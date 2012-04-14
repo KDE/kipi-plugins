@@ -74,7 +74,7 @@ public:
     KTextEdit* specialInstructionEdit;
 };
 
-IPTCStatus::IPTCStatus(QWidget* parent)
+IPTCStatus::IPTCStatus(QWidget* const parent)
     : QWidget(parent), d(new IPTCStatusPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -117,8 +117,10 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
     d->specialInstructionEdit  = new KTextEdit(this);
-/*    d->specialInstructionEdit->setValidator(asciiValidator);
-    d->specialInstructionEdit->document()->setMaxLength;*/
+/*
+    d->specialInstructionEdit->setValidator(asciiValidator);
+    d->specialInstructionEdit->document()->setMaxLength;
+*/
     d->specialInstructionEdit->setWhatsThis(i18n("Enter the editorial usage instructions. "
                                                  "This field is limited to 256 ASCII characters."));
 

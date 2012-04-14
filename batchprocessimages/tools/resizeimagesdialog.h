@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,38 +30,33 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-//class BatchProcessImagesItem;
-
-class ResizeImagesDialogPriv;
-
 class ResizeImagesDialog : public BatchProcessImagesDialog
 {
     Q_OBJECT
 
 public:
 
-    ResizeImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
+    ResizeImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget* parent = 0);
     ~ResizeImagesDialog();
 
 private Q_SLOTS:
 
-    void slotHelp();
     void slotOptionsClicked();
 
 protected:
 
-    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+    void initProcess(KProcess* proc, BatchProcessImagesItem* item,
                      const QString& albumDest, bool previewMode);
 
     void readSettings();
     void saveSettings();
-    bool prepareStartProcess(BatchProcessImagesItem *item,
-                             const QString& albumDest);
+    bool prepareStartProcess(BatchProcessImagesItem* item, const QString& albumDest);
 
     bool ResizeImage(int& w, int& h, int SizeFactor);
 
 private:
 
+    class ResizeImagesDialogPriv;
     ResizeImagesDialogPriv *d;
 };
 

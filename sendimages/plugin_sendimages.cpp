@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,10 +44,11 @@
 #include "sendimages.h"
 #include "sendimagesdialog.h"
 
+namespace KIPISendimagesPlugin
+{
+
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
 K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
-
-using namespace KIPISendimagesPlugin;
 
 class Plugin_SendImages::Plugin_SendImagesPriv
 {
@@ -67,9 +68,9 @@ public:
     SendImages*       sendImagesOperation;
 };
 
-Plugin_SendImages::Plugin_SendImages(QObject* parent, const QVariantList&)
-                 : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
-                   d(new Plugin_SendImagesPriv)
+Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
+    : Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
+      d(new Plugin_SendImagesPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
 }
@@ -81,7 +82,7 @@ Plugin_SendImages::~Plugin_SendImages()
 
 void Plugin_SendImages::setup( QWidget* widget )
 {
-    KIPI::Plugin::setup( widget );
+    Plugin::setup( widget );
 
     d->action_sendimages = actionCollection()->addAction("sendimages");
     d->action_sendimages->setText(i18n("Email Images..."));
@@ -92,14 +93,14 @@ void Plugin_SendImages::setup( QWidget* widget )
 
     addAction(d->action_sendimages);
 
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    Interface* interface = dynamic_cast< Interface* >( parent() );
     if ( !interface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    KIPI::ImageCollection selection = interface->currentSelection();
+    ImageCollection selection = interface->currentSelection();
     d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
 
     connect(interface, SIGNAL(selectionChanged(bool)),
@@ -108,21 +109,21 @@ void Plugin_SendImages::setup( QWidget* widget )
 
 void Plugin_SendImages::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
     if ( !interface )
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    KIPI::ImageCollection images = interface->currentSelection();
+    ImageCollection images = interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     delete d->dialog;
 
-    d->dialog = new SendImagesDialog(kapp->activeWindow(), interface, images.images());
+    d->dialog = new SendImagesDialog(kapp->activeWindow(), images.images());
     d->dialog->show();
 
     connect(d->dialog, SIGNAL(okClicked()),
@@ -131,23 +132,25 @@ void Plugin_SendImages::slotActivate()
 
 void Plugin_SendImages::slotPrepareEmail()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
     if ( !interface )
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    EmailSettingsContainer settings = d->dialog->emailSettings();
-    d->sendImagesOperation          = new SendImages(settings, this, interface);
+    EmailSettings settings = d->dialog->emailSettings();
+    d->sendImagesOperation = new SendImages(settings, this);
     d->sendImagesOperation->sendImages();
 }
 
-KIPI::Category Plugin_SendImages::category( KAction* action ) const
+Category Plugin_SendImages::category( KAction* action ) const
 {
     if ( action == d->action_sendimages )
-       return KIPI::ExportPlugin;
+       return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin; // no warning from compiler, please
+    return ExportPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPISendimagesPlugin

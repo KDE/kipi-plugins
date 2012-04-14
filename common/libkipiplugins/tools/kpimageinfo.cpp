@@ -37,6 +37,9 @@
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
+#include <libkipi/pluginloader.h>
+
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -46,8 +49,13 @@ class KPImageInfo::KPImageInfoPrivate
 public:
 
     KPImageInfoPrivate()
+        : iface(0)
     {
-        iface = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     bool hasValidData() const
@@ -57,7 +65,7 @@ public:
 
     QVariant attribute(const QString& name) const
     {
-        QMap<QString, QVariant> map; 
+        QMap<QString, QVariant> map;
         if (hasValidData())
         {
             ImageInfo info = iface->info(url);
@@ -101,11 +109,10 @@ public:
     Interface* iface;
 };
 
-KPImageInfo::KPImageInfo(Interface* const iface, const KUrl& url)
+KPImageInfo::KPImageInfo(const KUrl& url)
     : d(new KPImageInfoPrivate)
 {
-    d->iface = iface;
-    d->url   = url;
+    d->url = url;
 }
 
 KPImageInfo::~KPImageInfo()
@@ -120,9 +127,12 @@ KUrl KPImageInfo::url() const
 
 void KPImageInfo::cloneData(const KUrl& destination)
 {
-    KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
-    KIPI::ImageInfo destInfo = d->iface->info(destination);
-    destInfo.cloneData(srcInfo);
+    if (d->hasValidData())
+    {
+        ImageInfo srcInfo  = d->iface->info(d->url);
+        ImageInfo destInfo = d->iface->info(destination);
+        destInfo.cloneData(srcInfo);
+    }
 }
 
 qlonglong KPImageInfo::fileSize() const
@@ -132,7 +142,7 @@ qlonglong KPImageInfo::fileSize() const
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         return (qlonglong)info.size();
     }
 #endif
@@ -174,6 +184,7 @@ void KPImageInfo::setDescription(const QString& desc)
         trunc.truncate(2000);
         meta.removeIptcTag("Iptc.Application2.Caption");
         meta.setIptcTagString("Iptc.Application2.Caption", trunc);
+        meta.applyChanges();
     }
 }
 
@@ -557,6 +568,66 @@ bool KPImageInfo::hasKeywords() const
     }
 
     return false;
+}
+
+void KPImageInfo::setCreators(const QStringList& list)
+{
+    d->setAttribute("creators", list);
+}
+
+QStringList KPImageInfo::creators() const
+{
+    return d->attribute("creators").toStringList();
+}
+
+bool KPImageInfo::hasCreators() const
+{
+    return d->hasAttribute("creators");
+}
+
+void KPImageInfo::setCredit(const QString& val)
+{
+    d->setAttribute("credit", val);
+}
+
+QString KPImageInfo::credit() const
+{
+    return d->attribute("credit").toString();
+}
+
+bool KPImageInfo::hasCredit() const
+{
+    return d->hasAttribute("credit");
+}
+
+void KPImageInfo::setRights(const QString& val)
+{
+    d->setAttribute("rights", val);
+}
+
+QString KPImageInfo::rights() const
+{
+    return d->attribute("rights").toString();
+}
+
+bool KPImageInfo::hasRights() const
+{
+    return d->hasAttribute("rights");
+}
+
+void KPImageInfo::setSource(const QString& val)
+{
+    d->setAttribute("source", val);
+}
+
+QString KPImageInfo::source() const
+{
+    return d->attribute("source").toString();
+}
+
+bool KPImageInfo::hasSource() const
+{
+    return d->hasAttribute("source");
 }
 
 }  // namespace KIPIPlugins

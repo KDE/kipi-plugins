@@ -30,7 +30,6 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QRadioButton>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -52,6 +51,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 
 namespace KIPISmugPlugin
 {
@@ -65,7 +65,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
@@ -194,7 +194,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -262,7 +262,7 @@ KIPIPlugins::KPImagesList* SmugWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* SmugWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* SmugWidget::progressBar() const
 {
     return m_progressBar;
 }

@@ -123,7 +123,7 @@ public:
     CountrySelector*               countryCB;
 };
 
-IPTCOrigin::IPTCOrigin(QWidget* parent)
+IPTCOrigin::IPTCOrigin(QWidget* const parent)
     : QWidget(parent), d(new IPTCOriginPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

@@ -6,7 +6,7 @@
  * Date        : 2009-05-31
  * Description : Figure out camera clock delta from a clock picture.
  *
- * Copyright (C) 2009 by Pieter Edelman <p dot edelman at gmx dot net>
+ * Copyright (C) 2009      by Pieter Edelman <p dot edelman at gmx dot net>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -36,65 +36,16 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-namespace KIPI
-{
-    class Interface;
-}
-
-namespace KIPIPlugins
-{
-    class ImageDialog;
-}
-
-using namespace KIPI;
-using namespace KIPIPlugins;
-
 namespace KIPITimeAdjustPlugin
 {
 
-/* Overloaded class for displaying the image in a QScrollArea, to provide
- * support for dragging it around with the middle button. */
-class ImageDisplay : public QLabel
-{
-    Q_OBJECT
-
-public:
-
-    ImageDisplay(QScrollArea* const);
-
-protected:
-
-    void mousePressEvent(QMouseEvent*);
-    void mouseMoveEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent*);
-
-private:
-
-    int         currX;
-    int         currY;
-
-    QScrollBar* barX;
-    QScrollBar* barY;
-};
-
-// -----------------------------------------------------------------------------------
-
-/** Class for determining the camera time difference from a photo of a time
- *  display. The user can load a photo and tell the time displayed on this
- *  photo. This class calculates the time difference and stores it in a set
- *  of public variables: deltaNegative indicates whether the time should be
- *  added (false) or subtracted (true). deltaDays, deltaHours, deltaMinutes
- *  and deltaSeconds hold the numbers of days, hours, minutes and seconds
- *  to add or subtract. Months and years are not used, because these can be
- *  ambigious.
- */
 class ClockPhotoDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    ClockPhotoDialog(Interface* const interface, QWidget* const parent);
+    ClockPhotoDialog(QWidget* const parent);
     ~ClockPhotoDialog();
 
     /* The public variables that hold the time difference. */
@@ -109,25 +60,13 @@ public:
      * can't be read or the datetime information can't be read. */
     bool setImage(const KUrl&);
 
-protected:
-
-    void resizeEvent(QResizeEvent*);
-
 private Q_SLOTS:
 
     void slotLoadPhoto();
-    void slotAdjustZoom(int);
-    void slotZoomOut();
-    void slotZoomIn();
     void slotOk();
     void slotCancel();
 
 private:
-
-    /** Calculate the minimum value for the scroll slider according to the window
-     *  size. If fit is true, the image is made to fit in the viewport.
-     */
-    void adjustToWindowSize(bool);
 
     void saveSize();
 

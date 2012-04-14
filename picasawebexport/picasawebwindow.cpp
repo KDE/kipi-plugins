@@ -186,6 +186,10 @@ PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpF
 
     connect(m_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
             this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
+
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStopAndCloseProgressBar()));
+
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -208,6 +212,17 @@ void PicasawebWindow::slotHelp()
     KToolInvocation::invokeHelp("picasawebexport", "kipi-plugins");
 }
 
+void PicasawebWindow::slotStopAndCloseProgressBar()
+{
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    m_widget->progressBar()->progressCompleted();
+    done(Close);
+}
+
 void PicasawebWindow::slotButtonClicked(int button)
 {
     switch (button)
@@ -217,10 +232,12 @@ void PicasawebWindow::slotButtonClicked(int button)
             {
                 writeSettings();
                 m_widget->imagesList()->listView()->clear();
+                m_widget->progressBar()->progressCompleted();
                 done(Close);
             }
             else // cancel login/transfer
             {
+                m_widget->progressBar()->progressCompleted();
                 cancelProcessing();
             }
             break;
@@ -298,7 +315,7 @@ void PicasawebWindow::writeSettings()
 
 void PicasawebWindow::slotLoginProgress(int step, int maxStep, const QString &label)
 {
-    QProgressBar* progressBar = m_widget->progressBar();
+    KPProgressWidget* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
         progressBar->setFormat(label);
@@ -416,7 +433,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
     for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        KPImageInfo info(m_interface, *it);
+        KPImageInfo info(*it);
         PicasaWebPhoto temp;
         temp.title = info.name();
 
@@ -464,6 +481,9 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
+    m_widget->progressBar()->progressScheduled(i18n("Picasa Export"), true, true);
+    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+
 
     m_renamingOpt = 0;
 
@@ -594,6 +614,7 @@ void PicasawebWindow::uploadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
@@ -780,6 +801,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         {
             m_transferQueue.clear();
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             return;
         }
     }
@@ -792,6 +814,7 @@ void PicasawebWindow::downloadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
@@ -960,7 +983,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
         else
         {
-            KPImageInfo info(m_interface, newUrl);
+            KPImageInfo info(newUrl);
             info.setName(item.description);
             info.setTagsPath(item.tags);
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
@@ -978,6 +1001,7 @@ void PicasawebWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
     m_widget->progressBar()->hide();
+    m_widget->progressBar()->progressCompleted();
 
     m_talker->cancel();
 }

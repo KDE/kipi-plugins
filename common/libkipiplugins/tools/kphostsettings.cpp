@@ -34,6 +34,9 @@
 // Libkipi includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
+
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -43,8 +46,13 @@ class KPHostSettings::KPHostSettingsPrivate
 public:
 
     KPHostSettingsPrivate()
+        : iface(0)
     {
-        iface = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     bool hasValidData() const
@@ -76,10 +84,9 @@ public:
     Interface* iface;
 };
 
-KPHostSettings::KPHostSettings(Interface* const iface)
+KPHostSettings::KPHostSettings()
     : d(new KPHostSettingsPrivate)
 {
-    d->iface = iface;
 }
 
 KPHostSettings::~KPHostSettings()
@@ -149,6 +156,7 @@ KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
         meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
     }
 
+    kDebug() << meta;
     return meta;
 }
 

@@ -83,7 +83,7 @@ ImageGrayScale::~ImageGrayScale()
 {
 }
 
-bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool updateFileTimeStamp)
+bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
 {
     QFileInfo fi(src);
 
@@ -113,7 +113,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool upda
     }
     else if (Utils::isJPEG(src))
     {
-        if (!image2GrayScaleJPEG(src, tmp, err, updateFileTimeStamp))
+        if (!image2GrayScaleJPEG(src, tmp, err))
             return false;
     }
     else
@@ -139,8 +139,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool upda
     return true;
 }
 
-bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest, 
-                                         QString& err, bool updateFileTimeStamp)
+bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
 {
     JCOPY_OPTION copyoption         = JCOPYOPT_ALL;
     jpeg_transform_info transformoption;
@@ -230,11 +229,6 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     // And set finaly update the metadata to target file.
 
     KPMetadata meta;
-
-#if KEXIV2_VERSION >= 0x000600
-    meta.setUpdateFileTimeStamp(updateFileTimeStamp);
-#endif
-
     QImage img(dest);
     QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     meta.load(dest);

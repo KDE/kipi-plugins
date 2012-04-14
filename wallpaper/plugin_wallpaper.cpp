@@ -7,7 +7,7 @@
  * Description : Wall Paper kipi-plugin
  *
  * Copyright (C) 2004      by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "plugin_wallpaper.h"
 #include "plugin_wallpaper.moc"
 
 // KDE includes
@@ -47,18 +46,25 @@
 
 #include "kdesktop_interface.h"
 
+namespace KIPIWallPaperPlugin
+{
+
 K_PLUGIN_FACTORY( WallPaperFactory, registerPlugin<Plugin_WallPaper>(); )
 K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )
 
-Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const QVariantList&)
-                : KIPI::Plugin(WallPaperFactory::componentData(), parent, "WallPaper")
+Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
+    : Plugin(WallPaperFactory::componentData(), parent, "WallPaper")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_WallPaper plugin loaded";
 }
 
-void Plugin_WallPaper::setup( QWidget* widget )
+Plugin_WallPaper::~Plugin_WallPaper()
 {
-    KIPI::Plugin::setup( widget );
+}
+
+void Plugin_WallPaper::setup(QWidget* widget)
+{
+    Plugin::setup( widget );
 
     m_actionBackground = new KActionMenu(i18n("&Set as Background"),
                          actionCollection());
@@ -108,7 +114,7 @@ void Plugin_WallPaper::setup( QWidget* widget )
 
     addAction( m_actionBackground );
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
 
     if ( !interface )
     {
@@ -116,7 +122,7 @@ void Plugin_WallPaper::setup( QWidget* widget )
         return;
     }
 
-    KIPI::ImageCollection selection = interface->currentSelection();
+    ImageCollection selection = interface->currentSelection();
     m_actionBackground->setEnabled( selection.isValid() );
 
     connect( interface, SIGNAL(selectionChanged(bool)),
@@ -168,7 +174,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    if (layout>SCALE_AND_CROP || layout < CENTER)
       return;
 
-   KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+   Interface* interface = dynamic_cast<Interface*>( parent() );
 
    if ( !interface )
    {
@@ -176,12 +182,13 @@ void Plugin_WallPaper::setWallpaper(int layout)
        return;
    }
 
-   KIPI::ImageCollection images = interface->currentSelection();
+   ImageCollection images = interface->currentSelection();
 
    if (!images.isValid() ) return;
 
    KUrl url=images.images()[0];
    QString path;
+
    if (url.isLocalFile())
    {
       path=url.path();
@@ -199,6 +206,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
       if (path.isNull()) return;
       KIO::NetAccess::download(url, path, 0L);
    }
+
    //TODO verify when we change it with plasma
    OrgKdeKdesktopBackgroundInterface desktopInterface("org.kde.kdesktop", "/Background", QDBusConnection::sessionBus());
    QDBusReply<void> reply = desktopInterface.setWallpaper(path,layout);
@@ -206,11 +214,13 @@ void Plugin_WallPaper::setWallpaper(int layout)
       KMessageBox::information(0L,i18n("Change Background"),i18n("Background cannot be changed."));
 }
 
-KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
+Category Plugin_WallPaper::category(KAction* action) const
 {
     if ( action == m_actionBackground )
-       return KIPI::IMAGESPLUGIN;
+       return IMAGESPLUGIN;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return IMAGESPLUGIN; // no warning from compiler, please
 }
+
+} // namespace KIPIWallPaperPlugin

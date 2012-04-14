@@ -27,11 +27,6 @@
 
 #include "kpimageslist.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KIPIRemoveRedEyesPlugin
 {
 
@@ -41,7 +36,7 @@ class MyImagesList : public KIPIPlugins::KPImagesList
 
 public:
 
-    explicit MyImagesList(KIPI::Interface* const iface, QWidget* const parent = 0);
+    explicit MyImagesList(QWidget* const parent = 0);
     ~MyImagesList();
 
     bool hasUnprocessedImages();
@@ -51,11 +46,6 @@ public:
 public Q_SLOTS:
 
     void addEyeCounterByUrl(const KUrl&, int);
-
-private:
-
-    struct MyImagesListPriv;
-    MyImagesListPriv* const d;
 };
 
 }  // namespace KIPIRemoveRedEyesPlugin

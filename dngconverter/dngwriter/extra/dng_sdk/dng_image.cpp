@@ -469,7 +469,7 @@ void dng_image::GetEdge (dng_pixel_buffer &buffer,
 			{
 			
 			ThrowProgramError ();
-			
+			break;
 			}
 			
 		}

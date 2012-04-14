@@ -7,7 +7,7 @@
  * Description : Wall Paper kipi-plugin
  *
  * Copyright (C) 2004      by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,15 +31,20 @@
 class KActionMenu;
 class KAction;
 
-class Plugin_WallPaper : public KIPI::Plugin
+namespace KIPIWallPaperPlugin
+{
+
+class Plugin_WallPaper : public Plugin
 {
 Q_OBJECT
 
 public:
 
-    Plugin_WallPaper(QObject *parent, const QVariantList &args);
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+    Plugin_WallPaper(QObject* const parent, const QVariantList& args);
+    ~Plugin_WallPaper();
+
+    virtual Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 private Q_SLOTS:
 
@@ -54,7 +59,7 @@ private Q_SLOTS:
 
 private:
 
-    void setWallpaper( int layout );
+    void setWallpaper(int layout);
 
 private:
 
@@ -70,7 +75,9 @@ private:
         SCALE_AND_CROP   = 8
     };
 
-    KActionMenu *m_actionBackground;
+    KActionMenu* m_actionBackground;
 };
+
+} // namespace KIPIWallPaperPlugin
 
 #endif // PLUGIN_WALLPAPER_H

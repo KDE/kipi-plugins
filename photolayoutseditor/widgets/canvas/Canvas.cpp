@@ -895,7 +895,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
 void Canvas::scale(qreal factor, const QPoint & center)
 {
     // Scaling limitation
-    if (factor <= 0 || !scene() || (m_scale_factor*factor <= 0.1 && factor < 1 && m_scale_factor*factor > 7))
+    if (factor <= 0 || !scene() || ((m_scale_factor*factor <= 0.1 && factor < 1) || (m_scale_factor*factor > 7)))
         return;
 
     QGraphicsView::scale(factor, factor);

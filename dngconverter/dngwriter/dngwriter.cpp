@@ -89,18 +89,6 @@ enum DNGBayerPattern
     FourColor
 };
 
-dng_date_time dngDateTime(QDateTime qDT)
-{
-    dng_date_time dngDT;
-    dngDT.fYear   = qDT.date().year();
-    dngDT.fMonth  = qDT.date().month();
-    dngDT.fDay    = qDT.date().day();
-    dngDT.fHour   = qDT.time().hour();
-    dngDT.fMinute = qDT.time().minute();
-    dngDT.fSecond = qDT.time().second();
-    return dngDT;
-}
-
 DNGWriter::DNGWriter()
     : d(new DNGWriterPrivate)
 {
@@ -609,7 +597,6 @@ int DNGWriter::convert()
 
         // -------------------------------------------------------------------------------
 
-
         AutoPtr<dng_camera_profile> prof(new dng_camera_profile);
         prof->SetName(QString("%1 %2").arg(identify.make, identify.model).toAscii());
 
@@ -617,53 +604,53 @@ int DNGWriter::convert()
         dng_matrix matrix;
         switch (identify.rawColors)
         {
-        case 3:
-            {
-                dng_matrix_3by3 camXYZ;
-                camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
-                camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
-                camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
-                camXYZ[1][0] = identify.cameraXYZMatrix[1][0];
-                camXYZ[1][1] = identify.cameraXYZMatrix[1][1];
-                camXYZ[1][2] = identify.cameraXYZMatrix[1][2];
-                camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
-                camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
-                camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
-                if (camXYZ.MaxEntry() == 0.0)
+            case 3:
                 {
-                    kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
-                    camXYZ = dng_matrix_3by3(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+                    dng_matrix_3by3 camXYZ;
+                    camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
+                    camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
+                    camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
+                    camXYZ[1][0] = identify.cameraXYZMatrix[1][0];
+                    camXYZ[1][1] = identify.cameraXYZMatrix[1][1];
+                    camXYZ[1][2] = identify.cameraXYZMatrix[1][2];
+                    camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
+                    camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
+                    camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
+                    if (camXYZ.MaxEntry() == 0.0)
+                    {
+                        kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
+                        camXYZ = dng_matrix_3by3(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+                    }
+
+                    matrix = camXYZ;
+
+                    break;
                 }
-
-                matrix = camXYZ;
-
-                break;
-            }
-        case 4:
-            {
-                dng_matrix_4by3 camXYZ;
-                camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
-                camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
-                camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
-                camXYZ[1][0] = identify.cameraXYZMatrix[1][0];
-                camXYZ[1][1] = identify.cameraXYZMatrix[1][1];
-                camXYZ[1][2] = identify.cameraXYZMatrix[1][2];
-                camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
-                camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
-                camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
-                camXYZ[3][0] = identify.cameraXYZMatrix[3][0];
-                camXYZ[3][1] = identify.cameraXYZMatrix[3][1];
-                camXYZ[3][2] = identify.cameraXYZMatrix[3][2];
-                if (camXYZ.MaxEntry() == 0.0)
+            case 4:
                 {
-                    kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
-                    camXYZ = dng_matrix_4by3(0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+                    dng_matrix_4by3 camXYZ;
+                    camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
+                    camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
+                    camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
+                    camXYZ[1][0] = identify.cameraXYZMatrix[1][0];
+                    camXYZ[1][1] = identify.cameraXYZMatrix[1][1];
+                    camXYZ[1][2] = identify.cameraXYZMatrix[1][2];
+                    camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
+                    camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
+                    camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
+                    camXYZ[3][0] = identify.cameraXYZMatrix[3][0];
+                    camXYZ[3][1] = identify.cameraXYZMatrix[3][1];
+                    camXYZ[3][2] = identify.cameraXYZMatrix[3][2];
+                    if (camXYZ.MaxEntry() == 0.0)
+                    {
+                        kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
+                        camXYZ = dng_matrix_4by3(0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+                    }
+
+                    matrix = camXYZ;
+
+                    break;
                 }
-
-                matrix = camXYZ;
-
-                break;
-             }
         }
 
         prof->SetColorMatrix1((dng_matrix) matrix);
@@ -690,16 +677,16 @@ int DNGWriter::convert()
         long int   num, den;
         long       val;
         QString    str;
-        KPMetadata meta;    // NOTE : no need to lock item through KIPI::Interface, it's a temp file processed.
+        KPMetadata meta;
 
         if (meta.load(inputFile()))
         {
             // Time from original shot
             dng_date_time_info dti;
-            dti.SetDateTime(dngDateTime(meta.getImageDateTime()));
+            dti.SetDateTime(d->dngDateTime(meta.getImageDateTime()));
             exif->fDateTimeOriginal = dti;
 
-            dti.SetDateTime(dngDateTime(meta.getDigitizationDateTime(true)));
+            dti.SetDateTime(d->dngDateTime(meta.getDigitizationDateTime(true)));
             exif->fDateTimeDigitized = dti;
  
             negative->UpdateDateTime(dti);
@@ -991,7 +978,7 @@ int DNGWriter::convert()
 
             str = meta.getExifTagString("Exif.OlympusEq.LensSerialNumber");
             if (str.length()) exif->fLensSerialNumber.Set_ASCII(str.trimmed().toAscii());
-            
+
             str = meta.getExifTagString("Exif.OlympusEq.LensModel");
             if (str.length()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
 
@@ -999,7 +986,7 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.OlympusEq.MaxFocalLength", val))             exif->fLensInfo[1]              = dng_urational(val, 1);
 
             // Panasonic Makernotes
-            
+
             str = meta.getExifTagString("Exif.Panasonic.LensType");
             if (str.length()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
 
@@ -1015,8 +1002,8 @@ int DNGWriter::convert()
 
             str = meta.getExifTagString("Exif.Sony2.LensID");
             if (str.length()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
-            
-            // 
+
+            // -------------------------------------------
 
             if ((exif->fLensName.IsEmpty()) && 
                 (exif->fLensInfo[0].As_real64() > 0) &&
@@ -1032,13 +1019,13 @@ int DNGWriter::convert()
                     stream << QString("-%1").arg(dval, 0, 'f', 1);
                 }
                 stream << " mm";
-                
+
                 if (exif->fLensInfo[2].As_real64() > 0)
                 {
                     dval = (double)exif->fLensInfo[2].n / (double)exif->fLensInfo[2].d;
                     stream << QString(" 1/%1").arg(dval, 0, 'f', 1);
                 }
-                
+
                 if ((exif->fLensInfo[3].As_real64() > 0) &&
                     (exif->fLensInfo[2].As_real64() != exif->fLensInfo[3].As_real64()))
                 {
@@ -1048,7 +1035,7 @@ int DNGWriter::convert()
 
                 exif->fLensName.Set_ASCII(lensName.toAscii());
             }
-            
+
             // Markernote backup.
 
             QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
@@ -1073,7 +1060,7 @@ int DNGWriter::convert()
                 QString mknByteOrder = meta.getExifTagString("Exif.MakerNote.ByteOrder");
 
                 if ((meta.getExifTagLong("Exif.MakerNote.Offset", mknOffset)) && !mknByteOrder.isEmpty())
-                {                   
+                {
                     dng_memory_stream streamPriv(memalloc);
                     streamPriv.SetBigEndian();
 
@@ -1288,18 +1275,23 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
         // Metadata makernote cleanup using Exiv2 for some RAW file types
-        // See B.K.O #204437 and #210371
+        // See B.K.O #204437 and #210371, and write XMP Sidecar if necessary
 
-        if (inputInfo.suffix().toUpper() == QString("ORF"))
+        if (meta.load(dngFilePath))
         {
-            kDebug() << "DNGWriter: cleanup makernotes using Exiv2" ;
-
-            if (meta.load(dngFilePath))
+            if (inputInfo.suffix().toUpper() == QString("ORF"))
             {
+                kDebug() << "DNGWriter: cleanup makernotes using Exiv2" ;
+
                 meta.setWriteRawFiles(true);
                 meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
-                meta.applyChanges();
             }
+            else
+            {
+                // Don't touch DNG file and create XMP sidecar depending of KIPI host application settings.
+                meta.setWriteRawFiles(false);
+            }
+            meta.applyChanges();
         }
 
         // -----------------------------------------------------------------------------------------

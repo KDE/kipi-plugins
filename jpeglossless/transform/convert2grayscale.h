@@ -44,11 +44,11 @@ public:
     ImageGrayScale();
     ~ImageGrayScale();
 
-    bool image2GrayScale(const QString& src, QString& err, bool updateFileTimeStamp);
+    bool image2GrayScale(const QString& src, QString& err);
 
 private:
 
-    bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err, bool updateFileTimeStamp);
+    bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err);
     bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err);
 
 private:

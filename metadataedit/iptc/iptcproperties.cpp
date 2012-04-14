@@ -118,7 +118,7 @@ public:
     ObjectAttributesEdit*          objectAttribute;
 };
 
-IPTCProperties::IPTCProperties(QWidget* parent)
+IPTCProperties::IPTCProperties(QWidget* const parent)
     : QWidget(parent), d(new IPTCPropertiesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

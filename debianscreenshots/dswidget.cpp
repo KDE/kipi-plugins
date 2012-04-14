@@ -31,7 +31,6 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -54,7 +53,6 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollection.h>
 
@@ -65,6 +63,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 #include "packagedelegate.h"
 #include "debshots.h"
 #include "kclickableimagelabel.h"
@@ -72,7 +71,7 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-DsWidget::DsWidget(QWidget* const parent, KIPI::Interface* const iface)
+DsWidget::DsWidget(QWidget* const parent)
     : QWidget(parent),
       m_lastTip( QString() ),
       m_lastQueryUrl( QUrl() ),
@@ -85,7 +84,7 @@ DsWidget::DsWidget(QWidget* const parent, KIPI::Interface* const iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList  = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
@@ -156,7 +155,7 @@ DsWidget::DsWidget(QWidget* const parent, KIPI::Interface* const iface)
     sdnLayout->addWidget(descriptionLabel,      3, 0, 1, 1);
     sdnLayout->addWidget(m_descriptionLineEdit, 3, 1, 1, 4);
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -179,7 +178,7 @@ KIPIPlugins::KPImagesList* DsWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* DsWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* DsWidget::progressBar() const
 {
     return m_progressBar;
 }

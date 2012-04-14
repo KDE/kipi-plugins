@@ -45,6 +45,11 @@
 
 #include <libkdcraw/rcombobox.h>
 
+// Libkipi includes
+
+#include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
+
 // Local includes
 
 #include "dngwriter.h"
@@ -72,6 +77,13 @@ public:
         previewModeLabel      = 0;
         backupOriginalRawFile = 0;
         updateFileDate        = 0;
+        iface                 = 0;
+
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     QLabel*       conflictLabel;
@@ -87,9 +99,11 @@ public:
     QCheckBox*    updateFileDate;
 
     RComboBox*    previewModeCB;
+
+    Interface*    iface;
 };
 
-SettingsWidget::SettingsWidget(QWidget* const parent, Interface* const iface)
+SettingsWidget::SettingsWidget(QWidget* const parent)
     : QWidget(parent), d(new SettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -114,11 +128,11 @@ SettingsWidget::SettingsWidget(QWidget* const parent, Interface* const iface)
     d->updateFileDate->setWhatsThis(i18n("Sets the file modification date "
         "to the creation date provided in the image metadata."));
 
-    if (iface)
+    if (d->iface)
     {
         // If plugin run from KIPI host, use file time-stamp host settings instead.
         d->updateFileDate->hide();
-        KPHostSettings hSettings(iface);
+        KPHostSettings hSettings;
         d->updateFileDate->setChecked(hSettings.metadataSettings().updateFileTimeStamp);
     }
 

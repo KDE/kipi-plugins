@@ -24,6 +24,15 @@
 
 #include "kpmetadata.h"
 
+// Qt includes
+
+#include <QFile>
+#include <QFileInfo>
+
+// KDE includes
+
+#include <kde_file.h>
+
 // Local includes
 
 #include "kpmetasettings.h"
@@ -32,6 +41,7 @@
 // LibKipi includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 namespace KIPIPlugins
 {
@@ -39,37 +49,30 @@ namespace KIPIPlugins
 KPMetadata::KPMetadata()
     : KExiv2()
 {
-    m_iface = 0;
-    setSettings(KPMetaSettings());
+    init();
 }
 
 KPMetadata::KPMetadata(const QString& filePath)
     : KExiv2()
 {
-    m_iface = 0;
-    setSettings(KPMetaSettings());
-    load(filePath);
-}
-
-KPMetadata::KPMetadata(Interface* const iface)
-    : KExiv2()
-{
-    m_iface = iface;
-    KPHostSettings hset(m_iface);
-    setSettings(hset.metadataSettings());
-}
-
-KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
-    : KExiv2()
-{
-    m_iface = iface;
-    KPHostSettings hset(m_iface);
-    setSettings(hset.metadataSettings());
+    init();
     load(filePath);
 }
 
 KPMetadata::~KPMetadata()
 {
+}
+
+void KPMetadata::init()
+{
+    m_iface          = 0;
+    PluginLoader* pl = PluginLoader::instance();
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
+    KPHostSettings hset;
+    setSettings(hset.metadataSettings());
 }
 
 void KPMetadata::setSettings(const KPMetaSettings& settings)
@@ -78,6 +81,18 @@ void KPMetadata::setSettings(const KPMetaSettings& settings)
     setWriteRawFiles(settings.writeRawFiles);
     setMetadataWritingMode(settings.metadataWritingMode);
     setUpdateFileTimeStamp(settings.updateFileTimeStamp);
+}
+
+KPMetaSettings KPMetadata::settings() const
+{
+    KPMetaSettings settings;
+
+    settings.useXMPSidecar4Reading = useXMPSidecar4Reading();
+    settings.writeRawFiles         = writeRawFiles();
+    settings.metadataWritingMode   = (KPMetadata::MetadataWritingMode)metadataWritingMode();
+    settings.updateFileTimeStamp   = updateFileTimeStamp();
+
+    return settings;
 }
 
 bool KPMetadata::load(const QString& filePath) const
@@ -99,6 +114,44 @@ bool KPMetadata::applyChanges() const
     KPFileWriteLocker(m_iface, KUrl(getFilePath()));
 
     return KExiv2::applyChanges();
+}
+
+#if KEXIV2_VERSION < 0x020300
+
+KUrl KPMetadata::sidecarUrl(const KUrl& url)
+{
+    QString sidecarPath = sidecarFilePathForFile(url.path());
+    KUrl sidecarUrl(url);
+    sidecarUrl.setPath(sidecarPath);
+    return sidecarUrl;
+}
+
+KUrl KPMetadata::sidecarUrl(const QString& path)
+{
+    return KUrl::fromPath(sidecarFilePathForFile(path));
+}
+
+QString KPMetadata::sidecarPath(const QString& path)
+{
+    return sidecarFilePathForFile(path);
+}
+
+bool KPMetadata::hasSidecar(const QString& path)
+{
+    return QFileInfo(sidecarFilePathForFile(path)).exists();
+}
+
+#endif // KEXIV2_VERSION < 0x020300
+
+bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
+{
+    if (hasSidecar(src.toLocalFile()))
+    {
+        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()), 
+                       QFile::encodeName(sidecarUrl(dst).toLocalFile())) == 0)
+            return true;
+    }
+    return false;
 }
 
 }  // namespace KIPIPlugins

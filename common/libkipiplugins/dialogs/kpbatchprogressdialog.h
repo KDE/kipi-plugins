@@ -25,6 +25,10 @@
 #ifndef KPBATCHPROGRESSDIALOG_H
 #define KPBATCHPROGRESSDIALOG_H
 
+// Qt includes
+
+#include <QCloseEvent>
+
 // KDE includes
 
 #include <kdialog.h>
@@ -33,9 +37,7 @@
 // Local includes
 
 #include "kipiplugins_export.h"
-
-class QListWidget;
-class QProgressBar;
+#include "kpprogresswidget.h"
 
 namespace KIPIPlugins
 {
@@ -60,15 +62,19 @@ public:
     explicit KPBatchProgressWidget(QWidget* const parent=0);
     ~KPBatchProgressWidget();
 
-    QListWidget*  listView() const;
-    QProgressBar* progressBar() const;
-
     void addedAction(const QString& text, int type);
-    void reset();
-    void setProgress(int current, int total);
 
-    int progress() const;
-    int total() const;
+    void setProgress(int current, int total);
+    int  progress() const;
+    int  total() const;
+    void reset();
+
+    void progressScheduled(const QString& title, const QPixmap& thumb);
+    void progressCompleted();
+
+Q_SIGNALS:
+
+    void signalProgressCanceled();
 
 public Q_SLOTS:
 
@@ -97,12 +103,11 @@ public:
     explicit KPBatchProgressDialog(QWidget* const parent=0, const QString& caption=QString());
     ~KPBatchProgressDialog();
 
-    KPBatchProgressWidget* progressWidget() const;
+    KPBatchProgressWidget* progressWidget();
 
-private:
+private Q_SLOTS:
 
-    class KPBatchProgressDialogPriv;
-    KPBatchProgressDialogPriv* const d;
+    void slotCancel();
 };
 
 }  // namespace KIPIPlugins

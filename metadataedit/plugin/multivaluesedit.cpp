@@ -76,7 +76,7 @@ public:
     SqueezedComboBox* dataList;
 };
 
-MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QString& desc)
+MultiValuesEdit::MultiValuesEdit(QWidget* const parent, const QString& title, const QString& desc)
     : QWidget(parent), d(new MultiValuesEditPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

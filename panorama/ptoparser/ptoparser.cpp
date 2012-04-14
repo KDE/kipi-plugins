@@ -33,14 +33,22 @@
 #endif
 #endif
 
-#include "ptoparser.h"
-
-#include <QFile>
-
-#include <kdebug.h>
+// C++ includes
 
 #include <string>
 #include <iostream>
+
+// Qt includes
+
+#include <QFile>
+
+// KDE includes
+
+#include <kdebug.h>
+
+// Local includes
+
+#include "ptoparser.h"
 
 #include "common.h"
 #include "controlpointline.h"
@@ -74,20 +82,19 @@ namespace KIPIPanoramaPlugin { namespace PtoParser
             using qi::_val;
             using qi::_1;
             using qi::skip;
-            using qi::no_skip;
             using phoenix::bind;
 
             // ------------------------- PTO file parsing -------------------------
-            start = no_skip[*((
-                      'p' >> skip[projectLine]      [bind(&PTOType::setProject, _val, _1)]
-                    | 'm' >> skip[stitcherLine]     [bind(&PTOType::setStitcher, _val, _1)]
-                    | 'i' >> skip[imageLine]        [bind(&PTOType::addImage, _val, _1)]
-                    | 'k' >> skip[maskLine]         [bind(&PTOType::addMask, _val, bind(&MaskData::mask, _1), bind(&MaskData::imageId, _1))]
-                    | 'o' >> skip[optimisationLine] [bind(&PTOType::addOptimisation, _val, bind(&OptimisationData::optimisation, _1), bind(&OptimisationData::imageId, _1))]
-                    | 'c' >> skip[controlPointLine] [bind(&PTOType::addControlPoint, _val, _1)]
-                    | commentLine                   [bind(&QStringList::push_back, bind(&PTOType::lastComments, _val), _1)]
+            start = *((
+                      'p' >> projectLine        [bind(&PTOType::setProject, _val, _1)]
+                    | 'm' >> stitcherLine       [bind(&PTOType::setStitcher, _val, _1)]
+                    | 'i' >> imageLine          [bind(&PTOType::addImage, _val, _1)]
+                    | 'k' >> maskLine           [bind(&PTOType::addMask, _val, bind(&MaskData::mask, _1), bind(&MaskData::imageId, _1))]
+                    | 'o' >> optimisationLine   [bind(&PTOType::addOptimisation, _val, bind(&OptimisationData::optimisation, _1), bind(&OptimisationData::imageId, _1))]
+                    | 'c' >> controlPointLine   [bind(&PTOType::addControlPoint, _val, _1)]
+                    | commentLine               [bind(&QStringList::push_back, bind(&PTOType::lastComments, _val), _1)]
                 )
-                >> +eol)]
+                >> +eol)
             ;
         }
 

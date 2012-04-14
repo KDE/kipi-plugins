@@ -31,7 +31,6 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QStringList>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -46,7 +45,6 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollection.h>
 
@@ -54,11 +52,12 @@
 
 #include "kpimageslist.h"
 #include "imageshack.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIImageshackExportPlugin
 {
 
-ImageshackWidget::ImageshackWidget(QWidget* const parent, Interface* const interface, Imageshack* const imageshack)
+ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imageshack)
     : QWidget(parent)
 {
     setObjectName("ImageshackWidget");
@@ -69,7 +68,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Interface* const inter
 
     // --------------------------------------------
 
-    m_imgList = new KIPIPlugins::KPImagesList(interface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false);
     m_imgList->loadImagesFromCurrentSelection();
@@ -213,7 +212,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Interface* const inter
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
     m_progressBar->setVisible(false);
 
@@ -246,7 +245,7 @@ KIPIPlugins::KPImagesList* ImageshackWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* ImageshackWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* ImageshackWidget::progressBar() const
 {
     return m_progressBar;
 }

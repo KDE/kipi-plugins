@@ -26,7 +26,6 @@
 
 #include <QBrush>
 #include <QWidget>
-#include <QProgressBar>
 #include <QLayout>
 #include <QListWidget>
 #include <QMimeData>
@@ -40,6 +39,10 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+
+// Local includes
+
+#include <kpprogresswidget.h>
 
 namespace KIPIPlugins
 {
@@ -74,6 +77,7 @@ KPBatchProgressItem(QListWidget* const parent, const QString& message, int messa
             break;
         default:
             setIcon(SmallIcon("dialog-information"));
+            break;
     }
 
     // Set the message text.
@@ -95,9 +99,8 @@ public:
         actionsList = 0;
     }
 
-    QProgressBar* progress;
-
-    QListWidget*  actionsList;
+    QListWidget*      actionsList;
+    KPProgressWidget* progress;
 };
 
 KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
@@ -112,7 +115,7 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 
     //---------------------------------------------
 
-    d->progress = new QProgressBar(this);
+    d->progress = new KPProgressWidget(this);
     d->progress->setRange(0, 100);
     d->progress->setValue(0);
     d->progress->setWhatsThis(i18n("<p>This is the batch job progress as a percentage.</p>"));
@@ -121,6 +124,9 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(slotContextMenu()));
+
+    connect(d->progress, SIGNAL(signalProgressCanceled()),
+            this, SIGNAL(signalProgressCanceled()));
 }
 
 KPBatchProgressWidget::~KPBatchProgressWidget()
@@ -128,20 +134,22 @@ KPBatchProgressWidget::~KPBatchProgressWidget()
     delete d;
 }
 
-QListWidget* KPBatchProgressWidget::listView() const
+void KPBatchProgressWidget::progressScheduled(const QString& title, const QPixmap& thumb)
 {
-    return d->actionsList;
+    d->progress->progressScheduled(title, true, true);
+    d->progress->progressThumbnailChanged(thumb);
 }
 
-QProgressBar* KPBatchProgressWidget::progressBar() const
+void KPBatchProgressWidget::progressCompleted()
 {
-    return d->progress;
+    d->progress->progressCompleted();
 }
 
 void KPBatchProgressWidget::addedAction(const QString& text, int type)
 {
     KPBatchProgressItem* item = new KPBatchProgressItem(d->actionsList, text, type);
     d->actionsList->setCurrentItem(item);
+    d->progress->progressStatusChanged(text);
 }
 
 void KPBatchProgressWidget::reset()
@@ -204,39 +212,38 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
 
 // ---------------------------------------------------------------------------------
 
-class KPBatchProgressDialog::KPBatchProgressDialogPriv
-{
-public:
-
-    KPBatchProgressDialogPriv()
-    {
-        box = 0;
-    }
-
-    KPBatchProgressWidget* box;
-};
-
-KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const parent, const QString& caption)
-   : KDialog(parent), d(new KPBatchProgressDialogPriv)
+KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
+   : KDialog(0)
 {
     setCaption(caption);
     setButtons(Cancel);
     setDefaultButton(Cancel);
-    setModal(true);
+    setModal(false);
 
-    d->box = new KPBatchProgressWidget(this);
-    setMainWidget(d->box);
+    KPBatchProgressWidget* w = new KPBatchProgressWidget(this);
+    w->progressScheduled(caption, KIcon("kipi").pixmap(22, 22));
+    setMainWidget(w);
     resize(600, 400);
+
+    connect(w, SIGNAL(signalProgressCanceled()),
+            this, SIGNAL(cancelClicked()));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()
 {
-    delete d;
 }
 
-KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
+KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
 {
-    return d->box;
+    return (qobject_cast<KPBatchProgressWidget*>(mainWidget()));
+}
+
+void KPBatchProgressDialog::slotCancel()
+{
+    progressWidget()->progressCompleted();
 }
 
 }  // namespace KIPIPlugins

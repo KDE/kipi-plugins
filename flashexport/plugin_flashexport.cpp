@@ -47,13 +47,14 @@
 #include "flashmanager.h"
 #include "aboutdata.h"
 
-using namespace KIPIFlashExportPlugin;
+namespace KIPIFlashExportPlugin
+{
 
 K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
 K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
-Plugin_FlashExport::Plugin_FlashExport(QObject* parent, const QVariantList&)
-                   : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
+Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList&)
+    : Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
 {
     m_interface    = 0;
     m_action       = 0;
@@ -70,7 +71,7 @@ Plugin_FlashExport::~Plugin_FlashExport()
 void Plugin_FlashExport::setup(QWidget* widget)
 {
     m_parentWidget = widget;
-    KIPI::Plugin::setup(m_parentWidget);
+    Plugin::setup(m_parentWidget);
 
     m_action = actionCollection()->addAction("flashexport");
     m_action->setText(i18n("Export to F&lash..."));
@@ -82,7 +83,7 @@ void Plugin_FlashExport::setup(QWidget* widget)
 
     addAction(m_action);
 
-    m_interface = dynamic_cast< KIPI::Interface* >(parent());
+    m_interface = dynamic_cast<Interface*>(parent());
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
@@ -101,18 +102,19 @@ void Plugin_FlashExport::slotActivate()
     if (!m_manager)
     {
         m_manager = new FlashManager(this);
-        m_manager->setAbout(new FlashExportAboutData());
     }
 
     m_manager->setIface(m_interface);
     m_manager->run();
 }
 
-KIPI::Category Plugin_FlashExport::category( KAction* action ) const
+Category Plugin_FlashExport::category(KAction* action) const
 {
     if ( action == m_action )
-       return KIPI::ExportPlugin;
+       return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification" ;
-    return KIPI::ExportPlugin; // no warning from compiler, please
+    return ExportPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIFlashExportPlugin

@@ -44,7 +44,6 @@ extern "C"
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QPixmap>
-#include <QProgressBar>
 #include <QPushButton>
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
@@ -58,6 +57,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
+#include <kde_file.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -69,10 +69,6 @@ extern "C"
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
-
-// LibKIPI includes
-
-#include <libkipi/interface.h>
 
 // Local includes
 
@@ -86,6 +82,7 @@ extern "C"
 #include "kphostsettings.h"
 #include "kpsavesettingswidget.h"
 #include "rawdecodingiface.h"
+#include "kpprogresswidget.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -107,7 +104,6 @@ public:
         saveSettingsBox     = 0;
         decodingSettingsBox = 0;
         about               = 0;
-        iface               = 0;
     }
 
     bool                  busy;
@@ -116,7 +112,7 @@ public:
 
     QStringList           fileList;
 
-    QProgressBar*         progressBar;
+    KPProgressWidget*     progressBar;
 
     MyImageList*          listView;
 
@@ -127,15 +123,11 @@ public:
     DcrawSettingsWidget*  decodingSettingsBox;
 
     KPAboutData*          about;
-
-    Interface*            iface;
 };
 
-BatchDialog::BatchDialog(Interface* const iface)
+BatchDialog::BatchDialog()
     : KDialog(0), d(new BatchDialogPriv)
 {
-    d->iface = iface;
-
     setButtons(Help | Default | Apply | Close );
     setDefaultButton(Close);
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
@@ -148,7 +140,7 @@ BatchDialog::BatchDialog(Interface* const iface)
 
     //---------------------------------------------
 
-    d->listView = new MyImageList(d->iface, d->page);
+    d->listView = new MyImageList(d->page);
 
     // ---------------------------------------------------------------
 
@@ -168,7 +160,7 @@ BatchDialog::BatchDialog(Interface* const iface)
                                        QString("savesettings"), false);
 #endif
 
-    d->progressBar = new QProgressBar(d->page);
+    d->progressBar = new KPProgressWidget(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
     d->progressBar->hide();
 
@@ -213,7 +205,7 @@ BatchDialog::BatchDialog(Interface* const iface)
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread(this, d->iface);
+    d->thread = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
@@ -243,6 +235,10 @@ BatchDialog::BatchDialog(Interface* const iface)
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));
+
+    connect(d->progressBar, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStartStop()));
+
 
     // ---------------------------------------------------------------
 
@@ -353,6 +349,8 @@ void BatchDialog::slotStartStop()
         d->progressBar->setMaximum(d->fileList.count());
         d->progressBar->setValue(0);
         d->progressBar->show();
+        d->progressBar->progressScheduled(i18n("RAW Converter"), true, true);
+        d->progressBar->progressThumbnailChanged(KIcon("rawconverter").pixmap(22));
 
         d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
         processOne();
@@ -373,6 +371,7 @@ void BatchDialog::slotAborted()
 {
     d->progressBar->setValue(0);
     d->progressBar->hide();
+    d->progressBar->progressCompleted();
 }
 
 void BatchDialog::addItems(const KUrl::List& itemList)
@@ -535,6 +534,15 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
     if (!destFile.isEmpty())
     {
+        if (KPMetadata::hasSidecar(tmpFile))
+        {
+            if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
+                            KPMetadata::sidecarPath(destFile)) != 0)
+            {
+                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+            }
+        }
+
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
@@ -547,7 +555,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
             // Assign Kipi host attributes from original RAW image.
 
-            KPImageInfo info(d->iface, url);
+            KPImageInfo info(url);
             info.cloneData(KUrl(destFile));
         }
     }
@@ -575,6 +583,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
             {
                 busy(true);
                 d->listView->processing(ad.fileUrl);
+                d->progressBar->progressStatusChanged(i18n("Processing %1", ad.fileUrl.fileName()));
                 break;
             }
             default:

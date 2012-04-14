@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -83,6 +83,9 @@ struct PreProcessingPage::PreProcessingPagePriv
     QTimer*         progressTimer;
     QMutex          progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
     bool            canceled;
+
+    int             nbFilesProcessed;
+    QMutex          nbFilesProcessed_mutex;
 
     QLabel*         title;
 
@@ -181,11 +184,17 @@ void PreProcessingPage::process()
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-    d->mngr->thread()->setPreProcessingSettings(d->celesteCheckBox->isChecked(),
-                                                d->mngr->hdr(),
-                                                d->mngr->format(),
-                                                d->mngr->rawDecodingSettings());
-    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->cpCleanBinary().path(),
+//     d->nbFilesProcessed = 0;
+
+    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(),
+                                       d->mngr->preProcessedMap(),
+                                       d->mngr->cpFindUrl(),
+                                       d->mngr->cpFindUrlData(),
+                                       d->celesteCheckBox->isChecked(),
+                                       d->mngr->hdr(),
+                                       d->mngr->format(),
+                                       d->mngr->rawDecodingSettings(),
+                                       d->mngr->cpCleanBinary().path(),
                                        d->mngr->cpFindBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
@@ -239,6 +248,7 @@ void PreProcessingPage::slotShowDetails()
 
 void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
+    kDebug() << "SlotAction";
     QString text;
 
     QMutexLocker lock(&d->progressMutex);
@@ -253,21 +263,24 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             switch (ad.action)
             {
-                case(PREPROCESS):
+                case PREPROCESS_INPUT:
+                case CREATEPTO:
+                case CPFIND:
+                case CPCLEAN:
                 {
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->title->setText(i18n("<qt>"
-                                           "<p>Pre-processing has failed.</p>"
-                                           "<p>Press \"Details\" to show processing messages.</p>"
-                                           "</qt>"));
+                                            "<p>Pre-processing has failed.</p>"
+                                            "<p>Press \"Details\" to show processing messages.</p>"
+                                            "</qt>"));
                     d->progressTimer->stop();
                     d->celesteCheckBox->hide();
                     d->detailsBtn->show();
                     d->progressLabel->clear();
                     d->output = ad.message;
-                    emit signalPreProcessed(ItemUrlsMap());
+                    emit signalPreProcessed(false);
                     break;
                 }
                 default:
@@ -281,16 +294,28 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
-                case(PREPROCESS):
+                case PREPROCESS_INPUT:
+                {
+//                     QMutexLocker nbProcessed(&d->nbFilesProcessed_mutex);
+
+//                     d->nbFilesProcessed++;
+
+                    break;
+                }
+                case CREATEPTO:
+                case CPFIND:
+                {
+                    // Nothing to do, that just another step towards the end
+                    break;
+                }
+                case CPCLEAN:
                 {
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+                            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    d->mngr->setCPFindUrl(ad.ptoUrl);
-                    d->mngr->setCPFindUrlData(ad.ptoUrlData);
-                    emit signalPreProcessed(ad.preProcessedUrlsMap);
+                    emit signalPreProcessed(true);
                     break;
                 }
                 default:

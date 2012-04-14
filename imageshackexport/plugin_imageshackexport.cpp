@@ -47,13 +47,14 @@
 #include "imageshack.h"
 #include "imageshackwindow.h"
 
-using namespace KIPIImageshackExportPlugin;
+namespace KIPIImageshackExportPlugin
+{
 
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_ImageshackExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_imageshackexport"))
 
-Plugin_ImageshackExport::Plugin_ImageshackExport(QObject *parent, const QVariantList&)
-    : KIPI::Plugin(Factory::componentData(), parent, "ImageshackExport"),
+Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QVariantList&)
+    : Plugin(Factory::componentData(), parent, "ImageshackExport"),
       m_action(0), m_pImageshack(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_ImageshackExport plugin loaded";
@@ -63,11 +64,11 @@ void Plugin_ImageshackExport::setup(QWidget* widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
-    m_pImageshack = new KIPIImageshackExportPlugin::Imageshack();
+    m_pImageshack = new Imageshack();
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -93,7 +94,7 @@ Plugin_ImageshackExport::~Plugin_ImageshackExport()
 
 void Plugin_ImageshackExport::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -102,19 +103,21 @@ void Plugin_ImageshackExport::slotExport()
 
     kDebug() << "Loading Imageshack Export Window";
 
-    QPointer<KIPIImageshackExportPlugin::ImageshackWindow> dlg;
+    QPointer<ImageshackWindow> dlg;
 
-    dlg = new KIPIImageshackExportPlugin::ImageshackWindow(interface, kapp->activeWindow(), m_pImageshack);
+    dlg = new ImageshackWindow(interface, kapp->activeWindow(), m_pImageshack);
     dlg->exec();
 
     delete dlg;
 }
 
-KIPI::Category Plugin_ImageshackExport::category(KAction* action) const
+Category Plugin_ImageshackExport::category(KAction* action) const
 {
     if (action == m_action)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPIImageshackExportPlugin

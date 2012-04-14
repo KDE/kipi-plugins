@@ -7,9 +7,9 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2009 by Timothee Groleau <kde at timotheegroleau dot com>
+ * Copyright (C) 2009      by Timothee Groleau <kde at timotheegroleau dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -57,20 +57,24 @@ extern "C"
 
 #include "swwindow.h"
 
+namespace KIPIShwupPlugin
+{
+
 K_PLUGIN_FACTORY( ShwupFactory, registerPlugin<Plugin_Shwup>(); )
 K_EXPORT_PLUGIN ( ShwupFactory("kipiplugin_shwup") )
 
-Plugin_Shwup::Plugin_Shwup(QObject* parent, const QVariantList& /*args*/)
-    : KIPI::Plugin(ShwupFactory::componentData(), parent, "Shwup Export")
+Plugin_Shwup::Plugin_Shwup(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(ShwupFactory::componentData(), parent, "Shwup Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Shwup plugin loaded";
+
+    m_dlgExport    = 0;
+    m_actionExport = 0;
 }
 
 void Plugin_Shwup::setup(QWidget* widget)
 {
-    m_dlgExport = 0;
-
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_shwup");
 
@@ -84,7 +88,7 @@ void Plugin_Shwup::setup(QWidget* widget)
 
     addAction(m_actionExport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -101,7 +105,7 @@ Plugin_Shwup::~Plugin_Shwup()
 
 void Plugin_Shwup::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -114,7 +118,7 @@ void Plugin_Shwup::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIShwupPlugin::SwWindow(interface, tmp, kapp->activeWindow());
+        m_dlgExport = new SwWindow(interface, tmp, kapp->activeWindow());
     }
     else
     {
@@ -127,11 +131,13 @@ void Plugin_Shwup::slotExport()
     m_dlgExport->reactivate();
 }
 
-KIPI::Category Plugin_Shwup::category(KAction* action) const
+Category Plugin_Shwup::category(KAction* action) const
 {
     if (action == m_actionExport)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPIShwupPlugin

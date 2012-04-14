@@ -36,14 +36,17 @@
 
 #include <libkipi/plugin.h>
 
+class KActionMenu;
+
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 using namespace KIPI;
 
-class KActionMenu;
+namespace KIPIMetadataEditPlugin
+{
 
 class Plugin_MetadataEdit : public Plugin
 {
@@ -51,7 +54,7 @@ class Plugin_MetadataEdit : public Plugin
 
 public:
 
-    Plugin_MetadataEdit(QObject* parent, const QVariantList& args);
+    Plugin_MetadataEdit(QObject* const parent, const QVariantList& args);
     ~Plugin_MetadataEdit();
 
     virtual Category category(KAction* action) const;
@@ -69,5 +72,7 @@ private:
     class Plugin_MetadataEditPriv;
     Plugin_MetadataEditPriv* const d;
 };
+
+} // namespace KIPIMetadataEditPlugin
 
 #endif // PLUGIN_METADATAEDIT_H

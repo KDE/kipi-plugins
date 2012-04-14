@@ -50,13 +50,15 @@
 // Local includes
 
 #include "dswindow.h"
-//#include "dsjob.h"
+
+namespace KIPIDebianScreenshotsPlugin
+{
 
 K_PLUGIN_FACTORY( DebianScreenshotsFactory, registerPlugin<Plugin_DebianScreenshots>(); )
 K_EXPORT_PLUGIN ( DebianScreenshotsFactory("kipiplugin_debianscreenshots") )
 
-Plugin_DebianScreenshots::Plugin_DebianScreenshots(QObject* parent, const QVariantList& /*args*/)
-    : KIPI::Plugin(DebianScreenshotsFactory::componentData(),
+Plugin_DebianScreenshots::Plugin_DebianScreenshots(QObject* const parent, const QVariantList&)
+    : Plugin(DebianScreenshotsFactory::componentData(),
                    parent, "Debian Screenshots Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DebianScreenshots plugin loaded";
@@ -66,7 +68,7 @@ void Plugin_DebianScreenshots::setup(QWidget* widget)
 {
     m_dlgExport = 0;
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_debianscreenshots");
 
@@ -80,7 +82,7 @@ void Plugin_DebianScreenshots::setup(QWidget* widget)
 
     addAction(m_actionExport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -97,7 +99,7 @@ Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
 
 void Plugin_DebianScreenshots::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -110,7 +112,7 @@ void Plugin_DebianScreenshots::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIDebianScreenshotsPlugin::DsWindow(interface, tmp, kapp->activeWindow());
+        m_dlgExport = new DsWindow(interface, tmp, kapp->activeWindow());
     }
     else
     {
@@ -123,15 +125,9 @@ void Plugin_DebianScreenshots::slotExport()
     m_dlgExport->reactivate();
 }
 
-KIPI::Category Plugin_DebianScreenshots::category( KAction* /* action */ ) const
+Category Plugin_DebianScreenshots::category(KAction*) const
 {
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
 
-/*
-KJob* Plugin_DebianScreenshots::exportFiles(const QString& album)
-{
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    return new KIPIDebianScreenshotsPlugin::DebianScreenshotsJob(album, interface->currentSelection().images());
-}
-*/
+} // namespace KIPIDebianScreenshotsPlugin

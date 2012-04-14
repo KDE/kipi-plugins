@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,7 +26,6 @@
 // Local includes
 
 #include "batchprocessimagesdialog.h"
-#include "kpaboutdata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -39,12 +38,11 @@ class BorderImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    BorderImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent = 0);
+    BorderImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget* parent = 0);
     ~BorderImagesDialog();
 
 private Q_SLOTS:
 
-    void slotHelp();
     void slotOptionsClicked();
 
 protected:
@@ -65,15 +63,11 @@ protected:
 
 protected:
 
-    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+    void initProcess(KProcess* proc, BatchProcessImagesItem* item,
                      const QString& albumDest, bool previewMode);
 
     void readSettings();
     void saveSettings();
-
-private:
-
-    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

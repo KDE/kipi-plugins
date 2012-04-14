@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,33 +25,30 @@
 
 // KDE includes
 
-#include <kpagedialog.h>
 #include <kurl.h>
 
 // Local includes
 
-#include "emailsettingscontainer.h"
+#include "emailsettings.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
-namespace KIPI
-{
-    class Interface;
-}
+using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialog : public KPageDialog
+class SendImagesDialog : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    SendImagesDialog(QWidget* parent, KIPI::Interface* iface, const KUrl::List& urls);
+    SendImagesDialog(QWidget* const parent, const KUrl::List& urls);
     ~SendImagesDialog();
 
-    EmailSettingsContainer emailSettings();
+    EmailSettings emailSettings() const;
 
 protected:
 
@@ -60,7 +57,6 @@ protected:
 private Q_SLOTS:
 
     void slotOk();
-    void slotHelp();
     void slotCancel();
     void slotImagesCountChanged();
 
@@ -68,9 +64,6 @@ private:
 
     void readSettings();
     void saveSettings();
-
-    int  activePageIndex();
-    void showPage(int page);
 
 private:
 

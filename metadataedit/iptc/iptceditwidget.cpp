@@ -123,10 +123,10 @@ public:
     MetadataEditDialog*  dlg;
 };
 
-IPTCEditWidget::IPTCEditWidget(MetadataEditDialog* parent)
+IPTCEditWidget::IPTCEditWidget(MetadataEditDialog* const parent)
     : KPageWidget(parent), d(new IPTCEditWidgetPrivate)
 {
-    d->dlg       = parent;
+    d->dlg           = parent;
 
     d->contentPage   = new IPTCContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
@@ -287,7 +287,7 @@ void IPTCEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
+        KPImageInfo info(*d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -310,9 +310,6 @@ void IPTCEditWidget::apply()
         d->envelopePage->applyMetadata(d->iptcData);
 
         KPMetadata meta;
-        KPHostSettings hSettings(d->dlg->iface());
-        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

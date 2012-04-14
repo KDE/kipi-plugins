@@ -134,17 +134,13 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
 
 static bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE flip, JXFORM_CODE rotate, QString& err);
 
-bool transformJPEG(const QString& src, const QString& dest, Matrix& userAction, QString& err, bool updateFileTimeStamp)
+bool transformJPEG(const QString& src, const QString& dest, Matrix& userAction, QString& err)
 {
     // Get Exif orientation action to do.
     KPMetadata meta;
 
     Matrix exifAction, action;
     JXFORM_CODE flip,rotate;
-
-#if KEXIV2_VERSION >= 0x000600
-    meta.setUpdateFileTimeStamp(updateFileTimeStamp);
-#endif
 
     meta.load(src);
     getExifAction(exifAction, meta.getImageOrientation());

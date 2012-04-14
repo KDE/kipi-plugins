@@ -58,18 +58,21 @@ extern "C"
 #include "printhelper.h"
 #include "wizard.h"
 
+namespace KIPIPrintImagesPlugin
+{
+
 K_PLUGIN_FACTORY ( PrintImagesFactory, registerPlugin<Plugin_PrintImages>(); )
 K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 
-Plugin_PrintImages::Plugin_PrintImages ( QObject* parent, const QVariantList& /*args*/ )
-                  : KIPI::Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
+Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantList& /*args*/ )
+    : Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
 }
 
 void Plugin_PrintImages::setup( QWidget* widget )
 {
-    KIPI::Plugin::setup ( widget );
+    Plugin::setup ( widget );
 
     m_printImagesAction = actionCollection()->addAction ( "printimages" );
     m_printImagesAction->setText ( i18n ( "Print images" ) );
@@ -88,7 +91,7 @@ void Plugin_PrintImages::setup( QWidget* widget )
     connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
               this, SLOT (slotPrintAssistantActivate()) );
 
-    m_interface = dynamic_cast< KIPI::Interface* > ( parent() );
+    m_interface = dynamic_cast< Interface* > ( parent() );
 
     if ( !m_interface )
     {
@@ -96,12 +99,9 @@ void Plugin_PrintImages::setup( QWidget* widget )
         return;
     }
 
-    KIPI::ImageCollection selection = m_interface->currentSelection();
-    m_printImagesAction->setEnabled ( selection.isValid() &&
-                                      !selection.images().isEmpty() );
-
-    m_printAssistantAction->setEnabled ( selection.isValid() &&
-                                        !selection.images().isEmpty() );
+    ImageCollection selection = m_interface->currentSelection();
+    m_printImagesAction->setEnabled ( selection.isValid() && !selection.images().isEmpty() );
+    m_printAssistantAction->setEnabled ( selection.isValid() && !selection.images().isEmpty() );
 
     connect ( m_interface, SIGNAL (selectionChanged(bool)),
               m_printImagesAction, SLOT (setEnabled(bool)) );
@@ -116,7 +116,7 @@ Plugin_PrintImages::~Plugin_PrintImages()
 
 void Plugin_PrintImages::slotPrintImagesActivate()
 {
-    KIPI::ImageCollection album = m_interface->currentSelection();
+    ImageCollection album = m_interface->currentSelection();
 
     if ( !album.isValid() )
         return;
@@ -130,14 +130,14 @@ void Plugin_PrintImages::slotPrintImagesActivate()
         return;
     }
 
-    QWidget* parent=QApplication::activeWindow();
-    KIPIPrintImagesPlugin::PrintHelper printPlugin ( parent, m_interface );
+    QWidget* parent = QApplication::activeWindow();
+    PrintHelper printPlugin ( parent, m_interface );
     printPlugin.print ( fileList );
 }
 
 void Plugin_PrintImages::slotPrintAssistantActivate()
 {
-    KIPI::ImageCollection album = m_interface->currentSelection();
+    ImageCollection album = m_interface->currentSelection();
 
     if ( !album.isValid() )
         return;
@@ -152,19 +152,21 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     }
 
     QWidget* parent = QApplication::activeWindow();
-    KIPIPrintImagesPlugin::Wizard printAssistant(parent, m_interface);
+    Wizard printAssistant(parent, m_interface);
     KStandardDirs dir;
     QString tempPath = dir.saveLocation("tmp", "kipi-printassistantdplugin-" + QString::number(getpid()) + '/');
     printAssistant.print(fileList, tempPath);
 
-    if (printAssistant.exec()==QDialog::Rejected) return;
+    if (printAssistant.exec() == QDialog::Rejected) return;
 }
 
-KIPI::Category Plugin_PrintImages::category ( KAction* action ) const
+Category Plugin_PrintImages::category ( KAction* action ) const
 {
     if ( action == m_printImagesAction || action == m_printAssistantAction )
-        return KIPI::ImagesPlugin;
+        return ImagesPlugin;
 
     kWarning () << "Unrecognized action for plugin category identification";
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return ImagesPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIPrintImagesPlugin

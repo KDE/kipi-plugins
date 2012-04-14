@@ -28,20 +28,18 @@
 
 #include <QFileInfo>
 #include <QCheckBox>
-#include <QProgressBar>
 #include <QCloseEvent>
 #include <QSpinBox>
 
 // KDE includes
+
 #include <kcombobox.h>
 #include <kmenu.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 
 // LibKDcraw includes
 
@@ -59,6 +57,7 @@
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"
@@ -69,7 +68,7 @@ namespace KIPIFacebookPlugin
 
 FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
                    bool import, QWidget* const /*parent*/)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -121,27 +120,19 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    m_about = new KPAboutData(ki18n("Facebook Import/Export"), 0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to import/export image collection "
-                                                 "to/from Facebook web service."),
-                                           ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                                 "(c) 2008-2012, Gilles Caulier\n"
-                                                 "(c) 2008-2009, Luka Renko"));
+    KPAboutData* about = new KPAboutData(ki18n("Facebook Import/Export"), 0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to import/export image collection "
+                                               "to/from Facebook web service."),
+                                         ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                               "(c) 2008-2012, Gilles Caulier\n"
+                                               "(c) 2008-2009, Luka Renko"));
 
-    m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
-                       "lure at kubuntu dot org");
+    about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
+                     "lure at kubuntu dot org");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("facebook");
+    setAboutData(about);
 
     // ------------------------------------------------------------------------
 
@@ -178,6 +169,9 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
     connect(m_talker, SIGNAL(signalListFriendsDone(int,QString,QList<FbUser>)),
             this, SLOT(slotListFriendsDone(int,QString,QList<FbUser>)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStopAndCloseProgressBar()));
+
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -189,12 +183,17 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
 
 FbWindow::~FbWindow()
 {
-    delete m_about;
 }
 
-void FbWindow::slotHelp()
+void FbWindow::slotStopAndCloseProgressBar()
 {
-    KToolInvocation::invokeHelp("facebook", "kipi-plugins");
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    done(Close);
+    m_widget->progressBar()->progressCompleted();
 }
 
 void FbWindow::slotButtonClicked(int button)
@@ -206,6 +205,7 @@ void FbWindow::slotButtonClicked(int button)
             {
                 writeSettings();
                 m_widget->imagesList()->listView()->clear();
+                m_widget->progressBar()->progressCompleted();
                 done(Close);
             }
             else // cancel login/transfer
@@ -214,6 +214,7 @@ void FbWindow::slotButtonClicked(int button)
                 m_transferQueue.clear();
                 m_widget->m_imgList->cancelProcess();
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
             }
 
             break;
@@ -357,7 +358,7 @@ void FbWindow::authenticate()
 
 void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
 {
-    QProgressBar* progressBar = m_widget->progressBar();
+    KIPIPlugins::KPProgressWidget* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
     {
@@ -602,6 +603,9 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Facebook import"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+
 
         m_talker->listPhotos(m_widget->getFriendID(), m_widget->getAlbumID());
     }
@@ -624,6 +628,9 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+
 
         uploadNextPhoto();
     }
@@ -639,7 +646,7 @@ void FbWindow::setProfileAID(long long userID)
 
 QString FbWindow::getImageCaption(const QString& fileName)
 {
-    KPImageInfo info(m_interface, fileName);
+    KPImageInfo info(fileName);
     // Facebook doesn't support image titles. Include it in descriptions if needed.
     QStringList descriptions = QStringList() << info.title() << info.description();
     descriptions.removeAll("");
@@ -705,6 +712,7 @@ void FbWindow::uploadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
@@ -769,6 +777,7 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
             != KMessageBox::Continue)
         {
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
             return;
         }
@@ -782,6 +791,7 @@ void FbWindow::downloadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
@@ -829,6 +839,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                 != KMessageBox::Continue)
             {
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
                 m_transferQueue.clear();
                 return;
             }
@@ -842,6 +853,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
             != KMessageBox::Continue)
         {
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
             return;
         }

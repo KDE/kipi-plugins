@@ -161,7 +161,7 @@ public:
     SqueezedComboBox*               objectAttributeCB;
 };
 
-XMPProperties::XMPProperties(QWidget* parent)
+XMPProperties::XMPProperties(QWidget* const parent)
     : QWidget(parent), d(new XMPPropertiesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

@@ -39,7 +39,6 @@ extern "C"
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
-#include <QProgressBar>
 #include <QTimer>
 #include <QPointer>
 
@@ -70,11 +69,11 @@ extern "C"
 #include "kpversion.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
+#include "kpaboutdata.h"
 #include "kpmetadata.h"
+#include "kpprogresswidget.h"
 #include "imagepreview.h"
 #include "ui_batchprocessimagesdialog.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -97,16 +96,31 @@ enum ProcessState
 
 BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, Interface* const interface,
                                                    const QString& caption, QWidget* const parent)
-    : KDialog(parent),
-        m_listFile2Process_iterator(0),
-        m_selectedImageFiles(urlList),
-        m_interface(interface),
-        m_ui(new Ui::BatchProcessImagesDialog())
+    : KPToolDialog(parent),
+      m_listFile2Process_iterator(0),
+      m_selectedImageFiles(urlList),
+      m_interface(interface),
+      m_ui(new Ui::BatchProcessImagesDialog())
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
     setButtonText(User1, i18nc("start batch process images", "&Start"));
     showButtonSeparator(false);
+
+    KPAboutData* about = new KPAboutData(ki18n("Batch Process Images"),
+                                         QByteArray(),
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin for batch process images using \"ImageMagick\""),
+                                         ki18n("(c) 2003-2012, Gilles Caulier\n"
+                                               "(c) 2007-2009, Aurélien Gateau"));
+
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+                     "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+                     "aurelien dot gateau at free dot fr");
+
+    setAboutData(about);
 
     // Init. Tmp folder
 
@@ -122,7 +136,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, In
 
     // Get the image files filters from the hosts app.
 
-    KPHostSettings hSettings(m_interface);
+    KPHostSettings hSettings;
     m_ImagesFilesSort = hSettings.imageExtensions();
 }
 
@@ -212,6 +226,9 @@ void BatchProcessImagesDialog::setupUi()
 
     connect(m_ui->m_remImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonRem()));
+
+    connect(m_ui->m_progress, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotProcessStop()));
 }
 
 BatchProcessImagesDialog::~BatchProcessImagesDialog()
@@ -224,7 +241,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd()
 {
     QStringList ImageFilesList;
 
-    const KUrl::List urls = KPImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls = KPImageDialog::getImageUrls(this);
 
     if (urls.isEmpty())
         return;
@@ -285,7 +302,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixm
     QPixmap pix(pixmap);
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KPImageInfo info(m_interface, item.url());
+    KPImageInfo info(item.url());
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
@@ -354,6 +371,8 @@ void BatchProcessImagesDialog::slotProcessStart()
 
     enableWidgets(false);
     m_ui->m_progress->setVisible(true);
+    m_ui->m_progress->progressScheduled(i18n("Batch Image Effects"), true, true);
+    m_ui->m_progress->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
     m_listFile2Process_iterator = new QTreeWidgetItemIterator(m_listFiles);
     startProcess();
@@ -601,7 +620,6 @@ void BatchProcessImagesDialog::slotFinished()
             item->changeError(i18n("no processing error"));
             processDone();
 
-            // Save the comments for the converted image
             KUrl src;
             src.setPath(item->pathSrc());
             KUrl dest = m_ui->m_destinationUrl->url();
@@ -639,8 +657,12 @@ void BatchProcessImagesDialog::slotFinished()
 
             if (src != dest)
             {
-                KPImageInfo info(m_interface, src);
+                // Clone data in KIPI host application.
+                KPImageInfo info(src);
                 info.cloneData(dest);
+
+                // Move XMP sidecar file.
+                KPMetadata::moveSidecar(src, dest);
             }
 
             if (m_ui->m_removeOriginal->isChecked() && src != dest)
@@ -774,8 +796,8 @@ void BatchProcessImagesDialog::slotPreviewFinished()
             cropTitle = i18n(" - small preview");
 
         QPointer<ImagePreview> previewDialog = new ImagePreview(item->pathSrc(), m_tmpFolder + '/'
-                + QString::number(getpid()) + "preview.PNG", m_tmpFolder, m_ui->m_smallPreview->isChecked(),
-                false, m_Type->currentText() + cropTitle, item->nameSrc(), this);
+                + QString::number(getpid()) + "preview.PNG", m_ui->m_smallPreview->isChecked(),
+                m_Type->currentText() + cropTitle, item->nameSrc(), this);
         previewDialog->exec();
         delete previewDialog;
 
@@ -811,6 +833,8 @@ void BatchProcessImagesDialog::slotProcessStop()
     // If kill operation failed, Stop the process at the next image !
     if (m_convertStatus == UNDER_PROCESS)
         m_convertStatus = STOP_PROCESS;
+
+    m_ui->m_progress->progressCompleted();
 
     processAborted(true);
 }
@@ -940,6 +964,9 @@ void BatchProcessImagesDialog::endProcess()
     m_convertStatus = PROCESS_DONE;
     enableWidgets(true);
     QTimer::singleShot(500, m_ui->m_progress, SLOT(hide()));
+
+    m_ui->m_progress->progressCompleted();
+
     setButtonText(User1, i18n("&Close"));
 
     disconnect(this, SIGNAL(user1Clicked()),

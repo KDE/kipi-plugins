@@ -7,7 +7,7 @@
  * Description : a class to resize image in a separate thread.
  *
  * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -96,10 +96,10 @@ void Task::run()
     }
 }
 
-bool Task::imageResize(const EmailSettingsContainer& settings, const KUrl& orgUrl,
+bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
                        const QString& destName, QString& err)
 {
-    EmailSettingsContainer emailSettings = settings;
+    EmailSettings emailSettings = settings;
     QFileInfo fi(orgUrl.path());
 
     if (!fi.exists() || !fi.isReadable())
@@ -189,7 +189,7 @@ bool Task::imageResize(const EmailSettingsContainer& settings, const KUrl& orgUr
         else if (emailSettings.format() == QString("PNG"))
         {
             QByteArray data((const char*)img.bits(), img.numBytes());
-            KIPIPlugins::KPWriteImage wImageIface;
+            KPWriteImage wImageIface;
             wImageIface.setImageData(data, img.width(), img.height(), false, true, QByteArray(), meta);
             if ( !wImageIface.write2PNG(destPath) )
             {
@@ -218,7 +218,7 @@ ImageResize::~ImageResize()
     delete m_count;
 }
 
-void ImageResize::resize(const EmailSettingsContainer& settings)
+void ImageResize::resize(const EmailSettings& settings)
 {
     JobCollection* collection = new JobCollection(this);
     *m_count                  = 0;

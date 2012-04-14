@@ -57,21 +57,26 @@ extern "C"
 
 #include "smugwindow.h"
 
+namespace KIPISmugPlugin
+{
+
 K_PLUGIN_FACTORY( SmugFactory, registerPlugin<Plugin_Smug>(); )
 K_EXPORT_PLUGIN ( SmugFactory("kipiplugin_smug") )
 
-Plugin_Smug::Plugin_Smug(QObject* parent, const QVariantList& /*args*/)
-           : KIPI::Plugin(SmugFactory::componentData(), parent, "Smug")
+Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(SmugFactory::componentData(), parent, "Smug")
 {
-    m_dlgImport = 0;
-    m_dlgExport = 0;
-
     kDebug(AREA_CODE_LOADING) << "Plugin_Smug plugin loaded";
+
+    m_dlgImport    = 0;
+    m_dlgExport    = 0;
+    m_actionExport = 0;
+    m_actionImport = 0;
 }
 
 void Plugin_Smug::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_smug");
 
@@ -95,7 +100,7 @@ void Plugin_Smug::setup(QWidget* widget)
 
     addAction(m_actionImport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -114,7 +119,7 @@ Plugin_Smug::~Plugin_Smug()
 
 void Plugin_Smug::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -127,7 +132,7 @@ void Plugin_Smug::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPISmugPlugin::SmugWindow(interface, tmp, false, kapp->activeWindow());
+        m_dlgExport = new SmugWindow(interface, tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -142,7 +147,7 @@ void Plugin_Smug::slotExport()
 
 void Plugin_Smug::slotImport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -155,7 +160,7 @@ void Plugin_Smug::slotImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new KIPISmugPlugin::SmugWindow(interface, tmp, true, kapp->activeWindow());
+        m_dlgImport = new SmugWindow(interface, tmp, true, kapp->activeWindow());
     }
     else
     {
@@ -168,13 +173,15 @@ void Plugin_Smug::slotImport()
     m_dlgImport->show();
 }
 
-KIPI::Category Plugin_Smug::category( KAction* action ) const
+Category Plugin_Smug::category( KAction* action ) const
 {
     if (action == m_actionExport)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     else if (action == m_actionImport)
-        return KIPI::ImportPlugin;
+        return ImportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPISmugPlugin

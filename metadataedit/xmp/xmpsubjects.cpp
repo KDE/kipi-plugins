@@ -34,7 +34,7 @@
 namespace KIPIMetadataEditPlugin
 {
 
-XMPSubjects::XMPSubjects(QWidget* parent)
+XMPSubjects::XMPSubjects(QWidget* const parent)
     : SubjectWidget(parent)
 {
     // Subject string do not accept these characters:

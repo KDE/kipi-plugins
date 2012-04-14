@@ -45,9 +45,9 @@ class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
 
-namespace KIPI
+namespace KIPIPlugins
 {
-class Interface;
+    class KPProgressWidget;
 }
 
 namespace KIPIFlickrExportPlugin
@@ -69,9 +69,12 @@ public:
 
 public:
 
-    FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QString& serviceName);
+    FlickrWidget(QWidget* parent, const QString& serviceName);
     ~FlickrWidget();
+    KIPIPlugins::KPProgressWidget* progressBar() const;
+
 protected:
+
     virtual void showEvent(QShowEvent* event);
 
 private Q_SLOTS:
@@ -89,6 +92,7 @@ private Q_SLOTS:
     void slotExtendedPublicationToggled(bool);
     void slotExtendedTagsToggled(bool);
     void slotAddExtraTagsToggled(bool);
+
 
 private: // Functions
 
@@ -131,6 +135,7 @@ private: // Data
     QSpinBox*                           m_imageQualitySpinBox;
 
     KIPIFlickrExportPlugin::FlickrList* m_imglst;
+    KIPIPlugins::KPProgressWidget*      m_progressBar;
 
     friend class FlickrWindow;
 };

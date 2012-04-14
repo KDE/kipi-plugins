@@ -36,16 +36,21 @@
 
 #include "vkwindow.h"
 
-class Plugin_Vkontakte : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIVkontaktePlugin
+{
+
+class Plugin_Vkontakte : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_Vkontakte(QObject *parent, const QVariantList &args);
+    Plugin_Vkontakte(QObject* const parent, const QVariantList& args);
     ~Plugin_Vkontakte();
 
-    virtual KIPI::Category category(KAction *action) const;
+    virtual Category category(KAction *action) const;
     virtual void setup(QWidget*);
 
 public Q_SLOTS:
@@ -55,8 +60,10 @@ public Q_SLOTS:
 
 private:
 
-    KAction *m_actionExport;
-    KIPIVkontaktePlugin::VkontakteWindow *m_dlgExport;
+    KAction*         m_actionExport;
+    VkontakteWindow* m_dlgExport;
 };
+
+} // namespace KIPIVkontaktePlugin
 
 #endif // PLUGIN_VKONTAKTE_H

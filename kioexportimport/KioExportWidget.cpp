@@ -46,7 +46,7 @@
 namespace KIPIKioExportPlugin
 {
 
-KioExportWidget::KioExportWidget(QWidget* const parent, Interface* const interface)
+KioExportWidget::KioExportWidget(QWidget* const parent)
     : QWidget(parent)
 {
     // setup kio target selection
@@ -70,7 +70,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent, Interface* const interfa
     m_targetSearchButton->setIcon(KIcon("folder-remote"));
 
     // setup image list
-    m_imageList = new KPImagesList(interface, this);
+    m_imageList = new KPImagesList(this);
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n("This is the list of images to upload "
                                                "to the specified target."));

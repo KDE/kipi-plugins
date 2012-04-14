@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,56 +20,50 @@
  *
  * ============================================================ */
 
-#include "imagepreview.moc"
-
 // Qt includes
 
-#include <QLCDNumber>
-#include <QSlider>
+#include <QImage>
 
 // KDE includes
 
-#include <kdebug.h>
 #include <klocale.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
-#include "dialogutils.h"
+#include "imagepreview.h"
 #include "kpaboutdata.h"
-#include "pixmapview.h"
+#include "kppreviewmanager.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
-                           bool cropActionOrig, bool cropActionDest, const QString &EffectName,
-                           const QString &FileName, QWidget *parent)
-        : KDialog(parent)
+ImagePreview::ImagePreview(const QString& fileOrig, 
+                           const QString& fileDest,
+                           bool cropActionOrig, 
+                           const QString& EffectName,
+                           const QString& FileName, 
+                           QWidget* const parent)
+        : KPToolDialog(parent)
 {
     setCaption(i18n("Batch Process Preview (%1 - %2)", EffectName, FileName));
     setModal(true);
     setButtons(Ok | Help);
     setDefaultButton(Ok);
-    // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch process images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("An interface to preview the \"Batch Process Images\" "
-                                                 "Kipi plugin.\n"
-                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" "
-                                                 "package."),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
+    KPAboutData* about = new KPAboutData(ki18n("Batch Process Images"),
+                                         QByteArray(),
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin for batch process images using \"ImageMagick\""),
+                                         ki18n("(c) 2003-2012, Gilles Caulier\n"
+                                               "(c) 2007-2009, Aurélien Gateau"));
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
                        "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+    about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
                        "aurelien dot gateau at free dot fr");
 
-    DialogUtils::setupHelpButton(this, m_about);
+    setAboutData(about);
 
     //---------------------------------------------
 
@@ -78,56 +72,24 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     setMainWidget(box);
     resize(700, 400);
 
-    if (cropActionOrig == true || cropActionDest == true)
-        INIT_ZOOM_FACTOR = 20;
+    QImage original(fileOrig);
+    const QImage cropped = original.copy(0, 0, 300, 300);
+
+    if (cropActionOrig)
+    {
+        m_origView->setImage(cropped, true);
+    }
+
     else
-        INIT_ZOOM_FACTOR = 5;
+    {
+        m_origView->load(fileOrig, true);
+    }
 
-    m_zoomSlider->setValue(INIT_ZOOM_FACTOR);
-    m_zoomLcd->display(INIT_ZOOM_FACTOR * 5);
-
-    connect(m_zoomSlider, SIGNAL(valueChanged(int)),
-            this, SLOT(slotZoomFactorValueChanged(int)));
-
-    connect(m_origView, SIGNAL(wheelChanged(int)),
-            this, SLOT(slotWheelChanged(int)));
-
-    connect(m_destView, SIGNAL(wheelChanged(int)),
-            this, SLOT(slotWheelChanged(int)));
-
-    m_origView->setZoom(INIT_ZOOM_FACTOR * 5);
-    m_destView->setZoom(INIT_ZOOM_FACTOR * 5);
-
-    m_origView->setImage(fileOrig, tmpPath, cropActionOrig);
-    m_destView->setImage(fileDest, tmpPath, cropActionDest);
+    m_destView->load(fileDest, true);
 }
 
 ImagePreview::~ImagePreview()
 {
-    delete m_about;
-}
-
-void ImagePreview::slotHelp(void)
-{
-    KToolInvocation::invokeHelp("", "kipi-plugins");
-}
-
-void ImagePreview::slotWheelChanged(int delta)
-{
-    if (delta > 0)
-        m_zoomSlider->setValue(m_zoomSlider->value() - 1);
-    else
-        m_zoomSlider->setValue(m_zoomSlider->value() + 1);
-
-    slotZoomFactorValueChanged(m_zoomSlider->value());
-}
-
-void ImagePreview::slotZoomFactorValueChanged(int ZoomFactorValue)
-{
-    m_zoomLcd->display(QString::number(ZoomFactorValue * 5));
-
-    m_origView->setZoom(ZoomFactorValue * 5);
-    m_destView->setZoom(ZoomFactorValue * 5);
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -48,7 +48,7 @@ class IPTCSubjects : public SubjectWidget
 
 public:
 
-    IPTCSubjects(QWidget* parent);
+    IPTCSubjects(QWidget* const parent);
     ~IPTCSubjects();
 
     void applyMetadata(QByteArray& iptcData);

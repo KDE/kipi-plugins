@@ -1,8 +1,8 @@
 
 SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp 
                                     sendimagesdialog.cpp 
-                                    imagespage.cpp
-                                    emailpage.cpp
+                                    myimagelist.cpp
+                                    settingswidget.cpp
                                     imageresize.cpp
                                     sendimages.cpp
    )

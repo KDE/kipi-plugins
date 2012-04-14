@@ -59,11 +59,12 @@
 #include "comboboxdelegate.h"
 #include "comboboxintermediate.h"
 #include "flickrlist.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& serviceName)
+FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     : QWidget(parent)
 {
     setObjectName("FlickrWidget");
@@ -93,9 +94,15 @@ FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& ser
                                   " Export"
                                   "</h2></b>"));
 
+    // -- The common progress bar  --------------------------------------------------
+
+    m_progressBar = new KIPIPlugins::KPProgressWidget(this);
+    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_progressBar->hide();
+
     // -- The image list tab --------------------------------------------------
 
-    m_imglst             = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab, (serviceName == "23"));
+    m_imglst             = new FlickrList(m_tab, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
     QHeaderView* hdr     = m_imglst->listView()->header();
@@ -354,6 +361,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& ser
     flickrWidgetLayout->addWidget(line);
     flickrWidgetLayout->addWidget(m_tab, 5);
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
+    flickrWidgetLayout->addWidget(m_progressBar);
     flickrWidgetLayout->setMargin(0);
 
     m_tab->insertTab(FILELIST, m_imglst,           i18n("File List"));
@@ -433,6 +441,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& ser
 
 FlickrWidget::~FlickrWidget()
 {
+}
+
+KIPIPlugins::KPProgressWidget* FlickrWidget::progressBar() const
+{
+    return m_progressBar;
 }
 
 void FlickrWidget::slotOriginalChecked()

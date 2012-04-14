@@ -40,6 +40,7 @@
 
 // Libkipi includes
 
+#include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
 // local includes
@@ -53,8 +54,8 @@ namespace KIPIPicasawebExportPlugin
 
 static const char picasaweb_video_extentions[] = "*.3gp *.avi *.asf *.mov *.wmv *.mpg *.mp4 *.m2t *.mmv *.m2ts *.3gpp";
 
-PicasawebImagesList::PicasawebImagesList(Interface* const iface, QWidget* const parent, int iconSize)
-    : KPImagesList(iface, parent, iconSize)
+PicasawebImagesList::PicasawebImagesList(QWidget* const parent, int iconSize)
+    : KPImagesList(parent, iconSize)
 {
 }
 
@@ -123,9 +124,9 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interfac
     QString fileFormats = patternList.join("\n");
 
     QPointer<KFileDialog> dlg = new KFileDialog(iface ? iface->currentAlbum().path().path()
-                                                         : KGlobalSettings::documentPath(),
+                                                      : KGlobalSettings::documentPath(),
                                                 fileFormats, parent);
-    KIPIPlugins::KPImageDialogPreview *preview = new KIPIPlugins::KPImageDialogPreview(iface, dlg);
+    KIPIPlugins::KPImageDialogPreview* preview = new KIPIPlugins::KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 

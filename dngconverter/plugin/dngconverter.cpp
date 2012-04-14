@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 
     KApplication app;
 
-    BatchDialog* converter = new BatchDialog(0, aboutData);
+    BatchDialog* converter = new BatchDialog(aboutData);
     app.setTopWidget(converter);
 
     KUrl::List urls;

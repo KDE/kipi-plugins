@@ -38,7 +38,7 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKPMetadata includes
+// local includes
 
 #include "kpmetadata.h"
 
@@ -74,7 +74,7 @@ public:
     KListWidget* keywordsBox;
 };
 
-IPTCKeywords::IPTCKeywords(QWidget* parent)
+IPTCKeywords::IPTCKeywords(QWidget* const parent)
     : QWidget(parent), d(new IPTCKeywordsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

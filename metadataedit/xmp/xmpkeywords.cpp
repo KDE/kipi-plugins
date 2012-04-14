@@ -72,7 +72,7 @@ public:
     KListWidget* keywordsBox;
 };
 
-XMPKeywords::XMPKeywords(QWidget* parent)
+XMPKeywords::XMPKeywords(QWidget* const parent)
     : QWidget(parent), d(new XMPKeywordsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

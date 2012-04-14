@@ -100,7 +100,7 @@ public:
     MultiStringsEdit* bylineEdit;
 };
 
-XMPCredits::XMPCredits(QWidget* parent)
+XMPCredits::XMPCredits(QWidget* const parent)
     : QWidget(parent), d(new XMPCreditsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

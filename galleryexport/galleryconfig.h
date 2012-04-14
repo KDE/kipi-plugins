@@ -47,7 +47,7 @@ class GalleryEdit : public KDialog
 
 public:
 
-    GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& title);
+    GalleryEdit(QWidget* const pParent, Gallery* const pGallery, const QString& title);
     ~GalleryEdit();
 
 private Q_SLOTS:
@@ -56,16 +56,8 @@ private Q_SLOTS:
 
 private:
 
-    QLabel*    mpHeaderLabel;
-
-    QCheckBox* mpGalleryVersion;
-
-    KLineEdit* mpNameEdit;
-    KLineEdit* mpUrlEdit;
-    KLineEdit* mpUsernameEdit;
-    KLineEdit* mpPasswordEdit;
-
-    Gallery*   mpGallery;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIGalleryExportPlugin

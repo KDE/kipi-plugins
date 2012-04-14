@@ -78,7 +78,7 @@ public:
     KListWidget* subCategoriesBox;
 };
 
-IPTCCategories::IPTCCategories(QWidget* parent)
+IPTCCategories::IPTCCategories(QWidget* const parent)
     : QWidget(parent), d(new IPTCCategoriesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

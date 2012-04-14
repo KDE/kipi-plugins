@@ -44,6 +44,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
@@ -70,6 +71,11 @@ public:
         running               = false;
         previewMode           = DNGWriter::MEDIUM;
         iface                 = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     class Task
@@ -98,11 +104,10 @@ public:
     Interface*     iface;
 };
 
-ActionThread::ActionThread(QObject* const parent, Interface* const iface)
+ActionThread::ActionThread(QObject* const parent)
             : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
-    d->iface = iface;
 }
 
 ActionThread::~ActionThread()
@@ -270,6 +275,7 @@ void ActionThread::run()
                 {
                     kError() << "KIPIDNGConverterPlugin:ActionThread: "
                              << "Unknown action specified";
+                    break;
                 }
             }
         }

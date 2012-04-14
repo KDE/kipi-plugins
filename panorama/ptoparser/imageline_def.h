@@ -89,6 +89,7 @@ void setParameterFromInt(ImageParameter p, int i, PTOType::Image& image)
             break;
         default:
             kDebug() << "Wrong parameter type!!";
+            break;
     }
 }
 
@@ -130,6 +131,7 @@ void setParameterFromDouble(ImageParameter p, double d, PTOType::Image& image)
             break;
         default:
             kDebug() << "Wrong parameter type!!";
+            break;
     }
 }
 

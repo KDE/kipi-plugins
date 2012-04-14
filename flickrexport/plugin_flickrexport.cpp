@@ -7,8 +7,8 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -57,11 +57,14 @@ extern "C"
 
 #include "flickrwindow.h"
 
+namespace KIPIFlickrExportPlugin
+{
+
 K_PLUGIN_FACTORY(FlickrExportFactory, registerPlugin<Plugin_FlickrExport>();)
 K_EXPORT_PLUGIN(FlickrExportFactory("kipiplugin_flickrexport"))
 
-Plugin_FlickrExport::Plugin_FlickrExport(QObject* parent, const QVariantList& /*args*/)
-    : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
+Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_FlickrExport plugin loaded";
 }
@@ -72,7 +75,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_dlg23     = 0;
     m_dlgZooomr = 0;
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
 
@@ -109,7 +112,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     addAction(m_actionZooomr);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -128,7 +131,7 @@ Plugin_FlickrExport::~Plugin_FlickrExport()
 
 void Plugin_FlickrExport::slotActivateFlickr()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -142,7 +145,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Flickr");
+        m_dlgFlickr = new FlickrWindow(interface, tmp, kapp->activeWindow(), "Flickr");
     }
     else
     {
@@ -159,7 +162,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
 
 void Plugin_FlickrExport::slotActivate23()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -173,7 +176,7 @@ void Plugin_FlickrExport::slotActivate23()
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "23");
+        m_dlg23 = new FlickrWindow(interface, tmp, kapp->activeWindow(), "23");
     }
     else
     {
@@ -190,7 +193,7 @@ void Plugin_FlickrExport::slotActivate23()
 
 void Plugin_FlickrExport::slotActivateZooomr()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -204,7 +207,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Zooomr");
+        m_dlgZooomr = new FlickrWindow(interface, tmp, kapp->activeWindow(), "Zooomr");
     }
     else
     {
@@ -219,13 +222,15 @@ void Plugin_FlickrExport::slotActivateZooomr()
     m_dlgZooomr->reactivate();
 }
 
-KIPI::Category Plugin_FlickrExport::category(KAction* action) const
+Category Plugin_FlickrExport::category(KAction* action) const
 {
     if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
     {
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     }
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} //namespace KIPIFlickrExportPlugin

@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "vkalbumdialog.h"
+#include "vkalbumdialog.moc"
 
 // Qt includes
 
@@ -49,20 +49,19 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfoPtr album, bool editing)
+VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::AlbumInfoPtr album, bool editing)
     : KDialog(parent), m_album(album)
 {
-    setWindowTitle(editing ?
-        i18nc("@title:window", "Edit album") :
-        i18nc("@title:window", "New album"));
-    setButtons(KDialog::Ok | KDialog::Cancel);
-    setDefaultButton(KDialog::Ok);
+    setWindowTitle(editing ? i18nc("@title:window", "Edit album")
+                           : i18nc("@title:window", "New album"));
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
 
-    QWidget *mainWidget = new QWidget(this);
+    QWidget* mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 300);
 
-    QGroupBox *albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), mainWidget);
+    QGroupBox* albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), mainWidget);
     albumBox->setWhatsThis(
         i18n("These are basic settings for the new VKontakte album."));
 
@@ -73,36 +72,36 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfo
     m_summaryEdit->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
 
-    QFormLayout *albumBoxLayout  = new QFormLayout;
-    albumBoxLayout->addRow(i18n("Title:"), m_titleEdit);
+    QFormLayout* albumBoxLayout  = new QFormLayout;
+    albumBoxLayout->addRow(i18n("Title:"),   m_titleEdit);
     albumBoxLayout->addRow(i18n("Summary:"), m_summaryEdit);
     albumBox->setLayout(albumBoxLayout);
 
-    QGroupBox *privacyBox = new QGroupBox(i18n("Privacy Settings"), mainWidget);
-    QGridLayout *privacyBoxLayout = new QGridLayout;
+    QGroupBox* privacyBox         = new QGroupBox(i18n("Privacy Settings"), mainWidget);
+    QGridLayout* privacyBoxLayout = new QGridLayout;
 
     m_albumPrivacyCombo = new KComboBox(privacyBox);
-    m_albumPrivacyCombo->addItem(i18n("Only me"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
-    m_albumPrivacyCombo->addItem(i18n("My friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
+    m_albumPrivacyCombo->addItem(i18n("Only me"),               QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
+    m_albumPrivacyCombo->addItem(i18n("My friends"),            QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
     m_albumPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
-    m_albumPrivacyCombo->addItem(i18n("Everyone"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PUBLIC));
+    m_albumPrivacyCombo->addItem(i18n("Everyone"),              QVariant(Vkontakte::AlbumInfo::PRIVACY_PUBLIC));
     privacyBoxLayout->addWidget(new QLabel(i18n("Album available to:")), 0, 0);
     privacyBoxLayout->addWidget(m_albumPrivacyCombo, 0, 1);
 
     m_commentsPrivacyCombo = new KComboBox(privacyBox);
-    m_commentsPrivacyCombo->addItem(i18n("Only me"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
-    m_commentsPrivacyCombo->addItem(i18n("My friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
+    m_commentsPrivacyCombo->addItem(i18n("Only me"),               QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
+    m_commentsPrivacyCombo->addItem(i18n("My friends"),            QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
     m_commentsPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
-    m_commentsPrivacyCombo->addItem(i18n("Everyone"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PUBLIC));
+    m_commentsPrivacyCombo->addItem(i18n("Everyone"),              QVariant(Vkontakte::AlbumInfo::PRIVACY_PUBLIC));
     privacyBoxLayout->addWidget(new QLabel(i18n("Comments available to:")), 1, 0);
     privacyBoxLayout->addWidget(m_commentsPrivacyCombo, 1, 1);
 
     privacyBox->setLayout(privacyBoxLayout);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
+    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(privacyBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(spacingHint());
     mainWidget->setLayout(mainLayout);
 
     if (editing)
@@ -123,7 +122,7 @@ VkontakteAlbumDialog::~VkontakteAlbumDialog()
 
 void VkontakteAlbumDialog::slotButtonClicked(int button)
 {
-    if (button == KDialog::Ok)
+    if (button == Ok)
     {
         if (m_titleEdit->text().isEmpty())
         {
@@ -146,9 +145,7 @@ void VkontakteAlbumDialog::slotButtonClicked(int button)
             m_album->setCommentPrivacy(Vkontakte::AlbumInfo::PRIVACY_PRIVATE);
     }
 
-    return KDialog::slotButtonClicked(button);
+    return slotButtonClicked(button);
 }
 
 } // namespace KIPIVkontaktePlugin
-
-#include "vkalbumdialog.moc"

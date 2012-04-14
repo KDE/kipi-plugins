@@ -116,10 +116,10 @@ public:
     MetadataEditDialog*  dlg;
 };
 
-EXIFEditWidget::EXIFEditWidget(MetadataEditDialog* parent)
+EXIFEditWidget::EXIFEditWidget(MetadataEditDialog* const parent)
     : KPageWidget(parent), d(new EXIFEditWidgetPrivate)
 {
-    d->dlg       = parent;
+    d->dlg           = parent;
 
     d->captionPage   = new EXIFCaption(this);
     d->page_caption  = addPage(d->captionPage, i18nc("image caption", "Caption"));
@@ -245,7 +245,7 @@ void EXIFEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
+        KPImageInfo info(*d->dlg->currentItem());
 
         if (d->captionPage->syncHOSTCommentIsChecked())
         {
@@ -265,9 +265,6 @@ void EXIFEditWidget::apply()
         d->adjustPage->applyMetadata(d->exifData);
 
         KPMetadata meta;
-        KPHostSettings hSettings(d->dlg->iface());
-        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

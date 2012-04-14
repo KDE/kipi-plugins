@@ -67,7 +67,7 @@ public:
 
 public:
 
-    GalleryTalker(QWidget* parent);
+    GalleryTalker(QWidget* const parent);
     ~GalleryTalker();
 
     static void setGallery2(bool usegallery2)
@@ -129,13 +129,8 @@ private Q_SLOTS:
 
 private:
 
-    QWidget*          m_parent;
-    State             m_state;
-    QString           m_cookie;
-    KUrl              m_url;
-    KIO::TransferJob* m_job;
-    bool              m_loggedIn;
-    QByteArray        m_talker_buffer;
+    class Private;
+    Private* const d;
 
     static bool       s_using_gallery2;
     static QString    s_authToken;

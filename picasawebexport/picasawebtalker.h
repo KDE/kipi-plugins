@@ -26,7 +26,6 @@
 
 // Qt includes
 
-#include <QProgressDialog>
 #include <QLinkedList>
 #include <QMap>
 #include <QHash>

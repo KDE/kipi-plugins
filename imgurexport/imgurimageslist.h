@@ -27,10 +27,6 @@
 
 #include <QWidget>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpimageslist.h"
@@ -56,7 +52,7 @@ public:
         DELETEURL       = KPImagesListView::User4
     };
 
-    ImgurImagesList(Interface* const iface, QWidget* const parent = 0);
+    ImgurImagesList(QWidget* const parent = 0);
     ~ImgurImagesList();
 
 public:

@@ -34,10 +34,6 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-// KIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "comboboxdelegate.h"
@@ -45,8 +41,8 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrList::FlickrList(Interface* const iface, QWidget* const parent, bool is_23)
-    : KPImagesList(iface, parent),
+FlickrList::FlickrList(QWidget* const parent, bool is_23)
+    : KPImagesList(parent),
       m_public(Qt::Unchecked),
       m_family(Qt::Unchecked),
       m_friends(Qt::Unchecked),

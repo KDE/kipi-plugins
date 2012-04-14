@@ -7,7 +7,7 @@
  * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -56,12 +56,14 @@ extern "C"
 #include "fbwindow.h"
 #include "facebookjob.h"
 
+namespace KIPIFacebookPlugin
+{
+
 K_PLUGIN_FACTORY( FacebookFactory, registerPlugin<Plugin_Facebook>(); )
 K_EXPORT_PLUGIN ( FacebookFactory("kipiplugin_facebook") )
 
-Plugin_Facebook::Plugin_Facebook(QObject* parent, const QVariantList& /*args*/)
-               : KIPI::Plugin(FacebookFactory::componentData(),
-                              parent, "Facebook Import/Export")
+Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(FacebookFactory::componentData(), parent, "Facebook Import/Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Facebook plugin loaded";
 }
@@ -71,7 +73,7 @@ void Plugin_Facebook::setup(QWidget* widget)
     m_dlgImport = 0;
     m_dlgExport = 0;
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_facebook");
 
@@ -95,7 +97,7 @@ void Plugin_Facebook::setup(QWidget* widget)
 
     addAction(m_actionImport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -114,7 +116,7 @@ Plugin_Facebook::~Plugin_Facebook()
 
 void Plugin_Facebook::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -127,7 +129,7 @@ void Plugin_Facebook::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIFacebookPlugin::FbWindow(interface, tmp, false, kapp->activeWindow());
+        m_dlgExport = new FbWindow(interface, tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -142,7 +144,7 @@ void Plugin_Facebook::slotExport()
 
 void Plugin_Facebook::slotImport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -155,7 +157,7 @@ void Plugin_Facebook::slotImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new KIPIFacebookPlugin::FbWindow(interface, tmp, true, kapp->activeWindow());
+        m_dlgImport = new FbWindow(interface, tmp, true, kapp->activeWindow());
     }
     else
     {
@@ -168,19 +170,21 @@ void Plugin_Facebook::slotImport()
     m_dlgImport->show();
 }
 
-KIPI::Category Plugin_Facebook::category( KAction* action ) const
-{
-    if (action == m_actionExport)
-        return KIPI::ExportPlugin;
-    else if (action == m_actionImport)
-        return KIPI::ImportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
-}
-
 KJob* Plugin_Facebook::exportFiles(const QString& album)
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    return new KIPIFacebookPlugin::FacebookJob(album, interface->currentSelection().images());
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    return new FacebookJob(album, interface->currentSelection().images());
 }
+
+Category Plugin_Facebook::category(KAction* action) const
+{
+    if (action == m_actionExport)
+        return ExportPlugin;
+    else if (action == m_actionImport)
+        return ImportPlugin;
+
+    kWarning() << "Unrecognized action for plugin category identification";
+    return ExportPlugin;
+}
+
+} // namespace KIPIFacebookPlugin

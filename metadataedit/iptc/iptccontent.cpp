@@ -79,7 +79,7 @@ public:
     MultiStringsEdit* writerEdit;
 };
 
-IPTCContent::IPTCContent(QWidget* parent)
+IPTCContent::IPTCContent(QWidget* const parent)
     : QWidget(parent), d(new IPTCContentPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

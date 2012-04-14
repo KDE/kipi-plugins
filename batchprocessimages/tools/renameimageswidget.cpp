@@ -66,6 +66,7 @@
 #include "ui_renameimagesbase.h"
 #include "kpimageinfo.h"
 #include "kpimagedialog.h"
+#include "kpmetadata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -259,7 +260,7 @@ void RenameImagesWidget::sortList(QAction* action)
         else if (action == m_byDateAction)
         {
             KUrl url(item->pathSrc());
-            KIPIPlugins::KPImageInfo info(m_interface, url);
+            KIPIPlugins::KPImageInfo info(url);
             item->changeSortKey(info.date().toString(Qt::ISODate));
         }
     }
@@ -343,7 +344,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
 
     QFileInfo fi(item->pathSrc());
 
-    KIPIPlugins::KPImageInfo info(m_interface, url);
+    KIPIPlugins::KPImageInfo info(url);
 
     bool useExtraSymbols = ui->m_addFileDateCheck->isChecked() &&
                            ui->m_useExtraSymbolsCheck->isChecked();
@@ -518,7 +519,7 @@ void RenameImagesWidget::slotNext()
     if (!m_overwriteAll)
     {
         KDE_struct_stat info;
-        while (KDE_stat(QFile::encodeName(dst.path()), &info) == 0)
+        while (KDE_stat(QFile::encodeName(dst.toLocalFile()), &info) == 0)
         {
             if (m_autoSkip)
             {
@@ -579,11 +580,14 @@ void RenameImagesWidget::slotNext()
     else
     {
         // Get the src info
-        KIPIPlugins::KPImageInfo srcInfo(m_interface, src);
+        KIPIPlugins::KPImageInfo srcInfo(src);
 
-        if (KDE_rename(QFile::encodeName(src.path()),
-                       QFile::encodeName(dst.path())) == 0)
+        if (KDE_rename(QFile::encodeName(src.toLocalFile()),
+                       QFile::encodeName(dst.toLocalFile())) == 0)
         {
+            // Rename XMP sidecar file
+            KIPIPlugins::KPMetadata::moveSidecar(src, dst);
+
             srcInfo.setName(dst.fileName());
 
             item->changeResult(i18nc("batch process result", "OK"));
@@ -608,7 +612,7 @@ void RenameImagesWidget::slotNext()
 
 void RenameImagesWidget::slotAddImages()
 {
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this, m_interface);
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
 
     for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {

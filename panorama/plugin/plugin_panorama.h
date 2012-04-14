@@ -7,8 +7,8 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,26 +39,28 @@ class QWidget;
 
 class KAction;
 
-namespace KIPIPanoramaPlugin
-{
-class Manager;
-}
-
 namespace KIPI
 {
     class Interface;
 }
 
-class Plugin_Panorama : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIPanoramaPlugin
+{
+
+class Manager;
+
+class Plugin_Panorama : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_Panorama(QObject* parent, const QVariantList& args);
+    Plugin_Panorama(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_Panorama();
 
-    KIPI::Category category( KAction* action ) const;
+    Category category( KAction* action ) const;
     void setup( QWidget* );
 
 public Q_SLOTS:
@@ -67,13 +69,15 @@ public Q_SLOTS:
 
 private:
 
-    QWidget*                         m_parentWidget;
+    QWidget*   m_parentWidget;
 
-    KAction*                         m_action;
+    KAction*   m_action;
 
-    KIPIPanoramaPlugin::Manager*     m_manager;
+    Manager*   m_manager;
 
-    KIPI::Interface*                 m_interface;
+    Interface* m_interface;
 };
+
+} // namespace KIPIPanoramaPlugin
 
 #endif /* PLUGIN_PANORAMA_H */

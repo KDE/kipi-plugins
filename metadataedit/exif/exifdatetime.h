@@ -38,7 +38,7 @@ class EXIFDateTime : public QWidget
 
 public:
 
-    EXIFDateTime(QWidget* parent);
+    EXIFDateTime(QWidget* const parent);
     ~EXIFDateTime();
 
     void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData);

@@ -26,6 +26,7 @@
 // Qt includes
 
 #include <QString>
+#include <QDateTime>
 
 // Libkdcraw includes
 
@@ -89,6 +90,7 @@ public:
 
     void reset();
     void cleanup();
+    dng_date_time dngDateTime(const QDateTime& qDT);
 };
 
 }  // namespace DNGIface

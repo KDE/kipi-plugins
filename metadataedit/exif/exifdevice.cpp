@@ -115,7 +115,7 @@ public:
     MetadataCheckBox* subjectDistanceTypeCheck;
 };
 
-EXIFDevice::EXIFDevice(QWidget* parent)
+EXIFDevice::EXIFDevice(QWidget* const parent)
     : QWidget(parent), d(new EXIFDevicePriv)
 {
     QGridLayout* grid = new QGridLayout(this);

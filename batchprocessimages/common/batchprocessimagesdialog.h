@@ -29,7 +29,6 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kio/job.h>
 #include <kurl.h>
 
@@ -39,6 +38,7 @@
 
 // Local includes
 
+#include "kptooldialog.h"
 #include "batchprocessimagesitem.h"
 
 class QFileInfo;
@@ -53,13 +53,14 @@ namespace Ui
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
 class BatchProcessImagesList;
 
-class BatchProcessImagesDialog : public KDialog
+class BatchProcessImagesDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -230,7 +231,6 @@ private Q_SLOTS:
     // --------------------------------------------------------------------------------------------------------
     // Standards virtual slots for re-implementation
 
-    virtual void slotHelp() {};                // Called when 'Help' menu option is activated.
     virtual void slotOptionsClicked() {};      // Called when 'Options' button is clicked.
     virtual void slotTypeChanged(int) {};      // Called when the current type option is changed.
 

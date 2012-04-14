@@ -63,4 +63,16 @@ void DNGWriter::DNGWriterPrivate::cleanup()
     ::remove(QFile::encodeName(outputFile));
 }
 
+dng_date_time DNGWriter::DNGWriterPrivate::dngDateTime(const QDateTime& qDT)
+{
+    dng_date_time dngDT;
+    dngDT.fYear   = qDT.date().year();
+    dngDT.fMonth  = qDT.date().month();
+    dngDT.fDay    = qDT.date().day();
+    dngDT.fHour   = qDT.time().hour();
+    dngDT.fMinute = qDT.time().minute();
+    dngDT.fSecond = qDT.time().second();
+    return dngDT;
+}
+
 }  // namespace DNGIface

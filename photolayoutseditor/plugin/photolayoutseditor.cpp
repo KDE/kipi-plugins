@@ -697,7 +697,7 @@ void PhotoLayoutsEditor::loadNewImage()
     if (!m_canvas)
         return;
 
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this, m_interface);
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
     if (!urls.isEmpty())
         m_canvas->addImages(urls);
 }

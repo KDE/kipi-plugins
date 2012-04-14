@@ -961,7 +961,7 @@ dng_urational dng_stream::TagValue_urational (uint32 tagType)
 				result.n = (uint32) (x + 0.5);
 				
 				}
-			
+			break;
 			}
 		
 		}
@@ -1029,7 +1029,7 @@ dng_srational dng_stream::TagValue_srational (uint32 tagType)
 				result.n = (int32) (x - 0.5);
 				
 				}
-			
+			break;
 			}
 			
 		}

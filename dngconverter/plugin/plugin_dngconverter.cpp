@@ -45,13 +45,14 @@
 #include "aboutdata.h"
 #include "batchdialog.h"
 
-using namespace KIPIDNGConverterPlugin;
+namespace KIPIDNGConverterPlugin
+{
 
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_DNGConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_dngconverter") )
 
-Plugin_DNGConverter::Plugin_DNGConverter(QObject* parent, const QVariantList&)
-                   : KIPI::Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
+Plugin_DNGConverter::Plugin_DNGConverter(QObject* const parent, const QVariantList&)
+    : Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DNGConverter plugin loaded" ;
 }
@@ -60,7 +61,7 @@ void Plugin_DNGConverter::setup( QWidget* widget )
 {
     m_batchDlg = 0;
 
-    KIPI::Plugin::setup( widget );
+    Plugin::setup( widget );
 
     m_action = actionCollection()->addAction("dngconverter");
     m_action->setText(i18n("DNG Converter..."));
@@ -71,7 +72,7 @@ void Plugin_DNGConverter::setup( QWidget* widget )
 
     addAction(m_action);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -88,15 +89,14 @@ Plugin_DNGConverter::~Plugin_DNGConverter()
 
 void Plugin_DNGConverter::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
     if (!interface)
     {
         kError() << "Kipi interface is null!" ;
         return;
     }
 
-    KIPI::ImageCollection images;
-    images = interface->currentSelection();
+    ImageCollection images = interface->currentSelection();
 
     if (!images.isValid())
         return;
@@ -104,7 +104,7 @@ void Plugin_DNGConverter::slotActivate()
     KUrl::List urls = images.images();
     KUrl::List items;
 
-    for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it )
+    for( KUrl::List::const_iterator it = urls.begin(); it != urls.end(); ++it )
     {
         if (DNGConverterAboutData::isRAWFile((*it).path()))
             items.append((*it));
@@ -112,7 +112,7 @@ void Plugin_DNGConverter::slotActivate()
 
     if (!m_batchDlg)
     {
-        m_batchDlg = new BatchDialog(interface, new DNGConverterAboutData);
+        m_batchDlg = new BatchDialog(new DNGConverterAboutData);
     }
     else
     {
@@ -126,11 +126,13 @@ void Plugin_DNGConverter::slotActivate()
     m_batchDlg->addItems(items);
 }
 
-KIPI::Category Plugin_DNGConverter::category( KAction* action ) const
+Category Plugin_DNGConverter::category( KAction* action ) const
 {
     if (action == m_action)
-       return KIPI::BatchPlugin;
+       return BatchPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification" ;
-    return KIPI::BatchPlugin; // no warning from compiler, please
+    return BatchPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIDNGConverterPlugin

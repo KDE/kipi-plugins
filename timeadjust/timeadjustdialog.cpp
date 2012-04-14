@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -65,26 +65,22 @@ extern "C"
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kvbox.h>
-
-// LibKIPI includes
-
-#include <libkipi/interface.h>
+#include <kio/copyjob.h>
+#include <kde_file.h>
 
 // Local includes
 
 #include "kpaboutdata.h"
 #include "kpmetadata.h"
-#include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "clockphotodialog.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialogPrivate
+class TimeAdjustDialog::TimeAdjustDialogPrivate
 {
 
 public:
@@ -107,6 +103,7 @@ public:
         updEXIFDigDateCheck    = 0;
         updIPTCDateCheck       = 0;
         updXMPDateCheck        = 0;
+        updFileNameCheck       = 0;
         useFileDateTypeChooser = 0;
         useMetaDateTypeChooser = 0;
         adjTypeChooser         = 0;
@@ -120,105 +117,98 @@ public:
         useCustTimeInput       = 0;
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
-        interface              = 0;
-        about                  = 0;
+        progressBar            = 0;
     }
 
-    QGroupBox*       useGroupBox;
-    QGroupBox*       adjustGroupBox;
-    QGroupBox*       updateGroupBox;
-    QGroupBox*       exampleGroupBox;
+    QGroupBox*        useGroupBox;
+    QGroupBox*        adjustGroupBox;
+    QGroupBox*        updateGroupBox;
+    QGroupBox*        exampleGroupBox;
 
-    QButtonGroup*    useButtonGroup;
+    QButtonGroup*     useButtonGroup;
 
-    QRadioButton*    useApplDateBtn;
-    QRadioButton*    useFileDateBtn;
-    QRadioButton*    useMetaDateBtn;
-    QRadioButton*    useCustomDateBtn;
+    QRadioButton*     useApplDateBtn;
+    QRadioButton*     useFileDateBtn;
+    QRadioButton*     useMetaDateBtn;
+    QRadioButton*     useCustomDateBtn;
 
-    QCheckBox*       updAppDateCheck;
-    QCheckBox*       updFileModDateCheck;
-    QCheckBox*       updEXIFModDateCheck;
-    QCheckBox*       updEXIFOriDateCheck;
-    QCheckBox*       updEXIFDigDateCheck;
-    QCheckBox*       updIPTCDateCheck;
-    QCheckBox*       updXMPDateCheck;
+    QCheckBox*        updAppDateCheck;
+    QCheckBox*        updFileModDateCheck;
+    QCheckBox*        updEXIFModDateCheck;
+    QCheckBox*        updEXIFOriDateCheck;
+    QCheckBox*        updEXIFDigDateCheck;
+    QCheckBox*        updIPTCDateCheck;
+    QCheckBox*        updXMPDateCheck;
+    QCheckBox*        updFileNameCheck;
 
-    QComboBox*       useFileDateTypeChooser;
-    QComboBox*       useMetaDateTypeChooser;
-    QComboBox*       adjTypeChooser;
-    QComboBox*       exampleFileChooser;
+    QComboBox*        useFileDateTypeChooser;
+    QComboBox*        useMetaDateTypeChooser;
+    QComboBox*        adjTypeChooser;
+    QComboBox*        exampleFileChooser;
 
-    QLabel*          adjDaysLabel;
-    QLabel*          exampleSummaryLabel;
-    QLabel*          exampleTimeChangeLabel;
+    QLabel*           adjDaysLabel;
+    QLabel*           exampleSummaryLabel;
+    QLabel*           exampleTimeChangeLabel;
 
-    QSpinBox*        adjDaysInput;
+    QSpinBox*         adjDaysInput;
 
-    QPushButton*     adjDetByClockPhotoBtn;
+    QPushButton*      adjDetByClockPhotoBtn;
 
-    QDateEdit*       useCustDateInput;
+    QDateEdit*        useCustDateInput;
 
-    QTimeEdit*       useCustTimeInput;
-    QTimeEdit*       adjTimeInput;
+    QTimeEdit*        useCustTimeInput;
+    QTimeEdit*        adjTimeInput;
 
-    QToolButton*     useCustomDateTodayBtn;
+    QToolButton*      useCustomDateTodayBtn;
 
-    KUrl::List       imageURLs;
-    QList<QDateTime> imageOriginalDates;
+    KUrl::List        imageUrls;
+    QList<QDateTime>  imageOriginalDates;
 
-    Interface* interface;
-
-    KPAboutData*     about;
+    KPProgressWidget* progressBar;
 };
 
-TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
-                : KDialog(parent), d(new TimeAdjustDialogPrivate)
+TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
+    : KPToolDialog(parent), d(new TimeAdjustDialogPrivate)
 {
-    d->interface = interface;
-
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
     setCaption(i18n("Adjust Time & Date"));
     setModal(true);
 
     setMainWidget(new QWidget(this));
-    QVBoxLayout *mainWidgetLayout = new QVBoxLayout(mainWidget());
+    QVBoxLayout* mainWidgetLayout = new QVBoxLayout(mainWidget());
 
     // -- About data and help button ----------------------------------------
 
-    d->about = new KPAboutData(ki18n("Time Adjust"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
-                   ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                         "(c) 2006-2011, Gilles Caulier"));
+    KPAboutData* about = new KPAboutData(ki18n("Time Adjust"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
+                             ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
+                                   "(c) 2006-2012, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Jesper K. Pedersen"),
-                        ki18n("Author"),
-                        "blackie at kde dot org");
+    about->addAuthor(ki18n("Jesper K. Pedersen"),
+                     ki18n("Author"),
+                     "blackie at kde dot org");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Developer and maintainer"),
-                        "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer and maintainer"),
+                     "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
+    about->handbookEntry = QString("timeadjust");
+    setAboutData(about);
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    // -- Progress Bar ------------------------------------------------------------
+
+    d->progressBar = new KPProgressWidget(parent);
+    d->progressBar->reset();
+    d->progressBar->hide();
 
     // -- Use ------------------------------------------------------------
 
     d->useGroupBox           = new QGroupBox(i18n("Use Time && Date"), mainWidget());
     QGridLayout* useGBLayout = new QGridLayout(d->useGroupBox);
-
-    d->useButtonGroup = new QButtonGroup(d->useGroupBox);
+    d->useButtonGroup        = new QButtonGroup(d->useGroupBox);
     d->useButtonGroup->setExclusive(true);
 
     QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
@@ -231,7 +221,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     //d->useFileDateTypeChooser->addItem(i18n("File created")); // not supported by Linux, although supported by Qt (read-only)
     d->useFileDateTypeChooser->addItem(i18n("File last modified"));
 
-    d->useMetaDateBtn = new QRadioButton("", d->useGroupBox);
+    d->useMetaDateBtn         = new QRadioButton(QString(), d->useGroupBox);
     d->useMetaDateTypeChooser = new QComboBox(d->useGroupBox);
     d->useMetaDateTypeChooser->addItem(i18n("EXIF/IPTC/XMP"));
     d->useMetaDateTypeChooser->addItem(i18n("EXIF: created"));
@@ -281,11 +271,11 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     d->adjTypeChooser->addItem(i18n("Copy value"));
     d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date", "Add"));
     d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
-    d->adjDaysInput = new QSpinBox(d->adjustGroupBox);
+    d->adjDaysInput   = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);
-    d->adjDaysLabel = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
-    d->adjTimeInput = new QTimeEdit(d->adjustGroupBox);
+    d->adjDaysLabel   = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
+    d->adjTimeInput   = new QTimeEdit(d->adjustGroupBox);
     d->adjTimeInput->setDisplayFormat("hh:mm:ss");
     d->adjDetByClockPhotoBtn = new QPushButton(i18n("Determine from clock photo"));
 
@@ -305,13 +295,14 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     d->updateGroupBox           = new QGroupBox(i18n("Update Time && Date"), mainWidget());
     QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
 
-    d->updAppDateCheck     = new QCheckBox(applDateLabelString, d->updateGroupBox);
+    d->updAppDateCheck     = new QCheckBox(applDateLabelString,        d->updateGroupBox);
     d->updFileModDateCheck = new QCheckBox(i18n("File last modified"), d->updateGroupBox);
-    d->updEXIFModDateCheck = new QCheckBox(i18n("EXIF: created"), d->updateGroupBox);
-    d->updEXIFOriDateCheck = new QCheckBox(i18n("EXIF: original"), d->updateGroupBox);
-    d->updEXIFDigDateCheck = new QCheckBox(i18n("EXIF: digitized"), d->updateGroupBox);
-    d->updIPTCDateCheck    = new QCheckBox(i18n("IPTC: created"), d->updateGroupBox);
-    d->updXMPDateCheck     = new QCheckBox(i18n("XMP"), d->updateGroupBox);
+    d->updEXIFModDateCheck = new QCheckBox(i18n("EXIF: created"),      d->updateGroupBox);
+    d->updEXIFOriDateCheck = new QCheckBox(i18n("EXIF: original"),     d->updateGroupBox);
+    d->updEXIFDigDateCheck = new QCheckBox(i18n("EXIF: digitized"),    d->updateGroupBox);
+    d->updIPTCDateCheck    = new QCheckBox(i18n("IPTC: created"),      d->updateGroupBox);
+    d->updXMPDateCheck     = new QCheckBox(i18n("XMP"),                d->updateGroupBox);
+    d->updFileNameCheck    = new QCheckBox(i18n("Filename"),           d->updateGroupBox);
 
     updateGBLayout->setMargin(spacingHint());
     updateGBLayout->setSpacing(spacingHint());
@@ -325,6 +316,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     updateGBLayout->addWidget(d->updEXIFDigDateCheck, 2, 1, 1, 1);
     updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 0, 1, 1);
     updateGBLayout->addWidget(d->updXMPDateCheck,     0, 2, 1, 1);
+    updateGBLayout->addWidget(d->updFileNameCheck,    1, 2, 1, 1);
 
     if (!KPMetadata::supportXmp())
     {
@@ -355,6 +347,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     mainWidgetLayout->addWidget(d->adjustGroupBox);
     mainWidgetLayout->addWidget(d->updateGroupBox);
     mainWidgetLayout->addWidget(d->exampleGroupBox);
+    mainWidgetLayout->addWidget(d->progressBar);
     mainWidgetLayout->addStretch();
 
     // -- Slots/Signals ------------------------------------------------------
@@ -407,7 +400,6 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
 
 TimeAdjustDialog::~TimeAdjustDialog()
 {
-    delete d->about;
     delete d;
 }
 
@@ -445,6 +437,7 @@ void TimeAdjustDialog::readSettings()
     d->updEXIFDigDateCheck->setChecked(group.readEntry("Update EXIF Digitization Time", false));
     d->updIPTCDateCheck->setChecked(group.readEntry("Update IPTC Time", false));
     d->updXMPDateCheck->setChecked(group.readEntry("Update XMP Creation Time", false));
+    d->updFileNameCheck->setChecked(group.readEntry("Update File Name", false));
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     restoreDialogSize(group2);
@@ -477,19 +470,20 @@ void TimeAdjustDialog::saveSettings()
     group.writeEntry("Update EXIF Digitization Time", d->updEXIFDigDateCheck->isChecked());
     group.writeEntry("Update IPTC Time", d->updIPTCDateCheck->isChecked());
     group.writeEntry("Update XMP Creation Time", d->updXMPDateCheck->isChecked());
+    group.writeEntry("Update File Name", d->updFileNameCheck->isChecked());
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     saveDialogSize(group2);
     config.sync();
 }
 
-void TimeAdjustDialog::setImages(const KUrl::List& imageURLs)
+void TimeAdjustDialog::setImages(const KUrl::List& imageUrls)
 {
-    d->imageURLs.clear();
+    d->imageUrls.clear();
 
-    for (KUrl::List::ConstIterator it = imageURLs.constBegin(); it != imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = imageUrls.constBegin(); it != imageUrls.constEnd(); ++it)
     {
-        d->imageURLs.append(*it);
+        d->imageUrls.append(*it);
         d->exampleFileChooser->addItem((*it).fileName());
     }
 
@@ -513,7 +507,7 @@ void TimeAdjustDialog::readExampleTimestamps()
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                         "%1 images will be changed",
-                                        d->imageURLs.count()));
+                                        d->imageUrls.count()));
     }
 
     slotUpdateExample();
@@ -525,9 +519,9 @@ void TimeAdjustDialog::readApplicationTimestamps()
     int       inexactCount = 0;
     QDateTime nullDateTime;
 
-    for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
     {
-        KPImageInfo info(d->interface, *it);
+        KPImageInfo info(*it);
         if (info.isExactDate())
         {
             exactCount++;
@@ -544,7 +538,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
-                                    d->imageURLs.count()));
+                                    d->imageUrls.count()));
     }
     else
     {
@@ -561,7 +555,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
 void TimeAdjustDialog::readFileTimestamps()
 {
-    for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
     {
         QFileInfo fileInfo((*it).toLocalFile());
         d->imageOriginalDates.append(fileInfo.lastModified());
@@ -569,7 +563,7 @@ void TimeAdjustDialog::readFileTimestamps()
 
     d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                           "%1 images will be changed",
-                                          d->imageURLs.count()));
+                                          d->imageUrls.count()));
 }
 
 void TimeAdjustDialog::readMetadataTimestamps()
@@ -578,9 +572,9 @@ void TimeAdjustDialog::readMetadataTimestamps()
     int missingCount = 0;
     QDateTime nullDateTime;
 
-    for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
     {
-        KPImageInfo info(d->interface, *it);
+        KPImageInfo info(*it);
         KPMetadata  meta;
         if (!meta.load((*it).path()))
         {
@@ -631,7 +625,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                               "%1 images will be changed",
-                                              d->imageURLs.count()));
+                                              d->imageUrls.count()));
     }
     else
     {
@@ -698,7 +692,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
     /* When the use presses the clock photo button, present a dialog and set the
      * results to the proper widgets. */
 
-    QPointer<ClockPhotoDialog> dilg = new ClockPhotoDialog(d->interface, this);
+    QPointer<ClockPhotoDialog> dilg = new ClockPhotoDialog(this);
     int result = dilg->exec();
     if (result == QDialog::Accepted)
     {
@@ -726,7 +720,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 
 void TimeAdjustDialog::slotUpdateExample()
 {
-    static const QString exampleDateTimeFormat("dd.MM.yyyy hh:mm:ss");
+    static const QString exampleTimeFormat("hh:mm:ss");
 
     // When the custom timestamp is to be used, do not show any file original timestamps
     if (d->useCustomDateBtn->isChecked())
@@ -735,8 +729,11 @@ void TimeAdjustDialog::slotUpdateExample()
         if (d->adjTypeChooser->currentIndex() > 0)
             customTime = calculateAdjustedTime(customTime);
 
-        QString customTimeStr = customTime.toString(exampleDateTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1</b>", customTimeStr));
+        QDate customDate = customTime.date();
+        QString formattedCustomDate = KGlobal::locale()->formatDate(customDate, KLocale::ShortDate);
+
+        QString customTimeStr = customTime.toString(exampleTimeFormat);
+        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1 %2</b>", formattedCustomDate, customTimeStr));
         return;
     }
 
@@ -758,25 +755,27 @@ void TimeAdjustDialog::slotUpdateExample()
     }
 
     // Show the file original timestamp (and adjusted one if needed)
-    QString originalTimeStr = originalTime.toString(exampleDateTimeFormat);
+
+    QDate originalDate            = originalTime.date();
+    QString formattedOriginalDate = KGlobal::locale()->formatDate(originalDate, KLocale::ShortDate);
+    QString originalTimeStr       = originalTime.toString(exampleTimeFormat);
+
     if (d->adjTypeChooser->currentIndex() == 0)
     {
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1</b>", originalTimeStr));
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b>", formattedOriginalDate, originalTimeStr));
         return;
     }
     else
     {
-        QDateTime adjustedTime  = calculateAdjustedTime(originalTime);
-        QString adjustedTimeStr = adjustedTime.toString(exampleDateTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1</b><br/>"
-                                                "Adjusted: <b>%2</b>",
-                                           originalTimeStr, adjustedTimeStr));
-    }
-}
+        QDateTime adjustedTime        = calculateAdjustedTime(originalTime);
+        QDate adjustedDate            = adjustedTime.date();
+        QString formattedAdjustedDate = KGlobal::locale()->formatDate(adjustedDate, KLocale::ShortDate);
 
-void TimeAdjustDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("timeadjust", "kipi-plugins");
+        QString adjustedTimeStr = adjustedTime.toString(exampleTimeFormat);
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b><br/>"
+                                                "Adjusted: <b>%3 %4</b>",
+                                           formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
+    }
 }
 
 void TimeAdjustDialog::slotOk()
@@ -791,29 +790,54 @@ void TimeAdjustDialog::slotOk()
                            d->updIPTCDateCheck->isChecked()    ||
                            d->updXMPDateCheck->isChecked();
 
-    for (int i=0; i<d->imageURLs.size(); ++i)
+    d->progressBar->show();
+    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), false, true);
+    d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    d->progressBar->setMaximum(d->imageUrls.size());
+
+    for (int i=0; i<d->imageUrls.size(); ++i)
     {
-        KUrl url = d->imageURLs[i];
+        d->progressBar->setValue(i);
+        d->progressBar->progressStatusChanged(i18n("Processing %1", d->imageUrls[i].fileName()));
+        kapp->processEvents();
+
+        KUrl url = d->imageUrls[i];
+
         if (d->useCustomDateBtn->isChecked()) dateTime = customTime;
-        else dateTime = d->imageOriginalDates[i];
+        else                                  dateTime = d->imageOriginalDates[i];
+
         if (!dateTime.isValid()) continue;
 
         dateTime = calculateAdjustedTime(dateTime);
 
         if (d->updAppDateCheck->isChecked())
         {
-            KPImageInfo info(d->interface, url);
+            KPImageInfo info(url);
             info.setDate(dateTime);
+        }
+
+        if (d->updFileNameCheck->isChecked())
+        {
+            QString newdate;
+            QFileInfo image(url.path());
+
+            newdate = dateTime.toString(QString("yyyyMMddThhmmss"));
+            newdate += '.';
+            newdate += image.suffix();
+
+            KUrl newUrl = url;
+            newUrl.setFileName(newdate);
+
+            KIO::move(url, newUrl);
+
+            KPMetadata::moveSidecar(url, newUrl);
         }
 
         if (metadataChanged)
         {
             bool ret = true;
 
-            KPMetadata     meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            KPMetadata meta;
 
             ret &= meta.load(url.path());
             if (ret)
@@ -906,10 +930,6 @@ void TimeAdjustDialog::slotOk()
         }
     }
 
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-    d->interface->refreshImages(d->imageURLs);
-
     if (!metaTimeErrorFiles.isEmpty())
     {
         KMessageBox::informationList(
@@ -928,6 +948,7 @@ void TimeAdjustDialog::slotOk()
                      i18n("Adjust Time & Date"));
     }
 
+    d->progressBar->progressCompleted();
     saveSettings();
     accept();
 }

@@ -4,10 +4,10 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 
 #include "plugin_viewer.moc"
 
-// Qt includes
-
-#include <QMessageBox>
-
 // KDE includes
 
 #include <kaction.h>
@@ -35,6 +31,7 @@
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
+#include <kmessagebox.h>
 
 // LibKIPI includes
 
@@ -45,85 +42,109 @@
 
 #include "viewerwidget.h"
 
+namespace KIPIViewerPlugin
+{
+
 K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
 K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
-Plugin_viewer::Plugin_viewer(QObject* parent, const QVariantList&)
-     : KIPI::Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer")
+class Plugin_viewer::Plugin_viewerPriv
+{
+public:
+
+    Plugin_viewerPriv()
+    {
+        widget       = 0;
+        actionViewer = 0;
+    }
+
+    ViewerWidget* widget;
+    KAction*      actionViewer;
+};
+
+Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
+     : Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer"),
+       d(new Plugin_viewerPriv)
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 }
 
+Plugin_viewer::~Plugin_viewer()
+{
+    delete d;
+}
+
 void Plugin_viewer::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
-    KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* iface = dynamic_cast<Interface*>(parent());
 
-    if ( !pv_interface )
+    if ( !iface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    actionViewer = actionCollection()->addAction("oglimageviewer");
-    actionViewer->setText(i18n("OpenGL Image Viewer..."));
-    actionViewer->setIcon(KIcon("ogl"));
+    d->actionViewer = actionCollection()->addAction("oglimageviewer");
+    d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
+    d->actionViewer->setIcon(KIcon("ogl"));
 
-    connect(actionViewer, SIGNAL(triggered(bool)),
+    connect(d->actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(actionViewer);
+    addAction(d->actionViewer);
 }
 
-/*!
-    \fn Plugin_viewer::slotActivate()
- */
 void  Plugin_viewer::slotActivate()
 {
-    KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* iface = dynamic_cast<Interface*>(parent());
 
-    if ( !pv_interface )
+    if ( !iface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    widget = new KIPIviewer::ViewerWidget(pv_interface);
-    if ( widget->listOfFilesIsEmpty() )
+    d->widget = new ViewerWidget(iface);
+
+    if ( d->widget->listOfFilesIsEmpty() )
     {
-        delete widget;
+        delete d->widget;
         return;
     }
-    switch(widget->getOGLstate())
+
+    switch(d->widget->getOGLstate())
     {
-        case KIPIviewer::oglOK:
-            widget->show();
+        case oglOK:
+            d->widget->show();
             break;
 
-        case KIPIviewer::oglNoRectangularTexture:
+        case oglNoRectangularTexture:
             kError() << "GL_ARB_texture_rectangle not supported";
-            delete widget;
-            QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
+            delete d->widget;
+            KMessageBox::error(0, i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
-        case KIPIviewer::oglNoContext:
+        case oglNoContext:
             kError() << "no OpenGL context found";
-            delete widget;
-            QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("no OpenGL context found"));
+            delete d->widget;
+            KMessageBox::error(0, i18n("OpenGL error"), i18n("no OpenGL context found"));
             break;
     }
 }
 
-KIPI::Category Plugin_viewer::category(KAction* action) const
+Category Plugin_viewer::category(KAction* action) const
 {
-    if ( action == actionViewer )
+    if ( action == d->actionViewer )
     {
-        return KIPI::ToolsPlugin;
+        return ToolsPlugin;
     }
     else
     {
         kWarning() << "Unrecognized action for plugin category identification";
-        return KIPI::ToolsPlugin; // no warning from compiler, please
+        return ToolsPlugin; // no warning from compiler, please
     }
 }
+
+} // namespace KIPIViewerPlugin

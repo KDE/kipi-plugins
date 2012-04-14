@@ -37,7 +37,7 @@ class IPTCProperties : public QWidget
 
 public:
 
-    IPTCProperties(QWidget* parent);
+    IPTCProperties(QWidget* const parent);
     ~IPTCProperties();
 
     void applyMetadata(QByteArray& iptcData);

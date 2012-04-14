@@ -30,6 +30,7 @@
 
 #include <kdebug.h>
 #include <kapplication.h>
+#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>
@@ -42,11 +43,29 @@
 
 using namespace KIPIPlugins;
 
+namespace KIPIImgurExportPlugin
+{
+
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
 
+class Plugin_ImgurExport::Plugin_ImgurExportPriv
+{
+public:
+
+    Plugin_ImgurExportPriv()
+    {
+        actionExport = 0;
+        winExport = 0;
+    }
+
+    KAction*     actionExport;
+    ImgurWindow* winExport;
+};
+
 Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList& args)
-    : Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
+    : Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport"),
+      d(new Plugin_ImgurExportPriv)
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
@@ -54,36 +73,37 @@ Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList
 
 Plugin_ImgurExport::~Plugin_ImgurExport()
 {
+    delete d;
 }
 
 void Plugin_ImgurExport::setup(QWidget* widget)
 {
-    m_winExport = 0;
+    d->winExport = 0;
 
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
 
-    m_actionExport = actionCollection()->addAction("ImgurExport");
-    m_actionExport->setText(i18n("Export to &Imgur..."));
-    m_actionExport->setIcon(KIcon("imgur"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
+    d->actionExport = actionCollection()->addAction("ImgurExport");
+    d->actionExport->setText(i18n("Export to &Imgur..."));
+    d->actionExport->setIcon(KIcon("imgur"));
+    d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
+    connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionExport);
+    addAction(d->actionExport);
 
     Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
         kError() << "Kipi interface is null!" ;
-        m_actionExport->setEnabled(false);
+        d->actionExport->setEnabled(false);
         return;
     }
 
-    m_actionExport->setEnabled(true);
+    d->actionExport->setEnabled(true);
 }
 
 void Plugin_ImgurExport::slotActivate()
@@ -95,29 +115,29 @@ void Plugin_ImgurExport::slotActivate()
         return;
     }
 
-    if (!m_winExport)
+    if (!d->winExport)
     {
         // We clean it up in the close button
-        m_winExport = new ImgurWindow(interface, kapp->activeWindow());
+        d->winExport = new ImgurWindow(interface, kapp->activeWindow());
     }
     else
     {
-        if (m_winExport->isMinimized())
+        if (d->winExport->isMinimized())
         {
-            KWindowSystem::unminimizeWindow(m_winExport->winId());
+            KWindowSystem::unminimizeWindow(d->winExport->winId());
         }
 
-        KWindowSystem::activateWindow(m_winExport->winId());
+        KWindowSystem::activateWindow(d->winExport->winId());
     }
 
-    m_winExport->reactivate();
+    d->winExport->reactivate();
 
     kDebug() << "We have activated the imgur exporter!";
 }
 
-Category Plugin_ImgurExport::category( KAction* action ) const
+Category Plugin_ImgurExport::category(KAction* action) const
 {
-    if (action == m_actionExport)
+    if (action == d->actionExport)
     {
         return ExportPlugin;
     }
@@ -125,3 +145,5 @@ Category Plugin_ImgurExport::category( KAction* action ) const
     kWarning() << "Unrecognized action for plugin category identification";
     return ExportPlugin;
 }
+
+} // namespace KIPIImgurExportPlugin

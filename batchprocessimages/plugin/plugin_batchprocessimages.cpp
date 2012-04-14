@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -67,12 +67,15 @@ extern "C"
 #include "renameimagesdialog.h"
 #include "resizeimagesdialog.h"
 
+namespace KIPIBatchProcessImagesPlugin
+{
+
 K_PLUGIN_FACTORY(BatchProcessImagesFactory, registerPlugin<Plugin_BatchProcessImages>();)
 K_EXPORT_PLUGIN(BatchProcessImagesFactory("kipiplugin_batchprocessimages"))
 
-Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const QVariantList&)
-                         : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
-                                        parent, "BatchProcessImages")
+Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject* const parent, const QVariantList&)
+    : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
+                   parent, "BatchProcessImages")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_BatchProcessImages plugin loaded" ;
 }
@@ -122,7 +125,7 @@ void Plugin_BatchProcessImages::setup(QWidget* widget)
     addAction(m_action_recompressimages);
     addAction(m_action_resizeimages);
 
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >(parent());
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
     if (!interface)
     {
@@ -205,50 +208,50 @@ void Plugin_BatchProcessImages::slotActivate()
 
     if (from == "batch_convert_images")
     {
-        m_ConvertImagesDialog = new KIPIBatchProcessImagesPlugin::ConvertImagesDialog(urlList, interface,
+        m_ConvertImagesDialog = new ConvertImagesDialog(urlList, interface,
                 kapp->activeWindow());
         m_ConvertImagesDialog->show();
     }
     else if (from == "batch_rename_images")
     {
-        QPointer<KIPIBatchProcessImagesPlugin::RenameImagesDialog> dlg;
-        dlg = new KIPIBatchProcessImagesPlugin::RenameImagesDialog(urlList, interface, kapp->activeWindow());
+        QPointer<RenameImagesDialog> dlg;
+        dlg = new RenameImagesDialog(urlList, interface, kapp->activeWindow());
         dlg->exec();
         delete dlg;
     }
     else if (from == "batch_border_images")
     {
-        m_BorderImagesDialog = new KIPIBatchProcessImagesPlugin::BorderImagesDialog(urlList, interface,
+        m_BorderImagesDialog = new BorderImagesDialog(urlList, interface,
                 kapp->activeWindow());
         m_BorderImagesDialog->show();
     }
     else if (from == "batch_color_images")
     {
-        m_ColorImagesDialog = new KIPIBatchProcessImagesPlugin::ColorImagesDialog(urlList, interface,
+        m_ColorImagesDialog = new ColorImagesDialog(urlList, interface,
                 kapp->activeWindow());
         m_ColorImagesDialog->show();
     }
     else if (from == "batch_filter_images")
     {
-        m_FilterImagesDialog = new KIPIBatchProcessImagesPlugin::FilterImagesDialog(urlList, interface,
+        m_FilterImagesDialog = new FilterImagesDialog(urlList, interface,
                 kapp->activeWindow());
         m_FilterImagesDialog->show();
     }
     else if (from == "batch_effect_images")
     {
-        m_EffectImagesDialog = new KIPIBatchProcessImagesPlugin::EffectImagesDialog(urlList, interface,
+        m_EffectImagesDialog = new EffectImagesDialog(urlList, interface,
                 kapp->activeWindow());
         m_EffectImagesDialog->show();
     }
     else if (from == "batch_recompress_images")
     {
-        m_RecompressImagesDialog = new KIPIBatchProcessImagesPlugin::RecompressImagesDialog(urlList,
+        m_RecompressImagesDialog = new RecompressImagesDialog(urlList,
                 interface, kapp->activeWindow());
         m_RecompressImagesDialog->show();
     }
     else if (from == "batch_resize_images")
     {
-        m_ResizeImagesDialog = new KIPIBatchProcessImagesPlugin::ResizeImagesDialog(urlList, interface,
+        m_ResizeImagesDialog = new ResizeImagesDialog(urlList, interface,
                 kapp->activeWindow());
         m_ResizeImagesDialog->show();
     }
@@ -281,3 +284,5 @@ KIPI::Category Plugin_BatchProcessImages::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::BatchPlugin; // no warning from compiler, please
 }
+
+}  // namespace KIPIBatchProcessImagesPlugin

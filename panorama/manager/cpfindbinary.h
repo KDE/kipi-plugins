@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : Autodetects cpfind binary program and version
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,15 +38,16 @@ class CPFindBinary : public KPBinaryIface
 public:
 
     CPFindBinary()
-        : KPBinaryIface(QString("cpfind"), 
-                        QString("2010.4"), 
-                        QString("Hugins cpfind "),
-                        0, 
-                        QString("Hugin"), 
+        : KPBinaryIface(QString("cpfind"),
+                        QString("2010.4"),
+                        QString(),
+                        0,
+                        QString("Hugin"),
                         QString("http://hugin.sourceforge.net"),
-                        QString("Panorama"), 
+                        QString("Panorama"),
                         QStringList("--version")
-                       )
+                       ),
+          headerRegExp("^Hugin'?s cpfind( Pre-Release)? (\\d+\\.\\d+(\\.\\d+)?)(\\D.*)?$")
         {
             setup();
         }
@@ -58,6 +59,10 @@ public:
 protected:
 
     virtual bool parseHeader(const QString& output);
+
+private:
+
+    QRegExp headerRegExp;
 };
 
 } // namespace KIPIPanoramaPlugin

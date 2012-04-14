@@ -30,7 +30,6 @@
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QProgressBar>
 #include <QGroupBox>
 #include <QCloseEvent>
 
@@ -65,6 +64,7 @@
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "smugitem.h"
 #include "smugtalker.h"
 #include "smugwidget.h"
@@ -200,6 +200,9 @@ SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
     connect(m_talker, SIGNAL(signalListSubCategoriesDone(int,QString,QList<SmugCategory>)),
             this, SLOT(slotListSubCategoriesDone(int,QString,QList<SmugCategory>)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStopAndCloseProgressBar()));
+
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -253,6 +256,17 @@ void SmugWindow::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
+void SmugWindow::slotStopAndCloseProgressBar()
+{
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    m_widget->progressBar()->progressCompleted();
+    done(Close);
+}
+
 void SmugWindow::slotButtonClicked(int button)
 {
     switch (button)
@@ -262,6 +276,7 @@ void SmugWindow::slotButtonClicked(int button)
             {
                 writeSettings();
                 m_widget->imagesList()->listView()->clear();
+                m_widget->progressBar()->progressCompleted();
                 done(Close);
             }
             else // cancel login/transfer
@@ -270,6 +285,7 @@ void SmugWindow::slotButtonClicked(int button)
                 m_transferQueue.clear();
                 m_widget->m_imgList->cancelProcess();
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
             }
             break;
         case User1:
@@ -357,7 +373,7 @@ void SmugWindow::writeSettings()
 
 void SmugWindow::slotLoginProgress(int step, int maxStep, const QString &label)
 {
-    QProgressBar* progressBar = m_widget->progressBar();
+    KPProgressWidget* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
         progressBar->setFormat(label);
@@ -652,6 +668,8 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Smug Import"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
         // list photos of the album, then start download
         m_talker->listPhotos(m_widget->m_albumsCoB->itemData(
@@ -676,6 +694,8 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Smug Export"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
         kDebug() << "m_currentAlbumID" << m_currentAlbumID;
         uploadNextPhoto();
@@ -733,13 +753,14 @@ void SmugWindow::uploadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
     m_widget->m_imgList->processing(m_transferQueue.first());
 
     QString imgPath = m_transferQueue.first().path();
-    KPImageInfo info(m_interface, imgPath);
+    KPImageInfo info(imgPath);
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
@@ -796,6 +817,7 @@ void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
                          != KMessageBox::Continue)
         {
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
             return;
         }
@@ -809,6 +831,7 @@ void SmugWindow::downloadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
@@ -855,6 +878,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
             {
                 m_transferQueue.clear();
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
                 return;
             }
         }
@@ -868,6 +892,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         {
             m_transferQueue.clear();
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             return;
         }
     }

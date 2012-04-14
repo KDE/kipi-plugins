@@ -31,7 +31,6 @@
 #include <QTextDocument>
 #include <QFile>
 #include <QFileInfo>
-#include <QProgressDialog>
 
 // KDE includes
 

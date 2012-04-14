@@ -6,8 +6,8 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to wikimedia commons
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,11 +55,14 @@ extern "C"
 
 #include "wmwindow.h"
 
+namespace KIPIWikiMediaPlugin
+{
+
 K_PLUGIN_FACTORY( WikiMediaFactory, registerPlugin<Plugin_WikiMedia>(); )
 K_EXPORT_PLUGIN ( WikiMediaFactory("kipiplugin_wikimedia") )
 
-Plugin_WikiMedia::Plugin_WikiMedia(QObject* parent, const QVariantList& /*args*/)
-    : KIPI::Plugin(WikiMediaFactory::componentData(),
+Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(WikiMediaFactory::componentData(),
                    parent, "Wikimedia Commons Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_WikiMedia plugin loaded";
@@ -68,7 +71,7 @@ Plugin_WikiMedia::Plugin_WikiMedia(QObject* parent, const QVariantList& /*args*/
 void Plugin_WikiMedia::setup(QWidget* widget)
 {
     m_dlgExport = 0;
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_wikimedia");
 
@@ -81,7 +84,7 @@ void Plugin_WikiMedia::setup(QWidget* widget)
 
     addAction(m_actionExport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -98,7 +101,7 @@ Plugin_WikiMedia::~Plugin_WikiMedia()
 
 void Plugin_WikiMedia::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -111,7 +114,7 @@ void Plugin_WikiMedia::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIWikiMediaPlugin::WMWindow(interface, tmp, kapp->activeWindow());
+        m_dlgExport = new WMWindow(interface, tmp, kapp->activeWindow());
     }
     else
     {
@@ -122,11 +125,13 @@ void Plugin_WikiMedia::slotExport()
     }
 }
 
-KIPI::Category Plugin_WikiMedia::category( KAction* action ) const
+Category Plugin_WikiMedia::category( KAction* action ) const
 {
     if (action == m_actionExport)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPIWikiMediaPlugin

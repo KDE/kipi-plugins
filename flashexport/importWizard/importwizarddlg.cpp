@@ -43,7 +43,6 @@
 
 // Locale incudes.
 
-//#include "actionthread.h"
 #include "aboutdata.h"
 #include "intropage.h"
 #include "firstrunpage.h"
@@ -76,18 +75,19 @@ public:
     SimpleViewerSettingsContainer* settings;
 
     IntroPage*                     introPage;
-    FirstRunPage*               firstrunPage;
+    FirstRunPage*                  firstrunPage;
     SelectionPage*                 selectionPage;
     LookPage*                      lookPage;
     GeneralPage*                   generalPage;
     ProgressPage*                  progressPage;
 };
 
-ImportWizardDlg::ImportWizardDlg(FlashManager* mngr, QWidget* parent)
-    : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
+ImportWizardDlg::ImportWizardDlg(FlashManager* const mngr, QWidget* const parent)
+    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
 {
     setModal(false);
     setWindowTitle(i18n("Flash Export Wizard"));
+    setAboutData(new FlashExportAboutData());
 
     d->mngr              = mngr;
     //SimpleViewer must be initialized, or we will get a null poiter.
@@ -118,34 +118,13 @@ ImportWizardDlg::ImportWizardDlg(FlashManager* mngr, QWidget* parent)
             this, SLOT(slotFinishEnable()));
 
     // ---------------------------------------------------------------
-    // About data and help button.
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
-
-    // ---------------------------------------------------------------
 
     resize(600, 500);
-    
-
 }
 
 ImportWizardDlg::~ImportWizardDlg()
 {
     delete d;
-}
-
-void ImportWizardDlg::slotHelp()
-{
-    KToolInvocation::invokeHelp("flashexport", "kipi-plugins");
 }
 
 void ImportWizardDlg::slotActivate()
@@ -220,12 +199,12 @@ void ImportWizardDlg::next()
 
 void ImportWizardDlg::back()
 {
-
     if(checkIfPluginInstalled() && currentPage() == d->selectionPage->page())
         KAssistantDialog::back();
 
     if(currentPage() == d->progressPage->page())
         d->simple->slotCancel();
+
     KAssistantDialog::back();
 }
 
@@ -383,8 +362,6 @@ void ImportWizardDlg::saveSettings()
 
     config.sync();
     d->simple->setSettings(d->settings);
-
-    kDebug() <<"Settings Saved";
 }
 
 } // namespace KIPIFlashExportPlugin

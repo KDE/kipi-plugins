@@ -37,7 +37,7 @@ class IPTCCategories : public QWidget
 
 public:
 
-    IPTCCategories(QWidget* parent);
+    IPTCCategories(QWidget* const parent);
     ~IPTCCategories();
 
     void applyMetadata(QByteArray& iptcData);

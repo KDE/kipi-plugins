@@ -58,6 +58,7 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // LibKDcraw includes
 
@@ -126,7 +127,7 @@ void KPImagesListViewItem::updateInformation()
 {
     if (d->view->iface())
     {
-        KPImageInfo info(d->view->iface(), d->url);
+        KPImageInfo info(d->url);
 
         setComments(info.description());
 
@@ -499,6 +500,12 @@ public:
         progressTimer         = 0;
         loadRawThumb          = 0;
         progressPix           = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     bool              allowRAW;
@@ -524,11 +531,9 @@ public:
     KPRawThumbThread* loadRawThumb;
 };
 
-KPImagesList::KPImagesList(Interface* const iface, QWidget* const parent, int iconSize)
+KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
     : QWidget(parent), d(new KPImagesListPriv)
 {
-    d->iface = iface;
-
     if (iconSize != -1)  // default = ICONSIZE
     {
         setIconSize(iconSize);
@@ -827,7 +832,7 @@ void KPImagesList::slotAddImages(const KUrl::List& list)
 
 void KPImagesList::slotAddItems()
 {
-    KPImageDialog dlg(this, d->iface, false);
+    KPImageDialog dlg(this, false);
     KUrl::List urls = dlg.urls();
 
     if (!urls.isEmpty())

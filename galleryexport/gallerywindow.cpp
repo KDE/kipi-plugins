@@ -7,9 +7,9 @@
  * Description : a plugin to export to a remote Gallery server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -58,6 +58,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
@@ -93,10 +94,33 @@ public:
     QHash<QString, GAlbum> albumDict;
 
     KUrlLabel*             logo;
+
+    Interface*             interface;
+
+    Gallery*               gallery;
+
+    GalleryTalker*         talker;
+
+    QProgressDialog*       progressDlg;
+
+    unsigned int           uploadCount;
+
+    unsigned int           uploadTotal;
+
+    QStringList*           uploadList;
+
+    QString                firstAlbumName;
 };
 
 GalleryWindow::Private::Private(GalleryWindow* const parent)
 {
+
+    interface   = 0;
+    gallery     = 0;
+    talker      = 0;
+    progressDlg = 0;
+    uploadList  = 0;
+
     widget = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
@@ -130,7 +154,7 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     newAlbumBtn->setEnabled(false);
 
     addPhotoBtn = new QPushButton;
-    addPhotoBtn->setText(i18n("&Add Photos"));
+    addPhotoBtn->setText(i18n("&Add Selected Photos"));
     addPhotoBtn->setIcon(KIcon("list-add"));
     addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addPhotoBtn->setEnabled(false);
@@ -145,7 +169,7 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     QLabel *resizeLabel   = new QLabel(i18n("Maximum dimension:"));
 
     dimensionSpinBox      = new QSpinBox;
-    dimensionSpinBox->setRange(1,1600);
+    dimensionSpinBox->setRange(1,3200);
     dimensionSpinBox->setValue(600);
 
     resizeCheckBox->setChecked(false);
@@ -191,69 +215,59 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
 // --------------------------------------------------------------------------------------------------------------
 
-GalleryWindow::GalleryWindow(Interface* interface, QWidget *parent, Gallery* pGallery)
-             : KDialog(parent),
-               m_interface(interface),
-               mpGallery(pGallery),
-               d(new Private(this))
+GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, Gallery* const pGallery)
+    : KPToolDialog(parent),
+      d(new Private(this))
 {
+    d->interface = interface;
+    d->gallery   = pGallery;
+  
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
     setModal(false);
 
-    // About data.
-    m_about = new KPAboutData(ki18n("Gallery Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
-                                           ki18n("(c) 2003-2005, Renchi Raju\n"
-                                                    "(c) 2006-2007, Colin Guthrie\n"
-                                                    "(c) 2006-2009, Gilles Caulier\n"
-                                                    "(c) 2008, Andrea Diamantini\n"));
+    KPAboutData* about = new KPAboutData(ki18n("Gallery Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
+                                         ki18n("(c) 2003-2005, Renchi Raju\n"
+                                               "(c) 2006-2007, Colin Guthrie\n"
+                                               "(c) 2006-2012, Gilles Caulier\n"
+                                               "(c) 2008, Andrea Diamantini\n"));
 
-    m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
-                       "renchi dot raju at gmail dot com");
+    about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
+                     "renchi dot raju at gmail dot com");
 
-    m_about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
-                       "kde at colin dot guthr dot ie");
+    about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
+                     "kde at colin dot guthr dot ie");
 
-    m_about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
-                       "adjam7 at gmail dot com");
+    about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
+                     "adjam7 at gmail dot com");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    // help button
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("galleryexport");
+    setAboutData(about);
 
     // User1 Button : to conf gallery settings
-    KPushButton *confButton = button( User1 );
+    KPushButton* confButton = button( User1 );
     confButton->setText( i18n("Settings") );
     confButton->setIcon( KIcon("configure") );
     connect(confButton, SIGNAL(clicked()),
             this, SLOT(slotSettings()) );
 
-    // we need to let m_talker work..
-    m_talker = new GalleryTalker(d->widget);
+    // we need to let d->talker work..
+    d->talker = new GalleryTalker(d->widget);
 
     // setting progressDlg and its numeric hints
-    m_progressDlg = new QProgressDialog(this);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-    m_uploadCount = 0;
-    m_uploadTotal = 0;
-    mpUploadList  = new QStringList;
+    d->progressDlg = new QProgressDialog(this);
+    d->progressDlg->setModal(true);
+    d->progressDlg->setAutoReset(true);
+    d->progressDlg->setAutoClose(true);
+    d->uploadCount = 0;
+    d->uploadTotal = 0;
+    d->uploadList  = new QStringList;
 
     // connect functions
     connectSignals();
@@ -273,8 +287,7 @@ GalleryWindow::~GalleryWindow()
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
 
-    delete mpUploadList;
-    delete m_about;
+    delete d->uploadList;
 
     delete d;
 }
@@ -296,28 +309,28 @@ void GalleryWindow::connectSignals()
     connect(d->logo, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
 
-    connect(m_progressDlg, SIGNAL(canceled()),
+    connect(d->progressDlg, SIGNAL(canceled()),
             this, SLOT(slotAddPhotoCancel()));
 
-    connect(m_talker, SIGNAL(signalError(QString)),
+    connect(d->talker, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
 
-    connect(m_talker, SIGNAL(signalBusy(bool)),
+    connect(d->talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL(signalLoginFailed(QString)),
+    connect(d->talker, SIGNAL(signalLoginFailed(QString)),
             this, SLOT(slotLoginFailed(QString)));
 
-    connect(m_talker, SIGNAL(signalAlbums(QList<GAlbum>)),
+    connect(d->talker, SIGNAL(signalAlbums(QList<GAlbum>)),
             this, SLOT(slotAlbums(QList<GAlbum>)));
 
-    connect(m_talker, SIGNAL(signalPhotos(QList<GPhoto>)),
+    connect(d->talker, SIGNAL(signalPhotos(QList<GPhoto>)),
             this, SLOT(slotPhotos(QList<GPhoto>)));
 
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+    connect(d->talker, SIGNAL(signalAddPhotoSucceeded()),
             this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(QString)),
+    connect(d->talker, SIGNAL(signalAddPhotoFailed(QString)),
             this, SLOT(slotAddPhotoFailed(QString)));
 }
 
@@ -345,20 +358,15 @@ void GalleryWindow::readSettings()
     }
 }
 
-void GalleryWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
-}
-
 void GalleryWindow::slotDoLogin()
 {
-    GalleryTalker::setGallery2((2 == mpGallery->version()));
+    GalleryTalker::setGallery2((2 == d->gallery->version()));
 
-    KUrl url(mpGallery->url());
+    KUrl url(d->gallery->url());
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
-        url.setHost(mpGallery->url());
+        url.setHost(d->gallery->url());
     }
 
     if (!url.url().endsWith(QLatin1String(".php")))
@@ -370,13 +378,13 @@ void GalleryWindow::slotDoLogin()
     }
 
     // If we've done something clever, save it back to the gallery.
-    if (mpGallery->url() != url.url())
+    if (d->gallery->url() != url.url())
     {
-        mpGallery->setUrl(url.url());
-        mpGallery->save();
+        d->gallery->setUrl(url.url());
+        d->gallery->save();
     }
 
-    m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
+    d->talker->login(url.url(), d->gallery->username(), d->gallery->password());
 }
 
 void GalleryWindow::slotLoginFailed(const QString& msg)
@@ -391,7 +399,7 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
@@ -412,7 +420,7 @@ void GalleryWindow::slotBusy(bool val)
     else
     {
         setCursor(Qt::ArrowCursor);
-        bool loggedIn = m_talker->loggedIn();
+        bool loggedIn = d->talker->loggedIn();
         d->newAlbumBtn->setEnabled(loggedIn);
         d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
     }
@@ -420,7 +428,7 @@ void GalleryWindow::slotBusy(bool val)
 
 void GalleryWindow::slotError(const QString& msg)
 {
-    m_progressDlg->hide();
+    d->progressDlg->hide();
     KMessageBox::error(this, msg);
 }
 
@@ -447,8 +455,9 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             item->setText(0, cleanName(album.title) );
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
-            firstAlbumName = album.name;
+            d->firstAlbumName = album.name;
             item->setText(2, i18n("Album") );
+            item->setText(3, QString::number(album.ref_num) );
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
@@ -463,13 +472,14 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             while( !found && i < parentItemList.size() )
             {
                 parentItem = parentItemList.at(i);
-                if(parentItem && (parentItem->text(1) == QString::number(parentRefNum)))
+                if(parentItem && (parentItem->text(3) == QString::number(parentRefNum)))
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.title) );
                     item->setIcon(0, KIcon("inode-directory") );
                     item->setText(1, album.name );
                     item->setText(2, i18n("Album") );
+                    item->setText(3, QString::number(album.ref_num) );
 
                     d->albumDict.insert(album.title, album);
                     parentItemList << item;
@@ -527,10 +537,10 @@ void GalleryWindow::slotAlbumSelected()
     }
     else
     {
-        if (m_talker->loggedIn() && !albumName.isEmpty() )
+        if (d->talker->loggedIn() && !albumName.isEmpty() )
         {
             d->addPhotoBtn->setEnabled(true);
-            m_talker->listPhotos(albumName);
+            d->talker->listPhotos(albumName);
         }
         else
         {
@@ -662,11 +672,11 @@ void GalleryWindow::slotNewAlbum()
     {
         const GAlbum& album = d->albumDict.value( item->text(column) );
         parentAlbumName     = album.name;
-        m_talker->createAlbum( parentAlbumName, name, title, caption);
+        d->talker->createAlbum( parentAlbumName, name, title, caption);
     }
     else
     {
-        m_talker->createAlbum( firstAlbumName, name, title, caption );
+        d->talker->createAlbum( d->firstAlbumName, name, title, caption );
     }
 }
 
@@ -683,28 +693,28 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    KUrl::List urls = KPImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls(d->interface->currentSelection().images());
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
     for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        mpUploadList->append( (*it).path() );
+        d->uploadList->append( (*it).path() );
     }
 
-    m_uploadTotal = mpUploadList->count();
-    m_progressDlg->reset();
-    m_progressDlg->setMaximum(m_uploadTotal);
-    m_uploadCount = 0;
+    d->uploadTotal = d->uploadList->count();
+    d->progressDlg->reset();
+    d->progressDlg->setMaximum(d->uploadTotal);
+    d->uploadCount = 0;
     slotAddPhotoNext();
 }
 
 void GalleryWindow::slotAddPhotoNext()
 {
-    if ( mpUploadList->isEmpty() )
+    if ( d->uploadList->isEmpty() )
     {
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        d->progressDlg->reset();
+        d->progressDlg->hide();
         slotAlbumSelected();        // ?
         return;
     }
@@ -713,11 +723,11 @@ void GalleryWindow::slotAddPhotoNext()
     int column            = d->albumView->currentColumn();
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = mpUploadList->takeFirst();
-    KPImageInfo info(m_interface, photoPath);
+    QString photoPath     = d->uploadList->takeFirst();
+    KPImageInfo info(photoPath);
     QString title         = info.title();
     QString description   = info.description();
-    bool res              = m_talker->addPhoto(album.name, photoPath, title, description,
+    bool res              = d->talker->addPhoto(album.name, photoPath, title, description,
                                                d->resizeCheckBox->isChecked(),
                                                d->dimensionSpinBox->value() );
 
@@ -727,23 +737,23 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
+    d->progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
 
-    if (m_progressDlg->isHidden())
-        m_progressDlg->show();
+    if (d->progressDlg->isHidden())
+        d->progressDlg->show();
 }
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
-    m_uploadCount++;
-    m_progressDlg->setValue(m_uploadCount);
+    d->uploadCount++;
+    d->progressDlg->setValue(d->uploadCount);
     slotAddPhotoNext();
 }
 
 void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 {
-    m_progressDlg->reset();
-    m_progressDlg->hide();
+    d->progressDlg->reset();
+    d->progressDlg->hide();
 
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo into "
@@ -761,9 +771,9 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 
 void GalleryWindow::slotAddPhotoCancel()
 {
-    m_progressDlg->reset();
-    m_progressDlg->hide();
-    m_talker->cancel();
+    d->progressDlg->reset();
+    d->progressDlg->hide();
+    d->talker->cancel();
 }
 
 void GalleryWindow::slotEnableSpinBox(int n)
@@ -788,7 +798,7 @@ void GalleryWindow::slotEnableSpinBox(int n)
 void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
     if( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
@@ -796,8 +806,7 @@ void GalleryWindow::slotSettings()
     delete dlg;
 }
 
-
-QString GalleryWindow::cleanName(const QString& str)
+QString GalleryWindow::cleanName(const QString& str) const
 {
     QString plain = str;
     plain.replace("&lt;", "<");

@@ -142,7 +142,7 @@ public:
     MetadataCheckBox* maxApertureCheck;
 };
 
-EXIFLens::EXIFLens(QWidget* parent)
+EXIFLens::EXIFLens(QWidget* const parent)
     : QWidget(parent), d(new EXIFLensPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -363,7 +363,9 @@ void EXIFLens::readMetadata(QByteArray& exifData)
             d->maxApertureCheck->setChecked(true);
         }
         else
+        {
             d->maxApertureCheck->setValid(false);
+        }
     }
     d->maxApertureCB->setEnabled(d->maxApertureCheck->isChecked());
 

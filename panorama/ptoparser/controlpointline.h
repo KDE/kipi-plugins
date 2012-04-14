@@ -26,7 +26,7 @@
 #ifndef CONTROLPOINTLINE_H
 #define CONTROLPOINTLINE_H
 
-#include "common.h"
+#include "ptoparser/common.h"
 
 namespace KIPIPanoramaPlugin { namespace PtoParser
 {

@@ -84,7 +84,7 @@ public:
     MetadataCheckBox* customRenderedCheck;
 };
 
-EXIFAdjust::EXIFAdjust(QWidget* parent)
+EXIFAdjust::EXIFAdjust(QWidget* const parent)
     : QWidget(parent), d(new EXIFAdjustPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

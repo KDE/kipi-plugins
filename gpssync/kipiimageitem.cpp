@@ -39,7 +39,6 @@
 
 #include "kipiimagemodel.h"
 #include "kpimageinfo.h"
-#include "kphostsettings.h"
 
 using namespace KIPIPlugins;
 
@@ -138,14 +137,9 @@ KipiImageItem::~KipiImageItem()
 
 KPMetadata* KipiImageItem::getMetadataForFile() const
 {
-    QScopedPointer<KPMetadata> meta(new KPMetadata(m_interface));
+    QScopedPointer<KPMetadata> meta(new KPMetadata);
 
-    if (m_interface)
-    {
-        KPHostSettings hSettings(m_interface);
-        meta->setSettings(hSettings.metadataSettings());
-    }
-    else
+    if (!m_interface)
     {
         meta->setUseXMPSidecar4Reading(true);
         meta->setMetadataWritingMode(KPMetadata::WRITETOSIDECARONLY4READONLYFILES);
@@ -192,7 +186,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
     if (fromInterface && m_interface)
     {
         // try to load the GPS data from the KIPI interface:
-        KPImageInfo info(m_interface, m_url);
+        KPImageInfo info(m_url);
 
         if (info.hasLatitude() && info.hasLongitude())
         {
@@ -831,7 +825,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     // TODO: remove the altitude if it is not available
     if (m_interface)
     {
-        KPImageInfo info(m_interface, m_url);
+        KPImageInfo info(m_url);
 
         if (shouldWriteCoordinates)
         {

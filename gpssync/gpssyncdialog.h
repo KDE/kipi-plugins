@@ -7,7 +7,7 @@
  * @date   2006-05-16
  * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * @author Copyright (C) 2006-2011 by Gilles Caulier
+ * @author Copyright (C) 2006-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -36,7 +36,6 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
 
 // Libkgeomap includes
@@ -48,10 +47,17 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kptooldialog.h"
+
 namespace KGeoMap
 {
     class KGeoMapWidget;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -97,13 +103,13 @@ private:
 
 // ------------------------------------------------------------------------------------------------
 
-class GPSSyncDialog : public KDialog
+class GPSSyncDialog : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    GPSSyncDialog(KIPI::Interface* interface, QWidget* parent);
+    GPSSyncDialog(Interface* interface, QWidget* parent);
     ~GPSSyncDialog();
 
     void setImages(const KUrl::List& images);
@@ -139,7 +145,6 @@ private Q_SLOTS:
     void slotCurrentTabChanged(int);
     void slotBookmarkVisibilityToggled();
     void slotSetupChanged();
-    void slotHelp();
 
 private:
 

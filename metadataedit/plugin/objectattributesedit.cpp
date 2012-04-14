@@ -82,7 +82,7 @@ public:
     SqueezedComboBox* dataList;
 };
 
-ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size)
+ObjectAttributesEdit::ObjectAttributesEdit(QWidget* const parent, bool ascii, int size)
     : QWidget(parent), d(new ObjectAttributesEditPriv)
 {
     QGridLayout *grid = new QGridLayout(this);

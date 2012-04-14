@@ -38,12 +38,13 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 
 class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QRadioButton;
-class QProgressBar;
+
 class KPushButton;
 class KComboBox;
 
@@ -75,7 +76,7 @@ public:
 
     KPImagesList* imagesList() const;
 
-    QProgressBar* progressBar() const;
+    KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
 
@@ -113,7 +114,7 @@ private:
     KPImagesList* m_imgList;
     UploadWidget* m_uploadWidget;
 
-    QProgressBar* m_progressBar;
+    KPProgressWidget* m_progressBar;
 };
 
 } // namespace KIPIPicasawebExportPlugin

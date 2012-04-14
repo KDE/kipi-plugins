@@ -57,17 +57,23 @@ public:
     enum State
     {
         GE_LOGIN = 0,
+        GE_GETVERSION,
         GE_LISTALBUMS,
         GE_CHECKPHOTOEXIST,
-        GE_ADDPHOTO,
-        GE_ADDTHUMB,
-        GE_ADDHQ,
-        GE_ADDPHOTOSUMMARY
+        // Support for Web API >= 2.4
+        GE_ADDPHOTOCHUNK,
+        GE_ADDPHOTOSUMMARY,
+        // Support for Web API < 2.4
+        GE_OLD_ADDPHOTOCHUNK,
+        GE_OLD_ADDTHUMB,
+        GE_OLD_ADDHQ,
+        GE_OLD_ADDPHOTOSUMMARY
     };
 
     enum
     {
-        CHUNK_MAX_SIZE = 500000
+        CHUNK_MAX_SIZE = 500000,
+        PIWIGO_VER_2_4 = 24
     };
 
 public:
@@ -86,16 +92,15 @@ public:
     void listAlbums();
     void listPhotos(const QString& albumName);
 
+    /* TODO Implement this function
     void createAlbum(const QString& parentAlbumName,
                      const QString& albumName,
                      const QString& albumTitle,
-                     const QString& albumCaption);
+                     const QString& albumCaption);*/
 
     bool addPhoto(int albumId,
                   const QString& photoPath,
-                  const QString& caption = QString(),
-                  bool  captionIsTitle = true, bool captionIsDescription = false,
-                  bool  rescale = false, bool downloadHQ = false, int maxDim = 600, int thumbDim = 128);
+                  bool  rescale = false, int maxWidth = 800, int maxHeight = 600, int thumbDim = 128);
 
     void cancel();
 
@@ -112,14 +117,23 @@ Q_SIGNALS:
 private:
 
     void parseResponseLogin(const QByteArray& data);
+    void parseResponseGetVersion(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
     void parseResponseDoesPhotoExist(const QByteArray& data);
-    void parseResponseAddPhoto(const QByteArray& data);
-    void parseResponseAddThumbnail(const QByteArray& data);
-    void addHQNextChunk();
-    void parseResponseAddHQPhoto(const QByteArray& data);
+
+
+    void addNextChunk();
+    void parseResponseAddPhotoChunk(const QByteArray& data);
     void addPhotoSummary();
     void parseResponseAddPhotoSummary(const QByteArray& data);
+    
+    // Support for Web API < 2.4
+    void parseResponseOldAddPhoto(const QByteArray& data);
+    void parseResponseOldAddThumbnail(const QByteArray& data);
+    void addHQNextChunk();
+    void parseResponseOldAddHQPhoto(const QByteArray& data);
+    void addOldPhotoSummary();
+    void parseResponseOldAddPhotoSummary(const QByteArray& data);
 
     QByteArray computeMD5Sum(const QString& filepath);
 
@@ -138,15 +152,17 @@ private:
     bool              m_loggedIn;
     QByteArray        m_talker_buffer;
     uint              m_chunkId;
+    int               m_version;
 
     QByteArray        m_md5sum;
     QString           m_path;
     int               m_albumId;
     QString           m_thumbpath;
     QString           m_hqpath;
-    QString           m_comment;
-    QString           m_name;
-    QDateTime         m_date;
+    QString           m_comment;    // Synchronized with Piwigo comment
+    QString           m_title;      // Synchronized with Piwigo name
+    QString           m_author;     // Synchronized with Piwigo author
+    QDateTime         m_date;       // Synchronized with Piwigo date
 
     static QString    s_authToken;
 };

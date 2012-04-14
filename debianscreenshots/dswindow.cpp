@@ -25,19 +25,16 @@
 // Qt includes
 
 #include <QFileInfo>
-#include <QProgressBar>
 #include <QCloseEvent>
 #include <QImageReader>
 
 // KDE includes
 
 #include <kmenu.h>
-#include <khelpmenu.h>
 #include <klineedit.h>
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 #include <kdebug.h>
 
 // LibKDcraw includes
@@ -48,6 +45,7 @@
 
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
+#include "kpprogresswidget.h"
 
 // Local includes
 
@@ -60,8 +58,8 @@ namespace KIPIDebianScreenshotsPlugin
 static int maxWidth  = 800;
 static int maxHeight = 600;
 
-DsWindow::DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
-    : KDialog(0),
+DsWindow::DsWindow(Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
+    : KPToolDialog(0),
       m_uploadEnabled(false),
       m_imagesCount(0),
       m_imagesTotal(0),
@@ -75,7 +73,7 @@ DsWindow::DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
 //    m_imagesCount = 0;
 //    m_imagesTotal = 0;
     m_talker = new DsTalker(this);
-    m_widget = new DsWidget(this, interface);
+    m_widget = new DsWidget(this);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("debianscreenshots"));
@@ -101,27 +99,24 @@ DsWindow::DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()) );
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStopAndCloseProgressBar()));
+
     // ------------------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Debian Screenshots Export"), 0,
-                      KAboutData::License_GPL,
-                      ki18n("A Kipi plugin to export an image collection "
-                            "to the Debian Screenshots web site."),
-                      ki18n("(c) 2010, Pau Garcia i Quiles\n"));
+    KPAboutData* about = new KPAboutData(ki18n("Debian Screenshots Export"), 0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to export an image collection "
+                                   "to the Debian Screenshots web site."),
+                              ki18n("(c) 2010, Pau Garcia i Quiles\n"));
 
-    m_about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
                        "pgquiles at elpauer dot org");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()) );
+    about->handbookEntry = QString("debianscreenshots");
+    setAboutData(about);
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    // ------------------------------------------------------------------------
 
     connect(m_talker, SIGNAL(signalAddScreenshotDone(int,QString)),
             this, SLOT(slotAddScreenshotDone(int,QString)));
@@ -129,12 +124,15 @@ DsWindow::DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
 
 DsWindow::~DsWindow()
 {
-    delete m_about;
 }
 
-void DsWindow::slotHelp()
+void DsWindow::slotStopAndCloseProgressBar()
 {
-    KToolInvocation::invokeHelp("debianscreenshots", "kipi-plugins");
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    m_widget->imagesList()->listView()->clear();
+    m_widget->progressBar()->progressCompleted();
+    done(Close);
 }
 
 void DsWindow::slotButtonClicked(int button)
@@ -146,6 +144,7 @@ void DsWindow::slotButtonClicked(int button)
             if (m_widget->progressBar()->isHidden())
             {
                 m_widget->imagesList()->listView()->clear();
+                m_widget->progressBar()->progressCompleted();
                 done(Close);
             }
             else // cancel login/transfer
@@ -153,6 +152,7 @@ void DsWindow::slotButtonClicked(int button)
                 m_transferQueue.clear();
                 m_widget->m_imgList->cancelProcess();
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
             }
             break;
         }
@@ -164,6 +164,7 @@ void DsWindow::slotButtonClicked(int button)
         default:
         {
              KDialog::slotButtonClicked(button);
+             break;
         }
     }
 }
@@ -199,6 +200,8 @@ void DsWindow::slotStartTransfer()
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
+    m_widget->progressBar()->progressScheduled(i18n("Debian Screenshots export"), true, true);
+    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
     uploadNextPhoto();
 }

@@ -1,22 +1,26 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.digikam.org
+ *
+ * Date        : 2006-04-04
+ * Description : A KIPI plugin to generate HTML image galleries
+ *
+ * Copyright (C) 2006-2010 by Aurelien Gateau <aurelien dot gateau at free.fr>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
 // vim: set tabstop=4 shiftwidth=4 noexpandtab:
-/*
-A KIPI plugin to generate HTML image galleries
-Copyright 2006 by Aurelien Gateau <aurelien dot gateau at free.fr>
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-*/
 
 #include "wizard.moc"
 
@@ -59,47 +63,60 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "ui_themepage.h"
 #include "ui_themeparameterspage.h"
 
-namespace KIPIHTMLExport {
+namespace KIPIHTMLExport
+{
 
-
-class ThemeListBoxItem : public QListWidgetItem {
+class ThemeListBoxItem : public QListWidgetItem
+{
 public:
-    ThemeListBoxItem(QListWidget* list, Theme::Ptr theme)
-    : QListWidgetItem(theme->name(), list)
-    , mTheme(theme)
-    {}
+
+    ThemeListBoxItem(QListWidget* const list, Theme::Ptr theme)
+        : QListWidgetItem(theme->name(), list), 
+          mTheme(theme)
+    {
+    }
 
     Theme::Ptr mTheme;
 };
 
+// ----------------------------------------------------------------------------------------------
 
 template <class Ui_Class>
-class WizardPage : public QWidget, public Ui_Class {
+
+class WizardPage : public QWidget, public Ui_Class
+{
 public:
-    WizardPage(KAssistantDialog* dialog, const QString& title)
-    : QWidget(dialog) {
+
+    WizardPage(KAssistantDialog* const dialog, const QString& title)
+        : QWidget(dialog)
+    {
         this->setupUi(this);
         layout()->setMargin(0);
         mPage = dialog->addPage(this, title);
     }
 
-    KPageWidgetItem* page() const {
+    KPageWidgetItem* page() const
+    {
         return mPage;
     }
 
 private:
+
     KPageWidgetItem* mPage;
 };
 
+// ----------------------------------------------------------------------------------------------
 
-typedef WizardPage<Ui_ThemePage> ThemePage;
+typedef WizardPage<Ui_ThemePage>           ThemePage;
 typedef WizardPage<Ui_ThemeParametersPage> ThemeParametersPage;
-typedef WizardPage<Ui_OutputPage> OutputPage;
+typedef WizardPage<Ui_OutputPage>          OutputPage;
 
-class ImageSettingsPage : public WizardPage<Ui_ImageSettingsPage> {
+class ImageSettingsPage : public WizardPage<Ui_ImageSettingsPage>
+{
 public:
-    ImageSettingsPage(KAssistantDialog* dialog, const QString& title)
-    : WizardPage<Ui_ImageSettingsPage>(dialog, title)
+
+    ImageSettingsPage(KAssistantDialog* const dialog, const QString& title)
+        : WizardPage<Ui_ImageSettingsPage>(dialog, title)
     {
         InvisibleButtonGroup* group = new InvisibleButtonGroup(this);
         group->setObjectName("kcfg_useOriginalImageAsFullImage");
@@ -108,38 +125,44 @@ public:
     }
 };
 
+// ----------------------------------------------------------------------------------------------
 
-struct Wizard::Private {
-    GalleryInfo* mInfo;
-    KConfigDialogManager* mConfigManager;
+struct Wizard::Private
+{
+    GalleryInfo*                    mInfo;
+    KConfigDialogManager*           mConfigManager;
 
-    KIPI::ImageCollectionSelector* mCollectionSelector;
-    KPageWidgetItem* mCollectionSelectorPage;
-    ThemePage* mThemePage;
-    ThemeParametersPage* mThemeParametersPage;
-    ImageSettingsPage* mImageSettingsPage;
-    OutputPage* mOutputPage;
+    ImageCollectionSelector*        mCollectionSelector;
+    KPageWidgetItem*                mCollectionSelectorPage;
+    ThemePage*                      mThemePage;
+    ThemeParametersPage*            mThemeParametersPage;
+    ImageSettingsPage*              mImageSettingsPage;
+    OutputPage*                     mOutputPage;
 
-    KIPIPlugins::KPAboutData* mAbout;
-    QMap<QByteArray, QWidget*> mThemeParameterWidgetFromName;
+    QMap<QByteArray, QWidget*>      mThemeParameterWidgetFromName;
 
-    void initThemePage() {
-        KListWidget* listWidget=mThemePage->mThemeList;
+    void initThemePage()
+    {
+        KListWidget* listWidget = mThemePage->mThemeList;
         Theme::List list=Theme::getList();
         Theme::List::ConstIterator it=list.constBegin(), end=list.constEnd();
-        for (; it!=end; ++it) {
-            Theme::Ptr theme = *it;
-            ThemeListBoxItem* item=new ThemeListBoxItem(listWidget, theme);
-            if ( theme->internalName()==mInfo->theme() ) {
+        for (; it!=end; ++it)
+        {
+            Theme::Ptr theme       = *it;
+            ThemeListBoxItem* item = new ThemeListBoxItem(listWidget, theme);
+
+            if ( theme->internalName()==mInfo->theme() )
+            {
                 listWidget->setCurrentItem(item);
             }
         }
     }
 
-    void fillThemeParametersPage(Theme::Ptr theme) {
+    void fillThemeParametersPage(Theme::Ptr theme)
+    {
         // Create a new content page
         delete mThemeParametersPage->content;
-        QWidget* content = new QWidget;
+        QWidget* content              = new QWidget;
         mThemeParametersPage->content = content;
         mThemeParametersPage->scrollArea->setWidget(mThemeParametersPage->content);
         mThemeParametersPage->scrollArea->viewport()->setAutoFillBackground(false);
@@ -153,12 +176,13 @@ struct Wizard::Private {
         layout->setSpacing(KDialog::spacingHint());
 
         // Create widgets
-        Theme::ParameterList parameterList = theme->parameterList();
-        QString themeInternalName = theme->internalName();
-        Theme::ParameterList::ConstIterator
-            it = parameterList.constBegin(),
-            end = parameterList.constEnd();
-        for (; it!=end; ++it) {
+        Theme::ParameterList parameterList      = theme->parameterList();
+        QString themeInternalName               = theme->internalName();
+        Theme::ParameterList::ConstIterator it  = parameterList.constBegin(),
+                                            end = parameterList.constEnd();
+
+        for (; it!=end; ++it)
+        {
             AbstractThemeParameter* themeParameter = *it;
             QByteArray internalName = themeParameter->internalName();
             QString value = mInfo->getThemeParameterValue(
@@ -177,10 +201,13 @@ struct Wizard::Private {
             int row = layout->rowCount();
             layout->addWidget(label, row, 0);
 
-            if (widget->sizePolicy().expandingDirections() & Qt::Horizontal) {
+            if (widget->sizePolicy().expandingDirections() & Qt::Horizontal)
+            {
                 // Widget wants full width
                 layout->addWidget(widget, row, 1, 1, 2);
-            } else {
+            }
+            else
+            {
                 // Widget doesn't like to be stretched, add a spacer next to it
                 layout->addWidget(widget, row, 1);
                 QSpacerItem* spacer = new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -197,45 +224,37 @@ struct Wizard::Private {
     }
 };
 
-Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
-: KAssistantDialog(parent)
+Wizard::Wizard(QWidget* const parent, GalleryInfo* const info, Interface* const interface)
+    : KPWizardDialog(parent)
 {
-    d=new Private;
-    d->mInfo=info;
+    d        = new Private;
+    d->mInfo = info;
 
     setCaption(i18n("Export image collections to HTML pages"));
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->mAbout = new KIPIPlugins::KPAboutData(
-        ki18n("HTML Export"),
-        QByteArray(),
-        KAboutData::License_GPL,
-        ki18n("A KIPI plugin to export image collections to HTML pages"),
-        ki18n("(c) 2006-2009, Aurelien Gateau\n"
-              "(c) 2010, Gianluca Urgese"));
+    KPAboutData* about = new KPAboutData(
+                                ki18n("HTML Export"),
+                                QByteArray(),
+                                KAboutData::License_GPL,
+                                ki18n("A KIPI plugin to export image collections to HTML pages"),
+                                ki18n("(c) 2006-2009, Aurelien Gateau\n"
+                                      "(c) 2010, Gianluca Urgese"));
 
-    d->mAbout->addAuthor(
+    about->addAuthor(
         ki18n("Gianluca Urgese"),
         ki18n("Maintainer"),
         "giasone.82@gmail.com");
 
-    d->mAbout->addAuthor(
+    about->addAuthor(
         ki18n("Aurelien Gateau"),
         ki18n("Former Author and Maintainer"),
         "agateau@kde.org");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->mAbout, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("htmlexport");
+    setAboutData(about);
 
     // ---------------------------------------------------------------
 
@@ -269,42 +288,44 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
     updateFinishPageValidity();
 }
 
-
-Wizard::~Wizard() {
-    delete d->mAbout;
+Wizard::~Wizard()
+{
     delete d;
 }
 
-void Wizard::slotHelp() {
-    KToolInvocation::invokeHelp("htmlexport", "kipi-plugins");
-}
-
-void Wizard::updateFinishPageValidity() {
+void Wizard::updateFinishPageValidity()
+{
     setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destUrl->url().isEmpty());
 }
 
 
-void Wizard::updateCollectionSelectorPageValidity() {
+void Wizard::updateCollectionSelectorPageValidity()
+{
     setValid(d->mCollectionSelectorPage, !d->mCollectionSelector->selectedImageCollections().empty());
 }
 
+void Wizard::slotThemeSelectionChanged()
+{
+    KListWidget* listWidget = d->mThemePage->mThemeList;
+    KTextBrowser* browser   = d->mThemePage->mThemeInfo;
 
-void Wizard::slotThemeSelectionChanged() {
-    KListWidget* listWidget=d->mThemePage->mThemeList;
-    KTextBrowser* browser=d->mThemePage->mThemeInfo;
-    if (listWidget->currentItem()) {
+    if (listWidget->currentItem())
+    {
         Theme::Ptr theme=static_cast<ThemeListBoxItem*>(listWidget->currentItem())->mTheme;
 
-        QString url=theme->authorUrl();
-        QString author=theme->authorName();
-	bool allowNonsquareThumbnails=theme->allowNonsquareThumbnails();
-        if (!url.isEmpty()) {
+        QString url    = theme->authorUrl();
+        QString author = theme->authorName();
+        bool allowNonsquareThumbnails=theme->allowNonsquareThumbnails();
+        if (!url.isEmpty())
+        {
             author=QString("<a href='%1'>%2</a>").arg(url).arg(author);
         }
 
-        QString preview=theme->previewUrl();
-        QString image= "";
-        if (!preview.isEmpty()) {
+        QString preview = theme->previewUrl();
+        QString image   = "";
+
+        if (!preview.isEmpty())
+        {
             image=QString("<img src='%1/%2' /><br/><br/>").arg(theme->directory(), theme->previewUrl());
         }
 
@@ -319,37 +340,40 @@ void Wizard::slotThemeSelectionChanged() {
         Theme::ParameterList parameterList = theme->parameterList();
         setAppropriate(d->mThemeParametersPage->page(), parameterList.size() > 0);
 
-	d->mImageSettingsPage->kcfg_thumbnailSquare->setEnabled(allowNonsquareThumbnails);
-	if (!allowNonsquareThumbnails)
-		d->mImageSettingsPage->kcfg_thumbnailSquare->setChecked(true);
+        d->mImageSettingsPage->kcfg_thumbnailSquare->setEnabled(allowNonsquareThumbnails);
+        
+        if (!allowNonsquareThumbnails)
+            d->mImageSettingsPage->kcfg_thumbnailSquare->setChecked(true);
 
         d->fillThemeParametersPage(theme);
-    } else {
+    }
+    else
+    {
         browser->clear();
         setValid(d->mThemePage->page(), false);
     }
 }
 
-
 /**
  * Update mInfo
  */
-void Wizard::accept() {
+void Wizard::accept()
+{
     d->mInfo->mCollectionList=d->mCollectionSelector->selectedImageCollections();
 
-    Theme::Ptr theme=static_cast<ThemeListBoxItem*>(d->mThemePage->mThemeList->currentItem())->mTheme;
+    Theme::Ptr theme          = static_cast<ThemeListBoxItem*>(d->mThemePage->mThemeList->currentItem())->mTheme;
     QString themeInternalName = theme->internalName();
     d->mInfo->setTheme(themeInternalName);
 
-    Theme::ParameterList parameterList = theme->parameterList();
-    Theme::ParameterList::ConstIterator
-        it = parameterList.constBegin(),
-           end = parameterList.constEnd();
-    for (; it!=end; ++it) {
+    Theme::ParameterList parameterList      = theme->parameterList();
+    Theme::ParameterList::ConstIterator it  = parameterList.constBegin(),
+                                        end = parameterList.constEnd();
+    for (; it!=end; ++it)
+    {
         AbstractThemeParameter* themeParameter = *it;
-        QByteArray parameterInternalName = themeParameter->internalName();
-        QWidget* widget = d->mThemeParameterWidgetFromName[parameterInternalName];
-        QString value = themeParameter->valueFromWidget(widget);
+        QByteArray parameterInternalName       = themeParameter->internalName();
+        QWidget* widget                        = d->mThemeParameterWidgetFromName[parameterInternalName];
+        QString value                          = themeParameter->valueFromWidget(widget);
 
         d->mInfo->setThemeParameterValue(
             themeInternalName,
@@ -361,6 +385,5 @@ void Wizard::accept() {
 
     KAssistantDialog::accept();
 }
-
 
 } // namespace KIPIHTMLExport

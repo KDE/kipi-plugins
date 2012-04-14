@@ -1,22 +1,22 @@
-SUBDIRS(icons)
+ADD_SUBDIRECTORY(icons)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+#                     ${CMAKE_CURRENT_SOURCE_DIR}/ptogenerator
                     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser
+                    ${CMAKE_CURRENT_SOURCE_DIR}/ptotype
+                    ${CMAKE_CURRENT_SOURCE_DIR}/tasks
                     ${Boost_INCLUDE_DIR}/boost              # NOTICE: this is the only way for my system to compile it
 #                     ${Boost_INCLUDE_DIRS}
                    )
 
-IF(OPENMP_FOUND AND NOT APPLE)
-    ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
-    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-        SET(OPENMP_LDFLAGS "-lgomp")
-    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-        SET(OPENMP_LDFLAGS "-xopenmp")
-    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-ENDIF(OPENMP_FOUND AND NOT APPLE)
+# Enable exceptions for boost::spirit::karma, because of a bug in
+#     boost/numeric/conversion/converter_policies.hpp
+# that prevent us from karma without exceptions
+# Note that adding -fexceptions is not enough because -DQT_NO_EXCEPTIONS
+# should be unset at the same time, hence the following line:
+ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 INSTALL(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
@@ -25,14 +25,15 @@ INSTALL(DIRECTORY pics
 # Common source code
 
 SET(panorama_common_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptotype/ptotype.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/common.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/controlpointline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/imageline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/optimisationline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/projectline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/ptoparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/ptotype.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/variousgrammar.cpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/ptogenerator/ptogenerator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
@@ -43,6 +44,17 @@ SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/optimizepage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/previewpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/task.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/preprocesstask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createptotask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/cpfindtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/cpcleantask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/optimisationtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createpreviewtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createmktask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/compilemksteptask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/compilemktask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/copyfilestask.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
@@ -56,11 +68,11 @@ KDE4_ADD_LIBRARY(libpanorama STATIC ${panorama_common_SRCS})
 
 TARGET_LINK_LIBRARIES(libpanorama
                       ${KDE4_KPARTS_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
-                      ${OPENMP_LDFLAGS}
                       kipiplugins
                      )
 
@@ -81,7 +93,7 @@ INSTALL(FILES plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_
 
 SET(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
 
-KDE4_ADD_APP_ICON(panoramagui_SRCS "panorama")
+KDE4_ADD_APP_ICON(panoramagui_SRCS "./icons/*panorama.png")
 
 KDE4_ADD_EXECUTABLE(panoramagui ${panorama_SRCS})
 

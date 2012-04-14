@@ -482,8 +482,9 @@ void LookPage::setPageContent(int plugType)
             break;
         }
 
-    default:
-        kDebug() << "Unknown plugin type";
+        default:
+            kDebug() << "Unknown plugin type";
+            break;
     }
 
     // ------------------------------------------------------------------------
@@ -596,6 +597,7 @@ void LookPage::settings(SimpleViewerSettingsContainer* const settings)
             settings->thumbnailColumns  = d->thumbnailColumns->value();
             settings->backgroundColor   = d->backgroundColor->color();
             settings->textColor         = d->textColor->color();
+            break;
         }
     }
 }

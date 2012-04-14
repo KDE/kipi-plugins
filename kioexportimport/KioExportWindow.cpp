@@ -62,7 +62,7 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const int
         kFatal() << "Interface is empty";
     }
 
-    m_exportWidget = new KioExportWidget(this, interface);
+    m_exportWidget = new KioExportWidget(this);
     setMainWidget(m_exportWidget);
 
     // -- Window setup ------------------------------------------------------

@@ -78,7 +78,7 @@ public:
     AltLangStringsEdit* copyrightEdit;
 };
 
-XMPContent::XMPContent(QWidget* parent)
+XMPContent::XMPContent(QWidget* const parent)
     : QWidget(parent), d(new XMPContentPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

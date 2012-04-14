@@ -76,7 +76,7 @@ public:
     KListWidget* subCategoriesBox;
 };
 
-XMPCategories::XMPCategories(QWidget* parent)
+XMPCategories::XMPCategories(QWidget* const parent)
     : QWidget(parent), d(new XMPCategoriesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

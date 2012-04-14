@@ -40,11 +40,14 @@
 
 #include "calwizard.h"
 
+namespace KIPICalendarPlugin
+{
+
 K_PLUGIN_FACTORY(CalendarFactory, registerPlugin<Plugin_Calendar>();)
 K_EXPORT_PLUGIN(CalendarFactory("kipiplugin_calendar"))
 
-Plugin_Calendar::Plugin_Calendar(QObject* parent, const QVariantList&)
-    : KIPI::Plugin(CalendarFactory::componentData(), parent, "Calendar")
+Plugin_Calendar::Plugin_Calendar(QObject* const parent, const QVariantList&)
+    : Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
 }
@@ -55,7 +58,7 @@ Plugin_Calendar::~Plugin_Calendar()
 
 void Plugin_Calendar::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     m_actionCalendar = actionCollection()->addAction("calendar");
     m_actionCalendar->setText(i18n("Create Calendar..."));
@@ -66,7 +69,7 @@ void Plugin_Calendar::setup(QWidget* widget)
 
     addAction(m_actionCalendar);
 
-    m_interface = dynamic_cast< KIPI::Interface* >(parent());
+    m_interface = dynamic_cast<Interface*>(parent());
 
     if (!m_interface)
     {
@@ -77,17 +80,19 @@ void Plugin_Calendar::setup(QWidget* widget)
 
 void Plugin_Calendar::slotActivate()
 {
-    KIPICalendarPlugin::CalWizard w(m_interface, kapp->activeWindow());
+    CalWizard w(m_interface, kapp->activeWindow());
     w.exec();
 }
 
-KIPI::Category Plugin_Calendar::category(KAction* action) const
+Category Plugin_Calendar::category(KAction* action) const
 {
     if (action == m_actionCalendar)
     {
-        return KIPI::ToolsPlugin;
+        return ToolsPlugin;
     }
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ToolsPlugin; // no warning from compiler, please
+    return ToolsPlugin; // no warning from compiler, please
 }
+
+}  // NameSpace KIPICalendarPlugin

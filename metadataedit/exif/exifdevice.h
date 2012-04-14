@@ -37,7 +37,7 @@ class EXIFDevice : public QWidget
 
 public:
 
-    EXIFDevice(QWidget* parent);
+    EXIFDevice(QWidget* const parent);
     ~EXIFDevice();
 
     void applyMetadata(QByteArray& exifData);

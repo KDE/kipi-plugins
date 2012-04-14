@@ -40,10 +40,6 @@
 #include <klocale.h>
 #include <kapplication.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpimageslist.h"
@@ -84,7 +80,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
                          "the panorama.</p>"
                          "</qt>"));
 
-    d->list = new KPImagesList(d->mngr->iface(), vbox);
+    d->list = new KPImagesList(vbox);
     d->list->slotAddImages(d->mngr->itemsList());
 
     setPageWidget(vbox);

@@ -82,7 +82,7 @@ public:
     MultiStringsEdit* contactEdit;
 };
 
-IPTCCredits::IPTCCredits(QWidget* parent)
+IPTCCredits::IPTCCredits(QWidget* const parent)
     : QWidget(parent), d(new IPTCCreditsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

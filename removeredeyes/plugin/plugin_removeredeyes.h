@@ -35,16 +35,21 @@
 
 class KAction;
 
-class Plugin_RemoveRedEyes: public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIRemoveRedEyesPlugin
+{
+
+class Plugin_RemoveRedEyes: public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_RemoveRedEyes(QObject* parent, const QVariantList& args);
+    Plugin_RemoveRedEyes(QObject* const parent, const QVariantList& args);
     ~Plugin_RemoveRedEyes();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget* widget);
 
 private Q_SLOTS:
@@ -55,5 +60,7 @@ private:
 
     KAction* m_action;
 };
+
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif // PLUGIN_REMOVEREDEYES_H

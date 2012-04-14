@@ -49,12 +49,11 @@ public:
     ImageRotate();
     ~ImageRotate();
 
-    bool rotate(const QString& src, RotateAction angle, QString& err, bool updateFileTimeStamp);
+    bool rotate(const QString& src, RotateAction angle, QString& err);
 
 private:
 
-    bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, 
-                    QString& err, bool updateFileTimeStamp);
+    bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err);
     bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err);
 
 private:

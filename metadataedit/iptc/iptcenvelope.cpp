@@ -157,7 +157,7 @@ public:
     SqueezedComboBox*              formatCB;
 };
 
-IPTCEnvelope::IPTCEnvelope(QWidget* parent)
+IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
     : QWidget(parent), d(new IPTCEnvelopePriv)
 {
     QGridLayout* grid = new QGridLayout(this);

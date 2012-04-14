@@ -27,7 +27,6 @@
 // Qt includes
 
 #include <QLayout>
-#include <QProgressBar>
 #include <QCloseEvent>
 
 // KDE includes
@@ -37,12 +36,10 @@
 #include <klocale.h>
 #include <kmenu.h>
 #include <kurl.h>
-#include <khelpmenu.h>
 #include <klineedit.h>
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 
 // Mediawiki includes
 
@@ -58,6 +55,7 @@
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 #include "wmwidget.h"
 #include "wikimediajob.h"
 
@@ -65,12 +63,12 @@ namespace KIPIWikiMediaPlugin
 {
 
 WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir    = tmpFolder;
     m_interface = interface;
-    m_widget    = new WmWidget(this, interface);
+    m_widget    = new WmWidget(this);
     m_uploadJob = 0;
     m_login     = QString();
     m_pass      = QString();
@@ -84,32 +82,27 @@ WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget
     setButtonGuiItem(User1,
                      KGuiItem(i18n("Start Upload"), "network-workgroup",
                               i18n("Start upload to Wikimedia Commons")));
-    enableButton(User1,false);
+    enableButton(User1, false);
     m_widget->setMinimumSize(700, 500);
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Wikimedia Commons Export"), 0,
-                               KAboutData::License_GPL,
-                               ki18n("A Kipi plugin to export image collection "
-                                     "to Wikimedia Commons.\n"
-                                     "Using libmediawiki version %1").subs(QString(mediawiki_version)),
-                               ki18n("(c) 2011, Alexandre Mendes"));
+    KPAboutData* about = new KPAboutData(ki18n("Wikimedia Commons Export"), 0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collection "
+                                               "to Wikimedia Commons.\n"
+                                               "Using libmediawiki version %1").subs(QString(mediawiki_version)),
+                                         ki18n("(c) 2011, Alexandre Mendes"));
 
-    m_about->addAuthor(ki18n("Alexandre Mendes"), ki18n("Author"),
-                       "alex dot mendes1988 at gmail dot com");
+    about->addAuthor(ki18n("Alexandre Mendes"), ki18n("Author"),
+                     "alex dot mendes1988 at gmail dot com");
 
-    m_about->addAuthor(ki18n("Guillaume Hormiere"), ki18n("Developer"),
-                       "hormiere dot guillaume at gmail dot com");
+    about->addAuthor(ki18n("Guillaume Hormiere"), ki18n("Developer"),
+                     "hormiere dot guillaume at gmail dot com");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("wikimedia");
+    setAboutData(about);
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()));
@@ -123,13 +116,15 @@ WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget
     connect(m_widget, SIGNAL(signalLoginRequest(QString, QString, QUrl)),
             this, SLOT(slotDoLogin(QString, QString, QUrl)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotClose()));
+
     readSettings();
     reactivate();
 }
 
 WMWindow::~WMWindow()
 {
-    delete m_about;
 }
 
 void WMWindow::closeEvent(QCloseEvent* e)
@@ -169,13 +164,9 @@ void WMWindow::saveSettings()
     config.sync();
 }
 
-void WMWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("wikimedia", "kipi-plugins");
-}
-
 void WMWindow::slotClose()
 {
+    m_widget->progressBar()->progressCompleted();
     saveSettings();
     done(Close);
 }
@@ -192,7 +183,7 @@ void WMWindow::slotStartTransfer()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KPImageInfo info(m_interface, urls.at(i));
+        KPImageInfo info(urls.at(i));
 
         QStringList keywar = info.keywords();
         QMap<QString, QString> map;
@@ -232,6 +223,8 @@ void WMWindow::slotStartTransfer()
             this, SLOT(slotEndUpload()));
 
     m_widget->progressBar()->show();
+    m_widget->progressBar()->progressScheduled(i18n("Wiki Export"), true, true);
+    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     m_uploadJob->begin();
 }
 
@@ -250,12 +243,12 @@ void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QUrl
     Login* loginJob = new Login(*m_mediawiki, login, pass);
 
     connect(loginJob, SIGNAL(result(KJob*)), 
-            this, SLOT(loginHandle(KJob*)));
+            this, SLOT(slotLoginHandle(KJob*)));
 
     loginJob->start();
 }
 
-int WMWindow::loginHandle(KJob* loginJob)
+int WMWindow::slotLoginHandle(KJob* loginJob)
 {
     kDebug() << loginJob->error();
 
@@ -288,6 +281,7 @@ void WMWindow::slotEndUpload()
 
     KMessageBox::information(this, i18n("Upload finished with no errors."));
     m_widget->progressBar()->hide();
+    m_widget->progressBar()->progressCompleted();
     hide();
 }
 

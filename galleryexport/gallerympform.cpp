@@ -49,10 +49,20 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryMPForm::GalleryMPForm()
+class GalleryMPForm::Private
 {
-    m_boundary  = "----------";
-    m_boundary += KRandom::randomString( 42 + 13 ).toAscii();
+public:
+
+    QByteArray buffer;
+
+    QByteArray boundary;
+};
+
+GalleryMPForm::GalleryMPForm()
+    : d(new Private())
+{
+    d->boundary  = "----------";
+    d->boundary += KRandom::randomString( 42 + 13 ).toAscii();
 
     if (GalleryTalker::isGallery2())
     {
@@ -69,18 +79,18 @@ GalleryMPForm::~GalleryMPForm()
 
 void GalleryMPForm::reset()
 {
-    m_buffer.resize(0);
+    d->buffer.resize(0);
 }
 
 void GalleryMPForm::finish()
 {
     QString str;
     str += "--";
-    str += m_boundary;
+    str += d->boundary;
     str += "--";
     str += "\r\n";
 
-    m_buffer.append(str.toUtf8());
+    d->buffer.append(str.toUtf8());
 }
 
 bool GalleryMPForm::addPair(const QString& name, const QString& value)
@@ -96,7 +106,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     QString str;
 
     str += "--";
-    str += m_boundary;
+    str += d->boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
     str += name.toAscii();
@@ -105,7 +115,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     str += value.toAscii();
     str += "\r\n";
 
-    m_buffer.append(str.toUtf8());
+    d->buffer.append(str.toUtf8());
     return true;
 }
 
@@ -139,7 +149,7 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     QString str;
 
     str += "--";
-    str += m_boundary;
+    str += d->boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
 
@@ -157,30 +167,30 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str +=  mime.toAscii();
     str += "\r\n\r\n";
 
-    m_buffer.append(str.toUtf8());
+    d->buffer.append(str.toUtf8());
 
-    int oldSize = m_buffer.size();
-    m_buffer.resize(oldSize + imageData.size() + 2);
-    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
-    m_buffer[m_buffer.size()-2] = '\r';
-    m_buffer[m_buffer.size()-1] = '\n';
+    int oldSize = d->buffer.size();
+    d->buffer.resize(oldSize + imageData.size() + 2);
+    memcpy(d->buffer.data() + oldSize, imageData.data(), imageData.size());
+    d->buffer[d->buffer.size()-2] = '\r';
+    d->buffer[d->buffer.size()-1] = '\n';
 
     return true;
 }
 
 QString GalleryMPForm::contentType() const
 {
-    return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
+    return QString("Content-Type: multipart/form-data; boundary=" + d->boundary);
 }
   
 QString GalleryMPForm::boundary() const
 {
-    return m_boundary;
+    return d->boundary;
 }
 
 QByteArray GalleryMPForm::formData() const
 {
-    return m_buffer;
+    return d->buffer;
 }
 
 } // namespace KIPIGalleryExportPlugin

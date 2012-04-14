@@ -7,7 +7,7 @@
  * Description : a plugin to edit pictures metadata
  *
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
+ * Copyright (C) 2011         by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,11 +51,12 @@
 // Local includes
 
 #include "metadataedit.h"
-#include "kphostsettings.h"
 #include "kpmetadata.h"
 
 using namespace KIPIPlugins;
-using namespace KIPIMetadataEditPlugin;
+
+namespace KIPIMetadataEditPlugin
+{
 
 K_PLUGIN_FACTORY( MetadataEditFactory, registerPlugin<Plugin_MetadataEdit>(); )
 K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
@@ -77,7 +78,7 @@ public:
     KUrl         lastSelectedDirectory;
 };
 
-Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* parent, const QVariantList&)
+Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* const parent, const QVariantList&)
     : Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
     d(new Plugin_MetadataEditPriv)
 {
@@ -221,9 +222,6 @@ void Plugin_MetadataEdit::slotImportExif()
         {
             ret = true;
             KPMetadata meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
             ret &= meta.load(url.path());
             ret &= meta.setExif(exifData);
@@ -311,9 +309,6 @@ void Plugin_MetadataEdit::slotImportIptc()
         {
             ret = true;
             KPMetadata meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
             ret &= meta.load(url.path());
             ret &= meta.setIptc(iptcData);
@@ -401,9 +396,6 @@ void Plugin_MetadataEdit::slotImportXmp()
         {
             ret = true;
             KPMetadata meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
             ret &= meta.load(url.path());
             ret &= meta.setXmp(xmpData);
@@ -439,3 +431,5 @@ Category Plugin_MetadataEdit::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification";
     return ImagesPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIMetadataEditPlugin

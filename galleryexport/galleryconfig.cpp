@@ -48,10 +48,37 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& title)
-           : KDialog(pParent, Qt::Dialog)
+class GalleryEdit::Private
 {
-    mpGallery = pGallery;
+public:
+
+    Private()
+    {
+        galleryVersion = 0;
+        nameEdit       = 0;
+        urlEdit        = 0;
+        usernameEdit   = 0;
+        passwordEdit   = 0;
+        gallery        = 0;
+    }
+
+    QCheckBox* galleryVersion;
+
+    KLineEdit* nameEdit;
+
+    KLineEdit* urlEdit;
+
+    KLineEdit* usernameEdit;
+
+    KLineEdit* passwordEdit;
+
+    Gallery*   gallery;
+};
+
+GalleryEdit::GalleryEdit(QWidget* const pParent, Gallery* const pGallery, const QString& title)
+    : KDialog(pParent, Qt::Dialog), d(new Private())
+{
+    d->gallery = pGallery;
 
     setCaption(title);
 
@@ -60,18 +87,18 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
     page->setMinimumSize(500, 200);
     setMainWidget(page);
 
-    mpNameEdit = new KLineEdit(this);
-    centerLayout->addWidget(mpNameEdit, 0, 1);
+    d->nameEdit = new KLineEdit(this);
+    centerLayout->addWidget(d->nameEdit, 0, 1);
 
-    mpUrlEdit = new KLineEdit(this);
-    centerLayout->addWidget(mpUrlEdit, 1, 1);
+    d->urlEdit = new KLineEdit(this);
+    centerLayout->addWidget(d->urlEdit, 1, 1);
 
-    mpUsernameEdit = new KLineEdit(this);
-    centerLayout->addWidget(mpUsernameEdit, 2, 1);
+    d->usernameEdit = new KLineEdit(this);
+    centerLayout->addWidget(d->usernameEdit, 2, 1);
 
-    mpPasswordEdit = new KLineEdit(this);
-    mpPasswordEdit->setEchoMode(KLineEdit::Password);
-    centerLayout->addWidget(mpPasswordEdit, 3, 1);
+    d->passwordEdit = new KLineEdit(this);
+    d->passwordEdit->setEchoMode(KLineEdit::Password);
+    centerLayout->addWidget(d->passwordEdit, 3, 1);
 
     QLabel* namelabel = new QLabel(this);
     namelabel->setText(i18nc("gallery login settings", "Name:"));
@@ -91,9 +118,9 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
 
     //---------------------------------------------
 
-    mpGalleryVersion = new QCheckBox(i18n("Use &Gallery 2"), this);
-    mpGalleryVersion->setChecked(2 == pGallery->version());
-    centerLayout->addWidget(mpGalleryVersion, 4, 1);
+    d->galleryVersion = new QCheckBox(i18n("Use &Gallery 2"), this);
+    d->galleryVersion->setChecked(2 == pGallery->version());
+    centerLayout->addWidget(d->galleryVersion, 4, 1);
 
     //---------------------------------------------
 
@@ -102,10 +129,10 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
     resize(QSize(300, 150).expandedTo(minimumSizeHint()));
 
     // setting initial data
-    mpNameEdit->setText(pGallery->name());
-    mpUrlEdit->setText(pGallery->url());
-    mpUsernameEdit->setText(pGallery->username());
-    mpPasswordEdit->setText(pGallery->password());
+    d->nameEdit->setText(pGallery->name());
+    d->urlEdit->setText(pGallery->url());
+    d->usernameEdit->setText(pGallery->username());
+    d->passwordEdit->setText(pGallery->password());
 
     connect(this, SIGNAL(okClicked()), 
             this, SLOT(slotOk()));
@@ -117,24 +144,24 @@ GalleryEdit::~GalleryEdit()
 
 void GalleryEdit::slotOk()
 {
-    if (mpNameEdit->isModified())
-        mpGallery->setName(mpNameEdit->text());
+    if (d->nameEdit->isModified())
+        d->gallery->setName(d->nameEdit->text());
 
-    if (mpUrlEdit->isModified())
-        mpGallery->setUrl(mpUrlEdit->text());
+    if (d->urlEdit->isModified())
+        d->gallery->setUrl(d->urlEdit->text());
 
-    if (mpUsernameEdit->isModified())
-        mpGallery->setUsername(mpUsernameEdit->text());
+    if (d->usernameEdit->isModified())
+        d->gallery->setUsername(d->usernameEdit->text());
 
-    if (mpPasswordEdit->isModified())
-        mpGallery->setPassword(mpPasswordEdit->text());
+    if (d->passwordEdit->isModified())
+        d->gallery->setPassword(d->passwordEdit->text());
 
-    if (mpGalleryVersion->isChecked())
-        mpGallery->setVersion(2);
+    if (d->galleryVersion->isChecked())
+        d->gallery->setVersion(2);
     else
-        mpGallery->setVersion(1);
+        d->gallery->setVersion(1);
 
-    mpGallery->save();
+    d->gallery->save();
     accept();
 }
 

@@ -137,6 +137,7 @@ void ImageshackTalker::slotResult(KJob* kjob)
             break;
         case IMGHCK_ADDPHOTO:
             parseUploadPhotoDone(m_buffer);
+            break;
         default:
             break;
     }

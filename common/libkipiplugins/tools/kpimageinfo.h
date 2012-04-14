@@ -40,13 +40,6 @@
 #include "kipiplugins_export.h"
 #include "kpmetadata.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIPlugins
 {
 
@@ -55,9 +48,11 @@ class KIPIPLUGINS_EXPORT KPImageInfo
 
 public:
 
-    /** Contructor with KIPI interface instance get from plugin and item url that you want to manage.
+    /** Contructor with item url that you want to manage. KIPI interface from plugin loader instance is used
+     *  to fill item info from kipi host. If no interface is available, for ex when plugin is loaded as 
+     *  stand-alone application, some info are filled with image file metadata.
      */
-    KPImageInfo(Interface* const iface, const KUrl& url);
+    KPImageInfo(const KUrl& url);
     ~KPImageInfo();
 
     /** return item url.
@@ -98,7 +93,7 @@ public:
     void setRating(int r);
     int  rating() const;
     bool hasRating() const;
-    
+
     /** Manage color label of item (0-10 : none, red, orange, yellow, green, blue, magenta, gray, black, white)
      */
     void setColorLabel(int cl);
@@ -167,6 +162,30 @@ public:
     void                         setOrientation(KPMetadata::ImageOrientation orientation);
     KPMetadata::ImageOrientation orientation() const;
     bool                         hasOrientation() const;
+
+    /** Manage creators information of item.
+     */
+    void        setCreators(const QStringList& list);
+    QStringList creators() const;
+    bool        hasCreators() const;
+
+    /** Manage credit information of item.
+     */
+    void    setCredit(const QString& val);
+    QString credit() const;
+    bool    hasCredit() const;
+
+    /** Manage rights information of item.
+     */
+    void    setRights(const QString& val);
+    QString rights() const;
+    bool    hasRights() const;
+
+    /** Manage source information of item.
+     */
+    void    setSource(const QString& val);
+    QString source() const;
+    bool    hasSource() const;
 
 private:
 

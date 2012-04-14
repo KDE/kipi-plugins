@@ -107,7 +107,7 @@ public:
     CountrySelector*               countryCB;
 };
 
-XMPOrigin::XMPOrigin(QWidget* parent)
+XMPOrigin::XMPOrigin(QWidget* const parent)
     : QWidget(parent), d(new XMPOriginPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

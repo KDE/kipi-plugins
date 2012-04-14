@@ -35,20 +35,23 @@
 
 #include "rajcewindow.h"
 
-using namespace KIPIRajceExportPlugin;
+using namespace KIPI;
 
 class KAction;
 
-class Plugin_RajceExport : public KIPI::Plugin
+namespace KIPIRajceExportPlugin
+{
+
+class Plugin_RajceExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_RajceExport(QObject* parent, const QVariantList& args);
+    Plugin_RajceExport(QObject* const parent, const QVariantList& args);
     ~Plugin_RajceExport();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
 
     void setup(QWidget*);
 
@@ -62,5 +65,7 @@ private:
 
     RajceWindow* m_dlgExport;
 };
+
+} // namespace KIPIRajceExportPlugin
 
 #endif // PLUGIN_RAJCEEXPORT_H

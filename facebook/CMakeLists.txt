@@ -1,4 +1,4 @@
-subdirs(icons)
+SUBDIRS(icons)
 
 SET(kipiplugin_facebook_PART_SRCS
     plugin_facebook.cpp

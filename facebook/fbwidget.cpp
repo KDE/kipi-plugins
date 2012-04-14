@@ -30,7 +30,6 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -51,6 +50,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIFacebookPlugin
 {
@@ -64,7 +64,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
@@ -200,7 +200,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -275,7 +275,7 @@ KIPIPlugins::KPImagesList* FbWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* FbWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* FbWidget::progressBar() const
 {
     return m_progressBar;
 }

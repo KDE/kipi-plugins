@@ -4,10 +4,10 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,39 +24,41 @@
 #ifndef PLUGIN_VIEWER_H
 #define PLUGIN_VIEWER_H
 
+// Qt includes
+
+#include <QVariant>
+
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
 
-// Local includes
+using namespace KIPI;
 
-#include "viewerwidget.h"
+namespace KIPIViewerPlugin
+{
 
-class KAction;
-
-/**
- * @short integration with KIPI
- * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.2
- */
-class Plugin_viewer :public KIPI::Plugin
+class Plugin_viewer :public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_viewer(QObject* parent, const QVariantList&);
-    virtual void setup(QWidget* widget);
-    virtual KIPI::Category category(KAction* action) const;
+    Plugin_viewer(QObject* const parent, const QVariantList&);
+    ~Plugin_viewer();
 
-public Q_SLOTS:
+    void setup(QWidget* widget);
+    Category category(KAction* action) const;
+
+private Q_SLOTS:
 
     void  slotActivate();
 
-protected:
+private:
 
-    KIPIviewer::ViewerWidget* widget;
-    KAction*                  actionViewer;
+    class Plugin_viewerPriv;
+    Plugin_viewerPriv* const d;
 };
+
+} // namespace KIPIViewerPlugin
 
 #endif /* PLUGIN_VIEWER_H */

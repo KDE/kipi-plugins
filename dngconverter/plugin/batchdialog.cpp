@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,16 +44,13 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
+#include <kde_file.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-
-// LibKipi includes
-
-#include <libkipi/interface.h>
 
 // Local includes
 
@@ -69,7 +66,6 @@
 #include "kpimageinfo.h"
 
 using namespace DNGIface;
-using namespace KIPIPlugins;
 
 namespace KIPIDNGConverterPlugin
 {
@@ -86,8 +82,6 @@ public:
         listView    = 0;
         thread      = 0;
         settingsBox = 0;
-        iface       = 0;
-        about       = 0;
     }
 
     bool                   busy;
@@ -103,24 +97,18 @@ public:
     ActionThread*          thread;
 
     SettingsWidget*        settingsBox;
-
-    Interface*             iface;
-
-    DNGConverterAboutData* about;
 };
 
-BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const about)
-    : KDialog(0), d(new BatchDialogPriv)
+BatchDialog::BatchDialog(DNGConverterAboutData* const about)
+    : KPToolDialog(0), d(new BatchDialogPriv)
 {
-    d->iface = iface;
-    d->about = about;
-
     setWindowIcon(KIcon("dngconverter"));
     setButtons(Help | Default | Apply | Close);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
     setCaption(i18n("Batch convert RAW camera images to DNG"));
     setModal(false);
+    setAboutData(about);
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -128,13 +116,13 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
     //---------------------------------------------
 
-    d->listView = new MyImageList(d->iface, d->page);
+    d->listView = new MyImageList(d->page);
 
     // ---------------------------------------------------------------
 
-    d->settingsBox = new SettingsWidget(d->page, d->iface);
+    d->settingsBox = new SettingsWidget(d->page);
 
-    d->progressBar = new KPProgressWidget(d->iface, d->page);
+    d->progressBar = new KPProgressWidget(d->page);
     d->progressBar->setMaximumHeight(fontMetrics().height()+2);
     d->progressBar->hide();
 
@@ -147,22 +135,8 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
     mainLayout->setSpacing(spacingHint());
 
     // ---------------------------------------------------------------
-    // About data and help button.
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
-
-    // ---------------------------------------------------------------
-
-    d->thread = new ActionThread(this, d->iface);
+    d->thread = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
@@ -195,13 +169,7 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
 BatchDialog::~BatchDialog()
 {
-    delete d->about;
     delete d;
-}
-
-void BatchDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("dngconverter", "kipi-plugins");
 }
 
 void BatchDialog::closeEvent(QCloseEvent* e)
@@ -432,6 +400,15 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
     if (!destFile.isEmpty())
     {
+        if (KPMetadata::hasSidecar(tmpFile))
+        {
+            if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
+                            KPMetadata::sidecarPath(destFile)) != 0)
+            {
+                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+            }
+        }
+
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
@@ -442,13 +419,10 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             item->setDestFileName(QFileInfo(destFile).fileName());
             d->listView->processed(url, true);
 
-            if (d->iface)
-            {
-                // Assign Kipi host attributes from original RAW image.
+            // Assign Kipi host attributes from original RAW image.
 
-                KPImageInfo info(d->iface, url);
-                info.cloneData(KUrl(destFile));
-            }
+            KPImageInfo info(url);
+            info.cloneData(KUrl(destFile));
         }
     }
 

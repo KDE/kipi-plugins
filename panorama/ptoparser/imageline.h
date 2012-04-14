@@ -26,7 +26,7 @@
 #ifndef IMAGELINE_H
 #define IMAGELINE_H
 
-#include "common.h"
+#include "ptoparser/common.h"
 
 namespace KIPIPanoramaPlugin { namespace PtoParser
 {

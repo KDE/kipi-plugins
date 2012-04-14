@@ -6,7 +6,7 @@
  * Date        : 2009-05-31
  * Description : Figure out camera clock delta from a clock picture.
  *
- * Copyright (C) 2009 by Pieter Edelman <p dot edelman at gmx dot net>
+ * Copyright (C) 2009      by Pieter Edelman <p dot edelman at gmx dot net>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -48,10 +48,6 @@
 #include <klocale.h>
 #include <kpushbutton.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -61,60 +57,13 @@
 
 #include "kpimagedialog.h"
 #include "kpmetadata.h"
+#include "kppreviewmanager.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
 {
-
-ImageDisplay::ImageDisplay(QScrollArea* const parentArea)
-    : QLabel()
-{
-    currX  = 0;
-    currY  = 0;
-    barX   = parentArea->horizontalScrollBar();
-    barY   = parentArea->verticalScrollBar();
-}
-
-void ImageDisplay::mousePressEvent(QMouseEvent *event)
-{
-    // If the middle mouse button is pressed on the image, grab the cursor and
-    // change its icon, and save the current cursor position on the screen.
-    if (event->buttons() == Qt::MidButton)
-    {
-        currX = event->globalX();
-        currY = event->globalY();
-        grabMouse(QCursor(Qt::SizeAllCursor));
-    }
-    QLabel::mousePressEvent(event);
-}
-
-void ImageDisplay::mouseMoveEvent(QMouseEvent* event)
-{
-    // If the mouse is moved while the middle button is still pressed, calculate
-    // the position difference compared the last update, move the QScrollArea's
-    // sliders according to this difference, and save the new position.
-
-    if (event->buttons() == Qt::MidButton)
-    {
-        barX->setValue(barX->value() + currX - event->globalX());
-        barY->setValue(barY->value() + currY - event->globalY());
-        currX = event->globalX();
-        currY = event->globalY();
-    }
-    QLabel::mouseMoveEvent(event);
-}
-
-void ImageDisplay::mouseReleaseEvent(QMouseEvent* event)
-{
-    // When the middle (or rather, any) mouse button is released, we release the
-    // cursor again.
-
-    releaseMouse();
-    QLabel::mouseReleaseEvent(event);
-}
-
-// ------------------------------------------------------------------------------
 
 class ClockPhotoDialog::ClockPhotoDialogPrivate
 {
@@ -123,38 +72,24 @@ public:
 
     ClockPhotoDialogPrivate()
     {
-        scrollArea    = 0;
         image         = 0;
-        imageLabel    = 0;
-        zoomSlider    = 0;
-        zoomOutButton = 0;
-        zoomInButton  = 0;
+        imagePreview  = 0;
         calendar      = 0;
         photoDateTime = 0;
     }
 
+    QPixmap*          image;
 
-    QScrollArea     *scrollArea;
-    QPixmap         *image;
+    QDateTimeEdit*    calendar;
 
-    QSlider         *zoomSlider;
-    QPushButton     *zoomOutButton;
-    QPushButton     *zoomInButton;
+    QDateTime*        photoDateTime;
 
-    QDateTimeEdit   *calendar;
-
-    QDateTime       *photoDateTime;
-
-    ImageDisplay    *imageLabel;
-
-    Interface *interface;
+    KPPreviewManager* imagePreview;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(Interface* const interface, QWidget* const parent)
+ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
-    d->interface     = interface;
-
     // Initialize the variables.
     d->image         = new QPixmap();
     d->photoDateTime = new QDateTime();
@@ -169,6 +104,8 @@ ClockPhotoDialog::ClockPhotoDialog(Interface* const interface, QWidget* const pa
     // The Ok button is only enable when a photo is loaded.
     setCaption(i18n("Determine time difference with clock photo"));
     setButtons(User1 | Ok | Cancel);
+    setMinimumWidth(500);
+    setMinimumHeight(500);
     button(User1)->setText(i18n("Load different photo"));
     button(User1)->setIcon(KIcon("document-open"));
     button(Ok)->setEnabled(false);
@@ -178,52 +115,20 @@ ClockPhotoDialog::ClockPhotoDialog(Interface* const interface, QWidget* const pa
     QVBoxLayout* vBox = new QVBoxLayout(mainWidget());
 
     // Some explanation.
-    QLabel* explanationLabel =
-            new QLabel(i18n("If you have a photo in your set with a clock or "
-                            "another external time source on it, you can load "
-                            "it here and set the indicator to the (date and) "
-                            "time displayed. The difference of your internal "
-                            "camera clock will be determined from this "
-                            "setting."));
+    QLabel* explanationLabel = new QLabel(i18n("If you have a photo in your set with a clock or "
+                                               "another external time source on it, you can load "
+                                               "it here and set the indicator to the (date and) "
+                                               "time displayed. The difference of your internal "
+                                               "camera clock will be determined from this "
+                                               "setting."));
     explanationLabel->setWordWrap(true);
     vBox->addWidget(explanationLabel);
 
-    // The image is displayed by loading an ImageDisplay in the scroll area,
-    // which is an overloaded QLabel. See the Image Viewer Example from the Qt
-    // documentation (http://doc.trolltech.com/4.5/widgets-imageviewer.html).
-    d->scrollArea = new QScrollArea(this);
-    d->scrollArea->setBackgroundRole(QPalette::Window);
-    d->scrollArea->setAlignment(Qt::AlignCenter);
-    vBox->addWidget(d->scrollArea);
-
-    d->imageLabel = new ImageDisplay(d->scrollArea);
-    d->imageLabel->setBackgroundRole(QPalette::Base);
-    d->imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    d->imageLabel->setScaledContents(true);
-
-    // The label is also used to display text (warning and waiting messages).
-    d->imageLabel->setWordWrap(true);
-    d->imageLabel->setAlignment(Qt::AlignCenter);
-    d->scrollArea->setWidget(d->imageLabel);
-
-    // For zooming support, a scale is displayed beneath the image with zoom out
-    // and zoom in buttons.
-    QLabel* scale_label = new QLabel(i18n("Scale:"));
-    d->zoomOutButton    = new QPushButton(KIcon("zoom-out"), "");
-    d->zoomInButton     = new QPushButton(KIcon("zoom-in"), "");
-    d->zoomInButton->setFlat(true);
-    d->zoomOutButton->setFlat(true);
-    d->zoomSlider = new QSlider(Qt::Horizontal);
-    d->zoomSlider->setRange(10, 150);
-    QHBoxLayout *hBox1 = new QHBoxLayout(mainWidget());
-    hBox1->addWidget(scale_label);
-    hBox1->addWidget(d->zoomOutButton);
-    hBox1->addWidget(d->zoomSlider);
-    hBox1->addWidget(d->zoomInButton);
-    vBox->addLayout(hBox1);
-    d->zoomSlider->setEnabled(false);
-    d->zoomOutButton->setEnabled(false);
-    d->zoomInButton->setEnabled(false);
+    // The image is displayed by loading a KPPreviewManager
+    d->imagePreview = new KPPreviewManager(this);
+    d->imagePreview->setBackgroundRole(QPalette::Window);
+    d->imagePreview->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    vBox->addWidget(d->imagePreview);
 
     // The date and time entry widget allows the user to enter the date and time
     // displayed in the image. The format is explicitly set, otherwise seconds
@@ -242,15 +147,6 @@ ClockPhotoDialog::ClockPhotoDialog(Interface* const interface, QWidget* const pa
     // Setup the signals and slots.
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotLoadPhoto()));
-
-    connect(d->zoomSlider, SIGNAL(sliderMoved(int)),
-            this, SLOT(slotAdjustZoom(int)));
-
-    connect(d->zoomOutButton, SIGNAL(clicked()),
-            this, SLOT(slotZoomOut()));
-
-    connect(d->zoomInButton, SIGNAL(clicked()),
-            this, SLOT(slotZoomIn()));
 
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
@@ -285,7 +181,8 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
     QFileInfo info(imageFile.path());
 
     // Try to load the image into the d->image variable.
-    bool imageLoaded;
+    bool imageLoaded = false;
+
     if (rawFilesExt.toUpper().contains(info.suffix().toUpper()))
     {
         // In case of raw images, load the image the a QImage and convert it to
@@ -294,6 +191,7 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
         imageLoaded = KDcraw::loadDcrawPreview(tmp, imageFile.path());
         delete d->image;
         d->image    = new QPixmap(d->image->fromImage(tmp));
+        d->imagePreview->setImage(tmp, true);
     }
     else
     {
@@ -324,7 +222,7 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
                                        "obtain date and time information "
                                        "from image %1.</b></font>",
                                        imageFile.fileName());
-                d->imageLabel->setText(warning);
+                d->imagePreview->setText(warning);
             }
         }
     }
@@ -335,61 +233,25 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
         QString warning = i18n("<font color=\"red\"><b>Could not load "
                                "image %1.</b></font>",
                                imageFile.fileName());
-        d->imageLabel->setText(warning);
+        d->imagePreview->setText(warning);
     }
 
     if (success)
     {
-        // Load the photo and enable all image display GUI elements.
-        d->imageLabel->setPixmap(*(d->image));
-
-        // The following line is a bit of a hack: if the QLabel is shown for
-        // the first time, it is broken (parts of it are missing). After a scale
-        // action, this problem is solved. So we first scale it here.
-        d->imageLabel->resize(d->image->width(), d->image->height());
-        d->zoomSlider->setEnabled(true);
-        d->zoomOutButton->setEnabled(true);
-        d->zoomInButton->setEnabled(true);
-
-        // Fit the image to the viewport.
-        adjustToWindowSize(true);
+        // Load the photo.
+        d->imagePreview->load(imageFile.path(), true);
     }
     else
     {
         // Disable all the GUI elements.
-        d->zoomSlider->setEnabled(false);
-        d->zoomOutButton->setEnabled(false);
-        d->zoomInButton->setEnabled(false);
         d->calendar->setEnabled(false);
 
         // Make sure we de-load a previous image if a faulty url was provided.
         delete d->image;
         d->image = new QPixmap();
-
-        // Scale the imageLabel so that the warning shows up.
-        d->imageLabel->resize(d->scrollArea->viewport()->size());
     }
 
     return success;
-}
-
-void ClockPhotoDialog::adjustToWindowSize(bool fit)
-{
-    int scroll_width   = d->scrollArea->viewport()->width();
-    int scroll_height  = d->scrollArea->viewport()->height();
-    float scale_width  = (float)scroll_width  / d->image->width();
-    float scale_height = (float)scroll_height / d->image->height();
-    float scale        = scale_width;
-
-    if (scale_height < scale_width) scale = scale_height;
-
-    d->zoomSlider->setMinimum((int)(scale * 100.0));
-
-    if (fit)
-    {
-        d->imageLabel->resize((int)(d->image->width() * scale), (int)(d->image->height() * scale));
-        d->zoomSlider->setValue((int)(scale * 100.0));
-    }
 }
 
 void ClockPhotoDialog::saveSize()
@@ -402,7 +264,7 @@ void ClockPhotoDialog::saveSize()
 void ClockPhotoDialog::slotLoadPhoto()
 {
     // Present the user with a dialog to load the photo.
-    KPImageDialog dlg(this, d->interface, true, false);
+    KPImageDialog dlg(this, true, false);
 
     if (!dlg.url().isEmpty())
     {
@@ -419,41 +281,6 @@ void ClockPhotoDialog::slotLoadPhoto()
     }
 }
 
-void ClockPhotoDialog::slotAdjustZoom(int percentage)
-{
-    // Callback for when the zoom slider is adjusted. Scale the image to the new
-    // value and adjust the scrollbars adjusted so that the center of the
-    // display remains the same.
-
-    // Remember what the old width was.
-    float oldWidth = d->scrollArea->widget()->width();
-
-    // Convert the percentage to an absolute scale and scale the image.
-    float absScale = (float)percentage / 100;
-    d->imageLabel->resize(d->image->size() * absScale);
-
-    // Calculate the size increase.
-    float relScale = d->scrollArea->widget()->width() / oldWidth;
-
-    // Adjust the scrollbars to the size increase.
-    QScrollBar *barX = d->scrollArea->horizontalScrollBar();
-    QScrollBar *barY = d->scrollArea->verticalScrollBar();
-    barX->setValue(int(relScale * barX->value() + ((relScale - 1) * barX->pageStep()/2)));
-    barY->setValue(int(relScale * barY->value() + ((relScale - 1) * barY->pageStep()/2)));
-}
-
-void ClockPhotoDialog::slotZoomOut()
-{
-    d->zoomSlider->triggerAction(QAbstractSlider::SliderPageStepSub);
-    slotAdjustZoom(d->zoomSlider->value());
-}
-
-void ClockPhotoDialog::slotZoomIn()
-{
-    d->zoomSlider->triggerAction(QAbstractSlider::SliderPageStepAdd);
-    slotAdjustZoom(d->zoomSlider->value());
-}
-
 void ClockPhotoDialog::slotOk()
 {
     // Called when the ok button is pressed. Calculate the time difference
@@ -468,7 +295,7 @@ void ClockPhotoDialog::slotOk()
     if (delta < 0)
     {
         deltaNegative = true;
-        delta *= -1;
+        delta         *= -1;
     }
     else
     {
@@ -494,21 +321,6 @@ void ClockPhotoDialog::slotCancel()
     /* If the cancel button is clicked, reject the dialog. */
     saveSize();
     reject();
-}
-
-void ClockPhotoDialog::resizeEvent(QResizeEvent *event)
-{
-    // If the image is completely zoomed out, make it so in the new window size
-    // as well, otherwise, leave the zoom size intact.
-    if (d->zoomSlider->value() == d->zoomSlider->minimum())
-    {
-        adjustToWindowSize(true);
-    }
-    else
-    {
-        adjustToWindowSize(false);
-    }
-    QWidget::resizeEvent(event);
 }
 
 }  // namespace KIPITimeAdjustPlugin

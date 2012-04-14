@@ -25,17 +25,15 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
+
+// Local includes
+
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIDNGConverterPlugin
 {
@@ -43,14 +41,14 @@ namespace KIPIDNGConverterPlugin
 class ActionData;
 class DNGConverterAboutData;
 
-class BatchDialog : public KDialog
+class BatchDialog : public KPToolDialog
 {
 
 Q_OBJECT
 
 public:
 
-    BatchDialog(Interface* const iface, DNGConverterAboutData* const about);
+    BatchDialog(DNGConverterAboutData* const about);
     ~BatchDialog();
 
    void addItems(const KUrl::List& itemList);
@@ -74,7 +72,6 @@ private Q_SLOTS:
 
     void slotDefault();
     void slotClose();
-    void slotHelp();
     void slotStartStop();
     void slotAborted();
     void slotIdentify();

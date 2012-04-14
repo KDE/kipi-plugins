@@ -34,7 +34,7 @@
 namespace KIPIMetadataEditPlugin
 {
 
-IPTCSubjects::IPTCSubjects(QWidget* parent)
+IPTCSubjects::IPTCSubjects(QWidget* const parent)
     : SubjectWidget(parent)
 {
     // Subject string only accept printable Ascii char excepted these one:

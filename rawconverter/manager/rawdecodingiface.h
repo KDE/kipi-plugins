@@ -48,8 +48,6 @@ public:
     RawDecodingIface();
     ~RawDecodingIface();
 
-    void setUpdateFileTimeStamp(bool b);
-
 public:
 
     /** Extract a small size of decode RAW data in 8 bits/color/pixels 
@@ -72,10 +70,6 @@ private:
                          QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                          const QByteArray& imageData, int width, int height, int rgbmax,
                          const RawDecodingSettings& rawDecodingSettings);
-
-private:
-
-    bool m_updateFileTimeStamp;
 };
 
 }  // namespace KIPIRawConverterPlugin

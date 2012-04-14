@@ -122,7 +122,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     m_mainWidget            = new QWidget(this);
     QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
 
-    m_imgList               = new KPImagesList(interface, this);
+    m_imgList               = new KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
@@ -149,7 +149,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     loginDescLabel->setText(i18n("Name:"));
     loginDescLabel->setWhatsThis(i18n("Your Yandex login"));
 
-    m_loginLabel = new QLabel(m_accountBox);
+    m_loginLabel       = new QLabel(m_accountBox);
     m_changeUserButton = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
                  i18n("Change Yandex account used to authenticate")), m_accountBox);
@@ -685,7 +685,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     m_transferQueue.clear();
     foreach(const KUrl& url, m_imgList->imageUrls(true))
     {
-        KPImageInfo info(m_interface, url);
+        KPImageInfo info(url);
         KPMetadata  meta;
 
         const QString imgPath = url.toLocalFile();

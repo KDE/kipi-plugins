@@ -37,7 +37,7 @@ class IPTCStatus : public QWidget
 
 public:
 
-    IPTCStatus(QWidget* parent);
+    IPTCStatus(QWidget* const parent);
     ~IPTCStatus();
 
     void applyMetadata(QByteArray& iptcData);

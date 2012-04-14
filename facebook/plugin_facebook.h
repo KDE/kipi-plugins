@@ -7,7 +7,7 @@
  * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -50,23 +50,27 @@ namespace KIPIFacebookPlugin
 
 class KJob;
 
-class Plugin_Facebook
-    : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIFacebookPlugin
+{
+
+class Plugin_Facebook : public Plugin
 #if KDE_IS_VERSION(4,3,60)
-    , public KIPI::ExportInterface
+                      , public ExportInterface
 #endif
 {
-Q_OBJECT
+    Q_OBJECT
 #if KDE_IS_VERSION(4,3,60)
-Q_INTERFACES( KIPI::ExportInterface )
+    Q_INTERFACES( ExportInterface )
 #endif
 
 public:
 
-    Plugin_Facebook(QObject* parent, const QVariantList& args);
+    Plugin_Facebook(QObject* const parent, const QVariantList& args);
     ~Plugin_Facebook();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget*);
     virtual KJob* exportFiles(const QString& album);
 
@@ -77,11 +81,13 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                      m_actionImport;
-    KAction*                      m_actionExport;
+    KAction*  m_actionImport;
+    KAction*  m_actionExport;
 
-    KIPIFacebookPlugin::FbWindow* m_dlgImport;
-    KIPIFacebookPlugin::FbWindow* m_dlgExport;
+    FbWindow* m_dlgImport;
+    FbWindow* m_dlgExport;
 };
+
+} // namespace KIPIFacebookPlugin
 
 #endif // PLUGIN_FACEBOOK_H

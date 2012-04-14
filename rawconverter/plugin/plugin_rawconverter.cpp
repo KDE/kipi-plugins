@@ -60,11 +60,14 @@
 #include "singledialog.h"
 #include "batchdialog.h"
 
+namespace KIPIRawConverterPlugin
+{
+
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_RawConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 
-Plugin_RawConverter::Plugin_RawConverter(QObject* parent, const QVariantList&)
-                   : KIPI::Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
+Plugin_RawConverter::Plugin_RawConverter(QObject* const parent, const QVariantList&)
+    : Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_RawConverter plugin loaded";
 }
@@ -74,7 +77,7 @@ void Plugin_RawConverter::setup(QWidget* widget)
     m_singleDlg = 0;
     m_batchDlg  = 0;
 
-    KIPI::Plugin::setup( widget );
+    Plugin::setup( widget );
 
     KGlobal::locale()->insertCatalog("libkdcraw");
 
@@ -96,7 +99,7 @@ void Plugin_RawConverter::setup(QWidget* widget)
 
     addAction(m_batchAction);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
     if ( !interface )
     {
            kError() << "Kipi interface is null!";
@@ -131,14 +134,14 @@ bool Plugin_RawConverter::checkBinaries()
 
 void Plugin_RawConverter::slotActivateSingle()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
     if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    KIPI::ImageCollection images = interface->currentSelection();
+    ImageCollection images = interface->currentSelection();
 
     if (!images.isValid())
         return;
@@ -158,7 +161,7 @@ void Plugin_RawConverter::slotActivateSingle()
 
     if (!m_singleDlg)
     {
-        m_singleDlg = new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), interface);
+        m_singleDlg = new SingleDialog(images.images()[0].path());
     }
     else
     {
@@ -174,14 +177,14 @@ void Plugin_RawConverter::slotActivateSingle()
 
 void Plugin_RawConverter::slotActivateBatch()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* interface = dynamic_cast<Interface*>( parent() );
     if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    KIPI::ImageCollection images;
+    ImageCollection images;
     images = interface->currentSelection();
 
     if (!images.isValid())
@@ -201,7 +204,7 @@ void Plugin_RawConverter::slotActivateBatch()
 
     if (!m_batchDlg)
     {
-        m_batchDlg = new KIPIRawConverterPlugin::BatchDialog(interface);
+        m_batchDlg = new BatchDialog();
     }
     else
     {
@@ -215,13 +218,15 @@ void Plugin_RawConverter::slotActivateBatch()
     m_batchDlg->addItems(items);
 }
 
-KIPI::Category Plugin_RawConverter::category(KAction* action) const
+Category Plugin_RawConverter::category(KAction* action) const
 {
     if ( action == m_singleAction )
-       return KIPI::ToolsPlugin;
+       return ToolsPlugin;
     else if ( action == m_batchAction )
-       return KIPI::BatchPlugin;
+       return BatchPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ToolsPlugin; // no warning from compiler, please
+    return ToolsPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIRawConverterPlugin

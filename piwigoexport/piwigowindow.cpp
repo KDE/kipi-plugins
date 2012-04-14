@@ -7,10 +7,10 @@
  * Description : a plugin to export to a remote Piwigo server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,17 +28,20 @@
 
 // Qt includes
 
+#include <Qt>
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QSpinBox>
-#include <Qt>
 #include <QTreeWidgetItem>
 #include <QPointer>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QTextStream>
+#include <QFile>
+#include <QProgressDialog>
 
 // KDE includes
 
@@ -46,7 +49,6 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmenu.h>
@@ -84,19 +86,27 @@ public:
 
     QTreeWidget*           albumView;
 
-    QPushButton*           addPhotoBtn;
+    QPushButton*           confButton;
 
-    QCheckBox*             captTitleCheckBox;
-    QCheckBox*             captDescrCheckBox;
     QCheckBox*             resizeCheckBox;
-    QCheckBox*             downloadHQCheckBox;
-
-    QSpinBox*              dimensionSpinBox;
+    QSpinBox*              widthSpinBox;
+    QSpinBox*              heightSpinBox;
     QSpinBox*              thumbDimensionSpinBox;
 
     QHash<QString, GAlbum> albumDict;
 
     KUrlLabel*             logo;
+
+    Interface*             interface;
+
+    PiwigoTalker*          talker;
+    Piwigo*                pPiwigo;
+
+    QProgressDialog*       progressDlg;
+    unsigned int           uploadCount;
+    unsigned int           uploadTotal;
+    QStringList*           pUploadList;
+
 };
 
 PiwigoWindow::Private::Private(PiwigoWindow* const parent)
@@ -124,84 +134,79 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    QFrame *optionFrame = new QFrame;
-    QVBoxLayout *vlay   = new QVBoxLayout();
+    QFrame* optionFrame = new QFrame;
+    QVBoxLayout* vlay   = new QVBoxLayout();
 
-    addPhotoBtn = new QPushButton;
-    addPhotoBtn->setText(i18n("&Add Selected Photos"));
-    addPhotoBtn->setIcon(KIcon("list-add"));
-    addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    addPhotoBtn->setEnabled(false);
+    confButton = new QPushButton;
+    confButton->setText(i18n("Change Account"));
+    confButton->setIcon(KIcon("system-switch-user"));
+    confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
-    QVBoxLayout *vlay2    = new QVBoxLayout();
-
-    captTitleCheckBox     = new QCheckBox(optionsBox);
-    captTitleCheckBox->setText(i18n("EXIF Comment (instead of file name) sets Title"));
-
-    captDescrCheckBox     = new QCheckBox(optionsBox);
-    captDescrCheckBox->setText(i18n("EXIF Comment (instead of file name) sets Comment"));
+    QGroupBox* optionsBox = new QGroupBox(i18n("Options"));
+    QVBoxLayout* vlay2    = new QVBoxLayout();
 
     resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
-    QHBoxLayout *hlay2    = new QHBoxLayout;
-    QLabel *resizeLabel   = new QLabel(i18n("Maximum dimension:"));
+    QGridLayout* glay     = new QGridLayout;
+    QLabel* widthLabel    = new QLabel(i18n("Maximum width:"));
 
-    dimensionSpinBox      = new QSpinBox;
-    dimensionSpinBox->setRange(1,1600);
-    dimensionSpinBox->setValue(600);
+    widthSpinBox          = new QSpinBox;
+    widthSpinBox->setRange(1,1600);
+    widthSpinBox->setValue(800);
 
-    QHBoxLayout *hlay3    = new QHBoxLayout;
-    QLabel *resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
+    QLabel *heightLabel   = new QLabel(i18n("Maximum height:"));
+
+    heightSpinBox         = new QSpinBox;
+    heightSpinBox->setRange(1,1600);
+    heightSpinBox->setValue(600);
+
+    QHBoxLayout* hlay2    = new QHBoxLayout;
+    QLabel* resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
 
     thumbDimensionSpinBox = new QSpinBox;
     thumbDimensionSpinBox->setRange(32,800);
     thumbDimensionSpinBox->setValue(128);
+    thumbDimensionSpinBox->setToolTip(i18n("Thumbnail size is ignored with Piwigo > 2.4"));
 
-    downloadHQCheckBox    = new QCheckBox(optionsBox);
-    downloadHQCheckBox->setText(i18n("Also download the full size version"));
-
-    captTitleCheckBox->setChecked(true);
-    captDescrCheckBox->setChecked(false);
     resizeCheckBox->setChecked(false);
-    dimensionSpinBox->setEnabled(false);
+    widthSpinBox->setEnabled(false);
+    heightSpinBox->setEnabled(false);
     thumbDimensionSpinBox->setEnabled(true);
-    downloadHQCheckBox->setChecked(false);
 
     // ---------------------------------------------------------------------------
 
-    hlay2->addWidget(resizeLabel);
-    hlay2->addWidget(dimensionSpinBox);
-    hlay2->setSpacing(KDialog::spacingHint());
-    hlay2->setMargin(KDialog::spacingHint());
+    glay->addWidget(widthLabel, 0, 0);
+    glay->addWidget(widthSpinBox, 0, 1);
+    glay->addWidget(heightLabel, 1, 0);
+    glay->addWidget(heightSpinBox, 1, 1);
+    glay->setSpacing(spacingHint());
+    glay->setMargin(spacingHint());
 
     // ---------------------------------------------------------------------------
 
-    hlay3->addWidget(resizeThumbLabel);
-    hlay3->addWidget(thumbDimensionSpinBox);
-    hlay3->setSpacing(KDialog::spacingHint());
-    hlay3->setMargin(KDialog::spacingHint());
+    hlay2->addWidget(resizeThumbLabel);
+    hlay2->addWidget(thumbDimensionSpinBox);
+    hlay2->setSpacing(spacingHint());
+    hlay2->setMargin(spacingHint());
 
     // ---------------------------------------------------------------------------
 
-    vlay2->addWidget(captTitleCheckBox);
-    vlay2->addWidget(captDescrCheckBox);
     vlay2->addWidget(resizeCheckBox);
+    vlay2->addLayout(glay);
     vlay2->addLayout(hlay2);
-    vlay2->addLayout(hlay3);
-    vlay2->addWidget(downloadHQCheckBox);
-    vlay2->setSpacing(KDialog::spacingHint());
-    vlay2->setMargin(KDialog::spacingHint());
+    vlay2->addStretch(0);
+    vlay2->setSpacing(spacingHint());
+    vlay2->setMargin(spacingHint());
 
     optionsBox->setLayout(vlay2);
 
     // ---------------------------------------------------------------------------
 
-    vlay->addWidget(addPhotoBtn);
+    vlay->addWidget(confButton);
     vlay->addWidget(optionsBox);
-    vlay->setSpacing(KDialog::spacingHint());
-    vlay->setMargin(KDialog::spacingHint());
+    vlay->setSpacing(spacingHint());
+    vlay->setMargin(spacingHint());
 
     optionFrame->setLayout(vlay);
 
@@ -210,8 +215,8 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     hlay->addWidget(logo);
     hlay->addWidget(albumView);
     hlay->addWidget(optionFrame);
-    hlay->setSpacing(KDialog::spacingHint());
-    hlay->setMargin(KDialog::spacingHint());
+    hlay->setSpacing(spacingHint());
+    hlay->setMargin(spacingHint());
 
     widget->setLayout(hlay);
 }
@@ -219,72 +224,64 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo)
-    : KDialog(parent),
-      m_interface(interface),
-      mpPiwigo(pPiwigo),
+    : KPToolDialog(parent), 
       d(new Private(this))
 {
+    d->interface = interface;
+    d->pPiwigo   = pPiwigo;
+
     setWindowTitle( i18n("Piwigo Export") );
-    setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
+    setButtons(Close | User1 | Help);
     setModal(false);
 
     // About data.
-    m_about = new KPAboutData(ki18n("Piwigo Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
-                                           ki18n("(c) 2003-2005, Renchi Raju\n"
-                                                 "(c) 2006-2007, Colin Guthrie\n"
-                                                 "(c) 2006-2009, Gilles Caulier\n"
-                                                 "(c) 2008, Andrea Diamantini\n"
-                                                 "(c) 2010, Frédéric Coiffier\n"));
+    KPAboutData* about = new KPAboutData(ki18n("Piwigo Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
+                                         ki18n("(c) 2003-2005, Renchi Raju\n"
+                                               "(c) 2006-2007, Colin Guthrie\n"
+                                               "(c) 2006-2012, Gilles Caulier\n"
+                                               "(c) 2008, Andrea Diamantini\n"
+                                               "(c) 2012, Frédéric Coiffier\n"));
 
-    m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
-                       "renchi dot raju at gmail dot com");
+    about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
+                     "renchi dot raju at gmail dot com");
 
-    m_about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
-                       "kde at colin dot guthr dot ie");
+    about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
+                     "kde at colin dot guthr dot ie");
 
-    m_about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
-                       "adjam7 at gmail dot com");
+    about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
+                     "adjam7 at gmail dot com");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
-                       "fcoiffie at gmail dot com");
+    about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
+                     "fcoiffie at gmail dot com");
 
-    // help button
+    about->handbookEntry = QString("piwigoexport");
+    setAboutData(about);
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
+    // User1 Button : to upload selected photos
+    KPushButton* addPhotoBtn = button( User1 );
+    addPhotoBtn->setText( i18n("Start Upload") );
+    addPhotoBtn->setIcon( KIcon("network-workgroup") );
+    addPhotoBtn->setEnabled(false);
+    connect(addPhotoBtn, SIGNAL(clicked()),
+            this, SLOT(slotAddPhoto()));
 
-    KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
-
-    // User1 Button : to conf piwigo settings
-    KPushButton *confButton = button( User1 );
-    confButton->setText( i18n("Settings") );
-    confButton->setIcon( KIcon("configure") );
-    connect(confButton, SIGNAL(clicked()),
-            this, SLOT(slotSettings()) );
-
-    // we need to let m_talker work..
-    m_talker = new PiwigoTalker(d->widget);
+    // we need to let d->talker work..
+    d->talker = new PiwigoTalker(d->widget);
 
     // setting progressDlg and its numeric hints
-    m_progressDlg = new QProgressDialog(this);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-    m_uploadCount = 0;
-    m_uploadTotal = 0;
-    mpUploadList  = new QStringList;
+    d->progressDlg = new QProgressDialog(this);
+    d->progressDlg->setModal(true);
+    d->progressDlg->setAutoReset(true);
+    d->progressDlg->setAutoClose(true);
+    d->uploadCount = 0;
+    d->uploadTotal = 0;
+    d->pUploadList = new QStringList;
 
     // connect functions
     connectSignals();
@@ -302,17 +299,12 @@ PiwigoWindow::~PiwigoWindow()
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
-    group.writeEntry("Set title",       d->captTitleCheckBox->isChecked());
-    group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
-    group.writeEntry("Download HQ",     d->downloadHQCheckBox->isChecked());
-    group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
+    group.writeEntry("Maximum Width",   d->widthSpinBox->value());
+    group.writeEntry("Maximum Height",  d->heightSpinBox->value());
     group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
 
-    delete m_talker;
-
-    delete mpUploadList;
-    delete m_about;
-
+    delete d->talker;
+    delete d->pUploadList;
     delete d;
 }
 
@@ -321,8 +313,8 @@ void PiwigoWindow::connectSignals()
     connect(d->albumView, SIGNAL(itemSelectionChanged()),
             this , SLOT(slotAlbumSelected()) );
 
-    connect(d->addPhotoBtn, SIGNAL(clicked()),
-            this, SLOT(slotAddPhoto()));
+    connect(d->confButton, SIGNAL(clicked()), 
+             this, SLOT(slotSettings()) );
 
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotEnableSpinBox(int)));
@@ -330,28 +322,28 @@ void PiwigoWindow::connectSignals()
     connect(d->logo, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
 
-    connect(m_progressDlg, SIGNAL(canceled()),
+    connect(d->progressDlg, SIGNAL(canceled()),
             this, SLOT(slotAddPhotoCancel()));
 
-    connect(m_talker, SIGNAL(signalProgressInfo(QString)),
+    connect(d->talker, SIGNAL(signalProgressInfo(QString)),
             this, SLOT(slotProgressInfo(QString)));
 
-    connect(m_talker, SIGNAL(signalError(QString)),
+    connect(d->talker, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
 
-    connect(m_talker, SIGNAL(signalBusy(bool)),
+    connect(d->talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL(signalLoginFailed(QString)),
+    connect(d->talker, SIGNAL(signalLoginFailed(QString)),
             this, SLOT(slotLoginFailed(QString)));
 
-    connect(m_talker, SIGNAL(signalAlbums(QList<GAlbum>)),
+    connect(d->talker, SIGNAL(signalAlbums(QList<GAlbum>)),
             this, SLOT(slotAlbums(QList<GAlbum>)));
 
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+    connect(d->talker, SIGNAL(signalAddPhotoSucceeded()),
             this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(QString)),
+    connect(d->talker, SIGNAL(signalAddPhotoFailed(QString)),
             this, SLOT(slotAddPhotoFailed(QString)));
 }
 
@@ -369,55 +361,39 @@ void PiwigoWindow::readSettings()
     if (group.readEntry("Resize", false))
     {
         d->resizeCheckBox->setChecked(true);
-        d->dimensionSpinBox->setEnabled(true);
-        d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));
+        d->widthSpinBox->setEnabled(true);
+        d->heightSpinBox->setEnabled(true);
     }
     else
     {
         d->resizeCheckBox->setChecked(false);
-        d->dimensionSpinBox->setEnabled(false);
+        d->heightSpinBox->setEnabled(false);
+        d->widthSpinBox->setEnabled(false);
     }
 
-    if (group.readEntry("Set title", true))
-        d->captTitleCheckBox->setChecked(true);
-    else
-        d->captTitleCheckBox->setChecked(false);
-
-    if (group.readEntry("Set description", false))
-        d->captDescrCheckBox->setChecked(true);
-    else
-        d->captDescrCheckBox->setChecked(false);
-
-    if (group.readEntry("Download HQ", false))
-        d->downloadHQCheckBox->setChecked(true);
-    else
-        d->downloadHQCheckBox->setChecked(false);
+    d->widthSpinBox->setValue(group.readEntry("Maximum Width", 800));
+    d->heightSpinBox->setValue(group.readEntry("Maximum Height", 600));
 
     d->thumbDimensionSpinBox->setValue(group.readEntry("Thumbnail Width", 128));
 }
 
-void PiwigoWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("piwigoexport", "kipi-plugins");
-}
-
 void PiwigoWindow::slotDoLogin()
 {
-    KUrl url(mpPiwigo->url());
+    KUrl url(d->pPiwigo->url());
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
-        url.setHost(mpPiwigo->url());
+        url.setHost(d->pPiwigo->url());
     }
 
     // If we've done something clever, save it back to the piwigo.
-    if (mpPiwigo->url() != url.url())
+    if (!url.url().isEmpty() && d->pPiwigo->url() != url.url())
     {
-        mpPiwigo->setUrl(url.url());
-        mpPiwigo->save();
+        d->pPiwigo->setUrl(url.url());
+        d->pPiwigo->save();
     }
 
-    m_talker->login(url.url(), mpPiwigo->username(), mpPiwigo->password());
+    d->talker->login(url.url(), d->pPiwigo->username(), d->pPiwigo->password());
 }
 
 void PiwigoWindow::slotLoginFailed(const QString& msg)
@@ -432,7 +408,7 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), mpPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
@@ -447,24 +423,24 @@ void PiwigoWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-        d->addPhotoBtn->setEnabled(false);
+        button( User1 )->setEnabled(false);
     }
     else
     {
         setCursor(Qt::ArrowCursor);
-        bool loggedIn = m_talker->loggedIn();
-        d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
+        bool loggedIn = d->talker->loggedIn();
+        button( User1 )->setEnabled(loggedIn && d->albumView->currentItem());
     }
 }
 
 void PiwigoWindow::slotProgressInfo(const QString& msg)
 {
-    m_progressDlg->setLabelText(msg);
+    d->progressDlg->setLabelText(msg);
 }
 
 void PiwigoWindow::slotError(const QString& msg)
 {
-    m_progressDlg->hide();
+    d->progressDlg->hide();
     KMessageBox::error(this, msg);
 }
 
@@ -541,7 +517,7 @@ void PiwigoWindow::slotAlbumSelected()
 
     if (!item)
     {
-        d->addPhotoBtn->setEnabled(false);
+        button( User1 )->setEnabled(false);
     }
     else
     {
@@ -549,20 +525,20 @@ void PiwigoWindow::slotAlbumSelected()
 
         int albumId = item->data(1, Qt::UserRole).toInt();
         kDebug() << albumId << "\n";
-        if (m_talker->loggedIn() && albumId )
+        if (d->talker->loggedIn() && albumId )
         {
-            d->addPhotoBtn->setEnabled(true);
+            button( User1 )->setEnabled(true);
         }
         else
         {
-            d->addPhotoBtn->setEnabled(false);
+            button( User1 )->setEnabled(false);
         }
     }
 }
 
 void PiwigoWindow::slotAddPhoto()
 {
-    const KUrl::List urls(m_interface->currentSelection().images());
+    const KUrl::List urls(d->interface->currentSelection().images());
 
     if ( urls.isEmpty())
     {
@@ -572,22 +548,22 @@ void PiwigoWindow::slotAddPhoto()
 
     for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        mpUploadList->append( (*it).path() );
+        d->pUploadList->append( (*it).path() );
     }
 
-    m_uploadTotal = mpUploadList->count();
-    m_progressDlg->reset();
-    m_progressDlg->setMaximum(m_uploadTotal);
-    m_uploadCount = 0;
+    d->uploadTotal = d->pUploadList->count();
+    d->progressDlg->reset();
+    d->progressDlg->setMaximum(d->uploadTotal);
+    d->uploadCount = 0;
     slotAddPhotoNext();
 }
 
 void PiwigoWindow::slotAddPhotoNext()
 {
-    if ( mpUploadList->isEmpty() )
+    if ( d->pUploadList->isEmpty() )
     {
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        d->progressDlg->reset();
+        d->progressDlg->hide();
         return;
     }
 
@@ -595,14 +571,11 @@ void PiwigoWindow::slotAddPhotoNext()
     int column            = d->albumView->currentColumn();
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = mpUploadList->takeFirst();
-    QString photoName     = QFileInfo(photoPath).baseName();
-    bool res              = m_talker->addPhoto(album.ref_num, photoPath, photoName,
-                            d->captTitleCheckBox->isChecked(),
-                            d->captDescrCheckBox->isChecked(),
+    QString photoPath     = d->pUploadList->takeFirst();
+    bool res              = d->talker->addPhoto(album.ref_num, photoPath,
                             d->resizeCheckBox->isChecked(),
-                            d->downloadHQCheckBox->isChecked(),
-                            d->dimensionSpinBox->value(),
+                            d->widthSpinBox->value(),
+                            d->heightSpinBox->value(),
                             d->thumbDimensionSpinBox->value() );
 
     if (!res)
@@ -611,23 +584,23 @@ void PiwigoWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
+    d->progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
 
-    if (m_progressDlg->isHidden())
-        m_progressDlg->show();
+    if (d->progressDlg->isHidden())
+        d->progressDlg->show();
 }
 
 void PiwigoWindow::slotAddPhotoSucceeded()
 {
-    m_uploadCount++;
-    m_progressDlg->setValue(m_uploadCount);
+    d->uploadCount++;
+    d->progressDlg->setValue(d->uploadCount);
     slotAddPhotoNext();
 }
 
 void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
 {
-    m_progressDlg->reset();
-    m_progressDlg->hide();
+    d->progressDlg->reset();
+    d->progressDlg->hide();
 
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo into "
@@ -646,9 +619,9 @@ void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
 
 void PiwigoWindow::slotAddPhotoCancel()
 {
-    m_progressDlg->reset();
-    m_progressDlg->hide();
-    m_talker->cancel();
+    d->progressDlg->reset();
+    d->progressDlg->hide();
+    d->talker->cancel();
 }
 
 void PiwigoWindow::slotEnableSpinBox(int n)
@@ -656,24 +629,25 @@ void PiwigoWindow::slotEnableSpinBox(int n)
     bool b;
     switch (n)
     {
-    case 0:
-        b = false;
-        break;
-    case 1:
-    case 2:
-        b = true;
-        break;
-    default:
-        b = false;
-        break;
+        case 0:
+            b = false;
+            break;
+        case 1:
+        case 2:
+            b = true;
+            break;
+        default:
+            b = false;
+            break;
     }
-    d->dimensionSpinBox->setEnabled(b);
+    d->widthSpinBox->setEnabled(b);
+    d->heightSpinBox->setEnabled(b);
 }
 
 void PiwigoWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), mpPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
     if ( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
@@ -681,8 +655,7 @@ void PiwigoWindow::slotSettings()
     delete dlg;
 }
 
-
-QString PiwigoWindow::cleanName(const QString& str)
+QString PiwigoWindow::cleanName(const QString& str) const
 {
     QString plain = str;
     plain.replace("&lt;", "<");

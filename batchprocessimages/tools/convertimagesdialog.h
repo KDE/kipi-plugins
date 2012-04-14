@@ -25,10 +25,7 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -46,7 +43,6 @@ public:
 
 private Q_SLOTS:
 
-    void slotHelp();
     void slotOptionsClicked();
     void slotTypeChanged(int type);
 
@@ -69,10 +65,6 @@ protected:
     bool    m_compressLossLess;
     QString m_TIFFCompressionAlgo;
     QString m_TGACompressionAlgo;
-
-private:
-
-    KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

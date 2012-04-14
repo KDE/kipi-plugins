@@ -340,8 +340,8 @@ void CropWidgetItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         QPointF dif = event->scenePos() - event->lastScenePos();
         temp.translate(dif);
 
-        temp.translate( qMin(maxRect.right()-temp.right(),0.0), qMin(maxRect.bottom()-temp.bottom(),0.0) );
-        temp.translate( qMax(maxRect.left()-temp.left(),0.0), qMax(maxRect.top()-temp.top(),0.0) );
+        temp.translate( qMin<float>(maxRect.right()-temp.right(),0.0), qMin<float>(maxRect.bottom()-temp.bottom(),0.0) );
+        temp.translate( qMax<float>(maxRect.left()-temp.left(),0.0), qMax<float>(maxRect.top()-temp.top(),0.0) );
     }
     // Size change
     else

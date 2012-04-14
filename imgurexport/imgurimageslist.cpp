@@ -38,8 +38,8 @@
 namespace KIPIImgurExportPlugin
 {
 
-ImgurImagesList::ImgurImagesList(Interface* const interface, QWidget* const parent)
-    : KPImagesList(interface, parent)
+ImgurImagesList::ImgurImagesList(QWidget* const parent)
+    : KPImagesList(parent)
 {
     listView()->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("File name"));

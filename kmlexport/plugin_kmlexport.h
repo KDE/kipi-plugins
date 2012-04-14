@@ -42,13 +42,16 @@ namespace KIPI
 
 using namespace KIPI;
 
+namespace KIPIKMLExportPlugin
+{
+
 class Plugin_KMLExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_KMLExport(QObject* parent, const QVariantList& args);
+    Plugin_KMLExport(QObject* const parent, const QVariantList& args);
 
     Category category(KAction* action) const;
     void setup(QWidget*);
@@ -64,5 +67,7 @@ private:
 
     Interface* m_interface;
 };
+
+} // namespace KIPIKMLExportPlugin
 
 #endif // PLUGIN_KMLEXPORT_H

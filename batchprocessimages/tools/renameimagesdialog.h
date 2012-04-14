@@ -6,8 +6,8 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
+ * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2005      by Owen Hirst <n8rider@sbcglobal.net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,45 +26,39 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
 
 // Local includes
 
-#include "kpaboutdata.h"
+#include "kptooldialog.h"
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
 class RenameImagesWidget;
 
-class RenameImagesDialog : public KDialog
+class RenameImagesDialog : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    RenameImagesDialog(const KUrl::List& images,
-                       KIPI::Interface* interface,
-                       QWidget* parent);
+    RenameImagesDialog(const KUrl::List& images, Interface* interface, QWidget* parent);
     ~RenameImagesDialog();
 
 private:
 
-    RenameImagesWidget       *m_widget;
-
-    KIPIPlugins::KPAboutData *m_about;
-
-private Q_SLOTS:
-
-    void slotHelp();
+    RenameImagesWidget* m_widget;
 };
 
-}
+} // namespace KIPIBatchProcessImagesPlugin
 
 #endif /* RENAMEIMAGESDIALOG_H */

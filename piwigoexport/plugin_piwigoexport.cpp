@@ -7,10 +7,10 @@
  * Description : a plugin to export to a remote Piwigo server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,12 +52,15 @@
 #include "piwigoconfig.h"
 #include "piwigowindow.h"
 
+namespace KIPIPiwigoExportPlugin
+{
+
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_PiwigoExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_piwigoexport"))
 
-Plugin_PiwigoExport::Plugin_PiwigoExport(QObject *parent, const QVariantList&)
-    : KIPI::Plugin(Factory::componentData(), parent, "PiwigoExport"),
-      m_action(0), mpPiwigo(0)
+Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantList&)
+    : Plugin(Factory::componentData(), parent, "PiwigoExport"),
+      m_action(0), m_pPiwigo(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PiwigoExport plugin loaded";
 }
@@ -66,11 +69,11 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_piwigoexport");
 
-    mpPiwigo = new KIPIPiwigoExportPlugin::Piwigo();
+    m_pPiwigo = new Piwigo();
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -90,42 +93,44 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
 
 Plugin_PiwigoExport::~Plugin_PiwigoExport()
 {
-    delete mpPiwigo;
+    delete m_pPiwigo;
 }
 
 // this slot uses PiwigoWindow Class
 void Plugin_PiwigoExport::slotSync()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    QPointer<KIPIPiwigoExportPlugin::PiwigoEdit>   configDlg;
-    QPointer<KIPIPiwigoExportPlugin::PiwigoWindow> dlg;
+    QPointer<PiwigoEdit>   configDlg;
+    QPointer<PiwigoWindow> dlg;
 
     KConfig config("kipirc");
     if (!config.hasGroup("Piwigo Settings") )
     {
-        configDlg = new KIPIPiwigoExportPlugin::PiwigoEdit(kapp->activeWindow(),
-                        mpPiwigo, i18n("Edit Piwigo Data") );
+        configDlg = new PiwigoEdit(kapp->activeWindow(),
+                        m_pPiwigo, i18n("Edit Piwigo Data") );
         configDlg->exec();
     }
 
-    dlg = new KIPIPiwigoExportPlugin::PiwigoWindow(interface, kapp->activeWindow(), mpPiwigo);
+    dlg = new PiwigoWindow(interface, kapp->activeWindow(), m_pPiwigo);
     dlg->exec();
 
     delete configDlg;
     delete dlg;
 }
 
-KIPI::Category Plugin_PiwigoExport::category(KAction* action) const
+Category Plugin_PiwigoExport::category(KAction* action) const
 {
     if (action == m_action)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPIPiwigoExportPlugin

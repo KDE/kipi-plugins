@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,8 @@ public:
 
 Q_SIGNALS:
 
-    void signalStitchingFinished(const KUrl&);
+    void signalPreviewStitchingFinished(bool);
+    void signalStitchingFinished(bool);
 
 private Q_SLOTS:
 

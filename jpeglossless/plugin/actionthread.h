@@ -39,12 +39,6 @@
 #include "actions.h"
 #include "kpactionthreadbase.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIJPEGLossLessPlugin
@@ -56,7 +50,7 @@ class ActionThread : public KPActionThreadBase
 
 public:
 
-    ActionThread(Interface* const interface, QObject* const parent);
+    ActionThread(QObject* const parent);
     ~ActionThread();
 
     void rotate(const KUrl::List& urlList, RotateAction val);
@@ -75,8 +69,6 @@ private Q_SLOTS:
     void slotJobStarted(ThreadWeaver::Job*);
 
 private:
-
-    bool  m_updateFileStamp;
 
     class Task;
 };

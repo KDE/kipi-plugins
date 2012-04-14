@@ -27,7 +27,7 @@
 namespace KIPIGalleryExportPlugin
 {
 
-AlbumDlg::AlbumDlg(QWidget *parent)
+AlbumDlg::AlbumDlg(QWidget* const parent)
         : QDialog(parent)
 {
     setupUi(this);

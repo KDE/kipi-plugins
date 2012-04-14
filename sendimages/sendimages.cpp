@@ -48,12 +48,14 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
 #include "kpbatchprogressdialog.h"
-#include "emailsettingscontainer.h"
 #include "imageresize.h"
+
+using namespace KIPI;
 
 namespace KIPISendimagesPlugin
 {
@@ -64,10 +66,18 @@ public:
 
     SendImagesPriv()
     {
-        threadImgResize = 0;
-        progressDlg     = 0;
-        iface           = 0;
+        cancel           = false;
+        threadImgResize  = 0;
+        progressDlg      = 0;
+        iface            = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
+
+    bool                   cancel;
 
     KUrl::List             attachementFiles;
     KUrl::List             failedResizedImages;
@@ -76,16 +86,15 @@ public:
 
     KPBatchProgressDialog* progressDlg;
 
-    EmailSettingsContainer settings;
+    EmailSettings settings;
 
     ImageResize*           threadImgResize;
 };
 
-SendImages::SendImages(const EmailSettingsContainer& settings, QObject* const parent, Interface* const iface)
+SendImages::SendImages(const EmailSettings& settings, QObject* const parent)
     : QObject(parent), d(new SendImagesPriv)
 {
     d->settings        = settings;
-    d->iface           = iface;
     d->threadImgResize = new ImageResize(this);
 
     connect(d->threadImgResize, SIGNAL(startingResize(KUrl)),
@@ -109,6 +118,8 @@ SendImages::~SendImages()
 
 void SendImages::sendImages()
 {
+    d->cancel = false;
+
     if (!d->threadImgResize->isRunning())
     {
         d->threadImgResize->cancel();
@@ -161,6 +172,14 @@ void SendImages::sendImages()
 
 void SendImages::slotCancel()
 {
+    d->cancel = true;
+
+    if (!d->threadImgResize->isRunning())
+    {
+        d->threadImgResize->cancel();
+        d->threadImgResize->wait();
+    }
+
     d->progressDlg->progressWidget()->addedAction(i18n("Operation canceled by user"), WarningMessage);
     d->progressDlg->progressWidget()->setProgress(0, 100);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
@@ -173,12 +192,16 @@ void SendImages::slotCancel()
 
 void SendImages::slotStartingResize(const KUrl& orgUrl)
 {
+    if (d->cancel) return;
+
     QString text = i18n("Resizing %1", orgUrl.fileName());
     d->progressDlg->progressWidget()->addedAction(text, StartingMessage);
 }
 
 void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent)
 {
+    if (d->cancel) return;
+
     d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
     kDebug() << emailUrl;
     d->attachementFiles.append(emailUrl);
@@ -190,6 +213,8 @@ void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, in
 
 void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int percent)
 {
+    if (d->cancel) return;
+
     d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
     QString text = i18n("Failed to resize %1: %2", orgUrl.fileName(), error);
     d->progressDlg->progressWidget()->addedAction(text, ErrorMessage);
@@ -199,25 +224,33 @@ void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int 
 
 void SendImages::slotCompleteResize()
 {
+    if (d->cancel) return;
+
     if (!showFailedResizedImages())
     {
         slotCancel();
         return;
     }
+
     secondStage();
 }
 
 void SendImages::secondStage()
 {
+    if (d->cancel) return;
+
     buildPropertiesFile();
     d->progressDlg->progressWidget()->setProgress(90, 100);
     invokeMailAgent();
     d->progressDlg->progressWidget()->setProgress(100, 100);
 }
 
-/** Creates a text file with all images Comments, Tags, and Rating. */
+/** Creates a text file with all images Comments, Tags, and Rating.
+ */
 void SendImages::buildPropertiesFile()
 {
+    if (d->cancel) return;
+
     if (d->settings.addCommentsAndTags)
     {
         d->progressDlg->progressWidget()->addedAction(i18n("Build images properties file"), StartingMessage);
@@ -265,7 +298,8 @@ void SendImages::buildPropertiesFile()
     }
 }
 
-/** Shows up an error dialog about the problematic resized images. */
+/** Shows up an error dialog about the problematic resized images.
+ */
 bool SendImages::showFailedResizedImages()
 {
     if (!d->failedResizedImages.isEmpty())
@@ -360,9 +394,12 @@ KUrl::List SendImages::divideEmails()
 }
 
 /** Invokes mail agent. Depending on which mail agent to be used, we have different
-    proceedings. Easy for every agent except of mozilla derivates */
+    proceedings. Easy for every agent except of mozilla derivates
+ */
 bool SendImages::invokeMailAgent()
 {
+    if (d->cancel) return false;
+
     bool       agentInvoked = false;
     KUrl::List fileList;
     do
@@ -379,7 +416,7 @@ bool SendImages::invokeMailAgent()
 
             switch ((int)d->settings.emailProgram)
             {
-                case EmailSettingsContainer::DEFAULT:
+                case EmailSettings::DEFAULT:
                 {
                     KToolInvocation::invokeMailer(
                         QString(),                     // Destination address.
@@ -396,7 +433,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::BALSA:
+                case EmailSettings::BALSA:
                 {
                     QString prog("balsa");
                     QStringList args;
@@ -419,9 +456,9 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::CLAWSMAIL:
-                case EmailSettingsContainer::SYLPHEED:
-                case EmailSettingsContainer::SYLPHEEDCLAWS:
+                case EmailSettings::CLAWSMAIL:
+                case EmailSettings::SYLPHEED:
+                case EmailSettings::SYLPHEEDCLAWS:
                 {
                     QStringList args;
                     args.append("--compose");
@@ -432,9 +469,9 @@ bool SendImages::invokeMailAgent()
                     }
 
                     QString prog;
-                    if (d->settings.emailProgram == EmailSettingsContainer::CLAWSMAIL)
+                    if (d->settings.emailProgram == EmailSettings::CLAWSMAIL)
                         prog = QString("claws-mail");
-                    else if (d->settings.emailProgram == EmailSettingsContainer::SYLPHEED)
+                    else if (d->settings.emailProgram == EmailSettings::SYLPHEED)
                         prog = QString("sylpheed");
                     else
                         prog = QString("sylpheed-claws");
@@ -450,7 +487,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::EVOLUTION:
+                case EmailSettings::EVOLUTION:
                 {
                     QString prog("evolution");
                     QStringList args;
@@ -473,7 +510,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::KMAIL:
+                case EmailSettings::KMAIL:
                 {
                     QString prog("kmail");
                     QStringList args;
@@ -497,14 +534,14 @@ bool SendImages::invokeMailAgent()
                 // More info about command lines options with Mozilla & co:
                 // http://www.mozilla.org/docs/command-line-args.html#Syntax_Rules
 
-                case EmailSettingsContainer::NETSCAPE:
-                case EmailSettingsContainer::THUNDERBIRD:
-                case EmailSettingsContainer::GMAILAGENT:
+                case EmailSettings::NETSCAPE:
+                case EmailSettings::THUNDERBIRD:
+                case EmailSettings::GMAILAGENT:
                 {
                     QString prog;
-                    if (d->settings.emailProgram == EmailSettingsContainer::NETSCAPE)
+                    if (d->settings.emailProgram == EmailSettings::NETSCAPE)
                         prog = QString("netscape");
-                    else if (d->settings.emailProgram == EmailSettingsContainer::THUNDERBIRD)
+                    else if (d->settings.emailProgram == EmailSettings::THUNDERBIRD)
                         prog = QString("thunderbird");
                     else
                         prog = QString("gmailagent");

@@ -69,7 +69,7 @@ namespace KIPIJPEGLossLessPlugin
 {
 
 ImageRotate::ImageRotate()
-           : QObject()
+    : QObject()
 {
     m_tmpFile.setSuffix("kipiplugin-rotate");
     m_tmpFile.setAutoRemove(true);
@@ -79,7 +79,7 @@ ImageRotate::~ImageRotate()
 {
 }
 
-bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, bool updateFileTimeStamp)
+bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
 {
     QFileInfo fi(src);
 
@@ -111,7 +111,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
     }
     else if (Utils::isJPEG(src))
     {
-        if (!rotateJPEG(src, tmp, angle, err, updateFileTimeStamp))
+        if (!rotateJPEG(src, tmp, angle, err))
         {
             if (err == "nothing to do") { err.clear(); return true; }
             return false;
@@ -140,8 +140,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
     return true;
 }
 
-bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle,
-                             QString& err, bool updateFileTimeStamp)
+bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err)
 {
     Matrix transform = Matrix::none;
 
@@ -175,7 +174,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
         }
     }
 
-    return transformJPEG(src, dest, transform, err, updateFileTimeStamp);
+    return transformJPEG(src, dest, transform, err);
 }
 
 bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 

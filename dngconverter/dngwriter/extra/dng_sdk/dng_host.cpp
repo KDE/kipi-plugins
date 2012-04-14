@@ -459,13 +459,11 @@ dng_opcode * dng_host::Make_dng_opcode (uint32 opcodeID,
 			
 		default:
 			{
-			
 			result = new dng_opcode_Unknown (*this,
 											 opcodeID,
 											 stream);
-			
+			break;
 			}
-		
 		}
 
 	if (!result)

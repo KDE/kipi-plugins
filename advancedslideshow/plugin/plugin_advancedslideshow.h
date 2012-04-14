@@ -38,8 +38,8 @@ class KAction;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
-    class SharedContainer;
-}
+
+class SharedContainer;
 
 class Plugin_AdvancedSlideshow : public KIPI::Plugin
 {
@@ -47,7 +47,7 @@ class Plugin_AdvancedSlideshow : public KIPI::Plugin
 
 public:
 
-    Plugin_AdvancedSlideshow(QObject* parent, const QVariantList& args);
+    Plugin_AdvancedSlideshow(QObject* const parent, const QVariantList& args);
     ~Plugin_AdvancedSlideshow();
 
     virtual KIPI::Category category(KAction* action) const;
@@ -64,11 +64,13 @@ private Q_SLOTS:
 
 private:
 
-    KAction*                                      m_actionSlideShow;
-    KIPI::Interface*                              m_interface;
-    KUrl::List                                    m_urlList;
+    KAction*         m_actionSlideShow;
+    KIPI::Interface* m_interface;
+    KUrl::List       m_urlList;
 
-    KIPIAdvancedSlideshowPlugin::SharedContainer* m_sharedData;
+    SharedContainer* m_sharedData;
 };
+
+}  // namespace KIPIAdvancedSlideshowPlugin
 
 #endif  // PLUGIN_ADVANCEDSLIDESHOW_H

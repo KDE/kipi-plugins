@@ -7,8 +7,8 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,6 +25,8 @@
 
 #include "plugin_photolayoutseditor.moc"
 
+// KDE includes
+
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kicon.h>
@@ -32,19 +34,24 @@
 #include <kactioncollection.h>
 #include <kaboutdata.h>
 
+// Libkipi includes
+
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+
+// Local includes
 
 #include "photolayoutseditor.h"
 #include "PLEAboutData.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+namespace KIPIPhotoLayoutsEditor
+{
 
 K_PLUGIN_FACTORY ( PhotoFrmesEditorFactory, registerPlugin<Plugin_PhotoLayoutsEditor>(); )
 K_EXPORT_PLUGIN( PhotoFrmesEditorFactory( PLEAboutData() ))
 
-Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject * parent, const QVariantList &) :
-    KIPI::Plugin( PhotoFrmesEditorFactory::componentData(), parent, "photolayoutseditor" )
+Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject* const parent, const QVariantList&)
+    : Plugin( PhotoFrmesEditorFactory::componentData(), parent, "photolayoutseditor" )
 {
     m_interface    = 0;
     m_action       = 0;
@@ -55,21 +62,13 @@ Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject * parent, const QVa
 }
 
 Plugin_PhotoLayoutsEditor::~Plugin_PhotoLayoutsEditor()
-{}
-
-KIPI::Category Plugin_PhotoLayoutsEditor::category( KAction * action ) const
 {
-    if ( action == m_action )
-       return KIPI::ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ToolsPlugin; // no warning from compiler, please
 }
 
-void Plugin_PhotoLayoutsEditor::setup( QWidget * widget )
+void Plugin_PhotoLayoutsEditor::setup(QWidget* widget)
 {
     m_parentWidget = widget;
-    KIPI::Plugin::setup(m_parentWidget);
+    Plugin::setup(m_parentWidget);
 
     m_action = actionCollection()->addAction("photolayoutseditor");
     m_action->setText(i18n("Create photo layouts..."));
@@ -80,7 +79,7 @@ void Plugin_PhotoLayoutsEditor::setup( QWidget * widget )
 
     addAction(m_action);
 
-    m_interface = dynamic_cast< KIPI::Interface* >(parent());
+    m_interface = dynamic_cast< Interface* >(parent());
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
@@ -96,7 +95,7 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
         return;
     }
 
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     m_manager = PhotoLayoutsEditor::instance(m_parentWidget);
     m_manager->open();
@@ -105,3 +104,14 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
     m_manager->setInterface(m_interface);
     m_manager->show();
 }
+
+Category Plugin_PhotoLayoutsEditor::category(KAction* action) const
+{
+    if ( action == m_action )
+       return ToolsPlugin;
+
+    kWarning() << "Unrecognized action for plugin category identification";
+    return ToolsPlugin; // no warning from compiler, please
+}
+
+} // namespace KIPIPhotoLayoutsEditor

@@ -599,7 +599,7 @@ void SlideShowGL::printComments(QImage& layer)
 {
 //    QString comments = m_commentsList[m_fileIndex];
 
-    KIPIPlugins::KPImageInfo info(m_sharedData->iface(), m_imageLoader->currPath());
+    KIPIPlugins::KPImageInfo info(m_imageLoader->currPath());
     QString comments = info.description();
 
     int yPos = 5; // Text Y coordinate

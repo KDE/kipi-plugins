@@ -123,7 +123,7 @@ public:
     MetadataEditDialog*  dlg;
 };
 
-XMPEditWidget::XMPEditWidget(MetadataEditDialog* parent)
+XMPEditWidget::XMPEditWidget(MetadataEditDialog* const parent)
     : KPageWidget(parent), d(new XMPEditWidgetPrivate)
 {
     d->dlg       = parent;
@@ -266,6 +266,7 @@ void XMPEditWidget::slotItemChanged()
     d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
+
     d->isReadOnly = !KPMetadata::canWriteXmp((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
 
@@ -284,7 +285,7 @@ void XMPEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
+        KPImageInfo info(*d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -306,9 +307,6 @@ void XMPEditWidget::apply()
         d->propertiesPage->applyMetadata(d->xmpData);
 
         KPMetadata meta;
-        KPHostSettings hSettings(d->dlg->iface());
-        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

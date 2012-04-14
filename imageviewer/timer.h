@@ -4,10 +4,10 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,15 +26,9 @@
 
 // Qt includes
 
-#include <QDateTime>
 #include <QString>
 
-/**
- * @short convenience class for profiling
- * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.2
- */
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
 
 class Timer
@@ -44,15 +38,16 @@ public:
 
     Timer();
     ~Timer();
+
     void start();
     void at(const QString& s);
 
-protected:
+private:
 
-    QTime timer;
-    int   meantime;
+    class TimerPriv;
+    TimerPriv* const d;
 };
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin
 
 #endif // TIMER_H

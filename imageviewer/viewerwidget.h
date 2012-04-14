@@ -4,10 +4,10 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 
 #ifndef VIEWERWIDGET_H
 #define VIEWERWIDGET_H
-
-// C++ includes
-
-#include <iostream>
 
 // Qt includes
 
@@ -44,34 +40,17 @@
 
 // LibKIPI includes
 
-#include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
 // Local includes
 
 #include "texture.h"
+#include "global.h"
 
-/**
- * @short OpenGL widget for image viewer
- * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.2
- */
+using namespace KIPI;
 
-//keep in mind that one cache entry takes 20MB for a 5mpix pic
-#define CACHESIZE 4
-#define EMPTY 99999
-
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
-
-using namespace std;
-
-enum OGLstate
-{
-    oglOK,
-    oglNoRectangularTexture,
-    oglNoContext
-};
 
 class ViewerWidget : public QGLWidget
 {
@@ -79,81 +58,47 @@ class ViewerWidget : public QGLWidget
 
 public:
 
-    ViewerWidget(KIPI::Interface*);
-    ~ViewerWidget()
-    {
-        glDeleteTextures(1,tex);
-        for(int i=0;i<CACHESIZE;++i)
-        {
-            cache[i].file_index=EMPTY;
-            delete cache[i].texture;
-        }
-    }
+    ViewerWidget(Interface* const iface);
+    ~ViewerWidget();
 
-    void     drawImage(Texture* tex);
-    void     downloadTex(Texture* tex);
-    Texture* loadImage(int file_index);
-    void     prevImage();
-    void     nextImage();
-    bool     listOfFilesIsEmpty() const;
-    void     zoom(int mdelta, const QPoint& pos, float factor);
-    OGLstate getOGLstate();
+    void prevImage();
+    void nextImage();
+    bool listOfFilesIsEmpty() const;
 
-    virtual void initializeGL();
-    virtual void resizeGL(int w, int h);
-    virtual void paintGL();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void keyReleaseEvent(QKeyEvent* e);
+    OGLstate getOGLstate() const;
 
-protected:
+private:
 
-    struct Cache
-    {
-        int      file_index;
-        Texture* texture;
-    };
+    void initializeGL();
+    void resizeGL(int w, int h);
+    void paintGL();
 
-    enum WheelAction
-    {
-        zoomImage,
-        changeImage
-    };
-
-    Texture*         texture;
-    unsigned int     old_file_idx, file_idx, idx, oldidx;
-    float            ratio_view_y, ratio_view_x, delta;
-    QTime            timer;
-    QDir             directory;
-    QStringList      files;
-    unsigned char*   imageJPEGLIB;
-    Cache            cache[CACHESIZE];
-    GLuint           tex[3];
-    float            vertex_height, vertex_width, vertex_left, vertex_top, vertex_right, vertex_bottom;
-    QPoint           startdrag, previous_pos;
-    WheelAction      wheelAction;
-    bool             firstImage;
-    QSize            zoomsize;
-    QTimer           timerMouseMove;
-    QCursor          moveCursor, zoomCursor;
-    float            zoomfactor_scrollwheel,  zoomfactor_mousemove,  zoomfactor_keyboard;
-    QString          nullImage;
-    int              screen_width;
-    KIPI::Interface* kipiInterface;
-
-protected:
-
-    virtual void keyPressEvent(QKeyEvent* k);
-    virtual void wheelEvent(QWheelEvent* e);
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseDoubleClickEvent(QMouseEvent* e);
     bool isReallyFullScreen() const;
+
+    void keyPressEvent(QKeyEvent* k);
+    void keyReleaseEvent(QKeyEvent* e);
+    void wheelEvent(QWheelEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
+    void mousePressEvent(QMouseEvent* e);
+    void mouseDoubleClickEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
+
+    Texture* loadImage(int file_index);
+    void     drawImage(Texture* const tex);
+    void     downloadTexture(Texture* const tex);
+
+    void zoom(int mdelta, const QPoint& pos, float factor);
 
 private Q_SLOTS:
 
-    void timeoutMouseMove();
+    void slotTimeoutMouseMove();
+
+private:
+
+    class ViewerWidgetPriv;
+    ViewerWidgetPriv* const d;
 };
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin
 
 #endif // VIEWERWIDGET_H

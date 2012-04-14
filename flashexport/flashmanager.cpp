@@ -49,7 +49,6 @@ public:
     FlashManagerPriv()
     {
         iface  = 0;
-        about  = 0;
         wizard = 0;
         simple = 0;
     }
@@ -57,8 +56,6 @@ public:
     SimpleViewerSettingsContainer* containerSettings;
 
     Interface*                     iface;
-
-    FlashExportAboutData*          about;
 
     ImportWizardDlg*               wizard;
 
@@ -72,7 +69,6 @@ FlashManager::FlashManager(QObject* const parent)
 
 FlashManager::~FlashManager()
 {
-    delete d->about;
     delete d->wizard;
     delete d->simple;
     delete d;
@@ -83,16 +79,6 @@ void FlashManager::initSimple()
 // it cannot be initialized in main function because interface pointer is null.
     d->simple = new SimpleViewer(d->iface,this);
     kDebug() << "simpleview Initialized...";
-}
-
-void FlashManager::setAbout(FlashExportAboutData* const about)
-{
-    d->about = about;
-}
-
-FlashExportAboutData* FlashManager::about() const
-{
-    return d->about;
 }
 
 void FlashManager::setIface(Interface* const iface)

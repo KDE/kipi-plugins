@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -175,9 +175,9 @@ void OptimizePage::process()
     QMutexLocker lock(&d->progressMutex);
 
     d->title->setText(i18n("<qt>"
-    "<p>Optimization is in progress, please wait.</p>"
-    "<p>This can take a while...</p>"
-    "</qt>"));
+                           "<p>Optimization is in progress, please wait.</p>"
+                           "<p>This can take a while...</p>"
+                           "</qt>"));
     d->horizonCheckbox->hide();
     d->projectionAndSizeCheckbox->hide();
     d->progressTimer->start(300);
@@ -186,6 +186,7 @@ void OptimizePage::process()
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->optimizeProject(d->mngr->cpFindUrl(),
+                                       d->mngr->autoOptimiseUrl(),
                                        d->horizonCheckbox->isChecked(),
                                        d->projectionAndSizeCheckbox->isChecked(),
                                        d->mngr->autoOptimiserBinary().path());
@@ -246,22 +247,22 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             switch (ad.action)
             {
-                case(OPTIMIZE):
+                case OPTIMIZE:
                 {
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->title->setText(i18n("<qt>"
-                    "<p>Optimization has failed.</p>"
-                    "<p>Press \"Details\" to show processing messages.</p>"
-                    "</qt>"));
+                                           "<p>Optimization has failed.</p>"
+                                           "<p>Press \"Details\" to show processing messages.</p>"
+                                           "</qt>"));
                     d->progressTimer->stop();
                     d->horizonCheckbox->hide();
                     d->projectionAndSizeCheckbox->hide();
                     d->detailsBtn->show();
                     d->progressLabel->clear();
                     d->output = ad.message;
-                    emit signalOptimized(KUrl());
+                    emit signalOptimized(false);
                     break;
                 }
                 default:
@@ -275,14 +276,14 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
-                case(OPTIMIZE):
+                case OPTIMIZE:
                 {
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalOptimized(ad.ptoUrl);
+                    emit signalOptimized(true);
                     break;
                 }
                 default:

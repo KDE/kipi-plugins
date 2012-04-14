@@ -31,7 +31,7 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
-class QProgressBar;
+
 class KComboBox;
 class KPushButton;
 
@@ -44,6 +44,7 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class KPImagesList;
+    class KPProgressWidget;
 }
 
 namespace KIPIFacebookPlugin
@@ -74,7 +75,7 @@ public:
 
     KIPIPlugins::KPImagesList* imagesList() const;
 
-    QProgressBar* progressBar() const;
+    KIPIPlugins::KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
 
@@ -107,7 +108,7 @@ private:
     QSpinBox*                  m_dimensionSpB;
     QSpinBox*                  m_imageQualitySpB;
 
-    QProgressBar*              m_progressBar;
+    KIPIPlugins::KPProgressWidget* m_progressBar;
 
     friend class FbWindow;
 };

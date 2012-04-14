@@ -38,6 +38,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // LibKDcraw includes
 
@@ -61,6 +62,11 @@ public:
     {
         running = false;
         iface   = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     class Task
@@ -90,13 +96,10 @@ public:
     Interface*                         iface;
 };
 
-ActionThread::ActionThread(QObject* const parent, Interface* const iface)
+ActionThread::ActionThread(QObject* const parent)
     : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
-    d->iface = iface;
-    KPHostSettings hSettings(d->iface);
-    d->dcrawIface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 }
 
 ActionThread::~ActionThread()

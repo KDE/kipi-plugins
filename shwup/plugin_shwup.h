@@ -7,9 +7,9 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
+ * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,21 +36,23 @@
 
 class KAction;
 
+using namespace KIPI;
+
 namespace KIPIShwupPlugin
 {
-    class SwWindow;
-}
 
-class Plugin_Shwup : public KIPI::Plugin
+class SwWindow;
+
+class Plugin_Shwup : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_Shwup(QObject* parent, const QVariantList& args);
+    Plugin_Shwup(QObject* const parent, const QVariantList& args);
     ~Plugin_Shwup();
 
-    virtual KIPI::Category category(KAction* action) const;
+    virtual Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
 public Q_SLOTS:
@@ -59,8 +61,10 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                   m_actionExport;
-    KIPIShwupPlugin::SwWindow* m_dlgExport;
+    KAction*  m_actionExport;
+    SwWindow* m_dlgExport;
 };
+
+} // namespace KIPIShwupPlugin
 
 #endif // PLUGIN_SHWUP_H

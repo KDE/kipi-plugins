@@ -25,6 +25,10 @@
 #ifndef KPMETADATA_H
 #define KPMETADATA_H
 
+// KDE includes
+
+#include <kurl.h>
+
 // LibKExiv2 includes
 
 // NOTE: all file included here will be used into plugins as well, to prevent files to include from libkexiv2.
@@ -61,6 +65,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
+
 using namespace KExiv2Iface;
 
 namespace KIPIPlugins
@@ -76,9 +81,11 @@ class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 
 public:
 
-    /** Empty contructor. KIPI interface is null. Default metadata settings is used, 
-     *  and no file lock will be performed with read and write operations.
-     *  This contructor work like KExiv2 constructor.
+    /** Standard contructor. 
+     *  KIPI interface from plugin loader instance is used to lock item.
+     *  If no interface is available, for ex when plugin is loaded as stand-alone application,
+     *  default metadata settings is used, and no file lock will be performed with 
+     *  read and write operations. In this case, this contructor work like KExiv2 constructor.
      */
     KPMetadata();
     virtual ~KPMetadata();
@@ -87,22 +94,15 @@ public:
      */
     KPMetadata(const QString& filePath);
 
-    /** Constructor with KIPI interface. Metadata settings is taken from KIPI host application and file 
-     *  lock will be performed with read and write operations.
-     *  If interface is null, default settings is used, and no file lock will be performed.
-     *  With this constructor, just load metadata from file using load() method.
-     */
-    KPMetadata(Interface* const iface);
-
-    /** Constructor to load metadata from file. Same behavior than KPMetadata(Interface* const iface) constructor.
-     */
-    KPMetadata(const QString& filePath, Interface* const iface);
-
 public:
 
     /** Apply metadata settings from KIPI host application to this interface. To use before load and save operations.
      */
     void setSettings(const KPMetaSettings& settings);
+
+    /** Return all metadata settings configured.
+     */
+    KPMetaSettings settings() const;
 
     /** Load metadata operation from a file.
      *  Re-implemented from libKexiv2 to use lock mechanism with KIPI host application through KIPI::Interface.
@@ -119,8 +119,29 @@ public:
      */
     bool applyChanges() const;
 
+public:
+
+    // These methods have been factored to libkexiv2 2.3.0. Remove it after KDE 4.8.2
+#if KEXIV2_VERSION < 0x020300
+    static QString sidecarPath(const QString& path);
+    /** Like KExiv2::sidecarFilePathForFile, but works for remote URLs */
+    static KUrl sidecarUrl(const KUrl& url);
+    /** Gives a file url for a local path */
+    static KUrl sidecarUrl(const QString& path);
+    /** Performs a QFileInfo based check if the given local file has a sidecar */
+    static bool hasSidecar(const QString& path);
+#endif // KEXIV2_VERSION < 0x020300
+
+public:
+
+    static bool moveSidecar(const KUrl& src, const KUrl& dest);
+
 private:
 
+    void init();
+
+private:
+    
     Interface* m_iface;
 };
 

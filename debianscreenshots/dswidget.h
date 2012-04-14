@@ -29,7 +29,6 @@
 #include <QUrl>
 
 class QButtonGroup;
-class QProgressBar;
 class QNetworkReply;
 class KComboBox;
 class KLineEdit;
@@ -41,13 +40,13 @@ namespace KIO
 
 namespace KIPI
 {
-    class Interface;
     class UploadWidget;
 }
 
 namespace KIPIPlugins
 {
     class KPImagesList;
+    class KPProgressWidget;
 }
 
 namespace KIPIDebianScreenshotsPlugin
@@ -61,14 +60,14 @@ class DsWidget : public QWidget
 
 public:
 
-    DsWidget(QWidget* const parent, KIPI::Interface* const iface);
+    DsWidget(QWidget* const parent);
     ~DsWidget();
 
-     QString getDestinationPath() const;
+    QString getDestinationPath() const;
 
-     KIPIPlugins::KPImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
 
-    QProgressBar* progressBar() const;
+    KIPIPlugins::KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
 
@@ -87,7 +86,6 @@ private:
     QButtonGroup*              m_dlGrp;
     QString                    m_lastTip;
     QUrl                       m_lastQueryUrl;
-    QProgressBar*              m_progressBar;
 
     KLineEdit*                 m_pkgLineEdit;
     KComboBox*                 m_versionsComboBox;
@@ -100,6 +98,7 @@ private:
 
     KIPIPlugins::KPImagesList* m_imgList;
     KIPI::UploadWidget*        m_uploadWidget;
+    KIPIPlugins::KPProgressWidget* m_progressBar;
 
     friend class DsWindow;
 };

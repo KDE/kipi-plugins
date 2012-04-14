@@ -50,10 +50,13 @@ extern "C"
 
 #include <libkipi/interface.h>
 
+namespace KIPIRajceExportPlugin
+{
+
 K_PLUGIN_FACTORY( RajceExportFactory, registerPlugin<Plugin_RajceExport>(); )
 K_EXPORT_PLUGIN ( RajceExportFactory("kipiplugin_rajceexport") )
 
-Plugin_RajceExport::Plugin_RajceExport(QObject* parent, const QVariantList& /*args*/)
+Plugin_RajceExport::Plugin_RajceExport(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(RajceExportFactory::componentData(), parent, "RajceExport"),
       m_actionExport(0),
       m_dlgExport(0)
@@ -85,7 +88,7 @@ void Plugin_RajceExport::setup(QWidget* widget)
 
 void Plugin_RajceExport::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!" ;
@@ -98,7 +101,7 @@ void Plugin_RajceExport::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIRajceExportPlugin::RajceWindow(interface, Tmp, kapp->activeWindow());
+        m_dlgExport = new RajceWindow(interface, Tmp, kapp->activeWindow());
     }
     else
     {
@@ -113,11 +116,13 @@ void Plugin_RajceExport::slotExport()
     m_dlgExport->reactivate();
 }
 
-KIPI::Category Plugin_RajceExport::category(KAction* action) const
+Category Plugin_RajceExport::category(KAction* action) const
 {
     if (action == m_actionExport)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 
     kWarning() << "Unrecognized action";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPIRajceExportPlugin

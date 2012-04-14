@@ -37,7 +37,7 @@ class IPTCEnvelope : public QWidget
 
 public:
 
-    IPTCEnvelope(QWidget* parent);
+    IPTCEnvelope(QWidget* const parent);
     ~IPTCEnvelope();
 
     void applyMetadata(QByteArray& iptcData);

@@ -281,7 +281,7 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     printListLayout->setMargin(0);
     printListLayout->setSpacing(0);
 
-    d->m_imagesFilesListBox = new KPImagesList(interface, d->m_photoPage->mPrintList, KIconLoader::SizeMedium);
+    d->m_imagesFilesListBox = new KPImagesList(d->m_photoPage->mPrintList, KIconLoader::SizeMedium);
     d->m_imagesFilesListBox->setAllowDuplicate(true);
     d->m_imagesFilesListBox->setControlButtons(KPImagesList::Add |
                                                KPImagesList::Remove |

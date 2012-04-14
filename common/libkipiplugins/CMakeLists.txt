@@ -15,6 +15,8 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpactionthreadbase.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpweaverobserver.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpdialogprivate.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp

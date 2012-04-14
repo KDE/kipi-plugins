@@ -55,16 +55,10 @@ namespace KIPIRawConverterPlugin
 RawDecodingIface::RawDecodingIface()
     : KDcraw()
 {
-    m_updateFileTimeStamp = false;
 }
 
 RawDecodingIface::~RawDecodingIface()
 {
-}
-
-void RawDecodingIface::setUpdateFileTimeStamp(bool b)
-{
-    m_updateFileTimeStamp = b;
 }
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
@@ -163,18 +157,14 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
     // -- Write image data into destination file -------------------------------
 
-    QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
+    QByteArray prof = KPWriteImage::getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
     QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
     QFileInfo fi(filePath);
     destPath = fi.absolutePath() + QString("/") + ".kipi-rawconverter-tmp-" 
                                  + QString::number(QDateTime::currentDateTime().toTime_t());
 
     // Metadata restoration and update.
-    KPMetadata meta;    // NOTE : no need to lock item through KIPI::Interface, it's a temp file processed.
-
-#if KEXIV2_VERSION >= 0x000600
-    meta.setUpdateFileTimeStamp(m_updateFileTimeStamp);
-#endif
+    KPMetadata meta;
 
     meta.load(filePath);
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));

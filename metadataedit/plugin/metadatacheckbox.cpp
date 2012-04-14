@@ -28,7 +28,7 @@
 namespace KIPIMetadataEditPlugin
 {
 
-MetadataCheckBox::MetadataCheckBox(const QString& text, QWidget* parent)
+MetadataCheckBox::MetadataCheckBox(const QString& text, QWidget* const parent)
     : QCheckBox(text, parent)
 {
     m_valid = true;

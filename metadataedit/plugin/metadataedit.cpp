@@ -94,7 +94,7 @@ public:
     XMPEditWidget*       tabXmp;
 };
 
-MetadataEditDialog::MetadataEditDialog(QWidget* parent, const KUrl::List& urls, Interface* iface)
+MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& urls, Interface* const iface)
     : KDialog(parent), d(new MetadataEditDialogPrivate)
 {
     d->urls      = urls;

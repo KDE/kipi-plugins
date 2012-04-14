@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "plugin_vkontakte.h"
+#include "plugin_vkontakte.moc"
 
 // KDE includes
 
@@ -43,25 +43,26 @@
 
 #include "vkwindow.h"
 
+namespace KIPIVkontaktePlugin
+{
+
 K_PLUGIN_FACTORY( Factory, registerPlugin<Plugin_Vkontakte>(); )
 K_EXPORT_PLUGIN ( Factory("kipiplugin_vkontakte") )
 
-Plugin_Vkontakte::Plugin_Vkontakte(QObject *parent, const QVariantList&)
+Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     : Plugin(Factory::componentData(), parent, "VKontakte")
 {
-
     m_dlgExport = 0;
     // m_dlgImport = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Vkontakte plugin loaded" ;
 }
 
-void Plugin_Vkontakte::setup(QWidget *widget)
+void Plugin_Vkontakte::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_vkontakte");
-
 
     m_actionExport = actionCollection()->addAction("VKontakte");
     m_actionExport->setText(i18n("Export to &VKontakte..."));
@@ -75,7 +76,7 @@ void Plugin_Vkontakte::setup(QWidget *widget)
 
     addAction(m_actionExport);
 
-    KIPI::Interface *interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface *interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -100,7 +101,7 @@ void Plugin_Vkontakte::slotImport()
 
 void Plugin_Vkontakte::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -112,7 +113,7 @@ void Plugin_Vkontakte::slotExport()
     {
         // This object will live forever, we will reuse it on future accesses
         // to the plugin.
-        m_dlgExport = new KIPIVkontaktePlugin::VkontakteWindow(interface,
+        m_dlgExport = new VkontakteWindow(interface,
                 false, kapp->activeWindow());
     }
     else
@@ -126,15 +127,16 @@ void Plugin_Vkontakte::slotExport()
     m_dlgExport->startReactivation();
 }
 
-KIPI::Category Plugin_Vkontakte::category(KAction *action) const
+Category Plugin_Vkontakte::category(KAction* action) const
 {
     if (action == m_actionExport)
     {
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     }
 
     kWarning() << "Unrecognized action for plugin category identification" ;
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
 
-#include "plugin_vkontakte.moc"
+} // namespace KIPIVkontaktePlugin
+

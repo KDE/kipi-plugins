@@ -26,8 +26,8 @@
 
 // Qt includes
 
-#include <QProgressDialog>
 #include <QPushButton>
+#include <QProgressDialog>
 #include <QPixmap>
 #include <QCheckBox>
 #include <QStringList>
@@ -38,7 +38,6 @@
 
 #include <kcombobox.h>
 #include <klineedit.h>
-#include <khelpmenu.h>
 #include <kmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -53,7 +52,6 @@
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -64,6 +62,7 @@
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
@@ -78,7 +77,7 @@ namespace KIPIFlickrExportPlugin
 
 FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder, 
                            QWidget* const /*parent*/, const QString& serviceName)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
@@ -104,7 +103,7 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
-    m_widget                    = new FlickrWidget(this, interface, serviceName);
+    m_widget                    = new FlickrWidget(this, serviceName);
     m_photoView                 = m_widget->m_photoView;
     m_albumsListComboBox        = m_widget->m_albumsListComboBox;
     m_newAlbumBtn               = m_widget->m_newAlbumBtn;
@@ -139,31 +138,23 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     // --------------------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr/23/Zooomr Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export an image collection to a "
-                                                 "Flickr / 23 / Zooomr web service."),
-                                           ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                                 "(c) 2008-2009, Gilles Caulier\n"
-                                                 "(c) 2009, Luka Renko"));
+    KPAboutData* about = new KPAboutData(ki18n("Flickr/23/Zooomr Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export an image collection to a "
+                                               "Flickr / 23 / Zooomr web service."),
+                                         ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                               "(c) 2008-2012, Gilles Caulier\n"
+                                               "(c) 2009, Luka Renko"));
 
-    m_about->addAuthor(ki18n("Vardhman Jain"), ki18n("Author and maintainer"),
-                       "Vardhman at gmail dot com");
+    about->addAuthor(ki18n("Vardhman Jain"), ki18n("Author and maintainer"),
+                     "Vardhman at gmail dot com");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("flickrexport");
+    setAboutData(about);
 
     // --------------------------------------------------------------------------
 
@@ -193,6 +184,9 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     connect(m_talker, SIGNAL(signalTokenObtained(QString)),
             this, SLOT(slotTokenObtained(QString)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotAddPhotoCancelAndClose()));
+
     //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),
     //         SLOT(slotAlbums(QValueList<GAlbum>)) );
 
@@ -201,13 +195,6 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
 
     // --------------------------------------------------------------------------
 
-    m_progressDlg = new QProgressDialog(this);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-
-    connect(m_progressDlg, SIGNAL(canceled()),
-            this, SLOT(slotAddPhotoCancel()));
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotUserChangeRequest()));
@@ -261,23 +248,43 @@ FlickrWindow::~FlickrWindow()
     //   if (m_wallet)
     //      delete m_wallet;
 
-    delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;
-    delete m_about;
-}
-
-void FlickrWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("flickrexport", "kipi-plugins");
 }
 
 void FlickrWindow::slotClose()
 {
+    if (m_widget->progressBar()->isHidden())
+    {
+        writeSettings();
+        m_imglst->listView()->clear();
+        m_widget->progressBar()->progressCompleted();
+        done(Close);
+    }
+    else // cancel login/transfer
+    {
+        m_talker->cancel();
+        m_uploadQueue.clear();
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
+    }
+
+}
+
+void FlickrWindow::slotAddPhotoCancelAndClose()
+{
     writeSettings();
     m_imglst->listView()->clear();
+    m_uploadQueue.clear();
+    m_widget->progressBar()->reset();
+    m_widget->progressBar()->hide();
+    m_widget->progressBar()->progressCompleted();
+    m_talker->cancel();
     done(Close);
+
+    // refresh the thumbnails
+    //slotTagSelected();
 }
 
 void FlickrWindow::closeEvent(QCloseEvent* e)
@@ -567,7 +574,7 @@ void FlickrWindow::slotUser1()
         FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>
                                      (m_imglst->listView()->topLevelItem(i));
 
-        KIPIPlugins::KPImageInfo info(m_interface, lvItem->url());
+        KPImageInfo info(lvItem->url());
         kDebug() << "Adding images to the list";
         FPhotoInfo temp;
 
@@ -643,7 +650,7 @@ void FlickrWindow::slotUser1()
 
     m_uploadTotal = m_uploadQueue.count();
     m_uploadCount = 0;
-    m_progressDlg->reset();
+    m_widget->progressBar()->reset();
     slotAddPhotoNext();
     kDebug() << "SlotUploadImages done";
 }
@@ -652,8 +659,9 @@ void FlickrWindow::slotAddPhotoNext()
 {
     if (m_uploadQueue.isEmpty())
     {
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        m_widget->progressBar()->reset();
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         //slotAlbumSelected();
         return;
     }
@@ -702,11 +710,11 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1", pathComments.first.fileName()));
-
-    if (m_progressDlg->isHidden())
+    if (m_widget->progressBar()->isHidden())
     {
-        m_progressDlg->show();
+        m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     }
 }
 
@@ -716,8 +724,8 @@ void FlickrWindow::slotAddPhotoSucceeded()
     m_imglst->removeItemByUrl(m_uploadQueue.first().first);
     m_uploadQueue.pop_front();
     m_uploadCount++;
-    m_progressDlg->setMaximum(m_uploadTotal);
-    m_progressDlg->setValue(m_uploadCount);
+    m_widget->progressBar()->setMaximum(m_uploadTotal);
+    m_widget->progressBar()->setValue(m_uploadCount);
     slotAddPhotoNext();
 }
 
@@ -733,8 +741,9 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
         != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        m_widget->progressBar()->reset();
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         // refresh the thumbnails
         //slotTagSelected();
     }
@@ -742,8 +751,8 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
     {
         m_uploadQueue.pop_front();
         m_uploadTotal--;
-        m_progressDlg->setMaximum(m_uploadTotal);
-        m_progressDlg->setValue(m_uploadCount);
+        m_widget->progressBar()->setMaximum(m_uploadTotal);
+        m_widget->progressBar()->setValue(m_uploadCount);
         slotAddPhotoNext();
     }
 }
@@ -755,18 +764,6 @@ void FlickrWindow::slotAddPhotoSetSucceeded()
      * on Flickr. */
     slotPopulatePhotoSetComboBox();
     slotAddPhotoSucceeded();
-}
-
-void FlickrWindow::slotAddPhotoCancel()
-{
-    m_uploadQueue.clear();
-    m_progressDlg->reset();
-    m_progressDlg->hide();
-
-    m_talker->cancel();
-
-    // refresh the thumbnails
-    //slotTagSelected();
 }
 
 void FlickrWindow::slotImageListChanged()

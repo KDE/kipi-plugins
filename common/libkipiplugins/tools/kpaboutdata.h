@@ -38,13 +38,17 @@ namespace KIPIPlugins
 class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
 {
 
-    public:
+public:
 
-      explicit KPAboutData(const KLocalizedString& pluginName,
-                           const QByteArray& pluginVersion            = QByteArray(),
-                           enum  LicenseKey licenseType               = License_Unknown,
-                           const KLocalizedString& pluginDescription  = KLocalizedString(),
-                           const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2012, kipi-plugins team"));
+    explicit KPAboutData(const KLocalizedString& pluginName,
+                        const QByteArray& pluginVersion            = QByteArray(),
+                        enum  LicenseKey licenseType               = License_Unknown,
+                        const KLocalizedString& pluginDescription  = KLocalizedString(),
+                        const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2012, kipi-plugins team"));
+
+public:
+
+    QString handbookEntry;
 };
 
 } // namespace KIPIPlugins

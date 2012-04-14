@@ -564,7 +564,7 @@ void dng_pixel_buffer::SetConstant (const dng_rect &area,
 			{
 			
 			ThrowNotYetImplemented ();
-			
+			break;
 			}
 			
 		}
@@ -601,7 +601,7 @@ void dng_pixel_buffer::SetZero (const dng_rect &area,
 			{
 			
 			ThrowNotYetImplemented ();
-			
+			break;
 			}
 			
 		}
@@ -731,7 +731,7 @@ void dng_pixel_buffer::CopyArea (const dng_pixel_buffer &src,
 				{
 				
 				ThrowNotYetImplemented ();
-				
+				break;
 				}
 				
 			}
@@ -825,7 +825,7 @@ void dng_pixel_buffer::CopyArea (const dng_pixel_buffer &src,
 				{
 				
 				ThrowNotYetImplemented ();
-				
+				break;
 				}
 				
 			}
@@ -919,7 +919,7 @@ void dng_pixel_buffer::CopyArea (const dng_pixel_buffer &src,
 				{
 				
 				ThrowNotYetImplemented ();
-				
+				break;
 				}
 				
 			}
@@ -998,7 +998,7 @@ void dng_pixel_buffer::CopyArea (const dng_pixel_buffer &src,
 				{
 				
 				ThrowNotYetImplemented ();
-				
+				break;
 				}
 				
 			}
@@ -1053,7 +1053,7 @@ void dng_pixel_buffer::CopyArea (const dng_pixel_buffer &src,
 				{
 				
 				ThrowNotYetImplemented ();
-				
+				break;
 				}
 				
 			}
@@ -1130,7 +1130,7 @@ void dng_pixel_buffer::CopyArea (const dng_pixel_buffer &src,
 				{
 				
 				ThrowNotYetImplemented ();
-				
+				break;
 				}
 				
 			}
@@ -1269,7 +1269,7 @@ void dng_pixel_buffer::RepeatArea (const dng_rect &srcArea,
 			{
 			
 			ThrowNotYetImplemented ();
-			
+			break;
 			}
 			
 		}

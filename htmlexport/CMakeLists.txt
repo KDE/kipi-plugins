@@ -7,7 +7,7 @@ SET(kipiplugin_htmlexport_SRCS
     intthemeparameter.cpp
     invisiblebuttongroup.cpp
     listthemeparameter.cpp
-    plugin.cpp
+    plugin_htmlexport.cpp
     stringthemeparameter.cpp
     theme.cpp
     wizard.cpp

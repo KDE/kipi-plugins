@@ -52,10 +52,13 @@
 #include "kpbatchprogressdialog.h"
 #include "actionthread.h"
 
+using namespace KIPIPlugins;
+
+namespace KIPIJPEGLossLessPlugin
+{
+
 K_PLUGIN_FACTORY( JPEGLosslessFactory, registerPlugin<Plugin_JPEGLossless>(); )
 K_EXPORT_PLUGIN ( JPEGLosslessFactory("kipiplugin_jpeglossless") )
-
-using namespace KIPIPlugins;
 
 class Plugin_JPEGLossless::Plugin_JPEGLosslessPriv
 {
@@ -74,22 +77,22 @@ public:
         failed                   = false;
     }
 
-    bool                 failed;
+    bool                   failed;
 
-    int                  total;
-    int                  current;
+    int                    total;
+    int                    current;
 
-    KAction*             action_Convert2GrayScale;
-    KAction*             action_AutoExif;
+    KAction*               action_Convert2GrayScale;
+    KAction*               action_AutoExif;
 
-    KActionMenu*         action_RotateImage;
-    KActionMenu*         action_FlipImage;
+    KActionMenu*           action_RotateImage;
+    KActionMenu*           action_FlipImage;
 
-    KUrl::List           images;
+    KUrl::List             images;
 
     KPBatchProgressDialog* progressDlg;
 
-    ActionThread*        thread;
+    ActionThread*          thread;
 };
 
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject* const parent, const QVariantList&)
@@ -170,14 +173,14 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
 
     // -----------------------------------------------------------------------------------
 
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    d->thread = new ActionThread(interface, this);
+    d->thread = new ActionThread(this);
 
     connect( d->thread, SIGNAL(starting(KUrl, int)),
              this, SLOT(slotStarting(KUrl, int)));
@@ -504,3 +507,5 @@ KUrl::List Plugin_JPEGLossless::images()
     d->images = images.images();
     return images.images();
 }
+
+} // namespace KIPIJPEGLossLessPlugin

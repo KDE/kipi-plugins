@@ -159,18 +159,8 @@ private Q_SLOTS:
 
 private:
 
-    QString     m_apiKey;
-    QString     m_userAgent;
-
-    QWidget*    m_parent;
-    Interface*  m_interface;
-    QByteArray  m_buffer;
-
-    State       m_state;
-    KUrl        m_currentUrl;
-    KIO::Job*   m_job;
-
-    KUrl::List* m_queue;
+    class ImgurTalkerPriv;
+    ImgurTalkerPriv* const d;
 };
 
 } // namespace KIPIImgurTalkerPlugin

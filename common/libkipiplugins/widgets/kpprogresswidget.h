@@ -32,13 +32,6 @@
 
 #include "kipiplugins_export.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIPlugins
 {
 
@@ -48,7 +41,7 @@ class KIPIPLUGINS_EXPORT KPProgressWidget : public QProgressBar
 
 public:
 
-    KPProgressWidget(Interface* const iface, QWidget* const parent);
+    KPProgressWidget(QWidget* const parent);
     ~KPProgressWidget();
 
     /** Call this method to start a new instance of progress notification into KIPI host application

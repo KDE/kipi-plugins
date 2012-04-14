@@ -37,7 +37,7 @@
 
 #include <libkdcraw/squeezedcombobox.h>
 
-// LibKPMetadata includes
+// libKExiv2 includes
 
 #include <libkexiv2/altlangstredit.h>
 
@@ -61,11 +61,11 @@ public:
     }
 
     KPMetadata::AltLangMap oldValues;
-    MetadataCheckBox*  valueCheck;
-    AltLangStrEdit*    editor;
+    MetadataCheckBox*      valueCheck;
+    AltLangStrEdit*        editor;
 };
 
-AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc)
+AltLangStringsEdit::AltLangStringsEdit(QWidget* const parent, const QString& title, const QString& desc)
                   : QWidget(parent), d(new AltLangStringsEditPriv)
 {
     d->valueCheck = new MetadataCheckBox(title, this);

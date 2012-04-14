@@ -38,7 +38,7 @@ class XMPOrigin : public QWidget
 
 public:
 
-    XMPOrigin(QWidget* parent);
+    XMPOrigin(QWidget* const parent);
     ~XMPOrigin();
 
     void applyMetadata(QByteArray& exifData, QByteArray& xmpData);

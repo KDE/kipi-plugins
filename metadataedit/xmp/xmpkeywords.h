@@ -37,7 +37,7 @@ class XMPKeywords : public QWidget
 
 public:
 
-    XMPKeywords(QWidget* parent);
+    XMPKeywords(QWidget* const parent);
     ~XMPKeywords();
 
     void applyMetadata(QByteArray& xmpData);

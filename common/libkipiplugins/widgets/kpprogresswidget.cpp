@@ -31,6 +31,9 @@
 
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
+
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -40,19 +43,22 @@ class KPProgressWidget::KPProgressWidgetPriv
 public:
 
     KPProgressWidgetPriv()
+        :iface(0)
     {
-        iface = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     QString    progressId;
     Interface* iface;
 };
 
-KPProgressWidget::KPProgressWidget(Interface* const iface, QWidget* const parent)
+KPProgressWidget::KPProgressWidget(QWidget* const parent)
     : QProgressBar(parent), d(new KPProgressWidgetPriv)
 {
-    d->iface = iface;
-
     connect(this, SIGNAL(valueChanged(int)),
             this, SLOT(slotValueChanged(int)));
 }

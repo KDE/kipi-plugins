@@ -39,7 +39,7 @@ class EXIFEditWidget : public KPageWidget
 
 public:
 
-    EXIFEditWidget(MetadataEditDialog* parent);
+    EXIFEditWidget(MetadataEditDialog* const parent);
     ~EXIFEditWidget();
 
     bool isModified() const;

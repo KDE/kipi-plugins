@@ -2723,7 +2723,7 @@ void dng_image_writer::WriteData (dng_host &host,
 			{
 			
 			ThrowProgramError ();
-			
+			break;
 			}
 			
 		}
@@ -3425,6 +3425,7 @@ void dng_image_writer::WriteDNG (dng_host &host,
 		default:
 			{
 			ThrowProgramError ();
+			break;
 			}
 			
 		}

@@ -560,7 +560,7 @@ uint32 dng_opcode_MapPolynomial::BufferPixelType (uint32 imagePixelType)
 				
 			default:
 				ThrowBadFormat ();
-				
+				break;
 			}
 			
 		}
@@ -786,7 +786,7 @@ void dng_opcode_MapPolynomial::ProcessArea (dng_negative & /* negative */,
 							dPtr [col] = Pin_real32 (0.0f, y, 1.0f);
 							
 							}
-							
+						break;
 						}
 											
 					}
@@ -934,7 +934,7 @@ uint32 dng_opcode_DeltaPerRow::BufferPixelType (uint32 imagePixelType)
 			
 		default:
 			ThrowBadFormat ();
-			
+			break;
 		}
 		
 	fScale = (real32) (1.0 / scale32);
@@ -1141,7 +1141,7 @@ uint32 dng_opcode_DeltaPerColumn::BufferPixelType (uint32 imagePixelType)
 			
 		default:
 			ThrowBadFormat ();
-			
+			break;
 		}
 		
 	fScale = (real32) (1.0 / scale32);

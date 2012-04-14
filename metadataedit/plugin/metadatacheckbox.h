@@ -39,7 +39,7 @@ class MetadataCheckBox : public QCheckBox
 
 public:
 
-    MetadataCheckBox(const QString& text, QWidget* parent);
+    MetadataCheckBox(const QString& text, QWidget* const parent);
     ~MetadataCheckBox();
 
     void setValid(bool v);

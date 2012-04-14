@@ -7,6 +7,7 @@
  * Description : test for implementation of threadWeaver api
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,24 +25,35 @@
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-#include <kaboutdata.h>
 
 // Local includes
 
 #include "imageselector.h"
+#include "kpaboutdata.h"
+
+using namespace KIPIPlugins;
 
 /** Implements rotation of images using threadWeaver api
     rotates the selected images by 180.
 */
 int main(int argc, char* argv[])
 {
-    const KAboutData aboutData("multiThreadTest", "multiThreadTest", ki18n("multiThreadTest"), "1.0");
+    KPAboutData* about = new KPAboutData(ki18n("MultiThreadTest"), 0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A test application about threadWeaver API used with JPEGLossLess."),
+                                         ki18n("(c) 2011-2012, Gilles Caulier\n"
+                                               "(c) 2011-2012, A Janardhan Reddy"));
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+                     "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("A Janardhan Reddy"), ki18n("Author"),
+                     "annapareddyjanardhanreddy at gmail dot com");
+
+    KCmdLineArgs::init(argc, argv, about);
 
     KApplication app;
-    //A simple gui to select images
-    ImageSelector* selector = new ImageSelector();
+    ImageSelector* selector = new ImageSelector(about);
     selector->show();
     app.exec();
     return 0;

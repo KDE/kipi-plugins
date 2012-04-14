@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -79,7 +79,7 @@ public:
 
     void setFileFormatJPEG();
     void setFileFormatTIFF();
-    ActionThread::PanoramaFileType format() const;
+    PanoramaFileType format() const;
 
     void setAbout(PanoramaAboutData* about);
     PanoramaAboutData* about() const;
@@ -88,28 +88,18 @@ public:
     Interface* iface() const;
 
     void setItemsList(const KUrl::List& urls);
-    KUrl::List itemsList() const;
+    KUrl::List& itemsList() const;
 
-    void setCPFindUrl(const KUrl& url);
-    KUrl cpFindUrl() const;
-
-    void setCPFindUrlData(const PTOType& urlData);
-    PTOType cpFindUrlData() const;
-
-    void setAutoOptimiseUrl(const KUrl& url);
-    KUrl autoOptimiseUrl() const;
-
-    void setPreviewUrl(const KUrl& url);
-    KUrl previewUrl() const;
-
-    void setPanoUrl(const KUrl& url);
-    KUrl panoUrl() const;
+    KUrl& cpFindUrl() const;
+    PTOType& cpFindUrlData() const;
+    KUrl& autoOptimiseUrl() const;
+    KUrl& previewUrl() const;
+    KUrl& panoUrl() const;
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);
-    RawDecodingSettings rawDecodingSettings() const;
+    RawDecodingSettings& rawDecodingSettings() const;
 
-    void setPreProcessedMap(const ItemUrlsMap& urls);
-    ItemUrlsMap preProcessedMap() const;
+    ItemUrlsMap& preProcessedMap() const;
 
     ActionThread*           thread() const;
     AutoOptimiserBinary&    autoOptimiserBinary() const;
@@ -122,10 +112,14 @@ public:
 
     void run();
 
-    /**
-     * Clean up all temporary files produced so far.
-     */
-    void cleanUp();
+private Q_SLOTS:
+
+    void setCPFindUrl(const KUrl& url);
+    void setCPFindUrlData(const PTOType& urlData);
+    void setAutoOptimiseUrl(const KUrl& url);
+    void setPreviewUrl(const KUrl& url);
+    void setPanoUrl(const KUrl& url);
+    void setPreProcessedMap(const ItemUrlsMap& urls);
 
 private:
 

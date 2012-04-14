@@ -36,7 +36,7 @@ class MultiValuesEdit : public QWidget
 
 public:
 
-    MultiValuesEdit(QWidget* parent, const QString& title, const QString& desc);
+    MultiValuesEdit(QWidget* const parent, const QString& title, const QString& desc);
     ~MultiValuesEdit();
 
     void setValid(bool v);
