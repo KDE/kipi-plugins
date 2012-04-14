@@ -79,9 +79,7 @@ public:
     }
 
     QPixmap*          image;
-
     QDateTimeEdit*    calendar;
-
     QDateTime*        photoDateTime;
 
     KPPreviewManager* imagePreview;
@@ -133,12 +131,12 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     // The date and time entry widget allows the user to enter the date and time
     // displayed in the image. The format is explicitly set, otherwise seconds
     // might not get displayed.
-    QLabel* dtLabel = new QLabel(i18n("The clock date and time:"));
-    d->calendar     = new QDateTimeEdit();
+    QLabel* dtLabel    = new QLabel(i18n("The clock date and time:"));
+    d->calendar        = new QDateTimeEdit();
     d->calendar->setDisplayFormat("d MMMM yyyy, hh:mm:ss");
     d->calendar->setCalendarPopup(true);
     d->calendar->setEnabled(false);
-    QHBoxLayout *hBox2 = new QHBoxLayout(mainWidget());
+    QHBoxLayout* hBox2 = new QHBoxLayout(mainWidget());
     hBox2->addStretch();
     hBox2->addWidget(dtLabel);
     hBox2->addWidget(d->calendar);
@@ -172,7 +170,7 @@ ClockPhotoDialog::~ClockPhotoDialog()
     delete d;
 }
 
-bool ClockPhotoDialog::setImage(const KUrl& imageFile)
+bool ClockPhotoDialog::setImage(const KUrl& imageFile) const
 {
     bool success = false;
 
@@ -203,10 +201,12 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
         // Try to read the datetime data.
         KPMetadata meta;
         bool result = meta.load(imageFile.path());
+
         if (result)
         {
             delete d->photoDateTime;
             d->photoDateTime = new QDateTime(meta.getImageDateTime());
+
             if (d->photoDateTime->isValid())
             {
                 // Set the datetime widget to the photo datetime.
