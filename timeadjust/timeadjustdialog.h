@@ -6,6 +6,7 @@
  * Date        : 2004-05-16
  * Description : a plugin to set time stamp of picture files.
  *
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -52,6 +53,10 @@ public:
 
     void setImages(const KUrl::List& images);
 
+Q_SIGNALS:
+
+    void myCloseClicked();
+
 protected:
 
     void closeEvent(QCloseEvent*);
@@ -63,8 +68,14 @@ private Q_SLOTS:
     void slotAdjustmentTypeChanged();
     void slotDetAdjustmentByClockPhoto();
     void slotUpdateExample();
-    void slotOk();
-    void slotCancel();
+    void slotApplyClicked();
+    void slotCloseClicked();
+    void slotProgressChanged(int);
+    void slotThreadFinished();
+    void slotErrorFilesUpdate(const QString&, const QString&);
+    void cancelThread();
+    void setBusy(bool);
+    void slotButtonClicked(int);
 
 private:
 

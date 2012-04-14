@@ -48,17 +48,21 @@ public:
     ClockPhotoDialog(QWidget* const parent);
     ~ClockPhotoDialog();
 
-    /* The public variables that hold the time difference. */
+    /** Try to load the photo specified by the KUrl, and set the datetime widget
+     *  to the photo time. Return true on succes, or false if eithe the photo
+     *  can't be read or the datetime information can't be read.
+     */
+    bool setImage(const KUrl&) const;
+
+public:
+
+    /** The public variables that hold the time difference.
+     */
     bool deltaNegative;
     int  deltaDays;
     int  deltaHours;
     int  deltaMinutes;
     int  deltaSeconds;
-
-    /* Try to load the photo specified by the KUrl, and set the datetime widget
-     * to the photo time. Return true on succes, or false if eithe the photo
-     * can't be read or the datetime information can't be read. */
-    bool setImage(const KUrl&);
 
 private Q_SLOTS:
 

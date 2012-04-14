@@ -97,6 +97,7 @@ KPActionThreadBase::~KPActionThreadBase()
 void KPActionThreadBase::slotFinished()
 {
     kDebug() << "Finish Main Thread";
+    emit QThread::finished();
     d->weaverRunning = false;
     d->condVarJobs.wakeAll();
 }

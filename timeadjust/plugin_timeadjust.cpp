@@ -50,46 +50,62 @@ namespace KIPITimeAdjustPlugin
 K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
 K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 
+class Plugin_TimeAdjust::Plugin_TimeAdjustPriv
+{
+public:
+
+    Plugin_TimeAdjustPriv()
+    {
+        actionTimeAjust = 0;
+        interface       = 0;
+    }
+
+    KAction*   actionTimeAjust;
+    Interface* interface;
+};
+
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
-    : Plugin( TimeAdjustFactory::componentData(), parent, "TimeAdjust")
+    : Plugin(TimeAdjustFactory::componentData(), parent, "TimeAdjust"),
+      d(new Plugin_TimeAdjustPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
 }
 
 Plugin_TimeAdjust::~Plugin_TimeAdjust()
 {
+    delete d;
 }
 
 void Plugin_TimeAdjust::setup(QWidget* widget)
 {
     Plugin::setup(widget);
 
-    m_actionTimeAjust = actionCollection()->addAction("timeadjust");
-    m_actionTimeAjust->setText(i18n("Adjust Time && Date..."));
-    m_actionTimeAjust->setIcon(KIcon("timeadjust"));
+    d->actionTimeAjust = actionCollection()->addAction("timeadjust");
+    d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
+    d->actionTimeAjust->setIcon(KIcon("timeadjust"));
 
-    connect(m_actionTimeAjust, SIGNAL(triggered(bool)),
+    connect(d->actionTimeAjust, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionTimeAjust);
+    addAction(d->actionTimeAjust);
 
-    m_interface = dynamic_cast<Interface*>(parent());
-    if (!m_interface)
+    d->interface = dynamic_cast<Interface*>(parent());
+    if (!d->interface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    ImageCollection selection = m_interface->currentSelection();
-    m_actionTimeAjust->setEnabled(selection.isValid() && !selection.images().isEmpty());
+    ImageCollection selection = d->interface->currentSelection();
+    d->actionTimeAjust->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
-    connect(m_interface, SIGNAL(selectionChanged(bool)),
-            m_actionTimeAjust, SLOT(setEnabled(bool)));
+    connect(d->interface, SIGNAL(selectionChanged(bool)),
+            d->actionTimeAjust, SLOT(setEnabled(bool)));
 }
 
 void Plugin_TimeAdjust::slotActivate()
 {
-    ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = d->interface->currentSelection();
 
     if (!images.isValid() || images.images().isEmpty())
         return;
@@ -101,7 +117,7 @@ void Plugin_TimeAdjust::slotActivate()
 
 Category Plugin_TimeAdjust::category(KAction* action) const
 {
-    if ( action == m_actionTimeAjust )
+    if ( action == d->actionTimeAjust )
        return ImagesPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
