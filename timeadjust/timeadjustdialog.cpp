@@ -598,8 +598,8 @@ void TimeAdjustDialog::readFileTimestamps()
 
 void TimeAdjustDialog::readMetadataTimestamps()
 {
-    int okCount      = 0;
-    int missingCount = 0;
+    int       okCount      = 0;
+    int       missingCount = 0;
     QDateTime nullDateTime;
 
     for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
@@ -842,7 +842,6 @@ void TimeAdjustDialog::slotApplyClicked()
             info.setDate(dateTime);
             kapp->processEvents();
         }
-
     }
 
     d->thread->setDateSelection(d->useCustomDateBtn->isChecked(), customTime, d->imageOriginalDates);
@@ -862,7 +861,6 @@ void TimeAdjustDialog::slotApplyClicked()
 
     enableButton(Apply, false);
     setBusy(true);
-
 }
 
 void TimeAdjustDialog::slotButtonClicked(int button)
@@ -894,7 +892,6 @@ void TimeAdjustDialog::setBusy(bool busy)
 
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(cancelThread()));
-
     }
     else
     {
@@ -906,7 +903,6 @@ void TimeAdjustDialog::setBusy(bool busy)
 
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(slotCloseClicked()));
-
      }
 }
 

@@ -55,20 +55,29 @@ public:
 
     ActionThreadPriv()
     {
-        cancel              = false;
-        updAppDate          = false;
-        updEXIFModDate      = false;
-        updEXIFOriDate      = false;
-        updEXIFDigDate      = false;
-        updIPTCDate         = false;
-        updXMPDate          = false;
-        updFileName         = false;
-        updFileModDate      = false;
-        useCustomDateBtn    = false;
-        progress            = 0;
+        updAppDate     = false;
+        updEXIFModDate = false;
+        updEXIFOriDate = false;
+        updEXIFDigDate = false;
+        updIPTCDate    = false;
+        updXMPDate     = false;
+        updFileName    = false;
+        updFileModDate = false;
+        useCustomDate  = false;
+
+        cancel         = false;
+        progress       = 0;
     }
 
+    // To manage items processing
     bool             cancel;
+    int              progress;
+
+    // To report error to GUI through signals/slots
+    QString          fileTimeErrorFile;
+    QString          metaTimeErrorFile;
+
+    // Settings from GUI.
     bool             updAppDate;
     bool             updEXIFModDate;
     bool             updEXIFOriDate;
@@ -77,14 +86,10 @@ public:
     bool             updXMPDate;
     bool             updFileName;
     bool             updFileModDate;
-    bool             useCustomDateBtn;
-
-    int              progress;
+    bool             useCustomDate;
 
     QDateTime        customTime;
     QList<QDateTime> imageOriginalDates;
-    QString          fileTimeErrorFile;
-    QString          metaTimeErrorFile;
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -265,7 +270,7 @@ void ActionThread::setImages(const KUrl::List& urlList)
 
     for(int i=0; i< urlList.size(); ++i)
     {
-        if (d->useCustomDateBtn)
+        if (d->useCustomDate)
             mapping[urlList[i]] = d->customTime;
         else
             mapping[urlList[i]] = d->imageOriginalDates[i];
@@ -290,9 +295,9 @@ void ActionThread::setImages(const KUrl::List& urlList)
     appendJob(collection);
 }
 
-void ActionThread::setDateSelection(bool useCustomDateBtn, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates)
+void ActionThread::setDateSelection(bool useCustomDate, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates)
 {
-    d->useCustomDateBtn   = useCustomDateBtn;
+    d->useCustomDate   = useCustomDate;
     d->customTime         = customTime;
     d->imageOriginalDates = imageOriginalDates;
 }
