@@ -28,13 +28,10 @@
 #include <QPainter>
 #include <QIcon>
 
-// KDE includes
-
-#include <kassistantdialog.h>
-
 // Local includes
 
 #include "kpimageslist.h"
+#include "kptooldialog.h"
 
 namespace KIPI
 {
@@ -61,7 +58,7 @@ typedef struct _TPhotoSize
 /**
  * The wizard used by the user to select the various settings.
  */
-class Wizard : public KAssistantDialog 
+class Wizard : public KPWizardDialog
 {
     Q_OBJECT
 
@@ -75,11 +72,10 @@ public:
 protected Q_SLOTS:
 
     virtual void accept();
-    virtual void slotHelp();
     virtual void pageChanged(KPageWidgetItem*, KPageWidgetItem*);
     virtual void captionChanged(const QString& text);
     virtual void saveCaptionSettings();
-    virtual void outputChanged ( const QString& );
+    virtual void outputChanged(const QString&);
     virtual void BtnPrintOrderUp_clicked();
     virtual void BtnPrintOrderDown_clicked();
 
@@ -93,7 +89,7 @@ protected Q_SLOTS:
 
     virtual void reject();
     virtual void crop_selection(int);
-    virtual void PageRemoved(KPageWidgetItem* page);
+    virtual void slotPageRemoved(KPageWidgetItem* page);
 
     virtual void pagesetupclicked();
     virtual void pagesetupdialogexit();
@@ -101,15 +97,15 @@ protected Q_SLOTS:
     virtual void decreaseCopies();
     virtual void increaseCopies();
     virtual void infopage_updateCaptions();
-    
-    virtual void slotAddItems(const KUrl::List&);    
-    virtual void slotRemovingItem(KPImagesListViewItem*);
+
+    virtual void slotAddItems(const KUrl::List&);
+    virtual void slotRemovingItem(KIPIPlugins::KPImagesListViewItem*);
     virtual void slotContextMenuRequested();
-    virtual void slotXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*);
+    virtual void slotXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*);
     virtual void slotXMLLoadElement(QXmlStreamReader&);
     virtual void slotXMLCustomElement(QXmlStreamWriter&);
     virtual void slotXMLCustomElement(QXmlStreamReader&);
-    
+
 private:
 
     // Initialize page layout to the given pageSize in mm
@@ -128,18 +124,18 @@ private:
     void setBtnCropEnabled();
     void removeGimpFiles();
     void printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, QPrinter& printer);
-    QStringList printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* layouts);
+    QStringList printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* const layouts);
 
-    int     getPageCount();
+    int     getPageCount() const;
     QRect*  getLayout(int photoIndex) const;
-    QString captionFormatter(TPhoto* const photo);
+    QString captionFormatter(TPhoto* const photo) const;
     void    printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH, const QString& caption);
 
     bool paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList<QRect*>& layouts,
                       int& current, bool cropDisabled, bool useThumbnails = false);
 
     void manageBtnPreviewPage();
-    
+
     // fix caption group layout according to captions combobox text
     void enableCaptionGroup(const QString& text);
 

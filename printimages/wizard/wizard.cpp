@@ -47,10 +47,8 @@
 
 #include <kapplication.h>
 #include <kconfigdialogmanager.h>
-#include <khelpmenu.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 #include <kfile.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
@@ -126,12 +124,8 @@ struct Wizard::Private
     PhotoPage*               m_photoPage;
     CropPage*                m_cropPage;
 
-    KPushButton*             m_helpButton;
-
     ImageCollectionSelector* m_collectionSelector;
     Interface*               m_interface;
-
-    KPAboutData*             m_about;
 
     // Page Size in mm
     QSizeF                   m_pageSize;
@@ -153,7 +147,7 @@ struct Wizard::Private
 };
 
 Wizard::Wizard(QWidget* const parent, Interface* const interface)
-    : KAssistantDialog(parent), d(new Private)
+    : KPWizardDialog(parent), d(new Private)
 {
     d->m_interface    = interface;
     //d->m_printDialog = NULL;
@@ -165,27 +159,28 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     setCaption(i18n("Print assistant"));
 
     // About data
-    d->m_about = new KPAboutData(ki18n("Print assistant"),
-            QByteArray(),
-            KAboutData::License_GPL,
-            ki18n("A KIPI plugin to print images"),
-            ki18n("(c) 2003-2004, Todd Shoemaker\n(c) 2007-2012, Angelo Naselli"));
+    KPAboutData* about = new KPAboutData(ki18n("Print assistant"),
+                             QByteArray(),
+                             KAboutData::License_GPL,
+                             ki18n("A KIPI plugin to print images"),
+                             ki18n("(c) 2003-2004, Todd Shoemaker\n"
+                                   "(c) 2007-2012, Angelo Naselli"));
 
-    d->m_about->addAuthor(ki18n("Todd Shoemaker"), ki18n("Author"),
-                         "todd@theshoemakers.net");
-    d->m_about->addAuthor(ki18n("Angelo Naselli"), ki18n("Developer and maintainer"),
-                         "anaselli@linux.it");
-    d->m_about->addAuthor(ki18n("Andreas Trink"), ki18n("Contributor"),
-                         "atrink@nociaro.org");
+    about->addAuthor(ki18n("Todd Shoemaker"), ki18n("Author"),
+                     "todd@theshoemakers.net");
+
+    about->addAuthor(ki18n("Angelo Naselli"), ki18n("Developer and maintainer"),
+                     "anaselli@linux.it");
+
+    about->addAuthor(ki18n("Andreas Trink"), ki18n("Contributor"),
+                     "atrink@nociaro.org");
+
+    about->handbookEntry = QString("printwizard");
+    setAboutData(about);
 
     //d->m_photoPage  = new InfoPage ( this, i18n ( infoPageName ) );
     d->m_photoPage      = new PhotoPage(this, i18n(photoPageName));
     d->m_cropPage       = new CropPage(this, i18n(cropPageName)) ;
-
-    d->m_helpButton     = button(Help);
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
 
     //TODO
     d->m_pageSize = QSizeF(-1, -1); // select a different page to force a refresh in initPhotoSizes.
@@ -201,11 +196,6 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
         kDebug() << " printer: " << it->printerName();
         d->m_photoPage->m_printer_choice->addItem(it->printerName());
     }
-
-    // connections
-    // help
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
 
     // selected page
     connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
@@ -268,7 +258,7 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
 
     // remove a page
     connect(this, SIGNAL(pageRemoved(KPageWidgetItem*)),
-            this, SLOT(PageRemoved(KPageWidgetItem*)));
+            this, SLOT(slotPageRemoved(KPageWidgetItem*)));
 
     connect(d->m_photoPage->m_pagesetup, SIGNAL(clicked()),
             this, SLOT(pagesetupclicked()));
@@ -277,6 +267,7 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     {
         delete d->m_photoPage->mPrintList->layout();
     }
+
     QVBoxLayout* printListLayout = new QVBoxLayout;
     printListLayout->setMargin(0);
     printListLayout->setSpacing(0);
@@ -310,8 +301,8 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     connect(d->m_imagesFilesListBox, SIGNAL(signalAddItems(const KUrl::List&)),
             this, SLOT(slotAddItems(const KUrl::List&)));
 
-    connect(d->m_imagesFilesListBox, SIGNAL(signalRemovingItem(KPImagesListViewItem*)),
-            this, SLOT(slotRemovingItem(KPImagesListViewItem*)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalRemovingItem(KIPIPlugins::KPImagesListViewItem*)),
+            this, SLOT(slotRemovingItem(KIPIPlugins::KPImagesListViewItem*)));
 
     connect(d->m_imagesFilesListBox, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SLOT(imageSelected(QTreeWidgetItem*)));
@@ -320,8 +311,8 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
             this, SLOT(slotContextMenuRequested()));
 
     // Save item list => we catch the signal to add our PA attributes and elements Image children
-    connect(d->m_imagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*)),
-            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*)),
+            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*)));
 
     // Save item list => we catch the signal to add our PA elements (not per image)
     connect(d->m_imagesFilesListBox, SIGNAL(signalXMLCustomElements(QXmlStreamWriter&)),
@@ -340,15 +331,11 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     d->m_currentPreviewPage = 0;
     d->m_currentCropPhoto   = 0;
     d->m_cancelPrinting     = false;
-
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    d->m_helpButton->setMenu(helpMenu->menu());
 }
 
 Wizard::~Wizard()
 {
     // TODO private object could be deleted inside private destructor
-    delete d->m_about;
     delete d->m_pDlg;
     delete d->m_printer;
 
@@ -742,7 +729,7 @@ QRect* Wizard::getLayout(int photoIndex) const
     return s->layouts.at(retVal);
 }
 
-int Wizard::getPageCount()
+int Wizard::getPageCount() const
 {
     int pageCount   = 0;
     int photoCount  =  d->m_photos.count();
@@ -844,7 +831,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH
     }
 }
 
-QString Wizard::captionFormatter(TPhoto* const photo)
+QString Wizard::captionFormatter(TPhoto* const photo) const
 {
     if (!photo->pCaptionInfo)
         return QString();
@@ -1259,7 +1246,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamWriter& xmlWriter)
     xmlWriter.writeEndElement(); // pa_layout
 }
 
-void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KPImagesListViewItem* item)
+void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::KPImagesListViewItem* item)
 {
     if (d->m_photos.size())
     {
@@ -1447,7 +1434,7 @@ void Wizard::decreaseCopies()
     }
 }
 
-void Wizard::slotRemovingItem(KPImagesListViewItem* item)
+void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
 {
     if (item)
     {
@@ -1578,12 +1565,6 @@ void Wizard::increaseCopies()
         kDebug() << " Adding a copy of " << item->url();
         d->m_imagesFilesListBox->slotAddImages(list);
     }
-}
-
-// Wizard SLOTS
-void Wizard::slotHelp()
-{
-    KToolInvocation::invokeHelp("printwizard", "kipi-plugins");
 }
 
 void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
@@ -2216,7 +2197,7 @@ void Wizard::printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layo
     p.end();
 }
 
-QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* layouts)
+QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* const layouts)
 {
     Q_ASSERT(layouts->layouts.count() > 1);
 
@@ -2307,7 +2288,7 @@ void Wizard::removeGimpFiles()
 }
 
 //TODO not needed at the moment maybe we can remove it
-void Wizard::PageRemoved(KPageWidgetItem* page)
+void Wizard::slotPageRemoved(KPageWidgetItem* page)
 {
     kDebug() << page->name();
 }
