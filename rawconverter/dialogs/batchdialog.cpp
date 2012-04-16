@@ -456,14 +456,14 @@ void BatchDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply, KIcon("process-stop"));
-        setButtonText(Apply, i18n("&Abort"));
+        setButtonIcon(Apply,    KIcon("process-stop"));
+        setButtonText(Apply,    i18n("&Abort"));
         setButtonToolTip(Apply, i18n("Abort the current RAW file conversion"));
     }
     else
     {
-        setButtonIcon(Apply, KIcon("system-run"));
-        setButtonText(Apply, i18n("Con&vert"));
+        setButtonIcon(Apply,    KIcon("system-run"));
+        setButtonText(Apply,    i18n("Con&vert"));
         setButtonToolTip(Apply, i18n("Start converting the RAW images using current settings."));
     }
 
@@ -566,7 +566,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
             }
             default:
             {
-                kWarning() << "KIPIRawConverterPlugin: Unknown action";
+                kWarning() << "Unknown action";
                 break;
             }
         }
@@ -587,7 +587,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "KIPIRawConverterPlugin: Unknown action";
+                    kWarning() << "Unknown action";
                     break;
                 }
             }
@@ -613,7 +613,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "KIPIRawConverterPlugin: Unknown action";
+                    kWarning() << "Unknown action";
                     break;
                 }
             }
