@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,14 +40,11 @@
 #include <kcombobox.h>
 #include <kcolorbutton.h>
 #include <kconfig.h>
-#include <kdialog.h>
-#include <khelpmenu.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <knuminput.h>
 #include <kstandarddirs.h>
-#include <ktoolinvocation.h>
 #include <kurlrequester.h>
 
 // Local includes
@@ -61,8 +58,8 @@ namespace KIPIKMLExportPlugin
 /**
  * @brief Constructs a KIPIKMLExport::KMLExportConfig which is a child of @parent.
  */
-KMLExportConfig::KMLExportConfig(QWidget* parent)
-               : KDialog(parent)
+KMLExportConfig::KMLExportConfig(QWidget* const parent)
+    : KPToolDialog(parent)
 {
     setButtons(Help|Ok|Cancel);
     setDefaultButton(Ok);
@@ -267,43 +264,35 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
-    connect( GoogleMapTargetRadioButton_, SIGNAL(toggled(bool)),
-             this, SLOT(GoogleMapTargetRadioButton__toggled(bool)) );
+    connect(GoogleMapTargetRadioButton_, SIGNAL(toggled(bool)),
+            this, SLOT(slotGoogleMapTargetRadioButtonToggled(bool)));
 
-    connect( GPXTracksCheckBox_, SIGNAL(toggled(bool)),
-             this, SLOT(KMLTracksCheckButton__toggled(bool)) );
+    connect(GPXTracksCheckBox_, SIGNAL(toggled(bool)),
+            this, SLOT(slotKMLTracksCheckButtonToggled(bool)));
 
     // --------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("KML Export"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Kipi plugin for KML exporting"),
-                   ki18n("(c) 2006-2007, Stéphane Pontier"));
+    KPAboutData* about = new KPAboutData(ki18n("KML Export"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin for KML exporting"),
+                             ki18n("(c) 2006-2007, Stéphane Pontier"));
 
-    m_about->addAuthor(ki18n("Stéphane Pontier"),
-                        ki18n("Developer and maintainer"),
-                              "shadow dot walker at free dot fr");
+    about->addAuthor(ki18n("Stéphane Pontier"),
+                     ki18n("Developer and maintainer"),
+                            "shadow dot walker at free dot fr");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"),
-                       ki18n("Developer and maintainer"),
-                             "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer and maintainer"),
+                           "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n("Michael G. Hansen"),
-                       ki18n("Maintainer"),
-                             "mike at mghansen dot de");
+    about->addAuthor(ki18n("Michael G. Hansen"),
+                     ki18n("Maintainer"),
+                           "mike at mghansen dot de");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("kmlexport");
+    setAboutData(about);
 
     // --------------------------------------------------------------
     // Configuration file management
@@ -312,8 +301,8 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     // --------------------------------------------------------------
     // Just to initialize the UI
-    GoogleMapTargetRadioButton__toggled(true);
-    KMLTracksCheckButton__toggled(false);
+    slotGoogleMapTargetRadioButtonToggled(true);
+    slotKMLTracksCheckButtonToggled(false);
 }
 
 /**
@@ -321,8 +310,6 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
  */
 KMLExportConfig::~KMLExportConfig()
 {
-    // no need to delete child widgets, Qt does it all for us
-    delete m_about;
 }
 
 void KMLExportConfig::slotOk()
@@ -339,12 +326,7 @@ void KMLExportConfig::slotCancel()
     done(Close);
 }
 
-void KMLExportConfig::slotHelp()
-{
-    KToolInvocation::invokeHelp("kmlexport", "kipi-plugins");
-}
-
-void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
+void KMLExportConfig::slotGoogleMapTargetRadioButtonToggled(bool)
 {
     if (GoogleMapTargetRadioButton_->isChecked())
     {
@@ -362,7 +344,7 @@ void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
     }
 }
 
-void KMLExportConfig::KMLTracksCheckButton__toggled(bool)
+void KMLExportConfig::slotKMLTracksCheckButtonToggled(bool)
 {
     if (GPXTracksCheckBox_->isChecked())
     {
@@ -396,23 +378,24 @@ void KMLExportConfig::KMLTracksCheckButton__toggled(bool)
 
 void KMLExportConfig::readSettings()
 {
-    bool localTarget;
-    bool optimize_googlemap;
-    int iconSize;
+    bool    localTarget;
+    bool    optimize_googlemap;
+    int     iconSize;
+
     //	int googlemapSize;
-    int size;
+    int     size;
     QString UrlDestDir;
     QString baseDestDir;
     QString KMLFileName;
-    int AltitudeMode;
+    int     AltitudeMode;
 
-    bool GPXtracks;
+    bool    GPXtracks;
     QString GPXFile;
-    int TimeZone;
-    int LineWidth;
+    int     TimeZone;
+    int     LineWidth;
     QString GPXColor;
-    int GPXOpacity;
-    int GPXAltitudeMode;
+    int     GPXOpacity;
+    int     GPXAltitudeMode;
 
     KConfig config("kipirc");
     KConfigGroup group  = config.group(QString("KMLExport Settings"));

@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,9 +24,9 @@
 #ifndef KMLEXPORTCONFIG_H
 #define KMLEXPORTCONFIG_H
 
-// KDE includes
+// Local includes
 
-#include <kdialog.h>
+#include "kptooldialog.h"
 
 class QButtonGroup;
 class QCheckBox;
@@ -42,21 +42,18 @@ class KColorButton;
 class KIntNumInput;
 class KUrlRequester;
 
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
+using namespace KIPIPlugins;
 
 namespace KIPIKMLExportPlugin
 {
 
-class KMLExportConfig : public KDialog
+class KMLExportConfig : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    KMLExportConfig(QWidget* parent = 0);
+    KMLExportConfig(QWidget* const parent = 0);
     ~KMLExportConfig();
 
 public:
@@ -102,8 +99,8 @@ public:
 
 public Q_SLOTS:
 
-    void GoogleMapTargetRadioButton__toggled(bool);
-    void KMLTracksCheckButton__toggled(bool);
+    void slotGoogleMapTargetRadioButtonToggled(bool);
+    void slotKMLTracksCheckButtonToggled(bool);
 
 Q_SIGNALS:
 
@@ -118,19 +115,16 @@ protected Q_SLOTS:
 
     void slotOk();
     void slotCancel();
-    void slotHelp();
 
 protected:
 
-    QSpacerItem*              spacer3;
-    QSpacerItem*              spacer4;
+    QSpacerItem* spacer3;
+    QSpacerItem* spacer4;
 
-    QGridLayout*              KMLExportConfigLayout;
-    QGridLayout*              SizeGroupBoxLayout;
-    QGridLayout*              TargetPreferenceGroupBoxLayout;
-    QGridLayout*              buttonGroupTargetTypeLayout;
-
-    KIPIPlugins::KPAboutData* m_about;
+    QGridLayout* KMLExportConfigLayout;
+    QGridLayout* SizeGroupBoxLayout;
+    QGridLayout* TargetPreferenceGroupBoxLayout;
+    QGridLayout* buttonGroupTargetTypeLayout;
 };
 
 } // KIPIKMLExportPlugin
