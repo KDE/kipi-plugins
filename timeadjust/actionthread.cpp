@@ -37,13 +37,11 @@ extern "C"
 
 // KDE includes
 
-#include <kdebug.h>
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/JobCollection.h>
+#include <kdebug.h>
 #include <kde_file.h>
 #include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
 
 // Local includes
 
@@ -92,31 +90,30 @@ public:
 
 // ----------------------------------------------------------------------------------------------------
 
-Task::Task(QObject* const parent, const KUrl& url, const QDateTime& dateTime,
-           ActionThread::ActionThreadPriv* const d)
+Task::Task(QObject* const parent, const KUrl& url, const QDateTime& dt, ActionThread::ActionThreadPriv* const d)
     : Job(parent)
 {
-    this->url      = url;
-    this->ld       = d;
-    this->dateTime = dateTime;
+    m_url      = url;
+    m_dateTime = dt;
+    m_d        = d;
 }
 
 void Task::run()
 {
-    if (ld->cancel)
+    if (m_d->cancel)
     {
         return;
     }
 
-    if (!dateTime.isValid()) return;
+    if (!m_dateTime.isValid()) return;
 
-    bool metadataChanged = ld->updEXIFModDate || ld->updEXIFOriDate ||
-                           ld->updEXIFDigDate || ld->updIPTCDate    ||
-                           ld->updXMPDate;
+    bool metadataChanged = m_d->updEXIFModDate || m_d->updEXIFOriDate ||
+                           m_d->updEXIFDigDate || m_d->updIPTCDate    ||
+                           m_d->updXMPDate;
 
 
-    ld->metaTimeErrorFile.clear();
-    ld->fileTimeErrorFile.clear();
+    m_d->metaTimeErrorFile.clear();
+    m_d->fileTimeErrorFile.clear();
 
     if (metadataChanged)
     {
@@ -124,87 +121,92 @@ void Task::run()
 
         KPMetadata meta;
 
-        ret &= meta.load(url.path());
+        ret &= meta.load(m_url.path());
         if (ret)
         {
-            if (meta.canWriteExif(url.path()))
+            if (meta.canWriteExif(m_url.path()))
             {
-                if (ld->updEXIFModDate)
+                if (m_d->updEXIFModDate)
                 {
                     ret &= meta.setExifTagString("Exif.Image.DateTime",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
 
-                if (ld->updEXIFOriDate)
+                if (m_d->updEXIFOriDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeOriginal",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
 
-                if (ld->updEXIFDigDate)
+                if (m_d->updEXIFDigDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
             }
-            else if (ld->updEXIFModDate || ld->updEXIFOriDate ||
-                     ld->updEXIFDigDate)
+            else if (m_d->updEXIFModDate || m_d->updEXIFOriDate || m_d->updEXIFDigDate)
             {
                 ret = false;
             }
 
-            if (ld->updIPTCDate)
+            if (m_d->updIPTCDate)
             {
-                if (meta.canWriteIptc(url.path()))
+                if (meta.canWriteIptc(m_url.path()))
                 {
                     ret &= meta.setIptcTagString("Iptc.Application2.DateCreated",
-                        dateTime.date().toString(Qt::ISODate));
+                        m_dateTime.date().toString(Qt::ISODate));
                     ret &= meta.setIptcTagString("Iptc.Application2.TimeCreated",
-                        dateTime.time().toString(Qt::ISODate));
+                        m_dateTime.time().toString(Qt::ISODate));
                 }
-                else ret = false;
+                else
+                {
+                    ret = false;
+                }
             }
 
-            if (ld->updXMPDate)
+            if (m_d->updXMPDate)
             {
-                if (meta.supportXmp() && meta.canWriteXmp(url.path()))
+                if (meta.supportXmp() && meta.canWriteXmp(m_url.path()))
                 {
                     ret &= meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.photoshop.DateCreated",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.tiff.DateTime",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.xmp.CreateDate",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.xmp.MetadataDate",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.xmp.ModifyDate",
-                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
-                else ret = false;
+                else
+                {
+                    ret = false;
+                }
             }
 
-            ret &= meta.save(url.path());
+            ret &= meta.save(m_url.path());
 
             if (!ret)
             {
-                kDebug() << "Failed to update metadata in file " << url.fileName();
+                kDebug() << "Failed to update metadata in file " << m_url.fileName();
             }
         }
         else
         {
-            kDebug() << "Failed to load metadata from file " << url.fileName();
+            kDebug() << "Failed to load metadata from file " << m_url.fileName();
         }
 
         if (!ret)
         {
-            ld->metaTimeErrorFile = url.fileName();
-            emit signalErrorFilesUpdate(QString(), ld->metaTimeErrorFile);
+            m_d->metaTimeErrorFile = m_url.fileName();
+            emit signalErrorFilesUpdate(QString(), m_d->metaTimeErrorFile);
         }
     }
 
-    if (ld->updFileModDate)
+    if (m_d->updFileModDate)
     {
         // since QFileInfo does not support timestamp updates, see Qt suggestion #79427 at
         // http://www.qtsoftware.com/developer/task-tracker/index_html?id=79427&method=entry
@@ -212,40 +214,40 @@ void Task::run()
 
         utimbuf times;
         times.actime  = QDateTime::currentDateTime().toTime_t();
-        times.modtime = dateTime.toTime_t();
+        times.modtime = m_dateTime.toTime_t();
 
-        if (0 != utime(url.path().toLatin1().constData(), &times))
+        if (utime(m_url.path().toLatin1().constData(), &times) != 0)
         {
-            ld->fileTimeErrorFile = url.fileName();
-            emit signalErrorFilesUpdate(ld->fileTimeErrorFile, QString());
+            m_d->fileTimeErrorFile = m_url.fileName();
+            emit signalErrorFilesUpdate(m_d->fileTimeErrorFile, QString());
         }
     }
 
-    if (ld->updFileName)
+    if (m_d->updFileName)
     {
-        QFileInfo image(url.path());
-        QString newdate = dateTime.toString(QString("yyyyMMddThhmmss"));
+        QFileInfo image(m_url.path());
+        QString newdate = m_dateTime.toString(QString("yyyyMMddThhmmss"));
 
         newdate += '.';
         newdate += image.suffix();
 
-        KUrl newUrl = url;
+        KUrl newUrl = m_url;
         newUrl.setFileName(newdate);
 
-        KDE_rename(QFile::encodeName(url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile()));
+        KDE_rename(QFile::encodeName(m_url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile()));
 
-        KPMetadata::moveSidecar(url, newUrl);
+        KPMetadata::moveSidecar(m_url, newUrl);
     }
 
-    ld->progress++;
+    m_d->progress++;
 
-    emit signalProgressChanged(ld->progress);
+    emit signalProgressChanged(m_d->progress);
 }
 
 // ----------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), pd(new ActionThreadPriv)
+    : KPActionThreadBase(parent), d(new ActionThreadPriv)
 {
 }
 
@@ -260,10 +262,10 @@ void ActionThread::setImages(const KUrl::List& urlList)
 
     for(int i=0; i< urlList.size(); ++i)
     {
-        if (pd->useCustomDateBtn)
-            mapping[urlList[i]] = pd->customTime;
+        if (d->useCustomDateBtn)
+            mapping[urlList[i]] = d->customTime;
         else
-            mapping[urlList[i]] = pd->imageOriginalDates[i];
+            mapping[urlList[i]] = d->imageOriginalDates[i];
     }
 
     foreach(const KUrl& url, urlList)
@@ -271,7 +273,7 @@ void ActionThread::setImages(const KUrl::List& urlList)
 
         Task* t = 0;
 
-        t = new Task(this, url, mapping[url], pd);
+        t = new Task(this, url, mapping[url], d);
 
         connect(t, SIGNAL(signalProgressChanged(int)),
                 this, SIGNAL(signalProgressChanged(int)));
@@ -287,46 +289,46 @@ void ActionThread::setImages(const KUrl::List& urlList)
 
 void ActionThread::setDateSelection(bool useCustomDateBtn, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates)
 {
-    pd->useCustomDateBtn   = useCustomDateBtn;
-    pd->customTime         = customTime;
-    pd->imageOriginalDates = imageOriginalDates;
+    d->useCustomDateBtn   = useCustomDateBtn;
+    d->customTime         = customTime;
+    d->imageOriginalDates = imageOriginalDates;
 }
 
 void ActionThread::setFileNameCheck(bool updFileName)
 {
-    pd->updFileName = updFileName;
+    d->updFileName = updFileName;
 }
 
 void ActionThread::setEXIFDataCheck(bool updEXIFModDate, bool updEXIFOriDate, bool updEXIFDigDate)
 {
-    pd->updEXIFModDate = updEXIFModDate;
-    pd->updEXIFOriDate = updEXIFOriDate;
-    pd->updEXIFDigDate = updEXIFDigDate;
+    d->updEXIFModDate = updEXIFModDate;
+    d->updEXIFOriDate = updEXIFOriDate;
+    d->updEXIFDigDate = updEXIFDigDate;
 }
 
 void ActionThread::setIPTCDateCheck(bool updIPTCDate)
 {
-    pd->updIPTCDate = updIPTCDate;
+    d->updIPTCDate = updIPTCDate;
 }
 
 void ActionThread::setXMPDateCheck(bool updXMPDate)
 {
-    pd->updXMPDate = updXMPDate;
+    d->updXMPDate = updXMPDate;
 }
 
 void ActionThread::setFileModDateCheck(bool updFileModDate)
 {
-    pd->updFileModDate = updFileModDate;
+    d->updFileModDate = updFileModDate;
 }
 
 void ActionThread::setAppDateCheck(bool updAppDate)
 {
-    pd->updAppDate = updAppDate;
+    d->updAppDate = updAppDate;
 }
 
 void ActionThread::cancel()
 {
-    pd->cancel = true;
+    d->cancel = true;
     KPActionThreadBase::cancel();
 }
 
