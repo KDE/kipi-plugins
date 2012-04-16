@@ -39,7 +39,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct ControlWidgetPriv
+struct ControlWidget::ControlWidgetPriv
 {
     ControlWidgetPriv() :
         mode(0),
@@ -63,7 +63,7 @@ struct ControlWidgetPriv
     QTimer*       timerFadeOut;
 };
 
-ControlWidget::ControlWidget(QWidget* parent, int w, int h)
+ControlWidget::ControlWidget(QWidget* const parent, int w, int h)
     : QWidget(parent), d(new ControlWidgetPriv)
 {
     setMinimumSize(w, h);
@@ -71,8 +71,7 @@ ControlWidget::ControlWidget(QWidget* parent, int w, int h)
     setMouseTracking(true);
     hide();
 
-    d->mode = Normal;
-
+    d->mode     = Normal;
     d->renderer = new QSvgRenderer(KGlobal::dirs()->findResource("data",
                                    "kipiplugin_removeredeyes/controlwidget.svg"),
                                    this);
@@ -107,7 +106,7 @@ ControlWidget::~ControlWidget()
     delete d;
 }
 
-void ControlWidget::renderElement(const QString& element, QPainter* p)
+void ControlWidget::renderElement(const QString& element, QPainter* const p)
 {
     d->renderer->render(p, element, d->renderer->boundsOnElement(element));
 }
@@ -163,7 +162,7 @@ void ControlWidget::paintEvent(QPaintEvent*)
     }
 }
 
-void ControlWidget::mouseMoveEvent (QMouseEvent* e)
+void ControlWidget::mouseMoveEvent(QMouseEvent* e)
 {
     QRectF mousePos(e->pos(), QSize(1,1));
 
@@ -191,7 +190,7 @@ void ControlWidget::mouseMoveEvent (QMouseEvent* e)
     }
 }
 
-void ControlWidget::mousePressEvent (QMouseEvent* e)
+void ControlWidget::mousePressEvent(QMouseEvent* e)
 {
     QRectF mousePos(e->pos(), QSize(1,1));
 
@@ -225,7 +224,7 @@ void ControlWidget::leaveEvent(QEvent*)
     triggerHide();
 }
 
-void ControlWidget::mouseReleaseEvent (QMouseEvent*)
+void ControlWidget::mouseReleaseEvent(QMouseEvent*)
 {
     switch (d->mode)
     {

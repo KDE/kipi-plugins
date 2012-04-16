@@ -27,10 +27,12 @@
 
 #include "kpimageslist.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class MyImagesList : public KIPIPlugins::KPImagesList
+class MyImagesList : public KPImagesList
 {
     Q_OBJECT
 

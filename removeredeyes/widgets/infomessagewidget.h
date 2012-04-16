@@ -32,8 +32,6 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct InfoMessageWidgetPriv;
-
 class InfoMessageWidget : public QWidget
 {
     Q_OBJECT
@@ -49,7 +47,7 @@ public:
 
 public:
 
-    InfoMessageWidget(QWidget* parent = 0);
+    InfoMessageWidget(QWidget* const parent = 0);
     ~InfoMessageWidget();
 
     void display(const QString& message, Icon icon = Info, int durationMs = 0);
@@ -61,6 +59,7 @@ protected:
 
 private:
 
+    struct InfoMessageWidgetPriv;
     InfoMessageWidgetPriv* const d;
 };
 

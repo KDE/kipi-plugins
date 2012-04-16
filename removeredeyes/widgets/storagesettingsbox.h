@@ -31,8 +31,6 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct StorageSettingsBoxPriv;
-
 class StorageSettingsBox : public QGroupBox
 {
     Q_OBJECT
@@ -49,7 +47,7 @@ public:
 
 public:
 
-    StorageSettingsBox(QWidget* parent = 0);
+    StorageSettingsBox(QWidget* const parent = 0);
     ~StorageSettingsBox();
 
     int storageMode() const;
@@ -74,6 +72,7 @@ private Q_SLOTS:
 
 private:
 
+    struct StorageSettingsBoxPriv;
     StorageSettingsBoxPriv* const d;
 };
 

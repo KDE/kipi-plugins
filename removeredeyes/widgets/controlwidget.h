@@ -34,8 +34,6 @@ class QPainter;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct ControlWidgetPriv;
-
 class ControlWidget : public QWidget
 {
     Q_OBJECT
@@ -59,7 +57,7 @@ public:
 
 public:
 
-    explicit ControlWidget(QWidget* parent = 0, int w = 150, int h = 150);
+    explicit ControlWidget(QWidget* const parent = 0, int w = 150, int h = 150);
     ~ControlWidget();
 
     void triggerShow(int ms = 0);
@@ -75,10 +73,10 @@ Q_SIGNALS:
 
 protected:
 
-    void leaveEvent (QEvent* e);
-    void mouseMoveEvent (QMouseEvent* e);
-    void mouseReleaseEvent (QMouseEvent* e);
-    void mousePressEvent (QMouseEvent* e);
+    void leaveEvent(QEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
+    void mousePressEvent(QMouseEvent* e);
     void paintEvent(QPaintEvent* e);
 
 private Q_SLOTS:
@@ -88,11 +86,12 @@ private Q_SLOTS:
 
 private:
 
-    void renderElement(const QString& element, QPainter* p);
+    void renderElement(const QString& element, QPainter* const p);
     void setMode(int mode);
 
 private:
 
+    struct ControlWidgetPriv;
     ControlWidgetPriv* const d;
 };
 
