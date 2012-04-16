@@ -31,16 +31,18 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
+
+using namespace KIPIPlugins;
 
 namespace KIPIRawConverterPlugin
 {
 
 class ActionData;
 
-class BatchDialog : public KDialog
+class BatchDialog : public KPToolDialog
 {
 
 Q_OBJECT
@@ -71,7 +73,6 @@ private Q_SLOTS:
 
     void slotDefault();
     void slotClose();
-    void slotHelp();
     void slotStartStop();
     void slotAborted();
     void slotIdentify();

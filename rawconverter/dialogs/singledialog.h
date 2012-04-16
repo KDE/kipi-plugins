@@ -34,14 +34,20 @@
 #include <kdialog.h>
 #include <kurl.h>
 
+// Local includes
+
+#include "kptooldialog.h"
+
 class QCloseEvent;
+
+using namespace KIPIPlugins;
 
 namespace KIPIRawConverterPlugin
 {
 
 class ActionData;
 
-class SingleDialog : public KDialog
+class SingleDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -78,7 +84,6 @@ private Q_SLOTS:
 
     void slotDefault();
     void slotClose();
-    void slotHelp();
     void slotUser1();
     void slotUser2();
     void slotUser3();
