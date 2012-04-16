@@ -27,7 +27,6 @@
 // Qt includes
 
 #include <QObject>
-#include <QThread>
 #include <QDateTime>
 
 // KDE includes
@@ -86,6 +85,7 @@ class Task : public Job
 public:
 
     Task(QObject* const parent, const KUrl& url, const QDateTime& dt, ActionThread::ActionThreadPriv* const d);
+    ~Task();
 
 Q_SIGNALS:
 

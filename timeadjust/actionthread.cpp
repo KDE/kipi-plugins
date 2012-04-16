@@ -41,7 +41,6 @@ extern "C"
 #include <threadweaver/JobCollection.h>
 #include <kdebug.h>
 #include <kde_file.h>
-#include <kapplication.h>
 
 // Local includes
 
@@ -96,6 +95,10 @@ Task::Task(QObject* const parent, const KUrl& url, const QDateTime& dt, ActionTh
     m_url      = url;
     m_dateTime = dt;
     m_d        = d;
+}
+
+Task::~Task()
+{
 }
 
 void Task::run()
