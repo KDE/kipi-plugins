@@ -25,7 +25,6 @@
 
 // Qt includes
 
-#include <QThread>
 #include <QString>
 #include <QMutex>
 

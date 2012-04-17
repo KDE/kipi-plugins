@@ -73,9 +73,11 @@ void Task::run()
     QString errString;
 
     emit startingResize(m_orgUrl);
+
     m_mutex.lock();
     (*m_count)++;
     m_mutex.unlock();
+
     int percent = (int)(((float)(*m_count)/(float)m_settings.itemsList.count())*100.0);
 
     if (imageResize(m_settings, m_orgUrl, m_destName, errString))
