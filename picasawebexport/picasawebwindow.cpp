@@ -8,8 +8,8 @@
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2010      by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,14 +42,12 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <khelpmenu.h>
 #include <kcombobox.h>
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kpassworddialog.h>
 #include <kprogressdialog.h>
-#include <ktoolinvocation.h>
 #include <kio/renamedialog.h>
 
 // LibKDcraw includes
@@ -79,7 +77,7 @@ namespace KIPIPicasawebExportPlugin
 
 PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpFolder,
                                  bool import, QWidget* /*parent*/)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -129,42 +127,35 @@ PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpF
 
     // ------------------------------------------------------------------------
 
-    m_about = new KPAboutData(ki18n("PicasaWeb Export"),
-                              0,
-                              KAboutData::License_GPL,
-                              ki18n("A Kipi plugin to export image collections to "
-                                    "PicasaWeb web service."),
-                              ki18n( "(c) 2007-2009, Vardhman Jain\n"
-                              "(c) 2008-2012, Gilles Caulier\n"
-                              "(c) 2009, Luka Renko\n"
-                              "(c) 2010, Jens Mueller" ));
+    KPAboutData* about = new KPAboutData(ki18n("PicasaWeb Export"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to export image collections to "
+                                   "PicasaWeb web service."),
+                             ki18n( "(c) 2007-2009, Vardhman Jain\n"
+                             "(c) 2008-2012, Gilles Caulier\n"
+                             "(c) 2009, Luka Renko\n"
+                             "(c) 2010, Jens Mueller" ));
 
-    m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
-                       "Vardhman at gmail dot com");
+    about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
+                     "Vardhman at gmail dot com");
 
-    m_about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n( "Luka Renko" ), ki18n("Developer"),
-                       "lure at kubuntu dot org");
+    about->addAuthor(ki18n( "Luka Renko" ), ki18n("Developer"),
+                     "lure at kubuntu dot org");
 
-    m_about->addAuthor(ki18n( "Jens Mueller" ), ki18n("Developer"),
-                       "tschenser at gmx dot de");
+    about->addAuthor(ki18n( "Jens Mueller" ), ki18n("Developer"),
+                     "tschenser at gmx dot de");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()) );
+    about->handbookEntry = QString("picasawebexport");
+    setAboutData(about);
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    // ------------------------------------------------------------------------
 
-    m_albumDlg  = new PicasawebNewAlbum(this);
-
-    m_talker = new PicasawebTalker(this);
+    m_albumDlg = new PicasawebNewAlbum(this);
+    m_talker   = new PicasawebTalker(this);
 
     connect(m_talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
@@ -204,12 +195,6 @@ PicasawebWindow::~PicasawebWindow()
 {
     delete m_talker;
     delete m_albumDlg;
-    delete m_about;
-}
-
-void PicasawebWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("picasawebexport", "kipi-plugins");
 }
 
 void PicasawebWindow::slotStopAndCloseProgressBar()
@@ -278,8 +263,8 @@ void PicasawebWindow::readSettings()
     KConfigGroup grp = config.group( "PicasawebExport Settings");
     m_token          = grp.readEntry("token");
     m_username       = grp.readEntry("username");
-    //m_password       = grp.readEntry("password");
-    m_currentAlbumID  = grp.readEntry("Current Album");
+    //m_password     = grp.readEntry("password");
+    m_currentAlbumID = grp.readEntry("Current Album");
 
     if (grp.readEntry("Resize", false))
     {
