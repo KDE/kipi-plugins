@@ -228,14 +228,14 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     // -- Use ------------------------------------------------------------
 
-    d->useGroupBox           = new QGroupBox(i18n("Use Time && Date"), mainWidget());
+    d->useGroupBox           = new QGroupBox(i18n("Time && Date Used"), mainWidget());
     QGridLayout* useGBLayout = new QGridLayout(d->useGroupBox);
     d->useButtonGroup        = new QButtonGroup(d->useGroupBox);
     d->useButtonGroup->setExclusive(true);
 
     QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
     d->useApplDateBtn           = new QRadioButton("", d->useGroupBox);
-    QLabel *useApplDateLbl      = new QLabel(applDateLabelString);
+    QLabel* useApplDateLbl      = new QLabel(applDateLabelString);
     useApplDateLbl->setIndent(5);
 
     d->useFileDateBtn         = new QRadioButton("", d->useGroupBox);
@@ -285,7 +285,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     // -- Adjust-----------------------------------------------------------
 
-    d->adjustGroupBox           = new QGroupBox(i18n("Adjust"), mainWidget());
+    d->adjustGroupBox           = new QGroupBox(i18n("Time & Date Adjustements"), mainWidget());
     QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
 
     d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
@@ -313,7 +313,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     // -- Update ------------------------------------------------------------
 
-    d->updateGroupBox           = new QGroupBox(i18n("Update Time && Date"), mainWidget());
+    d->updateGroupBox           = new QGroupBox(i18n("Time && Date Updated"), mainWidget());
     QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
 
     d->updAppDateCheck     = new QCheckBox(applDateLabelString,        d->updateGroupBox);
@@ -329,15 +329,14 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     updateGBLayout->setSpacing(spacingHint());
     updateGBLayout->setColumnStretch(0, 1);
     updateGBLayout->setColumnStretch(1, 1);
-    updateGBLayout->setColumnStretch(2, 1);
     updateGBLayout->addWidget(d->updAppDateCheck,     0, 0, 1, 1);
-    updateGBLayout->addWidget(d->updFileModDateCheck, 1, 0, 1, 1);
     updateGBLayout->addWidget(d->updEXIFModDateCheck, 0, 1, 1, 1);
-    updateGBLayout->addWidget(d->updEXIFOriDateCheck, 1, 1, 1, 1);
-    updateGBLayout->addWidget(d->updEXIFDigDateCheck, 2, 1, 1, 1);
-    updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 0, 1, 1);
-    updateGBLayout->addWidget(d->updXMPDateCheck,     0, 2, 1, 1);
-    updateGBLayout->addWidget(d->updFileNameCheck,    1, 2, 1, 1);
+    updateGBLayout->addWidget(d->updEXIFOriDateCheck, 1, 0, 1, 1);
+    updateGBLayout->addWidget(d->updEXIFDigDateCheck, 1, 1, 1, 1);
+    updateGBLayout->addWidget(d->updXMPDateCheck,     2, 0, 1, 1);
+    updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 1, 1, 1);
+    updateGBLayout->addWidget(d->updFileModDateCheck, 3, 0, 1, 1);
+    updateGBLayout->addWidget(d->updFileNameCheck,    3, 1, 1, 1);
 
     if (!KPMetadata::supportXmp())
     {
