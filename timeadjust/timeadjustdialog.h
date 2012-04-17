@@ -73,9 +73,10 @@ private Q_SLOTS:
     void slotProgressChanged(int);
     void slotThreadFinished();
     void slotErrorFilesUpdate(const QString&, const QString&);
-    void cancelThread();
-    void setBusy(bool);
+    void slotCancelThread();
     void slotButtonClicked(int);
+
+    void setBusy(bool);
 
 private:
 

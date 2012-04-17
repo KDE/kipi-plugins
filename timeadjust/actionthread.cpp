@@ -55,6 +55,9 @@ public:
 
     ActionThreadPriv()
     {
+        cancel         = false;
+        progress       = 0;
+
         updAppDate     = false;
         updEXIFModDate = false;
         updEXIFOriDate = false;
@@ -64,9 +67,6 @@ public:
         updFileName    = false;
         updFileModDate = false;
         useCustomDate  = false;
-
-        cancel         = false;
-        progress       = 0;
     }
 
     // To manage items processing
@@ -104,12 +104,7 @@ Task::~Task()
 
 void Task::run()
 {
-    if (m_d->cancel)
-    {
-        return;
-    }
-
-    if (!m_dateTime.isValid()) return;
+    if (m_d->cancel || !m_dateTime.isValid()) return;
 
     bool metadataChanged = m_d->updEXIFModDate || m_d->updEXIFOriDate ||
                            m_d->updEXIFDigDate || m_d->updIPTCDate    ||
@@ -258,22 +253,14 @@ ActionThread::~ActionThread()
 void ActionThread::setImages(const KUrl::List& urlList)
 {
     JobCollection* collection = new JobCollection();
-    QMap<KUrl, QDateTime> mapping;
 
-    for(int i=0; i< urlList.size(); ++i)
+    for(int i = 0; i < urlList.size(); ++i)
     {
-        if (d->useCustomDate)
-            mapping[urlList[i]] = d->customTime;
-        else
-            mapping[urlList[i]] = d->imageOriginalDates[i];
-    }
-
-    foreach(const KUrl& url, urlList)
-    {
-
-        Task* t = 0;
-
-        t = new Task(this, url, mapping[url], d);
+        Task* t = new Task(this, 
+                           urlList[i], 
+                           d->useCustomDate ? d->customTime 
+                                            : d->imageOriginalDates[i],
+                           d);
 
         connect(t, SIGNAL(signalProgressChanged(int)),
                 this, SIGNAL(signalProgressChanged(int)));

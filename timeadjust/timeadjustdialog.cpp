@@ -845,7 +845,6 @@ void TimeAdjustDialog::slotApplyClicked()
     }
 
     d->thread->setDateSelection(d->useCustomDateBtn->isChecked(), customTime, d->imageOriginalDates);
-    d->thread->setImages(d->imageUrls);
     d->thread->setAppDateCheck(d->updAppDateCheck->isChecked());
     d->thread->setFileNameCheck(d->updFileNameCheck->isChecked());
     d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(), d->updEXIFOriDateCheck->isChecked(),
@@ -853,6 +852,7 @@ void TimeAdjustDialog::slotApplyClicked()
     d->thread->setIPTCDateCheck(d->updIPTCDateCheck->isChecked());
     d->thread->setXMPDateCheck(d->updXMPDateCheck->isChecked());
     d->thread->setFileModDateCheck(d->updFileModDateCheck->isChecked());
+    d->thread->setImages(d->imageUrls);
 
     if (!d->thread->isRunning())
     {
@@ -865,7 +865,7 @@ void TimeAdjustDialog::slotApplyClicked()
 
 void TimeAdjustDialog::slotButtonClicked(int button)
 {
-    emit buttonClicked(static_cast<KDialog::ButtonCode> (button));
+    emit buttonClicked(static_cast<KDialog::ButtonCode>(button));
 
     switch (button)
     {
@@ -875,8 +875,8 @@ void TimeAdjustDialog::slotButtonClicked(int button)
         case Close:
             emit myCloseClicked();
             break;
-        case Help:
-            emit helpClicked();
+        default:
+            break;
     }
 }
 
@@ -891,12 +891,12 @@ void TimeAdjustDialog::setBusy(bool busy)
         enableButton(Apply, false);
 
         connect(this, SIGNAL(myCloseClicked()),
-                this, SLOT(cancelThread()));
+                this, SLOT(slotCancelThread()));
     }
     else
     {
         disconnect(this, SIGNAL(myCloseClicked()),
-                   this, SLOT(cancelThread()));
+                   this, SLOT(slotCancelThread()));
 
         setButtonGuiItem(Close, KStandardGuiItem::close());
         enableButton(Apply, true);
@@ -954,7 +954,7 @@ void TimeAdjustDialog::slotErrorFilesUpdate(const QString& fileTimeErrorFile, co
     }
 }
 
-void TimeAdjustDialog::cancelThread()
+void TimeAdjustDialog::slotCancelThread()
 {
     if (d->thread->isRunning())
     {
