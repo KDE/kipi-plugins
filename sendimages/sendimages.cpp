@@ -7,9 +7,9 @@
  * Description : a kipi plugin to e-mailing images
  *
  * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
- * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
+ * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2006      by Tom Albers <tomalbers at kde dot nl>
+ * Copyright (C) 2006      by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -86,7 +86,7 @@ public:
 
     KPBatchProgressDialog* progressDlg;
 
-    EmailSettings settings;
+    EmailSettings          settings;
 
     ImageResize*           threadImgResize;
 };
@@ -116,7 +116,7 @@ SendImages::~SendImages()
     delete d;
 }
 
-void SendImages::sendImages()
+void SendImages::firstStage()
 {
     d->cancel = false;
 
@@ -137,8 +137,7 @@ void SendImages::sendImages()
         d->settings.tempFolderName = folders.last();
     }
 
-    d->progressDlg = new KPBatchProgressDialog(kapp->activeWindow(),
-                                      i18n("Email images"));
+    d->progressDlg = new KPBatchProgressDialog(kapp->activeWindow(), i18n("Email images"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
@@ -245,8 +244,6 @@ void SendImages::secondStage()
     d->progressDlg->progressWidget()->setProgress(100, 100);
 }
 
-/** Creates a text file with all images Comments, Tags, and Rating.
- */
 void SendImages::buildPropertiesFile()
 {
     if (d->cancel) return;
@@ -298,9 +295,7 @@ void SendImages::buildPropertiesFile()
     }
 }
 
-/** Shows up an error dialog about the problematic resized images.
- */
-bool SendImages::showFailedResizedImages()
+bool SendImages::showFailedResizedImages() const
 {
     if (!d->failedResizedImages.isEmpty())
     {
@@ -348,13 +343,9 @@ bool SendImages::showFailedResizedImages()
     return true;
 }
 
-/** Returns a list of image urls, whose sum file-size is smaller than the quota set in dialog.
-    The returned list are images than we can send immediately, and are removed from d->attachementFiles list.
-    Files which still in d->attachementFiles need to be send by another pass.
-*/
-KUrl::List SendImages::divideEmails()
+KUrl::List SendImages::divideEmails() const
 {
-    qint64 myListSize=0;
+    qint64 myListSize = 0;
 
     KUrl::List processedNow;            // List witch can be processed now.
     KUrl::List todoAttachement;         // Still todo list
@@ -393,9 +384,6 @@ KUrl::List SendImages::divideEmails()
     return processedNow;
 }
 
-/** Invokes mail agent. Depending on which mail agent to be used, we have different
-    proceedings. Easy for every agent except of mozilla derivates
- */
 bool SendImages::invokeMailAgent()
 {
     if (d->cancel) return false;
