@@ -6,7 +6,7 @@
  * Date        : 2011-03-14
  * Description : a dialog to edit EXIF,IPTC and XMP metadata
  *
- * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
+ * Copyright (C) 2011      by Victor Dodon <dodon dot victor at gmail dot com>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -36,13 +36,11 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kguiitem.h>
-#include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 #include <ktabwidget.h>
 
 // LibKIPI includes
@@ -72,7 +70,6 @@ public:
     MetadataEditDialogPrivate()
     {
         isReadOnly = false;
-        about      = 0;
         tabWidget  = 0;
         tabExif    = 0;
         tabIptc    = 0;
@@ -87,7 +84,6 @@ public:
     KTabWidget*          tabWidget;
 
     Interface*           interface;
-    KPAboutData*         about;
 
     EXIFEditWidget*      tabExif;
     IPTCEditWidget*      tabIptc;
@@ -95,7 +91,7 @@ public:
 };
 
 MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& urls, Interface* const iface)
-    : KDialog(parent), d(new MetadataEditDialogPrivate)
+    : KPToolDialog(parent), d(new MetadataEditDialogPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
@@ -159,28 +155,20 @@ MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& 
 
     enableButton(Apply, false);
 
-    d->about = new KPAboutData(ki18n("Edit Metadata"),
-                               0,
-                               KAboutData::License_GPL,
-                               ki18n("A Plugin to edit pictures' metadata."),
-                               ki18n("(c) 2006-2012, Gilles Caulier"));
+    KPAboutData* about = new KPAboutData(ki18n("Edit Metadata"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Plugin to edit pictures' metadata."),
+                             ki18n("(c) 2006-2012, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
-                        "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
+                     "caulier dot gilles at gmail dot com");
 
-    d->about->addAuthor(ki18n("Victor Dodon"), ki18n("Developer"),
-                        "victor dot dodon at cti dot pub dot ro");
+    about->addAuthor(ki18n("Victor Dodon"), ki18n("Developer"),
+                     "victor dot dodon at cti dot pub dot ro");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("metadataeditor");
+    setAboutData(about);
 
     readSettings();
     slotItemChanged();
@@ -188,7 +176,6 @@ MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& 
 
 MetadataEditDialog::~MetadataEditDialog()
 {
-    delete d->about;
     delete d;
 }
 
@@ -200,11 +187,6 @@ KUrl::List::iterator MetadataEditDialog::currentItem() const
 Interface* MetadataEditDialog::iface() const
 {
     return d->interface;
-}
-
-void MetadataEditDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
 void MetadataEditDialog::slotModified()
