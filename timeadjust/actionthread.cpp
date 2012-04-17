@@ -110,6 +110,8 @@ void Task::run()
                            m_d->updEXIFDigDate || m_d->updIPTCDate    ||
                            m_d->updXMPDate;
 
+    emit signalProcessStarted(m_url);
+
     if (metadataChanged)
     {
         bool ret = true;
@@ -239,6 +241,7 @@ void Task::run()
     m_mutex.unlock();
 
     emit signalProgressChanged(m_d->progress);
+    emit signalProcessEnded(m_url);
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -269,6 +272,12 @@ void ActionThread::setImages(const KUrl::List& urlList)
 
         connect(t, SIGNAL(signalErrorFilesUpdate(QString, QString)),
                 this, SIGNAL(signalErrorFilesUpdate(QString, QString)));
+
+        connect(t, SIGNAL(signalProcessStarted(KUrl)),
+                this, SIGNAL(signalProcessStarted(KUrl)));
+
+        connect(t, SIGNAL(signalProcessEnded(KUrl)),
+                this, SIGNAL(signalProcessEnded(KUrl)));
 
         collection->addJob(t);
      }

@@ -67,7 +67,7 @@ private Q_SLOTS:
     void slotResetDateToCurrent();
     void slotAdjustmentTypeChanged();
     void slotDetAdjustmentByClockPhoto();
-    void slotUpdateExample();
+    //void slotUpdateExample();
     void slotApplyClicked();
     void slotCloseClicked();
     void slotProgressChanged(int);
@@ -75,7 +75,8 @@ private Q_SLOTS:
     void slotErrorFilesUpdate(const QString&, const QString&);
     void slotCancelThread();
     void slotButtonClicked(int);
-
+    void slotProcessStarted(const KUrl&);
+    void slotProcessEnded(const KUrl&);
     void setBusy(bool);
 
 private:

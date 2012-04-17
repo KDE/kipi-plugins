@@ -75,6 +75,7 @@ extern "C"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "kpprogresswidget.h"
+#include "kpimageslist.h"
 #include "clockphotodialog.h"
 #include "actionthread.h"
 
@@ -91,7 +92,7 @@ public:
         useGroupBox            = 0;
         adjustGroupBox         = 0;
         updateGroupBox         = 0;
-        exampleGroupBox        = 0;
+        //exampleGroupBox        = 0;
         useButtonGroup         = 0;
         useApplDateBtn         = 0;
         useFileDateBtn         = 0;
@@ -108,10 +109,10 @@ public:
         useFileDateTypeChooser = 0;
         useMetaDateTypeChooser = 0;
         adjTypeChooser         = 0;
-        exampleFileChooser     = 0;
+        //exampleFileChooser     = 0;
         adjDaysLabel           = 0;
-        exampleSummaryLabel    = 0;
-        exampleTimeChangeLabel = 0;
+        //exampleSummaryLabel    = 0;
+        //exampleTimeChangeLabel = 0;
         adjDaysInput           = 0;
         adjDetByClockPhotoBtn  = 0;
         useCustDateInput       = 0;
@@ -120,12 +121,13 @@ public:
         useCustomDateTodayBtn  = 0;
         progressBar            = 0;
         thread                 = 0;
+        listView               = 0;
     }
 
     QGroupBox*        useGroupBox;
     QGroupBox*        adjustGroupBox;
     QGroupBox*        updateGroupBox;
-    QGroupBox*        exampleGroupBox;
+    //QGroupBox*        exampleGroupBox;
 
     QButtonGroup*     useButtonGroup;
 
@@ -146,11 +148,11 @@ public:
     QComboBox*        useFileDateTypeChooser;
     QComboBox*        useMetaDateTypeChooser;
     QComboBox*        adjTypeChooser;
-    QComboBox*        exampleFileChooser;
+    //QComboBox*        exampleFileChooser;
 
     QLabel*           adjDaysLabel;
-    QLabel*           exampleSummaryLabel;
-    QLabel*           exampleTimeChangeLabel;
+    //QLabel*           exampleSummaryLabel;
+    //QLabel*           exampleTimeChangeLabel;
 
     QSpinBox*         adjDaysInput;
 
@@ -170,6 +172,7 @@ public:
     QStringList       metaTimeErrorFiles;
 
     KPProgressWidget* progressBar;
+    KPImagesList*     listView;
 
     ActionThread*     thread;
 };
@@ -181,9 +184,15 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     setDefaultButton(Apply);
     setCaption(i18n("Adjust Time & Date"));
     setModal(true);
+    setMinimumSize(700, 500);
 
     setMainWidget(new QWidget(this));
-    QVBoxLayout* mainWidgetLayout = new QVBoxLayout(mainWidget());
+    //QVBoxLayout* mainWidgetLayout = new QVBoxLayout(mainWidget());
+    QGridLayout* mainLayout = new QGridLayout(mainWidget());
+    d->listView = new KPImagesList(parent);
+    d->listView->loadImagesFromCurrentSelection();
+    d->listView->setControlButtonsPlacement(KPImagesList::NoControlButtons);
+
 
     // -- About data and help button ----------------------------------------
 
@@ -338,6 +347,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
         d->updXMPDateCheck->setEnabled(false);
     }
 
+    /*
     // -- Example ------------------------------------------------------------
 
     d->exampleGroupBox           = new QGroupBox(i18n("Example"), mainWidget());
@@ -355,15 +365,25 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     exampleGBLayout->addWidget(d->exampleTimeChangeLabel);
 
     // -----------------------------------------------------------------------
-
-    mainWidgetLayout->setMargin(0);
+*/
+    /*mainWidgetLayout->setMargin(0);
     mainWidgetLayout->setSpacing(spacingHint());
     mainWidgetLayout->addWidget(d->useGroupBox);
     mainWidgetLayout->addWidget(d->adjustGroupBox);
     mainWidgetLayout->addWidget(d->updateGroupBox);
     mainWidgetLayout->addWidget(d->exampleGroupBox);
     mainWidgetLayout->addWidget(d->progressBar);
-    mainWidgetLayout->addStretch();
+    mainWidgetLayout->addStretch();*/
+
+    mainLayout->addWidget(d->listView,    0, 0, 5, 1);
+    mainLayout->addWidget(d->useGroupBox, 0, 1, 1, 1);
+    mainLayout->addWidget(d->adjustGroupBox, 1, 1, 1, 1);
+    mainLayout->addWidget(d->updateGroupBox, 2, 1, 1, 1);
+    mainLayout->addWidget(d->progressBar, 3, 1, 1, 1);
+    mainLayout->setColumnStretch(0, 10);
+    mainLayout->setRowStretch(4, 1);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacingHint());
 
     // -- Thread and its signals ---------------------------------------------
 
@@ -378,6 +398,13 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
+    connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
+            this, SLOT(slotProcessStarted(KUrl)));
+
+    connect(d->thread, SIGNAL(signalProcessEnded(KUrl)),
+            this, SLOT(slotProcessEnded(KUrl)));
+
+
     // -- Slots/Signals ------------------------------------------------------
 
     connect(d->useButtonGroup, SIGNAL(buttonReleased(int)),
@@ -389,29 +416,29 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     connect(d->useMetaDateTypeChooser, SIGNAL(currentIndexChanged(int)),
             this, SLOT(slotSrcTimestampChanged()));
 
-    connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
+  /*  connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
             this, SLOT(slotUpdateExample()));
 
     connect(d->useCustTimeInput, SIGNAL(timeChanged(QTime)),
             this, SLOT(slotUpdateExample()));
-
+*/
     connect(d->adjTypeChooser, SIGNAL(currentIndexChanged(int)),
             this, SLOT(slotAdjustmentTypeChanged()));
 
-    connect(d->adjDaysInput, SIGNAL(valueChanged(int)),
+  /*  connect(d->adjDaysInput, SIGNAL(valueChanged(int)),
             this, SLOT(slotUpdateExample()));
 
     connect(d->adjTimeInput, SIGNAL(timeChanged(QTime)),
             this, SLOT(slotUpdateExample()));
-
+*/
     connect(d->useCustomDateTodayBtn, SIGNAL(clicked()),
             this, SLOT(slotResetDateToCurrent()));
 
     connect(d->adjDetByClockPhotoBtn, SIGNAL(clicked()),
             this, SLOT(slotDetAdjustmentByClockPhoto()));
 
-    connect(d->exampleFileChooser, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(slotUpdateExample()));
+  //  connect(d->exampleFileChooser, SIGNAL(currentIndexChanged(int)),
+    //        this, SLOT(slotUpdateExample()));
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotApplyClicked()));
@@ -514,7 +541,7 @@ void TimeAdjustDialog::setImages(const KUrl::List& imageUrls)
     for (KUrl::List::ConstIterator it = imageUrls.constBegin(); it != imageUrls.constEnd(); ++it)
     {
         d->imageUrls.append(*it);
-        d->exampleFileChooser->addItem((*it).fileName());
+        //d->exampleFileChooser->addItem((*it).fileName());
     }
 
     readExampleTimestamps();
@@ -535,12 +562,12 @@ void TimeAdjustDialog::readExampleTimestamps()
 
     else if (d->useCustomDateBtn->isChecked())
     {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                        "%1 images will be changed",
-                                        d->imageUrls.count()));
+  //      d->exampleSummaryLabel->setText(i18np("1 image will be changed",
+   //                                     "%1 images will be changed",
+   //                                     d->imageUrls.count()));
     }
 
-    slotUpdateExample();
+//    slotUpdateExample();
 }
 
 void TimeAdjustDialog::readApplicationTimestamps()
@@ -566,19 +593,19 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
     if (inexactCount == 0)
     {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed",
+    /*    d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
-                                    d->imageUrls.count()));
+                                      d->imageUrls.count())); */
     }
     else
     {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
+    /*    d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
                                     "%1 images will be changed; ",
                                     exactCount)
                                 + "<br>"
                                 + i18np("1 image will be skipped due to an inexact date.",
                                         "%1 images will be skipped due to inexact dates.",
-                                        inexactCount));
+                                        inexactCount)); */
     }
     // PENDING(blackie) handle all images being inexact.
 }
@@ -591,9 +618,9 @@ void TimeAdjustDialog::readFileTimestamps()
         d->imageOriginalDates.append(fileInfo.lastModified());
     }
 
-    d->exampleSummaryLabel->setText(i18np("1 image will be changed",
+   /* d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                           "%1 images will be changed",
-                                          d->imageUrls.count()));
+                                          d->imageUrls.count()));*/
 }
 
 void TimeAdjustDialog::readMetadataTimestamps()
@@ -653,19 +680,19 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
     if (missingCount == 0)
     {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed",
+        /*d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                               "%1 images will be changed",
-                                              d->imageUrls.count()));
+                                              d->imageUrls.count()));*/
     }
     else
     {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
+        /*d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
                                               "%1 images will be changed; ",
                                               okCount)
                                         + QString("<br>")
                                         + i18np("1 image will be skipped due to a missing source timestamp.",
                                                 "%1 images will be skipped due to missing source timestamps.",
-                                                missingCount));
+                                                missingCount));*/
     }
 }
 
@@ -695,7 +722,7 @@ void TimeAdjustDialog::slotSrcTimestampChanged()
     // read the original timestamps for all selected files
     // (according to the newly selected source timestamp type),
     // this will also implicitly update the example
-    readExampleTimestamps();
+    //readExampleTimestamps();
 }
 
 void TimeAdjustDialog::slotResetDateToCurrent()
@@ -714,7 +741,7 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
     d->adjTimeInput->setEnabled(isAdjustment);
 
     // update the examples (with adjustment enabled also the adjusted time is shown)
-    slotUpdateExample();
+    //slotUpdateExample();
 }
 
 void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
@@ -748,6 +775,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
     delete dilg;
 }
 
+/*
 void TimeAdjustDialog::slotUpdateExample()
 {
     static const QString exampleTimeFormat("hh:mm:ss");
@@ -807,7 +835,7 @@ void TimeAdjustDialog::slotUpdateExample()
                                            formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
     }
 }
-
+*/
 void TimeAdjustDialog::slotApplyClicked()
 {
     QDateTime   dateTime;
@@ -960,6 +988,16 @@ void TimeAdjustDialog::slotCancelThread()
     {
         d->thread->cancel();
     }
+}
+
+void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
+{
+    d->listView->processing(url);
+}
+
+void TimeAdjustDialog::slotProcessEnded(const KUrl& url)
+{
+    d->listView->processed(url, true);
 }
 
 void TimeAdjustDialog::slotThreadFinished()
