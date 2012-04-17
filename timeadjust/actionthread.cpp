@@ -202,9 +202,9 @@ void Task::run()
 
     if (m_d->updFileModDate)
     {
-        // since QFileInfo does not support timestamp updates, see Qt suggestion #79427 at
+        // Since QFileInfo does not support timestamp updates, see Qt suggestion #79427 at
         // http://www.qtsoftware.com/developer/task-tracker/index_html?id=79427&method=entry
-        // we have to use the utime() system call
+        // we have to use the utime() system call.
 
         utimbuf times;
         times.actime  = QDateTime::currentDateTime().toTime_t();
@@ -218,14 +218,16 @@ void Task::run()
 
     if (m_d->updFileName)
     {
-        QFileInfo image(m_url.path());
-        QString newdate = m_dateTime.toString(QString("yyyyMMddThhmmss"));
+        QFileInfo fi(m_url.path());
 
-        newdate += '.';
-        newdate += image.suffix();
+        QString newFileName = fi.baseName();
+        newFileName += '-';
+        newFileName += m_dateTime.toString(QString("yyyyMMddThhmmss"));
+        newFileName += '.';
+        newFileName += fi.completeSuffix();
 
         KUrl newUrl = m_url;
-        newUrl.setFileName(newdate);
+        newUrl.setFileName(newFileName);
 
         KDE_rename(QFile::encodeName(m_url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile()));
 
