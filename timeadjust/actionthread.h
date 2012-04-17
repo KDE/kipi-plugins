@@ -28,6 +28,7 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QMutex>
 
 // KDE includes
 
@@ -90,7 +91,7 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalErrorFilesUpdate(const QString&, const QString&);
+    void signalErrorFilesUpdate(const QString& fileTimeErrorFile, const QString& metaTimeErrorFile);
 
 protected:
 
@@ -98,6 +99,7 @@ protected:
 
 private:
 
+    QMutex                          m_mutex;
     KUrl                            m_url;
     QDateTime                       m_dateTime;
 

@@ -73,10 +73,6 @@ public:
     bool             cancel;
     int              progress;
 
-    // To report error to GUI through signals/slots
-    QString          fileTimeErrorFile;
-    QString          metaTimeErrorFile;
-
     // Settings from GUI.
     bool             updAppDate;
     bool             updEXIFModDate;
@@ -118,10 +114,6 @@ void Task::run()
     bool metadataChanged = m_d->updEXIFModDate || m_d->updEXIFOriDate ||
                            m_d->updEXIFDigDate || m_d->updIPTCDate    ||
                            m_d->updXMPDate;
-
-
-    m_d->metaTimeErrorFile.clear();
-    m_d->fileTimeErrorFile.clear();
 
     if (metadataChanged)
     {
@@ -209,8 +201,7 @@ void Task::run()
 
         if (!ret)
         {
-            m_d->metaTimeErrorFile = m_url.fileName();
-            emit signalErrorFilesUpdate(QString(), m_d->metaTimeErrorFile);
+            emit signalErrorFilesUpdate(QString(), m_url.fileName());
         }
     }
 
@@ -226,8 +217,7 @@ void Task::run()
 
         if (utime(m_url.path().toLatin1().constData(), &times) != 0)
         {
-            m_d->fileTimeErrorFile = m_url.fileName();
-            emit signalErrorFilesUpdate(m_d->fileTimeErrorFile, QString());
+            emit signalErrorFilesUpdate(m_url.fileName(), QString());
         }
     }
 
@@ -247,7 +237,9 @@ void Task::run()
         KPMetadata::moveSidecar(m_url, newUrl);
     }
 
+    m_mutex.lock();
     m_d->progress++;
+    m_mutex.unlock();
 
     emit signalProgressChanged(m_d->progress);
 }
@@ -297,7 +289,7 @@ void ActionThread::setImages(const KUrl::List& urlList)
 
 void ActionThread::setDateSelection(bool useCustomDate, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates)
 {
-    d->useCustomDate   = useCustomDate;
+    d->useCustomDate      = useCustomDate;
     d->customTime         = customTime;
     d->imageOriginalDates = imageOriginalDates;
 }

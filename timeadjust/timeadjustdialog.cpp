@@ -943,12 +943,12 @@ void TimeAdjustDialog::slotProgressChanged(int progress)
 
 void TimeAdjustDialog::slotErrorFilesUpdate(const QString& fileTimeErrorFile, const QString& metaTimeErrorFile)
 {
-    if (fileTimeErrorFile != "")
+    if (!fileTimeErrorFile.isEmpty())
     {
         d->fileTimeErrorFiles.append(fileTimeErrorFile);
     }
 
-    if (metaTimeErrorFile != "")
+    if (!metaTimeErrorFile.isEmpty())
     {
         d->metaTimeErrorFiles.append(metaTimeErrorFile);
     }
