@@ -55,7 +55,7 @@ public:
 
 Q_SIGNALS:
 
-    void myCloseClicked();
+    void signalMyCloseClicked();
 
 protected:
 
@@ -81,12 +81,27 @@ private Q_SLOTS:
 
 private:
 
+    /** Read the Used Timestamps for all selected files
+     * (according to the newly selected source timestamp type),
+     * this will also implicitly update listview info.
+     */
     void readTimestamps();
+
+    /** Called by readTimestamps() to get KIPI host timestamps
+     */
     void readApplicationTimestamps();
+
+    /** Called by readTimestamps() to get file timestamps
+     */
     void readFileTimestamps();
+
+    /** Called by readTimestamps() to get file metadata timestamps
+     */
     void readMetadataTimestamps();
+
     void readSettings();
     void saveSettings();
+
     QDateTime calculateAdjustedTime(const QDateTime& time) const;
 
 private:

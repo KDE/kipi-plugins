@@ -26,6 +26,10 @@
 
 #include <klocale.h>
 
+// Local includes
+
+#include "actionthread.h"
+
 namespace KIPITimeAdjustPlugin
 {
 
@@ -33,15 +37,19 @@ MyImageList::MyImageList(QWidget* const parent)
     : KPImagesList(parent)
 {
     setControlButtonsPlacement(KPImagesList::NoControlButtons);
-    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMPUSED),
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMP_USED),
                           i18n("Timestamp Used"), true);
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMP_UPDATED),
+                          i18n("Timestamp Updated"), true);
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMP_FILENAME),
+                          i18n("New Filename"), true);
 }
 
 MyImageList::~MyImageList()
 {
 }
 
-void MyImageList::setItemOriginalDates(const QMap<KUrl, QDateTime>& map)
+void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, bool updateFileName)
 {
     foreach (const KUrl& url, map.keys())
     {
@@ -51,11 +59,19 @@ void MyImageList::setItemOriginalDates(const QMap<KUrl, QDateTime>& map)
             QDateTime dt = map.value(url);
             if (dt.isValid())
             {
-                item->setText(TIMESTAMPUSED, dt.toString(Qt::ISODate));
+                item->setText(type, KGlobal::locale()->formatDateTime(dt, KLocale::ShortDate, true));
             }
             else
             {
-                item->setText(TIMESTAMPUSED, i18n("not valid"));
+                item->setText(type, i18n("not valid"));
+            }
+
+            if (type == TIMESTAMP_UPDATED)
+            {
+                if (updateFileName)
+                    item->setText(TIMESTAMP_FILENAME, ActionThread::newUrl(url, dt).fileName());
+                else
+                    item->setText(TIMESTAMP_FILENAME, i18nc("not applicable", "N.A"));
             }
         }
     }

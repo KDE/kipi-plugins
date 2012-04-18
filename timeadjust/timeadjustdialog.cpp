@@ -50,6 +50,7 @@ extern "C"
 #include <QComboBox>
 #include <QPointer>
 #include <QMap>
+#include <QCursor>
 
 // KDE includes
 
@@ -151,7 +152,8 @@ public:
 
     QToolButton*          useCustomDateTodayBtn;
 
-    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and original timestamps.
+    QMap<KUrl, QDateTime> itemsUsedMap;           // Map of item urls and Used Timestamps.
+    QMap<KUrl, QDateTime> itemsUpdatedMap;        // Map of item urls and Updated Timestamps.
 
     QStringList           fileTimeErrorFiles;
     QStringList           metaTimeErrorFiles;
@@ -362,6 +364,9 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->thread, SIGNAL(signalProcessEnded(KUrl)),
             this, SLOT(slotProcessEnded(KUrl)));
 
+    connect(d->progressBar, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotCancelThread()));
+
     // -- Slots/Signals ------------------------------------------------------
 
     connect(d->useButtonGroup, SIGNAL(buttonReleased(int)),
@@ -379,17 +384,17 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->useCustomDateTodayBtn, SIGNAL(clicked()),
             this, SLOT(slotResetDateToCurrent()));
 
+    connect(d->updFileNameCheck, SIGNAL(clicked()),
+            this, SLOT(slotUpdateListView()));
+
     connect(d->adjDetByClockPhotoBtn, SIGNAL(clicked()),
             this, SLOT(slotDetAdjustmentByClockPhoto()));
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotApplyClicked()));
 
-    connect(this, SIGNAL(myCloseClicked()),
+    connect(this, SIGNAL(signalMyCloseClicked()),
             this, SLOT(slotCloseClicked()));
-
-    connect(d->progressBar, SIGNAL(signalProgressCanceled()),
-            this, SLOT(slotCancelThread()));
 
     connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
             this, SLOT(slotUpdateListView()));
@@ -493,11 +498,11 @@ void TimeAdjustDialog::saveSettings()
 
 void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
-    d->itemsMap.clear();
+    d->itemsUsedMap.clear();
 
     foreach (const KUrl& url, imageUrls)
     {
-        d->itemsMap.insert(url, QDateTime());
+        d->itemsUsedMap.insert(url, QDateTime());
     }
 
     d->listView->listView()->clear();
@@ -507,9 +512,9 @@ void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 
 void TimeAdjustDialog::readTimestamps()
 {
-    foreach (const KUrl& url, d->itemsMap.keys())
+    foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
-        d->itemsMap.insert(url, QDateTime());
+        d->itemsUsedMap.insert(url, QDateTime());
     }
 
     if (d->useApplDateBtn->isChecked())
@@ -526,9 +531,9 @@ void TimeAdjustDialog::readTimestamps()
     }
     else if (d->useCustomDateBtn->isChecked())
     {
-        foreach (const KUrl& url, d->itemsMap.keys())
+        foreach (const KUrl& url, d->itemsUsedMap.keys())
         {
-            d->itemsMap.insert(url, QDateTime(d->useCustDateInput->date(), d->useCustTimeInput->time()));
+            d->itemsUsedMap.insert(url, QDateTime(d->useCustDateInput->date(), d->useCustTimeInput->time()));
         }
     }
 
@@ -539,17 +544,17 @@ void TimeAdjustDialog::readApplicationTimestamps()
 {
     int inexactCount = 0;
 
-    foreach (const KUrl& url, d->itemsMap.keys())
+    foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         KPImageInfo info(url);
         if (info.isExactDate())
         {
-            d->itemsMap.insert(url, info.date());
+            d->itemsUsedMap.insert(url, info.date());
         }
         else
         {
             inexactCount++;
-            d->itemsMap.insert(url, QDateTime());
+            d->itemsUsedMap.insert(url, QDateTime());
         }
     }
 
@@ -567,21 +572,21 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
 void TimeAdjustDialog::readFileTimestamps()
 {
-    foreach (const KUrl& url, d->itemsMap.keys())
+    foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         QFileInfo fileInfo(url.toLocalFile());
-        d->itemsMap.insert(url, fileInfo.lastModified());
+        d->itemsUsedMap.insert(url, fileInfo.lastModified());
     }
 }
 
 void TimeAdjustDialog::readMetadataTimestamps()
 {
-    foreach (const KUrl& url, d->itemsMap.keys())
+    foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
-        KPMetadata  meta;
+        KPMetadata meta;
         if (!meta.load(url.toLocalFile()))
         {
-            d->itemsMap.insert(url, QDateTime());
+            d->itemsUsedMap.insert(url, QDateTime());
             continue;
         }
 
@@ -614,7 +619,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
                 break;
         };
 
-        d->itemsMap.insert(url, curImageDateTime);
+        d->itemsUsedMap.insert(url, curImageDateTime);
     }
 }
 
@@ -641,9 +646,6 @@ void TimeAdjustDialog::slotSrcTimestampChanged()
         d->useCustomDateTodayBtn->setEnabled(true);
     }
 
-    // read the original timestamps for all selected files
-    // (according to the newly selected source timestamp type),
-    // this will also implicitly update listview info.
     readTimestamps();
 }
 
@@ -652,6 +654,7 @@ void TimeAdjustDialog::slotResetDateToCurrent()
     QDateTime currentDateTime(QDateTime::currentDateTime());
     d->useCustDateInput->setDateTime(currentDateTime);
     d->useCustTimeInput->setDateTime(currentDateTime);
+    readTimestamps();
 }
 
 void TimeAdjustDialog::slotAdjustmentTypeChanged()
@@ -703,42 +706,20 @@ void TimeAdjustDialog::slotApplyClicked()
     d->progressBar->show();
     d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
     d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
-    d->progressBar->setMaximum(d->itemsMap.keys().size());
-
-    QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
-
-    // Map of item urls and patched timestamps.
-    QMap<KUrl, QDateTime> newItemsMap = d->itemsMap;
-
-    if (d->adjTypeChooser->currentIndex() != 0)
-    {
-        customTime = calculateAdjustedTime(customTime);
-
-        foreach (const KUrl& url, d->itemsMap.keys())
-        {
-            newItemsMap.insert(url, calculateAdjustedTime(d->itemsMap.value(url)));
-        }
-    }
+    d->progressBar->setMaximum(d->itemsUsedMap.keys().size());
 
     // NOTE: this loop is not yet re-entrant due to use KPImageInfo. It must still in main thread.
-    foreach (const KUrl& url, newItemsMap.keys())
+    foreach (const KUrl& url, d->itemsUpdatedMap.keys())
     {
-        QDateTime dateTime;
-
-        if (d->useCustomDateBtn->isChecked()) dateTime = customTime;
-        else                                  dateTime = newItemsMap.value(url);
-
-        if (!dateTime.isValid()) continue;
-
         if (d->updAppDateCheck->isChecked())
         {
             KPImageInfo info(url);
-            info.setDate(dateTime);
+            QDateTime dt = d->itemsUpdatedMap.value(url);
+            if (dt.isValid()) info.setDate(dt);
             kapp->processEvents();
         }
     }
 
-    d->thread->setCustomDate(d->useCustomDateBtn->isChecked(), customTime);
     d->thread->setAppDateCheck(d->updAppDateCheck->isChecked());
     d->thread->setFileNameCheck(d->updFileNameCheck->isChecked());
     d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(),
@@ -747,7 +728,7 @@ void TimeAdjustDialog::slotApplyClicked()
     d->thread->setIPTCDateCheck(d->updIPTCDateCheck->isChecked());
     d->thread->setXMPDateCheck(d->updXMPDateCheck->isChecked());
     d->thread->setFileModDateCheck(d->updFileModDateCheck->isChecked());
-    d->thread->setItems(newItemsMap);
+    d->thread->setUpdatedDates(d->itemsUpdatedMap);
 
     if (!d->thread->isRunning())
     {
@@ -768,7 +749,7 @@ void TimeAdjustDialog::slotButtonClicked(int button)
             emit applyClicked();
             break;
         case Close:
-            emit myCloseClicked();
+            emit signalMyCloseClicked();
             break;
         default:
             break;
@@ -779,24 +760,24 @@ void TimeAdjustDialog::setBusy(bool busy)
 {
     if (busy)
     {
-        disconnect(this, SIGNAL(myCloseClicked()),
+        disconnect(this, SIGNAL(signalMyCloseClicked()),
                    this, SLOT(slotCloseClicked()));
 
         setButtonGuiItem(Close, KStandardGuiItem::cancel());
         enableButton(Apply, false);
 
-        connect(this, SIGNAL(myCloseClicked()),
+        connect(this, SIGNAL(signalMyCloseClicked()),
                 this, SLOT(slotCancelThread()));
     }
     else
     {
-        disconnect(this, SIGNAL(myCloseClicked()),
+        disconnect(this, SIGNAL(signalMyCloseClicked()),
                    this, SLOT(slotCancelThread()));
 
         setButtonGuiItem(Close, KStandardGuiItem::close());
         enableButton(Apply, true);
 
-        connect(this, SIGNAL(myCloseClicked()),
+        connect(this, SIGNAL(signalMyCloseClicked()),
                 this, SLOT(slotCloseClicked()));
      }
 }
@@ -896,7 +877,18 @@ void TimeAdjustDialog::slotThreadFinished()
 
 void TimeAdjustDialog::slotUpdateListView()
 {
-    d->listView->setItemOriginalDates(d->itemsMap);
+    kapp->setOverrideCursor(Qt::WaitCursor);
+
+    d->listView->setItemDates(d->itemsUsedMap, MyImageList::TIMESTAMP_USED);
+
+    foreach (const KUrl& url, d->itemsUsedMap.keys())
+    {
+        d->itemsUpdatedMap.insert(url, calculateAdjustedTime(d->itemsUsedMap.value(url)));
+    }
+
+    d->listView->setItemDates(d->itemsUpdatedMap, MyImageList::TIMESTAMP_UPDATED, d->updFileNameCheck->isChecked());
+
+    kapp->restoreOverrideCursor();
 }
 
 /*

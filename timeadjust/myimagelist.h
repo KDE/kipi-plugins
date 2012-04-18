@@ -50,8 +50,9 @@ public:
     /* The different columns in a list. */
     enum FieldType
     {
-        TIMESTAMPUSED    = KPImagesListView::User1,
-        TIMESTAMPUPDATED = KPImagesListView::User2
+        TIMESTAMP_USED     = KPImagesListView::User1,
+        TIMESTAMP_UPDATED  = KPImagesListView::User2,
+        TIMESTAMP_FILENAME = KPImagesListView::User3
     };
 
 public:
@@ -59,7 +60,7 @@ public:
     MyImageList(QWidget* const parent);
     ~MyImageList();
 
-    void setItemOriginalDates(const QMap<KUrl, QDateTime>& map);
+    void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, bool updateFileName=false);
 };
 
 }  // namespace KIPITimeAdjustPlugin

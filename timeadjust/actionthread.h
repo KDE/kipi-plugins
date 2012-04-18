@@ -54,8 +54,7 @@ public:
     ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void setItems(const QMap<KUrl, QDateTime>& map);
-    void setCustomDate(bool useCustomDateBtn, const QDateTime& customTime);
+    void setUpdatedDates(const QMap<KUrl, QDateTime>& map);
     void setAppDateCheck(bool updAppDate);
     void setFileNameCheck(bool updFileName);
     void setEXIFDataCheck(bool updEXIFModDate, bool updEXIFOriDate, bool updEXIFDigDate);
@@ -63,6 +62,8 @@ public:
     void setXMPDateCheck(bool updXMPDate);
     void setFileModDateCheck(bool updFileModDate);
     void cancel();
+
+    static KUrl newUrl(const KUrl& url, const QDateTime& dt);
 
 Q_SIGNALS:
 

@@ -66,7 +66,6 @@ public:
         updXMPDate     = false;
         updFileName    = false;
         updFileModDate = false;
-        useCustomDate  = false;
     }
 
     // To manage items processing
@@ -82,10 +81,8 @@ public:
     bool                  updXMPDate;
     bool                  updFileName;
     bool                  updFileModDate;
-    bool                  useCustomDate;
 
-    QDateTime             customTime;
-    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and patched timestamps.
+    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and Updated Timestamps.
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -106,11 +103,11 @@ void Task::run()
 {
     if (m_d->cancel || !m_dateTime.isValid()) return;
 
+    emit signalProcessStarted(m_url);
+
     bool metadataChanged = m_d->updEXIFModDate || m_d->updEXIFOriDate ||
                            m_d->updEXIFDigDate || m_d->updIPTCDate    ||
                            m_d->updXMPDate;
-
-    emit signalProcessStarted(m_url);
 
     if (metadataChanged)
     {
@@ -220,16 +217,7 @@ void Task::run()
 
     if (m_d->updFileName)
     {
-        QFileInfo fi(m_url.path());
-
-        QString newFileName = fi.baseName();
-        newFileName += '-';
-        newFileName += m_dateTime.toString(QString("yyyyMMddThhmmss"));
-        newFileName += '.';
-        newFileName += fi.completeSuffix();
-
-        KUrl newUrl = m_url;
-        newUrl.setFileName(newFileName);
+        KUrl newUrl = ActionThread::newUrl(m_url, m_dateTime);
 
         KDE_rename(QFile::encodeName(m_url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile()));
 
@@ -255,7 +243,7 @@ ActionThread::~ActionThread()
 {
 }
 
-void ActionThread::setItems(const QMap<KUrl, QDateTime>& map)
+void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
 {
     d->itemsMap               = map;
     JobCollection* collection = new JobCollection();
@@ -264,8 +252,7 @@ void ActionThread::setItems(const QMap<KUrl, QDateTime>& map)
     {
         Task* t = new Task(this, 
                            url, 
-                           d->useCustomDate ? d->customTime
-                                            : d->itemsMap.value(url),
+                           d->itemsMap.value(url),
                            d);
 
         connect(t, SIGNAL(signalProgressChanged(int)),
@@ -284,12 +271,6 @@ void ActionThread::setItems(const QMap<KUrl, QDateTime>& map)
      }
 
     appendJob(collection);
-}
-
-void ActionThread::setCustomDate(bool useCustomDate, const QDateTime& customTime)
-{
-    d->useCustomDate = useCustomDate;
-    d->customTime    = customTime;
 }
 
 void ActionThread::setFileNameCheck(bool updFileName)
@@ -328,6 +309,26 @@ void ActionThread::cancel()
 {
     d->cancel = true;
     KPActionThreadBase::cancel();
+}
+
+/** Static public method also called from GUI to update listview information about new filename
+ *  computed with timeStamp.
+ */
+KUrl ActionThread::newUrl(const KUrl& url, const QDateTime& dt)
+{
+    if (!dt.isValid()) return KUrl();
+
+    QFileInfo fi(url.path());
+
+    QString newFileName = fi.baseName();
+    newFileName += '-';
+    newFileName += dt.toString(QString("yyyyMMddThhmmss"));
+    newFileName += '.';
+    newFileName += fi.completeSuffix();
+
+    KUrl newUrl = url;
+    newUrl.setFileName(newFileName);
+    return newUrl;
 }
 
 }  // namespace KIPITimeAdjustPlugin
