@@ -113,10 +113,12 @@ public:
         progressBar            = 0;
         thread                 = 0;
         listView               = 0;
-        //exampleGroupBox        = 0;
-        //exampleFileChooser     = 0;
-        //exampleSummaryLabel    = 0;
-        //exampleTimeChangeLabel = 0;
+/*
+        exampleGroupBox        = 0;
+        exampleFileChooser     = 0;
+        exampleSummaryLabel    = 0;
+        exampleTimeChangeLabel = 0;
+*/
     }
 
     QGroupBox*            useGroupBox;
@@ -237,9 +239,9 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     d->useFileDateBtn         = new QRadioButton("", d->useGroupBox);
     d->useFileDateTypeChooser = new QComboBox(d->useGroupBox);
 
-/* NOTE: not supported by Linux, although supported by Qt (read-only)
+    /* NOTE: not supported by Linux, although supported by Qt (read-only)
     d->useFileDateTypeChooser->addItem(i18n("File created"));
-*/
+    */
 
     d->useFileDateTypeChooser->addItem(i18n("File last modified"));
 
@@ -362,7 +364,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 */
 
     // -----------------------------------------------------------------------
-    
+
     mainLayout->addWidget(d->listView,       0, 0, 5, 1);
     mainLayout->addWidget(d->useGroupBox,    0, 1, 1, 1);
     mainLayout->addWidget(d->adjustGroupBox, 1, 1, 1, 1);
@@ -417,7 +419,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     connect(this, SIGNAL(myCloseClicked()),
             this, SLOT(slotCloseClicked()));
-    
+
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotStartStop()));
 
@@ -590,7 +592,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
     }
 
     // PENDING(blackie) handle all images being inexact.
-    
+
 /*
     if (inexactCount == 0)
     {
