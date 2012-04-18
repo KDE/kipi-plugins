@@ -578,7 +578,6 @@ void TimeAdjustDialog::readMetadataTimestamps()
 {
     foreach (const KUrl& url, d->itemsMap.keys())
     {
-        KPImageInfo info(url);
         KPMetadata  meta;
         if (!meta.load(url.toLocalFile()))
         {
