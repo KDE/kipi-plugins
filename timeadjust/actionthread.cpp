@@ -70,22 +70,22 @@ public:
     }
 
     // To manage items processing
-    bool             cancel;
-    int              progress;
+    bool                  cancel;
+    int                   progress;
 
     // Settings from GUI.
-    bool             updAppDate;
-    bool             updEXIFModDate;
-    bool             updEXIFOriDate;
-    bool             updEXIFDigDate;
-    bool             updIPTCDate;
-    bool             updXMPDate;
-    bool             updFileName;
-    bool             updFileModDate;
-    bool             useCustomDate;
+    bool                  updAppDate;
+    bool                  updEXIFModDate;
+    bool                  updEXIFOriDate;
+    bool                  updEXIFDigDate;
+    bool                  updIPTCDate;
+    bool                  updXMPDate;
+    bool                  updFileName;
+    bool                  updFileModDate;
+    bool                  useCustomDate;
 
-    QDateTime        customTime;
-    QList<QDateTime> imageOriginalDates;
+    QDateTime             customTime;
+    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and original dates.
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -255,16 +255,17 @@ ActionThread::~ActionThread()
 {
 }
 
-void ActionThread::setImages(const KUrl::List& urlList)
+void ActionThread::setItems(const QMap<KUrl, QDateTime>& map)
 {
+    d->itemsMap               = map;
     JobCollection* collection = new JobCollection();
 
-    for(int i = 0; i < urlList.size(); ++i)
+    foreach (const KUrl& url, d->itemsMap.keys())
     {
         Task* t = new Task(this, 
-                           urlList[i], 
+                           url, 
                            d->useCustomDate ? d->customTime 
-                                            : d->imageOriginalDates[i],
+                                            : d->itemsMap.value(url),
                            d);
 
         connect(t, SIGNAL(signalProgressChanged(int)),
@@ -285,11 +286,10 @@ void ActionThread::setImages(const KUrl::List& urlList)
     appendJob(collection);
 }
 
-void ActionThread::setDateSelection(bool useCustomDate, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates)
+void ActionThread::setCustomDate(bool useCustomDate, const QDateTime& customTime)
 {
-    d->useCustomDate      = useCustomDate;
-    d->customTime         = customTime;
-    d->imageOriginalDates = imageOriginalDates;
+    d->useCustomDate = useCustomDate;
+    d->customTime    = customTime;
 }
 
 void ActionThread::setFileNameCheck(bool updFileName)

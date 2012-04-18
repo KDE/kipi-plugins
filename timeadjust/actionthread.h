@@ -29,6 +29,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QMutex>
+#include <QMap>
 
 // KDE includes
 
@@ -53,8 +54,8 @@ public:
     ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void setImages(const KUrl::List& urlList);
-    void setDateSelection(bool useCustomDateBtn, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates);
+    void setItems(const QMap<KUrl, QDateTime>& map);
+    void setCustomDate(bool useCustomDateBtn, const QDateTime& customTime);
     void setAppDateCheck(bool updAppDate);
     void setFileNameCheck(bool updFileName);
     void setEXIFDataCheck(bool updEXIFModDate, bool updEXIFOriDate, bool updEXIFDigDate);

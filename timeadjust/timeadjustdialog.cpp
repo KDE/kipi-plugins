@@ -60,7 +60,6 @@ extern "C"
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
-#include <kde_file.h>
 #include <kmessagebox.h>
 
 // Local includes
@@ -527,7 +526,7 @@ void TimeAdjustDialog::saveSettings()
     config.sync();
 }
 
-void TimeAdjustDialog::setImages(const KUrl::List& imageUrls)
+void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
     d->itemsMap.clear();
 
@@ -536,6 +535,7 @@ void TimeAdjustDialog::setImages(const KUrl::List& imageUrls)
         d->itemsMap.insert(url, QDateTime());
     }
 
+    d->listView->listView()->clear();
     d->listView->slotAddImages(imageUrls);
     readExampleTimestamps();
 }
@@ -689,8 +689,8 @@ void TimeAdjustDialog::readMetadataTimestamps()
     if (missingCount == 0)
     {
          d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                              "%1 images will be changed",
-                                              d->imageUrls.count()));
+                                               "%1 images will be changed",
+                                               d->imageUrls.count()));
 
     }
     else
@@ -698,11 +698,10 @@ void TimeAdjustDialog::readMetadataTimestamps()
          d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
                                               "%1 images will be changed; ",
                                               okCount)
-                                        + QString("<br>")
-                                        + i18np("1 image will be skipped due to a missing source timestamp.",
-                                                "%1 images will be skipped due to missing source timestamps.",
-                                                missingCount));
-
+                                         + QString("<br>")
+                                         + i18np("1 image will be skipped due to a missing source timestamp.",
+                                                 "%1 images will be skipped due to missing source timestamps.",
+                                                 missingCount));
     }
 */
 }
@@ -825,7 +824,7 @@ void TimeAdjustDialog::slotApplyClicked()
         }
     }
 
-    d->thread->setDateSelection(d->useCustomDateBtn->isChecked(), customTime, d->itemsMap.values());
+    d->thread->setCustomDate(d->useCustomDateBtn->isChecked(), customTime);
     d->thread->setAppDateCheck(d->updAppDateCheck->isChecked());
     d->thread->setFileNameCheck(d->updFileNameCheck->isChecked());
     d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(), d->updEXIFOriDateCheck->isChecked(),
@@ -833,7 +832,7 @@ void TimeAdjustDialog::slotApplyClicked()
     d->thread->setIPTCDateCheck(d->updIPTCDateCheck->isChecked());
     d->thread->setXMPDateCheck(d->updXMPDateCheck->isChecked());
     d->thread->setFileModDateCheck(d->updFileModDateCheck->isChecked());
-    d->thread->setImages(d->itemsMap.keys());
+    d->thread->setItems(d->itemsMap);
 
     if (!d->thread->isRunning())
     {

@@ -31,6 +31,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
+#include <kwindowsystem.h>
 #include <kiconloader.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -58,10 +59,12 @@ public:
     {
         actionTimeAjust = 0;
         interface       = 0;
+        dialog          = 0;
     }
 
-    KAction*   actionTimeAjust;
-    Interface* interface;
+    KAction*          actionTimeAjust;
+    Interface*        interface;
+    TimeAdjustDialog* dialog;
 };
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
@@ -110,9 +113,20 @@ void Plugin_TimeAdjust::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    TimeAdjustDialog dlg(kapp->activeWindow());
-    dlg.setImages(images.images());
-    dlg.exec();
+    if (!d->dialog)
+    {
+        d->dialog = new TimeAdjustDialog();
+    }
+    else
+    {
+        if (d->dialog->isMinimized())
+            KWindowSystem::unminimizeWindow(d->dialog->winId());
+
+        KWindowSystem::activateWindow(d->dialog->winId());
+    }
+
+    d->dialog->show();
+    d->dialog->addItems(images.images());
 }
 
 Category Plugin_TimeAdjust::category(KAction* action) const

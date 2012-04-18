@@ -48,10 +48,10 @@ class TimeAdjustDialog : public KPToolDialog
 
 public:
 
-    TimeAdjustDialog(QWidget* const parent);
+    TimeAdjustDialog(QWidget* const parent=0);
     ~TimeAdjustDialog();
 
-    void setImages(const KUrl::List& images);
+    void addItems(const KUrl::List& images);
 
 Q_SIGNALS:
 
