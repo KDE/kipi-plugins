@@ -331,24 +331,6 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
         d->updXMPDateCheck->setEnabled(false);
     }
 
-/*
-    // -- Example ------------------------------------------------------------
-
-    d->exampleGroupBox           = new QGroupBox(i18n("Example"), mainWidget());
-    QVBoxLayout* exampleGBLayout = new QVBoxLayout(d->exampleGroupBox);
-
-    d->exampleSummaryLabel       = new QLabel(d->exampleGroupBox);
-    d->exampleFileChooser        = new QComboBox(d->exampleGroupBox);
-    d->exampleTimeChangeLabel    = new QLabel(d->exampleGroupBox);
-    //d->exampleTimeChangeLabel->setAlignment(Qt::AlignCenter);
-
-    exampleGBLayout->setMargin(spacingHint());
-    exampleGBLayout->setSpacing(spacingHint());
-    exampleGBLayout->addWidget(d->exampleSummaryLabel);
-    exampleGBLayout->addWidget(d->exampleFileChooser);
-    exampleGBLayout->addWidget(d->exampleTimeChangeLabel);
-*/
-
     // -----------------------------------------------------------------------
 
     mainLayout->addWidget(d->listView,       0, 0, 5, 1);
@@ -434,7 +416,7 @@ TimeAdjustDialog::~TimeAdjustDialog()
     delete d;
 }
 
-void TimeAdjustDialog::closeEvent(QCloseEvent *e)
+void TimeAdjustDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
     saveSettings();
@@ -555,7 +537,6 @@ void TimeAdjustDialog::readTimestamps()
 
 void TimeAdjustDialog::readApplicationTimestamps()
 {
-    int exactCount   = 0;
     int inexactCount = 0;
 
     foreach (const KUrl& url, d->itemsMap.keys())
@@ -563,7 +544,6 @@ void TimeAdjustDialog::readApplicationTimestamps()
         KPImageInfo info(url);
         if (info.isExactDate())
         {
-            exactCount++;
             d->itemsMap.insert(url, info.date());
         }
         else
@@ -576,25 +556,11 @@ void TimeAdjustDialog::readApplicationTimestamps()
     // PENDING(blackie) handle all images being inexact.
 
 /*
-    if (inexactCount == 0)
+    if (inexactCount > 0)
     {
-
-         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                    "%1 images will be changed",
-                                      d->imageUrls.count()));
-
-    }
-    else
-    {
-
-         d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
-                                    "%1 images will be changed; ",
-                                    exactCount)
-                                + "<br>"
-                                + i18np("1 image will be skipped due to an inexact date.",
+         d->exampleSummaryLabel->setText(i18np("1 image will be skipped due to an inexact date.",
                                         "%1 images will be skipped due to inexact dates.",
                                         inexactCount));
-
     }
 */
 }
@@ -610,16 +576,12 @@ void TimeAdjustDialog::readFileTimestamps()
 
 void TimeAdjustDialog::readMetadataTimestamps()
 {
-    int exactCount   = 0;
-    int missingCount = 0;
-
     foreach (const KUrl& url, d->itemsMap.keys())
     {
         KPImageInfo info(url);
         KPMetadata  meta;
         if (!meta.load(url.toLocalFile()))
         {
-            missingCount++;
             d->itemsMap.insert(url, QDateTime());
             continue;
         }
@@ -654,32 +616,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
         };
 
         d->itemsMap.insert(url, curImageDateTime);
-
-        if (curImageDateTime.isValid())
-            exactCount++;
-        else
-            missingCount++;
     }
-
-/*
-    if (missingCount == 0)
-    {
-         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                               "%1 images will be changed",
-                                               d->imageUrls.count()));
-
-    }
-    else
-    {
-         d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
-                                              "%1 images will be changed; ",
-                                              okCount)
-                                         + QString("<br>")
-                                         + i18np("1 image will be skipped due to a missing source timestamp.",
-                                                 "%1 images will be skipped due to missing source timestamps.",
-                                                 missingCount));
-    }
-*/
 }
 
 void TimeAdjustDialog::slotSrcTimestampChanged()
