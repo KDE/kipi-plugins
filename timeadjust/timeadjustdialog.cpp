@@ -176,18 +176,18 @@ public:
 */
 };
 
-TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
-    : KPToolDialog(parent), d(new TimeAdjustDialogPrivate)
+TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
+    : KPToolDialog(0), d(new TimeAdjustDialogPrivate)
 {
     setButtons(Help | Apply | Close);
     setDefaultButton(Apply);
     setCaption(i18n("Adjust Time & Date"));
-    setModal(true);
+    setModal(false);
     setMinimumSize(700, 500);
 
     setMainWidget(new QWidget(this));
     QGridLayout* mainLayout = new QGridLayout(mainWidget());
-    d->listView             = new MyImageList(parent);
+    d->listView             = new MyImageList(mainWidget());
 
     // -- About data and help button ----------------------------------------
 
@@ -220,7 +220,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     // -- Progress Bar ------------------------------------------------------------
 
-    d->progressBar = new KPProgressWidget(parent);
+    d->progressBar = new KPProgressWidget(mainWidget());
     d->progressBar->reset();
     d->progressBar->hide();
 
@@ -421,7 +421,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
             this, SLOT(slotCloseClicked()));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
-            this, SLOT(slotStartStop()));
+            this, SLOT(slotCancelThread()));
 
 /*
     connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
