@@ -23,6 +23,15 @@
 #ifndef MYIMAGELIST_H
 #define MYIMAGELIST_H
 
+// Qt includes
+
+#include <QMap>
+#include <QDateTime>
+
+// KDE includes
+
+#include <kurl.h>
+
 // Local includes
 
 #include "kpimageslist.h"
@@ -38,8 +47,19 @@ class MyImageList : public KPImagesList
 
 public:
 
+    /* The different columns in a list. */
+    enum FieldType
+    {
+        TIMESTAMPUSED    = KPImagesListView::User1,
+        TIMESTAMPUPDATED = KPImagesListView::User2
+    };
+
+public:
+
     MyImageList(QWidget* const parent);
     ~MyImageList();
+
+    void setItemOriginalDates(const QMap<KUrl, QDateTime>& map);
 };
 
 }  // namespace KIPITimeAdjustPlugin

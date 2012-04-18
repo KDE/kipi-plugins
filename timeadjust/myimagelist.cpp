@@ -22,6 +22,10 @@
 
 #include "myimagelist.moc"
 
+// KDE includes
+
+#include <klocale.h>
+
 namespace KIPITimeAdjustPlugin
 {
 
@@ -29,10 +33,32 @@ MyImageList::MyImageList(QWidget* const parent)
     : KPImagesList(parent)
 {
     setControlButtonsPlacement(KPImagesList::NoControlButtons);
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMPUSED),
+                          i18n("Timestamp Used"), true);
 }
 
 MyImageList::~MyImageList()
 {
+}
+
+void MyImageList::setItemOriginalDates(const QMap<KUrl, QDateTime>& map)
+{
+    foreach (const KUrl& url, map.keys())
+    {
+        KPImagesListViewItem* item = listView()->findItem(url);
+        if (item)
+        {
+            QDateTime dt = map.value(url);
+            if (dt.isValid())
+            {
+                item->setText(TIMESTAMPUSED, dt.toString(Qt::ISODate));
+            }
+            else
+            {
+                item->setText(TIMESTAMPUSED, i18n("not valid"));
+            }
+        }
+    }
 }
 
 }  // namespace KIPITimeAdjustPlugin

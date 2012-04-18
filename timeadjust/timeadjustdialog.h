@@ -76,6 +76,7 @@ private Q_SLOTS:
     void slotButtonClicked(int);
     void slotProcessStarted(const KUrl&);
     void slotProcessEnded(const KUrl&);
+    void slotUpdateListView();
     void setBusy(bool);
 
 private:

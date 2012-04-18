@@ -85,7 +85,7 @@ public:
     bool                  useCustomDate;
 
     QDateTime             customTime;
-    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and original dates.
+    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and patched timestamps.
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -264,7 +264,7 @@ void ActionThread::setItems(const QMap<KUrl, QDateTime>& map)
     {
         Task* t = new Task(this, 
                            url, 
-                           d->useCustomDate ? d->customTime 
+                           d->useCustomDate ? d->customTime
                                             : d->itemsMap.value(url),
                            d);
 

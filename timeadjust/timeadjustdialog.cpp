@@ -112,12 +112,6 @@ public:
         progressBar            = 0;
         thread                 = 0;
         listView               = 0;
-/*
-        exampleGroupBox        = 0;
-        exampleFileChooser     = 0;
-        exampleSummaryLabel    = 0;
-        exampleTimeChangeLabel = 0;
-*/
     }
 
     QGroupBox*            useGroupBox;
@@ -157,7 +151,7 @@ public:
 
     QToolButton*          useCustomDateTodayBtn;
 
-    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and original dates.
+    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and original timestamps.
 
     QStringList           fileTimeErrorFiles;
     QStringList           metaTimeErrorFiles;
@@ -166,13 +160,6 @@ public:
     MyImageList*          listView;
 
     ActionThread*         thread;
-
-/*
-    QGroupBox*            exampleGroupBox;
-    QComboBox*            exampleFileChooser;
-    QLabel*               exampleSummaryLabel;
-    QLabel*               exampleTimeChangeLabel;
-*/
 };
 
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
@@ -225,7 +212,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // -- Use ------------------------------------------------------------
 
-    d->useGroupBox           = new QGroupBox(i18n("Time && Date Used"), mainWidget());
+    d->useGroupBox           = new QGroupBox(i18n("Timestamp Used"), mainWidget());
     QGridLayout* useGBLayout = new QGridLayout(d->useGroupBox);
     d->useButtonGroup        = new QButtonGroup(d->useGroupBox);
     d->useButtonGroup->setExclusive(true);
@@ -286,7 +273,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // -- Adjust-----------------------------------------------------------
 
-    d->adjustGroupBox           = new QGroupBox(i18n("Time & Date Adjustments"), mainWidget());
+    d->adjustGroupBox           = new QGroupBox(i18n("Timestamp Adjustments"), mainWidget());
     QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
 
     d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
@@ -314,7 +301,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // -- Update ------------------------------------------------------------
 
-    d->updateGroupBox           = new QGroupBox(i18n("Time && Date Updated"), mainWidget());
+    d->updateGroupBox           = new QGroupBox(i18n("Timestamp Updated"), mainWidget());
     QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
 
     d->updAppDateCheck     = new QCheckBox(applDateLabelString,        d->updateGroupBox);
@@ -422,22 +409,18 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancelThread()));
 
-/*
     connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
-            this, SLOT(slotUpdateExample()));
+            this, SLOT(slotUpdateListView()));
 
     connect(d->useCustTimeInput, SIGNAL(timeChanged(QTime)),
-            this, SLOT(slotUpdateExample()));
+            this, SLOT(slotUpdateListView()));
 
     connect(d->adjDaysInput, SIGNAL(valueChanged(int)),
-            this, SLOT(slotUpdateExample()));
+            this, SLOT(slotUpdateListView()));
 
     connect(d->adjTimeInput, SIGNAL(timeChanged(QTime)),
-            this, SLOT(slotUpdateExample()));
+            this, SLOT(slotUpdateListView()));
 
-    connect(d->exampleFileChooser, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(slotUpdateExample()));
-*/
     // -----------------------------------------------------------------------
 
     setBusy(false);
@@ -561,14 +544,13 @@ void TimeAdjustDialog::readTimestamps()
     }
     else if (d->useCustomDateBtn->isChecked())
     {
-/*
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                        "%1 images will be changed",
-                                        d->imageUrls.count()));
-*/
+        foreach (const KUrl& url, d->itemsMap.keys())
+        {
+            d->itemsMap.insert(url, QDateTime(d->useCustDateInput->date(), d->useCustTimeInput->time()));
+        }
     }
 
-//    slotUpdateExample();
+    slotUpdateListView();
 }
 
 void TimeAdjustDialog::readApplicationTimestamps()
@@ -624,12 +606,6 @@ void TimeAdjustDialog::readFileTimestamps()
         QFileInfo fileInfo(url.toLocalFile());
         d->itemsMap.insert(url, fileInfo.lastModified());
     }
-
-/*
-     d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                          "%1 images will be changed",
-                                          d->imageUrls.count()));
-*/
 }
 
 void TimeAdjustDialog::readMetadataTimestamps()
@@ -731,8 +707,8 @@ void TimeAdjustDialog::slotSrcTimestampChanged()
 
     // read the original timestamps for all selected files
     // (according to the newly selected source timestamp type),
-    // this will also implicitly update the example.
-    //readExampleTimestamps();
+    // this will also implicitly update listview info.
+    readTimestamps();
 }
 
 void TimeAdjustDialog::slotResetDateToCurrent()
@@ -750,8 +726,8 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
     d->adjDaysLabel->setEnabled(isAdjustment);
     d->adjTimeInput->setEnabled(isAdjustment);
 
-    // update the examples (with adjustment enabled also the adjusted time is shown)
-    //slotUpdateExample();
+    // update listview info (with adjustment enabled also the adjusted time is shown)
+    slotUpdateListView();
 }
 
 void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
@@ -788,13 +764,15 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 
 void TimeAdjustDialog::slotApplyClicked()
 {
-    QDateTime dateTime;
-    QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
-
     d->progressBar->show();
     d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
     d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     d->progressBar->setMaximum(d->itemsMap.keys().size());
+
+    QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
+
+    // Map of item urls and patched timestamps.
+    QMap<KUrl, QDateTime> newItemsMap;
 
     if (d->adjTypeChooser->currentIndex() != 0)
     {
@@ -802,17 +780,17 @@ void TimeAdjustDialog::slotApplyClicked()
 
         foreach (const KUrl& url, d->itemsMap.keys())
         {
-            QDateTime newdt = calculateAdjustedTime(d->itemsMap.value(url));
-            d->itemsMap.insert(url, newdt);
-
+            newItemsMap.insert(url, calculateAdjustedTime(d->itemsMap.value(url)));
         }
     }
 
-    // NOTE: this code is not yet re-entrant. It must still in main thread
-    foreach (const KUrl& url, d->itemsMap.keys())
+    // NOTE: this loop is not yet re-entrant due to use KPImageInfo. It must still in main thread.
+    foreach (const KUrl& url, newItemsMap.keys())
     {
+        QDateTime dateTime;
+
         if (d->useCustomDateBtn->isChecked()) dateTime = customTime;
-        else                                  dateTime = d->itemsMap.value(url);
+        else                                  dateTime = newItemsMap.value(url);
 
         if (!dateTime.isValid()) continue;
 
@@ -827,12 +805,13 @@ void TimeAdjustDialog::slotApplyClicked()
     d->thread->setCustomDate(d->useCustomDateBtn->isChecked(), customTime);
     d->thread->setAppDateCheck(d->updAppDateCheck->isChecked());
     d->thread->setFileNameCheck(d->updFileNameCheck->isChecked());
-    d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(), d->updEXIFOriDateCheck->isChecked(),
+    d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(),
+                                d->updEXIFOriDateCheck->isChecked(),
                                 d->updEXIFDigDateCheck->isChecked());
     d->thread->setIPTCDateCheck(d->updIPTCDateCheck->isChecked());
     d->thread->setXMPDateCheck(d->updXMPDateCheck->isChecked());
     d->thread->setFileModDateCheck(d->updFileModDateCheck->isChecked());
-    d->thread->setItems(d->itemsMap);
+    d->thread->setItems(newItemsMap);
 
     if (!d->thread->isRunning())
     {
@@ -977,6 +956,11 @@ void TimeAdjustDialog::slotThreadFinished()
     d->progressBar->progressCompleted();
     enableButton(Apply, true);
     saveSettings();
+}
+
+void TimeAdjustDialog::slotUpdateListView()
+{
+    d->listView->setItemOriginalDates(d->itemsMap);
 }
 
 /*
