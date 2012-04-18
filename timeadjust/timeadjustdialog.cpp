@@ -285,7 +285,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     // -- Adjust-----------------------------------------------------------
 
-    d->adjustGroupBox           = new QGroupBox(i18n("Time & Date Adjustements"), mainWidget());
+    d->adjustGroupBox           = new QGroupBox(i18n("Time & Date Adjustments"), mainWidget());
     QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
 
     d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
