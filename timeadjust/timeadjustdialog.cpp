@@ -286,7 +286,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     d->adjDaysLabel   = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
     d->adjTimeInput   = new QTimeEdit(d->adjustGroupBox);
     d->adjTimeInput->setDisplayFormat("hh:mm:ss");
-    d->adjDetByClockPhotoBtn = new QPushButton(i18n("Determine from clock photo"));
+    d->adjDetByClockPhotoBtn = new QPushButton(i18n("Determine difference from clock photo"));
 
     adjustGBLayout->setMargin(spacingHint());
     adjustGBLayout->setSpacing(spacingHint());
