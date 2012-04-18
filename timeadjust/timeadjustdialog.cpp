@@ -57,13 +57,11 @@ extern "C"
 #include <kconfig.h>
 #include <kdatetimewidget.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
-#include <ktoolinvocation.h>
 #include <kvbox.h>
 #include <kde_file.h>
 #include <kmessagebox.h>
@@ -240,7 +238,11 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     d->useFileDateBtn         = new QRadioButton("", d->useGroupBox);
     d->useFileDateTypeChooser = new QComboBox(d->useGroupBox);
-    //d->useFileDateTypeChooser->addItem(i18n("File created")); // not supported by Linux, although supported by Qt (read-only)
+
+/* NOTE: not supported by Linux, although supported by Qt (read-only)
+    d->useFileDateTypeChooser->addItem(i18n("File created"));
+*/
+
     d->useFileDateTypeChooser->addItem(i18n("File last modified"));
 
     d->useMetaDateBtn         = new QRadioButton(QString(), d->useGroupBox);
@@ -290,7 +292,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
     d->adjTypeChooser->addItem(i18n("Copy value"));
-    d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date", "Add"));
+    d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date",      "Add"));
     d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
     d->adjDaysInput   = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
@@ -417,6 +419,9 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     connect(this, SIGNAL(myCloseClicked()),
             this, SLOT(slotCloseClicked()));
+    
+    connect(d->progressBar, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStartStop()));
 
 /*
     connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
@@ -637,6 +642,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
         }
 
         QDateTime curImageDateTime;
+
         switch (d->useMetaDateTypeChooser->currentIndex())
         {
             case 0:
@@ -732,7 +738,7 @@ void TimeAdjustDialog::slotResetDateToCurrent()
 
 void TimeAdjustDialog::slotAdjustmentTypeChanged()
 {
-    // if the addition or subtraction has been selected, enable the edit boxes to enter the adjustment length
+    // If the addition or subtraction has been selected, enable the edit boxes to enter the adjustment length
     bool isAdjustment = (d->adjTypeChooser->currentIndex() > 0);
     d->adjDaysInput->setEnabled(isAdjustment);
     d->adjDaysLabel->setEnabled(isAdjustment);
@@ -744,18 +750,19 @@ void TimeAdjustDialog::slotAdjustmentTypeChanged()
 
 void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 {
-    /* When the use presses the clock photo button, present a dialog and set the
-     * results to the proper widgets. */
+    /* When user press the clock photo button, a dialog is displayed and set the
+     * results to the proper widgets.
+     */
+    QPointer<ClockPhotoDialog> dlg = new ClockPhotoDialog(this);
+    int result = dlg->exec();
 
-    QPointer<ClockPhotoDialog> dilg = new ClockPhotoDialog(this);
-    int result = dilg->exec();
     if (result == QDialog::Accepted)
     {
-        if (dilg->deltaDays == 0 && dilg->deltaHours == 0 && dilg->deltaMinutes == 0 && dilg->deltaSeconds == 0)
+        if (dlg->deltaDays == 0 && dlg->deltaHours == 0 && dlg->deltaMinutes == 0 && dlg->deltaSeconds == 0)
         {
             d->adjTypeChooser->setCurrentIndex(0);
         }
-        else if (dilg->deltaNegative)
+        else if (dlg->deltaNegative)
         {
             d->adjTypeChooser->setCurrentIndex(2);
         }
@@ -764,13 +771,13 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
             d->adjTypeChooser->setCurrentIndex(1);
         }
 
-        d->adjDaysInput->setValue(dilg->deltaDays);
+        d->adjDaysInput->setValue(dlg->deltaDays);
         QTime deltaTime;
-        deltaTime.setHMS(dilg->deltaHours, dilg->deltaMinutes, dilg->deltaSeconds);
+        deltaTime.setHMS(dlg->deltaHours, dlg->deltaMinutes, dlg->deltaSeconds);
         d->adjTimeInput->setTime(deltaTime);
     }
 
-    delete dilg;
+    delete dlg;
 }
 
 /*
@@ -836,11 +843,11 @@ void TimeAdjustDialog::slotUpdateExample()
 */
 void TimeAdjustDialog::slotApplyClicked()
 {
-    QDateTime   dateTime;
-    QDateTime   customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
+    QDateTime dateTime;
+    QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
 
     d->progressBar->show();
-    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), false, true);
+    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
     d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     d->progressBar->setMaximum(d->imageUrls.size());
 

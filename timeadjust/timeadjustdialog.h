@@ -67,7 +67,6 @@ private Q_SLOTS:
     void slotResetDateToCurrent();
     void slotAdjustmentTypeChanged();
     void slotDetAdjustmentByClockPhoto();
-    //void slotUpdateExample();
     void slotApplyClicked();
     void slotCloseClicked();
     void slotProgressChanged(int);
