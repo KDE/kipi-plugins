@@ -49,18 +49,15 @@ extern "C"
 #include <QTimeEdit>
 #include <QComboBox>
 #include <QPointer>
+#include <QMap>
 
 // KDE includes
 
-#include <kaboutdata.h>
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kdatetimewidget.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kmenu.h>
-#include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
 #include <kde_file.h>
@@ -122,58 +119,59 @@ public:
         //exampleTimeChangeLabel = 0;
     }
 
-    QGroupBox*        useGroupBox;
-    QGroupBox*        adjustGroupBox;
-    QGroupBox*        updateGroupBox;
+    QGroupBox*            useGroupBox;
+    QGroupBox*            adjustGroupBox;
+    QGroupBox*            updateGroupBox;
 
-    QButtonGroup*     useButtonGroup;
+    QButtonGroup*         useButtonGroup;
 
-    QRadioButton*     useApplDateBtn;
-    QRadioButton*     useFileDateBtn;
-    QRadioButton*     useMetaDateBtn;
-    QRadioButton*     useCustomDateBtn;
+    QRadioButton*         useApplDateBtn;
+    QRadioButton*         useFileDateBtn;
+    QRadioButton*         useMetaDateBtn;
+    QRadioButton*         useCustomDateBtn;
 
-    QCheckBox*        updAppDateCheck;
-    QCheckBox*        updFileModDateCheck;
-    QCheckBox*        updEXIFModDateCheck;
-    QCheckBox*        updEXIFOriDateCheck;
-    QCheckBox*        updEXIFDigDateCheck;
-    QCheckBox*        updIPTCDateCheck;
-    QCheckBox*        updXMPDateCheck;
-    QCheckBox*        updFileNameCheck;
+    QCheckBox*            updAppDateCheck;
+    QCheckBox*            updFileModDateCheck;
+    QCheckBox*            updEXIFModDateCheck;
+    QCheckBox*            updEXIFOriDateCheck;
+    QCheckBox*            updEXIFDigDateCheck;
+    QCheckBox*            updIPTCDateCheck;
+    QCheckBox*            updXMPDateCheck;
+    QCheckBox*            updFileNameCheck;
 
-    QComboBox*        useFileDateTypeChooser;
-    QComboBox*        useMetaDateTypeChooser;
-    QComboBox*        adjTypeChooser;
+    QComboBox*            useFileDateTypeChooser;
+    QComboBox*            useMetaDateTypeChooser;
+    QComboBox*            adjTypeChooser;
 
-    QLabel*           adjDaysLabel;
+    QLabel*               adjDaysLabel;
 
-    QSpinBox*         adjDaysInput;
+    QSpinBox*             adjDaysInput;
 
-    QPushButton*      adjDetByClockPhotoBtn;
+    QPushButton*          adjDetByClockPhotoBtn;
 
-    QDateEdit*        useCustDateInput;
+    QDateEdit*            useCustDateInput;
 
-    QTimeEdit*        useCustTimeInput;
-    QTimeEdit*        adjTimeInput;
+    QTimeEdit*            useCustTimeInput;
+    QTimeEdit*            adjTimeInput;
 
-    QToolButton*      useCustomDateTodayBtn;
+    QToolButton*          useCustomDateTodayBtn;
 
-    KUrl::List        imageUrls;
-    QList<QDateTime>  imageOriginalDates;
+    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and original dates.
 
-    QStringList       fileTimeErrorFiles;
-    QStringList       metaTimeErrorFiles;
+    QStringList           fileTimeErrorFiles;
+    QStringList           metaTimeErrorFiles;
 
-    KPProgressWidget* progressBar;
-    MyImageList*      listView;
+    KPProgressWidget*     progressBar;
+    MyImageList*          listView;
 
-    ActionThread*     thread;
+    ActionThread*         thread;
 
-    //QGroupBox*        exampleGroupBox;
-    //QComboBox*        exampleFileChooser;
-    //QLabel*           exampleSummaryLabel;
-    //QLabel*           exampleTimeChangeLabel;
+/*
+    QGroupBox*            exampleGroupBox;
+    QComboBox*            exampleFileChooser;
+    QLabel*               exampleSummaryLabel;
+    QLabel*               exampleTimeChangeLabel;
+*/
 };
 
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
@@ -254,11 +252,11 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     d->useMetaDateTypeChooser->addItem(i18n("IPTC: created"));
     d->useMetaDateTypeChooser->addItem(i18n("XMP: created"));
 
-    d->useCustomDateBtn = new QRadioButton(d->useGroupBox);
-    d->useCustDateInput = new QDateEdit(d->useGroupBox);
+    d->useCustomDateBtn      = new QRadioButton(d->useGroupBox);
+    d->useCustDateInput      = new QDateEdit(d->useGroupBox);
     d->useCustDateInput->setDisplayFormat("dd MMMM yyyy");
     d->useCustDateInput->setCalendarPopup(true);
-    d->useCustTimeInput = new QTimeEdit(d->useGroupBox);
+    d->useCustTimeInput      = new QTimeEdit(d->useGroupBox);
     d->useCustTimeInput->setDisplayFormat("hh:mm:ss");
     d->useCustomDateTodayBtn = new QToolButton(d->useGroupBox);
     d->useCustomDateTodayBtn->setIcon(SmallIcon("go-jump-today"));
@@ -529,30 +527,36 @@ void TimeAdjustDialog::saveSettings()
 
 void TimeAdjustDialog::setImages(const KUrl::List& imageUrls)
 {
-    d->imageUrls.clear();
+    d->itemsMap.clear();
 
-    for (KUrl::List::ConstIterator it = imageUrls.constBegin(); it != imageUrls.constEnd(); ++it)
+    foreach (const KUrl& url, imageUrls)
     {
-        d->imageUrls.append(*it);
-        //d->exampleFileChooser->addItem((*it).fileName());
+        d->itemsMap.insert(url, QDateTime());
     }
 
+    d->listView->slotAddImages(imageUrls);
     readExampleTimestamps();
 }
 
 void TimeAdjustDialog::readExampleTimestamps()
 {
-    d->imageOriginalDates.clear();
+    foreach (const KUrl& url, d->itemsMap.keys())
+    {
+        d->itemsMap.insert(url, QDateTime());
+    }
 
     if (d->useApplDateBtn->isChecked())
+    {
         readApplicationTimestamps();
-
+    }
     else if (d->useFileDateBtn->isChecked())
+    {
         readFileTimestamps();
-
+    }
     else if (d->useMetaDateBtn->isChecked())
+    {
         readMetadataTimestamps();
-
+    }
     else if (d->useCustomDateBtn->isChecked())
     {
 /*
@@ -567,36 +571,38 @@ void TimeAdjustDialog::readExampleTimestamps()
 
 void TimeAdjustDialog::readApplicationTimestamps()
 {
-    int       exactCount   = 0;
-    int       inexactCount = 0;
-    QDateTime nullDateTime;
+    int exactCount   = 0;
+    int inexactCount = 0;
 
-    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
+    foreach (const KUrl& url, d->itemsMap.keys())
     {
-        KPImageInfo info(*it);
+        KPImageInfo info(url);
         if (info.isExactDate())
         {
             exactCount++;
-            d->imageOriginalDates.append(info.date());
+            d->itemsMap.insert(url, info.date());
         }
         else
         {
             inexactCount++;
-            d->imageOriginalDates.append(nullDateTime);
+            d->itemsMap.insert(url, QDateTime());
         }
     }
 
+    // PENDING(blackie) handle all images being inexact.
+    
+/*
     if (inexactCount == 0)
     {
-/*
+
          d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
                                       d->imageUrls.count()));
-*/
+
     }
     else
     {
-/*
+
          d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
                                     "%1 images will be changed; ",
                                     exactCount)
@@ -604,17 +610,17 @@ void TimeAdjustDialog::readApplicationTimestamps()
                                 + i18np("1 image will be skipped due to an inexact date.",
                                         "%1 images will be skipped due to inexact dates.",
                                         inexactCount));
-*/
+
     }
-    // PENDING(blackie) handle all images being inexact.
+*/
 }
 
 void TimeAdjustDialog::readFileTimestamps()
 {
-    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
+    foreach (const KUrl& url, d->itemsMap.keys())
     {
-        QFileInfo fileInfo((*it).toLocalFile());
-        d->imageOriginalDates.append(fileInfo.lastModified());
+        QFileInfo fileInfo(url.toLocalFile());
+        d->itemsMap.insert(url, fileInfo.lastModified());
     }
 
 /*
@@ -626,18 +632,17 @@ void TimeAdjustDialog::readFileTimestamps()
 
 void TimeAdjustDialog::readMetadataTimestamps()
 {
-    int       okCount      = 0;
-    int       missingCount = 0;
-    QDateTime nullDateTime;
+    int exactCount   = 0;
+    int missingCount = 0;
 
-    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
+    foreach (const KUrl& url, d->itemsMap.keys())
     {
-        KPImageInfo info(*it);
+        KPImageInfo info(url);
         KPMetadata  meta;
-        if (!meta.load((*it).path()))
+        if (!meta.load(url.toLocalFile()))
         {
             missingCount++;
-            d->imageOriginalDates.append(nullDateTime);
+            d->itemsMap.insert(url, QDateTime());
             continue;
         }
 
@@ -670,25 +675,24 @@ void TimeAdjustDialog::readMetadataTimestamps()
                 break;
         };
 
-        d->imageOriginalDates.append(curImageDateTime);
+        d->itemsMap.insert(url, curImageDateTime);
 
         if (curImageDateTime.isValid())
-            okCount++;
+            exactCount++;
         else
             missingCount++;
     }
 
+/*
     if (missingCount == 0)
     {
-/*
          d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                               "%1 images will be changed",
                                               d->imageUrls.count()));
-*/
+
     }
     else
     {
-/*
          d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
                                               "%1 images will be changed; ",
                                               okCount)
@@ -696,8 +700,9 @@ void TimeAdjustDialog::readMetadataTimestamps()
                                         + i18np("1 image will be skipped due to a missing source timestamp.",
                                                 "%1 images will be skipped due to missing source timestamps.",
                                                 missingCount));
-*/
+
     }
+*/
 }
 
 void TimeAdjustDialog::slotSrcTimestampChanged()
@@ -725,7 +730,7 @@ void TimeAdjustDialog::slotSrcTimestampChanged()
 
     // read the original timestamps for all selected files
     // (according to the newly selected source timestamp type),
-    // this will also implicitly update the example
+    // this will also implicitly update the example.
     //readExampleTimestamps();
 }
 
@@ -780,67 +785,6 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
     delete dlg;
 }
 
-/*
-void TimeAdjustDialog::slotUpdateExample()
-{
-    static const QString exampleTimeFormat("hh:mm:ss");
-
-    // When the custom timestamp is to be used, do not show any file original timestamps
-    if (d->useCustomDateBtn->isChecked())
-    {
-        QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
-        if (d->adjTypeChooser->currentIndex() > 0)
-            customTime = calculateAdjustedTime(customTime);
-
-        QDate customDate = customTime.date();
-        QString formattedCustomDate = KGlobal::locale()->formatDate(customDate, KLocale::ShortDate);
-
-        QString customTimeStr = customTime.toString(exampleTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1 %2</b>", formattedCustomDate, customTimeStr));
-        return;
-    }
-
-    // If the file timestamp structures are not ready yet, do not show any information
-    // (this may happen during initialization)
-    if (d->imageOriginalDates.size() == 0 || d->exampleFileChooser->currentIndex() >= d->imageOriginalDates.size()) 
-    {
-        d->exampleTimeChangeLabel->setText("");
-        return;
-    }
-
-    // Get the file original timestamp according to the selection, if it is not available inform the user
-    QDateTime originalTime = d->imageOriginalDates.at(d->exampleFileChooser->currentIndex());
-    if (!originalTime.isValid())
-    {
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>N/A</b><br/>"
-                                                "Image will be skipped"));
-        return;
-    }
-
-    // Show the file original timestamp (and adjusted one if needed)
-
-    QDate originalDate            = originalTime.date();
-    QString formattedOriginalDate = KGlobal::locale()->formatDate(originalDate, KLocale::ShortDate);
-    QString originalTimeStr       = originalTime.toString(exampleTimeFormat);
-
-    if (d->adjTypeChooser->currentIndex() == 0)
-    {
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b>", formattedOriginalDate, originalTimeStr));
-        return;
-    }
-    else
-    {
-        QDateTime adjustedTime        = calculateAdjustedTime(originalTime);
-        QDate adjustedDate            = adjustedTime.date();
-        QString formattedAdjustedDate = KGlobal::locale()->formatDate(adjustedDate, KLocale::ShortDate);
-
-        QString adjustedTimeStr = adjustedTime.toString(exampleTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b><br/>"
-                                                "Adjusted: <b>%3 %4</b>",
-                                           formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
-    }
-}
-*/
 void TimeAdjustDialog::slotApplyClicked()
 {
     QDateTime dateTime;
@@ -849,35 +793,37 @@ void TimeAdjustDialog::slotApplyClicked()
     d->progressBar->show();
     d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
     d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
-    d->progressBar->setMaximum(d->imageUrls.size());
+    d->progressBar->setMaximum(d->itemsMap.keys().size());
 
     if (d->adjTypeChooser->currentIndex() != 0)
     {
         customTime = calculateAdjustedTime(customTime);
 
-        for(int k=0 ; k < d->imageUrls.size(); ++k)
+        foreach (const KUrl& url, d->itemsMap.keys())
         {
-            d->imageOriginalDates[k] = calculateAdjustedTime(d->imageOriginalDates[k]);
+            QDateTime newdt = calculateAdjustedTime(d->itemsMap.value(url));
+            d->itemsMap.insert(url, newdt);
+
         }
     }
 
     // NOTE: this code is not yet re-entrant. It must still in main thread
-    for (int i=0; i < d->imageUrls.size(); ++i)
+    foreach (const KUrl& url, d->itemsMap.keys())
     {
         if (d->useCustomDateBtn->isChecked()) dateTime = customTime;
-        else                                  dateTime = d->imageOriginalDates[i];
+        else                                  dateTime = d->itemsMap.value(url);
 
         if (!dateTime.isValid()) continue;
 
         if (d->updAppDateCheck->isChecked())
         {
-            KPImageInfo info(d->imageUrls[i]);
+            KPImageInfo info(url);
             info.setDate(dateTime);
             kapp->processEvents();
         }
     }
 
-    d->thread->setDateSelection(d->useCustomDateBtn->isChecked(), customTime, d->imageOriginalDates);
+    d->thread->setDateSelection(d->useCustomDateBtn->isChecked(), customTime, d->itemsMap.values());
     d->thread->setAppDateCheck(d->updAppDateCheck->isChecked());
     d->thread->setFileNameCheck(d->updFileNameCheck->isChecked());
     d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(), d->updEXIFOriDateCheck->isChecked(),
@@ -885,7 +831,7 @@ void TimeAdjustDialog::slotApplyClicked()
     d->thread->setIPTCDateCheck(d->updIPTCDateCheck->isChecked());
     d->thread->setXMPDateCheck(d->updXMPDateCheck->isChecked());
     d->thread->setFileModDateCheck(d->updFileModDateCheck->isChecked());
-    d->thread->setImages(d->imageUrls);
+    d->thread->setImages(d->itemsMap.keys());
 
     if (!d->thread->isRunning())
     {
@@ -1031,5 +977,67 @@ void TimeAdjustDialog::slotThreadFinished()
     enableButton(Apply, true);
     saveSettings();
 }
+
+/*
+void TimeAdjustDialog::slotUpdateExample()
+{
+    QString exampleTimeFormat("hh:mm:ss");
+
+    // When the custom timestamp is to be used, do not show any file original timestamps
+    if (d->useCustomDateBtn->isChecked())
+    {
+        QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
+        if (d->adjTypeChooser->currentIndex() > 0)
+            customTime = calculateAdjustedTime(customTime);
+
+        QDate customDate            = customTime.date();
+        QString formattedCustomDate = KGlobal::locale()->formatDate(customDate, KLocale::ShortDate);
+
+        QString customTimeStr = customTime.toString(exampleTimeFormat);
+        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1 %2</b>", formattedCustomDate, customTimeStr));
+        return;
+    }
+
+    // If the file timestamp structures are not ready yet, do not show any information
+    // (this may happen during initialization)
+    if (d->imageOriginalDates.size() == 0 || d->exampleFileChooser->currentIndex() >= d->imageOriginalDates.size()) 
+    {
+        d->exampleTimeChangeLabel->setText("");
+        return;
+    }
+
+    // Get the file original timestamp according to the selection, if it is not available inform the user
+    QDateTime originalTime = d->imageOriginalDates.at(d->exampleFileChooser->currentIndex());
+    if (!originalTime.isValid())
+    {
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>N/A</b><br/>"
+                                                "Image will be skipped"));
+        return;
+    }
+
+    // Show the file original timestamp (and adjusted one if needed)
+
+    QDate   originalDate          = originalTime.date();
+    QString formattedOriginalDate = KGlobal::locale()->formatDate(originalDate, KLocale::ShortDate);
+    QString originalTimeStr       = originalTime.toString(exampleTimeFormat);
+
+    if (d->adjTypeChooser->currentIndex() == 0)
+    {
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b>", formattedOriginalDate, originalTimeStr));
+        return;
+    }
+    else
+    {
+        QDateTime adjustedTime        = calculateAdjustedTime(originalTime);
+        QDate adjustedDate            = adjustedTime.date();
+        QString formattedAdjustedDate = KGlobal::locale()->formatDate(adjustedDate, KLocale::ShortDate);
+
+        QString adjustedTimeStr = adjustedTime.toString(exampleTimeFormat);
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b><br/>"
+                                                "Adjusted: <b>%3 %4</b>",
+                                           formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
+    }
+}
+*/
 
 }  // namespace KIPITimeAdjustPlugin

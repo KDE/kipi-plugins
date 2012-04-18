@@ -20,8 +20,6 @@
  *
  * ============================================================ */
 
-#define ICONSIZE 64
-
 #include "myimagelist.moc"
 
 namespace KIPITimeAdjustPlugin
@@ -30,8 +28,7 @@ namespace KIPITimeAdjustPlugin
 MyImageList::MyImageList(QWidget* const parent)
     : KPImagesList(parent)
 {
-    loadImagesFromCurrentSelection();
-    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+    setControlButtonsPlacement(KPImagesList::NoControlButtons);
 }
 
 MyImageList::~MyImageList()
