@@ -708,7 +708,7 @@ void TimeAdjustDialog::slotApplyClicked()
     QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
 
     // Map of item urls and patched timestamps.
-    QMap<KUrl, QDateTime> newItemsMap;
+    QMap<KUrl, QDateTime> newItemsMap = d->itemsMap;
 
     if (d->adjTypeChooser->currentIndex() != 0)
     {
