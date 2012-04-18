@@ -80,7 +80,7 @@ private Q_SLOTS:
 
 private:
 
-    void readExampleTimestamps();
+    void readTimestamps();
     void readApplicationTimestamps();
     void readFileTimestamps();
     void readMetadataTimestamps();

@@ -537,10 +537,10 @@ void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 
     d->listView->listView()->clear();
     d->listView->slotAddImages(imageUrls);
-    readExampleTimestamps();
+    readTimestamps();
 }
 
-void TimeAdjustDialog::readExampleTimestamps()
+void TimeAdjustDialog::readTimestamps()
 {
     foreach (const KUrl& url, d->itemsMap.keys())
     {
