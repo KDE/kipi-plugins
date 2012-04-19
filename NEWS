@@ -54,5 +54,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 039 ==> 294455 : Batch process preview doesn't show a preview.
 040 ==> 298118 : Crash when open Geo-location dialog.
 041 ==> 163991 : Import images from Picasa WebAlbum.
-042 ==>
+042 ==> 285070 : Change Date and Time dialog should warn when no tag to change is selected.
+043 ==>
 
