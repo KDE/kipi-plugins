@@ -24,13 +24,6 @@
 
 #include "timeadjustdialog.moc"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <utime.h>
-}
-
 // Qt includes
 
 #include <QButtonGroup>
@@ -278,15 +271,15 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     d->adjustGroupBox           = new QGroupBox(i18n("Timestamp Adjustments"), mainWidget());
     QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
 
-    d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
+    d->adjTypeChooser        = new QComboBox(d->adjustGroupBox);
     d->adjTypeChooser->addItem(i18n("Copy value"));
     d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date",      "Add"));
     d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
-    d->adjDaysInput   = new QSpinBox(d->adjustGroupBox);
+    d->adjDaysInput          = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);
-    d->adjDaysLabel   = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
-    d->adjTimeInput   = new QTimeEdit(d->adjustGroupBox);
+    d->adjDaysLabel          = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
+    d->adjTimeInput          = new QTimeEdit(d->adjustGroupBox);
     d->adjTimeInput->setDisplayFormat("hh:mm:ss");
     d->adjDetByClockPhotoBtn = new QPushButton(i18n("Determine difference from clock photo"));
 
@@ -542,7 +535,7 @@ void TimeAdjustDialog::readTimestamps()
 
 void TimeAdjustDialog::readApplicationTimestamps()
 {
-    int inexactCount = 0;
+    KUrl::List floatingDateItems;
 
     foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
@@ -553,21 +546,12 @@ void TimeAdjustDialog::readApplicationTimestamps()
         }
         else
         {
-            inexactCount++;
+            floatingDateItems.append(url);
             d->itemsUsedMap.insert(url, QDateTime());
         }
     }
 
-    // PENDING(blackie) handle all images being inexact.
-
-/*
-    if (inexactCount > 0)
-    {
-         d->exampleSummaryLabel->setText(i18np("1 image will be skipped due to an inexact date.",
-                                        "%1 images will be skipped due to inexact dates.",
-                                        inexactCount));
-    }
-*/
+    // TODO (blackie): handle all items in listview with inexact timestamp through floatingDateItems.
 }
 
 void TimeAdjustDialog::readFileTimestamps()
@@ -598,21 +582,27 @@ void TimeAdjustDialog::readMetadataTimestamps()
                 curImageDateTime = meta.getImageDateTime();
                 break;
             case 1:
-                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Image.DateTime"),
+                                                         "yyyy:MM:dd hh:mm:ss");
                 break;
             case 2:
-                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeOriginal"),
+                                                         "yyyy:MM:dd hh:mm:ss");
                 break;
             case 3:
-                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeDigitized"),
+                                                         "yyyy:MM:dd hh:mm:ss");
                 break;
             case 4:
                 // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
-                curImageDateTime = QDateTime(QDate::fromString(meta.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
-                                             QTime::fromString(meta.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
+                curImageDateTime = QDateTime(QDate::fromString(meta.getIptcTagString("Iptc.Application2.DateCreated"), 
+                                                               Qt::ISODate),
+                                             QTime::fromString(meta.getIptcTagString("Iptc.Application2.TimeCreated").left(8),
+                                                               Qt::ISODate));
                 break;
             case 5:
-                curImageDateTime = QDateTime::fromString(meta.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getXmpTagString("Xmp.xmp.CreateDate"),
+                                                         "yyyy:MM:dd hh:mm:ss");
                 break;
             default:
                 // curImageDateTime stays invalid
@@ -675,7 +665,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
      * results to the proper widgets.
      */
     QPointer<ClockPhotoDialog> dlg = new ClockPhotoDialog(this);
-    int result = dlg->exec();
+    int result                     = dlg->exec();
 
     if (result == QDialog::Accepted)
     {
@@ -791,6 +781,7 @@ void TimeAdjustDialog::slotCloseClicked()
 QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
 {
     int sign = 0;
+
     switch (d->adjTypeChooser->currentIndex())
     {
         case 1:
