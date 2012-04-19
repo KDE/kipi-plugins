@@ -3,13 +3,16 @@ Kipi-plugins 2.6.0-rc - Release date: 2012/05/06
 
 NEW FEATURES:
 
+TimeAdjust        : Add items listview support, progress management support, multithreading, and parallelization of tasks using ThreadWeaver.
+SendImages        : Dialog Layout improvements, progress management support, and parallelization of tasks using ThreadWeaver.
+RedEyesRemoval    : Parallelization of tasks using ThreadWeaver.
 PhotoLayoutEditor : Add SuperImpose Template support to compose fun frame, post-card, etc... template file use SVG format.
 Panorama          : Bugfix for binary detection on OSes different than Linux (fixes the same issue with expoblending).
                     Bugfix for the back button of the assistant.
                     First steps towards a cropping for target panorama.
-                    Migration to KPActionThreadBase (ThreadWeaver).
-General           : New tool to export images to ImageShack web service (http://imageshack.us)
-General           : New tool to export images to MediaWiki web service (http://www.mediawiki.org)
+                    Parallelization of tasks using ThreadWeaver.
+General           : New tool to export images to ImageShack web service (http://imageshack.us).
+General           : New tool to export images to MediaWiki web service (http://www.mediawiki.org).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
