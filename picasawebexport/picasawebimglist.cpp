@@ -57,6 +57,10 @@ static const char picasaweb_video_extentions[] = "*.3gp *.avi *.asf *.mov *.wmv 
 PicasawebImagesList::PicasawebImagesList(QWidget* const parent, int iconSize)
     : KPImagesList(parent, iconSize)
 {
+    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+    setAllowRAW(true);
+    loadImagesFromCurrentSelection();
+    listView()->setWhatsThis(i18n("This is the list of images to upload to your Picasaweb account."));
 }
 
 PicasawebImagesList::~PicasawebImagesList()
