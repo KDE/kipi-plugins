@@ -23,16 +23,6 @@
 #ifndef TIMEADJUSTSETTING_H
 #define TIMEADJUSTSETTING_H
 
-// Qt includes
-
-#include <QList>
-#include <QString>
-#include <QStringList>
-
-// KDE includes
-
-#include <kurl.h>
-
 namespace KIPITimeAdjustPlugin
 {
 
