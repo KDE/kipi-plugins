@@ -498,6 +498,12 @@ void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
     d->itemsUsedMap.clear();
     d->itemsUpdatedMap.clear();
     d->listView->listView()->clear();
+
+    foreach (const KUrl& url, imageUrls)
+    {
+        d->itemsUsedMap.insert(url, QDateTime());
+    }
+    
     d->listView->slotAddImages(imageUrls);
     readTimestamps();
 }
