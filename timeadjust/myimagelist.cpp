@@ -49,7 +49,7 @@ MyImageList::~MyImageList()
 {
 }
 
-void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, bool updateFileName)
+void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings)
 {
     foreach (const KUrl& url, map.keys())
     {
@@ -68,7 +68,7 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
 
             if (type == TIMESTAMP_UPDATED)
             {
-                if (updateFileName)
+                if (settings.updFileName)
                     item->setText(TIMESTAMP_FILENAME, ActionThread::newUrl(url, dt).fileName());
                 else
                     item->setText(TIMESTAMP_FILENAME, i18nc("not applicable", "N.A"));

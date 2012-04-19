@@ -37,6 +37,7 @@
 
 // Local includes
 
+#include "timeadjustsettings.h"
 #include "kpactionthreadbase.h"
 
 using namespace KIPIPlugins;
@@ -55,12 +56,7 @@ public:
     ~ActionThread();
 
     void setUpdatedDates(const QMap<KUrl, QDateTime>& map);
-    void setAppDateCheck(bool updAppDate);
-    void setFileNameCheck(bool updFileName);
-    void setEXIFDataCheck(bool updEXIFModDate, bool updEXIFOriDate, bool updEXIFDigDate);
-    void setIPTCDateCheck(bool updIPTCDate);
-    void setXMPDateCheck(bool updXMPDate);
-    void setFileModDateCheck(bool updFileModDate);
+    void setSettings(const TimeAdjustSettings& settings);
     void cancel();
 
     static KUrl newUrl(const KUrl& url, const QDateTime& dt);

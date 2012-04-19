@@ -55,17 +55,8 @@ public:
 
     ActionThreadPriv()
     {
-        cancel         = false;
-        progress       = 0;
-
-        updAppDate     = false;
-        updEXIFModDate = false;
-        updEXIFOriDate = false;
-        updEXIFDigDate = false;
-        updIPTCDate    = false;
-        updXMPDate     = false;
-        updFileName    = false;
-        updFileModDate = false;
+        cancel   = false;
+        progress = 0;
     }
 
     // To manage items processing
@@ -73,16 +64,10 @@ public:
     int                   progress;
 
     // Settings from GUI.
-    bool                  updAppDate;
-    bool                  updEXIFModDate;
-    bool                  updEXIFOriDate;
-    bool                  updEXIFDigDate;
-    bool                  updIPTCDate;
-    bool                  updXMPDate;
-    bool                  updFileName;
-    bool                  updFileModDate;
+    TimeAdjustSettings    settings;
 
-    QMap<KUrl, QDateTime> itemsMap;               // Map of item urls and Updated Timestamps.
+    // Map of item urls and Updated Timestamps.
+    QMap<KUrl, QDateTime> itemsMap;
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -105,9 +90,9 @@ void Task::run()
 
     emit signalProcessStarted(m_url);
 
-    bool metadataChanged = m_d->updEXIFModDate || m_d->updEXIFOriDate ||
-                           m_d->updEXIFDigDate || m_d->updIPTCDate    ||
-                           m_d->updXMPDate;
+    bool metadataChanged = m_d->settings.updEXIFModDate || m_d->settings.updEXIFOriDate ||
+                           m_d->settings.updEXIFDigDate || m_d->settings.updIPTCDate    ||
+                           m_d->settings.updXMPDate;
 
     if (metadataChanged)
     {
@@ -120,30 +105,30 @@ void Task::run()
         {
             if (meta.canWriteExif(m_url.path()))
             {
-                if (m_d->updEXIFModDate)
+                if (m_d->settings.updEXIFModDate)
                 {
                     ret &= meta.setExifTagString("Exif.Image.DateTime",
                         m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
 
-                if (m_d->updEXIFOriDate)
+                if (m_d->settings.updEXIFOriDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeOriginal",
                         m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
 
-                if (m_d->updEXIFDigDate)
+                if (m_d->settings.updEXIFDigDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
                         m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
             }
-            else if (m_d->updEXIFModDate || m_d->updEXIFOriDate || m_d->updEXIFDigDate)
+            else if (m_d->settings.updEXIFModDate || m_d->settings.updEXIFOriDate || m_d->settings.updEXIFDigDate)
             {
                 ret = false;
             }
 
-            if (m_d->updIPTCDate)
+            if (m_d->settings.updIPTCDate)
             {
                 if (meta.canWriteIptc(m_url.path()))
                 {
@@ -158,7 +143,7 @@ void Task::run()
                 }
             }
 
-            if (m_d->updXMPDate)
+            if (m_d->settings.updXMPDate)
             {
                 if (meta.supportXmp() && meta.canWriteXmp(m_url.path()))
                 {
@@ -199,7 +184,7 @@ void Task::run()
         }
     }
 
-    if (m_d->updFileModDate)
+    if (m_d->settings.updFileModDate)
     {
         // Since QFileInfo does not support timestamp updates, see Qt suggestion #79427 at
         // http://www.qtsoftware.com/developer/task-tracker/index_html?id=79427&method=entry
@@ -215,7 +200,7 @@ void Task::run()
         }
     }
 
-    if (m_d->updFileName)
+    if (m_d->settings.updFileName)
     {
         KUrl newUrl = ActionThread::newUrl(m_url, m_dateTime);
 
@@ -273,36 +258,9 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
     appendJob(collection);
 }
 
-void ActionThread::setFileNameCheck(bool updFileName)
+void ActionThread::setSettings(const TimeAdjustSettings& settings)
 {
-    d->updFileName = updFileName;
-}
-
-void ActionThread::setEXIFDataCheck(bool updEXIFModDate, bool updEXIFOriDate, bool updEXIFDigDate)
-{
-    d->updEXIFModDate = updEXIFModDate;
-    d->updEXIFOriDate = updEXIFOriDate;
-    d->updEXIFDigDate = updEXIFDigDate;
-}
-
-void ActionThread::setIPTCDateCheck(bool updIPTCDate)
-{
-    d->updIPTCDate = updIPTCDate;
-}
-
-void ActionThread::setXMPDateCheck(bool updXMPDate)
-{
-    d->updXMPDate = updXMPDate;
-}
-
-void ActionThread::setFileModDateCheck(bool updFileModDate)
-{
-    d->updFileModDate = updFileModDate;
-}
-
-void ActionThread::setAppDateCheck(bool updAppDate)
-{
-    d->updAppDate = updAppDate;
+    d->settings = settings;
 }
 
 void ActionThread::cancel()

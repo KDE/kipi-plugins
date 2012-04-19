@@ -36,6 +36,7 @@
 // Local includes
 
 #include "kptooldialog.h"
+#include "timeadjustsettings.h"
 
 using namespace KIPIPlugins;
 
@@ -101,6 +102,8 @@ private:
 
     void readSettings();
     void saveSettings();
+
+    TimeAdjustSettings settings() const;
 
     QDateTime calculateAdjustedTime(const QDateTime& time) const;
 

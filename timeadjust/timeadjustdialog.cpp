@@ -475,14 +475,15 @@ void TimeAdjustDialog::saveSettings()
     group.writeEntry("Adjustment Days",               d->adjDaysInput->value());
     group.writeEntry("Adjustment Time",               d->adjTimeInput->dateTime());
 
-    group.writeEntry("Update Application Time",       d->updAppDateCheck->isChecked());
-    group.writeEntry("Update File Modification Time", d->updFileModDateCheck->isChecked());
-    group.writeEntry("Update EXIF Modification Time", d->updEXIFModDateCheck->isChecked());
-    group.writeEntry("Update EXIF Original Time",     d->updEXIFOriDateCheck->isChecked());
-    group.writeEntry("Update EXIF Digitization Time", d->updEXIFDigDateCheck->isChecked());
-    group.writeEntry("Update IPTC Time",              d->updIPTCDateCheck->isChecked());
-    group.writeEntry("Update XMP Creation Time",      d->updXMPDateCheck->isChecked());
-    group.writeEntry("Update File Name",              d->updFileNameCheck->isChecked());
+    TimeAdjustSettings prm = settings();
+    group.writeEntry("Update Application Time",       prm.updAppDate);
+    group.writeEntry("Update File Modification Time", prm.updFileModDate);
+    group.writeEntry("Update EXIF Modification Time", prm.updEXIFModDate);
+    group.writeEntry("Update EXIF Original Time",     prm.updEXIFOriDate);
+    group.writeEntry("Update EXIF Digitization Time", prm.updEXIFDigDate);
+    group.writeEntry("Update IPTC Time",              prm.updIPTCDate);
+    group.writeEntry("Update XMP Creation Time",      prm.updXMPDate);
+    group.writeEntry("Update File Name",              prm.updFileName);
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     saveDialogSize(group2);
@@ -701,7 +702,7 @@ void TimeAdjustDialog::slotApplyClicked()
     // NOTE: this loop is not yet re-entrant due to use KPImageInfo. It must still in main thread.
     foreach (const KUrl& url, d->itemsUpdatedMap.keys())
     {
-        if (d->updAppDateCheck->isChecked())
+        if (settings().updAppDate)
         {
             KPImageInfo info(url);
             QDateTime dt = d->itemsUpdatedMap.value(url);
@@ -710,14 +711,7 @@ void TimeAdjustDialog::slotApplyClicked()
         }
     }
 
-    d->thread->setAppDateCheck(d->updAppDateCheck->isChecked());
-    d->thread->setFileNameCheck(d->updFileNameCheck->isChecked());
-    d->thread->setEXIFDataCheck(d->updEXIFModDateCheck->isChecked(),
-                                d->updEXIFOriDateCheck->isChecked(),
-                                d->updEXIFDigDateCheck->isChecked());
-    d->thread->setIPTCDateCheck(d->updIPTCDateCheck->isChecked());
-    d->thread->setXMPDateCheck(d->updXMPDateCheck->isChecked());
-    d->thread->setFileModDateCheck(d->updFileModDateCheck->isChecked());
+    d->thread->setSettings(settings());
     d->thread->setUpdatedDates(d->itemsUpdatedMap);
 
     if (!d->thread->isRunning())
@@ -727,6 +721,53 @@ void TimeAdjustDialog::slotApplyClicked()
 
     enableButton(Apply, false);
     setBusy(true);
+}
+
+void TimeAdjustDialog::slotCancelThread()
+{
+    if (d->thread->isRunning())
+    {
+        d->thread->cancel();
+    }
+}
+
+TimeAdjustSettings TimeAdjustDialog::settings() const
+{
+    TimeAdjustSettings settings;
+    settings.updAppDate     = d->updAppDateCheck->isChecked();
+    settings.updEXIFModDate = d->updEXIFModDateCheck->isChecked();
+    settings.updEXIFOriDate = d->updEXIFOriDateCheck->isChecked();
+    settings.updEXIFDigDate = d->updEXIFDigDateCheck->isChecked();
+    settings.updIPTCDate    = d->updIPTCDateCheck->isChecked();
+    settings.updXMPDate     = d->updXMPDateCheck->isChecked();
+    settings.updFileName    = d->updFileNameCheck->isChecked();
+    settings.updFileModDate = d->updFileModDateCheck->isChecked();
+    return settings;
+}
+
+QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
+{
+    int sign = 0;
+
+    switch (d->adjTypeChooser->currentIndex())
+    {
+        case 1:
+            sign = 1;
+            break;
+        case 2:
+            sign = -1;
+            break;
+        default:
+            return originalTime;
+    };
+
+    const QTime& adjTime = d->adjTimeInput->time();
+    int seconds          = adjTime.second();
+    seconds             += 60*adjTime.minute();
+    seconds             += 60*60*adjTime.hour();
+    seconds             += 24*60*60*d->adjDaysInput->value();
+
+    return originalTime.addSecs(sign * seconds);
 }
 
 void TimeAdjustDialog::slotButtonClicked(int button)
@@ -778,31 +819,6 @@ void TimeAdjustDialog::slotCloseClicked()
     done(Close);
 }
 
-QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
-{
-    int sign = 0;
-
-    switch (d->adjTypeChooser->currentIndex())
-    {
-        case 1:
-            sign = 1;
-            break;
-        case 2:
-            sign = -1;
-            break;
-        default:
-            return originalTime;
-    };
-
-    const QTime& adjTime = d->adjTimeInput->time();
-    int seconds          = adjTime.second();
-    seconds             += 60*adjTime.minute();
-    seconds             += 60*60*adjTime.hour();
-    seconds             += 24*60*60*d->adjDaysInput->value();
-
-    return originalTime.addSecs(sign * seconds);
-}
-
 void TimeAdjustDialog::slotProgressChanged(int progress)
 {
     d->progressBar->setValue(progress);
@@ -818,14 +834,6 @@ void TimeAdjustDialog::slotErrorFilesUpdate(const QString& fileTimeErrorFile, co
     if (!metaTimeErrorFile.isEmpty())
     {
         d->metaTimeErrorFiles.append(metaTimeErrorFile);
-    }
-}
-
-void TimeAdjustDialog::slotCancelThread()
-{
-    if (d->thread->isRunning())
-    {
-        d->thread->cancel();
     }
 }
 
@@ -870,14 +878,16 @@ void TimeAdjustDialog::slotUpdateListView()
 {
     kapp->setOverrideCursor(Qt::WaitCursor);
 
-    d->listView->setItemDates(d->itemsUsedMap, MyImageList::TIMESTAMP_USED);
+    TimeAdjustSettings prm = settings();
+
+    d->listView->setItemDates(d->itemsUsedMap, MyImageList::TIMESTAMP_USED, prm);
 
     foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         d->itemsUpdatedMap.insert(url, calculateAdjustedTime(d->itemsUsedMap.value(url)));
     }
 
-    d->listView->setItemDates(d->itemsUpdatedMap, MyImageList::TIMESTAMP_UPDATED, d->updFileNameCheck->isChecked());
+    d->listView->setItemDates(d->itemsUpdatedMap, MyImageList::TIMESTAMP_UPDATED, prm);
 
     kapp->restoreOverrideCursor();
 }

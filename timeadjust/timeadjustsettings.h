@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-17-04
- * Description : time adjust images list.
+ * Date        : 2012-04-19
+ * Description : time adjust settings container.
  *
  * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,50 +20,55 @@
  *
  * ============================================================ */
 
-#ifndef MYIMAGELIST_H
-#define MYIMAGELIST_H
+#ifndef TIMEADJUSTSETTING_H
+#define TIMEADJUSTSETTING_H
 
 // Qt includes
 
-#include <QMap>
-#include <QDateTime>
+#include <QList>
+#include <QString>
+#include <QStringList>
 
 // KDE includes
 
 #include <kurl.h>
 
-// Local includes
-
-#include "kpimageslist.h"
-#include "timeadjustsettings.h"
-
-using namespace KIPIPlugins;
-
 namespace KIPITimeAdjustPlugin
 {
 
-class MyImageList : public KPImagesList
+class TimeAdjustSettings
 {
-    Q_OBJECT
 
 public:
 
-    /* The different columns in a list. */
-    enum FieldType
+    TimeAdjustSettings()
     {
-        TIMESTAMP_USED     = KPImagesListView::User1,
-        TIMESTAMP_UPDATED  = KPImagesListView::User2,
-        TIMESTAMP_FILENAME = KPImagesListView::User3
+        updAppDate     = false;
+        updEXIFModDate = false;
+        updEXIFOriDate = false;
+        updEXIFDigDate = false;
+        updIPTCDate    = false;
+        updXMPDate     = false;
+        updFileName    = false;
+        updFileModDate = false;
+    };
+
+    ~TimeAdjustSettings()
+    {
     };
 
 public:
 
-    MyImageList(QWidget* const parent);
-    ~MyImageList();
-
-    void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);
+    bool updAppDate;
+    bool updEXIFModDate;
+    bool updEXIFOriDate;
+    bool updEXIFDigDate;
+    bool updIPTCDate;
+    bool updXMPDate;
+    bool updFileName;
+    bool updFileModDate;
 };
 
 }  // namespace KIPITimeAdjustPlugin
 
-#endif // MYIMAGELIST_H
+#endif  // TIMEADJUSTSETTING_H
