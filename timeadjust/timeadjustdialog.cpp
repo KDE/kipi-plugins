@@ -701,33 +701,49 @@ void TimeAdjustDialog::slotApplyClicked()
     d->fileTimeErrorFiles.clear();
     d->metaTimeErrorFiles.clear();
 
-    d->progressBar->show();
-    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
-    d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
-    d->progressBar->setMaximum(d->itemsUsedMap.keys().size());
+    // Check if atleast one option is selected
+    bool atleastOneSelected = d->updAppDateCheck->isChecked() || d->updFileModDateCheck->isChecked()
+            || d->updEXIFModDateCheck->isChecked() || d->updEXIFOriDateCheck->isChecked()
+            || d->updEXIFDigDateCheck->isChecked() || d->updIPTCDateCheck->isChecked()
+            || d->updXMPDateCheck->isChecked() || d->updFileNameCheck->isChecked();
 
-    // NOTE: this loop is not yet re-entrant due to use KPImageInfo. It must still in main thread.
-    foreach (const KUrl& url, d->itemsUpdatedMap.keys())
+    if (atleastOneSelected)
     {
-        if (settings().updAppDate)
+        d->progressBar->show();
+        d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
+        d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        d->progressBar->setMaximum(d->itemsUsedMap.keys().size());
+
+        // NOTE: this loop is not yet re-entrant due to use KPImageInfo. It must still in main thread.
+        foreach (const KUrl& url, d->itemsUpdatedMap.keys())
         {
-            KPImageInfo info(url);
-            QDateTime dt = d->itemsUpdatedMap.value(url);
-            if (dt.isValid()) info.setDate(dt);
-            kapp->processEvents();
+            if (settings().updAppDate)
+            {
+                KPImageInfo info(url);
+                QDateTime dt = d->itemsUpdatedMap.value(url);
+                if (dt.isValid()) info.setDate(dt);
+                kapp->processEvents();
+            }
         }
+
+        d->thread->setSettings(settings());
+        d->thread->setUpdatedDates(d->itemsUpdatedMap);
+
+        if (!d->thread->isRunning())
+        {
+            d->thread->start();
+        }
+
+        enableButton(Apply, false);
+        setBusy(true);
     }
-
-    d->thread->setSettings(settings());
-    d->thread->setUpdatedDates(d->itemsUpdatedMap);
-
-    if (!d->thread->isRunning())
+    else
     {
-        d->thread->start();
+        KMessageBox::error(
+                     kapp->activeWindow(),
+                     i18n("Select atleast one Option"),
+                     i18n("Adjust Time & Date"));
     }
-
-    enableButton(Apply, false);
-    setBusy(true);
 }
 
 void TimeAdjustDialog::slotCancelThread()
