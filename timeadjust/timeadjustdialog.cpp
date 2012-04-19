@@ -496,12 +496,7 @@ void TimeAdjustDialog::saveSettings()
 void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
     d->itemsUsedMap.clear();
-
-    foreach (const KUrl& url, imageUrls)
-    {
-        d->itemsUsedMap.insert(url, QDateTime());
-    }
-
+    d->itemsUpdatedMap.clear();
     d->listView->listView()->clear();
     d->listView->slotAddImages(imageUrls);
     readTimestamps();
@@ -697,6 +692,9 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 
 void TimeAdjustDialog::slotApplyClicked()
 {
+    d->fileTimeErrorFiles.clear();
+    d->metaTimeErrorFiles.clear();
+
     d->progressBar->show();
     d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
     d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
@@ -822,6 +820,16 @@ void TimeAdjustDialog::slotCloseClicked()
     done(Close);
 }
 
+void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
+{
+    d->listView->processing(url);
+}
+
+void TimeAdjustDialog::slotProcessEnded(const KUrl& url)
+{
+    d->listView->processed(url, true);
+}
+
 void TimeAdjustDialog::slotProgressChanged(int progress)
 {
     d->progressBar->setValue(progress);
@@ -838,16 +846,6 @@ void TimeAdjustDialog::slotErrorFilesUpdate(const QString& fileTimeErrorFile, co
     {
         d->metaTimeErrorFiles.append(metaTimeErrorFile);
     }
-}
-
-void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
-{
-    d->listView->processing(url);
-}
-
-void TimeAdjustDialog::slotProcessEnded(const KUrl& url)
-{
-    d->listView->processed(url, true);
 }
 
 void TimeAdjustDialog::slotThreadFinished()
