@@ -106,6 +106,7 @@ public:
         progressBar            = 0;
         thread                 = 0;
         listView               = 0;
+        settingsView           = 0;
     }
 
     QGroupBox*            useGroupBox;
@@ -131,6 +132,8 @@ public:
     QComboBox*            useFileDateTypeChooser;
     QComboBox*            useMetaDateTypeChooser;
     QComboBox*            adjTypeChooser;
+
+    KVBox*                settingsView;
 
     QLabel*               adjDaysLabel;
 
@@ -169,6 +172,143 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     setMainWidget(new QWidget(this));
     QGridLayout* mainLayout = new QGridLayout(mainWidget());
     d->listView             = new MyImageList(mainWidget());
+    d->settingsView         = new KVBox(mainWidget());
+    d->progressBar          = new KPProgressWidget(mainWidget());
+    d->progressBar->reset();
+    d->progressBar->hide();
+    d->settingsView->setMargin(0);
+    d->settingsView->setSpacing(spacingHint());
+
+    // -- Settings View Used Timestamps ---------------------------------------------------------
+
+    d->useGroupBox              = new QGroupBox(i18n("Timestamp Used"), d->settingsView);
+    QGridLayout* useGBLayout    = new QGridLayout(d->useGroupBox);
+    d->useButtonGroup           = new QButtonGroup(d->useGroupBox);
+    d->useButtonGroup->setExclusive(true);
+
+    QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
+    d->useApplDateBtn           = new QRadioButton("", d->useGroupBox);
+    QLabel* useApplDateLbl      = new QLabel(applDateLabelString);
+    useApplDateLbl->setIndent(5);
+
+    d->useFileDateBtn           = new QRadioButton("", d->useGroupBox);
+    d->useFileDateTypeChooser   = new QComboBox(d->useGroupBox);
+
+    /* NOTE: not supported by Linux, although supported by Qt (read-only)
+    d->useFileDateTypeChooser->addItem(i18n("File created"));
+    */
+
+    d->useFileDateTypeChooser->addItem(i18n("File last modified"));
+
+    d->useMetaDateBtn         = new QRadioButton(QString(), d->useGroupBox);
+    d->useMetaDateTypeChooser = new QComboBox(d->useGroupBox);
+    d->useMetaDateTypeChooser->addItem(i18n("EXIF/IPTC/XMP"));
+    d->useMetaDateTypeChooser->addItem(i18n("EXIF: created"));
+    d->useMetaDateTypeChooser->addItem(i18n("EXIF: original"));
+    d->useMetaDateTypeChooser->addItem(i18n("EXIF: digitized"));
+    d->useMetaDateTypeChooser->addItem(i18n("IPTC: created"));
+    d->useMetaDateTypeChooser->addItem(i18n("XMP: created"));
+
+    d->useCustomDateBtn       = new QRadioButton(d->useGroupBox);
+    d->useCustDateInput       = new QDateEdit(d->useGroupBox);
+    d->useCustDateInput->setDisplayFormat("dd MMMM yyyy");
+    d->useCustDateInput->setCalendarPopup(true);
+    d->useCustTimeInput       = new QTimeEdit(d->useGroupBox);
+    d->useCustTimeInput->setDisplayFormat("hh:mm:ss");
+    d->useCustomDateTodayBtn  = new QToolButton(d->useGroupBox);
+    d->useCustomDateTodayBtn->setIcon(SmallIcon("go-jump-today"));
+    d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
+
+    useGBLayout->setMargin(spacingHint());
+    useGBLayout->setSpacing(spacingHint());
+    useGBLayout->setColumnStretch(1, 1);
+    useGBLayout->setColumnStretch(2, 1);
+    useGBLayout->addWidget(d->useApplDateBtn,         0, 0, 1, 1);
+    useGBLayout->addWidget(useApplDateLbl,            0, 1, 1, 1);
+    useGBLayout->addWidget(d->useFileDateBtn,         1, 0, 1, 1);
+    useGBLayout->addWidget(d->useFileDateTypeChooser, 1, 1, 1, 1);
+    useGBLayout->addWidget(d->useMetaDateBtn,         2, 0, 1, 1);
+    useGBLayout->addWidget(d->useMetaDateTypeChooser, 2, 1, 1, 1);
+    useGBLayout->addWidget(d->useCustomDateBtn,       3, 0, 1, 1);
+    useGBLayout->addWidget(d->useCustDateInput,       3, 1, 1, 1);
+    useGBLayout->addWidget(d->useCustTimeInput,       3, 2, 1, 1);
+    useGBLayout->addWidget(d->useCustomDateTodayBtn,  3, 3, 1, 1);
+
+    d->useButtonGroup->addButton(d->useApplDateBtn,   0);
+    d->useButtonGroup->addButton(d->useFileDateBtn,   1);
+    d->useButtonGroup->addButton(d->useMetaDateBtn,   2);
+    d->useButtonGroup->addButton(d->useCustomDateBtn, 3);
+    d->useApplDateBtn->setChecked(true);
+
+    // -- Settings View TimesStamp Adjustements ---------------------------------------------------
+
+    d->adjustGroupBox           = new QGroupBox(i18n("Timestamp Adjustments"), d->settingsView);
+    QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
+
+    d->adjTypeChooser           = new QComboBox(d->adjustGroupBox);
+    d->adjTypeChooser->addItem(i18n("Copy value"));
+    d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date",      "Add"));
+    d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
+    d->adjDaysInput             = new QSpinBox(d->adjustGroupBox);
+    d->adjDaysInput->setRange(0, 9999);
+    d->adjDaysInput->setSingleStep(1);
+    d->adjDaysLabel             = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
+    d->adjTimeInput             = new QTimeEdit(d->adjustGroupBox);
+    d->adjTimeInput->setDisplayFormat("hh:mm:ss");
+    d->adjDetByClockPhotoBtn    = new QPushButton(i18n("Determine difference from clock photo"));
+
+    adjustGBLayout->setMargin(spacingHint());
+    adjustGBLayout->setSpacing(spacingHint());
+    adjustGBLayout->setColumnStretch(0, 1);
+    adjustGBLayout->setColumnStretch(1, 1);
+    adjustGBLayout->setColumnStretch(3, 1);
+    adjustGBLayout->addWidget(d->adjTypeChooser,        0, 0, 1, 1);
+    adjustGBLayout->addWidget(d->adjDaysInput,          0, 1, 1, 1);
+    adjustGBLayout->addWidget(d->adjDaysLabel,          0, 2, 1, 1);
+    adjustGBLayout->addWidget(d->adjTimeInput,          0, 3, 1, 1);
+    adjustGBLayout->addWidget(d->adjDetByClockPhotoBtn, 1, 0, 1, 4);
+
+    // -- Settings View Updated Timestamps -------------------------------------------------------
+
+    d->updateGroupBox           = new QGroupBox(i18n("Timestamp Updated"), d->settingsView);
+    QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
+
+    d->updAppDateCheck          = new QCheckBox(applDateLabelString,        d->updateGroupBox);
+    d->updFileModDateCheck      = new QCheckBox(i18n("File last modified"), d->updateGroupBox);
+    d->updEXIFModDateCheck      = new QCheckBox(i18n("EXIF: created"),      d->updateGroupBox);
+    d->updEXIFOriDateCheck      = new QCheckBox(i18n("EXIF: original"),     d->updateGroupBox);
+    d->updEXIFDigDateCheck      = new QCheckBox(i18n("EXIF: digitized"),    d->updateGroupBox);
+    d->updIPTCDateCheck         = new QCheckBox(i18n("IPTC: created"),      d->updateGroupBox);
+    d->updXMPDateCheck          = new QCheckBox(i18n("XMP"),                d->updateGroupBox);
+    d->updFileNameCheck         = new QCheckBox(i18n("Filename"),           d->updateGroupBox);
+
+    updateGBLayout->setMargin(spacingHint());
+    updateGBLayout->setSpacing(spacingHint());
+    updateGBLayout->setColumnStretch(0, 1);
+    updateGBLayout->setColumnStretch(1, 1);
+    updateGBLayout->addWidget(d->updAppDateCheck,     0, 0, 1, 1);
+    updateGBLayout->addWidget(d->updEXIFModDateCheck, 0, 1, 1, 1);
+    updateGBLayout->addWidget(d->updEXIFOriDateCheck, 1, 0, 1, 1);
+    updateGBLayout->addWidget(d->updEXIFDigDateCheck, 1, 1, 1, 1);
+    updateGBLayout->addWidget(d->updXMPDateCheck,     2, 0, 1, 1);
+    updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 1, 1, 1);
+    updateGBLayout->addWidget(d->updFileModDateCheck, 3, 0, 1, 1);
+    updateGBLayout->addWidget(d->updFileNameCheck,    3, 1, 1, 1);
+
+    if (!KPMetadata::supportXmp())
+    {
+        d->updXMPDateCheck->setEnabled(false);
+    }
+
+    // ----------------------------------------------------------------------------
+
+    mainLayout->addWidget(d->listView,       0, 0, 5, 1);
+    mainLayout->addWidget(d->settingsView,   0, 1, 1, 1);
+    mainLayout->addWidget(d->progressBar,    1, 1, 1, 1);
+    mainLayout->setColumnStretch(0, 10);
+    mainLayout->setRowStretch(4, 1);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacingHint());
 
     // -- About data and help button ----------------------------------------
 
@@ -199,146 +339,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     about->handbookEntry = QString("timeadjust");
     setAboutData(about);
 
-    // -- Progress Bar ------------------------------------------------------------
-
-    d->progressBar = new KPProgressWidget(mainWidget());
-    d->progressBar->reset();
-    d->progressBar->hide();
-
-    // -- Use ------------------------------------------------------------
-
-    d->useGroupBox           = new QGroupBox(i18n("Timestamp Used"), mainWidget());
-    QGridLayout* useGBLayout = new QGridLayout(d->useGroupBox);
-    d->useButtonGroup        = new QButtonGroup(d->useGroupBox);
-    d->useButtonGroup->setExclusive(true);
-
-    QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
-    d->useApplDateBtn           = new QRadioButton("", d->useGroupBox);
-    QLabel* useApplDateLbl      = new QLabel(applDateLabelString);
-    useApplDateLbl->setIndent(5);
-
-    d->useFileDateBtn         = new QRadioButton("", d->useGroupBox);
-    d->useFileDateTypeChooser = new QComboBox(d->useGroupBox);
-
-    /* NOTE: not supported by Linux, although supported by Qt (read-only)
-    d->useFileDateTypeChooser->addItem(i18n("File created"));
-    */
-
-    d->useFileDateTypeChooser->addItem(i18n("File last modified"));
-
-    d->useMetaDateBtn         = new QRadioButton(QString(), d->useGroupBox);
-    d->useMetaDateTypeChooser = new QComboBox(d->useGroupBox);
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF/IPTC/XMP"));
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF: created"));
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF: original"));
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF: digitized"));
-    d->useMetaDateTypeChooser->addItem(i18n("IPTC: created"));
-    d->useMetaDateTypeChooser->addItem(i18n("XMP: created"));
-
-    d->useCustomDateBtn      = new QRadioButton(d->useGroupBox);
-    d->useCustDateInput      = new QDateEdit(d->useGroupBox);
-    d->useCustDateInput->setDisplayFormat("dd MMMM yyyy");
-    d->useCustDateInput->setCalendarPopup(true);
-    d->useCustTimeInput      = new QTimeEdit(d->useGroupBox);
-    d->useCustTimeInput->setDisplayFormat("hh:mm:ss");
-    d->useCustomDateTodayBtn = new QToolButton(d->useGroupBox);
-    d->useCustomDateTodayBtn->setIcon(SmallIcon("go-jump-today"));
-    d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
-
-    useGBLayout->setMargin(spacingHint());
-    useGBLayout->setSpacing(spacingHint());
-    useGBLayout->setColumnStretch(1, 1);
-    useGBLayout->setColumnStretch(2, 1);
-    useGBLayout->addWidget(d->useApplDateBtn,         0, 0, 1, 1);
-    useGBLayout->addWidget(useApplDateLbl,            0, 1, 1, 1);
-    useGBLayout->addWidget(d->useFileDateBtn,         1, 0, 1, 1);
-    useGBLayout->addWidget(d->useFileDateTypeChooser, 1, 1, 1, 1);
-    useGBLayout->addWidget(d->useMetaDateBtn,         2, 0, 1, 1);
-    useGBLayout->addWidget(d->useMetaDateTypeChooser, 2, 1, 1, 1);
-    useGBLayout->addWidget(d->useCustomDateBtn,       3, 0, 1, 1);
-    useGBLayout->addWidget(d->useCustDateInput,       3, 1, 1, 1);
-    useGBLayout->addWidget(d->useCustTimeInput,       3, 2, 1, 1);
-    useGBLayout->addWidget(d->useCustomDateTodayBtn,  3, 3, 1, 1);
-
-    d->useButtonGroup->addButton(d->useApplDateBtn,   0);
-    d->useButtonGroup->addButton(d->useFileDateBtn,   1);
-    d->useButtonGroup->addButton(d->useMetaDateBtn,   2);
-    d->useButtonGroup->addButton(d->useCustomDateBtn, 3);
-    d->useApplDateBtn->setChecked(true);
-
-    // -- Adjust-----------------------------------------------------------
-
-    d->adjustGroupBox           = new QGroupBox(i18n("Timestamp Adjustments"), mainWidget());
-    QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
-
-    d->adjTypeChooser        = new QComboBox(d->adjustGroupBox);
-    d->adjTypeChooser->addItem(i18n("Copy value"));
-    d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date",      "Add"));
-    d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
-    d->adjDaysInput          = new QSpinBox(d->adjustGroupBox);
-    d->adjDaysInput->setRange(0, 9999);
-    d->adjDaysInput->setSingleStep(1);
-    d->adjDaysLabel          = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
-    d->adjTimeInput          = new QTimeEdit(d->adjustGroupBox);
-    d->adjTimeInput->setDisplayFormat("hh:mm:ss");
-    d->adjDetByClockPhotoBtn = new QPushButton(i18n("Determine difference from clock photo"));
-
-    adjustGBLayout->setMargin(spacingHint());
-    adjustGBLayout->setSpacing(spacingHint());
-    adjustGBLayout->setColumnStretch(0, 1);
-    adjustGBLayout->setColumnStretch(1, 1);
-    adjustGBLayout->setColumnStretch(3, 1);
-    adjustGBLayout->addWidget(d->adjTypeChooser,        0, 0, 1, 1);
-    adjustGBLayout->addWidget(d->adjDaysInput,          0, 1, 1, 1);
-    adjustGBLayout->addWidget(d->adjDaysLabel,          0, 2, 1, 1);
-    adjustGBLayout->addWidget(d->adjTimeInput,          0, 3, 1, 1);
-    adjustGBLayout->addWidget(d->adjDetByClockPhotoBtn, 1, 0, 1, 4);
-
-    // -- Update ------------------------------------------------------------
-
-    d->updateGroupBox           = new QGroupBox(i18n("Timestamp Updated"), mainWidget());
-    QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
-
-    d->updAppDateCheck     = new QCheckBox(applDateLabelString,        d->updateGroupBox);
-    d->updFileModDateCheck = new QCheckBox(i18n("File last modified"), d->updateGroupBox);
-    d->updEXIFModDateCheck = new QCheckBox(i18n("EXIF: created"),      d->updateGroupBox);
-    d->updEXIFOriDateCheck = new QCheckBox(i18n("EXIF: original"),     d->updateGroupBox);
-    d->updEXIFDigDateCheck = new QCheckBox(i18n("EXIF: digitized"),    d->updateGroupBox);
-    d->updIPTCDateCheck    = new QCheckBox(i18n("IPTC: created"),      d->updateGroupBox);
-    d->updXMPDateCheck     = new QCheckBox(i18n("XMP"),                d->updateGroupBox);
-    d->updFileNameCheck    = new QCheckBox(i18n("Filename"),           d->updateGroupBox);
-
-    updateGBLayout->setMargin(spacingHint());
-    updateGBLayout->setSpacing(spacingHint());
-    updateGBLayout->setColumnStretch(0, 1);
-    updateGBLayout->setColumnStretch(1, 1);
-    updateGBLayout->addWidget(d->updAppDateCheck,     0, 0, 1, 1);
-    updateGBLayout->addWidget(d->updEXIFModDateCheck, 0, 1, 1, 1);
-    updateGBLayout->addWidget(d->updEXIFOriDateCheck, 1, 0, 1, 1);
-    updateGBLayout->addWidget(d->updEXIFDigDateCheck, 1, 1, 1, 1);
-    updateGBLayout->addWidget(d->updXMPDateCheck,     2, 0, 1, 1);
-    updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 1, 1, 1);
-    updateGBLayout->addWidget(d->updFileModDateCheck, 3, 0, 1, 1);
-    updateGBLayout->addWidget(d->updFileNameCheck,    3, 1, 1, 1);
-
-    if (!KPMetadata::supportXmp())
-    {
-        d->updXMPDateCheck->setEnabled(false);
-    }
-
-    // -----------------------------------------------------------------------
-
-    mainLayout->addWidget(d->listView,       0, 0, 5, 1);
-    mainLayout->addWidget(d->useGroupBox,    0, 1, 1, 1);
-    mainLayout->addWidget(d->adjustGroupBox, 1, 1, 1, 1);
-    mainLayout->addWidget(d->updateGroupBox, 2, 1, 1, 1);
-    mainLayout->addWidget(d->progressBar,    3, 1, 1, 1);
-    mainLayout->setColumnStretch(0, 10);
-    mainLayout->setRowStretch(4, 1);
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(spacingHint());
-
-    // -- Thread and its signals ---------------------------------------------
+    // -- Thread Slots/Signals ----------------------------------------------
 
     d->thread = new ActionThread(this);
 
@@ -360,7 +361,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancelThread()));
 
-    // -- Slots/Signals ------------------------------------------------------
+    // -- Settings View Slots/Signals ----------------------------------------
 
     connect(d->useButtonGroup, SIGNAL(buttonReleased(int)),
             this, SLOT(slotSrcTimestampChanged()));
@@ -383,12 +384,6 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->adjDetByClockPhotoBtn, SIGNAL(clicked()),
             this, SLOT(slotDetAdjustmentByClockPhoto()));
 
-    connect(this, SIGNAL(applyClicked()),
-            this, SLOT(slotApplyClicked()));
-
-    connect(this, SIGNAL(signalMyCloseClicked()),
-            this, SLOT(slotCloseClicked()));
-
     connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
             this, SLOT(slotUpdateListView()));
 
@@ -400,6 +395,14 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     connect(d->adjTimeInput, SIGNAL(timeChanged(QTime)),
             this, SLOT(slotUpdateListView()));
+
+    // -- Dialog Slots/Signals -----------------------------------------------
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotApplyClicked()));
+
+    connect(this, SIGNAL(signalMyCloseClicked()),
+            this, SLOT(slotCloseClicked()));
 
     // -----------------------------------------------------------------------
 
@@ -891,67 +894,5 @@ void TimeAdjustDialog::slotUpdateListView()
 
     kapp->restoreOverrideCursor();
 }
-
-/*
-void TimeAdjustDialog::slotUpdateExample()
-{
-    QString exampleTimeFormat("hh:mm:ss");
-
-    // When the custom timestamp is to be used, do not show any file original timestamps
-    if (d->useCustomDateBtn->isChecked())
-    {
-        QDateTime customTime(d->useCustDateInput->date(), d->useCustTimeInput->time());
-        if (d->adjTypeChooser->currentIndex() > 0)
-            customTime = calculateAdjustedTime(customTime);
-
-        QDate customDate            = customTime.date();
-        QString formattedCustomDate = KGlobal::locale()->formatDate(customDate, KLocale::ShortDate);
-
-        QString customTimeStr = customTime.toString(exampleTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1 %2</b>", formattedCustomDate, customTimeStr));
-        return;
-    }
-
-    // If the file timestamp structures are not ready yet, do not show any information
-    // (this may happen during initialization)
-    if (d->imageOriginalDates.size() == 0 || d->exampleFileChooser->currentIndex() >= d->imageOriginalDates.size()) 
-    {
-        d->exampleTimeChangeLabel->setText("");
-        return;
-    }
-
-    // Get the file original timestamp according to the selection, if it is not available inform the user
-    QDateTime originalTime = d->imageOriginalDates.at(d->exampleFileChooser->currentIndex());
-    if (!originalTime.isValid())
-    {
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>N/A</b><br/>"
-                                                "Image will be skipped"));
-        return;
-    }
-
-    // Show the file original timestamp (and adjusted one if needed)
-
-    QDate   originalDate          = originalTime.date();
-    QString formattedOriginalDate = KGlobal::locale()->formatDate(originalDate, KLocale::ShortDate);
-    QString originalTimeStr       = originalTime.toString(exampleTimeFormat);
-
-    if (d->adjTypeChooser->currentIndex() == 0)
-    {
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b>", formattedOriginalDate, originalTimeStr));
-        return;
-    }
-    else
-    {
-        QDateTime adjustedTime        = calculateAdjustedTime(originalTime);
-        QDate adjustedDate            = adjustedTime.date();
-        QString formattedAdjustedDate = KGlobal::locale()->formatDate(adjustedDate, KLocale::ShortDate);
-
-        QString adjustedTimeStr = adjustedTime.toString(exampleTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b><br/>"
-                                                "Adjusted: <b>%3 %4</b>",
-                                           formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
-    }
-}
-*/
 
 }  // namespace KIPITimeAdjustPlugin
