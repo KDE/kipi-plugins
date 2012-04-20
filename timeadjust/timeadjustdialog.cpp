@@ -77,6 +77,7 @@ public:
 
     TimeAdjustDialogPrivate()
     {
+        settingsView           = 0;
         useGroupBox            = 0;
         adjustGroupBox         = 0;
         updateGroupBox         = 0;
@@ -103,10 +104,10 @@ public:
         useCustTimeInput       = 0;
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
+
         progressBar            = 0;
-        thread                 = 0;
         listView               = 0;
-        settingsView           = 0;
+        thread                 = 0;
     }
 
     QGroupBox*            useGroupBox;
@@ -133,8 +134,6 @@ public:
     QComboBox*            useMetaDateTypeChooser;
     QComboBox*            adjTypeChooser;
 
-    KVBox*                settingsView;
-
     QLabel*               adjDaysLabel;
 
     QSpinBox*             adjDaysInput;
@@ -147,6 +146,8 @@ public:
     QTimeEdit*            adjTimeInput;
 
     QToolButton*          useCustomDateTodayBtn;
+
+    KVBox*                settingsView;
 
     QMap<KUrl, QDateTime> itemsUsedMap;           // Map of item urls and Used Timestamps.
     QMap<KUrl, QDateTime> itemsUpdatedMap;        // Map of item urls and Updated Timestamps.
@@ -193,21 +194,19 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     d->useFileDateBtn           = new QRadioButton("", d->useGroupBox);
     d->useFileDateTypeChooser   = new QComboBox(d->useGroupBox);
-
+    d->useFileDateTypeChooser->insertItem(TimeAdjustSettings::FILELASTMOD, i18n("File last modified"));
     /* NOTE: not supported by Linux, although supported by Qt (read-only)
-    d->useFileDateTypeChooser->addItem(i18n("File created"));
+    d->useFileDateTypeChooser->insertItem(TimeAdjustSettings::FILECREATED, i18n("File created"));
     */
-
-    d->useFileDateTypeChooser->addItem(i18n("File last modified"));
 
     d->useMetaDateBtn         = new QRadioButton(QString(), d->useGroupBox);
     d->useMetaDateTypeChooser = new QComboBox(d->useGroupBox);
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF/IPTC/XMP"));
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF: created"));
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF: original"));
-    d->useMetaDateTypeChooser->addItem(i18n("EXIF: digitized"));
-    d->useMetaDateTypeChooser->addItem(i18n("IPTC: created"));
-    d->useMetaDateTypeChooser->addItem(i18n("XMP: created"));
+    d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFIPTCXMP,   i18n("EXIF/IPTC/XMP"));
+    d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFCREATED,   i18n("EXIF: created"));
+    d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFORIGINAL,  i18n("EXIF: original"));
+    d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFDIGITIZED, i18n("EXIF: digitized"));
+    d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::IPTCCREATED,   i18n("IPTC: created"));
+    d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::XMPCREATED,    i18n("XMP: created"));
 
     d->useCustomDateBtn       = new QRadioButton(d->useGroupBox);
     d->useCustDateInput       = new QDateEdit(d->useGroupBox);
@@ -246,9 +245,9 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
 
     d->adjTypeChooser           = new QComboBox(d->adjustGroupBox);
-    d->adjTypeChooser->addItem(i18n("Copy value"));
-    d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date",      "Add"));
-    d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
+    d->adjTypeChooser->insertItem(TimeAdjustSettings::COPYVALUE, i18nc("copy timestamp as well",             "Copy value"));
+    d->adjTypeChooser->insertItem(TimeAdjustSettings::ADDVALUE,  i18nc("add a fixed timestamp to date",      "Add"));
+    d->adjTypeChooser->insertItem(TimeAdjustSettings::SUBVALUE,  i18nc("subtract a fixed timestamp to date", "Subtract"));
     d->adjDaysInput             = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);
@@ -435,12 +434,12 @@ void TimeAdjustDialog::readSettings()
     else if (useTimestampType == 2) d->useMetaDateBtn->setChecked(true);
     else if (useTimestampType == 3) d->useCustomDateBtn->setChecked(true);
 
-    d->useFileDateTypeChooser->setCurrentIndex(group.readEntry("File Timestamp Type",   0));
-    d->useMetaDateTypeChooser->setCurrentIndex(group.readEntry("Meta Timestamp Type",   0));
+    d->useFileDateTypeChooser->setCurrentIndex(group.readEntry("File Timestamp Type",   (int)TimeAdjustSettings::FILELASTMOD));
+    d->useMetaDateTypeChooser->setCurrentIndex(group.readEntry("Meta Timestamp Type",   (int)TimeAdjustSettings::EXIFIPTCXMP));
     d->useCustDateInput->setDateTime(group.readEntry("Custom Date",                     QDateTime::currentDateTime()));
     d->useCustTimeInput->setDateTime(group.readEntry("Custom Time",                     QDateTime::currentDateTime()));
 
-    d->adjTypeChooser->setCurrentIndex(group.readEntry("Adjustment Type",               0));
+    d->adjTypeChooser->setCurrentIndex(group.readEntry("Adjustment Type",               (int)TimeAdjustSettings::COPYVALUE));
     d->adjDaysInput->setValue(group.readEntry("Adjustment Days",                        0));
     d->adjTimeInput->setDateTime(group.readEntry("Adjustment Time",                     QDateTime()));
 
@@ -583,29 +582,29 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
         switch (d->useMetaDateTypeChooser->currentIndex())
         {
-            case 0:
+            case TimeAdjustSettings::EXIFIPTCXMP:
                 curImageDateTime = meta.getImageDateTime();
                 break;
-            case 1:
+            case TimeAdjustSettings::EXIFCREATED:
                 curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Image.DateTime"),
                                                          "yyyy:MM:dd hh:mm:ss");
                 break;
-            case 2:
+            case TimeAdjustSettings::EXIFORIGINAL:
                 curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeOriginal"),
                                                          "yyyy:MM:dd hh:mm:ss");
                 break;
-            case 3:
+            case TimeAdjustSettings::EXIFDIGITIZED:
                 curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeDigitized"),
                                                          "yyyy:MM:dd hh:mm:ss");
                 break;
-            case 4:
+            case TimeAdjustSettings::IPTCCREATED:
                 // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
                 curImageDateTime = QDateTime(QDate::fromString(meta.getIptcTagString("Iptc.Application2.DateCreated"), 
                                                                Qt::ISODate),
                                              QTime::fromString(meta.getIptcTagString("Iptc.Application2.TimeCreated").left(8),
                                                                Qt::ISODate));
                 break;
-            case 5:
+            case TimeAdjustSettings::XMPCREATED:
                 curImageDateTime = QDateTime::fromString(meta.getXmpTagString("Xmp.xmp.CreateDate"),
                                                          "yyyy:MM:dd hh:mm:ss");
                 break;
@@ -655,7 +654,7 @@ void TimeAdjustDialog::slotResetDateToCurrent()
 void TimeAdjustDialog::slotAdjustmentTypeChanged()
 {
     // If the addition or subtraction has been selected, enable the edit boxes to enter the adjustment length
-    bool isAdjustment = (d->adjTypeChooser->currentIndex() > 0);
+    bool isAdjustment = (d->adjTypeChooser->currentIndex() > TimeAdjustSettings::COPYVALUE);
     d->adjDaysInput->setEnabled(isAdjustment);
     d->adjDaysLabel->setEnabled(isAdjustment);
     d->adjTimeInput->setEnabled(isAdjustment);
@@ -676,15 +675,15 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
     {
         if (dlg->deltaDays == 0 && dlg->deltaHours == 0 && dlg->deltaMinutes == 0 && dlg->deltaSeconds == 0)
         {
-            d->adjTypeChooser->setCurrentIndex(0);
+            d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::COPYVALUE);
         }
         else if (dlg->deltaNegative)
         {
-            d->adjTypeChooser->setCurrentIndex(2);
+            d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::SUBVALUE);
         }
         else
         {
-            d->adjTypeChooser->setCurrentIndex(1);
+            d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::ADDVALUE);
         }
 
         d->adjDaysInput->setValue(dlg->deltaDays);
@@ -774,13 +773,13 @@ QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime)
 
     switch (d->adjTypeChooser->currentIndex())
     {
-        case 1:
+        case TimeAdjustSettings::ADDVALUE:
             sign = 1;
             break;
-        case 2:
+        case TimeAdjustSettings::SUBVALUE:
             sign = -1;
             break;
-        default:
+        default: // TimeAdjustSettings::COPYVALUE
             return originalTime;
     };
 

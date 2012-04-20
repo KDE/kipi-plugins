@@ -31,6 +31,31 @@ class TimeAdjustSettings
 
 public:
 
+    enum UseMetaDateType
+    {
+        EXIFIPTCXMP = 0,
+        EXIFCREATED,
+        EXIFORIGINAL,
+        EXIFDIGITIZED,
+        IPTCCREATED,
+        XMPCREATED
+    };
+
+    enum UseFileDateType
+    {
+        FILELASTMOD = 0,
+        FILECREATED
+    };
+
+    enum AdjType
+    {
+        COPYVALUE = 0,
+        ADDVALUE,
+        SUBVALUE
+    };
+
+public:
+
     TimeAdjustSettings()
     {
         updAppDate     = false;
