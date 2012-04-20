@@ -741,7 +741,7 @@ void TimeAdjustDialog::slotApplyClicked()
     {
         KMessageBox::error(
                      kapp->activeWindow(),
-                     i18n("Select atleast one Option"),
+                     i18n("Select at least one option"),
                      i18n("Adjust Time & Date"));
     }
 }
