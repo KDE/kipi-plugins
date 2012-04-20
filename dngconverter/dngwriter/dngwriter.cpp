@@ -38,7 +38,8 @@
     DNG4PS2:             http://dng4ps2.chat.ru/index_en.html
     CORNERFIX:           http://sourceforge.net/projects/cornerfix
     ADOBE DNG CONVERTER: ftp://ftp.adobe.com/pub/adobe/photoshop/cameraraw/win/4.x
-    DNGCONVERT:          https://github.com/jmue/dngconvert    
+    DNGCONVERT:          https://github.com/jmue/dngconvert
+    MOVIE2DNG:           https://elphel.svn.sourceforge.net/svnroot/elphel/tools/Movie2DNG
 */
 
 // C ansi includes
@@ -235,13 +236,13 @@ int DNGWriter::convert()
             useFullSensorImage = true;
         }
 
-        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, 
+        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify,
                                          useFullSensorImage,             // arg deprecated with KDCRAW >=0x020001
                                          0))
         {
             kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return -1;
-        }  
+        }
 #else
         if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, 0))
         {
@@ -266,7 +267,7 @@ int DNGWriter::convert()
 #if KDCRAW_VERSION < 0x020001
         kDebug() << "--- Right margin:  " << identify.rightMargin;
         kDebug() << "--- Bottom margin: " << identify.bottomMargin;
-#endif        
+#endif
         kDebug() << "--- Filter:        " << identify.filterPattern;
         kDebug() << "--- Colors:        " << identify.rawColors;
         kDebug() << "--- Black:         " << identify.blackPoint;
@@ -688,7 +689,7 @@ int DNGWriter::convert()
 
             dti.SetDateTime(d->dngDateTime(meta.getDigitizationDateTime(true)));
             exif->fDateTimeDigitized = dti;
- 
+
             negative->UpdateDateTime(dti);
 
             // String Tags
