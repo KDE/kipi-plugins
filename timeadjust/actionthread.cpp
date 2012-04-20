@@ -59,7 +59,7 @@ public:
         progress = 0;
     }
 
-    // To manage items processing
+    // To manage items processing.
     bool                  cancel;
     int                   progress;
 
@@ -235,10 +235,7 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
 
     foreach (const KUrl& url, d->itemsMap.keys())
     {
-        Task* t = new Task(this, 
-                           url, 
-                           d->itemsMap.value(url),
-                           d);
+        Task* t = new Task(this, url, d->itemsMap.value(url), d);
 
         connect(t, SIGNAL(signalProgressChanged(int)),
                 this, SIGNAL(signalProgressChanged(int)));
