@@ -72,11 +72,10 @@ public:
 
 // ----------------------------------------------------------------------------------------------------
 
-Task::Task(QObject* const parent, const KUrl& url, const QDateTime& dt, ActionThread::ActionThreadPriv* const d)
+Task::Task(QObject* const parent, const KUrl& url, ActionThread::ActionThreadPriv* const d)
     : Job(parent)
 {
     m_url      = url;
-    m_dateTime = dt;
     m_d        = d;
 }
 
@@ -86,7 +85,11 @@ Task::~Task()
 
 void Task::run()
 {
-    if (m_d->cancel || !m_dateTime.isValid()) return;
+    if (m_d->cancel) return;
+
+    QDateTime dt = m_d->itemsMap.value(m_url);
+
+    if (!dt.isValid()) return;
 
     emit signalProcessStarted(m_url);
 
@@ -108,19 +111,19 @@ void Task::run()
                 if (m_d->settings.updEXIFModDate)
                 {
                     ret &= meta.setExifTagString("Exif.Image.DateTime",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
 
                 if (m_d->settings.updEXIFOriDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeOriginal",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
 
                 if (m_d->settings.updEXIFDigDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
             }
             else if (m_d->settings.updEXIFModDate || m_d->settings.updEXIFOriDate || m_d->settings.updEXIFDigDate)
@@ -133,9 +136,9 @@ void Task::run()
                 if (meta.canWriteIptc(m_url.path()))
                 {
                     ret &= meta.setIptcTagString("Iptc.Application2.DateCreated",
-                        m_dateTime.date().toString(Qt::ISODate));
+                        dt.date().toString(Qt::ISODate));
                     ret &= meta.setIptcTagString("Iptc.Application2.TimeCreated",
-                        m_dateTime.time().toString(Qt::ISODate));
+                        dt.time().toString(Qt::ISODate));
                 }
                 else
                 {
@@ -148,17 +151,17 @@ void Task::run()
                 if (meta.supportXmp() && meta.canWriteXmp(m_url.path()))
                 {
                     ret &= meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.photoshop.DateCreated",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.tiff.DateTime",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.xmp.CreateDate",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.xmp.MetadataDate",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     ret &= meta.setXmpTagString("Xmp.xmp.ModifyDate",
-                        m_dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
                 else
                 {
@@ -192,7 +195,7 @@ void Task::run()
 
         utimbuf times;
         times.actime  = QDateTime::currentDateTime().toTime_t();
-        times.modtime = m_dateTime.toTime_t();
+        times.modtime = dt.toTime_t();
 
         if (utime(m_url.path().toLatin1().constData(), &times) != 0)
         {
@@ -202,7 +205,7 @@ void Task::run()
 
     if (m_d->settings.updFileName)
     {
-        KUrl newUrl = ActionThread::newUrl(m_url, m_dateTime);
+        KUrl newUrl = ActionThread::newUrl(m_url, dt);
 
         KDE_rename(QFile::encodeName(m_url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile()));
 
@@ -211,9 +214,9 @@ void Task::run()
 
     m_mutex.lock();
     m_d->progress++;
+    emit signalProgressChanged(m_d->progress);
     m_mutex.unlock();
 
-    emit signalProgressChanged(m_d->progress);
     emit signalProcessEnded(m_url);
 }
 
@@ -235,7 +238,7 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
 
     foreach (const KUrl& url, d->itemsMap.keys())
     {
-        Task* t = new Task(this, url, d->itemsMap.value(url), d);
+        Task* t = new Task(this, url, d);
 
         connect(t, SIGNAL(signalProgressChanged(int)),
                 this, SIGNAL(signalProgressChanged(int)));

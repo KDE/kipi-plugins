@@ -85,7 +85,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent, const KUrl& url, const QDateTime& dt, ActionThread::ActionThreadPriv* const d);
+    Task(QObject* const parent, const KUrl& url, ActionThread::ActionThreadPriv* const d);
     ~Task();
 
 Q_SIGNALS:
@@ -103,8 +103,6 @@ private:
 
     QMutex                          m_mutex;
     KUrl                            m_url;
-    QDateTime                       m_dateTime;
-
     ActionThread::ActionThreadPriv* m_d;
 };
 
