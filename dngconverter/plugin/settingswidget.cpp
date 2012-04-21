@@ -153,9 +153,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     QVBoxLayout* vlay      = new QVBoxLayout(conflictBox);
     d->conflictButtonGroup = new QButtonGroup(conflictBox);
     d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
-    d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), conflictBox);
+    d->promptButton        = new QRadioButton(i18n("Store as a different name"), conflictBox);
     d->conflictButtonGroup->addButton(d->overwriteButton, OVERWRITE);
-    d->conflictButtonGroup->addButton(d->promptButton,    ASKTOUSER);
+    d->conflictButtonGroup->addButton(d->promptButton,    DIFFNAME);
     d->conflictButtonGroup->setExclusive(true);
     d->overwriteButton->setChecked(true);
 
@@ -179,6 +179,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     connect(dngLogoLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(processUrl(QString)));
+
+    connect(d->conflictButtonGroup, SIGNAL(buttonClicked(int)),
+            this, SIGNAL(buttonChanged(int)));
 }
 
 SettingsWidget::~SettingsWidget()
@@ -248,5 +251,4 @@ void SettingsWidget::setConflictRule(SettingsWidget::ConflictRule r)
 {
     d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
-
 } // namespace KIPIDNGConverterPlugin

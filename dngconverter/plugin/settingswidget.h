@@ -39,7 +39,7 @@ public:
     enum ConflictRule 
     {
         OVERWRITE = 0,
-        ASKTOUSER
+        DIFFNAME
     };
 
 public:
@@ -63,6 +63,10 @@ public:
     bool backupOriginalRawFile() const;
 
     void setDefaultSettings();
+
+Q_SIGNALS:
+
+    void buttonChanged(int);
 
 private Q_SLOTS:
 
