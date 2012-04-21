@@ -502,7 +502,7 @@ void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
     {
         d->itemsUsedMap.insert(url, QDateTime());
     }
-    
+
     d->listView->slotAddImages(imageUrls);
     readTimestamps();
 }
@@ -701,10 +701,10 @@ void TimeAdjustDialog::slotApplyClicked()
     d->metaTimeErrorFiles.clear();
 
     // Check if atleast one option is selected
-    bool atleastOneSelected = d->updAppDateCheck->isChecked() || d->updFileModDateCheck->isChecked()
-            || d->updEXIFModDateCheck->isChecked() || d->updEXIFOriDateCheck->isChecked()
-            || d->updEXIFDigDateCheck->isChecked() || d->updIPTCDateCheck->isChecked()
-            || d->updXMPDateCheck->isChecked() || d->updFileNameCheck->isChecked();
+    bool atleastOneSelected = d->updAppDateCheck->isChecked()     || d->updFileModDateCheck->isChecked() ||
+                              d->updEXIFModDateCheck->isChecked() || d->updEXIFOriDateCheck->isChecked() ||
+                              d->updEXIFDigDateCheck->isChecked() || d->updIPTCDateCheck->isChecked()    ||
+                              d->updXMPDateCheck->isChecked()     || d->updFileNameCheck->isChecked();
 
     if (atleastOneSelected)
     {
