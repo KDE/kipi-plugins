@@ -71,6 +71,10 @@ public:
          addAuthor(ki18n("Jens Mueller"),
                    ki18n("Developer"),
                    "tschenser at gmx dot de");
+
+         addAuthor(ki18n("Smit Mehta"),
+                   ki18n("Developer"),
+                   "smit dot meh at gmail dot com");
     }
 
     ~DNGConverterAboutData(){}
