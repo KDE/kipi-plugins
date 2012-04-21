@@ -76,7 +76,11 @@ private Q_SLOTS:
     void slotStartStop();
     void slotAborted();
     void slotThreadFinished();
+
+    /** Set Identity and Target file.
+     */
     void slotIdentify();
+
     void slotAction(const KIPIDNGConverterPlugin::ActionData&);
 
 private:

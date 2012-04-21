@@ -85,19 +85,19 @@ public:
         settingsBox = 0;
     }
 
-    bool                   busy;
+    bool              busy;
 
-    QWidget*               page;
+    QWidget*          page;
 
-    QStringList            fileList;
+    QStringList       fileList;
 
-    KPProgressWidget*      progressBar;
+    KPProgressWidget* progressBar;
 
-    MyImageList*           listView;
+    MyImageList*      listView;
 
-    ActionThread*          thread;
+    ActionThread*     thread;
 
-    SettingsWidget*        settingsBox;
+    SettingsWidget*   settingsBox;
 };
 
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
@@ -117,12 +117,8 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
     //---------------------------------------------
 
-    d->listView = new MyImageList(d->page);
-
-    // ---------------------------------------------------------------
-
+    d->listView    = new MyImageList(d->page);
     d->settingsBox = new SettingsWidget(d->page);
-
     d->progressBar = new KPProgressWidget(d->page);
     d->progressBar->setMaximumHeight(fontMetrics().height()+2);
     d->progressBar->hide();
@@ -139,6 +135,15 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
     d->thread = new ActionThread(this);
 
+    connect(d->thread, SIGNAL(signalStarting(KIPIDNGConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
+
+    connect(d->thread, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
+
+    connect(d->thread, SIGNAL(signalFinished()),
+            this, SLOT(slotThreadFinished()));
+
     // ---------------------------------------------------------------
 
     connect(this, SIGNAL(closeClicked()),
@@ -149,15 +154,6 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
-
-    connect(d->thread, SIGNAL(starting(KIPIDNGConverterPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
-
-    connect(d->thread, SIGNAL(finished(KIPIDNGConverterPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
-
-    connect(d->thread, SIGNAL(finished()),
-            this, SLOT(slotThreadFinished()));
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));
@@ -210,13 +206,11 @@ void BatchDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("DNGConverter Settings"));
 
-    d->settingsBox->setBackupOriginalRawFile(group.readEntry("BackupOriginalRawFile", false));
-    d->settingsBox->setCompressLossLess(group.readEntry("CompressLossLess", true));
-    d->settingsBox->setUpdateFileDate(group.readEntry("UpdateFileDate", false));
-    d->settingsBox->setCompressLossLess(group.readEntry("PreviewMode", (int)(DNGWriter::MEDIUM)));
-    d->settingsBox->setConflictRule(
-        (SettingsWidget::ConflictRule)group.readEntry("Conflict",
-            (int)(SettingsWidget::OVERWRITE)));
+    d->settingsBox->setBackupOriginalRawFile(group.readEntry("BackupOriginalRawFile",         false));
+    d->settingsBox->setCompressLossLess(group.readEntry("CompressLossLess",                   true));
+    d->settingsBox->setUpdateFileDate(group.readEntry("UpdateFileDate",                       false));
+    d->settingsBox->setCompressLossLess(group.readEntry("PreviewMode",                        (int)(DNGWriter::MEDIUM)));
+    d->settingsBox->setConflictRule((SettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SettingsWidget::OVERWRITE)));
 
     KConfigGroup group2 = config.group(QString("Batch DNG Converter Dialog"));
     restoreDialogSize(group2);
@@ -300,27 +294,25 @@ void BatchDialog::slotAborted()
     d->progressBar->progressCompleted();
 }
 
-/// Set Identity and Target file
 void BatchDialog::slotIdentify()
 {
     KUrl::List urlList = d->listView->imageUrls(true);
 
-    for (KUrl::List::const_iterator  it = urlList.constBegin();
-         it != urlList.constEnd(); ++it)
+    for (KUrl::List::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
 
         if(d->settingsBox->conflictRule() == SettingsWidget::OVERWRITE)
         {
-            QString dest      = fi.completeBaseName() + QString(".dng");
+            QString dest              = fi.completeBaseName() + QString(".dng");
             MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
             if (item) item->setDestFileName(dest);
         }
 
         else
         {
-            int i = 0;
-            QFileInfo* a;
+            int i        = 0;
+            QFileInfo* a = 0;
             QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
 
             a = new QFileInfo(dest);
@@ -393,14 +385,14 @@ void BatchDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply, KIcon("process-stop"));
-        setButtonText(Apply, i18n("&Abort"));
+        setButtonIcon(Apply,    KIcon("process-stop"));
+        setButtonText(Apply,    i18n("&Abort"));
         setButtonToolTip(Apply, i18n("Abort the conversion of Raw files."));
     }
     else
     {
-        setButtonIcon(Apply, KIcon("system-run"));
-        setButtonText(Apply, i18n("Con&vert"));
+        setButtonIcon(Apply,    KIcon("system-run"));
+        setButtonText(Apply,    i18n("Con&vert"));
         setButtonToolTip(Apply, i18n("Start converting the Raw images using the current settings."));
     }
 
@@ -414,11 +406,13 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
     MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
     if (!item) return;
+
     QString destFile(item->destPath());
 
     if (d->settingsBox->conflictRule() != SettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
+
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
             KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
@@ -440,8 +434,11 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
                     destFile = dlg.newDestUrl().path();
                     break;
                 }
-                default:    // Overwrite.
+                default:
+                {
+                    // Overwrite.
                     break;
+                }
             }
         }
     }
@@ -450,14 +447,13 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     {
         if (KPMetadata::hasSidecar(tmpFile))
         {
-            if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
-                            KPMetadata::sidecarPath(destFile)) != 0)
+            if (!KPMetadata::moveSidecar(KUrl(tmpFile), KUrl(destFile)))
             {
                 KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
             }
         }
 
-        if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
+        if (KDE::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
             d->listView->processed(url, false);
@@ -492,7 +488,9 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
         switch (ad.action)
         {
             case(IDENTIFY):
+            {
                 break;
+            }
             case(PROCESS):
             {
                 busy(true);
@@ -514,7 +512,9 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             switch (ad.action)
             {
                 case(IDENTIFY):
+                {
                     break;
+                }
                 case(PROCESS):
                 {
                     processingFailed(ad.fileUrl);

@@ -74,34 +74,34 @@ public:
         cancel                = false;
         previewMode           = DNGWriter::MEDIUM;
         iface                 = 0;
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* pl      = PluginLoader::instance();
         if (pl)
         {
             iface = pl->interface();
         }
     }
 
-    bool           backupOriginalRawFile;
-    bool           compressLossLess;
-    bool           updateFileDate;
-    bool           cancel;
+    bool       backupOriginalRawFile;
+    bool       compressLossLess;
+    bool       updateFileDate;
+    bool       cancel;
 
-    int            previewMode;
+    int        previewMode;
 
-    QMutex         mutex;
+    QMutex     mutex;
 
-    DNGWriter      dngProcessor;
+    DNGWriter  dngProcessor;
 
-    Interface*     iface;
+    Interface* iface;
 };
 
 
 Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action, ActionThread::ActionThreadPriv* const d)
     : Job(parent)
 {
-    m_url      = fileUrl;
-    m_action   = action;
-    m_d        = d;
+    m_url    = fileUrl;
+    m_action = action;
+    m_d      = d;
 }
 
 Task::~Task()
@@ -137,7 +137,7 @@ void Task::run()
             ad.fileUrl = m_url;
             ad.message = identify;
             ad.success = true;
-            emit finished(ad);
+            emit signalFinished(ad);
             break;
         }
 
@@ -147,7 +147,7 @@ void Task::run()
             ad1.action   = PROCESS;
             ad1.fileUrl  = m_url;
             ad1.starting = true;
-            emit starting(ad1);
+            emit signalStarting(ad1);
 
             int     ret = 0;
             QString destPath;
@@ -173,21 +173,22 @@ void Task::run()
             ad2.fileUrl  = m_url;
             ad2.destPath = destPath;
             ad2.success  = (ret == 0) ? true : false;
-            emit finished(ad2);
+            emit signalFinished(ad2);
             break;
         }
 
         default:
         {
-            kError() << "KIPIDNGConverterPlugin:ActionThread: "
-                     << "Unknown action specified";
+            kError() << "Unknown action specified";
             break;
         }
     }
 }
 
+// ----------------------------------------------------------------------------------------------------------------
+
 ActionThread::ActionThread(QObject* const parent)
-            : KPActionThreadBase(parent), d(new ActionThreadPriv)
+    : KPActionThreadBase(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
 }
@@ -240,16 +241,15 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList)
 {
     JobCollection* collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* t      = new Task(this, *it, IDENTIFY, d);
+        Task* t = new Task(this, *it, IDENTIFY, d);
 
-        connect(t, SIGNAL(starting(KIPIDNGConverterPlugin::ActionData)),
-                this, SIGNAL(starting(KIPIDNGConverterPlugin::ActionData)));
+        connect(t, SIGNAL(signalStarting(KIPIDNGConverterPlugin::ActionData)),
+                this, SIGNAL(signalStarting(KIPIDNGConverterPlugin::ActionData)));
 
-        connect(t, SIGNAL(finished(KIPIDNGConverterPlugin::ActionData)),
-                this, SIGNAL(finished(KIPIDNGConverterPlugin::ActionData)));
+        connect(t, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)),
+                this, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)));
 
         collection->addJob(t);
     }
@@ -261,16 +261,15 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
     JobCollection* collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* t      = new Task(this, *it, PROCESS, d);
+        Task* t = new Task(this, *it, PROCESS, d);
 
-        connect(t, SIGNAL(starting(KIPIDNGConverterPlugin::ActionData)),
-                this, SIGNAL(starting(KIPIDNGConverterPlugin::ActionData)));
+        connect(t, SIGNAL(signalStarting(KIPIDNGConverterPlugin::ActionData)),
+                this, SIGNAL(signalStarting(KIPIDNGConverterPlugin::ActionData)));
 
-        connect(t, SIGNAL(finished(KIPIDNGConverterPlugin::ActionData)),
-                this, SIGNAL(finished(KIPIDNGConverterPlugin::ActionData)));
+        connect(t, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)),
+                this, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)));
 
         collection->addJob(t);
     }
@@ -283,7 +282,5 @@ void ActionThread::cancel()
     d->cancel = true;
     KPActionThreadBase::cancel();
 }
-
-
 
 }  // namespace KIPIDNGConverterPlugin

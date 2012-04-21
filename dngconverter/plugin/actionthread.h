@@ -68,8 +68,8 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const KIPIDNGConverterPlugin::ActionData& ad);
-    void finished(const KIPIDNGConverterPlugin::ActionData& ad);
+    void signalStarting(const KIPIDNGConverterPlugin::ActionData& ad);
+    void signalFinished(const KIPIDNGConverterPlugin::ActionData& ad);
 
 public:
 
@@ -79,6 +79,8 @@ private:
 
     ActionThreadPriv* const d;
 };
+
+// -----------------------------------------------------------------------------------------------------------------------
 
 class Task : public Job
 {
@@ -91,8 +93,8 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const KIPIDNGConverterPlugin::ActionData& ad);
-    void finished(const KIPIDNGConverterPlugin::ActionData& ad);
+    void signalStarting(const KIPIDNGConverterPlugin::ActionData& ad);
+    void signalFinished(const KIPIDNGConverterPlugin::ActionData& ad);
 
 protected:
 
