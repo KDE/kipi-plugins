@@ -26,6 +26,7 @@ Name[ru]=Экспорт в снимки экрана Debian
 Name[sv]=Exportera skärmbilder för Debian
 Name[uk]=Експортування до знімків Debian
 Name[x-test]=xxDebian Screenshots Exportxx
+Name[zh_CN]=Debian 截图导出
 Name[zh_TW]=Debian Screenshots 匯出
 Comment=A tool to export images to the Debian Screenshots site
 Comment[bg]=Инструмент за изнасяне на изображения към сайт със снимки на екрана от Debian

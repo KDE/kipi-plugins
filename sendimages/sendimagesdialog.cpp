@@ -69,7 +69,7 @@ public:
         settingsWidget = 0;
     }
 
-    KUrl::List   urls;
+    KUrl::List      urls;
 
     MyImageList*    imagesList;
     SettingsWidget* settingsWidget;

@@ -80,9 +80,9 @@ Plugin_SendImages::~Plugin_SendImages()
     delete d;
 }
 
-void Plugin_SendImages::setup( QWidget* widget )
+void Plugin_SendImages::setup(QWidget* widget)
 {
-    Plugin::setup( widget );
+    Plugin::setup(widget);
 
     d->action_sendimages = actionCollection()->addAction("sendimages");
     d->action_sendimages->setText(i18n("Email Images..."));
@@ -93,8 +93,8 @@ void Plugin_SendImages::setup( QWidget* widget )
 
     addAction(d->action_sendimages);
 
-    Interface* interface = dynamic_cast< Interface* >( parent() );
-    if ( !interface )
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
@@ -109,8 +109,8 @@ void Plugin_SendImages::setup( QWidget* widget )
 
 void Plugin_SendImages::slotActivate()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    if (!interface)
     {
        kError() << "Kipi interface is null!";
        return;
@@ -132,8 +132,8 @@ void Plugin_SendImages::slotActivate()
 
 void Plugin_SendImages::slotPrepareEmail()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    if (!interface)
     {
        kError() << "Kipi interface is null!";
        return;
@@ -141,12 +141,12 @@ void Plugin_SendImages::slotPrepareEmail()
 
     EmailSettings settings = d->dialog->emailSettings();
     d->sendImagesOperation = new SendImages(settings, this);
-    d->sendImagesOperation->sendImages();
+    d->sendImagesOperation->firstStage();
 }
 
-Category Plugin_SendImages::category( KAction* action ) const
+Category Plugin_SendImages::category(KAction* action) const
 {
-    if ( action == d->action_sendimages )
+    if (action == d->action_sendimages)
        return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";

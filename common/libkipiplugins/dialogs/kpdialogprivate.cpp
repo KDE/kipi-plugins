@@ -50,10 +50,13 @@ KPDialogPrivate::~KPDialogPrivate()
     delete m_about;
 }
 
-void KPDialogPrivate::setAboutData(KPAboutData* const data)
+void KPDialogPrivate::setAboutData(KPAboutData* const data, KPushButton* help)
 {
     if (!data || !m_dialog) return;
 
+    if (!help) help = m_dialog->button(KDialog::Help);
+    if (!help) return;
+    
     m_about = data;
 
     KHelpMenu* helpMenu = new KHelpMenu(m_dialog, m_about, false);
@@ -64,7 +67,7 @@ void KPDialogPrivate::setAboutData(KPAboutData* const data)
             this, SLOT(slotHelp()));
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    m_dialog->button(KDialog::Help)->setMenu(helpMenu->menu());
+    help->setMenu(helpMenu->menu());
 }
 
 void KPDialogPrivate::slotHelp()

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2010      by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,29 +31,20 @@
 #include <QLinkedList>
 #include <QPair>
 
-// KDE includes
-
-#include <kdialog.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// local includes
+// Local includes
 
+#include "kptooldialog.h"
 #include "kpaboutdata.h"
-
 
 class KUrl;
 
 namespace KIPI
 {
     class Interface;
-}
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
 }
 
 using namespace KIPI;
@@ -69,7 +60,7 @@ class PicasawebWidget;
 class PicasawebTalker;
 //class FPhotoInfo;
 
-class PicasawebWindow : public KDialog
+class PicasawebWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -102,7 +93,6 @@ private Q_SLOTS:
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
     void slotTransferCancel();
-    void slotHelp();
     void slotStartTransfer();
     void slotImageListChanged();
     void slotButtonClicked(int button);
@@ -146,8 +136,6 @@ private:
     PicasawebNewAlbum*                        m_albumDlg;
 
     Interface*                                m_interface;
-
-    KPAboutData*                              m_about;
 };
 
 } // namespace KIPIPicasawebExportPlugin

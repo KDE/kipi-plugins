@@ -45,8 +45,6 @@
 
 #include "kpimagedialog.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPIRemoveRedEyesPlugin
 {
 

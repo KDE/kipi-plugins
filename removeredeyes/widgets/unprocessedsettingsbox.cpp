@@ -40,17 +40,17 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct UnprocessedSettingsBoxPriv
+struct UnprocessedSettingsBox::UnprocessedSettingsBoxPriv
 {
     UnprocessedSettingsBoxPriv()
     {
         unprocessedGroup = 0;
     }
 
-    QButtonGroup*       unprocessedGroup;
+    QButtonGroup* unprocessedGroup;
 };
 
-UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
+UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* const parent)
     : QGroupBox(parent), d(new UnprocessedSettingsBoxPriv)
 {
     setTitle(i18n("Unprocessed Image Handling"));

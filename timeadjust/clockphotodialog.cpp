@@ -295,7 +295,7 @@ void ClockPhotoDialog::slotOk()
     if (delta < 0)
     {
         deltaNegative = true;
-        delta         *= -1;
+        delta        *= -1;
     }
     else
     {
@@ -316,9 +316,10 @@ void ClockPhotoDialog::slotOk()
     accept();
 }
 
+/** If the cancel button is clicked, reject the dialog.
+*/
 void ClockPhotoDialog::slotCancel()
 {
-    /* If the cancel button is clicked, reject the dialog. */
     saveSize();
     reject();
 }

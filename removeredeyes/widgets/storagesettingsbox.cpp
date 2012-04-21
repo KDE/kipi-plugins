@@ -41,7 +41,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct StorageSettingsBoxPriv
+struct StorageSettingsBox::StorageSettingsBoxPriv
 {
     StorageSettingsBoxPriv() :
         keywordCB(0),
@@ -50,6 +50,7 @@ struct StorageSettingsBoxPriv
         saveMethodLineEdit(0)
     {
     }
+
     QCheckBox* keywordCB;
 
     KComboBox* saveMethodCB;
@@ -58,7 +59,7 @@ struct StorageSettingsBoxPriv
     KLineEdit* saveMethodLineEdit;
 };
 
-StorageSettingsBox::StorageSettingsBox(QWidget* parent)
+StorageSettingsBox::StorageSettingsBox(QWidget* const parent)
     : QGroupBox(parent), d(new StorageSettingsBoxPriv)
 {
     setTitle(i18n("Storage Settings"));

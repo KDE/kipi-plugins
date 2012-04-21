@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-04-04
- * Description : Tool dialog private
+ * Date        : 2012-17-04
+ * Description : time adjust images list.
  *
  * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,43 +20,50 @@
  *
  * ============================================================ */
 
-#ifndef KPTOOLDIALOG_PRIVATE_H
-#define KPTOOLDIALOG_PRIVATE_H
+#ifndef MYIMAGELIST_H
+#define MYIMAGELIST_H
 
 // Qt includes
 
-#include <QObject>
+#include <QMap>
+#include <QDateTime>
+
+// KDE includes
+
+#include <kurl.h>
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kpimageslist.h"
+#include "timeadjustsettings.h"
 
-class KPushButton;
+using namespace KIPIPlugins;
 
-namespace KIPIPlugins
+namespace KIPITimeAdjustPlugin
 {
 
-class KPDialogPrivate : public QObject
+class MyImageList : public KPImagesList
 {
     Q_OBJECT
 
 public:
 
-    KPDialogPrivate(KDialog* const dlg);
-    ~KPDialogPrivate();
+    /* The different columns in a list. */
+    enum FieldType
+    {
+        TIMESTAMP_USED     = KPImagesListView::User1,
+        TIMESTAMP_UPDATED  = KPImagesListView::User2,
+        TIMESTAMP_FILENAME = KPImagesListView::User3
+    };
 
-    void setAboutData(KPAboutData* const data, KPushButton* help=0);
+public:
 
-private Q_SLOTS:
+    MyImageList(QWidget* const parent);
+    ~MyImageList();
 
-    void slotHelp();
-
-private:
-
-    KPAboutData* m_about;
-    KDialog*     m_dialog;
+    void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);
 };
 
-} // namespace KIPIPlugins
+}  // namespace KIPITimeAdjustPlugin
 
-#endif /* KPTOOLDIALOG_PRIVATE_H */
+#endif // MYIMAGELIST_H

@@ -26,6 +26,7 @@ Name[ru]=Экспорт в сеть обмена мгновенными сооб
 Name[sv]=Export som direktmeddelande
 Name[uk]=Експорт до мережі обміну повідомленнями
 Name[x-test]=xxInstant Messaging Exportxx
+Name[zh_CN]=即时消息导出
 Name[zh_TW]=即時訊息匯出
 Comment=A tool to export images to an instant messaging contact
 Comment[bg]=Инструмент за изнасяне на изображения към контакт в моментни съобщения

@@ -27,8 +27,9 @@
 // Qt includes
 
 #include <QObject>
-#include <QThread>
 #include <QDateTime>
+#include <QMutex>
+#include <QMap>
 
 // KDE includes
 
@@ -36,6 +37,7 @@
 
 // Local includes
 
+#include "timeadjustsettings.h"
 #include "kpactionthreadbase.h"
 
 using namespace KIPIPlugins;
@@ -53,20 +55,18 @@ public:
     ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void setImages(const KUrl::List& urlList);
-    void setDateSelection(bool useCustomDateBtn, const QDateTime& customTime, const QList<QDateTime>& imageOriginalDates);
-    void setAppDateCheck(bool updAppDate);
-    void setFileNameCheck(bool updFileName);
-    void setEXIFDataCheck(bool updEXIFModDate, bool updEXIFOriDate, bool updEXIFDigDate);
-    void setIPTCDateCheck(bool updIPTCDate);
-    void setXMPDateCheck(bool updXMPDate);
-    void setFileModDateCheck(bool updFileModDate);
+    void setUpdatedDates(const QMap<KUrl, QDateTime>& map);
+    void setSettings(const TimeAdjustSettings& settings);
     void cancel();
+
+    static KUrl newUrl(const KUrl& url, const QDateTime& dt);
 
 Q_SIGNALS:
 
     void signalProgressChanged(int);
     void signalErrorFilesUpdate(const QString&, const QString&);
+    void signalProcessStarted(const KUrl&);
+    void signalProcessEnded(const KUrl&);
 
 public:
 
@@ -74,7 +74,7 @@ public:
 
 private:
 
-    ActionThreadPriv* const pd;
+    ActionThreadPriv* const d;
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -85,13 +85,15 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent = 0, const KUrl& fileUrl = KUrl(), const QDateTime& dateTime = QDateTime(), 
-         ActionThread::ActionThreadPriv* const d = 0);
+    Task(QObject* const parent, const KUrl& url, ActionThread::ActionThreadPriv* const d);
+    ~Task();
 
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalErrorFilesUpdate(const QString&, const QString&);
+    void signalErrorFilesUpdate(const QString& fileTimeErrorFile, const QString& metaTimeErrorFile);
+    void signalProcessStarted(const KUrl&);
+    void signalProcessEnded(const KUrl&);
 
 protected:
 
@@ -99,10 +101,9 @@ protected:
 
 private:
 
-    KUrl                            url;
-    QDateTime                       dateTime;
-
-    ActionThread::ActionThreadPriv* ld;
+    QMutex                          m_mutex;
+    KUrl                            m_url;
+    ActionThread::ActionThreadPriv* m_d;
 };
 
 }  // namespace KIPITimeAdjustPlugin

@@ -31,8 +31,6 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct UnprocessedSettingsBoxPriv;
-
 class UnprocessedSettingsBox : public QGroupBox
 {
     Q_OBJECT
@@ -48,7 +46,7 @@ public:
 
 public:
 
-    UnprocessedSettingsBox(QWidget* parent = 0);
+    UnprocessedSettingsBox(QWidget* const parent = 0);
     ~UnprocessedSettingsBox();
 
     int handleMode() const;
@@ -60,6 +58,7 @@ Q_SIGNALS:
 
 private:
 
+    struct UnprocessedSettingsBoxPriv;
     UnprocessedSettingsBoxPriv* const d;
 };
 

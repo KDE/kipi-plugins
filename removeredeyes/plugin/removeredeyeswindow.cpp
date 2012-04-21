@@ -36,14 +36,12 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktabwidget.h>
 #include <ktemporaryfile.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -66,8 +64,6 @@
 #include "unprocessedsettingsbox.h"
 #include "workerthread.h"
 #include "workerthreaddata.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -97,8 +93,7 @@ public:
         storageSettingsBox(0),
         locator(0),
         saveMethod(0),
-        interface(0),
-        about(0)
+        interface(0)
     {}
 
     static const QString      configGroupName;
@@ -144,8 +139,7 @@ public:
     Locator*                  locator;
     SaveMethod*               saveMethod;
 
-    KIPI::Interface*          interface;
-    KPAboutData*              about;
+    Interface*                interface;
 };
 const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configGroupName("RemoveRedEyes Settings");
 const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configStorageModeEntry("Storage Mode");
@@ -158,8 +152,8 @@ const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configLocatorDefault
 
 // --------------------------------------------------------
 
-RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
-    : KDialog(0), d(new RemoveRedEyesWindowPriv)
+RemoveRedEyesWindow::RemoveRedEyesWindow(Interface* const interface)
+    : KPToolDialog(0), d(new RemoveRedEyesWindowPriv)
 {
     setWindowTitle(i18n("Automatic Red-Eye Removal"));
     setButtons(Help|User1|User2|Close);
@@ -187,22 +181,18 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
 
     // ----------------------------------------------------------
 
-    d->about = new KPAboutData(ki18n("Remove Red-Eye"),
-                               0,
-                               KAboutData::License_GPL,
-                               ki18n("A plugin to automatically "
-                                     "detect and remove red-eye effect."),
-                               ki18n("(c) 2008-2009, Andi Clemens"));
+    KPAboutData* about = new KPAboutData(ki18n("Remove Red-Eye"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A plugin to automatically "
+                                   "detect and remove red-eye effect."),
+                             ki18n("(c) 2008-2009, Andi Clemens"));
 
-    d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
-                        "andi dot clemens at googlemail dot com");
+    about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
+                     "andi dot clemens at googlemail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("removeredeyes");
+    setAboutData(about);
 
     // ----------------------------------------------------------
 
@@ -294,14 +284,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
 
     // ----------------------------------------------------------
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(helpClicked()));
-
-    // ----------------------------------------------------------
-
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(helpClicked()));
-
     connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
             this, SLOT(foundRAWImages(bool)));
 
@@ -331,7 +313,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
 
     // ----------------------------------------------------------
 
-    KIPI::ImageCollection images = interface->currentSelection();
+    ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
     {
@@ -349,7 +331,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
 
 RemoveRedEyesWindow::~RemoveRedEyesWindow()
 {
-    delete d->about;
     delete d->locator;
     delete d->saveMethod;
     delete d;
@@ -518,11 +499,6 @@ void RemoveRedEyesWindow::closeClicked()
     }
 
     done(Close);
-}
-
-void RemoveRedEyesWindow::helpClicked()
-{
-    KToolInvocation::invokeHelp("removeredeyes", "kipi-plugins");
 }
 
 void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
@@ -864,9 +840,9 @@ int RemoveRedEyesWindow::failedImages() const
 
 void RemoveRedEyesWindow::resetSummary()
 {
-    d->total       = d->imageList->imageUrls().count();
-    d->processed   = 0;
-    d->failed      = 0;
+    d->total     = d->imageList->imageUrls().count();
+    d->processed = 0;
+    d->failed    = 0;
 }
 
 void RemoveRedEyesWindow::updateSummary()

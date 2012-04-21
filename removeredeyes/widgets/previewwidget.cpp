@@ -42,7 +42,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct PreviewWidgetPriv
+struct PreviewWidget::PreviewWidgetPriv
 {
     PreviewWidgetPriv() :
         locked(false),
@@ -74,7 +74,7 @@ struct PreviewWidgetPriv
     InfoMessageWidget*  modeInfo;
 };
 
-PreviewWidget::PreviewWidget(QWidget* parent)
+PreviewWidget::PreviewWidget(QWidget* const parent)
     : QGraphicsView(parent), d(new PreviewWidgetPriv)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
@@ -322,7 +322,7 @@ void PreviewWidget::resetPreviews()
     updateSettings();
 }
 
-bool PreviewWidget::previewsComplete()
+bool PreviewWidget::previewsComplete() const
 {
     if (d->originalLabel->pixmap()->isNull()  ||
         d->correctedLabel->pixmap()->isNull() ||

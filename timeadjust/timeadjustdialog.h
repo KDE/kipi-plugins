@@ -36,6 +36,7 @@
 // Local includes
 
 #include "kptooldialog.h"
+#include "timeadjustsettings.h"
 
 using namespace KIPIPlugins;
 
@@ -48,14 +49,14 @@ class TimeAdjustDialog : public KPToolDialog
 
 public:
 
-    TimeAdjustDialog(QWidget* const parent);
+    TimeAdjustDialog(QWidget* const parent=0);
     ~TimeAdjustDialog();
 
-    void setImages(const KUrl::List& images);
+    void addItems(const KUrl::List& images);
 
 Q_SIGNALS:
 
-    void myCloseClicked();
+    void signalMyCloseClicked();
 
 protected:
 
@@ -67,24 +68,43 @@ private Q_SLOTS:
     void slotResetDateToCurrent();
     void slotAdjustmentTypeChanged();
     void slotDetAdjustmentByClockPhoto();
-    void slotUpdateExample();
     void slotApplyClicked();
     void slotCloseClicked();
     void slotProgressChanged(int);
     void slotThreadFinished();
     void slotErrorFilesUpdate(const QString&, const QString&);
-    void cancelThread();
-    void setBusy(bool);
+    void slotCancelThread();
     void slotButtonClicked(int);
+    void slotProcessStarted(const KUrl&);
+    void slotProcessEnded(const KUrl&);
+    void slotUpdateListView();
+    void setBusy(bool);
 
 private:
 
-    void readExampleTimestamps();
+    /** Read the Used Timestamps for all selected files
+     * (according to the newly selected source timestamp type),
+     * this will also implicitly update listview info.
+     */
+    void readTimestamps();
+
+    /** Called by readTimestamps() to get KIPI host timestamps
+     */
     void readApplicationTimestamps();
+
+    /** Called by readTimestamps() to get file timestamps
+     */
     void readFileTimestamps();
+
+    /** Called by readTimestamps() to get file metadata timestamps
+     */
     void readMetadataTimestamps();
+
     void readSettings();
     void saveSettings();
+
+    TimeAdjustSettings settings() const;
+
     QDateTime calculateAdjustedTime(const QDateTime& time) const;
 
 private:

@@ -7,7 +7,7 @@
  * Description : file list view and items.
  *
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,9 +37,9 @@ MyImageList::MyImageList(QWidget* const parent)
 {
     setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));
-    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(MyImageList::TARGETFILENAME),
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TARGETFILENAME),
                           i18n("Target File"), true);
-    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(MyImageList::IDENTIFICATION),
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(IDENTIFICATION),
                           i18n("Camera"), true);
 }
 

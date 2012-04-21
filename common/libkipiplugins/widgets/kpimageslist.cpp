@@ -289,13 +289,13 @@ void KPImagesListView::setup(int iconSize)
 
     setColumnCount(8);
     setHeaderLabels(QStringList() << i18n("Thumbnail")
-                    << i18n("File Name")
-                    << i18n("User1")
-                    << i18n("User2")
-                    << i18n("User3")
-                    << i18n("User4")
-                    << i18n("User5")
-                    << i18n("User6"));
+                                  << i18n("File Name")
+                                  << i18n("User1")
+                                  << i18n("User2")
+                                  << i18n("User3")
+                                  << i18n("User4")
+                                  << i18n("User5")
+                                  << i18n("User6"));
     hideColumn(User1);
     hideColumn(User2);
     hideColumn(User3);
@@ -303,15 +303,15 @@ void KPImagesListView::setup(int iconSize)
     hideColumn(User5);
     hideColumn(User6);
 
-    header()->setResizeMode(User1, QHeaderView::ResizeToContents);
-    header()->setResizeMode(User2, QHeaderView::Stretch);
-    header()->setResizeMode(User3, QHeaderView::Stretch);
-    header()->setResizeMode(User4, QHeaderView::Stretch);
-    header()->setResizeMode(User5, QHeaderView::Stretch);
+    header()->setResizeMode(User1, QHeaderView::Interactive);
+    header()->setResizeMode(User2, QHeaderView::Interactive);
+    header()->setResizeMode(User3, QHeaderView::Interactive);
+    header()->setResizeMode(User4, QHeaderView::Interactive);
+    header()->setResizeMode(User5, QHeaderView::Interactive);
     header()->setResizeMode(User6, QHeaderView::Stretch);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem*,int)));
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
 }
 
 void KPImagesListView::enableDragAndDrop(const bool enable)
@@ -399,7 +399,7 @@ QModelIndex KPImagesListView::indexFromItem(KPImagesListViewItem* item, int colu
   return QTreeWidget::indexFromItem(item, column);
 }
  
-void KPImagesListView::contextMenuEvent(QContextMenuEvent * e)
+void KPImagesListView::contextMenuEvent(QContextMenuEvent* e)
 {
     QTreeWidget::contextMenuEvent(e);
     emit signalContextMenuRequested();
@@ -450,12 +450,10 @@ void KPImagesListView::dropEvent(QDropEvent* e)
 Interface* KPImagesListView::iface() const
 {
     KPImagesList* p = dynamic_cast<KPImagesList*>(parent());
-
     if (p)
     {
         return p->iface();
     }
-
     return 0;
 }
 
@@ -577,14 +575,14 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl, QPixmap)),
+                this, SLOT(slotThumbnail(KUrl, QPixmap)));
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
-            this, SLOT(slotRawThumb(KUrl,QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
+            this, SLOT(slotRawThumb(KUrl, QImage)));
 
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
@@ -1097,7 +1095,7 @@ void KPImagesList::slotProgressTimerDone()
 {
     if (!d->processItems.isEmpty())
     {
-        foreach(KUrl url, d->processItems)
+        foreach(const KUrl& url, d->processItems)
         {
             KPImagesListViewItem* item = listView()->findItem(url);
             if (item) item->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
@@ -1144,7 +1142,7 @@ void KPImagesList::processed(const KUrl& url, bool success)
 
 void KPImagesList::cancelProcess()
 {
-    foreach(KUrl url, d->processItems)
+    foreach(const KUrl& url, d->processItems)
     {
         processed(url, false);
     }
@@ -1233,8 +1231,8 @@ void KPImagesList::updateThumbnail(const KUrl& url)
         KIO::PreviewJob* job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
 #endif
 
-        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
-                this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
+        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
+                this, SLOT(slotKDEPreview(KFileItem, QPixmap)));
 
         connect(job, SIGNAL(failed(KFileItem)),
                 this, SLOT(slotKDEPreviewFailed(KFileItem)));

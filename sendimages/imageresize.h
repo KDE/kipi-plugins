@@ -25,7 +25,6 @@
 
 // Qt includes
 
-#include <QThread>
 #include <QString>
 #include <QMutex>
 
@@ -55,11 +54,11 @@ public:
 
 public:
 
-    KUrl                   m_orgUrl;
-    QString                m_destName;
+    KUrl          m_orgUrl;
+    QString       m_destName;
     EmailSettings m_settings;
 
-    int*                   m_count;
+    int*          m_count;
 
 Q_SIGNALS:
 
@@ -72,8 +71,10 @@ private:
     void run();
     bool imageResize(const EmailSettings& settings,
                      const KUrl& orgUrl, const QString& destName, QString& err);
-    
-    QMutex mutex;
+
+private:
+
+    QMutex m_mutex;
 };
 
 // ----------------------------------------------------------------------------------------------------

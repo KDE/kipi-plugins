@@ -38,7 +38,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct InfoMessageWidgetPriv
+struct InfoMessageWidget::InfoMessageWidgetPriv
 {
     InfoMessageWidgetPriv()
     {
@@ -52,15 +52,14 @@ struct InfoMessageWidgetPriv
     QTimer* timer;
 };
 
-InfoMessageWidget::InfoMessageWidget(QWidget* parent)
+InfoMessageWidget::InfoMessageWidget(QWidget* const parent)
     : QWidget(parent), d(new InfoMessageWidgetPriv)
 {
     setFocusPolicy(Qt::NoFocus);
 
     QPalette pal = palette();
     pal.setColor(QPalette::Active, QPalette::Window,
-                 KApplication::palette().color(QPalette::Active,
-                         QPalette::Window));
+                 KApplication::palette().color(QPalette::Active, QPalette::Window));
     setPalette(pal);
 
     move(10, 10);

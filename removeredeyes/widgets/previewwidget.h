@@ -32,11 +32,8 @@
 
 class QWidget;
 
-
 namespace KIPIRemoveRedEyesPlugin
 {
-
-struct PreviewWidgetPriv;
 
 class PreviewWidget : public QGraphicsView
 {
@@ -62,7 +59,7 @@ public:
 
 public:
 
-    PreviewWidget(QWidget* parent = 0);
+    PreviewWidget(QWidget* const parent = 0);
     ~PreviewWidget();
 
     QString& currentImage() const;
@@ -80,7 +77,7 @@ Q_SIGNALS:
 
 protected:
 
-    void enterEvent (QEvent* e);
+    void enterEvent(QEvent* e);
     void resizeEvent(QResizeEvent* e);
 
 private Q_SLOTS:
@@ -95,7 +92,7 @@ private Q_SLOTS:
 
 private:
 
-    bool previewsComplete();
+    bool previewsComplete() const;
     void resetPreviews();
 
     void setMode(DisplayMode mode);
@@ -104,6 +101,7 @@ private:
 
 private:
 
+    struct PreviewWidgetPriv;
     PreviewWidgetPriv* const d;
 };
 

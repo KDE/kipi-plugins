@@ -43,7 +43,7 @@ public:
     SendImages(const EmailSettings& settings, QObject* const parent);
     ~SendImages();
 
-    void sendImages();
+    void firstStage();
 
 private Q_SLOTS:
 
@@ -57,12 +57,27 @@ private Q_SLOTS:
 private:
 
     void secondStage();
-    void buildPropertiesFile();
-    bool showFailedResizedImages();
-    KUrl::List divideEmails();
-    bool invokeMailAgent();
     void invokeMailAgentError(const QString& prog, const QStringList& args);
     void invokeMailAgentDone(const QString& prog, const QStringList& args);
+    
+    /** Creates a text file with all images Comments, Tags, and Rating.
+     */
+    void buildPropertiesFile();
+
+    /** Invokes mail agent. Depending on which mail agent to be used, we have different
+        proceedings. Easy for every agent except of mozilla derivates
+     */
+    bool invokeMailAgent();
+
+    /** Shows up an error dialog about the problematic resized images.
+     */
+    bool showFailedResizedImages() const;
+
+    /** Returns a list of image urls, whose sum file-size is smaller than the quota set in dialog.
+        The returned list are images than we can send immediately, and are removed from d->attachementFiles list.
+        Files which still in d->attachementFiles need to be send by another pass.
+     */
+    KUrl::List divideEmails() const;
 
 private:
 

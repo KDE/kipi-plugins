@@ -51,7 +51,6 @@ extern "C"
 #include <kconfig.h>
 #include <kcursor.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
 #include <kde_file.h>
@@ -60,7 +59,6 @@ extern "C"
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
-#include <ktoolinvocation.h>
 
 // LibKDcraw includes
 
@@ -84,7 +82,6 @@ extern "C"
 #include "actionthread.h"
 
 using namespace KDcrawIface;
-using namespace KIPIPlugins;
 
 namespace KIPIRawConverterPlugin
 {
@@ -99,7 +96,6 @@ public:
         thread              = 0;
         saveSettingsBox     = 0;
         decodingSettingsBox = 0;
-        about               = 0;
         iface               = 0;
         PluginLoader* pl = PluginLoader::instance();
         if (pl)
@@ -120,13 +116,11 @@ public:
 
     DcrawSettingsWidget*  decodingSettingsBox;
 
-    KPAboutData*          about;
-
     Interface*            iface;
 };
 
 SingleDialog::SingleDialog(const QString& file)
-    : KDialog(0), d(new SingleDialogPriv)
+    : KPToolDialog(0), d(new SingleDialogPriv)
 {
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(Close);
@@ -136,7 +130,7 @@ SingleDialog::SingleDialog(const QString& file)
     setCaption(i18n("RAW Image Converter"));
     setModal(false);
 
-    QWidget* page = new QWidget( this );
+    QWidget* page           = new QWidget( this );
     setMainWidget( page );
     QGridLayout* mainLayout = new QGridLayout(page);
 
@@ -167,33 +161,24 @@ SingleDialog::SingleDialog(const QString& file)
 #endif
 
     // ---------------------------------------------------------------
-    // About data and help button.
 
-    d->about = new KPAboutData(ki18n("RAW Image Converter"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to convert RAW images"),
-                   ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2012, Gilles Caulier"));
+    KPAboutData* about = new KPAboutData(ki18n("RAW Image Converter"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to convert RAW images"),
+                             ki18n("(c) 2003-2005, Renchi Raju\n"
+                                   "(c) 2006-2012, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Renchi Raju"),
-                       ki18n("Author"),
-                             "renchi dot raju at gmail dot com");
+    about->addAuthor(ki18n("Renchi Raju"),
+                     ki18n("Author"),
+                           "renchi dot raju at gmail dot com");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                       ki18n("Developer and maintainer"),
-                             "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer and maintainer"),
+                           "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("rawconverter");
+    setAboutData(about);
 
     // ---------------------------------------------------------------
 
@@ -250,7 +235,6 @@ SingleDialog::SingleDialog(const QString& file)
 
 SingleDialog::~SingleDialog()
 {
-    delete d->about;
     delete d->thread;
     delete d;
 }
@@ -260,11 +244,6 @@ void SingleDialog::setFile(const QString& file)
     d->inputFile     = file;
     d->inputFileName = QFileInfo(file).fileName();
     QTimer::singleShot(0, this, SLOT(slotIdentify()));
-}
-
-void SingleDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("rawconverter", "kipi-plugins");
 }
 
 void SingleDialog::slotSixteenBitsImageToggled(bool)
@@ -521,7 +500,7 @@ void SingleDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
             }
             default:
             {
-                kWarning() << "KIPIRawConverterPlugin: Unknown action";
+                kWarning() << "Unknown action";
                 break;
             }
         }
@@ -549,7 +528,7 @@ void SingleDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "KIPIRawConverterPlugin: Unknown action";
+                    kWarning() << "Unknown action";
                     break;
                 }
             }
@@ -585,7 +564,7 @@ void SingleDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "KIPIRawConverterPlugin: Unknown action";
+                    kWarning() << "Unknown action";
                     break;
                 }
             }

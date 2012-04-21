@@ -24,23 +24,24 @@
 #ifndef REMOVEREDEYESWINDOW_H
 #define REMOVEREDEYESWINDOW_H
 
-// KDE includes
+// Local includes
 
-#include <kdialog.h>
-
-class KDialog;
+#include "kptooldialog.h"
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
 class WorkerThreadData;
 
-class RemoveRedEyesWindow : public KDialog
+class RemoveRedEyesWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -55,7 +56,7 @@ public:
 
 public:
 
-    RemoveRedEyesWindow(KIPI::Interface* const interface);
+    RemoveRedEyesWindow(Interface* const interface);
     ~RemoveRedEyesWindow();
 
 Q_SIGNALS:
@@ -69,7 +70,6 @@ private Q_SLOTS:
     void resetSummary();
 
     void closeClicked();
-    void helpClicked();
     void slotButtonClicked(int);
 
     void foundRAWImages(bool);
