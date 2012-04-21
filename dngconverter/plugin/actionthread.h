@@ -25,23 +25,25 @@
 
 // Qt includes
 
-#include <QThread>
-
 // KDE includes
 
 #include <kurl.h>
 
 // Local includes
 
+#include "kpactionthreadbase.h"
 #include "settingswidget.h"
+#include "actions.h"
 
+using namespace KIPIPlugins;
+using namespace ThreadWeaver;
 
 namespace KIPIDNGConverterPlugin
 {
 
 class ActionData;
 
-class ActionThread : public QThread
+class ActionThread : public KPActionThreadBase
 {
     Q_OBJECT
 
@@ -68,14 +70,39 @@ Q_SIGNALS:
     void starting(const KIPIDNGConverterPlugin::ActionData& ad);
     void finished(const KIPIDNGConverterPlugin::ActionData& ad);
 
+public:
+
+    class ActionThreadPriv;
+
+private:
+
+    ActionThreadPriv* const d;
+};
+
+class Task : public Job
+{
+    Q_OBJECT
+
+public:
+
+    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::ActionThreadPriv* const d);
+    ~Task();
+
+Q_SIGNALS:
+
+    void starting(const KIPIDNGConverterPlugin::ActionData& ad);
+    void finished(const KIPIDNGConverterPlugin::ActionData& ad);
+
 protected:
 
     void run();
 
 private:
 
-    class ActionThreadPriv;
-    ActionThreadPriv* const d;
+    KUrl                            m_url;
+    Action                          m_action;
+
+    ActionThread::ActionThreadPriv* m_d;
 };
 
 }  // namespace KIPIDNGConverterPlugin

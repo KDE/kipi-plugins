@@ -301,9 +301,9 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // ----------------------------------------------------------------------------
 
-    mainLayout->addWidget(d->listView,       0, 0, 5, 1);
-    mainLayout->addWidget(d->settingsView,   0, 1, 1, 1);
-    mainLayout->addWidget(d->progressBar,    1, 1, 1, 1);
+    mainLayout->addWidget(d->listView,     0, 0, 5, 1);
+    mainLayout->addWidget(d->settingsView, 0, 1, 1, 1);
+    mainLayout->addWidget(d->progressBar,  1, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(4, 1);
     mainLayout->setMargin(0);
@@ -426,7 +426,7 @@ void TimeAdjustDialog::closeEvent(QCloseEvent* e)
 void TimeAdjustDialog::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Time Adjust Settings"));
+    KConfigGroup group   = config.group(QString("Time Adjust Settings"));
 
     int useTimestampType = group.readEntry("Use Timestamp Type", 0);
     if (useTimestampType == 0)      d->useApplDateBtn->setChecked(true);
