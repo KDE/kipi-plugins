@@ -15,7 +15,6 @@ TARGET_LINK_LIBRARIES(dngconverter
                       ${KDE4_KIO_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
                       kipiplugins
@@ -36,7 +35,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_dngconverter
                       ${KDE4_KPARTS_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
                       kipiplugins
