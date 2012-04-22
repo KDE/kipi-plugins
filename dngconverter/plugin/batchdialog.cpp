@@ -415,33 +415,10 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
-            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
-                                  url.fileName()),
-                                  tmpFile, destFile,
-                                  KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
-
-            switch (dlg.exec())
-            {
-                case KIO::R_CANCEL:
-                case KIO::R_SKIP:
-                {
-                    destFile.clear();
-                    d->listView->cancelProcess();
-                    break;
-                }
-                case KIO::R_RENAME:
-                {
-                    destFile = dlg.newDestUrl().path();
-                    break;
-                }
-                default:
-                {
-                    // Overwrite.
-                    break;
-                }
-            }
+            item->setStatus(QString("Failed to save image"));
         }
     }
+
 
     if (!destFile.isEmpty())
     {
@@ -449,19 +426,20 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         {
             if (!KPMetadata::moveSidecar(KUrl(tmpFile), KUrl(destFile)))
             {
-                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+                item->setStatus(QString("Failed to move sidecar"));
             }
         }
 
         if (KDE::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image %1", destFile));
+            item->setStatus(QString("Failed to save image."));
             d->listView->processed(url, false);
         }
         else
         {
             item->setDestFileName(QFileInfo(destFile).fileName());
             d->listView->processed(url, true);
+            item->setStatus(QString("Success"));
 
             // Assign Kipi host attributes from original RAW image.
 
