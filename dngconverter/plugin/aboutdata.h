@@ -60,7 +60,8 @@ public:
                             .subs(KDcraw::version())
                             .subs(QString(XMP_API_VERSION_STRING)),
                       ki18n("(c) 2008-2012, Gilles Caulier\n"
-                            "(c) 2010-2011, Jens Mueller"))
+                            "(c) 2010-2011, Jens Mueller\n"
+                            "(c) 2012, Smit Mehta"))
     {
          handbookEntry = QString("dngconverter");
 

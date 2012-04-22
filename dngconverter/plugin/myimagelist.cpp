@@ -144,7 +144,7 @@ void MyImageListViewItem::setStatus(const QString& str)
 
 QString MyImageListViewItem::destPath() const
 {
-    QString path = url().directory() + '/' + destFileName();
+    QString path = url().directory() + QString("/") + destFileName();
     return path;
 }
 
