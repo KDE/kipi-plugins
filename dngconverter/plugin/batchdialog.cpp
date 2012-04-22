@@ -141,7 +141,7 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     connect(d->thread, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)),
             this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
 
-    connect(d->thread, SIGNAL(signalFinished()),
+    connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
     // ---------------------------------------------------------------
