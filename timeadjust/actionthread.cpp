@@ -183,7 +183,7 @@ void Task::run()
 
         if (!ret)
         {
-            emit signalErrorFilesUpdate(QString(), m_url.fileName());
+            emit signalMetaTimeErrorUpdate(m_url);
         }
     }
 
@@ -199,7 +199,7 @@ void Task::run()
 
         if (utime(m_url.path().toLatin1().constData(), &times) != 0)
         {
-            emit signalErrorFilesUpdate(m_url.fileName(), QString());
+            emit signalFileTimeErrorUpdate(m_url);
         }
     }
 
@@ -243,8 +243,11 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
         connect(t, SIGNAL(signalProgressChanged(int)),
                 this, SIGNAL(signalProgressChanged(int)));
 
-        connect(t, SIGNAL(signalErrorFilesUpdate(QString, QString)),
-                this, SIGNAL(signalErrorFilesUpdate(QString, QString)));
+        connect(t, SIGNAL(signalFileTimeErrorUpdate(KUrl)),
+                this, SIGNAL(signalFileTimeErrorUpdate(KUrl)));
+
+        connect(t, SIGNAL(signalMetaTimeErrorUpdate(KUrl)),
+                this, SIGNAL(signalMetaTimeErrorUpdate(KUrl)));
 
         connect(t, SIGNAL(signalProcessStarted(KUrl)),
                 this, SIGNAL(signalProcessStarted(KUrl)));

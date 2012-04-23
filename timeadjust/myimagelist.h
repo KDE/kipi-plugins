@@ -53,7 +53,8 @@ public:
     {
         TIMESTAMP_USED     = KPImagesListView::User1,
         TIMESTAMP_UPDATED  = KPImagesListView::User2,
-        TIMESTAMP_FILENAME = KPImagesListView::User3
+        TIMESTAMP_FILENAME = KPImagesListView::User3,
+        STATUS             = KPImagesListView::User4
     };
 
 public:
@@ -62,8 +63,8 @@ public:
     ~MyImageList();
 
     void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);
+    void setStatus(const KUrl::List& metaTimeErrorFiles, const KUrl::List& fileTimeErrorFiles, const QMap<KUrl, QDateTime>& map);
 };
-
 }  // namespace KIPITimeAdjustPlugin
 
 #endif // MYIMAGELIST_H

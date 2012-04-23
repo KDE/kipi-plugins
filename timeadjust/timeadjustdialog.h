@@ -72,7 +72,8 @@ private Q_SLOTS:
     void slotCloseClicked();
     void slotProgressChanged(int);
     void slotThreadFinished();
-    void slotErrorFilesUpdate(const QString&, const QString&);
+    void slotFileTimeErrorUpdate(const KUrl&);
+    void slotMetaTimeErrorUpdate(const KUrl&);
     void slotCancelThread();
     void slotButtonClicked(int);
     void slotProcessStarted(const KUrl&);

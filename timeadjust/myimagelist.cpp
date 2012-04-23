@@ -43,6 +43,8 @@ MyImageList::MyImageList(QWidget* const parent)
                           i18n("Timestamp Updated"), true);
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMP_FILENAME),
                           i18n("New Filename"), true);
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(STATUS),
+                          i18n("Status"), true);
 }
 
 MyImageList::~MyImageList()
@@ -77,4 +79,33 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
     }
 }
 
+void MyImageList::setStatus(const KUrl::List& metaTimeErrorFiles, const KUrl::List& fileTimeErrorFiles, const QMap<KUrl, QDateTime>& map)
+{
+    foreach (const KUrl& url, map.keys())
+    {
+        KPImagesListViewItem* item = listView()->findItem(url);
+
+        if (metaTimeErrorFiles.contains(url))
+        {
+            if (fileTimeErrorFiles.contains(url))
+            {
+                item->setText(STATUS, "Failed to update metadata\nFailed to update mod. time");
+            }
+            else
+            {
+                item->setText(STATUS, "Unable to update metadata");
+            }
+        }
+
+        else if (fileTimeErrorFiles.contains(url))
+        {
+            item->setText(STATUS, "Failed to update mod. time");
+        }
+
+        else
+        {
+            item->setText(STATUS, "Success");
+        }
+    }
+}
 }  // namespace KIPITimeAdjustPlugin

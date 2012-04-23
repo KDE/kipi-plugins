@@ -64,7 +64,8 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalErrorFilesUpdate(const QString&, const QString&);
+    void signalFileTimeErrorUpdate(const KUrl&);
+    void signalMetaTimeErrorUpdate(const KUrl&);
     void signalProcessStarted(const KUrl&);
     void signalProcessEnded(const KUrl&);
 
@@ -91,7 +92,8 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalErrorFilesUpdate(const QString& fileTimeErrorFile, const QString& metaTimeErrorFile);
+    void signalFileTimeErrorUpdate(const KUrl&);
+    void signalMetaTimeErrorUpdate(const KUrl&);
     void signalProcessStarted(const KUrl&);
     void signalProcessEnded(const KUrl&);
 
