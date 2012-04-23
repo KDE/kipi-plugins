@@ -64,10 +64,8 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalFileTimeErrorUpdate(const KUrl&);
-    void signalMetaTimeErrorUpdate(const KUrl&);
     void signalProcessStarted(const KUrl&);
-    void signalProcessEnded(const KUrl&);
+    void signalProcessEnded(const KUrl&, int);
 
 public:
 
@@ -92,10 +90,8 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalFileTimeErrorUpdate(const KUrl&);
-    void signalMetaTimeErrorUpdate(const KUrl&);
     void signalProcessStarted(const KUrl&);
-    void signalProcessEnded(const KUrl&);
+    void signalProcessEnded(const KUrl&, int);
 
 protected:
 

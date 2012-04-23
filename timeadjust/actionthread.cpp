@@ -45,6 +45,7 @@ extern "C"
 // Local includes
 
 #include "kpmetadata.h"
+#include "myimagelist.h"
 
 namespace KIPITimeAdjustPlugin
 {
@@ -96,6 +97,8 @@ void Task::run()
     bool metadataChanged = m_d->settings.updEXIFModDate || m_d->settings.updEXIFOriDate ||
                            m_d->settings.updEXIFDigDate || m_d->settings.updIPTCDate    ||
                            m_d->settings.updXMPDate;
+
+    int status = MyImageList::NO_ERROR;
 
     if (metadataChanged)
     {
@@ -183,7 +186,7 @@ void Task::run()
 
         if (!ret)
         {
-            emit signalMetaTimeErrorUpdate(m_url);
+            status |= MyImageList::META_TIME_ERROR;
         }
     }
 
@@ -199,17 +202,22 @@ void Task::run()
 
         if (utime(m_url.path().toLatin1().constData(), &times) != 0)
         {
-            emit signalFileTimeErrorUpdate(m_url);
+            status |= MyImageList::FILE_TIME_ERROR;
         }
     }
 
     if (m_d->settings.updFileName)
     {
+        bool ret    = true;
         KUrl newUrl = ActionThread::newUrl(m_url, dt);
 
-        KDE_rename(QFile::encodeName(m_url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile()));
+        if (KDE_rename(QFile::encodeName(m_url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
+            ret = false;
 
-        KPMetadata::moveSidecar(m_url, newUrl);
+        ret &= KPMetadata::moveSidecar(m_url, newUrl);
+
+        if (!ret)
+            status |= MyImageList::FILE_NAME_ERROR;
     }
 
     m_mutex.lock();
@@ -217,7 +225,7 @@ void Task::run()
     emit signalProgressChanged(m_d->progress);
     m_mutex.unlock();
 
-    emit signalProcessEnded(m_url);
+    emit signalProcessEnded(m_url, status);
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -243,17 +251,11 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
         connect(t, SIGNAL(signalProgressChanged(int)),
                 this, SIGNAL(signalProgressChanged(int)));
 
-        connect(t, SIGNAL(signalFileTimeErrorUpdate(KUrl)),
-                this, SIGNAL(signalFileTimeErrorUpdate(KUrl)));
-
-        connect(t, SIGNAL(signalMetaTimeErrorUpdate(KUrl)),
-                this, SIGNAL(signalMetaTimeErrorUpdate(KUrl)));
-
         connect(t, SIGNAL(signalProcessStarted(KUrl)),
                 this, SIGNAL(signalProcessStarted(KUrl)));
 
-        connect(t, SIGNAL(signalProcessEnded(KUrl)),
-                this, SIGNAL(signalProcessEnded(KUrl)));
+        connect(t, SIGNAL(signalProcessEnded(KUrl, int)),
+                this, SIGNAL(signalProcessEnded(KUrl, int)));
 
         collection->addJob(t);
      }

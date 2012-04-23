@@ -150,9 +150,7 @@ public:
 
     QMap<KUrl, QDateTime> itemsUsedMap;           // Map of item urls and Used Timestamps.
     QMap<KUrl, QDateTime> itemsUpdatedMap;        // Map of item urls and Updated Timestamps.
-
-    KUrl::List            fileTimeErrorFiles;
-    KUrl::List            metaTimeErrorFiles;
+    QMap<KUrl, int>       itemsStatusMap;         // Map of item urls and status flag.
 
     KPProgressWidget*     progressBar;
     MyImageList*          listView;
@@ -344,20 +342,14 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->thread, SIGNAL(signalProgressChanged(int)),
             this, SLOT(slotProgressChanged(int)));
 
-    connect(d->thread, SIGNAL(signalFileTimeErrorUpdate(KUrl)),
-            this, SLOT(slotFileTimeErrorUpdate(KUrl)));
-
-    connect(d->thread, SIGNAL(signalMetaTimeErrorUpdate(KUrl)),
-            this, SLOT(slotMetaTimeErrorUpdate(KUrl)));
-
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
     connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
             this, SLOT(slotProcessStarted(KUrl)));
 
-    connect(d->thread, SIGNAL(signalProcessEnded(KUrl)),
-            this, SLOT(slotProcessEnded(KUrl)));
+    connect(d->thread, SIGNAL(signalProcessEnded(KUrl, int)),
+            this, SLOT(slotProcessEnded(KUrl, int)));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancelThread()));
@@ -496,8 +488,7 @@ void TimeAdjustDialog::saveSettings()
 
 void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
-    d->itemsUsedMap.clear();
-    d->itemsUpdatedMap.clear();
+    d->itemsStatusMap.clear();
     d->listView->listView()->clear();
 
     foreach (const KUrl& url, imageUrls)
@@ -699,8 +690,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 
 void TimeAdjustDialog::slotApplyClicked()
 {
-    d->fileTimeErrorFiles.clear();
-    d->metaTimeErrorFiles.clear();
+    d->itemsStatusMap.clear();
 
     // Check if atleast one option is selected
     bool atleastOneSelected = d->updAppDateCheck->isChecked()     || d->updFileModDateCheck->isChecked() ||
@@ -848,9 +838,10 @@ void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
     d->listView->processing(url);
 }
 
-void TimeAdjustDialog::slotProcessEnded(const KUrl& url)
+void TimeAdjustDialog::slotProcessEnded(const KUrl& url, int status)
 {
-    d->listView->processed(url, true);
+    d->listView->processed(url, (status == MyImageList::NO_ERROR));
+    d->itemsStatusMap.insert(url, status);
 }
 
 void TimeAdjustDialog::slotProgressChanged(int progress)
@@ -858,26 +849,9 @@ void TimeAdjustDialog::slotProgressChanged(int progress)
     d->progressBar->setValue(progress);
 }
 
-void TimeAdjustDialog::slotFileTimeErrorUpdate(const KUrl& fileTimeErrorFile)
-{
-    if (!fileTimeErrorFile.isEmpty())
-    {
-        d->fileTimeErrorFiles.append(fileTimeErrorFile);
-    }
-}
-
-void TimeAdjustDialog::slotMetaTimeErrorUpdate(const KUrl& metaTimeErrorFile)
-{
-    if (!metaTimeErrorFile.isEmpty())
-    {
-        d->metaTimeErrorFiles.append(metaTimeErrorFile);
-    }
-}
-
-
 void TimeAdjustDialog::slotThreadFinished()
 {
-    d->listView->setStatus(d->metaTimeErrorFiles, d->fileTimeErrorFiles, d->itemsUsedMap);
+    d->listView->setStatus(d->itemsStatusMap);
     setBusy(false);
     d->progressBar->hide();
     d->progressBar->progressCompleted();

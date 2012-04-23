@@ -6,6 +6,7 @@
  * Date        : 2012-17-04
  * Description : time adjust images list.
  *
+ * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -79,33 +80,41 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
     }
 }
 
-void MyImageList::setStatus(const KUrl::List& metaTimeErrorFiles, const KUrl::List& fileTimeErrorFiles, const QMap<KUrl, QDateTime>& map)
+void MyImageList::setStatus(const QMap<KUrl, int>& status)
 {
-    foreach (const KUrl& url, map.keys())
+    foreach (const KUrl& url, status.keys())
     {
         KPImagesListViewItem* item = listView()->findItem(url);
-
-        if (metaTimeErrorFiles.contains(url))
+        if (item)
         {
-            if (fileTimeErrorFiles.contains(url))
+            QStringList errors;
+            int         flags = status.value(url);
+
+            if (flags & META_TIME_ERROR)
             {
-                item->setText(STATUS, "Failed to update metadata\nFailed to update mod. time");
+                errors << i18n("Failed to update metadata timestamp");
+            }
+
+            if (flags & FILE_TIME_ERROR)
+            {
+                errors << i18n("Failed to update file timestamp");
+            }
+
+            if (flags & FILE_NAME_ERROR)
+            {
+                errors << i18n("Failed to rename file");
+            }
+
+            if (errors.isEmpty())
+            {
+                item->setText(STATUS, i18n("Processed without error"));
             }
             else
             {
-                item->setText(STATUS, "Unable to update metadata");
+                item->setText(STATUS, errors.join(" | "));
             }
-        }
-
-        else if (fileTimeErrorFiles.contains(url))
-        {
-            item->setText(STATUS, "Failed to update mod. time");
-        }
-
-        else
-        {
-            item->setText(STATUS, "Success");
         }
     }
 }
+
 }  // namespace KIPITimeAdjustPlugin
