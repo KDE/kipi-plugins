@@ -7,7 +7,7 @@
  * Description : file list view and items.
  *
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,11 +23,21 @@
 
 #include "myimagelist.moc"
 
+// Qt includes
+
+#include <QFileInfo>
+
 // KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
+
+// LibKDcraw includes
+
+#include <libkdcraw/kdcraw.h>
+
+using namespace KDcrawIface;
 
 namespace KIPIRawConverterPlugin
 {
@@ -70,7 +80,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
             }
         }
 
-        if (!found)
+        if (!found && isRAWFile(imageUrl))
         {
             new MyImageListViewItem(listView(), imageUrl);
         }
@@ -80,6 +90,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
     // upload button again.
     emit signalImageListChanged();
 }
+
 void MyImageList::slotRemoveItems()
 {
     bool find;
@@ -101,6 +112,17 @@ void MyImageList::slotRemoveItems()
     }
     while(find);
 }
+
+bool MyImageList::isRAWFile(const KUrl& url)
+{
+    QString rawFilesExt(KDcraw::rawFiles());
+    QFileInfo fileInfo(url.path());
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
+        return true;
+
+    return false;
+}
+
 // ------------------------------------------------------------------------------------------------
 
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)

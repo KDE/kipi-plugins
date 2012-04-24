@@ -97,7 +97,7 @@ public:
         saveSettingsBox     = 0;
         decodingSettingsBox = 0;
         iface               = 0;
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* pl    = PluginLoader::instance();
         if (pl)
         {
             iface = pl->interface();
@@ -167,7 +167,8 @@ SingleDialog::SingleDialog(const QString& file)
                              KAboutData::License_GPL,
                              ki18n("A Kipi plugin to convert RAW images"),
                              ki18n("(c) 2003-2005, Renchi Raju\n"
-                                   "(c) 2006-2012, Gilles Caulier"));
+                                   "(c) 2006-2012, Gilles Caulier\n"
+                                   "(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n("Renchi Raju"),
                      ki18n("Author"),
@@ -176,6 +177,10 @@ SingleDialog::SingleDialog(const QString& file)
     about->addAuthor(ki18n("Gilles Caulier"),
                      ki18n("Developer and maintainer"),
                            "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Smit Mehta"),
+                     ki18n("Developer"),
+                           "smit dot meh at gmail dot com");
 
     about->handbookEntry = QString("rawconverter");
     setAboutData(about);

@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,8 +63,8 @@ public:
 
     ActionThreadPriv()
     {
-        cancel = false;
-        iface   = 0;
+        cancel           = false;
+        iface            = 0;
         PluginLoader* pl = PluginLoader::instance();
         if (pl)
         {
@@ -84,7 +85,6 @@ public:
     Interface*                         iface;
 };
 
-
 //------------------------------------------------------
 
 Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
@@ -98,7 +98,6 @@ Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
 Task::~Task()
 {
 }
-
 
 void Task::run()
 {
@@ -198,7 +197,7 @@ void Task::run()
             {
                 KPFileReadLocker(m_d->iface, m_url.toLocalFile());
                 result = m_d->dcrawIface.decodeHalfRAWImage(m_url.toLocalFile(), destPath,
-                                                          m_d->outputFormat, m_d->rawDecodingSettings);
+                                                            m_d->outputFormat, m_d->rawDecodingSettings);
             }
 
             ActionData ad2;
@@ -224,7 +223,7 @@ void Task::run()
             {
                 KPFileReadLocker(m_d->iface, m_url.toLocalFile());
                 result = m_d->dcrawIface.decodeRAWImage(m_url.toLocalFile(), destPath,
-                                                      m_d->outputFormat, m_d->rawDecodingSettings);
+                                                        m_d->outputFormat, m_d->rawDecodingSettings);
             }
 
             ActionData ad2;
@@ -238,13 +237,10 @@ void Task::run()
 
         default:
         {
-            qCritical() << "KIPIRawConverterPlugin:ActionThread: "
-                        << "Unknown action specified"
-                        << endl;
+            qCritical() << "Unknown action specified";
         }
     }
 }
-
 
 //------------------------------------------------------------
 
@@ -378,7 +374,6 @@ void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
     }
 
     appendJob(collection);
-
 }
 
 void ActionThread::cancel()
@@ -387,4 +382,5 @@ void ActionThread::cancel()
     d->cancel = true;
     KPActionThreadBase::cancel();
 }
+
 }  // namespace KIPIRawConverterPlugin

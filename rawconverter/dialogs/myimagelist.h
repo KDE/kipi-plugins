@@ -23,6 +23,10 @@
 #ifndef MYIMAGELIST_H
 #define MYIMAGELIST_H
 
+// KDE includes
+
+#include <kurl.h>
+
 // Local includes
 
 #include "kpimageslist.h"
@@ -50,6 +54,9 @@ public:
 
     explicit MyImageList(QWidget* const parent = 0);
     virtual ~MyImageList();
+
+
+    static bool isRAWFile(const KUrl& url);
 
 public Q_SLOTS:
 
