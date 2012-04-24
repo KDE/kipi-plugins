@@ -60,6 +60,8 @@ public:
         GE_GETVERSION,
         GE_LISTALBUMS,
         GE_CHECKPHOTOEXIST,
+        GE_GETINFO,
+        GE_SETINFO,
         // Support for Web API >= 2.4
         GE_ADDPHOTOCHUNK,
         GE_ADDPHOTOSUMMARY,
@@ -120,7 +122,8 @@ private:
     void parseResponseGetVersion(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
     void parseResponseDoesPhotoExist(const QByteArray& data);
-
+    void parseResponseGetInfo(const QByteArray& data);
+    void parseResponseSetInfo(const QByteArray& data);
 
     void addNextChunk();
     void parseResponseAddPhotoChunk(const QByteArray& data);
@@ -157,6 +160,7 @@ private:
     QByteArray        m_md5sum;
     QString           m_path;
     int               m_albumId;
+    int               m_photoId;    // Filled when the photo already exist
     QString           m_thumbpath;
     QString           m_hqpath;
     QString           m_comment;    // Synchronized with Piwigo comment
