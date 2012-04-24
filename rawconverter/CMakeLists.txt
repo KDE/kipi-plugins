@@ -20,6 +20,7 @@ KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
                       ${KDE4_KPARTS_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
