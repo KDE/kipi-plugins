@@ -58,6 +58,10 @@ public Q_SLOTS:
 protected Q_SLOTS:
 
     virtual void slotRemoveItems();
+
+private:
+
+    bool isValidRAWFile(const KUrl& url) const;
 };
 
 // -------------------------------------------------------------------------

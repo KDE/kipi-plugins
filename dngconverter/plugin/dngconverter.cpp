@@ -34,6 +34,7 @@
 // Local includes
 
 #include "aboutdata.h"
+#include "myimagelist.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
 #include "batchdialog.h"
@@ -60,13 +61,11 @@ int main(int argc, char* argv[])
     BatchDialog* converter = new BatchDialog(aboutData);
     app.setTopWidget(converter);
 
-    KUrl::List urls;
+    KUrl::List    urls;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     for(int i = 0; i < args->count(); ++i)
     {
-        KUrl url = args->url(i);
-        if (DNGConverterAboutData::isRAWFile(url.path()))
-            urls.append(url);
+        urls.append(args->url(i));
     }
     args->clear();
 
