@@ -479,6 +479,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
     MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
     if (!item) return;
+
     QString destFile(item->destPath());
 
     if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
@@ -518,19 +519,20 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
                             KPMetadata::sidecarPath(destFile)) != 0)
             {
-                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+                item->setStatus(QString("Failed to move sidecar"));
             }
         }
 
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image %1", destFile));
+            item->setStatus(QString("Failed to save image."));
             d->listView->processed(url, false);
         }
         else
         {
             item->setDestFileName(QFileInfo(destFile).fileName());
             d->listView->processed(url, true);
+            item->setStatus(QString("Success"));
 
             // Assign Kipi host attributes from original RAW image.
 

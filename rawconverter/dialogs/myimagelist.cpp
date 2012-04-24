@@ -39,6 +39,7 @@ MyImageList::MyImageList(QWidget* const parent)
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TARGETFILENAME), i18n("Target File"), true);
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::IDENTIFICATION), i18n("Camera"),      true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::STATUS),         i18n("Status"),      true);
 }
 
 MyImageList::~MyImageList()
@@ -126,6 +127,12 @@ void MyImageListViewItem::setIdentity(const QString& str)
 {
     m_identity = str;
     setText(MyImageList::IDENTIFICATION, m_identity);
+}
+
+void MyImageListViewItem::setStatus(const QString& str)
+{
+    m_status = str;
+    setText(MyImageList::STATUS, m_status);
 }
 
 QString MyImageListViewItem::identity() const
