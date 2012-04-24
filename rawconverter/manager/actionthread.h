@@ -39,22 +39,25 @@
 // Local includes
 
 #include "kpsavesettingswidget.h"
+#include "kpactionthreadbase.h"
+#include "actions.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
+using namespace ThreadWeaver;
 
 namespace KIPIRawConverterPlugin
 {
 
 class ActionData;
 
-class ActionThread : public QThread
+class ActionThread : public KPActionThreadBase
 {
     Q_OBJECT
 
 public:
 
-    explicit ActionThread(QObject* const parent);
+    ActionThread(QObject* const parent);
     ~ActionThread();
 
     void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings, 
@@ -76,8 +79,34 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const KIPIRawConverterPlugin::ActionData& ad);
-    void finished(const KIPIRawConverterPlugin::ActionData& ad);
+    void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
+    void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
+
+public:
+
+    class ActionThreadPriv;
+
+private:
+
+    ActionThreadPriv* const d;
+
+};
+
+// -----------------------------------------------------------------------------------------------------------------------
+
+class Task : public Job
+{
+    Q_OBJECT
+
+public:
+
+    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::ActionThreadPriv* const d);
+    ~Task();
+
+Q_SIGNALS:
+
+    void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
+    void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
 
 protected:
 
@@ -85,9 +114,12 @@ protected:
 
 private:
 
-    class ActionThreadPriv;
-    ActionThreadPriv* const d;
+    KUrl                            m_url;
+    Action                          m_action;
+
+    ActionThread::ActionThreadPriv* m_d;
 };
+
 
 }  // namespace KIPIRawConverterPlugin
 

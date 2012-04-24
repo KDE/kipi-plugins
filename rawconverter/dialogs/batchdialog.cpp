@@ -127,6 +127,7 @@ BatchDialog::BatchDialog()
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
     setCaption(i18n("RAW Image Batch Converter"));
     setModal(false);
+    setMinimumSize(700, 500);
 
     d->page = new QWidget(this);
     setMainWidget(d->page);
@@ -212,11 +213,14 @@ BatchDialog::BatchDialog()
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-    connect(d->thread, SIGNAL(starting(KIPIRawConverterPlugin::ActionData)),
+    connect(d->thread, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
             this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
 
-    connect(d->thread, SIGNAL(finished(KIPIRawConverterPlugin::ActionData)),
+    connect(d->thread, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
             this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
+
+    connect(d->thread, SIGNAL(finished()),
+            this, SLOT(slotThreadFinished()));
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));
@@ -331,7 +335,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->progressThumbnailChanged(KIcon("rawconverter").pixmap(22));
 
         d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
-        processOne();
+        processAll();
     }
     else
     {
@@ -431,21 +435,18 @@ void BatchDialog::slotSaveFormatChanged()
     }
 }
 
-void BatchDialog::processOne()
+void BatchDialog::processAll()
 {
-    if (d->fileList.empty())
-    {
-        busy(false);
-        slotAborted();
-        return;
-    }
+    d->thread->processRawFiles(d->listView->imageUrls(true));
 
-    QString file(d->fileList.first());
-    d->fileList.pop_front();
-
-    d->thread->processRawFile(KUrl(file));
     if (!d->thread->isRunning())
         d->thread->start();
+}
+
+void BatchDialog::slotThreadFinished()
+{
+    busy(false);
+    slotAborted();
 }
 
 void BatchDialog::busy(bool busy)
@@ -582,7 +583,6 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 case(PROCESS):
                 {
                     processingFailed(ad.fileUrl);
-                    processOne();
                     break;
                 }
                 default:
@@ -608,7 +608,6 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 case(PROCESS):
                 {
                     processed(ad.fileUrl, ad.destPath);
-                    processOne();
                     break;
                 }
                 default:
