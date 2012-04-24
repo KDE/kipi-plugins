@@ -443,7 +443,7 @@ void KPImagesListView::dropEvent(QDropEvent* e)
 
     if (!urls.isEmpty())
     {
-        emit addedDropedItems(urls);
+        emit signalAddedDropedItems(urls);
     }
 }
 
@@ -570,7 +570,7 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    connect(d->listView, SIGNAL(addedDropedItems(KUrl::List)),
+    connect(d->listView, SIGNAL(signalAddedDropedItems(KUrl::List)),
             this, SLOT(slotAddImages(KUrl::List)));
 
     if (d->iface)

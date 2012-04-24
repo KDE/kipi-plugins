@@ -151,7 +151,7 @@ public:
 
 Q_SIGNALS:
 
-    void addedDropedItems(const KUrl::List& urls);
+    void signalAddedDropedItems(const KUrl::List&);
     void signalItemClicked(QTreeWidgetItem*);
     void signalContextMenuRequested();
 
