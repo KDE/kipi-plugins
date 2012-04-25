@@ -41,7 +41,6 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kcursor.h>
-#include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
@@ -332,13 +331,11 @@ void BatchDialog::slotIdentify()
                     if (!a->exists())
                     {
                         fileNotFound = false;
-                        kDebug() << "m in non existing mode" << i;
                     }
                     else
                     {
                         i++;
                         dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString("_") + QString::number(i) + QString(".dng");
-                        kDebug() << "m in existing mode" << i;
                     }
                 }
 

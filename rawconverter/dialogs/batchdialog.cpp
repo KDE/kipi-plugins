@@ -145,6 +145,7 @@ BatchDialog::BatchDialog()
                                                               DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->decodingSettingsBox->setObjectName("RawSettingsBox Expander");
     d->saveSettingsBox     = new KPSaveSettingsWidget(d->page);
+    d->saveSettingsBox->setPromptButtonText("Store it under different name");
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
@@ -201,7 +202,10 @@ BatchDialog::BatchDialog()
     // ---------------------------------------------------------------
 
     connect(d->saveSettingsBox, SIGNAL(signalSaveFormatChanged()),
-            this, SLOT(slotSaveFormatChanged()));
+            this, SLOT(slotIdentify()));
+
+    connect(d->saveSettingsBox, SIGNAL(signalConflictButtonChanged(int)),
+            this, SLOT(slotIdentify()));
 
     connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
             d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
@@ -385,15 +389,58 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
             ext = ".png";
             break;
     }
+
     KUrl::List urlList = d->listView->imageUrls(true);
 
     for (KUrl::List::const_iterator  it = urlList.constBegin();
          it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
-        QString dest              = fi.completeBaseName() + ext;
-        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
-        if (item) item->setDestFileName(dest);
+
+        if(d->saveSettingsBox->conflictRule() == KPSaveSettingsWidget::OVERWRITE)
+        {
+            QString dest              = fi.completeBaseName() + ext;
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+            if (item) item->setDestFileName(dest);
+        }
+
+        else
+        {
+            int i        = 0;
+            QFileInfo* a = 0;
+            QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + ext;
+
+            a = new QFileInfo(dest);
+
+            bool fileNotFound = (a->exists());
+
+            if (!fileNotFound)
+            {
+                dest = fi.completeBaseName() + ext;
+            }
+
+            else
+            {
+                while(fileNotFound)
+                {
+                    a = new QFileInfo(dest);
+                    if (!a->exists())
+                    {
+                        fileNotFound = false;
+                    }
+                    else
+                    {
+                        i++;
+                        dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString("_") + QString::number(i) + ext;
+                    }
+                }
+
+                dest = fi.completeBaseName() + QString("_") + QString::number(i) + ext;
+            }
+
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+            if (item) item->setDestFileName(dest);
+        }
     }
 
     if (!urlList.empty())
@@ -401,42 +448,6 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
         d->thread->identifyRawFiles(urlList);
         if (!d->thread->isRunning())
             d->thread->start();
-    }
-}
-void BatchDialog::slotSaveFormatChanged()
-{
-    QString ext;
-
-    switch(d->saveSettingsBox->fileFormat())
-    {
-        case KPSaveSettingsWidget::OUTPUT_JPEG:
-            ext = "jpg";
-            break;
-        case KPSaveSettingsWidget::OUTPUT_TIFF:
-            ext = "tif";
-            break;
-        case KPSaveSettingsWidget::OUTPUT_PPM:
-            ext = "ppm";
-            break;
-        case KPSaveSettingsWidget::OUTPUT_PNG:
-            ext = "png";
-            break;
-    }
-
-    QTreeWidgetItemIterator it(d->listView->listView());
-    while (*it)
-    {
-        MyImageListViewItem* lvItem = dynamic_cast<MyImageListViewItem*>(*it);
-        if (lvItem)
-        {
-            if (!lvItem->isDisabled())
-            {
-                QFileInfo fi(lvItem->url().path());
-                QString dest = fi.completeBaseName() + QString(".") + ext;
-                lvItem->setDestFileName(dest);
-            }
-        }
-        ++it;
     }
 }
 
@@ -492,28 +503,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
-            KIO::RenameDialog dlg(this, i18n("Save RAW image converted from '%1' as",
-                                  url.fileName()),
-                                  tmpFile, destFile,
-                                  KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
-
-            switch (dlg.exec())
-            {
-                case KIO::R_CANCEL:
-                case KIO::R_SKIP:
-                {
-                    destFile.clear();
-                    d->listView->cancelProcess();
-                    break;
-                }
-                case KIO::R_RENAME:
-                {
-                    destFile = dlg.newDestUrl().path();
-                    break;
-                }
-                default:    // Overwrite.
-                    break;
-            }
+            item->setStatus(QString("Failed to save image"));
         }
     }
 

@@ -117,6 +117,9 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* parent)
 
     connect(d->formatComboBox, SIGNAL(activated(int)),
             this, SIGNAL(signalSaveFormatChanged()));
+
+    connect(d->conflictButtonGroup, SIGNAL(buttonClicked(int)),
+            this, SIGNAL(signalConflictButtonChanged(int)));
 }
 
 KPSaveSettingsWidget::~KPSaveSettingsWidget()
@@ -143,6 +146,11 @@ KPSaveSettingsWidget::OutputFormat KPSaveSettingsWidget::fileFormat() const
 void KPSaveSettingsWidget::setFileFormat(OutputFormat f)
 {
     d->formatComboBox->setCurrentIndex((int)f);
+}
+
+void KPSaveSettingsWidget::setPromptButtonText(const QString& str)
+{
+    d->promptButton->setText(str);
 }
 
 KPSaveSettingsWidget::ConflictRule KPSaveSettingsWidget::conflictRule() const
