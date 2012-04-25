@@ -90,9 +90,9 @@ public:
 Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
            ActionThread::ActionThreadPriv* const d): Job(parent)
 {
-    m_url               = fileUrl;
-    m_action            = action;
-    m_d                 = d;
+    m_url    = fileUrl;
+    m_action = action;
+    m_d      = d;
 }
 
 Task::~Task()
@@ -122,7 +122,9 @@ void Task::run()
             if (info.isDecodable)
             {
                 if (m_action == IDENTIFY)
+                {
                     identify = info.make + QString("-") + info.model;
+                }
                 else
                 {
                     identify = i18n("<br>Make: %1<br>",   info.make);
@@ -334,7 +336,6 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 
     appendJob(collection);
 }
-
 
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {

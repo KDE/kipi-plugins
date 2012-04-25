@@ -90,7 +90,6 @@ public:
 private:
 
     ActionThreadPriv* const d;
-
 };
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -120,7 +119,6 @@ private:
 
     ActionThread::ActionThreadPriv* m_d;
 };
-
 
 }  // namespace KIPIRawConverterPlugin
 
