@@ -94,7 +94,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 }
 void MyImageList::slotRemoveItems()
 {
-    bool find;
+    bool find = false;
     do
     {
         find = false;
