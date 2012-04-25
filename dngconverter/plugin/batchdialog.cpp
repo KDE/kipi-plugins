@@ -41,6 +41,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kcursor.h>
+#include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
