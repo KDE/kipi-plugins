@@ -63,7 +63,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 {
     // Figure out which of the supplied URL's should actually be added and which
     // of them already exist.
-    bool found;
+    bool found = false;
 
     for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
@@ -93,7 +93,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 
 void MyImageList::slotRemoveItems()
 {
-    bool find;
+    bool find = false;
     do
     {
         find = false;
@@ -164,7 +164,7 @@ QString MyImageListViewItem::identity() const
 
 QString MyImageListViewItem::destPath() const
 {
-    QString path = url().directory() + '/' + destFileName();
+    QString path = url().directory() + QString("/") + destFileName();
     return path;
 }
 
