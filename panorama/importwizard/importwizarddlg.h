@@ -33,11 +33,11 @@
 // KDE includes
 
 #include <kurl.h>
-#include <kassistantdialog.h>
 
 // Local includes
 
 #include "actions.h"
+#include "kptooldialog.h"
 
 class KPageWidgetItem;
 
@@ -47,6 +47,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -54,7 +55,7 @@ namespace KIPIPanoramaPlugin
 class Manager;
 class PanoramaAboutData;
 
-class ImportWizardDlg : public KAssistantDialog
+class ImportWizardDlg : public KPWizardDialog
 {
     Q_OBJECT
 
@@ -81,7 +82,6 @@ private Q_SLOTS:
     void slotStitchingFinished(bool);
     void slotCopyFinished(bool);
     void slotLastPageIsValid(bool);
-    void slotHelp();
 
 private:
 

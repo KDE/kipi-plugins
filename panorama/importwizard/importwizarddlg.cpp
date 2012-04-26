@@ -33,9 +33,7 @@
 
 #include <kmenu.h>
 #include <klocale.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 #include <kmessagebox.h>
 
 // LibKIPI includes
@@ -83,7 +81,7 @@ struct ImportWizardDlg::ImportWizardDlgPriv
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
-    : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
+    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
 {
     setModal(false);
     setWindowTitle(i18n("Panorama Creator Wizard"));
@@ -96,27 +94,17 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     d->previewPage       = new PreviewPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
 
-    // ---------------------------------------------------------------
-    // About data and help button.
-
-    disconnect(this, SIGNAL(helpClicked()),
-                this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    setAboutData(new KPAboutData(*d->mngr->about()));
 
     // ---------------------------------------------------------------
 
     QDesktopWidget* desktop = QApplication::desktop();
-    int screen = desktop->screenNumber();
-    QRect srect = desktop->availableGeometry(screen);
+    int screen              = desktop->screenNumber();
+    QRect srect             = desktop->availableGeometry(screen);
     resize(800 <= srect.width()  ? 800 : srect.width(),
            750 <= srect.height() ? 750 : srect.height());
+
+    // ---------------------------------------------------------------
 
     connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
             this, SLOT(slotIntroPageIsValid(bool)));
@@ -330,11 +318,6 @@ void ImportWizardDlg::slotCopyFinished(bool success)
 void ImportWizardDlg::slotLastPageIsValid(bool isValid)
 {
     setValid(d->lastPage->page(), isValid);
-}
-
-void ImportWizardDlg::slotHelp()
-{
-    KToolInvocation::invokeHelp("panorama", "kipi-plugins");
 }
 
 } // namespace KIPIPanoramaPlugin
