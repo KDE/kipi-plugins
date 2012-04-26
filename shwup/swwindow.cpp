@@ -526,14 +526,11 @@ void SwWindow::uploadNextPhoto()
     m_progressDlg->progressBar()->setValue(m_imagesCount);
 
     QString imgPath = m_transferQueue.first().path();
+    QString caption;
+    bool    res;
 
     // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcraw::rawFiles());
-    QFileInfo fileInfo(imgPath);
-    QString caption;
-    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-    bool res;
-
+    bool isRAW = KPMetadata::isRawFile(imgPath);
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW, caption))
