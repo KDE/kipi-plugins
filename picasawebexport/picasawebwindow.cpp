@@ -604,14 +604,14 @@ void PicasawebWindow::uploadNextPhoto()
     }
 
     typedef QPair<KUrl,PicasaWebPhoto> Pair;
-    Pair pathComments = m_transferQueue.first();
+    Pair pathComments   = m_transferQueue.first();
     PicasaWebPhoto info = m_transferQueue.first().second;
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
 
     m_widget->m_imgList->processing(pathComments.first);
-    QString imgPath = pathComments.first.toLocalFile();
+    QString imgPath  = pathComments.first.toLocalFile();
     QString itemPath = imgPath;
 
     bool res = false;
@@ -628,9 +628,7 @@ void PicasawebWindow::uploadNextPhoto()
     else
     {
         // check if we have to RAW file -> use preview image then
-        QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-        QFileInfo fileInfo(imgPath);
-        bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
+        bool isRAW = KPMetadata::isRawFile(imgPath);
 
         if (!prepareImageForUpload(imgPath, isRAW))
         {
@@ -641,7 +639,7 @@ void PicasawebWindow::uploadNextPhoto()
     }
 
     bool bCancel = false;
-    bool bAdd = true;
+    bool bAdd    = true;
 
     if (!info.id.isEmpty() && !info.editUrl.isEmpty())
     {
