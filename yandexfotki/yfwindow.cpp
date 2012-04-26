@@ -110,7 +110,7 @@ const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 
 YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
                                      bool import, QWidget* const parent)
-    : KDialog(parent)
+    : KPToolDialog(parent)
 {
     m_interface = interface;
     m_import    = import;
@@ -337,31 +337,21 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
         optionsBox->hide();
     }
 
-    KPAboutData* about = new KPAboutData(
-        ki18n("Yandex.Fotki Plugin"),
-        0,
-        KAboutData::License_GPL,
-        ki18n("A Kipi plugin to export image collections to "
-              "Yandex.Fotki web service."),
-        ki18n( "(c) 2007-2009, Vardhman Jain\n"
-               "(c) 2008-2012, Gilles Caulier\n"
-               "(c) 2009, Luka Renko\n"
-               "(c) 2010, Roman Tsisyk" )
-    );
+    KPAboutData* about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to "
+                                               "Yandex.Fotki web service."),
+                                         ki18n("(c) 2007-2009, Vardhman Jain\n"
+                                               "(c) 2008-2012, Gilles Caulier\n"
+                                               "(c) 2009, Luka Renko\n"
+                                               "(c) 2010, Roman Tsisyk"));
 
     about->addAuthor(ki18n( "Roman Tsisyk" ), ki18n("Author"),
                      "roman at tsisyk dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()) );
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("YandexFotki");
+    setAboutData(about);
 
     // -- UI slots -----------------------------------------------------------------------
 
@@ -570,11 +560,6 @@ void YandexFotkiWindow::slotResizeChecked()
 {
     m_dimensionSpin->setEnabled(m_resizeCheck->isChecked());
     m_imageQualitySpin->setEnabled(m_resizeCheck->isChecked());
-}
-
-void YandexFotkiWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("YandexFotki", "kipi-plugins");
 }
 
 /*
