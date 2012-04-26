@@ -64,9 +64,9 @@ namespace KIPIHTMLExport
  */
 static QImage generateThumbnail(const QImage& fullImage, int size, bool square)
 {
-    QImage image = fullImage.scaled(size, size,
-        square ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
-        Qt::SmoothTransformation);
+    QImage image = fullImage.scaled(size, size, square ? Qt::KeepAspectRatioByExpanding
+                                                       : Qt::KeepAspectRatio,
+                                    Qt::SmoothTransformation);
 
     if (square && (image.width() != size || image.height() != size))
     {
@@ -99,15 +99,12 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
         return;
     }
 
-    QImage originalImage;
-
-    // Check if RAW file.
-    QFileInfo fi(path);
-    QString rawFilesExt(KDcraw::rawFiles());
-    QString imageFormat;
+    QImage     originalImage;
+    QString    imageFormat;
     QByteArray imageData;
 
-    if (rawFilesExt.toUpper().contains(fi.suffix().toUpper()) && !mInfo->useOriginalImageAsFullImage())
+    // Check if RAW file.
+    if (KPMetadata::isRawFile(path))
     {
         if (!KDcraw::loadDcrawPreview(originalImage, path))
         {
