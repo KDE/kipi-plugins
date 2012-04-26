@@ -58,7 +58,7 @@ class ActionThread : public QThread
 
 public:
 
-    explicit ActionThread(QObject* parent);
+    explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
     void setEnfuseVersion(const double version);
@@ -93,7 +93,6 @@ private:
                                const QString& alignPath, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
-    bool    isRawFile(const KUrl& url);
 
     bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                         const EnfuseSettings& settings,
