@@ -174,14 +174,10 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile) const
 {
     bool success = false;
 
-    // Raw housekeeping.
-    QString rawFilesExt(KDcraw::rawFiles());
-    QFileInfo info(imageFile.path());
-
     // Try to load the image into the d->image variable.
     bool imageLoaded = false;
 
-    if (rawFilesExt.toUpper().contains(info.suffix().toUpper()))
+    if (KPMetadata::isRawFile(imageFile))
     {
         // In case of raw images, load the image the a QImage and convert it to
         // the QPixmap for display.
