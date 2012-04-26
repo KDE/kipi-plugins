@@ -33,11 +33,9 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-// LibKDcraw includes
+// Local includes
 
-#include <libkdcraw/kdcraw.h>
-
-using namespace KDcrawIface;
+#include "kpmetadata.h"
 
 namespace KIPIRawConverterPlugin
 {
@@ -80,7 +78,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
             }
         }
 
-        if (!found && isRAWFile(imageUrl))
+        if (!found && KPMetadata::isRawFile(imageUrl))
         {
             new MyImageListViewItem(listView(), imageUrl);
         }
@@ -111,16 +109,6 @@ void MyImageList::slotRemoveItems()
         }
     }
     while(find);
-}
-
-bool MyImageList::isRAWFile(const KUrl& url)
-{
-    QString rawFilesExt(KDcraw::rawFiles());
-    QFileInfo fileInfo(url.path());
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
-        return true;
-
-    return false;
 }
 
 // ------------------------------------------------------------------------------------------------

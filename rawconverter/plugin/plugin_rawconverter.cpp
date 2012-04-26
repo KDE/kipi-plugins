@@ -48,6 +48,7 @@
 
 // Local includes
 
+#include "kpmetadata.h"
 #include "myimagelist.h"
 #include "singledialog.h"
 #include "batchdialog.h"
@@ -126,7 +127,7 @@ void Plugin_RawConverter::slotActivateSingle()
     if ( images.images().isEmpty() )
         return;
 
-    if (!MyImageList::isRAWFile(images.images()[0]))
+    if (!KPMetadata::isRawFile(images.images()[0]))
     {
         KMessageBox::error(kapp->activeWindow(),
                            i18n("\"%1\" is not a RAW file.", images.images()[0].fileName()));

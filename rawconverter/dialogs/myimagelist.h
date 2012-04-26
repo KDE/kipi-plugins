@@ -55,9 +55,6 @@ public:
     explicit MyImageList(QWidget* const parent = 0);
     virtual ~MyImageList();
 
-
-    static bool isRAWFile(const KUrl& url);
-
 public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
