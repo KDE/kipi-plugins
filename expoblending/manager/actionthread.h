@@ -98,7 +98,7 @@ private:
                         const EnfuseSettings& settings,
                         const QString& enfusePath, QString& errors);
 
-    QString getProcessError(KProcess* proc) const;
+    QString getProcessError(KProcess* const proc) const;
 
     float   getAverageSceneLuminance(const KUrl& url);
     bool    getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta);

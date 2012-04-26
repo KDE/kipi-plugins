@@ -129,7 +129,7 @@ public:
     }
 };
 
-ActionThread::ActionThread(QObject* parent)
+ActionThread::ActionThread(QObject* const parent)
             : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
@@ -798,7 +798,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     return false;
 }
 
-QString ActionThread::getProcessError(KProcess* proc) const
+QString ActionThread::getProcessError(KProcess* const proc) const
 {
     if (!proc) return QString();
 
