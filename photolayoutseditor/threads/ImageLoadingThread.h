@@ -26,43 +26,52 @@
 #ifndef IMAGELOADINGTHREAD_H
 #define IMAGELOADINGTHREAD_H
 
+// Qt includes
+
 #include <QThread>
 #include <QImage>
+
+// KDE includes
 
 #include <kurl.h>
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class ImageLoadingThread : public QThread
-    {
-            Q_OBJECT
 
-        public:
+class ImageLoadingThread : public QThread
+{
+    Q_OBJECT
 
-            explicit ImageLoadingThread(QObject* parent = 0);
-            ~ImageLoadingThread();
+public:
 
-            virtual void run();
+    explicit ImageLoadingThread(QObject* const parent = 0);
+    ~ImageLoadingThread();
 
-        Q_SIGNALS:
+    virtual void run();
 
-            void imageLoaded(const KUrl& url, const QImage& image);
+Q_SIGNALS:
 
-        public Q_SLOTS:
+    void imageLoaded(const KUrl& url, const QImage& image);
 
-            void setMaximumProgress(double limit);
-            void setImageUrl(const KUrl& url);
-            void setImagesUrls(const KUrl::List& urls);
+public Q_SLOTS:
 
-        private:
+    void setMaximumProgress(double limit);
+    void setImageUrl(const KUrl& url);
+    void setImagesUrls(const KUrl::List& urls);
 
-            void loadRaw(const KUrl& url);
-            void loadImage(const KUrl& url);
+private:
 
-            class ImageLoadingThreadPrivate;
-            friend class ImageLoadingThreadPrivate;
-            ImageLoadingThreadPrivate* d;
-    };
-}
+    void loadRaw(const KUrl& url);
+    void loadImage(const KUrl& url);
+
+private:
+
+    class ImageLoadingThreadPrivate;
+    ImageLoadingThreadPrivate* d;
+
+    friend class ImageLoadingThreadPrivate;
+};
+
+} // namespace KIPIPhotoLayoutsEditor
 
 #endif // IMAGELOADINGTHREAD_H
