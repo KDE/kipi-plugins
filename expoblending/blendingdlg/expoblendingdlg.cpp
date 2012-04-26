@@ -59,9 +59,7 @@ extern "C"
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>

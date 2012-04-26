@@ -32,9 +32,7 @@
 
 #include <kmenu.h>
 #include <klocale.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -95,6 +93,8 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     QRect srect             = desktop->availableGeometry(screen);
     resize(800 <= srect.width()  ? 800 : srect.width(),
            750 <= srect.height() ? 750 : srect.height());
+
+    // ---------------------------------------------------------------
 
     connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
             this, SLOT(slotIntroPageIsValid(bool)));
