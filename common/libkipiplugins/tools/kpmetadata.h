@@ -135,13 +135,14 @@ public:
 public:
 
     static bool moveSidecar(const KUrl& src, const KUrl& dest);
+    static bool isRawFile(const KUrl& url);
 
 private:
 
     void init();
 
 private:
-    
+
     Interface* m_iface;
 };
 
