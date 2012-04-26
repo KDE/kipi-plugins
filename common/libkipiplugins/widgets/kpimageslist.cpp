@@ -812,7 +812,7 @@ void KPImagesList::slotAddImages(const KUrl::List& list)
         if (d->allowDuplicate || !found)
         {
             // if RAW files are not allowed, skip the image
-            if (!d->allowRAW && isRAWFile(imageUrl.path()))
+            if (!d->allowRAW && KPMetadata::isRawFile(imageUrl))
             {
                 raw = true;
                 continue;
@@ -1173,20 +1173,6 @@ KPImagesListView* KPImagesList::listView() const
 Interface* KPImagesList::iface() const
 {
     return d->iface;
-}
-
-bool KPImagesList::isRAWFile(const QString& filePath) const
-{
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-
-    QFileInfo fileInfo(filePath);
-
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
-    {
-        return true;
-    }
-
-    return false;
 }
 
 void KPImagesList::slotImageListChanged()

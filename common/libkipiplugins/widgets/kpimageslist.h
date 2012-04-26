@@ -292,7 +292,6 @@ private Q_SLOTS:
 
 private:
 
-    bool isRAWFile(const QString& filePath) const;
     void setIconSize(int size);
 
 private:
