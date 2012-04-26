@@ -69,7 +69,7 @@ void PreProcessTask::requestAbort()
 
 void PreProcessTask::run()
 {
-    if (isRawFile(fileUrl.toLocalFile()))
+    if (KPMetadata::isRawFile(fileUrl))
     {
         preProcessedUrl->preprocessedUrl    = tmpDir;
 

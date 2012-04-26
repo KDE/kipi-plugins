@@ -37,12 +37,14 @@
 namespace KIPIPanoramaPlugin
 {
 
-Task::Task(QObject* parent, Action action, const KUrl& workDir)
+Task::Task(QObject* const parent, Action action, const KUrl& workDir)
     : Job(parent), action(action), successFlag(false), isAbortedFlag(false), tmpDir(workDir)
-{}
+{
+}
 
 Task::~Task()
-{}
+{
+}
 
 bool Task::success() const
 {
@@ -52,17 +54,6 @@ bool Task::success() const
 void Task::requestAbort()
 {
     isAbortedFlag = true;
-}
-
-bool Task::isRawFile(const KUrl& url)
-{
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-
-    QFileInfo fileInfo(url.toLocalFile());
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
-        return true;
-
-    return false;
 }
 
 QString Task::getProcessError(KProcess& proc)
