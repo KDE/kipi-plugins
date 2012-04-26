@@ -75,7 +75,7 @@ public:
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
-    : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
+    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
 {
     setModal(false);
     setWindowTitle(i18n("Exposure Blending Import Wizard"));
@@ -86,28 +86,15 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     d->preProcessingPage = new PreProcessingPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
 
-    // ---------------------------------------------------------------
-    // About data and help button.
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    setAboutData(new KPAboutData(*d->mngr->about()));
 
     // ---------------------------------------------------------------
 
     QDesktopWidget* desktop = QApplication::desktop();
-    int screen = desktop->screenNumber();
-    QRect srect = desktop->availableGeometry(screen);
+    int screen              = desktop->screenNumber();
+    QRect srect             = desktop->availableGeometry(screen);
     resize(800 <= srect.width()  ? 800 : srect.width(),
            750 <= srect.height() ? 750 : srect.height());
-//     resize(800, 580);
 
     connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
             this, SLOT(slotIntroPageIsValid(bool)));
@@ -124,11 +111,6 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 ImportWizardDlg::~ImportWizardDlg()
 {
     delete d;
-}
-
-void ImportWizardDlg::slotHelp()
-{
-    KToolInvocation::invokeHelp("expoblending", "kipi-plugins");
 }
 
 Manager* ImportWizardDlg::manager() const

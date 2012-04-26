@@ -62,8 +62,6 @@ public:
                             "(c) 2010-2011, Jens Mueller\n"
                             "(c) 2012, Smit Mehta"))
     {
-         handbookEntry = QString("dngconverter");
-
          addAuthor(ki18n("Gilles Caulier"),
                    ki18n("Author"),
                    "caulier dot gilles at gmail dot com");
@@ -75,6 +73,8 @@ public:
          addAuthor(ki18n("Smit Mehta"),
                    ki18n("Developer"),
                    "smit dot meh at gmail dot com");
+
+        handbookEntry = QString("dngconverter");
     }
 
     ~DNGConverterAboutData(){}

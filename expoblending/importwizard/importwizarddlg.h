@@ -32,11 +32,11 @@
 // KDE includes
 
 #include <kurl.h>
-#include <kassistantdialog.h>
 
 // Local includes
 
 #include "actions.h"
+#include "kptooldialog.h"
 
 class KPageWidgetItem;
 
@@ -53,7 +53,7 @@ namespace KIPIExpoBlendingPlugin
 class Manager;
 class ExpoBlendingAboutData;
 
-class ImportWizardDlg : public KAssistantDialog
+class ImportWizardDlg : public KPWizardDialog
 {
     Q_OBJECT
 
@@ -74,7 +74,6 @@ private Q_SLOTS:
     void slotIntroPageIsValid(bool);
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);
-    void slotHelp();
 
 private:
 
