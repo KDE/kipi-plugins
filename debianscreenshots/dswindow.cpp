@@ -45,6 +45,7 @@
 
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
+#include "kpmetadata.h"
 #include "kpprogresswidget.h"
 
 // Local includes
@@ -111,7 +112,7 @@ DsWindow::DsWindow(Interface* const interface, const QString& tmpFolder, QWidget
                               ki18n("(c) 2010, Pau Garcia i Quiles\n"));
 
     about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
-                       "pgquiles at elpauer dot org");
+                     "pgquiles at elpauer dot org");
 
     about->handbookEntry = QString("debianscreenshots");
     setAboutData(about);
@@ -273,9 +274,7 @@ void DsWindow::uploadNextPhoto()
     }
 
     // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(imgPath);
-    if( rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()) )
+    if( KPMetadata::isRawFile(imgPath) )
     {
         massageRequired = DsWindow::ImageIsRaw;
     }
