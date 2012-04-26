@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ class CalPainter : public QObject, public QPainter
 
 public:
 
-    CalPainter(QPaintDevice* pd);
+    CalPainter(QPaintDevice* const pd);
     virtual ~CalPainter();
 
     void setImage(const KUrl& imagePath, KPMetadata::ImageOrientation orientation);
