@@ -106,7 +106,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
     static_cast<QFSFileEngine*>(m_tmpFile.fileEngine())->rename(tmp);
 #endif
 
-    if (Utils::isRAW(src))
+    if (KPMetadata::isRawFile(src))
     {
         err = i18n("Cannot convert to gray scale RAW file");
         return false;

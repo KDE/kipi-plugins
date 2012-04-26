@@ -39,7 +39,7 @@ class Utils : public QObject
 
 public:
 
-    Utils(QObject* parent);
+    Utils(QObject* const parent);
     ~Utils();
 
     bool updateMetadataImageMagick(const QString& src, QString& err);
@@ -49,10 +49,6 @@ public: // Static methods.
     /** Test if a file is a JPEG file.
     */
     static bool isJPEG(const QString& file);
-
-    /** Test if a file is a RAW file supported by dcraw.
-    */
-    static bool isRAW(const QString& file);
 
     /** POSIX Compliant File Copy and Move -
         Can't use KIO based operations as we need to use these in a thread

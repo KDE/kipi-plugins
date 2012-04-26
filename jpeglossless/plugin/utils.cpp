@@ -70,7 +70,7 @@ using namespace KIPIPlugins;
 namespace KIPIJPEGLossLessPlugin
 {
 
-Utils::Utils(QObject *parent)
+Utils::Utils(QObject* const parent)
     : QObject(parent)
 {
 }
@@ -198,16 +198,6 @@ bool Utils::isJPEG(const QString& file)
 {
     QString format = QString(QImageReader::imageFormat(file)).toUpper();
     return format=="JPEG";
-}
-
-bool Utils::isRAW(const QString& file)
-{
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(file);
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
-        return true;
-
-    return false;
 }
 
 bool Utils::copyOneFile(const QString& src, const QString& dst)
