@@ -58,11 +58,14 @@
 
 #include "calsettings.h"
 #include "kpimagedialog.h"
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPICalendarPlugin
 {
 
-MonthWidget::MonthWidget(KIPI::Interface* interface, QWidget* parent, int month)
+MonthWidget::MonthWidget(Interface* const interface, QWidget* const parent, int month)
     : QPushButton(parent), thumbSize(64, 64), interface_(interface)
 {
     setAcceptDrops(true);
@@ -78,7 +81,6 @@ MonthWidget::MonthWidget(KIPI::Interface* interface, QWidget* parent, int month)
 
     connect(this, SIGNAL(pressed()), 
             this, SLOT(monthSelected()));
-    
 }
 
 MonthWidget::~MonthWidget()
@@ -97,7 +99,7 @@ void MonthWidget::paintEvent(QPaintEvent* event)
     QPushButton::paintEvent(event);
     QPainter painter(this);
     QString name = KGlobal::locale()->calendar()->monthName(
-                       month_, CalSettings::instance()->year(), KCalendarSystem::ShortName);
+                   month_, CalSettings::instance()->year(), KCalendarSystem::ShortName);
 
     cr = contentsRect();
     cr.setBottom(70);
@@ -142,12 +144,9 @@ void MonthWidget::setImage(const KUrl& url)
     }
 
     // check if the file is an image
-    QFileInfo fi(url.path());
 
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-
-    // Check if RAW image.
-    if (!rawFilesExt.toUpper().contains(fi.suffix().toUpper()))
+    // Check if RAW file.
+    if (KPMetadata::isRawFile(url))
     {
         // Check if image can be loaded by native Qt loader.
         if (QImageReader::imageFormat(url.path()).isEmpty())
@@ -200,7 +199,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
 
     if (event->button() == Qt::LeftButton)
     {
-        KIPIPlugins::KPImageDialog dlg(this, true);
+        KPImageDialog dlg(this, true);
         setImage(dlg.url());
     }
     else if (event->button() == Qt::RightButton)
