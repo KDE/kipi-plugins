@@ -11,7 +11,7 @@
  * GUI based on PicasaWeb KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -164,9 +164,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
 
-    /*
-     * Album box
-     */
+    // -- Album box --------------------------------------------------------------------------
 
     m_albumsBox      = new QGroupBox(i18n("Album"), settingsBox);
     m_albumsBox->setWhatsThis(
@@ -300,10 +298,8 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
+    // -- Layouts ---------------------------------------------------------------------
 
-    /*
-     * Layouts
-     */
     settingsBoxLayout->addWidget(m_headerLabel);
     settingsBoxLayout->addWidget(m_accountBox);
     settingsBoxLayout->addWidget(m_albumsBox);
@@ -367,16 +363,13 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
 
-    /*
-     * UI slots
-     */
+    // -- UI slots -----------------------------------------------------------------------
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()) );
 
-    /*
-     * Talker slots
-     */
+    // -- Talker slots -------------------------------------------------------------------
+
     connect(&m_talker, SIGNAL(signalError()),
             this, SLOT(slotError()));
 
@@ -789,14 +782,10 @@ void YandexFotkiWindow::updateNextPhoto()
 
         if (!photo.originalUrl().isNull())
         {
-            const QFileInfo fileInfo(photo.originalUrl());
-
-            // check if we have to RAW file -> use preview image then
-            QString rawFilesExt(KDcraw::rawFiles());
-            bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-
             QImage image;
 
+            // check if we have to RAW file -> use preview image then
+            bool isRAW = KPMetadata::isRawFile(photo.originalUrl());
             if (isRAW)
             {
                 KDcraw::loadDcrawPreview(image, photo.originalUrl());
