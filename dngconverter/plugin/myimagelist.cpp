@@ -35,9 +35,7 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
-
-using namespace KDcrawIface;
+#include "kpmetadata.h"
 
 namespace KIPIDNGConverterPlugin
 {
@@ -116,13 +114,13 @@ void MyImageList::slotRemoveItems()
 
 bool MyImageList::isValidRAWFile(const KUrl& url) const
 {
-
-    QString rawFilesExt(KDcraw::rawFiles());
-    QFileInfo fileInfo(url.path());
-    if (fileInfo.suffix().toUpper() != QString("DNG"))
+    if (KPMetadata::isRawFile(url))
     {
-        if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
+        QFileInfo fileInfo(url.path());
+        if (fileInfo.suffix().toUpper() != QString("DNG"))
+        {
             return true;
+        }
     }
 
     return false;
