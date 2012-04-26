@@ -58,7 +58,7 @@ class LoadThread : public QThread
 
 public:
 
-    LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl& path,
+    LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const KUrl& path,
                KPMetadata::ImageOrientation orientation, int width, int height);
     ~LoadThread();
 
