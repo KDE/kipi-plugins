@@ -33,7 +33,6 @@ namespace KIPIExpoBlendingPlugin
 {
 
 class Manager;
-class LastPagePriv;
 
 class LastPage : public KPWizardPage
 {
