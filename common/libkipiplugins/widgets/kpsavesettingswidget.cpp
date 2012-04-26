@@ -67,8 +67,8 @@ public:
     QRadioButton* promptButton;
 };
 
-KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* parent)
-                  : QWidget(parent), d(new KPSaveSettingsWidgetPriv)
+KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
+    : QWidget(parent), d(new KPSaveSettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -92,8 +92,8 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* parent)
     slotPopulateImageFormat(false);
 
     d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
-    QWidget *conflictBox   = new QWidget(this);
-    QVBoxLayout *vlay      = new QVBoxLayout(conflictBox);
+    QWidget* conflictBox   = new QWidget(this);
+    QVBoxLayout* vlay      = new QVBoxLayout(conflictBox);
     d->conflictButtonGroup = new QButtonGroup(conflictBox);
     d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
     d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), conflictBox);
@@ -127,7 +127,7 @@ KPSaveSettingsWidget::~KPSaveSettingsWidget()
     delete d;
 }
 
-void KPSaveSettingsWidget::setCustomSettingsWidget(QWidget* custom)
+void KPSaveSettingsWidget::setCustomSettingsWidget(QWidget* const custom)
 {
     d->grid->addWidget(custom, 3, 0, 1, 2);
 }
@@ -166,7 +166,7 @@ void KPSaveSettingsWidget::setConflictRule(ConflictRule r)
 void KPSaveSettingsWidget::readSettings(KConfigGroup& group)
 {
     setFileFormat((KPSaveSettingsWidget::OutputFormat)group.readEntry("Output Format", (int)(KPSaveSettingsWidget::OUTPUT_PNG)));
-    setConflictRule((KPSaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(KPSaveSettingsWidget::OVERWRITE)));
+    setConflictRule((KPSaveSettingsWidget::ConflictRule)group.readEntry("Conflict",    (int)(KPSaveSettingsWidget::OVERWRITE)));
 }
 
 void KPSaveSettingsWidget::writeSettings(KConfigGroup& group)
