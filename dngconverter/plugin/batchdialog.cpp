@@ -312,12 +312,10 @@ void BatchDialog::slotIdentify()
         else
         {
             int i        = 0;
-            QFileInfo* a = 0;
             QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
+            QFileInfo a(dest);
 
-            a = new QFileInfo(dest);
-
-            bool fileNotFound = (a->exists());
+            bool fileNotFound = (a.exists());
 
             if (!fileNotFound)
             {
@@ -328,8 +326,8 @@ void BatchDialog::slotIdentify()
             {
                 while(fileNotFound)
                 {
-                    a = new QFileInfo(dest);
-                    if (!a->exists())
+                    a = QFileInfo(dest);
+                    if (!a.exists())
                     {
                         fileNotFound = false;
                     }
