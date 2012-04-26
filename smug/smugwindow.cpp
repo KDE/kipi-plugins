@@ -765,12 +765,10 @@ void SmugWindow::uploadNextPhoto()
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
 
-    // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(imgPath);
-    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
     bool res;
 
+    // check if we have to RAW file -> use preview image then
+    bool isRAW = KPMetadata::isRawFile(imgPath);
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW))
