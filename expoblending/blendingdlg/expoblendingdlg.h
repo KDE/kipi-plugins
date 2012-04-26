@@ -46,6 +46,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {

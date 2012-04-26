@@ -88,7 +88,6 @@ extern "C"
 #include "kppreviewmanager.h"
 #include "kpsavesettingswidget.h"
 
-using namespace KIPIPlugins;
 using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
