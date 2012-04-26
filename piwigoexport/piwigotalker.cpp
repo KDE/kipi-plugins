@@ -7,10 +7,10 @@
 * Description : a plugin to export to a remote Piwigo server.
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
-* Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+* Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
 * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
-* Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
-* Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+* Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+* Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
 * This program is free software; you can redistribute it
 * and/or modify it under the terms of the GNU General
@@ -61,7 +61,7 @@ namespace KIPIPiwigoExportPlugin
 
 QString PiwigoTalker::s_authToken = "";
 
-PiwigoTalker::PiwigoTalker(QWidget* parent)
+PiwigoTalker::PiwigoTalker(QWidget* const parent)
     : m_parent(parent),  m_job(0),  m_loggedIn(false), m_version(-1)
 {
 }
@@ -182,16 +182,14 @@ bool PiwigoTalker::addPhoto(int   albumId,
     QImage image;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fi(photoPath);
-
-    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    if (KPMetadata::isRawFile(photoPath))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
 
     if (!image.isNull())
     {
+        QFileInfo fi(photoPath);
         QImage thumbnail = image.scaled(thumbDim, thumbDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         m_thumbpath      = KStandardDirs::locateLocal("tmp", "thumb-" + KUrl(photoPath).fileName());
         thumbnail.save(m_thumbpath, "JPEG", 95);
