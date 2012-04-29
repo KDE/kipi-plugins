@@ -6,6 +6,7 @@
  * Date        : 2008-09-24
  * Description : DNG converter batch dialog
  *
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -64,7 +65,7 @@ private:
 
     void busy(bool busy);
 
-    void processOne();
+    void processAll();
     void processed(const KUrl& url, const QString& tmpFile);
     void processingFailed(const KUrl& url);
 
@@ -74,7 +75,12 @@ private Q_SLOTS:
     void slotClose();
     void slotStartStop();
     void slotAborted();
+    void slotThreadFinished();
+
+    /** Set Identity and Target file.
+     */
     void slotIdentify();
+
     void slotAction(const KIPIDNGConverterPlugin::ActionData&);
 
 private:

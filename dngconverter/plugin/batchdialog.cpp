@@ -6,6 +6,7 @@
  * Date        : 2008-09-24
  * Description : DNG converter batch dialog
  *
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
  * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
@@ -84,19 +85,19 @@ public:
         settingsBox = 0;
     }
 
-    bool                   busy;
+    bool              busy;
 
-    QWidget*               page;
+    QWidget*          page;
 
-    QStringList            fileList;
+    QStringList       fileList;
 
-    KPProgressWidget*      progressBar;
+    KPProgressWidget* progressBar;
 
-    MyImageList*           listView;
+    MyImageList*      listView;
 
-    ActionThread*          thread;
+    ActionThread*     thread;
 
-    SettingsWidget*        settingsBox;
+    SettingsWidget*   settingsBox;
 };
 
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
@@ -116,12 +117,8 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
     //---------------------------------------------
 
-    d->listView = new MyImageList(d->page);
-
-    // ---------------------------------------------------------------
-
+    d->listView    = new MyImageList(d->page);
     d->settingsBox = new SettingsWidget(d->page);
-
     d->progressBar = new KPProgressWidget(d->page);
     d->progressBar->setMaximumHeight(fontMetrics().height()+2);
     d->progressBar->hide();
@@ -138,6 +135,15 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
     d->thread = new ActionThread(this);
 
+    connect(d->thread, SIGNAL(signalStarting(KIPIDNGConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
+
+    connect(d->thread, SIGNAL(signalFinished(KIPIDNGConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
+
+    connect(d->thread, SIGNAL(finished()),
+            this, SLOT(slotThreadFinished()));
+
     // ---------------------------------------------------------------
 
     connect(this, SIGNAL(closeClicked()),
@@ -149,17 +155,14 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-    connect(d->thread, SIGNAL(starting(KIPIDNGConverterPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
-
-    connect(d->thread, SIGNAL(finished(KIPIDNGConverterPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIDNGConverterPlugin::ActionData)));
-
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotStartStop()));
+
+    connect(d->settingsBox, SIGNAL(buttonChanged(int)),
+            this, SLOT(slotIdentify()));
 
     // ---------------------------------------------------------------
 
@@ -189,6 +192,7 @@ void BatchDialog::slotClose()
     if (d->busy) slotStartStop();
     saveSettings();
     d->listView->listView()->clear();
+    d->fileList.clear();
     done(Close);
 }
 
@@ -202,13 +206,11 @@ void BatchDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("DNGConverter Settings"));
 
-    d->settingsBox->setBackupOriginalRawFile(group.readEntry("BackupOriginalRawFile", false));
-    d->settingsBox->setCompressLossLess(group.readEntry("CompressLossLess", true));
-    d->settingsBox->setUpdateFileDate(group.readEntry("UpdateFileDate", false));
-    d->settingsBox->setCompressLossLess(group.readEntry("PreviewMode", (int)(DNGWriter::MEDIUM)));
-    d->settingsBox->setConflictRule(
-        (SettingsWidget::ConflictRule)group.readEntry("Conflict",
-            (int)(SettingsWidget::OVERWRITE)));
+    d->settingsBox->setBackupOriginalRawFile(group.readEntry("BackupOriginalRawFile",         false));
+    d->settingsBox->setCompressLossLess(group.readEntry("CompressLossLess",                   true));
+    d->settingsBox->setUpdateFileDate(group.readEntry("UpdateFileDate",                       false));
+    d->settingsBox->setCompressLossLess(group.readEntry("PreviewMode",                        (int)(DNGWriter::MEDIUM)));
+    d->settingsBox->setConflictRule((SettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SettingsWidget::OVERWRITE)));
 
     KConfigGroup group2 = config.group(QString("Batch DNG Converter Dialog"));
     restoreDialogSize(group2);
@@ -266,7 +268,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->progressScheduled(i18n("DNG Converter"), true, true);
         d->progressBar->progressThumbnailChanged(KIcon("dngconverter").pixmap(22));
 
-        processOne();
+        processAll();
     }
     else
     {
@@ -292,18 +294,60 @@ void BatchDialog::slotAborted()
     d->progressBar->progressCompleted();
 }
 
-/// Set Identity and Target file
 void BatchDialog::slotIdentify()
 {
     KUrl::List urlList = d->listView->imageUrls(true);
 
-    for (KUrl::List::const_iterator  it = urlList.constBegin();
-         it != urlList.constEnd(); ++it)
+    for (KUrl::List::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
-        QString dest              = fi.completeBaseName() + QString(".dng");
-        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
-        if (item) item->setDestFileName(dest);
+
+        if(d->settingsBox->conflictRule() == SettingsWidget::OVERWRITE)
+        {
+            QString dest              = fi.completeBaseName() + QString(".dng");
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+            if (item) item->setDestFileName(dest);
+        }
+
+        else
+        {
+            int i        = 0;
+            QFileInfo* a = 0;
+            QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
+
+            a = new QFileInfo(dest);
+
+            bool fileNotFound = (a->exists());
+
+            if (!fileNotFound)
+            {
+                dest = fi.completeBaseName() + QString(".dng");
+            }
+
+            else
+            {
+                while(fileNotFound)
+                {
+                    a = new QFileInfo(dest);
+                    if (!a->exists())
+                    {
+                        fileNotFound = false;
+                        kDebug() << "m in non existing mode" << i;
+                    }
+                    else
+                    {
+                        i++;
+                        dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString("_") + QString::number(i) + QString(".dng");
+                        kDebug() << "m in existing mode" << i;
+                    }
+                }
+
+                dest = fi.completeBaseName() + QString("_") + QString::number(i) + QString(".dng");
+            }
+
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+            if (item) item->setDestFileName(dest);
+        }
     }
 
     if (!urlList.empty())
@@ -314,27 +358,23 @@ void BatchDialog::slotIdentify()
     }
 }
 
-void BatchDialog::processOne()
+void BatchDialog::processAll()
 {
-    if (d->fileList.empty())
-    {
-        busy(false);
-        slotAborted();
-        return;
-    }
-
-    QString file(d->fileList.first());
-    d->fileList.pop_front();
-
     d->thread->setBackupOriginalRawFile(d->settingsBox->backupOriginalRawFile());
     d->thread->setCompressLossLess(d->settingsBox->compressLossLess());
     d->thread->setPreviewMode(d->settingsBox->previewMode());
     d->thread->setUpdateFileDate(d->settingsBox->updateFileDate());
-    d->thread->processRawFile(KUrl(file));
+    d->thread->processRawFiles(d->listView->imageUrls(true));
     if (!d->thread->isRunning())
     {
         d->thread->start();
     }
+}
+
+void BatchDialog::slotThreadFinished()
+{
+    busy(false);
+    slotAborted();
 }
 
 void BatchDialog::busy(bool busy)
@@ -345,14 +385,14 @@ void BatchDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply, KIcon("process-stop"));
-        setButtonText(Apply, i18n("&Abort"));
+        setButtonIcon(Apply,    KIcon("process-stop"));
+        setButtonText(Apply,    i18n("&Abort"));
         setButtonToolTip(Apply, i18n("Abort the conversion of Raw files."));
     }
     else
     {
-        setButtonIcon(Apply, KIcon("system-run"));
-        setButtonText(Apply, i18n("Con&vert"));
+        setButtonIcon(Apply,    KIcon("system-run"));
+        setButtonText(Apply,    i18n("Con&vert"));
         setButtonToolTip(Apply, i18n("Start converting the Raw images using the current settings."));
     }
 
@@ -366,58 +406,40 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
     MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
     if (!item) return;
+
     QString destFile(item->destPath());
 
     if (d->settingsBox->conflictRule() != SettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
+
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
-            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
-                                  url.fileName()),
-                                  tmpFile, destFile,
-                                  KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
-
-            switch (dlg.exec())
-            {
-                case KIO::R_CANCEL:
-                case KIO::R_SKIP:
-                {
-                    destFile.clear();
-                    d->listView->cancelProcess();
-                    break;
-                }
-                case KIO::R_RENAME:
-                {
-                    destFile = dlg.newDestUrl().path();
-                    break;
-                }
-                default:    // Overwrite.
-                    break;
-            }
+            item->setStatus(QString("Failed to save image"));
         }
     }
+
 
     if (!destFile.isEmpty())
     {
         if (KPMetadata::hasSidecar(tmpFile))
         {
-            if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
-                            KPMetadata::sidecarPath(destFile)) != 0)
+            if (!KPMetadata::moveSidecar(KUrl(tmpFile), KUrl(destFile)))
             {
-                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+                item->setStatus(QString("Failed to move sidecar"));
             }
         }
 
-        if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
+        if (KDE::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image %1", destFile));
+            item->setStatus(QString("Failed to save image."));
             d->listView->processed(url, false);
         }
         else
         {
             item->setDestFileName(QFileInfo(destFile).fileName());
             d->listView->processed(url, true);
+            item->setStatus(QString("Success"));
 
             // Assign Kipi host attributes from original RAW image.
 
@@ -444,7 +466,9 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
         switch (ad.action)
         {
             case(IDENTIFY):
+            {
                 break;
+            }
             case(PROCESS):
             {
                 busy(true);
@@ -466,11 +490,12 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             switch (ad.action)
             {
                 case(IDENTIFY):
+                {
                     break;
+                }
                 case(PROCESS):
                 {
                     processingFailed(ad.fileUrl);
-                    processOne();
                     break;
                 }
                 default:
@@ -496,7 +521,6 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
                 case(PROCESS):
                 {
                     processed(ad.fileUrl, ad.destPath);
-                    processOne();
                     break;
                 }
                 default:

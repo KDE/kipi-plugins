@@ -41,6 +41,8 @@ MyImageList::MyImageList(QWidget* const parent)
                           i18n("Target File"), true);
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(IDENTIFICATION),
                           i18n("Camera"), true);
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(STATUS),
+                          i18n("Status"), true);
 }
 
 MyImageList::~MyImageList()
@@ -134,9 +136,15 @@ QString MyImageListViewItem::identity() const
     return m_identity;
 }
 
+void MyImageListViewItem::setStatus(const QString& str)
+{
+    m_status = str;
+    setText(MyImageList::STATUS, m_status);
+}
+
 QString MyImageListViewItem::destPath() const
 {
-    QString path = url().directory() + '/' + destFileName();
+    QString path = url().directory() + QString("/") + destFileName();
     return path;
 }
 

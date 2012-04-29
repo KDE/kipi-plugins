@@ -767,31 +767,6 @@ TimeAdjustSettings TimeAdjustDialog::settings() const
     return settings;
 }
 
-QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
-{
-    int sign = 0;
-
-    switch (d->adjTypeChooser->currentIndex())
-    {
-        case TimeAdjustSettings::ADDVALUE:
-            sign = 1;
-            break;
-        case TimeAdjustSettings::SUBVALUE:
-            sign = -1;
-            break;
-        default: // TimeAdjustSettings::COPYVALUE
-            return originalTime;
-    };
-
-    const QTime& adjTime = d->adjTimeInput->time();
-    int seconds          = adjTime.second();
-    seconds             += 60*adjTime.minute();
-    seconds             += 60*60*adjTime.hour();
-    seconds             += 24*60*60*d->adjDaysInput->value();
-
-    return originalTime.addSecs(sign * seconds);
-}
-
 void TimeAdjustDialog::slotButtonClicked(int button)
 {
     emit buttonClicked(static_cast<KDialog::ButtonCode>(button));
@@ -904,6 +879,8 @@ void TimeAdjustDialog::slotUpdateListView()
 
     d->listView->setItemDates(d->itemsUsedMap, MyImageList::TIMESTAMP_USED, prm);
 
+    // TODO : this loop can take a while, especially when items mist is huge.
+    //        Moving this loop code to ActionThread is the right way for the future.
     foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         d->itemsUpdatedMap.insert(url, calculateAdjustedTime(d->itemsUsedMap.value(url)));
@@ -912,6 +889,31 @@ void TimeAdjustDialog::slotUpdateListView()
     d->listView->setItemDates(d->itemsUpdatedMap, MyImageList::TIMESTAMP_UPDATED, prm);
 
     kapp->restoreOverrideCursor();
+}
+
+QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
+{
+    int sign = 0;
+
+    switch (d->adjTypeChooser->currentIndex())
+    {
+        case TimeAdjustSettings::ADDVALUE:
+            sign = 1;
+            break;
+        case TimeAdjustSettings::SUBVALUE:
+            sign = -1;
+            break;
+        default: // TimeAdjustSettings::COPYVALUE
+            return originalTime;
+    };
+
+    const QTime& adjTime = d->adjTimeInput->time();
+    int seconds          = adjTime.second();
+    seconds             += 60*adjTime.minute();
+    seconds             += 60*60*adjTime.hour();
+    seconds             += 24*60*60*d->adjDaysInput->value();
+
+    return originalTime.addSecs(sign * seconds);
 }
 
 }  // namespace KIPITimeAdjustPlugin
