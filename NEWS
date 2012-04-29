@@ -61,4 +61,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 041 ==> 163991 : Import images from Picasa WebAlbum.
 042 ==> 285070 : Change Date and Time dialog should warn when no tag to change is selected.
 043 ==> 143886 : Replace add and substract in "adjust time and date" menu with positive/negative times.
-044 ==> 
+044 ==> 296776 : Crash while trying to send pictures via default email software (kipi).
+045 ==> 
+
