@@ -11,7 +11,7 @@
  * GUI based on PicasaWeb KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -110,7 +110,7 @@ const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 
 YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
                                      bool import, QWidget* const parent)
-    : KDialog(parent)
+    : KPToolDialog(parent)
 {
     m_interface = interface;
     m_import    = import;
@@ -164,9 +164,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
 
-    /*
-     * Album box
-     */
+    // -- Album box --------------------------------------------------------------------------
 
     m_albumsBox      = new QGroupBox(i18n("Album"), settingsBox);
     m_albumsBox->setWhatsThis(
@@ -300,10 +298,8 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
+    // -- Layouts ---------------------------------------------------------------------
 
-    /*
-     * Layouts
-     */
     settingsBoxLayout->addWidget(m_headerLabel);
     settingsBoxLayout->addWidget(m_accountBox);
     settingsBoxLayout->addWidget(m_albumsBox);
@@ -341,42 +337,29 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
         optionsBox->hide();
     }
 
-    KPAboutData* about = new KPAboutData(
-        ki18n("Yandex.Fotki Plugin"),
-        0,
-        KAboutData::License_GPL,
-        ki18n("A Kipi plugin to export image collections to "
-              "Yandex.Fotki web service."),
-        ki18n( "(c) 2007-2009, Vardhman Jain\n"
-               "(c) 2008-2012, Gilles Caulier\n"
-               "(c) 2009, Luka Renko\n"
-               "(c) 2010, Roman Tsisyk" )
-    );
+    KPAboutData* about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to "
+                                               "Yandex.Fotki web service."),
+                                         ki18n("(c) 2007-2009, Vardhman Jain\n"
+                                               "(c) 2008-2012, Gilles Caulier\n"
+                                               "(c) 2009, Luka Renko\n"
+                                               "(c) 2010, Roman Tsisyk"));
 
     about->addAuthor(ki18n( "Roman Tsisyk" ), ki18n("Author"),
                      "roman at tsisyk dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()) );
+    about->handbookEntry = QString("YandexFotki");
+    setAboutData(about);
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
-
-    /*
-     * UI slots
-     */
+    // -- UI slots -----------------------------------------------------------------------
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()) );
 
-    /*
-     * Talker slots
-     */
+    // -- Talker slots -------------------------------------------------------------------
+
     connect(&m_talker, SIGNAL(signalError()),
             this, SLOT(slotError()));
 
@@ -577,11 +560,6 @@ void YandexFotkiWindow::slotResizeChecked()
 {
     m_dimensionSpin->setEnabled(m_resizeCheck->isChecked());
     m_imageQualitySpin->setEnabled(m_resizeCheck->isChecked());
-}
-
-void YandexFotkiWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("YandexFotki", "kipi-plugins");
 }
 
 /*
@@ -789,14 +767,10 @@ void YandexFotkiWindow::updateNextPhoto()
 
         if (!photo.originalUrl().isNull())
         {
-            const QFileInfo fileInfo(photo.originalUrl());
-
-            // check if we have to RAW file -> use preview image then
-            QString rawFilesExt(KDcraw::rawFiles());
-            bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-
             QImage image;
 
+            // check if we have to RAW file -> use preview image then
+            bool isRAW = KPMetadata::isRawFile(photo.originalUrl());
             if (isRAW)
             {
                 KDcraw::loadDcrawPreview(image, photo.originalUrl());

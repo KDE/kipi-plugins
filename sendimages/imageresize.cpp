@@ -124,8 +124,7 @@ bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
     QImage img;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcraw::rawFiles());
-    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    if (KPMetadata::isRawFile(orgUrl))
         KDcraw::loadDcrawPreview(img, orgUrl.path());
     else
         img.load(orgUrl.path());

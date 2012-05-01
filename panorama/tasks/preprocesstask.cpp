@@ -42,7 +42,7 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-PreProcessTask::PreProcessTask(QObject* parent, const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
+PreProcessTask::PreProcessTask(QObject* const parent, const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
                                const KUrl& sourceUrl, const RawDecodingSettings& rawSettings)
     : Task(parent, PREPROCESS_INPUT, workDir), id(id),
       fileUrl(sourceUrl), preProcessedUrl(&targetUrls), settings(rawSettings)
@@ -69,9 +69,9 @@ void PreProcessTask::requestAbort()
 
 void PreProcessTask::run()
 {
-    if (isRawFile(fileUrl.toLocalFile()))
+    if (KPMetadata::isRawFile(fileUrl))
     {
-        preProcessedUrl->preprocessedUrl    = tmpDir;
+        preProcessedUrl->preprocessedUrl = tmpDir;
 
         if (!convertRaw())
         {
@@ -82,10 +82,10 @@ void PreProcessTask::run()
     else
     {
         // NOTE: in this case, preprocessed Url is the original file Url.
-        preProcessedUrl->preprocessedUrl    = fileUrl;
+        preProcessedUrl->preprocessedUrl = fileUrl;
     }
 
-    preProcessedUrl->previewUrl             = tmpDir;
+    preProcessedUrl->previewUrl          = tmpDir;
 
     if (!computePreview(preProcessedUrl->preprocessedUrl))
     {
@@ -131,7 +131,7 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
 bool PreProcessTask::convertRaw()
 {
     const KUrl& inUrl = fileUrl;
-    KUrl &outUrl = preProcessedUrl->preprocessedUrl;
+    KUrl &outUrl      = preProcessedUrl->preprocessedUrl;
 
     int        width, height, rgbmax;
     QByteArray imageData;

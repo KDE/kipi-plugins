@@ -31,6 +31,12 @@
 #include <klocale.h>
 #include <kdebug.h>
 
+// Local includes
+
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -115,7 +121,7 @@ void CopyFilesTask::run()
         kDebug() << "Copying converted RAW files...";
         for (ItemUrlsMap::iterator i = (ItemUrlsMap::iterator) urlList->begin(); i != urlList->end(); ++i)
         {
-            if (isRawFile(i.key()))
+            if (KPMetadata::isRawFile(i.key()))
             {
                 KUrl finalImgUrl(finalPanoUrl);
                 finalImgUrl.setFileName(i->preprocessedUrl.fileName());

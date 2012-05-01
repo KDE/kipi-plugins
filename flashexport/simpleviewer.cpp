@@ -482,8 +482,7 @@ void SimpleViewer::processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
         d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), StartingMessage);
 
         // Check if RAW file.
-        QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-        if (rawFilesExt.toUpper().contains( fi.suffix().toUpper()))
+        if (KPMetadata::isRawFile(url))
             KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
         else
             image.load(url.path());

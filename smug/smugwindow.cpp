@@ -75,7 +75,7 @@ namespace KIPISmugPlugin
 
 SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
                        bool import, QWidget* const /*parent*/)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -126,27 +126,19 @@ SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    m_about = new KPAboutData(ki18n("Smug Import/Export"), 0,
-                      KAboutData::License_GPL,
-                      ki18n("A Kipi plugin to import/export image collections "
-                            "from/to the SmugMug web service."),
-                      ki18n("(c) 2005-2008, Vardhman Jain\n"
-                            "(c) 2008-2012, Gilles Caulier\n"
-                            "(c) 2008-2009, Luka Renko"));
+    KPAboutData* about = new KPAboutData(ki18n("Smug Import/Export"), 0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to import/export image collections "
+                                   "from/to the SmugMug web service."),
+                             ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                   "(c) 2008-2012, Gilles Caulier\n"
+                                   "(c) 2008-2009, Luka Renko"));
 
-    m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
-                       "lure at kubuntu dot org");
+    about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
+                     "lure at kubuntu dot org");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()) );
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("smug");
+    setAboutData(about);
 
     // ------------------------------------------------------------------------
 
@@ -191,6 +183,7 @@ SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
 
     connect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<SmugPhoto>)),
             this, SLOT(slotListPhotosDone(int,QString,QList<SmugPhoto>)));
+
     connect(m_talker, SIGNAL(signalListAlbumTmplDone(int,QString,QList<SmugAlbumTmpl>)),
             this, SLOT(slotListAlbumTmplDone(int,QString,QList<SmugAlbumTmpl>)));
 
@@ -236,15 +229,9 @@ SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
 SmugWindow::~SmugWindow()
 {
     delete m_talker;
-    delete m_about;
 }
 
-void SmugWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("smug", "kipi-plugins");
-}
-
-void SmugWindow::closeEvent(QCloseEvent *e)
+void SmugWindow::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
 
@@ -765,12 +752,10 @@ void SmugWindow::uploadNextPhoto()
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
 
-    // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(imgPath);
-    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
     bool res;
 
+    // check if we have to RAW file -> use preview image then
+    bool isRAW = KPMetadata::isRawFile(imgPath);
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW))

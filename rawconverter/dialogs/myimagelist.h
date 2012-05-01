@@ -23,6 +23,10 @@
 #ifndef MYIMAGELIST_H
 #define MYIMAGELIST_H
 
+// KDE includes
+
+#include <kurl.h>
+
 // Local includes
 
 #include "kpimageslist.h"
@@ -42,7 +46,8 @@ public:
     enum FieldType
     {
         TARGETFILENAME = KPImagesListView::User1,
-        IDENTIFICATION = KPImagesListView::User2
+        IDENTIFICATION = KPImagesListView::User2,
+        STATUS         = KPImagesListView::User3
     };
 
 public:
@@ -75,12 +80,15 @@ public:
     void setIdentity(const QString& str);
     QString identity() const;
 
+    void setStatus(const QString& str);
+
     QString destPath() const;
 
 private:
 
     QString m_destFileName;
     QString m_identity;
+    QString m_status;
 };
 
 } // namespace KIPIRawConverterPlugin

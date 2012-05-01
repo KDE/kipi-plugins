@@ -6,6 +6,7 @@
  * Date        : 2012-17-04
  * Description : time adjust images list.
  *
+ * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -43,6 +44,8 @@ MyImageList::MyImageList(QWidget* const parent)
                           i18n("Timestamp Updated"), true);
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(TIMESTAMP_FILENAME),
                           i18n("New Filename"), true);
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(STATUS),
+                          i18n("Status"), true);
 }
 
 MyImageList::~MyImageList()
@@ -72,6 +75,43 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
                     item->setText(TIMESTAMP_FILENAME, ActionThread::newUrl(url, dt).fileName());
                 else
                     item->setText(TIMESTAMP_FILENAME, i18nc("not applicable", "N.A"));
+            }
+        }
+    }
+}
+
+void MyImageList::setStatus(const QMap<KUrl, int>& status)
+{
+    foreach (const KUrl& url, status.keys())
+    {
+        KPImagesListViewItem* item = listView()->findItem(url);
+        if (item)
+        {
+            QStringList errors;
+            int         flags = status.value(url);
+
+            if (flags & META_TIME_ERROR)
+            {
+                errors << i18n("Failed to update metadata timestamp");
+            }
+
+            if (flags & FILE_TIME_ERROR)
+            {
+                errors << i18n("Failed to update file timestamp");
+            }
+
+            if (flags & FILE_NAME_ERROR)
+            {
+                errors << i18n("Failed to rename file");
+            }
+
+            if (errors.isEmpty())
+            {
+                item->setText(STATUS, i18n("Processed without error"));
+            }
+            else
+            {
+                item->setText(STATUS, errors.join(" | "));
             }
         }
     }

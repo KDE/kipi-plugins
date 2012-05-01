@@ -31,12 +31,12 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
 
 // Local includes
 
 #include "actions.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -46,6 +46,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -54,7 +55,7 @@ class Manager;
 class ActionData;
 class ExpoBlendingAboutData;
 
-class ExpoBlendingDlg : public KDialog
+class ExpoBlendingDlg : public KPToolDialog
 {
     Q_OBJECT
 
@@ -81,7 +82,6 @@ private Q_SLOTS:
 
     void slotDefault();
     void slotClose();
-    void slotHelp();
     void slotPreview();
     void slotProcess();
     void slotAbort();

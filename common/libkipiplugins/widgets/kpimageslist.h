@@ -151,7 +151,7 @@ public:
 
 Q_SIGNALS:
 
-    void addedDropedItems(const KUrl::List& urls);
+    void signalAddedDropedItems(const KUrl::List&);
     void signalItemClicked(QTreeWidgetItem*);
     void signalContextMenuRequested();
 
@@ -292,7 +292,6 @@ private Q_SLOTS:
 
 private:
 
-    bool isRAWFile(const QString& filePath) const;
     void setIconSize(int size);
 
 private:

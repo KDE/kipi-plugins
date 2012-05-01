@@ -723,11 +723,9 @@ void FbWindow::uploadNextPhoto()
     m_widget->progressBar()->setValue(m_imagesCount);
 
     // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(imgPath);
+    bool    isRAW = KPMetadata::isRawFile(imgPath);
     QString caption;
-    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-    bool res;
+    bool    res;
 
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
@@ -743,7 +741,7 @@ void FbWindow::uploadNextPhoto()
     {
         caption = getImageCaption(imgPath);
         m_tmpPath.clear();
-        res = m_talker->addPhoto(imgPath, m_currentAlbumID, caption);
+        res     = m_talker->addPhoto(imgPath, m_currentAlbumID, caption);
     }
 
     if (!res)

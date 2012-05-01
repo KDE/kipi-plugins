@@ -7,7 +7,7 @@
  * Description : file list view and items.
  *
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,11 +23,19 @@
 
 #include "myimagelist.moc"
 
+// Qt includes
+
+#include <QFileInfo>
+
 // KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
+
+// Local includes
+
+#include "kpmetadata.h"
 
 namespace KIPIRawConverterPlugin
 {
@@ -39,6 +47,7 @@ MyImageList::MyImageList(QWidget* const parent)
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TARGETFILENAME), i18n("Target File"), true);
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::IDENTIFICATION), i18n("Camera"),      true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::STATUS),         i18n("Status"),      true);
 }
 
 MyImageList::~MyImageList()
@@ -52,7 +61,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 {
     // Figure out which of the supplied URL's should actually be added and which
     // of them already exist.
-    bool found;
+    bool found = false;
 
     for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
@@ -69,7 +78,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
             }
         }
 
-        if (!found)
+        if (!found && KPMetadata::isRawFile(imageUrl))
         {
             new MyImageListViewItem(listView(), imageUrl);
         }
@@ -79,9 +88,10 @@ void MyImageList::slotAddImages(const KUrl::List& list)
     // upload button again.
     emit signalImageListChanged();
 }
+
 void MyImageList::slotRemoveItems()
 {
-    bool find;
+    bool find = false;
     do
     {
         find = false;
@@ -100,6 +110,7 @@ void MyImageList::slotRemoveItems()
     }
     while(find);
 }
+
 // ------------------------------------------------------------------------------------------------
 
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
@@ -128,6 +139,12 @@ void MyImageListViewItem::setIdentity(const QString& str)
     setText(MyImageList::IDENTIFICATION, m_identity);
 }
 
+void MyImageListViewItem::setStatus(const QString& str)
+{
+    m_status = str;
+    setText(MyImageList::STATUS, m_status);
+}
+
 QString MyImageListViewItem::identity() const
 {
     return m_identity;
@@ -135,7 +152,7 @@ QString MyImageListViewItem::identity() const
 
 QString MyImageListViewItem::destPath() const
 {
-    QString path = url().directory() + '/' + destFileName();
+    QString path = url().directory() + QString("/") + destFileName();
     return path;
 }
 

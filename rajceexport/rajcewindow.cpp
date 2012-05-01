@@ -29,8 +29,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ktoolinvocation.h>
-#include <khelpmenu.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
 
@@ -42,9 +40,9 @@
 namespace KIPIRajceExportPlugin
 {
 
-RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder,
-                         QWidget* /*parent*/, Qt::WFlags /*flags*/)
-    : KDialog(0), m_interface(interface)
+RajceWindow::RajceWindow(Interface* const interface, const QString& tmpFolder,
+                         QWidget* const /*parent*/, Qt::WFlags /*flags*/)
+    : KPToolDialog(0), m_interface(interface)
 {
     m_widget = new RajceWidget(interface, tmpFolder, this);
     m_widget->readSettings();
@@ -71,44 +69,30 @@ RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     //--------------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Rajce.net Export"),
-                               0,
-                               KAboutData::License_GPL,
-                               ki18n("A Kipi plugin to export image collections to "
-                               "Rajce.net."),
-                               ki18n( "(c) 2011, Lukas Krejci" ));
+    KPAboutData* about = new KPAboutData(ki18n("Rajce.net Export"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to export image collections to "
+                             "Rajce.net."),
+                             ki18n( "(c) 2011, Lukas Krejci" ));
 
-    m_about->addAuthor(ki18n( "Lukas Krejci" ), ki18n("Author and maintainer"),
-                       "metlosh at gmail dot com");
+    about->addAuthor(ki18n( "Lukas Krejci" ), ki18n("Author and maintainer"),
+                     "metlosh at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(showHelp()) );
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(showHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("rajceexport");
+    setAboutData(about);
 
     button(User1)->setEnabled(false);
 }
 
 RajceWindow::~RajceWindow()
 {
-    delete m_about;
 }
 
 void RajceWindow::reactivate()
 {
     m_widget->reactivate();
     show();
-}
-
-void RajceWindow::showHelp()
-{
-    KToolInvocation::invokeHelp("rajceexport", "kipi-plugins");
 }
 
 void RajceWindow::slotSetUploadButtonEnabled(bool enabled)

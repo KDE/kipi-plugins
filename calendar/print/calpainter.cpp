@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@
 namespace KIPICalendarPlugin
 {
 
-CalPainter::CalPainter(QPaintDevice* pd)
+CalPainter::CalPainter(QPaintDevice* const pd)
     : QPainter(pd)
 {
     orientation_ = KPMetadata::ORIENTATION_UNSPECIFIED;
@@ -314,11 +314,7 @@ void CalPainter::paint(int month)
     }
 
     // Check if RAW file.
-    QFileInfo fi(imagePath_.path());
-
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-
-    if (rawFilesExt.toUpper().contains(fi.suffix().toUpper()))
+    if (KPMetadata::isRawFile(imagePath_))
     {
         KDcrawIface::KDcraw::loadDcrawPreview(image_, imagePath_.path());
     }

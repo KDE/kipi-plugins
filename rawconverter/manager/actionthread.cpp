@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,6 +35,8 @@
 
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <threadweaver/ThreadWeaver.h>
+#include <threadweaver/JobCollection.h>
 
 // LibKIPI includes
 
@@ -60,8 +63,8 @@ public:
 
     ActionThreadPriv()
     {
-        running = false;
-        iface   = 0;
+        cancel           = false;
+        iface            = 0;
         PluginLoader* pl = PluginLoader::instance();
         if (pl)
         {
@@ -69,23 +72,9 @@ public:
         }
     }
 
-    class Task
-    {
-        public:
-
-            KUrl                               fileUrl;
-            Action                             action;
-            KPSaveSettingsWidget::OutputFormat outputFormat;
-            RawDecodingSettings                decodingSettings;
-    };
-
-    bool                               running;
+    bool                               cancel;
 
     QMutex                             mutex;
-
-    QWaitCondition                     condVar;
-
-    QList<Task*>                       todo;
 
     RawDecodingIface                   dcrawIface;
 
@@ -96,8 +85,169 @@ public:
     Interface*                         iface;
 };
 
+//------------------------------------------------------
+
+Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
+           ActionThread::ActionThreadPriv* const d): Job(parent)
+{
+    m_url    = fileUrl;
+    m_action = action;
+    m_d      = d;
+}
+
+Task::~Task()
+{
+}
+
+void Task::run()
+{
+    if (m_d->cancel)
+    {
+        return;
+    }
+
+    switch (m_action)
+    {
+        case IDENTIFY:
+        case IDENTIFY_FULL:
+        {
+            // Identify Camera model.
+            DcrawInfoContainer info;
+            {
+                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
+                m_d->dcrawIface.rawFileIdentify(info, m_url.toLocalFile());
+            }
+
+            QString identify = i18n("Cannot identify RAW image");
+            if (info.isDecodable)
+            {
+                if (m_action == IDENTIFY)
+                {
+                    identify = info.make + QString("-") + info.model;
+                }
+                else
+                {
+                    identify = i18n("<br>Make: %1<br>",   info.make);
+                    identify.append(i18n("Model: %1<br>", info.model));
+
+                    if (info.dateTime.isValid())
+                    {
+                        identify.append(i18n("Created: %1<br>",
+                        KGlobal::locale()->formatDateTime(info.dateTime,
+                                                          KLocale::ShortDate, true)));
+                    }
+
+                    if (info.aperture != -1.0)
+                    {
+                        identify.append(i18n("Aperture: f/%1<br>", QString::number(info.aperture)));
+                    }
+
+                    if (info.focalLength != -1.0)
+                    {
+                        identify.append(i18n("Focal: %1 mm<br>", info.focalLength));
+                    }
+
+                    if (info.exposureTime != -1.0)
+                    {
+                        identify.append(i18n("Exposure: 1/%1 s<br>", info.exposureTime));
+                    }
+
+                    if (info.sensitivity != -1)
+                    {
+                        identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
+                    }
+                }
+            }
+
+            ActionData ad;
+            ad.action  = m_action;
+            ad.fileUrl = m_url;
+            ad.message = identify;
+            ad.success = true;
+            emit signalFinished(ad);
+            break;
+        }
+
+        case THUMBNAIL:
+        {
+            // Get embedded RAW file thumbnail.
+            QImage image;
+            {
+                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
+                m_d->dcrawIface.loadDcrawPreview(image, m_url.toLocalFile());
+            }
+
+            ActionData ad;
+            ad.action  = m_action;
+            ad.fileUrl = m_url;
+            ad.image   = image;
+            ad.success = true;
+            emit signalFinished(ad);
+            break;
+        }
+
+        case PREVIEW:
+        {
+            ActionData ad1;
+            ad1.action   = PREVIEW;
+            ad1.fileUrl  = m_url;
+            ad1.starting = true;
+            emit signalStarting(ad1);
+
+            QString destPath;
+            bool result = false;
+            {
+                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
+                result = m_d->dcrawIface.decodeHalfRAWImage(m_url.toLocalFile(), destPath,
+                                                            m_d->outputFormat, m_d->rawDecodingSettings);
+            }
+
+            ActionData ad2;
+            ad2.action   = PREVIEW;
+            ad2.fileUrl  = m_url;
+            ad2.destPath = destPath;
+            ad2.success  = result;
+            emit signalFinished(ad2);
+            break;
+        }
+
+        case PROCESS:
+        {
+            ActionData ad1;
+            ad1.action   = PROCESS;
+            ad1.fileUrl  = m_url;
+            ad1.starting = true;
+            emit signalStarting(ad1);
+
+            QString destPath;
+            bool result = false;
+
+            {
+                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
+                result = m_d->dcrawIface.decodeRAWImage(m_url.toLocalFile(), destPath,
+                                                        m_d->outputFormat, m_d->rawDecodingSettings);
+            }
+
+            ActionData ad2;
+            ad2.action   = PROCESS;
+            ad2.fileUrl  = m_url;
+            ad2.destPath = destPath;
+            ad2.success  = result;
+            emit signalFinished(ad2);
+            break;
+        }
+
+        default:
+        {
+            qCritical() << "Unknown action specified";
+        }
+    }
+}
+
+//------------------------------------------------------------
+
 ActionThread::ActionThread(QObject* const parent)
-    : QThread(parent), d(new ActionThreadPriv)
+    : KPActionThreadBase(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
 }
@@ -140,21 +290,6 @@ void ActionThread::identifyRawFile(const KUrl& url, bool full)
     identifyRawFiles(oneFile, full);
 }
 
-void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
-{
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
-    {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->fileUrl                = *it;
-        t->action                 = full ? IDENTIFY_FULL : IDENTIFY;
-
-        QMutexLocker lock(&d->mutex);
-        d->todo << t;
-        d->condVar.wakeAll();
-    }
-}
-
 void ActionThread::thumbRawFile(const KUrl& url)
 {
     KUrl::List oneFile;
@@ -162,219 +297,91 @@ void ActionThread::thumbRawFile(const KUrl& url)
     thumbRawFiles(oneFile);
 }
 
+void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
+{
+    JobCollection* collection = new JobCollection();
+
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    {
+        Task* t = new Task(this, *it, full ? IDENTIFY_FULL : IDENTIFY, d);
+
+        connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
+
+        connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        collection->addJob(t);
+    }
+
+    appendJob(collection);
+}
+
 void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
-    {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->fileUrl                = *it;
-        t->action                 = THUMBNAIL;
+    JobCollection* collection = new JobCollection();
 
-        QMutexLocker lock(&d->mutex);
-        d->todo << t;
-        d->condVar.wakeAll();
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    {
+        Task* t = new Task(this, *it, THUMBNAIL, d);
+
+        connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
+
+        connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        collection->addJob(t);
     }
+
+    appendJob(collection);
 }
 
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
-    {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->fileUrl                = *it;
-        t->outputFormat           = d->outputFormat;
-        t->decodingSettings       = d->rawDecodingSettings;
-        t->action                 = PROCESS;
+    JobCollection* collection = new JobCollection();
 
-        QMutexLocker lock(&d->mutex);
-        d->todo << t;
-        d->condVar.wakeAll();
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    {
+        Task* t = new Task(this, *it, PROCESS, d);
+
+        connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
+
+        connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        collection->addJob(t);
     }
+
+    appendJob(collection);
 }
 
 void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
-    {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->fileUrl                = *it;
-        t->outputFormat           = d->outputFormat;
-        t->decodingSettings       = d->rawDecodingSettings;
-        t->action                 = PREVIEW;
+    JobCollection* collection = new JobCollection();
 
-        QMutexLocker lock(&d->mutex);
-        d->todo << t;
-        d->condVar.wakeAll();
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    {
+        Task* t = new Task(this, *it, PREVIEW, d);
+
+        connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
+
+        connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
+                this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        collection->addJob(t);
     }
+
+    appendJob(collection);
 }
 
 void ActionThread::cancel()
 {
-    QMutexLocker lock(&d->mutex);
-    d->todo.clear();
-    d->running = false;
-    d->condVar.wakeAll();
     d->dcrawIface.cancel();
-}
-
-void ActionThread::run()
-{
-    d->running = true;
-    while (d->running)
-    {
-        ActionThreadPriv::Task *t = 0;
-        {
-            QMutexLocker lock(&d->mutex);
-            if (!d->todo.isEmpty())
-                t = d->todo.takeFirst();
-            else
-                d->condVar.wait(&d->mutex);
-        }
-
-        if (t)
-        {
-            switch (t->action)
-            {
-                case IDENTIFY:
-                case IDENTIFY_FULL:
-                {
-                    // Identify Camera model.
-                    DcrawInfoContainer info;
-                    {
-                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
-                        d->dcrawIface.rawFileIdentify(info, t->fileUrl.toLocalFile());
-                    }
-
-                    QString identify = i18n("Cannot identify RAW image");
-                    if (info.isDecodable)
-                    {
-                        if (t->action == IDENTIFY)
-                            identify = info.make + QString("-") + info.model;
-                        else
-                        {
-                            identify = i18n("<br>Make: %1<br>",   info.make);
-                            identify.append(i18n("Model: %1<br>", info.model));
-
-                            if (info.dateTime.isValid())
-                            {
-                                identify.append(i18n("Created: %1<br>",
-                                         KGlobal::locale()->formatDateTime(info.dateTime,
-                                                                           KLocale::ShortDate, true)));
-                            }
-
-                            if (info.aperture != -1.0)
-                            {
-                                identify.append(i18n("Aperture: f/%1<br>", QString::number(info.aperture)));
-                            }
-
-                            if (info.focalLength != -1.0)
-                            {
-                                identify.append(i18n("Focal: %1 mm<br>", info.focalLength));
-                            }
-
-                            if (info.exposureTime != -1.0)
-                            {
-                                identify.append(i18n("Exposure: 1/%1 s<br>", info.exposureTime));
-                            }
-
-                            if (info.sensitivity != -1)
-                            {
-                                identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
-                            }
-                        }
-                    }
-
-                    ActionData ad;
-                    ad.action  = t->action;
-                    ad.fileUrl = t->fileUrl;
-                    ad.message = identify;
-                    ad.success = true;
-                    emit finished(ad);
-                    break;
-                }
-
-                case THUMBNAIL:
-                {
-                    // Get embedded RAW file thumbnail.
-                    QImage image;
-                    {
-                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
-                        d->dcrawIface.loadDcrawPreview(image, t->fileUrl.toLocalFile());
-                    }
-
-                    ActionData ad;
-                    ad.action  = t->action;
-                    ad.fileUrl = t->fileUrl;
-                    ad.image   = image;
-                    ad.success = true;
-                    emit finished(ad);
-                    break;
-                }
-
-                case PREVIEW:
-                {
-                    ActionData ad1;
-                    ad1.action   = PREVIEW;
-                    ad1.fileUrl  = t->fileUrl;
-                    ad1.starting = true;
-                    emit starting(ad1);
-
-                    QString destPath;
-                    bool result = false;
-                    {
-                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
-                        result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.toLocalFile(), destPath,
-                                                                  t->outputFormat, t->decodingSettings);
-                    }
-
-                    ActionData ad2;
-                    ad2.action   = PREVIEW;
-                    ad2.fileUrl  = t->fileUrl;
-                    ad2.destPath = destPath;
-                    ad2.success  = result;
-                    emit finished(ad2);
-                    break;
-                }
-
-                case PROCESS:
-                {
-                    ActionData ad1;
-                    ad1.action   = PROCESS;
-                    ad1.fileUrl  = t->fileUrl;
-                    ad1.starting = true;
-                    emit starting(ad1);
-
-                    QString destPath;
-                    bool result = false;
-                    {
-                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
-                        result = d->dcrawIface.decodeRAWImage(t->fileUrl.toLocalFile(), destPath,
-                                                              t->outputFormat, t->decodingSettings);
-                    }
-
-                    ActionData ad2;
-                    ad2.action   = PROCESS;
-                    ad2.fileUrl  = t->fileUrl;
-                    ad2.destPath = destPath;
-                    ad2.success  = result;
-                    emit finished(ad2);
-                    break;
-                }
-
-                default:
-                {
-                    qCritical() << "KIPIRawConverterPlugin:ActionThread: "
-                                << "Unknown action specified"
-                                << endl;
-                }
-            }
-        }
-
-        delete t;
-    }
+    d->cancel = true;
+    KPActionThreadBase::cancel();
 }
 
 }  // namespace KIPIRawConverterPlugin

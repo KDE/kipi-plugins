@@ -30,16 +30,13 @@
 
 #include <QList>
 
-// KDE includes
-
-#include <kdialog.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// local includes
+// Local includes
 
+#include "kptooldialog.h"
 #include "smugitem.h"
 
 class QCloseEvent;
@@ -47,16 +44,6 @@ class QCloseEvent;
 class KUrl;
 class KProgressDialog;
 class KPasswordDialog;
-
-namespace KIPI
-{
-    class Interface;
-}
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -68,7 +55,7 @@ class SmugTalker;
 class SmugWidget;
 class SmugNewAlbum;
 
-class SmugWindow : public KDialog
+class SmugWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -105,7 +92,6 @@ private Q_SLOTS:
     void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
-    void slotHelp();
     void slotStartTransfer();
     void slotStopAndCloseProgressBar();
     void slotImageListChanged();
@@ -151,8 +137,6 @@ private:
     SmugNewAlbum*    m_albumDlg;
 
     Interface*       m_interface;
-
-    KPAboutData*     m_about;
 };
 
 } // namespace KIPISmugPlugin

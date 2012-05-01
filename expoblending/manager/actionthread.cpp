@@ -129,7 +129,7 @@ public:
     }
 };
 
-ActionThread::ActionThread(QObject* parent)
+ActionThread::ActionThread(QObject* const parent)
             : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
@@ -485,7 +485,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
         KUrl url = inUrls.at(i);
 
-        if (isRawFile(url.toLocalFile()))
+        if (KPMetadata::isRawFile(url.toLocalFile()))
         {
             KUrl preprocessedUrl, previewUrl;
 
@@ -711,17 +711,6 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
     return true;
 }
 
-bool ActionThread::isRawFile(const KUrl& url)
-{
-    QString rawFilesExt(KDcraw::rawFiles());
-
-    QFileInfo fileInfo(url.toLocalFile());
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
-        return true;
-
-    return false;
-}
-
 bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                                const EnfuseSettings& settings,
                                const QString& enfusePath, QString& errors)
@@ -809,7 +798,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     return false;
 }
 
-QString ActionThread::getProcessError(KProcess* proc) const
+QString ActionThread::getProcessError(KProcess* const proc) const
 {
     if (!proc) return QString();
 

@@ -101,7 +101,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
     static_cast<QFSFileEngine*>(m_tmpFile.fileEngine())->rename(tmp);
 #endif
 
-    if (Utils::isRAW(src))
+    if (KPMetadata::isRawFile(src))
     {
         err = i18n("Cannot rotate RAW file");
         return false;

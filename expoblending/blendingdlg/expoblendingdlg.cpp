@@ -59,9 +59,7 @@ extern "C"
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
@@ -90,7 +88,6 @@ extern "C"
 #include "kppreviewmanager.h"
 #include "kpsavesettingswidget.h"
 
-using namespace KIPIPlugins;
 using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
@@ -124,7 +121,7 @@ public:
 
     EnfuseSettingsWidget* enfuseSettingsBox;
 
-    KPSaveSettingsWidget*   saveSettingsBox;
+    KPSaveSettingsWidget* saveSettingsBox;
 
     BracketStackList*     bracketStack;
     EnfuseStackList*      enfuseStack;
@@ -135,7 +132,7 @@ public:
 };
 
 ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
-               : KDialog(parent), d(new ExpoBlendingDlgPriv)
+    : KPToolDialog(parent), d(new ExpoBlendingDlgPriv)
 {
     d->mngr = mngr;
 
@@ -158,6 +155,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     setButtonToolTip(Close, i18n("Exit this tool"));
     setModal(false);
+    setAboutData(new KPAboutData(*d->mngr->about()));
 
     // ---------------------------------------------------------------
 
@@ -210,20 +208,6 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     grid->setColumnStretch(1, 5);
 
     // ---------------------------------------------------------------
-    // About data and help button.
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
-
-    // ---------------------------------------------------------------
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
@@ -271,11 +255,6 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 ExpoBlendingDlg::~ExpoBlendingDlg()
 {
     delete d;
-}
-
-void ExpoBlendingDlg::slotHelp()
-{
-    KToolInvocation::invokeHelp("expoblending", "kipi-plugins");
 }
 
 void ExpoBlendingDlg::closeEvent(QCloseEvent* e)

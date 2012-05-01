@@ -68,6 +68,8 @@ public:
     OutputFormat fileFormat() const;
     void setFileFormat(OutputFormat f);
 
+    void setPromptButtonText(const QString&);
+
     ConflictRule conflictRule() const;
     void setConflictRule(ConflictRule r);
 
@@ -88,6 +90,7 @@ public Q_SLOTS:
 Q_SIGNALS:
 
     void signalSaveFormatChanged();
+    void signalConflictButtonChanged(int);
 
 private:
 

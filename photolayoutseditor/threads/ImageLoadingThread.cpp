@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Łukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -24,8 +24,8 @@
  * ============================================================ */
 
 #include "ImageLoadingThread.moc"
-#include "ProgressEvent.h"
-#include "photolayoutseditor.h"
+
+// Qt includes
 
 #include <QCoreApplication>
 #include <QSemaphore>
@@ -34,13 +34,28 @@
 #include <QDataStream>
 #include <QBuffer>
 #include <QFileInfo>
-#include <QDebug>
+
+// KDE includes
 
 #include <klocalizedstring.h>
+#include <kdebug.h>
+
+// Libkdcaw includes
+
 #include <libkdcraw/kdcraw.h>
 #include <libkdcraw/rawdecodingsettings.h>
 
-using namespace KIPIPhotoLayoutsEditor;
+// Local includes
+
+#include "kpmetadata.h"
+#include "ProgressEvent.h"
+#include "photolayoutseditor.h"
+
+using namespace KIPIPlugins;
+using namespace KDcrawIface;
+
+namespace KIPIPhotoLayoutsEditor
+{
 
 class ImageLoadingThread::ImageLoadingThreadPrivate
 {
@@ -48,41 +63,48 @@ class ImageLoadingThread::ImageLoadingThreadPrivate
         m_sem(1),
         m_size(0),
         m_max_progress(1)
-    {}
+    {
+    }
 
     KUrl::List m_urls;
     QSemaphore m_sem;
-    qint64 m_size;
-    qint64 m_loaded_bytes;
-    double m_max_progress;
+    qint64     m_size;
+    qint64     m_loaded_bytes;
+    double     m_max_progress;
 
     friend class ImageLoadingThread;
 };
 
-class RAWLoader : public KDcrawIface::KDcraw
+class RAWLoader : public KDcraw
 {
-        double m_max_progress;
-        ImageLoadingThread * m_thread;
-    public:
-        RAWLoader(ImageLoadingThread * thread) :
-            m_max_progress(100),
-            m_thread(thread)
-        {}
-        void setMaxDataProgress(double value)
-        {
-            m_max_progress = value;
-        }
-    protected:
-        virtual void setWaitingDataProgress(double value)
-        {
-            ProgressEvent * event = new ProgressEvent(m_thread);
-            event->setData(ProgressEvent::ProgressUpdate, value * m_max_progress / 0.4);
-            QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
-            QCoreApplication::processEvents();
-        }
+    double              m_max_progress;
+    ImageLoadingThread* m_thread;
+
+public:
+
+    RAWLoader(ImageLoadingThread* const thread) :
+        m_max_progress(100),
+        m_thread(thread)
+    {
+    }
+
+    void setMaxDataProgress(double value)
+    {
+        m_max_progress = value;
+    }
+
+protected:
+
+    virtual void setWaitingDataProgress(double value)
+    {
+        ProgressEvent* event = new ProgressEvent(m_thread);
+        event->setData(ProgressEvent::ProgressUpdate, value * m_max_progress / 0.4);
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
+        QCoreApplication::processEvents();
+    }
 };
 
-ImageLoadingThread::ImageLoadingThread(QObject * parent) :
+ImageLoadingThread::ImageLoadingThread(QObject* const parent) :
     QThread(parent),
     d(new ImageLoadingThreadPrivate)
 {
@@ -99,7 +121,8 @@ void ImageLoadingThread::run()
 
     // Calculating reading progress
     d->m_loaded_bytes = d->m_size = 0;
-    foreach(KUrl url, urls)
+
+    foreach(const KUrl& url, urls)
     {
         QFile f(url.path());
         f.open(QIODevice::ReadOnly);
@@ -116,23 +139,19 @@ void ImageLoadingThread::run()
         goto finish_thread;
 
     // Reading
-    foreach(KUrl url, urls)
+    foreach(const KUrl& url, urls)
     {
-        ProgressEvent * startEvent = new ProgressEvent(this);
+        ProgressEvent* startEvent = new ProgressEvent(this);
         startEvent->setData(ProgressEvent::Init, 0);
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
         QCoreApplication::processEvents();
 
-        QFileInfo fileInfo(url.path());
-        QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-        QString ext = fileInfo.suffix().toUpper();
-
-        if (rawFilesExt.toUpper().contains(ext))
+        if (KPMetadata::isRawFile(url))
             loadRaw(url);
         else
             loadImage(url);
 
-        ProgressEvent * finishEvent = new ProgressEvent(this);
+        ProgressEvent* finishEvent = new ProgressEvent(this);
         finishEvent->setData(ProgressEvent::Finish, 1);
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
         QCoreApplication::processEvents();
@@ -150,7 +169,7 @@ void ImageLoadingThread::setMaximumProgress(double limit)
     d->m_max_progress = limit;
 }
 
-void ImageLoadingThread::setImageUrl(const KUrl & url)
+void ImageLoadingThread::setImageUrl(const KUrl& url)
 {
     d->m_sem.acquire();
     d->m_urls.clear();
@@ -158,23 +177,23 @@ void ImageLoadingThread::setImageUrl(const KUrl & url)
     d->m_sem.release();
 }
 
-void ImageLoadingThread::setImagesUrls(const KUrl::List & urls)
+void ImageLoadingThread::setImagesUrls(const KUrl::List& urls)
 {
     d->m_sem.acquire();
     d->m_urls = urls;
     d->m_sem.release();
 }
 
-void ImageLoadingThread::loadRaw(const KUrl & url)
+void ImageLoadingThread::loadRaw(const KUrl& url)
 {
-    ProgressEvent * loadingImageActionEvent = new ProgressEvent(this);
+    ProgressEvent* loadingImageActionEvent = new ProgressEvent(this);
     loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), loadingImageActionEvent);
     QCoreApplication::processEvents();
 
-    RAWLoader * loader = new RAWLoader(this);
+    RAWLoader* loader = new RAWLoader(this);
     loader->setMaxDataProgress(d->m_max_progress * 0.7);
-    KDcrawIface::RawDecodingSettings settings;
+    RawDecodingSettings settings;
     QByteArray ba;
     int width;
     int height;
@@ -187,7 +206,7 @@ void ImageLoadingThread::loadRaw(const KUrl & url)
     QCoreApplication::processEvents();
 
     QImage img;
-    uchar * image = new uchar[width*height*4];
+    uchar* image = new uchar[width*height*4];
     if (image)
     {
         uchar* dst   = image;
@@ -229,21 +248,23 @@ void ImageLoadingThread::loadRaw(const KUrl & url)
         }
     }
     else
-        qDebug() << "Failed to allocate memory for loading raw file";
+    {
+        kDebug() << "Failed to allocate memory for loading raw file";
+    }
 
-    ProgressEvent * emitEvent = new ProgressEvent(this);
+    ProgressEvent* emitEvent = new ProgressEvent(this);
     emitEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Finishing...") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), emitEvent);
     QCoreApplication::processEvents();
 
     emit imageLoaded(url, img);
-    delete[] image;
+    delete [] image;
     delete loader;
 }
 
-void ImageLoadingThread::loadImage(const KUrl & url)
+void ImageLoadingThread::loadImage(const KUrl& url)
 {
-    ProgressEvent * loadingImageActionEvent = new ProgressEvent(this);
+    ProgressEvent* loadingImageActionEvent = new ProgressEvent(this);
     loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), loadingImageActionEvent);
     QCoreApplication::processEvents();
@@ -256,32 +277,36 @@ void ImageLoadingThread::loadImage(const KUrl & url)
     QByteArray temp;
     int s = f.size() / 10;
     s = s < 1000 ? 1000 : s;
+
     do
     {
         temp = f.read(s);
         d->m_loaded_bytes += temp.size();
         bf.write(temp.data(), temp.size());
         this->yieldCurrentThread();
-        ProgressEvent * event = new ProgressEvent(this);
+        ProgressEvent* event = new ProgressEvent(this);
         event->setData(ProgressEvent::ProgressUpdate, (d->m_loaded_bytes * d->m_max_progress) / (d->m_size * 1.4));
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
         QCoreApplication::processEvents();
     }
     while (temp.size() == s);
+
     f.close();
     bf.close();
 
-    ProgressEvent * buildImageEvent = new ProgressEvent(this);
+    ProgressEvent* buildImageEvent = new ProgressEvent(this);
     buildImageEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Decoding image") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), buildImageEvent);
     QCoreApplication::processEvents();
 
     QImage img = QImage::fromData(ba);
 
-    ProgressEvent * emitEvent = new ProgressEvent(this);
+    ProgressEvent* emitEvent = new ProgressEvent(this);
     emitEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Finishing...") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), emitEvent);
     QCoreApplication::processEvents();
 
     emit imageLoaded(url, img);
 }
+
+} // namespace KIPIPhotoLayoutsEditor

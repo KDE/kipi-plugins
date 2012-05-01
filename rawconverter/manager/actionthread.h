@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,22 +40,25 @@
 // Local includes
 
 #include "kpsavesettingswidget.h"
+#include "kpactionthreadbase.h"
+#include "actions.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
+using namespace ThreadWeaver;
 
 namespace KIPIRawConverterPlugin
 {
 
 class ActionData;
 
-class ActionThread : public QThread
+class ActionThread : public KPActionThreadBase
 {
     Q_OBJECT
 
 public:
 
-    explicit ActionThread(QObject* const parent);
+    ActionThread(QObject* const parent);
     ~ActionThread();
 
     void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings, 
@@ -76,8 +80,33 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const KIPIRawConverterPlugin::ActionData& ad);
-    void finished(const KIPIRawConverterPlugin::ActionData& ad);
+    void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
+    void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
+
+public:
+
+    class ActionThreadPriv;
+
+private:
+
+    ActionThreadPriv* const d;
+};
+
+// -----------------------------------------------------------------------------------------------------------------------
+
+class Task : public Job
+{
+    Q_OBJECT
+
+public:
+
+    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::ActionThreadPriv* const d);
+    ~Task();
+
+Q_SIGNALS:
+
+    void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
+    void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
 
 protected:
 
@@ -85,8 +114,10 @@ protected:
 
 private:
 
-    class ActionThreadPriv;
-    ActionThreadPriv* const d;
+    KUrl                            m_url;
+    Action                          m_action;
+
+    ActionThread::ActionThreadPriv* m_d;
 };
 
 }  // namespace KIPIRawConverterPlugin

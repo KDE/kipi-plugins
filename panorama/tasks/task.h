@@ -39,18 +39,18 @@ class Task : public ThreadWeaver::Job
 {
 public:
 
-    QString                     errString;
-    const Action                action;
+    QString      errString;
+    const Action action;
 
 protected:
 
-    bool                        successFlag;
-    bool                        isAbortedFlag;
-    const KUrl                  tmpDir;
+    bool         successFlag;
+    bool         isAbortedFlag;
+    const KUrl   tmpDir;
 
 public:
 
-    Task(QObject* parent, Action action, const KUrl& workDir);
+    Task(QObject* const parent, Action action, const KUrl& workDir);
     ~Task();
 
     bool success() const;
@@ -60,7 +60,6 @@ protected:
 
     virtual void run() = 0;
 
-    static bool isRawFile(const KUrl& url);
     static QString getProcessError(KProcess& proc);
 };
 

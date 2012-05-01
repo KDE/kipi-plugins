@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,7 +39,7 @@ public:
         : KPAboutData(ki18n("Exposure Blending"), 0,
                       KAboutData::License_GPL,
                       ki18n("A tool to blend bracketed images"),
-                      ki18n("(c) 2009-2011, Gilles Caulier"))
+                      ki18n("(c) 2009-2012, Gilles Caulier"))
     {
          addAuthor(ki18n("Gilles Caulier"),
                    ki18n("Author"),
@@ -48,9 +48,13 @@ public:
          addAuthor(ki18n("Johannes Wienke"),
                    ki18n("Developer"),
                    "languitar at semipol dot de");
+
+         handbookEntry = QString("expoblending");
     }
 
-    ~ExpoBlendingAboutData(){}
+    ~ExpoBlendingAboutData()
+    {
+    }
 };
 
 } // namespace KIPIExpoBlendingPlugin

@@ -402,7 +402,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     // ---------------------------------------------------------------
 
-    code = meta.getXmpTagStringBag("Xmp.dc.Type", false);
+    code = meta.getXmpTagStringBag("Xmp.dc.type", false);
     for (QStringList::Iterator it3 = code.begin(); it3 != code.end(); ++it3)
     {
         QStringList data = d->objectTypeEdit->getData();
@@ -510,9 +510,9 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
     // ---------------------------------------------------------------
 
     if (d->objectTypeEdit->getValues(oldList, newList))
-        meta.setXmpTagStringBag("Xmp.dc.Type", newList, false);
+        meta.setXmpTagStringBag("Xmp.dc.type", newList, false);
     else
-        meta.removeXmpTag("Xmp.dc.Type");
+        meta.removeXmpTag("Xmp.dc.type");
 
     // ---------------------------------------------------------------
 

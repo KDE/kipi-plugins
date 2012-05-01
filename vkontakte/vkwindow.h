@@ -11,8 +11,8 @@
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2010 by Roman Tsisyk <roman at tsisyk dot com>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2010      by Roman Tsisyk <roman at tsisyk dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,14 +29,13 @@
 #ifndef VKWINDOW_H
 #define VKWINDOW_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // libkvkontakte includes
 
 #include <libkvkontakte/albuminfo.h>
 
+// Local includes
+
+#include "kptooldialog.h"
 
 class QLabel;
 class QSpinBox;
@@ -71,7 +70,7 @@ using namespace KIPIPlugins;
 namespace KIPIVkontaktePlugin
 {
 
-class VkontakteWindow : public KDialog
+class VkontakteWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -127,7 +126,6 @@ protected Q_SLOTS:
 
     void slotStartTransfer();
 
-    void slotHelp();
     void slotButtonClicked(int button);
 
     void slotFinished();

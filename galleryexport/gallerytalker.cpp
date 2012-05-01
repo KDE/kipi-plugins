@@ -64,7 +64,7 @@ namespace KIPIGalleryExportPlugin
 {
 
 bool GalleryTalker::s_using_gallery2 = true;
-QString GalleryTalker::s_authToken   = "";
+QString GalleryTalker::s_authToken   = QString();
 
 class GalleryTalker::Private
 {
@@ -89,9 +89,9 @@ public:
 
 GalleryTalker::Private::Private(QWidget* const parent)
 {
-    job = 0;
+    job      = 0;
     loggedIn = false;
-    widget = new QWidget(parent);
+    widget   = new QWidget(parent);
 }
 
 GalleryTalker::GalleryTalker(QWidget* const parent)
@@ -112,9 +112,9 @@ bool GalleryTalker::loggedIn() const
 
 void GalleryTalker::login(const KUrl& url, const QString& name, const QString& passwd)
 {
-    d->job   = 0;
-    d->galleryUrl   = url;
-    d->state = GE_LOGIN;
+    d->job        = 0;
+    d->galleryUrl = url;
+    d->state      = GE_LOGIN;
     d->talker_buffer.resize(0);
 
     GalleryMPForm form;
@@ -237,9 +237,9 @@ bool GalleryTalker::addPhoto(const QString& albumName,
                              bool  rescale,
                              int   maxDim)
 {
-    d->job        = 0;
+    d->job       = 0;
     QString path = photoPath;
-    d->state      = GE_ADDPHOTO;
+    d->state     = GE_ADDPHOTO;
     d->talker_buffer.resize(0);
 
     GalleryMPForm form;
@@ -250,10 +250,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     QImage image;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fi(photoPath);
-
-    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    if (KPMetadata::isRawFile(photoPath))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
@@ -412,11 +409,11 @@ void GalleryTalker::slotResult(KJob *job)
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
-    QString str = QString::fromUtf8(data);
+    bool foundResponse = false;
+    d->loggedIn        = false;
+    QString str        = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
-    bool foundResponse = false;
-    d->loggedIn         = false;
 
     while (!ts.atEnd())
     {
@@ -459,11 +456,11 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 
 void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
-    QTextStream ts(&str, QIODevice::ReadOnly);
-    QString line;
     bool foundResponse = false;
     bool success       = false;
+    QString str        = QString::fromUtf8(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
+    QString line;
 
     typedef QList<GAlbum> GAlbumList;
     GAlbumList albumList;
@@ -555,11 +552,11 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
 
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
-    QString str = QString::fromUtf8(data);
-    QTextStream ts(&str, QIODevice::ReadOnly);
-    QString line;
     bool foundResponse = false;
     bool success       = false;
+    QString str        = QString::fromUtf8(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
+    QString line;
 
     typedef QList<GPhoto> GPhotoList;
     GPhotoList photoList;
@@ -630,11 +627,11 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
-    QTextStream ts(&str, QIODevice::ReadOnly);
-    QString line;
     bool foundResponse = false;
     bool success       = false;
+    QString str        = QString::fromUtf8(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
+    QString line;
 
     while (!ts.atEnd())
     {
@@ -681,11 +678,11 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
 
 void GalleryTalker::parseResponseAddPhoto(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
-    QTextStream ts(&str, QIODevice::ReadOnly);
-    QString line;
     bool foundResponse = false;
     bool success       = false;
+    QString str        = QString::fromUtf8(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
+    QString line;
 
     while (!ts.atEnd())
     {

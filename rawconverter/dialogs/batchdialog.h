@@ -65,7 +65,7 @@ private:
 
     void busy(bool busy);
 
-    void processOne();
+    void processAll();
     void processed(const KUrl& url, const QString& tmpFile);
     void processingFailed(const KUrl& url);
 
@@ -76,7 +76,7 @@ private Q_SLOTS:
     void slotStartStop();
     void slotAborted();
     void slotIdentify();
-    void slotSaveFormatChanged();
+    void slotThreadFinished();
 
     void slotAction(const KIPIRawConverterPlugin::ActionData&);
 

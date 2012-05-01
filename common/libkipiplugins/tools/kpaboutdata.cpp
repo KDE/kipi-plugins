@@ -42,15 +42,15 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          enum  LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
-           : KAboutData (QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
-                         QByteArray(),
-                         pluginName,
-                         kipipluginsVersion().toAscii(),
-                         KLocalizedString(),
-                         licenseType,
-                         copyrightStatement,
-                         pluginDescription,
-                         QByteArray("http://www.digikam.org"))
+    : KAboutData(QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
+                 QByteArray(),
+                 pluginName,
+                 kipipluginsVersion().toAscii(),
+                 KLocalizedString(),
+                 licenseType,
+                 copyrightStatement,
+                 pluginDescription,
+                 QByteArray("http://www.digikam.org"))
 {
     if (KGlobal::hasMainComponent())
     {
@@ -74,6 +74,12 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
 
     // and set the string into the short description
     setShortDescription(shortDesc);
+}
+
+KPAboutData::KPAboutData(const KPAboutData& other)
+    : KAboutData(other)
+{
+    handbookEntry = other.handbookEntry;
 }
 
 }   // namespace KIPIPlugins

@@ -332,8 +332,6 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     else if (dateTimeStr.isEmpty())
         dateTimeStr = meta.getXmpTagString("Xmp.xmp.ModifyDate", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = meta.getXmpTagString("Xmp.exif.DateTimeCreated", false);
-    else if (dateTimeStr.isEmpty())
         dateTimeStr = meta.getXmpTagString("Xmp.exif.DateTimeOriginal", false);
     else if (dateTimeStr.isEmpty())
         dateTimeStr = meta.getXmpTagString("Xmp.tiff.DateTime", false);
@@ -437,8 +435,6 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
         meta.setXmpTagString("Xmp.xmp.CreateDate",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        meta.setXmpTagString("Xmp.exif.DateTimeCreated",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
         meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
         meta.setXmpTagString("Xmp.tiff.DateTime",
@@ -457,7 +453,6 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     {
         meta.removeXmpTag("Xmp.photoshop.DateCreated");
         meta.removeXmpTag("Xmp.xmp.CreateDate");
-        meta.removeXmpTag("Xmp.exif.DateTimeCreated");
         meta.removeXmpTag("Xmp.exif.DateTimeOriginal");
         meta.removeXmpTag("Xmp.tiff.DateTime");
         meta.removeXmpTag("Xmp.xmp.ModifyDate");

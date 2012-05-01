@@ -43,12 +43,16 @@
 // Local includes
 
 #include "slideshowkb.h"
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height, bool loop)
-               : QThread()
+    : QThread()
 {
     m_initialized   = false;
     m_needImage     = true;
@@ -149,7 +153,6 @@ void ImageLoadThread::run()
                 m_haveImages  = ok;
                 m_initialized = true;
             }
-
         }
         else
         {
@@ -162,23 +165,20 @@ void ImageLoadThread::run()
 bool ImageLoadThread::loadImage()
 {
     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
-    QString path(fileAngle.first);
-    int     angle(fileAngle.second);
-
-    QImage image;
+    QString             path(fileAngle.first);
+    int                 angle(fileAngle.second);
+    QImage              image;
 
     // check if it's a RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(path);
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
+    if (KPMetadata::isRawFile(path))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcrawIface::KDcraw::loadDcrawPreview(image, path);
+        KDcraw::loadDcrawPreview(image, path);
     }
     else
     {
         // use the standard loader
-        image=QImage(path);
+        image = QImage(path);
     }
 
     if (angle != 0)

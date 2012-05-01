@@ -72,7 +72,7 @@ public:
 
 public:
 
-    FlickrTalker(QWidget* parent, const QString& serviceName);
+    FlickrTalker(QWidget* const parent, const QString& serviceName);
     ~FlickrTalker();
 
     QString getUserName() const;

@@ -9,7 +9,7 @@
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
+ * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,13 +38,11 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <khelpmenu.h>
 #include <klineedit.h>
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <kprogressdialog.h>
-#include <ktoolinvocation.h>
 
 // LibKDcraw includes
 
@@ -73,7 +71,7 @@ namespace KIPIShwupPlugin
 {
 
 SwWindow::SwWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
-    : KDialog(parent)
+    : KPToolDialog(parent)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -113,25 +111,17 @@ SwWindow::SwWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
 
     // ------------------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Shwup Export"), 0,
-                      KAboutData::License_GPL,
-                      ki18n("A Kipi plugin to export images "
-                            "to Shwup web service."),
-                      ki18n("(c) 2009, Timothée Groleau"));
+    KPAboutData* about = new KPAboutData(ki18n("Shwup Export"), 0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to export images "
+                                   "to Shwup web service."),
+                             ki18n("(c) 2009, Timothée Groleau"));
 
-    m_about->addAuthor(ki18n("Timothée Groleau"), ki18n("Author and maintainer"),
-                       "kde at timotheegroleau dot com");
+    about->addAuthor(ki18n("Timothée Groleau"), ki18n("Author and maintainer"),
+                     "kde at timotheegroleau dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()) );
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("shwup");
+    setAboutData(about);
 
     // ------------------------------------------------------------------------
 
@@ -182,12 +172,6 @@ SwWindow::SwWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
 SwWindow::~SwWindow()
 {
     delete m_connector;
-    delete m_about;
-}
-
-void SwWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("shwup", "kipi-plugins");
 }
 
 void SwWindow::slotClose()
@@ -542,14 +526,11 @@ void SwWindow::uploadNextPhoto()
     m_progressDlg->progressBar()->setValue(m_imagesCount);
 
     QString imgPath = m_transferQueue.first().path();
+    QString caption;
+    bool    res;
 
     // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcraw::rawFiles());
-    QFileInfo fileInfo(imgPath);
-    QString caption;
-    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-    bool res;
-
+    bool isRAW = KPMetadata::isRawFile(imgPath);
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW, caption))

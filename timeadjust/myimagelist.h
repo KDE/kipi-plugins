@@ -6,6 +6,7 @@
  * Date        : 2012-17-04
  * Description : time adjust images list.
  *
+ * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -53,7 +54,16 @@ public:
     {
         TIMESTAMP_USED     = KPImagesListView::User1,
         TIMESTAMP_UPDATED  = KPImagesListView::User2,
-        TIMESTAMP_FILENAME = KPImagesListView::User3
+        TIMESTAMP_FILENAME = KPImagesListView::User3,
+        STATUS             = KPImagesListView::User4
+    };
+
+    enum ProcessingStatus
+    {
+        NO_ERROR        = 1 << 0,
+        META_TIME_ERROR = 1 << 1,
+        FILE_TIME_ERROR = 1 << 2,
+        FILE_NAME_ERROR = 1 << 3
     };
 
 public:
@@ -62,8 +72,8 @@ public:
     ~MyImageList();
 
     void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);
+    void setStatus(const QMap<KUrl, int>& status);
 };
-
 }  // namespace KIPITimeAdjustPlugin
 
 #endif // MYIMAGELIST_H

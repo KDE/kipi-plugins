@@ -23,46 +23,42 @@
 #ifndef RAJCEWINDOW_H
 #define RAJCEWINDOW_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Libkipi includes
 
 #include <libkipi/interface.h>
 
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
+// Local includes
+
+#include "kptooldialog.h"
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIRajceExportPlugin
 {
 
 class RajceWidget;
 
-class RajceWindow : public KDialog
+class RajceWindow : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit RajceWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent = 0, Qt::WFlags flags = 0);
+    explicit RajceWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent = 0, Qt::WFlags flags = 0);
     ~RajceWindow();
 
     void reactivate();
 
 private Q_SLOTS:
 
-    void showHelp();
     void slotSetUploadButtonEnabled(bool);
     void slotClose();
 
 private:
 
-    KIPI::Interface*          m_interface;
-    RajceWidget*              m_widget;
-    KIPIPlugins::KPAboutData* m_about;
+    Interface*   m_interface;
+    RajceWidget* m_widget;
 };
 
 } // namespace KIPIRajceExportPlugin

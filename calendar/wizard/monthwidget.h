@@ -7,9 +7,9 @@
  * Description : month image selection widget.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
+ * Copyright (C) 2006      by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,8 +43,10 @@ class QPaintEvent;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
+
+using namespace KIPI;
 
 namespace KIPICalendarPlugin
 {
@@ -55,7 +57,7 @@ class MonthWidget : public QPushButton
 
 public:
 
-    MonthWidget(KIPI::Interface* interface, QWidget* parent, int month);
+    MonthWidget(Interface* const interface, QWidget* const parent, int month);
     ~MonthWidget();
 
     KUrl imagePath() const;
@@ -85,11 +87,11 @@ private:
 
 private:
 
-    const QSize      thumbSize;
-    QPixmap          thumb_;
-    int              month_;
-    KUrl             imagePath_;
-    KIPI::Interface* interface_;
+    const QSize thumbSize;
+    QPixmap     thumb_;
+    int         month_;
+    KUrl        imagePath_;
+    Interface*  interface_;
 };
 
 }  // NameSpace KIPICalendarPlugin

@@ -23,11 +23,19 @@
 
 #include "myimagelist.moc"
 
+// Qt includes
+
+#include <QFileInfo>
+
 // KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
+
+// LibKDcraw includes
+
+#include "kpmetadata.h"
 
 namespace KIPIDNGConverterPlugin
 {
@@ -56,7 +64,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 
     // Figure out which of the supplied URL's should actually be added and which
     // of them already exist.
-    bool found;
+    bool found = false;
 
     for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
@@ -72,7 +80,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
             }
         }
 
-        if (!found)
+        if (!found && isValidRAWFile(imageUrl))
         {
             new MyImageListViewItem(listView(), imageUrl);
         }
@@ -84,7 +92,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 }
 void MyImageList::slotRemoveItems()
 {
-    bool find;
+    bool find = false;
     do
     {
         find = false;
@@ -103,6 +111,21 @@ void MyImageList::slotRemoveItems()
     }
     while(find);
 }
+
+bool MyImageList::isValidRAWFile(const KUrl& url) const
+{
+    if (KPMetadata::isRawFile(url))
+    {
+        QFileInfo fileInfo(url.path());
+        if (fileInfo.suffix().toUpper() != QString("DNG"))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // ------------------------------------------------------------------------------------------------
 
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)

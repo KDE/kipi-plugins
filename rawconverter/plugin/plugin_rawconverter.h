@@ -55,11 +55,6 @@ public:
     Category category(KAction* action) const;
     void setup(QWidget* widget);
 
-private:
-
-    bool checkBinaries();
-    bool isRAWFile(const QString& filePath);
-
 private Q_SLOTS:
 
     void slotActivateSingle();

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -127,6 +127,7 @@ BatchDialog::BatchDialog()
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
     setCaption(i18n("RAW Image Batch Converter"));
     setModal(false);
+    setMinimumSize(700, 500);
 
     d->page = new QWidget(this);
     setMainWidget(d->page);
@@ -144,6 +145,7 @@ BatchDialog::BatchDialog()
                                                               DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->decodingSettingsBox->setObjectName("RawSettingsBox Expander");
     d->saveSettingsBox     = new KPSaveSettingsWidget(d->page);
+    d->saveSettingsBox->setPromptButtonText("Store it under different name");
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
@@ -175,7 +177,8 @@ BatchDialog::BatchDialog()
                              KAboutData::License_GPL,
                              ki18n("A Kipi plugin to convert RAW images"),
                              ki18n("(c) 2003-2005, Renchi Raju\n"
-                                   "(c) 2006-2012, Gilles Caulier"));
+                                   "(c) 2006-2012, Gilles Caulier\n"
+                                   "(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n("Renchi Raju"),
                      ki18n("Author"),
@@ -184,6 +187,10 @@ BatchDialog::BatchDialog()
     about->addAuthor(ki18n("Gilles Caulier"),
                      ki18n("Developer and maintainer"),
                            "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Smit Mehta"),
+                     ki18n("Developer"),
+                           "smit dot meh at gmail dot com");
 
     about->handbookEntry = QString("rawconverter");
     setAboutData(about);
@@ -195,7 +202,10 @@ BatchDialog::BatchDialog()
     // ---------------------------------------------------------------
 
     connect(d->saveSettingsBox, SIGNAL(signalSaveFormatChanged()),
-            this, SLOT(slotSaveFormatChanged()));
+            this, SLOT(slotIdentify()));
+
+    connect(d->saveSettingsBox, SIGNAL(signalConflictButtonChanged(int)),
+            this, SLOT(slotIdentify()));
 
     connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
             d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
@@ -212,11 +222,14 @@ BatchDialog::BatchDialog()
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-    connect(d->thread, SIGNAL(starting(KIPIRawConverterPlugin::ActionData)),
+    connect(d->thread, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
             this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
 
-    connect(d->thread, SIGNAL(finished(KIPIRawConverterPlugin::ActionData)),
+    connect(d->thread, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
             this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
+
+    connect(d->thread, SIGNAL(finished()),
+            this, SLOT(slotThreadFinished()));
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));
@@ -331,7 +344,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->progressThumbnailChanged(KIcon("rawconverter").pixmap(22));
 
         d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
-        processOne();
+        processAll();
     }
     else
     {
@@ -376,15 +389,56 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
             ext = ".png";
             break;
     }
+
     KUrl::List urlList = d->listView->imageUrls(true);
 
     for (KUrl::List::const_iterator  it = urlList.constBegin();
          it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
-        QString dest              = fi.completeBaseName() + ext;
-        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
-        if (item) item->setDestFileName(dest);
+
+        if(d->saveSettingsBox->conflictRule() == KPSaveSettingsWidget::OVERWRITE)
+        {
+            QString dest              = fi.completeBaseName() + ext;
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+            if (item) item->setDestFileName(dest);
+        }
+
+        else
+        {
+            int i        = 0;
+            QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + ext;
+            QFileInfo a(dest);
+
+            bool fileNotFound = (a.exists());
+
+            if (!fileNotFound)
+            {
+                dest = fi.completeBaseName() + ext;
+            }
+
+            else
+            {
+                while(fileNotFound)
+                {
+                    a = QFileInfo(dest);
+                    if (!a.exists())
+                    {
+                        fileNotFound = false;
+                    }
+                    else
+                    {
+                        i++;
+                        dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString("_") + QString::number(i) + ext;
+                    }
+                }
+
+                dest = fi.completeBaseName() + QString("_") + QString::number(i) + ext;
+            }
+
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+            if (item) item->setDestFileName(dest);
+        }
     }
 
     if (!urlList.empty())
@@ -394,58 +448,19 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
             d->thread->start();
     }
 }
-void BatchDialog::slotSaveFormatChanged()
+
+void BatchDialog::processAll()
 {
-    QString ext;
+    d->thread->processRawFiles(d->listView->imageUrls(true));
 
-    switch(d->saveSettingsBox->fileFormat())
-    {
-        case KPSaveSettingsWidget::OUTPUT_JPEG:
-            ext = "jpg";
-            break;
-        case KPSaveSettingsWidget::OUTPUT_TIFF:
-            ext = "tif";
-            break;
-        case KPSaveSettingsWidget::OUTPUT_PPM:
-            ext = "ppm";
-            break;
-        case KPSaveSettingsWidget::OUTPUT_PNG:
-            ext = "png";
-            break;
-    }
-
-    QTreeWidgetItemIterator it(d->listView->listView());
-    while (*it)
-    {
-        MyImageListViewItem* lvItem = dynamic_cast<MyImageListViewItem*>(*it);
-        if (lvItem)
-        {
-            if (!lvItem->isDisabled())
-            {
-                QFileInfo fi(lvItem->url().path());
-                QString dest = fi.completeBaseName() + QString(".") + ext;
-                lvItem->setDestFileName(dest);
-            }
-        }
-        ++it;
-    }
-}
-
-void BatchDialog::processOne()
-{
-    if (d->fileList.empty())
-    {
-        busy(false);
-        slotAborted();
-        return;
-    }
-
-    QString file(d->fileList.first());
-    d->fileList.pop_front();
-
-    d->thread->processRawFile(KUrl(file));
     if (!d->thread->isRunning())
         d->thread->start();
+}
+
+void BatchDialog::slotThreadFinished()
+{
+    busy(false);
+    slotAborted();
 }
 
 void BatchDialog::busy(bool busy)
@@ -478,6 +493,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
     MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
     if (!item) return;
+
     QString destFile(item->destPath());
 
     if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
@@ -485,28 +501,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
-            KIO::RenameDialog dlg(this, i18n("Save RAW image converted from '%1' as",
-                                  url.fileName()),
-                                  tmpFile, destFile,
-                                  KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
-
-            switch (dlg.exec())
-            {
-                case KIO::R_CANCEL:
-                case KIO::R_SKIP:
-                {
-                    destFile.clear();
-                    d->listView->cancelProcess();
-                    break;
-                }
-                case KIO::R_RENAME:
-                {
-                    destFile = dlg.newDestUrl().path();
-                    break;
-                }
-                default:    // Overwrite.
-                    break;
-            }
+            item->setStatus(QString("Failed to save image"));
         }
     }
 
@@ -517,19 +512,20 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
                             KPMetadata::sidecarPath(destFile)) != 0)
             {
-                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+                item->setStatus(QString("Failed to move sidecar"));
             }
         }
 
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image %1", destFile));
+            item->setStatus(QString("Failed to save image."));
             d->listView->processed(url, false);
         }
         else
         {
             item->setDestFileName(QFileInfo(destFile).fileName());
             d->listView->processed(url, true);
+            item->setStatus(QString("Success"));
 
             // Assign Kipi host attributes from original RAW image.
 
@@ -582,7 +578,6 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 case(PROCESS):
                 {
                     processingFailed(ad.fileUrl);
-                    processOne();
                     break;
                 }
                 default:
@@ -608,7 +603,6 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 case(PROCESS):
                 {
                     processed(ad.fileUrl, ad.destPath);
-                    processOne();
                     break;
                 }
                 default:

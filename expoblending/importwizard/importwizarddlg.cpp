@@ -6,8 +6,8 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,9 +32,7 @@
 
 #include <kmenu.h>
 #include <klocale.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -74,8 +72,8 @@ public:
     LastPage*          lastPage;
 };
 
-ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
-               : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
+ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
+    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
 {
     setModal(false);
     setWindowTitle(i18n("Exposure Blending Import Wizard"));
@@ -86,28 +84,17 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     d->preProcessingPage = new PreProcessingPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
 
-    // ---------------------------------------------------------------
-    // About data and help button.
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    setAboutData(new KPAboutData(*d->mngr->about()));
 
     // ---------------------------------------------------------------
 
     QDesktopWidget* desktop = QApplication::desktop();
-    int screen = desktop->screenNumber();
-    QRect srect = desktop->availableGeometry(screen);
+    int screen              = desktop->screenNumber();
+    QRect srect             = desktop->availableGeometry(screen);
     resize(800 <= srect.width()  ? 800 : srect.width(),
            750 <= srect.height() ? 750 : srect.height());
-//     resize(800, 580);
+
+    // ---------------------------------------------------------------
 
     connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
             this, SLOT(slotIntroPageIsValid(bool)));
@@ -124,11 +111,6 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 ImportWizardDlg::~ImportWizardDlg()
 {
     delete d;
-}
-
-void ImportWizardDlg::slotHelp()
-{
-    KToolInvocation::invokeHelp("expoblending", "kipi-plugins");
 }
 
 Manager* ImportWizardDlg::manager() const

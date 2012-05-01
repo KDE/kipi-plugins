@@ -74,7 +74,7 @@ using namespace KIPIPlugins;
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
+FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 {
     m_parent        = parent;
     m_job           = 0;
@@ -609,10 +609,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     QImage image;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(photoPath);
-
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
+    if (KPMetadata::isRawFile(photoPath))
     {
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     }

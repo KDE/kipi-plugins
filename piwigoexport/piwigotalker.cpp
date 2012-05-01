@@ -7,10 +7,10 @@
 * Description : a plugin to export to a remote Piwigo server.
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
-* Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+* Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
 * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
-* Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
-* Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+* Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+* Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
 * This program is free software; you can redistribute it
 * and/or modify it under the terms of the GNU General
@@ -61,7 +61,7 @@ namespace KIPIPiwigoExportPlugin
 
 QString PiwigoTalker::s_authToken = "";
 
-PiwigoTalker::PiwigoTalker(QWidget* parent)
+PiwigoTalker::PiwigoTalker(QWidget* const parent)
     : m_parent(parent),  m_job(0),  m_loggedIn(false), m_version(-1)
 {
 }
@@ -182,16 +182,14 @@ bool PiwigoTalker::addPhoto(int   albumId,
     QImage image;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fi(photoPath);
-
-    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    if (KPMetadata::isRawFile(photoPath))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
 
     if (!image.isNull())
     {
+        QFileInfo fi(photoPath);
         QImage thumbnail = image.scaled(thumbDim, thumbDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         m_thumbpath      = KStandardDirs::locateLocal("tmp", "thumb-" + KUrl(photoPath).fileName());
         thumbnail.save(m_thumbpath, "JPEG", 95);
@@ -211,7 +209,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
 
         // Complete name and comment for summary sending
-        m_title = fi.baseName();
+        m_title = fi.completeBaseName();
         m_comment = "";
         m_author = "";
         m_date    = fi.created();
@@ -313,7 +311,8 @@ void PiwigoTalker::slotResult(KJob* job)
             // As login succeeded, albums can be listed
             listAlbums();
         }
-        else if (state == GE_CHECKPHOTOEXIST || state == GE_ADDPHOTOCHUNK ||
+        else if (state == GE_CHECKPHOTOEXIST || state == GE_GETINFO ||
+                 state == GE_SETINFO         || state == GE_ADDPHOTOCHUNK ||
                  state == GE_ADDPHOTOSUMMARY || state == GE_OLD_ADDPHOTOCHUNK ||
                  state == GE_OLD_ADDTHUMB    || state == GE_OLD_ADDHQ ||
                  state == GE_OLD_ADDPHOTOSUMMARY)
@@ -342,6 +341,12 @@ void PiwigoTalker::slotResult(KJob* job)
             break;
         case(GE_CHECKPHOTOEXIST):
             parseResponseDoesPhotoExist(m_talker_buffer);
+            break;
+        case(GE_GETINFO):
+            parseResponseGetInfo(m_talker_buffer);
+            break;
+        case(GE_SETINFO):
+            parseResponseSetInfo(m_talker_buffer);
             break;
         // Support for Web API >= 2.4
         case(GE_ADDPHOTOCHUNK):
@@ -552,19 +557,50 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
     while (!ts.atEnd())
     {
+
         ts.readNext();
 
-        if (ts.isStartElement())
+        if (ts.name() == "rsp")
         {
-            if (ts.name() == "rsp")
-            {
-                foundResponse = true;
-                if (ts.attributes().value("stat") == "ok") success = true;
-            }
-            if (ts.name() == QString(m_md5sum.toHex()))
-            {
-                emit signalAddPhotoFailed(i18n("Photo '%1' already exists.", m_title));
-                return;
+            QRegExp md5rx("([a-f0-9]+)>([0-9]+)</.+");
+
+            foundResponse = true;
+            if (ts.attributes().value("stat") == "ok")
+                success = true;
+
+            // The next XML is invalid as the element can start with a digit
+            ts.readNext();
+
+            if (md5rx.exactMatch(data.mid(ts.characterOffset()))) {
+                QStringList qsl = md5rx.capturedTexts();
+                if (qsl[1] == QString(m_md5sum.toHex())) {
+                    m_photoId = qsl[2].toInt();
+                    kDebug() << "m_photoId: " << m_photoId;
+
+                    emit signalProgressInfo(i18n("Photo '%1' already exists.", m_title));
+
+                    m_state = GE_GETINFO;
+                    m_talker_buffer.resize(0);
+
+                    QStringList qsl;
+                    qsl.append("method=pwg.images.getInfo");
+                    qsl.append("image_id=" + QString::number(m_photoId));
+                    QString dataParameters = qsl.join("&");
+                    QByteArray buffer;
+                    buffer.append(dataParameters.toUtf8());
+
+                    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
+                    m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+                    m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
+
+                    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+                        this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
+
+                    connect(m_job, SIGNAL(result(KJob*)),
+                        this, SLOT(slotResult(KJob*)));
+
+                    return;
+                }
             }
         }
     }
@@ -620,6 +656,130 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
     }
 }
 
+void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
+{
+    QString str        = QString::fromUtf8(data);
+    QXmlStreamReader ts(data);
+    QString line;
+    bool foundResponse = false;
+    bool success       = false;
+    QList<int> categories;
+
+    kDebug() << "parseResponseGetInfo: " << QString(data);
+
+
+    while (!ts.atEnd())
+    {
+        ts.readNext();
+
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
+                foundResponse = true;
+                if (ts.attributes().value("stat") == "ok") success = true;
+            }
+            if (ts.name() == "category")
+            {
+                if (ts.attributes().hasAttribute("id")) {
+                    QString id(ts.attributes().value("id").toString());
+                    categories.append(id.toInt());
+                }
+            }
+        }
+    }
+
+    if (!foundResponse)
+    {
+        emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
+        return;
+    }
+
+    if (categories.contains(m_albumId)) {
+        emit signalAddPhotoFailed(i18n("Photo '%1' already exists in this album.", m_title));
+        return;
+    } else {
+        categories.append(m_albumId);
+    }
+
+    m_state = GE_SETINFO;
+    m_talker_buffer.resize(0);
+
+    QStringList qsl_cat;
+    for (int i = 0; i < categories.size(); ++i) {
+        qsl_cat.append(QString::number(categories.at(i)));
+    }
+    
+    QStringList qsl;
+    qsl.append("method=pwg.images.setInfo");
+    qsl.append("image_id=" + QString::number(m_photoId));
+    qsl.append("categories=" + qsl_cat.join(";"));
+    QString dataParameters = qsl.join("&");
+    QByteArray buffer;
+    buffer.append(dataParameters.toUtf8());
+
+    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
+
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
+
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    return;
+
+}
+
+void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
+{
+    QString str = QString::fromUtf8(data);
+    QXmlStreamReader ts(data);
+    QString line;
+    bool foundResponse = false;
+    bool success       = false;
+
+    kDebug() << "parseResponseSetInfo: " << QString(data);
+
+    while (!ts.atEnd())
+    {
+        ts.readNext();
+
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
+                foundResponse = true;
+                if (ts.attributes().value("stat") == "ok") success = true;
+                break;
+            }
+        }
+    }
+
+    if (!foundResponse)
+    {
+        emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
+        return;
+    }
+
+    if (!success)
+    {
+        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
+        return;
+    }
+
+    if (m_path.size())
+        QFile(m_path).remove();
+
+    if (m_thumbpath.size())
+        QFile(m_thumbpath).remove();
+
+    m_path      = "";
+    m_thumbpath = "";
+
+    emit signalAddPhotoSucceeded();
+}
 
 void PiwigoTalker::addNextChunk()
 {
@@ -740,7 +900,7 @@ void PiwigoTalker::addPhotoSummary()
 void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 {
     QString str = QString::fromUtf8(data);
-    QXmlStreamReader ts(data);
+    QXmlStreamReader ts(data.mid(data.indexOf("<?xml")));
     QString line;
     bool foundResponse = false;
     bool success       = false;
@@ -774,12 +934,6 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
         return;
     }
 
-    if (!foundResponse)
-    {
-        emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
-        return;
-    }
-
     if (m_path.size())
         QFile(m_path).remove();
 
@@ -789,14 +943,7 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
     m_path      = "";
     m_thumbpath = "";
 
-    if (!success)
-    {
-        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
-    }
-    else
-    {
-        emit signalAddPhotoSucceeded();
-    }
+    emit signalAddPhotoSucceeded();
 }
 
 /**
@@ -1011,8 +1158,9 @@ void PiwigoTalker::addOldPhotoSummary()
     qsl.append("method=pwg.images.add");
     qsl.append("original_sum=" + m_md5sum.toHex());
     qsl.append("name=" + m_title.toUtf8().toPercentEncoding());
+    qsl.append("categories=" + QString::number(m_albumId));
     if (!m_author.isEmpty()) qsl.append("author=" + m_author.toUtf8().toPercentEncoding());
-    if (!m_comment.isEmpty()) qsl.append("categories=" + QString::number(m_albumId));
+    if (!m_comment.isEmpty()) qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
     qsl.append("thumbnail_sum=" + computeMD5Sum(m_thumbpath).toHex());
     if (!m_hqpath.isNull() && !m_hqpath.isEmpty())
@@ -1021,7 +1169,7 @@ void PiwigoTalker::addOldPhotoSummary()
     }
     qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
     //qsl.append("tag_ids="); // TODO Implement this function
-    qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
+    
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
@@ -1044,7 +1192,7 @@ void PiwigoTalker::addOldPhotoSummary()
 void PiwigoTalker::parseResponseOldAddPhotoSummary(const QByteArray& data)
 {
     QString str = QString::fromUtf8(data);
-    QXmlStreamReader ts(data);
+    QXmlStreamReader ts(data.mid(data.indexOf("<?xml")));
     QString line;
     bool foundResponse = false;
     bool success       = false;
@@ -1078,12 +1226,6 @@ void PiwigoTalker::parseResponseOldAddPhotoSummary(const QByteArray& data)
         return;
     }
 
-    if (!foundResponse)
-    {
-        emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
-        return;
-    }
-
     if (m_path.size())
         QFile(m_path).remove();
 
@@ -1093,14 +1235,7 @@ void PiwigoTalker::parseResponseOldAddPhotoSummary(const QByteArray& data)
     m_path      = "";
     m_thumbpath = "";
 
-    if (!success)
-    {
-        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
-    }
-    else
-    {
-        emit signalAddPhotoSucceeded();
-    }
+    emit signalAddPhotoSucceeded();
 }
 
 } // namespace KIPIPiwigoExportPlugin

@@ -49,18 +49,18 @@ class PreProcessTask : public Task
 
 public:
 
-    const int                           id;
+    const int                   id;
 
 private:
 
-    const KUrl                          fileUrl;
-    ItemPreprocessedUrls* const         preProcessedUrl;
-    const RawDecodingSettings           settings;
-    QPointer<KDcraw>                    rawProcess;
+    const KUrl                  fileUrl;
+    ItemPreprocessedUrls* const preProcessedUrl;
+    const RawDecodingSettings   settings;
+    QPointer<KDcraw>            rawProcess;
 
 public:
 
-    PreProcessTask(QObject* parent, const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
+    PreProcessTask(QObject* const parent, const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
                    const KUrl& sourceUrl, const RawDecodingSettings& rawSettings);
     PreProcessTask(const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
                    const KUrl& sourceUrl, const RawDecodingSettings& rawSettings);
@@ -76,7 +76,6 @@ private:
 
     bool computePreview(const KUrl& inUrl);
     bool convertRaw();
-
 };
 
 }  // namespace KIPIPanoramaPlugin

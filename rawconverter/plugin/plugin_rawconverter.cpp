@@ -28,10 +28,6 @@
 
 #include <cstdlib>
 
-// Qt includes
-
-#include <QFileInfo>
-
 // KDE includes
 
 #include <kaction.h>
@@ -45,11 +41,6 @@
 #include <kmessagebox.h>
 #include <kwindowsystem.h>
 
-// LibKDcraw includes
-
-#include <libkdcraw/version.h>
-#include <libkdcraw/kdcraw.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -57,6 +48,8 @@
 
 // Local includes
 
+#include "kpmetadata.h"
+#include "myimagelist.h"
 #include "singledialog.h"
 #include "batchdialog.h"
 
@@ -117,21 +110,6 @@ Plugin_RawConverter::~Plugin_RawConverter()
 {
 }
 
-bool Plugin_RawConverter::isRAWFile(const QString& filePath)
-{
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(filePath);
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
-        return true;
-
-    return false;
-}
-
-bool Plugin_RawConverter::checkBinaries()
-{
-    return true;
-}
-
 void Plugin_RawConverter::slotActivateSingle()
 {
     Interface* interface = dynamic_cast<Interface*>( parent() );
@@ -146,13 +124,10 @@ void Plugin_RawConverter::slotActivateSingle()
     if (!images.isValid())
         return;
 
-    if (!checkBinaries())
-        return;
-
     if ( images.images().isEmpty() )
         return;
 
-    if (!isRAWFile(images.images()[0].path()))
+    if (!KPMetadata::isRawFile(images.images()[0]))
     {
         KMessageBox::error(kapp->activeWindow(),
                            i18n("\"%1\" is not a RAW file.", images.images()[0].fileName()));
@@ -190,18 +165,6 @@ void Plugin_RawConverter::slotActivateBatch()
     if (!images.isValid())
         return;
 
-    if (!checkBinaries())
-        return;
-
-    KUrl::List urls = images.images();
-    KUrl::List items;
-
-    for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it )
-    {
-        if (isRAWFile((*it).path()))
-            items.append((*it));
-    }
-
     if (!m_batchDlg)
     {
         m_batchDlg = new BatchDialog();
@@ -215,7 +178,7 @@ void Plugin_RawConverter::slotActivateBatch()
     }
 
     m_batchDlg->show();
-    m_batchDlg->addItems(items);
+    m_batchDlg->addItems(images.images());
 }
 
 Category Plugin_RawConverter::category(KAction* action) const

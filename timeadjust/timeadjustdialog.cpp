@@ -49,7 +49,6 @@
 
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -151,9 +150,7 @@ public:
 
     QMap<KUrl, QDateTime> itemsUsedMap;           // Map of item urls and Used Timestamps.
     QMap<KUrl, QDateTime> itemsUpdatedMap;        // Map of item urls and Updated Timestamps.
-
-    QStringList           fileTimeErrorFiles;
-    QStringList           metaTimeErrorFiles;
+    QMap<KUrl, int>       itemsStatusMap;         // Map of item urls and status flag.
 
     KPProgressWidget*     progressBar;
     MyImageList*          listView;
@@ -168,7 +165,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     setDefaultButton(Apply);
     setCaption(i18n("Adjust Time & Date"));
     setModal(false);
-    setMinimumSize(700, 500);
+    setMinimumSize(900, 500);
 
     setMainWidget(new QWidget(this));
     QGridLayout* mainLayout = new QGridLayout(mainWidget());
@@ -345,17 +342,14 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->thread, SIGNAL(signalProgressChanged(int)),
             this, SLOT(slotProgressChanged(int)));
 
-    connect(d->thread, SIGNAL(signalErrorFilesUpdate(QString, QString)),
-            this, SLOT(slotErrorFilesUpdate(QString, QString)));
-
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
     connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
             this, SLOT(slotProcessStarted(KUrl)));
 
-    connect(d->thread, SIGNAL(signalProcessEnded(KUrl)),
-            this, SLOT(slotProcessEnded(KUrl)));
+    connect(d->thread, SIGNAL(signalProcessEnded(KUrl, int)),
+            this, SLOT(slotProcessEnded(KUrl, int)));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancelThread()));
@@ -494,8 +488,7 @@ void TimeAdjustDialog::saveSettings()
 
 void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
-    d->itemsUsedMap.clear();
-    d->itemsUpdatedMap.clear();
+    d->itemsStatusMap.clear();
     d->listView->listView()->clear();
 
     foreach (const KUrl& url, imageUrls)
@@ -697,8 +690,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 
 void TimeAdjustDialog::slotApplyClicked()
 {
-    d->fileTimeErrorFiles.clear();
-    d->metaTimeErrorFiles.clear();
+    d->itemsStatusMap.clear();
 
     // Check if atleast one option is selected
     bool atleastOneSelected = d->updAppDateCheck->isChecked()     || d->updFileModDateCheck->isChecked() ||
@@ -784,6 +776,31 @@ void TimeAdjustDialog::slotButtonClicked(int button)
     }
 }
 
+QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
+{
+    int sign = 0;
+
+    switch (d->adjTypeChooser->currentIndex())
+    {
+        case TimeAdjustSettings::ADDVALUE:
+            sign = 1;
+            break;
+        case TimeAdjustSettings::SUBVALUE:
+            sign = -1;
+            break;
+        default: // TimeAdjustSettings::COPYVALUE
+            return originalTime;
+    };
+
+    const QTime& adjTime = d->adjTimeInput->time();
+    int seconds          = adjTime.second();
+    seconds             += 60*adjTime.minute();
+    seconds             += 60*60*adjTime.hour();
+    seconds             += 24*60*60*d->adjDaysInput->value();
+
+    return originalTime.addSecs(sign * seconds);
+}
+
 void TimeAdjustDialog::setBusy(bool busy)
 {
     if (busy)
@@ -821,9 +838,10 @@ void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
     d->listView->processing(url);
 }
 
-void TimeAdjustDialog::slotProcessEnded(const KUrl& url)
+void TimeAdjustDialog::slotProcessEnded(const KUrl& url, int status)
 {
-    d->listView->processed(url, true);
+    d->listView->processed(url, (status == MyImageList::NO_ERROR));
+    d->itemsStatusMap.insert(url, status);
 }
 
 void TimeAdjustDialog::slotProgressChanged(int progress)
@@ -831,39 +849,9 @@ void TimeAdjustDialog::slotProgressChanged(int progress)
     d->progressBar->setValue(progress);
 }
 
-void TimeAdjustDialog::slotErrorFilesUpdate(const QString& fileTimeErrorFile, const QString& metaTimeErrorFile)
-{
-    if (!fileTimeErrorFile.isEmpty())
-    {
-        d->fileTimeErrorFiles.append(fileTimeErrorFile);
-    }
-
-    if (!metaTimeErrorFile.isEmpty())
-    {
-        d->metaTimeErrorFiles.append(metaTimeErrorFile);
-    }
-}
-
 void TimeAdjustDialog::slotThreadFinished()
 {
-    if (!d->metaTimeErrorFiles.isEmpty())
-        {
-            KMessageBox::informationList(
-                         kapp->activeWindow(),
-                         i18n("Unable to update metadata in:"),
-                         d->metaTimeErrorFiles,
-                         i18n("Adjust Time & Date"));
-        }
-
-        if (!d->fileTimeErrorFiles.isEmpty())
-        {
-            KMessageBox::informationList(
-                         kapp->activeWindow(),
-                         i18n("Unable to update file modification time in:"),
-                         d->fileTimeErrorFiles,
-                         i18n("Adjust Time & Date"));
-        }
-
+    d->listView->setStatus(d->itemsStatusMap);
     setBusy(false);
     d->progressBar->hide();
     d->progressBar->progressCompleted();
@@ -881,6 +869,7 @@ void TimeAdjustDialog::slotUpdateListView()
 
     // TODO : this loop can take a while, especially when items mist is huge.
     //        Moving this loop code to ActionThread is the right way for the future.
+
     foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         d->itemsUpdatedMap.insert(url, calculateAdjustedTime(d->itemsUsedMap.value(url)));
@@ -889,31 +878,6 @@ void TimeAdjustDialog::slotUpdateListView()
     d->listView->setItemDates(d->itemsUpdatedMap, MyImageList::TIMESTAMP_UPDATED, prm);
 
     kapp->restoreOverrideCursor();
-}
-
-QDateTime TimeAdjustDialog::calculateAdjustedTime(const QDateTime& originalTime) const
-{
-    int sign = 0;
-
-    switch (d->adjTypeChooser->currentIndex())
-    {
-        case TimeAdjustSettings::ADDVALUE:
-            sign = 1;
-            break;
-        case TimeAdjustSettings::SUBVALUE:
-            sign = -1;
-            break;
-        default: // TimeAdjustSettings::COPYVALUE
-            return originalTime;
-    };
-
-    const QTime& adjTime = d->adjTimeInput->time();
-    int seconds          = adjTime.second();
-    seconds             += 60*adjTime.minute();
-    seconds             += 60*60*adjTime.hour();
-    seconds             += 24*60*60*d->adjDaysInput->value();
-
-    return originalTime.addSecs(sign * seconds);
 }
 
 }  // namespace KIPITimeAdjustPlugin

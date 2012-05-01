@@ -11,8 +11,8 @@
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2010 by Roman Tsisyk <roman at tsisyk dot com>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2010      by Roman Tsisyk <roman at tsisyk dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -107,7 +107,7 @@ namespace KIPIVkontaktePlugin
 {
 
 VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidget* const parent)
-    : KDialog(parent)
+    : KPToolDialog(parent)
 {
     m_authenticated = false;
 
@@ -287,30 +287,21 @@ VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidge
 //         optionsBox->hide();
     }
 
-    KPAboutData* about = new KPAboutData(
-        ki18n("VKontakte Plugin"),
-        0,
-        KAboutData::License_GPL,
-        ki18n("A Kipi plugin to export image collections to "
-              "VKontakte web service."),
-        ki18n("(c) 2007-2009, Vardhman Jain\n"
-              "(c) 2008-2010, Gilles Caulier\n"
-              "(c) 2009, Luka Renko\n"
-              "(c) 2010, Roman Tsisyk\n"
-              "(c) 2011, Alexander Potashev")
-    );
+    KPAboutData* about = new KPAboutData(ki18n("VKontakte Plugin"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to "
+                                               "VKontakte web service."),
+                                         ki18n("(c) 2007-2009, Vardhman Jain\n"
+                                               "(c) 2008-2010, Gilles Caulier\n"
+                                               "(c) 2009, Luka Renko\n"
+                                               "(c) 2010, Roman Tsisyk\n"
+                                               "(c) 2011, Alexander Potashev"));
 
     about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("VKontakte");
+    setAboutData(about);
 
     /*
      * UI slots
@@ -499,11 +490,6 @@ void VkontakteWindow::slotButtonClicked(int button)
         default:
             KDialog::slotButtonClicked(button);
     }
-}
-
-void VkontakteWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("VKontakte", "kipi-plugins");
 }
 
 void VkontakteWindow::startAuthentication(bool forceLogout)

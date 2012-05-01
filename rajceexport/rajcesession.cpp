@@ -553,10 +553,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
       m_tmpDir(tmpDir),
       m_imagePath(path)
 {
-    QString   rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(path);
-    bool      isRaw = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-
+    bool isRaw = KPMetadata::isRawFile(path);
     if (isRaw)
     {
         kDebug() << "Get RAW preview " << path;

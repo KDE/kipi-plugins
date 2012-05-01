@@ -49,12 +49,14 @@
 #include "commoncontainer.h"
 #include "kpimageinfo.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl& path,
+LoadThread::LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const KUrl& path,
                        KPMetadata::ImageOrientation orientation, int width, int height)
-          : QThread()
+    : QThread()
 {
     m_path         = path;
     m_orientation  = orientation;
@@ -73,12 +75,10 @@ void LoadThread::run()
     QImage newImage;
 
     // check if it's a RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(m_path.toLocalFile());
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
+    if (KPMetadata::isRawFile(m_path))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcrawIface::KDcraw::loadDcrawPreview(newImage, m_path.toLocalFile());
+        KDcraw::loadDcrawPreview(newImage, m_path.toLocalFile());
     }
     else
     {

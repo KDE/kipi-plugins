@@ -101,15 +101,6 @@ void Plugin_DNGConverter::slotActivate()
     if (!images.isValid())
         return;
 
-    KUrl::List urls = images.images();
-    KUrl::List items;
-
-    for( KUrl::List::const_iterator it = urls.begin(); it != urls.end(); ++it )
-    {
-        if (DNGConverterAboutData::isRAWFile((*it).path()))
-            items.append((*it));
-    }
-
     if (!m_batchDlg)
     {
         m_batchDlg = new BatchDialog(new DNGConverterAboutData);
@@ -123,7 +114,7 @@ void Plugin_DNGConverter::slotActivate()
     }
 
     m_batchDlg->show();
-    m_batchDlg->addItems(items);
+    m_batchDlg->addItems(images.images());
 }
 
 Category Plugin_DNGConverter::category( KAction* action ) const
