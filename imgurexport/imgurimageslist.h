@@ -46,24 +46,25 @@ public:
     /* The different columns in a list. */
     enum FieldType
     {
-        TITLE           = KPImagesListView::User1,
-        DESCRIPTION     = KPImagesListView::User2,
-        URL             = KPImagesListView::User3,
-        DELETEURL       = KPImagesListView::User4
+        Title           = KPImagesListView::Filename,
+        Description     = KPImagesListView::User1,
+        URL             = KPImagesListView::User2,
+        DeleteURL       = KPImagesListView::User3
     };
 
     ImgurImagesList(QWidget* const parent = 0);
     ~ImgurImagesList();
 
 public:
-
     // implement this, if you have special item widgets, e.g. an edit line
     // they will be set automatically when adding items, changing order, etc.
     virtual void updateItemWidgets();
 
 public Q_SLOTS:
-    virtual void slotAddImages(const KUrl::List& list);
-    virtual void slotImageChanged (const KUrl imageUrl, ImgurSuccess success);
+    void slotAddImages(const KUrl::List& list);
+    void signalUploadSuccess (const KUrl imageUrl, ImgurSuccess success);
+    void signalUploadError (const KUrl imageUrl, ImgurError error);
+    void doubleClick (QTreeWidgetItem* element,int i);
 };
 
 // -------------------------------------------------------------------------
@@ -75,6 +76,12 @@ public:
 
     ImgurImageListViewItem(KPImagesListView* const view, const KUrl& url);
     virtual ~ImgurImageListViewItem();
+
+    void setTitle(const QString& str);
+    QString Title() const;
+
+    void setDescription(const QString& str);
+    QString Description() const;
 
     void setUrl(const QString& str);
     QString Url() const;
@@ -90,6 +97,7 @@ private:
     QString m_Description;
     QString m_Url;
     QString m_deleteUrl;
+
 };
 
 } // namespace KIPIImgurTalkerPlugin

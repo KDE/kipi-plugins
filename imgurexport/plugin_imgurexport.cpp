@@ -41,6 +41,10 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include <imgurwindow.h>
+
 using namespace KIPIPlugins;
 
 namespace KIPIImgurExportPlugin

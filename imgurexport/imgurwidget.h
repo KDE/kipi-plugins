@@ -59,12 +59,14 @@ Q_SIGNALS:
 
     void signalAddItems(const KUrl::List& list);
     void signalImageUploadSuccess (const KUrl imgPath, ImgurSuccess success);
+    void signalImageUploadError (const KUrl imgPath, ImgurError error);
     void signalImageListChanged();
 
 public Q_SLOTS:
 
     void slotAddItems(const KUrl::List& list);
     void slotImageUploadSuccess(const KUrl imgPath, ImgurSuccess success);
+    void slotImageUploadError(const KUrl imgPath, ImgurError error);
     void slotImageListChanged();
 
 private:

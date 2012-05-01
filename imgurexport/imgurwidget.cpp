@@ -106,7 +106,10 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
             this, SLOT(slotImageListChanged()));
 
     connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
-            d->imagesList, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
+            d->imagesList, SLOT(slotUploadSuccess(KUrl, ImgurSuccess)));
+
+    connect(this, SIGNAL(signalImageUploadError(KUrl, ImgurError)),
+            d->imagesList, SLOT(slotUploadError(KUrl, ImgurError)));
 }
 
 
@@ -128,6 +131,10 @@ void ImgurWidget::slotImageListChanged()
 void ImgurWidget::slotImageUploadSuccess(const KUrl imgPath, ImgurSuccess success)
 {
     emit signalImageUploadSuccess(imgPath, success);
+}
+
+void ImgurWidget::slotImageUploadError(const KUrl imgPath, ImgurError error){
+    emit signalImageUploadError(imgPath, error);
 }
 
 

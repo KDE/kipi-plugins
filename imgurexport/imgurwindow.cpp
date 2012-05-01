@@ -74,13 +74,6 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     setButtonGuiItem(User1, KGuiItem(i18n("Upload"), "network-workgroup", i18n("Start upload to Imgur")));
     setDefaultButton(Close);
 
-
-    connect(d->webService, SIGNAL(signalError(ImgurError)),
-            this, SLOT(slotAddPhotoError(ImgurError)));
-
-    connect(d->webService, SIGNAL(signalSuccess(ImgurSuccess)),
-            this, SLOT(slotAddPhotoSuccess(ImgurSuccess)));
-
     connect(d->widget, SIGNAL(signalAddItems(KUrl::List)),
             d->webService, SLOT(slotAddItems(KUrl::List)));
 
@@ -117,8 +110,20 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
             this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
 
+
+    // connecting the web service to the current window - @todo: remove this step
+    connect(d->webService, SIGNAL(signalError(ImgurError)),
+            this, SLOT(slotAddPhotoError(ImgurError)));
+
+    connect(d->webService, SIGNAL(signalSuccess(ImgurSuccess)),
+            this, SLOT(slotAddPhotoSuccess(ImgurSuccess)));
+
+    // connecting the current window to the imgur widget
     connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
             d->widget, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
+
+    connect(this, SIGNAL(signalImageUploadError(KUrl, ImgurError)),
+            d->widget, SLOT(slotImageUploadError(KUrl, ImgurError)));
 }
 
 ImgurWindow::~ImgurWindow()
@@ -201,6 +206,7 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
     kError() << error.message;
     d->widget->imagesList()->processed(currentImage, false);
 
+    emit signalImageUploadError (currentImage, error);
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo to Imgur: %1\n"
                                                 "Do you want to continue?", error.message))

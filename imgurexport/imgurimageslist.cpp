@@ -21,10 +21,12 @@
  * ============================================================ */
 
 #include "imgurimageslist.moc"
+#include "imgurimageslist.h"
 
 // Qt includes
 
 #include <QLabel>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -42,16 +44,24 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
     : KPImagesList(parent)
 {
     listView()->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
-    listView()->setColumnLabel(KPImagesListView::Filename, i18n("File name"));
 
-    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::TITLE),
+    //listView()->setColumnLabel(KPImagesListView::Filename, i18n("File name"));
+
+    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::Title),
                                i18n("Submission title"));
-    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DESCRIPTION),
+
+    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::Description),
                                i18n("Submission description"));
+
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::URL),
                           i18n("Imgur URL"), true);
-//    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
-//                          i18n("Imgur Delete URL"), true);
+
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
+                          i18n("Imgur Delete URL"), true);
+
+    connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+            this, SLOT(doubleClick(QTreeWidgetItem*,int)));
+
 }
 
 ImgurImagesList::~ImgurImagesList()
@@ -109,7 +119,11 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     emit signalImageListChanged();
 }
 
-void ImgurImagesList::slotImageChanged (const KUrl localFile, ImgurSuccess success) {
+void ImgurImagesList::signalUploadError (const KUrl localFile, ImgurError error) {
+    // error
+}
+
+void ImgurImagesList::signalUploadSuccess (const KUrl localFile, ImgurSuccess success) {
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
         ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
@@ -129,20 +143,58 @@ void ImgurImagesList::slotImageChanged (const KUrl localFile, ImgurSuccess succe
     }
 }
 
+void ImgurImagesList::doubleClick (QTreeWidgetItem* element,int i)
+{
+    //qDebug() << i;
+
+    if (i == 3 || i == 4) {
+        const QUrl url = QUrl (element->text(i));
+        QDesktopServices::openUrl(url);
+    }
+}
+
 // ------------------------------------------------------------------------------------------------
 
 ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, const KUrl& url)
     : KPImagesListViewItem(view, url)
 {
+    const QColor blue = QColor (0,0,255);
+
+    setTextColor(3, blue);
+    setTextColor(4, blue);
+
 }
 
 ImgurImageListViewItem::~ImgurImageListViewItem()
 {
 }
 
+void ImgurImageListViewItem::setTitle(const QString& str)
+{
+    setText(ImgurImagesList::Title, str);
+    m_Title = str;
+}
+
+QString ImgurImageListViewItem::Title() const
+{
+    return m_Title;
+}
+
+void ImgurImageListViewItem::setDescription(const QString& str)
+{
+    setText(ImgurImagesList::Description, str);
+    m_Description = str;
+}
+
+QString ImgurImageListViewItem::Description() const
+{
+    return m_Description;
+}
+
 void ImgurImageListViewItem::setUrl(const QString& str)
 {
     setText(ImgurImagesList::URL, str);
+    m_Url = str;
 }
 
 QString ImgurImageListViewItem::Url() const
@@ -152,7 +204,8 @@ QString ImgurImageListViewItem::Url() const
 
 void ImgurImageListViewItem::setDeleteUrl(const QString& str)
 {
-    setText(ImgurImagesList::DELETEURL, str);
+    setText(ImgurImagesList::DeleteURL, str);
+    m_deleteUrl = str;
 }
 
 QString ImgurImageListViewItem::deleteUrl() const
