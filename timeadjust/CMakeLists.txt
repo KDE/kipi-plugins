@@ -5,6 +5,7 @@ SET(kipiplugin_timeadjust_PART_SRCS plugin_timeadjust.cpp
                                     clockphotodialog.cpp
                                     actionthread.cpp
                                     myimagelist.cpp
+                                    settingswidget.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_timeadjust ${kipiplugin_timeadjust_PART_SRCS})

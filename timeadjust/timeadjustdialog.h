@@ -64,10 +64,6 @@ protected:
 
 private Q_SLOTS:
 
-    void slotSrcTimestampChanged();
-    void slotResetDateToCurrent();
-    void slotAdjustmentTypeChanged();
-    void slotDetAdjustmentByClockPhoto();
     void slotApplyClicked();
     void slotCloseClicked();
     void slotProgressChanged(int);
@@ -76,16 +72,15 @@ private Q_SLOTS:
     void slotButtonClicked(int);
     void slotProcessStarted(const KUrl&);
     void slotProcessEnded(const KUrl&, int);
-    void slotUpdateListView();
     void setBusy(bool);
-
-private:
 
     /** Read the Used Timestamps for all selected files
      * (according to the newly selected source timestamp type),
      * this will also implicitly update listview info.
      */
-    void readTimestamps();
+    void slotReadTimestamps();
+
+private:
 
     /** Called by readTimestamps() to get KIPI host timestamps
      */
@@ -102,9 +97,7 @@ private:
     void readSettings();
     void saveSettings();
 
-    TimeAdjustSettings settings() const;
-
-    QDateTime calculateAdjustedTime(const QDateTime& time) const;
+    void updateListView();
 
 private:
 

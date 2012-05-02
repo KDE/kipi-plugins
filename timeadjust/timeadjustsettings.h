@@ -31,6 +31,14 @@ class TimeAdjustSettings
 
 public:
 
+    enum UseDateSource
+    {
+        APPDATE = 0,
+        FILEDATE,
+        METADATADATE,
+        CUSTOMDATE
+    };
+
     enum UseMetaDateType
     {
         EXIFIPTCXMP = 0,
@@ -66,11 +74,28 @@ public:
         updXMPDate     = false;
         updFileName    = false;
         updFileModDate = false;
+
+        dateSource     = APPDATE;
+        metadataSource = EXIFIPTCXMP;
+        fileDateSource = FILELASTMOD;
     };
 
     ~TimeAdjustSettings()
     {
     };
+
+    /// Check if at least one option is selected
+    bool atLeastOneUpdateToProcess()
+    {
+        return (updAppDate     ||
+                updFileModDate ||
+                updEXIFModDate ||
+                updEXIFOriDate ||
+                updEXIFDigDate ||
+                updIPTCDate    ||
+                updXMPDate     ||
+                updFileName);
+    }
 
 public:
 
@@ -82,6 +107,10 @@ public:
     bool updXMPDate;
     bool updFileName;
     bool updFileModDate;
+
+    int  dateSource;
+    int  metadataSource;
+    int  fileDateSource;
 };
 
 }  // namespace KIPITimeAdjustPlugin
