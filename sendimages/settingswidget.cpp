@@ -205,7 +205,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     grid2->addWidget(d->labelImagesFormat,     1, 0, 1, 1);
     grid2->addWidget(d->imagesFormat,          1, 1, 1, 2);
     grid2->addWidget(d->labelImageCompression, 2, 0, 1, 1);
-    grid2->addWidget(d->imageCompression,      2, 1, 1, 3);
+    grid2->addWidget(d->imageCompression,      2, 1, 1, 2);
     grid2->setRowStretch(4, 10);
     grid2->setColumnStretch(2, 10);
     grid2->setMargin(KDialog::spacingHint());
