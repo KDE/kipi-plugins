@@ -26,19 +26,13 @@
 // Qt includes
 
 #include <QDateTimeEdit>
-#include <QFileInfo>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QImage>
 #include <QLabel>
 #include <QMouseEvent>
-#include <QPixmap>
-#include <QPushButton>
 #include <QResizeEvent>
-#include <QScrollArea>
-#include <QScrollBar>
 #include <QSize>
-#include <QSlider>
-#include <QVBoxLayout>
 
 // KDE includes
 
