@@ -50,6 +50,7 @@ RajceExport        : A tool to export images to Rajce web service (http://www.ra
 Vkontakte          : A tool to export images to VKontakte web service (http://www.vkontakte.ru)
 PhotoLayoutEditor  : A tool to assemble images together.
 ImageShackExport   : A tool to export images to ImageShack web service (http://imageshack.us)
+ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
 
 Porting under progress to Qt4/KDE4:
 
