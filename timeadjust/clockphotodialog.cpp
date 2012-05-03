@@ -48,18 +48,12 @@
 #include <klocale.h>
 #include <kpushbutton.h>
 
-// LibKDcraw includes
-
-#include <libkdcraw/version.h>
-#include <libkdcraw/kdcraw.h>
-
 // Local includes
 
 #include "kpimagedialog.h"
 #include "kpmetadata.h"
 #include "kppreviewmanager.h"
 
-using namespace KDcrawIface;
 using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
@@ -72,15 +66,12 @@ public:
 
     ClockPhotoDialogPrivate()
     {
-        image         = 0;
-        imagePreview  = 0;
         calendar      = 0;
-        photoDateTime = 0;
+        imagePreview  = 0;
     }
 
-    QPixmap*          image;
     QDateTimeEdit*    calendar;
-    QDateTime*        photoDateTime;
+    QDateTime         photoDateTime;
 
     KPPreviewManager* imagePreview;
 };
@@ -89,13 +80,11 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
     // Initialize the variables.
-    d->image         = new QPixmap();
-    d->photoDateTime = new QDateTime();
-    deltaNegative    = false;
-    deltaDays        = 0;
-    deltaHours       = 0;
-    deltaMinutes     = 0;
-    deltaSeconds     = 0;
+    m_deltaNegative = false;
+    m_deltaDays     = 0;
+    m_deltaHours    = 0;
+    m_deltaMinutes  = 0;
+    m_deltaSeconds  = 0;
 
     // This dialog should be modal with three buttons: Ok, Cancel, and load
     // photo. For this third button, the User1 button from KDialog is used.
@@ -165,48 +154,26 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
 
 ClockPhotoDialog::~ClockPhotoDialog()
 {
-    delete d->image;
-    delete d->photoDateTime;
     delete d;
 }
 
-bool ClockPhotoDialog::setImage(const KUrl& imageFile) const
+bool ClockPhotoDialog::setImage(const KUrl& imageFile)
 {
     bool success = false;
 
-    // Try to load the image into the d->image variable.
-    bool imageLoaded = false;
-
-    if (KPMetadata::isRawFile(imageFile))
-    {
-        // In case of raw images, load the image the a QImage and convert it to
-        // the QPixmap for display.
-        QImage tmp  = QImage();
-        imageLoaded = KDcraw::loadDcrawPreview(tmp, imageFile.path());
-        delete d->image;
-        d->image    = new QPixmap(d->image->fromImage(tmp));
-        d->imagePreview->setImage(tmp, true);
-    }
-    else
-    {
-        imageLoaded = d->image->load(imageFile.path());
-    }
-
-    if (imageLoaded)
+    if (d->imagePreview->load(imageFile.toLocalFile()))
     {
         // Try to read the datetime data.
         KPMetadata meta;
-        bool result = meta.load(imageFile.path());
 
-        if (result)
+        if (meta.load(imageFile.toLocalFile()))
         {
-            delete d->photoDateTime;
-            d->photoDateTime = new QDateTime(meta.getImageDateTime());
+            d->photoDateTime = meta.getImageDateTime();
 
-            if (d->photoDateTime->isValid())
+            if (d->photoDateTime.isValid())
             {
                 // Set the datetime widget to the photo datetime.
-                d->calendar->setDateTime(*(d->photoDateTime));
+                d->calendar->setDateTime(d->photoDateTime);
                 d->calendar->setEnabled(true);
                 success = true;
             }
@@ -215,7 +182,7 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile) const
                 // If datetime information couldn't be loaded, display a
                 // warning and disable the datetime widget.
                 QString warning = i18n("<font color=\"red\"><b>Could not "
-                                       "obtain date and time information "
+                                       "obtain<br>date and time information<br>"
                                        "from image %1.</b></font>",
                                        imageFile.fileName());
                 d->imagePreview->setText(warning);
@@ -226,26 +193,14 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile) const
     {
         // If the image couldn't be loaded, display a warning, disable all the
         // GUI elements and load an empty photo into d->image.
-        QString warning = i18n("<font color=\"red\"><b>Could not load "
+        QString warning = i18n("<font color=\"red\"><b>Could not load<br>"
                                "image %1.</b></font>",
                                imageFile.fileName());
         d->imagePreview->setText(warning);
     }
 
-    if (success)
-    {
-        // Load the photo.
-        d->imagePreview->load(imageFile.path(), true);
-    }
-    else
-    {
-        // Disable all the GUI elements.
-        d->calendar->setEnabled(false);
-
-        // Make sure we de-load a previous image if a faulty url was provided.
-        delete d->image;
-        d->image = new QPixmap();
-    }
+    // Disable all the GUI elements if loading failed.
+    d->calendar->setEnabled(success);
 
     return success;
 }
@@ -284,28 +239,28 @@ void ClockPhotoDialog::slotOk()
     // the public variables.
 
     // Determine the number of seconds between the dates.
-    int delta = d->photoDateTime->secsTo(d->calendar->dateTime());
+    int delta = d->photoDateTime.secsTo(d->calendar->dateTime());
 
     // If the photo datetime is newer than the user datetime, it results in
     // subtraction.
     if (delta < 0)
     {
-        deltaNegative = true;
+        m_deltaNegative = true;
         delta        *= -1;
     }
     else
     {
-        deltaNegative = false;
+        m_deltaNegative = false;
     }
 
     // Calculate the number of days, hours, minutes and seconds.
-    deltaDays    = delta / 86400;
+    m_deltaDays    = delta / 86400;
     delta        = delta % 86400;
-    deltaHours   = delta / 3600;
+    m_deltaHours   = delta / 3600;
     delta        = delta % 3600;
-    deltaMinutes = delta / 60;
+    m_deltaMinutes = delta / 60;
     delta        = delta % 60;
-    deltaSeconds = delta;
+    m_deltaSeconds = delta;
 
     // Accept the dialog.
     saveSize();

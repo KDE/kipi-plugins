@@ -498,11 +498,11 @@ void SettingsWidget::slotDetAdjustmentByClockPhoto()
 
     if (result == QDialog::Accepted)
     {
-        if (dlg->deltaDays == 0 && dlg->deltaHours == 0 && dlg->deltaMinutes == 0 && dlg->deltaSeconds == 0)
+        if (dlg->m_deltaDays == 0 && dlg->m_deltaHours == 0 && dlg->m_deltaMinutes == 0 && dlg->m_deltaSeconds == 0)
         {
             d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::COPYVALUE);
         }
-        else if (dlg->deltaNegative)
+        else if (dlg->m_deltaNegative)
         {
             d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::SUBVALUE);
         }
@@ -511,9 +511,9 @@ void SettingsWidget::slotDetAdjustmentByClockPhoto()
             d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::ADDVALUE);
         }
 
-        d->adjDaysInput->setValue(dlg->deltaDays);
+        d->adjDaysInput->setValue(dlg->m_deltaDays);
         QTime deltaTime;
-        deltaTime.setHMS(dlg->deltaHours, dlg->deltaMinutes, dlg->deltaSeconds);
+        deltaTime.setHMS(dlg->m_deltaHours, dlg->m_deltaMinutes, dlg->m_deltaSeconds);
         d->adjTimeInput->setTime(deltaTime);
     }
 

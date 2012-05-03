@@ -24,13 +24,6 @@
 #ifndef CLOCKPHOTODIALOG_H
 #define CLOCKPHOTODIALOG_H
 
-// Qt includes
-
-#include <QDateTime>
-#include <QScrollArea>
-#include <QScrollBar>
-#include <QLabel>
-
 // KDE includes
 
 #include <kdialog.h>
@@ -52,17 +45,17 @@ public:
      *  to the photo time. Return true on succes, or false if eithe the photo
      *  can't be read or the datetime information can't be read.
      */
-    bool setImage(const KUrl&) const;
+    bool setImage(const KUrl&);
 
 public:
 
     /** The public variables that hold the time difference.
      */
-    bool deltaNegative;
-    int  deltaDays;
-    int  deltaHours;
-    int  deltaMinutes;
-    int  deltaSeconds;
+    bool m_deltaNegative;
+    int  m_deltaDays;
+    int  m_deltaHours;
+    int  m_deltaMinutes;
+    int  m_deltaSeconds;
 
 private Q_SLOTS:
 
