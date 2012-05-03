@@ -26,6 +26,8 @@
 namespace KIPITimeAdjustPlugin
 {
 
+/** Container that store all timestamp adjustments.
+ */
 class TimeAdjustSettings
 {
 
@@ -85,7 +87,7 @@ public:
     };
 
     /// Check if at least one option is selected
-    bool atLeastOneUpdateToProcess()
+    bool atLeastOneUpdateToProcess() const
     {
         return (updAppDate     ||
                 updFileModDate ||
@@ -111,6 +113,47 @@ public:
     int  dateSource;
     int  metadataSource;
     int  fileDateSource;
+};
+
+// -------------------------------------------------------------------
+
+/** Container that hold the time difference for clock photo dialog.
+ */
+class DeltaTime
+{
+
+public:
+
+    DeltaTime()
+    {
+        deltaNegative = false;
+        deltaDays     = 0;
+        deltaHours    = 0;
+        deltaMinutes  = 0;
+        deltaSeconds  = 0;
+    };
+
+    ~DeltaTime()
+    {
+    };
+
+    /// Check if at least one option is selected
+    bool isNull() const
+    {
+        return (deltaDays    == 0 &&
+                deltaHours   == 0 &&
+                deltaMinutes == 0 &&
+                deltaSeconds == 0);
+    }
+
+public:
+
+    bool deltaNegative;
+
+    int  deltaDays;
+    int  deltaHours;
+    int  deltaMinutes;
+    int  deltaSeconds;
 };
 
 }  // namespace KIPITimeAdjustPlugin

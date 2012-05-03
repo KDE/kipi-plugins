@@ -32,6 +32,8 @@
 namespace KIPITimeAdjustPlugin
 {
 
+class DeltaTime;
+
 class ClockPhotoDialog : public KDialog
 {
     Q_OBJECT
@@ -47,15 +49,7 @@ public:
      */
     bool setImage(const KUrl&);
 
-public:
-
-    /** The public variables that hold the time difference.
-     */
-    bool m_deltaNegative;
-    int  m_deltaDays;
-    int  m_deltaHours;
-    int  m_deltaMinutes;
-    int  m_deltaSeconds;
+    DeltaTime deltaValues() const;
 
 private Q_SLOTS:
 
@@ -65,7 +59,8 @@ private Q_SLOTS:
 
 private:
 
-    void saveSize();
+    void loadSettings();
+    void saveSettings();
 
 private:
 

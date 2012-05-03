@@ -53,6 +53,7 @@
 #include "kpimagedialog.h"
 #include "kpmetadata.h"
 #include "kppreviewmanager.h"
+#include "timeadjustsettings.h"
 
 using namespace KIPIPlugins;
 
@@ -70,6 +71,8 @@ public:
         imagePreview  = 0;
     }
 
+    DeltaTime         deltaValues;
+
     QDateTimeEdit*    calendar;
     QDateTime         photoDateTime;
 
@@ -79,13 +82,6 @@ public:
 ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
-    // Initialize the variables.
-    m_deltaNegative = false;
-    m_deltaDays     = 0;
-    m_deltaHours    = 0;
-    m_deltaMinutes  = 0;
-    m_deltaSeconds  = 0;
-
     // This dialog should be modal with three buttons: Ok, Cancel, and load
     // photo. For this third button, the User1 button from KDialog is used.
     // The Ok button is only enable when a photo is loaded.
@@ -142,9 +138,7 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
             this, SLOT(slotCancel()));
 
     // Show the window.
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Clock Photo Dialog"));
-    restoreDialogSize(group);
+    loadSettings();
     show();
 
     // Upon initialization, present the user with a photo loading dialog. This
@@ -155,6 +149,11 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
 ClockPhotoDialog::~ClockPhotoDialog()
 {
     delete d;
+}
+
+DeltaTime ClockPhotoDialog::deltaValues() const
+{
+    return d->deltaValues;
 }
 
 bool ClockPhotoDialog::setImage(const KUrl& imageFile)
@@ -205,7 +204,14 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
     return success;
 }
 
-void ClockPhotoDialog::saveSize()
+void ClockPhotoDialog::loadSettings()
+{
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("Clock Photo Dialog"));
+    restoreDialogSize(group);
+}
+
+void ClockPhotoDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Clock Photo Dialog"));
@@ -245,33 +251,33 @@ void ClockPhotoDialog::slotOk()
     // subtraction.
     if (delta < 0)
     {
-        m_deltaNegative = true;
-        delta        *= -1;
+        d->deltaValues.deltaNegative = true;
+        delta                       *= -1;
     }
     else
     {
-        m_deltaNegative = false;
+        d->deltaValues.deltaNegative = false;
     }
 
     // Calculate the number of days, hours, minutes and seconds.
-    m_deltaDays    = delta / 86400;
-    delta        = delta % 86400;
-    m_deltaHours   = delta / 3600;
-    delta        = delta % 3600;
-    m_deltaMinutes = delta / 60;
-    delta        = delta % 60;
-    m_deltaSeconds = delta;
+    d->deltaValues.deltaDays    = delta / 86400;
+    delta                       = delta % 86400;
+    d->deltaValues.deltaHours   = delta / 3600;
+    delta                       = delta % 3600;
+    d->deltaValues.deltaMinutes = delta / 60;
+    delta                       = delta % 60;
+    d->deltaValues.deltaSeconds = delta;
 
     // Accept the dialog.
-    saveSize();
+    saveSettings();
     accept();
 }
 
 /** If the cancel button is clicked, reject the dialog.
-*/
+ */
 void ClockPhotoDialog::slotCancel()
 {
-    saveSize();
+    saveSettings();
     reject();
 }
 
