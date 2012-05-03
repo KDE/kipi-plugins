@@ -156,10 +156,10 @@ bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
     if (hasSidecar(src.toLocalFile()))
     {
         if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()), 
-                       QFile::encodeName(sidecarUrl(dst).toLocalFile())) == 0)
-            return true;
+                       QFile::encodeName(sidecarUrl(dst).toLocalFile())) != 0)
+            return false;
     }
-    return false;
+    return true;
 }
 
 bool KPMetadata::isRawFile(const KUrl& url)
