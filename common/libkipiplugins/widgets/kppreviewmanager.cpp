@@ -141,7 +141,7 @@ KPPreviewManager::~KPPreviewManager()
 
 void KPPreviewManager::slotLoad(const KUrl& url)
 {
-    load(url.path());
+    load(url.toLocalFile());
 }
 
 void KPPreviewManager::setImage(const QImage& img, bool fit)
@@ -161,14 +161,14 @@ void KPPreviewManager::setImage(const QImage& img, bool fit)
     }
 }
 
-void KPPreviewManager::load(const QString& file, bool fit)
+bool KPPreviewManager::load(const QString& file, bool fit)
 {
     setBusy(false);
 
     if (!d->preview->load(file))
     {
         setText(i18n( "Failed to load image" ));
-        return;
+        return false;
     }
 
     setCurrentIndex(PreviewMode);
@@ -176,6 +176,7 @@ void KPPreviewManager::load(const QString& file, bool fit)
     {
         d->preview->slotZoom2Fit();
     }
+    return true;
 }
 
 void KPPreviewManager::setThumbnail(const QPixmap& thumbnail)
