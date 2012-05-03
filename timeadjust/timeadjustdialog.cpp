@@ -114,11 +114,11 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // ----------------------------------------------------------------------------
 
-    mainLayout->addWidget(d->listView,     0, 0, 5, 1);
+    mainLayout->addWidget(d->listView,     0, 0, 2, 1);
     mainLayout->addWidget(d->settingsView, 0, 1, 1, 1);
     mainLayout->addWidget(d->progressBar,  1, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
-    mainLayout->setRowStretch(4, 1);
+    mainLayout->setRowStretch(0, 10);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
 

@@ -28,13 +28,11 @@
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QGridLayout>
-#include <QGroupBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QToolButton>
-#include <QVBoxLayout>
 #include <QTimeEdit>
 #include <QComboBox>
 #include <QPointer>
@@ -47,12 +45,19 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <kvbox.h>
+
+// libKdcraw includes
+
+#include <libkdcraw/version.h>
+#include <libkdcraw/rexpanderbox.h>
 
 // Local includes
 
 #include "clockphotodialog.h"
 #include "kpmetadata.h"
 
+using namespace KDcrawIface;
 using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
@@ -65,9 +70,9 @@ public:
 
     SettingsWidgetPrivate()
     {
-        useGroupBox            = 0;
-        adjustGroupBox         = 0;
-        updateGroupBox         = 0;
+        useSettingsBox         = 0;
+        adjustSettingsBox      = 0;
+        updateSettingsBox      = 0;
         useButtonGroup         = 0;
         useApplDateBtn         = 0;
         useFileDateBtn         = 0;
@@ -91,73 +96,83 @@ public:
         useCustTimeInput       = 0;
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
+        settingsExpander       = 0;
     }
 
-    QGroupBox*            useGroupBox;
-    QGroupBox*            adjustGroupBox;
-    QGroupBox*            updateGroupBox;
+    QWidget*      useSettingsBox;
+    QWidget*      adjustSettingsBox;
+    QWidget*      updateSettingsBox;
 
-    QButtonGroup*         useButtonGroup;
+    QButtonGroup* useButtonGroup;
 
-    QRadioButton*         useApplDateBtn;
-    QRadioButton*         useFileDateBtn;
-    QRadioButton*         useMetaDateBtn;
-    QRadioButton*         useCustomDateBtn;
+    QRadioButton* useApplDateBtn;
+    QRadioButton* useFileDateBtn;
+    QRadioButton* useMetaDateBtn;
+    QRadioButton* useCustomDateBtn;
 
-    QCheckBox*            updAppDateCheck;
-    QCheckBox*            updFileModDateCheck;
-    QCheckBox*            updEXIFModDateCheck;
-    QCheckBox*            updEXIFOriDateCheck;
-    QCheckBox*            updEXIFDigDateCheck;
-    QCheckBox*            updIPTCDateCheck;
-    QCheckBox*            updXMPDateCheck;
-    QCheckBox*            updFileNameCheck;
+    QCheckBox*    updAppDateCheck;
+    QCheckBox*    updFileModDateCheck;
+    QCheckBox*    updEXIFModDateCheck;
+    QCheckBox*    updEXIFOriDateCheck;
+    QCheckBox*    updEXIFDigDateCheck;
+    QCheckBox*    updIPTCDateCheck;
+    QCheckBox*    updXMPDateCheck;
+    QCheckBox*    updFileNameCheck;
 
-    QComboBox*            useFileDateTypeChooser;
-    QComboBox*            useMetaDateTypeChooser;
-    QComboBox*            adjTypeChooser;
+    QComboBox*    useFileDateTypeChooser;
+    QComboBox*    useMetaDateTypeChooser;
+    QComboBox*    adjTypeChooser;
 
-    QLabel*               adjDaysLabel;
+    QLabel*       adjDaysLabel;
 
-    QSpinBox*             adjDaysInput;
+    QSpinBox*     adjDaysInput;
 
-    QPushButton*          adjDetByClockPhotoBtn;
+    QPushButton*  adjDetByClockPhotoBtn;
 
-    QDateEdit*            useCustDateInput;
+    QDateEdit*    useCustDateInput;
 
-    QTimeEdit*            useCustTimeInput;
-    QTimeEdit*            adjTimeInput;
+    QTimeEdit*    useCustTimeInput;
+    QTimeEdit*    adjTimeInput;
 
-    QToolButton*          useCustomDateTodayBtn;
+    QToolButton*  useCustomDateTodayBtn;
+
+    RExpanderBox* settingsExpander;
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
-    : KVBox(parent), d(new SettingsWidgetPrivate)
+    : QScrollArea(parent), d(new SettingsWidgetPrivate)
 {
-    setMargin(0);
-    setSpacing(KDialog::spacingHint());
+    KVBox* panel         = new KVBox(viewport());
+    panel->setAutoFillBackground(false);
+    setWidget(panel);
+    setWidgetResizable(true);
+    setAutoFillBackground(false);
+    viewport()->setAutoFillBackground(false);
+
+    d->settingsExpander  = new RExpanderBox(panel);
+    d->settingsExpander->setObjectName("Time Adjust Settings Expander");
 
     // -- Settings View Used Timestamps ---------------------------------------------------------
 
-    d->useGroupBox              = new QGroupBox(i18n("Timestamp Used"), this);
-    QGridLayout* useGBLayout    = new QGridLayout(d->useGroupBox);
-    d->useButtonGroup           = new QButtonGroup(d->useGroupBox);
+    d->useSettingsBox           = new QWidget(d->settingsExpander);
+    QGridLayout* useGBLayout    = new QGridLayout(d->useSettingsBox);
+    d->useButtonGroup           = new QButtonGroup(d->useSettingsBox);
     d->useButtonGroup->setExclusive(true);
 
     QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
-    d->useApplDateBtn           = new QRadioButton("", d->useGroupBox);
+    d->useApplDateBtn           = new QRadioButton(QString(), d->useSettingsBox);
     QLabel* useApplDateLbl      = new QLabel(applDateLabelString);
     useApplDateLbl->setIndent(5);
 
-    d->useFileDateBtn           = new QRadioButton(d->useGroupBox);
-    d->useFileDateTypeChooser   = new QComboBox(d->useGroupBox);
+    d->useFileDateBtn           = new QRadioButton(d->useSettingsBox);
+    d->useFileDateTypeChooser   = new QComboBox(d->useSettingsBox);
     d->useFileDateTypeChooser->insertItem(TimeAdjustSettings::FILELASTMOD, i18n("File last modified"));
     /* NOTE: not supported by Linux, although supported by Qt (read-only)
     d->useFileDateTypeChooser->insertItem(TimeAdjustSettings::FILECREATED, i18n("File created"));
     */
 
-    d->useMetaDateBtn         = new QRadioButton(QString(), d->useGroupBox);
-    d->useMetaDateTypeChooser = new QComboBox(d->useGroupBox);
+    d->useMetaDateBtn         = new QRadioButton(QString(), d->useSettingsBox);
+    d->useMetaDateTypeChooser = new QComboBox(d->useSettingsBox);
     d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFIPTCXMP,   i18n("EXIF/IPTC/XMP"));
     d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFCREATED,   i18n("EXIF: created"));
     d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::EXIFORIGINAL,  i18n("EXIF: original"));
@@ -165,13 +180,13 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::IPTCCREATED,   i18n("IPTC: created"));
     d->useMetaDateTypeChooser->insertItem(TimeAdjustSettings::XMPCREATED,    i18n("XMP: created"));
 
-    d->useCustomDateBtn       = new QRadioButton(d->useGroupBox);
-    d->useCustDateInput       = new QDateEdit(d->useGroupBox);
+    d->useCustomDateBtn       = new QRadioButton(d->useSettingsBox);
+    d->useCustDateInput       = new QDateEdit(d->useSettingsBox);
     d->useCustDateInput->setDisplayFormat("dd MMMM yyyy");
     d->useCustDateInput->setCalendarPopup(true);
-    d->useCustTimeInput       = new QTimeEdit(d->useGroupBox);
+    d->useCustTimeInput       = new QTimeEdit(d->useSettingsBox);
     d->useCustTimeInput->setDisplayFormat("hh:mm:ss");
-    d->useCustomDateTodayBtn  = new QToolButton(d->useGroupBox);
+    d->useCustomDateTodayBtn  = new QToolButton(d->useSettingsBox);
     d->useCustomDateTodayBtn->setIcon(SmallIcon("go-jump-today"));
     d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
 
@@ -198,18 +213,18 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // -- Settings View TimesStamp Adjustements ---------------------------------------------------
 
-    d->adjustGroupBox           = new QGroupBox(i18n("Timestamp Adjustments"), this);
-    QGridLayout* adjustGBLayout = new QGridLayout(d->adjustGroupBox);
+    d->adjustSettingsBox        = new QWidget(d->settingsExpander);
+    QGridLayout* adjustGBLayout = new QGridLayout(d->adjustSettingsBox);
 
-    d->adjTypeChooser           = new QComboBox(d->adjustGroupBox);
+    d->adjTypeChooser           = new QComboBox(d->adjustSettingsBox);
     d->adjTypeChooser->insertItem(TimeAdjustSettings::COPYVALUE, i18nc("copy timestamp as well",             "Copy value"));
     d->adjTypeChooser->insertItem(TimeAdjustSettings::ADDVALUE,  i18nc("add a fixed timestamp to date",      "Add"));
     d->adjTypeChooser->insertItem(TimeAdjustSettings::SUBVALUE,  i18nc("subtract a fixed timestamp to date", "Subtract"));
-    d->adjDaysInput             = new QSpinBox(d->adjustGroupBox);
+    d->adjDaysInput             = new QSpinBox(d->adjustSettingsBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);
-    d->adjDaysLabel             = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
-    d->adjTimeInput             = new QTimeEdit(d->adjustGroupBox);
+    d->adjDaysLabel             = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustSettingsBox);
+    d->adjTimeInput             = new QTimeEdit(d->adjustSettingsBox);
     d->adjTimeInput->setDisplayFormat("hh:mm:ss");
     d->adjDetByClockPhotoBtn    = new QPushButton(i18n("Determine difference from clock photo"));
 
@@ -226,17 +241,17 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // -- Settings View Updated Timestamps -------------------------------------------------------
 
-    d->updateGroupBox           = new QGroupBox(i18n("Timestamp Updated"), this);
-    QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
+    d->updateSettingsBox        = new QWidget(d->settingsExpander);
+    QGridLayout* updateGBLayout = new QGridLayout(d->updateSettingsBox);
 
-    d->updAppDateCheck          = new QCheckBox(applDateLabelString,        d->updateGroupBox);
-    d->updFileModDateCheck      = new QCheckBox(i18n("File last modified"), d->updateGroupBox);
-    d->updEXIFModDateCheck      = new QCheckBox(i18n("EXIF: created"),      d->updateGroupBox);
-    d->updEXIFOriDateCheck      = new QCheckBox(i18n("EXIF: original"),     d->updateGroupBox);
-    d->updEXIFDigDateCheck      = new QCheckBox(i18n("EXIF: digitized"),    d->updateGroupBox);
-    d->updIPTCDateCheck         = new QCheckBox(i18n("IPTC: created"),      d->updateGroupBox);
-    d->updXMPDateCheck          = new QCheckBox(i18n("XMP"),                d->updateGroupBox);
-    d->updFileNameCheck         = new QCheckBox(i18n("Filename"),           d->updateGroupBox);
+    d->updAppDateCheck          = new QCheckBox(applDateLabelString,        d->updateSettingsBox);
+    d->updFileModDateCheck      = new QCheckBox(i18n("File last modified"), d->updateSettingsBox);
+    d->updEXIFModDateCheck      = new QCheckBox(i18n("EXIF: created"),      d->updateSettingsBox);
+    d->updEXIFOriDateCheck      = new QCheckBox(i18n("EXIF: original"),     d->updateSettingsBox);
+    d->updEXIFDigDateCheck      = new QCheckBox(i18n("EXIF: digitized"),    d->updateSettingsBox);
+    d->updIPTCDateCheck         = new QCheckBox(i18n("IPTC: created"),      d->updateSettingsBox);
+    d->updXMPDateCheck          = new QCheckBox(i18n("XMP"),                d->updateSettingsBox);
+    d->updFileNameCheck         = new QCheckBox(i18n("Filename"),           d->updateSettingsBox);
 
     updateGBLayout->setMargin(KDialog::spacingHint());
     updateGBLayout->setSpacing(KDialog::spacingHint());
@@ -255,6 +270,16 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     {
         d->updXMPDateCheck->setEnabled(false);
     }
+
+    // -----------------------------------------------------------------------
+
+    d->settingsExpander->addItem(d->useSettingsBox,    i18n("Timestamp Used"),        QString("timestampused"),        true);
+    d->settingsExpander->addItem(d->adjustSettingsBox, i18n("Timestamp Adjustments"), QString("timestampadjustments"), true);
+    d->settingsExpander->addItem(d->updateSettingsBox, i18n("Timestamp Updated"),     QString("timestampupdated"),     true);
+    d->settingsExpander->addStretch();
+    d->settingsExpander->setItemIcon(0, SmallIcon("document-import"));
+    d->settingsExpander->setItemIcon(1, SmallIcon("document-edit"));
+    d->settingsExpander->setItemIcon(2, SmallIcon("document-export"));
 
     // -- Settings View Slots/Signals ----------------------------------------
 
@@ -297,8 +322,14 @@ SettingsWidget::~SettingsWidget()
     delete d;
 }
 
-void SettingsWidget::readSettings(const KConfigGroup& group)
+void SettingsWidget::readSettings(KConfigGroup& group)
 {
+#if KDCRAW_VERSION >= 0x020000
+    d->settingsExpander->readSettings(group);
+#else
+    d->settingsExpander->readSettings();
+#endif
+    
     int useTimestampType = group.readEntry("Use Timestamp Type", (int)TimeAdjustSettings::APPDATE);
     if      (useTimestampType == TimeAdjustSettings::APPDATE)      d->useApplDateBtn->setChecked(true);
     else if (useTimestampType == TimeAdjustSettings::FILEDATE)     d->useFileDateBtn->setChecked(true);
@@ -329,6 +360,12 @@ void SettingsWidget::readSettings(const KConfigGroup& group)
 
 void SettingsWidget::saveSettings(KConfigGroup& group)
 {
+#if KDCRAW_VERSION >= 0x020000
+    d->settingsExpander->writeSettings(group);
+#else
+    d->settingsExpander->writeSettings();
+#endif
+
     group.writeEntry("Custom Date",                   d->useCustDateInput->dateTime());
     group.writeEntry("Custom Time",                   d->useCustTimeInput->dateTime());
 

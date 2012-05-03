@@ -27,11 +27,11 @@
 // Qt includes
 
 #include <QDateTime>
+#include <QScrollArea>
 
 // KDE includes
 
 #include <kconfiggroup.h>
-#include <kvbox.h>
 
 // Local includes
 
@@ -42,7 +42,7 @@ class KConfigGroup;
 namespace KIPITimeAdjustPlugin
 {
 
-class SettingsWidget : public KVBox
+class SettingsWidget : public QScrollArea
 {
     Q_OBJECT
 
@@ -51,7 +51,7 @@ public:
     SettingsWidget(QWidget* const parent=0);
     ~SettingsWidget();
 
-    void readSettings(const KConfigGroup& group);
+    void readSettings(KConfigGroup& group);
     void saveSettings(KConfigGroup& group);
 
     TimeAdjustSettings settings() const;
