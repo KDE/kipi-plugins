@@ -33,6 +33,8 @@
 
 #include "kipiplugins_export.h"
 
+class KPushButton;
+
 namespace KIPIPlugins
 {
 
@@ -43,14 +45,14 @@ class KIPIPLUGINS_EXPORT KPDialogBase
 public:
 
     KPDialogBase(KDialog* const dlg);
-    ~KPDialogBase();
+    virtual ~KPDialogBase();
 
     void setAboutData(KPAboutData* const data, KPushButton* help=0);
 
 private:
 
-    KPAboutData* m_about;
-    KDialog*     m_dialog;
+    class KPDialogBasePrivate;
+    KPDialogBasePrivate* const d;
 };
 
 // -----------------------------------------------------------------------------------
@@ -60,7 +62,7 @@ class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog, public KPDialogBase
 public:
 
     KPToolDialog(QWidget* const parent=0);
-    ~KPToolDialog();
+    virtual ~KPToolDialog();
 };
 
 // -----------------------------------------------------------------------------------
@@ -70,7 +72,7 @@ class KIPIPLUGINS_EXPORT KPWizardDialog : public KAssistantDialog, public KPDial
 public:
 
     KPWizardDialog(QWidget* const parent=0);
-    ~KPWizardDialog();
+    virtual ~KPWizardDialog();
 };
 
 // -----------------------------------------------------------------------------------
@@ -80,7 +82,7 @@ class KIPIPLUGINS_EXPORT KPPageDialog : public KPageDialog, public KPDialogBase
 public:
 
     KPPageDialog(QWidget* const parent=0);
-    ~KPPageDialog();
+    virtual ~KPPageDialog();
 };
 
 } // namespace KIPIPlugins

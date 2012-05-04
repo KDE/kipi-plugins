@@ -40,27 +40,42 @@
 namespace KIPIPlugins
 {
 
-KPDialogBase::KPDialogBase(KDialog* const dlg)
+class KPDialogBase::KPDialogBasePrivate
 {
-    m_about  = 0;
-    m_dialog = dlg;
+
+public:
+
+    KPDialogBasePrivate()
+    {
+        about  = 0;
+        dialog = 0;
+    }
+
+    KPAboutData* about;
+    KDialog*     dialog;
+};
+
+KPDialogBase::KPDialogBase(KDialog* const dlg)
+    : d(new KPDialogBasePrivate)
+{
+    d->dialog = dlg;
 }
 
 KPDialogBase::~KPDialogBase()
 {
-    delete m_about;
+    delete d->about;
+    delete d;
 }
 
 void KPDialogBase::setAboutData(KPAboutData* const data, KPushButton* help)
 {
-    if (!data || !m_dialog) return;
+    if (!data || !d->dialog) return;
 
-    if (!help) help = m_dialog->button(KDialog::Help);
+    if (!help) help = d->dialog->button(KDialog::Help);
     if (!help) return;
 
-    m_about = data;
-
-    m_about->setHelpButton(help);
+    d->about = data;
+    d->about->setHelpButton(help);
 }
 
 // -----------------------------------------------------------------------------------
