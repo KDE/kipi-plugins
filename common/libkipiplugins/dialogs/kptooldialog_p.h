@@ -23,10 +23,6 @@
 #ifndef KPTOOLDIALOG_PRIVATE_H
 #define KPTOOLDIALOG_PRIVATE_H
 
-// Qt includes
-
-#include <QObject>
-
 // Local includes
 
 #include "kptooldialog.h"
@@ -36,20 +32,14 @@ class KPushButton;
 namespace KIPIPlugins
 {
 
-class KPDialogPrivate : public QObject
+class KPDialogPrivate
 {
-    Q_OBJECT
-
 public:
 
     KPDialogPrivate(KDialog* const dlg);
     ~KPDialogPrivate();
 
     void setAboutData(KPAboutData* const data, KPushButton* help=0);
-
-private Q_SLOTS:
-
-    void slotHelp();
 
 private:
 

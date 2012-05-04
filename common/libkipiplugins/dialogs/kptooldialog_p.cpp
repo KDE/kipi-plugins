@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kptooldialog_p.moc"
+#include "kptooldialog_p.h"
 
 // KDE includes
 
@@ -56,23 +56,10 @@ void KPDialogPrivate::setAboutData(KPAboutData* const data, KPushButton* help)
 
     if (!help) help = m_dialog->button(KDialog::Help);
     if (!help) return;
-    
+
     m_about = data;
 
-    KHelpMenu* helpMenu = new KHelpMenu(m_dialog, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), m_dialog);
-
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    help->setMenu(helpMenu->menu());
-}
-
-void KPDialogPrivate::slotHelp()
-{
-    KToolInvocation::invokeHelp(m_about ? m_about->handbookEntry : QString(), "kipi-plugins");
+    m_about->setHelpButton(help);
 }
 
 } // namespace KIPIPlugins

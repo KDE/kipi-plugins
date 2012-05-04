@@ -22,13 +22,7 @@
 
 // KDE includes
 
-#include <kaction.h>
-#include <khelpmenu.h>
-#include <kicon.h>
-#include <klocale.h>
-#include <kmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -46,6 +40,7 @@ KPToolDialog::KPToolDialog(QWidget* const parent)
 
 KPToolDialog::~KPToolDialog()
 {
+    delete d;
 }
 
 void KPToolDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
@@ -62,6 +57,7 @@ KPWizardDialog::KPWizardDialog(QWidget* const parent)
 
 KPWizardDialog::~KPWizardDialog()
 {
+    delete d;
 }
 
 void KPWizardDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
@@ -79,6 +75,7 @@ KPPageDialog::KPPageDialog(QWidget* const parent)
 
 KPPageDialog::~KPPageDialog()
 {
+    delete d;
 }
 
 void KPPageDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
