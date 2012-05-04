@@ -101,7 +101,7 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const int
                      ki18n("Developer and maintainer"),
                      "languitar at semipol dot de");
 
-    about->handbookEntry = QString("kioexport");
+    about->setHandbookEntry("kioexport");
     setAboutData(about);
 
     // -- initial sync ------------------------------------------------------

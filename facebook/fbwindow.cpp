@@ -131,7 +131,7 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
     about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                      "lure at kubuntu dot org");
 
-    about->handbookEntry = QString("facebook");
+    about->setHandbookEntry("facebook");
     setAboutData(about);
 
     // ------------------------------------------------------------------------

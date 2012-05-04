@@ -167,7 +167,7 @@ MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& 
     about->addAuthor(ki18n("Victor Dodon"), ki18n("Developer"),
                      "victor dot dodon at cti dot pub dot ro");
 
-    about->handbookEntry = QString("metadataeditor");
+    about->setHandbookEntry("metadataeditor");
     setAboutData(about);
 
     readSettings();

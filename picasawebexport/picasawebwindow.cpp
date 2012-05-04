@@ -149,7 +149,7 @@ PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpF
     about->addAuthor(ki18n( "Jens Mueller" ), ki18n("Developer"),
                      "tschenser at gmx dot de");
 
-    about->handbookEntry = QString("picasawebexport");
+    about->setHandbookEntry("picasawebexport");
     setAboutData(about);
 
     // ------------------------------------------------------------------------

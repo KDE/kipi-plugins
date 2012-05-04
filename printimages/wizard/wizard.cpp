@@ -175,7 +175,7 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     about->addAuthor(ki18n("Andreas Trink"), ki18n("Contributor"),
                      "atrink@nociaro.org");
 
-    about->handbookEntry = QString("printwizard");
+    about->setHandbookEntry("printwizard");
     setAboutData(about);
 
     //d->m_photoPage  = new InfoPage ( this, i18n ( infoPageName ) );

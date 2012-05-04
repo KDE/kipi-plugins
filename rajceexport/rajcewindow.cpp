@@ -79,7 +79,7 @@ RajceWindow::RajceWindow(Interface* const interface, const QString& tmpFolder,
     about->addAuthor(ki18n( "Lukas Krejci" ), ki18n("Author and maintainer"),
                      "metlosh at gmail dot com");
 
-    about->handbookEntry = QString("rajceexport");
+    about->setHandbookEntry("rajceexport");
     setAboutData(about);
 
     button(User1)->setEnabled(false);

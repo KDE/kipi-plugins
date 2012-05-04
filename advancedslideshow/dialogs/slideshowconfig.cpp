@@ -123,7 +123,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
                      "valerio dot fuoglio at gmail dot com");
 
-    about->handbookEntry = QString("slideshow");
+    about->setHandbookEntry("slideshow");
     setAboutData(about);
 
     // Slot connections

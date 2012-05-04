@@ -260,7 +260,7 @@ PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Pi
     about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
                      "fcoiffie at gmail dot com");
 
-    about->handbookEntry = QString("piwigoexport");
+    about->setHandbookEntry("piwigoexport");
     setAboutData(about);
 
     // User1 Button : to upload selected photos

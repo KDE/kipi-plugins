@@ -137,7 +137,7 @@ SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
     about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                      "lure at kubuntu dot org");
 
-    about->handbookEntry = QString("smug");
+    about->setHandbookEntry("smug");
     setAboutData(about);
 
     // ------------------------------------------------------------------------

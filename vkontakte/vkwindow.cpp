@@ -300,7 +300,7 @@ VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidge
 
     about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
 
-    about->handbookEntry = QString("VKontakte");
+    about->setHandbookEntry("VKontakte");
     setAboutData(about);
 
     /*

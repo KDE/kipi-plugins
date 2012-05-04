@@ -37,11 +37,12 @@
 #include "XMP_Version.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPIDNGConverterPlugin
 {
 
-class DNGConverterAboutData : public KIPIPlugins::KPAboutData
+class DNGConverterAboutData : public KPAboutData
 {
 
 public:
@@ -74,10 +75,12 @@ public:
                    ki18n("Developer"),
                    "smit dot meh at gmail dot com");
 
-        handbookEntry = QString("dngconverter");
+        setHandbookEntry("dngconverter");
     }
 
-    ~DNGConverterAboutData(){}
+    ~DNGConverterAboutData()
+    {
+    }
 };
 
 } // namespace KIPIDNGConverterPlugin

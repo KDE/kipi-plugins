@@ -117,7 +117,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
     about->addAuthor(ki18n("Tom Albers"), ki18n("Developer"),
                      "tomalbers at kde dot nl");
 
-    about->handbookEntry = QString("sendimages");
+    about->setHandbookEntry("sendimages");
     setAboutData(about);
 
     // ------------------------------------------------------------

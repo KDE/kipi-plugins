@@ -191,7 +191,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(Interface* const interface)
     about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                      "andi dot clemens at googlemail dot com");
 
-    about->handbookEntry = QString("removeredeyes");
+    about->setHandbookEntry("removeredeyes");
     setAboutData(about);
 
     // ----------------------------------------------------------

@@ -20,67 +20,82 @@
  *
  * ============================================================ */
 
+#include "kptooldialog.h"
+
 // KDE includes
 
+#include <kdialog.h>
+#include <kaction.h>
+#include <khelpmenu.h>
+#include <kicon.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
-#include "kptooldialog.h"
-#include "kptooldialog_p.h"
+#include "kpaboutdata.h"
 
 namespace KIPIPlugins
 {
 
+KPDialogBase::KPDialogBase(KDialog* const dlg)
+{
+    m_about  = 0;
+    m_dialog = dlg;
+}
+
+KPDialogBase::~KPDialogBase()
+{
+    delete m_about;
+}
+
+void KPDialogBase::setAboutData(KPAboutData* const data, KPushButton* help)
+{
+    if (!data || !m_dialog) return;
+
+    if (!help) help = m_dialog->button(KDialog::Help);
+    if (!help) return;
+
+    m_about = data;
+
+    m_about->setHelpButton(help);
+}
+
+// -----------------------------------------------------------------------------------
+
 KPToolDialog::KPToolDialog(QWidget* const parent)
-    : KDialog(parent), d(new KPDialogPrivate(this))
+    : KDialog(parent), KPDialogBase(this)
 {
     setButtons(Help | Ok);
 }
 
 KPToolDialog::~KPToolDialog()
 {
-    delete d;
-}
-
-void KPToolDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
-{
-    d->setAboutData(about, help);
 }
 
 // -----------------------------------------------------------------------------------
 
 KPWizardDialog::KPWizardDialog(QWidget* const parent)
-    : KAssistantDialog(parent), d(new KPDialogPrivate(this))
+    : KAssistantDialog(parent), KPDialogBase(this)
 {
 }
 
 KPWizardDialog::~KPWizardDialog()
 {
-    delete d;
-}
-
-void KPWizardDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
-{
-    d->setAboutData(about, help);
 }
 
 // -----------------------------------------------------------------------------------
 
 KPPageDialog::KPPageDialog(QWidget* const parent)
-    : KPageDialog(parent), d(new KPDialogPrivate(this))
+    : KPageDialog(parent), KPDialogBase(this)
 {
     setButtons(Help | Ok);
 }
 
 KPPageDialog::~KPPageDialog()
 {
-    delete d;
-}
-
-void KPPageDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
-{
-    d->setAboutData(about, help);
 }
 
 } // namespace KIPIPlugins

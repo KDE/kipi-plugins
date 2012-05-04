@@ -27,10 +27,12 @@
 
 #include "kpaboutdata.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIFlashExportPlugin
 {
 
-class FlashExportAboutData : public KIPIPlugins::KPAboutData
+class FlashExportAboutData : public KPAboutData
 {
 
 public:
@@ -44,7 +46,7 @@ public:
                             "(c) 2011, Veaceslav Munteanu"))
 
     {
-        handbookEntry = QString("flashexport");
+        setHandbookEntry("flashexport");
 
         addAuthor(ki18n("Joern Ahrens"),
                 ki18n("Author"),
@@ -69,7 +71,9 @@ public:
                 "http://www.stegmann.dk/mikkel/porta");
     }
 
-    ~FlashExportAboutData(){}
+    ~FlashExportAboutData()
+    {
+    }
 };
 
 } // namespace KIPIFlashExportPlugin

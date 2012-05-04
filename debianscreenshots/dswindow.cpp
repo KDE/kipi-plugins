@@ -114,7 +114,7 @@ DsWindow::DsWindow(Interface* const interface, const QString& tmpFolder, QWidget
     about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
                      "pgquiles at elpauer dot org");
 
-    about->handbookEntry = QString("debianscreenshots");
+    about->setHandbookEntry("debianscreenshots");
     setAboutData(about);
 
     // ------------------------------------------------------------------------

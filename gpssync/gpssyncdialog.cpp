@@ -416,7 +416,7 @@ GPSSyncDialog::GPSSyncDialog(Interface* const interface, QWidget* const parent)
                      ki18n("Developer"),
                            "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("gpssync");
+    about->setHandbookEntry("gpssync");
     setAboutData(about, help);
 
     // ---------------------------------------------------------------

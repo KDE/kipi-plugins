@@ -101,7 +101,7 @@ WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("wikimedia");
+    about->setHandbookEntry("wikimedia");
     setAboutData(about);
 
     connect(this, SIGNAL(user1Clicked()),

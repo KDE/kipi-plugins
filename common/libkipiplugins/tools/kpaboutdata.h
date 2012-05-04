@@ -55,15 +55,16 @@ public:
 
     KPAboutData(const KPAboutData& other);
 
+    void setHandbookEntry(const QString& entry);
     void setHelpButton(KPushButton* const help);
 
 private Q_SLOTS:
 
     void slotHelp();
 
-public:
+private:
 
-    QString handbookEntry;
+    QString m_handbookEntry;
 };
 
 } // namespace KIPIPlugins

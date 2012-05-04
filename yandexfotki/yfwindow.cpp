@@ -350,7 +350,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     about->addAuthor(ki18n( "Roman Tsisyk" ), ki18n("Author"),
                      "roman at tsisyk dot com");
 
-    about->handbookEntry = QString("YandexFotki");
+    about->setHandbookEntry("YandexFotki");
     setAboutData(about);
 
     // -- UI slots -----------------------------------------------------------------------

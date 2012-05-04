@@ -129,7 +129,7 @@ UploadDialog::UploadDialog
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("ipodexport");
+    about->setHandbookEntry("ipodexport");
     setAboutData(about);
 
     // ------------------------------------------------------------

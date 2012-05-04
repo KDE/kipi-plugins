@@ -253,7 +253,7 @@ Wizard::Wizard(QWidget* const parent, GalleryInfo* const info, Interface* const 
         ki18n("Former Author and Maintainer"),
         "agateau@kde.org");
 
-    about->handbookEntry = QString("htmlexport");
+    about->setHandbookEntry("htmlexport");
     setAboutData(about);
 
     // ---------------------------------------------------------------

@@ -221,7 +221,7 @@ GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, 
 {
     d->interface = interface;
     d->gallery   = pGallery;
-  
+
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
     setModal(false);
@@ -247,7 +247,7 @@ GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, 
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("galleryexport");
+    about->setHandbookEntry("galleryexport");
     setAboutData(about);
 
     // User1 Button : to conf gallery settings

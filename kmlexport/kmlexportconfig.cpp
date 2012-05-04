@@ -291,7 +291,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
                      ki18n("Maintainer"),
                            "mike at mghansen dot de");
 
-    about->handbookEntry = QString("kmlexport");
+    about->setHandbookEntry("kmlexport");
     setAboutData(about);
 
     // --------------------------------------------------------------

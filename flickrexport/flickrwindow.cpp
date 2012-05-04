@@ -153,7 +153,7 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("flickrexport");
+    about->setHandbookEntry("flickrexport");
     setAboutData(about);
 
     // --------------------------------------------------------------------------

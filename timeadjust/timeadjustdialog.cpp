@@ -148,7 +148,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
                      ki18n("Developer"),
                      "p dot edelman at gmx dot net");
 
-    about->handbookEntry = QString("timeadjust");
+    about->setHandbookEntry("timeadjust");
     setAboutData(about);
 
     // -- Thread Slots/Signals ----------------------------------------------

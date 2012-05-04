@@ -99,7 +99,7 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("imgurexport");
+    about->setHandbookEntry("imgurexport");
     setAboutData(about);
 
     // ------------------------------------------------------------

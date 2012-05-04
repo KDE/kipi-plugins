@@ -109,7 +109,7 @@ ImageshackWindow::ImageshackWindow(Interface* const interface, QWidget* const pa
     about->addAuthor(ki18n("Dodon Victor"), ki18n("Author"),
                      "dodonvictor at gmail dot com");
 
-    about->handbookEntry = QString("imageshackexport");
+    about->setHandbookEntry("imageshackexport");
     setAboutData(about);
 
     // -----------------------------------------------------------

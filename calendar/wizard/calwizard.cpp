@@ -110,7 +110,7 @@ CalWizard::CalWizard(Interface* const interface, QWidget* const parent)
     about->addAuthor(ki18n("Renchi Raju"), ki18n("Former author and maintainer"),
                      "renchi dot raju at gmail dot com");
 
-    about->handbookEntry = QString("calendar");
+    about->setHandbookEntry("calendar");
     setAboutData(about);
 
     // ------------------------------------------

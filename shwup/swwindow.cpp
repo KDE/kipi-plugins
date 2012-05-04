@@ -120,7 +120,7 @@ SwWindow::SwWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
     about->addAuthor(ki18n("Timothée Groleau"), ki18n("Author and maintainer"),
                      "kde at timotheegroleau dot com");
 
-    about->handbookEntry = QString("shwup");
+    about->setHandbookEntry("shwup");
     setAboutData(about);
 
     // ------------------------------------------------------------------------

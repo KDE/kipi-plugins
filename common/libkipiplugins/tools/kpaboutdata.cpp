@@ -88,7 +88,12 @@ KPAboutData::KPAboutData(const KPAboutData& other)
     : QObject((QObject*)(&other)),
       KAboutData(other)
 {
-    handbookEntry = other.handbookEntry;
+    setHandbookEntry(other.m_handbookEntry);
+}
+
+void KPAboutData::setHandbookEntry(const QString& entry)
+{
+    m_handbookEntry = entry;
 }
 
 void KPAboutData::setHelpButton(KPushButton* const help)
@@ -108,7 +113,7 @@ void KPAboutData::setHelpButton(KPushButton* const help)
 
 void KPAboutData::slotHelp()
 {
-    KToolInvocation::invokeHelp(handbookEntry, "kipi-plugins");
+    KToolInvocation::invokeHelp(m_handbookEntry, "kipi-plugins");
 }
 
 }   // namespace KIPIPlugins
