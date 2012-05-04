@@ -122,7 +122,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (!m_scanDlg)
     {
-        m_scanDlg = new ScanDialog(m_interface, m_saneWidget, kapp->activeWindow(), new ScanDialogAboutData);
+        m_scanDlg = new ScanDialog(m_saneWidget, kapp->activeWindow(), new ScanDialogAboutData);
     }
     else
     {
