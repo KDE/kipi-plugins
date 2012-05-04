@@ -35,6 +35,13 @@
 
 class KPushButton;
 
+namespace KIPI
+{
+    class Interface;
+}
+
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
 
@@ -48,6 +55,8 @@ public:
     virtual ~KPDialogBase();
 
     void setAboutData(KPAboutData* const data, KPushButton* help=0);
+
+    Interface* iface() const;
 
 private:
 

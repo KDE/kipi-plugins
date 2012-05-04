@@ -33,6 +33,11 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
+// Libkipi includes
+
+#include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
+
 // Local includes
 
 #include "kpaboutdata.h"
@@ -49,8 +54,17 @@ public:
     {
         about  = 0;
         dialog = 0;
-    }
+        iface  = 0;
 
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
+
+    }
+    
+    Interface*   iface;
     KPAboutData* about;
     KDialog*     dialog;
 };
@@ -65,6 +79,11 @@ KPDialogBase::~KPDialogBase()
 {
     delete d->about;
     delete d;
+}
+
+Interface* KPDialogBase::iface() const
+{
+    return d->iface;
 }
 
 void KPDialogBase::setAboutData(KPAboutData* const data, KPushButton* help)
