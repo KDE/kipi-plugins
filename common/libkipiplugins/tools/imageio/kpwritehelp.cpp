@@ -41,15 +41,15 @@ extern "C"
 #include <jerror.h>
 }
 
-#define BUFFER_SIZE  4096	/* choose an efficiently fwrite'able size */
+/* choose an efficiently fwrite'able size */
+#define BUFFER_SIZE  4096
 
 namespace KIPIPlugins
 {
 
 /**
- Expanded data destination object for input/output for jpeg 
+ Expanded data destination object for input/output for jpeg
  */
-
 typedef struct
 {
     struct jpeg_destination_mgr pub; /* public fields */
@@ -74,15 +74,14 @@ typedef struct
  */
 void init_destination (j_compress_ptr cinfo)
 {
-    my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
+    my_dest_ptr dest           = (my_dest_ptr) cinfo->dest;
 
     /* Allocate the output buffer --- it will be released when done with image */
-    dest->buffer = (JOCTET*)
-        (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_IMAGE,
-                    BUFFER_SIZE * (size_t)sizeof(JOCTET));
+    dest->buffer               = (JOCTET*) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_IMAGE,
+                                 BUFFER_SIZE * (size_t)sizeof(JOCTET));
 
     dest->pub.next_output_byte = dest->buffer;
-    dest->pub.free_in_buffer = BUFFER_SIZE;
+    dest->pub.free_in_buffer   = BUFFER_SIZE;
 }
 
 /**
@@ -176,7 +175,7 @@ void init_source(j_decompress_ptr cinfo)
     fill_input_buffer(cinfo);
 }
 
-void skip_input_data(j_decompress_ptr cinfo, long num_bytes) 
+void skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
     my_source_mgr* src = (my_source_mgr*)cinfo->src;
     if (num_bytes > 0)
@@ -202,10 +201,10 @@ void term_source(j_decompress_ptr)
 void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
 {
     Q_ASSERT(!cinfo->src);
-    my_source_mgr* src = (my_source_mgr*)
-                         (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
-                         sizeof(my_source_mgr));
-    cinfo->src         = (jpeg_source_mgr*)src;
+    my_source_mgr* src         = (my_source_mgr*)
+                                 (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
+                                 sizeof(my_source_mgr));
+    cinfo->src                 = (jpeg_source_mgr*)src;
 
     src->pub.init_source       = init_source;
     src->pub.fill_input_buffer = fill_input_buffer;
@@ -222,8 +221,8 @@ void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
 void kp_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
     QIODevice* out = (QIODevice*)png_get_io_ptr(png_ptr);
+    uint nr        = out->write((char*)data, length);
 
-    uint nr = out->write((char*)data, length);
     if (nr != length)
     {
         png_error(png_ptr, "Write Error");
