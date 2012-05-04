@@ -43,7 +43,6 @@ namespace KIPIPlugins
     class KPImagesList;
 }
 
-
 using namespace KIPIPlugins;
 
 namespace KIPIKioExportPlugin

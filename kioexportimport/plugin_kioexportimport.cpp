@@ -90,7 +90,7 @@ void Plugin_KioExportImport::setup(QWidget* widget)
     addAction(m_actionImport);
 
     // check interface availability
-    Interface *interface = dynamic_cast<Interface*> (parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Interface empty";
@@ -104,7 +104,7 @@ void Plugin_KioExportImport::slotActivateExport()
 {
     kDebug() << "Starting KIO export";
 
-    Interface *interface = dynamic_cast<Interface*> (parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Interface empty";
@@ -131,7 +131,7 @@ void Plugin_KioExportImport::slotActivateImport()
 {
     kDebug() << "Starting KIO import";
 
-    Interface *interface = dynamic_cast<Interface*> (parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Interface empty";
