@@ -94,12 +94,10 @@ enum ProcessState
     STOP_PROCESS
 };
 
-BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, Interface* const interface,
-                                                   const QString& caption, QWidget* const parent)
+BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, const QString& caption, QWidget* const parent)
     : KPToolDialog(parent),
       m_listFile2Process_iterator(0),
       m_selectedImageFiles(urlList),
-      m_interface(interface),
       m_ui(new Ui::BatchProcessImagesDialog())
 {
     setCaption(caption);
@@ -170,7 +168,7 @@ void BatchProcessImagesDialog::setupUi()
                                               "all original image files will be removed after processing."));
 
     m_ui->m_destinationUrl->setMode(KFile::Directory | KFile::LocalOnly);
-    ImageCollection album = m_interface->currentAlbum();
+    ImageCollection album = iface()->currentAlbum();
     if (album.isValid())
     {
         QString url;
@@ -402,7 +400,7 @@ bool BatchProcessImagesDialog::startProcess()
     m_listFiles->setCurrentItem(item);
 
     // Lock current item into KIPI host application
-    KPFileReadLocker(m_interface, item->pathSrc());
+    KPFileReadLocker(iface(), item->pathSrc());
 
     if (prepareStartProcess(item, targetAlbum) == false)   // If there is a problem during the
     {                                                   // preparation -> pass to the next item!
@@ -629,12 +627,12 @@ void BatchProcessImagesDialog::slotFinished()
             KUrl::List urlList;
             urlList.append(src);
             urlList.append(dest);
-            m_interface->refreshImages(urlList);
+            iface()->refreshImages(urlList);
 
             if (!item->overWrote())
             {
                 // Do not add an entry if there was an image at the location already.
-                bool ok = m_interface->addImage(dest, errmsg);
+                bool ok = iface()->addImage(dest, errmsg);
 
                 if (!ok)
                 {
@@ -676,7 +674,7 @@ void BatchProcessImagesDialog::slotFinished()
                 }
                 else
                 {
-                    m_interface->delImage(item->pathSrc());
+                    iface()->delImage(item->pathSrc());
                 }
             }
             break;

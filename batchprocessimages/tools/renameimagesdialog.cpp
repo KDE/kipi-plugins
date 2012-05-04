@@ -45,7 +45,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, Interface* interface, QWidget* parent)
+RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, QWidget* parent)
     : KPToolDialog(parent)
 {
     setCaption(i18n("Rename Images"));
@@ -75,7 +75,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, Interface* inte
 
     QWidget* box     = new QWidget(this);
     QVBoxLayout* lay = new QVBoxLayout(box);
-    m_widget         = new RenameImagesWidget(box, interface, images);
+    m_widget         = new RenameImagesWidget(box, iface(), images);
     lay->addWidget(m_widget);
     setMainWidget(box);
 

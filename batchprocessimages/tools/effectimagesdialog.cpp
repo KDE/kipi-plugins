@@ -51,8 +51,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-EffectImagesDialog::EffectImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget* parent)
-    : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image Effects"), parent)
+EffectImagesDialog::EffectImagesDialog(const KUrl::List& urlList, QWidget* parent)
+    : BatchProcessImagesDialog(urlList, i18n("Batch Image Effects"), parent)
 {
     m_nbItem = m_selectedImageFiles.count();
 
