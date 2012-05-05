@@ -59,7 +59,7 @@ class ImageshackWindow : public KPToolDialog
 
 public:
 
-    ImageshackWindow(Interface* const interface, QWidget* const parent, Imageshack* const pImageshack);
+    ImageshackWindow(QWidget* const parent, Imageshack* const pImageshack);
     ~ImageshackWindow();
 
     KPImagesList* getImagesList() const;
@@ -100,17 +100,15 @@ private Q_SLOTS:
 
 private:
 
-    bool                m_import;
-    unsigned int        m_imagesCount;
-    unsigned int        m_imagesTotal;
+    bool              m_import;
+    unsigned int      m_imagesCount;
+    unsigned int      m_imagesTotal;
 
-    KUrl::List          m_transferQueue;
+    KUrl::List        m_transferQueue;
 
-    Imageshack*         m_imageshack;
-    ImageshackWidget*   m_widget;
-    ImageshackTalker*   m_talker;
-
-    Interface*          m_interface;
+    Imageshack*       m_imageshack;
+    ImageshackWidget* m_widget;
+    ImageshackTalker* m_talker;
 };
 
 } // namespace KIPIImageshackExportPlugin
