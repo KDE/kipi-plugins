@@ -116,20 +116,13 @@ Plugin_Facebook::~Plugin_Facebook()
 
 void Plugin_Facebook::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-fb-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new FbWindow(interface, tmp, false, kapp->activeWindow());
+        m_dlgExport = new FbWindow(tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -144,20 +137,13 @@ void Plugin_Facebook::slotExport()
 
 void Plugin_Facebook::slotImport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-fb-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new FbWindow(interface, tmp, true, kapp->activeWindow());
+        m_dlgImport = new FbWindow(tmp, true, kapp->activeWindow());
     }
     else
     {

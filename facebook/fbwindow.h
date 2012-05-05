@@ -70,8 +70,7 @@ class FbWindow : public KPToolDialog
 
 public:
 
-    FbWindow(Interface* const interface, const QString& tmpFolder,
-             bool import, QWidget* const parent);
+    FbWindow(const QString& tmpFolder, bool import, QWidget* const parent);
     ~FbWindow();
 
     /**
@@ -145,8 +144,6 @@ private:
     FbTalker*    m_talker;
     FbWidget*    m_widget;
     FbNewAlbum*  m_albumDlg;
-
-    Interface*   m_interface;
 };
 
 } // namespace KIPIFacebookPlugin
