@@ -23,10 +23,6 @@
 #ifndef RAJCEWINDOW_H
 #define RAJCEWINDOW_H
 
-// Libkipi includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kptooldialog.h"
@@ -45,7 +41,7 @@ class RajceWindow : public KPToolDialog
 
 public:
 
-    explicit RajceWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent = 0, Qt::WFlags flags = 0);
+    explicit RajceWindow(const QString& tmpFolder, QWidget* const parent = 0, Qt::WFlags flags = 0);
     ~RajceWindow();
 
     void reactivate();
@@ -57,7 +53,6 @@ private Q_SLOTS:
 
 private:
 
-    Interface*   m_interface;
     RajceWidget* m_widget;
 };
 
