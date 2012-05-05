@@ -99,25 +99,17 @@ Plugin_PiwigoExport::~Plugin_PiwigoExport()
 // this slot uses PiwigoWindow Class
 void Plugin_PiwigoExport::slotSync()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     QPointer<PiwigoEdit>   configDlg;
     QPointer<PiwigoWindow> dlg;
 
     KConfig config("kipirc");
     if (!config.hasGroup("Piwigo Settings") )
     {
-        configDlg = new PiwigoEdit(kapp->activeWindow(),
-                        m_pPiwigo, i18n("Edit Piwigo Data") );
+        configDlg = new PiwigoEdit(kapp->activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
         configDlg->exec();
     }
 
-    dlg = new PiwigoWindow(interface, kapp->activeWindow(), m_pPiwigo);
+    dlg = new PiwigoWindow(kapp->activeWindow(), m_pPiwigo);
     dlg->exec();
 
     delete configDlg;
