@@ -51,7 +51,7 @@ class Wizard : public KPWizardDialog
 
 public:
 
-    Wizard(QWidget* const parent, GalleryInfo* constinfo, Interface* const);
+    Wizard(QWidget* const parent, GalleryInfo* constinfo);
     ~Wizard();
 
 protected Q_SLOTS:
