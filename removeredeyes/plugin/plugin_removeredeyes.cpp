@@ -87,15 +87,7 @@ Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
 
 void Plugin_RemoveRedEyes::activate()
 {
-    Interface* interface = dynamic_cast<Interface*> (parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    RemoveRedEyesWindow* window = new RemoveRedEyesWindow(interface);
+    RemoveRedEyesWindow* window = new RemoveRedEyesWindow();
     window->show();
 }
 
