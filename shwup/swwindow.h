@@ -39,11 +39,6 @@ class QCloseEvent;
 class KProgressDialog;
 class KUrl;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KIPIPlugins
 {
     class KPAboutData;
@@ -69,7 +64,7 @@ class SwWindow : public KPToolDialog
 
 public:
 
-    SwWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
+    SwWindow(const QString& tmpFolder, QWidget* const parent);
     ~SwWindow();
 
     /**
@@ -135,8 +130,6 @@ private:
     SwConnector*     m_connector;
     SwWidget*        m_widget;
     SwNewAlbum*      m_albumDlg;
-
-    Interface*       m_interface;
 };
 
 } // namespace KIPIShwupPlugin

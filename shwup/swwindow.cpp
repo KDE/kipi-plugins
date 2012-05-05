@@ -70,15 +70,14 @@ using namespace KDcrawIface;
 namespace KIPIShwupPlugin
 {
 
-SwWindow::SwWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
+SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
-    m_interface   = interface;
     m_imagesCount = 0;
     m_imagesTotal = 0;
-    m_widget      = new SwWidget(this, interface);
+    m_widget      = new SwWidget(this, iface());
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("shwup"));
