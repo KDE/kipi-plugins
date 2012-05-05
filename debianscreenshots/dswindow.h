@@ -62,7 +62,7 @@ class DsWindow : public KPToolDialog
 
 public:
 
-    DsWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
+    DsWindow(const QString& tmpFolder, QWidget* const parent);
     ~DsWindow();
 
     /**
@@ -108,8 +108,6 @@ private:
     QString      m_tmpPath;
 
     KUrl::List   m_transferQueue;
-
-    Interface*   m_interface;
 
     DsTalker*    m_talker;
     DsWidget*    m_widget;

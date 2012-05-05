@@ -99,20 +99,13 @@ Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
 
 void Plugin_DebianScreenshots::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-ds-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new DsWindow(interface, tmp, kapp->activeWindow());
+        m_dlgExport = new DsWindow(tmp, kapp->activeWindow());
     }
     else
     {
