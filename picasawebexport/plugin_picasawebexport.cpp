@@ -116,20 +116,13 @@ Plugin_PicasawebExport::~Plugin_PicasawebExport()
 
 void Plugin_PicasawebExport::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
-
     KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-picasawebexportplugin-" + QString::number(getpid()) + '/');
+    QString tmp = dir.saveLocation("tmp", "kipi-picasawebexportplugin-" + QString::number(getpid()) + '/');
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new PicasawebWindow(interface, Tmp, false, kapp->activeWindow());
+        m_dlgExport = new PicasawebWindow(tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -144,20 +137,13 @@ void Plugin_PicasawebExport::slotExport()
 
 void Plugin_PicasawebExport::slotImport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-picasawebexportplugin-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new PicasawebWindow(interface, tmp, true, kapp->activeWindow());
+        m_dlgImport = new PicasawebWindow(tmp, true, kapp->activeWindow());
     }
     else
     {

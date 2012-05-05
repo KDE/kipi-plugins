@@ -75,17 +75,15 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpFolder,
-                                 bool import, QWidget* /*parent*/)
+PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget* /*parent*/)
     : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
-    m_interface   = interface;
     m_import      = import;
     m_imagesCount = 0;
     m_imagesTotal = 0;
-    m_widget      = new PicasawebWidget(this, interface, import);
+    m_widget      = new PicasawebWidget(this, iface(), import);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("picasa"));
