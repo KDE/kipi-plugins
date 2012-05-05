@@ -61,8 +61,7 @@ class SmugWindow : public KPToolDialog
 
 public:
 
-    SmugWindow(Interface* const interface, const QString& tmpFolder,
-               bool import, QWidget* const parent);
+    SmugWindow(const QString& tmpFolder, bool import, QWidget* const parent);
     ~SmugWindow();
 
     /**
@@ -135,8 +134,6 @@ private:
     SmugTalker*      m_talker;
     SmugWidget*      m_widget;
     SmugNewAlbum*    m_albumDlg;
-
-    Interface*       m_interface;
 };
 
 } // namespace KIPISmugPlugin

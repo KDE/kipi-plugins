@@ -119,20 +119,13 @@ Plugin_Smug::~Plugin_Smug()
 
 void Plugin_Smug::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-smug-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new SmugWindow(interface, tmp, false, kapp->activeWindow());
+        m_dlgExport = new SmugWindow(tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -147,20 +140,13 @@ void Plugin_Smug::slotExport()
 
 void Plugin_Smug::slotImport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-smug-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new SmugWindow(interface, tmp, true, kapp->activeWindow());
+        m_dlgImport = new SmugWindow(tmp, true, kapp->activeWindow());
     }
     else
     {

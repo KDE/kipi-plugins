@@ -73,17 +73,15 @@
 namespace KIPISmugPlugin
 {
 
-SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
-                       bool import, QWidget* const /*parent*/)
+SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*parent*/)
     : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
-    m_interface   = interface;
     m_import      = import;
     m_imagesCount = 0;
     m_imagesTotal = 0;
-    m_widget      = new SmugWidget(this, interface, import);
+    m_widget      = new SmugWidget(this, iface(), import);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("smugmug"));
