@@ -54,15 +54,10 @@
 namespace KIPIKioExportPlugin
 {
 
-KioImportWindow::KioImportWindow(QWidget* const /*parent*/, Interface* const interface)
-    : KPToolDialog(0), m_interface(interface)
+KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
+    : KPToolDialog(0)
 {
-    if (!interface)
-    {
-        kFatal() << "Interface is empty";
-    }
-
-    m_importWidget = new KioImportWidget(this, interface);
+    m_importWidget = new KioImportWidget(this, iface());
     setMainWidget(m_importWidget);
 
     // window setup

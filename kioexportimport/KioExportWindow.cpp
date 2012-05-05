@@ -55,14 +55,9 @@ const QString KioExportWindow::TARGET_URL_PROPERTY  = "targetUrl";
 const QString KioExportWindow::HISTORY_URL_PROPERTY = "historyUrls";
 const QString KioExportWindow::CONFIG_GROUP         = "KioExport";
 
-KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const interface)
-    : KPToolDialog(0), m_interface(interface)
+KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
+    : KPToolDialog(0)
 {
-    if (!interface)
-    {
-        kFatal() << "Interface is empty";
-    }
-
     m_exportWidget = new KioExportWidget(this);
     setMainWidget(m_exportWidget);
 

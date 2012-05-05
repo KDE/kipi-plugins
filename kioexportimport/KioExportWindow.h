@@ -60,9 +60,8 @@ public:
      * Constructor.
      *
      * @param parent parent QWidget
-     * @param interface pointer to the KIPI interface to use. Must not be null.
      */
-    KioExportWindow(QWidget* const parent, Interface* const interface);
+    KioExportWindow(QWidget* const parent);
 
     /**
      * Destructor.
@@ -139,8 +138,6 @@ private:
     const static QString CONFIG_GROUP;
 
 private:
-
-    Interface*       m_interface;
 
     KioExportWidget* m_exportWidget;
 };

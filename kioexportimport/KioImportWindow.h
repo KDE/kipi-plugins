@@ -60,7 +60,7 @@ public:
      *
      * @param parent parent widget
      */
-    KioImportWindow(QWidget* const parent, Interface* const interface);
+    KioImportWindow(QWidget* const parent);
 
     /**
      * Destructor.
@@ -93,8 +93,6 @@ private slots:
     void slotCopyingFinished(KJob* job);
 
 private:
-
-    Interface*       m_interface;
 
     KioImportWidget* m_importWidget;
 };
