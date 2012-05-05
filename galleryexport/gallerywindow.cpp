@@ -95,8 +95,6 @@ public:
 
     KUrlLabel*             logo;
 
-    Interface*             interface;
-
     Gallery*               gallery;
 
     GalleryTalker*         talker;
@@ -114,8 +112,6 @@ public:
 
 GalleryWindow::Private::Private(GalleryWindow* const parent)
 {
-
-    interface   = 0;
     gallery     = 0;
     talker      = 0;
     progressDlg = 0;
@@ -215,12 +211,11 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
 // --------------------------------------------------------------------------------------------------------------
 
-GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, Gallery* const pGallery)
+GalleryWindow::GalleryWindow(QWidget* const parent, Gallery* const pGallery)
     : KPToolDialog(parent),
       d(new Private(this))
 {
-    d->interface = interface;
-    d->gallery   = pGallery;
+    d->gallery = pGallery;
 
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
@@ -693,7 +688,7 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    const KUrl::List urls(d->interface->currentSelection().images());
+    const KUrl::List urls(iface()->currentSelection().images());
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
