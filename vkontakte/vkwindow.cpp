@@ -106,7 +106,7 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidget* const parent)
+VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_authenticated = false;
@@ -117,13 +117,10 @@ VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidge
     connect(this, SIGNAL(finished()), 
             this, SLOT(slotFinished()));
 
-    m_interface = interface;
-    m_import    = import;
-
+    m_import                = import;
     m_mainWidget            = new QWidget(this);
     QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
-
-    m_imgList  = new KPImagesList(this);
+    m_imgList               = new KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false); // TODO: implement conversion
     m_imgList->loadImagesFromCurrentSelection();
@@ -226,7 +223,7 @@ VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidge
     QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where VKontakte images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget               = interface->uploadWidget(uploadBox);
+    m_uploadWidget               = iface()->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------

@@ -76,8 +76,7 @@ class VkontakteWindow : public KPToolDialog
 
 public:
 
-    VkontakteWindow(Interface* const interface,
-                    bool import, QWidget* const parent);
+    VkontakteWindow(bool import, QWidget* const parent);
     ~VkontakteWindow();
 
     /**
@@ -152,7 +151,6 @@ protected:
 
     /// Plugin
     bool                           m_import;
-    Interface*                     m_interface;
 
     /// User interface
     QWidget*                       m_mainWidget;
