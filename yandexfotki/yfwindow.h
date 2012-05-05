@@ -55,7 +55,6 @@ class KLineEdit;
 
 namespace KIPI
 {
-    class Interface;
     class UploadWidget;
 }
 
@@ -76,8 +75,7 @@ class YandexFotkiWindow : public KPToolDialog
 
 public:
 
-    YandexFotkiWindow(Interface* const interface,
-                      bool import, QWidget* const parent);
+    YandexFotkiWindow(bool import, QWidget* const parent);
     ~YandexFotkiWindow();
 
     /**
@@ -141,7 +139,6 @@ protected:
      */
 
     bool                     m_import;
-    Interface*               m_interface;
 
     /*
      * User interface
