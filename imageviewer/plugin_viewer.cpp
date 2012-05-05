@@ -98,15 +98,7 @@ void Plugin_viewer::setup(QWidget* widget)
 
 void  Plugin_viewer::slotActivate()
 {
-    Interface* iface = dynamic_cast<Interface*>(parent());
-
-    if ( !iface )
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    d->widget = new ViewerWidget(iface);
+    d->widget = new ViewerWidget();
 
     if ( d->widget->listOfFilesIsEmpty() )
     {

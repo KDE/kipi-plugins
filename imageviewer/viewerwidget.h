@@ -38,10 +38,6 @@
 #include <kurl.h>
 #include <kmimetype.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "texture.h"
@@ -58,7 +54,7 @@ class ViewerWidget : public QGLWidget
 
 public:
 
-    ViewerWidget(Interface* const iface);
+    ViewerWidget();
     ~ViewerWidget();
 
     void prevImage();

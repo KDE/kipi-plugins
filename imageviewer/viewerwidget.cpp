@@ -39,6 +39,8 @@
 // Libkipi includes
 
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
@@ -99,6 +101,14 @@ public:
         // be the optimal way for a PentiumM 1.4G, Nvidia FX5200. For a faster setup, this might
         // not be necessary anymore
         zoomsize   = QSize(1024, 768);
+
+        iface      = 0;
+
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     GLuint           tex[3];
@@ -117,13 +127,14 @@ public:
     float            zoomfactor_scrollwheel, zoomfactor_mousemove, zoomfactor_keyboard;
     QString          nullImage;
     int              screen_width;
+    Interface*       iface;
 };
 
-ViewerWidget::ViewerWidget(Interface* const iface)
+ViewerWidget::ViewerWidget()
     : d(new ViewerWidgetPriv)
 {
-    ImageCollection selection = iface->currentSelection();
-    ImageCollection album     = iface->currentAlbum();
+    ImageCollection selection = d->iface->currentSelection();
+    ImageCollection album     = d->iface->currentAlbum();
 
     KUrl::List myfiles; //pics which are displayed in imageviewer
     QString selectedImage; //selected pic in hostapp
