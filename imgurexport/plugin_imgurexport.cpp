@@ -108,17 +108,10 @@ void Plugin_ImgurExport::setup(QWidget* widget)
 
 void Plugin_ImgurExport::slotActivate()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
-
     if (!d->winExport)
     {
         // We clean it up in the close button
-        d->winExport = new ImgurWindow(interface, kapp->activeWindow());
+        d->winExport = new ImgurWindow(kapp->activeWindow());
     }
     else
     {

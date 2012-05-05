@@ -58,11 +58,11 @@ public:
     ImgurWidget* widget;
 };
 
-ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
+ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     : KPToolDialog(0), d(new ImgurWindowPriv)
 {
     d->widget     = new ImgurWidget(this);
-    d->webService = new ImgurTalker(interface, this);
+    d->webService = new ImgurTalker(iface(), this);
 
     setMainWidget(d->widget);
     setWindowIcon(KIcon("imgur"));
