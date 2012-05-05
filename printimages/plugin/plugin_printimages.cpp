@@ -91,7 +91,7 @@ void Plugin_PrintImages::setup( QWidget* widget )
     connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
               this, SLOT (slotPrintAssistantActivate()) );
 
-    m_interface = dynamic_cast< Interface* > ( parent() );
+    m_interface = dynamic_cast<Interface*>(parent());
 
     if ( !m_interface )
     {
@@ -131,8 +131,8 @@ void Plugin_PrintImages::slotPrintImagesActivate()
     }
 
     QWidget* parent = QApplication::activeWindow();
-    PrintHelper printPlugin ( parent, m_interface );
-    printPlugin.print ( fileList );
+    PrintHelper printPlugin(parent);
+    printPlugin.print(fileList);
 }
 
 void Plugin_PrintImages::slotPrintAssistantActivate()
@@ -152,7 +152,7 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     }
 
     QWidget* parent = QApplication::activeWindow();
-    Wizard printAssistant(parent, m_interface);
+    Wizard printAssistant(parent);
     KStandardDirs dir;
     QString tempPath = dir.saveLocation("tmp", "kipi-printassistantdplugin-" + QString::number(getpid()) + '/');
     printAssistant.print(fileList, tempPath);

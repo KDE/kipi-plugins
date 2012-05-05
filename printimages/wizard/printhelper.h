@@ -30,11 +30,6 @@
 
 class QWidget;
 
-namespace KIPI 
-{
-    class Interface;
-}
-
 namespace KIPIPrintImagesPlugin
 {
 
@@ -43,7 +38,7 @@ class PrintHelper
 
 public:
 
-    PrintHelper(QWidget* parent, KIPI::Interface*);
+    PrintHelper(QWidget* parent);
     ~PrintHelper();
 
     void print(const KUrl::List& fileList);

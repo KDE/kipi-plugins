@@ -33,11 +33,6 @@
 #include "kpimageslist.h"
 #include "kptooldialog.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
 using namespace KIPI;
 using namespace KIPIPlugins;
 
@@ -64,7 +59,7 @@ class Wizard : public KPWizardDialog
 
 public:
 
-    Wizard(QWidget* const, Interface* const);
+    Wizard(QWidget* const);
     ~Wizard();
 
     void print(const KUrl::List& fileList, const QString& tempPath);
