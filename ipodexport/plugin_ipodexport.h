@@ -34,11 +34,6 @@
 
 class KAction;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 using namespace KIPI;
 
 namespace KIPIIpodExportPlugin
@@ -65,8 +60,6 @@ private Q_SLOTS:
 private:
 
     KAction*      m_actionImageUpload;
-
-    Interface*    m_interface;
 
     UploadDialog* m_dlgImageUpload;
 };

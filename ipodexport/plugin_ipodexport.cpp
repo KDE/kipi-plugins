@@ -58,7 +58,6 @@ Plugin_iPodExport::Plugin_iPodExport(QObject* const parent, const QVariantList&)
     : Plugin( IpodFactory::componentData(), parent, "iPodExport")
 {
     m_dlgImageUpload = 0;
-    m_interface      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_iPodExport plugin loaded" ;
 
@@ -78,15 +77,13 @@ void Plugin_iPodExport::setup(QWidget* widget)
             this, SLOT(slotImageUpload()));
 
     addAction(m_actionImageUpload);
-
-    m_interface = dynamic_cast<Interface*>(parent());
 }
 
 void Plugin_iPodExport::slotImageUpload()
 {
     if (!m_dlgImageUpload)
     {
-        m_dlgImageUpload = new UploadDialog(m_interface, i18n("iPod Export"), kapp->activeWindow());
+        m_dlgImageUpload = new UploadDialog(i18n("iPod Export"), kapp->activeWindow());
     }
     else
     {
