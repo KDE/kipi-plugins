@@ -70,6 +70,8 @@ using namespace KIPIPlugins;
 namespace KIPIVkontaktePlugin
 {
 
+class VkAPI;
+
 class VkontakteWindow : public KPToolDialog
 {
     Q_OBJECT
@@ -89,17 +91,12 @@ public:
 
 Q_SIGNALS:
 
-    void signalAuthenticationDone();
+    void signalUpdateAuthInfo();
 
 protected Q_SLOTS:
 
     // ui slots
     void slotChangeUserClicked();
-
-    // authentication
-    void slotApplicationPermissionCheckDone(KJob *kjob);
-    void slotAuthenticationDialogDone(const QString &accessToken);
-    void slotAuthenticationDialogCanceled();
 
     // requesting album information
     void startAlbumsUpdate();
@@ -140,8 +137,6 @@ protected:
 
     void handleVkError(KJob *kjob);
 
-    // authentication
-    bool isAuthenticated();
     void startAuthentication(bool forceLogout);
 
     Vkontakte::AlbumInfoPtr currentAlbum();
@@ -180,8 +175,7 @@ protected:
     /** Pointers to running jobs */
     QList<KJob*>                   m_jobs;
 
-    bool                           m_authenticated;
-    QString                        m_accessToken;
+    VkAPI*                         m_vkapi;
     QList<Vkontakte::AlbumInfoPtr> m_albums;
 
     QString                        m_userFullName;

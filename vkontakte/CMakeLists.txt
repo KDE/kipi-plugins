@@ -7,6 +7,7 @@ set(kipiplugin_vkontakte_PART_SRCS
     plugin_vkontakte.cpp
     vkwindow.cpp
     vkalbumdialog.cpp
+    vkapi.cpp
    )
 
 kde4_add_plugin(kipiplugin_vkontakte ${kipiplugin_vkontakte_PART_SRCS})
