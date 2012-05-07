@@ -85,6 +85,7 @@
 #include "kpversion.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
+
 #include "vkapi.h"
 #include "vkalbumdialog.h"
 #include "albumchooserwidget.h"
@@ -113,7 +114,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     // read settings from file
     readSettings();
 
-    connect(this, SIGNAL(finished()), 
+    connect(this, SIGNAL(finished()),
             this, SLOT(slotFinished()));
 
     m_import                = import;
@@ -159,7 +160,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
-    connect(m_changeUserButton, SIGNAL(clicked()), 
+    connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
 
     /*
