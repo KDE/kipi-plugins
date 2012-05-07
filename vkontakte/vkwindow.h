@@ -6,7 +6,7 @@
  * Date        : 2010-11-15
  * Description : a kipi plugin to export images to VKontakte web service
  *
- * Copyright (C) 2011 by Alexander Potashev <aspotashev at gmail dot com>
+ * Copyright (C) 2011, 2012 by Alexander Potashev <aspotashev at gmail dot com>
  *
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
@@ -71,6 +71,7 @@ namespace KIPIVkontaktePlugin
 {
 
 class VkAPI;
+class AlbumChooserWidget;
 
 class VkontakteWindow : public KPToolDialog
 {
@@ -100,26 +101,13 @@ protected Q_SLOTS:
     void slotChangeUserClicked();
 
     // requesting album information
-    void startAlbumsUpdate();
     void startGetFullName();
     void startGetUserId();
-    void startAlbumCreation(Vkontakte::AlbumInfoPtr album);
-    void startAlbumEditing(Vkontakte::AlbumInfoPtr album);
-    void startAlbumDeletion(Vkontakte::AlbumInfoPtr album);
-    void slotAlbumsUpdateDone(KJob *kjob);
     void slotGetFullNameDone(KJob *kjob);
     void slotGetUserIdDone(KJob *kjob);
-    void slotAlbumCreationDone(KJob *kjob);
-    void slotAlbumEditingDone(KJob *kjob);
-    void slotAlbumDeletionDone(KJob *kjob);
 
     // requesting photo information
     void slotPhotoUploadDone(KJob *kjob);
-
-    void slotNewAlbumRequest();
-    void slotEditAlbumRequest();
-    void slotDeleteAlbumRequest();
-    void slotReloadAlbumsRequest();
 
     void slotStartTransfer();
 
@@ -139,9 +127,6 @@ protected:
 
     void startAuthentication(bool forceLogout);
 
-    Vkontakte::AlbumInfoPtr currentAlbum();
-    void selectAlbum(int aid);
-
     void handleVkError(KJob *kjob);
 
 protected:
@@ -158,13 +143,8 @@ protected:
     QLabel*                        m_headerLabel;
     KPushButton*                   m_changeUserButton;
 
-    /// albums
-    QGroupBox*                     m_albumsBox;
-    KPushButton*                   m_newAlbumButton;
-    KPushButton*                   m_reloadAlbumsButton;
-    KComboBox*                     m_albumsCombo;
-    QToolButton*                   m_editAlbumButton;
-    QToolButton*                   m_deleteAlbumButton;
+    // album selection
+    AlbumChooserWidget*            m_albumsBox;
 
     /// options
 //     QCheckBox*                  m_checkKeepOriginal;
@@ -178,12 +158,10 @@ protected:
     QList<KJob*>                   m_jobs;
 
     VkAPI*                         m_vkapi;
-    QList<Vkontakte::AlbumInfoPtr> m_albums;
 
     QString                        m_userFullName;
     int                            m_userId;
 
-    /** album with this "aid" will be selected in slotAlbumsUpdateDone() */
     int                            m_albumToSelect;
 
     QString                        m_appId;

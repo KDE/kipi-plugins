@@ -7,6 +7,7 @@ set(kipiplugin_vkontakte_PART_SRCS
     plugin_vkontakte.cpp
     vkwindow.cpp
     vkalbumdialog.cpp
+    albumchooserwidget.cpp
     vkapi.cpp
    )
 
