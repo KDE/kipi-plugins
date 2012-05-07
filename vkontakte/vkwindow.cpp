@@ -319,6 +319,20 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     // for startReactivation()
     connect(m_vkapi, SIGNAL(authenticated()),
             this, SLOT(show()));
+
+    /*
+     * Dialog update slots
+     */
+    connect(this, SIGNAL(signalUpdateBusyStatus(bool)),
+            this, SLOT(updateBusyStatus(bool)));
+
+    connect(this, SIGNAL(signalUpdateBusyStatus(bool)),
+            this, SLOT(updateBusyStatus(bool)));
+
+    connect(this, SIGNAL(signalUpdateAuthInfo()),
+            this, SLOT(updateAuthInfo()));
+
+    updateBusyStatus(true);
 }
 
 VkontakteWindow::~VkontakteWindow()
@@ -336,29 +350,19 @@ void VkontakteWindow::startReactivation()
 
 void VkontakteWindow::reset()
 {
-    //m_talker.reset();
-    updateControls(true);
-    updateLabels();
+    emit signalUpdateBusyStatus(false);
+    emit signalUpdateAuthInfo();
 }
 
-void VkontakteWindow::updateControls(bool val)
+void VkontakteWindow::updateBusyStatus(bool busy)
 {
-    if (val)
+    if (m_albumsBox)
+        m_albumsBox->setEnabled(!busy && m_vkapi->isAuthenticated());
+
+    if (!busy)
     {
-        if (m_vkapi->isAuthenticated())
-        {
-            m_albumsBox->setEnabled(true);
-            enableButton(User1, true);
-        }
-        else
-        {
-            m_albumsBox->setEnabled(false);
-            enableButton(User1, false);
-        }
-
-        //m_changeUserButton->setEnabled(true); // does not work anyway
         setCursor(Qt::ArrowCursor);
-
+        enableButton(User1, m_vkapi->isAuthenticated());
         setButtonGuiItem(KDialog::Close,
                          KGuiItem(i18n("Close"), "dialog-close",
                                   i18n("Close window")));
@@ -366,17 +370,14 @@ void VkontakteWindow::updateControls(bool val)
     else
     {
         setCursor(Qt::WaitCursor);
-        m_albumsBox->setEnabled(false);
-        //m_changeUserButton->setEnabled(false); // does not work anyway
         enableButton(User1, false);
-
         setButtonGuiItem(KDialog::Close,
                          KGuiItem(i18n("Cancel"), "dialog-cancel",
                                   i18n("Cancel current operation")));
     }
 }
 
-void VkontakteWindow::updateLabels()
+void VkontakteWindow::updateAuthInfo()
 {
     QString loginText;
     QString urlText;
@@ -384,7 +385,8 @@ void VkontakteWindow::updateLabels()
     if (m_vkapi->isAuthenticated())
     {
         loginText = m_userFullName;
-        m_albumsBox->setEnabled(true);
+        if (m_albumsBox)
+            m_albumsBox->setEnabled(true);
     }
     else
     {
@@ -479,12 +481,8 @@ void VkontakteWindow::slotButtonClicked(int button)
             slotStartTransfer();
             break;
         case KDialog::Close:
-            if (!isButtonEnabled(KDialog::User1))
-            {
-                //m_talker.cancel();
-                updateControls(true);
-                break;
-            }
+            // TODO: grab better code from picasawebexport/picasawebwindow.cpp:219
+            reset();
         default:
             KDialog::slotButtonClicked(button);
     }
@@ -544,7 +542,7 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
         m_deleteAlbumButton->setEnabled(true);
     }
 
-    updateControls(true);
+    emit signalUpdateBusyStatus(false);
 }
 
 //---------------------------------------------------------------------------
@@ -565,7 +563,7 @@ void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
     SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
     m_userFullName = job->variable().toString();
-    updateLabels();
+    updateAuthInfo();
 }
 
 //---------------------------------------------------------------------------
@@ -586,7 +584,7 @@ void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
     SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
     m_userId = job->variable().toInt();
-    updateLabels();
+    emit signalUpdateAuthInfo();
 }
 
 //---------------------------------------------------------------------------
@@ -616,7 +614,7 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
     m_albumsCombo->setEnabled(false);
     m_editAlbumButton->setEnabled(false);
     m_deleteAlbumButton->setEnabled(false);
-    updateControls(false);
+    emit signalUpdateBusyStatus(true);
 }
 
 //---------------------------------------------------------------------------
@@ -646,7 +644,7 @@ void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
     m_albumsCombo->setEnabled(false);
     m_editAlbumButton->setEnabled(false);
     m_deleteAlbumButton->setEnabled(false);
-    updateControls(false);
+    emit signalUpdateBusyStatus(true);
 }
 
 //---------------------------------------------------------------------------
@@ -670,7 +668,7 @@ void VkontakteWindow::slotAlbumDeletionDone(KJob *kjob)
     m_albumsCombo->setEnabled(false);
     m_editAlbumButton->setEnabled(false);
     m_deleteAlbumButton->setEnabled(false);
-    updateControls(false);
+    emit signalUpdateBusyStatus(true);
 }
 
 //---------------------------------------------------------------------------
@@ -681,7 +679,7 @@ void VkontakteWindow::slotNewAlbumRequest()
     QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album);
     if (dlg->exec() == QDialog::Accepted)
     {
-        updateControls(false);
+        emit signalUpdateBusyStatus(true);
         startAlbumCreation(album);
     }
 
@@ -697,7 +695,7 @@ void VkontakteWindow::slotEditAlbumRequest()
     QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album, true);
     if (dlg->exec() == QDialog::Accepted)
     {
-        updateControls(false);
+        emit signalUpdateBusyStatus(true);
         startAlbumEditing(album);
     }
 
@@ -726,7 +724,7 @@ void VkontakteWindow::slotDeleteAlbumRequest()
 
 void VkontakteWindow::slotReloadAlbumsRequest()
 {
-    updateControls(false);
+    emit signalUpdateBusyStatus(true);
 
     Vkontakte::AlbumInfoPtr album = currentAlbum();
     if (!album.isNull())
@@ -748,7 +746,7 @@ void VkontakteWindow::slotStartTransfer()
     // TODO: import support
     if (!m_import)
     {
-        updateControls(false);
+        emit signalUpdateBusyStatus(true);
 
         QStringList files;
         foreach(const KUrl& url, m_imgList->imageUrls(true))
@@ -778,7 +776,7 @@ void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 
     m_progressBar->hide();
     m_progressBar->progressCompleted();
-    updateControls(true);
+    emit signalUpdateBusyStatus(false);
 }
 
 } // namespace KIPIVkontaktePlugin

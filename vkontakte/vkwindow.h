@@ -92,6 +92,7 @@ public:
 Q_SIGNALS:
 
     void signalUpdateAuthInfo();
+    void signalUpdateBusyStatus(bool busy);
 
 protected Q_SLOTS:
 
@@ -126,21 +127,22 @@ protected Q_SLOTS:
 
     void slotFinished();
 
+    void updateAuthInfo();
+    void updateBusyStatus(bool busy);
+
 protected:
 
     void readSettings();
     void writeSettings();
 
     void reset();
-    void updateControls(bool val);
-    void updateLabels();
-
-    void handleVkError(KJob *kjob);
 
     void startAuthentication(bool forceLogout);
 
     Vkontakte::AlbumInfoPtr currentAlbum();
     void selectAlbum(int aid);
+
+    void handleVkError(KJob *kjob);
 
 protected:
 
