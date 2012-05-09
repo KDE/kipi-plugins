@@ -120,6 +120,8 @@ protected Q_SLOTS:
 
 protected:
 
+    void initAccountBox();
+
     void readSettings();
     void writeSettings();
 
