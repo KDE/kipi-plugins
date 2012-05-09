@@ -32,11 +32,12 @@
 
 // OpenCV includes
 
-#ifdef WIN32
-#include <cv.h>
+#if defined (__APPLE__)
+#include <opencv2/opencv.hpp>
+#include <opencv2/legacy/compat.hpp>
 #else
 #include <opencv/cv.h>
-#endif // WIN32
+#endif
 
 namespace KIPIRemoveRedEyesPlugin
 {

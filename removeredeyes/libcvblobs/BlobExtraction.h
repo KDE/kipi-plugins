@@ -30,8 +30,9 @@
 // To avoid broken compilation with OpenCV >= 2.0
 #undef HAVE_CONFIG_H
 
-#ifdef WIN32
-#include <cv.h>
+#if defined (__APPLE__)
+#include <opencv2/opencv.hpp>
+#include <opencv2/legacy/compat.hpp>
 #else
 #include <opencv/cv.h>
 #endif
