@@ -70,12 +70,14 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget *parent, VkAPI *vkapi)
 
     QWidget *currentAlbumWidget = new QWidget(this);
     QHBoxLayout *currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
+    currentAlbumWidgetLayout->setContentsMargins(0, 0, 0, 0);
     currentAlbumWidgetLayout->addWidget(m_albumsCombo);
     currentAlbumWidgetLayout->addWidget(m_editAlbumButton);
     currentAlbumWidgetLayout->addWidget(m_deleteAlbumButton);
 
     QWidget *albumButtons = new QWidget(this);
     QHBoxLayout *albumButtonsLayout = new QHBoxLayout(albumButtons);
+    albumButtonsLayout->setContentsMargins(0, 0, 0, 0);
     albumButtonsLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
     albumButtonsLayout->addWidget(m_newAlbumButton);
     albumButtonsLayout->addWidget(m_reloadAlbumsButton);
