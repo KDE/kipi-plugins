@@ -136,6 +136,7 @@ protected:
 
     /// User interface
     QWidget*                       m_mainWidget;
+    QWidget*                       m_settingsBox;
 
     /// accounts
     QGroupBox*                     m_accountBox;

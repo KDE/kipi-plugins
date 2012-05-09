@@ -127,10 +127,10 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     m_imgList->listView()->setWhatsThis(
         i18n("This is the list of images to upload to your VKontakte album."));
 
-    QWidget *settingsBox = new QWidget(this);
-    QVBoxLayout *settingsBoxLayout = new QVBoxLayout(settingsBox);
+    m_settingsBox = new QWidget(this);
+    QVBoxLayout *settingsBoxLayout = new QVBoxLayout(m_settingsBox);
 
-    m_headerLabel = new QLabel(settingsBox);
+    m_headerLabel = new QLabel(m_settingsBox);
     m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the "
                                      "VKontakte service in a web browser."));
     m_headerLabel->setOpenExternalLinks(true);
@@ -139,7 +139,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     /*
      * Account box
      */
-    m_accountBox = new QGroupBox(i18n("Account"), settingsBox);
+    m_accountBox = new QGroupBox(i18n("Account"), m_settingsBox);
     m_accountBox->setWhatsThis(i18n("This account is used for authentication."));
 
     QGridLayout* accountBoxLayout = new QGridLayout(m_accountBox);
@@ -171,7 +171,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), m_settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where VKontakte images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget               = iface()->uploadWidget(uploadBox);
@@ -180,17 +180,17 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     // ------------------------------------------------------------------------
 
 #if 0
-    QGroupBox *optionsBox = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox *optionsBox = new QGroupBox(i18n("Options"), m_settingsBox);
     optionsBox->setWhatsThis(
         i18n("These are options that will be applied to images before upload."));
 #endif
 
-//     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), settingsBox); // store state in kipirc
+//     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), m_settingsBox); // store state in kipirc
 
 //     QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
 //     optionsBoxLayout->addWidget(m_checkKeepOriginal);
 
-    m_progressBar = new KPProgressWidget(settingsBox);
+    m_progressBar = new KPProgressWidget(m_settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -208,7 +208,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     mainLayout->addWidget(m_imgList);
-    mainLayout->addWidget(settingsBox);
+    mainLayout->addWidget(m_settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
