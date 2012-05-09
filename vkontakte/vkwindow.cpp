@@ -235,9 +235,6 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
             this, SLOT(slotStartTransfer()));
 
     connect(m_vkapi, SIGNAL(authenticated()),
-            this, SLOT(startAlbumsUpdate()));
-
-    connect(m_vkapi, SIGNAL(authenticated()),
             this, SLOT(startGetFullName()));
 
     connect(m_vkapi, SIGNAL(authenticated()),
