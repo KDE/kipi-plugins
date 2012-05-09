@@ -933,7 +933,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
     }
 
-    if ((bSkip == true))
+    if (bSkip == true)
     {
         QFile::remove(tmpUrl.toLocalFile());
     }
