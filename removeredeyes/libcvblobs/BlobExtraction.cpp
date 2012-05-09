@@ -280,7 +280,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                         // pixels al sud de l'actual
                         if ( iRow < imatgePerimetreExtern->height - 1)
                         {
-                            if ( (*(pMask+maskImage->widthStep) == PIXEL_EXTERIOR) )
+                            if (*(pMask + maskImage->widthStep) == PIXEL_EXTERIOR)
                             {
                                 ++perimeter;
                             }
