@@ -27,15 +27,9 @@
 #ifndef BLOBEXTRACTION_H
 #define BLOBEXTRACTION_H
 
-// To avoid broken compilation with OpenCV >= 2.0
-#undef HAVE_CONFIG_H
+// OpenCV includes
 
-#if defined (__APPLE__)
-#include <opencv2/opencv.hpp>
-#include <opencv2/legacy/compat.hpp>
-#else
-#include <opencv/cv.h>
-#endif
+#include "libopencv.h"
 
 // Local includes
 

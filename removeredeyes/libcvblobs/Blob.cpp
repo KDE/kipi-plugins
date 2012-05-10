@@ -32,12 +32,7 @@
 
 // OpenCV includes
 
-#if defined (__APPLE__)
-#include <opencv2/opencv.hpp>
-#include <opencv2/legacy/compat.hpp>
-#else
-#include <opencv/cv.h>
-#endif
+#include "libopencv.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
