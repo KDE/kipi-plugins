@@ -89,6 +89,7 @@
 #include "vkapi.h"
 #include "vkalbumdialog.h"
 #include "albumchooserwidget.h"
+#include "authinfowidget.h"
 
 #undef SLOT_JOB_DONE_INIT
 #define SLOT_JOB_DONE_INIT(JobClass) \
@@ -144,7 +145,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     /*
      * Album box
      */
-    m_albumsBox = new AlbumChooserWidget(this, m_vkapi);
+    m_albumsBox = new AlbumChooserWidget(m_settingsBox, m_vkapi);
     m_albumsBox->selectAlbum(m_albumToSelect);
 
     // ------------------------------------------------------------------------
@@ -234,12 +235,6 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()));
 
-    connect(m_vkapi, SIGNAL(authenticated()),
-            this, SLOT(startGetFullName()));
-
-    connect(m_vkapi, SIGNAL(authenticated()),
-            this, SLOT(startGetUserId()));
-
     // for startReactivation()
     connect(m_vkapi, SIGNAL(authenticated()),
             this, SLOT(show()));
@@ -250,40 +245,21 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     connect(this, SIGNAL(signalUpdateBusyStatus(bool)),
             this, SLOT(updateBusyStatus(bool)));
 
-    connect(this, SIGNAL(signalUpdateBusyStatus(bool)),
-            this, SLOT(updateBusyStatus(bool)));
-
-    connect(this, SIGNAL(signalUpdateAuthInfo()),
-            this, SLOT(updateAuthInfo()));
-
     updateBusyStatus(true);
 }
 
 void VkontakteWindow::initAccountBox()
 {
-    m_accountBox = new QGroupBox(i18n("Account"), m_settingsBox);
-    m_accountBox->setWhatsThis(i18n("This account is used for authentication."));
+    m_accountBox = new AuthInfoWidget(m_settingsBox, m_vkapi);
 
-    QGridLayout* accountBoxLayout = new QGridLayout(m_accountBox);
-    QLabel* loginDescLabel = new QLabel(m_accountBox);
-    loginDescLabel->setText(i18n("Name:"));
-    loginDescLabel->setWhatsThis(i18n("Your VKontakte login"));
+    connect(m_vkapi, SIGNAL(authenticated()),
+            this, SLOT(authenticated()));
 
-    m_loginLabel = new QLabel(m_accountBox);
-    m_changeUserButton = new KPushButton(
-        KGuiItem(i18n("Change Account"), "system-switch-user",
-                 i18n("Change VKontakte account used to authenticate")), m_accountBox);
-    m_changeUserButton->hide(); // changing account does not work anyway
+    connect(m_accountBox, SIGNAL(authCleared()),
+            this, SLOT(authCleared()));
 
-    accountBoxLayout->addWidget(loginDescLabel, 0, 0);
-    accountBoxLayout->addWidget(m_loginLabel, 0, 1);
-
-    accountBoxLayout->addWidget(m_changeUserButton, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
-
-    connect(m_changeUserButton, SIGNAL(clicked()),
-            this, SLOT(slotChangeUserClicked()));
+    connect(m_accountBox, SIGNAL(signalUpdateAuthInfo()),
+            this, SLOT(updateHeaderLabel()));
 }
 
 VkontakteWindow::~VkontakteWindow()
@@ -298,13 +274,12 @@ void VkontakteWindow::startReactivation()
     m_imgList->loadImagesFromCurrentSelection();
 
     reset();
-    startAuthentication(false); // show() will be called after that
+    m_accountBox->startAuthentication(false); // show() will be called after that
 }
 
 void VkontakteWindow::reset()
 {
     emit signalUpdateBusyStatus(false);
-    emit signalUpdateAuthInfo();
 }
 
 void VkontakteWindow::updateBusyStatus(bool busy)
@@ -328,35 +303,6 @@ void VkontakteWindow::updateBusyStatus(bool busy)
                          KGuiItem(i18n("Cancel"), "dialog-cancel",
                                   i18n("Cancel current operation")));
     }
-}
-
-void VkontakteWindow::updateAuthInfo()
-{
-    QString loginText;
-    QString urlText;
-
-    if (m_vkapi->isAuthenticated())
-    {
-        loginText = m_userFullName;
-        if (m_albumsBox)
-            m_albumsBox->setEnabled(true);
-    }
-    else
-    {
-        loginText = i18n("Unauthorized");
-        if (m_albumsBox)
-            m_albumsBox->clearList();
-    }
-
-    if (m_vkapi->isAuthenticated() && m_userId != -1)
-        urlText = QString("http://vkontakte.ru/albums%1").arg(m_userId);
-    else
-        urlText = "http://vkontakte.ru/";
-
-    m_loginLabel->setText(QString("<b>%1</b>").arg(loginText));
-    m_headerLabel->setText(
-        QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
-            .arg(urlText).arg(i18n("VKontakte")));
 }
 
 //---------------------------------------------------------------------------
@@ -396,12 +342,6 @@ QString VkontakteWindow::getDestinationPath() const
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
 
-void VkontakteWindow::slotChangeUserClicked()
-{
-    // force authenticate window
-    startAuthentication(true);
-}
-
 void VkontakteWindow::slotFinished()
 {
     writeSettings();
@@ -423,14 +363,26 @@ void VkontakteWindow::slotButtonClicked(int button)
     }
 }
 
-void VkontakteWindow::startAuthentication(bool forceLogout)
+void VkontakteWindow::authenticated()
 {
-    m_userFullName.clear();
-    m_userId = -1;
     if (m_albumsBox)
-        m_albumsBox->setEnabled(false);
+        m_albumsBox->setEnabled(true);
+}
 
-    m_vkapi->startAuthentication(forceLogout);
+void VkontakteWindow::authCleared()
+{
+    if (m_albumsBox)
+    {
+        m_albumsBox->setEnabled(false);
+        m_albumsBox->clearList();
+    }
+}
+
+void VkontakteWindow::updateHeaderLabel()
+{
+    m_headerLabel->setText(
+        QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
+            .arg(m_accountBox->albumsURL()).arg(i18n("VKontakte")));
 }
 
 //---------------------------------------------------------------------------
@@ -438,48 +390,6 @@ void VkontakteWindow::startAuthentication(bool forceLogout)
 void VkontakteWindow::handleVkError(KJob *kjob)
 {
     KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
-}
-
-//---------------------------------------------------------------------------
-
-void VkontakteWindow::startGetFullName()
-{
-    Vkontakte::GetVariableJob* job = new Vkontakte::GetVariableJob(m_vkapi->accessToken(), 1281);
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotGetFullNameDone(KJob*)));
-
-    m_jobs.append(job);
-    job->start();
-}
-
-void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
-{
-    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
-
-    m_userFullName = job->variable().toString();
-    updateAuthInfo();
-}
-
-//---------------------------------------------------------------------------
-
-void VkontakteWindow::startGetUserId()
-{
-    Vkontakte::GetVariableJob* job = new Vkontakte::GetVariableJob(m_vkapi->accessToken(), 1280);
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotGetUserIdDone(KJob*)));
-
-    m_jobs.append(job);
-    job->start();
-}
-
-void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
-{
-    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
-
-    m_userId = job->variable().toInt();
-    emit signalUpdateAuthInfo();
 }
 
 //---------------------------------------------------------------------------

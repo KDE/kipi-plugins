@@ -21,6 +21,7 @@
 #ifndef ALBUMCHOOSERWIDGET_H
 #define ALBUMCHOOSERWIDGET_H
 
+#include <QString>
 #include <QGroupBox>
 
 #include <libkvkontakte/albuminfo.h>

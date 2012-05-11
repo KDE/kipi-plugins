@@ -54,6 +54,8 @@ QString VkAPI::accessToken() const
     return m_accessToken;
 }
 
+#include <stdio.h>
+
 void VkAPI::startAuthentication(bool forceLogout)
 {
     if (forceLogout)

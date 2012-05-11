@@ -72,6 +72,7 @@ namespace KIPIVkontaktePlugin
 
 class VkAPI;
 class AlbumChooserWidget;
+class AuthInfoWidget;
 
 class VkontakteWindow : public KPToolDialog
 {
@@ -92,19 +93,9 @@ public:
 
 Q_SIGNALS:
 
-    void signalUpdateAuthInfo();
     void signalUpdateBusyStatus(bool busy);
 
 protected Q_SLOTS:
-
-    // ui slots
-    void slotChangeUserClicked();
-
-    // requesting album information
-    void startGetFullName();
-    void startGetUserId();
-    void slotGetFullNameDone(KJob *kjob);
-    void slotGetUserIdDone(KJob *kjob);
 
     // requesting photo information
     void slotPhotoUploadDone(KJob *kjob);
@@ -115,8 +106,11 @@ protected Q_SLOTS:
 
     void slotFinished();
 
-    void updateAuthInfo();
     void updateBusyStatus(bool busy);
+
+    void authenticated();
+    void authCleared();
+    void updateHeaderLabel();
 
 protected:
 
@@ -126,8 +120,6 @@ protected:
     void writeSettings();
 
     void reset();
-
-    void startAuthentication(bool forceLogout);
 
     void handleVkError(KJob *kjob);
 
@@ -139,12 +131,10 @@ protected:
     /// User interface
     QWidget*                       m_mainWidget;
     QWidget*                       m_settingsBox;
+    QLabel*                        m_headerLabel;
 
     /// accounts
-    QGroupBox*                     m_accountBox;
-    QLabel*                        m_loginLabel;
-    QLabel*                        m_headerLabel;
-    KPushButton*                   m_changeUserButton;
+    AuthInfoWidget*                m_accountBox;
 
     // album selection
     AlbumChooserWidget*            m_albumsBox;
@@ -161,9 +151,6 @@ protected:
     QList<KJob*>                   m_jobs;
 
     VkAPI*                         m_vkapi;
-
-    QString                        m_userFullName;
-    int                            m_userId;
 
     int                            m_albumToSelect;
 
