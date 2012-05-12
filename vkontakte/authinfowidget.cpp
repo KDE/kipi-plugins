@@ -18,7 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "authinfowidget.h"
+#include "authinfowidget.moc"
 
 #include <QWidget>
 #include <QLabel>
