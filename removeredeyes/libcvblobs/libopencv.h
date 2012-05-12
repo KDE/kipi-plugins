@@ -30,12 +30,18 @@
 
 #include "BlobLibraryConfiguration.h"
 
-// OpenCV includes
-
 // To avoid broken compilation with OpenCV >= 2.0
 #undef HAVE_CONFIG_H
 
-#if defined(__APPLE__)
+// OpenCV includes
+
+#include <opencv2/core/version.hpp>
+
+#define OPENCV_MAKE_VERSION(major,minor,patch) (((major) << 16) | ((minor) << 8) | (patch))
+#define OPENCV_VERSION                         OPENCV_MAKE_VERSION(CV_MAJOR_VERSION,CV_MINOR_VERSION,CV_SUBMINOR_VERSION)
+#define OPENCV_TEST_VERSION(major,minor,patch) ( OPENCV_VERSION >= OPENCV_MAKE_VERSION(major,minor,patch) )
+
+#if OPENCV_TEST_VERSION(2,3,0)
 #include <opencv2/opencv.hpp>
 #include <opencv2/legacy/compat.hpp>
 #include <opencv/cvaux.h>
