@@ -467,7 +467,7 @@ void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
 
 void TimeAdjustDialog::slotProcessEnded(const KUrl& url, int status)
 {
-    d->listView->processed(url, (status == MyImageList::NO_ERROR));
+    d->listView->processed(url, (status == MyImageList::NOPROCESS_ERROR));
     d->itemsStatusMap.insert(url, status);
 }
 
