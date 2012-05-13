@@ -27,20 +27,17 @@
 
 #include <QString>
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kptooldialog.h"
 
 namespace KIPIPlugins
 {
 
 class KPAboutData;
 
-class KIPIPLUGINS_EXPORT KPOutputDialog : public KDialog
+class KIPIPLUGINS_EXPORT KPOutputDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -52,11 +49,8 @@ public:
                             const QString& Header=QString());
     ~KPOutputDialog();
 
-    void setAboutData(KPAboutData* const about, const QString& handbookName);
-
 private Q_SLOTS:
 
-    void slotHelp();
     void slotCopyToCliboard();
 
 private:

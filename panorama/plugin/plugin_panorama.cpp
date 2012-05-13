@@ -108,7 +108,6 @@ void Plugin_Panorama::slotActivate()
     if (!m_manager)
     {
         m_manager = new Manager(this);
-        m_manager->setAbout(new PanoramaAboutData());
     }
 
     m_manager->checkBinaries();

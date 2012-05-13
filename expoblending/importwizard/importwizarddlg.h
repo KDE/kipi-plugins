@@ -52,7 +52,6 @@ namespace KIPIExpoBlendingPlugin
 {
 
 class Manager;
-class ExpoBlendingAboutData;
 
 class ImportWizardDlg : public KPWizardDialog
 {

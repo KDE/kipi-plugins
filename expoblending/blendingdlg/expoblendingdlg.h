@@ -53,7 +53,6 @@ namespace KIPIExpoBlendingPlugin
 
 class Manager;
 class ActionData;
-class ExpoBlendingAboutData;
 
 class ExpoBlendingDlg : public KPToolDialog
 {

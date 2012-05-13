@@ -53,8 +53,6 @@ public:
                         const KLocalizedString& pluginDescription  = KLocalizedString(),
                         const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2012, kipi-plugins team"));
 
-    KPAboutData(const KPAboutData& other);
-
     void setHandbookEntry(const QString& entry);
     void setHelpButton(KPushButton* const help);
 

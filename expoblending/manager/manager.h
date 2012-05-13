@@ -7,7 +7,7 @@
  * Description : a plugin to blend bracketed images.
  *
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -63,15 +63,12 @@ class Manager : public QObject
 
 public:
 
-    Manager(QObject* parent=0);
+    Manager(QObject* const parent=0);
     ~Manager();
 
     bool checkBinaries();
 
-    void setAbout(ExpoBlendingAboutData* about);
-    ExpoBlendingAboutData* about() const;
-
-    void setIface(Interface* iface);
+    void setIface(Interface* const iface);
     Interface* iface() const;
 
     void setItemsList(const KUrl::List& urls);
