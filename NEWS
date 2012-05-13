@@ -64,5 +64,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 044 ==> 296776 : Crash while trying to send pictures via default email software (kipi).
 045 ==> 299071 : digiKam crashed on export of one image to picasaweb.
 046 ==> 288462 : Issues building with highgui [patch].
-047 ==> 
+047 ==> 299952 : Crash when closing ExpoBlending tool.
+048 ==> 
 
