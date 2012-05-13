@@ -63,7 +63,7 @@ public:
         }
 
     }
-    
+
     Interface*   iface;
     KPAboutData* about;
     KDialog*     dialog;
