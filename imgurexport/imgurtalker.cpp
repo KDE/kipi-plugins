@@ -146,6 +146,7 @@ void ImgurTalker::slotResult(KJob* kjob)
             break;
     }
 
+    kDebug() << "Parsing : " << parseOk;
     d->buffer.resize(0);
 
     emit signalUploadDone();
