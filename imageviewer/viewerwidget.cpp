@@ -550,7 +550,7 @@ Texture* ViewerWidget::loadImage(int file_index)
         {
             //determine screensize since its not yet known by the widget
             QDesktopWidget dw;
-            QRect r = dw.screenGeometry(this);
+            //QRect r = dw.screenGeometry(this);
             size    = dw.size();
             //kDebug() << "first image:size=" << size.width();
         }
