@@ -485,7 +485,7 @@ void UploadDialog::ipodItemSelected(QTreeWidgetItem* item)
 //     m_ipodPreview->setPixmap( pix );
 
     // memory release
-    gdk_pixbuf_unref ( gpixbuf );
+    g_object_unref ( gpixbuf );
 }
 
 void UploadDialog::imageSelected(QTreeWidgetItem* item)
