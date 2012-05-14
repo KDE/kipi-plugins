@@ -389,16 +389,16 @@ bool BlobAnalysis(  IplImage* inputImage,
     /*    int RegionNum = 0;*/
     int ErrorFlag = 0;
 
-    int LastRow, ThisRow;            // Row number
+    int /*LastRow,*/ ThisRow;        // Row number
     int LastStart, ThisStart;        // Starting column of run
     int LastEnd, ThisEnd;            // Ending column of run
     int LastColor, ThisColor;        // Color of run
 
-    int LastIndex, ThisIndex;        // Which run are we up to
-    int LastIndexCount, ThisIndexCount;    // Out of these runs
-    int LastRegionNum, ThisRegionNum;    // Which assignment
+    int LastIndex, ThisIndex;             // Which run are we up to
+    int LastIndexCount, ThisIndexCount;   // Out of these runs
+    int LastRegionNum, ThisRegionNum;     // Which assignment
 
-    int LastOffset = -(Trans + 2);    // For performance to avoid multiplication
+    int LastOffset = -(Trans + 2);     // For performance to avoid multiplication
     int ThisOffset = 0;                // For performance to avoid multiplication
     int ComputeData;
 
@@ -448,7 +448,7 @@ bool BlobAnalysis(  IplImage* inputImage,
         ThisOffset += Trans + 2;
         ThisIndex = 0;
         LastOffset += Trans + 2;;
-        LastRow = ThisRow - 1;
+        //LastRow = ThisRow - 1;
         LastIndexCount = ThisIndexCount;
         LastIndex = 0;
 
