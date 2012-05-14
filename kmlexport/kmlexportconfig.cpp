@@ -436,6 +436,7 @@ void KMLExportConfig::readSettings()
     DestinationUrl_->setText(UrlDestDir);
     FileName_->setText(KMLFileName);
 
+    GPXTracksCheckBox_->setChecked(GPXtracks);
     timeZoneCB->setCurrentIndex(TimeZone);
     GPXLineWidthInput_->setValue(LineWidth);
     GPXTrackColor_->setColor(GPXColor);
@@ -448,10 +449,10 @@ void KMLExportConfig::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("KMLExport Settings"));
 
-    group.writeEntry("localTarget", LocalTargetRadioButton_->isChecked());
+    group.writeEntry("localTarget",        LocalTargetRadioButton_->isChecked());
     group.writeEntry("optimize_googlemap", GoogleMapTargetRadioButton_->isChecked());
-    group.writeEntry("iconSize", IconSizeInput_->value());
-    group.writeEntry("size", ImageSizeInput_->value());
+    group.writeEntry("iconSize",           IconSizeInput_->value());
+    group.writeEntry("size",               ImageSizeInput_->value());
 
     QString destination = DestinationDirectory_->url().path();
     if (!destination.endsWith('/'))
@@ -466,15 +467,15 @@ void KMLExportConfig::saveSettings()
         url.append('/');
     }
 
-    group.writeEntry("UrlDestDir",url);
-    group.writeEntry("KMLFileName",FileName_->text());
-    group.writeEntry("Altitude Mode", AltitudeCB_->currentIndex() );
-    group.writeEntry("UseGPXTracks", GPXTracksCheckBox_->isChecked());
-    group.writeEntry("GPXFile", GPXFileKUrlRequester_->lineEdit()->originalText());
-    group.writeEntry("Time Zone", timeZoneCB->currentIndex() );
-    group.writeEntry("Line Width", GPXLineWidthInput_->value());
-    group.writeEntry("Track Color", GPXTrackColor_->color().name () );
-    group.writeEntry("Track Opacity", GPXTracksOpacityInput_->value() );
+    group.writeEntry("UrlDestDir",        url);
+    group.writeEntry("KMLFileName",       FileName_->text());
+    group.writeEntry("Altitude Mode",     AltitudeCB_->currentIndex() );
+    group.writeEntry("UseGPXTracks",      GPXTracksCheckBox_->isChecked());
+    group.writeEntry("GPXFile",           GPXFileKUrlRequester_->lineEdit()->originalText());
+    group.writeEntry("Time Zone",         timeZoneCB->currentIndex() );
+    group.writeEntry("Line Width",        GPXLineWidthInput_->value());
+    group.writeEntry("Track Color",   	  GPXTrackColor_->color().name () );
+    group.writeEntry("Track Opacity",     GPXTracksOpacityInput_->value() );
     group.writeEntry("GPX Altitude Mode", GPXAltitudeCB_->currentIndex() );
 
     KConfigGroup group2 = config.group(QString("KMLExport Dialog"));
