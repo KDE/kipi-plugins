@@ -209,11 +209,11 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
 
         // Complete name and comment for summary sending
-        m_title = fi.completeBaseName();
+        m_title   = fi.completeBaseName();
         m_comment = "";
-        m_author = "";
+        m_author  = "";
         m_date    = fi.created();
-        
+
         // Look in the Digikam database
         KPImageInfo info(photoUrl);
         if (info.hasTitle() && !info.title().isEmpty())
@@ -228,7 +228,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
         kDebug() << "Comment: " << m_comment;
         kDebug() << "Author: " << m_author;
         kDebug() << "Date: " << m_date;
-        
+
         // Restore all metadata with EXIF
         // in the resized version
         KPMetadata meta;
@@ -297,7 +297,7 @@ void PiwigoTalker::slotResult(KJob* job)
     KIO::Job* tempjob = static_cast<KIO::Job*>(job);
     State state = m_state; // Can change in the treatment itself
                            // so we cache it
-    
+
     if (tempjob->error())
     {
         if (state == GE_LOGIN)
@@ -404,7 +404,7 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
                 m_state = GE_GETVERSION;
                 m_talker_buffer.resize(0);
                 m_version = -1;
-                
+
                 QByteArray buffer = "method=pwg.getVersion";
                 m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
                 m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -440,7 +440,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
     QXmlStreamReader ts(data);
     QString line;
     QRegExp verrx(".?(\\d)\\.(\\d).*");
-    
+
     bool foundResponse = false;
 
     kDebug() << "parseResponseGetVersion: " << QString(data);
@@ -455,7 +455,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
             if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok")
             {
                 QString v = ts.readElementText();
-                
+
                 if (verrx.exactMatch(v)) {
                     QStringList qsl = verrx.capturedTexts();
                     m_version = qsl[1].toInt() * 10 + qsl[2].toInt();
@@ -465,6 +465,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
             }
         }
     }
+    kDebug() << "foundResponse : " << foundResponse;
 }
 
 void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
@@ -617,13 +618,15 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
         return;
     }
 
-
-    if (m_version >= PIWIGO_VER_2_4) {
-        m_state = GE_ADDPHOTOCHUNK;
+    if (m_version >= PIWIGO_VER_2_4)
+    {
+        m_state   = GE_ADDPHOTOCHUNK;
         m_talker_buffer.resize(0);
         m_chunkId = 0;
         addNextChunk();
-    } else {
+    }
+    else
+    {
         m_state = GE_OLD_ADDPHOTOCHUNK;
         m_talker_buffer.resize(0);
 
@@ -667,7 +670,6 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
 
     kDebug() << "parseResponseGetInfo: " << QString(data);
 
-
     while (!ts.atEnd())
     {
         ts.readNext();
@@ -689,16 +691,21 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
         }
     }
 
+    kDebug() << "success : " << success;
+
     if (!foundResponse)
     {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
         return;
     }
 
-    if (categories.contains(m_albumId)) {
+    if (categories.contains(m_albumId))
+    {
         emit signalAddPhotoFailed(i18n("Photo '%1' already exists in this album.", m_title));
         return;
-    } else {
+    }
+    else
+    {
         categories.append(m_albumId);
     }
 
@@ -706,10 +713,11 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     m_talker_buffer.resize(0);
 
     QStringList qsl_cat;
-    for (int i = 0; i < categories.size(); ++i) {
+    for (int i = 0; i < categories.size(); ++i)
+    {
         qsl_cat.append(QString::number(categories.at(i)));
     }
-    
+
     QStringList qsl;
     qsl.append("method=pwg.images.setInfo");
     qsl.append("image_id=" + QString::number(m_photoId));
@@ -729,7 +737,6 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
             this, SLOT(slotResult(KJob*)));
 
     return;
-
 }
 
 void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
