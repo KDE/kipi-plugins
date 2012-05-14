@@ -765,6 +765,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
         bRet = meta.save(fileName);
     }
+    kDebug() << "bRet : " << bRet;
 
     m_widget->m_imgList->processed(m_transferQueue.first().first, (errCode == 0));
 
@@ -853,6 +854,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                 }
                 bRet = meta.save(tmpUrl.toLocalFile());
             }
+            kDebug() << "bRet : " << bRet;
 
             m_transferQueue.pop_front();
             m_imagesCount++;
