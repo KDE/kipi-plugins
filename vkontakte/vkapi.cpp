@@ -18,8 +18,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "vkapi.h"
+#include "vkapi.moc"
+
+// Qt includes
+
 #include <QPointer>
+
+// Local includes
+
 #include <libkvkontakte/authenticationdialog.h>
 #include <libkvkontakte/getapplicationpermissionsjob.h>
 

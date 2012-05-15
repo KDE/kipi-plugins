@@ -34,6 +34,7 @@ class VkAPI : public QObject
     Q_OBJECT
 
 public:
+
     VkAPI(QWidget *parent);
     ~VkAPI();
 
@@ -47,19 +48,22 @@ public:
     bool isAuthenticated();
 
 Q_SIGNALS:
+
     void authenticated();
 
 protected Q_SLOTS:
+
     // authentication
     void slotApplicationPermissionCheckDone(KJob *kjob);
     void slotAuthenticationDialogDone(const QString &accessToken);
     void slotAuthenticationDialogCanceled();
 
 private:
-    QString m_appId;
-    QWidget *m_parent;
-    QString m_accessToken;
-    bool m_authenticated;
+
+    QString  m_appId;
+    QWidget* m_parent;
+    QString  m_accessToken;
+    bool     m_authenticated;
 };
 
 } // namespace KIPIVkontaktePlugin
