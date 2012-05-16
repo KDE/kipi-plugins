@@ -49,7 +49,7 @@
 #include <opencv/cv.h>
 #include <opencv/cvaux.h>
 #include <opencv/cxcore.h>
-#include <opencv2/highgui/highgui_c.h>
+#include <opencv/highgui.h>
 #endif
 
 #ifdef MATRIXCV_ACTIU
