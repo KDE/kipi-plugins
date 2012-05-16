@@ -61,7 +61,7 @@ KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
 TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       ${KIPI_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
-                      ${KEXIV2_LIBRARIES} 
+                      ${KEXIV2_LIBRARIES}
                       ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KDE4_KPARTS_LIBS}
