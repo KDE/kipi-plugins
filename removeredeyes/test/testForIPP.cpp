@@ -29,9 +29,9 @@
 
 // Local includes
 
-#include 'libopencv.h"
+#include "libopencv.h"
 
-int main (int argc, char const* argv[])
+int main (int /*argc*/, char const** /*argv[]*/)
 {
     const char* libs    = 0;
     const char* modules = 0;
