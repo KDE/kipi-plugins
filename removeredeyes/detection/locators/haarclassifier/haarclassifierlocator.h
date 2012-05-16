@@ -24,21 +24,9 @@
 #ifndef HAARCLASSIFIERLOCATOR_H
 #define HAARCLASSIFIERLOCATOR_H
 
-// OpenCV includes
-
-// To avoid broken compilation with OpenCV >= 2.0
-#undef HAVE_CONFIG_H
-
-#if defined (__APPLE__)
-#include <opencv2/opencv.hpp>
-#include <opencv2/legacy/compat.hpp>
-#else
-#include <opencv/cv.h>
-#include <opencv2/highgui/highgui_c.h>
-#endif
-
 // Local includes
 
+#include "libopencv.h"
 #include "locator.h"
 
 class QString;

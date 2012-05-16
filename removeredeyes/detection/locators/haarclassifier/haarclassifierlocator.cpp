@@ -34,12 +34,9 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-// OpenCV includes
-
-#include <BlobResult.h>
-
 // Local includes
 
+#include "BlobResult.h"
 #include "haarsettings.h"
 #include "haarsettingswidget.h"
 #include "simplesettings.h"
