@@ -131,15 +131,12 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     m_interface(0),
     d(new PhotoLayoutsEditorPriv)
 {
-    initIconsResource();
-
-    this->componentData().setAboutData( PLEAboutData() );
-
-    setXMLFile("photolayoutseditorui.rc");
-
-    setCaption("Photo Layouts Editor");
-
     m_instance = this;
+    componentData().setAboutData( PLEAboutData() );
+
+    initIconsResource();
+    setXMLFile("photolayoutseditorui.rc");
+    setCaption("Photo Layouts Editor");
 
     loadEffects();
     loadBorders();
@@ -147,11 +144,11 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     createWidgets();
     refreshActions();
 
-    this->setAcceptDrops(true);
+    setAcceptDrops(true);
     int height = QApplication::desktop()->height()*0.8;
-    this->resize(qRound(height*16.0/9.0),height);
-    QDesktopWidget * d = KApplication::kApplication()->desktop();
-    this->move(d->rect().center() - this->frameGeometry().center());
+    resize(qRound(height*16.0/9.0),height);
+    QDesktopWidget* d = KApplication::kApplication()->desktop();
+    move(d->rect().center() - this->frameGeometry().center());
 }
 
 PhotoLayoutsEditor::~PhotoLayoutsEditor()
