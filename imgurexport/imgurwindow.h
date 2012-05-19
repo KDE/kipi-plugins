@@ -87,6 +87,8 @@ private:
     void uploadNextItem();
     void closeEvent(QCloseEvent* e);
     void close();
+    void readSettings();
+    void saveSettings();
 
 private:
 

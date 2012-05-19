@@ -28,6 +28,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <klocale.h>
+#include <kconfig.h>
 
 // Local includes
 
@@ -122,10 +123,15 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 
     connect(this, SIGNAL(signalImageUploadError(KUrl, ImgurError)),
             d->widget, SLOT(slotImageUploadError(KUrl, ImgurError)));
+
+   // ---------------------------------------------------------------
+ 
+    readSettings();
 }
 
 ImgurWindow::~ImgurWindow()
 {
+    saveSettings();
     delete d;
 }
 
@@ -270,6 +276,7 @@ void ImgurWindow::slotBusy(bool val)
 void ImgurWindow::closeEvent(QCloseEvent* e)
 {
     kDebug() << "Close event" << e;
+    saveSettings();
 }
 
 void ImgurWindow::uploadNextItem()
@@ -292,6 +299,25 @@ void ImgurWindow::uploadNextItem()
 
     kDebug() << "Starting upload for:" << current;
     d->webService->imageUpload(current);
+}
+
+void ImgurWindow::readSettings()
+{
+    KConfig config("kipirc");
+//    KConfigGroup group = config.group(QString("ImgUr Settings"));
+
+    KConfigGroup group2 = config.group(QString("ImgUr Dialog"));
+    restoreDialogSize(group2);
+}
+
+void ImgurWindow::saveSettings()
+{
+    KConfig config("kipirc");
+//    KConfigGroup group = config.group(QString("ImgUr Settings"));
+
+    KConfigGroup group2 = config.group(QString("ImgUr Dialog"));
+    saveDialogSize(group2);
+    config.sync();
 }
 
 } // namespace KIPIImgurExportPlugin
