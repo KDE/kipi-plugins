@@ -110,7 +110,6 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
             this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
 
-
     // connecting the web service to the current window - @todo: remove this step
     connect(d->webService, SIGNAL(signalError(ImgurError)),
             this, SLOT(slotAddPhotoError(ImgurError)));

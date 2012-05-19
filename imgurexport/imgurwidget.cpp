@@ -30,7 +30,6 @@
 
 #include <klocale.h>
 
-
 namespace KIPIImgurExportPlugin
 {
 
@@ -86,9 +85,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     settingsBoxLayout->addWidget(d->textLbl);
     settingsBoxLayout->addWidget(d->progressBar);
     settingsBoxLayout->setAlignment(d->textLbl, Qt::AlignTop);
-
     settingsBoxLayout->setAlignment(d->progressBar, Qt::AlignBottom);
-
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -112,7 +109,6 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
             d->imagesList, SLOT(slotUploadError(KUrl, ImgurError)));
 }
 
-
 ImgurWidget::~ImgurWidget()
 {
     delete d;
@@ -128,15 +124,15 @@ void ImgurWidget::slotImageListChanged()
     emit signalImageListChanged();
 }
 
-void ImgurWidget::slotImageUploadSuccess(const KUrl imgPath, ImgurSuccess success)
+void ImgurWidget::slotImageUploadSuccess(const KUrl& imgPath, ImgurSuccess success)
 {
     emit signalImageUploadSuccess(imgPath, success);
 }
 
-void ImgurWidget::slotImageUploadError(const KUrl imgPath, ImgurError error){
+void ImgurWidget::slotImageUploadError(const KUrl& imgPath, ImgurError error)
+{
     emit signalImageUploadError(imgPath, error);
 }
-
 
 ImgurImagesList* ImgurWidget::imagesList() const
 {

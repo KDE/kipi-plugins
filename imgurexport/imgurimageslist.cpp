@@ -59,9 +59,8 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
                           i18n("Imgur Delete URL"), true);
 
-    connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-            this, SLOT(doubleClick(QTreeWidgetItem*,int)));
-
+    connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
+            this, SLOT(doubleClick(QTreeWidgetItem*, int)));
 }
 
 ImgurImagesList::~ImgurImagesList()
@@ -89,7 +88,7 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
 
         KPMetadata meta(imageUrl.toLocalFile());
 
-        const QString sUrl = meta.getXmpTagString("Xmp.kipi.ImgurURL");
+        const QString sUrl       = meta.getXmpTagString("Xmp.kipi.ImgurURL");
         const QString sDeleteUrl = meta.getXmpTagString("Xmp.kipi.ImgurDeleteURL");
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
@@ -98,11 +97,13 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
             if (currItem && currItem->url() == imageUrl)
             {
                 found = true;
-                if (!sUrl.isEmpty()) {
+                if (!sUrl.isEmpty())
+                {
                     currItem->setUrl(sUrl);
                 }
 
-                if (!sDeleteUrl.isEmpty()) {
+                if (!sDeleteUrl.isEmpty())
+                {
                     currItem->setDeleteUrl(sDeleteUrl);
                 }
                 break;
@@ -119,23 +120,29 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     emit signalImageListChanged();
 }
 
-void ImgurImagesList::slotUploadError (const KUrl localFile, ImgurError error) {
-    // error
+void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, ImgurError /*error*/)
+{
+    // TODO
 }
 
-void ImgurImagesList::slotUploadSuccess (const KUrl localFile, ImgurSuccess success) {
+void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess success)
+{
     kDebug () << success.links.imgur_page;
+
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
         ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+
         if (currItem && currItem->url() == localFile)
         {
-            if (!success.links.imgur_page.isEmpty()) {
+            if (!success.links.imgur_page.isEmpty())
+            {
                 const QString sUrl = success.links.imgur_page.toEncoded();
                 currItem->setUrl(sUrl);
             }
 
-            if (!success.links.delete_page.isEmpty()) {
+            if (!success.links.delete_page.isEmpty())
+            {
                 const QString sDeleteUrl = success.links.delete_page.toEncoded();
                 currItem->setDeleteUrl(sDeleteUrl);
             }
@@ -144,7 +151,7 @@ void ImgurImagesList::slotUploadSuccess (const KUrl localFile, ImgurSuccess succ
     }
 }
 
-void ImgurImagesList::doubleClick (QTreeWidgetItem* element,int i)
+void ImgurImagesList::doubleClick(QTreeWidgetItem* element, int i)
 {
     //qDebug() << i;
 

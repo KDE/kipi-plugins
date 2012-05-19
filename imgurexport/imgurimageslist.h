@@ -56,15 +56,17 @@ public:
     ~ImgurImagesList();
 
 public:
+
     // implement this, if you have special item widgets, e.g. an edit line
     // they will be set automatically when adding items, changing order, etc.
     virtual void updateItemWidgets();
 
 public Q_SLOTS:
+
     void slotAddImages(const KUrl::List& list);
-    void slotUploadSuccess (const KUrl imageUrl, ImgurSuccess success);
-    void slotUploadError (const KUrl imageUrl, ImgurError error);
-    void doubleClick (QTreeWidgetItem* element,int i);
+    void slotUploadSuccess (const KUrl& imageUrl, ImgurSuccess success);
+    void slotUploadError (const KUrl& imageUrl, ImgurError error);
+    void doubleClick (QTreeWidgetItem* element, int i);
 };
 
 // -------------------------------------------------------------------------
@@ -97,7 +99,6 @@ private:
     QString m_Description;
     QString m_Url;
     QString m_deleteUrl;
-
 };
 
 } // namespace KIPIImgurTalkerPlugin

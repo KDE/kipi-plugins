@@ -60,7 +60,7 @@ public:
     Plugin_ImgurExportPriv()
     {
         actionExport = 0;
-        winExport = 0;
+        winExport    = 0;
     }
 
     KAction*     actionExport;
@@ -102,7 +102,7 @@ void Plugin_ImgurExport::setup(QWidget* widget)
 
     if (!interface)
     {
-        kError() << "Kipi interface is null!" ;
+        kError() << "Kipi interface is null!";
         d->actionExport->setEnabled(false);
         return;
     }
