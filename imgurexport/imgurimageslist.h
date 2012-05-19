@@ -62,8 +62,8 @@ public:
 
 public Q_SLOTS:
     void slotAddImages(const KUrl::List& list);
-    void signalUploadSuccess (const KUrl imageUrl, ImgurSuccess success);
-    void signalUploadError (const KUrl imageUrl, ImgurError error);
+    void slotUploadSuccess (const KUrl imageUrl, ImgurSuccess success);
+    void slotUploadError (const KUrl imageUrl, ImgurError error);
     void doubleClick (QTreeWidgetItem* element,int i);
 };
 

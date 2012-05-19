@@ -119,11 +119,12 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     emit signalImageListChanged();
 }
 
-void ImgurImagesList::signalUploadError (const KUrl localFile, ImgurError error) {
+void ImgurImagesList::slotUploadError (const KUrl localFile, ImgurError error) {
     // error
 }
 
-void ImgurImagesList::signalUploadSuccess (const KUrl localFile, ImgurSuccess success) {
+void ImgurImagesList::slotUploadSuccess (const KUrl localFile, ImgurSuccess success) {
+    kDebug () << success.links.imgur_page;
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
         ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
@@ -149,6 +150,7 @@ void ImgurImagesList::doubleClick (QTreeWidgetItem* element,int i)
 
     if (i == 3 || i == 4) {
         const QUrl url = QUrl (element->text(i));
+        // need to check for delete url click - and ask user if he wants to remove the tags also
         QDesktopServices::openUrl(url);
     }
 }
