@@ -71,7 +71,7 @@ public Q_SLOTS:
     void slotStartUpload();
     void slotBusy(bool val);
 
-    void slotButtonClicked(int);
+    void slotDlgButtonClicked(KDialog::ButtonCode);
     void slotAddPhotoDone();
     void slotAddPhotoSuccess(ImgurSuccess success);
     void slotAddPhotoError(ImgurError error);

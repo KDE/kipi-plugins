@@ -107,7 +107,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
             this, SLOT(slotBusy(bool)));
 
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
-            this, SLOT(slotButtonClicked(int)));
+            this, SLOT(slotDlgButtonClicked(KDialog::ButtonCode)));
 
     // connecting the web service to the current window - @todo: remove this step
     connect(d->webService, SIGNAL(signalError(ImgurError)),
@@ -157,7 +157,7 @@ void ImgurWindow::slotStartUpload()
     uploadNextItem();
 }
 
-void ImgurWindow::slotButtonClicked(int button)
+void ImgurWindow::slotDlgButtonClicked(KDialog::ButtonCode button)
 {
     kDebug() << "Button clicked" << button;
 
