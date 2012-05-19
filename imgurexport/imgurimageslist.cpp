@@ -43,6 +43,10 @@ namespace KIPIImgurExportPlugin
 ImgurImagesList::ImgurImagesList(QWidget* const parent)
     : KPImagesList(parent)
 {
+    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+    setAllowDuplicate(false);
+    setAllowRAW(false);
+
     listView()->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
 
     //listView()->setColumnLabel(KPImagesListView::Filename, i18n("File name"));

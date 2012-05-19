@@ -56,10 +56,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
     d->imagesList           = new ImgurImagesList(this);
-
     d->imagesList->loadImagesFromCurrentSelection();
-    d->imagesList->setAllowDuplicate(false);
-    d->imagesList->setAllowRAW(false);
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
