@@ -71,11 +71,11 @@ public Q_SLOTS:
     void slotStartUpload();
     void slotBusy(bool val);
 
-    void slotButtonClicked(int button);
-//    void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotButtonClicked(int);
     void slotAddPhotoDone();
     void slotAddPhotoSuccess(ImgurSuccess success);
     void slotAddPhotoError(ImgurError error);
+//  void slotAddPhotoDone(int errCode, const QString& errMsg);
 
 Q_SIGNALS:
 
