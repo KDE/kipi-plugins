@@ -57,16 +57,15 @@
 namespace KIPICalendarPlugin
 {
 
-CalWizard::CalWizard(Interface* const interface, QWidget* const parent)
-    : KPWizardDialog(parent),
-      interface_(interface)
+CalWizard::CalWizard(QWidget* const parent)
+    : KPWizardDialog(parent)
 {
     setMaximumSize(800, 600);
     cSettings_   = CalSettings::instance(this);
 
     // ---------------------------------------------------------------
 
-    wTemplate_   = new CalTemplate(interface, this);
+    wTemplate_   = new CalTemplate(iface(), this);
     addPage(wTemplate_, i18n("Create Template for Calendar"));
 
     // ---------------------------------------------------------------
@@ -110,7 +109,7 @@ CalWizard::CalWizard(Interface* const interface, QWidget* const parent)
     about->addAuthor(ki18n("Renchi Raju"), ki18n("Former author and maintainer"),
                      "renchi dot raju at gmail dot com");
 
-    about->handbookEntry = QString("calendar");
+    about->setHandbookEntry("calendar");
     setAboutData(about);
 
     // ------------------------------------------
@@ -134,11 +133,6 @@ CalWizard::~CalWizard()
     }
 
     delete printer_;
-}
-
-Interface* CalWizard::interface() const
-{
-    return interface_;
 }
 
 void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before)
@@ -266,7 +260,7 @@ void CalWizard::print()
 
     printThread_ = new CalPrinter(printer_,
                                   months_,
-                                  interface_,
+                                  iface(),
                                   this);
 
     connect(printThread_, SIGNAL(pageChanged(int)),

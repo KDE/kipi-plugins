@@ -62,12 +62,11 @@
 namespace KIPIWikiMediaPlugin
 {
 
-WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
+WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir    = tmpFolder;
-    m_interface = interface;
     m_widget    = new WmWidget(this);
     m_uploadJob = 0;
     m_login     = QString();
@@ -101,7 +100,7 @@ WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("wikimedia");
+    about->setHandbookEntry("wikimedia");
     setAboutData(about);
 
     connect(this, SIGNAL(user1Clicked()),
@@ -174,7 +173,7 @@ void WMWindow::slotClose()
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    KUrl::List urls = m_interface->currentSelection().images();
+    KUrl::List urls = iface()->currentSelection().images();
 
     QList<QMap<QString, QString> > imageDesc;
     QString author  = m_widget->author();
@@ -262,7 +261,7 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
     }
     else
     {
-        m_uploadJob = new WikiMediaJob(m_interface, m_mediawiki, this);
+        m_uploadJob = new WikiMediaJob(iface(), m_mediawiki, this);
         enableButton(User1, true);
         m_widget->invertAccountLoginBox();
         m_widget->updateLabels(m_login, m_wiki.toString());

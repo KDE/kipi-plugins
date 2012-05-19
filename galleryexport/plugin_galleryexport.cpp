@@ -7,9 +7,9 @@
  * Description : a plugin to export to a remote Gallery server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -114,13 +114,6 @@ Plugin_GalleryExport::~Plugin_GalleryExport()
 // this slot uses GalleryWindow Class
 void Plugin_GalleryExport::slotSync()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     QPointer<GalleryEdit>   configDlg;
     QPointer<GalleryWindow> dlg;
 
@@ -131,7 +124,7 @@ void Plugin_GalleryExport::slotSync()
         configDlg->exec();
     }
 
-    dlg = new GalleryWindow(interface, kapp->activeWindow(), d->gallery);
+    dlg = new GalleryWindow(kapp->activeWindow(), d->gallery);
     dlg->exec();
 
     delete configDlg;

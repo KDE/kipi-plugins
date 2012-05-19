@@ -26,17 +26,24 @@
 
 // KDE includes
 
+#include <QObject>
+
+// KDE includes
+
 #include <kaboutdata.h>
 
 // Local includes
 
 #include "kipiplugins_export.h"
 
+class KPushButton;
+
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
+class KIPIPLUGINS_EXPORT KPAboutData : public QObject, public KAboutData
 {
+    Q_OBJECT
 
 public:
 
@@ -47,10 +54,18 @@ public:
                         const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2012, kipi-plugins team"));
 
     KPAboutData(const KPAboutData& other);
+    virtual ~KPAboutData();
 
-public:
+    void setHandbookEntry(const QString& entry);
+    void setHelpButton(KPushButton* const help);
 
-    QString handbookEntry;
+private Q_SLOTS:
+
+    void slotHelp();
+
+private:
+
+    QString m_handbookEntry;
 };
 
 } // namespace KIPIPlugins

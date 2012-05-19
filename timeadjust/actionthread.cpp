@@ -98,7 +98,7 @@ void Task::run()
                            m_d->settings.updEXIFDigDate || m_d->settings.updIPTCDate    ||
                            m_d->settings.updXMPDate;
 
-    int status = MyImageList::NO_ERROR;
+    int status = MyImageList::NOPROCESS_ERROR;
 
     if (metadataChanged)
     {

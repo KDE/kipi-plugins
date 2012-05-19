@@ -59,18 +59,16 @@ namespace KIPIDebianScreenshotsPlugin
 static int maxWidth  = 800;
 static int maxHeight = 600;
 
-DsWindow::DsWindow(Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
+DsWindow::DsWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     : KPToolDialog(0),
       m_uploadEnabled(false),
       m_imagesCount(0),
       m_imagesTotal(0),
 //      m_talker(new DsTalker(this)),
-      m_tmpDir(tmpFolder),
-      m_interface(interface)
+      m_tmpDir(tmpFolder)
 {
     m_tmpPath.clear();
 //    m_tmpDir      = tmpFolder;
-//    m_interface   = interface;
 //    m_imagesCount = 0;
 //    m_imagesTotal = 0;
     m_talker = new DsTalker(this);
@@ -114,7 +112,7 @@ DsWindow::DsWindow(Interface* const interface, const QString& tmpFolder, QWidget
     about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
                      "pgquiles at elpauer dot org");
 
-    about->handbookEntry = QString("debianscreenshots");
+    about->setHandbookEntry("debianscreenshots");
     setAboutData(about);
 
     // ------------------------------------------------------------------------

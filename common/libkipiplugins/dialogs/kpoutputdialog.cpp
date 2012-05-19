@@ -55,20 +55,18 @@ public:
         debugView = 0;
     }
 
-    QString       handbookName;
     KTextBrowser* debugView;
 };
 
 KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
                                const QString& Messages, const QString& Header)
-    : KDialog(parent), d(new KPOutputDialogPriv)
+    : KPToolDialog(parent), d(new KPOutputDialogPriv)
 {
     setCaption(caption);
     setModal(true);
     setButtons(Ok | Help | User1);
     setButtonText(User1, i18n("Copy to Clip&board"));
     setDefaultButton(Ok);
-    showButton(Help, false);
 
     //---------------------------------------------
 
@@ -91,27 +89,6 @@ KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
 KPOutputDialog::~KPOutputDialog()
 {
     delete d;
-}
-
-void KPOutputDialog::setAboutData(KPAboutData* const about, const QString& handbookName)
-{
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
-    d->handbookName = handbookName;
-    showButton(Help, true);
-}
-
-void KPOutputDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp(d->handbookName, "kipi-plugins");
 }
 
 void KPOutputDialog::slotCopyToCliboard()

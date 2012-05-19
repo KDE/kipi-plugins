@@ -94,18 +94,11 @@ Plugin_ImageshackExport::~Plugin_ImageshackExport()
 
 void Plugin_ImageshackExport::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     kDebug() << "Loading Imageshack Export Window";
 
     QPointer<ImageshackWindow> dlg;
 
-    dlg = new ImageshackWindow(interface, kapp->activeWindow(), m_pImageshack);
+    dlg = new ImageshackWindow(kapp->activeWindow(), m_pImageshack);
     dlg->exec();
 
     delete dlg;

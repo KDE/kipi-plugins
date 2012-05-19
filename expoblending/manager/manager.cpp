@@ -7,7 +7,7 @@
  * Description : a plugin to blend bracketed images.
  *
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,7 +33,6 @@
 
 // Local includes
 
-#include "aboutdata.h"
 #include "importwizarddlg.h"
 #include "expoblendingdlg.h"
 #include "actionthread.h"
@@ -50,7 +49,6 @@ public:
     ManagerPriv()
     {
         iface  = 0;
-        about  = 0;
         thread = 0;
         wizard = 0;
         dlg    = 0;
@@ -64,8 +62,6 @@ public:
 
     Interface*             iface;
 
-    ExpoBlendingAboutData* about;
-
     ActionThread*          thread;
 
     AlignBinary            alignBinary;
@@ -75,7 +71,7 @@ public:
     ExpoBlendingDlg*       dlg;
 };
 
-Manager::Manager(QObject* parent)
+Manager::Manager(QObject* const parent)
        : QObject(parent), d(new ManagerPriv)
 {
     d->thread                               = new ActionThread(this);
@@ -92,7 +88,6 @@ Manager::Manager(QObject* parent)
 
 Manager::~Manager()
 {
-    delete d->about;
     delete d->thread;
     delete d->wizard;
     delete d->dlg;
@@ -110,16 +105,6 @@ bool Manager::checkBinaries()
     return true;
 }
 
-void Manager::setAbout(ExpoBlendingAboutData* about)
-{
-    d->about = about;
-}
-
-ExpoBlendingAboutData* Manager::about() const
-{
-    return d->about;
-}
-
 AlignBinary& Manager::alignBinary() const
 {
     return d->alignBinary;
@@ -130,7 +115,7 @@ EnfuseBinary& Manager::enfuseBinary() const
     return d->enfuseBinary;
 }
 
-void Manager::setIface(Interface* iface)
+void Manager::setIface(Interface* const iface)
 {
     d->iface = iface;
 }

@@ -54,6 +54,7 @@
 
 // Local includes
 
+#include "aboutdata.h"
 #include "kpoutputdialog.h"
 #include "cpcleanbinary.h"
 #include "cpfindbinary.h"
@@ -242,7 +243,7 @@ void PreProcessingPage::slotShowDetails()
     KPOutputDialog dlg(kapp->activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
-    dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("panorama"));
+    dlg.setAboutData(new PanoramaAboutData());
     dlg.exec();
 }
 

@@ -58,7 +58,7 @@ class WMWindow : public KPToolDialog
 
 public:
 
-    WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
+    WMWindow(const QString& tmpFolder, QWidget* const parent);
     ~WMWindow();
 
     void reactivate();
@@ -89,7 +89,6 @@ private:
     WmWidget*     m_widget;
     MediaWiki*    m_mediawiki;
 
-    Interface*    m_interface;
     WmLogin*      m_dlgLoginExport;
     WikiMediaJob* m_uploadJob;
 };

@@ -55,7 +55,7 @@ class PiwigoWindow : public KPToolDialog
 
 public:
 
-    PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo);
+    PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo);
     ~PiwigoWindow();
 
 private:

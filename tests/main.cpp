@@ -55,37 +55,39 @@
 #include "kipitest-debug.h"
 #include "kpversion.h"
 
+using namespace KIPI;
+
 /**
 * \brief Returns the name of a KIPI::Category
 * \param category Category which should be returned as a string
 * \returns String version of the category
 */
-QString PluginCategoriesToString(const KIPI::Category& category)
+QString PluginCategoriesToString(const Category& category)
 {
     QString categorystring;
     switch(category)
     {
-        case KIPI::ImagesPlugin:
+        case ImagesPlugin:
             categorystring = i18n("Images");
             break;
 
-        case KIPI::ToolsPlugin:
+        case ToolsPlugin:
             categorystring = i18n("Tool");
             break;
 
-        case KIPI::ImportPlugin:
+        case ImportPlugin:
             categorystring = i18n("Import");
             break;
 
-        case KIPI::ExportPlugin:
+        case ExportPlugin:
             categorystring = i18n("Export");
             break;
 
-        case KIPI::BatchPlugin:
+        case BatchPlugin:
             categorystring = i18n("Batch");
             break;
 
-        case KIPI::CollectionsPlugin:
+        case CollectionsPlugin:
             categorystring = i18n("Collections");
             break;
 
@@ -147,14 +149,14 @@ bool LoadPlugins(const QString& libraryName = "")
 {
     if (!libraryName.isEmpty())
     {
-        qerr << QString("Will only load library \"%1\"").arg(libraryName) << "\n";
+        kDebug() << QString("Will only load library \"%1\"").arg(libraryName);
     }
     else
     {
-        qerr << "Will load all libraries, if possible." << "\n";
+        kDebug() << "Will load all libraries, if possible.";
     }
 
-    KIPI::PluginLoader* const kipiPluginLoader = KIPI::PluginLoader::instance();
+    PluginLoader* const kipiPluginLoader = PluginLoader::instance();
 
     if (libraryName.isEmpty())
     {
@@ -162,35 +164,33 @@ bool LoadPlugins(const QString& libraryName = "")
         return true;
     }
 
-    const KIPI::PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
-    bool foundPlugin                                = false;
+    const PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
 
-    for (KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
+    for (PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
          it!=pluginList.constEnd(); ++it)
     {
         if ( (*it)->library() == libraryName )
         {
             if ( !(*it)->shouldLoad() )
             {
-                qerr << i18n("Can not load plugin \"%1\": Loader says it should not load.", libraryName) << endl;
+                kDebug() << i18n("Can not load plugin \"%1\": Loader says it should not load.", libraryName);
                 return false;
             }
 
-            foundPlugin = true;
             (*it)->shouldLoad();
 
             if ( !(*it)->plugin() )
             {
-                qerr << i18n("Plugin \"%1\" failed to load.", libraryName) << endl;
+                kDebug() << i18n("Plugin \"%1\" failed to load.", libraryName);
                 return false;
             }
 
-            qerr << i18n("Plugin \"%1\" loaded.", libraryName) << endl;
+            kDebug() << i18n("Plugin \"%1\" loaded.", libraryName);
             return true;
         }
     }
 
-    qerr << i18n("Plugin \"%1\" not found.", libraryName) << endl;
+    kDebug() << i18n("Plugin \"%1\" not found.", libraryName);
 
     return false;
 }
@@ -202,11 +202,11 @@ bool LoadPlugins(const QString& libraryName = "")
 */
 bool ListPlugins(const QString& libraryName = "")
 {
-    KIPI::PluginLoader* const kipiPluginLoader = KIPI::PluginLoader::instance();
+    PluginLoader* const kipiPluginLoader = PluginLoader::instance();
     if ( !LoadPlugins( libraryName ) )
         return false;
 
-    const KIPI::PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
+    const PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
     int pluginNumber                                = 1;
     const int nPlugins                              = pluginList.size();
     const int nDigits                               = QString::number(nPlugins).size();
@@ -214,28 +214,27 @@ bool ListPlugins(const QString& libraryName = "")
 
     std::auto_ptr<QWidget> dummyWidget( new QWidget() );
 
-    qerr << i18np("Found 1 plugin:", "Found %1 plugins:", nPlugins) << endl;
+    kDebug() << i18np("Found 1 plugin:", "Found %1 plugins:", nPlugins);
 
-    for (KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
+    for (PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
          it!= pluginList.constEnd(); ++ it)
     {
         const QString pluginNumberString = QString("%1").arg(pluginNumber, nDigits); ++pluginNumber;
 
-        qerr << QString("%1: %2 - %3").arg(pluginNumberString).arg((*it)->name()).arg((*it)->comment()) << endl;
-        //      qout<<preSpace<< i18n("Should load: ")<< ( (*it)->shouldLoad() ? i18n("Yes") : i18n("No") ) << endl;
-        qerr << preSpace<< i18n("Library: ")<< (*it)->library() << endl;
+        kDebug() << QString("%1: %2 - %3").arg(pluginNumberString).arg((*it)->name()).arg((*it)->comment());
+        kDebug() << preSpace << i18n("Library: ")<< (*it)->library();
 
-        KIPI::Plugin* const plugin = (*it)->plugin();
+        Plugin* const plugin = (*it)->plugin();
 
         if (plugin == 0)
         {
-            qerr << preSpace << i18n( "Plugin not loaded." ) << endl;
+            kDebug() << preSpace << i18n( "Plugin not loaded." );
             continue;
         }
 
         plugin->setup(dummyWidget.get());
         const QList<QPair<int, QAction*> > actionsList = FlattenActionList(QListKAction2QListQAction(plugin->actions()));
-        qerr << preSpace<<i18n("Actions:") << endl;
+        kDebug() << preSpace<<i18n("Actions:");
         const QString preSpaceActions = preSpace + "  ";
 
         for (QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin();
@@ -243,7 +242,7 @@ bool ListPlugins(const QString& libraryName = "")
         {
             const int level             = (*it).first;
             const QAction* const action = (*it).second;
-            qerr << preSpaceActions << QString(level*2, ' ') << '"' << action->text() << '"' << endl;
+            kDebug() << preSpaceActions << QString(level*2, ' ') << '"' << action->text() << '"';
         }
     }
     return true;
@@ -259,28 +258,28 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 {
     kDebug() << QString("Looking for action \"%1\"...").arg(actionText);
 
-    KIPI::PluginLoader* const kipiPluginLoader = KIPI::PluginLoader::instance();
+    PluginLoader* const kipiPluginLoader = PluginLoader::instance();
     if ( !LoadPlugins( libraryName ) )
         return false;
 
-    KIPI::PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
+    PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
 
     /*std::auto_ptr<*/QWidget* dummyWidget( new QWidget() );
 
     bool foundAction = false;
 
-    for (KIPI::PluginLoader::PluginList::ConstIterator info = pluginList.constBegin();
+    for (PluginLoader::PluginList::ConstIterator info = pluginList.constBegin();
          (info!=pluginList.constEnd()) && !foundAction; ++info)
     {
         if ( !libraryName.isEmpty() && ( (*info)->library() != libraryName ) )
             continue;
 
         // scan for the desired action:
-        KIPI::Plugin* const plugin = (*info)->plugin();
+        Plugin* const plugin = (*info)->plugin();
 
         if (plugin == 0)
         {
-            qerr << i18n("Plugin \"%1\" failed to load.", (*info)->library()) << endl;
+            kDebug() << i18n("Plugin \"%1\" failed to load.", (*info)->library());
             continue;
         }
 
@@ -296,12 +295,11 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
             if ( pluginAction->text() != actionText )
                 continue;
 
-            qerr << i18n("Found action \"%1\" in library \"%2\", will now call it.", actionText, (*info)->library() )
-                 << endl;
+            kDebug() << i18n("Found action \"%1\" in library \"%2\", will now call it.", actionText, (*info)->library());
 
             // call the action:
             pluginAction->trigger();
-            qerr << i18n("Plugin is done.") << endl;
+            kDebug() << i18n("Plugin is done.");
             foundAction = true;
 
             break;
@@ -309,7 +307,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
     }
 
     if (!foundAction)
-        qerr << i18n("Could not find action \"%1\".", actionText) << endl;
+        kDebug() << i18n("Could not find action \"%1\".", actionText);
 
     return foundAction;
 }
@@ -354,7 +352,7 @@ int main(int argc, char* argv[])
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
     // create an instance of the plugin loader:
-    new KIPI::PluginLoader(QStringList(), kipiInterface);
+    new PluginLoader(QStringList(), kipiInterface);
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 

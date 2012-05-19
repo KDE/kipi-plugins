@@ -33,56 +33,65 @@
 
 #include "kipiplugins_export.h"
 
+class KPushButton;
+
+namespace KIPI
+{
+    class Interface;
+}
+
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
 
 class KPAboutData;
-class KPDialogPrivate;
 
-class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog
+class KIPIPLUGINS_EXPORT KPDialogBase
+{
+public:
+
+    KPDialogBase(KDialog* const dlg);
+    virtual ~KPDialogBase();
+
+    void setAboutData(KPAboutData* const data, KPushButton* help=0);
+
+    Interface* iface() const;
+
+private:
+
+    class KPDialogBasePrivate;
+    KPDialogBasePrivate* const d;
+};
+
+// -----------------------------------------------------------------------------------
+
+class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog, public KPDialogBase
 {
 public:
 
     KPToolDialog(QWidget* const parent=0);
-    ~KPToolDialog();
-
-    void setAboutData(KPAboutData* const about, KPushButton* const help=0);
-
-private:
-
-    KPDialogPrivate* const d;
+    virtual ~KPToolDialog();
 };
 
 // -----------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPWizardDialog : public KAssistantDialog
+class KIPIPLUGINS_EXPORT KPWizardDialog : public KAssistantDialog, public KPDialogBase
 {
 public:
 
     KPWizardDialog(QWidget* const parent=0);
-    ~KPWizardDialog();
-
-    void setAboutData(KPAboutData* const about, KPushButton* const help=0);
-
-private:
-
-    KPDialogPrivate* const d;
+    virtual ~KPWizardDialog();
 };
 
 // -----------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPPageDialog : public KPageDialog
+class KIPIPLUGINS_EXPORT KPPageDialog : public KPageDialog, public KPDialogBase
 {
 public:
 
     KPPageDialog(QWidget* const parent=0);
-    ~KPPageDialog();
-
-    void setAboutData(KPAboutData* const about, KPushButton* const help=0);
-
-private:
-
-    KPDialogPrivate* const d;
+    virtual ~KPPageDialog();
 };
 
 } // namespace KIPIPlugins

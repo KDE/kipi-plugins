@@ -8,6 +8,7 @@
  *               location
  *
  * Copyright (C) 2006-2009 by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,22 +27,17 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
 #include <kio/job.h>
 
 // Local includes
 
+#include "kptooldialog.h"
 #include "KioExportWidget.h"
 
 namespace KIPI
 {
     class Interface;
-}
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
 }
 
 using namespace KIPI;
@@ -54,7 +50,7 @@ namespace KIPIKioExportPlugin
  * Main window of the KIOExport Plugin.
  */
 
-class KioExportWindow: public KDialog
+class KioExportWindow: public KPToolDialog
 {
     Q_OBJECT
 
@@ -64,9 +60,8 @@ public:
      * Constructor.
      *
      * @param parent parent QWidget
-     * @param interface pointer to the KIPI interface to use. Must not be null.
      */
-    KioExportWindow(QWidget* const parent, Interface* const interface);
+    KioExportWindow(QWidget* const parent);
 
     /**
      * Destructor.
@@ -106,12 +101,7 @@ private Q_SLOTS:
      * Re-enables the dialog after the job finished and displays a warning if
      * something didn't work.
      */
-    void slotCopyingFinished(KJob *job);
-
-    /**
-     * Load plugin handbook.
-     */
-    void slotHelp();
+    void slotCopyingFinished(KJob* job);
 
     /**
      * Handle Close button.
@@ -149,11 +139,7 @@ private:
 
 private:
 
-    Interface*       m_interface;
-
     KioExportWidget* m_exportWidget;
-
-    KPAboutData*     m_about;
 };
 
 } // namespace KIPIKioExportPlugin

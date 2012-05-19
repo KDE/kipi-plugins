@@ -63,7 +63,6 @@ void Plugin_YandexFotki::setup(QWidget* widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_yandexfotki");
 
-
     m_actionExport = actionCollection()->addAction("Yandex.Fotki");
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
@@ -101,19 +100,11 @@ void Plugin_YandexFotki::slotImport()
 
 void Plugin_YandexFotki::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
-
     if (!m_dlgExport)
     {
         // This object will live forever, we will reuse it on future accesses
         // to the plugin.
-        m_dlgExport = new YandexFotkiWindow(interface, false, kapp->activeWindow());
+        m_dlgExport = new YandexFotkiWindow(false, kapp->activeWindow());
     }
     else
     {

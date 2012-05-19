@@ -6,7 +6,8 @@
  * Date        : 04.10.2009
  * Description : A tool for importing images via KIO
  *
- * Copyright (C) 2009 by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2009      by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,13 +26,13 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kjob.h>
 #include <kurl.h>
 #include <kio/job.h>
 
 // Local includes
 
+#include "kptooldialog.h"
 #include "KioImportWidget.h"
 
 namespace KIPI
@@ -39,10 +40,8 @@ namespace KIPI
     class Interface;
 }
 
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIKioExportPlugin
 {
@@ -50,9 +49,8 @@ namespace KIPIKioExportPlugin
 /**
  * Main dialog used for the kio import tool.
  */
-class KioImportWindow : public KDialog
+class KioImportWindow : public KPToolDialog
 {
-
     Q_OBJECT
 
 public:
@@ -62,7 +60,7 @@ public:
      *
      * @param parent parent widget
      */
-    KioImportWindow(QWidget *parent, KIPI::Interface *interface);
+    KioImportWindow(QWidget* const parent);
 
     /**
      * Destructor.
@@ -85,27 +83,18 @@ private slots:
     /**
      * Removes the copied image from the image list.
      */
-    void slotCopyingDone(KIO::Job *job, const KUrl& from, const KUrl& to,
+    void slotCopyingDone(KIO::Job* job, const KUrl& from, const KUrl& to,
                          time_t mtime, bool directory, bool renamed);
 
     /**
      * Re-enables the dialog after the job finished and displays a warning if
      * something didn't work.
      */
-    void slotCopyingFinished(KJob *job);
-
-    /**
-     * Load plugin handbook.
-     */
-    void slotHelp();
+    void slotCopyingFinished(KJob* job);
 
 private:
 
-    KIPI::Interface          *m_interface;
-
-    KioImportWidget          *m_importWidget;
-
-    KIPIPlugins::KPAboutData *m_about;
+    KioImportWidget* m_importWidget;
 };
 
 } // namespace KIPIKioExportPlugin

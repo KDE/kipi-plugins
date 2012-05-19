@@ -6,7 +6,8 @@
  * Date        : 04.10.2009
  * Description : A tool for importing images via KIO
  *
- * Copyright (C) 2009 by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2009      by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -53,15 +54,10 @@
 namespace KIPIKioExportPlugin
 {
 
-KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface* interface)
-               : KDialog(0), m_interface(interface)
+KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
+    : KPToolDialog(0)
 {
-    if (!interface)
-    {
-        kFatal() << "KIPI::Interface is empty";
-    }
-
-    m_importWidget = new KioImportWidget(this, interface);
+    m_importWidget = new KioImportWidget(this, iface());
     setMainWidget(m_importWidget);
 
     // window setup
@@ -89,26 +85,18 @@ KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface* interface
 
     // about data and help button
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Import from remote computer"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to import images over network using KIO-Slave"),
-                   ki18n("(c) 2009, Johannes Wienke"));
+    KPAboutData* about = new KPAboutData(ki18n("Import from remote computer"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin to import images over network using KIO-Slave"),
+                             ki18n("(c) 2009, Johannes Wienke"));
 
-    m_about->addAuthor(ki18n("Johannes Wienke"),
-                       ki18n("Developer and maintainer"),
-                       "languitar at semipol dot de");
+    about->addAuthor(ki18n("Johannes Wienke"),
+                     ki18n("Developer and maintainer"),
+                     "languitar at semipol dot de");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->setHandbookEntry("kioexport");
+    setAboutData(about);
 
     slotSourceAndTargetUpdated();
 }
@@ -133,7 +121,7 @@ void KioImportWindow::slotImport()
             this, SLOT(slotCopyingFinished(KJob*)));
 }
 
-void KioImportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
+void KioImportWindow::slotCopyingDone(KIO::Job* job, const KUrl& from,
                                       const KUrl& to, time_t mtime, bool directory, bool renamed)
 {
     Q_UNUSED(job);
@@ -147,7 +135,7 @@ void KioImportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
     m_importWidget->imagesList()->removeItemByUrl(from);
 }
 
-void KioImportWindow::slotCopyingFinished(KJob *job)
+void KioImportWindow::slotCopyingFinished(KJob* job)
 {
     Q_UNUSED(job);
 
@@ -172,11 +160,6 @@ void KioImportWindow::slotSourceAndTargetUpdated()
                   << hasUrlToImport << ", hasTarget = " << hasTarget;
 
     enableButton(User1, hasUrlToImport && hasTarget);
-}
-
-void KioImportWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
 }
 
 } // namespace KIPIKioExportPlugin

@@ -76,15 +76,15 @@ public:
 ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
     : d(new ImgurTalkerPriv)
 {
-    d->parent               = parent;
-    d->interface            = interface;
+    d->parent              = parent;
+    d->interface           = interface;
 
-    d->job                  = 0;
-    d->userAgent            = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
+    d->job                 = 0;
+    d->userAgent           = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
 
-    d->apiKey               = _IMGUR_API_KEY;
+    d->apiKey              = _IMGUR_API_KEY;
 
-    d->queue                = new KUrl::List();
+    d->queue               = new KUrl::List();
     ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
@@ -146,6 +146,7 @@ void ImgurTalker::slotResult(KJob* kjob)
             break;
     }
 
+    kDebug() << "Parsing : " << parseOk;
     d->buffer.resize(0);
 
     emit signalUploadDone();

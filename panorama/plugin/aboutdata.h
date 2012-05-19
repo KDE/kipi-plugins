@@ -27,10 +27,12 @@
 
 #include "kpaboutdata.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIPanoramaPlugin
 {
 
-class PanoramaAboutData : public KIPIPlugins::KPAboutData
+class PanoramaAboutData : public KPAboutData
 {
 
 public:
@@ -49,7 +51,7 @@ public:
                    ki18n("Developer"),
                    "caulier dot gilles at gmail dot com");
 
-         handbookEntry = QString("panorama");
+         setHandbookEntry("panorama");
     }
 
     ~PanoramaAboutData()

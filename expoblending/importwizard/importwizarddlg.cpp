@@ -38,8 +38,9 @@
 
 #include <libkipi/interface.h>
 
-// Locale incudes.
+// Locale incudes
 
+#include "aboutdata.h"
 #include "manager.h"
 #include "actionthread.h"
 #include "aboutdata.h"
@@ -77,14 +78,13 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 {
     setModal(false);
     setWindowTitle(i18n("Exposure Blending Import Wizard"));
+    setAboutData(new ExpoBlendingAboutData());
 
     d->mngr              = mngr;
     d->introPage         = new IntroPage(d->mngr, this);
     d->itemsPage         = new ItemsPage(d->mngr, this);
     d->preProcessingPage = new PreProcessingPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
-
-    setAboutData(new KPAboutData(*d->mngr->about()));
 
     // ---------------------------------------------------------------
 

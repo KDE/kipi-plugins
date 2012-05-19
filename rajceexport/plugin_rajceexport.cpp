@@ -88,20 +88,13 @@ void Plugin_RajceExport::setup(QWidget* widget)
 
 void Plugin_RajceExport::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
-
     KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-rajceexportplugin-" + QString::number(getpid()) + '/');
+    QString tmp = dir.saveLocation("tmp", "kipi-rajceexportplugin-" + QString::number(getpid()) + '/');
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new RajceWindow(interface, Tmp, kapp->activeWindow());
+        m_dlgExport = new RajceWindow(tmp, kapp->activeWindow());
     }
     else
     {

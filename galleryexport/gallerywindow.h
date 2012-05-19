@@ -61,7 +61,7 @@ class GalleryWindow : public KPToolDialog
 
 public:
 
-    GalleryWindow(Interface* const interface, QWidget* const parent, Gallery* const pGallery);
+    GalleryWindow(QWidget* const parent, Gallery* const pGallery);
     ~GalleryWindow();
 
 private:

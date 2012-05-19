@@ -224,7 +224,7 @@ struct Wizard::Private
     }
 };
 
-Wizard::Wizard(QWidget* const parent, GalleryInfo* const info, Interface* const interface)
+Wizard::Wizard(QWidget* const parent, GalleryInfo* const info)
     : KPWizardDialog(parent)
 {
     d        = new Private;
@@ -253,33 +253,33 @@ Wizard::Wizard(QWidget* const parent, GalleryInfo* const info, Interface* const 
         ki18n("Former Author and Maintainer"),
         "agateau@kde.org");
 
-    about->handbookEntry = QString("htmlexport");
+    about->setHandbookEntry("htmlexport");
     setAboutData(about);
 
     // ---------------------------------------------------------------
 
-    d->mCollectionSelector = interface->imageCollectionSelector(this);
+    d->mCollectionSelector     = iface()->imageCollectionSelector(this);
     d->mCollectionSelectorPage = addPage(d->mCollectionSelector, i18n("Collection Selection"));
     updateCollectionSelectorPageValidity();
-    connect(d->mCollectionSelector, SIGNAL(selectionChanged()),
-        SLOT(updateCollectionSelectorPageValidity()));
 
-    d->mThemePage=new ThemePage(this, i18n("Theme"));
+    connect(d->mCollectionSelector, SIGNAL(selectionChanged()),
+            this, SLOT(updateCollectionSelectorPageValidity()));
+
+    d->mThemePage = new ThemePage(this, i18n("Theme"));
     d->initThemePage();
+
     connect(d->mThemePage->mThemeList, SIGNAL(itemSelectionChanged()),
-        this, SLOT(slotThemeSelectionChanged()) );
+            this, SLOT(slotThemeSelectionChanged()) );
 
     d->mThemeParametersPage = new ThemeParametersPage(this, i18n("Theme Parameters"));
-
-    d->mImageSettingsPage=new ImageSettingsPage(this, i18n("Image Settings"));
-
-    d->mOutputPage=new OutputPage(this, i18n("Output"));
+    d->mImageSettingsPage   = new ImageSettingsPage(this, i18n("Image Settings"));
+    d->mOutputPage          = new OutputPage(this, i18n("Output"));
     d->mOutputPage->kcfg_destUrl->setMode(KFile::Directory);
 
     connect(d->mOutputPage->kcfg_destUrl, SIGNAL(textChanged(QString)),
-        this, SLOT(updateFinishPageValidity()) );
+            this, SLOT(updateFinishPageValidity()) );
 
-    d->mConfigManager=new KConfigDialogManager(this, d->mInfo);
+    d->mConfigManager = new KConfigDialogManager(this, d->mInfo);
     d->mConfigManager->updateWidgets();
 
     // Set page states

@@ -105,20 +105,13 @@ Plugin_Shwup::~Plugin_Shwup()
 
 void Plugin_Shwup::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", "kipi-shwup-" + QString::number(getpid()) + '/');
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new SwWindow(interface, tmp, kapp->activeWindow());
+        m_dlgExport = new SwWindow(tmp, kapp->activeWindow());
     }
     else
     {

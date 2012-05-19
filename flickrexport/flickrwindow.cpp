@@ -75,8 +75,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder, 
-                           QWidget* const /*parent*/, const QString& serviceName)
+FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName)
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
@@ -99,7 +98,6 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     }
 
     m_tmp                       = tmpFolder;
-    m_interface                 = interface;
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
@@ -153,7 +151,7 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("flickrexport");
+    about->setHandbookEntry("flickrexport");
     setAboutData(about);
 
     // --------------------------------------------------------------------------
@@ -269,7 +267,6 @@ void FlickrWindow::slotClose()
         m_widget->progressBar()->hide();
         m_widget->progressBar()->progressCompleted();
     }
-
 }
 
 void FlickrWindow::slotAddPhotoCancelAndClose()
@@ -317,7 +314,7 @@ void FlickrWindow::readSettings()
     m_stripSpaceTagsCheckBox->setChecked(grp.readEntry("Strip Space From Tags", false));
     m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
 
-    if (!m_interface->hasFeature(KIPI::HostSupportsTags))
+    if (!iface()->hasFeature(KIPI::HostSupportsTags))
     {
         m_exportHostTagsCheckBox->setEnabled(false);
         m_stripSpaceTagsCheckBox->setEnabled(false);

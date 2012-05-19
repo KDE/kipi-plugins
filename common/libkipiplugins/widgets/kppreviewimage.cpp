@@ -47,6 +47,16 @@
 #include <kicon.h>
 #include <kvbox.h>
 
+// libKdcraw includes
+
+#include <libkdcraw/kdcraw.h>
+
+// Local includes
+
+#include "kpmetadata.h"
+
+using namespace KDcrawIface;
+
 namespace KIPIPlugins
 {
 
@@ -384,10 +394,10 @@ public:
 
     enum 
     {
-        NONE, 
-        LOOKAROUND, 
-        DRAWSELECTION, 
-        EXPANDORSHRINK, 
+        NONE,
+        LOOKAROUND,
+        DRAWSELECTION,
+        EXPANDORSHRINK,
         MOVESELECTION
     }
     mouseDragAction;
@@ -541,7 +551,17 @@ void KPPreviewImage::enableSelectionArea(bool b)
 
 bool KPPreviewImage::load(const QString& file) const
 {
-    QImage image(file);
+    QImage image;
+
+    if (KPMetadata::isRawFile(file))
+    {
+        KDcraw::loadDcrawPreview(image, file);
+    }
+    else
+    {
+        image.load(file);
+    }
+
     bool ret = setImage(image);
     if (ret && d->enableSelection)
     {

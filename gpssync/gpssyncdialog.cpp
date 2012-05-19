@@ -31,7 +31,7 @@
 
 // Qt includes
 
-#include <qtconcurrentmap.h>
+#include <QtConcurrentMap>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
@@ -166,7 +166,6 @@ public:
     GPSSyncDialogPriv()
     {
         // TODO: initialize in the initializer list
-        interface         = 0;
         mapWidget         = 0;
         uiEnabled         = true;
         splitterSize      = 0;
@@ -175,7 +174,6 @@ public:
     }
 
     // General things
-    Interface                               *interface;
     KipiImageModel                          *imageModel;
     QItemSelectionModel                     *selectionModel;
     bool                                     uiEnabled;
@@ -232,17 +230,15 @@ public:
     QMenu                                   *sortMenu;
 };
 
-GPSSyncDialog::GPSSyncDialog(Interface* const interface, QWidget* const parent)
+GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     : KPToolDialog(parent), d(new GPSSyncDialogPriv)
 {
-    d->interface = interface;
-
     setAttribute(Qt::WA_DeleteOnClose, true);
-
     setButtons(0);
     setCaption(i18n("Geolocation"));
-//     setModal(true);
     setMinimumSize(300,400);
+//  setModal(true);
+
     d->imageModel     = new KipiImageModel(this);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
 
@@ -255,7 +251,7 @@ GPSSyncDialog::GPSSyncDialog(Interface* const interface, QWidget* const parent)
     d->stackedWidget = new QStackedWidget();
     d->searchWidget  = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
 
-    d->imageModel->setKipiInterface(d->interface);
+    d->imageModel->setKipiInterface(iface());
     KipiImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
     d->mapModelHelper     = new GPSSyncKGeoMapModelHelper(d->imageModel, d->selectionModel, this);
@@ -346,7 +342,7 @@ GPSSyncDialog::GPSSyncDialog(Interface* const interface, QWidget* const parent)
     d->mapSplitter->addWidget(mapVBox);
     d->VSplitter->addWidget(d->mapSplitter);
 
-    d->treeView      = new KipiImageList(d->interface, this);
+    d->treeView      = new KipiImageList(iface(), this);
     d->treeView->setModelAndSelectionModel(d->imageModel, d->selectionModel);
     d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
     d->treeView->setDragEnabled(true);
@@ -390,7 +386,7 @@ GPSSyncDialog::GPSSyncDialog(Interface* const interface, QWidget* const parent)
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
     d->stackedWidget->addWidget(d->undoView);
 
-    d->rgWidget = new GPSReverseGeocodingWidget(d->interface, d->imageModel, d->selectionModel, d->stackedWidget);
+    d->rgWidget = new GPSReverseGeocodingWidget(iface(), d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
 
     d->stackedWidget->addWidget(d->searchWidget);
@@ -416,7 +412,7 @@ GPSSyncDialog::GPSSyncDialog(Interface* const interface, QWidget* const parent)
                      ki18n("Developer"),
                            "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("gpssync");
+    about->setHandbookEntry("gpssync");
     setAboutData(about, help);
 
     // ---------------------------------------------------------------
@@ -574,7 +570,7 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
 {
     for ( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
     {
-        KipiImageItem* const newItem = new KipiImageItem(d->interface, *it);
+        KipiImageItem* const newItem = new KipiImageItem(iface(), *it);
         newItem->loadImageData(true, false);
         d->imageModel->addItem(newItem);
     }

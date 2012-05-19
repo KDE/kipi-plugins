@@ -131,21 +131,13 @@ Plugin_FlickrExport::~Plugin_FlickrExport()
 
 void Plugin_FlickrExport::slotActivateFlickr()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(interface, tmp, kapp->activeWindow(), "Flickr");
+        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr");
     }
     else
     {
@@ -162,21 +154,13 @@ void Plugin_FlickrExport::slotActivateFlickr()
 
 void Plugin_FlickrExport::slotActivate23()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(interface, tmp, kapp->activeWindow(), "23");
+        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23");
     }
     else
     {
@@ -193,21 +177,13 @@ void Plugin_FlickrExport::slotActivate23()
 
 void Plugin_FlickrExport::slotActivateZooomr()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(interface, tmp, kapp->activeWindow(), "Zooomr");
+        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr");
     }
     else
     {

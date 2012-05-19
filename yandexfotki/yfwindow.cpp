@@ -108,11 +108,9 @@ namespace KIPIYandexFotkiPlugin
  */
 const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 
-YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
-                                     bool import, QWidget* const parent)
+YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
-    m_interface = interface;
     m_import    = import;
 
     KStandardDirs dir;
@@ -198,7 +196,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     uploadBox->setWhatsThis(
         i18n("This is the location where Yandex.Fotki images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget = interface->uploadWidget(uploadBox);
+    m_uploadWidget = iface()->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
@@ -208,7 +206,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
         i18n("These are options that will be applied to images before upload."));
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
-    m_resizeCheck     = new QCheckBox(optionsBox);
+    m_resizeCheck = new QCheckBox(optionsBox);
     m_resizeCheck->setText(i18n("Resize photos before uploading"));
     m_resizeCheck->setChecked(false);
 
@@ -350,7 +348,7 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     about->addAuthor(ki18n( "Roman Tsisyk" ), ki18n("Author"),
                      "roman at tsisyk dot com");
 
-    about->handbookEntry = QString("YandexFotki");
+    about->setHandbookEntry("YandexFotki");
     setAboutData(about);
 
     // -- UI slots -----------------------------------------------------------------------

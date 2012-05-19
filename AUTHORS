@@ -23,6 +23,7 @@ Lukas Krejci         <krejci dot l at centrum dot cz>
 Alexander Potashev   <aspotashev at gmail dot com>
 Lukasz Spas          <lukasz dot spas at gmail dot com>
 Dodon Victor         <dodonvictor at gmail dot com>
+Marius Orcsik        <marius at habarnam dot ro>
 
 CONTRIBUTORS:
 Frederic Coiffier    <fcoiffie at gmail dot com>
@@ -65,12 +66,12 @@ Ipod export             : Seb Ruiz
 Jpeglossless            : Gilles Caulier and Marcel Wiesweg
 MetadataEdit            : Gilles Caulier
 PicasaWeb export        : Jens Muller
-Print images            : Angelo Naselli
+PrintImages             : Angelo Naselli
 Raw converter           : Gilles Caulier and Marcel Wiesweg
 RemoveRedEyes           : Andi Clemens
 Sendimages              : Gilles Caulier
 Smug import/export      : Luka Renko
-Time adjust             : Gilles Caulier
+TimeAdjust              : Gilles Caulier
 Wallpaper               : Laurent Montel
 KIOExport               : Johannes Wienke
 ShwupExport             : Timothee Groleau
@@ -83,6 +84,7 @@ RajceExport             : Lukas Krejci
 VKontakte               : Alexander Potashev
 PhotoLayoutEditor       : Lukasz Spas
 ImageShackExport        : Dodon Victor
+ImgurExport             : Marius Orcsik
 
 PROJECT COORDINATORS:
 Gilles Caulier and Angelo Naselli

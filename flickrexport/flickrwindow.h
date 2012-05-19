@@ -90,8 +90,7 @@ class FlickrWindow : public KPToolDialog
 
 public:
 
-    FlickrWindow(Interface* const interface, const QString& tmpFolder,
-                 QWidget* const parent, const QString& serviceName);
+    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName);
     ~FlickrWindow();
 
     /**
@@ -182,8 +181,6 @@ private:
 
     FlickrWidget*                          m_widget;
     FlickrTalker*                          m_talker;
-
-    Interface*                             m_interface;
 
     FlickrList*                            m_imglst;
 };

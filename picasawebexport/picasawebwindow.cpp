@@ -75,17 +75,15 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpFolder,
-                                 bool import, QWidget* /*parent*/)
+PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget* /*parent*/)
     : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
-    m_interface   = interface;
     m_import      = import;
     m_imagesCount = 0;
     m_imagesTotal = 0;
-    m_widget      = new PicasawebWidget(this, interface, import);
+    m_widget      = new PicasawebWidget(this, iface(), import);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("picasa"));
@@ -149,7 +147,7 @@ PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpF
     about->addAuthor(ki18n( "Jens Mueller" ), ki18n("Developer"),
                      "tschenser at gmx dot de");
 
-    about->handbookEntry = QString("picasawebexport");
+    about->setHandbookEntry("picasawebexport");
     setAboutData(about);
 
     // ------------------------------------------------------------------------
@@ -767,6 +765,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
         bRet = meta.save(fileName);
     }
+    kDebug() << "bRet : " << bRet;
 
     m_widget->m_imgList->processed(m_transferQueue.first().first, (errCode == 0));
 
@@ -855,6 +854,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                 }
                 bRet = meta.save(tmpUrl.toLocalFile());
             }
+            kDebug() << "bRet : " << bRet;
 
             m_transferQueue.pop_front();
             m_imagesCount++;
@@ -935,7 +935,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
     }
 
-    if ((bSkip == true))
+    if (bSkip == true)
     {
         QFile::remove(tmpUrl.toLocalFile());
     }

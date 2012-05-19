@@ -97,8 +97,6 @@ public:
 
     KUrlLabel*             logo;
 
-    Interface*             interface;
-
     PiwigoTalker*          talker;
     Piwigo*                pPiwigo;
 
@@ -223,12 +221,11 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
 // --------------------------------------------------------------------------------------------------------------
 
-PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo)
+PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
     : KPToolDialog(parent), 
       d(new Private(this))
 {
-    d->interface = interface;
-    d->pPiwigo   = pPiwigo;
+    d->pPiwigo = pPiwigo;
 
     setWindowTitle( i18n("Piwigo Export") );
     setButtons(Close | User1 | Help);
@@ -260,7 +257,7 @@ PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Pi
     about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
                      "fcoiffie at gmail dot com");
 
-    about->handbookEntry = QString("piwigoexport");
+    about->setHandbookEntry("piwigoexport");
     setAboutData(about);
 
     // User1 Button : to upload selected photos
@@ -538,7 +535,7 @@ void PiwigoWindow::slotAlbumSelected()
 
 void PiwigoWindow::slotAddPhoto()
 {
-    const KUrl::List urls(d->interface->currentSelection().images());
+    const KUrl::List urls(iface()->currentSelection().images());
 
     if ( urls.isEmpty())
     {

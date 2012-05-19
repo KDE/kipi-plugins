@@ -26,10 +26,20 @@
 namespace KIPITimeAdjustPlugin
 {
 
+/** Container that store all timestamp adjustments.
+ */
 class TimeAdjustSettings
 {
 
 public:
+
+    enum UseDateSource
+    {
+        APPDATE = 0,
+        FILEDATE,
+        METADATADATE,
+        CUSTOMDATE
+    };
 
     enum UseMetaDateType
     {
@@ -66,11 +76,28 @@ public:
         updXMPDate     = false;
         updFileName    = false;
         updFileModDate = false;
+
+        dateSource     = APPDATE;
+        metadataSource = EXIFIPTCXMP;
+        fileDateSource = FILELASTMOD;
     };
 
     ~TimeAdjustSettings()
     {
     };
+
+    /// Check if at least one option is selected
+    bool atLeastOneUpdateToProcess() const
+    {
+        return (updAppDate     ||
+                updFileModDate ||
+                updEXIFModDate ||
+                updEXIFOriDate ||
+                updEXIFDigDate ||
+                updIPTCDate    ||
+                updXMPDate     ||
+                updFileName);
+    }
 
 public:
 
@@ -82,6 +109,51 @@ public:
     bool updXMPDate;
     bool updFileName;
     bool updFileModDate;
+
+    int  dateSource;
+    int  metadataSource;
+    int  fileDateSource;
+};
+
+// -------------------------------------------------------------------
+
+/** Container that hold the time difference for clock photo dialog.
+ */
+class DeltaTime
+{
+
+public:
+
+    DeltaTime()
+    {
+        deltaNegative = false;
+        deltaDays     = 0;
+        deltaHours    = 0;
+        deltaMinutes  = 0;
+        deltaSeconds  = 0;
+    };
+
+    ~DeltaTime()
+    {
+    };
+
+    /// Check if at least one option is selected
+    bool isNull() const
+    {
+        return (deltaDays    == 0 &&
+                deltaHours   == 0 &&
+                deltaMinutes == 0 &&
+                deltaSeconds == 0);
+    }
+
+public:
+
+    bool deltaNegative;
+
+    int  deltaDays;
+    int  deltaHours;
+    int  deltaMinutes;
+    int  deltaSeconds;
 };
 
 }  // namespace KIPITimeAdjustPlugin

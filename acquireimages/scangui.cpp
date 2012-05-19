@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    ScanDialog* dlg = new ScanDialog(0, saneWidget, app.activeWindow(), aboutData);
+    ScanDialog* dlg = new ScanDialog(saneWidget, app.activeWindow(), aboutData);
     app.setTopWidget(dlg);
     dlg->show();
 

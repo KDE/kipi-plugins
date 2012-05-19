@@ -8,6 +8,7 @@
  *               location
  *
  * Copyright (C) 2006-2009 by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,14 +55,9 @@ const QString KioExportWindow::TARGET_URL_PROPERTY  = "targetUrl";
 const QString KioExportWindow::HISTORY_URL_PROPERTY = "historyUrls";
 const QString KioExportWindow::CONFIG_GROUP         = "KioExport";
 
-KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const interface)
-    : KDialog(0), m_interface(interface)
+KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
+    : KPToolDialog(0)
 {
-    if (!interface)
-    {
-        kFatal() << "Interface is empty";
-    }
-
     m_exportWidget = new KioExportWidget(this);
     setMainWidget(m_exportWidget);
 
@@ -90,26 +86,18 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const int
 
     // -- About data and help button ----------------------------------------
 
-    m_about = new KPAboutData(ki18n("Export to remote computer"),
+    KPAboutData* about = new KPAboutData(ki18n("Export to remote computer"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images over network using KIO-Slave"),
                    ki18n("(c) 2009, Johannes Wienke"));
 
-    m_about->addAuthor(ki18n("Johannes Wienke"),
-                       ki18n("Developer and maintainer"),
-                       "languitar at semipol dot de");
+    about->addAuthor(ki18n("Johannes Wienke"),
+                     ki18n("Developer and maintainer"),
+                     "languitar at semipol dot de");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->setHandbookEntry("kioexport");
+    setAboutData(about);
 
     // -- initial sync ------------------------------------------------------
 
@@ -119,12 +107,6 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const int
 
 KioExportWindow::~KioExportWindow()
 {
-    delete m_about;
-}
-
-void KioExportWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
 }
 
 void KioExportWindow::closeEvent(QCloseEvent* e)

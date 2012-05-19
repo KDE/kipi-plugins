@@ -6,7 +6,7 @@
  * Date        : 2007-09-09
  * Description : scanner dialog
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -71,23 +71,18 @@ public:
     ScanDialogPriv()
     {
         saneWidget = 0;
-        interface  = 0;
         saveThread = 0;
     }
 
     SaveImgThread* saveThread;
 
-    Interface*     interface;
-
     KSaneWidget*   saneWidget;
 };
 
-ScanDialog::ScanDialog(Interface* const kinterface, KSaneWidget* const saneWidget,
-                       QWidget* const /*parent*/, ScanDialogAboutData* const about)
+ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/, ScanDialogAboutData* const about)
     : KPToolDialog(0), d(new ScanDialogPriv)
 {
     d->saneWidget = saneWidget;
-    d->interface  = kinterface;
     d->saveThread = new SaveImgThread(this);
 
     setButtons(Help|Close);
@@ -103,11 +98,11 @@ ScanDialog::ScanDialog(Interface* const kinterface, KSaneWidget* const saneWidge
 
     // ------------------------------------------------------------------------
 
-    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&,int,int,int,int)),
-            this, SLOT(slotSaveImage(QByteArray&,int,int,int,int)));
+    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
+            this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
 
-    connect(d->saveThread, SIGNAL(signalComplete(KUrl,bool)),
-            this, SLOT(slotThreadDone(KUrl,bool)));
+    connect(d->saveThread, SIGNAL(signalComplete(KUrl, bool)),
+            this, SLOT(slotThreadDone(KUrl, bool)));
 }
 
 ScanDialog::~ScanDialog()
@@ -155,8 +150,8 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     QString format("PNG");
     QString place = QDir::homePath();
 
-    if (d->interface)
-        place = d->interface->currentAlbum().uploadPath().path();
+    if (iface())
+        place = iface()->currentAlbum().uploadPath().path();
 
     QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(place, QString(), 0);
 
@@ -168,9 +163,10 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     imageFileSaveDialog->setMimeFilter(writableMimetypes, defaultMimeType);
 
     // Start dialog and check if canceled.
-    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted ) {
-       delete imageFileSaveDialog;
-       return;
+    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted )
+    {
+        delete imageFileSaveDialog;
+        return;
     }
 
     KUrl newURL = imageFileSaveDialog->selectedUrl();
@@ -254,8 +250,8 @@ void ScanDialog::slotThreadDone(const KUrl& url, bool success)
     if (!success)
         KMessageBox::error(0, i18n("Cannot save \"%1\" file", url.fileName()));
 
-    if (d->interface)
-        d->interface->refreshImages( KUrl::List(url) );
+    if (iface())
+        iface()->refreshImages( KUrl::List(url) );
 
     unsetCursor();
     setEnabled(true);

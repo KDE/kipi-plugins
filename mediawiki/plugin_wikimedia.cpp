@@ -101,20 +101,13 @@ Plugin_WikiMedia::~Plugin_WikiMedia()
 
 void Plugin_WikiMedia::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-mediawiki-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new WMWindow(interface, tmp, kapp->activeWindow());
+        m_dlgExport = new WMWindow(tmp, kapp->activeWindow());
     }
     else
     {
@@ -125,7 +118,7 @@ void Plugin_WikiMedia::slotExport()
     }
 }
 
-Category Plugin_WikiMedia::category( KAction* action ) const
+Category Plugin_WikiMedia::category(KAction* action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

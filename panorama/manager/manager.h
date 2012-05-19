@@ -69,7 +69,7 @@ class Manager : public QObject
 
 public:
 
-    Manager(QObject* parent=0);
+    Manager(QObject* const parent=0);
     ~Manager();
 
     bool checkBinaries();
@@ -81,10 +81,7 @@ public:
     void setFileFormatTIFF();
     PanoramaFileType format() const;
 
-    void setAbout(PanoramaAboutData* about);
-    PanoramaAboutData* about() const;
-
-    void setIface(Interface* iface);
+    void setIface(Interface* const iface);
     Interface* iface() const;
 
     void setItemsList(const KUrl::List& urls);

@@ -51,8 +51,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RecompressImagesDialog::RecompressImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget* parent)
-    : BatchProcessImagesDialog(urlList, interface, i18n("Batch Recompress Images"), parent)
+RecompressImagesDialog::RecompressImagesDialog(const KUrl::List& urlList, QWidget* parent)
+    : BatchProcessImagesDialog(urlList, i18n("Batch Recompress Images"), parent)
 {
     m_nbItem = m_selectedImageFiles.count();
 

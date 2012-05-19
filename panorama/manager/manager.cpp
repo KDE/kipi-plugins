@@ -34,11 +34,8 @@
 
 // Local includes
 
-#include "aboutdata.h"
 #include "importwizarddlg.h"
-
 #include "actionthread.h"
-
 #include "autooptimiserbinary.h"
 #include "cpcleanbinary.h"
 #include "cpfindbinary.h"
@@ -54,7 +51,6 @@ struct Manager::ManagerPriv
 {
     ManagerPriv()
     : iface(0),
-      about(0),
       thread(0),
       wizard(0),
       config("kipirc"),
@@ -88,8 +84,6 @@ struct Manager::ManagerPriv
 
     Interface*                     iface;
 
-    PanoramaAboutData*             about;
-
     ActionThread*                  thread;
 
     AutoOptimiserBinary            autoOptimiserBinary;
@@ -108,8 +102,8 @@ private:
     KConfigGroup group;
 };
 
-Manager::Manager(QObject* parent)
-       : QObject(parent), d(new ManagerPriv)
+Manager::Manager(QObject* const parent)
+    : QObject(parent), d(new ManagerPriv)
 {
     d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
@@ -117,8 +111,6 @@ Manager::Manager(QObject* parent)
 
 Manager::~Manager()
 {
-    if (d->about)
-        delete d->about;
     delete d->thread;
     delete d->wizard;
     delete d;
@@ -158,16 +150,6 @@ void Manager::setFileFormatTIFF()
 PanoramaFileType Manager::format() const
 {
     return d->fileType;
-}
-
-void Manager::setAbout(PanoramaAboutData* about)
-{
-    d->about = about;
-}
-
-PanoramaAboutData* Manager::about() const
-{
-    return d->about;
 }
 
 AutoOptimiserBinary& Manager::autoOptimiserBinary() const
@@ -225,7 +207,7 @@ KUrl& Manager::panoUrl() const
     return d->panoUrl;
 }
 
-void Manager::setIface(Interface* iface)
+void Manager::setIface(Interface* const iface)
 {
     d->iface = iface;
 }
@@ -308,7 +290,6 @@ void Manager::run()
 void Manager::startWizard()
 {
     d->wizard = new ImportWizardDlg(this);
-
     d->wizard->show();
 }
 

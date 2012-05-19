@@ -33,17 +33,11 @@
 
 class QWidget;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KSaneIface
 {
     class KSaneWidget;
 }
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 using namespace KSaneIface;
 
@@ -58,8 +52,7 @@ class ScanDialog : public KPToolDialog
 
 public:
 
-    ScanDialog(Interface* const interface, KSaneWidget* const saneWidget,
-               QWidget* const parent, ScanDialogAboutData* const about);
+    ScanDialog(KSaneWidget* const saneWidget, QWidget* const parent, ScanDialogAboutData* const about);
     ~ScanDialog();
 
 protected:

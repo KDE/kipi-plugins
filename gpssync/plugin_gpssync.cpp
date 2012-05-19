@@ -99,7 +99,7 @@ void Plugin_GPSSync::slotGPSSync()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    GPSSyncDialog* dialog = new GPSSyncDialog(m_interface, kapp->activeWindow());
+    GPSSyncDialog* dialog = new GPSSyncDialog(kapp->activeWindow());
 
     dialog->setImages( images.images() );
     dialog->show();

@@ -87,26 +87,17 @@ namespace KIPIIpodExportPlugin
 
 UploadDialog* UploadDialog::s_instance = 0;
 
-UploadDialog::UploadDialog
-(
-#if KIPI_PLUGIN
-    Interface* const interface,
-#endif
-    const QString& caption, QWidget* const /*parent*/ )
-    : KPToolDialog(0)
-      , m_transferring( false )
-#if KIPI_PLUGIN
-      , m_interface( interface )
-#endif
-      , m_itdb( 0 )
-      , m_ipodInfo( 0 )
-      , m_ipodHeader( 0 )
-      , m_mountPoint( QString() )
-      , m_deviceNode( QString() )
-      , m_ipodAlbumList( 0 )
+UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
+    : KPToolDialog(0),
+      m_transferring(false),
+      m_itdb(0),
+      m_ipodInfo(0),
+      m_ipodHeader(0),
+      m_mountPoint(QString()),
+      m_deviceNode(QString()),
+      m_ipodAlbumList(0)
 {
     s_instance   = this;
-
     QWidget* box = new QWidget();
     setMainWidget( box );
     setCaption( caption );
@@ -129,7 +120,7 @@ UploadDialog::UploadDialog
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
-    about->handbookEntry = QString("ipodexport");
+    about->setHandbookEntry("ipodexport");
     setAboutData(about);
 
     // ------------------------------------------------------------
@@ -298,7 +289,7 @@ void UploadDialog::loadImagesFromCurrentSelection()
 {
 #if KIPI_PLUGIN
     /// add selected items to the ImageList
-    ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = iface()->currentSelection();
 
     if( images.isValid() )
     {
@@ -494,7 +485,7 @@ void UploadDialog::ipodItemSelected(QTreeWidgetItem* item)
 //     m_ipodPreview->setPixmap( pix );
 
     // memory release
-    gdk_pixbuf_unref ( gpixbuf );
+    g_object_unref ( gpixbuf );
 }
 
 void UploadDialog::imageSelected(QTreeWidgetItem* item)
@@ -591,7 +582,7 @@ void UploadDialog::createIpodAlbum()
     QString helper;
 
 #if KIPI_PLUGIN
-    ImageCollection album = m_interface->currentAlbum();
+    ImageCollection album = iface()->currentAlbum();
     if( album.isValid() )
         helper = album.name();
 #endif

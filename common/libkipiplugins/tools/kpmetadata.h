@@ -65,7 +65,6 @@ namespace KIPI
 }
 
 using namespace KIPI;
-
 using namespace KExiv2Iface;
 
 namespace KIPIPlugins
@@ -134,7 +133,14 @@ public:
 
 public:
 
+    /** Move XMP sidecar file of source file src to destination dest.
+     *  If src do not has an XMP sidecar, nothing is done and true is returned.
+     *  If src has an XMP sidecar file, if moving is done succesfully, true is returned, else false.
+     */
     static bool moveSidecar(const KUrl& src, const KUrl& dest);
+
+    /** Return true if url is a RAW file. File-name extension is used to check type mime.
+     */
     static bool isRawFile(const KUrl& url);
 
 private:

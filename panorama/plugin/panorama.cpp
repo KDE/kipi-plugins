@@ -72,7 +72,6 @@ int main(int argc, char* argv[])
     Manager mngr;
 
     mngr.setItemsList(urlList);
-    mngr.setAbout(aboutData);
     mngr.setIface(0);
     mngr.run();
 

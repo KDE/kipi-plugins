@@ -39,21 +39,7 @@
 
 // OpenCV includes
 
-// To avoid broken compilation with OpenCV >= 2.0
-#undef HAVE_CONFIG_H
-
-#ifdef WIN32
-#include <cxcore.h>
-#else
-#include <opencv/cxcore.h>
-#endif // WIN32
-
-#ifdef MATRIXCV_ACTIU
-#include <opencv/matrixCV.h>
-#else
-//! Vector de doubles
-typedef std::vector<double> double_stl_vector;
-#endif // MATRIXCV_ACTIU
+#include "libopencv.h"
 
 // Local includes
 

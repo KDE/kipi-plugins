@@ -110,7 +110,7 @@ class GPSSyncDialog : public KPToolDialog
 
 public:
 
-    GPSSyncDialog(Interface* const interface, QWidget* const parent);
+    GPSSyncDialog(QWidget* const parent);
     ~GPSSyncDialog();
 
     void setImages(const KUrl::List& images);

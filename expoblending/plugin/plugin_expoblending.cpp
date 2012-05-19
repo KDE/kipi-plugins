@@ -107,7 +107,6 @@ void Plugin_ExpoBlending::slotActivate()
     if (!m_manager)
     {
         m_manager = new Manager(this);
-        m_manager->setAbout(new ExpoBlendingAboutData());
     }
 
     m_manager->checkBinaries();

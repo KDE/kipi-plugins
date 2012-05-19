@@ -28,11 +28,6 @@
 
 #include "kptooldialog.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
 using namespace KIPI;
 using namespace KIPIPlugins;
 
@@ -56,7 +51,7 @@ public:
 
 public:
 
-    RemoveRedEyesWindow(Interface* const interface);
+    RemoveRedEyesWindow();
     ~RemoveRedEyesWindow();
 
 Q_SIGNALS:

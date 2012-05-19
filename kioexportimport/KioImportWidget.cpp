@@ -45,18 +45,18 @@
 namespace KIPIKioExportPlugin
 {
 
-KioImportWidget::KioImportWidget(QWidget* parent, KIPI::Interface* interface)
-               : QWidget(parent)
+KioImportWidget::KioImportWidget(QWidget* const parent, Interface* const interface)
+    : QWidget(parent)
 {
     // setup image list
-    m_imageList = new KIPIPlugins::KPImagesList(this);
+    m_imageList = new KPImagesList(this);
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n(
                     "This is the list of images to import "
                     "into the current album."));
 
     // setup upload widget
-    m_uploadWidget = interface->uploadWidget(this);
+    m_uploadWidget      = interface->uploadWidget(this);
 
     // layout dialog
     QVBoxLayout* layout = new QVBoxLayout(this);
@@ -71,12 +71,12 @@ KioImportWidget::~KioImportWidget()
 {
 }
 
-KIPIPlugins::KPImagesList* KioImportWidget::imagesList() const
+KPImagesList* KioImportWidget::imagesList() const
 {
     return m_imageList;
 }
 
-KIPI::UploadWidget* KioImportWidget::uploadWidget() const
+UploadWidget* KioImportWidget::uploadWidget() const
 {
     return m_uploadWidget;
 }

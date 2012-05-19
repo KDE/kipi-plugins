@@ -125,7 +125,6 @@ struct Wizard::Private
     CropPage*                m_cropPage;
 
     ImageCollectionSelector* m_collectionSelector;
-    Interface*               m_interface;
 
     // Page Size in mm
     QSizeF                   m_pageSize;
@@ -146,10 +145,9 @@ struct Wizard::Private
     KPImagesList*            m_imagesFilesListBox;
 };
 
-Wizard::Wizard(QWidget* const parent, Interface* const interface)
+Wizard::Wizard(QWidget* const parent)
     : KPWizardDialog(parent), d(new Private)
 {
-    d->m_interface    = interface;
     //d->m_printDialog = NULL;
     d->m_pDlg        = NULL;
     d->m_printer     = NULL;
@@ -175,7 +173,7 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     about->addAuthor(ki18n("Andreas Trink"), ki18n("Contributor"),
                      "atrink@nociaro.org");
 
-    about->handbookEntry = QString("printwizard");
+    about->setHandbookEntry("printwizard");
     setAboutData(about);
 
     //d->m_photoPage  = new InfoPage ( this, i18n ( infoPageName ) );

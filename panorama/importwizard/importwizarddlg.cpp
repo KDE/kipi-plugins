@@ -46,7 +46,6 @@
 #include "actionthread.h"
 #include "aboutdata.h"
 #include "cpfindbinary.h"
-
 #include "intropage.h"
 #include "itemspage.h"
 #include "preprocessingpage.h"
@@ -94,7 +93,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     d->previewPage       = new PreviewPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
 
-    setAboutData(new KPAboutData(*d->mngr->about()));
+    setAboutData(new PanoramaAboutData());
 
     // ---------------------------------------------------------------
 

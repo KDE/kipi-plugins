@@ -60,7 +60,7 @@ public:
     KPPreviewManager(QWidget* const parent);
     ~KPPreviewManager();
 
-    void load(const QString& file, bool fit = true);
+    bool load(const QString& file, bool fit = true);
     void setImage(const QImage& img, bool fit = true);
     void setText(const QString& text, const QColor& color=Qt::white);
     void setBusy(bool b, const QString& text=QString());

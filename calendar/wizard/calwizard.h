@@ -65,10 +65,8 @@ class CalWizard : public KPWizardDialog
 
 public:
 
-    explicit CalWizard(Interface* const interface, QWidget* const parent=0);
+    explicit CalWizard(QWidget* const parent=0);
     virtual ~CalWizard();
-    
-    Interface* interface() const;
 
 private:
 
@@ -99,8 +97,6 @@ private:
     CalPrinter*               printThread_;
 
     QMap<int, KUrl>           months_;
-
-    Interface*                interface_;
 };
 
 }  // NameSpace KIPICalendarPlugin

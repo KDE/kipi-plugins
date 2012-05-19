@@ -57,11 +57,10 @@ class MetadataEditDialog : public KPToolDialog
 
 public:
 
-    MetadataEditDialog(QWidget* const parent, const KUrl::List& urls, Interface* const iface);
+    MetadataEditDialog(QWidget* const parent, const KUrl::List& urls);
     ~MetadataEditDialog();
 
     KUrl::List::iterator currentItem() const;
-    Interface* iface() const;
 
 public Q_SLOTS:
 

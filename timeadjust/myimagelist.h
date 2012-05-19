@@ -60,7 +60,7 @@ public:
 
     enum ProcessingStatus
     {
-        NO_ERROR        = 1 << 0,
+        NOPROCESS_ERROR = 1 << 0,
         META_TIME_ERROR = 1 << 1,
         FILE_TIME_ERROR = 1 << 2,
         FILE_NAME_ERROR = 1 << 3

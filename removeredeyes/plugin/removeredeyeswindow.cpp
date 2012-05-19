@@ -92,8 +92,7 @@ public:
         unprocessedSettingsBox(0),
         storageSettingsBox(0),
         locator(0),
-        saveMethod(0),
-        interface(0)
+        saveMethod(0)
     {}
 
     static const QString      configGroupName;
@@ -138,8 +137,6 @@ public:
 
     Locator*                  locator;
     SaveMethod*               saveMethod;
-
-    Interface*                interface;
 };
 const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configGroupName("RemoveRedEyes Settings");
 const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configStorageModeEntry("Storage Mode");
@@ -152,7 +149,7 @@ const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configLocatorDefault
 
 // --------------------------------------------------------
 
-RemoveRedEyesWindow::RemoveRedEyesWindow(Interface* const interface)
+RemoveRedEyesWindow::RemoveRedEyesWindow()
     : KPToolDialog(0), d(new RemoveRedEyesWindowPriv)
 {
     setWindowTitle(i18n("Automatic Red-Eye Removal"));
@@ -160,7 +157,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(Interface* const interface)
     setDefaultButton(Close);
     setModal(false);
 
-    d->interface     = interface;
     KPHostSettings hSettings;
     d->thread        = new WorkerThread(this, hSettings.metadataSettings().updateFileTimeStamp);
     d->runtype       = WorkerThread::Testrun;
@@ -191,7 +187,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(Interface* const interface)
     about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                      "andi dot clemens at googlemail dot com");
 
-    about->handbookEntry = QString("removeredeyes");
+    about->setHandbookEntry("removeredeyes");
     setAboutData(about);
 
     // ----------------------------------------------------------
@@ -313,7 +309,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(Interface* const interface)
 
     // ----------------------------------------------------------
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = iface()->currentSelection();
 
     if (images.isValid())
     {

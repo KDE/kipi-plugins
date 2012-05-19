@@ -32,19 +32,15 @@
 #ifndef BLOB_H
 #define BLOB_H
 
-// To avoid broken compilation with OpenCV >= 2.0
-#undef HAVE_CONFIG_H
+// C++ includes
 
-#ifdef WIN32
-#include <cxcore.h>
-#else
-#include <opencv/cxcore.h>
-#endif // WIN32
-
-#include "BlobLibraryConfiguration.h"
 #include <functional>
 #include <vector>
 #include <algorithm>
+
+// OpenCV includes
+
+#include "libopencv.h"
 
 #ifdef BLOB_OBJECT_FACTORY
 //! Object factory pattern implementation

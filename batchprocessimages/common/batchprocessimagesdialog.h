@@ -69,8 +69,7 @@ public:
     // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
     // children dialog class.
 
-    BatchProcessImagesDialog(const KUrl::List& urlList, Interface* const interface,
-                             const QString& caption, QWidget* const parent = 0);
+    BatchProcessImagesDialog(const KUrl::List& urlList, const QString& caption, QWidget* const parent = 0);
     ~BatchProcessImagesDialog();
 
 protected:
@@ -104,8 +103,6 @@ protected:
     QString                  m_tmpFolder;
     QString                  m_previewOutput;
     KUrl::List               m_selectedImageFiles;
-
-    Interface*               m_interface;
 
     // --------------------------------------------------------------------------------------------------------
     // Standards functions

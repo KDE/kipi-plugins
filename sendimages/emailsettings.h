@@ -151,6 +151,7 @@ public:
                 return (*it).emailUrl;
             }
         }
+        return KUrl();
     };
 
     qint64 attachementLimitInBytes() const

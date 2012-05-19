@@ -145,7 +145,7 @@ void VkontakteAlbumDialog::slotButtonClicked(int button)
             m_album->setCommentPrivacy(Vkontakte::AlbumInfo::PRIVACY_PRIVATE);
     }
 
-    return slotButtonClicked(button);
+    return KDialog::slotButtonClicked(button);
 }
 
 } // namespace KIPIVkontaktePlugin

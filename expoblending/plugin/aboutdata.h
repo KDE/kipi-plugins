@@ -27,10 +27,12 @@
 
 #include "kpaboutdata.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIExpoBlendingPlugin
 {
 
-class ExpoBlendingAboutData : public KIPIPlugins::KPAboutData
+class ExpoBlendingAboutData : public KPAboutData
 {
 
 public:
@@ -49,7 +51,7 @@ public:
                    ki18n("Developer"),
                    "languitar at semipol dot de");
 
-         handbookEntry = QString("expoblending");
+         setHandbookEntry("expoblending");
     }
 
     ~ExpoBlendingAboutData()

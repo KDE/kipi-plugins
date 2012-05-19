@@ -50,6 +50,7 @@
 
 // Local includes
 
+#include "aboutdata.h"
 #include "kpoutputdialog.h"
 #include "alignbinary.h"
 #include "manager.h"
@@ -219,7 +220,7 @@ void PreProcessingPage::slotShowDetails()
                        i18n("Pre-Processing Messages"),
                        d->output);
 
-    dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("expoblending"));
+    dlg.setAboutData(new ExpoBlendingAboutData());
     dlg.exec();
 }
 

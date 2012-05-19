@@ -1188,6 +1188,8 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
         errCode = parseErrorResponse(docElem, errMsg);
     }
 
+    kDebug() << "Error Code : " << errCode;
+
     // consider we are logged out in any case
     m_accessToken.clear();
     m_sessionExpires = 0;

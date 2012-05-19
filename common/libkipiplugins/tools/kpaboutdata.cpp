@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kpaboutdata.h"
+#include "kpaboutdata.moc"
 
 // KDE includes
 
@@ -29,6 +29,13 @@
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
+#include <kaction.h>
+#include <khelpmenu.h>
+#include <kicon.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -42,7 +49,8 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          enum  LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
-    : KAboutData(QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
+    : QObject(),
+      KAboutData(QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
                  QByteArray(),
                  pluginName,
                  kipipluginsVersion().toAscii(),
@@ -77,9 +85,38 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
 }
 
 KPAboutData::KPAboutData(const KPAboutData& other)
-    : KAboutData(other)
+    : QObject((QObject*)(&other)), KAboutData(other)
 {
-    handbookEntry = other.handbookEntry;
+     setHandbookEntry(other.m_handbookEntry);
+}
+
+KPAboutData::~KPAboutData()
+{
+}
+
+void KPAboutData::setHandbookEntry(const QString& entry)
+{
+    m_handbookEntry = entry;
+}
+
+void KPAboutData::setHelpButton(KPushButton* const help)
+{
+    if (!help) return;
+
+    KHelpMenu* helpMenu = new KHelpMenu(help, this, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), helpMenu);
+
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    help->setMenu(helpMenu->menu());
+}
+
+void KPAboutData::slotHelp()
+{
+    KToolInvocation::invokeHelp(m_handbookEntry, "kipi-plugins");
 }
 
 }   // namespace KIPIPlugins

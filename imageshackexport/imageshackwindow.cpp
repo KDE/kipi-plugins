@@ -72,13 +72,11 @@
 namespace KIPIImageshackExportPlugin
 {
 
-ImageshackWindow::ImageshackWindow(Interface* const interface, QWidget* const parent, Imageshack* const imghack)
+ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imghack)
     : KPToolDialog(parent)
 {
-    m_interface  = interface;
     m_imageshack = imghack;
-
-    m_widget = new ImageshackWidget(this, imghack);
+    m_widget     = new ImageshackWidget(this, imghack);
     m_widget->setMinimumSize(700, 500);
     setMainWidget(m_widget);
     setWindowTitle(i18n("Imageshack Export"));
@@ -109,7 +107,7 @@ ImageshackWindow::ImageshackWindow(Interface* const interface, QWidget* const pa
     about->addAuthor(ki18n("Dodon Victor"), ki18n("Author"),
                      "dodonvictor at gmail dot com");
 
-    about->handbookEntry = QString("imageshackexport");
+    about->setHandbookEntry("imageshackexport");
     setAboutData(about);
 
     // -----------------------------------------------------------

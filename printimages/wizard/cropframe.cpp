@@ -41,14 +41,13 @@
 namespace KIPIPrintImagesPlugin
 {
 
-CropFrame::CropFrame(QWidget* parent=0)
+CropFrame::CropFrame(QWidget* const parent)
     : QWidget(parent)
 {
     m_mouseDown = false;
     m_drawRec   = true;
     m_pixmap    = 0;
 }
-
 
 CropFrame::~CropFrame()
 {

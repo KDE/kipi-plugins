@@ -83,19 +83,16 @@ public:
 
     KTabWidget*          tabWidget;
 
-    Interface*           interface;
-
     EXIFEditWidget*      tabExif;
     IPTCEditWidget*      tabIptc;
     XMPEditWidget*       tabXmp;
 };
 
-MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& urls, Interface* const iface)
+MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& urls)
     : KPToolDialog(parent), d(new MetadataEditDialogPrivate)
 {
-    d->urls      = urls;
-    d->interface = iface;
-    d->currItem  = d->urls.begin();
+    d->urls     = urls;
+    d->currItem = d->urls.begin();
 
     setCaption(i18n("Metadata edit dialog"));
     d->tabWidget = new KTabWidget(this);
@@ -167,7 +164,7 @@ MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& 
     about->addAuthor(ki18n("Victor Dodon"), ki18n("Developer"),
                      "victor dot dodon at cti dot pub dot ro");
 
-    about->handbookEntry = QString("metadataeditor");
+    about->setHandbookEntry("metadataeditor");
     setAboutData(about);
 
     readSettings();
@@ -182,11 +179,6 @@ MetadataEditDialog::~MetadataEditDialog()
 KUrl::List::iterator MetadataEditDialog::currentItem() const
 {
     return d->currItem;
-}
-
-Interface* MetadataEditDialog::iface() const
-{
-    return d->interface;
 }
 
 void MetadataEditDialog::slotModified()
@@ -230,7 +222,7 @@ void MetadataEditDialog::slotApply()
     d->tabIptc->apply();
     d->tabXmp->apply();
     slotItemChanged();
-    d->interface->refreshImages(*d->currItem);
+    iface()->refreshImages(*d->currItem);
 }
 
 void MetadataEditDialog::slotNext()

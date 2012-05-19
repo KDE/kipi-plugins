@@ -40,11 +40,10 @@
 namespace KIPIRajceExportPlugin
 {
 
-RajceWindow::RajceWindow(Interface* const interface, const QString& tmpFolder,
-                         QWidget* const /*parent*/, Qt::WFlags /*flags*/)
-    : KPToolDialog(0), m_interface(interface)
+RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt::WFlags /*flags*/)
+    : KPToolDialog(0)
 {
-    m_widget = new RajceWidget(interface, tmpFolder, this);
+    m_widget = new RajceWidget(iface(), tmpFolder, this);
     m_widget->readSettings();
 
     setMainWidget(m_widget);
@@ -79,7 +78,7 @@ RajceWindow::RajceWindow(Interface* const interface, const QString& tmpFolder,
     about->addAuthor(ki18n( "Lukas Krejci" ), ki18n("Author and maintainer"),
                      "metlosh at gmail dot com");
 
-    about->handbookEntry = QString("rajceexport");
+    about->setHandbookEntry("rajceexport");
     setAboutData(about);
 
     button(User1)->setEnabled(false);

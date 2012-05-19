@@ -77,12 +77,7 @@ class UploadDialog : public KPToolDialog
 
 public:
 
-    UploadDialog(
-#if KIPI_PLUGIN
-                 Interface* const interface,
-#endif
-                 const QString& caption, QWidget* const parent=0 );
-
+    UploadDialog(const QString& caption, QWidget* const parent=0);
     ~UploadDialog();
 
     QString ipodModel()  const;
@@ -139,10 +134,6 @@ private:
 private:
 
     bool                 m_transferring;
-
-#if KIPI_PLUGIN
-    Interface*           m_interface;
-#endif
 
     Itdb_PhotoDB*        m_itdb;
     Itdb_IpodInfo*       m_ipodInfo;

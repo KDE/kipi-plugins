@@ -55,7 +55,7 @@ public:
                    ki18n("Developer"),
                    "anaselli at linux dot it");
 
-         handbookEntry = QString("acquireimages");
+         setHandbookEntry("acquireimages");
     }
 
     ~ScanDialogAboutData()

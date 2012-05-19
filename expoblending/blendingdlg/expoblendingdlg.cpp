@@ -76,6 +76,7 @@ extern "C"
 
 // Local includes
 
+#include "aboutdata.h"
 #include "manager.h"
 #include "enfusebinary.h"
 #include "enfusesettings.h"
@@ -155,12 +156,12 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     setButtonToolTip(Close, i18n("Exit this tool"));
     setModal(false);
-    setAboutData(new KPAboutData(*d->mngr->about()));
+    setAboutData(new ExpoBlendingAboutData());
 
     // ---------------------------------------------------------------
 
-    QWidget *page     = new QWidget(this);
-    QGridLayout *grid = new QGridLayout(page);
+    QWidget* page     = new QWidget(this);
+    QGridLayout* grid = new QGridLayout(page);
     setMainWidget(page);
 
     d->previewWidget  = new KPPreviewManager(page);
@@ -169,7 +170,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     // ---------------------------------------------------------------
 
     QScrollArea* sv      = new QScrollArea(page);
-    KVBox *panel         = new KVBox(sv->viewport());
+    KVBox* panel         = new KVBox(sv->viewport());
     panel->setAutoFillBackground(false);
     sv->setWidget(panel);
     sv->setWidgetResizable(true);
@@ -284,7 +285,7 @@ void ExpoBlendingDlg::slotPreviewButtonClicked()
                        i18n("Enfuse Processing Messages"),
                        d->output);
 
-    dlg.setAboutData(d->mngr->about(), QString("expoblending"));
+    dlg.setAboutData(new ExpoBlendingAboutData());
     dlg.exec();
 }
 

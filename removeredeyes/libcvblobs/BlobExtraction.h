@@ -27,14 +27,9 @@
 #ifndef BLOBEXTRACTION_H
 #define BLOBEXTRACTION_H
 
-// To avoid broken compilation with OpenCV >= 2.0
-#undef HAVE_CONFIG_H
+// OpenCV includes
 
-#ifdef WIN32
-#include <cv.h>
-#else
-#include <opencv/cv.h>
-#endif
+#include "libopencv.h"
 
 // Local includes
 

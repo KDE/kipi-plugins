@@ -68,7 +68,7 @@ public:
                       const QByteArray& iccProfile,
                       const KPMetadata& metadata);
 
-    void setCancel(bool* cancel);
+    void setCancel(bool* const cancel);
     bool cancel() const;
 
     bool write2JPEG(const QString& destPath);

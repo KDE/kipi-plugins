@@ -101,20 +101,11 @@ void Plugin_Vkontakte::slotImport()
 
 void Plugin_Vkontakte::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
-
     if (!m_dlgExport)
     {
         // This object will live forever, we will reuse it on future accesses
         // to the plugin.
-        m_dlgExport = new VkontakteWindow(interface,
-                false, kapp->activeWindow());
+        m_dlgExport = new VkontakteWindow(false, kapp->activeWindow());
     }
     else
     {
@@ -139,4 +130,3 @@ Category Plugin_Vkontakte::category(KAction* action) const
 }
 
 } // namespace KIPIVkontaktePlugin
-

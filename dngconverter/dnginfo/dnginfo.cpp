@@ -97,7 +97,7 @@ int main(int argc, char** argv)
         negative->PostParse(host, stream, info);
 
         QString originalFileName(negative->OriginalRawFileName().Get());
-        dng_fingerprint originalDigest = negative->OriginalRawFileDigest();
+//      dng_fingerprint originalDigest = negative->OriginalRawFileDigest();
         quint32 originalDataLength     = negative->OriginalRawFileDataLength();
         const void* originalData       = negative->OriginalRawFileData();
 

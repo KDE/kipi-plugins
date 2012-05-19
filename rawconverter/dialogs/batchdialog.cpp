@@ -192,7 +192,7 @@ BatchDialog::BatchDialog()
                      ki18n("Developer"),
                            "smit dot meh at gmail dot com");
 
-    about->handbookEntry = QString("rawconverter");
+    about->setHandbookEntry("rawconverter");
     setAboutData(about);
 
     // ---------------------------------------------------------------

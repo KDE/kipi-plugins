@@ -116,7 +116,7 @@ int KPWriteImage::bytesDepth() const
     return 3;
 }
 
-void KPWriteImage::setCancel(bool* cancel)
+void KPWriteImage::setCancel(bool* const cancel)
 {
     d->cancel = cancel;
 }

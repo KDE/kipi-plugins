@@ -68,19 +68,11 @@ void Plugin_Calendar::setup(QWidget* widget)
             this, SLOT(slotActivate()));
 
     addAction(m_actionCalendar);
-
-    m_interface = dynamic_cast<Interface*>(parent());
-
-    if (!m_interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
 }
 
 void Plugin_Calendar::slotActivate()
 {
-    CalWizard w(m_interface, kapp->activeWindow());
+    CalWizard w(kapp->activeWindow());
     w.exec();
 }
 

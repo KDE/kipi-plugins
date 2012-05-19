@@ -208,51 +208,44 @@ void Plugin_BatchProcessImages::slotActivate()
 
     if (from == "batch_convert_images")
     {
-        m_ConvertImagesDialog = new ConvertImagesDialog(urlList, interface,
-                kapp->activeWindow());
+        m_ConvertImagesDialog = new ConvertImagesDialog(urlList, kapp->activeWindow());
         m_ConvertImagesDialog->show();
     }
     else if (from == "batch_rename_images")
     {
         QPointer<RenameImagesDialog> dlg;
-        dlg = new RenameImagesDialog(urlList, interface, kapp->activeWindow());
+        dlg = new RenameImagesDialog(urlList, kapp->activeWindow());
         dlg->exec();
         delete dlg;
     }
     else if (from == "batch_border_images")
     {
-        m_BorderImagesDialog = new BorderImagesDialog(urlList, interface,
-                kapp->activeWindow());
+        m_BorderImagesDialog = new BorderImagesDialog(urlList, kapp->activeWindow());
         m_BorderImagesDialog->show();
     }
     else if (from == "batch_color_images")
     {
-        m_ColorImagesDialog = new ColorImagesDialog(urlList, interface,
-                kapp->activeWindow());
+        m_ColorImagesDialog = new ColorImagesDialog(urlList, kapp->activeWindow());
         m_ColorImagesDialog->show();
     }
     else if (from == "batch_filter_images")
     {
-        m_FilterImagesDialog = new FilterImagesDialog(urlList, interface,
-                kapp->activeWindow());
+        m_FilterImagesDialog = new FilterImagesDialog(urlList, kapp->activeWindow());
         m_FilterImagesDialog->show();
     }
     else if (from == "batch_effect_images")
     {
-        m_EffectImagesDialog = new EffectImagesDialog(urlList, interface,
-                kapp->activeWindow());
+        m_EffectImagesDialog = new EffectImagesDialog(urlList, kapp->activeWindow());
         m_EffectImagesDialog->show();
     }
     else if (from == "batch_recompress_images")
     {
-        m_RecompressImagesDialog = new RecompressImagesDialog(urlList,
-                interface, kapp->activeWindow());
+        m_RecompressImagesDialog = new RecompressImagesDialog(urlList, kapp->activeWindow());
         m_RecompressImagesDialog->show();
     }
     else if (from == "batch_resize_images")
     {
-        m_ResizeImagesDialog = new ResizeImagesDialog(urlList, interface,
-                kapp->activeWindow());
+        m_ResizeImagesDialog = new ResizeImagesDialog(urlList, kapp->activeWindow());
         m_ResizeImagesDialog->show();
     }
     else

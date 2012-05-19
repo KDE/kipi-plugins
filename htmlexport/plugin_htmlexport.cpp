@@ -96,8 +96,8 @@ void Plugin_HTMLExport::slotActivate()
     GalleryInfo info;
     info.readConfig();
     QWidget* parent=QApplication::activeWindow();
-    QPointer<Wizard> wizard = new Wizard(parent, &info, interface);
-    if (wizard->exec()==QDialog::Rejected)
+    QPointer<Wizard> wizard = new Wizard(parent, &info);
+    if (wizard->exec() == QDialog::Rejected)
     {
         delete wizard;
         return;

@@ -43,6 +43,9 @@ namespace KIPIPlugins
     class KPImagesList;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIKioExportPlugin
 {
 
@@ -61,7 +64,7 @@ public:
      * @param parent the parent widget
      * @param interface kipi interface to use
      */
-    KioImportWidget(QWidget *parent, KIPI::Interface *interface);
+    KioImportWidget(QWidget* const parent, Interface* const interface);
 
     /**
      * Destructor.
@@ -81,19 +84,19 @@ public:
      *
      * @return pointer to the image list
      */
-    KIPIPlugins::KPImagesList* imagesList() const;
+    KPImagesList* imagesList() const;
 
     /**
      * Returns the upload widget for specifying the target location.
      *
      * @return pointer to the widget
      */
-    KIPI::UploadWidget* uploadWidget() const;
+    UploadWidget* uploadWidget() const;
 
 private:
 
-    KIPIPlugins::KPImagesList* m_imageList;
-    KIPI::UploadWidget*        m_uploadWidget;
+    KPImagesList* m_imageList;
+    UploadWidget* m_uploadWidget;
 };
 
 } // namespace KIPIKioExportPlugin
