@@ -106,7 +106,6 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     connect(d->webService, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
             this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
 
