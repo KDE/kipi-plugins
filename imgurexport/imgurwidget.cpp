@@ -68,9 +68,10 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     d->headerLbl->setFocusPolicy(Qt::NoFocus);
 
     d->textLbl = new QLabel(settingsBox);
-    d->textLbl->setText(i18n("You can retreive the image URLs from the Xmp tags:\n"
-                            "\"Imgur URL\" and \"Imgur Delete URL\". \n"));
+    d->textLbl->setText(i18n("You can retreive the\nimage URLs from the Xmp tags:\n"
+                             "\"Imgur URL\" and \"Imgur Delete URL\". \n"));
     d->textLbl->setFocusPolicy(Qt::NoFocus);
+    d->textLbl->setWordWrap(true);
 
     d->progressBar = new KPProgressWidget(settingsBox);
     d->progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -81,6 +82,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     settingsBoxLayout->addWidget(d->headerLbl);
     settingsBoxLayout->addWidget(d->textLbl);
     settingsBoxLayout->addWidget(d->progressBar);
+    settingsBoxLayout->addStretch(10);
     settingsBoxLayout->setAlignment(d->textLbl, Qt::AlignTop);
     settingsBoxLayout->setAlignment(d->progressBar, Qt::AlignBottom);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
