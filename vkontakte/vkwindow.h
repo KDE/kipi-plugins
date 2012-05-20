@@ -107,6 +107,7 @@ protected Q_SLOTS:
     void slotFinished();
 
     void updateBusyStatus(bool busy);
+    void updateBusyStatusReady();
 
     void authenticated();
     void authCleared();

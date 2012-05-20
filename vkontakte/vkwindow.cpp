@@ -242,6 +242,8 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
      */
     connect(this, SIGNAL(signalUpdateBusyStatus(bool)),
             this, SLOT(updateBusyStatus(bool)));
+    connect(m_vkapi, SIGNAL(authenticated()), // TBD: busy status handling needs improvement
+            this, SLOT(updateBusyStatusReady()));
 
     updateBusyStatus(true);
 }
@@ -301,6 +303,11 @@ void VkontakteWindow::updateBusyStatus(bool busy)
                          KGuiItem(i18n("Cancel"), "dialog-cancel",
                                   i18n("Cancel current operation")));
     }
+}
+
+void VkontakteWindow::updateBusyStatusReady()
+{
+    updateBusyStatus(false);
 }
 
 //---------------------------------------------------------------------------
