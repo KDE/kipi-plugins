@@ -66,7 +66,6 @@
 // libkvkontakte includes
 
 #include <libkvkontakte/uploadphotosjob.h>
-#include <libkvkontakte/getvariablejob.h>
 
 // LibKDcraw includes
 
@@ -87,7 +86,6 @@
 #include "kpprogresswidget.h"
 
 #include "vkapi.h"
-#include "vkalbumdialog.h"
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
 
