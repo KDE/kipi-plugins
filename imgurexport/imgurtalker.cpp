@@ -87,6 +87,9 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
     d->queue               = new KUrl::List();
     ImageCollection images = interface->currentSelection();
 
+    connect(this, SIGNAL(signalUploadDone()),
+            this, SLOT(slotUploadDone()));
+
     if (images.isValid())
     {
         slotAddItems(images.images());
@@ -153,6 +156,18 @@ void ImgurTalker::slotResult(KJob* kjob)
     emit signalBusy(false);
 
     return;
+}
+
+void ImgurTalker::slotUploadDone()
+{
+    if (d->queue->empty())
+    {
+        return;
+    }
+
+    d->queue->removeFirst();
+
+    emit signalQueueChanged();
 }
 
 bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
@@ -332,8 +347,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
             }
 
             emit signalSuccess(success);
-//             kDebug() << "Link:" << success.links.imgur_page;
-//             kDebug() << "Delete:" << success.links.delete_page;
+//            kDebug() << "Link:" << success.links.imgur_page;
+//            kDebug() << "Delete:" << success.links.delete_page;
         }
     }
     else
@@ -404,6 +419,7 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
     d->state = IE_REMOVEPHOTO;
 
     emit signalBusy(true);
+    emit signalQueueChanged();
 
     return true;
 }
@@ -419,23 +435,6 @@ void ImgurTalker::cancel()
     emit signalBusy(false);
 }
 
-//void ImgurTalker::startUpload()
-//{
-//    ImageCollection images = d->interface->currentSelection();
-
-//    if (images.isValid())
-//    {
-//        KUrl::List list = images.images();
-//        for (KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it)
-//        {
-//            KUrl imageUrl = *it;
-
-//            imageUpload(imageUrl);
-//            //kDebug() << images.images().at(i).pathOrUrl();
-//        }
-//    }
-//}
-
 void ImgurTalker::slotAddItems(const KUrl::List& list)
 {
     if (list.count() == 0)
@@ -445,11 +444,18 @@ void ImgurTalker::slotAddItems(const KUrl::List& list)
 
     kDebug() << "Appended" << list;
     d->queue->append(list);
+
+    emit signalQueueChanged();
 }
 
 KUrl::List* ImgurTalker::imageQueue() const
 {
     return d->queue;
+}
+
+KUrl ImgurTalker::geCurrentUrl() const
+{
+    return d->currentUrl;
 }
 
 } // namespace KIPIImgurExportPlugin

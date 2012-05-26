@@ -63,15 +63,17 @@ public:
     ImgurWindow(QWidget* const parent = 0);
     ~ImgurWindow();
 
+    using KDialog::slotButtonClicked;
+
     void reactivate();
 
 public Q_SLOTS:
 
-    void slotImageListChanged();
+    void slotImageQueueChanged();
     void slotStartUpload();
     void slotBusy(bool val);
 
-    void slotDlgButtonClicked(KDialog::ButtonCode);
+    void slotButtonClicked(KDialog::ButtonCode button);
     void slotAddPhotoDone();
     void slotAddPhotoSuccess(ImgurSuccess success);
     void slotAddPhotoError(ImgurError error);

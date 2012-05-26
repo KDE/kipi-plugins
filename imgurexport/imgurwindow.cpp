@@ -29,6 +29,7 @@
 #include <kpushbutton.h>
 #include <klocale.h>
 #include <kconfig.h>
+#include <kdialog.h>
 
 // Local includes
 
@@ -101,14 +102,14 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 
     // ------------------------------------------------------------
 
-    connect(d->widget, SIGNAL(signalImageListChanged()),
-            this, SLOT(slotImageListChanged()));
+    connect(d->webService, SIGNAL(signalQueueChanged()),
+            this, SLOT(slotImageQueueChanged()));
 
     connect(d->webService, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
-            this, SLOT(slotDlgButtonClicked(KDialog::ButtonCode)));
+            this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
 
     // connecting the web service to the current window - @todo: remove this step
     connect(d->webService, SIGNAL(signalError(ImgurError)),
@@ -125,7 +126,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
             d->widget, SLOT(slotImageUploadError(KUrl, ImgurError)));
 
    // ---------------------------------------------------------------
- 
+
     readSettings();
 }
 
@@ -163,7 +164,7 @@ void ImgurWindow::slotStartUpload()
     uploadNextItem();
 }
 
-void ImgurWindow::slotDlgButtonClicked(KDialog::ButtonCode button)
+void ImgurWindow::slotButtonClicked(KDialog::ButtonCode button)
 {
     kDebug() << "Button clicked" << button;
 
@@ -185,10 +186,8 @@ void ImgurWindow::slotDlgButtonClicked(KDialog::ButtonCode button)
             done(Close);
             break;
         default:
-
             break;
     }
-    KDialog::slotButtonClicked(button);
 }
 
 void ImgurWindow::reactivate()
@@ -197,9 +196,9 @@ void ImgurWindow::reactivate()
     show();
 }
 
-void ImgurWindow::slotImageListChanged()
+void ImgurWindow::slotImageQueueChanged()
 {
-    enableButton(User1, !d->widget->imagesList()->imageUrls().isEmpty());
+    enableButton(User1, !d->webService->imageQueue()->isEmpty());
 }
 
 void ImgurWindow::slotAddPhotoError(ImgurError error)
@@ -214,25 +213,25 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo to Imgur: %1\n"
                                                 "Do you want to continue?", error.message))
-        != KMessageBox::Continue)
+        == KMessageBox::Continue)
     {
-        d->widget->progressBar()->setVisible(false);
-        d->widget->progressBar()->progressCompleted();
-        m_transferQueue->clear();
+        uploadNextItem();
         return;
     }
 
-    uploadNextItem();
+    d->widget->progressBar()->setVisible(false);
+    d->widget->progressBar()->progressCompleted();
+    m_transferQueue->clear();
+    return;
+
 }
 
 void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
 {
-    KUrl::List* m_transferQueue = d->webService->imageQueue();
-    KUrl currentImage           = m_transferQueue->first();
+    KUrl currentImage           = d->webService->geCurrentUrl();
 
     d->widget->imagesList()->processed(currentImage, true);
 
-    d->webService->imageQueue()->pop_front();
     d->imagesCount++;
 
     const QString sUrl       = success.links.imgur_page.toEncoded();
@@ -298,6 +297,7 @@ void ImgurWindow::uploadNextItem()
     d->widget->progressBar()->progressStatusChanged(i18n("Processing %1", current.fileName()));
 
     kDebug() << "Starting upload for:" << current;
+
     d->webService->imageUpload(current);
 }
 

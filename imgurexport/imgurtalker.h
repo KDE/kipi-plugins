@@ -132,7 +132,9 @@ public:
 //    void startUpload ();
     void        cancel();
     bool        imageUpload(const KUrl& filePath);
+    bool        imageRemove(const QString& hash);
     KUrl::List* imageQueue() const;
+    KUrl        geCurrentUrl() const;
 
 Q_SIGNALS:
 
@@ -142,13 +144,11 @@ Q_SIGNALS:
     void signalBusy(bool busy);
     void signalError(ImgurError err);
     void signalSuccess(ImgurSuccess success);
+    void signalQueueChanged();
 
 private:
 
-    bool imageDelete(const QString& hash);
     bool parseResponseImageUpload(const QByteArray& data);
-
-    bool imageRemove(const QString& hash);
     bool parseResponseImageRemove(const QByteArray& data);
 
 private Q_SLOTS:
@@ -156,6 +156,7 @@ private Q_SLOTS:
     void slotResult(KJob* job);
     void slotData(KIO::Job* job, const QByteArray& data);
     void slotAddItems(const KUrl::List& list);
+    void slotUploadDone();
 
 private:
 
