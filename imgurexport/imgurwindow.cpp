@@ -84,7 +84,6 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     // ---------------------------------------------------------------
     // About data and help button.
 
-
     KPAboutData* about = new KPAboutData(ki18n("Imgur Export"),
                              0,
                              KAboutData::License_GPL,
@@ -209,7 +208,7 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
     kError() << error.message;
     d->widget->imagesList()->processed(currentImage, false);
 
-    emit signalImageUploadError (currentImage, error);
+    emit signalImageUploadError(currentImage, error);
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo to Imgur: %1\n"
                                                 "Do you want to continue?", error.message))
@@ -228,7 +227,7 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
 
 void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
 {
-    KUrl currentImage           = d->webService->geCurrentUrl();
+    KUrl currentImage        = d->webService->geCurrentUrl();
 
     d->widget->imagesList()->processed(currentImage, true);
 
@@ -246,8 +245,8 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
     bool saved = meta.applyChanges();
 
     kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
-    kDebug () << "URL" << sUrl;
-    kDebug () << "Delete URL" << sDeleteUrl;
+    kDebug() << "URL" << sUrl;
+    kDebug() << "Delete URL" << sDeleteUrl;
 
     emit signalImageUploadSuccess(currentImage, success);
     uploadNextItem();

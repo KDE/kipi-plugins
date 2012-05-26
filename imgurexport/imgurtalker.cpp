@@ -367,7 +367,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 bool ImgurTalker::imageUpload(const KUrl& filePath)
 {
     kDebug() << "Upload image" << filePath;
-    d->currentUrl   = filePath;
+    d->currentUrl  = filePath;
 
     MPForm form;
 
