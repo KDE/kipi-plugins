@@ -64,7 +64,7 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
                           i18n("Imgur Delete URL"), true);
 
     connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
-            this, SLOT(doubleClick(QTreeWidgetItem*, int)));
+            this, SLOT(slotDoubleClick(QTreeWidgetItem*, int)));
 }
 
 ImgurImagesList::~ImgurImagesList()
@@ -114,7 +114,8 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
             }
         }
 
-        if (!found) {
+        if (!found)
+        {
             new ImgurImageListViewItem(listView(), imageUrl);
         }
     }
@@ -132,7 +133,6 @@ void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, ImgurError /*er
 
 void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess success)
 {
-
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
         ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
@@ -155,10 +155,10 @@ void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess succ
     }
 }
 
-void ImgurImagesList::doubleClick(QTreeWidgetItem* element, int i)
+void ImgurImagesList::slotDoubleClick(QTreeWidgetItem* element, int i)
 {
-
-    if (i == 3 || i == 4) {
+    if (i == 3 || i == 4)
+    {
         const QUrl url = QUrl (element->text(i));
         // need to check for delete url click - and ask user if he wants to remove the tags also
         QDesktopServices::openUrl(url);
@@ -174,7 +174,6 @@ ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, con
 
     setTextColor(3, blue);
     setTextColor(4, blue);
-
 }
 
 ImgurImageListViewItem::~ImgurImageListViewItem()

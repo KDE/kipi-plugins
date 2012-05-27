@@ -270,7 +270,7 @@ void ImgurWindow::slotBusy(bool val)
     }
 }
 
-void ImgurWindow::closeEvent(QCloseEvent* e)
+void ImgurWindow::closeEvent(QCloseEvent*)
 {
     saveSettings();
 }

@@ -133,7 +133,7 @@ void ImgurTalker::slotResult(KJob* kjob)
         kDebug() << "Error :" << job->errorString();
     }
 
-    bool parseOk;
+    bool parseOk = false;
 
     switch(d->state)
     {
@@ -147,6 +147,7 @@ void ImgurTalker::slotResult(KJob* kjob)
         default:
             break;
     }
+    kDebug() << "ParseOk :" << parseOk;
 
     d->buffer.resize(0);
 
