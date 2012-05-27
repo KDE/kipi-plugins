@@ -122,6 +122,7 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     // Duplicate the signalImageListChanged of the ImageWindow, to enable the
     // upload button again.
     emit signalImageListChanged();
+    emit signalAddItems(list);
 }
 
 void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, ImgurError /*error*/)
@@ -131,7 +132,6 @@ void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, ImgurError /*er
 
 void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess success)
 {
-    kDebug () << success.links.imgur_page;
 
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
@@ -157,7 +157,6 @@ void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess succ
 
 void ImgurImagesList::doubleClick(QTreeWidgetItem* element, int i)
 {
-    //qDebug() << i;
 
     if (i == 3 || i == 4) {
         const QUrl url = QUrl (element->text(i));

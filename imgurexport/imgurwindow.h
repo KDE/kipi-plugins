@@ -74,10 +74,8 @@ public Q_SLOTS:
     void slotBusy(bool val);
 
     void slotButtonClicked(KDialog::ButtonCode button);
-    void slotAddPhotoDone();
     void slotAddPhotoSuccess(ImgurSuccess success);
     void slotAddPhotoError(ImgurError error);
-//  void slotAddPhotoDone(int errCode, const QString& errMsg);
 
 Q_SIGNALS:
 
