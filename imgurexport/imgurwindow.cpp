@@ -76,10 +76,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     setButtonGuiItem(User1, KGuiItem(i18n("Upload"), "network-workgroup", i18n("Start upload to Imgur")));
     setDefaultButton(Close);
 
-    connect(d->widget, SIGNAL(signalAddItems(KUrl::List)),
-            d->webService, SLOT(slotAddItems(KUrl::List)));
-
-    enableButton(User1, !d->widget->imagesList()->imageUrls().isEmpty());
+    enableButton(User1, !d->webService->imageQueue()->isEmpty());
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -101,21 +98,26 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 
     // ------------------------------------------------------------
 
+    connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
+            this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
+
     connect(d->webService, SIGNAL(signalQueueChanged()),
             this, SLOT(slotImageQueueChanged()));
 
     connect(d->webService, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
-            this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
-
-    // connecting the web service to the current window - @todo: remove this step
     connect(d->webService, SIGNAL(signalError(ImgurError)),
             this, SLOT(slotAddPhotoError(ImgurError)));
 
     connect(d->webService, SIGNAL(signalSuccess(ImgurSuccess)),
             this, SLOT(slotAddPhotoSuccess(ImgurSuccess)));
+
+    connect(d->widget, SIGNAL(signalAddItems(KUrl::List)),
+            d->webService, SLOT(slotAddItems(KUrl::List)));
+
+    connect(d->widget, SIGNAL(signalRemoveItems(KUrl::List)),
+            d->webService, SLOT(slotRemoveItems(KUrl::List)));
 
     // connecting the current window to the imgur widget
     connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
@@ -137,8 +139,6 @@ ImgurWindow::~ImgurWindow()
 
 void ImgurWindow::slotStartUpload()
 {
-    kDebug() << "Start upload";
-
     d->widget->imagesList()->clearProcessedStatus();
     KUrl::List* m_transferQueue = d->webService->imageQueue();
 
@@ -158,15 +158,13 @@ void ImgurWindow::slotStartUpload()
     d->widget->progressBar()->setValue(0);
     d->widget->progressBar()->setVisible(true);
 
-    kDebug() << "Upload queue has " << m_transferQueue->length() << "items";
+    kDebug() << "Upload queue has" << m_transferQueue->length() << "items";
 
     uploadNextItem();
 }
 
 void ImgurWindow::slotButtonClicked(KDialog::ButtonCode button)
 {
-    kDebug() << "Button clicked" << button;
-
     switch (button)
     {
         case KDialog::User1:
@@ -175,6 +173,7 @@ void ImgurWindow::slotButtonClicked(KDialog::ButtonCode button)
         case KDialog::Close:
             // Must cancel the transfer
             d->webService->cancel();
+            d->webService->imageQueue()->clear();
 
             d->widget->imagesList()->cancelProcess();
             d->widget->progressBar()->setVisible(false);
@@ -182,6 +181,7 @@ void ImgurWindow::slotButtonClicked(KDialog::ButtonCode button)
 
             // close the dialog
             d->widget->imagesList()->listView()->clear();
+
             done(Close);
             break;
         default:
@@ -208,7 +208,9 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
     kError() << error.message;
     d->widget->imagesList()->processed(currentImage, false);
 
+    d->imagesCount++;
     emit signalImageUploadError(currentImage, error);
+
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo to Imgur: %1\n"
                                                 "Do you want to continue?", error.message))
@@ -250,11 +252,8 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
 
     emit signalImageUploadSuccess(currentImage, success);
     uploadNextItem();
-}
 
-void ImgurWindow::slotAddPhotoDone()
-{
-    // NOTE: not used atm
+    return;
 }
 
 void ImgurWindow::slotBusy(bool val)
@@ -267,13 +266,12 @@ void ImgurWindow::slotBusy(bool val)
     else
     {
         setCursor(Qt::ArrowCursor);
-        enableButton(User1, d->webService->imageQueue()->isEmpty());
+        enableButton(User1, !d->webService->imageQueue()->isEmpty());
     }
 }
 
-void ImgurWindow::closeEvent(QCloseEvent* e)
+void ImgurWindow::closeEvent(QCloseEvent*)
 {
-    kDebug() << "Close event" << e;
     saveSettings();
 }
 
@@ -281,7 +279,7 @@ void ImgurWindow::uploadNextItem()
 {
     KUrl::List* m_transferQueue = d->webService->imageQueue();
 
-    if (m_transferQueue->empty())
+    if (m_transferQueue->isEmpty())
     {
         d->widget->progressBar()->hide();
         d->widget->progressBar()->progressCompleted();

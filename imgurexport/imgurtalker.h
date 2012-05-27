@@ -156,6 +156,7 @@ private Q_SLOTS:
     void slotResult(KJob* job);
     void slotData(KIO::Job* job, const QByteArray& data);
     void slotAddItems(const KUrl::List& list);
+    void slotRemoveItems(const KUrl::List list);
     void slotUploadDone();
 
 private:

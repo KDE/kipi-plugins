@@ -68,8 +68,10 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     d->headerLbl->setFocusPolicy(Qt::NoFocus);
 
     d->textLbl = new QLabel(settingsBox);
+/*
     d->textLbl->setText(i18n("You can retreive the\nimage URLs from the Xmp tags:\n"
                              "\"Imgur URL\" and \"Imgur Delete URL\". \n"));
+*/
     d->textLbl->setFocusPolicy(Qt::NoFocus);
     d->textLbl->setWordWrap(true);
 
@@ -98,6 +100,9 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     connect(d->imagesList, SIGNAL(signalAddItems(KUrl::List)),
             this, SLOT(slotAddItems(KUrl::List)));
 
+    connect(d->imagesList, SIGNAL(signalRemovedItems(KUrl::List)),
+            this, SLOT(slotRemoveItems(KUrl::List)));
+
     connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
@@ -116,6 +121,11 @@ ImgurWidget::~ImgurWidget()
 void ImgurWidget::slotAddItems(const KUrl::List& list)
 {
     emit signalAddItems(list);
+}
+
+void ImgurWidget::slotRemoveItems(const KUrl::List& list)
+{
+    emit signalRemoveItems(list);
 }
 
 void ImgurWidget::slotImageListChanged()
