@@ -36,10 +36,12 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIHelloWorldPlugin
 {
 
-class Plugin_HelloWorld : public KIPI::Plugin
+class Plugin_HelloWorld : public Plugin
 {
     Q_OBJECT
 
@@ -50,12 +52,18 @@ public:
         and const QStringList& args (the arguments passed).
     */
     Plugin_HelloWorld(QObject* const parent, const QVariantList& args);
-    virtual ~Plugin_HelloWorld();
+    ~Plugin_HelloWorld();
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    /** This method assign the plugin category for each plugin actions. This plug action to
+     *  right menu in KIPI host application.
+     */
+    Category category(KAction* const action) const;
 
-private slots:
+    /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.
+     */
+    void setup(QWidget* const);
+
+private Q_SLOTS:
 
     /** This is an example slot to which your action is connected.
      */
@@ -65,12 +73,13 @@ private:
 
     /** This is the plugin action that KIPI host application will plug into menu.
      */
-    KAction*         m_action;
+    KAction*   m_action;
 
-    /** this is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
+    /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
      *  instance of KIPI::PluginLoader singleton which provide a method for that.
+     *  Since libkipi 2.0.0, KIPI host interface is also available from KIPI::Plugin::interface().
      */
-    KIPI::Interface* m_iface;
+    Interface* m_iface;
 };
 
 }  // namespace KIPIHelloWorldPlugin

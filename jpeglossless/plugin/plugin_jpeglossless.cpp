@@ -108,7 +108,7 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
     delete d;
 }
 
-void Plugin_JPEGLossless::setup(QWidget* widget)
+void Plugin_JPEGLossless::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
@@ -473,21 +473,6 @@ void Plugin_JPEGLossless::oneTaskCompleted()
     }
 }
 
-Category Plugin_JPEGLossless::category(KAction* action) const
-{
-    if (action == d->action_AutoExif)
-        return ImagesPlugin;
-    else if ( action == d->action_RotateImage )
-       return ImagesPlugin;
-    else if ( action == d->action_FlipImage )
-       return ImagesPlugin;
-    else if ( action == d->action_Convert2GrayScale )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
-}
-
 KUrl::List Plugin_JPEGLossless::images()
 {
     Interface* interface = dynamic_cast<Interface*>( parent() );
@@ -506,6 +491,21 @@ KUrl::List Plugin_JPEGLossless::images()
     // and tells the host app to refresh the images.
     d->images = images.images();
     return images.images();
+}
+
+Category Plugin_JPEGLossless::category(KAction* const action) const
+{
+    if (action == d->action_AutoExif)
+        return ImagesPlugin;
+    else if ( action == d->action_RotateImage )
+       return ImagesPlugin;
+    else if ( action == d->action_FlipImage )
+       return ImagesPlugin;
+    else if ( action == d->action_Convert2GrayScale )
+       return ImagesPlugin;
+
+    kWarning() << "Unrecognized action for plugin category identification";
+    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIJPEGLossLessPlugin

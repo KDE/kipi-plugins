@@ -74,7 +74,11 @@ Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
     m_actionImport = 0;
 }
 
-void Plugin_Smug::setup(QWidget* widget)
+Plugin_Smug::~Plugin_Smug()
+{
+}
+
+void Plugin_Smug::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -111,10 +115,6 @@ void Plugin_Smug::setup(QWidget* widget)
 
     m_actionImport->setEnabled(true);
     m_actionExport->setEnabled(true);
-}
-
-Plugin_Smug::~Plugin_Smug()
-{
 }
 
 void Plugin_Smug::slotExport()
@@ -159,7 +159,7 @@ void Plugin_Smug::slotImport()
     m_dlgImport->show();
 }
 
-Category Plugin_Smug::category( KAction* action ) const
+Category Plugin_Smug::category(KAction* const action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

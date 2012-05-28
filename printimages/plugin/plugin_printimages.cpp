@@ -70,7 +70,11 @@ Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantLi
     kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
 }
 
-void Plugin_PrintImages::setup( QWidget* widget )
+Plugin_PrintImages::~Plugin_PrintImages()
+{
+}
+
+void Plugin_PrintImages::setup(QWidget* const widget)
 {
     Plugin::setup ( widget );
 
@@ -108,10 +112,6 @@ void Plugin_PrintImages::setup( QWidget* widget )
 
     connect ( m_interface, SIGNAL (selectionChanged(bool)),
               m_printAssistantAction, SLOT (setEnabled(bool)) );
-}
-
-Plugin_PrintImages::~Plugin_PrintImages()
-{
 }
 
 void Plugin_PrintImages::slotPrintImagesActivate()
@@ -160,7 +160,7 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     if (printAssistant.exec() == QDialog::Rejected) return;
 }
 
-Category Plugin_PrintImages::category ( KAction* action ) const
+Category Plugin_PrintImages::category(KAction* const action) const
 {
     if ( action == m_printImagesAction || action == m_printAssistantAction )
         return ImagesPlugin;

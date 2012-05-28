@@ -58,7 +58,11 @@ Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "Plugin_Vkontakte plugin loaded" ;
 }
 
-void Plugin_Vkontakte::setup(QWidget* widget)
+Plugin_Vkontakte::~Plugin_Vkontakte()
+{
+}
+
+void Plugin_Vkontakte::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -88,10 +92,6 @@ void Plugin_Vkontakte::setup(QWidget* widget)
     m_actionExport->setEnabled(true);
 }
 
-Plugin_Vkontakte::~Plugin_Vkontakte()
-{
-}
-
 /*
 void Plugin_Vkontakte::slotImport()
 {
@@ -118,7 +118,7 @@ void Plugin_Vkontakte::slotExport()
     m_dlgExport->startReactivation();
 }
 
-Category Plugin_Vkontakte::category(KAction* action) const
+Category Plugin_Vkontakte::category(KAction* const action) const
 {
     if (action == m_actionExport)
     {

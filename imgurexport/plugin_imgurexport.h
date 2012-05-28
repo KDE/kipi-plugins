@@ -49,8 +49,8 @@ public:
     explicit Plugin_ImgurExport(QObject* const parent, const QVariantList& args);
     ~Plugin_ImgurExport();
 
-    void setup(QWidget*);
-    Category category(KAction* action) const;
+    void setup(QWidget* const);
+    Category category(KAction* const action) const;
 
 public Q_SLOTS:
 

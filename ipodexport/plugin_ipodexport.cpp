@@ -64,7 +64,11 @@ Plugin_iPodExport::Plugin_iPodExport(QObject* const parent, const QVariantList&)
     g_type_init();
 }
 
-void Plugin_iPodExport::setup(QWidget* widget)
+Plugin_iPodExport::~Plugin_iPodExport()
+{
+}
+
+void Plugin_iPodExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -97,7 +101,7 @@ void Plugin_iPodExport::slotImageUpload()
     m_dlgImageUpload->reactivate();
 }
 
-Category Plugin_iPodExport::category(KAction* action) const
+Category Plugin_iPodExport::category(KAction* const action) const
 {
     if ( action == m_actionImageUpload )
         return ExportPlugin;

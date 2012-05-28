@@ -50,8 +50,8 @@ public:
     Plugin_Vkontakte(QObject* const parent, const QVariantList& args);
     ~Plugin_Vkontakte();
 
-    virtual Category category(KAction *action) const;
-    virtual void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

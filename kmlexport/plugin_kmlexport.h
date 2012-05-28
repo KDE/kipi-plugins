@@ -52,9 +52,10 @@ class Plugin_KMLExport : public Plugin
 public:
 
     Plugin_KMLExport(QObject* const parent, const QVariantList& args);
+    ~Plugin_KMLExport();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 protected Q_SLOTS:
 

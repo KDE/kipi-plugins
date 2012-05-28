@@ -66,7 +66,11 @@ Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
 }
 
-void Plugin_KMLExport::setup(QWidget* widget)
+Plugin_KMLExport::~Plugin_KMLExport()
+{
+}
+
+void Plugin_KMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
@@ -117,7 +121,7 @@ void Plugin_KMLExport::slotKMLGenerate()
     myExport.generate();
 }
 
-Category Plugin_KMLExport::category(KAction* action) const
+Category Plugin_KMLExport::category(KAction* const action) const
 {
     if ( action == m_actionKMLExport )
     {

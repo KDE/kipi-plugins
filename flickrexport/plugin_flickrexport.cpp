@@ -69,7 +69,11 @@ Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantLi
     kDebug(AREA_CODE_LOADING) << "Plugin_FlickrExport plugin loaded";
 }
 
-void Plugin_FlickrExport::setup(QWidget* widget)
+Plugin_FlickrExport::~Plugin_FlickrExport()
+{
+}
+
+void Plugin_FlickrExport::setup(QWidget* const widget)
 {
     m_dlgFlickr = 0;
     m_dlg23     = 0;
@@ -123,10 +127,6 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_actionFlickr->setEnabled(true);
     m_action23->setEnabled(true);
     m_actionZooomr->setEnabled(true);
-}
-
-Plugin_FlickrExport::~Plugin_FlickrExport()
-{
 }
 
 void Plugin_FlickrExport::slotActivateFlickr()
@@ -198,7 +198,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     m_dlgZooomr->reactivate();
 }
 
-Category Plugin_FlickrExport::category(KAction* action) const
+Category Plugin_FlickrExport::category(KAction* const action) const
 {
     if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
     {

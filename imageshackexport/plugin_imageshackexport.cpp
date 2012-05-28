@@ -60,7 +60,12 @@ Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QV
     kDebug(AREA_CODE_LOADING) << "Plugin_ImageshackExport plugin loaded";
 }
 
-void Plugin_ImageshackExport::setup(QWidget* widget)
+Plugin_ImageshackExport::~Plugin_ImageshackExport()
+{
+    delete m_pImageshack;
+}
+
+void Plugin_ImageshackExport::setup(QWidget* const widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
@@ -87,11 +92,6 @@ void Plugin_ImageshackExport::setup(QWidget* widget)
     addAction(m_action);
 }
 
-Plugin_ImageshackExport::~Plugin_ImageshackExport()
-{
-    delete m_pImageshack;
-}
-
 void Plugin_ImageshackExport::slotExport()
 {
     kDebug() << "Loading Imageshack Export Window";
@@ -104,7 +104,7 @@ void Plugin_ImageshackExport::slotExport()
     delete dlg;
 }
 
-Category Plugin_ImageshackExport::category(KAction* action) const
+Category Plugin_ImageshackExport::category(KAction* const action) const
 {
     if (action == m_action)
         return ExportPlugin;

@@ -43,8 +43,8 @@ public:
     Plugin_WallPaper(QObject* const parent, const QVariantList& args);
     ~Plugin_WallPaper();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 private Q_SLOTS:
 

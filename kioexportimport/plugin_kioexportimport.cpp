@@ -60,7 +60,11 @@ Plugin_KioExportImport::Plugin_KioExportImport(QObject* const parent, const QVar
     kDebug(AREA_CODE_LOADING) << "Plugin_KioExportImport plugin loaded";
 }
 
-void Plugin_KioExportImport::setup(QWidget* widget)
+Plugin_KioExportImport::~Plugin_KioExportImport()
+{
+}
+
+void Plugin_KioExportImport::setup(QWidget* const widget)
 {
     m_dlgExport = 0;
     m_dlgImport = 0;
@@ -140,7 +144,7 @@ void Plugin_KioExportImport::slotActivateImport()
     m_dlgImport->show();
 }
 
-Category Plugin_KioExportImport::category(KAction* action) const
+Category Plugin_KioExportImport::category(KAction* const action) const
 {
     if (action == m_actionExport)
     {

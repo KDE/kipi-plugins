@@ -52,8 +52,8 @@ public:
     Plugin_Shwup(QObject* const parent, const QVariantList& args);
     ~Plugin_Shwup();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

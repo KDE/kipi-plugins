@@ -68,7 +68,7 @@ Plugin_FlashExport::~Plugin_FlashExport()
 {
 }
 
-void Plugin_FlashExport::setup(QWidget* widget)
+void Plugin_FlashExport::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
@@ -108,7 +108,7 @@ void Plugin_FlashExport::slotActivate()
     m_manager->run();
 }
 
-Category Plugin_FlashExport::category(KAction* action) const
+Category Plugin_FlashExport::category(KAction* const action) const
 {
     if ( action == m_action )
        return ExportPlugin;

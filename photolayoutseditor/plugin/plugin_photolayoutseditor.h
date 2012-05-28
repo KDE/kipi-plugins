@@ -52,8 +52,8 @@ public:
     Plugin_PhotoLayoutsEditor(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_PhotoLayoutsEditor();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

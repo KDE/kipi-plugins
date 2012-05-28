@@ -56,7 +56,11 @@ Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* const parent, const QVariant
     kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
 }
 
-void Plugin_RemoveRedEyes::setup(QWidget* widget)
+Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
+{
+}
+
+void Plugin_RemoveRedEyes::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -81,17 +85,13 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
             m_action, SLOT(setEnabled(bool)));
 }
 
-Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
-{
-}
-
 void Plugin_RemoveRedEyes::activate()
 {
     RemoveRedEyesWindow* window = new RemoveRedEyesWindow();
     window->show();
 }
 
-Category Plugin_RemoveRedEyes::category(KAction* action) const
+Category Plugin_RemoveRedEyes::category(KAction* const action) const
 {
     if (action == m_action)
     {

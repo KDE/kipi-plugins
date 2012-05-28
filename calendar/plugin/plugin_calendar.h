@@ -53,8 +53,8 @@ public:
     Plugin_Calendar(QObject* const parent, const QVariantList& args);
     ~Plugin_Calendar();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget* widget);
+    virtual Category category(KAction* const action) const;
+    virtual void setup(QWidget* const widget);
 
 protected Q_SLOTS:
 

@@ -57,7 +57,11 @@ Plugin_DNGConverter::Plugin_DNGConverter(QObject* const parent, const QVariantLi
     kDebug(AREA_CODE_LOADING) << "Plugin_DNGConverter plugin loaded" ;
 }
 
-void Plugin_DNGConverter::setup( QWidget* widget )
+Plugin_DNGConverter::~Plugin_DNGConverter()
+{
+}
+
+void Plugin_DNGConverter::setup(QWidget* const widget)
 {
     m_batchDlg = 0;
 
@@ -81,10 +85,6 @@ void Plugin_DNGConverter::setup( QWidget* widget )
 
     connect(interface, SIGNAL(currentAlbumChanged(bool)),
             m_action, SLOT(setEnabled(bool)));
-}
-
-Plugin_DNGConverter::~Plugin_DNGConverter()
-{
 }
 
 void Plugin_DNGConverter::slotActivate()
@@ -117,7 +117,7 @@ void Plugin_DNGConverter::slotActivate()
     m_batchDlg->addItems(images.images());
 }
 
-Category Plugin_DNGConverter::category( KAction* action ) const
+Category Plugin_DNGConverter::category(KAction* const action) const
 {
     if (action == m_action)
        return BatchPlugin;

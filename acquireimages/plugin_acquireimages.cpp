@@ -67,7 +67,11 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject* const parent, const QVariant
     kDebug(AREA_CODE_LOADING) << "Plugin_AcquireImages plugin loaded";
 }
 
-void Plugin_AcquireImages::setup(QWidget* widget)
+Plugin_AcquireImages::~Plugin_AcquireImages()
+{
+}
+
+void Plugin_AcquireImages::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     KIPI::Plugin::setup(m_parentWidget);
@@ -90,10 +94,6 @@ void Plugin_AcquireImages::setup(QWidget* widget)
         return;
     }
     m_action_scanimages->setEnabled(true);
-}
-
-Plugin_AcquireImages::~Plugin_AcquireImages()
-{
 }
 
 void Plugin_AcquireImages::slotActivate()
@@ -137,7 +137,7 @@ void Plugin_AcquireImages::slotActivate()
     m_scanDlg->show();
 }
 
-KIPI::Category Plugin_AcquireImages::category(KAction* action) const
+KIPI::Category Plugin_AcquireImages::category(KAction* const action) const
 {
     if (action == m_action_scanimages)
     {

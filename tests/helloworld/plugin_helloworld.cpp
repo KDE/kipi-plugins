@@ -51,9 +51,9 @@ K_PLUGIN_FACTORY(HelloWorldFactory, registerPlugin<Plugin_HelloWorld>();)
 K_EXPORT_PLUGIN(HelloWorldFactory("kipiplugin_helloworld") )
 
 Plugin_HelloWorld::Plugin_HelloWorld(QObject* const parent, const QVariantList&)
-    : KIPI::Plugin(HelloWorldFactory::componentData(), parent, "HelloWorld")
+    : Plugin(HelloWorldFactory::componentData(), parent, "HelloWorld")
 {
-    /// There is a debug space for plugin loading area.
+    /// There is a debug space for plugin loading area. Please do not use qDebug and qWarning in plugin.
     kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
 }
 
@@ -61,11 +61,11 @@ Plugin_HelloWorld::~Plugin_HelloWorld()
 {
 }
 
-void Plugin_HelloWorld::setup(QWidget* widget)
+void Plugin_HelloWorld::setup(QWidget* const widget)
 {
     /** We pass the widget which host plugin in KIPI host application
      */
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     /** We define plugin action which will be plug in KIPI host application.
      */
@@ -82,7 +82,7 @@ void Plugin_HelloWorld::setup(QWidget* widget)
      */
     addAction(m_action);
 
-    m_iface = dynamic_cast<KIPI::Interface*>(parent());
+    m_iface = dynamic_cast<Interface*>(parent());
     if (!m_iface)
     {
        /// No need special debug space outside load plugin area, it will be selected automatically.
@@ -92,7 +92,7 @@ void Plugin_HelloWorld::setup(QWidget* widget)
 
     /** This will get items selection from KIPI host application
      */
-    KIPI::ImageCollection selection = m_iface->currentSelection();
+    ImageCollection selection = m_iface->currentSelection();
     m_action->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
@@ -103,9 +103,11 @@ void Plugin_HelloWorld::setup(QWidget* widget)
 
 void Plugin_HelloWorld::slotActivate()
 {
-    /** When plugin action is actived, we display list of item selected in a message box
+    /** When plugin action is actived, we display list of item selected in a message box.
+     *  This example show a simple dialog with current items selected in KIPI host application.
+     *  You can branch here your dedicated dialog to process items as you want. 
      */
-    KIPI::ImageCollection images = m_iface->currentSelection();
+    ImageCollection images = m_iface->currentSelection();
 
     if (!images.isValid() || images.images().isEmpty())
         return;
@@ -116,14 +118,15 @@ void Plugin_HelloWorld::slotActivate()
                                 );
 }
 
-KIPI::Category Plugin_HelloWorld::category(KAction* action) const
+Category Plugin_HelloWorld::category(KAction* const action) const
 {
+    /// For each plugin actions defined, you can attribute a category which will plug it on right KIPI host application menu.
     if (action == m_action)
-       return KIPI::ImagesPlugin;
+       return ImagesPlugin;
 
     /// No need special debug space outside load plugin area, it will be selected automatically.
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return ImagesPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIHelloWorldPlugin

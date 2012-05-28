@@ -71,7 +71,11 @@ Plugin_PicasawebExport::Plugin_PicasawebExport(QObject* const parent, const QVar
     kDebug(AREA_CODE_LOADING) << "Plugin_PicasawebExport plugin loaded" ;
 }
 
-void Plugin_PicasawebExport::setup(QWidget* widget)
+Plugin_PicasawebExport::~Plugin_PicasawebExport()
+{
+}
+
+void Plugin_PicasawebExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -108,10 +112,6 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
 
     m_actionImport->setEnabled(true);
     m_actionExport->setEnabled(true);
-}
-
-Plugin_PicasawebExport::~Plugin_PicasawebExport()
-{
 }
 
 void Plugin_PicasawebExport::slotExport()
@@ -156,7 +156,7 @@ void Plugin_PicasawebExport::slotImport()
     m_dlgImport->show();
 }
 
-Category Plugin_PicasawebExport::category( KAction* action ) const
+Category Plugin_PicasawebExport::category(KAction* const action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

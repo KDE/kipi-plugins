@@ -50,8 +50,8 @@ public:
     Plugin_AdvancedSlideshow(QObject* const parent, const QVariantList& args);
     ~Plugin_AdvancedSlideshow();
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    KIPI::Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

@@ -80,7 +80,7 @@ Plugin_SendImages::~Plugin_SendImages()
     delete d;
 }
 
-void Plugin_SendImages::setup(QWidget* widget)
+void Plugin_SendImages::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -144,7 +144,7 @@ void Plugin_SendImages::slotPrepareEmail()
     d->sendImagesOperation->firstStage();
 }
 
-Category Plugin_SendImages::category(KAction* action) const
+Category Plugin_SendImages::category(KAction* const action) const
 {
     if (action == d->action_sendimages)
        return ExportPlugin;

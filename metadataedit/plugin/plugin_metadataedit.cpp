@@ -90,7 +90,7 @@ Plugin_MetadataEdit::~Plugin_MetadataEdit()
     delete d;
 }
 
-void Plugin_MetadataEdit::setup(QWidget* widget)
+void Plugin_MetadataEdit::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -423,7 +423,7 @@ void Plugin_MetadataEdit::slotImportXmp()
     }
 }
 
-Category Plugin_MetadataEdit::category(KAction* action) const
+Category Plugin_MetadataEdit::category(KAction* const action) const
 {
     if ( action == d->actionMetadataEdit )
        return ImagesPlugin;

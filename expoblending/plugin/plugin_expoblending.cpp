@@ -69,7 +69,7 @@ Plugin_ExpoBlending::~Plugin_ExpoBlending()
 {
 }
 
-void Plugin_ExpoBlending::setup(QWidget* widget)
+void Plugin_ExpoBlending::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
@@ -115,7 +115,7 @@ void Plugin_ExpoBlending::slotActivate()
     m_manager->run();
 }
 
-Category Plugin_ExpoBlending::category( KAction* action ) const
+Category Plugin_ExpoBlending::category(KAction* const action) const
 {
     if ( action == m_action )
        return ToolsPlugin;

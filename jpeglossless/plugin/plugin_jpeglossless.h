@@ -52,8 +52,8 @@ public:
     Plugin_JPEGLossless(QObject* const parent, const QVariantList& args);
     ~Plugin_JPEGLossless();
 
-    Category category(KAction* action) const;
-    void setup(QWidget* widget);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const widget);
 
 protected:
 

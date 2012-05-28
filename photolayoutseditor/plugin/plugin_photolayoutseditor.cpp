@@ -65,7 +65,7 @@ Plugin_PhotoLayoutsEditor::~Plugin_PhotoLayoutsEditor()
 {
 }
 
-void Plugin_PhotoLayoutsEditor::setup(QWidget* widget)
+void Plugin_PhotoLayoutsEditor::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
@@ -105,7 +105,7 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
     m_manager->show();
 }
 
-Category Plugin_PhotoLayoutsEditor::category(KAction* action) const
+Category Plugin_PhotoLayoutsEditor::category(KAction* const action) const
 {
     if ( action == m_action )
        return ToolsPlugin;

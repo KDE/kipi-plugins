@@ -79,7 +79,7 @@ Plugin_TimeAdjust::~Plugin_TimeAdjust()
     delete d;
 }
 
-void Plugin_TimeAdjust::setup(QWidget* widget)
+void Plugin_TimeAdjust::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -129,7 +129,7 @@ void Plugin_TimeAdjust::slotActivate()
     d->dialog->addItems(images.images());
 }
 
-Category Plugin_TimeAdjust::category(KAction* action) const
+Category Plugin_TimeAdjust::category(KAction* const action) const
 {
     if ( action == d->actionTimeAjust )
        return ImagesPlugin;

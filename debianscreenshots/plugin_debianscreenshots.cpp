@@ -64,7 +64,11 @@ Plugin_DebianScreenshots::Plugin_DebianScreenshots(QObject* const parent, const 
     kDebug(AREA_CODE_LOADING) << "Plugin_DebianScreenshots plugin loaded";
 }
 
-void Plugin_DebianScreenshots::setup(QWidget* widget)
+Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
+{
+}
+
+void Plugin_DebianScreenshots::setup(QWidget* const widget)
 {
     m_dlgExport = 0;
 
@@ -93,10 +97,6 @@ void Plugin_DebianScreenshots::setup(QWidget* widget)
     m_actionExport->setEnabled(true);
 }
 
-Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
-{
-}
-
 void Plugin_DebianScreenshots::slotExport()
 {
     KStandardDirs dir;
@@ -118,7 +118,7 @@ void Plugin_DebianScreenshots::slotExport()
     m_dlgExport->reactivate();
 }
 
-Category Plugin_DebianScreenshots::category(KAction*) const
+Category Plugin_DebianScreenshots::category(KAction* const) const
 {
     return ExportPlugin;
 }

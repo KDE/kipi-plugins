@@ -57,7 +57,11 @@ Plugin_YandexFotki::Plugin_YandexFotki(QObject* const parent, const QVariantList
     // m_dlgImport = 0;
 }
 
-void Plugin_YandexFotki::setup(QWidget* widget)
+Plugin_YandexFotki::~Plugin_YandexFotki()
+{
+}
+
+void Plugin_YandexFotki::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -87,10 +91,6 @@ void Plugin_YandexFotki::setup(QWidget* widget)
     m_actionExport->setEnabled(true);
 }
 
-Plugin_YandexFotki::~Plugin_YandexFotki()
-{
-}
-
 /*
 void Plugin_YandexFotki::slotImport()
 {
@@ -117,7 +117,7 @@ void Plugin_YandexFotki::slotExport()
     m_dlgExport->reactivate();
 }
 
-Category Plugin_YandexFotki::category( KAction* action ) const
+Category Plugin_YandexFotki::category(KAction* const action) const
 {
     if (action == m_actionExport)
     {

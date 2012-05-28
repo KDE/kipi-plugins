@@ -64,7 +64,11 @@ Plugin_GPSSync::Plugin_GPSSync(QObject* const parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
 }
 
-void Plugin_GPSSync::setup(QWidget* widget)
+Plugin_GPSSync::~Plugin_GPSSync()
+{
+}
+
+void Plugin_GPSSync::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
@@ -105,7 +109,7 @@ void Plugin_GPSSync::slotGPSSync()
     dialog->show();
 }
 
-Category Plugin_GPSSync::category( KAction* action ) const
+Category Plugin_GPSSync::category(KAction* const action) const
 {
     if ( action == m_action_geolocation )
        return ImagesPlugin;

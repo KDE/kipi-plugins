@@ -70,7 +70,7 @@ Plugin_Panorama::~Plugin_Panorama()
 {
 }
 
-void Plugin_Panorama::setup(QWidget* widget)
+void Plugin_Panorama::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
@@ -116,7 +116,7 @@ void Plugin_Panorama::slotActivate()
     m_manager->run();
 }
 
-Category Plugin_Panorama::category( KAction* action ) const
+Category Plugin_Panorama::category(KAction* const action) const
 {
     if ( action == m_action )
        return ToolsPlugin;

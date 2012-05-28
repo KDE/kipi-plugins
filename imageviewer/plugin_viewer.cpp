@@ -74,7 +74,7 @@ Plugin_viewer::~Plugin_viewer()
     delete d;
 }
 
-void Plugin_viewer::setup(QWidget* widget)
+void Plugin_viewer::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -126,7 +126,7 @@ void  Plugin_viewer::slotActivate()
     }
 }
 
-Category Plugin_viewer::category(KAction* action) const
+Category Plugin_viewer::category(KAction* const action) const
 {
     if ( action == d->actionViewer )
     {

@@ -81,7 +81,11 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* const parent, const 
     m_sharedData = 0;
 }
 
-void Plugin_AdvancedSlideshow::setup(QWidget* widget)
+Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
+{
+}
+
+void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 {
     KIPI::Plugin::setup(widget);
 
@@ -113,10 +117,6 @@ void Plugin_AdvancedSlideshow::setup(QWidget* widget)
     {
         slotAlbumChanged(true);
     }
-}
-
-Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
-{
 }
 
 void Plugin_AdvancedSlideshow::slotActivate()
@@ -269,7 +269,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     }
 }
 
-KIPI::Category Plugin_AdvancedSlideshow::category(KAction* action) const
+KIPI::Category Plugin_AdvancedSlideshow::category(KAction* const action) const
 {
     if (action == m_actionSlideShow)
         return KIPI::ToolsPlugin;

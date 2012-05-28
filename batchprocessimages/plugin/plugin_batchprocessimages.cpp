@@ -80,7 +80,11 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject* const parent, cons
     kDebug(AREA_CODE_LOADING) << "Plugin_BatchProcessImages plugin loaded" ;
 }
 
-void Plugin_BatchProcessImages::setup(QWidget* widget)
+Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
+{
+}
+
+void Plugin_BatchProcessImages::setup(QWidget* const widget)
 {
     KIPI::Plugin::setup(widget);
 
@@ -170,10 +174,6 @@ void Plugin_BatchProcessImages::setup(QWidget* widget)
             m_action_resizeimages, SLOT(setEnabled(bool)));
 }
 
-Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
-{
-}
-
 void Plugin_BatchProcessImages::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
@@ -255,7 +255,7 @@ void Plugin_BatchProcessImages::slotActivate()
     }
 }
 
-KIPI::Category Plugin_BatchProcessImages::category(KAction* action) const
+KIPI::Category Plugin_BatchProcessImages::category(KAction* const action) const
 {
     if (action == m_action_borderimages)
         return KIPI::BatchPlugin;

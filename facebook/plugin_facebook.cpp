@@ -68,7 +68,11 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
     kDebug(AREA_CODE_LOADING) << "Plugin_Facebook plugin loaded";
 }
 
-void Plugin_Facebook::setup(QWidget* widget)
+Plugin_Facebook::~Plugin_Facebook()
+{
+}
+
+void Plugin_Facebook::setup(QWidget* const widget)
 {
     m_dlgImport = 0;
     m_dlgExport = 0;
@@ -108,10 +112,6 @@ void Plugin_Facebook::setup(QWidget* widget)
 
     m_actionExport->setEnabled(true);
     m_actionImport->setEnabled(true);
-}
-
-Plugin_Facebook::~Plugin_Facebook()
-{
 }
 
 void Plugin_Facebook::slotExport()
@@ -162,7 +162,7 @@ KJob* Plugin_Facebook::exportFiles(const QString& album)
     return new FacebookJob(album, interface->currentSelection().images());
 }
 
-Category Plugin_Facebook::category(KAction* action) const
+Category Plugin_Facebook::category(KAction* const action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

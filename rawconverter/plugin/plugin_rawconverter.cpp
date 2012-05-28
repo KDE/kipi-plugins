@@ -65,7 +65,11 @@ Plugin_RawConverter::Plugin_RawConverter(QObject* const parent, const QVariantLi
     kDebug(AREA_CODE_LOADING) << "Plugin_RawConverter plugin loaded";
 }
 
-void Plugin_RawConverter::setup(QWidget* widget)
+Plugin_RawConverter::~Plugin_RawConverter()
+{
+}
+
+void Plugin_RawConverter::setup(QWidget* const widget)
 {
     m_singleDlg = 0;
     m_batchDlg  = 0;
@@ -104,10 +108,6 @@ void Plugin_RawConverter::setup(QWidget* widget)
 
     connect(interface, SIGNAL(currentAlbumChanged(bool)),
             m_batchAction, SLOT(setEnabled(bool)));
-}
-
-Plugin_RawConverter::~Plugin_RawConverter()
-{
 }
 
 void Plugin_RawConverter::slotActivateSingle()
@@ -181,7 +181,7 @@ void Plugin_RawConverter::slotActivateBatch()
     m_batchDlg->addItems(images.images());
 }
 
-Category Plugin_RawConverter::category(KAction* action) const
+Category Plugin_RawConverter::category(KAction* const action) const
 {
     if ( action == m_singleAction )
        return ToolsPlugin;

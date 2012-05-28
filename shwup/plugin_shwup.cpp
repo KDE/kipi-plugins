@@ -72,7 +72,11 @@ Plugin_Shwup::Plugin_Shwup(QObject* const parent, const QVariantList& /*args*/)
     m_actionExport = 0;
 }
 
-void Plugin_Shwup::setup(QWidget* widget)
+Plugin_Shwup::~Plugin_Shwup()
+{
+}
+
+void Plugin_Shwup::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -99,10 +103,6 @@ void Plugin_Shwup::setup(QWidget* widget)
     m_actionExport->setEnabled(true);
 }
 
-Plugin_Shwup::~Plugin_Shwup()
-{
-}
-
 void Plugin_Shwup::slotExport()
 {
     KStandardDirs dir;
@@ -124,7 +124,7 @@ void Plugin_Shwup::slotExport()
     m_dlgExport->reactivate();
 }
 
-Category Plugin_Shwup::category(KAction* action) const
+Category Plugin_Shwup::category(KAction* const action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

@@ -67,7 +67,11 @@ Plugin_Kopete::Plugin_Kopete(QObject* const parent, const QVariantList& /*args*/
     kDebug(AREA_CODE_LOADING) << "Plugin_Kopete plugin loaded";
 }
 
-void Plugin_Kopete::setup(QWidget* widget)
+Plugin_Kopete::~Plugin_Kopete()
+{
+}
+
+void Plugin_Kopete::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -97,10 +101,6 @@ void Plugin_Kopete::setup(QWidget* widget)
     }
 
     m_actionExport->setEnabled(true);
-}
-
-Plugin_Kopete::~Plugin_Kopete()
-{
 }
 
 void Plugin_Kopete::slotAboutToShowMenu()
@@ -214,7 +214,7 @@ bool Plugin_Kopete::kopeteRunning()
     return false;
 }
 
-Category Plugin_Kopete::category( KAction* /* action */ ) const
+Category Plugin_Kopete::category(KAction* const) const
 {
     return ExportPlugin;
 }

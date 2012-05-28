@@ -52,8 +52,8 @@ public:
     Plugin_GalleryExport(QObject* const parent, const QVariantList& args);
     ~Plugin_GalleryExport();
 
-    virtual Category category(KAction* const action) const;
-    virtual void setup(QWidget* const);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

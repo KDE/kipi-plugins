@@ -80,7 +80,7 @@ Plugin_ImgurExport::~Plugin_ImgurExport()
     delete d;
 }
 
-void Plugin_ImgurExport::setup(QWidget* widget)
+void Plugin_ImgurExport::setup(QWidget* const widget)
 {
     d->winExport = 0;
 
@@ -132,7 +132,7 @@ void Plugin_ImgurExport::slotActivate()
     kDebug() << "We have activated the imgur exporter!";
 }
 
-Category Plugin_ImgurExport::category(KAction* action) const
+Category Plugin_ImgurExport::category(KAction* const action) const
 {
     if (action == d->actionExport)
     {

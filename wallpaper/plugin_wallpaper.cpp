@@ -62,7 +62,7 @@ Plugin_WallPaper::~Plugin_WallPaper()
 {
 }
 
-void Plugin_WallPaper::setup(QWidget* widget)
+void Plugin_WallPaper::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
@@ -214,7 +214,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
       KMessageBox::information(0L,i18n("Change Background"),i18n("Background cannot be changed."));
 }
 
-Category Plugin_WallPaper::category(KAction* action) const
+Category Plugin_WallPaper::category(KAction* const action) const
 {
     if ( action == m_actionBackground )
        return IMAGESPLUGIN;

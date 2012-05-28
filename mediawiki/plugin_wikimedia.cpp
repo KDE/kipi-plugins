@@ -68,7 +68,11 @@ Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*
     kDebug(AREA_CODE_LOADING) << "Plugin_WikiMedia plugin loaded";
 }
 
-void Plugin_WikiMedia::setup(QWidget* widget)
+Plugin_WikiMedia::~Plugin_WikiMedia()
+{
+}
+
+void Plugin_WikiMedia::setup(QWidget* const widget)
 {
     m_dlgExport = 0;
     Plugin::setup(widget);
@@ -95,10 +99,6 @@ void Plugin_WikiMedia::setup(QWidget* widget)
     m_actionExport->setEnabled(true);
 }
 
-Plugin_WikiMedia::~Plugin_WikiMedia()
-{
-}
-
 void Plugin_WikiMedia::slotExport()
 {
     KStandardDirs dir;
@@ -118,7 +118,7 @@ void Plugin_WikiMedia::slotExport()
     }
 }
 
-Category Plugin_WikiMedia::category(KAction* action) const
+Category Plugin_WikiMedia::category(KAction* const action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

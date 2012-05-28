@@ -49,8 +49,8 @@ public:
     Plugin_DebianScreenshots(QObject* const parent, const QVariantList& args);
     ~Plugin_DebianScreenshots();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

@@ -67,7 +67,7 @@ Plugin_RajceExport::~Plugin_RajceExport()
 {
 }
 
-void Plugin_RajceExport::setup(QWidget* widget)
+void Plugin_RajceExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -109,7 +109,7 @@ void Plugin_RajceExport::slotExport()
     m_dlgExport->reactivate();
 }
 
-Category Plugin_RajceExport::category(KAction* action) const
+Category Plugin_RajceExport::category(KAction* const action) const
 {
     if (action == m_actionExport)
         return ExportPlugin;

@@ -74,7 +74,7 @@ Plugin_HTMLExport::~Plugin_HTMLExport()
     delete d;
 }
 
-void Plugin_HTMLExport::setup( QWidget* widget )
+void Plugin_HTMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
     d->mAction = actionCollection()->addAction("htmlexport");
@@ -134,7 +134,7 @@ void Plugin_HTMLExport::slotActivate()
     delete wizard;
 }
 
-Category Plugin_HTMLExport::category(KAction* action) const
+Category Plugin_HTMLExport::category(KAction* const action) const
 {
     if (action == d->mAction)
     {

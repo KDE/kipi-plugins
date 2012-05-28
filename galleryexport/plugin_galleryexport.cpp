@@ -79,6 +79,11 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject* const parent, const QVariant
     kDebug(AREA_CODE_LOADING) << "Plugin_GalleryExport plugin loaded";
 }
 
+Plugin_GalleryExport::~Plugin_GalleryExport()
+{
+    delete d->gallery;
+}
+
 void Plugin_GalleryExport::setup(QWidget* const widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
@@ -104,11 +109,6 @@ void Plugin_GalleryExport::setup(QWidget* const widget)
             this, SLOT(slotSync()));
 
     addAction(d->action);
-}
-
-Plugin_GalleryExport::~Plugin_GalleryExport()
-{
-    delete d->gallery;
 }
 
 // this slot uses GalleryWindow Class

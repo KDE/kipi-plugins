@@ -56,7 +56,7 @@ Plugin_Calendar::~Plugin_Calendar()
 {
 }
 
-void Plugin_Calendar::setup(QWidget* widget)
+void Plugin_Calendar::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -76,7 +76,7 @@ void Plugin_Calendar::slotActivate()
     w.exec();
 }
 
-Category Plugin_Calendar::category(KAction* action) const
+Category Plugin_Calendar::category(KAction* const action) const
 {
     if (action == m_actionCalendar)
     {

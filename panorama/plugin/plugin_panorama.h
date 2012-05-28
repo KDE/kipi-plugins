@@ -60,8 +60,8 @@ public:
     Plugin_Panorama(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_Panorama();
 
-    Category category( KAction* action ) const;
-    void setup( QWidget* );
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

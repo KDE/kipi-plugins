@@ -70,8 +70,8 @@ public:
     Plugin_Facebook(QObject* const parent, const QVariantList& args);
     ~Plugin_Facebook();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
     virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
