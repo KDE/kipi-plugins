@@ -86,7 +86,7 @@ void Plugin_DLNAExport::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new DLNAWindow(tmp, kapp->activeWindow());
+        m_dlgExport = new DLNAWindow(tmp);
     }
     else
     {
@@ -97,6 +97,8 @@ void Plugin_DLNAExport::slotExport()
 
         KWindowSystem::activateWindow(m_dlgExport->winId());
     }
+
+    m_dlgExport->show();
 }
 
 Category Plugin_DLNAExport::category(KAction* const action) const

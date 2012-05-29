@@ -40,7 +40,7 @@
 namespace KIPIDLNAExportPlugin
 {
 
-DLNAWindow::DLNAWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt::WFlags /*flags*/)
+DLNAWindow::DLNAWindow(const QString& tmpFolder)
     : KPToolDialog(0)
 {
     m_widget = new DLNAWidget(iface(), tmpFolder, this);

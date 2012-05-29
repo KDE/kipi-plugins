@@ -40,7 +40,7 @@ class DLNAWindow : public KPToolDialog
 
 public:
 
-    explicit DLNAWindow(const QString& tmpFolder, QWidget* const parent = 0, Qt::WFlags flags = 0);
+    explicit DLNAWindow(const QString& tmpFolder);
     ~DLNAWindow();
 
 private:
