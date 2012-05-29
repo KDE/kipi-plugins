@@ -27,7 +27,6 @@
 
 #include "kptooldialog.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-
 #include "dlnawindow.moc"
 
 // Qt includes
@@ -56,7 +55,6 @@ DLNAWindow::DLNAWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt::
     setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
                                      i18n("Start upload via DLNA")));
     m_widget->setMinimumSize(700, 500);
-
 
     //--------------------------------------------------------------------
 

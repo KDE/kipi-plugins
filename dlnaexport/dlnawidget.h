@@ -43,10 +43,14 @@ namespace KIPI
     class UploadWidget;
 }
 
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
     class KPImagesList;
 }
+
+using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -57,7 +61,8 @@ class DLNAWidget : public QWidget
 
 public:
 
-    explicit DLNAWidget(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    explicit DLNAWidget(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
+    ~DLNAWidget();
 
 public Q_SLOTS:
 
@@ -65,15 +70,19 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 
-private:
+
 
 private:
 
-    QLabel*                    m_headerLbl;
 
-    KIPIPlugins::KPImagesList* m_imgList;
 
-    QProgressBar*              m_progressBar;
+private:
+
+    QLabel*       m_headerLbl;
+
+    KPImagesList* m_imgList;
+
+    QProgressBar* m_progressBar;
 };
 
 } // namespace KIPIDLNAExportPlugin

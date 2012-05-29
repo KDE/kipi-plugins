@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-
 #include "dlnawidget.moc"
 
 // Qt includes
@@ -59,7 +58,7 @@
 namespace KIPIDLNAExportPlugin
 {
 
-DLNAWidget::DLNAWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
+DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolder*/, QWidget* const parent)
     : QWidget(parent)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
@@ -80,7 +79,6 @@ DLNAWidget::DLNAWidget(KIPI::Interface* const interface, const QString& tmpFolde
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the DLNA home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
-
 
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -105,7 +103,10 @@ DLNAWidget::DLNAWidget(KIPI::Interface* const interface, const QString& tmpFolde
 
     QString link = QString ("http://www.google.com");
     m_headerLbl->setText(link);
+}
 
+DLNAWidget::~DLNAWidget()
+{
 }
 
 void DLNAWidget::reactivate()
