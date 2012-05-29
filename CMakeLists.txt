@@ -7,12 +7,12 @@ MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
 # Information to update before to release this package.
 
 # kipi-plugins version
-SET(KIPIPLUGINS_MAJOR_VERSION "3")
-SET(KIPIPLUGINS_MINOR_VERSION "0")
+SET(KIPIPLUGINS_MAJOR_VERSION "2")
+SET(KIPIPLUGINS_MINOR_VERSION "6")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2012-12-23")
+SET (KIPIPLUGINS_RELEASE_DATE "2012-06-03")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -398,6 +398,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(kmlexport)
     ADD_SUBDIRECTORY(imageshackexport)
     ADD_SUBDIRECTORY(photolayoutseditor)
+    ADD_SUBDIRECTORY(dlnaexport)
 
     # Plugins which are optional depencies.
 
