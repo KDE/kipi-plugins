@@ -99,7 +99,7 @@ void Plugin_DLNAExport::slotExport()
     }
 }
 
-KIPI::Category Plugin_DLNAExport::category(KAction* const action) const
+Category Plugin_DLNAExport::category(KAction* const action) const
 {
     if (action == m_actionExport)
        return ExportPlugin;
