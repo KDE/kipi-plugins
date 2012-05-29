@@ -51,9 +51,8 @@ public:
     Plugin_DLNAExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_DLNAExport();
 
-    virtual KIPI::Category category(KAction* action) const;
-    
-    virtual void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 private Q_SLOTS:
 
@@ -61,9 +60,9 @@ private Q_SLOTS:
 
 private:
 
-    KAction*         m_actionExport;
+    KAction*    m_actionExport;
 
-    DLNAWindow*      m_dlgExport;
+    DLNAWindow* m_dlgExport;
 };
 
 }  // namespace KIPIDLNAExportPlugin

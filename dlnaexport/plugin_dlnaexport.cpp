@@ -43,7 +43,6 @@ extern "C"
 
 #include <libkipi/interface.h>
 
-
 namespace KIPIDLNAExportPlugin
 {
 
@@ -61,7 +60,7 @@ Plugin_DLNAExport::~Plugin_DLNAExport()
 {
 }
 
-void Plugin_DLNAExport::setup(QWidget* widget)
+void Plugin_DLNAExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
@@ -100,12 +99,12 @@ void Plugin_DLNAExport::slotExport()
     }
 }
 
-KIPI::Category Plugin_DLNAExport::category(KAction* action) const
+KIPI::Category Plugin_DLNAExport::category(KAction* const action) const
 {
     if (action == m_actionExport)
        return ExportPlugin;
 
-     kWarning() << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return ExportPlugin;
 }
 
