@@ -18,17 +18,17 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# ============================================================ */
+# ============================================================
 
 SET(kipiplugin_helloworld_PART_SRCS plugin_helloworld.cpp)
 
 KDE4_ADD_PLUGIN(kipiplugin_helloworld ${kipiplugin_helloworld_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_helloworld 
-                      ${KDE4_KPARTS_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${KIPI_LIBRARIES} 
-                      ${KEXIV2_LIBRARIES} 
+TARGET_LINK_LIBRARIES(kipiplugin_helloworld
+                      ${KDE4_KPARTS_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${KIPI_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       kipiplugins
                      )
