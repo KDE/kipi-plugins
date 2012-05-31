@@ -25,6 +25,8 @@
 #ifndef PLUGIN_HELLOWORLD_H
 #define PLUGIN_HELLOWORLD_H
 
+// NOTE: Always limit include in header file to speed-up compilation.
+
 // Qt includes
 
 #include <QVariant>
