@@ -53,13 +53,13 @@ public:
     {
         /// It's always clean to init pointers to zero. If crash appear, 
         /// debugger will show a null pointer instead a non initialized one.
-        action = 0;
+        action1 = 0;
         iface  = 0;
     }
 
-    /** This is the plugin action that KIPI host application will plug into menu.
+    /** These plugin actions will pluged into menu KIPI host application.
      */
-    KAction*   action;
+    KAction*   action1;
 
     /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
      *  instance of KIPI::PluginLoader singleton which provide a method for that.
@@ -86,7 +86,8 @@ K_EXPORT_PLUGIN(HelloWorldFactory("kipiplugin_helloworld") )
  */
 Plugin_HelloWorld::Plugin_HelloWorld(QObject* const parent, const QVariantList&)
     : Plugin(HelloWorldFactory::componentData(), parent, "HelloWorld"),
-      d(new Private)                                                                 /// Private container is allocated here.
+      /// Private container is allocated here.
+      d(new Private)
 {
     /// There is a debug space for plugin loading area. Please do not use qDebug and qWarning in plugin.
     kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
@@ -104,27 +105,8 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
      */
     Plugin::setup(widget);
 
-    /** We define plugin action which will be plug in KIPI host application.
-     *  Note that if you set keyboard shortcut to an action you must take a care
-     *  about already existing one from other tool to prevent conflict.
-     *  Don't forget to define an unique string name to your action, to be able to disable it 
-     *  in KIPI host application if necessary. You must check of course name already used in 
-     *  others tool before to prevent redondancy.
+    /** We will check KIPI host application interface instance validity
      */
-    d->action = actionCollection()->addAction("helloworld");
-    d->action->setText(i18n("Hello World..."));
-    d->action->setIcon(KIcon("misc"));
-    d->action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
-
-    /** Connect plugin action signal to dedicated slot.
-     */
-    connect(d->action, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    /** Action is registered in plugin instance.
-     */
-    addAction(d->action);
-
     d->iface = dynamic_cast<Interface*>(parent());
     if (!d->iface)
     {
@@ -133,18 +115,40 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
        return;
     }
 
-    /** This will get items selection from KIPI host application
+    /** We define plugin action which will be plug in KIPI host application.
+     *  Note that if you set keyboard shortcut to an action you must take a care
+     *  about already existing one from other tool to prevent conflict.
+     *  Don't forget to define an unique string name to your action, to be able to disable it 
+     *  in KIPI host application if necessary. You must check of course name already used in 
+     *  others tool before to prevent redondancy.
+     */
+
+    d->action1 = actionCollection()->addAction("helloworld");
+    d->action1->setText(i18n("Hello World..."));
+    d->action1->setIcon(KIcon("misc"));
+    d->action1->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
+
+    /** Connect plugin action signal to dedicated slot.
+     */
+    connect(d->action1, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateAction1()));
+
+    /** Action is registered in plugin instance.
+     */
+    addAction(d->action1);
+
+    /** This will get items selection from KIPI host application.
      */
     ImageCollection selection = d->iface->currentSelection();
-    d->action->setEnabled(selection.isValid() && !selection.images().isEmpty());
+    d->action1->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */
     connect(d->iface, SIGNAL(selectionChanged(bool)),
-            d->action, SLOT(setEnabled(bool)));
+            d->action1, SLOT(setEnabled(bool)));
 }
 
-void Plugin_HelloWorld::slotActivate()
+void Plugin_HelloWorld::slotActivateAction1()
 {
     /** When plugin action is actived, we display list of items selected in a message box.
      *  This example show a simple dialog with current items selected in KIPI host application.
@@ -164,7 +168,7 @@ void Plugin_HelloWorld::slotActivate()
 Category Plugin_HelloWorld::category(KAction* const action) const
 {
     /// For each plugin actions defined, you can attribute a category which will plug it on right KIPI host application menu.
-    if (action == d->action)
+    if (action == d->action1)
        return ImagesPlugin;
 
     /// No need special debug space outside load plugin area, it will be selected automatically.
