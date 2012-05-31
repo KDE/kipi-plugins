@@ -1,0 +1,2 @@
+To be able to load this plugin in digiKam for testing purpose, you need to to remove it from banned list of tool in 
+void KipiPluginLoader::loadPlugins() method, from core/utilities/kipiiface/kipipluginloader.cpp

@@ -125,7 +125,7 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
 
     d->action1 = actionCollection()->addAction("helloworld");
     d->action1->setText(i18n("Hello World..."));
-    d->action1->setIcon(KIcon("misc"));
+    d->action1->setIcon(KIcon("script-error"));
     d->action1->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
 
     /** Connect plugin action signal to dedicated slot.
