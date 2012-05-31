@@ -72,6 +72,7 @@ private Q_SLOTS:
      */
     void slotActivateAction1();
     void slotActivateAction2();
+    void slotActivateAction3();
 
 private:
 

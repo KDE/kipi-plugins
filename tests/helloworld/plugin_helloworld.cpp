@@ -43,10 +43,13 @@
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
-/// This is all Kipi-plugins common includes used in this tool.
+/** This is all Kipi-plugins common includes used in this tool.
+ *  Look into kipi-plugins/common/libkipiplugins/ for details.
+ */
 
 #include "kptooldialog.h"
 #include "kpaboutdata.h"
+#include "kpimageslist.h"
 
 /// We will use Kipi-plugins namespace.
 using namespace KIPIPlugins;
@@ -68,6 +71,7 @@ public:
         /// debugger will show a null pointer instead a non initialized one.
         action1 = 0;
         action2 = 0;
+        action3 = 0;
         iface   = 0;
     }
 
@@ -75,6 +79,7 @@ public:
      */
     KAction*   action1;
     KAction*   action2;
+    KAction*   action3;
 
     /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
      *  instance of KIPI::PluginLoader singleton which provide a method for that.
@@ -173,6 +178,16 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
     connect(d->action2, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateAction2()));
     addAction(d->action2);
+
+    /** Another action dedicated to be plugged in digiKam Export menu.
+     */
+    d->action3 = actionCollection()->addAction("helloworld-action3");
+    d->action3->setText(i18n("Hello World..."));
+    d->action3->setIcon(KIcon("script-error"));
+    d->action3->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_H));
+    connect(d->action3, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateAction3()));
+    addAction(d->action3);
 }
 
 void Plugin_HelloWorld::slotActivateAction1()
@@ -235,6 +250,47 @@ void Plugin_HelloWorld::slotActivateAction2()
     delete dlg;
 }
 
+void Plugin_HelloWorld::slotActivateAction3()
+{
+    /** When plugin action3 is actived, we display a dedicated widget from libkipiplugins which will show 
+     *  and permit to manage current items selection from kipi host application for batch post-processing purpose.
+     */
+
+    KPAboutData* about = new KPAboutData(ki18n("Hello World"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A simple demo Kipi plugin"),
+                             ki18n("(c) 2004-2012, Gilles Caulier"));
+
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
+
+    about->setHandbookEntry("helloworld");
+
+    QPointer<KPToolDialog> dlg = new KPToolDialog(0);
+    KPImagesList* listView     = new KPImagesList(dlg);
+    listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
+    listView->setAllowRAW(true);
+    listView->loadImagesFromCurrentSelection();
+    dlg->setMainWidget(listView);
+    dlg->setAboutData(about);
+    dlg->exec();
+
+    KUrl::List list = listView->imageUrls();
+
+    if (!list.isEmpty())
+    {
+        QStringList names;
+        foreach (KUrl col, list)
+            names << col.fileName();
+
+        KMessageBox::informationList(0, i18n("This is the list of items to process"), names);
+    }
+
+    delete dlg;
+}
+
 Category Plugin_HelloWorld::category(KAction* const action) const
 {
     /** For each plugin actions defined, you can attribute a category which will plug it on right KIPI host application menu.
@@ -244,6 +300,9 @@ Category Plugin_HelloWorld::category(KAction* const action) const
 
     if (action == d->action2)
        return ToolsPlugin;
+
+    if (action == d->action3)
+       return ExportPlugin;
 
     /// No need special debug space outside load plugin area, it will be selected automatically.
     kWarning() << "Unrecognized action for plugin category identification";
