@@ -68,9 +68,10 @@ public:
 
 private Q_SLOTS:
 
-    /** This is the slot to handle action1 event.
+    /** There are slots to handle action events.
      */
     void slotActivateAction1();
+    void slotActivateAction2();
 
 private:
 
