@@ -59,7 +59,7 @@ private:
 
 public:
 
-    KipiInterface(QObject* parent, const char* name=0);
+    KipiInterface(QObject* const parent, const char* name=0);
     ~KipiInterface();
 
     ImageCollection        currentAlbum();
@@ -71,11 +71,11 @@ public:
     void delImage(const KUrl& url);
     void refreshImages(const KUrl::List& urls);
 
-    int features() const;
+    int      features() const;
     QVariant hostSetting(const QString& settingName);
 
-    ImageCollectionSelector* imageCollectionSelector(QWidget * parent);
-    UploadWidget* uploadWidget(QWidget* parent);
+    ImageCollectionSelector* imageCollectionSelector(QWidget* parent);
+    UploadWidget*            uploadWidget(QWidget* parent);
 
     void addSelectedImages(const KUrl::List& images);
     void addSelectedImage(const KUrl& image);
