@@ -20,6 +20,16 @@
  *
  * ============================================================ */
 
+/** Take a care about includes order, to prevent compilation problem.
+ *  1/ moc file.
+ *  2/ C ansi if really necessary.
+ *  3/ C++ (always prefered than C ansi.
+ *  4/ Extra libraries such as openCV for ex.
+ *  4/ Qt.
+ *  5/ KDE.
+ *  6/ Local files.
+ */
+ 
 /// No need to include plugin_helloworld.h, it will be done through Qt moc file.
 #include "plugin_helloworld.moc"
 
