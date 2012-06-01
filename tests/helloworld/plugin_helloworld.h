@@ -76,6 +76,7 @@ private Q_SLOTS:
     void slotActivateActionImages();
     void slotActivateActionTools();
     void slotActivateActionExport();
+    void slotActivateActionImport();
 
 private:
 
