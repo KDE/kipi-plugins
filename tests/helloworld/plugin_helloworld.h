@@ -45,6 +45,7 @@ namespace KIPIHelloWorldPlugin
 {
 
 /** We will use KIPI::Plugin class as parent from libkipi
+ *  See this API for details : http://api.kde.org/4.x-api/kdegraphics-apidocs/libs/libkipi/libkipi/html/index.html
  */
 class Plugin_HelloWorld : public Plugin
 {
@@ -72,9 +73,9 @@ private Q_SLOTS:
 
     /** There are slots to handle action events.
      */
-    void slotActivateAction1();
-    void slotActivateAction2();
-    void slotActivateAction3();
+    void slotActivateActionImages();
+    void slotActivateActionTools();
+    void slotActivateActionExport();
 
 private:
 

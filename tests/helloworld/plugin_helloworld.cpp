@@ -79,17 +79,17 @@ public:
     {
         /// It's always clean to init pointers to zero. If crash appear, 
         /// debugger will show a null pointer instead a non initialized one.
-        action1 = 0;
-        action2 = 0;
-        action3 = 0;
+        actionImages = 0;
+        actionTools  = 0;
+        actionExport = 0;
         iface   = 0;
     }
 
     /** These plugin actions will pluged into menu KIPI host application.
      */
-    KAction*   action1;
-    KAction*   action2;
-    KAction*   action3;
+    KAction*   actionImages;
+    KAction*   actionTools;
+    KAction*   actionExport;
 
     /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
      *  instance of KIPI::PluginLoader singleton which provide a method for that.
@@ -155,54 +155,54 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
 
     /** An action dedicated to be plugged in digiKam Image menu.
      */
-    d->action1 = actionCollection()->addAction("helloworld-action1");
-    d->action1->setText(i18n("Hello World..."));
-    d->action1->setIcon(KIcon("script-error"));
-    d->action1->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
+    d->actionImages = actionCollection()->addAction("helloworld-actionImages");
+    d->actionImages->setText(i18n("Hello World..."));
+    d->actionImages->setIcon(KIcon("script-error"));
+    d->actionImages->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
 
     /** Connect plugin action signal to dedicated slot.
      */
-    connect(d->action1, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivateAction1()));
+    connect(d->actionImages, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateActionImages()));
 
     /** Action is registered in plugin instance.
      */
-    addAction(d->action1);
+    addAction(d->actionImages);
 
     /** This will get items selection from KIPI host application.
      */
     ImageCollection selection = d->iface->currentSelection();
-    d->action1->setEnabled(selection.isValid() && !selection.images().isEmpty());
+    d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */
     connect(d->iface, SIGNAL(selectionChanged(bool)),
-            d->action1, SLOT(setEnabled(bool)));
+            d->actionImages, SLOT(setEnabled(bool)));
 
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
-    d->action2 = actionCollection()->addAction("helloworld-action2");
-    d->action2->setText(i18n("Hello World..."));
-    d->action2->setIcon(KIcon("script-error"));
-    d->action2->setShortcut(KShortcut(Qt::ALT+Qt::CTRL+Qt::Key_H));
-    connect(d->action2, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivateAction2()));
-    addAction(d->action2);
+    d->actionTools = actionCollection()->addAction("helloworld-actionTools");
+    d->actionTools->setText(i18n("Hello World..."));
+    d->actionTools->setIcon(KIcon("script-error"));
+    d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::CTRL+Qt::Key_H));
+    connect(d->actionTools, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateActionTools()));
+    addAction(d->actionTools);
 
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
-    d->action3 = actionCollection()->addAction("helloworld-action3");
-    d->action3->setText(i18n("Hello World..."));
-    d->action3->setIcon(KIcon("script-error"));
-    d->action3->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_H));
-    connect(d->action3, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivateAction3()));
-    addAction(d->action3);
+    d->actionExport = actionCollection()->addAction("helloworld-actionExport");
+    d->actionExport->setText(i18n("Hello World..."));
+    d->actionExport->setIcon(KIcon("script-error"));
+    d->actionExport->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_H));
+    connect(d->actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateActionExport()));
+    addAction(d->actionExport);
 }
 
-void Plugin_HelloWorld::slotActivateAction1()
+void Plugin_HelloWorld::slotActivateActionImages()
 {
-    /** When plugin action1 is actived, we display list of items selected in a message box.
+    /** When actionImages is actived, we display list of items selected in a message box.
      *  This example show a simple dialog with current items selected in KIPI host application.
      *  You can branch here your dedicated dialog to process items as you want. 
      */
@@ -211,16 +211,16 @@ void Plugin_HelloWorld::slotActivateAction1()
     if (images.isValid() && !images.images().isEmpty())
     {
         QStringList names;
-        foreach (KUrl url, images.images())
+        foreach (const KUrl& url, images.images())
             names << url.fileName();
 
         KMessageBox::informationList(0, i18n("This is the list of selected items"), names);
     }
 }
 
-void Plugin_HelloWorld::slotActivateAction2()
+void Plugin_HelloWorld::slotActivateActionTools()
 {
-    /** When plugin action2 is actived, we display a dedicated widget to select albums from kipi host application
+    /** When actionTools is actived, we display a dedicated widget to select albums from kipi host application
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
 
@@ -251,7 +251,7 @@ void Plugin_HelloWorld::slotActivateAction2()
     if (!list.isEmpty())
     {
         QStringList names;
-        foreach (ImageCollection col, list)
+        foreach (const ImageCollection& col, list)
             names << col.name();
 
         KMessageBox::informationList(0, i18n("This is the list of selected albums"), names);
@@ -260,9 +260,9 @@ void Plugin_HelloWorld::slotActivateAction2()
     delete dlg;
 }
 
-void Plugin_HelloWorld::slotActivateAction3()
+void Plugin_HelloWorld::slotActivateActionExport()
 {
-    /** When plugin action3 is actived, we display a dedicated widget from libkipiplugins which will show 
+    /** When actionExport is actived, we display a dedicated widget from libkipiplugins which will show 
      *  and permit to manage current items selection from kipi host application for batch post-processing purpose.
      */
 
@@ -292,7 +292,7 @@ void Plugin_HelloWorld::slotActivateAction3()
     if (!list.isEmpty())
     {
         QStringList names;
-        foreach (KUrl col, list)
+        foreach (const KUrl& col, list)
             names << col.fileName();
 
         KMessageBox::informationList(0, i18n("This is the list of items to process"), names);
@@ -305,13 +305,13 @@ Category Plugin_HelloWorld::category(KAction* const action) const
 {
     /** For each plugin actions defined, you can attribute a category which will plug it on right KIPI host application menu.
      */
-    if (action == d->action1)
+    if (action == d->actionImages)
        return ImagesPlugin;
 
-    if (action == d->action2)
+    if (action == d->actionTools)
        return ToolsPlugin;
 
-    if (action == d->action3)
+    if (action == d->actionExport)
        return ExportPlugin;
 
     /// No need special debug space outside load plugin area, it will be selected automatically.
