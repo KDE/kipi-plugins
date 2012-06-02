@@ -94,6 +94,14 @@
 #elif defined(__BIG_ENDIAN__)
 #define qDNGBigEndian 1
 
+#elif defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__) && \
+    __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#define qDNGBigEndian 1
+
+#elif defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__) && \
+    __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define qDNGBigEndian 0
+
 #else
 
 #ifndef qXCodeRez
