@@ -67,4 +67,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 046 ==> 288462 : Issues building with highgui [patch].
 047 ==> 299952 : Crash when closing ExpoBlending tool.
 048 ==> 224893 : New tool to export to Imgur.
-049 ==> 
+049 ==> 301027 : Fix fail to build on MIPS.
+050 ==> 
