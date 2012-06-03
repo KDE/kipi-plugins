@@ -53,7 +53,7 @@
 #include "kipiimagecollectionshared.h"
 #include "kipitest-debug.h"
 
-KipiInterface::KipiInterface(QObject* parent, const char* name)
+KipiInterface::KipiInterface(QObject* const parent, const char* name)
     : Interface(parent, name),
       m_selectedImages(),
       m_selectedAlbums(),

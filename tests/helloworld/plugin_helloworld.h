@@ -20,8 +20,12 @@
  *
  * ============================================================ */
 
+/** Standard C++ header wrapper
+ */
 #ifndef PLUGIN_HELLOWORLD_H
 #define PLUGIN_HELLOWORLD_H
+
+// NOTE: Always limit include in header file to speed-up compilation.
 
 // Qt includes
 
@@ -31,16 +35,18 @@
 
 #include <libkipi/plugin.h>
 
-namespace KIPI
-{
-    class Interface;
-}
-
+/** To make source code more readable, we will declare KIPI namespace as well.
+ */
 using namespace KIPI;
 
+/** Each plugin must be fully wrapped into a dedicated C++ namespace to prevent conflicts with symbols and identifiers.
+ */
 namespace KIPIHelloWorldPlugin
 {
 
+/** We will use KIPI::Plugin class as parent from libkipi
+ *  See this API for details : http://api.kde.org/4.x-api/kdegraphics-apidocs/libs/libkipi/libkipi/html/index.html
+ */
 class Plugin_HelloWorld : public Plugin
 {
     Q_OBJECT
@@ -61,25 +67,23 @@ public:
 
     /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.
      */
-    void setup(QWidget* const);
+    void setup(QWidget* const widget);
 
 private Q_SLOTS:
 
-    /** This is an example slot to which your action is connected.
+    /** There are slots to handle action events.
      */
-    void slotActivate();
+    void slotActivateActionImages();
+    void slotActivateActionTools();
+    void slotActivateActionExport();
+    void slotActivateActionImport();
 
 private:
 
-    /** This is the plugin action that KIPI host application will plug into menu.
+    /** We use d private internal container. See implementation for details.
      */
-    KAction*   m_action;
-
-    /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
-     *  instance of KIPI::PluginLoader singleton which provide a method for that.
-     *  Since libkipi 2.0.0, KIPI host interface is also available from KIPI::Plugin::interface().
-     */
-    Interface* m_iface;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIHelloWorldPlugin
