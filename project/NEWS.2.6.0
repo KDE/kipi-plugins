@@ -1,0 +1,70 @@
+Kipi-plugins 2.6.0 - Release date: 2012/06/03
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+RAWConverter      : Add progress management support, and parallelization of tasks using ThreadWeaver.
+DNGConverter      : Add progress management support, and parallelization of tasks using ThreadWeaver.
+RedEyesRemoval    : Add progress management support, and parallelization of tasks using ThreadWeaver.
+TimeAdjust        : Add items listview support, progress management support, multithreading, and parallelization of tasks using ThreadWeaver.
+SendImages        : Dialog Layout improvements, progress management support, and parallelization of tasks using ThreadWeaver.
+PhotoLayoutEditor : Add SuperImpose Template support to compose fun frame, post-card, etc... template file use SVG format.
+Panorama          : Bugfix for binary detection on OSes different than Linux (fixes the same issue with expoblending).
+                    Bugfix for the back button of the assistant.
+                    First steps towards a cropping for target panorama.
+                    Parallelization of tasks using ThreadWeaver.
+General           : New tool to export items to ImageShack web service (http://imageshack.us).
+General           : New tool to export items to MediaWiki web service (http://www.mediawiki.org).
+General           : New tool to export items to Imgur web service (http://imgur.com).
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 149269 : Thumbnails are square (HTML Export plugin) [patch].
+002 ==> 289283 : HTMLExport: add keyboard navigation and image preloading to floating_cards theme [patch].
+003 ==> 153249 : Photo arranging and printing plugin.
+004 ==> 209721 : Search field in digikam's coordinates editor uses black text on black background.
+005 ==> 279182 : Batch resize fails possibly due to timestamp in filename.
+006 ==> 290932 : KIPI Plugins - up to date website.
+007 ==> 212785 : Cannot preserve rotation when exporting from raw to Facebook.
+008 ==> 291762 : Crash with export.
+009 ==> 286736 : PrintAssistant: If you step through multiple images in crop image, it adds pages 
+010 ==> 286735 : PrintAssistant: Custom paper size isn't retained
+011 ==> 257636 : PrintAssistant: add 35x45mm photo template for UK passports
+012 ==> 272336 : Picasaweb, album date -1.
+013 ==> 292537 : Dng plugin segfaults.
+014 ==> 293301 : digiKam crashes when uploading to PicasaWeb.
+015 ==> 220798 : It is not possible to set the language in create calendar tool.
+016 ==> 293917 : Crash when exiting digikam.
+017 ==> 294133 : Expoblending cannot be compiled.
+018 ==> 233926 : New tool to export to Imageshack.
+019 ==> 294460 : Std namespace issue in kipi-plugins [patch].
+020 ==> 294461 : Build failure in picasawebexport - QString ambiguity [patch].
+021 ==> 294547 : The url http://www.kipi-plugins.org in 'about' menu does nt work.
+022 ==> 294751 : Unlisted dependancy (hugin).
+023 ==> 206842 : New tool to export to Wikimedia Commons.
+024 ==> 286018 : Pano Tool and ExpoBlend tool do not work on OS X [patch].
+025 ==> 286633 : Unable to find cpfind executable, but cpfind is installed and availabe within the path.
+026 ==> 286382 : Panorama stitcher doesn't run and asks for autooptimizer despite hugin is installed.
+027 ==> 296579 : Adjust Date & Time: Wrong date format shown
+028 ==> 193874 : When changing dates, change date-based filename as well.
+029 ==> 268317 : "Determine from clock photo" dialog: Allow zooming with +/- or ctrl+mousewheel in the preview.
+030 ==> 208291 : Lock zoom when switching photos.
+031 ==> 279444 : Missing progress information when updating date on several images.
+032 ==> 134222 : Gallery2 export doesn't respect items selections.
+033 ==> 154699 : Current item in the gallery export list view should be shown in preview.
+034 ==> 207390 : Gallery export shows regular file dialog instead of tags or folders.
+035 ==> 220319 : Gallery2 Export Plugin not allowing Maximum Dimension > 999 px.
+036 ==>	292268 : Coordinates into LineString not correct.
+037 ==> 268315 : xx MB field below "Mail program": Function unclear.
+038 ==> 220221 : Batch processing preview shows only the corner of images.
+039 ==> 294455 : Batch process preview doesn't show a preview.
+040 ==> 298118 : Crash when open Geo-location dialog.
+041 ==> 163991 : Import images from Picasa WebAlbum.
+042 ==> 285070 : Change Date and Time dialog should warn when no tag to change is selected.
+043 ==> 143886 : Replace add and substract in "adjust time and date" menu with positive/negative times.
+044 ==> 296776 : Crash while trying to send pictures via default email software (kipi).
+045 ==> 299071 : digiKam crashed on export of one image to picasaweb.
+046 ==> 288462 : Issues building with highgui [patch].
+047 ==> 299952 : Crash when closing ExpoBlending tool.
+048 ==> 224893 : New tool to export to Imgur.
+049 ==> 301027 : Fix fail to build on MIPS.
