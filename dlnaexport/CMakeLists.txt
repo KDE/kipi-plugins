@@ -4,6 +4,7 @@ SET(kipiplugin_dlnaexport_PART_SRCS
     dlnawidget.cpp
     plugin_dlnaexport.cpp
     dlnawindow.cpp
+    mediaserver_window.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_dlnaexport ${kipiplugin_dlnaexport_PART_SRCS})
@@ -16,6 +17,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
                       ${KDE4_KIO_LIBS}
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
+                      ${HUPNP_LIBS}
                       kipiplugins
                      )
 

@@ -50,6 +50,8 @@ namespace KIPIPlugins
     class KPImagesList;
 }
 
+class MediaServerWindow;
+
 using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
@@ -68,14 +70,6 @@ public Q_SLOTS:
 
     void reactivate();
 
-private Q_SLOTS:
-
-
-
-private:
-
-
-
 private:
 
     QLabel*       m_headerLbl;
@@ -83,6 +77,8 @@ private:
     KPImagesList* m_imgList;
 
     QProgressBar* m_progressBar;
+
+    MediaServerWindow* m_dlna;
 };
 
 } // namespace KIPIDLNAExportPlugin

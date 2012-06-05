@@ -54,6 +54,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "mediaserver_window.h"
 
 namespace KIPIDLNAExportPlugin
 {
@@ -63,6 +64,8 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
+    m_dlna = new MediaServerWindow();
+
     // -------------------------------------------------------------------
 
     m_imgList = new KIPIPlugins::KPImagesList(this);
@@ -71,6 +74,8 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via DLNA."));
+
+    m_dlna->on_addContentButton_clicked("/home/smit/pics", true);
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
