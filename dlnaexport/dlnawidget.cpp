@@ -63,8 +63,7 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     : QWidget(parent)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-
-    m_dlna = new MediaServerWindow();
+    m_dlna                  = new MediaServerWindow();
 
     // -------------------------------------------------------------------
 

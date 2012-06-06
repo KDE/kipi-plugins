@@ -72,11 +72,11 @@ public Q_SLOTS:
 
 private:
 
-    QLabel*       m_headerLbl;
+    QLabel*            m_headerLbl;
 
-    KPImagesList* m_imgList;
+    KPImagesList*      m_imgList;
 
-    QProgressBar* m_progressBar;
+    QProgressBar*      m_progressBar;
 
     MediaServerWindow* m_dlna;
 };
