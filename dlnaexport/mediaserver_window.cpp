@@ -20,7 +20,7 @@
  *  along with HUpnpAvSimpleTestApp. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mediaserver_window.h"
+#include "mediaserver_window.moc"
 
 #include <HUpnpCore/HUpnp>
 #include <HUpnpCore/HDeviceInfo>

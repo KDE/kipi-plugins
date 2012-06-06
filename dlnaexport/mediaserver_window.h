@@ -26,18 +26,9 @@
 #include <HUpnpAv/HUpnpAv>
 #include <HUpnpCore/HDeviceHost>
 
-//
-//
-//
 class MediaServerWindow : public QObject
 {
     Q_OBJECT
-
-private:
-
-    Herqq::Upnp::HDeviceHost* m_deviceHost;
-
-    Herqq::Upnp::Av::HFileSystemDataSource* m_datasource;
 
 public:
 
@@ -45,6 +36,11 @@ public:
     virtual ~MediaServerWindow();
     void on_addContentButton_clicked(QString, bool);
 
+
+private:
+
+    Herqq::Upnp::HDeviceHost*               m_deviceHost;
+    Herqq::Upnp::Av::HFileSystemDataSource* m_datasource;
 };
 
 #endif // MEDIASERVER_WINDOW_H
