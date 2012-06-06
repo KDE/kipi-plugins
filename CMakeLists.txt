@@ -161,6 +161,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
 MACRO_OPTIONAL_FIND_PACKAGE(Boost)         # For Panorama
+MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)         # For DlnaExport
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
@@ -244,6 +245,7 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap" KGEOMAP_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki" MEDIAWIKI_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte" LIBKVKONTAKTE_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("boost" Boost_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("Hupnp" HUPNP_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -303,6 +305,7 @@ PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki" MEDIAWIKI_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Panorama" Boost_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("DlnaExport" HUPNP_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -398,7 +401,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(kmlexport)
     ADD_SUBDIRECTORY(imageshackexport)
     ADD_SUBDIRECTORY(photolayoutseditor)
-    ADD_SUBDIRECTORY(dlnaexport)
 
     # Plugins which are optional depencies.
 
@@ -458,6 +460,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     IF(Boost_FOUND)
         ADD_SUBDIRECTORY(panorama)
+    ENDIF(Boost_FOUND)
+
+    IF(HUPNP_FOUND)
+        ADD_SUBDIRECTORY(dlnaexport)
     ENDIF(Boost_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
