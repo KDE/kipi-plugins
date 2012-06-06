@@ -1,5 +1,7 @@
 SUBDIRS(icons)
 
+INCLUDE_DIRECTORIES(${HUPNP_INCLUDE_DIR})
+
 SET(kipiplugin_dlnaexport_PART_SRCS
     dlnawidget.cpp
     plugin_dlnaexport.cpp
