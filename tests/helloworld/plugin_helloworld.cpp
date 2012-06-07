@@ -28,8 +28,11 @@
  *  4/ Qt.
  *  5/ KDE.
  *  6/ Local files.
+ *
+ *  Also, use C++ classes include header styles with Qt4,
+ *  but do not use it with KDE4 header (use C ANSI style instead).
  */
- 
+
 /// No need to include plugin_helloworld.h, it will be done through Qt moc file.
 #include "plugin_helloworld.moc"
 
