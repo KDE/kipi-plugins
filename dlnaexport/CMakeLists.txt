@@ -20,6 +20,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
                       ${HUPNP_LIBS}
+                      ${HUPNPAV_LIBS}
                       kipiplugins
                      )
 
