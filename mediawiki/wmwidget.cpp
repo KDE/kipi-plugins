@@ -111,24 +111,28 @@ WmWidget::WmWidget(QWidget* const parent)
     QGridLayout* loginBoxLayout = new QGridLayout(m_loginBox);
 
     m_wikiSelect = new KUrlComboRequester(m_loginBox);
-    m_nameEdit   = new KLineEdit(m_loginBox);
-    m_passwdEdit = new KLineEdit(m_loginBox);
-    m_passwdEdit->setEchoMode(KLineEdit::Password);
-
+    m_wikiSelect->comboBox()->setEditable(true);
+    m_wikiSelect->setWhatsThis(i18n("Enter mediawiki server url where you want to be connected "
+                                    "(as http://en.wikipedia.org/w/api.php for Wikipedia for example)."));
     if(m_wikiSelect->button())
         m_wikiSelect->button()->hide();
-    
-    m_wikiSelect->comboBox()->setEditable(true);
+
+    m_nameEdit   = new KLineEdit(m_loginBox);
+    m_nameEdit->setWhatsThis(i18n("Enter your mediawiki server login name where you want to be connected."));
+
+    m_passwdEdit = new KLineEdit(m_loginBox);
+    m_passwdEdit->setEchoMode(KLineEdit::Password);
+    m_passwdEdit->setWhatsThis(i18n("Enter your mediawiki server password where you want to be connected."));
 
     QLabel* wikiLabel     = new QLabel(m_loginBox);
-    wikiLabel->setText(i18n("Wiki:"));
+    wikiLabel->setText(i18n("Url:"));
 
     QLabel* nameLabel     = new QLabel(m_loginBox);
     nameLabel->setText(i18n( "Login:" ));
 
     QLabel* passwdLabel   = new QLabel(m_loginBox);
     passwdLabel->setText(i18n("Password:"));
-    
+
     QPushButton* loginBtn = new QPushButton(m_loginBox);
     loginBtn->setAutoDefault(true);
     loginBtn->setDefault(true);
@@ -221,7 +225,7 @@ WmWidget::WmWidget(QWidget* const parent)
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
     QLabel* dimensionLbl = new QLabel(i18n("Maximum size:"), m_optionsBox);
-  
+
     m_imageQualitySpB = new QSpinBox(m_optionsBox);
     m_imageQualitySpB->setMinimum(0);
     m_imageQualitySpB->setMaximum(100);
