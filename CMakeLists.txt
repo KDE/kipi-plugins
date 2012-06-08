@@ -464,7 +464,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     IF(HUPNP_FOUND)
         ADD_SUBDIRECTORY(dlnaexport)
-    ENDIF(Boost_FOUND)
+    ENDIF(HUPNP_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #
