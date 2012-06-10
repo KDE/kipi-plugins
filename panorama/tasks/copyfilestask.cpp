@@ -101,7 +101,7 @@ void CopyFilesTask::run()
         errString = i18n("Cannot move panorama from %1 to %2.",
                          panoUrl.toLocalFile(),
                          finalPanoUrl.toLocalFile());
-        kDebug() << "Cannot move panorama: QFile error = " + panoFile.error();
+        kDebug() << "Cannot move panorama: QFile error = " << panoFile.error();
         successFlag = false;
         return;
     }

@@ -153,7 +153,10 @@ QVariant LayersModel::headerData(int section, Qt::Orientation orientation, int r
                 return root->data(section);
             case Qt::DecorationRole:
                 if (section == 1 || section == 2)
+                {
                     return root->data(section);
+                }
+                break;
         }
     }
     return QVariant();

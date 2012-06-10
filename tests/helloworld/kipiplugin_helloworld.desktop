@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=HelloWorld
 Comment=A demo kipi tool
+Comment=An hello world tool
 Type=Service
 Icon=script-error
 ServiceTypes=KIPI/Plugin
