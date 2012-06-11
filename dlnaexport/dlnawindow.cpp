@@ -54,7 +54,7 @@ DLNAWindow::DLNAWindow(const QString& tmpFolder)
     setWindowTitle(i18n("Export via DLNA"));
     setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
                                      i18n("Start upload via DLNA")));
-    m_widget->setMinimumSize(700, 500);
+    m_widget->setMinimumSize(300, 200);
 
     //--------------------------------------------------------------------
 

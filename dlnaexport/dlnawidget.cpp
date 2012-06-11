@@ -25,27 +25,23 @@
 // Qt includes
 
 #include <QLabel>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QGroupBox>
-#include <QButtonGroup>
-#include <QRadioButton>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDialog>
+#include <QDesktopServices>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <klineedit.h>
-#include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
+#include <kglobalsettings.h>
+#include <kdeversion.h>
 
 // Libkipi includes
 
@@ -54,7 +50,6 @@
 
 // Local includes
 
-#include "kpimageslist.h"
 #include "mediaserver_window.h"
 
 namespace KIPIDLNAExportPlugin
@@ -63,51 +58,44 @@ namespace KIPIDLNAExportPlugin
 DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolder*/, QWidget* const parent)
     : QWidget(parent)
 {
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    m_dlna                  = new MediaServerWindow();
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     // -------------------------------------------------------------------
-
-    m_imgList = new KIPIPlugins::KPImagesList(this);
-
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
-    m_imgList->setAllowRAW(true);
-    m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via DLNA."));
-
-    m_dlna->on_addContentButton_clicked("/home/smit/pictu", true);
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the DLNA home page in a web browser."));
-    m_headerLbl->setOpenExternalLinks(true);
-    m_headerLbl->setFocusPolicy(Qt::NoFocus);
+    m_headerLbl->setText("Please select a folder containing jpeg/jpg images only");
 
-    m_progressBar = new QProgressBar(settingsBox);
-    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_progressBar->hide();
-    m_progressBar->setMinimum(0);
-    m_progressBar->setMaximum(100);
+    // ------------------------------------------------------------------------
+
+    m_directoryLbl = new QLabel(settingsBox);
+
+    // ------------------------------------------------------------------------
+    m_selectBtn = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
+                                              i18n("Select Directory for transfer")),
+                                              settingsBox);
 
     // ------------------------------------------------------------------------
 
     settingsBoxLayout->addWidget(m_headerLbl);
+    settingsBoxLayout->addWidget(m_directoryLbl);
+    settingsBoxLayout->addWidget(m_selectBtn);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
-    mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
     // ------------------------------------------------------------------------
 
-    QString link = QString ("http://www.google.com");
-    m_headerLbl->setText(link);
+    connect(m_selectBtn, SIGNAL(clicked()),
+            this, SLOT(slotSelectDirectory()));
+
 }
 
 DLNAWidget::~DLNAWidget()
@@ -116,8 +104,27 @@ DLNAWidget::~DLNAWidget()
 
 void DLNAWidget::reactivate()
 {
-    m_imgList->listView()->clear();
-    m_imgList->loadImagesFromCurrentSelection();
 }
 
+void DLNAWidget::slotSelectDirectory()
+{
+    QString startingPath;
+#if KDE_IS_VERSION(4,1,61)
+    startingPath = KGlobalSettings::picturesPath();
+#else
+    startingPath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+#endif
+    QString path = KFileDialog::getExistingDirectory(startingPath, this,
+                                                     i18n("Select folder to parse"));
+
+    if (path.isEmpty())
+    {
+        return;
+    }
+
+    m_directoryLbl->setText(path);
+    kDebug() << path;
+    this->m_dlna = new MediaServerWindow();
+    m_dlna->on_addContentButton_clicked(path, true);
+}
 } // namespace KIPIDLNAExportPlugin

@@ -30,9 +30,6 @@
 // Local includes
 
 class QLabel;
-class QRadioButton;
-class QSpinBox;
-class QProgressBar;
 
 class KComboBox;
 class KPushButton;
@@ -69,16 +66,17 @@ public:
 public Q_SLOTS:
 
     void reactivate();
+    void slotSelectDirectory();
 
 private:
 
     QLabel*            m_headerLbl;
 
-    KPImagesList*      m_imgList;
-
-    QProgressBar*      m_progressBar;
+    KPushButton*       m_selectBtn;
 
     MediaServerWindow* m_dlna;
+
+    QLabel*            m_directoryLbl;
 };
 
 } // namespace KIPIDLNAExportPlugin
