@@ -36,7 +36,6 @@
 #include <HUpnpAv/HFileSystemDataSource>
 #include <HUpnpAv/HContentDirectoryServiceConfiguration>
 
-
 using namespace Herqq::Upnp;
 using namespace Herqq::Upnp::Av;
 
@@ -93,8 +92,6 @@ MediaServerWindow::MediaServerWindow( QObject* parent )
     //    Q_ASSERT_X(false, "", m_deviceHost->errorDescription().toLocal8Bit());
         kDebug() << "Initialization failed. Description : " << m_deviceHost->errorDescription().toLocal8Bit();
     }
-
-
 }
 
 MediaServerWindow::~MediaServerWindow()

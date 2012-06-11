@@ -34,8 +34,8 @@ public:
 
     MediaServerWindow(QObject* parent = 0);
     virtual ~MediaServerWindow();
-    void on_addContentButton_clicked(QString, bool);
 
+    void on_addContentButton_clicked(QString, bool);
 
 private:
 
