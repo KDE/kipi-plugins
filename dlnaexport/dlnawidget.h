@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPIDLNAEXPORTPLUGIN_DLNAWIDGET_H
-#define KIPIDLNAEXPORTPLUGIN_DLNAWIDGET_H
+#ifndef DLNAWIDGET_H
+#define DLNAWIDGET_H
 
 // Qt includes
 
@@ -81,4 +81,4 @@ private:
 
 } // namespace KIPIDLNAExportPlugin
 
-#endif // KIPIDLNAEXPORTPLUGIN_DLNAWIDGET_H
+#endif // DLNAWIDGET_H

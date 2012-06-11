@@ -65,7 +65,7 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    m_headerLbl = new QLabel(settingsBox);
+    m_headerLbl    = new QLabel(settingsBox);
     m_headerLbl->setText("Please select a folder containing jpeg/jpg images only");
 
     // ------------------------------------------------------------------------
@@ -73,7 +73,8 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     m_directoryLbl = new QLabel(settingsBox);
 
     // ------------------------------------------------------------------------
-    m_selectBtn = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
+
+    m_selectBtn    = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
                                               i18n("Select Directory for transfer")),
                                               settingsBox);
 
@@ -124,7 +125,8 @@ void DLNAWidget::slotSelectDirectory()
 
     m_directoryLbl->setText(path);
     kDebug() << path;
-    this->m_dlna = new MediaServerWindow();
+    m_dlna = new MediaServerWindow();
     m_dlna->on_addContentButton_clicked(path, true);
 }
+
 } // namespace KIPIDLNAExportPlugin

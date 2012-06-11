@@ -76,4 +76,4 @@ DLNAWindow::~DLNAWindow()
 {
 }
 
-} //namespace KIPIDLNAExportPlugin
+} // namespace KIPIDLNAExportPlugin
