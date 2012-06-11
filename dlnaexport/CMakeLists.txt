@@ -1,4 +1,5 @@
 SUBDIRS(icons)
+SUBDIRS(descriptions)
 
 INCLUDE_DIRECTORIES(${HUPNP_INCLUDE_DIR})
 

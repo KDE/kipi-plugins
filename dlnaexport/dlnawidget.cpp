@@ -45,6 +45,7 @@
 #include <kpushbutton.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
+#include <kdebug.h>
 
 // Libkipi includes
 
@@ -74,7 +75,7 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via DLNA."));
 
-    m_dlna->on_addContentButton_clicked("/home/smit/pics", true);
+    m_dlna->on_addContentButton_clicked("/home/smit/pictures2", true);
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);

@@ -22,6 +22,9 @@
 
 #include "mediaserver_window.moc"
 
+#include <kstandarddirs.h>
+#include <kdebug.h>
+
 #include <HUpnpCore/HUpnp>
 #include <HUpnpCore/HDeviceInfo>
 #include <HUpnpCore/HDeviceHostConfiguration>
@@ -68,7 +71,14 @@ MediaServerWindow::MediaServerWindow( QObject* parent )
 
     // 5) Setup the HDeviceHost with desired configuration info.
     HDeviceConfiguration config;
-    config.setPathToDeviceDescription("./descriptions/herqq_mediaserver_description.xml");
+
+    QString filePath = KStandardDirs::locate("data",
+    "kipiplugin_dlnaexport/xml/herqq_mediaserver_description.xml");
+
+    config.setPathToDeviceDescription(filePath);
+
+    kDebug() << "filepath properly set : " << filePath;
+
     config.setCacheControlMaxAge(180);
 
     HDeviceHostConfiguration hostConfiguration;
@@ -77,10 +87,14 @@ MediaServerWindow::MediaServerWindow( QObject* parent )
 
     // 6) Initialize the HDeviceHost.
     m_deviceHost = new HDeviceHost(this);
+
     if (!m_deviceHost->init(hostConfiguration))
     {
-        Q_ASSERT_X(false, "", m_deviceHost->errorDescription().toLocal8Bit());
+    //    Q_ASSERT_X(false, "", m_deviceHost->errorDescription().toLocal8Bit());
+        kDebug() << "Initialization failed. Description : " << m_deviceHost->errorDescription().toLocal8Bit();
     }
+
+
 }
 
 MediaServerWindow::~MediaServerWindow()
