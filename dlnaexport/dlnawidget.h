@@ -47,12 +47,12 @@ namespace KIPIPlugins
     class KPImagesList;
 }
 
-class MediaServerWindow;
-
 using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
 {
+
+class MediaServerWindow;
 
 class DLNAWidget : public QWidget
 {
