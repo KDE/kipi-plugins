@@ -32,19 +32,37 @@
 
 #include <HUpnpCore/HUpnp>
 #include <HUpnpCore/HDeviceInfo>
+#include <HUpnpCore/HDeviceHost>
 #include <HUpnpCore/HDeviceHostConfiguration>
+#include <HUpnpAv/HUpnpAv>
 #include <HUpnpAv/HRootDir>
 #include <HUpnpAv/HAvDeviceModelCreator>
 #include <HUpnpAv/HMediaServerDeviceConfiguration>
 #include <HUpnpAv/HFileSystemDataSource>
 #include <HUpnpAv/HContentDirectoryServiceConfiguration>
 
+using namespace Herqq::Upnp;
+using namespace Herqq::Upnp::Av;
+
 namespace KIPIDLNAExportPlugin
 {
 
+class MediaServerWindow::Private
+{
+public:
+
+    Private()
+    {
+        deviceHost = 0;
+        datasource = 0;
+    }
+
+    HDeviceHost*           deviceHost;
+    HFileSystemDataSource* datasource;
+};
+
 MediaServerWindow::MediaServerWindow(QObject* const parent)
-    : QObject(parent),
-      m_datasource(0)
+    : QObject(parent), d(new Private)
 {
     // Configure a data source
     HFileSystemDataSourceConfiguration datasourceConfig;
@@ -52,11 +70,11 @@ MediaServerWindow::MediaServerWindow(QObject* const parent)
     // Here you could configure the data source in more detail if needed. For example,
     // you could add "root directories" to the configuration and the data source
     // would scan those directories for media content upon initialization.
-    m_datasource = new HFileSystemDataSource(datasourceConfig);
+    d->datasource = new HFileSystemDataSource(datasourceConfig);
 
     // Configure ContentDirectoryService by providing it access to the desired data source.
     HContentDirectoryServiceConfiguration cdsConfig;
-    cdsConfig.setDataSource(m_datasource, false);
+    cdsConfig.setDataSource(d->datasource, false);
 
     // Configure MediaServer by giving it the ContentDirectoryService configuration.
     HMediaServerDeviceConfiguration mediaServerConfig;
@@ -84,17 +102,18 @@ MediaServerWindow::MediaServerWindow(QObject* const parent)
     hostConfiguration.add(config);
 
     // Initialize the HDeviceHost.
-    m_deviceHost = new HDeviceHost(this);
+    d->deviceHost = new HDeviceHost(this);
 
-    if (!m_deviceHost->init(hostConfiguration))
+    if (!d->deviceHost->init(hostConfiguration))
     {
-        kDebug() << "Initialization failed. Description : " << m_deviceHost->errorDescription().toLocal8Bit();
+        kDebug() << "Initialization failed. Description : " << d->deviceHost->errorDescription().toLocal8Bit();
     }
 }
 
 MediaServerWindow::~MediaServerWindow()
 {
-     delete m_datasource;
+     delete d->datasource;
+     delete d;
 }
 
 void MediaServerWindow::onAddContentButtonClicked(const QString& dirName, bool mode)
@@ -105,7 +124,7 @@ void MediaServerWindow::onAddContentButtonClicked(const QString& dirName, bool m
                                         : HRootDir::SingleDirectoryScan;
 
         HRootDir rd(dirName, smode);
-        m_datasource->add(rd);
+        d->datasource->add(rd);
     }
 }
 

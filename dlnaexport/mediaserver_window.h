@@ -29,14 +29,6 @@
 #include <QObject>
 #include <QString>
 
-// libHUpnp includes
-
-#include <HUpnpAv/HUpnpAv>
-#include <HUpnpCore/HDeviceHost>
-
-using namespace Herqq::Upnp;
-using namespace Herqq::Upnp::Av;
-
 namespace KIPIDLNAExportPlugin
 {
 
@@ -53,8 +45,8 @@ public:
 
 private:
 
-    HDeviceHost*           m_deviceHost;
-    HFileSystemDataSource* m_datasource;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIDLNAExportPlugin
