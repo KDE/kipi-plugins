@@ -25,8 +25,8 @@
         </argument>
       </argumentList>
     </action>
-	<action>
-	<name>GetFeatureList</name>
+    <action>
+      <name>GetFeatureList</name>
       <argumentList>
         <argument>
           <name>FeatureList</name>
@@ -46,7 +46,7 @@
       </argumentList>
     </action>
     <action>
-	<name>GetServiceResetToken</name>
+      <name>GetServiceResetToken</name>
       <argumentList>
         <argument>
           <name>ResetToken</name>
@@ -112,7 +112,7 @@
     </action>
   </actionList>
     <serviceStateTable>
-	<stateVariable sendEvents="no">
+      <stateVariable sendEvents="no">
       <name>SearchCapabilities</name>
       <dataType>string</dataType>
     </stateVariable>
@@ -124,11 +124,11 @@
       <name>SystemUpdateID</name>
       <dataType>ui4</dataType>
     </stateVariable>
-	<stateVariable sendEvents="no">
+    <stateVariable sendEvents="no">
       <name>ServiceResetToken</name>
       <dataType>string</dataType>
     </stateVariable>
-	<stateVariable sendEvents="no">
+    <stateVariable sendEvents="no">
       <name>FeatureList</name>
       <dataType>string</dataType>
     </stateVariable>

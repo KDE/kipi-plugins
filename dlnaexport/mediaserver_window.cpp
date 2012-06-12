@@ -46,32 +46,32 @@ MediaServerWindow::MediaServerWindow(QObject* const parent)
     : QObject(parent),
       m_datasource(0)
 {
-    // 1) Configure a data source
+    // Configure a data source
     HFileSystemDataSourceConfiguration datasourceConfig;
+
     // Here you could configure the data source in more detail if needed. For example,
     // you could add "root directories" to the configuration and the data source
     // would scan those directories for media content upon initialization.
     m_datasource = new HFileSystemDataSource(datasourceConfig);
 
-    // 2) Configure ContentDirectoryService by providing it access to the desired data source.
+    // Configure ContentDirectoryService by providing it access to the desired data source.
     HContentDirectoryServiceConfiguration cdsConfig;
     cdsConfig.setDataSource(m_datasource, false);
 
-    // 3) Configure MediaServer by giving it the ContentDirectoryService configuration.
+    // Configure MediaServer by giving it the ContentDirectoryService configuration.
     HMediaServerDeviceConfiguration mediaServerConfig;
     mediaServerConfig.setContentDirectoryConfiguration(cdsConfig);
 
-    // 4) Setup the "Device Model Cretor" that HUPnP will use to create
+    // Setup the "Device Model Cretor" that HUPnP will use to create
     // appropriate UPnP A/V device and service instances. Here you provide the
     // MediaServer configuration HUPnP will pass to the MediaServer device instance.
     HAvDeviceModelCreator creator;
     creator.setMediaServerConfiguration(mediaServerConfig);
 
-    // 5) Setup the HDeviceHost with desired configuration info.
+    // Setup the HDeviceHost with desired configuration info.
     HDeviceConfiguration config;
 
-    QString filePath = KStandardDirs::locate("data",
-    "kipiplugin_dlnaexport/xml/herqq_mediaserver_description.xml");
+    QString filePath = KStandardDirs::locate("data", "kipiplugin_dlnaexport/xml/herqq_mediaserver_description.xml");
 
     config.setPathToDeviceDescription(filePath);
 
@@ -83,12 +83,11 @@ MediaServerWindow::MediaServerWindow(QObject* const parent)
     hostConfiguration.setDeviceModelCreator(creator);
     hostConfiguration.add(config);
 
-    // 6) Initialize the HDeviceHost.
+    // Initialize the HDeviceHost.
     m_deviceHost = new HDeviceHost(this);
 
     if (!m_deviceHost->init(hostConfiguration))
     {
-    //    Q_ASSERT_X(false, "", m_deviceHost->errorDescription().toLocal8Bit());
         kDebug() << "Initialization failed. Description : " << m_deviceHost->errorDescription().toLocal8Bit();
     }
 }
@@ -102,8 +101,8 @@ void MediaServerWindow::onAddContentButtonClicked(const QString& dirName, bool m
 {
     if (!dirName.isEmpty())
     {
-        HRootDir::ScanMode smode = mode ?
-                HRootDir::RecursiveScan : HRootDir::SingleDirectoryScan;
+        HRootDir::ScanMode smode = mode ? HRootDir::RecursiveScan 
+                                        : HRootDir::SingleDirectoryScan;
 
         HRootDir rd(dirName, smode);
         m_datasource->add(rd);
