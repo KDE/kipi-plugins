@@ -32,20 +32,12 @@ using namespace KIPIPlugins;
 namespace KIPIDLNAExportPlugin
 {
 
-class DLNAWidget;
-
 class DLNAWindow : public KPToolDialog
 {
-    Q_OBJECT
-
 public:
 
     explicit DLNAWindow(const QString& tmpFolder);
     ~DLNAWindow();
-
-private:
-
-    DLNAWidget* m_widget;
 };
 
 } // namespace KIPIDLNAExportPlugin

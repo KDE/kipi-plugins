@@ -20,8 +20,6 @@
  *
  * ============================================================ */
 
-#include "dlnawindow.moc"
-
 // Qt includes
 
 #include <QAction>
@@ -36,6 +34,7 @@
 
 #include "kpaboutdata.h"
 #include "dlnawidget.h"
+#include "dlnawindow.h"
 
 namespace KIPIDLNAExportPlugin
 {
@@ -43,9 +42,10 @@ namespace KIPIDLNAExportPlugin
 DLNAWindow::DLNAWindow(const QString& tmpFolder)
     : KPToolDialog(0)
 {
-    m_widget = new DLNAWidget(iface(), tmpFolder, this);
+    DLNAWidget* widget = new DLNAWidget(iface(), tmpFolder, this);
+    widget->setMinimumSize(300, 200);
 
-    setMainWidget(m_widget);
+    setMainWidget(widget);
     setWindowIcon(KIcon("dlna"));
     setButtons(Help|Close);
     setDefaultButton(Close);
@@ -54,7 +54,6 @@ DLNAWindow::DLNAWindow(const QString& tmpFolder)
     setWindowTitle(i18n("Export via DLNA"));
     setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
                                      i18n("Start upload via DLNA")));
-    m_widget->setMinimumSize(300, 200);
 
     //--------------------------------------------------------------------
 
