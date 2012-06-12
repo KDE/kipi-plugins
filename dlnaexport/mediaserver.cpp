@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "mediaserver_window.moc"
+#include "mediaserver.moc"
 
 // KDE includes
 
@@ -47,7 +47,7 @@ using namespace Herqq::Upnp::Av;
 namespace KIPIDLNAExportPlugin
 {
 
-class MediaServerWindow::Private
+class MediaServer::Private
 {
 public:
 
@@ -61,7 +61,7 @@ public:
     HFileSystemDataSource* datasource;
 };
 
-MediaServerWindow::MediaServerWindow(QObject* const parent)
+MediaServer::MediaServer(QObject* const parent)
     : QObject(parent), d(new Private)
 {
     // Configure a data source
@@ -110,13 +110,13 @@ MediaServerWindow::MediaServerWindow(QObject* const parent)
     }
 }
 
-MediaServerWindow::~MediaServerWindow()
+MediaServer::~MediaServer()
 {
      delete d->datasource;
      delete d;
 }
 
-void MediaServerWindow::onAddContentButtonClicked(const QString& dirName, bool mode)
+void MediaServer::onAddContentButtonClicked(const QString& dirName, bool mode)
 {
     if (!dirName.isEmpty())
     {

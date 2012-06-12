@@ -52,7 +52,7 @@
 
 // Local includes
 
-#include "mediaserver_window.h"
+#include "mediaserver.h"
 
 namespace KIPIDLNAExportPlugin
 {
@@ -71,15 +71,15 @@ public:
         directoryLbl = 0;
     }
 
-    QLabel*            iconLbl;
-    QLabel*            titleLbl;
-    QLabel*            headerLbl;
+    QLabel*      iconLbl;
+    QLabel*      titleLbl;
+    QLabel*      headerLbl;
 
-    KPushButton*       selectBtn;
+    KPushButton* selectBtn;
 
-    MediaServerWindow* dlna;
+    MediaServer* dlna;
 
-    QLabel*            directoryLbl;
+    QLabel*      directoryLbl;
 };
 
 DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolder*/, QWidget* const parent)
@@ -165,7 +165,9 @@ void DLNAWidget::slotSelectDirectory()
 
     d->directoryLbl->setText(path);
     kDebug() << path;
-    d->dlna = new MediaServerWindow();
+
+    // TODO : stop properly previous server instance if exist.
+    d->dlna = new MediaServer();
     d->dlna->onAddContentButtonClicked(path, true);
 }
 

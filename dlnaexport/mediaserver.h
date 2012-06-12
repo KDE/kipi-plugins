@@ -32,14 +32,14 @@
 namespace KIPIDLNAExportPlugin
 {
 
-class MediaServerWindow : public QObject
+class MediaServer : public QObject
 {
     Q_OBJECT
 
 public:
 
-    MediaServerWindow(QObject* const parent=0);
-    virtual ~MediaServerWindow();
+    MediaServer(QObject* const parent=0);
+    virtual ~MediaServer();
 
     void onAddContentButtonClicked(const QString&, bool);
 
