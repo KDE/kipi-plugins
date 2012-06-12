@@ -70,6 +70,8 @@ public Q_SLOTS:
 
 private:
 
+    QLabel*            m_iconLbl;
+    QLabel*            m_titleLbl;
     QLabel*            m_headerLbl;
 
     KPushButton*       m_selectBtn;

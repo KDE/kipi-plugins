@@ -33,6 +33,7 @@
 
 // KDE includes
 
+#include <khbox.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kpushbutton.h>
@@ -42,6 +43,7 @@
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
+#include <kiconloader.h>
 
 // Libkipi includes
 
@@ -65,6 +67,19 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
+    KHBox* hbox    = new KHBox(settingsBox);
+    m_iconLbl      = new QLabel(hbox);
+    m_iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
+    m_iconLbl->setAlignment(Qt::AlignLeft);
+
+    m_titleLbl     = new QLabel(hbox);
+    m_titleLbl->setOpenExternalLinks(true);
+    m_titleLbl->setFocusPolicy(Qt::NoFocus);
+    m_titleLbl->setAlignment(Qt::AlignLeft);
+    m_titleLbl->setText(QString("<b><h2><a href='http://www.dlna.org'>"
+                                "<font color=\"#9ACD32\">DLNA Export</font>"
+                                "</a></h2></b>"));
+
     m_headerLbl    = new QLabel(settingsBox);
     m_headerLbl->setText("Please select a folder containing JPEG images only");
 
@@ -75,11 +90,12 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     // ------------------------------------------------------------------------
 
     m_selectBtn    = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
-                                              i18n("Select Directory for transfer")),
+                                              i18n("Select Directory to Export")),
                                               settingsBox);
 
     // ------------------------------------------------------------------------
 
+    settingsBoxLayout->addWidget(hbox);
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(m_directoryLbl);
     settingsBoxLayout->addWidget(m_selectBtn);
