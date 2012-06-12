@@ -31,13 +31,7 @@
 
 #include <libkipi/plugin.h>
 
-// Local includes
-
-#include "dlnawindow.h"
-
 using namespace KIPI;
-
-class KAction;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -60,9 +54,8 @@ private Q_SLOTS:
 
 private:
 
-    KAction*    m_actionExport;
-
-    DLNAWindow* m_dlgExport;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIDLNAExportPlugin

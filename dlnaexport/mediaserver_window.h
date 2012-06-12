@@ -7,7 +7,7 @@
  * Description : a KIPI plugin to export pics through DLNA technology.
  *
  * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2011 Tuomo Penttinen <tp at herqq dot org>
+ * Copyright (C) 2011 by Tuomo Penttinen <tp at herqq dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

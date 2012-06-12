@@ -43,21 +43,40 @@ extern "C"
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "dlnawindow.h"
+
 namespace KIPIDLNAExportPlugin
 {
 
 K_PLUGIN_FACTORY(DLNAExportFactory, registerPlugin<Plugin_DLNAExport>();)
 K_EXPORT_PLUGIN(DLNAExportFactory("kipiplugin_dlnaexport") )
 
+class Plugin_DLNAExport::Private
+{
+public:
+
+    Private()
+    {
+        actionExport = 0;
+        dlgExport    = 0;
+    }
+
+    KAction*    actionExport;
+
+    DLNAWindow* dlgExport;
+};
+
 Plugin_DLNAExport::Plugin_DLNAExport(QObject* const parent, const QVariantList&)
     : Plugin(DLNAExportFactory::componentData(), parent, "DLNAExport"),
-    m_actionExport(0),
-    m_dlgExport(0)
+      d(new Private)
 {
 }
 
 Plugin_DLNAExport::~Plugin_DLNAExport()
 {
+    delete d;
 }
 
 void Plugin_DLNAExport::setup(QWidget* const widget)
@@ -66,16 +85,16 @@ void Plugin_DLNAExport::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_dlnaexport");
 
-    m_actionExport = actionCollection()->addAction("dlnaexport");
-    m_actionExport->setText(i18n("Export via &DLNA"));
-    m_actionExport->setIcon(KIcon("dlna"));
+    d->actionExport = actionCollection()->addAction("dlnaexport");
+    d->actionExport->setText(i18n("Export via &DLNA"));
+    d->actionExport->setIcon(KIcon("dlna"));
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
+    connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_actionExport);
+    addAction(d->actionExport);
 
-    m_actionExport->setEnabled(true);
+    d->actionExport->setEnabled(true);
 }
 
 void Plugin_DLNAExport::slotExport()
@@ -83,27 +102,27 @@ void Plugin_DLNAExport::slotExport()
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", "kipi-dlnaexportplugin-" + QString::number(getpid()) + '/');
 
-    if (!m_dlgExport)
+    if (!d->dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new DLNAWindow(tmp);
+        d->dlgExport = new DLNAWindow(tmp);
     }
     else
     {
-        if (m_dlgExport->isMinimized())
+        if (d->dlgExport->isMinimized())
         {
-            KWindowSystem::unminimizeWindow(m_dlgExport->winId());
+            KWindowSystem::unminimizeWindow(d->dlgExport->winId());
         }
 
-        KWindowSystem::activateWindow(m_dlgExport->winId());
+        KWindowSystem::activateWindow(d->dlgExport->winId());
     }
 
-    m_dlgExport->show();
+    d->dlgExport->show();
 }
 
 Category Plugin_DLNAExport::category(KAction* const action) const
 {
-    if (action == m_actionExport)
+    if (action == d->actionExport)
        return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
