@@ -58,7 +58,7 @@ namespace KIPIDLNAExportPlugin
 DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolder*/, QWidget* const parent)
     : QWidget(parent)
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* mainLayout        = new QVBoxLayout(this);
 
     // -------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl    = new QLabel(settingsBox);
-    m_headerLbl->setText("Please select a folder containing jpeg/jpg images only");
+    m_headerLbl->setText("Please select a folder containing JPEG images only");
 
     // ------------------------------------------------------------------------
 

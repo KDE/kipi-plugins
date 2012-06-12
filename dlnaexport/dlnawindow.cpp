@@ -61,9 +61,8 @@ DLNAWindow::DLNAWindow(const QString& tmpFolder)
     KPAboutData* about = new KPAboutData(ki18n("DLNA Export"),
                              0,
                              KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to export image collections via "
-                             "DLNA."),
-                             ki18n( "(c) 2012, Smit Mehta" ));
+                             ki18n("A Kipi plugin to export image collections via DLNA."),
+                             ki18n("(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n( "Smit Mehta" ), ki18n("Author and maintainer"),
                      "smit dot meh at gmail dot com");
