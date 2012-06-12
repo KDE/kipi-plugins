@@ -57,48 +57,72 @@
 namespace KIPIDLNAExportPlugin
 {
 
+class DLNAWidget::Private
+{
+public:
+
+    Private()
+    {
+        iconLbl      = 0;
+        titleLbl     = 0;
+        headerLbl    = 0;
+        selectBtn    = 0;
+        dlna         = 0;
+        directoryLbl = 0;
+    }
+
+    QLabel*            iconLbl;
+    QLabel*            titleLbl;
+    QLabel*            headerLbl;
+
+    KPushButton*       selectBtn;
+
+    MediaServerWindow* dlna;
+
+    QLabel*            directoryLbl;
+};
+
 DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolder*/, QWidget* const parent)
-    : QWidget(parent)
+    : QWidget(parent), d(new Private)
 {
     QVBoxLayout* mainLayout        = new QVBoxLayout(this);
-
-    // -------------------------------------------------------------------
-
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    KHBox* hbox    = new KHBox(settingsBox);
-    m_iconLbl      = new QLabel(hbox);
-    m_iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
-    m_iconLbl->setAlignment(Qt::AlignLeft);
+    // -------------------------------------------------------------------
 
-    m_titleLbl     = new QLabel(hbox);
-    m_titleLbl->setOpenExternalLinks(true);
-    m_titleLbl->setFocusPolicy(Qt::NoFocus);
-    m_titleLbl->setAlignment(Qt::AlignLeft);
-    m_titleLbl->setText(QString("<b><h2><a href='http://www.dlna.org'>"
+    KHBox* hbox = new KHBox(settingsBox);
+    d->iconLbl  = new QLabel(hbox);
+    d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
+    d->iconLbl->setAlignment(Qt::AlignLeft);
+
+    d->titleLbl = new QLabel(hbox);
+    d->titleLbl->setOpenExternalLinks(true);
+    d->titleLbl->setFocusPolicy(Qt::NoFocus);
+    d->titleLbl->setAlignment(Qt::AlignLeft);
+    d->titleLbl->setText(QString("<b><h2><a href='http://www.dlna.org'>"
                                 "<font color=\"#9ACD32\">DLNA Export</font>"
                                 "</a></h2></b>"));
 
-    m_headerLbl    = new QLabel(settingsBox);
-    m_headerLbl->setText("Please select a folder containing JPEG images only");
+    d->headerLbl = new QLabel(settingsBox);
+    d->headerLbl->setText("Please select a folder containing JPEG images only");
 
     // ------------------------------------------------------------------------
 
-    m_directoryLbl = new QLabel(settingsBox);
+    d->directoryLbl = new QLabel(settingsBox);
 
     // ------------------------------------------------------------------------
 
-    m_selectBtn    = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
+    d->selectBtn    = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
                                               i18n("Select Directory to Export")),
                                               settingsBox);
 
     // ------------------------------------------------------------------------
 
     settingsBoxLayout->addWidget(hbox);
-    settingsBoxLayout->addWidget(m_headerLbl);
-    settingsBoxLayout->addWidget(m_directoryLbl);
-    settingsBoxLayout->addWidget(m_selectBtn);
+    settingsBoxLayout->addWidget(d->headerLbl);
+    settingsBoxLayout->addWidget(d->directoryLbl);
+    settingsBoxLayout->addWidget(d->selectBtn);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -110,12 +134,13 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
 
     // ------------------------------------------------------------------------
 
-    connect(m_selectBtn, SIGNAL(clicked()),
+    connect(d->selectBtn, SIGNAL(clicked()),
             this, SLOT(slotSelectDirectory()));
 }
 
 DLNAWidget::~DLNAWidget()
 {
+    delete d;
 }
 
 void DLNAWidget::reactivate()
@@ -138,10 +163,10 @@ void DLNAWidget::slotSelectDirectory()
         return;
     }
 
-    m_directoryLbl->setText(path);
+    d->directoryLbl->setText(path);
     kDebug() << path;
-    m_dlna = new MediaServerWindow();
-    m_dlna->onAddContentButtonClicked(path, true);
+    d->dlna = new MediaServerWindow();
+    d->dlna->onAddContentButtonClicked(path, true);
 }
 
 } // namespace KIPIDLNAExportPlugin

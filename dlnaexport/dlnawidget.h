@@ -26,28 +26,14 @@
 // Qt includes
 
 #include <QWidget>
-
-// Local includes
-
-class QLabel;
-
-class KComboBox;
-class KPushButton;
+#include <QString>
 
 namespace KIPI
 {
     class Interface;
-    class UploadWidget;
 }
 
 using namespace KIPI;
-
-namespace KIPIPlugins
-{
-    class KPImagesList;
-}
-
-using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -70,15 +56,8 @@ public Q_SLOTS:
 
 private:
 
-    QLabel*            m_iconLbl;
-    QLabel*            m_titleLbl;
-    QLabel*            m_headerLbl;
-
-    KPushButton*       m_selectBtn;
-
-    MediaServerWindow* m_dlna;
-
-    QLabel*            m_directoryLbl;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIDLNAExportPlugin
