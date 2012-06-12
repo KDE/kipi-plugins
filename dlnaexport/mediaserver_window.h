@@ -49,7 +49,7 @@ public:
     MediaServerWindow(QObject* const parent=0);
     virtual ~MediaServerWindow();
 
-    void on_addContentButton_clicked(QString, bool);
+    void onAddContentButtonClicked(const QString&, bool);
 
 private:
 

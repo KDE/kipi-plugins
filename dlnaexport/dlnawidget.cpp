@@ -96,7 +96,6 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
 
     connect(m_selectBtn, SIGNAL(clicked()),
             this, SLOT(slotSelectDirectory()));
-
 }
 
 DLNAWidget::~DLNAWidget()
@@ -126,7 +125,7 @@ void DLNAWidget::slotSelectDirectory()
     m_directoryLbl->setText(path);
     kDebug() << path;
     m_dlna = new MediaServerWindow();
-    m_dlna->on_addContentButton_clicked(path, true);
+    m_dlna->onAddContentButtonClicked(path, true);
 }
 
 } // namespace KIPIDLNAExportPlugin

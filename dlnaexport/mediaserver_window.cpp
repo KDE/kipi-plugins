@@ -98,7 +98,7 @@ MediaServerWindow::~MediaServerWindow()
      delete m_datasource;
 }
 
-void MediaServerWindow::on_addContentButton_clicked(QString dirName, bool mode)
+void MediaServerWindow::onAddContentButtonClicked(const QString& dirName, bool mode)
 {
     if (!dirName.isEmpty())
     {
