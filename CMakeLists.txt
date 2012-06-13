@@ -245,7 +245,6 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap" KGEOMAP_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki" MEDIAWIKI_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte" LIBKVKONTAKTE_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("boost" Boost_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("Hupnp" HUPNP_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -257,6 +256,12 @@ IF(NOT WIN32 AND NOT APPLE)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 PRINT_OPTIONAL_LIBRARY_STATUS("libksane" KSANE_FOUND)
+
+IF(HUPNP_FOUND)
+    MESSAGE(STATUS " Hupnp library found...................... YES (optional)")
+ELSE(HUPNP_FOUND)
+    MESSAGE(STATUS " Hupnp library found...................... NO  (optional - internal version used instead)")
+ENDIF(HUPNP_FOUND)
 
 # Optional plugins results ----------------------------------------------------------------------------
 
@@ -305,7 +310,6 @@ PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki" MEDIAWIKI_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Panorama" Boost_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("DlnaExport" HUPNP_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")

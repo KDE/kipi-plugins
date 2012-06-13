@@ -90,7 +90,7 @@ libksane        >= 0.3.0                        https://projects.kde.org/project
 libkgeomap      >= 2.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
 libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
-libhupnp        >= 2.0.0                        http://www.herqq.org
+libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
 
 Plugin Specific Dependencies (for compiling and for running) :
 
