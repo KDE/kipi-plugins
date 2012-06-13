@@ -6,6 +6,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
                     ${QT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/../qtsoap/src
                     ${CMAKE_CURRENT_BINARY_DIR}/../qtsoap/src
+                    ${CMAKE_CURRENT_SOURCE_DIR}/include
                     ${CMAKE_CURRENT_BINARY_DIR}/include
                    )
 
