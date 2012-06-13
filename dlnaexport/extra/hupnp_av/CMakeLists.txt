@@ -4,8 +4,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}/src
                     src
                     ${QT_INCLUDE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../hupnp/include/HUpnpCore
-                    ${CMAKE_CURRENT_BINARY_DIR}/../hupnp/include/HUpnpCore
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../hupnp/include
+                    ${CMAKE_CURRENT_BINARY_DIR}/../hupnp/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/include
                     ${CMAKE_CURRENT_BINARY_DIR}/include
                    )
