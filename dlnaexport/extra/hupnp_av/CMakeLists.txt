@@ -247,7 +247,7 @@ SET(HUpnpAv_MOC_HDRS
 
 QT4_WRAP_CPP(HUpnpAv_MOC_SRCS ${HUpnpAv_MOC_HDRS})
 
-SET(SRCS ${HUpnpAv_SRCS} ${HUpnpAv_MOC_HDRS})
+SET(SRCS ${HUpnpAv_SRCS} ${HUpnpAv_MOC_SRCS})
 
 FOREACH(_currentfile ${SRCS})
     IF(NOT MSVC)
