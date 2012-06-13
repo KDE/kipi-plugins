@@ -1,4 +1,4 @@
-ADD_SUBDIRECTORY( utils/qtpropertybrowser )
+ADD_SUBDIRECTORY( extra/qtpropertybrowser )
 ADD_SUBDIRECTORY( resources/app )
 ADD_SUBDIRECTORY( data )
 ADD_SUBDIRECTORY( effectplugins )
@@ -11,8 +11,8 @@ SET(PLE_Common_SRCS
     plugin/photolayoutseditor.cpp
     settings/PLEConfigDialog.cpp
     settings/PLEConfigViewWidget.cpp
-    utils/global.cpp
-    utils/KEditFactory.cpp
+    extra/global.cpp
+    extra/KEditFactory.cpp
     events/ProgressEvent.cpp
     events/UndoCommandEvent.cpp
     events/UndoCommandEventFilter.cpp
@@ -134,8 +134,8 @@ SET(INCLUDE_DIRS
     settings
     threads
     undo
-    utils
-    utils/qtpropertybrowser/src
+    extra
+    extra/qtpropertybrowser/src
     widgets
     widgets/canvas
     widgets/dialogs
