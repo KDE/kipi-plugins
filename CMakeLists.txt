@@ -464,7 +464,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     IF(HUPNP_FOUND AND HUPNPAV_FOUND)
         ADD_SUBDIRECTORY(dlnaexport)
-    ENDIF(HUPNP_FOUND)
+    ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #
