@@ -401,6 +401,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(kmlexport)
     ADD_SUBDIRECTORY(imageshackexport)
     ADD_SUBDIRECTORY(photolayoutseditor)
+    ADD_SUBDIRECTORY(dlnaexport)
 
     # Plugins which are optional depencies.
 
@@ -461,10 +462,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     IF(Boost_FOUND)
         ADD_SUBDIRECTORY(panorama)
     ENDIF(Boost_FOUND)
-
-    IF(HUPNP_FOUND AND HUPNPAV_FOUND)
-        ADD_SUBDIRECTORY(dlnaexport)
-    ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #
