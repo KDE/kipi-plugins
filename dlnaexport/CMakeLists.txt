@@ -1,7 +1,13 @@
-SUBDIRS(icons)
-SUBDIRS(data)
+ADD_SUBDIRECTORY(icons)
+ADD_SUBDIRECTORY(data)
+ADD_SUBDIRECTORY(extra/qtsoap)
+ADD_SUBDIRECTORY(extra/hupnp)
+ADD_SUBDIRECTORY(extra/hupnp_av)
 
-INCLUDE_DIRECTORIES(${HUPNP_INCLUDE_DIR})
+#INCLUDE_DIRECTORIES(${HUPNP_INCLUDE_DIR})
+
+INCLUDE_DIRECTORIES(extra/hupnp/include)
+INCLUDE_DIRECTORIES(extra/hupnp_av/include)
 
 SET(kipiplugin_dlnaexport_PART_SRCS
     dlnawidget.cpp
@@ -20,9 +26,13 @@ TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
                       ${KDE4_KIO_LIBS}
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
-                      ${HUPNP_LIBS}
-                      ${HUPNPAV_LIBS}
                       kipiplugins
+
+#                      ${HUPNP_LIBS}
+#                      ${HUPNPAV_LIBS}
+
+                      HUpnp
+                      HUpnpAv
                      )
 
 INSTALL(TARGETS kipiplugin_dlnaexport
