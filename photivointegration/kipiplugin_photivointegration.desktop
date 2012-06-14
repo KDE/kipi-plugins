@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Photivo Integration
+Name[de]=Photivo Integration
+Comment=Integration of the Photivo RAW-Processor
+Comment[de]=Integration des Photivo RAW-Konverters
+Type=Service
+Icon=photivo
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_photivointegration
+author=Dominic Lyons, domlyons at googlemail dot com
+X-KIPI-ReqFeatures=
