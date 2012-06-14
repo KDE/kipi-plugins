@@ -1,23 +1,21 @@
 
-find_package(ImageMagick COMPONENTS MagickCore)
+INCLUDE(${QT_USE_FILE})
 
-if(ImageMagick_FOUND )
-    include(${QT_USE_FILE})
-    include_directories(${ImageMagick_INCLUDE_DIRS} ${QT_INCLUDES} 
-                        ${KDE4_INCLUDES}
-                        ${CMAKE_BINARY_DIR})
+INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
+                    ${QT_INCLUDES}
+                    ${KDE4_INCLUDES}
+                    ${CMAKE_BINARY_DIR}
+                   )
 
-    add_subdirectory( TestMagick )
+ADD_SUBDIRECTORY(TestMagick)
 
-    set(imagemagick_SRCS  magick_api.cpp
-        main.cpp 
-        processimage.cpp
-    )
+SET(imagemagick_SRCS  magick_api.cpp
+    main.cpp 
+    processimage.cpp
+   )
 
-    kde4_add_executable(imagemagick ${imagemagick_SRCS})
+KDE4_ADD_EXECUTABLE(imagemagick ${imagemagick_SRCS})
 
-    target_link_libraries(imagemagick ${ImageMagick_LIBRARIES} ${QT_LIBRARIES})
+TARGET_LINK_LIBRARIES(imagemagick ${ImageMagick_LIBRARIES} ${QT_LIBRARIES})
 
-    install(TARGETS imagemagick ${INSTALL_TARGETS_DEFAULT_ARGS} )
-endif(ImageMagick_FOUND )
-
+INSTALL(TARGETS imagemagick ${INSTALL_TARGETS_DEFAULT_ARGS} )
