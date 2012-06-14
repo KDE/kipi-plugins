@@ -25,11 +25,11 @@
 
 #include <QtTest>
 
-#include "TestMagic.moc"
+#include "testmagickiface.moc"
 
-QTEST_MAIN(TestMagick)
+QTEST_MAIN(TestMagickIface)
 
-TestMagick::TestMagick()
+TestMagickIface::TestMagickIface()
 {
     api = new MagickApi();
     spy = new QSignalSpy(api,SIGNAL(APIError(QString)));
@@ -37,7 +37,7 @@ TestMagick::TestMagick()
     file = new QFile(QFileDialog::getOpenFileName(NULL, tr("SelectImage"), "/home", tr("Image Files (*.png *.jpg)")));
 }
 
-TestMagick::~TestMagick()
+TestMagickIface::~TestMagickIface()
 {
     delete(spy);
     delete(api);
@@ -49,7 +49,7 @@ TestMagick::~TestMagick()
 }
 
 
-void TestMagick::testCreateImage()
+void TestMagickIface::testCreateImage()
 {
     spy->clear();
 
@@ -65,7 +65,7 @@ void TestMagick::testCreateImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testDuplicateImage()
+void TestMagickIface::testDuplicateImage()
 {
     spy->clear();
 
@@ -91,7 +91,7 @@ void TestMagick::testDuplicateImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testOverlayImage()
+void TestMagickIface::testOverlayImage()
 {
     spy->clear();
 
@@ -116,7 +116,7 @@ void TestMagick::testOverlayImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testBlendImage()
+void TestMagickIface::testBlendImage()
 {
     spy->clear();
     QSKIP("need to change the code",SkipSingle);
@@ -148,7 +148,7 @@ void TestMagick::testBlendImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testBitblitImage()
+void TestMagickIface::testBitblitImage()
 {
     spy->clear();
 
@@ -173,7 +173,7 @@ void TestMagick::testBitblitImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testScaleImage()
+void TestMagickIface::testScaleImage()
 {
     spy->clear();
 
@@ -192,7 +192,7 @@ void TestMagick::testScaleImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testScaleblitImage()
+void TestMagickIface::testScaleblitImage()
 {
     spy->clear();
 
@@ -217,12 +217,12 @@ void TestMagick::testScaleblitImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testBorderImage()
+void TestMagickIface::testBorderImage()
 {
     spy->clear();
 
     QVERIFY( file != 0);
-    
+
     MagickImage *src = api->loadStream(*file);
     QVERIFY( src != 0 );
 
@@ -241,7 +241,7 @@ void TestMagick::testBorderImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testGeoScaleImage()
+void TestMagickIface::testGeoScaleImage()
 {
     spy->clear();
 
@@ -265,7 +265,7 @@ void TestMagick::testGeoScaleImage()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testLoadAndSaveFile()
+void TestMagickIface::testLoadAndSaveFile()
 {
     spy->clear();
 
@@ -283,7 +283,7 @@ void TestMagick::testLoadAndSaveFile()
     QCOMPARE(spy->count(), 0);
 }
 
-void TestMagick::testLoadAndSaveStream()
+void TestMagickIface::testLoadAndSaveStream()
 {
     spy->clear();
 
@@ -305,6 +305,3 @@ void TestMagick::testLoadAndSaveStream()
 
     QCOMPARE(spy->count(), 0);
 }
-
-
-

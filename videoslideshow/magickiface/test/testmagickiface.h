@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef TESTMAGICKIFACE_H
+#define TESTMAGICKIFACE_H
 
 #include <QtCore>
 
@@ -32,14 +32,17 @@
 
 class QSignalSpy;
 
-class TestMagick: public QObject
+class TestMagickIface: public QObject
 {
     Q_OBJECT
+
 public:
-    TestMagick();
-    ~TestMagick();
+
+    TestMagickIface();
+    ~TestMagickIface();
 
 private slots:
+
     void testCreateImage();
     void testDuplicateImage();
     void testOverlayImage();
@@ -54,10 +57,11 @@ private slots:
     void testLoadAndSaveStream();
 
 private:
+
     MagickApi *api;
     // used to chekc the signlas emitted by a class
     QSignalSpy *spy;
     QFile *file;
 };
 
-#endif
+#endif // TESTMAGICKIFACE_H
