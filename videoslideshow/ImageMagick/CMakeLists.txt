@@ -9,8 +9,9 @@ INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
 
 ADD_SUBDIRECTORY(TestMagick)
 
-SET(imagemagick_SRCS  magick_api.cpp
-    main.cpp 
+SET(imagemagick_SRCS
+    magick_api.cpp
+    main.cpp
     processimage.cpp
    )
 
