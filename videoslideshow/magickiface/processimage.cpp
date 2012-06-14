@@ -119,7 +119,7 @@ MagickImage *ProcessImage::transition(const MagickImage &from,const MagickImage 
 #define DEC(v)    DecValue(v,step,steps)
 
     if (step < 0 || step >= steps)
-        emit ProcessError(QString("step: ") + step + QString("is out of range") + steps);
+        emit ProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
 
     // create a new target image and copy the from image onto
     dst = api->createImage("black",w = from.getWidth(),h = from.getHeight());
