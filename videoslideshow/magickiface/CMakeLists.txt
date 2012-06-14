@@ -1,3 +1,4 @@
+ADD_SUBDIRECTORY(test)
 
 INCLUDE(${QT_USE_FILE})
 
@@ -6,8 +7,6 @@ INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                     ${KDE4_INCLUDES}
                     ${CMAKE_BINARY_DIR}
                    )
-
-ADD_SUBDIRECTORY(TestMagick)
 
 SET(imagemagick_SRCS
     magick_api.cpp
@@ -19,4 +18,4 @@ KDE4_ADD_EXECUTABLE(imagemagick ${imagemagick_SRCS})
 
 TARGET_LINK_LIBRARIES(imagemagick ${ImageMagick_LIBRARIES} ${QT_LIBRARIES})
 
-INSTALL(TARGETS imagemagick ${INSTALL_TARGETS_DEFAULT_ARGS} )
+INSTALL(TARGETS imagemagick ${INSTALL_TARGETS_DEFAULT_ARGS})
