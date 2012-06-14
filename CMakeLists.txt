@@ -143,26 +143,26 @@ ENDIF (KDCRAW_VERSION)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)         # For DNGConverter: XMP SDK need Expat library to compile.
-MACRO_OPTIONAL_FIND_PACKAGE(Threads)       # For DNGConverter: DNG SDK need native threads support.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)       # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)       # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)        # For AdvancedSlideshow and ImageViewer.
-MACRO_OPTIONAL_FIND_PACKAGE(Ipod)          # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(Gdk)           # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)         # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GObject)       # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)    # For Calendar (libkcal).
-MACRO_OPTIONAL_FIND_PACKAGE(QCA2)          # For Shwup and YandexFotki.
-MACRO_OPTIONAL_FIND_PACKAGE(KSane)         # For AcquireImages.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)        # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and Facebook, and Imgur.
-MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
-MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
-MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
-MACRO_OPTIONAL_FIND_PACKAGE(Boost)         # For Panorama
-MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)         # For DlnaExport
-MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick)   # For VideoSlideshow
+MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
+MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                     # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)                                      # For AdvancedSlideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(Ipod)                                        # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GObject)                                     # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
+MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)                                      # For RemoveRedEyes.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots and Facebook, and Imgur.
+MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
+MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
+MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
+MACRO_OPTIONAL_FIND_PACKAGE(Boost)                                       # For Panorama.
+MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
+MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
