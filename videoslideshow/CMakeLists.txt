@@ -1,2 +1,1 @@
-add_subdirectory( ImageMagick )
-
+ADD_SUBDIRECTORY(magickiface)
