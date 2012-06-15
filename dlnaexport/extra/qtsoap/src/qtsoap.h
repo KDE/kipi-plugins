@@ -56,22 +56,20 @@
 #include <QtCore/QPointer>
 #include <QtCore/QScopedPointer>
 
-#ifdef QT_QTSOAP_EXPORT
-#  undef QT_QTSOAP_EXPORT
-#  ifdef Q_OS_WIN
-#    define QT_QTSOAP_EXPORT __declspec(dllexport)
-#  elif defined(QT_VISIBILITY_AVAILABLE)
-#    define QT_QTSOAP_EXPORT __attribute__((visibility("default")))
-#  endif
-#  ifndef QT_QTSOAP_EXPORT
+#if defined(Q_WS_WIN)
+#  if !defined(QT_QTSOAP_EXPORT) && !defined(QT_QTSOAP_IMPORT)
 #    define QT_QTSOAP_EXPORT
+#  elif defined(QT_QTSOAP_IMPORT)
+#    if defined(QT_QTSOAP_EXPORT)
+#      undef QT_QTSOAP_EXPORT
+#    endif
+#    define QT_QTSOAP_EXPORT __declspec(dllimport)
+#  elif defined(QT_QTSOAP_EXPORT)
+#    undef QT_QTSOAP_EXPORT
+#    define QT_QTSOAP_EXPORT __declspec(dllexport)
 #  endif
 #else
-#  if defined(Q_OS_WIN)
-#    define QT_QTSOAP_EXPORT __declspec(dllimport)
-#  else
-#    define QT_QTSOAP_EXPORT
-#  endif
+#  define QT_QTSOAP_EXPORT
 #endif
 
 #define SOAPv11_ENVELOPE    "http://schemas.xmlsoap.org/soap/envelope/"
