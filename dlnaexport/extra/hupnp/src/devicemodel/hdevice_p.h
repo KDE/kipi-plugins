@@ -108,8 +108,7 @@ public: // methods
     {
         foreach(Service* sc, m_services)
         {
-            HServiceId scId = sc->info().serviceId();
-            if (scId == serviceId)
+            if (sc->info().serviceId() == serviceId)
             {
                 return sc;
             }
