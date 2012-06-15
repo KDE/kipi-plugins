@@ -28,7 +28,6 @@
 
 #include <QtGui>
 
-#include <magick/MagickCore.h>
 #include <magick/api.h>
 
 #define SCALE_FILTER_BEST    GaussianFilter
