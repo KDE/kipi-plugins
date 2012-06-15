@@ -7,9 +7,7 @@ IF(HUPNP_FOUND AND HUPNPAV_FOUND)
 
 ELSE(HUPNP_FOUND AND HUPNPAV_FOUND)
 
-    ADD_SUBDIRECTORY(extra/qtsoap)
-    ADD_SUBDIRECTORY(extra/hupnp)
-    ADD_SUBDIRECTORY(extra/hupnp_av)
+    ADD_SUBDIRECTORY(extra)
 
     INCLUDE_DIRECTORIES(extra/hupnp/include)
     INCLUDE_DIRECTORIES(extra/hupnp_av/include)
