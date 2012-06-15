@@ -30,6 +30,7 @@
 // change or the file may be removed without of notice.
 //
 
+#include <HUpnpCore/HServiceId>
 #include <HUpnpCore/HDeviceInfo>
 #include <HUpnpCore/HDeviceStatus>
 #include <HUpnpCore/HResourceType>
@@ -107,7 +108,8 @@ public: // methods
     {
         foreach(Service* sc, m_services)
         {
-            if (sc->info().serviceId() == serviceId)
+            HServiceId scId = sc->info().serviceId();
+            if (scId == serviceId)
             {
                 return sc;
             }
