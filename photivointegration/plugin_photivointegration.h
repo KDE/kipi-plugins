@@ -36,10 +36,12 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIPhotivoIntegrationPlugin
 {
 
-class Plugin_PhotivoIntegration : public KIPI::Plugin
+class Plugin_PhotivoIntegration : public Plugin
 {
     Q_OBJECT
 
@@ -52,8 +54,8 @@ public:
     Plugin_PhotivoIntegration(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_PhotivoIntegration();
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    Category category(KAction* const action) const;
+    void setup(QWidget* const);
 
 private slots:
 
@@ -65,12 +67,12 @@ private:
 
     /** This is the plugin action that KIPI host application will plug into menu.
      */
-    KAction*         m_action;
+    KAction*   m_action;
 
     /** this is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
      *  instance of KIPI::PluginLoader singleton which provide a method for that.
      */
-    KIPI::Interface* m_iface;
+    Interface* m_iface;
 };
 
 }  // namespace KIPIPhotivoIntegrationPlugin

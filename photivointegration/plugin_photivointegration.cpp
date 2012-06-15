@@ -52,7 +52,7 @@ K_EXPORT_PLUGIN(PhotivoIntegrationFactory("kipiplugin_photivointegration") )
 
 //Contructor is called by the factory that is set up by the macros K_PLUGIN_FACTORY and K_EXPORT_PLUGIN
 Plugin_PhotivoIntegration::Plugin_PhotivoIntegration(QObject* const parent, const QVariantList&)
-    : KIPI::Plugin(PhotivoIntegrationFactory::componentData(), parent, "PhotivoIntegration")
+    : Plugin(PhotivoIntegrationFactory::componentData(), parent, "PhotivoIntegration")
 {
     /// There is a debug space for plugin loading area.
     kDebug(AREA_CODE_LOADING) << "Plugin_PhotivoIntegration plugin loaded";
@@ -62,11 +62,11 @@ Plugin_PhotivoIntegration::~Plugin_PhotivoIntegration()
 {
 }
 
-void Plugin_PhotivoIntegration::setup(QWidget* widget)
+void Plugin_PhotivoIntegration::setup(QWidget* const widget)
 {
     /** We pass the widget which host plugin in KIPI host application
      */
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     /** We define plugin action which will be plug in KIPI host application.
      */
@@ -117,14 +117,14 @@ void Plugin_PhotivoIntegration::slotActivate()
                                 );
 }
 
-KIPI::Category Plugin_PhotivoIntegration::category(KAction* action) const
+Category Plugin_PhotivoIntegration::category(KAction* const action) const
 {
     if (action == m_action)
-       return KIPI::ToolsPlugin;//Plugin will be listed as an item of the "Tools" menu
+       return ToolsPlugin;//Plugin will be listed as an item of the "Tools" menu
 
     /// No need special debug space outside load plugin area, it will be selected automatically.
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ToolsPlugin; // no warning from compiler, please (return an object)
+    return ToolsPlugin; // no warning from compiler, please (return an object)
 }
 
 }  // namespace KIPIPhotivoIntegrationPlugin
