@@ -26,16 +26,20 @@
 #ifndef PROCESSIMAGE_H
 #define PROCESSIMAGE_H
 
+#include <QObject>
+
 #include <magick_api.h>
 
-enum ASPECTCORRECTION_TYPE {
+enum ASPECTCORRECTION_TYPE
+{
     ASPECTCORRECTION_TYPE_AUTO,
     ASPECTCORRECTION_TYPE_NONE,
     ASPECTCORRECTION_TYPE_FITIN,
     ASPECTCORRECTION_TYPE_FILLIN
 } ;
 
-enum TRANSITION_TYPE {
+enum TRANSITION_TYPE
+{
     TRANSITION_TYPE_RANDOM,
     TRANSITION_TYPE_FADE,
     TRANSITION_TYPE_SLIDE_L2R,
@@ -56,31 +60,40 @@ enum TRANSITION_TYPE {
     TRANSITION_TYPE_ROLL_B2T
 };
 
-typedef struct GeoImage {
+typedef struct GeoImage
+{
     int x, y, w, h;
 } GeoImage;
+
+// ---------------------------------------------------------------------------------------
 
 class ProcessImage : public QObject
 {
     Q_OBJECT
+
 public:
-    ProcessImage(MagickApi *api);
-    // corrects the aspect ratio of images - not complete
-    MagickImage *aspectRatioCorrection(MagickImage &image, double aspectratio,ASPECTCORRECTION_TYPE aspectcorrection);
 
-    /* These functions claculates the required properties at a paricular instance, we can copy them
-     frame by frame to a stream and write to a file in the end
-     makes an instance of MagickImage which will be shown during given step(0,1,... steps - 1) */
-    MagickImage *transition(const MagickImage &from,const MagickImage &to,int type,int step,int steps);
-    // calculates the required geometry of image to be shown during a instance for zoom effect
-    GeoImage *getGeometry(const GeoImage &from,const GeoImage &to, int image_width,int image_height,
-                          int step,int steps);
+    ProcessImage(MagickApi* api);
 
-signals:
+    /// corrects the aspect ratio of images - not complete
+    MagickImage* aspectRatioCorrection(MagickImage& image, double aspectratio, ASPECTCORRECTION_TYPE aspectcorrection);
+
+    /** These functions claculates the required properties at a paricular instance, we can copy them
+        frame by frame to a stream and write to a file in the end
+        makes an instance of MagickImage which will be shown during given step(0,1,... steps - 1)
+     */
+    MagickImage* transition(const MagickImage& from, const MagickImage& to, int type, int step, int steps);
+
+    /// calculates the required geometry of image to be shown during a instance for zoom effect
+    GeoImage* getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height,
+                          int step, int steps);
+Q_SIGNALS:
+
     void ProcessError(QString errMess);
 
 private:
-    MagickApi *api;
+
+    MagickApi* api;
 };
 
 #endif // PROCESSIMAGE_H

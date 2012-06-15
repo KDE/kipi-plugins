@@ -23,7 +23,9 @@
  *
  * ============================================================ */
 
-#include "processimage.h"
+#include "processimage.moc"
+
+#include <cmath>
 
 #define MIN(a,b)    (((a) < (b)) ? (a) : (b))
 #define MAX(a,b)    (((a) > (b)) ? (a) : (b))
@@ -246,19 +248,22 @@ GeoImage* ProcessImage::getGeometry(const GeoImage &from, const GeoImage &to,
     GeoImage *geometry = new GeoImage();
     // compute the dimesions in current step
     steps--;
-    if (step <= 0) {
+    if (step <= 0)
+    {
         geometry->x = lround(from.x);
         geometry->y = lround(from.y);
         geometry->w = lround(from.w);
         geometry->h = lround(from.h);
     }
-    else if (step >= steps) {
+    else if (step >= steps)
+    {
         geometry->x = lround(to.x);
         geometry->y = lround(to.y);
         geometry->w = lround(to.w);
         geometry->h = lround(to.h);
     }
-    else {
+    else
+    {
         geometry->x = lround(from.x + (to.x - from.x) * (double) step / (double) steps);
         geometry->y = lround(from.y + (to.y - from.y) * (double) step / (double) steps);
         geometry->w = lround(from.w + (to.w - from.w) * (double) step / (double) steps);
@@ -272,7 +277,3 @@ GeoImage* ProcessImage::getGeometry(const GeoImage &from, const GeoImage &to,
 
     return geometry;
 }
-
-
-
-

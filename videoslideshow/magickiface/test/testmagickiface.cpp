@@ -24,6 +24,7 @@
  * ============================================================ */
 
 #include <QtTest>
+#include <QFileDialog>
 
 #include "testmagickiface.moc"
 

@@ -23,6 +23,8 @@
  *
  * ============================================================ */
 
+#include "magick_api.moc"
+
 #include <cstdlib>
 #include <cstring>
 

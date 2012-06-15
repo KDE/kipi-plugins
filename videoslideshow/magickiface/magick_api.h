@@ -26,7 +26,9 @@
 #ifndef MAGICK_API_H
 #define MAGICK_API_H
 
-#include <QtGui>
+#include <QObject>
+#include <QFile>
+#include <QString>
 
 #include <magick/api.h>
 
@@ -70,7 +72,7 @@ public:
     ~MagickApi();
 
     MagickImage* loadImage(QString file);
-    MagickImage* loadStream(QFile &stream);
+    MagickImage* loadStream(QFile& stream);
     int saveToFile(const MagickImage &img, QString file);
     int saveToStream(const MagickImage &img, QFile& stream);
 
