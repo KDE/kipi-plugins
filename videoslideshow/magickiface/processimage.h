@@ -7,8 +7,8 @@
  * @date   2012-06-01
  * @brief  Transitions, AspectRatioCorrection and otherImageEffects
  *
- * @author Copyright (C) 2012 by A Janardhan Reddy
- *         <a href="mailto:annapareddyjanardhanreddy at gmail dot com">annapareddyjanardhanreddy at gmail dot com</a>
+ * @author Copyright (C) 2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ *         Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -76,7 +76,7 @@ class ProcessImage : public QObject
 
 public:
 
-    ProcessImage(MagickApi* api);
+    ProcessImage(MagickApi* const api);
 
     /// corrects the aspect ratio of images - not complete
     MagickImage* aspectRatioCorrection(MagickImage& image, double aspectratio, ASPECTCORRECTION_TYPE aspectcorrection);
@@ -96,7 +96,15 @@ Q_SIGNALS:
 
 private:
 
-    MagickApi* api;
+    /// increase value with increasing step
+    int incValue(int v, int step, int steps) const;
+
+    /// decrease value with increasing step
+    int decValue(int v, int step, int steps) const;
+    
+private:
+
+    MagickApi* m_api;
 };
 
 #endif // PROCESSIMAGE_H
