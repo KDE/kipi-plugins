@@ -75,16 +75,16 @@ public:
     MagickApi();
     ~MagickApi();
 
-    MagickImage* loadImage(QString file);
+    MagickImage* loadImage(const QString& file);
     MagickImage* loadStream(QFile& stream);
 
-    int saveToFile(const MagickImage &img, QString file);
-    int saveToStream(const MagickImage &img, QFile& stream);
+    int saveToFile(const MagickImage& img, const QString& file);
+    int saveToStream(const MagickImage& img, QFile& stream);
 
-    MagickImage* createImage(const QString color, int width, int height);
+    MagickImage* createImage(const QString& color, int width, int height);
     MagickImage* duplicateImage(const MagickImage& src);
 
-    bool freeImage(const MagickImage& img);
+    bool freeImage(const MagickImage& img) const;
 
     bool blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a);
     bool overlayImage(MagickImage& dst, int dx, int dy, const MagickImage& src);
@@ -93,7 +93,7 @@ public:
     bool scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh);
 
     MagickImage* geoscaleImage(const MagickImage& img, int x, int y, int w, int h, int width, int height);
-    MagickImage* borderImage(const MagickImage& img, QString rgbcolor, int bw, int bh);
+    MagickImage* borderImage(const MagickImage& img, const QString& rgbcolor, int bw, int bh);
 
     // used to display image
     bool displayImage(MagickImage& img);
@@ -107,7 +107,10 @@ Q_SIGNALS:
 
 private:
 
-    MagickImage* alloc_image();
+    /*
+     * allocate a new image
+     */
+    MagickImage* allocImage();
 
 private:
 

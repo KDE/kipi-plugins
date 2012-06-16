@@ -113,10 +113,7 @@ int MagickApi::getFilter()
     return filter;
 }
 
-/*
- * allocate a new image
- */
-MagickImage* MagickApi::alloc_image()
+MagickImage* MagickApi::allocImage()
 {
     MagickImage*  img;
     unsigned char pixels[4];
@@ -150,13 +147,13 @@ MagickImage* MagickApi::alloc_image()
     return img;
 }
 
-MagickImage* MagickApi::loadImage(QString file)
+MagickImage* MagickApi::loadImage(const QString& file)
 {
     MagickImage*  img;
     ImageInfo*    info;
     ExceptionInfo exception;
 
-    img = alloc_image();
+    img = allocImage();
     if(!img)
         return 0;
 
@@ -194,7 +191,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
     ImageInfo*    info;
     ExceptionInfo exception;
 
-    img = alloc_image();
+    img = allocImage();
     if (!img)
         return 0;
 
@@ -221,7 +218,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
     return img;
 }
 
-int MagickApi::saveToFile(const MagickImage& img, QString file)
+int MagickApi::saveToFile(const MagickImage& img, const QString& file)
 {
     ImageInfo* info = NULL;
 
@@ -280,14 +277,13 @@ int MagickApi::saveToStream(const MagickImage& img, QFile& stream)
     return 1;
 }
 
-
-MagickImage* MagickApi::createImage(const QString color, int width, int height)
+MagickImage* MagickApi::createImage(const QString& color, int width, int height)
 {
     MagickImage*  img;
     Image*        image;
     ExceptionInfo exception;
 
-    img = alloc_image();
+    img = allocImage();
     if (!img)
         return 0;
 
@@ -319,7 +315,7 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
     MagickImage*  dst;
     ExceptionInfo exception;
 
-    dst = alloc_image();
+    dst = allocImage();
     if (!dst)
         return 0;
 
@@ -339,7 +335,7 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
     return dst;
 }
 
-bool MagickApi::freeImage(const MagickImage& img)
+bool MagickApi::freeImage(const MagickImage& img) const
 {
     img.freeImage();
     delete(&img);
@@ -443,7 +439,7 @@ bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magi
     return 1;
 }
 
-MagickImage* MagickApi::borderImage(const MagickImage& simg, QString color, int bw, int bh)
+MagickImage* MagickApi::borderImage(const MagickImage& simg, const QString& color, int bw, int bh)
 {
     MagickImage* img;
 
