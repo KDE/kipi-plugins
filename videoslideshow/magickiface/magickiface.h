@@ -118,14 +118,8 @@ Q_SIGNALS:
 
 private:
 
-    /// allocate a new image
-    MagickImage* allocImage();
-
-private:
-
-    /// this is the temporary directory for storing files
-    char* m_cwd;
-    int   m_filter;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPlugins

@@ -96,62 +96,85 @@ bool MagickImage::freeImage() const
 
 // ----------------------------------------------------------------------------------
 
-MagickApi::MagickApi()
-    : QObject()
+class MagickApi::Private
 {
-    /* Iniialize ImageMagick lib */
-    MagickCoreGenesis(m_cwd = GetCurrentDir(NULL, 0), MagickFalse);
-    m_filter                = SCALE_FILTER_FAST;
+public:
+
+    Private(MagickApi* const api)
+    {
+        cwd    = 0;
+        filter = SCALE_FILTER_FAST;
+        parent = api;
+    }
+
+    /// allocate a new image
+    MagickImage* allocImage()
+    {
+        MagickImage*  img = 0;
+        unsigned char pixels[4];
+
+        ExceptionInfo exception;
+
+        /* initialize the pixel data */
+        memset(pixels, 0, sizeof(pixels));
+
+        /* allocate a new image */
+        if (!(img = (MagickImage*) malloc(sizeof(MagickImage))))
+        {
+            parent->emit signalsAPIError("Out of memory");
+            return 0;
+        }
+
+        memset(img, 0, sizeof(MagickImage));
+        img->setWidth(1);
+        img->setHeight(1);
+
+        GetExceptionInfo(&exception);
+
+        if (!(img->setImage(ConstituteImage(1, 1, "RGB", CharPixel, pixels, &exception))))
+        {
+            parent->emit signalsAPIError("ConstituteImage() failed");
+            return 0;
+        }
+
+        img->getImage()->compression = UndefinedCompression;
+        img->getImage()->depth       = 8;
+        DestroyExceptionInfo(&exception);
+
+        return img;
+    }
+
+public:
+
+    /// this is the temporary directory for storing files
+    char*      cwd;
+    int        filter;
+    MagickApi* parent;
+};
+
+MagickApi::MagickApi()
+    : QObject(), d(new Private(this))
+{
+    // Iniialize ImageMagick lib
+    MagickCoreGenesis(d->cwd = GetCurrentDir(NULL, 0), MagickFalse);
 }
 
 MagickApi::~MagickApi()
 {
-    if (m_cwd)
+    if (d->cwd)
     {
-        free(m_cwd);
-        m_cwd = NULL;
+        free(d->cwd);
+        d->cwd = NULL;
     }
 
     MagickCoreTerminus();
+
+    delete d;
 }
 
 int MagickApi::getFilter() const
 {
-    return m_filter;
-}
-
-MagickImage* MagickApi::allocImage()
-{
-    MagickImage*  img = 0;
-    unsigned char pixels[4];
-
-    ExceptionInfo exception;
-
-    /* initialize the pixel data */
-    memset(pixels, 0, sizeof(pixels));
-
-    /* allocate a new image */
-    if (!(img = (MagickImage*) malloc(sizeof(MagickImage))))
-    {
-        emit signalsAPIError("Out of memory");
-        return 0;
-    }
-
-    memset(img, 0, sizeof(MagickImage));
-    img->setWidth(1);
-    img->setHeight(1);
-
-    GetExceptionInfo(&exception);
-    if (!(img->setImage(ConstituteImage(1, 1, "RGB", CharPixel, pixels, &exception))))
-    {
-        emit signalsAPIError("ConstituteImage() failed");
-        return 0;
-    }
-    img->getImage()->compression = UndefinedCompression;
-    img->getImage()->depth       = 8;
-    DestroyExceptionInfo(&exception);
-
-    return img;
+    return d->filter;
 }
 
 MagickImage* MagickApi::loadImage(const QString& file)
@@ -160,7 +183,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
     ImageInfo*    info = 0;
     ExceptionInfo exception;
 
-    img = allocImage();
+    img = d->allocImage();
     if(!img)
         return 0;
 
@@ -201,7 +224,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
     ImageInfo*    info = 0;
     ExceptionInfo exception;
 
-    img = allocImage();
+    img = d->allocImage();
     if (!img)
         return 0;
 
@@ -302,7 +325,7 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
     Image*        image = 0;
     ExceptionInfo exception;
 
-    img = allocImage();
+    img = d->allocImage();
     if (!img)
         return 0;
 
@@ -336,7 +359,7 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
     MagickImage*  dst = 0;
     ExceptionInfo exception;
 
-    dst = allocImage();
+    dst = d->allocImage();
     if (!dst)
         return 0;
 
@@ -542,7 +565,7 @@ bool MagickApi::scaleImage(MagickImage& img, int width, int height)
     if (img.getWidth() != width || img.getHeight() != height)
     {
         GetExceptionInfo(&exception);
-        if (!(image = ResizeImage(img.getImage(), width, height,(FilterTypes)m_filter, 1.0, &exception)))
+        if (!(image = ResizeImage(img.getImage(), width, height,(FilterTypes)d->filter, 1.0, &exception)))
         {
             emit signalsAPIError("ResizeImage() failed\n");
             return -1;
