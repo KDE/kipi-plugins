@@ -26,17 +26,21 @@
 #ifndef MAGICK_API_H
 #define MAGICK_API_H
 
+// Qt includes
+
 #include <QObject>
 #include <QFile>
 #include <QString>
 
+// ImageMagick includes
+
 #include <magick/api.h>
 
-#define SCALE_FILTER_BEST    GaussianFilter
-#define SCALE_FILTER_FAST    PointFilter
+#define SCALE_FILTER_BEST GaussianFilter
+#define SCALE_FILTER_FAST PointFilter
 
 /// wraper over MagickImage to use in c++ code
-class MagickImage 
+class MagickImage
 {
 
 public:
@@ -73,11 +77,13 @@ public:
 
     MagickImage* loadImage(QString file);
     MagickImage* loadStream(QFile& stream);
+
     int saveToFile(const MagickImage &img, QString file);
     int saveToStream(const MagickImage &img, QFile& stream);
 
     MagickImage* createImage(const QString color, int width, int height);
     MagickImage* duplicateImage(const MagickImage& src);
+
     bool freeImage(const MagickImage& img);
 
     bool blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a);
@@ -85,6 +91,7 @@ public:
     bool bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage& src, int sx, int sy, int w, int h);
     bool scaleImage(MagickImage& img, int width, int height);
     bool scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh);
+
     MagickImage* geoscaleImage(const MagickImage& img, int x, int y, int w, int h, int width, int height);
     MagickImage* borderImage(const MagickImage& img, QString rgbcolor, int bw, int bh);
 
@@ -96,7 +103,7 @@ public:
 
 Q_SIGNALS:
 
-    void APIError(QString error);
+    void signalsAPIError(const QString& error);
 
 private:
 

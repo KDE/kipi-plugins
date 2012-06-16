@@ -1,6 +1,4 @@
 
-INCLUDE(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                     ${QT_INCLUDES}
                     ${CMAKE_CURRENT_BINARY_DIR}/../
@@ -14,7 +12,8 @@ KDE4_ADD_EXECUTABLE(testmagickiface ${testmagickiface_SRCS})
 TARGET_LINK_LIBRARIES(testmagickiface
                       magickiface
                       ${QT_QTTEST_LIBRARY}
-                      ${QT_LIBRARIES}
+                      ${QT_QTGUI_LIBRARY}
+                      ${KDE4_KDECORE_LIBS}
                       ${ImageMagick_LIBRARIES}
                      )
 

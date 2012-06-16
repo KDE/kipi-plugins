@@ -1,7 +1,5 @@
 ADD_SUBDIRECTORY(test)
 
-INCLUDE(${QT_USE_FILE})
-
 INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                     ${QT_INCLUDES}
                     ${KDE4_INCLUDES}
@@ -13,6 +11,10 @@ SET(magickiface_SRCS
     processimage.cpp
    )
 
-ADD_LIBRARY(magickiface ${magickiface_SRCS})
+KDE4_ADD_LIBRARY(magickiface STATIC ${magickiface_SRCS})
 
-TARGET_LINK_LIBRARIES(magickiface ${ImageMagick_LIBRARIES} ${QT_LIBRARIES})
+TARGET_LINK_LIBRARIES(magickiface
+                      ${QT_QTGUI_LIBRARY}
+                      ${KDE4_KDECORE_LIBS}
+                      ${ImageMagick_LIBRARIES}
+                     )

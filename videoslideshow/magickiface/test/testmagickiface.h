@@ -26,7 +26,11 @@
 #ifndef TESTMAGICKIFACE_H
 #define TESTMAGICKIFACE_H
 
+// Qt includes
+
 #include <QObject>
+
+// Local includes
 
 #include "magick_api.h"
 

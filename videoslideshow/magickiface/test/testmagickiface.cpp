@@ -23,17 +23,19 @@
  *
  * ============================================================ */
 
+#include "testmagickiface.moc"
+
+// Qt includes
+
 #include <QtTest>
 #include <QFileDialog>
-
-#include "testmagickiface.moc"
 
 QTEST_MAIN(TestMagickIface)
 
 TestMagickIface::TestMagickIface()
 {
     api  = new MagickApi();
-    spy  = new QSignalSpy(api,SIGNAL(APIError(QString)));
+    spy  = new QSignalSpy(api, SIGNAL(signalsAPIError(const QString&)));
     QVERIFY(spy->isValid());
     file = new QFile(QFileDialog::getOpenFileName(NULL, tr("SelectImage"), "/home", tr("Image Files (*.png *.jpg)")));
 }

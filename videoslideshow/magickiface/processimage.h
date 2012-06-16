@@ -26,9 +26,13 @@
 #ifndef PROCESSIMAGE_H
 #define PROCESSIMAGE_H
 
+// Qt includes
+
 #include <QObject>
 
-#include <magick_api.h>
+// Local includes
+
+#include "magick_api.h"
 
 enum ASPECTCORRECTION_TYPE
 {
@@ -89,7 +93,7 @@ public:
                           int step, int steps);
 Q_SIGNALS:
 
-    void ProcessError(QString errMess);
+    void signalProcessError(const QString& errMess);
 
 private:
 
