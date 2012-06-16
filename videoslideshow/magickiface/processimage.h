@@ -30,6 +30,13 @@
 
 #include <QObject>
 
+// Local includes
+
+#include "kipiplugins_export.h"
+
+namespace KIPIPlugins
+{
+
 enum ASPECTCORRECTION_TYPE
 {
     ASPECTCORRECTION_TYPE_AUTO,
@@ -70,7 +77,7 @@ class MagickApi;
 
 // ---------------------------------------------------------------------------------------
 
-class ProcessImage : public QObject
+class KIPIPLUGINS_EXPORT ProcessImage : public QObject
 {
     Q_OBJECT
 
@@ -106,5 +113,7 @@ private:
 
     MagickApi* m_api;
 };
+
+} // namespace KIPIPlugins
 
 #endif // PROCESSIMAGE_H

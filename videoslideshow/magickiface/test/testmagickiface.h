@@ -33,7 +33,12 @@
 class QSignalSpy;
 class QFile;
 
-class MagickApi;
+namespace KIPIPlugins
+{
+    class MagickApi;
+}
+
+using namespace KIPIPlugins;
 
 class TestMagickIface : public QObject
 {

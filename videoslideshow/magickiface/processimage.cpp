@@ -36,6 +36,9 @@
 #define INC(v) incValue(v, step, steps)
 #define DEC(v) decValue(v, step, steps)
 
+namespace KIPIPlugins
+{
+
 ProcessImage::ProcessImage(MagickApi* const api)
 {
     m_api = api;
@@ -311,3 +314,5 @@ GeoImage* ProcessImage::getGeometry(const GeoImage& from, const GeoImage& to, in
 
     return geometry;
 }
+
+} // namespace KIPIPlugins

@@ -38,11 +38,18 @@
 #define GetCurrentDir getcwd
 #endif
 
+namespace KIPIPlugins
+{
+
 MagickImage::MagickImage()
 {
     m_width  = 0;
     m_height = 0;
     m_image  = 0;
+}
+
+MagickImage::~MagickImage()
+{
 }
 
 void MagickImage::setWidth(int width)
@@ -579,3 +586,5 @@ bool MagickApi::displayImage(MagickImage& img)
 
     return false;
 }
+
+} // namespace KIPIPlugins
