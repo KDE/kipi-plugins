@@ -30,10 +30,6 @@
 
 #include <QObject>
 
-// Local includes
-
-#include "magick_api.h"
-
 enum ASPECTCORRECTION_TYPE
 {
     ASPECTCORRECTION_TYPE_AUTO,
@@ -68,6 +64,9 @@ typedef struct GeoImage
 {
     int x, y, w, h;
 } GeoImage;
+
+class MagickImage;
+class MagickApi;
 
 // ---------------------------------------------------------------------------------------
 
