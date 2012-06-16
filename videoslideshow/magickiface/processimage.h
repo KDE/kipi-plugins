@@ -88,8 +88,8 @@ public:
     MagickImage* transition(const MagickImage& from, const MagickImage& to, int type, int step, int steps);
 
     /// calculates the required geometry of image to be shown during a instance for zoom effect
-    GeoImage* getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height,
-                          int step, int steps);
+    GeoImage* getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height, int step, int steps) const;
+    
 Q_SIGNALS:
 
     void signalProcessError(const QString& errMess);

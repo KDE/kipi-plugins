@@ -460,7 +460,7 @@ bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magi
         /* do it every row */
         for (x = 0 ; x < dst.getHeight() ; x++)
         {
-            blendPixel(dst_data,src0_data, src1_data, a);
+            blendPixel(dst_data, src0_data, src1_data, a);
             src0_data++;
             src1_data++;
             dst_data++;
