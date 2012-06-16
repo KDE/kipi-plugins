@@ -30,6 +30,10 @@
 #include <QtTest>
 #include <QFileDialog>
 
+// Local includes
+
+#include "magickiface.h"
+
 QTEST_MAIN(TestMagickIface)
 
 TestMagickIface::TestMagickIface()

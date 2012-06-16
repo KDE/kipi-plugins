@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "magick_api.moc"
+#include "magickiface.moc"
 
 // C++ includes
 

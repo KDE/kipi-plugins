@@ -31,7 +31,7 @@
 
 // Local includes
 
-#include "magick_api.h"
+#include "magickiface.h"
 
 ProcessImage::ProcessImage(MagickApi* api)
 {

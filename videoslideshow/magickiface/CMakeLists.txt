@@ -7,7 +7,7 @@ INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                    )
 
 SET(magickiface_SRCS
-    magick_api.cpp
+    magickiface.cpp
     processimage.cpp
    )
 

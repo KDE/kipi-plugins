@@ -30,12 +30,10 @@
 
 #include <QObject>
 
-// Local includes
-
-#include "magick_api.h"
-
 class QSignalSpy;
 class QFile;
+
+class MagickApi;
 
 class TestMagickIface: public QObject
 {
