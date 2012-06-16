@@ -58,9 +58,9 @@ public:
 
 private:
 
-    int    width;
-    int    height;
-    Image* image;
+    int    m_width;
+    int    m_height;
+    Image* m_image;
 };
 
 // ------------------------------------------------------------------------------

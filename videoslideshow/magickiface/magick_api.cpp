@@ -40,19 +40,19 @@
 
 MagickImage::MagickImage()
 {
-    width  = 0;
-    height = 0;
-    image  = 0;
+    m_width  = 0;
+    m_height = 0;
+    m_image  = 0;
 }
 
 void MagickImage::setWidth(int width)
 {
-    this->width = width;
+    m_width = width;
 }
 
 void MagickImage::setHeight(int height)
 {
-    this->height = height;
+    m_height = height;
 }
 
 bool MagickImage::setImage(Image* const img)
@@ -60,29 +60,29 @@ bool MagickImage::setImage(Image* const img)
     if(!img)
         return false;
 
-    this->image = img;
+    m_image = img;
     return true;
 }
 
 int MagickImage::getHeight() const
 {
-    return height;
+    return m_height;
 }
 
 int MagickImage::getWidth() const
 {
-    return width;
+    return m_width;
 }
 
 Image* MagickImage::getImage() const
 {
-    return image;
+    return m_image;
 }
 
 bool MagickImage::freeImage() const
 {
-    if(image)
-        DestroyImage(image);
+    if(m_image)
+        DestroyImage(m_image);
 
     return true;
 }
