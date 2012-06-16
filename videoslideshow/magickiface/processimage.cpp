@@ -33,9 +33,6 @@
 
 #include "magick_api.h"
 
-#define MIN(a,b)    (((a) < (b)) ? (a) : (b))
-#define MAX(a,b)    (((a) > (b)) ? (a) : (b))
-
 ProcessImage::ProcessImage(MagickApi* api)
 {
     this->api = api;
@@ -144,7 +141,7 @@ MagickImage* ProcessImage::transition(const MagickImage &from,const MagickImage 
     switch (type)
     {
         // sliding
-        
+
         case TRANSITION_TYPE_SLIDE_L2R:
             api->overlayImage(*dst,0,0,from);
             api->overlayImage(*dst,DEC(-w),0,to);
@@ -290,10 +287,10 @@ GeoImage* ProcessImage::getGeometry(const GeoImage &from, const GeoImage &to,
         geometry->h = lround(from.h + (to.h - from.h) * (double) step / (double) steps);
     }
 
-    geometry->x = MIN(MAX(geometry->x,0),image_width - 1);
-    geometry->y = MIN(MAX(geometry->y,0),image_height - 1);
-    geometry->w = MIN(MAX(geometry->w,0),image_width - 1 - geometry->x);
-    geometry->h = MIN(MAX(geometry->h,0),image_height - 1 - geometry->y);
+    geometry->x = qMin(qMax(geometry->x, 0), image_width  - 1);
+    geometry->y = qMin(qMax(geometry->y, 0), image_height - 1);
+    geometry->w = qMin(qMax(geometry->w, 0), image_width  - 1 - geometry->x);
+    geometry->h = qMin(qMax(geometry->h, 0), image_height - 1 - geometry->y);
 
     return geometry;
 }
