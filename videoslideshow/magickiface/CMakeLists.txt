@@ -8,14 +8,11 @@ INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                     ${CMAKE_BINARY_DIR}
                    )
 
-SET(imagemagick_SRCS
+SET(magickiface_SRCS
     magick_api.cpp
-    main.cpp
     processimage.cpp
    )
 
-KDE4_ADD_EXECUTABLE(imagemagick ${imagemagick_SRCS})
+ADD_LIBRARY(magickiface ${magickiface_SRCS})
 
-TARGET_LINK_LIBRARIES(imagemagick ${ImageMagick_LIBRARIES} ${QT_LIBRARIES})
-
-INSTALL(TARGETS imagemagick ${INSTALL_TARGETS_DEFAULT_ARGS})
+TARGET_LINK_LIBRARIES(magickiface ${ImageMagick_LIBRARIES} ${QT_LIBRARIES})
