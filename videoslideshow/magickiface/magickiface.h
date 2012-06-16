@@ -34,10 +34,15 @@
 
 // ImageMagick includes
 
+#include <magick/magick-config.h>
+
+#define QuantumDepth  MAGICKCORE_QUANTUM_DEPTH
+
 #include <magick/api.h>
 
 #define SCALE_FILTER_BEST GaussianFilter
 #define SCALE_FILTER_FAST PointFilter
+
 
 /// wraper over MagickImage to use in c++ code
 class MagickImage
