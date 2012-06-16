@@ -95,11 +95,11 @@ public:
     MagickImage* geoscaleImage(const MagickImage& img, int x, int y, int w, int h, int width, int height);
     MagickImage* borderImage(const MagickImage& img, const QString& rgbcolor, int bw, int bh);
 
-    // used to display image
+    /// used to display image
     bool displayImage(MagickImage& img);
 
-    // returns filter used during resize of image
-    int getFilter();
+    /// returns filter used during resize of image
+    int getFilter() const;
 
 Q_SIGNALS:
 
@@ -107,16 +107,14 @@ Q_SIGNALS:
 
 private:
 
-    /*
-     * allocate a new image
-     */
+    /// allocate a new image
     MagickImage* allocImage();
 
 private:
 
-    // this is the temporary directory for storing files
-    char* cwd;
-    int   filter;
+    /// this is the temporary directory for storing files
+    char* m_cwd;
+    int   m_filter;
 };
 
 #endif // MAGICK_API_H

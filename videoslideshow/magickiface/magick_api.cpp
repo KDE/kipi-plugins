@@ -93,24 +93,24 @@ MagickApi::MagickApi()
     : QObject()
 {
     /* Iniialize ImageMagick lib */
-    MagickCoreGenesis(cwd = GetCurrentDir(NULL, 0), MagickFalse);
-    filter                = SCALE_FILTER_FAST;
+    MagickCoreGenesis(m_cwd = GetCurrentDir(NULL, 0), MagickFalse);
+    m_filter                = SCALE_FILTER_FAST;
 }
 
 MagickApi::~MagickApi()
 {
-    if (cwd)
+    if (m_cwd)
     {
-        free(cwd);
-        cwd = NULL;
+        free(m_cwd);
+        m_cwd = NULL;
     }
 
     MagickCoreTerminus();
 }
 
-int MagickApi::getFilter()
+int MagickApi::getFilter() const
 {
-    return filter;
+    return m_filter;
 }
 
 MagickImage* MagickApi::allocImage()
@@ -502,7 +502,7 @@ bool MagickApi::scaleImage(MagickImage& img, int width, int height)
     if (img.getWidth() != width || img.getHeight() != height)
     {
         GetExceptionInfo(&exception);
-        if (!(image = ResizeImage(img.getImage(),width,height,(FilterTypes)filter,1.0,&exception)))
+        if (!(image = ResizeImage(img.getImage(),width,height,(FilterTypes)m_filter,1.0,&exception)))
         {
             emit signalsAPIError("ResizeImage() failed\n");
             return -1;
