@@ -34,8 +34,7 @@
 
 // ImageMagick includes
 
-#include <magick/magick-config.h>
-
+// To prevent compilation warnings about undefined QuantumDepth
 #define QuantumDepth  MAGICKCORE_QUANTUM_DEPTH
 
 #include <magick/api.h>
