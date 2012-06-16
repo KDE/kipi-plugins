@@ -146,17 +146,17 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
             m_api->overlayImage(*dst, 0, 0, from);
             m_api->overlayImage(*dst, DEC(-w), 0, to);
             break;
-            
+
         case TRANSITION_TYPE_SLIDE_R2L:
             m_api->overlayImage(*dst, 0, 0, from);
             m_api->overlayImage(*dst, DEC(w), 0, to);
             break;
-            
+
         case TRANSITION_TYPE_SLIDE_T2B:
             m_api->overlayImage(*dst, 0, 0, from);
             m_api->overlayImage(*dst, 0, DEC(-h), to);
             break;
-            
+
         case TRANSITION_TYPE_SLIDE_B2T:
             m_api->overlayImage(*dst, 0, 0, from);
             m_api->overlayImage(*dst, 0, DEC(h), to);
@@ -168,17 +168,17 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
             m_api->overlayImage(*dst, INC(w), 0, from);
             m_api->overlayImage(*dst, DEC(-w), 0, to);
             break;
-            
+
         case TRANSITION_TYPE_PUSH_R2L:
             m_api->overlayImage(*dst, INC(-w), 0, from);
             m_api->overlayImage(*dst, DEC(w), 0, to);
             break;
-            
+
         case TRANSITION_TYPE_PUSH_T2B:
             m_api->overlayImage(*dst, 0, INC(h), from);
             m_api->overlayImage(*dst, 0, DEC(-h), to);
             break;
-            
+
         case TRANSITION_TYPE_PUSH_B2T:
             m_api->overlayImage(*dst, 0, INC(-h), from);
             m_api->overlayImage(*dst, 0, DEC(h), to);

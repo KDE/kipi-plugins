@@ -309,7 +309,7 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
     GetExceptionInfo(&exception);
     QueryColorDatabase(color.toAscii(), &img->getImage()->background_color, &img->getImage()->exception);
     SetImageBackgroundColor(img->getImage());
-    
+
     if (!(image = ResizeImage(img->getImage(), width, height, SCALE_FILTER_FAST, 1.0, &exception)))
     {
         emit signalsAPIError("ResizeImage() failed\n");

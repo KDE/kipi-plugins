@@ -67,7 +67,7 @@ private Q_SLOTS:
 private:
 
     MagickApi*  api;
-    
+
     /// used to check the signlas emitted by a class
     QSignalSpy* spy;
 

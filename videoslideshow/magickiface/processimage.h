@@ -96,7 +96,7 @@ public:
 
     /// calculates the required geometry of image to be shown during a instance for zoom effect
     GeoImage* getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height, int step, int steps) const;
-    
+
 Q_SIGNALS:
 
     void signalProcessError(const QString& errMess);
@@ -108,7 +108,7 @@ private:
 
     /// decrease value with increasing step
     int decValue(int v, int step, int steps) const;
-    
+
 private:
 
     MagickApi* m_api;
