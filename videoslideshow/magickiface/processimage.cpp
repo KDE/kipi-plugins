@@ -46,10 +46,8 @@ ProcessImage::ProcessImage(MagickApi* const api)
 
 MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspectratio, ASPECTCORRECTION_TYPE aspectcorrection)
 {
-    double img_aspectratio;
-    MagickImage* newimg = NULL;
-
-    img_aspectratio = (double) img.getWidth() / (double) img.getHeight();
+    MagickImage* newimg    = NULL;
+    double img_aspectratio = (double) img.getWidth() / (double) img.getHeight();
 
     if (aspectcorrection == ASPECTCORRECTION_TYPE_AUTO)
     {
@@ -75,7 +73,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             else
             {
                 // resulting image will have black bars on top and bottom
-                if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio,img.getHeight())))
+                if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
                     emit signalProcessError("couldn't create image\n");
 
                 m_api->overlayImage(*newimg, 0, (newimg->getHeight() - img.getHeight()) / 2, img);
@@ -87,7 +85,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             if (img_aspectratio < aspectratio)
             {
                 // cut on top and bottom side
-                if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio,img.getHeight())))
+                if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
                     emit signalProcessError("couldn't create image\n");
 
                 m_api->bitblitImage(*newimg, 0, 0, img, 0, (img.getHeight() - newimg->getHeight()) / 2, newimg->getWidth(), newimg->getHeight());
@@ -95,7 +93,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             else
             {
                 // cut on right and left side
-                if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio,img.getHeight())))
+                if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
                     emit signalProcessError("couldn't create image\n");
 
                 m_api->bitblitImage(*newimg, 0, 0, img,(img.getWidth() - newimg->getWidth()) / 2,0, newimg->getWidth(), newimg->getHeight());
@@ -129,59 +127,58 @@ int ProcessImage::decValue(int v, int step, int steps) const
 
 MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage& to, int type, int step, int steps)
 {
-    MagickImage* dst = 0;
     int w, h;
 
     if (step < 0 || step >= steps)
         emit signalProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
 
     // create a new target image and copy the from image onto
-    dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
+    MagickImage* dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
 
     switch (type)
     {
         // sliding
 
         case TRANSITION_TYPE_SLIDE_L2R:
-            m_api->overlayImage(*dst, 0, 0, from);
+            m_api->overlayImage(*dst, 0,       0, from);
             m_api->overlayImage(*dst, DEC(-w), 0, to);
             break;
 
         case TRANSITION_TYPE_SLIDE_R2L:
-            m_api->overlayImage(*dst, 0, 0, from);
+            m_api->overlayImage(*dst, 0,      0, from);
             m_api->overlayImage(*dst, DEC(w), 0, to);
             break;
 
         case TRANSITION_TYPE_SLIDE_T2B:
-            m_api->overlayImage(*dst, 0, 0, from);
+            m_api->overlayImage(*dst, 0, 0,       from);
             m_api->overlayImage(*dst, 0, DEC(-h), to);
             break;
 
         case TRANSITION_TYPE_SLIDE_B2T:
-            m_api->overlayImage(*dst, 0, 0, from);
+            m_api->overlayImage(*dst, 0, 0,      from);
             m_api->overlayImage(*dst, 0, DEC(h), to);
             break;
 
         // pushing
 
         case TRANSITION_TYPE_PUSH_L2R:
-            m_api->overlayImage(*dst, INC(w), 0, from);
+            m_api->overlayImage(*dst, INC(w),  0, from);
             m_api->overlayImage(*dst, DEC(-w), 0, to);
             break;
 
         case TRANSITION_TYPE_PUSH_R2L:
             m_api->overlayImage(*dst, INC(-w), 0, from);
-            m_api->overlayImage(*dst, DEC(w), 0, to);
+            m_api->overlayImage(*dst, DEC(w),  0, to);
             break;
 
         case TRANSITION_TYPE_PUSH_T2B:
-            m_api->overlayImage(*dst, 0, INC(h), from);
+            m_api->overlayImage(*dst, 0, INC(h),  from);
             m_api->overlayImage(*dst, 0, DEC(-h), to);
             break;
 
         case TRANSITION_TYPE_PUSH_B2T:
             m_api->overlayImage(*dst, 0, INC(-h), from);
-            m_api->overlayImage(*dst, 0, DEC(h), to);
+            m_api->overlayImage(*dst, 0, DEC(h),  to);
             break;
 
         // swapping
@@ -189,13 +186,13 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
         case TRANSITION_TYPE_SWAP_L2R:
             if (step < steps / 2)
             {
-                m_api->overlayImage(*dst, INC(w), 0, to);
+                m_api->overlayImage(*dst, INC(w),  0, to);
                 m_api->overlayImage(*dst, INC(-w), 0, from);
             }
             else
             {
                 m_api->overlayImage(*dst, DEC(-w), 0, from);
-                m_api->overlayImage(*dst, DEC(w), 0, to);
+                m_api->overlayImage(*dst, DEC(w),  0, to);
             }
             break;
 
@@ -203,11 +200,11 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
             if (step < steps / 2)
             {
                 m_api->overlayImage(*dst, INC(-w), 0, to);
-                m_api->overlayImage(*dst, INC(w), 0, from);
+                m_api->overlayImage(*dst, INC(w),  0, from);
             }
             else
             {
-                m_api->overlayImage(*dst, DEC(w), 0, from);
+                m_api->overlayImage(*dst, DEC(w),  0, from);
                 m_api->overlayImage(*dst, DEC(-w), 0, to);
             }
             break;
@@ -215,13 +212,13 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
         case TRANSITION_TYPE_SWAP_T2B:
             if (step < steps / 2)
             {
-                m_api->overlayImage(*dst, 0, INC(h), to);
+                m_api->overlayImage(*dst, 0, INC(h),  to);
                 m_api->overlayImage(*dst, 0, INC(-h), from);
             }
             else
             {
                 m_api->overlayImage(*dst, 0, DEC(-h), from);
-                m_api->overlayImage(*dst, 0, DEC(h), to);
+                m_api->overlayImage(*dst, 0, DEC(h),  to);
             }
             break;
 
@@ -229,11 +226,11 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
             if (step < steps / 2)
             {
                 m_api->overlayImage(*dst, 0, INC(-h), to);
-                m_api->overlayImage(*dst, 0, INC(h), from);
+                m_api->overlayImage(*dst, 0, INC(h),  from);
             }
             else
             {
-                m_api->overlayImage(*dst, 0, DEC(h), from);
+                m_api->overlayImage(*dst, 0, DEC(h),  from);
                 m_api->overlayImage(*dst, 0, DEC(-h), to);
             }
             break;
@@ -242,30 +239,30 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
 
         case TRANSITION_TYPE_ROLL_L2R:
             if (INC(w))
-                m_api->scaleblitImage(*dst, 0, 0, INC(w), h, to, 0, 0, w, h);
+                m_api->scaleblitImage(*dst, 0,      0, INC(w), h, to,   0, 0, w, h);
             if (DEC(w))
                 m_api->scaleblitImage(*dst, INC(w), 0, DEC(w), h, from, 0, 0, w, h);
             break;
 
         case TRANSITION_TYPE_ROLL_R2L:
             if (DEC(w))
-                m_api->scaleblitImage(*dst, 0, 0, DEC(w), h, from, 0, 0, w, h);
+                m_api->scaleblitImage(*dst, 0,      0, DEC(w), h, from, 0, 0, w, h);
             if (INC(w))
-                m_api->scaleblitImage(*dst, DEC(w), 0, INC(w), h, to, 0, 0, w, h);
+                m_api->scaleblitImage(*dst, DEC(w), 0, INC(w), h, to,   0, 0, w, h);
             break;
 
         case TRANSITION_TYPE_ROLL_T2B:
             if (INC(h))
-                m_api->scaleblitImage(*dst, 0, 0, w, INC(h), to, 0, 0, w, h);
+                m_api->scaleblitImage(*dst, 0, 0,      w, INC(h), to,   0, 0, w, h);
             if (DEC(h))
                 m_api->scaleblitImage(*dst, 0, INC(h), w, DEC(h), from, 0, 0, w, h);
             break;
 
         case TRANSITION_TYPE_ROLL_B2T:
             if (DEC(h))
-                m_api->scaleblitImage(*dst, 0, 0, w, DEC(h), from, 0, 0, w, h);
+                m_api->scaleblitImage(*dst, 0, 0,      w, DEC(h), from, 0, 0, w, h);
             if (INC(h))
-                m_api->scaleblitImage(*dst, 0, DEC(h), w, INC(h), to, 0, 0, w, h);
+                m_api->scaleblitImage(*dst, 0, DEC(h), w, INC(h), to,   0, 0, w, h);
             break;
 
         // fade
