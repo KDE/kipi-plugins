@@ -37,12 +37,27 @@ ENDFOREACH(_currentfile ${AvTest_SRCS})
 KDE4_ADD_EXECUTABLE(avtest ${AvTest_SRCS})
 
 TARGET_LINK_LIBRARIES(avtest
-                    HUpnp
-                    HUpnpAv
-                    ${KDE4_KDEUI_LIBS}
-                    ${QT_LIBRARIES}
-                    ${QT_QTNETWORK_LIBRARY}
-                    ${QT_PHONON_LIBRARY}
-                    ${QT_QTXML_LIBRARY}
-                    ${QT_QTXMLPATTERNS_LIBRARY}
-                    )
+                      HUpnp
+                      HUpnpAv
+                      ${KDE4_KDEUI_LIBS}
+                      ${QT_LIBRARIES}
+                      ${QT_QTNETWORK_LIBRARY}
+                      ${QT_PHONON_LIBRARY}
+                      ${QT_QTXML_LIBRARY}
+                      ${QT_QTXMLPATTERNS_LIBRARY}
+                     )
+
+INSTALL(TARGETS avtest ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+SET(avtest_xml_files
+    herqq_avtransport_scpd.xml
+    herqq_contentdirectory_scpd.xml
+    herqq_renderingcontrol_scpd.xml
+    herqq_connectionmanager_sink_scpd.xml
+    herqq_mediarenderer_description.xml
+    herqq_connectionmanager_source_scpd.xml
+    herqq_mediaserver_description.xml
+   )
+
+INSTALL(FILES       ${avtest_xml_files}
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_dlnaexport/xml)

@@ -37,6 +37,11 @@
 #include <QDir>
 #include <QFileDialog>
 
+// KDE includes
+
+#include <kstandarddirs.h>
+#include <kdebug.h>
+
 using namespace Herqq::Upnp;
 using namespace Herqq::Upnp::Av;
 
@@ -71,10 +76,14 @@ MediaServerWindow::MediaServerWindow(QWidget *parent) :
     HAvDeviceModelCreator creator;
     creator.setMediaServerConfiguration(mediaServerConfig);
 
+    QString filePath = KStandardDirs::locate("data", "kipiplugin_dlnaexport/xml/herqq_mediaserver_description.xml");
+
     // 5) Setup the HDeviceHost with desired configuration info.
     HDeviceConfiguration config;
-    config.setPathToDeviceDescription("./descriptions/herqq_mediaserver_description.xml");
+    config.setPathToDeviceDescription(filePath);
     config.setCacheControlMaxAge(180);
+
+    kDebug() << "filepath properly set : " << filePath;
 
     HDeviceHostConfiguration hostConfiguration;
     hostConfiguration.setDeviceModelCreator(creator);

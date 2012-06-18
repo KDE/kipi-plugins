@@ -38,6 +38,11 @@
 
 #include <QtNetwork/QNetworkAccessManager>
 
+// KDE includes
+
+#include <kstandarddirs.h>
+#include <kdebug.h>
+
 using namespace Herqq::Upnp;
 using namespace Herqq::Upnp::Av;
 
@@ -94,9 +99,13 @@ MediaRendererWindow::MediaRendererWindow(QWidget* parent) :
     HAvDeviceModelCreator creator;
     creator.setMediaRendererConfiguration(mediaRendererConfig);
 
+    QString filePath = KStandardDirs::locate("data", "kipiplugin_dlnaexport/xml/herqq_mediarenderer_description.xml");
+
     HDeviceConfiguration config;
-    config.setPathToDeviceDescription("./descriptions/herqq_mediarenderer_description.xml");
+    config.setPathToDeviceDescription(filePath);
     config.setCacheControlMaxAge(180);
+
+    kDebug() << "filepath properly set : " << filePath;
 
     HDeviceHostConfiguration hostConfiguration;
     hostConfiguration.setDeviceModelCreator(creator);
