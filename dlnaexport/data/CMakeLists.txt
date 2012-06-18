@@ -1,6 +1,7 @@
-SET(upnp_xml_files herqq_mediaserver_description.xml
-    herqq_connectionmanager_source_scpd.xml
-    herqq_contentdirectory_scpd.xml
+SET(upnp_xml_files
+    dlnaexport_mediaserver_description.xml
+    dlnaexport_connectionmanager_source_scpd.xml
+    dlnaexport_contentdirectory_scpd.xml
    )
 
 INSTALL(FILES       ${upnp_xml_files}
