@@ -433,8 +433,8 @@ short unsigned int blendPixelColor(short unsigned int color0, short unsigned int
     if (d < 0)
         d = 0;
 
-    if (d > 255)
-        d = 255;
+    if (d > 65535)
+        d = 65535;
 
     return d;
 }
@@ -497,7 +497,7 @@ bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magi
         }
     }
 
-    SetImageBackgroundColor(dst.getImage());
+    SyncAuthenticPixels(dst.getImage(), &dst.getImage()->exception);
     return 1;
 }
 

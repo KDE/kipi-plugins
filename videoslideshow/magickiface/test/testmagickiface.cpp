@@ -62,7 +62,7 @@ void TestMagickIface::testCreateImage()
 {
     spy->clear();
 
-    MagickImage* img = api->createImage(QString("blue"), 300, 300);
+    MagickImage* img = api->createImage(QString("green"), 300, 300);
     QVERIFY( img != 0 );
 
     bool done = api->displayImage(*img);
@@ -128,18 +128,17 @@ void TestMagickIface::testOverlayImage()
 void TestMagickIface::testBlendImage()
 {
     spy->clear();
-    QSKIP("need to change the code", SkipSingle);
 
     MagickImage* src0 = api->createImage(QString("green"), 100, 100);
     QVERIFY( src0 != 0 );
 
-    MagickImage* src1 = api->createImage(QString("blue"), 100, 100);
+    MagickImage* src1 = api->createImage(QString("white"), 100, 100);
     QVERIFY( src1 != 0 );
 
     MagickImage* dst = api->createImage(QString("yellow"), 100, 100);
     QVERIFY( dst != 0);
 
-    bool done = api->blendImage(*dst, *src0, *src1, 255);
+    bool done = api->blendImage(*dst, *src0, *src1, 0.75);
     QVERIFY(done);
 
     done = api->displayImage(*dst);
