@@ -25,6 +25,9 @@
 
 #include "testmagickiface.moc"
 
+// To run QTEST_MAIN as a GUI application
+#define QT_GUI_LIB
+
 // Qt includes
 
 #include <QtTest>

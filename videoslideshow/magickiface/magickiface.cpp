@@ -138,7 +138,7 @@ public:
         }
 
         img->getImage()->compression = UndefinedCompression;
-        img->getImage()->depth       = 8;
+        img->getImage()->depth       = 16;
         DestroyExceptionInfo(&exception);
 
         return img;
