@@ -89,7 +89,7 @@ MediaServer::MediaServer(QObject* const parent)
     // Setup the HDeviceHost with desired configuration info.
     HDeviceConfiguration config;
 
-    QString filePath = KStandardDirs::locate("data", "kipiplugin_dlnaexport/xml/herqq_mediaserver_description.xml");
+    QString filePath = KStandardDirs::locate("data", "kipiplugin_dlnaexport/xml/dlnaexport_mediaserver_description.xml");
 
     config.setPathToDeviceDescription(filePath);
 
