@@ -50,13 +50,13 @@ TARGET_LINK_LIBRARIES(avtest
 INSTALL(TARGETS avtest ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 SET(avtest_xml_files
-    herqq_avtransport_scpd.xml
-    herqq_contentdirectory_scpd.xml
-    herqq_renderingcontrol_scpd.xml
-    herqq_connectionmanager_sink_scpd.xml
-    herqq_mediarenderer_description.xml
-    herqq_connectionmanager_source_scpd.xml
-    herqq_mediaserver_description.xml
+    descriptions/herqq_avtransport_scpd.xml
+    descriptions/herqq_contentdirectory_scpd.xml
+    descriptions/herqq_renderingcontrol_scpd.xml
+    descriptions/herqq_connectionmanager_sink_scpd.xml
+    descriptions/herqq_mediarenderer_description.xml
+    descriptions/herqq_connectionmanager_source_scpd.xml
+    descriptions/herqq_mediaserver_description.xml
    )
 
 INSTALL(FILES       ${avtest_xml_files}
