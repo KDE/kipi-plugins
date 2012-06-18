@@ -123,11 +123,13 @@ SET(HUpnp_MOC_HDRS
     src/devicemodel/server/hserverdevice.h
     src/devicemodel/server/hserverstatevariable.h
     src/devicemodel/client/hclientservice.h
+    src/devicemodel/client/hclientservice_adapter.h
     src/devicemodel/client/hdefault_clientdevice_p.h
     src/devicemodel/client/hclientaction_p.h
     src/devicemodel/client/hclientstatevariable.h
     src/devicemodel/client/hclientaction.h
     src/devicemodel/client/hclientdevice.h
+    src/devicemodel/client/hclientdevice_adapter.h
 
     src/http/hhttp_asynchandler_p.h
     src/http/hhttp_server_p.h
