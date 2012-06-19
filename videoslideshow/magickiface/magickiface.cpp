@@ -143,7 +143,27 @@ public:
 
         return img;
     }
+    
+    void blendPixel(PixelPacket* const dst, PixelPacket* const src0, PixelPacket* const src1, float a)
+    {
+        dst->red   = blendPixelColor(src0->red,   src1->red,   a);
+        dst->blue  = blendPixelColor(src0->blue,  src1->blue,  a);
+        dst->green = blendPixelColor(src0->green, src1->green, a);
+    }
 
+    short unsigned int blendPixelColor(short unsigned int color0, short unsigned int color1, float a)
+    {
+        int d = (int) ((1 - (a)) * (color0) + (a) * (color1));
+
+        if (d < 0)
+            d = 0;
+
+        if (d > 65535)
+            d = 65535;
+
+        return d;
+    }
+    
 public:
 
     /// this is the temporary directory for storing files
@@ -188,6 +208,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
         return 0;
 
     GetExceptionInfo(&exception);
+
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
         emit signalsAPIError("CloneImageInfo() failed\n");
@@ -195,6 +216,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
     }
 
     strcpy(info->filename,file.toAscii());
+
     if (img->getImage())
         DestroyImage(img->getImage());
 
@@ -235,8 +257,8 @@ MagickImage* MagickApi::loadStream(QFile& stream)
         return 0;
     }
 
-    strcpy(info->filename,"");
-    info->file = fdopen(fileHandle,"rb");
+    strcpy(info->filename, "");
+    info->file = fdopen(fileHandle, "rb");
 
     if (img->getImage())
         DestroyImage(img->getImage());
@@ -289,8 +311,7 @@ int MagickApi::saveToStream(const MagickImage& img, QFile& stream)
         stream.close();
 
     stream.open(QIODevice::WriteOnly);
-    int fileHandle = stream.handle();
-
+    int fileHandle  = stream.handle();
     ImageInfo* info = 0;
 
     if (!(info = CloneImageInfo(NULL)))
@@ -367,7 +388,7 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
     if (dst->getImage())
         DestroyImage(dst->getImage());
 
-    if (!(dst->setImage(CloneImage(src.getImage(),0,0,(MagickBooleanType)1,&exception))))
+    if (!(dst->setImage(CloneImage(src.getImage(), 0, 0, (MagickBooleanType)1, &exception))))
     {
         emit signalsAPIError("CloneImageInfo() failed\n");
         return 0;
@@ -375,8 +396,8 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
 
     DestroyExceptionInfo(&exception);
 
-    dst->setWidth( src.getWidth());
-    dst->setHeight( src.getHeight());
+    dst->setWidth(src.getWidth());
+    dst->setHeight(src.getHeight());
 
     return dst;
 }
@@ -426,26 +447,6 @@ bool MagickApi::bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage
     return 1;
 }
 
-short unsigned int blendPixelColor(short unsigned int color0, short unsigned int color1, float a)
-{
-    int d = (int) ((1 - (a)) * (color0) + (a) * (color1));
-
-    if (d < 0)
-        d = 0;
-
-    if (d > 65535)
-        d = 65535;
-
-    return d;
-}
-
-void blendPixel(PixelPacket* dst, PixelPacket* src0, PixelPacket* src1, float a)
-{
-    dst->red   = blendPixelColor(src0->red,   src1->red,   a);
-    dst->blue  = blendPixelColor(src0->blue,  src1->blue,  a);
-    dst->green = blendPixelColor(src0->green, src1->green, a);
-}
-
 bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a)
 {
     PixelPacket* src0_data = 0;
@@ -490,7 +491,7 @@ bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magi
         /* do it every row */
         for (x = 0 ; x < dst.getHeight() ; x++)
         {
-            blendPixel(dst_data, src0_data, src1_data, a);
+            d->blendPixel(dst_data, src0_data, src1_data, a);
             src0_data++;
             src1_data++;
             dst_data++;
