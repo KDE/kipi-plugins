@@ -93,11 +93,11 @@ public:
 
     bool freeImage(const MagickImage& img) const;
 
-    bool blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a);
+    int blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a);
     bool overlayImage(MagickImage& dst, int dx, int dy, const MagickImage& src);
-    bool bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage& src, int sx, int sy, int w, int h);
-    bool scaleImage(MagickImage& img, int width, int height);
-    bool scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh);
+    int bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage& src, int sx, int sy, int w, int h);
+    int scaleImage(MagickImage& img, int width, int height);
+    int scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh);
 
     MagickImage* geoscaleImage(const MagickImage& img, int x, int y, int w, int h, int width, int height);
     MagickImage* borderImage(const MagickImage& img, const QString& rgbcolor, int bw, int bh);

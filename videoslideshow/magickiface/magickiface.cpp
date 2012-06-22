@@ -143,7 +143,7 @@ public:
 
         return img;
     }
-    
+
     void blendPixel(PixelPacket* const dst, PixelPacket* const src0, PixelPacket* const src1, float a)
     {
         dst->red   = blendPixelColor(src0->red,   src1->red,   a);
@@ -163,7 +163,7 @@ public:
 
         return d;
     }
-    
+
 public:
 
     /// this is the temporary directory for storing files
@@ -240,8 +240,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
         stream.close();
 
     stream.open(QIODevice::ReadOnly);
-    int fileHandle = stream.handle();
-
+    int fileHandle     = stream.handle();
     MagickImage*  img  = 0;
     ImageInfo*    info = 0;
     ExceptionInfo exception;
@@ -410,7 +409,7 @@ bool MagickApi::freeImage(const MagickImage& img) const
     return true;
 }
 
-bool MagickApi::bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage& src, int sx, int sy, int w, int h)
+int MagickApi::bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage& src, int sx, int sy, int w, int h)
 {
     Image* cropped = 0;
     Image* source  = src.getImage();
@@ -447,7 +446,7 @@ bool MagickApi::bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage
     return 1;
 }
 
-bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a)
+int MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a)
 {
     PixelPacket* src0_data = 0;
     PixelPacket* src1_data = 0;
@@ -504,9 +503,7 @@ bool MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magi
 
 MagickImage* MagickApi::borderImage(const MagickImage& simg, const QString& color, int bw, int bh)
 {
-    MagickImage* img = 0;
-
-    img = createImage(color, simg.getWidth() + 2 * bw, simg.getWidth() + 2 * bh);
+    MagickImage* img = createImage(color, simg.getWidth() + 2 * bw, simg.getWidth() + 2 * bh);
     if (!img)
         return 0;
 
@@ -540,12 +537,10 @@ bool MagickApi::overlayImage(MagickImage& dst, int dx, int dy, const MagickImage
     return bitblitImage(dst, dx, dy, src, 0, 0, src.getWidth(), src.getHeight());
 }
 
-bool MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh)
+int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh)
 {
-    MagickImage* img = 0;
-
     /* scale the source image */
-    img = geoscaleImage(simg, sx, sy, sw, sh, dw, dh);
+    MagickImage* img = geoscaleImage(simg, sx, sy, sw, sh, dw, dh);
     if (!img)
         return -1;
 
@@ -558,7 +553,7 @@ bool MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh
     return 1;
 }
 
-bool MagickApi::scaleImage(MagickImage& img, int width, int height)
+int MagickApi::scaleImage(MagickImage& img, int width, int height)
 {
     Image*        image = 0;
     ExceptionInfo exception;
@@ -599,7 +594,7 @@ bool MagickApi::displayImage(MagickImage& img)
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
         emit signalsAPIError("CloneImageInfo() failed\n");
-        return 0;
+        return false;
     }
 
     MagickBooleanType done = DisplayImages(info, img.getImage());
