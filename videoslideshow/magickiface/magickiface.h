@@ -42,15 +42,11 @@
 #define SCALE_FILTER_BEST GaussianFilter
 #define SCALE_FILTER_FAST PointFilter
 
-// Local includes
-
-#include "kipiplugins_export.h"
-
 namespace KIPIPlugins
 {
 
-/// wraper over MagickImage to use in c++ code
-class KIPIPLUGINS_EXPORT MagickImage
+/// wraper over ImageMagick Image container to use in c++ code
+class MagickImage
 {
 
 public:
@@ -77,7 +73,7 @@ private:
 // ------------------------------------------------------------------------------
 
 /// c++ wrapper over ImageMagic API written in "api.h"
-class KIPIPLUGINS_EXPORT MagickApi : public QObject
+class MagickApi : public QObject
 {
     Q_OBJECT
 

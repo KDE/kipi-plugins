@@ -30,10 +30,6 @@
 
 #include <QObject>
 
-// Local includes
-
-#include "kipiplugins_export.h"
-
 namespace KIPIPlugins
 {
 
@@ -77,7 +73,7 @@ class MagickApi;
 
 // ---------------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT ProcessImage : public QObject
+class ProcessImage : public QObject
 {
     Q_OBJECT
 
