@@ -20,9 +20,13 @@
 #
 # ============================================================ */
 
-SUBDIRS(icons)
+ADD_SUBDIRECTORY(icons)
 
-SET(kipiplugin_photivointegration_PART_SRCS plugin_photivointegration.cpp)
+###REMOVE_DEFINITIONS(-DQT_NO_STL)
+
+SET(kipiplugin_photivointegration_PART_SRCS plugin_photivointegration.cpp
+                                            xmpinfo.cpp
+)
 
 KDE4_ADD_PLUGIN(kipiplugin_photivointegration ${kipiplugin_photivointegration_PART_SRCS})
 

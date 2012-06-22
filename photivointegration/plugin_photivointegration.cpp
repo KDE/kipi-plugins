@@ -37,6 +37,10 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
+// local includes
+
+#include "xmpinfo.h"
+
 /// You must wrap all your plugin code to a dedicated namespace
 namespace KIPIPhotivoIntegrationPlugin
 {
@@ -110,10 +114,19 @@ void Plugin_PhotivoIntegration::slotActivate()
 
     if (!images.isValid() || images.images().isEmpty())
         return;
+    
+    // Currently just a provisional arrangement to examine 
+    // Photivo (using Exiv2) and this implementation (using KExiv2)
+    XmpInfo     xmpInfo;
+    KUrl::List  imageList = images.images();
+    QStringList infoList  = imageList.toStringList();
+    for (int i = 0, end = infoList.size();  i < end;  i++) {
+	infoList[i] += ": " + xmpInfo.isDerivate(imageList[i].toLocalFile());//KPMetadata seems to be picky (doesn't accept file://)
+    }
 
     KMessageBox::informationList(0,
                                  i18n("This is the list of selected items"),
-                                 images.images().toStringList()
+				 infoList
                                 );
 }
 
