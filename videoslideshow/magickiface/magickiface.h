@@ -35,7 +35,7 @@
 // ImageMagick includes
 
 // To prevent compilation warnings about undefined QuantumDepth
-#define QuantumDepth  MAGICKCORE_QUANTUM_DEPTH
+#define QuantumDepth      MAGICKCORE_QUANTUM_DEPTH
 
 #include <magick/api.h>
 
@@ -92,9 +92,9 @@ public:
     MagickImage* duplicateImage(const MagickImage& src);
 
     bool freeImage(const MagickImage& img) const;
+    bool overlayImage(MagickImage& dst, int dx, int dy, const MagickImage& src);
 
     int blendImage(MagickImage& dst, const MagickImage& src0, const MagickImage& src1, float a);
-    bool overlayImage(MagickImage& dst, int dx, int dy, const MagickImage& src);
     int bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage& src, int sx, int sy, int w, int h);
     int scaleImage(MagickImage& img, int width, int height);
     int scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh);
