@@ -20,28 +20,28 @@
  *
  * ============================================================ */
 
-
 #ifndef XMPINFO_H
 #define XMPINFO_H
 
 //local includes
-#include "kpmetadata.h" //from: common/libkipiplugins
+
+#include "kpmetadata.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPhotivoIntegrationPlugin
-{    
-    
+{
+
 class XmpInfo
 {
 
 public:
-    QString isDerivate(const QString &image) const;
-	
+
+    QString isDerivate(const QString& image) const;
+
 private:
 
 };
-
 
 } // namespace KIPIPhotivoIntegrationPlugin
 

@@ -20,13 +20,15 @@
  *
  * ============================================================ */
 
-//STL includes
+// C++ includes
 #include <iostream>
 
-//KDE includes
-#include <KDebug>
+// KDE includes
+
+#include <kdebug.h>
 
 //KIPI includes
+
 #include "xmpinfo.h"
 
 namespace KIPIPhotivoIntegrationPlugin
@@ -37,34 +39,41 @@ namespace KIPIPhotivoIntegrationPlugin
 QString XmpInfo::isDerivate(const QString& image) const
 {
     const KPMetadata meta;
-    
-    if (meta.load(image)) {
-	QString orig;
-	QString current;
-	
-	// Read sidecar at first: Embedded metadata has precedence, so if both 
-	// exist the doubled entries will be overwritten by embedded data later on
-	if (meta.hasSidecar(image)) {
-	    //TODO
-	}
-	
-	// Now read embedded XMP
-	if (meta.hasXmp()) {
-	    orig    = meta.getXmpTagString("Xmp.xmpMM.OriginalDocumentID");
-	    current = meta.getXmpTagString("Xmp.xmpMM.DocumentID");
-	}
-	
-	// Evaluate 
-	if (!current.isEmpty() && !orig.isEmpty()) {
-	    if (current == orig) return "Original";
-	    return QString("Derived from ") + orig; //TODO:Mapping UUID -> filename
-	}
-    } else kWarning() << "Loading Metadata for file" << image << "failed";
-    
-    return "- unknown -";
-}
 
+    if (meta.load(image))
+    {
+        QString orig;
+        QString current;
+
+        // Read sidecar at first: Embedded metadata has precedence, so if both 
+        // exist the doubled entries will be overwritten by embedded data later on
+        if (meta.hasSidecar(image))
+        {
+            //TODO
+        }
+
+        // Now read embedded XMP
+        if (meta.hasXmp())
+        {
+            orig    = meta.getXmpTagString("Xmp.xmpMM.OriginalDocumentID");
+            current = meta.getXmpTagString("Xmp.xmpMM.DocumentID");
+        }
+
+        // Evaluate
+        if (!current.isEmpty() && !orig.isEmpty())
+        {
+            if (current == orig) return "Original";
+                return QString("Derived from ") + orig; //TODO:Mapping UUID -> filename
+        }
+     }
+     else
+     {
+        kWarning() << "Loading Metadata for file" << image << "failed";
+     }
+
+    return QString("- unknown -");
+}
 
 // private ////////////////////////////////////////////////////////////////////
 
-}
+} // namespace KIPIPhotivoIntegrationPlugin
