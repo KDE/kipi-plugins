@@ -80,7 +80,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
             }
         }
 
-        if (!found && isValidRAWFile(imageUrl))
+        if (!found && KPMetadata::isRawFile(imageUrl))
         {
             new MyImageListViewItem(listView(), imageUrl);
         }
@@ -110,20 +110,6 @@ void MyImageList::slotRemoveItems()
         }
     }
     while(find);
-}
-
-bool MyImageList::isValidRAWFile(const KUrl& url) const
-{
-    if (KPMetadata::isRawFile(url))
-    {
-        QFileInfo fileInfo(url.path());
-        if (fileInfo.suffix().toUpper() != QString("DNG"))
-        {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 // ------------------------------------------------------------------------------------------------
