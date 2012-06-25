@@ -352,7 +352,7 @@ int main(int argc, char* argv[])
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
     // create an instance of the plugin loader:
-    new PluginLoader(QStringList(), kipiInterface);
+    new PluginLoader(QStringList(), 0, kipiInterface);
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
