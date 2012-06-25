@@ -6,4 +6,5 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 295931 - digiKam / Kipi-Geolocation segfault.
-002 ==> 
+002 ==> 302447 - DNG RAW file can't be added for conversion.
+003 ==> 
