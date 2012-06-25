@@ -46,6 +46,7 @@
 
 // LibKIPI includes
 
+#include <libkipi/version.h>
 #include <libkipi/plugin.h>
 #include <libkipi/pluginloader.h>
 
@@ -207,10 +208,10 @@ bool ListPlugins(const QString& libraryName = "")
         return false;
 
     const PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
-    int pluginNumber                                = 1;
-    const int nPlugins                              = pluginList.size();
-    const int nDigits                               = QString::number(nPlugins).size();
-    const QString preSpace                          = QString(nDigits+1+1, ' ');
+    int pluginNumber                          = 1;
+    const int nPlugins                        = pluginList.size();
+    const int nDigits                         = QString::number(nPlugins).size();
+    const QString preSpace                    = QString(nDigits+1+1, ' ');
 
     std::auto_ptr<QWidget> dummyWidget( new QWidget() );
 
@@ -352,7 +353,13 @@ int main(int argc, char* argv[])
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
     // create an instance of the plugin loader:
+#if KIPI_VERSION >= 0x020000
+    PluginLoader* loader = new PluginLoader(0);
+    loader->setInterface(kipiInterface);
+    loader->init();
+#else
     new PluginLoader(QStringList(), 0, kipiInterface);
+#endif
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
