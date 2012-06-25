@@ -358,7 +358,7 @@ int main(int argc, char* argv[])
     loader->setInterface(kipiInterface);
     loader->init();
 #else
-    new PluginLoader(QStringList(), 0, kipiInterface);
+    new PluginLoader(QStringList(), kipiInterface);
 #endif
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
