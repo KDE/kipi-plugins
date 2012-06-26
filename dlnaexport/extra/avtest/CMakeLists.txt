@@ -18,23 +18,25 @@ SET(AvTest_SRCS
     mediarenderer_window.cpp
     )
 
-KDE4_ADD_UI_FILES(AvTest_SRCS
-                  controlpoint.ui
-                  mainwindow.ui
-                  mediarenderer_connectionwindow.ui
-                  mediaserver_window.ui
-                  invokeactiondialog.ui
-                  mediamanager_dialog.ui
-                  mediarenderer_window.ui
-                 )
+QT4_WRAP_UI(AvTest_FORMS
+            controlpoint.ui
+            mainwindow.ui
+            mediarenderer_connectionwindow.ui
+            mediaserver_window.ui
+            invokeactiondialog.ui
+            mediamanager_dialog.ui
+            mediarenderer_window.ui
+           )
 
-FOREACH(_currentfile ${AvTest_SRCS})
+SET(SRCS ${AvTest_SRCS} ${AvTest_FORMS})
+
+FOREACH(_currentfile ${SRCS})
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     ENDIF(NOT MSVC)
-ENDFOREACH(_currentfile ${AvTest_SRCS})
+ENDFOREACH(_currentfile ${SRCS})
 
-KDE4_ADD_EXECUTABLE(avtest ${AvTest_SRCS})
+KDE4_ADD_EXECUTABLE(avtest ${SRCS})
 
 TARGET_LINK_LIBRARIES(avtest
                       HUpnp
