@@ -336,7 +336,7 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_username = m_talker->getUserName();
-    m_widget->updateLabels(m_username);
+    m_widget->updateLabels(m_talker->getLoginName(), m_username);
 
     m_widget->m_albumsCoB->clear();
     for (int i = 0; i < albumsList.size(); ++i)

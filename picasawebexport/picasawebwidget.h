@@ -70,7 +70,7 @@ public:
     PicasawebWidget(QWidget* const parent, Interface* const iface, bool import);
     ~PicasawebWidget();
 
-    void updateLabels(const QString& name = QString());
+    void updateLabels(const QString& login = QString(), const QString& name = QString());
 
     QString getDestinationPath();
 
