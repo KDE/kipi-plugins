@@ -94,13 +94,7 @@ public:
 
     bool hasAttribute(const QString& name) const
     {
-        if (hasValidData())
-        {
-            ImageInfo info             = iface->info(url);
-            QMap<QString, QVariant>map = info.attributes();
-            return (map.contains(name));
-        }
-        return false;
+        return (attribute(name).isValid());
     }
 
 public:
