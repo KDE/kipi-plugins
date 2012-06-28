@@ -68,7 +68,7 @@ public:
 
 public:
 
-    PicasawebTalker(QWidget* parent);
+    PicasawebTalker(QWidget* const parent);
     ~PicasawebTalker();
 
     QString token() { return m_token;}
@@ -82,7 +82,10 @@ public:
     bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
     bool updatePhoto(const QString& photoPath, PicasaWebPhoto& info);
     void getPhoto(const QString& imgPath);
-    QString getUserName();
+    
+    QString getLoginName() const;
+    QString getUserName() const;
+
     void cancel();
 
 Q_SIGNALS:
@@ -120,6 +123,7 @@ private:
     QWidget*                    m_parent;
     QByteArray                  m_buffer;
     QString                     m_token;
+    QString                     m_loginName;
     QString                     m_username;
     QString                     m_password;
 

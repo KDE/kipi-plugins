@@ -336,7 +336,7 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_username = m_talker->getUserName();
-    m_widget->updateLabels(m_username);
+    m_widget->updateLabels(m_talker->getLoginName(), m_username);
 
     m_widget->m_albumsCoB->clear();
     for (int i = 0; i < albumsList.size(); ++i)
@@ -423,7 +423,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
         // Picasa doesn't support image titles. Include it in descriptions if needed.
         QStringList descriptions = QStringList() << info.title() << info.description();
         descriptions.removeAll("");
-        temp.description = descriptions.join("\n\n");
+        temp.description         = descriptions.join("\n\n");
 
         // check for existing items
         QString localId;
@@ -601,7 +601,7 @@ void PicasawebWindow::uploadNextPhoto()
         return;
     }
 
-    typedef QPair<KUrl,PicasaWebPhoto> Pair;
+    typedef QPair<KUrl, PicasaWebPhoto> Pair;
     Pair pathComments   = m_transferQueue.first();
     PicasaWebPhoto info = m_transferQueue.first().second;
 
@@ -612,14 +612,11 @@ void PicasawebWindow::uploadNextPhoto()
     QString imgPath  = pathComments.first.toLocalFile();
     QString itemPath = imgPath;
 
-    bool res = false;
+    bool res           = false;
     KMimeType::Ptr ptr = KMimeType::findByUrl(imgPath);
-    if(((ptr->is("image/bmp") ||
-         ptr->is("image/gif") ||
-         ptr->is("image/jpeg") ||
-         ptr->is("image/png")) &&
-        !m_widget->m_resizeChB->isChecked()) ||
-       ptr->name().startsWith("video"))
+    
+    if(((ptr->is("image/bmp") || ptr->is("image/gif") || ptr->is("image/jpeg") || ptr->is("image/png")) &&
+        !m_widget->m_resizeChB->isChecked()) || ptr->name().startsWith("video"))
     {
         m_tmpPath.clear();
     }
@@ -643,84 +640,86 @@ void PicasawebWindow::uploadNextPhoto()
     {
         switch(m_renamingOpt)
         {
-        case PWR_ADD_ALL:
-            bAdd = true;
-            break;
-        case PWR_REPLACE_ALL:
-            bAdd = false;
-            break;
-        default:
-            {
-                PicasawebReplaceDialog dlg(this, "", m_interface, imgPath, info.thumbURL);
-                switch(dlg.exec())
+            case PWR_ADD_ALL:
+                bAdd = true;
+                break;
+            case PWR_REPLACE_ALL:
+                bAdd = false;
+                break;
+            default:
                 {
-                case PWR_ADD_ALL:
-                    m_renamingOpt = PWR_ADD_ALL;
-                case PWR_ADD:
-                    bAdd = true;
-                    break;
-                case PWR_REPLACE_ALL:
-                    m_renamingOpt = PWR_REPLACE_ALL;
-                case PWR_REPLACE:
-                    bAdd = false;
-                    break;
-                case PWR_CANCEL:
-                default:
-                    bCancel = true;
-                    break;
+                    PicasawebReplaceDialog dlg(this, "", m_interface, imgPath, info.thumbURL);
+                    switch(dlg.exec())
+                    {
+                    case PWR_ADD_ALL:
+                        m_renamingOpt = PWR_ADD_ALL;
+                    case PWR_ADD:
+                        bAdd = true;
+                        break;
+                    case PWR_REPLACE_ALL:
+                        m_renamingOpt = PWR_REPLACE_ALL;
+                    case PWR_REPLACE:
+                        bAdd = false;
+                        break;
+                    case PWR_CANCEL:
+                    default:
+                        bCancel = true;
+                        break;
+                    }
                 }
-            }
-            break;
+                break;
         }
     }
 
     //modify tags
     switch (m_widget->m_tagsBGrp->checkedId())
     {
-    case PwTagLeaf:
-        {
-            QStringList newTags;
-            QStringList::const_iterator itT;
-            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+        case PwTagLeaf:
             {
-                QString strTmp = *itT;
-                int idx = strTmp.lastIndexOf("/");
-                if (idx > 0)
+                QStringList newTags;
+                QStringList::const_iterator itT;
+                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
                 {
-                    strTmp.remove(0, idx + 1);
-                }
-                newTags.append(strTmp);
-            }
-            info.tags = newTags;
-        }
-        break;
-    case PwTagSplit:
-        {
-            QSet<QString> newTagsSet;
-            QStringList::const_iterator itT;
-            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
-            {
-                QStringList strListTmp = itT->split('/');
-                QStringList::const_iterator itT2;
-                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
-                {
-                    if (!newTagsSet.contains(*itT2))
+                    QString strTmp = *itT;
+                    int idx        = strTmp.lastIndexOf("/");
+                    if (idx > 0)
                     {
-                        newTagsSet.insert(*itT2);
+                        strTmp.remove(0, idx + 1);
+                    }
+                    newTags.append(strTmp);
+                }
+                info.tags = newTags;
+            }
+            break;
+        
+        case PwTagSplit:
+            {
+                QSet<QString> newTagsSet;
+                QStringList::const_iterator itT;
+                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                {
+                    QStringList strListTmp = itT->split('/');
+                    QStringList::const_iterator itT2;
+                    for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
+                    {
+                        if (!newTagsSet.contains(*itT2))
+                        {
+                            newTagsSet.insert(*itT2);
+                        }
                     }
                 }
+                info.tags.clear();
+                QSet<QString>::const_iterator itT3;
+                for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
+                {
+                    info.tags.append(*itT3);
+                }
             }
-            info.tags.clear();
-            QSet<QString>::const_iterator itT3;
-            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
-            {
-                info.tags.append(*itT3);
-            }
-        }
-        break;
-    case PwTagCombined:
-    default:
-        break;
+            break;
+
+        case PwTagCombined:
+        default:
+            break;
     }
 
     if (bCancel)

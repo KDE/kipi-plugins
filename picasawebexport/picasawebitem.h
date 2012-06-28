@@ -31,7 +31,6 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-// ------------------------------------------------------
 class PicasaWebAlbum
 {
 
@@ -39,7 +38,7 @@ public:
 
     PicasaWebAlbum()
     {
-        id="-1";
+        id         = QString("-1");
         canComment = true;
     }
 
@@ -62,10 +61,10 @@ public:
 
     PicasaWebPhoto()
     {
-        id="-1";
+        id         = QString("-1");
         canComment = true;
-        gpsLon = "";
-        gpsLat = "";
+        gpsLon     = "";
+        gpsLat     = "";
     }
 
     QString     id;

@@ -270,9 +270,9 @@ QString PicasawebWidget::getDestinationPath()
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
 
-void PicasawebWidget::updateLabels(const QString& name)
+void PicasawebWidget::updateLabels(const QString& login, const QString& name)
 {
-    m_userName->setText(QString("<b>%1</b>").arg(name));
+    m_userName->setText(QString("<b>%1</b>").arg(login));
     m_headerLbl->setText(QString("<b><h2><a href='http://picasaweb.google.com/%1'>"
                                  "<font color=\"#9ACD32\">Picasaweb</font>"
                                  "</a></h2></b>").arg(name));
