@@ -53,6 +53,10 @@
 // Local includes
 
 #include "mediaserver.h"
+#include "kpimageslist.h"
+#include "kpprogresswidget.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -69,6 +73,8 @@ public:
         selectBtn    = 0;
         dlna         = 0;
         directoryLbl = 0;
+        imgList      = 0;
+        progressBar  = 0;
     }
 
     QLabel*      iconLbl;
@@ -80,16 +86,27 @@ public:
     MediaServer* dlna;
 
     QLabel*      directoryLbl;
+
+    KPImagesList* imgList;
+
+    KPProgressWidget* progressBar;
 };
 
 DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolder*/, QWidget* const parent)
     : QWidget(parent), d(new Private)
 {
-    QVBoxLayout* mainLayout        = new QVBoxLayout(this);
+
+    QHBoxLayout* mainLayout        = new QHBoxLayout(this);
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     // -------------------------------------------------------------------
+
+    d->imgList = new KIPIPlugins::KPImagesList(this);
+    d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
+    d->imgList->setAllowRAW(true);
+    d->imgList->listView()->setWhatsThis(
+        i18n("This is the list of images to upload via your DLNA server"));
 
     KHBox* hbox = new KHBox(settingsBox);
     d->iconLbl  = new QLabel(hbox);
@@ -107,6 +124,11 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     d->headerLbl = new QLabel(settingsBox);
     d->headerLbl->setText("Please select a folder containing JPEG images only");
 
+
+    d->progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
+    d->progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    //d->progressBar->hide();
+
     // ------------------------------------------------------------------------
 
     d->directoryLbl = new QLabel(settingsBox);
@@ -123,11 +145,13 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     settingsBoxLayout->addWidget(d->headerLbl);
     settingsBoxLayout->addWidget(d->directoryLbl);
     settingsBoxLayout->addWidget(d->selectBtn);
+    settingsBoxLayout->addWidget(d->progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
+    mainLayout->addWidget(d->imgList);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
@@ -136,6 +160,7 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
 
     connect(d->selectBtn, SIGNAL(clicked()),
             this, SLOT(slotSelectDirectory()));
+
 }
 
 DLNAWidget::~DLNAWidget()
