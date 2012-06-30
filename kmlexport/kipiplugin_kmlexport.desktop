@@ -25,7 +25,6 @@ Comment[sv]=Ett insticksprogram för att skapa KML-filer som visar bilder med ko
 Comment[uk]=Додаток для створення файлів KML для показу зображення з координатами.
 Comment[x-test]=xxA plugin to create KML files to present images with coordinates.xx
 Comment[zh_TW]=建立 KML 檔來將影像展示在座標軸上的外掛程式。
-Encoding=UTF-8
 Icon=applications-development-web
 Name=KMLExport
 Name[bg]=Изнасяне в KML

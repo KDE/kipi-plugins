@@ -79,8 +79,8 @@ class PicasawebLogin;
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebTalker::PicasawebTalker( QWidget* parent )
-               : m_parent( parent ),  m_job( 0 )
+PicasawebTalker::PicasawebTalker(QWidget* const parent)
+    : m_parent(parent),  m_job(0)
     {
         connect(this, SIGNAL(signalError(QString)),
                 this, SLOT(slotError(QString)));
@@ -119,7 +119,9 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
         return ;
     }
 
-    m_username    = username_edit;
+    m_loginName = username_edit;
+    m_username  = username_edit;
+    
     QString accountType = "GOOGLE";
 
     QStringList qsl;
@@ -154,8 +156,9 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
     if (!token.isNull() || token.length() > 0)
     {
         kDebug() << " Checktoken being called" << token ;
-        m_username = username;
-        m_password = password; //this would be needed if the checktoken failed
+        m_loginName = username;
+        m_username  = username;
+        m_password  = password; //this would be needed if the checktoken failed
                                 //we would need to reauthenticate using auth
         m_token = token;
         checkToken(token);
@@ -524,9 +527,14 @@ void PicasawebTalker::getPhoto(const QString& imgPath)
     m_buffer.resize(0);
 }
 
-QString PicasawebTalker::getUserName()
+QString PicasawebTalker::getUserName() const
 {
     return m_username;
+}
+
+QString PicasawebTalker::getLoginName() const
+{
+    return m_loginName;
 }
 
 void PicasawebTalker::cancel()
@@ -675,8 +683,10 @@ void PicasawebTalker::parseResponseCheckToken(const QByteArray& /*data*/)
 {
     bool success = true;
     // TODO(vardhman): Fix this with proper error handling.
+
     if(!success)
         getToken(m_username, m_password);
+
     emit signalLoginDone(0, "");
 }
 
