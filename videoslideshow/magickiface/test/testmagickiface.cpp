@@ -138,8 +138,8 @@ void TestMagickIface::testBlendImage()
     MagickImage* dst = api->createImage(QString("yellow"), 100, 100);
     QVERIFY( dst != 0);
 
-    bool done = api->blendImage(*dst, *src0, *src1, 0.75);
-    QVERIFY(done);
+    int done = api->blendImage(*dst, *src0, *src1, 0.75);
+    QVERIFY(done != -1);
 
     done = api->displayImage(*dst);
     QVERIFY(done);
@@ -166,8 +166,8 @@ void TestMagickIface::testBitblitImage()
     MagickImage* dst = api->createImage(QString("blue"), 300, 300);
     QVERIFY( dst != 0);
 
-    bool done = api->bitblitImage(*dst, 100, 100, *src, 0, 0, 100, 100);
-    QVERIFY(done);
+    int done = api->bitblitImage(*dst, 100, 100, *src, 0, 0, 100, 100);
+    QVERIFY(done != -1);
 
     done = api->displayImage(*dst);
     QVERIFY(done);
@@ -188,8 +188,8 @@ void TestMagickIface::testScaleImage()
     MagickImage* src = api->createImage(QString("white"), 150, 150);
     QVERIFY( src != 0 );
 
-    bool done = api->scaleImage(*src, 300, 300);
-    QVERIFY(done);
+    int done = api->scaleImage(*src, 300, 300);
+    QVERIFY(done != -1);
 
     done = api->displayImage(*src);
     QVERIFY(done);
@@ -210,8 +210,8 @@ void TestMagickIface::testScaleblitImage()
     MagickImage* dst = api->createImage(QString("blue"), 300, 300);
     QVERIFY( dst != 0);
 
-    bool done = api->scaleblitImage(*dst, 0, 0, 200, 200, *src, 0, 0, 100, 100);
-    QVERIFY(done);
+    int done = api->scaleblitImage(*dst, 0, 0, 200, 200, *src, 0, 0, 100, 100);
+    QVERIFY(done != -1);
 
     done = api->displayImage(*dst);
     QVERIFY(done);

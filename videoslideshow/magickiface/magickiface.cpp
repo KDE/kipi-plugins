@@ -29,6 +29,7 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <climits>
 
 #ifdef WINDOWS
 #include <direct.h>
@@ -119,7 +120,7 @@ public:
         memset(pixels, 0, sizeof(pixels));
 
         /* allocate a new image */
-        if (!(img = (MagickImage*) malloc(sizeof(MagickImage))))
+        if (!(img = new MagickImage()))
         {
             parent->emit signalsAPIError("Out of memory");
             return 0;
@@ -158,8 +159,8 @@ public:
         if (d < 0)
             d = 0;
 
-        if (d > 65535)
-            d = 65535;
+        if (d > USHRT_MAX)
+            d = USHRT_MAX;
 
         return d;
     }
@@ -428,7 +429,7 @@ int MagickApi::bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage&
         if (!(source = cropped = CropImage(src.getImage(), &geometry, &exception)))
         {
             emit signalsAPIError("CropImage() failed\n");
-            return 0;
+            return -1;
         }
     }
 
@@ -507,7 +508,7 @@ MagickImage* MagickApi::borderImage(const MagickImage& simg, const QString& colo
     if (!img)
         return 0;
 
-    if(!bitblitImage(*img, bw, bh, simg, 0, 0, simg.getWidth(), simg.getWidth()))
+    if(bitblitImage(*img, bw, bh, simg, 0, 0, simg.getWidth(), simg.getWidth()) != 1)
         return 0;
 
     return img;
@@ -522,11 +523,11 @@ MagickImage* MagickApi::geoscaleImage(const MagickImage& simg, int x, int y, int
         return 0;
 
     /* copy the area out of the source image */
-    if(!bitblitImage(*img, 0, 0, simg, x, y, w, h))
+    if(bitblitImage(*img, 0, 0, simg, x, y, w, h) != 1)
         return 0;
 
     /* and scale it to correct output size */
-    if(!scaleImage(*img, width, height))
+    if(scaleImage(*img, width, height) != 1)
         return 0;
 
     return img;
@@ -544,7 +545,7 @@ int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh,
     if (!img)
         return -1;
 
-    if(!bitblitImage(dimg, dx, dy, *img, 0, 0, dw, dh))
+    if(bitblitImage(dimg, dx, dy, *img, 0, 0, dw, dh) != 1)
         return -1;
 
     if(!freeImage(*img))
