@@ -77,17 +77,17 @@ public:
         progressBar  = 0;
     }
 
-    QLabel*      iconLbl;
-    QLabel*      titleLbl;
-    QLabel*      headerLbl;
+    QLabel*           iconLbl;
+    QLabel*           titleLbl;
+    QLabel*           headerLbl;
 
-    KPushButton* selectBtn;
+    KPushButton*      selectBtn;
 
-    MediaServer* dlna;
+    MediaServer*      dlna;
 
-    QLabel*      directoryLbl;
+    QLabel*           directoryLbl;
 
-    KPImagesList* imgList;
+    KPImagesList*     imgList;
 
     KPProgressWidget* progressBar;
 };
@@ -102,11 +102,10 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
 
     // -------------------------------------------------------------------
 
-    d->imgList = new KIPIPlugins::KPImagesList(this);
+    d->imgList = new KPImagesList(this);
     d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
     d->imgList->setAllowRAW(true);
-    d->imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload via your DLNA server"));
+    d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
     KHBox* hbox = new KHBox(settingsBox);
     d->iconLbl  = new QLabel(hbox);
@@ -118,12 +117,11 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     d->titleLbl->setFocusPolicy(Qt::NoFocus);
     d->titleLbl->setAlignment(Qt::AlignLeft);
     d->titleLbl->setText(QString("<b><h2><a href='http://www.dlna.org'>"
-                                "<font color=\"#9ACD32\">DLNA Export</font>"
-                                "</a></h2></b>"));
+                                 "<font color=\"#9ACD32\">DLNA Export</font>"
+                                 "</a></h2></b>"));
 
-    d->headerLbl = new QLabel(settingsBox);
+    d->headerLbl   = new QLabel(settingsBox);
     d->headerLbl->setText("Please select a folder containing JPEG images only");
-
 
     d->progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     d->progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -136,8 +134,8 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     // ------------------------------------------------------------------------
 
     d->selectBtn    = new KPushButton(KGuiItem(i18n("Select Directory"), "list-add",
-                                              i18n("Select Directory to Export")),
-                                              settingsBox);
+                                               i18n("Select Directory to Export")),
+                                               settingsBox);
 
     // ------------------------------------------------------------------------
 
@@ -160,7 +158,6 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
 
     connect(d->selectBtn, SIGNAL(clicked()),
             this, SLOT(slotSelectDirectory()));
-
 }
 
 DLNAWidget::~DLNAWidget()
