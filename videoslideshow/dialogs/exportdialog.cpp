@@ -243,7 +243,7 @@ void ExportDialog::slotThreadFinished()
 
 void ExportDialog::processAll()
 {
-
+    busy(true);
 }
 
 void ExportDialog::busy(bool busy)
