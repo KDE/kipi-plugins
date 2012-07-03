@@ -51,7 +51,7 @@ public:
     void resetToDefault();
     void updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect);
     
-signals:
+Q_SIGNALS:
   
     void timeDataChanged(int time);
     void effectDataChanged(QString data, EFFECT effect);

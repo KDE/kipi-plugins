@@ -41,7 +41,7 @@ enum Action
 {
     NONE = 0,
     TRANSITION,
-    SCROLL,
+    IMAGE,
     KENBURN
 };
 
