@@ -49,6 +49,8 @@
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 
+using namespace KIPIPlugins;
+
 namespace KIPIVideoSlideShowPlugin
 {
 
@@ -121,22 +123,22 @@ SlideShowSettingsWidget::~SlideShowSettingsWidget()
 
 void SlideShowSettingsWidget::effectIndexChanged(int index)
 {
-    emit DataChanged(d->effects->itemText(index), MyImageList::SPECIALEFFECT);
+    emit effectDataChanged(d->effects->itemText(index), (EFFECT)d->effects->itemData(index).toInt());
 }
 
 void SlideShowSettingsWidget::transIndexChanged(int index)
 {
-    emit DataChanged(d->transitions->itemText(index), MyImageList::TRANSITION);
+    emit transDataChanged(d->transitions->itemText(index), (TRANSITION_TYPE)d->transitions->itemData(index).toInt());
 }
 
 void SlideShowSettingsWidget::transSpeedIndexChanged(int index)
 {
-    emit DataChanged(d->transitionSpeed->itemText(index), MyImageList::TRANSSPEED);
+    emit transSpeedDataChanged(d->transitionSpeed->itemText(index), (TRANSITION_SPEED)d->transitionSpeed->itemData(index).toInt());
 }
 
 void SlideShowSettingsWidget::timeValueChanged(int time)
-{
-    emit DataChanged(QString::number(time), MyImageList::TIME);
+{ 
+    emit timeDataChanged(time);
 }
 
 void SlideShowSettingsWidget::setUpPPMSettings()
@@ -153,38 +155,37 @@ void SlideShowSettingsWidget::setUpPPMSettings()
 
     d->effects      = new QComboBox();
     d->effects->setEditable(false);
-    d->effects->addItem(i18n("None"), i18n("None"));
-    d->effects->addItem(i18n("Ken-Burn Effect"), i18n("Ken-Burn Effect"));
-    d->effects->addItem(i18n("Scroll Effect"), i18n("Scroll Effect"));
-
+    d->effects->addItem(i18n("None"),            (int)EFFECT_NONE);
+    d->effects->addItem(i18n("Ken-Burn Effect"), (int)EFFECT_KENBURN);
+    
     d->transitions  = new QComboBox();
     d->transitions->setEditable(false);
-    d->transitions->addItem(i18n("None"), i18n("None"));
-    d->transitions->addItem(i18n("Random"), i18n("Random"));
-    d->transitions->addItem(i18n("Fade"), i18n("Fade"));
-    d->transitions->addItem(i18n("Slide Left to Right"), i18n("Slide Left to Right"));
-    d->transitions->addItem(i18n("Slide Right to Left"), i18n("Slide Right to Left"));
-    d->transitions->addItem(i18n("Slide Top to Bottom"), i18n("Slide Top to Bottom"));
-    d->transitions->addItem(i18n("Slide Bottom to Top"), i18n("Slide Bottom to Top"));
-    d->transitions->addItem(i18n("Push Left to Right"), i18n("Push Left to Right"));
-    d->transitions->addItem(i18n("Push Right to Left"), i18n("Push Right to Left"));
-    d->transitions->addItem(i18n("Push Top to Bottom"), i18n("Push Top to Bottom"));
-    d->transitions->addItem(i18n("Push Bottom to Top"), i18n("Push Bottom to Top"));
-    d->transitions->addItem(i18n("Swap Left to Right"), i18n("Swap Left to Right"));
-    d->transitions->addItem(i18n("Swap Right to Left"), i18n("Swap Right to Left"));
-    d->transitions->addItem(i18n("Swap Top to Bottom"), i18n("Swap Top to Bottom"));
-    d->transitions->addItem(i18n("Swap Bottom to Top"), i18n("Swap Bottom to Top"));
-    d->transitions->addItem(i18n("Roll Left to Right"), i18n("Roll Left to Right"));
-    d->transitions->addItem(i18n("Roll Right to Left"), i18n("Roll Right to Left"));
-    d->transitions->addItem(i18n("Roll Top to Bottom"), i18n("Roll Top to Bottom"));
-    d->transitions->addItem(i18n("Roll Bottom to Top"), i18n("Roll Bottom to Top"));
-
+    d->transitions->addItem(i18n("None"),                (int)TRANSITION_TYPE_NONE);
+    d->transitions->addItem(i18n("Random"),              (int)TRANSITION_TYPE_RANDOM);
+    d->transitions->addItem(i18n("Fade"),                (int)TRANSITION_TYPE_FADE);
+    d->transitions->addItem(i18n("Slide Left to Right"), (int)TRANSITION_TYPE_SLIDE_L2R);
+    d->transitions->addItem(i18n("Slide Right to Left"), (int)TRANSITION_TYPE_SLIDE_R2L);
+    d->transitions->addItem(i18n("Slide Top to Bottom"), (int)TRANSITION_TYPE_SLIDE_T2B);
+    d->transitions->addItem(i18n("Slide Bottom to Top"), (int)TRANSITION_TYPE_SLIDE_B2T);
+    d->transitions->addItem(i18n("Push Left to Right"),  (int)TRANSITION_TYPE_PUSH_L2R);
+    d->transitions->addItem(i18n("Push Right to Left"),  (int)TRANSITION_TYPE_PUSH_R2L);
+    d->transitions->addItem(i18n("Push Top to Bottom"),  (int)TRANSITION_TYPE_PUSH_T2B);
+    d->transitions->addItem(i18n("Push Bottom to Top"),  (int)TRANSITION_TYPE_PUSH_B2T);
+    d->transitions->addItem(i18n("Swap Left to Right"),  (int)TRANSITION_TYPE_SWAP_L2R);
+    d->transitions->addItem(i18n("Swap Right to Left"),  (int)TRANSITION_TYPE_SWAP_R2L);
+    d->transitions->addItem(i18n("Swap Top to Bottom"),  (int)TRANSITION_TYPE_SWAP_T2B);
+    d->transitions->addItem(i18n("Swap Bottom to Top"),  (int)TRANSITION_TYPE_SWAP_B2T);
+    d->transitions->addItem(i18n("Roll Left to Right"),  (int)TRANSITION_TYPE_ROLL_L2R);
+    d->transitions->addItem(i18n("Roll Right to Left"),  (int)TRANSITION_TYPE_ROLL_R2L);
+    d->transitions->addItem(i18n("Roll Top to Bottom"),  (int)TRANSITION_TYPE_ROLL_T2B);
+    d->transitions->addItem(i18n("Roll Bottom to Top"),  (int)TRANSITION_TYPE_ROLL_B2T);
+    
     d->transitionSpeed  = new QComboBox();
     d->transitionSpeed->setEditable(false);
-    d->transitionSpeed->addItem(i18n("Slow"), i18n("Slow"));
-    d->transitionSpeed->addItem(i18n("Medium"), i18n("Medium"));
-    d->transitionSpeed->addItem(i18n("Fast"), i18n("Fast"));
-
+    d->transitionSpeed->addItem(i18n("Slow"),   (int)TRANSITION_SLOW);
+    d->transitionSpeed->addItem(i18n("Medium"), (int)TRANSITION_MEDIUM);
+    d->transitionSpeed->addItem(i18n("Fast"),   (int)TRANSITION_FAST);
+    
     mainLayout->addWidget(timeLabel,          0, 0, 1, 1);
     mainLayout->addWidget(d->timeVal,         0, 1, 1, 1);
     mainLayout->addWidget(effectLabel,        1, 0, 1, 1);
@@ -206,11 +207,11 @@ void SlideShowSettingsWidget::setUpPPMSettings()
 
     d->asptRatioCorrct = new QComboBox();
     d->asptRatioCorrct->setEditable(false);
-    d->asptRatioCorrct->addItem(i18n("Auto"), i18n("Auto"));
-    d->asptRatioCorrct->addItem(i18n("None"), i18n("None"));
-    d->asptRatioCorrct->addItem(i18n("Fill In"), i18n("Fill In"));
-    d->asptRatioCorrct->addItem(i18n("Fit In"), i18n("Fit In"));
-
+    d->asptRatioCorrct->addItem(i18n("Auto"),    (int)ASPECTCORRECTION_TYPE_AUTO);
+    d->asptRatioCorrct->addItem(i18n("None"),    (int)ASPECTCORRECTION_TYPE_NONE);
+    d->asptRatioCorrct->addItem(i18n("Fill In"), (int)ASPECTCORRECTION_TYPE_FITIN);
+    d->asptRatioCorrct->addItem(i18n("Fit In"),  (int)ASPECTCORRECTION_TYPE_FILLIN);
+    
     d->frameHeight     = new QSpinBox();
     d->frameHeight->setRange(100, 1000);
     d->frameWidth      = new QSpinBox();
@@ -232,10 +233,10 @@ void SlideShowSettingsWidget::setUpPPMSettings()
 void SlideShowSettingsWidget::resetToDefault()
 {
     d->timeVal->setValue(25);
-    d->effects->setCurrentIndex(d->effects->findData(i18n("None")));
-    d->transitions->setCurrentIndex(d->transitions->findData(i18n("Random")));
-    d->transitionSpeed->setCurrentIndex(d->transitionSpeed->findData(i18n("Medium")));
-    d->asptRatioCorrct->setCurrentIndex(d->asptRatioCorrct->findData(i18n("None")));
+    d->effects->setCurrentIndex(d->effects->findData((int)EFFECT_NONE));
+    d->transitions->setCurrentIndex(d->transitions->findData((int)TRANSITION_TYPE_RANDOM));
+    d->transitionSpeed->setCurrentIndex(d->transitionSpeed->findData((int)TRANSITION_MEDIUM));
+    d->asptRatioCorrct->setCurrentIndex(d->asptRatioCorrct->findData((int)ASPECTCORRECTION_TYPE_NONE));
     d->frameWidth->setValue(500);
     d->frameHeight->setValue(500);
 }
@@ -269,12 +270,12 @@ void SlideShowSettingsWidget::setTempDirPath(QString& path)
         d->path = QDir::tempPath();
 }
 
-void SlideShowSettingsWidget::updateData(int time, const QString& transition, const QString& transSpeed, const QString& effect)
+void SlideShowSettingsWidget::updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect)
 {
     d->timeVal->setValue(time);
-    d->effects->setCurrentIndex(d->effects->findData(i18n(effect.toUtf8())));
-    d->transitions->setCurrentIndex(d->transitions->findData(i18n(transition.toUtf8())));
-    d->transitionSpeed->setCurrentIndex(d->transitionSpeed->findData(i18n(transSpeed.toUtf8())));
+    d->effects->setCurrentIndex(d->effects->findData((int)effect));
+    d->transitions->setCurrentIndex(d->transitions->findData((int)transition));
+    d->transitionSpeed->setCurrentIndex(d->transitionSpeed->findData((int)transSpeed));
 }
 
 } // namespace KIPIVideoSlideShowPlugin

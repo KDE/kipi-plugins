@@ -41,7 +41,7 @@ MyImageList::MyImageList(QWidget* const parent)
     setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("Image"));
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::SPECIALEFFECT), i18n("Special Effect"),   true);
-    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TIME),          i18n("Frames per Image"), true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TIME),          i18n("Time (seconds)"),   true);
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TRANSITION),    i18n("Transition"),       true);
     listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TRANSSPEED),    i18n("Transition Speed"), true);
 }
@@ -119,19 +119,19 @@ public:
 
     int     time;
 
-    QString effect;
-    QString transition;
-    QString transSpeed;
-    QString status;
+    EFFECT           effect;
+    TRANSITION_TYPE  transition;
+    TRANSITION_SPEED transSpeed;
+    QString          status;
 };
 
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
     : KPImagesListViewItem(view, url), d(new Private)
 {
     setTime(25);
-    setEffectName("None");        // FIXME : no i18n ?
-    setTransition("Random");      // FIXME : no i18n ?
-    setTransitionSpeed("Medium"); // FIXME : no i18n ?
+    setEffectName("None",        EFFECT_NONE);
+    setTransition("Random",      TRANSITION_TYPE_RANDOM);
+    setTransitionSpeed("Medium", TRANSITION_MEDIUM);
 }
 
 MyImageListViewItem::~MyImageListViewItem()
@@ -139,13 +139,13 @@ MyImageListViewItem::~MyImageListViewItem()
     delete d;
 }
 
-void MyImageListViewItem::setEffectName(const QString& str)
+void MyImageListViewItem::setEffectName(const QString& str, EFFECT effect)
 {
-    d->effect = str;
-    setText(MyImageList::SPECIALEFFECT, d->effect);
+    d->effect = effect;
+    setText(MyImageList::SPECIALEFFECT, str);
 }
 
-QString MyImageListViewItem::EffectName() const
+EFFECT MyImageListViewItem::EffectName() const
 {
     return d->effect;
 }
@@ -156,13 +156,13 @@ void MyImageListViewItem::setTime(const int time)
     setText(MyImageList::TIME, QString::number(time));
 }
 
-void MyImageListViewItem::setTransition(const QString& str)
+void MyImageListViewItem::setTransition(const QString& str, TRANSITION_TYPE type)
 {
-    d->transition = str;
-    setText(MyImageList::TRANSITION, d->transition);
+    d->transition = type;
+    setText(MyImageList::TRANSITION, str);
 }
 
-QString MyImageListViewItem::getTransition() const
+TRANSITION_TYPE MyImageListViewItem::getTransition() const
 {
     return d->transition;
 }
@@ -172,15 +172,15 @@ int MyImageListViewItem::getTime() const
     return d->time;
 }
 
-QString MyImageListViewItem::getTransitionSpeed() const
+TRANSITION_SPEED MyImageListViewItem::getTransitionSpeed() const
 {
     return d->transSpeed;
 }
 
-void MyImageListViewItem::setTransitionSpeed(const QString& str)
+void MyImageListViewItem::setTransitionSpeed(const QString& str, TRANSITION_SPEED speed)
 {
-    d->transSpeed = str;
-    setText(MyImageList::TRANSSPEED, d->transSpeed);
+    d->transSpeed = speed;
+    setText(MyImageList::TRANSSPEED, str);
 }
 
 int MyImageList::getTotalFrames()

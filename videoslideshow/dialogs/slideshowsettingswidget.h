@@ -49,12 +49,15 @@ public:
     void    setTempDirPath(QString& path);
 
     void resetToDefault();
-    void updateData(int time, const QString& transition, const QString& transSpeed, const QString& effect);
-
-Q_SIGNALS:
-
-    void DataChanged(const QString& data, MyImageList::FieldType type);
-
+    void updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect);
+    
+signals:
+  
+    void timeDataChanged(int time);
+    void effectDataChanged(QString data, EFFECT effect);
+    void transDataChanged(QString data, TRANSITION_TYPE type);
+    void transSpeedDataChanged(QString data, TRANSITION_SPEED speed);
+    
 private:
 
     void setUpPPMSettings();

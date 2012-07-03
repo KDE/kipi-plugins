@@ -82,7 +82,10 @@ private Q_SLOTS:
     void slotAborted();
     void slotThreadFinished();
     void updateSettingWidget();
-    void updateImageItems(const QString& data, MyImageList::FieldType type);
+    void updateImageTime(int time);
+    void updateImageEffect(QString data,     EFFECT effect);
+    void updateImageTransition(QString data, TRANSITION_TYPE type);
+    void updateImageTransSpeed(QString data, TRANSITION_SPEED speed);
 
 private:
 

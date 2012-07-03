@@ -30,6 +30,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "processimage.h"
 
 using namespace KIPIPlugins;
 
@@ -76,17 +77,17 @@ public:
     MyImageListViewItem(KPImagesListView* const view, const KUrl& url);
     virtual ~MyImageListViewItem();
 
-    void setEffectName(const QString& str);
-    QString EffectName() const;
+    void setEffectName(const QString& str, EFFECT effect);
+    EFFECT EffectName() const;
 
     void setTime(const int time);
     int getTime() const;
 
-    void setTransition(const QString& str);
-    QString getTransition() const;
+    void setTransition(const QString& str, TRANSITION_TYPE type);
+    TRANSITION_TYPE getTransition() const;
 
-    void setTransitionSpeed(const QString& str);
-    QString getTransitionSpeed() const;
+    void setTransitionSpeed(const QString& str, TRANSITION_SPEED speed);
+    TRANSITION_SPEED getTransitionSpeed() const;
 
 private:
 
