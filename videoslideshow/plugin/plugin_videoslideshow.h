@@ -58,8 +58,8 @@ private Q_SLOTS:
 
 private:
 
-    KAction*      m_exportAction;
-    ExportDialog* m_exportDlg;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIVideoSlideShowPlugin

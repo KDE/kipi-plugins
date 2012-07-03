@@ -54,29 +54,44 @@ namespace KIPIVideoSlideShowPlugin
 K_PLUGIN_FACTORY( VideoSlideShowFactory, registerPlugin<Plugin_VideoSlideShow>(); )
 K_EXPORT_PLUGIN ( VideoSlideShowFactory("kipiplugin_videoslideshow") )
 
+class Plugin_VideoSlideShow::Private
+{
+public:
+
+    Private()
+    {
+        exportAction = 0;
+        exportDlg    = 0;
+    }
+    KAction*      exportAction;
+    ExportDialog* exportDlg;
+};
+
 Plugin_VideoSlideShow::Plugin_VideoSlideShow(QObject* const parent, const QVariantList&)
-    : Plugin(VideoSlideShowFactory::componentData(), parent, "VideoSlideShow")
+    : Plugin(VideoSlideShowFactory::componentData(), parent, "VideoSlideShow"),
+      d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_VideoSlideShow plugin loaded";
 }
 
 Plugin_VideoSlideShow::~Plugin_VideoSlideShow()
 {
+    delete d;
 }
 
 void Plugin_VideoSlideShow::setup(QWidget* const widget)
 {
-    m_exportDlg = 0;
+    d->exportDlg = 0;
 
     Plugin::setup( widget );
 
-    m_exportAction = actionCollection()->addAction("video_slide_show");
-    m_exportAction->setText(i18n("Export to Video Slide Show..."));
+    d->exportAction = actionCollection()->addAction("video_slide_show");
+    d->exportAction->setText(i18n("Export to Video Slide Show..."));
 
-    connect(m_exportAction, SIGNAL(triggered(bool)),
+    connect(d->exportAction, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_exportAction);
+    addAction(d->exportAction);
 
     Interface* interface = dynamic_cast<Interface*>( parent() );
     if ( !interface )
@@ -86,10 +101,10 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
     }
 
     connect(interface, SIGNAL(selectionChanged(bool)),
-            m_exportAction, SLOT(setEnabled(bool)));
+            d->exportAction, SLOT(setEnabled(bool)));
 
     connect(interface, SIGNAL(currentAlbumChanged(bool)),
-            m_exportAction, SLOT(setEnabled(bool)));
+            d->exportAction, SLOT(setEnabled(bool)));
 }
 
 void Plugin_VideoSlideShow::slotExport()
@@ -109,25 +124,25 @@ void Plugin_VideoSlideShow::slotExport()
     if ( images.images().isEmpty() )
         return;
 
-    if (!m_exportDlg)
+    if (!d->exportDlg)
     {
-        m_exportDlg = new ExportDialog(images);
+        d->exportDlg = new ExportDialog(images);
     }
     else
     {
-        if (m_exportDlg->isMinimized())
-            KWindowSystem::unminimizeWindow(m_exportDlg->winId());
+        if (d->exportDlg->isMinimized())
+            KWindowSystem::unminimizeWindow(d->exportDlg->winId());
 
-        KWindowSystem::activateWindow(m_exportDlg->winId());
-        m_exportDlg->setImages(images);
+        KWindowSystem::activateWindow(d->exportDlg->winId());
+        d->exportDlg->setImages(images);
     }
 
-    m_exportDlg->show();
+    d->exportDlg->show();
 }
 
 Category Plugin_VideoSlideShow::category(KAction* const action) const
 {
-    if ( action == m_exportAction )
+    if ( action == d->exportAction )
        return ToolsPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";

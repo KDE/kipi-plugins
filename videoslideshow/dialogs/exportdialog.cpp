@@ -62,7 +62,7 @@
 
 namespace KIPIVideoSlideShowPlugin
 {
-  
+
 class ExportDialog::Private
 {
 public:
