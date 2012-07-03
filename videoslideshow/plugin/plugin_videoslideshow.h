@@ -59,7 +59,6 @@ private Q_SLOTS:
 private:
 
     KAction*      m_exportAction;
-
     ExportDialog* m_exportDlg;
 };
 

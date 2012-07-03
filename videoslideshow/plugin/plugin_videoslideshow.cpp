@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "plugin_videoslideshow.h"
+#include "plugin_videoslideshow.moc"
 
 // C++ includes
 
@@ -87,10 +87,9 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
 
     connect(interface, SIGNAL(selectionChanged(bool)),
             m_exportAction, SLOT(setEnabled(bool)));
-    
+
     connect(interface, SIGNAL(currentAlbumChanged(bool)),
             m_exportAction, SLOT(setEnabled(bool)));
-
 }
 
 void Plugin_VideoSlideShow::slotExport()
@@ -125,7 +124,6 @@ void Plugin_VideoSlideShow::slotExport()
 
     m_exportDlg->show();
 }
-
 
 Category Plugin_VideoSlideShow::category(KAction* const action) const
 {
