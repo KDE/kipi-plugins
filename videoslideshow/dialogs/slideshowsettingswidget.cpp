@@ -98,10 +98,17 @@ SlideShowSettingsWidget::SlideShowSettingsWidget(QWidget* const parent, Qt::WFla
 
     setUpPPMSettings();
 
-    connect(d->timeVal,         SIGNAL(valueChanged(int)),        this, SLOT(timeValueChanged(int)));
-    connect(d->effects,         SIGNAL(currentIndexChanged(int)), this, SLOT(effectIndexChanged(int)));
-    connect(d->transitions,     SIGNAL(currentIndexChanged(int)), this, SLOT(transIndexChanged(int)));
-    connect(d->transitionSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(transSpeedIndexChanged(int)));
+    connect(d->timeVal, SIGNAL(valueChanged(int)),
+            this, SLOT(timeValueChanged(int)));
+
+    connect(d->effects, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(effectIndexChanged(int)));
+
+    connect(d->transitions, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(transIndexChanged(int)));
+
+    connect(d->transitionSpeed, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(transSpeedIndexChanged(int)));
 }
 
 SlideShowSettingsWidget::~SlideShowSettingsWidget()

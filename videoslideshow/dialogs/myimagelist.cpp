@@ -109,8 +109,24 @@ void MyImageList::slotRemoveItems()
 
 // ------------------------------------------------------------------------------------------------
 
+class MyImageListViewItem::Private
+{
+public:
+
+    Private()
+    {
+    }
+
+    int     time;
+
+    QString effect;
+    QString transition;
+    QString transSpeed;
+    QString status;
+};
+
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
-    : KPImagesListViewItem(view, url)
+    : KPImagesListViewItem(view, url), d(new Private)
 {
     setEffectName("None");
     setTime(25);
@@ -120,50 +136,51 @@ MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUr
 
 MyImageListViewItem::~MyImageListViewItem()
 {
+    delete d;
 }
 
 void MyImageListViewItem::setEffectName(const QString& str)
 {
-    m_effect = str;
-    setText(MyImageList::SPECIALEFFECT, m_effect);
+    d->effect = str;
+    setText(MyImageList::SPECIALEFFECT, d->effect);
 }
 
 QString MyImageListViewItem::EffectName() const
 {
-    return m_effect;
+    return d->effect;
 }
 
 void MyImageListViewItem::setTime(const int time)
 {
-    m_time = time;
+    d->time = time;
     setText(MyImageList::TIME, QString::number(time));
 }
 
 void MyImageListViewItem::setTransition(const QString& str)
 {
-    m_transition = str;
-    setText(MyImageList::TRANSITION, m_transition);
+    d->transition = str;
+    setText(MyImageList::TRANSITION, d->transition);
 }
 
 QString MyImageListViewItem::getTransition() const
 {
-    return m_transition;
+    return d->transition;
 }
 
 int MyImageListViewItem::getTime() const
 {
-    return m_time;
+    return d->time;
 }
 
 QString MyImageListViewItem::getTransitionSpeed() const
 {
-    return m_transSpeed;
+    return d->transSpeed;
 }
 
 void MyImageListViewItem::setTransitionSpeed(const QString& str)
 {
-    m_transSpeed = str;
-    setText(MyImageList::TRANSSPEED, m_transSpeed);
+    d->transSpeed = str;
+    setText(MyImageList::TRANSSPEED, d->transSpeed);
 }
 
 int MyImageList::getTotalFrames()

@@ -90,11 +90,8 @@ public:
 
 private:
 
-    QString m_effect;
-    int     m_time;
-    QString m_transition;
-    QString m_transSpeed;
-    QString m_status;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIVideoSlideShowPlugin
