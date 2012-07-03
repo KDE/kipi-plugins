@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "actionthread.h"
+#include "actionthread.moc"
 
 // Local includes
 
@@ -33,8 +33,10 @@ namespace KIPIVideoSlideShowPlugin
 
 ActionThread::ActionThread()
 {
+}
 
-
+ActionThread::~ActionThread()
+{
 }
 
 } // namespace KIPIVideoSlideShowPlugin

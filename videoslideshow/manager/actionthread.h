@@ -45,6 +45,7 @@ class ActionThread : public QObject
 public:
 
     ActionThread();
+    ~ActionThread();
 
 Q_SIGNALS:
 
