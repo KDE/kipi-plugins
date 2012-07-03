@@ -29,12 +29,6 @@
 
 #include <QObject>
 
-// Local includes
-
-#include "processimage.h"
-
-using namespace KIPIPlugins;
-
 namespace KIPIVideoSlideShowPlugin
 {
 
@@ -53,8 +47,8 @@ Q_SIGNALS:
 
 private:
 
-    MagickApi*     m_api;
-    ProcessImage*  processImg;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIVideoSlideShowPlugin

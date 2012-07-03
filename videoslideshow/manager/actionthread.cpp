@@ -26,17 +26,36 @@
 
 // Local includes
 
+#include "processimage.h"
 #include "magickiface.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIVideoSlideShowPlugin
 {
 
+class ActionThread::Private
+{
+public:
+
+    Private()
+    {
+        api        = 0;
+        processImg = 0;
+    }
+
+    MagickApi*    api;
+    ProcessImage* processImg;
+};
+
 ActionThread::ActionThread()
+    : d(new Private)
 {
 }
 
 ActionThread::~ActionThread()
 {
+    delete d;
 }
 
 } // namespace KIPIVideoSlideShowPlugin
