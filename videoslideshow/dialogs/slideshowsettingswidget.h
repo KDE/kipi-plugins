@@ -25,7 +25,12 @@
 #ifndef SLIDESHOWSETTINGSWIDGET_H
 #define SLIDESHOWSETTINGSWIDGET_H
 
+// KDE includes
+
 #include <ktabwidget.h>
+
+// Local includes
+
 #include "myimagelist.h"
 
 namespace KIPIVideoSlideShowPlugin
@@ -65,8 +70,8 @@ private Q_SLOTS:
 
 private:
 
-    class SlideShowPriv;
-    SlideShowPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIVideoSlideShowPlugin

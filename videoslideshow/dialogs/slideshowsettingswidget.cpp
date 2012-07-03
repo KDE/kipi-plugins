@@ -24,6 +24,11 @@
 
 #include "slideshowsettingswidget.moc"
 
+// C ANSI includes
+
+#include <sys/socket.h>
+
+
 // Qt includes
 
 #include <QGridLayout>
@@ -34,7 +39,7 @@
 #include <QSpacerItem>
 #include <QDir>
 
-// kde includes 
+// KDE includes 
 
 #include <kpushbutton.h>
 #include <klocalizeddate.h>
@@ -42,18 +47,16 @@
 #include <kurl.h>
 #include <kseparator.h>
 #include <klocalizedstring.h>
-#include <sys/socket.h>
-
 #include <kmessagebox.h>
 
 namespace KIPIVideoSlideShowPlugin
 {
 
-class SlideShowSettingsWidget::SlideShowPriv
+class SlideShowSettingsWidget::Private
 {
 public:
 
-    SlideShowPriv()
+    Private()
     {
         PPMSettingsWidget   = 0;
         VideoSettingsWidget = 0;
@@ -86,7 +89,7 @@ public:
 };
 
 SlideShowSettingsWidget::SlideShowSettingsWidget(QWidget* const parent, Qt::WFlags flags)
-    : KTabWidget(parent, flags), d(new SlideShowPriv)
+    : KTabWidget(parent, flags), d(new Private)
 {
     d->PPMSettingsWidget   = new QWidget();
     d->VideoSettingsWidget = new QWidget();

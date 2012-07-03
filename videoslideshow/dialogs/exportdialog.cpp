@@ -57,25 +57,24 @@
 #include "kpversion.h"
 #include "kpimageinfo.h"
 #include "kpprogresswidget.h"
-
 #include "actionthread.h"
 #include "slideshowsettingswidget.h"
 
 namespace KIPIVideoSlideShowPlugin
 {
   
-class ExportDialog::ExportDialogPriv
+class ExportDialog::Private
 {
 public:
 
-    ExportDialogPriv()
+    Private()
     {
-        busy                = false;
-        page                = 0;
-        progressBar         = 0;
-        listView            = 0;
-        thread              = 0;
-        settingsBox         = 0;
+        busy        = false;
+        page        = 0;
+        progressBar = 0;
+        listView    = 0;
+        thread      = 0;
+        settingsBox = 0;
     }
 
     bool                     busy;
@@ -92,7 +91,7 @@ public:
 };
 
 ExportDialog::ExportDialog(const ImageCollection& images)
-    : KPToolDialog(0), d(new ExportDialogPriv)
+    : KPToolDialog(0), d(new Private)
 {
     setButtons(Help | Default | Apply | Close );
     setDefaultButton(Close);
