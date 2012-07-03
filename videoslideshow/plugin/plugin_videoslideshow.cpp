@@ -83,10 +83,11 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
 {
     d->exportDlg = 0;
 
-    Plugin::setup( widget );
+    Plugin::setup(widget);
 
     d->exportAction = actionCollection()->addAction("video_slide_show");
     d->exportAction->setText(i18n("Export to Video Slide Show..."));
+    d->exportAction->setIcon(KIcon("media-record"));
 
     connect(d->exportAction, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
