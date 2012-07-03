@@ -128,10 +128,10 @@ public:
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
     : KPImagesListViewItem(view, url), d(new Private)
 {
-    setEffectName("None");
     setTime(25);
-    setTransition("Random");
-    setTransitionSpeed("Medium");
+    setEffectName("None");        // FIXME : no i18n ?
+    setTransition("Random");      // FIXME : no i18n ?
+    setTransitionSpeed("Medium"); // FIXME : no i18n ?
 }
 
 MyImageListViewItem::~MyImageListViewItem()
