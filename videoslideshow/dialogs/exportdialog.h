@@ -60,11 +60,11 @@ public:
 
     void setImages(const ImageCollection& images);
     void addItems(const KUrl::List& itemList);
-    
+
 protected:
 
     void closeEvent(QCloseEvent*);
-    
+
 private:
 
     void readSettings();
@@ -73,7 +73,7 @@ private:
     void busy(bool busy);
 
     void processAll();
-    
+
 private Q_SLOTS:
 
     void slotDefault();
@@ -82,13 +82,12 @@ private Q_SLOTS:
     void slotAborted();
     void slotThreadFinished();
     void updateSettingWidget();
-    void updateImageItems(QString data, MyImageList::FieldType type);
+    void updateImageItems(const QString& data, MyImageList::FieldType type);
 
 private:
 
     class ExportDialogPriv;
     ExportDialogPriv* const d;
-
 };
 
 } // namespace KIPIVideoSlideShowPlugin

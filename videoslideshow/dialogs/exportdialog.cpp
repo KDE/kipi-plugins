@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "exportdialog.h"
+#include "exportdialog.moc"
 
 // Qt includes
 
@@ -75,7 +75,7 @@ public:
         progressBar         = 0;
         listView            = 0;
         thread              = 0;
-	SettingsBox         = 0;
+        settingsBox         = 0;
     }
 
     bool                     busy;
@@ -88,7 +88,7 @@ public:
 
     ActionThread*            thread;
 
-    SlideShowSettingsWidget* SettingsBox;
+    SlideShowSettingsWidget* settingsBox;
 };
 
 ExportDialog::ExportDialog(const ImageCollection& images)
@@ -111,14 +111,14 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     // ---------------------------------------------------------------
 
-    d->SettingsBox = new SlideShowSettingsWidget(d->page);
+    d->settingsBox = new SlideShowSettingsWidget(d->page);
 
     d->progressBar = new KPProgressWidget(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
     d->progressBar->hide();
 
     mainLayout->addWidget(d->listView,            0, 0, 3, 1);
-    mainLayout->addWidget(d->SettingsBox,         0, 1, 1, 1);
+    mainLayout->addWidget(d->settingsBox,         0, 1, 1, 1);
     mainLayout->addWidget(d->progressBar,         1, 1, 1, 1);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
@@ -144,9 +144,10 @@ ExportDialog::ExportDialog(const ImageCollection& images)
     d->thread = new ActionThread();
     addItems(images.images());
 
-    connect(d->listView->listView(), SIGNAL(itemSelectionChanged()), this, SLOT(updateSettingWidget()));
-    
-    connect(d->SettingsBox, SIGNAL(DataChanged(QString,MyImageList::FieldType)),
+    connect(d->listView->listView(), SIGNAL(itemSelectionChanged()),
+            this, SLOT(updateSettingWidget()));
+
+    connect(d->settingsBox, SIGNAL(DataChanged(QString,MyImageList::FieldType)),
             this, SLOT(updateImageItems(QString,MyImageList::FieldType)));
 
     connect(this, SIGNAL(closeClicked()),
@@ -204,7 +205,7 @@ void ExportDialog::addItems(const KUrl::List& itemList)
 
 void ExportDialog::slotDefault()
 {
-    d->SettingsBox->resetToDefault();
+    d->settingsBox->resetToDefault();
 }
 
 void ExportDialog::readSettings()
@@ -213,7 +214,7 @@ void ExportDialog::readSettings()
     KConfigGroup group  = config.group(QString("VideoSlideShow Settings"));
 
     QString path = group.readEntry("Temp Dir", QString());
-    d->SettingsBox->setTempDirPath(path);
+    d->settingsBox->setTempDirPath(path);
     restoreDialogSize(group);
 }
 
@@ -222,9 +223,9 @@ void ExportDialog::saveSettings()
     KConfig config("kipivss");
     KConfigGroup group  = config.group(QString("VideoSlideShow Settings"));
 
-    group.writeEntry("Temp Dir", d->SettingsBox->getTempDirPath());
+    group.writeEntry("Temp Dir", d->settingsBox->getTempDirPath());
     saveDialogSize(group);
-    
+
     config.sync();
 }
 
@@ -265,7 +266,7 @@ void ExportDialog::busy(bool busy)
         setButtonToolTip(Apply, i18n("Start converting the images using current settings."));
     }
 
-    d->SettingsBox->setEnabled(!d->busy);
+    d->settingsBox->setEnabled(!d->busy);
     d->listView->listView()->viewport()->setEnabled(!d->busy);
 
     d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
@@ -307,12 +308,12 @@ void ExportDialog::updateSettingWidget()
     if(!d->listView->listView()->selectedItems().isEmpty())
     {
         MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>( d->listView->listView()->selectedItems().at(0));
-        d->SettingsBox->updateData(item->getTime(), item->getTransition(), item->getTransitionSpeed(), item->EffectName());
+        d->settingsBox->updateData(item->getTime(), item->getTransition(), item->getTransitionSpeed(), item->EffectName());
     }
 }
 
-void ExportDialog::updateImageItems(QString data, MyImageList::FieldType type)
-{ 
+void ExportDialog::updateImageItems(const QString& data, MyImageList::FieldType type)
+{
     QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
     QList<QTreeWidgetItem*>::iterator it;
 

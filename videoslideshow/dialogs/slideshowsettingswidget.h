@@ -30,43 +30,43 @@
 
 namespace KIPIVideoSlideShowPlugin
 {
-  
+
 class SlideShowSettingsWidget: public KTabWidget
 {
     Q_OBJECT
 
 public:
 
-    SlideShowSettingsWidget(QWidget* parent = 0, Qt::WFlags flags = 0);
+    SlideShowSettingsWidget(QWidget* const parent = 0, Qt::WFlags flags = 0);
     ~SlideShowSettingsWidget();
-    
+
     QString getTempDirPath();
-    void setTempDirPath(QString& path);
+    void    setTempDirPath(QString& path);
+
     void resetToDefault();
-    void updateData(int time, QString transition, QString transSpeed, QString effect);
-    
-signals:
-  
-    void DataChanged(QString data, MyImageList::FieldType type);
-    
+    void updateData(int time, const QString& transition, const QString& transSpeed, const QString& effect);
+
+Q_SIGNALS:
+
+    void DataChanged(const QString& data, MyImageList::FieldType type);
+
 private:
-  
+
     void setUpPPMSettings();
     void setUpVideoSettings();
-    
+
 private Q_SLOTS:
-  
+
     void slotSelectTempDirectory();
     void effectIndexChanged(int index);
     void transIndexChanged(int index);
     void transSpeedIndexChanged(int index);
     void timeValueChanged(int time);
-    
+
 private:
 
     class SlideShowPriv;
     SlideShowPriv* const d;
-    
 };
 
 } // namespace KIPIVideoSlideShowPlugin

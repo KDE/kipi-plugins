@@ -84,14 +84,14 @@ public:
 
     void setTransition(const QString& str);
     QString getTransition() const;
-    
+
     void setTransitionSpeed(const QString& str);
     QString getTransitionSpeed() const;
 
 private:
 
     QString m_effect;
-    int m_time;
+    int     m_time;
     QString m_transition;
     QString m_transSpeed;
     QString m_status;

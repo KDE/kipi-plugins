@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "myimagelist.h"
+#include "myimagelist.moc"
 
 // Qt includes
 
@@ -40,10 +40,10 @@ MyImageList::MyImageList(QWidget* const parent)
 {
     setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("Image"));
-    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::SPECIALEFFECT),  i18n("Special Effect"),         true);
-    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TIME),           i18n("Frames per Image"),       true);
-    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TRANSITION),     i18n("Transition"),             true);
-    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TRANSSPEED),     i18n("Transition Speed"),       true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::SPECIALEFFECT), i18n("Special Effect"),   true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TIME),          i18n("Frames per Image"), true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TRANSITION),    i18n("Transition"),       true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TRANSSPEED),    i18n("Transition Speed"), true);
 }
 
 MyImageList::~MyImageList()
