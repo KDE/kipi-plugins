@@ -45,7 +45,7 @@ extern "C"
 
 // Local includes
 
-#include "dlnawindow.h"
+#include "wizard.h"
 
 namespace KIPIDLNAExportPlugin
 {
@@ -65,7 +65,7 @@ public:
 
     KAction*    actionExport;
 
-    DLNAWindow* dlgExport;
+    Wizard*     dlgExport;
 };
 
 Plugin_DLNAExport::Plugin_DLNAExport(QObject* const parent, const QVariantList&)
@@ -99,13 +99,11 @@ void Plugin_DLNAExport::setup(QWidget* const widget)
 
 void Plugin_DLNAExport::slotExport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-dlnaexportplugin-" + QString::number(getpid()) + '/');
-
     if (!d->dlgExport)
     {
         // We clean it up in the close button
-        d->dlgExport = new DLNAWindow(tmp);
+        QWidget* parent=QApplication::activeWindow();
+        d->dlgExport = new Wizard(parent);
     }
     else
     {

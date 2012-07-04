@@ -23,6 +23,7 @@ SET(kipiplugin_dlnaexport_PART_SRCS
     plugin_dlnaexport.cpp
     dlnawindow.cpp
     mediaserver.cpp
+    wizard.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_dlnaexport ${kipiplugin_dlnaexport_PART_SRCS})
