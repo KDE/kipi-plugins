@@ -105,6 +105,7 @@ DLNAWidget::DLNAWidget(Interface* const /*interface*/, const QString& /*tmpFolde
     d->imgList = new KPImagesList(this);
     d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
     d->imgList->setAllowRAW(true);
+    d->imgList->setMinimumSize(300, 450);
     d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
     KHBox* hbox = new KHBox(settingsBox);

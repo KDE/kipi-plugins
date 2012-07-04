@@ -25,9 +25,6 @@
 
 // QT incudes
 
-#include <QPainter>
-#include <QIcon>
-
 // Local includes
 
 #include "kpimageslist.h"

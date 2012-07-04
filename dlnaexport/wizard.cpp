@@ -22,31 +22,13 @@
 
 #include "wizard.moc"
 
-// C++ includes
-
-#include <memory>
-
 // Qt includes
 
 #include <QFileInfo>
-#include <QPainter>
 #include <QPalette>
 #include <QtGlobal>
 
 // KDE includes
-
-#include <kapplication.h>
-#include <kconfigdialogmanager.h>
-#include <kmenu.h>
-#include <kpushbutton.h>
-#include <kfile.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <kdeprintdialog.h>
-#include <kdebug.h>
-#include <kstandarddirs.h>
-#include <kconfig.h>
-#include <kdesktopfile.h>
 
 // libHUpnp includes
 
@@ -62,7 +44,6 @@
 
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
-#include "kpmetadata.h"
 #include "dlnawidget.h"
 
 using namespace Herqq;
@@ -75,6 +56,7 @@ struct Wizard::Private
     DLNAWidget*              m_selectionPage;
     ImageCollectionSelector* m_collectionSelector;
     KPageWidgetItem*         m_selectionPageItem;
+    KPageWidgetItem*         m_collectionSelectorPageItem;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -82,6 +64,7 @@ Wizard::Wizard(QWidget* const parent)
 {
     // Caption
     setCaption(i18n("DLNA Export"));
+    setMinimumSize(300, 500);
 
     //--------------------------------------------------------------------
 
@@ -112,8 +95,12 @@ Wizard::Wizard(QWidget* const parent)
 
     //-----------------------------------------------------------------------
 
+    d->m_collectionSelector     = iface()->imageCollectionSelector(this);
+    d->m_collectionSelectorPageItem = addPage(d->m_collectionSelector, i18n("Collection Selection"));
+
     d->m_selectionPage  = new DLNAWidget(iface(), QString(), this);
     addPage(d->m_selectionPage, "Select the collection to upload");
+
 }
 
 Wizard::~Wizard()
