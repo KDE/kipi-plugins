@@ -145,7 +145,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     connect(d->listView->listView(), SIGNAL(itemSelectionChanged()),
             this, SLOT(updateSettingWidget()));
-    
+
     connect(d->settingsBox, SIGNAL(timeDataChanged(int)),
             this, SLOT(updateImageTime(int)));
 
@@ -324,7 +324,7 @@ void ExportDialog::updateImageEffect(QString data, EFFECT effect)
 {
     QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
     QList<QTreeWidgetItem*>::iterator it;
-    
+
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
         dynamic_cast<MyImageListViewItem*>((*it))->setEffectName(data, effect);
 }
@@ -333,7 +333,7 @@ void ExportDialog::updateImageTime(int time)
 {
     QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
     QList<QTreeWidgetItem*>::iterator it;
-    
+
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
         dynamic_cast<MyImageListViewItem*>((*it))->setTime(time);;
 }
@@ -342,7 +342,7 @@ void ExportDialog::updateImageTransition(QString data, TRANSITION_TYPE type)
 {
     QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
     QList<QTreeWidgetItem*>::iterator it;
-    
+
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
         dynamic_cast<MyImageListViewItem*>((*it))->setTransition(data, type);
 }
@@ -351,7 +351,7 @@ void ExportDialog::updateImageTransSpeed(QString data, TRANSITION_SPEED speed)
 {
    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
    QList<QTreeWidgetItem*>::iterator it;
-   
+
    for(it = imgLst.begin(); it != imgLst.end(); ++it)
        dynamic_cast<MyImageListViewItem*>((*it))->setTransitionSpeed(data, speed);
 }

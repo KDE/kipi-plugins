@@ -56,6 +56,7 @@ public:
 
     explicit MyImageList(QWidget* const parent = 0);
     virtual ~MyImageList();
+
     int getTotalFrames();
 
 public Q_SLOTS:

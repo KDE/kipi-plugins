@@ -117,12 +117,13 @@ public:
     {
     }
 
-    int     time;
+    int              time;
+
+    QString          status;
 
     EFFECT           effect;
     TRANSITION_TYPE  transition;
     TRANSITION_SPEED transSpeed;
-    QString          status;
 };
 
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)

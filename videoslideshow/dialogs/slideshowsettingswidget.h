@@ -50,14 +50,14 @@ public:
 
     void resetToDefault();
     void updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect);
-    
+
 Q_SIGNALS:
-  
+
     void timeDataChanged(int time);
-    void effectDataChanged(QString data, EFFECT effect);
-    void transDataChanged(QString data, TRANSITION_TYPE type);
-    void transSpeedDataChanged(QString data, TRANSITION_SPEED speed);
-    
+    void effectDataChanged(const QString& data, EFFECT effect);
+    void transDataChanged(const QString& data, TRANSITION_TYPE type);
+    void transSpeedDataChanged(const QString& data, TRANSITION_SPEED speed);
+
 private:
 
     void setUpPPMSettings();

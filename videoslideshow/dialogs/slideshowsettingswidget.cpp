@@ -137,18 +137,18 @@ void SlideShowSettingsWidget::transSpeedIndexChanged(int index)
 }
 
 void SlideShowSettingsWidget::timeValueChanged(int time)
-{ 
+{
     emit timeDataChanged(time);
 }
 
 void SlideShowSettingsWidget::setUpPPMSettings()
 {
-    QGridLayout *mainLayout = new QGridLayout(d->PPMSettingsWidget);
+    QGridLayout* mainLayout = new QGridLayout(d->PPMSettingsWidget);
 
-    QLabel *timeLabel       = new QLabel("Image Display Time");
-    QLabel *effectLabel     = new QLabel("Special Effect");
-    QLabel *transitionLabel = new QLabel("Transition");
-    QLabel *transSpeedLabel = new QLabel("Transition Speed");
+    QLabel* timeLabel       = new QLabel("Image Display Time");
+    QLabel* effectLabel     = new QLabel("Special Effect");
+    QLabel* transitionLabel = new QLabel("Transition");
+    QLabel* transSpeedLabel = new QLabel("Transition Speed");
 
     d->timeVal      = new QSpinBox();
     d->timeVal->setRange(1,60);
@@ -157,7 +157,7 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     d->effects->setEditable(false);
     d->effects->addItem(i18n("None"),            (int)EFFECT_NONE);
     d->effects->addItem(i18n("Ken-Burn Effect"), (int)EFFECT_KENBURN);
-    
+
     d->transitions  = new QComboBox();
     d->transitions->setEditable(false);
     d->transitions->addItem(i18n("None"),                (int)TRANSITION_TYPE_NONE);
@@ -179,13 +179,13 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     d->transitions->addItem(i18n("Roll Right to Left"),  (int)TRANSITION_TYPE_ROLL_R2L);
     d->transitions->addItem(i18n("Roll Top to Bottom"),  (int)TRANSITION_TYPE_ROLL_T2B);
     d->transitions->addItem(i18n("Roll Bottom to Top"),  (int)TRANSITION_TYPE_ROLL_B2T);
-    
+
     d->transitionSpeed  = new QComboBox();
     d->transitionSpeed->setEditable(false);
     d->transitionSpeed->addItem(i18n("Slow"),   (int)TRANSITION_SLOW);
     d->transitionSpeed->addItem(i18n("Medium"), (int)TRANSITION_MEDIUM);
     d->transitionSpeed->addItem(i18n("Fast"),   (int)TRANSITION_FAST);
-    
+
     mainLayout->addWidget(timeLabel,          0, 0, 1, 1);
     mainLayout->addWidget(d->timeVal,         0, 1, 1, 1);
     mainLayout->addWidget(effectLabel,        1, 0, 1, 1);
@@ -198,12 +198,13 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     mainLayout->addWidget(new KSeparator(Qt::Horizontal), 4, 0, 1, 2);
 
     d->tempDirLabel           = new QLabel(i18n("Temporary Directory"));
-    QLabel *asptRatioCorLabel = new QLabel("Aspect Ratio Correction");
-    QLabel *heightLabel       = new QLabel("Frame Height");
-    QLabel *widthLabel        = new QLabel("Frame Width");
+    QLabel* asptRatioCorLabel = new QLabel("Aspect Ratio Correction");
+    QLabel* heightLabel       = new QLabel("Frame Height");
+    QLabel* widthLabel        = new QLabel("Frame Width");
 
     d->selectBtn       = new KPushButton("Browse");
-    connect(d->selectBtn, SIGNAL(clicked(bool)), this, SLOT(slotSelectTempDirectory()));
+    connect(d->selectBtn, SIGNAL(clicked(bool)),
+            this, SLOT(slotSelectTempDirectory()));
 
     d->asptRatioCorrct = new QComboBox();
     d->asptRatioCorrct->setEditable(false);
@@ -211,7 +212,7 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     d->asptRatioCorrct->addItem(i18n("None"),    (int)ASPECTCORRECTION_TYPE_NONE);
     d->asptRatioCorrct->addItem(i18n("Fill In"), (int)ASPECTCORRECTION_TYPE_FITIN);
     d->asptRatioCorrct->addItem(i18n("Fit In"),  (int)ASPECTCORRECTION_TYPE_FILLIN);
-    
+
     d->frameHeight     = new QSpinBox();
     d->frameHeight->setRange(100, 1000);
     d->frameWidth      = new QSpinBox();
