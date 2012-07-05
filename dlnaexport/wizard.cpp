@@ -30,6 +30,8 @@
 
 // KDE includes
 
+#include <kdebug.h>
+
 // libHUpnp includes
 
 #include <HUpnpCore/HUpnpInfo>
@@ -97,7 +99,10 @@ Wizard::Wizard(QWidget* const parent)
 
     d->m_collectionSelector     = iface()->imageCollectionSelector(this);
     d->m_collectionSelectorPageItem = addPage(d->m_collectionSelector, i18n("Collection Selection"));
-
+    
+    // Compilaiton issue
+    //    kDebug() << d->m_collectionSelector->selectedImageCollections().count();   
+    
     d->m_selectionPage  = new DLNAWidget(iface(), QString(), this);
     addPage(d->m_selectionPage, "Select the collection to upload");
 
