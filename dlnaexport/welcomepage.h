@@ -20,26 +20,43 @@
  *
  * ============================================================ */
 
-#ifndef DLNAWINDOW_H
-#define DLNAWINDOW_H
+#ifndef WELCOMEPAGE_H
+#define WELCOMEPAGE_H
 
-// Local includes
+// KDE includes
 
-#include "kptooldialog.h"
+#include <kcombobox.h>
 
-using namespace KIPIPlugins;
+// Qt includes
+
+#include <QWidget>
 
 namespace KIPIDLNAExportPlugin
 {
 
-class DLNAWindow : public KPToolDialog
+class WelcomePage : public QWidget
 {
+    Q_OBJECT
+
 public:
 
-    explicit DLNAWindow(const QString& tmpFolder);
-    ~DLNAWindow();
+    enum ImageGetOption
+    {
+        COLLECTION = 0,
+        IMAGEDIALOG
+    };
+    
+    explicit WelcomePage(QWidget* const parent);
+    ~WelcomePage();
+
+public Q_SLOTS:
+
+private:
+
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIDLNAExportPlugin
 
-#endif // DLNAWINDOW_H
+#endif // WELCOMEPAGE_H

@@ -48,6 +48,7 @@
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "dlnawidget.h"
+#include "welcomepage.h"
 
 using namespace Herqq;
 
@@ -58,8 +59,10 @@ struct Wizard::Private
 {
     DLNAWidget*              m_selectionPage;
     ImageCollectionSelector* m_collectionSelector;
+    WelcomePage*             m_welcomePage;
     KPageWidgetItem*         m_selectionPageItem;
     KPageWidgetItem*         m_collectionSelectorPageItem;
+    KPageWidgetItem*         m_welcomePageItem;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -98,19 +101,43 @@ Wizard::Wizard(QWidget* const parent)
 
     //-----------------------------------------------------------------------
 
+    d->m_welcomePage  = new WelcomePage(this);
+    d->m_welcomePageItem = addPage(d->m_welcomePage, "Welcome to DLNA Export");
+    
     d->m_collectionSelector     = iface()->imageCollectionSelector(this);
     d->m_collectionSelectorPageItem = addPage(d->m_collectionSelector, i18n("Collection Selection"));
 
-    // Compilaiton issue
-    kDebug() << d->m_collectionSelector->selectedImageCollections().count();
+    setValid(d->m_collectionSelectorPageItem, false);
+        
+    connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
+            this, SLOT(updateCollectionSelectorPageValidity()));
 
-    d->m_selectionPage  = new DLNAWidget(iface(), QString(), this);
-    addPage(d->m_selectionPage, "Select the collection to upload");
+    d->m_selectionPage  = new DLNAWidget(this);
+    d->m_selectionPageItem = addPage(d->m_selectionPage, "Select the collection to upload");
 }
 
 Wizard::~Wizard()
 {
     delete d;
+}
+
+void Wizard::next()
+{
+    if (currentPage() == d->m_collectionSelectorPageItem)
+    {
+        setCurrentPage(d->m_selectionPageItem);
+        KUrl::List images = d->m_collectionSelector->selectedImageCollections().at(0).images();
+        kDebug() << images;
+    }
+    else
+    {
+        setCurrentPage(d->m_collectionSelectorPageItem);
+    }
+}
+
+void Wizard::updateCollectionSelectorPageValidity()
+{
+    setValid(d->m_collectionSelectorPageItem, !d->m_collectionSelector->selectedImageCollections().empty());
 }
 
 } // namespace KIPIDLNAExportPlugin

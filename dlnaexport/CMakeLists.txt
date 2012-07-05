@@ -21,9 +21,9 @@ ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
 SET(kipiplugin_dlnaexport_PART_SRCS
     dlnawidget.cpp
     plugin_dlnaexport.cpp
-    dlnawindow.cpp
     mediaserver.cpp
     wizard.cpp
+    welcomepage.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_dlnaexport ${kipiplugin_dlnaexport_PART_SRCS})

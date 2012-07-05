@@ -44,7 +44,12 @@ public:
 
     Wizard(QWidget* const);
     ~Wizard();
+    void next();
 
+private Q_SLOTS:
+    
+    void updateCollectionSelectorPageValidity();
+    
 private:
 
     struct Private;

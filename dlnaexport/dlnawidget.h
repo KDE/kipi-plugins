@@ -46,13 +46,13 @@ class DLNAWidget : public QWidget
 
 public:
 
-    explicit DLNAWidget(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
+    explicit DLNAWidget(QWidget* const parent);
     ~DLNAWidget();
 
 public Q_SLOTS:
 
     void reactivate();
-    void slotSelectDirectory();
+//    void slotSelectDirectory();
 
 private:
 
