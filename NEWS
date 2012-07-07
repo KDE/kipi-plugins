@@ -1,14 +1,9 @@
-Kipi-plugins 2.7.0 - Release date: 2012/07/08
+Kipi-plugins 2.8.0 - Release date: 2012/08/05
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 295931 - digiKam / Kipi-Geolocation segfault.
-002 ==> 302447 - DNG RAW file can't be added for conversion.
-003 ==> 291951 - Shows numeric ID instead of name of the Google.
-004 ==> 285831 - Picasa export plugin: name is replaced by google userid.
-005 ==> 302121 - "Blend bracketed images" menu entry doesn't appear.
-006 ==> 
+001 ==> 
 
