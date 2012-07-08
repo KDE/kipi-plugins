@@ -26,20 +26,26 @@
 //local includes
 
 #include "kpmetadata.h"
+#include "xmpmm.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPhotivoIntegrationPlugin
 {
 
-class XmpInfo
+/** Access XMP-Metadata */
+class XmpInfo //: protected KPMetadata //inherit protected to simplify the interface
 {
 
 public:
 
     QString isDerivate(const QString& image) const;
+    XmpMM   getXmpMM(const QString& image) const;
 
 private:
+    
+//     void getHistory(XmpMM &mm, const MetaDataMap &mmMap) const;
+//     void getIDs(XmpMM &mm, const MetaDataMap &mmMap) const;
 
 };
 

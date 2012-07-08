@@ -27,9 +27,10 @@
 
 #include <kdebug.h>
 
-//KIPI includes
+// KIPI includes
 
 #include "xmpinfo.h"
+#include "xmpmm.h"
 
 namespace KIPIPhotivoIntegrationPlugin
 {
@@ -42,36 +43,48 @@ QString XmpInfo::isDerivate(const QString& image) const
 
     if (meta.load(image))
     {
-        QString orig;
-        QString current;
-
         // Read sidecar at first: Embedded metadata has precedence, so if both 
         // exist the doubled entries will be overwritten by embedded data later on
         if (meta.hasSidecar(image))
         {
-            //TODO
+            //TODO??? Needed? KExiv seams to take care of sidecars by itself on loading
         }
 
-        // Now read embedded XMP
-        if (meta.hasXmp())
-        {
-            orig    = meta.getXmpTagString("Xmp.xmpMM.OriginalDocumentID");
-            current = meta.getXmpTagString("Xmp.xmpMM.DocumentID");
-        }
+        XmpMM mm(meta);
 
         // Evaluate
-        if (!current.isEmpty() && !orig.isEmpty())
+        if (!mm.documentID.isEmpty() && !mm.originalDocumentID.isEmpty())
         {
-            if (current == orig) return "Original";
-                return QString("Derived from ") + orig; //TODO:Mapping UUID -> filename
+            if (mm.documentID == mm.originalDocumentID) 
+		return "Original";
+            return mm.documentID + " is derived from " + mm.originalDocumentID; //TODO:Mapping UUID -> filename
         }
-     }
-     else
-     {
+    }
+    else
+    {
         kWarning() << "Loading Metadata for file" << image << "failed";
-     }
+    }
 
     return QString("- unknown -");
+}
+
+// ----------------------------------------------------------------------------
+
+XmpMM XmpInfo::getXmpMM(const QString& image) const
+{
+    const KPMetadata meta;
+    XmpMM            mm;
+
+    if (meta.load(image))
+    {
+	mm.load(meta);
+    }
+    else
+    {
+        kWarning() << "Loading Metadata for file" << image << "failed";
+    }
+
+    return mm;
 }
 
 // private ////////////////////////////////////////////////////////////////////
