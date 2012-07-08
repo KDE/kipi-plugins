@@ -43,7 +43,7 @@ public:
     XmpMM   getXmpMM(const QString& image) const;
 
 private:
-    
+
 //     void getHistory(XmpMM &mm, const MetaDataMap &mmMap) const;
 //     void getIDs(XmpMM &mm, const MetaDataMap &mmMap) const;
 
