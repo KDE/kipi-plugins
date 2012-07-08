@@ -10,5 +10,4 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 291951 - Shows numeric ID instead of name of the Google.
 004 ==> 285831 - Picasa export plugin: name is replaced by google userid.
 005 ==> 302121 - "Blend bracketed images" menu entry doesn't appear.
-006 ==> 
 
