@@ -6,7 +6,7 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to WikiMedia web service
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -58,9 +58,11 @@ class WikiMediaJob : public KJob
 public:
 
     WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
-    QString buildWikiText(const QMap<QString, QString>& info);
+    ~WikiMediaJob();
 
-    void setImageMap(const QList<QMap<QString, QString> >& imageDesc);
+    QString buildWikiText(const QMap<QString, QString>& info) const;
+
+    void setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc);
     void start();
 
 Q_SIGNALS:
@@ -76,12 +78,8 @@ public Q_SLOTS:
 
 private:
 
-    KUrl::List                    m_urls;
-    Interface*                    m_interface;
-    MediaWiki*                    m_mediawiki;
-    QList<QMap<QString,QString> > m_imageDesc;
-    QString                       m_error;
-    QString                       m_currentFile;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIWikiMediaPlugin

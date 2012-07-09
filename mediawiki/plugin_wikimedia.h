@@ -42,7 +42,6 @@
 #include <libmediawiki/mediawiki.h>
 
 class KAction;
-class KJob;
 
 using namespace KIPI;
 
@@ -70,8 +69,8 @@ public Q_SLOTS:
 
 private:
 
-    KAction*  m_actionExport;
-    WMWindow* m_dlgExport;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIWikiMediaPlugin
