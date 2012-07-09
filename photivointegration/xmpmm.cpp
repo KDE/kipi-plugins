@@ -22,7 +22,7 @@
 
 // KDE includes
 
-#include <KDebug>
+#include <kdebug.h>
 
 // local includes
 
@@ -33,47 +33,47 @@ namespace KIPIPhotivoIntegrationPlugin
 
 // public /////////////////////////////////////////////////////////////////////
 
-void XmpMM::load(const KPMetadata meta)
+void XmpMM::load(const KPMetadata& meta)
 {
     // Check if XMP is available at all
     if (meta.hasXmp())
     {
-	KExiv2::MetaDataMap mmMap   = meta.getXmpTagsDataList(QStringList("xmpMM"));
-	kDebug() << "mmMap.size():" << mmMap.size();
+        KExiv2::MetaDataMap mmMap = meta.getXmpTagsDataList(QStringList("xmpMM"));
+        kDebug() << "mmMap.size():" << mmMap.size();
 
-	loadIDs(mmMap);
-	loadHistory(mmMap);
+        loadIDs(mmMap);
+        loadHistory(mmMap);
     }
 }
 
 // private ////////////////////////////////////////////////////////////////////
 
-void XmpMM::loadHistory(const KExiv2::MetaDataMap &mmMap)
+void XmpMM::loadHistory(const KExiv2::MetaDataMap& mmMap)
 {
     // KPMetadata/KExiv2 can't tell how many elements an array has, 
     // so we try to access the next element in a loop until we fail.
     int i = 0;
     while (mmMap.contains(QString("Xmp.xmpMM.History[%1]").arg(++i)))
     {
-	XmpMMHistory hist;
-	QString      node  = QString("xmpMM.History[%1]/stEvt:").arg(i);
-	
-	// Missing key/value pairs will result as an empty string
-	hist.action     = mmMap[node + "action"];
-	hist.instanceID = mmMap[node + "instanceID"];
-	hist.when       = mmMap[node + "when"];
-	history.push_back(hist);
+        XmpMMHistory hist;
+        QString      node  = QString("xmpMM.History[%1]/stEvt:").arg(i);
+
+        // Missing key/value pairs will result as an empty string
+        hist.action     = mmMap[node + "action"];
+        hist.instanceID = mmMap[node + "instanceID"];
+        hist.when       = mmMap[node + "when"];
+        history.push_back(hist);
     }
     kDebug() << "history.size():" << history.size();
 }
 
 // ----------------------------------------------------------------------------
 
-void XmpMM::loadIDs(const KExiv2::MetaDataMap &mmMap)
+void XmpMM::loadIDs(const KExiv2::MetaDataMap& mmMap)
 {
     // Missing key/value pairs will result as an empty string
-    documentID    = mmMap["Xmp.xmpMM.DocumentID"];
-    instanceID    = mmMap["Xmp.xmpMM.InstanceID"];
+    documentID         = mmMap["Xmp.xmpMM.DocumentID"];
+    instanceID         = mmMap["Xmp.xmpMM.InstanceID"];
     originalDocumentID = mmMap["Xmp.xmpMM.OriginalDocumentID"];
 }
 

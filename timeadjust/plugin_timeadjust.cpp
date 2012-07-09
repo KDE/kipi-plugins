@@ -51,11 +51,11 @@ namespace KIPITimeAdjustPlugin
 K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
 K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 
-class Plugin_TimeAdjust::Plugin_TimeAdjustPriv
+class Plugin_TimeAdjust::Private
 {
 public:
 
-    Plugin_TimeAdjustPriv()
+    Private()
     {
         actionTimeAjust = 0;
         interface       = 0;
@@ -69,7 +69,7 @@ public:
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
     : Plugin(TimeAdjustFactory::componentData(), parent, "TimeAdjust"),
-      d(new Plugin_TimeAdjustPriv)
+      d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
 }

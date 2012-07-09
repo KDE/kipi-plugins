@@ -72,8 +72,8 @@ private Q_SLOTS:
 
 private:
 
-    class SettingsWidgetPrivate;
-    SettingsWidgetPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPITimeAdjustPlugin

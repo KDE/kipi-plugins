@@ -1,3 +1,530 @@
+2.7.0 2012-07-08
+
+2012-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2012-07-04  Script Kiddy <scripty@kde.org>
+
+	* imageshackexport/kipiplugin_imageshackexport.desktop,
+	imgurexport/kipiplugin_imgurexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	panorama/plugin/panoramagui.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/templates/6_photos_3.5x4.5cm.desktop,
+	printimages/templates/FullPage.desktop,
+	printimages/templates/Thumbnails_5x4.desktop,
+	printimages/templates/Thumbnails_6x5.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	tests/helloworld/kipiplugin_helloworld.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2012-06-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/tools/kpimageinfo.cpp: be more restictive to
+	check if attribute exist to prevent crash if QMap is empty.
+	Simplify and factorize code.  Please check if this patch fix crash
+	indeep Qt4.  CCBUGS: 302306 CCBUGS: 302714
+
+2012-06-28  Jekyll Wu <adaptee@gmail.com>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/plugin/kipiplugin_batchprocessimages.desktop,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	expoblending/plugin/kipiplugin_expoblending.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	gpssync/kipiplugin_gpssync.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	imageshackexport/kipiplugin_imageshackexport.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	imgurexport/kipiplugin_imgurexport.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	panorama/plugin/kipiplugin_panorama.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	tests/helloworld/kipiplugin_helloworld.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: Remove deprecated
+	"Encoding" key from dekstop entry
+
+2012-06-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* picasawebexport/picasawebwindow.cpp: polish
+
+2012-06-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* picasawebexport/picasawebitem.h: polish
+
+2012-06-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2012-06-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* picasawebexport/picasawebtalker.cpp,
+	picasawebexport/picasawebtalker.h,
+	picasawebexport/picasawebwidget.cpp,
+	picasawebexport/picasawebwidget.h,
+	picasawebexport/picasawebwindow.cpp: show login name in main dialog,
+	not internal Google user name taken from token.  BUGS: 291951 BUGS:
+	285831
+
+2012-06-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2012-06-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/plugin/myimagelist.cpp,
+	dngconverter/plugin/myimagelist.h: permit to process back DNG files
+	for recompression conversion, as Adobe tool.  BUGS: 302447
+
+2012-06-24  Script Kiddy <scripty@kde.org>
+
+	* imageshackexport/kipiplugin_imageshackexport.desktop,
+	imgurexport/kipiplugin_imgurexport.desktop,
+	panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop,
+	printimages/templates/6_photos_3.5x4.5cm.desktop,
+	tests/helloworld/kipiplugin_helloworld.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2012-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2012-06-21  Script Kiddy <scripty@kde.org>
+
+	* dngconverter/plugin/dngconverter.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2012-06-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* Messages.sh: backport from 3.0.0 branch
+
+2012-06-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/extra/KEditFactory.cpp,
+	photolayoutseditor/extra/KEditFactory.h,
+	photolayoutseditor/extra/PLEConfigSkeleton.cpp,
+	photolayoutseditor/extra/PLEConfigSkeleton.h,
+	photolayoutseditor/extra/SavingThread.cpp,
+	photolayoutseditor/extra/SavingThread.h,
+	photolayoutseditor/extra/global.cpp,
+	photolayoutseditor/extra/global.h,
+	photolayoutseditor/extra/qtpropertybrowser/CMakeLists.txt,
+	photolayoutseditor/extra/qtpropertybrowser/README.TXT,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtAbstractEditorFact
+	oryBase,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtAbstractPropertyBr
+	owser,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtAbstractPropertyMa
+	nager,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtBoolPropertyManage
+	r, photolayoutseditor/extra/qtpropertybrowser/src/QtBrowserItem,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtButtonPropertyBrow
+	ser,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtCharEditorFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtCharPropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtCheckBoxFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtColorEditorFactory
+	,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtColorPropertyManag
+	er,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtCursorEditorFactor
+	y,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtCursorPropertyMana
+	ger,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtDateEditFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtDatePropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtDateTimeEditFactor
+	y,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtDateTimePropertyMa
+	nager,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtDoublePropertyMana
+	ger,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtDoubleSpinBoxFacto
+	ry,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtEnumEditorFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtEnumPropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtFlagPropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtFontEditorFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtFontPropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtGroupBoxPropertyBr
+	owser,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtGroupPropertyManag
+	er,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtIntPropertyManager
+	,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtKeySequenceEditorF
+	actory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtKeySequencePropert
+	yManager,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtLineEditFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtLocalePropertyMana
+	ger,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtPointFPropertyMana
+	ger,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtPointPropertyManag
+	er, photolayoutseditor/extra/qtpropertybrowser/src/QtProperty,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtRectFPropertyManag
+	er,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtRectPropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtScrollBarFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtSizeFPropertyManag
+	er,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtSizePolicyProperty
+	Manager,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtSizePropertyManage
+	r, photolayoutseditor/extra/qtpropertybrowser/src/QtSliderFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtSpinBoxFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtStringPropertyMana
+	ger,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtTimeEditFactory,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtTimePropertyManage
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtTreePropertyBrowse
+	r,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtVariantEditorFacto
+	ry,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtVariantProperty,
+	photolayoutseditor/extra/qtpropertybrowser/src/QtVariantPropertyMan
+	ager,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtbuttonpropertybrow
+	ser.cpp,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtbuttonpropertybrow
+	ser.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qteditorfactory.cpp,
+	photolayoutseditor/extra/qtpropertybrowser/src/qteditorfactory.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtgroupboxpropertybr
+	owser.cpp,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtgroupboxpropertybr
+	owser.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertybrowser.cp
+	p,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertybrowser.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertybrowser.pr
+	i,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertybrowser.qr
+	c,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertybrowseruti
+	ls.cpp,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertybrowseruti
+	ls_p.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertymanager.cp
+	p,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtpropertymanager.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qttreepropertybrowse
+	r.cpp,
+	photolayoutseditor/extra/qtpropertybrowser/src/qttreepropertybrowse
+	r.h,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtvariantproperty.cp
+	p,
+	photolayoutseditor/extra/qtpropertybrowser/src/qtvariantproperty.h,
+	photolayoutseditor/utils/KEditFactory.cpp,
+	photolayoutseditor/utils/KEditFactory.h,
+	photolayoutseditor/utils/PLEConfigSkeleton.cpp,
+	photolayoutseditor/utils/PLEConfigSkeleton.h,
+	photolayoutseditor/utils/SavingThread.cpp,
+	photolayoutseditor/utils/SavingThread.h,
+	photolayoutseditor/utils/global.cpp,
+	photolayoutseditor/utils/global.h,
+	photolayoutseditor/utils/qtpropertybrowser/CMakeLists.txt,
+	photolayoutseditor/utils/qtpropertybrowser/README.TXT,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtAbstractEditorFact
+	oryBase,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtAbstractPropertyBr
+	owser,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtAbstractPropertyMa
+	nager,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtBoolPropertyManage
+	r, photolayoutseditor/utils/qtpropertybrowser/src/QtBrowserItem,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtButtonPropertyBrow
+	ser,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtCharEditorFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtCharPropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtCheckBoxFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtColorEditorFactory
+	,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtColorPropertyManag
+	er,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtCursorEditorFactor
+	y,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtCursorPropertyMana
+	ger,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtDateEditFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtDatePropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtDateTimeEditFactor
+	y,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtDateTimePropertyMa
+	nager,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtDoublePropertyMana
+	ger,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtDoubleSpinBoxFacto
+	ry,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtEnumEditorFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtEnumPropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtFlagPropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtFontEditorFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtFontPropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtGroupBoxPropertyBr
+	owser,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtGroupPropertyManag
+	er,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtIntPropertyManager
+	,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtKeySequenceEditorF
+	actory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtKeySequencePropert
+	yManager,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtLineEditFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtLocalePropertyMana
+	ger,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtPointFPropertyMana
+	ger,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtPointPropertyManag
+	er, photolayoutseditor/utils/qtpropertybrowser/src/QtProperty,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtRectFPropertyManag
+	er,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtRectPropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtScrollBarFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtSizeFPropertyManag
+	er,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtSizePolicyProperty
+	Manager,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtSizePropertyManage
+	r, photolayoutseditor/utils/qtpropertybrowser/src/QtSliderFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtSpinBoxFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtStringPropertyMana
+	ger,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtTimeEditFactory,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtTimePropertyManage
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtTreePropertyBrowse
+	r,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtVariantEditorFacto
+	ry,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtVariantProperty,
+	photolayoutseditor/utils/qtpropertybrowser/src/QtVariantPropertyMan
+	ager,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtbuttonpropertybrow
+	ser.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtbuttonpropertybrow
+	ser.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qteditorfactory.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qteditorfactory.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtgroupboxpropertybr
+	owser.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtgroupboxpropertybr
+	owser.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowser.cp
+	p,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowser.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowser.pr
+	i,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowser.qr
+	c,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowseruti
+	ls.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowseruti
+	ls_p.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertymanager.cp
+	p,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertymanager.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qttreepropertybrowse
+	r.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qttreepropertybrowse
+	r.h,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtvariantproperty.cp
+	p,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtvariantproperty.h: 
+	utils => extra
+
+2012-06-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : these files are already in top level dir
+
+2012-06-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/data/CMakeLists.txt: missing file
+
+2012-06-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* Messages.sh, common/CMakeLists.txt, common/data/tips, tips: move
+	kipiplugins tips to common/data.  extract i18n accordingly install
+	tips file
+
+2012-06-10  Jaime Torres <jtamate@gmail.com>
+
+	* panorama/tasks/copyfilestask.cpp: replace + with << to get the
+	desired effect adding 'QFile::FileError' to a string does not append to the string
+
+2012-06-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwidget.cpp: add tooltips
+
+2012-06-07  Script Kiddy <scripty@kde.org>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	acquireimages/scangui.desktop,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/plugin/kipiplugin_batchprocessimages.desktop,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	dngconverter/plugin/dngconverter.desktop,
+	dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	expoblending/plugin/expoblending.desktop,
+	expoblending/plugin/kipiplugin_expoblending.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	gpssync/kipiplugin_gpssync.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	htmlexport/themes/classic/classic.desktop,
+	htmlexport/themes/cleanframes/cleanframes.desktop,
+	htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	htmlexport/themes/frames/frames.desktop,
+	htmlexport/themes/matrix/matrix.desktop,
+	htmlexport/themes/s0/s0.desktop,
+	htmlexport/themes/simple/simple.desktop,
+	htmlexport/themes/snow/snow.desktop,
+	imageshackexport/kipiplugin_imageshackexport.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	imgurexport/kipiplugin_imgurexport.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/templates/1_photo_10.5x14.8cm.desktop,
+	printimages/templates/1_photo_10x15cm.desktop,
+	printimages/templates/1_photo_20x25cm.desktop,
+	printimages/templates/1_photo_8x10.desktop,
+	printimages/templates/1_photo_9x13cm.desktop,
+	printimages/templates/2_photos_13x18cm.desktop,
+	printimages/templates/2_photos_5x7.desktop,
+	printimages/templates/3_photos_10x15cm.desktop,
+	printimages/templates/3_photos_4x6.desktop,
+	printimages/templates/4_photos_10x13.33cm.desktop,
+	printimages/templates/4_photos_3.5x5.desktop,
+	printimages/templates/4_photos_4.5x5cm.desktop,
+	printimages/templates/4_photos_9x13cm.desktop,
+	printimages/templates/4x6Album.desktop,
+	printimages/templates/6_photos_3.5x4.5cm.desktop,
+	printimages/templates/6_photos_3.5x4cm.desktop,
+	printimages/templates/8_photos_6x9cm.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop,
+	printimages/templates/Album_10x15cm.desktop,
+	printimages/templates/Album_11.5x15cm.desktop,
+	printimages/templates/FullPage.desktop,
+	printimages/templates/Photoframe.desktop,
+	printimages/templates/Thumbnails_5x4.desktop,
+	printimages/templates/Thumbnails_6x5.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	tests/helloworld/kipiplugin_helloworld.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2012-06-07  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/models/LayersModel.cpp: fix pedantic compile
+	warnings
+
+2012-06-05  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2012-06-04  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for digikam 2.7.0
+
+2012-06-04  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.6.0: New version 2.6.0
+
 2.6.0 2012-06-04
 
 2012-06-03  Gilles Caulier <caulier.gilles@gmail.com>

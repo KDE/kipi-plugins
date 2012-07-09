@@ -69,11 +69,11 @@ Q_SIGNALS:
 
 public:
 
-    class ActionThreadPriv;
+    class Private;
 
 private:
 
-    ActionThreadPriv* const d;
+    Private* const d;
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent, const KUrl& url, ActionThread::ActionThreadPriv* const d);
+    Task(QObject* const parent, const KUrl& url, ActionThread::Private* const d);
     ~Task();
 
 Q_SIGNALS:
@@ -99,9 +99,9 @@ protected:
 
 private:
 
-    QMutex                          m_mutex;
-    KUrl                            m_url;
-    ActionThread::ActionThreadPriv* m_d;
+    QMutex                 m_mutex;
+    KUrl                   m_url;
+    ActionThread::Private* m_d;
 };
 
 }  // namespace KIPITimeAdjustPlugin

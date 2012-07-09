@@ -21,6 +21,7 @@
  * ============================================================ */
 
 // C++ includes
+
 #include <iostream>
 
 // KDE includes
@@ -56,7 +57,8 @@ QString XmpInfo::isDerivate(const QString& image) const
         if (!mm.documentID.isEmpty() && !mm.originalDocumentID.isEmpty())
         {
             if (mm.documentID == mm.originalDocumentID) 
-		return "Original";
+                 return "Original";
+
             return mm.documentID + " is derived from " + mm.originalDocumentID; //TODO:Mapping UUID -> filename
         }
     }
@@ -77,7 +79,7 @@ XmpMM XmpInfo::getXmpMM(const QString& image) const
 
     if (meta.load(image))
     {
-	mm.load(meta);
+        mm.load(meta);
     }
     else
     {

@@ -9,6 +9,7 @@
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
+ * Copyright (C) 2012      by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,6 +29,7 @@
 
 #include <QLayout>
 #include <QCloseEvent>
+#include <QFileInfo>
 
 // KDE includes
 
@@ -41,8 +43,10 @@
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 
-// Mediawiki includes
+// MediaWiki includes
 
+#include <libmediawiki/login.h>
+#include <libmediawiki/mediawiki.h>
 #include <libmediawiki/version.h>
 
 // KIPI includes
@@ -59,30 +63,56 @@
 #include "wmwidget.h"
 #include "wikimediajob.h"
 
+using namespace KIPI;
+using namespace mediawiki;
+
 namespace KIPIWikiMediaPlugin
 {
 
-WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0)
+class WMWindow::Private
 {
-    m_tmpPath.clear();
-    m_tmpDir    = tmpFolder;
-    m_widget    = new WmWidget(this);
-    m_uploadJob = 0;
-    m_login     = QString();
-    m_pass      = QString();
+public:
 
-    setMainWidget(m_widget);
+    Private()
+    {
+        widget    = 0;
+        mediawiki = 0;
+        uploadJob = 0;
+    }
+
+    QString       tmpDir;
+    QString       tmpPath;
+    QString       login;
+    QString       pass;
+    QUrl          wiki;
+
+    WmWidget*     widget;
+    MediaWiki*    mediawiki;
+
+    WikiMediaJob* uploadJob;
+};
+
+WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
+    : KPToolDialog(0), d(new Private)
+{
+    d->tmpPath.clear();
+    d->tmpDir    = tmpFolder;
+    d->widget    = new WmWidget(this);
+    d->uploadJob = 0;
+    d->login     = QString();
+    d->pass      = QString();
+
+    setMainWidget(d->widget);
     setWindowIcon(KIcon("wikimedia"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
     setWindowTitle(i18n("Export to Wikimedia Commons"));
-    setButtonGuiItem(User1,
-                     KGuiItem(i18n("Start Upload"), "network-workgroup",
-                              i18n("Start upload to Wikimedia Commons")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                     i18n("Start upload to Wikimedia Commons")));
     enableButton(User1, false);
-    m_widget->setMinimumSize(700, 500);
+    d->widget->setMinimumSize(700, 500);
+    d->widget->installEventFilter(this);
 
     KPAboutData* about = new KPAboutData(ki18n("Wikimedia Commons Export"), 0,
                                          KAboutData::License_GPL,
@@ -100,6 +130,9 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
+    about->addAuthor(ki18n("Peter Potrowl"), ki18n("Developer"),
+                     "peter dot potrowl at gmail dot com");
+
     about->setHandbookEntry("wikimedia");
     setAboutData(about);
 
@@ -109,13 +142,13 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(m_widget, SIGNAL(signalChangeUserRequest()),
+    connect(d->widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
 
-    connect(m_widget, SIGNAL(signalLoginRequest(QString, QString, QUrl)),
+    connect(d->widget, SIGNAL(signalLoginRequest(QString, QString, QUrl)),
             this, SLOT(slotDoLogin(QString, QString, QUrl)));
 
-    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+    connect(d->widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotClose()));
 
     readSettings();
@@ -124,6 +157,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
 WMWindow::~WMWindow()
 {
+    delete d;
 }
 
 void WMWindow::closeEvent(QCloseEvent* e)
@@ -135,8 +169,10 @@ void WMWindow::closeEvent(QCloseEvent* e)
 
 void WMWindow::reactivate()
 {
-    m_widget->imagesList()->listView()->clear();
-    m_widget->imagesList()->loadImagesFromCurrentSelection();
+    d->widget->imagesList()->listView()->clear();
+    d->widget->imagesList()->loadImagesFromCurrentSelection();
+    d->widget->loadImageInfoFirstLoad();
+
     show();
 }
 
@@ -145,7 +181,7 @@ void WMWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Wikimedia Commons settings"));
 
-    m_widget->readSettings(group);
+    d->widget->readSettings(group);
 
     KConfigGroup group2 = config.group(QString("Wikimedia Commons dialog"));
     restoreDialogSize(group2);
@@ -156,7 +192,7 @@ void WMWindow::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Wikimedia Commons settings"));
 
-    m_widget->saveSettings(group);
+    d->widget->saveSettings(group);
 
     KConfigGroup group2 = config.group(QString("Wikimedia Commons dialog"));
     saveDialogSize(group2);
@@ -165,81 +201,110 @@ void WMWindow::saveSettings()
 
 void WMWindow::slotClose()
 {
-    m_widget->progressBar()->progressCompleted();
+    d->widget->clearImagesDesc();
+    d->widget->progressBar()->progressCompleted();
     saveSettings();
     done(Close);
+}
+
+QString WMWindow::getImageCaption(const QString& fileName)
+{
+    KPImageInfo info(fileName);
+    QStringList descriptions = QStringList() << info.title() << info.description();
+    descriptions.removeAll("");
+    return descriptions.join("\n\n");
+}
+
+bool WMWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
+{
+    QImage image;
+    image.load(imgPath);
+
+    if (image.isNull())
+    {
+        return false;
+    }
+
+    // get temporary file name
+    d->tmpPath = d->tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
+
+    // rescale image if requested
+    int maxDim = d->widget->dimension();
+
+    if (image.width() > maxDim || image.height() > maxDim)
+    {
+        kDebug() << "Resizing to " << maxDim;
+        image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
+                             Qt::SmoothTransformation);
+    }
+
+    kDebug() << "Saving to temp file: " << d->tmpPath;
+    image.save(d->tmpPath, "JPEG", d->widget->quality());
+
+    // copy meta data to temporary image
+    KPMetadata meta;
+
+    if (meta.load(imgPath))
+    {
+        caption = getImageCaption(imgPath);
+        meta.setImageDimensions(image.size());
+        meta.save(d->tmpPath);
+    }
+    else
+    {
+        caption.clear();
+    }
+
+    return true;
 }
 
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    KUrl::List urls = iface()->currentSelection().images();
-
-    QList<QMap<QString, QString> > imageDesc;
-    QString author  = m_widget->author();
-    QString licence = m_widget->licence();
-    QString category;
+    KUrl::List urls                                     = iface()->currentSelection().images();
+    QMap <QString, QMap <QString, QString> > imagesDesc = d->widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KPImageInfo info(urls.at(i));
-
-        QStringList keywar = info.keywords();
-        QMap<QString, QString> map;
-
-        map["url"]         = urls.at(i).url();
-        map["licence"]     = licence;
-        map["author"]      = author;
-        map["description"] = info.description();
-        map["time"]        = info.date().toString(Qt::ISODate);
-
-        for( int i = keywar.size(); i > 0; i--)
+        QString caption;
+        QString url;
+        if(d->widget->resize())
         {
-            if(keywar.at(i).contains("wikimedia"))
-            category.append(" "+keywar.at(i)+"\n|[[Category:");
+            prepareImageForUpload(urls.at(i).path(), caption);
+            imagesDesc.insert(d->tmpPath, imagesDesc.take(urls.at(i).path()));
         }
-        map["categories"] = category;
-
-        if(info.hasGeolocationInfo())
-        {
-            map["latitude"]  = QString::number(info.latitude());
-            map["longitude"] = QString::number(info.longitude());
-            map["altitude"]  = QString::number(info.altitude());
-        }
-
-        imageDesc << map;
     }
 
-    m_uploadJob->setImageMap(imageDesc);
+    d->uploadJob->setImageMap(imagesDesc);
 
-    m_widget->progressBar()->setRange(0, 100);
-    m_widget->progressBar()->setValue(0);
+    d->widget->progressBar()->setRange(0, 100);
+    d->widget->progressBar()->setValue(0);
 
-    connect(m_uploadJob, SIGNAL(uploadProgress(int)),
-            m_widget->progressBar(), SLOT(setValue(int)));
+    connect(d->uploadJob, SIGNAL(uploadProgress(int)),
+            d->widget->progressBar(), SLOT(setValue(int)));
 
-    connect(m_uploadJob, SIGNAL(endUpload()),
+    connect(d->uploadJob, SIGNAL(endUpload()),
             this, SLOT(slotEndUpload()));
 
-    m_widget->progressBar()->show();
-    m_widget->progressBar()->progressScheduled(i18n("Wiki Export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
-    m_uploadJob->begin();
+    d->widget->progressBar()->show();
+    d->widget->progressBar()->progressScheduled(i18n("Wiki Export"), true, true);
+    d->widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    d->uploadJob->begin();
 }
 
 void WMWindow::slotChangeUserClicked()
 {
     enableButton(User1, false);
-    m_widget->invertAccountLoginBox();
+    d->widget->invertAccountLoginBox();
 }
 
 void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QUrl& wiki)
 {
-    m_login         = login;
-    m_pass          = pass;
-    m_wiki          = wiki;
-    m_mediawiki     = new MediaWiki(wiki);
-    Login* loginJob = new Login(*m_mediawiki, login, pass);
+    d->login        = login;
+    d->pass         = pass;
+    d->wiki         = wiki;
+    d->mediawiki    = new MediaWiki(wiki);
+    Login* loginJob = new Login(*d->mediawiki, login, pass);
 
     connect(loginJob, SIGNAL(result(KJob*)), 
             this, SLOT(slotLoginHandle(KJob*)));
@@ -253,18 +318,18 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
 
     if(loginJob->error())
     {
-        m_login.clear();
-        m_pass.clear();
-        m_uploadJob = NULL;
+        d->login.clear();
+        d->pass.clear();
+        d->uploadJob = 0;
         //TODO Message d'erreur de login
         KMessageBox::error(this, i18n("Login error\nPlease check your credentials and try again."));
     }
     else
     {
-        m_uploadJob = new WikiMediaJob(iface(), m_mediawiki, this);
+        d->uploadJob = new WikiMediaJob(iface(), d->mediawiki, this);
         enableButton(User1, true);
-        m_widget->invertAccountLoginBox();
-        m_widget->updateLabels(m_login, m_wiki.toString());
+        d->widget->invertAccountLoginBox();
+        d->widget->updateLabels(d->login, d->wiki.toString());
     }
 
     return loginJob->error();
@@ -272,16 +337,34 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
 
 void WMWindow::slotEndUpload()
 {
-    disconnect(m_uploadJob, SIGNAL(uploadProgress(int)),
-               m_widget->progressBar(),SLOT(setValue(int)));
+    disconnect(d->uploadJob, SIGNAL(uploadProgress(int)),
+               d->widget->progressBar(),SLOT(setValue(int)));
 
-    disconnect(m_uploadJob, SIGNAL(endUpload()),
+    disconnect(d->uploadJob, SIGNAL(endUpload()),
                this, SLOT(slotEndUpload()));
 
     KMessageBox::information(this, i18n("Upload finished with no errors."));
-    m_widget->progressBar()->hide();
-    m_widget->progressBar()->progressCompleted();
+    d->widget->progressBar()->hide();
+    d->widget->progressBar()->progressCompleted();
     hide();
+}
+
+bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
+{
+    if(event->type() == QEvent::KeyRelease)
+    {
+        QKeyEvent* c = dynamic_cast<QKeyEvent *>(event);
+
+        if(c && c->key() == Qt::Key_Return)
+        {
+            event->ignore();
+            kDebug() << "Key event pass";
+            return false;
+
+        }
+    }
+
+    return true;
 }
 
 } // namespace KIPIWikiMediaPlugin

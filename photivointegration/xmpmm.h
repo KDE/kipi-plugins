@@ -46,29 +46,30 @@ struct XmpMMHistory;
 struct XmpMMDerivedFrom;
 
 /*!****************************************************************************
- * Encapsulate and manage xmpMM data 
+ * Encapsulate and manage xmpMM data
  */
 class XmpMM
 {
 
 public:
 
-    QString originalDocumentID;
-    QString documentID;
-    QString instanceID;
+    QString                  originalDocumentID;
+    QString                  documentID;
+    QString                  instanceID;
     vector<XmpMMDerivedFrom> derivedFrom;
     vector<XmpMMHistory>     history;
+
+public:
 
     XmpMM() = default;
     XmpMM(const KPMetadata meta) { load(meta); }
 
-    void load(const KPMetadata meta);
+    void load(const KPMetadata& meta);
 
 private:
 
-    void loadHistory(const KExiv2::MetaDataMap &mmMap);
-    void loadIDs(const KExiv2::MetaDataMap &mmMap);
-
+    void loadHistory(const KExiv2::MetaDataMap& mmMap);
+    void loadIDs(const KExiv2::MetaDataMap& mmMap);
 };
 
 /*!****************************************************************************

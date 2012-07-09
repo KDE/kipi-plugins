@@ -101,8 +101,8 @@ private:
 
 private:
 
-    class TimeAdjustDialogPrivate;
-    TimeAdjustDialogPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPITimeAdjustPlugin
