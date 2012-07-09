@@ -226,6 +226,7 @@ void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
     d->itemsStatusMap.clear();
     d->listView->listView()->clear();
+    d->itemsUsedMap.clear();
 
     foreach (const KUrl& url, imageUrls)
     {
