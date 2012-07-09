@@ -58,7 +58,9 @@ class WikiMediaJob : public KJob
 public:
 
     WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
-    QString buildWikiText(const QMap<QString, QString>& info);
+    ~WikiMediaJob();
+
+    QString buildWikiText(const QMap<QString, QString>& info) const;
 
     void setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc);
     void start();
@@ -76,12 +78,8 @@ public Q_SLOTS:
 
 private:
 
-    KUrl::List                             m_urls;
-    Interface*                             m_interface;
-    MediaWiki*                             m_mediawiki;
-    QString                                m_error;
-    QString                                m_currentFile;
-    QMap <QString,QMap <QString,QString> > m_imageDesc;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIWikiMediaPlugin

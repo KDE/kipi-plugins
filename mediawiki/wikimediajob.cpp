@@ -51,9 +51,34 @@
 namespace KIPIWikiMediaPlugin
 {
 
-WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent)
-    : KJob(parent), m_interface(interface), m_mediawiki(mediawiki)
+class WikiMediaJob::Private
 {
+public:
+
+    Private()
+    {
+        interface = 0;
+        mediawiki = 0;
+    }
+
+    KUrl::List                               urls;
+    Interface*                               interface;
+    MediaWiki*                               mediawiki;
+    QString                                  error;
+    QString                                  currentFile;
+    QMap <QString, QMap <QString, QString> > imageDesc;
+};
+
+WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent)
+    : KJob(parent), d(new Private)
+{
+    d->interface = interface;
+    d->mediawiki = mediawiki;
+}
+
+WikiMediaJob::~WikiMediaJob()
+{
+    delete d;
 }
 
 void WikiMediaJob::start()
@@ -68,7 +93,7 @@ void WikiMediaJob::begin()
 
 void WikiMediaJob::setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc)
 {
-    m_imageDesc = imageDesc;
+    d->imageDesc = imageDesc;
 }
 
 void WikiMediaJob::uploadHandle(KJob* j)
@@ -90,21 +115,21 @@ void WikiMediaJob::uploadHandle(KJob* j)
             const QString errorText = j->errorText();
             if(errorText.isEmpty())
             {
-                m_error = i18n("Error on file '%1'\n", m_currentFile);
+                d->error = i18n("Error on file '%1'\n", d->currentFile);
             }
             else
             {
-                m_error = i18n("Error on file '%1': %2\n", m_currentFile, errorText.isEmpty());
+                d->error = i18n("Error on file '%1': %2\n", d->currentFile, errorText.isEmpty());
             }
         }
     }
 
     // upload next image
-    if(!m_imageDesc.isEmpty())
+    if(!d->imageDesc.isEmpty())
     {
-        QList<QString> keys        = m_imageDesc.keys();
-        QMap<QString,QString> info = m_imageDesc.take(keys.first());
-        Upload* e1                 = new Upload(*m_mediawiki, this);
+        QList<QString> keys        = d->imageDesc.keys();
+        QMap<QString,QString> info = d->imageDesc.take(keys.first());
+        Upload* e1                 = new Upload(*d->mediawiki, this);
 
         kDebug() << "image path : " << keys.first();
 
@@ -113,7 +138,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
         //emit fileUploadProgress(done = 0, total file.size());
 
         e1->setFile(file);
-        m_currentFile = file->fileName();
+        d->currentFile = file->fileName();
         kDebug() << "image name : " << file->fileName();
         e1->setFilename(info["title"]);
         e1->setText(buildWikiText(info));
@@ -131,19 +156,19 @@ void WikiMediaJob::uploadHandle(KJob* j)
     else
     {
         //finish upload
-        if(m_error.size() > 0)
+        if(d->error.size() > 0)
         {
-            KMessageBox::error(0,m_error);
+            KMessageBox::error(0,d->error);
         }
         else
         {
             emit endUpload();
         }
-        m_error.clear();
+        d->error.clear();
     }
 }
 
-QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info)
+QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
 {
     QString text = QString::fromUtf8("=={{int:filedesc}}==");
     text.append("\n{{Information");
