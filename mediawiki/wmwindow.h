@@ -62,6 +62,8 @@ public:
     ~WMWindow();
 
     void reactivate();
+    QString getImageCaption(const QString& fileName);
+    bool prepareImageForUpload(const QString& imgPath, QString& caption);
 
 private Q_SLOTS:
 
@@ -74,6 +76,7 @@ private Q_SLOTS:
 
 private:
 
+    bool eventFilter(QObject* obj, QEvent* event);
     void closeEvent(QCloseEvent*);
     void readSettings();
     void saveSettings();

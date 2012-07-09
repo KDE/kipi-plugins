@@ -9,6 +9,7 @@
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
+ * Copyright (C) 2012      by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,6 +29,7 @@
 
 #include <QLayout>
 #include <QCloseEvent>
+#include <QFileInfo>
 
 // KDE includes
 
@@ -78,11 +80,11 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     setDefaultButton(Close);
     setModal(false);
     setWindowTitle(i18n("Export to Wikimedia Commons"));
-    setButtonGuiItem(User1,
-                     KGuiItem(i18n("Start Upload"), "network-workgroup",
-                              i18n("Start upload to Wikimedia Commons")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                     i18n("Start upload to Wikimedia Commons")));
     enableButton(User1, false);
     m_widget->setMinimumSize(700, 500);
+    m_widget->installEventFilter(this);
 
     KPAboutData* about = new KPAboutData(ki18n("Wikimedia Commons Export"), 0,
                                          KAboutData::License_GPL,
@@ -99,6 +101,9 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Peter Potrowl"), ki18n("Developer"),
+                     "peter dot potrowl at gmail dot com");
 
     about->setHandbookEntry("wikimedia");
     setAboutData(about);
@@ -137,6 +142,8 @@ void WMWindow::reactivate()
 {
     m_widget->imagesList()->listView()->clear();
     m_widget->imagesList()->loadImagesFromCurrentSelection();
+    m_widget->loadImageInfoFirstLoad();
+
     show();
 }
 
@@ -165,52 +172,81 @@ void WMWindow::saveSettings()
 
 void WMWindow::slotClose()
 {
+    m_widget->clearImagesDesc();
     m_widget->progressBar()->progressCompleted();
     saveSettings();
     done(Close);
+}
+
+QString WMWindow::getImageCaption(const QString& fileName)
+{
+    KPImageInfo info(fileName);
+    QStringList descriptions = QStringList() << info.title() << info.description();
+    descriptions.removeAll("");
+    return descriptions.join("\n\n");
+}
+
+bool WMWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
+{
+    QImage image;
+    image.load(imgPath);
+
+    if (image.isNull())
+    {
+        return false;
+    }
+
+    // get temporary file name
+    m_tmpPath = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
+
+    // rescale image if requested
+    int maxDim = m_widget->dimension();
+
+    if (image.width() > maxDim || image.height() > maxDim)
+    {
+        kDebug() << "Resizing to " << maxDim;
+        image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
+                             Qt::SmoothTransformation);
+    }
+
+    kDebug() << "Saving to temp file: " << m_tmpPath;
+    image.save(m_tmpPath, "JPEG", m_widget->quality());
+
+    // copy meta data to temporary image
+    KPMetadata meta;
+
+    if (meta.load(imgPath))
+    {
+        caption = getImageCaption(imgPath);
+        meta.setImageDimensions(image.size());
+        meta.save(m_tmpPath);
+    }
+    else
+    {
+        caption.clear();
+    }
+
+    return true;
 }
 
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
     KUrl::List urls = iface()->currentSelection().images();
-
-    QList<QMap<QString, QString> > imageDesc;
-    QString author  = m_widget->author();
-    QString licence = m_widget->licence();
-    QString category;
+    QMap <QString,QMap <QString,QString> > imagesDesc=m_widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KPImageInfo info(urls.at(i));
-
-        QStringList keywar = info.keywords();
-        QMap<QString, QString> map;
-
-        map["url"]         = urls.at(i).url();
-        map["licence"]     = licence;
-        map["author"]      = author;
-        map["description"] = info.description();
-        map["time"]        = info.date().toString(Qt::ISODate);
-
-        for( int i = keywar.size(); i > 0; i--)
+        QString caption;
+        QString url;
+        if(m_widget->resize())
         {
-            if(keywar.at(i).contains("wikimedia"))
-            category.append(" "+keywar.at(i)+"\n|[[Category:");
+            prepareImageForUpload(urls.at(i).path(), caption);
+            imagesDesc.insert(m_tmpPath, imagesDesc.take(urls.at(i).path()));
         }
-        map["categories"] = category;
-
-        if(info.hasGeolocationInfo())
-        {
-            map["latitude"]  = QString::number(info.latitude());
-            map["longitude"] = QString::number(info.longitude());
-            map["altitude"]  = QString::number(info.altitude());
-        }
-
-        imageDesc << map;
     }
 
-    m_uploadJob->setImageMap(imageDesc);
+    m_uploadJob->setImageMap(imagesDesc);
 
     m_widget->progressBar()->setRange(0, 100);
     m_widget->progressBar()->setValue(0);
@@ -255,7 +291,7 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
     {
         m_login.clear();
         m_pass.clear();
-        m_uploadJob = NULL;
+        m_uploadJob = 0;
         //TODO Message d'erreur de login
         KMessageBox::error(this, i18n("Login error\nPlease check your credentials and try again."));
     }
@@ -282,6 +318,22 @@ void WMWindow::slotEndUpload()
     m_widget->progressBar()->hide();
     m_widget->progressBar()->progressCompleted();
     hide();
+}
+
+bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
+{
+    if(event->type() == QEvent::KeyRelease)
+    {
+        QKeyEvent* c = dynamic_cast<QKeyEvent *>(event);
+        if(c && c->key() == Qt::Key_Return)
+        {
+            event->ignore();
+            kDebug() << "Key event pass";
+            return false;
+
+        }
+    }
+    return true;
 }
 
 } // namespace KIPIWikiMediaPlugin
