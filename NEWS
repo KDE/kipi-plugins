@@ -8,4 +8,6 @@ MediaWiki : GUI improvmenets and new features to export items.
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 302755 - Improve usability and fix bugs [patch].
+002 ==> 303188 - Adjust Time and Date keeps executing on previously selected images.
+003 ==> 
 
