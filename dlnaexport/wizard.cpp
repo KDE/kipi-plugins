@@ -57,12 +57,19 @@ namespace KIPIDLNAExportPlugin
 
 struct Wizard::Private
 {
-    DLNAWidget*              m_selectionPage;
+    
+	Private()
+    {
+        m_imageDialogOptionSelected = true;
+    }
+	
+	DLNAWidget*              m_selectionPage;
     ImageCollectionSelector* m_collectionSelector;
     WelcomePage*             m_welcomePage;
     KPageWidgetItem*         m_selectionPageItem;
     KPageWidgetItem*         m_collectionSelectorPageItem;
     KPageWidgetItem*         m_welcomePageItem;
+    bool                     m_imageDialogOptionSelected;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -103,17 +110,17 @@ Wizard::Wizard(QWidget* const parent)
 
     d->m_welcomePage  = new WelcomePage(this);
     d->m_welcomePageItem = addPage(d->m_welcomePage, "Welcome to DLNA Export");
-    
-    d->m_collectionSelector     = iface()->imageCollectionSelector(this);
-    d->m_collectionSelectorPageItem = addPage(d->m_collectionSelector, i18n("Collection Selection"));
 
-    setValid(d->m_collectionSelectorPageItem, false);
+	d->m_collectionSelector     = iface()->imageCollectionSelector(this);
+	d->m_collectionSelectorPageItem = addPage(d->m_collectionSelector, i18n("Select the required collections"));
+
+	setValid(d->m_collectionSelectorPageItem, false);
         
-    connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
-            this, SLOT(updateCollectionSelectorPageValidity()));
+	connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
+		this, SLOT(updateCollectionSelectorPageValidity()));
 
-    d->m_selectionPage  = new DLNAWidget(this);
-    d->m_selectionPageItem = addPage(d->m_selectionPage, "Select the collection to upload");
+	d->m_selectionPage  = new DLNAWidget(this);
+	d->m_selectionPageItem = addPage(d->m_selectionPage, "Images to be exported");
 }
 
 Wizard::~Wizard()
@@ -123,16 +130,46 @@ Wizard::~Wizard()
 
 void Wizard::next()
 {
-    if (currentPage() == d->m_collectionSelectorPageItem)
+    if (currentPage() == d->m_welcomePageItem)
     {
-        setCurrentPage(d->m_selectionPageItem);
-        KUrl::List images = d->m_collectionSelector->selectedImageCollections().at(0).images();
-        kDebug() << images;
+		d->m_imageDialogOptionSelected = d->m_welcomePage->getImageDialogOptionSelected();
+
+		if (d->m_imageDialogOptionSelected)
+		{
+			KAssistantDialog::next();
+			KAssistantDialog::next();
+		}
+		else
+		{
+			KAssistantDialog::next();
+		}
     }
     else
     {
-        setCurrentPage(d->m_collectionSelectorPageItem);
+        KAssistantDialog::next();
     }
+    
+}
+
+void Wizard::back()
+{
+    if (currentPage() == d->m_selectionPageItem)
+    {
+		if (d->m_imageDialogOptionSelected)
+		{
+			KAssistantDialog::back();
+			KAssistantDialog::back();
+		}
+		else
+		{
+			KAssistantDialog::back();
+		}
+    }
+    else
+    {
+        KAssistantDialog::back();
+    }
+    
 }
 
 void Wizard::updateCollectionSelectorPageValidity()

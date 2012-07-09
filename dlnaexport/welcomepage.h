@@ -48,6 +48,7 @@ public:
     
     explicit WelcomePage(QWidget* const parent);
     ~WelcomePage();
+	bool getImageDialogOptionSelected();
 
 public Q_SLOTS:
 

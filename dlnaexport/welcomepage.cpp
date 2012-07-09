@@ -58,7 +58,7 @@ public:
     QLabel*           headerLbl;
     QLabel*           getImageLbl;
 
-    KComboBox* imageGetOption;   
+    KComboBox*        imageGetOption;   
 };
     
 WelcomePage::WelcomePage(QWidget* const parent)
@@ -84,8 +84,8 @@ WelcomePage::WelcomePage(QWidget* const parent)
     // ComboBox for image selection method
     d->getImageLbl = new QLabel(i18n("&Choose image selection method:"),settingsBox);
     d->imageGetOption = new KComboBox(settingsBox);
-    d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
     d->imageGetOption->insertItem(WelcomePage::IMAGEDIALOG, "From file system");
+	d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
     d->getImageLbl->setBuddy(d->imageGetOption);
     
     settingsBoxLayout->addWidget(d->getImageLbl);
@@ -104,4 +104,11 @@ WelcomePage::~WelcomePage()
 {
 }
 
+bool WelcomePage::getImageDialogOptionSelected()
+{
+	if (d->imageGetOption->currentIndex() == 0)
+		return false;
+	else
+		return true;
+}
 }   // namespace KIPIDLNAExportPlugin

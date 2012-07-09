@@ -45,6 +45,7 @@ public:
     Wizard(QWidget* const);
     ~Wizard();
     void next();
+	void back();
 
 private Q_SLOTS:
     
