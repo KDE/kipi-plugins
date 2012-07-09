@@ -61,42 +61,57 @@ namespace KIPIWikiMediaPlugin
 K_PLUGIN_FACTORY( WikiMediaFactory, registerPlugin<Plugin_WikiMedia>(); )
 K_EXPORT_PLUGIN ( WikiMediaFactory("kipiplugin_wikimedia") )
 
+class Plugin_WikiMedia::Private
+{
+public:
+
+    Private()
+    {
+        actionExport = 0;
+        dlgExport    = 0;
+    }
+
+    KAction*  actionExport;
+    WMWindow* dlgExport;
+};
+
 Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(WikiMediaFactory::componentData(),
-                   parent, "Wikimedia Commons Export")
+    : Plugin(WikiMediaFactory::componentData(), parent, "Wikimedia Commons Export"),
+      d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_WikiMedia plugin loaded";
 }
 
+Plugin_WikiMedia::~Plugin_WikiMedia()
+{
+    delete d;
+}
+
 void Plugin_WikiMedia::setup(QWidget* widget)
 {
-    m_dlgExport = 0;
+    d->dlgExport = 0;
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_wikimedia");
 
-    m_actionExport = actionCollection()->addAction("wikimediaexport");
-    m_actionExport->setText(i18n("Export to &WikiMedia Commons..."));
-    m_actionExport->setIcon(KIcon("wikimedia"));
+    d->actionExport = actionCollection()->addAction("wikimediaexport");
+    d->actionExport->setText(i18n("Export to &WikiMedia Commons..."));
+    d->actionExport->setIcon(KIcon("wikimedia"));
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
+    connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(m_actionExport);
+    addAction(d->actionExport);
 
     Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
+        d->actionExport->setEnabled(false);
         return;
     }
 
-    m_actionExport->setEnabled(true);
-}
-
-Plugin_WikiMedia::~Plugin_WikiMedia()
-{
+    d->actionExport->setEnabled(true);
 }
 
 void Plugin_WikiMedia::slotExport()
@@ -104,23 +119,23 @@ void Plugin_WikiMedia::slotExport()
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-mediawiki-") + QString::number(getpid()) + QString("/"));
 
-    if (!m_dlgExport)
+    if (!d->dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new WMWindow(tmp, kapp->activeWindow());
+        d->dlgExport = new WMWindow(tmp, kapp->activeWindow());
     }
     else
     {
-        if (m_dlgExport->isMinimized())
-            KWindowSystem::unminimizeWindow(m_dlgExport->winId());
+        if (d->dlgExport->isMinimized())
+            KWindowSystem::unminimizeWindow(d->dlgExport->winId());
 
-        m_dlgExport->reactivate();
+        d->dlgExport->reactivate();
     }
 }
 
 Category Plugin_WikiMedia::category(KAction* action) const
 {
-    if (action == m_actionExport)
+    if (action == d->actionExport)
         return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
