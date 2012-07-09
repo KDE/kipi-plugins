@@ -63,12 +63,12 @@ using namespace KIPIPlugins;
 namespace KIPITimeAdjustPlugin
 {
 
-class SettingsWidget::SettingsWidgetPrivate
+class SettingsWidget::Private
 {
 
 public:
 
-    SettingsWidgetPrivate()
+    Private()
     {
         useSettingsBox         = 0;
         adjustSettingsBox      = 0;
@@ -140,7 +140,7 @@ public:
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
-    : QScrollArea(parent), d(new SettingsWidgetPrivate)
+    : QScrollArea(parent), d(new Private)
 {
     KVBox* panel         = new KVBox(viewport());
     panel->setAutoFillBackground(false);

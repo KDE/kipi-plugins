@@ -54,12 +54,12 @@ using namespace KIPIPlugins;
 namespace KIPITimeAdjustPlugin
 {
 
-class ClockPhotoDialog::ClockPhotoDialogPrivate
+class ClockPhotoDialog::Private
 {
 
 public:
 
-    ClockPhotoDialogPrivate()
+    Private()
     {
         calendar      = 0;
         imagePreview  = 0;
@@ -74,7 +74,7 @@ public:
 };
 
 ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
-    : KDialog(parent), d(new ClockPhotoDialogPrivate)
+    : KDialog(parent), d(new Private)
 {
     // This dialog should be modal with three buttons: Ok, Cancel, and load
     // photo. For this third button, the User1 button from KDialog is used.

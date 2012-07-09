@@ -70,12 +70,12 @@
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialog::TimeAdjustDialogPrivate
+class TimeAdjustDialog::Private
 {
 
 public:
 
-    TimeAdjustDialogPrivate()
+    Private()
     {
         settingsView = 0;
         progressBar  = 0;
@@ -96,7 +96,7 @@ public:
 };
 
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
-    : KPToolDialog(0), d(new TimeAdjustDialogPrivate)
+    : KPToolDialog(0), d(new Private)
 {
     setButtons(Help | Apply | Close);
     setDefaultButton(Apply);

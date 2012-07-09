@@ -50,11 +50,11 @@ extern "C"
 namespace KIPITimeAdjustPlugin
 {
 
-class ActionThread::ActionThreadPriv
+class ActionThread::Private
 {
 public:
 
-    ActionThreadPriv()
+    Private()
     {
         cancel   = false;
         progress = 0;
@@ -73,7 +73,7 @@ public:
 
 // ----------------------------------------------------------------------------------------------------
 
-Task::Task(QObject* const parent, const KUrl& url, ActionThread::ActionThreadPriv* const d)
+Task::Task(QObject* const parent, const KUrl& url, ActionThread::Private* const d)
     : Job(parent)
 {
     m_url      = url;
@@ -231,7 +231,7 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new ActionThreadPriv)
+    : KPActionThreadBase(parent), d(new Private)
 {
 }
 
