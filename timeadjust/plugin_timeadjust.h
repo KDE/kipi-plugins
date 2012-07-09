@@ -55,8 +55,8 @@ protected Q_SLOTS:
 
 private:
 
-    class Plugin_TimeAdjustPriv;
-    Plugin_TimeAdjustPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPITimeAdjustPlugin

@@ -64,8 +64,8 @@ private:
 
 private:
 
-    class ClockPhotoDialogPrivate;
-    ClockPhotoDialogPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPITimeAdjustPlugin
