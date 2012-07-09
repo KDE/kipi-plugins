@@ -28,30 +28,13 @@
 // Qt includes
 
 #include <QWidget>
-#include <QScrollArea>
-#include <QComboBox>
 #include <QStringList>
 #include <QTreeWidgetItem>
 
 //KDE includes
 
-#include <klineedit.h>
-#include <ktextedit.h>
 #include <kconfig.h>
 #include <kurl.h>
-
-class QLabel;
-class QSpinBox;
-class QCheckBox;
-
-class KVBox;
-class KHBox;
-class KPushButton;
-
-namespace KIPI
-{
-    class UploadWidget;
-}
 
 namespace KIPIPlugins
 {
@@ -59,15 +42,7 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
-namespace KDcrawIface
-{
-    class RExpanderBox;
-    class SqueezedComboBox;
-}
-
-using namespace KIPI;
 using namespace KIPIPlugins;
-using namespace KDcrawIface;
 
 namespace KIPIWikiMediaPlugin
 {
@@ -108,7 +83,7 @@ public:
     QString latitude()    const;
     QString longitude()   const;
 
-    QMap <QString,QMap <QString,QString> > allImagesDesc();
+    QMap <QString, QMap <QString, QString> > allImagesDesc();
 
     void clearImagesDesc();
     void readSettings(KConfigGroup& group);
@@ -137,50 +112,8 @@ private Q_SLOTS:
 
 private:
 
-    KHBox*                                 m_uploadBox;
-    QWidget*                               m_fileBox;
-    KLineEdit*                             m_titleEdit;
-    KTextEdit*                             m_descEdit;
-    KLineEdit*                             m_dateEdit;
-    KLineEdit*                             m_longitudeEdit;
-    KLineEdit*                             m_latitudeEdit;
-    KTextEdit*                             m_categoryEdit;
-
-    KVBox*                                 m_userBox;
-    QWidget*                               m_loginBox;
-    QLabel*                                m_loginHeaderLbl;
-    KLineEdit*                             m_nameEdit;
-    KLineEdit*                             m_passwdEdit;
-    QScrollArea*                           m_newWikiSv;
-    KLineEdit*                             m_newWikiNameEdit;
-    KLineEdit*                             m_newWikiUrlEdit;
-    QComboBox*                             m_wikiSelect;
-
-    QWidget*                               m_textBox;
-
-    KLineEdit*                             m_authorEdit;
-
-    KHBox*                                 m_accountBox;
-    QLabel*                                m_headerLbl;
-    QLabel*                                m_userNameDisplayLbl;
-    KPushButton*                           m_changeUserBtn;
-
-    QWidget*                               m_optionsBox;
-    QCheckBox*                             m_resizeChB;
-    QSpinBox*                              m_dimensionSpB;
-    QSpinBox*                              m_imageQualitySpB;
-    SqueezedComboBox*                      m_licenseComboBox;
-
-    KPProgressWidget*                      m_progressBar;
-
-    RExpanderBox*                          m_settingsExpander;
-    KPImagesList*                          m_imgList;
-    UploadWidget*                          m_uploadWidget;
-
-    QStringList                            m_WikisHistory;
-    QStringList                            m_UrlsHistory;
-
-    QMap <QString,QMap <QString,QString> > m_imagesDescInfo;
+    class Private;
+    Private* const d;
 
     friend class WmWindow;
 };
