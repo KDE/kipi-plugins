@@ -87,13 +87,13 @@ public:
 
     void setTransitionSpeed(const QString& str, TRANSITION_SPEED speed);
     TRANSITION_SPEED getTransitionSpeed() const;
-    
+
     void setPrevImageItem(MyImageListViewItem* prevItem);
-    MyImageListViewItem* getPrevImageItem();
-    
+    MyImageListViewItem* getPrevImageItem() const;
+
     void setNextImageItem(MyImageListViewItem* nextItem);
-    MyImageListViewItem* getNextImageItem();
-    
+    MyImageListViewItem* getNextImageItem() const;
+
 private:
 
     class Private;

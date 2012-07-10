@@ -119,14 +119,14 @@ public:
         next = 0;
     }
 
-    int              time;
+    int                  time;
 
-    QString          status;
+    QString              status;
 
-    EFFECT           effect;
-    TRANSITION_TYPE  transition;
-    TRANSITION_SPEED transSpeed;
-    
+    EFFECT               effect;
+    TRANSITION_TYPE      transition;
+    TRANSITION_SPEED     transSpeed;
+
     MyImageListViewItem* prev;
     MyImageListViewItem* next;
 };
@@ -189,12 +189,12 @@ void MyImageListViewItem::setTransitionSpeed(const QString& str, TRANSITION_SPEE
     setText(MyImageList::TRANSSPEED, str);
 }
 
-MyImageListViewItem* MyImageListViewItem::getNextImageItem()
+MyImageListViewItem* MyImageListViewItem::getNextImageItem() const
 {
-    return d->next; 
+    return d->next;
 }
 
-MyImageListViewItem* MyImageListViewItem::getPrevImageItem()
+MyImageListViewItem* MyImageListViewItem::getPrevImageItem() const
 {
     return d->prev;
 }
