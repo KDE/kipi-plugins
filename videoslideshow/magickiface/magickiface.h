@@ -79,7 +79,7 @@ class MagickApi : public QObject
 
 public:
 
-    MagickApi();
+    MagickApi(const QString& path);
     ~MagickApi();
 
     MagickImage* loadImage(const QString& file);

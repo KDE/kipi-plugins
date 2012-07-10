@@ -41,6 +41,7 @@
 
 #include "kptooldialog.h"
 #include "myimagelist.h"
+#include "actions.h"
 
 class QCloseEvent;
 
@@ -72,7 +73,8 @@ private:
 
     void busy(bool busy);
 
-    void processAll();
+    void processAll(MyImageListViewItem& item);
+    MyImageListViewItem* setUpImageItems();
 
 private Q_SLOTS:
 
@@ -81,6 +83,8 @@ private Q_SLOTS:
     void slotStartStop();
     void slotAborted();
     void slotThreadFinished();
+    void slotShowError(const QString& error);
+    void slotProcessedFrame(const ActionData& ad);
     void updateSettingWidget();
     void updateImageTime(int time);
     void updateImageEffect(QString data,     EFFECT effect);

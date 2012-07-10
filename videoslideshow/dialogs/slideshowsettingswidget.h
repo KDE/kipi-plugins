@@ -47,6 +47,11 @@ public:
 
     QString getTempDirPath();
     void    setTempDirPath(QString& path);
+    
+    int getFrameHeight();
+    int getFrameWidth();
+    ASPECTCORRECTION_TYPE getAspectCorrection();
+    
 
     void resetToDefault();
     void updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect);

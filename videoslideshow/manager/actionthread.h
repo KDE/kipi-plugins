@@ -28,11 +28,21 @@
 // Qt includes
 
 #include <QObject>
+#include <QThread>
+#include <QFile>
+
+// Local includes
+
+#include "processimage.h"
+#include "myimagelist.h"
+#include "actions.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIVideoSlideShowPlugin
 {
-
-class ActionThread : public QObject
+ 
+class ActionThread : public QThread
 {
     Q_OBJECT
 
@@ -40,15 +50,49 @@ public:
 
     ActionThread();
     ~ActionThread();
-
+        
+    void doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, int frameWidth, int frameHeight, QString& path, MyImageListViewItem& item);
+    int getTotalFrames(MyImageListViewItem* item);
+    
+    void cancel();
+           
 Q_SIGNALS:
 
     void signalProcessError(const QString& errMess);
+    void frameCompleted(const ActionData& ad);
+    void finished();
+    
+private:
+  
+    void run();
+    
+    int getTransitionFrames(MyImageListViewItem* item);
+    void processItem(int upperBound, MagickImage& img, MagickImage& imgNext, Action action);
+    
+    MagickImage* getDynamicImage(MyImageListViewItem& imgItem, MagickImage& img, int step);
+    MagickImage* loadImage(MyImageListViewItem& img);
+    
+    struct Frame {
+        Action               action;
+        int                  number;
+    
+        MyImageListViewItem* item;
+    
+        MagickImage*         img;
+        MagickImage*         imgnext;
+        MagickImage*         imgout; 
+    };
+    
+    void ProcessFrame(Frame& frame);
+    void WriteFrame(Frame& frame);
+    
+    Frame* getFrame(MyImageListViewItem& item, MagickImage& img, MagickImage& imgNext, int number, Action action);    
 
 private:
 
     class Private;
     Private* const d;
+    
 };
 
 } // namespace KIPIVideoSlideShowPlugin

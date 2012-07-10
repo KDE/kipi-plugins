@@ -103,7 +103,6 @@ public:
 
     Private(MagickApi* const api)
     {
-        cwd    = 0;
         filter = SCALE_FILTER_FAST;
         parent = api;
     }
@@ -168,26 +167,19 @@ public:
 public:
 
     /// this is the temporary directory for storing files
-    char*      cwd;
     int        filter;
     MagickApi* parent;
 };
 
-MagickApi::MagickApi()
+MagickApi::MagickApi(const QString& path)
     : QObject(), d(new Private(this))
 {
     // Iniialize ImageMagick lib
-    MagickCoreGenesis(d->cwd = GetCurrentDir(NULL, 0), MagickFalse);
+    MagickCoreGenesis(path.toLocal8Bit().data(), MagickFalse);
 }
 
 MagickApi::~MagickApi()
 {
-    if (d->cwd)
-    {
-        free(d->cwd);
-        d->cwd = NULL;
-    }
-
     MagickCoreTerminus();
 
     delete d;

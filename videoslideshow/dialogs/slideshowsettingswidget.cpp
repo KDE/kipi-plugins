@@ -253,7 +253,7 @@ void SlideShowSettingsWidget::slotSelectTempDirectory()
 
     if (!path.isEmpty())
     {
-        d->path = path;
+        setTempDirPath(path);
         d->tempDirLabel->setText(path);
     }
 }
@@ -277,6 +277,21 @@ void SlideShowSettingsWidget::updateData(int time, TRANSITION_TYPE transition, T
     d->effects->setCurrentIndex(d->effects->findData((int)effect));
     d->transitions->setCurrentIndex(d->transitions->findData((int)transition));
     d->transitionSpeed->setCurrentIndex(d->transitionSpeed->findData((int)transSpeed));
+}
+
+ASPECTCORRECTION_TYPE SlideShowSettingsWidget::getAspectCorrection()
+{
+    return (ASPECTCORRECTION_TYPE)d->asptRatioCorrct->itemData(d->asptRatioCorrct->currentIndex()).toInt();
+}
+
+int SlideShowSettingsWidget::getFrameHeight()
+{
+    return d->frameHeight->value();
+}
+
+int SlideShowSettingsWidget::getFrameWidth()
+{
+    return d->frameWidth->value();
 }
 
 } // namespace KIPIVideoSlideShowPlugin

@@ -30,6 +30,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTimer>
+#include <QDir>
 
 // KDE includes
 
@@ -166,6 +167,15 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
+    
+    connect(d->thread, SIGNAL(finished()),
+            this, SLOT(slotThreadFinished()));
+    
+    connect(d->thread, SIGNAL(signalProcessError(QString)),
+            this, SLOT(slotShowError(QString)));
+    
+    connect(d->thread, SIGNAL(frameCompleted(ActionData)),
+            this, SLOT(slotProcessedFrame(ActionData)));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotStartStop()));
@@ -178,6 +188,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
 ExportDialog::~ExportDialog()
 {
+    slotAborted();
     delete d;
 }
 
@@ -250,9 +261,21 @@ void ExportDialog::slotThreadFinished()
     slotAborted();
 }
 
-void ExportDialog::processAll()
+void ExportDialog::processAll(MyImageListViewItem& item)
 {
-    busy(true);
+    int framerate              = 25; // we will provided later based on video format and settings
+    int frameHeight            = d->settingsBox->getFrameHeight();
+    int frameWidth             = d->settingsBox->getFrameWidth();
+    QString path               = d->settingsBox->getTempDirPath();
+    ASPECTCORRECTION_TYPE type = d->settingsBox->getAspectCorrection();
+
+    if(!KUrl(path).isValid())
+    {
+        path = QDir::tempPath();
+        d->settingsBox->setTempDirPath(path);
+    }
+
+    d->thread->doPreProcessing(framerate, type, frameWidth, frameHeight, path, item);
 }
 
 void ExportDialog::busy(bool busy)
@@ -292,22 +315,55 @@ void ExportDialog::slotStartStop()
             return;
         }
 
-        d->progressBar->setMaximum(d->listView->getTotalFrames());
+        MyImageListViewItem *item = setUpImageItems();
+
+        processAll(*item);
+
+        d->progressBar->setMaximum(d->thread->getTotalFrames(item));
         d->progressBar->setValue(0);
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("Video SlideShow"), true, true);
 
-        processAll();
+        busy(true);
+
+        if (!d->thread->isRunning())
+            d->thread->start();
     }
     else
     {
-        //d->thread->cancel();
+        d->thread->cancel();
         busy(false);
 
         d->listView->cancelProcess();
 
         QTimer::singleShot(500, this, SLOT(slotAborted()));
     }
+}
+
+void ExportDialog::slotProcessedFrame(const ActionData& ad)
+{
+    switch(ad.action)
+    {
+        case TYPE_TRANSITION:
+            d->progressBar->progressStatusChanged(QString("Processing transition:%1, totalFrames: %2")  
+               .arg(ad.fileUrl.path()).arg(ad.totalFrames));
+            break;
+        case TYPE_IMAGE:
+            d->progressBar->progressStatusChanged(QString("Processing Image:%1, totalFrames: %2")  
+               .arg(ad.fileUrl.path()).arg(ad.totalFrames));
+            d->listView->processed(ad.fileUrl, true);
+            break;
+        default:
+            slotShowError("Undefined action");
+            break;
+    }
+    
+    d->progressBar->setValue(d->progressBar->value()+ad.totalFrames);
+}
+
+void ExportDialog::slotShowError(const QString& err)
+{
+    KMessageBox::error(this, err);
 }
 
 void ExportDialog::updateSettingWidget()
@@ -349,11 +405,32 @@ void ExportDialog::updateImageTransition(QString data, TRANSITION_TYPE type)
 
 void ExportDialog::updateImageTransSpeed(QString data, TRANSITION_SPEED speed)
 {
-   QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
-   QList<QTreeWidgetItem*>::iterator it;
+    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
+    QList<QTreeWidgetItem*>::iterator it;
 
-   for(it = imgLst.begin(); it != imgLst.end(); ++it)
-       dynamic_cast<MyImageListViewItem*>((*it))->setTransitionSpeed(data, speed);
+    for(it = imgLst.begin(); it != imgLst.end(); ++it)
+        dynamic_cast<MyImageListViewItem*>((*it))->setTransitionSpeed(data, speed);
 }
+
+MyImageListViewItem* ExportDialog::setUpImageItems()
+{
+    KPImagesListView* view = d->listView->listView(); 
+    
+    MyImageListViewItem* prev = NULL;
+    MyImageListViewItem* next = NULL;
+    
+    int total = view->topLevelItemCount();
+   
+    for(int i = 0; i < total; i++)
+    {
+        dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setPrevImageItem(prev);
+        prev = dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i));
+        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1)) : NULL;
+        dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setNextImageItem(next);
+    }    
+    
+    return dynamic_cast<MyImageListViewItem*>(view->topLevelItem(0));
+}
+
 
 } // namespace KIPIVideoSlideShowPlugin

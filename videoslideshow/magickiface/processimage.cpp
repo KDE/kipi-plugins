@@ -48,6 +48,10 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
 {
     MagickImage* newimg    = NULL;
     double img_aspectratio = (double) img.getWidth() / (double) img.getHeight();
+    
+    // tolerate some error in double value
+    if(abs(img_aspectratio - aspectratio) <= 0.001)
+        return &img;
 
     if (aspectcorrection == ASPECTCORRECTION_TYPE_AUTO)
     {
