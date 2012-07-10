@@ -55,7 +55,7 @@ public:
 public Q_SLOTS:
 
     void reactivate();
-//    void slotSelectDirectory();
+    void slotSelectDirectory();
 
 private:
 

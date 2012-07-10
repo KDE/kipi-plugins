@@ -198,4 +198,11 @@ void Wizard::getImagesFromCollection()
 	};
 }
 
+void Wizard::accept()
+{
+	kDebug() << "you clicked finish";
+	d->m_selectionPage->slotSelectDirectory();
+	KAssistantDialog::accept();
+}
+
 } // namespace KIPIDLNAExportPlugin

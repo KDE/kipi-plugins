@@ -138,7 +138,7 @@ void DLNAWidget::setControlButtons(bool select)
 void DLNAWidget::reactivate()
 {
 }
-/*
+
 void DLNAWidget::slotSelectDirectory()
 {
     QString startingPath;
@@ -155,12 +155,11 @@ void DLNAWidget::slotSelectDirectory()
         return;
     }
 
-    d->directoryLbl->setText(path);
     kDebug() << path;
 
     // TODO : stop properly previous server instance if exist.
     d->dlna = new MediaServer();
     d->dlna->onAddContentButtonClicked(path, true);
 }
-*/
+
 } // namespace KIPIDLNAExportPlugin
