@@ -27,6 +27,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <kurl.h>
 
 namespace KIPI
 {
@@ -48,6 +49,8 @@ public:
 
     explicit DLNAWidget(QWidget* const parent);
     ~DLNAWidget();
+	void setControlButtons(bool);
+	void setImages(KUrl::List);
 
 public Q_SLOTS:
 

@@ -50,6 +50,7 @@ public:
 private Q_SLOTS:
     
     void updateCollectionSelectorPageValidity();
+	void getImagesFromCollection();
     
 private:
 
