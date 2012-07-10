@@ -73,8 +73,8 @@ private:
 
     void busy(bool busy);
 
-    void processAll(MyImageListViewItem& item);
-    MyImageListViewItem* setUpImageItems();
+    void processAll(MyImageListViewItem* const item);
+    MyImageListViewItem* setUpImageItems() const;
 
 private Q_SLOTS:
 

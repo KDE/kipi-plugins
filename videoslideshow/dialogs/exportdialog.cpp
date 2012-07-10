@@ -260,7 +260,7 @@ void ExportDialog::slotThreadFinished()
     slotAborted();
 }
 
-void ExportDialog::processAll(MyImageListViewItem& item)
+void ExportDialog::processAll(MyImageListViewItem* const item)
 {
     int framerate              = 25; // we will provided later based on video format and settings
     int frameHeight            = d->settingsBox->getFrameHeight();
@@ -316,7 +316,7 @@ void ExportDialog::slotStartStop()
 
         MyImageListViewItem* item = setUpImageItems();
 
-        processAll(*item);
+        processAll(item);
 
         d->progressBar->setMaximum(d->thread->getTotalFrames(item));
         d->progressBar->setValue(0);
@@ -357,7 +357,7 @@ void ExportDialog::slotProcessedFrame(const ActionData& ad)
             break;
     }
 
-    d->progressBar->setValue(d->progressBar->value()+ad.totalFrames);
+    d->progressBar->setValue(d->progressBar->value() + ad.totalFrames);
 }
 
 void ExportDialog::slotShowError(const QString& err)
@@ -411,14 +411,12 @@ void ExportDialog::updateImageTransSpeed(const QString& data, TRANSITION_SPEED s
         dynamic_cast<MyImageListViewItem*>((*it))->setTransitionSpeed(data, speed);
 }
 
-MyImageListViewItem* ExportDialog::setUpImageItems()
+MyImageListViewItem* ExportDialog::setUpImageItems() const
 {
-    KPImagesListView* view = d->listView->listView();
-
+    KPImagesListView* view    = d->listView->listView();
     MyImageListViewItem* prev = 0;
     MyImageListViewItem* next = 0;
-
-    int total = view->topLevelItemCount();
+    int total                 = view->topLevelItemCount();
 
     for(int i = 0; i < total; i++)
     {

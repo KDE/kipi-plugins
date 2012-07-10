@@ -50,49 +50,54 @@ public:
 
     ActionThread();
     ~ActionThread();
-        
-    void doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, int frameWidth, int frameHeight, QString& path, MyImageListViewItem& item);
-    int getTotalFrames(MyImageListViewItem* item);
-    
+
+    void doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, int frameWidth, int frameHeight,
+                         const QString& path, MyImageListViewItem* const item);
+    int  getTotalFrames(MyImageListViewItem* const item) const;
+
     void cancel();
-           
+
 Q_SIGNALS:
 
     void signalProcessError(const QString& errMess);
     void frameCompleted(const ActionData& ad);
     void finished();
-    
+
 private:
-  
-    void run();
-    
-    int getTransitionFrames(MyImageListViewItem* item);
-    void processItem(int upperBound, MagickImage& img, MagickImage& imgNext, Action action);
-    
-    MagickImage* getDynamicImage(MyImageListViewItem& imgItem, MagickImage& img, int step);
-    MagickImage* loadImage(MyImageListViewItem& img);
-    
-    struct Frame {
+
+    struct Frame
+    {
         Action               action;
         int                  number;
-    
+
         MyImageListViewItem* item;
-    
+
         MagickImage*         img;
         MagickImage*         imgnext;
         MagickImage*         imgout; 
     };
-    
-    void ProcessFrame(Frame& frame);
-    void WriteFrame(Frame& frame);
-    
-    Frame* getFrame(MyImageListViewItem& item, MagickImage& img, MagickImage& imgNext, int number, Action action);    
+
+private:
+
+    void run();
+
+    int  getTransitionFrames(MyImageListViewItem* const item) const;
+    void processItem(int upperBound, MagickImage* const img, MagickImage* const imgNext, Action action);
+
+    MagickImage* getDynamicImage(MyImageListViewItem* const imgItem, MagickImage* const img, int step) const;
+    MagickImage* loadImage(MyImageListViewItem* const img) const;
+
+
+    void ProcessFrame(Frame* const frame);
+    void WriteFrame(Frame* const frame);
+
+    Frame* getFrame(MyImageListViewItem* const item, MagickImage* const img, MagickImage* const imgNext,
+                    int number, Action action) const;
 
 private:
 
     class Private;
     Private* const d;
-    
 };
 
 } // namespace KIPIVideoSlideShowPlugin

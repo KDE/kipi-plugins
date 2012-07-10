@@ -44,18 +44,24 @@ enum Action
     TYPE_IMAGE
 };
 
+// -----------------------------------------------------
+
 class ActionData
 {
 
 public:
 
-    ActionData() {}
+    ActionData()
+    {
+        totalFrames = 0;
+        action      = TYPE_NONE;
+    }
 
     KUrl    fileUrl;
 
     Action  action;
-    
-    int totalFrames;
+
+    int     totalFrames;
 };
 
 }  // namespace KIPIVideoSlideShowPlugin
