@@ -31,5 +31,14 @@
                 <eventSubURL>DLNAExportMediaServer/ContentDirectory/Events</eventSubURL>
             </service>
         </serviceList>
+	<iconList>
+	    <icon>
+	        <mimetype>image/png</mimetype>
+		<width>32</width>
+		<height>32</height>
+		<depth>24</depth>
+		<url>qt-logo.png</url>
+	    </icon>
+	</iconList> 
     </device>
 </root>

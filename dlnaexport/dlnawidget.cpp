@@ -91,7 +91,7 @@ DLNAWidget::DLNAWidget(QWidget* const parent)
     // -------------------------------------------------------------------
 
     d->imgList = new KPImagesList(this);
-
+	d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
     d->imgList->setAllowRAW(true);
     d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
@@ -122,10 +122,23 @@ DLNAWidget::~DLNAWidget()
     delete d;
 }
 
+void DLNAWidget::setImages(KUrl::List imageList)
+{
+	d->imgList->slotAddImages(imageList);
+}
+
+void DLNAWidget::setControlButtons(bool select)
+{
+	if (select)
+		d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
+	else
+		d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
+}
+
 void DLNAWidget::reactivate()
 {
 }
-/*
+
 void DLNAWidget::slotSelectDirectory()
 {
     QString startingPath;
@@ -142,12 +155,11 @@ void DLNAWidget::slotSelectDirectory()
         return;
     }
 
-    d->directoryLbl->setText(path);
     kDebug() << path;
 
     // TODO : stop properly previous server instance if exist.
     d->dlna = new MediaServer();
     d->dlna->onAddContentButtonClicked(path, true);
 }
-*/
+
 } // namespace KIPIDLNAExportPlugin

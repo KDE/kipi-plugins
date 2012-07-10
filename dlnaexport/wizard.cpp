@@ -31,6 +31,7 @@
 // KDE includes
 
 #include <kdebug.h>
+#include <kurl.h>
 
 // libHUpnp includes
 
@@ -69,7 +70,8 @@ struct Wizard::Private
     KPageWidgetItem*         m_selectionPageItem;
     KPageWidgetItem*         m_collectionSelectorPageItem;
     KPageWidgetItem*         m_welcomePageItem;
-    bool                     m_imageDialogOptionSelected;
+    KUrl::List               m_imageList;
+	bool                     m_imageDialogOptionSelected;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -119,6 +121,9 @@ Wizard::Wizard(QWidget* const parent)
 	connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
 		this, SLOT(updateCollectionSelectorPageValidity()));
 
+	connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
+		this, SLOT(getImagesFromCollection()));
+
 	d->m_selectionPage  = new DLNAWidget(this);
 	d->m_selectionPageItem = addPage(d->m_selectionPage, "Images to be exported");
 }
@@ -138,16 +143,23 @@ void Wizard::next()
 		{
 			KAssistantDialog::next();
 			KAssistantDialog::next();
+			d->m_selectionPage->setControlButtons(true);
 		}
 		else
 		{
 			KAssistantDialog::next();
+			d->m_selectionPage->setControlButtons(false);
 		}
     }
-    else
+    else if (currentPage() == d->m_collectionSelectorPageItem)
     {
-        KAssistantDialog::next();
+        d->m_selectionPage->setImages(d->m_imageList);
+		KAssistantDialog::next();
     }
+    else
+	{
+		KAssistantDialog::next();
+	}
     
 }
 
@@ -175,6 +187,22 @@ void Wizard::back()
 void Wizard::updateCollectionSelectorPageValidity()
 {
     setValid(d->m_collectionSelectorPageItem, !d->m_collectionSelector->selectedImageCollections().empty());
+}
+
+void Wizard::getImagesFromCollection()
+{
+	d->m_imageList.clear();
+	foreach(ImageCollection images, d->m_collectionSelector->selectedImageCollections())
+	{
+		d->m_imageList.append(images.images());
+	};
+}
+
+void Wizard::accept()
+{
+	kDebug() << "you clicked finish";
+	d->m_selectionPage->slotSelectDirectory();
+	KAssistantDialog::accept();
 }
 
 } // namespace KIPIDLNAExportPlugin
