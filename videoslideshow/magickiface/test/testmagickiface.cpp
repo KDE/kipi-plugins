@@ -32,6 +32,7 @@
 
 #include <QtTest>
 #include <QFileDialog>
+#include <QDir>
 
 // Local includes
 
@@ -41,7 +42,7 @@ QTEST_MAIN(TestMagickIface)
 
 TestMagickIface::TestMagickIface()
 {
-    api  = new MagickApi();
+    api  = new MagickApi(QDir::tempPath());
     spy  = new QSignalSpy(api, SIGNAL(signalsAPIError(const QString&)));
     QVERIFY(spy->isValid());
     file = new QFile(QFileDialog::getOpenFileName(NULL, tr("SelectImage"), "/home", tr("Image Files (*.png *.jpg)")));

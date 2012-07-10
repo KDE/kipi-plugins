@@ -39,31 +39,29 @@ namespace KIPIVideoSlideShowPlugin
 
 enum Action
 {
-    NONE = 0,
-    TRANSITION,
-    IMAGE,
-    KENBURN
+    TYPE_NONE = 0,
+    TYPE_TRANSITION,
+    TYPE_IMAGE
 };
+
+// -----------------------------------------------------
 
 class ActionData
 {
 
 public:
 
-    ActionData() 
+    ActionData()
     {
-        starting = false;
-        success  = false;
+        totalFrames = 0;
+        action      = TYPE_NONE;
     }
-
-    bool    starting;
-    bool    success;
-
-    QString message;
 
     KUrl    fileUrl;
 
     Action  action;
+
+    int     totalFrames;
 };
 
 }  // namespace KIPIVideoSlideShowPlugin

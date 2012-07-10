@@ -115,15 +115,20 @@ public:
 
     Private()
     {
+        prev = 0;
+        next = 0;
     }
 
-    int              time;
+    int                  time;
 
-    QString          status;
+    QString              status;
 
-    EFFECT           effect;
-    TRANSITION_TYPE  transition;
-    TRANSITION_SPEED transSpeed;
+    EFFECT               effect;
+    TRANSITION_TYPE      transition;
+    TRANSITION_SPEED     transSpeed;
+
+    MyImageListViewItem* prev;
+    MyImageListViewItem* next;
 };
 
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
@@ -184,9 +189,24 @@ void MyImageListViewItem::setTransitionSpeed(const QString& str, TRANSITION_SPEE
     setText(MyImageList::TRANSSPEED, str);
 }
 
-int MyImageList::getTotalFrames()
+MyImageListViewItem* MyImageListViewItem::getNextImageItem() const
 {
-    return 100;
+    return d->next;
+}
+
+MyImageListViewItem* MyImageListViewItem::getPrevImageItem() const
+{
+    return d->prev;
+}
+
+void MyImageListViewItem::setNextImageItem(MyImageListViewItem* nextItem)
+{
+    d->next = nextItem;
+}
+
+void MyImageListViewItem::setPrevImageItem(MyImageListViewItem* prevItem)
+{
+    d->prev = prevItem;
 }
 
 } // namespace KIPIVideoSlideShowPlugin

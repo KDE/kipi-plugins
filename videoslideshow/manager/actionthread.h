@@ -28,11 +28,21 @@
 // Qt includes
 
 #include <QObject>
+#include <QThread>
+#include <QFile>
+
+// Local includes
+
+#include "processimage.h"
+#include "myimagelist.h"
+#include "actions.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIVideoSlideShowPlugin
 {
-
-class ActionThread : public QObject
+ 
+class ActionThread : public QThread
 {
     Q_OBJECT
 
@@ -41,9 +51,48 @@ public:
     ActionThread();
     ~ActionThread();
 
+    void doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, int frameWidth, int frameHeight,
+                         const QString& path, MyImageListViewItem* const item);
+    int  getTotalFrames(MyImageListViewItem* const item) const;
+
+    void cancel();
+
 Q_SIGNALS:
 
     void signalProcessError(const QString& errMess);
+    void frameCompleted(const ActionData& ad);
+    void finished();
+
+private:
+
+    struct Frame
+    {
+        Action               action;
+        int                  number;
+
+        MyImageListViewItem* item;
+
+        MagickImage*         img;
+        MagickImage*         imgnext;
+        MagickImage*         imgout; 
+    };
+
+private:
+
+    void run();
+
+    int  getTransitionFrames(MyImageListViewItem* const item) const;
+    void processItem(int upperBound, MagickImage* const img, MagickImage* const imgNext, Action action);
+
+    MagickImage* getDynamicImage(MyImageListViewItem* const imgItem, MagickImage* const img, int step) const;
+    MagickImage* loadImage(MyImageListViewItem* const img) const;
+
+
+    void ProcessFrame(Frame* const frame);
+    void WriteFrame(Frame* const frame);
+
+    Frame* getFrame(MyImageListViewItem* const item, MagickImage* const img, MagickImage* const imgNext,
+                    int number, Action action) const;
 
 private:
 

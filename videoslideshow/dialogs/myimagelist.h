@@ -57,8 +57,6 @@ public:
     explicit MyImageList(QWidget* const parent = 0);
     virtual ~MyImageList();
 
-    int getTotalFrames();
-
 public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
@@ -89,6 +87,12 @@ public:
 
     void setTransitionSpeed(const QString& str, TRANSITION_SPEED speed);
     TRANSITION_SPEED getTransitionSpeed() const;
+
+    void setPrevImageItem(MyImageListViewItem* prevItem);
+    MyImageListViewItem* getPrevImageItem() const;
+
+    void setNextImageItem(MyImageListViewItem* nextItem);
+    MyImageListViewItem* getNextImageItem() const;
 
 private:
 

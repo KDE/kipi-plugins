@@ -79,6 +79,13 @@ enum EFFECT
 
 typedef struct GeoImage
 {
+    GeoImage(int a = 0, int b = 0, int c = 0, int d = 0)
+    {
+        x = a;
+        y = b;
+        w = c;
+        h = d;
+    }
     int x, y, w, h;
 } GeoImage;
 
