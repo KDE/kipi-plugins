@@ -101,13 +101,13 @@ ExportDialog::ExportDialog(const ImageCollection& images)
     setModal(false);
     setMinimumSize(700, 500);
 
-    d->page = new QWidget(this);
+    d->page                 = new QWidget(this);
     setMainWidget(d->page);
     QGridLayout* mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
-    d->listView = new MyImageList(d->page);
+    d->listView    = new MyImageList(d->page);
 
     // ---------------------------------------------------------------
 
@@ -153,11 +153,11 @@ ExportDialog::ExportDialog(const ImageCollection& images)
     connect(d->settingsBox, SIGNAL(effectDataChanged(QString, EFFECT)),
             this, SLOT(updateImageEffect(QString, EFFECT)));
 
-    connect(d->settingsBox, SIGNAL(transDataChanged(QString,TRANSITION_TYPE)),
+    connect(d->settingsBox, SIGNAL(transDataChanged(QString, TRANSITION_TYPE)),
             this, SLOT(updateImageTransition(QString, TRANSITION_TYPE)));
 
-    connect(d->settingsBox, SIGNAL(transSpeedDataChanged(QString,TRANSITION_SPEED)),
-            this, SLOT(updateImageTransSpeed(QString,TRANSITION_SPEED)));
+    connect(d->settingsBox, SIGNAL(transSpeedDataChanged(QString, TRANSITION_SPEED)),
+            this, SLOT(updateImageTransSpeed(QString, TRANSITION_SPEED)));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
@@ -167,13 +167,13 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
-    
+
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
-    
+
     connect(d->thread, SIGNAL(signalProcessError(QString)),
             this, SLOT(slotShowError(QString)));
-    
+
     connect(d->thread, SIGNAL(frameCompleted(ActionData)),
             this, SLOT(slotProcessedFrame(ActionData)));
 
@@ -229,17 +229,16 @@ void ExportDialog::slotDefault()
 
 void ExportDialog::readSettings()
 {
-    KConfig config("kipivss");
-    KConfigGroup group  = config.group(QString("VideoSlideShow Settings"));
-
-    QString path = group.readEntry("Temp Dir", QString());
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("VideoSlideShow Settings"));
+    QString path       = group.readEntry("Temp Dir", QString());
     d->settingsBox->setTempDirPath(path);
     restoreDialogSize(group);
 }
 
 void ExportDialog::saveSettings()
 {
-    KConfig config("kipivss");
+    KConfig config("kipirc");
     KConfigGroup group  = config.group(QString("VideoSlideShow Settings"));
 
     group.writeEntry("Temp Dir", d->settingsBox->getTempDirPath());
@@ -315,7 +314,7 @@ void ExportDialog::slotStartStop()
             return;
         }
 
-        MyImageListViewItem *item = setUpImageItems();
+        MyImageListViewItem* item = setUpImageItems();
 
         processAll(*item);
 
@@ -357,7 +356,7 @@ void ExportDialog::slotProcessedFrame(const ActionData& ad)
             slotShowError("Undefined action");
             break;
     }
-    
+
     d->progressBar->setValue(d->progressBar->value()+ad.totalFrames);
 }
 
@@ -371,14 +370,14 @@ void ExportDialog::updateSettingWidget()
     // When more than one image is selected, only the first images data will be shown in settings Widget
     if(!d->listView->listView()->selectedItems().isEmpty())
     {
-        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>( d->listView->listView()->selectedItems().at(0));
+        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->selectedItems().at(0));
         d->settingsBox->updateData(item->getTime(), item->getTransition(), item->getTransitionSpeed(), item->EffectName());
     }
 }
 
-void ExportDialog::updateImageEffect(QString data, EFFECT effect)
+void ExportDialog::updateImageEffect(const QString& data, EFFECT effect)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
+    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
@@ -387,25 +386,25 @@ void ExportDialog::updateImageEffect(QString data, EFFECT effect)
 
 void ExportDialog::updateImageTime(int time)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
+    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
         dynamic_cast<MyImageListViewItem*>((*it))->setTime(time);;
 }
 
-void ExportDialog::updateImageTransition(QString data, TRANSITION_TYPE type)
+void ExportDialog::updateImageTransition(const QString& data, TRANSITION_TYPE type)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
+    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
         dynamic_cast<MyImageListViewItem*>((*it))->setTransition(data, type);
 }
 
-void ExportDialog::updateImageTransSpeed(QString data, TRANSITION_SPEED speed)
+void ExportDialog::updateImageTransSpeed(const QString& data, TRANSITION_SPEED speed)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();  
+    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
@@ -414,23 +413,22 @@ void ExportDialog::updateImageTransSpeed(QString data, TRANSITION_SPEED speed)
 
 MyImageListViewItem* ExportDialog::setUpImageItems()
 {
-    KPImagesListView* view = d->listView->listView(); 
-    
-    MyImageListViewItem* prev = NULL;
-    MyImageListViewItem* next = NULL;
-    
+    KPImagesListView* view = d->listView->listView();
+
+    MyImageListViewItem* prev = 0;
+    MyImageListViewItem* next = 0;
+
     int total = view->topLevelItemCount();
-   
+
     for(int i = 0; i < total; i++)
     {
         dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setPrevImageItem(prev);
         prev = dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i));
-        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1)) : NULL;
+        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1)) : 0;
         dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setNextImageItem(next);
-    }    
-    
+    }
+
     return dynamic_cast<MyImageListViewItem*>(view->topLevelItem(0));
 }
-
 
 } // namespace KIPIVideoSlideShowPlugin

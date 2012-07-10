@@ -87,9 +87,9 @@ private Q_SLOTS:
     void slotProcessedFrame(const ActionData& ad);
     void updateSettingWidget();
     void updateImageTime(int time);
-    void updateImageEffect(QString data,     EFFECT effect);
-    void updateImageTransition(QString data, TRANSITION_TYPE type);
-    void updateImageTransSpeed(QString data, TRANSITION_SPEED speed);
+    void updateImageEffect(const QString& data,     EFFECT effect);
+    void updateImageTransition(const QString& data, TRANSITION_TYPE type);
+    void updateImageTransSpeed(const QString& data, TRANSITION_SPEED speed);
 
 private:
 
