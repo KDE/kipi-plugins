@@ -46,9 +46,9 @@ ProcessImage::ProcessImage(MagickApi* const api)
 
 MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspectratio, ASPECTCORRECTION_TYPE aspectcorrection)
 {
-    MagickImage* newimg    = NULL;
+    MagickImage* newimg    = 0;
     double img_aspectratio = (double) img.getWidth() / (double) img.getHeight();
-    
+
     // tolerate some error in double value
     if(abs(img_aspectratio - aspectratio) <= 0.001)
         return &img;
@@ -280,7 +280,8 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
     return dst;
 }
 
-GeoImage* ProcessImage::getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height, int step, int steps) const
+GeoImage* ProcessImage::getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height, 
+                                    int step, int steps) const
 {
     GeoImage* geometry = new GeoImage();
     // compute the dimesions in current step

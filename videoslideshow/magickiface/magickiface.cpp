@@ -110,7 +110,7 @@ public:
     /// allocate a new image
     MagickImage* allocImage()
     {
-        MagickImage*  img = 0;
+        MagickImage* img = 0;
         unsigned char pixels[4];
 
         ExceptionInfo exception;
@@ -530,7 +530,8 @@ bool MagickApi::overlayImage(MagickImage& dst, int dx, int dy, const MagickImage
     return bitblitImage(dst, dx, dy, src, 0, 0, src.getWidth(), src.getHeight());
 }
 
-int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, int sx, int sy, int sw, int sh)
+int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh, const MagickImage& simg, 
+                              int sx, int sy, int sw, int sh)
 {
     /* scale the source image */
     MagickImage* img = geoscaleImage(simg, sx, sy, sw, sh, dw, dh);
