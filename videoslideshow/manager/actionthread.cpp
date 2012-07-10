@@ -130,6 +130,12 @@ void ActionThread::run()
 
 void ActionThread::processItem(int upperBound, MagickImage& img, MagickImage& imgNext, Action action)
 {
+    if(action == TYPE_IMAGE)
+    {
+        if(d->item->EffectName() == EFFECT_NONE)
+            upperBound = 1;
+    }
+    
     for(int n = 0; n < upperBound && d->running; n++)
     {
         Frame* frm = getFrame(*d->item, img, imgNext, n, action);
