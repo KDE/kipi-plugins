@@ -28,7 +28,6 @@
 
 #include <sys/socket.h>
 
-
 // Qt includes
 
 #include <QGridLayout>
@@ -258,7 +257,7 @@ void SlideShowSettingsWidget::slotSelectTempDirectory()
     }
 }
 
-QString SlideShowSettingsWidget::getTempDirPath()
+QString SlideShowSettingsWidget::getTempDirPath() const
 {
     return d->path;
 }
@@ -279,17 +278,17 @@ void SlideShowSettingsWidget::updateData(int time, TRANSITION_TYPE transition, T
     d->transitionSpeed->setCurrentIndex(d->transitionSpeed->findData((int)transSpeed));
 }
 
-ASPECTCORRECTION_TYPE SlideShowSettingsWidget::getAspectCorrection()
+ASPECTCORRECTION_TYPE SlideShowSettingsWidget::getAspectCorrection() const
 {
     return (ASPECTCORRECTION_TYPE)d->asptRatioCorrct->itemData(d->asptRatioCorrct->currentIndex()).toInt();
 }
 
-int SlideShowSettingsWidget::getFrameHeight()
+int SlideShowSettingsWidget::getFrameHeight() const
 {
     return d->frameHeight->value();
 }
 
-int SlideShowSettingsWidget::getFrameWidth()
+int SlideShowSettingsWidget::getFrameWidth() const
 {
     return d->frameWidth->value();
 }

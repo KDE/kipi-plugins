@@ -45,13 +45,12 @@ public:
     SlideShowSettingsWidget(QWidget* const parent = 0, Qt::WFlags flags = 0);
     ~SlideShowSettingsWidget();
 
-    QString getTempDirPath();
+    QString getTempDirPath() const;
     void    setTempDirPath(QString& path);
-    
-    int getFrameHeight();
-    int getFrameWidth();
-    ASPECTCORRECTION_TYPE getAspectCorrection();
-    
+
+    int                   getFrameHeight()      const;
+    int                   getFrameWidth()       const;
+    ASPECTCORRECTION_TYPE getAspectCorrection() const;
 
     void resetToDefault();
     void updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect);
