@@ -42,9 +42,9 @@ TARGET_LINK_LIBRARIES(avtest
                       HUpnp
                       HUpnpAv
                       ${KDE4_KDEUI_LIBS}
+                      ${KDE4_PHONON_LIBS}
                       ${QT_LIBRARIES}
                       ${QT_QTNETWORK_LIBRARY}
-                      ${QT_PHONON_LIBRARY}
                       ${QT_QTXML_LIBRARY}
                       ${QT_QTXMLPATTERNS_LIBRARY}
                      )
