@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2004      by Gregory Kokanosky <gregory dot kokanosky at free.fr>
  * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Varun Herale <varun dot herale at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,9 +24,15 @@
 
 #include "plugin_wallpaper.moc"
 
+// QT includes
+
+#include <QDBusInterface>
+#include <QDBusReply>
+
 // KDE includes
 
 #include <klocale.h>
+#include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -42,10 +49,6 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes
-
-#include "kdesktop_interface.h"
-
 namespace KIPIWallPaperPlugin
 {
 
@@ -55,172 +58,79 @@ K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )
 Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
     : Plugin(WallPaperFactory::componentData(), parent, "WallPaper")
 {
+    m_interface = 0;
+    m_actionBackground = 0;
     kDebug(AREA_CODE_LOADING) << "Plugin_WallPaper plugin loaded";
 }
 
 Plugin_WallPaper::~Plugin_WallPaper()
 {
+    delete m_actionBackground;
 }
 
 void Plugin_WallPaper::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
-    m_actionBackground = new KActionMenu(i18n("&Set as Background"),
-                         actionCollection());
+    m_actionBackground = new KActionMenu(KIcon("image-jpeg"), i18n("&Set as Background"), actionCollection());
     m_actionBackground->setObjectName("images2desktop");
 
-    KAction *centered = actionCollection()->addAction("images2desktop_center");
-    centered->setText(i18n("Centered"));
-    connect(centered, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetCenter()));
-    m_actionBackground->addAction(centered);
+    KAction *wallpaper = actionCollection()->addAction("images2desktop_setwallpaper");
+    wallpaper->setText(i18n("Set as wallpaper"));
 
-    KAction *centeredTiled = actionCollection()->addAction("images2desktop_center_tiled");
-    centeredTiled->setText(i18n("Centered Tiled"));
-    connect(centeredTiled, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetCenterTiled()));
-    m_actionBackground->addAction(centeredTiled);
+    connect(wallpaper, SIGNAL(triggered(bool)),
+            this, SLOT(setWallpaper()));
 
-    KAction *centeredMax = actionCollection()->addAction("images2desktop_center_maxpect");
-    centeredMax->setText(i18n("Centered Max-Aspect"));
-    connect(centeredMax, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetCenteredMaxpect()));
-    m_actionBackground->addAction(centeredMax);
-
-    KAction *tiledMax = actionCollection()->addAction("images2desktop_tiled_maxpect");
-    tiledMax->setText(i18n("Tiled Max-Aspect"));
-    connect(tiledMax, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetTiledMaxpect()));
-    m_actionBackground->addAction(tiledMax);
-
-    KAction *scaled = actionCollection()->addAction("images2desktop_scaled");
-    scaled->setText(i18n("Scaled"));
-    connect(scaled, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetScaled()));
-    m_actionBackground->addAction(scaled);
-
-    KAction *centeredAutoFit = actionCollection()->addAction("images2desktop_centered_auto_fit");
-    centeredAutoFit->setText(i18n("Centered Auto Fit"));
-    connect(centeredAutoFit, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetCenteredAutoFit()));
-    m_actionBackground->addAction(centeredAutoFit);
-
-    KAction *scaleCrop = actionCollection()->addAction("images2desktop_scale_and_crop");
-    scaleCrop->setText(i18n("Scale && Crop"));
-    connect(scaleCrop, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetScaleAndCrop()));
-    m_actionBackground->addAction(scaleCrop);
+    m_actionBackground->addAction(wallpaper);
 
     addAction( m_actionBackground );
 
-    Interface* interface = dynamic_cast<Interface*>( parent() );
+    m_interface = dynamic_cast<Interface*>( parent() );
 
-    if ( !interface )
+    if ( !m_interface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    ImageCollection selection = interface->currentSelection();
-    m_actionBackground->setEnabled( selection.isValid() );
+    ImageCollection selection = m_interface->currentSelection();
+    m_actionBackground->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             m_actionBackground, SLOT(setEnabled(bool)));
+    connect(m_interface, SIGNAL(selectionChanged(bool)),
+	    m_actionBackground, SLOT(setEnabled(bool)));
  }
 
-void Plugin_WallPaper::slotSetCenter()
+void Plugin_WallPaper::setWallpaper()
 {
-   return setWallpaper(CENTER);
-}
+   ImageCollection images = m_interface->currentSelection();
 
-void Plugin_WallPaper::slotSetTiled()
-{
-   return setWallpaper(TILED);
-}
-
-void Plugin_WallPaper::slotSetCenterTiled()
-{
-   return  setWallpaper(CENTER_TILED);
-}
-
-void Plugin_WallPaper::slotSetCenteredMaxpect()
-{
-   return setWallpaper(CENTER_MAXPECT);
-}
-
-void Plugin_WallPaper::slotSetTiledMaxpect()
-{
-   return setWallpaper(TILED_MAXPECT);
-}
-
-void Plugin_WallPaper::slotSetScaled()
-{
-   return setWallpaper(SCALED);
-}
-
-void Plugin_WallPaper::slotSetCenteredAutoFit()
-{
-   return setWallpaper(CENTERED_AUTOFIT);
-}
-
-void Plugin_WallPaper::slotSetScaleAndCrop()
-{
-   return setWallpaper(SCALE_AND_CROP);
-}
-
-void Plugin_WallPaper::setWallpaper(int layout)
-{
-   if (layout>SCALE_AND_CROP || layout < CENTER)
-      return;
-
-   Interface* interface = dynamic_cast<Interface*>( parent() );
-
-   if ( !interface )
-   {
-       kError() << "Kipi interface is null!";
+   if ( !images.isValid() )
        return;
-   }
-
-   ImageCollection images = interface->currentSelection();
-
-   if (!images.isValid() ) return;
 
    KUrl url=images.images()[0];
+
    QString path;
+   path = url.path();
 
-   if (url.isLocalFile())
-   {
-      path=url.path();
-   }
-   else
-   {
-      // PENDING We need a way to get a parent widget
-      // Sun, 06 Jun 2004 - Aurelien
+   QDBusInterface *dbusInterface = new QDBusInterface("org.kde.plasma-desktop",
+						  "/App",
+						  "local.PlasmaApp");
 
-      KMessageBox::information( kapp->activeWindow(), i18n(
-         "<p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
-         "</p><p>You will now be asked where to save the image.</p>"));
-      path = KFileDialog::getSaveFileName(url.fileName(), QString(), kapp->activeWindow());
+   QDBusReply<void> reply = dbusInterface->call("setWallpaperImage", path);
 
-      if (path.isNull()) return;
-      KIO::NetAccess::download(url, path, 0L);
-   }
+   if ( !reply.isValid() )
+       KMessageBox::information(0L,i18n("Background cannot be changed. You do not have the correct version of kde-workspace."),i18n("Change Background"));
 
-   //TODO verify when we change it with plasma
-   OrgKdeKdesktopBackgroundInterface desktopInterface("org.kde.kdesktop", "/Background", QDBusConnection::sessionBus());
-   QDBusReply<void> reply = desktopInterface.setWallpaper(path,layout);
-   if(!reply.isValid())
-      KMessageBox::information(0L,i18n("Change Background"),i18n("Background cannot be changed."));
+   delete dbusInterface;
 }
 
 Category Plugin_WallPaper::category(KAction* const action) const
 {
     if ( action == m_actionBackground )
-       return IMAGESPLUGIN;
+       return ImagesPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return IMAGESPLUGIN; // no warning from compiler, please
+    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIWallPaperPlugin
