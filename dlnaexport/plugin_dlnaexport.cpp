@@ -64,7 +64,6 @@ public:
     }
 
     KAction*    actionExport;
-
     Wizard*     dlgExport;
 };
 
@@ -102,8 +101,7 @@ void Plugin_DLNAExport::slotExport()
     if (!d->dlgExport)
     {
         // We clean it up in the close button
-        QWidget* parent=QApplication::activeWindow();
-        d->dlgExport = new Wizard(parent);
+        d->dlgExport = new Wizard(kapp->activeWindow());
     }
     else
     {

@@ -60,15 +60,14 @@ public:
 
     KComboBox*        imageGetOption;   
 };
-    
+
 WelcomePage::WelcomePage(QWidget* const parent)
     : QWidget(parent), d(new Private)
 {
-    
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    QWidget* settingsBox = new QWidget(this);
+    QVBoxLayout* mainLayout        = new QVBoxLayout(this);
+    QWidget* settingsBox           = new QWidget(this);
     QHBoxLayout* settingsBoxLayout = new QHBoxLayout(settingsBox);
-    
+
     d->iconLbl  = new QLabel(this);
     d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
     d->iconLbl->setAlignment(Qt::AlignCenter);
@@ -85,30 +84,30 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->getImageLbl = new QLabel(i18n("&Choose image selection method:"),settingsBox);
     d->imageGetOption = new KComboBox(settingsBox);
     d->imageGetOption->insertItem(WelcomePage::IMAGEDIALOG, "From file system");
-	d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
+    d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
     d->getImageLbl->setBuddy(d->imageGetOption);
-    
+
     settingsBoxLayout->addWidget(d->getImageLbl);
     settingsBoxLayout->addWidget(d->imageGetOption);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    
+
     mainLayout->addWidget(d->iconLbl);
     mainLayout->addWidget(d->titleLbl);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
-    
 }
 
 WelcomePage::~WelcomePage()
 {
 }
 
-bool WelcomePage::getImageDialogOptionSelected()
+bool WelcomePage::getImageDialogOptionSelected() const
 {
-	if (d->imageGetOption->currentIndex() == 0)
-		return false;
-	else
-		return true;
+    if (d->imageGetOption->currentIndex() == 0)
+        return false;
+    else
+        return true;
 }
+
 }   // namespace KIPIDLNAExportPlugin

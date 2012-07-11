@@ -44,18 +44,19 @@ public:
 
     Wizard(QWidget* const);
     ~Wizard();
+
     void next();
-	void back();
-	void accept();
+    void back();
+    void accept();
 
 private Q_SLOTS:
-    
+
     void updateCollectionSelectorPageValidity();
-	void getImagesFromCollection();
-    
+    void getImagesFromCollection();
+
 private:
 
-    struct Private;
+    class Private;
     Private* const d;
 };
 

@@ -49,8 +49,9 @@ public:
 
     explicit DLNAWidget(QWidget* const parent);
     ~DLNAWidget();
-	void setControlButtons(bool);
-	void setImages(KUrl::List);
+
+    void setControlButtons(bool);
+    void setImages(const KUrl::List&);
 
 public Q_SLOTS:
 

@@ -45,10 +45,13 @@ public:
         COLLECTION = 0,
         IMAGEDIALOG
     };
-    
+
+public:
+
     explicit WelcomePage(QWidget* const parent);
     ~WelcomePage();
-	bool getImageDialogOptionSelected();
+
+    bool getImageDialogOptionSelected() const;
 
 public Q_SLOTS:
 

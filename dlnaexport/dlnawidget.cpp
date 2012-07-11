@@ -72,7 +72,6 @@ public:
         progressBar  = 0;
     }
 
-    
     MediaServer*      dlna;
 
     KPImagesList*     imgList;
@@ -91,7 +90,7 @@ DLNAWidget::DLNAWidget(QWidget* const parent)
     // -------------------------------------------------------------------
 
     d->imgList = new KPImagesList(this);
-	d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
+    d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
     d->imgList->setAllowRAW(true);
     d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
@@ -114,7 +113,6 @@ DLNAWidget::DLNAWidget(QWidget* const parent)
     mainLayout->setMargin(0);
 
     // ------------------------------------------------------------------------
-
 }
 
 DLNAWidget::~DLNAWidget()
@@ -122,17 +120,17 @@ DLNAWidget::~DLNAWidget()
     delete d;
 }
 
-void DLNAWidget::setImages(KUrl::List imageList)
+void DLNAWidget::setImages(const KUrl::List& imageList)
 {
-	d->imgList->slotAddImages(imageList);
+    d->imgList->slotAddImages(imageList);
 }
 
 void DLNAWidget::setControlButtons(bool select)
 {
-	if (select)
-		d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
-	else
-		d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
+    if (select)
+        d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
+    else
+        d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
 }
 
 void DLNAWidget::reactivate()
