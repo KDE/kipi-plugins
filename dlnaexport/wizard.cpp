@@ -62,17 +62,23 @@ public:
 
     Private()
     {
-        m_imageDialogOptionSelected = true;
+        selectionPage              = 0;
+        collectionSelector         = 0;
+        welcomePage                = 0;
+        selectionPageItem          = 0;
+        collectionSelectorPageItem = 0;
+        welcomePageItem            = 0;
+        imageDialogOptionSelected  = true;
     }
-    
-    DLNAWidget*              m_selectionPage;
-    ImageCollectionSelector* m_collectionSelector;
-    WelcomePage*             m_welcomePage;
-    KPageWidgetItem*         m_selectionPageItem;
-    KPageWidgetItem*         m_collectionSelectorPageItem;
-    KPageWidgetItem*         m_welcomePageItem;
-    KUrl::List               m_imageList;
-    bool                     m_imageDialogOptionSelected;
+
+    DLNAWidget*              selectionPage;
+    ImageCollectionSelector* collectionSelector;
+    WelcomePage*             welcomePage;
+    KPageWidgetItem*         selectionPageItem;
+    KPageWidgetItem*         collectionSelectorPageItem;
+    KPageWidgetItem*         welcomePageItem;
+    KUrl::List               imageList;
+    bool                     imageDialogOptionSelected;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -111,22 +117,22 @@ Wizard::Wizard(QWidget* const parent)
 
     //-----------------------------------------------------------------------
 
-    d->m_welcomePage     = new WelcomePage(this);
-    d->m_welcomePageItem = addPage(d->m_welcomePage, "Welcome to DLNA Export");
+    d->welcomePage     = new WelcomePage(this);
+    d->welcomePageItem = addPage(d->welcomePage, "Welcome to DLNA Export");
 
-    d->m_collectionSelector         = iface()->imageCollectionSelector(this);
-    d->m_collectionSelectorPageItem = addPage(d->m_collectionSelector, i18n("Select the required collections"));
+    d->collectionSelector         = iface()->imageCollectionSelector(this);
+    d->collectionSelectorPageItem = addPage(d->collectionSelector, i18n("Select the required collections"));
 
-    setValid(d->m_collectionSelectorPageItem, false);
+    setValid(d->collectionSelectorPageItem, false);
 
-    connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
+    connect(d->collectionSelector, SIGNAL(selectionChanged()),
             this, SLOT(updateCollectionSelectorPageValidity()));
 
-    connect(d->m_collectionSelector, SIGNAL(selectionChanged()),
+    connect(d->collectionSelector, SIGNAL(selectionChanged()),
             this, SLOT(getImagesFromCollection()));
 
-    d->m_selectionPage     = new DLNAWidget(this);
-    d->m_selectionPageItem = addPage(d->m_selectionPage, "Images to be exported");
+    d->selectionPage     = new DLNAWidget(this);
+    d->selectionPageItem = addPage(d->selectionPage, "Images to be exported");
 }
 
 Wizard::~Wizard()
@@ -136,25 +142,25 @@ Wizard::~Wizard()
 
 void Wizard::next()
 {
-    if (currentPage() == d->m_welcomePageItem)
+    if (currentPage() == d->welcomePageItem)
     {
-        d->m_imageDialogOptionSelected = d->m_welcomePage->getImageDialogOptionSelected();
+        d->imageDialogOptionSelected = d->welcomePage->getImageDialogOptionSelected();
 
-        if (d->m_imageDialogOptionSelected)
+        if (d->imageDialogOptionSelected)
         {
             KAssistantDialog::next();
             KAssistantDialog::next();
-            d->m_selectionPage->setControlButtons(true);
+            d->selectionPage->setControlButtons(true);
         }
         else
         {
             KAssistantDialog::next();
-            d->m_selectionPage->setControlButtons(false);
+            d->selectionPage->setControlButtons(false);
         }
     }
-    else if (currentPage() == d->m_collectionSelectorPageItem)
+    else if (currentPage() == d->collectionSelectorPageItem)
     {
-        d->m_selectionPage->setImages(d->m_imageList);
+        d->selectionPage->setImages(d->imageList);
         KAssistantDialog::next();
     }
     else
@@ -165,9 +171,9 @@ void Wizard::next()
 
 void Wizard::back()
 {
-    if (currentPage() == d->m_selectionPageItem)
+    if (currentPage() == d->selectionPageItem)
     {
-        if (d->m_imageDialogOptionSelected)
+        if (d->imageDialogOptionSelected)
         {
             KAssistantDialog::back();
             KAssistantDialog::back();
@@ -185,23 +191,23 @@ void Wizard::back()
 
 void Wizard::updateCollectionSelectorPageValidity()
 {
-    setValid(d->m_collectionSelectorPageItem, !d->m_collectionSelector->selectedImageCollections().empty());
+    setValid(d->collectionSelectorPageItem, !d->collectionSelector->selectedImageCollections().empty());
 }
 
 void Wizard::getImagesFromCollection()
 {
-    d->m_imageList.clear();
+    d->imageList.clear();
 
-    foreach(ImageCollection images, d->m_collectionSelector->selectedImageCollections())
+    foreach(ImageCollection images, d->collectionSelector->selectedImageCollections())
     {
-        d->m_imageList.append(images.images());
+        d->imageList.append(images.images());
     }
 }
 
 void Wizard::accept()
 {
     kDebug() << "you clicked finish";
-    d->m_selectionPage->slotSelectDirectory();
+    d->selectionPage->slotSelectDirectory();
     KAssistantDialog::accept();
 }
 
