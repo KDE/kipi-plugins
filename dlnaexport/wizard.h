@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2008-01-11
- * Description : a kipi plugin to print images
+ * Date        : 2012-05-28
+ * Description : a KIPI plugin to export pics through DLNA technology.
  *
- * Copyright 2008-2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
