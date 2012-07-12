@@ -33,13 +33,7 @@
 
 #include <libkipi/plugin.h>
 
-class KActionMenu;
 class KAction;
-
-namespace KIPI
-{
-    class Interface;
-}
 
 using namespace KIPI;
 
@@ -60,12 +54,12 @@ public:
 
 protected Q_SLOTS:
 
-    void setWallpaper();
+    void slotSetWallpaper();
 
 private:
 
-    KActionMenu* m_actionBackground;
-    Interface* m_interface;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIWallPaperPlugin

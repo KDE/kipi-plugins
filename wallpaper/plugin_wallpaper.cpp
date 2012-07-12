@@ -37,12 +37,8 @@
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kdebug.h>
-#include <krun.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
-#include <ktextbrowser.h>
-#include <kfiledialog.h>
-#include <kio/netaccess.h>
 
 // LibKIPI includes
 
@@ -55,78 +51,88 @@ namespace KIPIWallPaperPlugin
 K_PLUGIN_FACTORY( WallPaperFactory, registerPlugin<Plugin_WallPaper>(); )
 K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )
 
-Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
-    : Plugin(WallPaperFactory::componentData(), parent, "WallPaper")
+class Plugin_WallPaper::Private
 {
-    m_interface = 0;
-    m_actionBackground = 0;
+
+public:
+
+    Private()
+    {
+        actionBackground = 0;
+        interface        = 0;
+    }
+
+    KActionMenu* actionBackground;
+    Interface*   interface;
+};
+
+Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
+    : Plugin(WallPaperFactory::componentData(), parent, "WallPaper"),
+      d(new Private)
+{
     kDebug(AREA_CODE_LOADING) << "Plugin_WallPaper plugin loaded";
 }
 
 Plugin_WallPaper::~Plugin_WallPaper()
 {
-    delete m_actionBackground;
+    delete d->actionBackground;
+    delete d;
 }
 
 void Plugin_WallPaper::setup(QWidget* const widget)
 {
-    Plugin::setup( widget );
+    Plugin::setup(widget);
 
-    m_actionBackground = new KActionMenu(KIcon("image-jpeg"), i18n("&Set as Background"), actionCollection());
-    m_actionBackground->setObjectName("images2desktop");
+    d->actionBackground = new KActionMenu(KIcon("image-jpeg"), i18n("&Set as Background"), actionCollection());
+    d->actionBackground->setObjectName("images2desktop");
 
-    KAction *wallpaper = actionCollection()->addAction("images2desktop_setwallpaper");
+    KAction* wallpaper = actionCollection()->addAction("images2desktop_setwallpaper");
     wallpaper->setText(i18n("Set as wallpaper"));
 
     connect(wallpaper, SIGNAL(triggered(bool)),
-            this, SLOT(setWallpaper()));
+            this, SLOT(slotSetWallpaper()));
 
-    m_actionBackground->addAction(wallpaper);
+    d->actionBackground->addAction(wallpaper);
 
-    addAction( m_actionBackground );
+    addAction( d->actionBackground );
 
-    m_interface = dynamic_cast<Interface*>( parent() );
+    d->interface = dynamic_cast<Interface*>( parent() );
 
-    if ( !m_interface )
+    if ( !d->interface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    ImageCollection selection = m_interface->currentSelection();
-    m_actionBackground->setEnabled( selection.isValid() && !selection.images().isEmpty() );
+    ImageCollection selection = d->interface->currentSelection();
+    d->actionBackground->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
-    connect(m_interface, SIGNAL(selectionChanged(bool)),
-	    m_actionBackground, SLOT(setEnabled(bool)));
+    connect(d->interface, SIGNAL(selectionChanged(bool)),
+            d->actionBackground, SLOT(setEnabled(bool)));
  }
 
-void Plugin_WallPaper::setWallpaper()
+void Plugin_WallPaper::slotSetWallpaper()
 {
-   ImageCollection images = m_interface->currentSelection();
+   ImageCollection images = d->interface->currentSelection();
 
    if ( !images.isValid() )
        return;
 
-   KUrl url=images.images()[0];
-
-   QString path;
-   path = url.path();
-
-   QDBusInterface *dbusInterface = new QDBusInterface("org.kde.plasma-desktop",
-						  "/App",
-						  "local.PlasmaApp");
-
-   QDBusReply<void> reply = dbusInterface->call("setWallpaperImage", path);
+   KUrl url                      = images.images()[0];
+   QString path                  = url.path();
+   QDBusInterface* dbusInterface = new QDBusInterface("org.kde.plasma-desktop", "/App", "local.PlasmaApp");
+   QDBusReply<void> reply        = dbusInterface->call("setWallpaperImage", path);
 
    if ( !reply.isValid() )
-       KMessageBox::information(0L,i18n("Background cannot be changed. You do not have the correct version of kde-workspace."),i18n("Change Background"));
+       KMessageBox::information(0, i18n("Background cannot be changed. You do not have the correct version "
+                                        "of kde-workspace."), i18n("Change Background"));
 
    delete dbusInterface;
 }
 
 Category Plugin_WallPaper::category(KAction* const action) const
 {
-    if ( action == m_actionBackground )
+    if ( action == d->actionBackground )
        return ImagesPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
