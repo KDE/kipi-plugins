@@ -25,6 +25,11 @@
 
 #include "magickiface.moc"
 
+// Qt includes
+
+#include <QImage>
+#include <QColor>
+
 // C++ includes
 
 #include <cstdlib>
@@ -103,7 +108,7 @@ public:
 
     Private(MagickApi* const api)
     {
-        filter = SCALE_FILTER_FAST;
+        filter = SCALE_FILTER_BEST;
         parent = api;
     }
 
@@ -188,6 +193,52 @@ MagickApi::~MagickApi()
 int MagickApi::getFilter() const
 {
     return d->filter;
+}
+
+MagickImage* MagickApi::loadQImage(const QImage& qimage)
+{
+    MagickImage* img      = 0;
+    PixelPacket* img_data = 0;
+    Image*       image;
+    int x, y;
+    
+    img = d->allocImage();
+    if (!img)
+        return 0;
+
+    if (!(image = ResizeImage(img->getImage(), qimage.width(), qimage.height(), SCALE_FILTER_FAST, 
+          1.0, &img->getImage()->exception)))
+    {
+        emit signalsAPIError("ResizeImage() failed\n");
+        return 0;
+    }
+    
+    DestroyImage(img->getImage());
+    img->setImage(image);
+    img->setWidth(img->getImage()->columns);
+    img->setHeight(img->getImage()->rows);
+
+    if (!(img_data = GetAuthenticPixels(img->getImage(), 0, 0, img->getWidth(), img->getHeight(), 
+          &img->getImage()->exception)))
+    {
+        emit signalsAPIError("GetImagePixels() failed\n");
+        return 0;
+    }
+
+    for (y = 0 ; y < img->getHeight() ; y++)
+    {
+        for (x = 0 ; x < img->getWidth() ; x++)
+        {
+            QColor rgb = qimage.pixel(x, y);
+            img_data->red   = rgb.red() * USHRT_MAX / UCHAR_MAX;
+            img_data->green = rgb.green() * USHRT_MAX / UCHAR_MAX ;
+            img_data->blue  = rgb.blue() * USHRT_MAX / UCHAR_MAX ;
+            img_data++;
+        }
+    }
+
+    SyncAuthenticPixels(img->getImage(), &img->getImage()->exception);
+    return img;
 }
 
 MagickImage* MagickApi::loadImage(const QString& file)
@@ -357,12 +408,12 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
     img->setWidth(img->getImage()->columns);
     img->setHeight(img->getImage()->rows);
     DestroyExceptionInfo(&exception);
-
-    if (img->getWidth() != width || img->getWidth() != height)
+    
+    if (img->getWidth() != width || img->getHeight() != height)
     {
         emit signalsAPIError("frame doesn't have expected dimensions\n");
         return 0;
-    }
+    }    
 
     return img;
 }
@@ -496,11 +547,11 @@ int MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magic
 
 MagickImage* MagickApi::borderImage(const MagickImage& simg, const QString& color, int bw, int bh)
 {
-    MagickImage* img = createImage(color, simg.getWidth() + 2 * bw, simg.getWidth() + 2 * bh);
+    MagickImage* img = createImage(color, simg.getWidth() + 2 * bw, simg.getHeight() + 2 * bh);
     if (!img)
         return 0;
 
-    if(bitblitImage(*img, bw, bh, simg, 0, 0, simg.getWidth(), simg.getWidth()) != 1)
+    if(bitblitImage(*img, bw, bh, simg, 0, 0, simg.getWidth(), simg.getHeight()) != 1)
         return 0;
 
     return img;

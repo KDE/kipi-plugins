@@ -42,6 +42,8 @@
 #define SCALE_FILTER_BEST GaussianFilter
 #define SCALE_FILTER_FAST PointFilter
 
+class QImage;
+
 namespace KIPIPlugins
 {
 
@@ -84,6 +86,7 @@ public:
 
     MagickImage* loadImage(const QString& file);
     MagickImage* loadStream(QFile& stream);
+    MagickImage* loadQImage(const QImage& image);
 
     int saveToFile(const MagickImage& img, const QString& file);
     int saveToStream(const MagickImage& img, QFile& stream);

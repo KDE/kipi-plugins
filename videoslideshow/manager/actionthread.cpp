@@ -28,10 +28,15 @@
 
 #include "processimage.h"
 #include "magickiface.h"
+#include "kpmetadata.h"
 
 // Qt includes
 
 #include <QDir>
+
+// libkdcraw
+
+#include <libkdcraw/kdcraw.h>
 
 using namespace KIPIPlugins;
 
@@ -181,8 +186,16 @@ void ActionThread::doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, in
 MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
 {
     MagickImage* img = 0;
+    
+    if(KPMetadata::isRawFile(imgItem->url()))
+    {   
+        QImage image;
+        KDcrawIface::KDcraw::loadEmbeddedPreview(image, imgItem->url().path());
 
-    if(!(img = d->api->loadImage(imgItem->url().path())))
+        if(!(img = d->api->loadQImage(image)))
+            return 0;        
+    }
+    else if(!(img = d->api->loadImage(imgItem->url().path())))
         return 0;
 
     if(!(img = d->processImg->aspectRatioCorrection(*img, (double)d->frameHeight/d->frameWidth, d->aspectcorrection)))
@@ -227,7 +240,6 @@ MagickImage* ActionThread::getDynamicImage(MyImageListViewItem* const imgItem, M
             delete(currentGeo);
         }
         break;
-
         case EFFECT_NONE:
             return imgout;
         break;

@@ -179,7 +179,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotStartStop()));
-
+    
     // ---------------------------------------------------------------
 
     busy(false);

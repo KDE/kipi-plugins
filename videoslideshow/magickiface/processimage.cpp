@@ -138,6 +138,9 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
 
     // create a new target image and copy the from image onto
     MagickImage* dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
+    
+    if(type == TRANSITION_TYPE_RANDOM)
+        type = (TRANSITION_TYPE)(rand() % TRANS_MAX + 1);   
 
     switch (type)
     {
