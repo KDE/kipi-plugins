@@ -109,7 +109,8 @@ private:
 
     void authenticate(const QString& token = QString(),
                       const QString& username = QString(),
-                      const QString& password = QString());
+                      const QString& password = QString(),
+                      const QString& userEmailId = QString());
 
     void buttonStateChange(bool state);
 
@@ -124,6 +125,7 @@ private:
     QString                                   m_token;
     QString                                   m_username;
     QString                                   m_password;
+    QString                                   m_userEmailId;
     QString                                   m_currentAlbumID;
 
     int                                       m_renamingOpt;

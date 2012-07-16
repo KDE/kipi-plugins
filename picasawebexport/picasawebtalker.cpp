@@ -119,8 +119,9 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
         return ;
     }
 
-    m_loginName = username_edit;
-    m_username  = username_edit;
+    m_loginName   = username_edit;
+    m_username    = username_edit;
+    m_userEmailId = username_edit;
     
     QString accountType = "GOOGLE";
 
@@ -151,13 +152,14 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     emit signalBusy( true );
 }
 
-void PicasawebTalker::authenticate(const QString& token, const QString& username, const QString& password)
+void PicasawebTalker::authenticate(const QString& token, const QString& username, const QString& password, const QString& userEmailId)
 {
     if (!token.isNull() || token.length() > 0)
     {
         kDebug() << " Checktoken being called" << token ;
         m_loginName = username;
         m_username  = username;
+        m_userEmailId = userEmailId;
         m_password  = password; //this would be needed if the checktoken failed
                                 //we would need to reauthenticate using auth
         m_token = token;
@@ -530,6 +532,11 @@ void PicasawebTalker::getPhoto(const QString& imgPath)
 QString PicasawebTalker::getUserName() const
 {
     return m_username;
+}
+
+QString PicasawebTalker::getUserEmailId() const
+{
+    return m_userEmailId;
 }
 
 QString PicasawebTalker::getLoginName() const

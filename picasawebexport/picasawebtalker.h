@@ -74,7 +74,7 @@ public:
     QString token() { return m_token;}
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
-    void authenticate(const QString& token=QString(), const QString& username=QString(), const QString& password=QString()) ;
+    void authenticate(const QString& token=QString(), const QString& username=QString(), const QString& password=QString(), const QString& userEmailId=QString()) ;
     void listAlbums(const QString& username);
     void listPhotos(const QString& username, const QString& albumId,
                     const QString& imgmax=QString());
@@ -85,6 +85,7 @@ public:
     
     QString getLoginName() const;
     QString getUserName() const;
+    QString getUserEmailId() const;
 
     void cancel();
 
@@ -126,6 +127,7 @@ private:
     QString                     m_loginName;
     QString                     m_username;
     QString                     m_password;
+    QString                     m_userEmailId;
 
     QMap<KIO::Job*, QByteArray> m_jobData;
     KIO::Job*                   m_job;
