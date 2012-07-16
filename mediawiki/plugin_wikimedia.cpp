@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-02-11
- * Description : a kipi plugin to export images to wikimedia commons
+ * Description : A kipi plugin to export images to a MediaWiki wiki
  *
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -76,10 +76,10 @@ public:
 };
 
 Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(WikiMediaFactory::componentData(), parent, "Wikimedia Commons Export"),
+    : Plugin(WikiMediaFactory::componentData(), parent, "MediaWiki export"),
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_WikiMedia plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_MediaWiki plugin loaded";
 }
 
 Plugin_WikiMedia::~Plugin_WikiMedia()
@@ -95,7 +95,7 @@ void Plugin_WikiMedia::setup(QWidget* widget)
     KIconLoader::global()->addAppDir("kipiplugin_wikimedia");
 
     d->actionExport = actionCollection()->addAction("wikimediaexport");
-    d->actionExport->setText(i18n("Export to &WikiMedia Commons..."));
+    d->actionExport->setText(i18n("Export to MediaWiki..."));
     d->actionExport->setIcon(KIcon("wikimedia"));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
