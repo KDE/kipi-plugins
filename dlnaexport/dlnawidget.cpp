@@ -139,6 +139,7 @@ void DLNAWidget::reactivate()
 
 void DLNAWidget::slotSelectDirectory()
 {
+    /*
     QString startingPath;
 #if KDE_IS_VERSION(4,1,61)
     startingPath = KGlobalSettings::picturesPath();
@@ -154,10 +155,11 @@ void DLNAWidget::slotSelectDirectory()
     }
 
     kDebug() << path;
-
+*/
     // TODO : stop properly previous server instance if exist.
     d->dlna = new MediaServer();
-    d->dlna->onAddContentButtonClicked(path, true);
+    d->dlna->onAddContentButtonClicked(d->imgList->imageUrls());
+    //    d->dlna->onAddContentButtonClicked(path, true);
 }
 
 } // namespace KIPIDLNAExportPlugin

@@ -28,6 +28,7 @@
 
 #include <QObject>
 #include <QString>
+#include <kurl.h>
 
 namespace KIPIDLNAExportPlugin
 {
@@ -41,7 +42,7 @@ public:
     MediaServer(QObject* const parent=0);
     virtual ~MediaServer();
 
-    void onAddContentButtonClicked(const QString&, bool);
+    void onAddContentButtonClicked(const KUrl::List&);
 
 private:
 

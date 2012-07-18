@@ -27,6 +27,7 @@
 
 #include <kstandarddirs.h>
 #include <kdebug.h>
+#include <kurl.h>
 
 // libHUpnp includes
 
@@ -36,10 +37,17 @@
 #include <HUpnpCore/HDeviceHostConfiguration>
 #include <HUpnpAv/HUpnpAv>
 #include <HUpnpAv/HRootDir>
+#include <HUpnpAv/HImageItem>
+#include <HUpnpAv/HPhoto>
+#include <HUpnpAv/HContainer>
 #include <HUpnpAv/HAvDeviceModelCreator>
 #include <HUpnpAv/HMediaServerDeviceConfiguration>
 #include <HUpnpAv/HFileSystemDataSource>
 #include <HUpnpAv/HContentDirectoryServiceConfiguration>
+
+// Qt includes
+#include <QList>
+#include <QFile>
 
 using namespace Herqq::Upnp;
 using namespace Herqq::Upnp::Av;
@@ -116,16 +124,25 @@ MediaServer::~MediaServer()
      delete d;
 }
 
-void MediaServer::onAddContentButtonClicked(const QString& dirName, bool mode)
+void MediaServer::onAddContentButtonClicked(const KUrl::List& imageUrlList)
 {
-    if (!dirName.isEmpty())
+    kDebug() << imageUrlList;
+    QList<HPhoto*> itemList;
+    QFileInfo* file;
+        
+    for (int i = 0; i<imageUrlList.size(); i++)
     {
-        HRootDir::ScanMode smode = mode ? HRootDir::RecursiveScan 
-                                        : HRootDir::SingleDirectoryScan;
-
-        HRootDir rd(dirName, smode);
-        d->datasource->add(rd);
+        file = new QFileInfo(QString(imageUrlList.at(i).path()));
+        itemList.append(new HPhoto(QString(imageUrlList.at(i).fileName()), QString("0"), QString()));
+        itemList.at(i)->setContentFormat(QString("image/%1").arg(file->suffix().toLower()));
+        d->datasource->add(itemList.at(i), imageUrlList.at(i).path());
     }
+    
+//    HPhoto* item = new HPhoto(QString("title"), QString("0"), QString());
+//    item->setContentFormat(QString("image/jpg"));
+
+//    kDebug() << d->datasource->add(item, QString("/home/smit/pics/logo.jpg"));
 }
 
 } // namespace KIPIDLNAExportPlugin
+
