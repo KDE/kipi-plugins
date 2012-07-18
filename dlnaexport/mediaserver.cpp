@@ -138,10 +138,6 @@ void MediaServer::onAddContentButtonClicked(const KUrl::List& imageUrlList)
         d->datasource->add(itemList.at(i), imageUrlList.at(i).path());
     }
     
-//    HPhoto* item = new HPhoto(QString("title"), QString("0"), QString());
-//    item->setContentFormat(QString("image/jpg"));
-
-//    kDebug() << d->datasource->add(item, QString("/home/smit/pics/logo.jpg"));
 }
 
 } // namespace KIPIDLNAExportPlugin
