@@ -36,11 +36,11 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kxmlguiclient.h>
 
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/plugin.h>
 
 // Local includes
 
@@ -53,43 +53,73 @@ namespace KIPIImageshackExportPlugin
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_ImageshackExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_imageshackexport"))
 
+class Plugin_ImageshackExport::Private
+{
+public:
+
+    Private() :
+        actionExport(0),
+        iface(0),
+        imageshack(0)
+    {
+    }
+
+    KAction*    actionExport;
+    Interface*  iface;
+    Imageshack* imageshack;
+};
+
 Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QVariantList&)
     : Plugin(Factory::componentData(), parent, "ImageshackExport"),
-      m_action(0), m_pImageshack(0)
+      d(new Private())
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_ImageshackExport plugin loaded";
-}
+    kDebug() << "Plugin_ImageshackExport plugin loaded";
 
-Plugin_ImageshackExport::~Plugin_ImageshackExport()
-{
-    delete m_pImageshack;
-}
-
-void Plugin_ImageshackExport::setup(QWidget* const widget)
-{
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
-    m_pImageshack = new Imageshack();
-
-    Plugin::setup(widget);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    d->imageshack = new Imageshack();
+    d->iface = dynamic_cast<Interface*>(parent);
+    if (!d->iface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    m_action = actionCollection()->addAction("imageshackexport");
-    m_action->setText(i18n("Export to &Imageshack..."));
-    m_action->setIcon(KIcon("imageshack"));
-    m_action->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));
-    m_action->setEnabled(true);
+    setupActions();
+    setupXML();
+}
 
-    connect(m_action, SIGNAL(triggered(bool)),
+Plugin_ImageshackExport::~Plugin_ImageshackExport()
+{
+    delete d->imageshack;
+    delete d;
+}
+
+void Plugin_ImageshackExport::setup(QWidget* const widget)
+{
+    Plugin::setup(widget);
+}
+
+void Plugin_ImageshackExport::setupActions()
+{
+    d->actionExport = actionCollection()->addAction("imageshackexport");
+    d->actionExport->setText(i18n("Export to &Imageshack..."));
+    d->actionExport->setIcon(KIcon("imageshack"));
+    d->actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));
+    d->actionExport->setEnabled(true);
+
+    connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_action);
+    addAction(d->actionExport);
+
+    setUiBaseName("kipiplugin_imageshackexportui.rc");
+}
+
+void Plugin_ImageshackExport::setupXML()
+{
+    KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
+    mergeXMLFile(host);
 }
 
 void Plugin_ImageshackExport::slotExport()
@@ -98,7 +128,7 @@ void Plugin_ImageshackExport::slotExport()
 
     QPointer<ImageshackWindow> dlg;
 
-    dlg = new ImageshackWindow(kapp->activeWindow(), m_pImageshack);
+    dlg = new ImageshackWindow(kapp->activeWindow(), d->imageshack);
     dlg->exec();
 
     delete dlg;
@@ -106,7 +136,7 @@ void Plugin_ImageshackExport::slotExport()
 
 Category Plugin_ImageshackExport::category(KAction* const action) const
 {
-    if (action == m_action)
+    if (action == d->actionExport)
         return ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";

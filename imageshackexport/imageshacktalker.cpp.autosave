@@ -118,7 +118,6 @@ void ImageshackTalker::slotResult(KJob* kjob)
 
     if (job->error())
     {
-        kDebug() << job->errorString();
         if (m_loginInProgress)
         {
             checkRegistrationCodeDone(job->error(), job->errorString());

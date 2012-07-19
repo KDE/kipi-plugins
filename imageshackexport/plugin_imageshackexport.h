@@ -51,12 +51,17 @@ public:
 
     Category category(KAction* const action) const;
     void setup(QWidget* const);
+    void setupActions();
+    void setupXML();
 
 public Q_SLOTS:
 
     void slotExport();
 
 private:
+
+    class Private;
+    Private* const d;
 
     KAction*    m_action;
     Imageshack* m_pImageshack;
