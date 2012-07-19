@@ -106,8 +106,6 @@ void Imageshack::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("Imageshack Settings");
 
-    kDebug() << "Reading data from kipirc file..";
-
     m_registrationCode = group.readEntry("RegistrationCode", QString());
 }
 
@@ -116,11 +114,7 @@ void Imageshack::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("Imageshack Settings");
 
-    kDebug() << "Saving settings to kipirc file..";
-
     group.writeEntry(QString("RegistrationCode"), registrationCode());
-
-    kDebug() << "syncing..";
     config.sync();
 }
 

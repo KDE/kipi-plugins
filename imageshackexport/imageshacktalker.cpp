@@ -96,8 +96,6 @@ QString ImageshackTalker::getCallString(QMap< QString, QString >& args)
         result.append(it.value());
     }
 
-    kDebug() << "CALL: " << result;
-
     return result;
 }
 
@@ -118,7 +116,6 @@ void ImageshackTalker::slotResult(KJob* kjob)
 
     if (job->error())
     {
-        kDebug() << job->errorString();
         if (m_loginInProgress)
         {
             checkRegistrationCodeDone(job->error(), job->errorString());
@@ -149,11 +146,6 @@ void ImageshackTalker::authenticate()
 {
     m_loginInProgress = true;
 
-//     if (m_imageshack->m_registrationCode.isEmpty())
-//     {
-//         emit signalNeedRegistrationCode();
-//     }
-//     else
     if (!m_imageshack->m_registrationCode.isEmpty())
     {
         emit signalLoginInProgress(1, 4, i18n("Checking the registration code"));
@@ -232,13 +224,11 @@ void ImageshackTalker::parseCheckRegistrationCode(const QByteArray& data)
             {
                 reader.readNext();
                 m_imageshack->setUsername(reader.text().toString());
-                kDebug() << m_imageshack->username();
             }
             if (reader.name() == "email")
             {
                 reader.readNext();
                 m_imageshack->setEmail(reader.text().toString());
-                kDebug() << m_imageshack->email();
             }
         }
     }
@@ -261,11 +251,8 @@ void ImageshackTalker::parseCheckRegistrationCode(const QByteArray& data)
 
 void ImageshackTalker::authenticationDone(int errCode, const QString& errMsg)
 {
-    kDebug() << errCode << " -- " << errMsg;
     if (errCode)
     {
-//         m_imageshack->m_loggedIn = false;
-//         m_imageshack->m_registrationCode.clear();
         m_imageshack->logOut();
     }
 

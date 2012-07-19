@@ -124,8 +124,6 @@ void Plugin_ImageshackExport::setupXML()
 
 void Plugin_ImageshackExport::slotExport()
 {
-    kDebug() << "Loading Imageshack Export Window";
-
     QPointer<ImageshackWindow> dlg;
 
     dlg = new ImageshackWindow(kapp->activeWindow(), d->imageshack);
