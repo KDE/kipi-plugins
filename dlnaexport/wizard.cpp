@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QPalette>
 #include <QtGlobal>
+#include <QMap>
 
 // KDE includes
 
@@ -71,14 +72,15 @@ public:
         imageDialogOptionSelected  = true;
     }
 
-    DLNAWidget*              selectionPage;
-    ImageCollectionSelector* collectionSelector;
-    WelcomePage*             welcomePage;
-    KPageWidgetItem*         selectionPageItem;
-    KPageWidgetItem*         collectionSelectorPageItem;
-    KPageWidgetItem*         welcomePageItem;
-    KUrl::List               imageList;
-    bool                     imageDialogOptionSelected;
+    DLNAWidget*                selectionPage;
+    ImageCollectionSelector*   collectionSelector;
+    WelcomePage*               welcomePage;
+    KPageWidgetItem*           selectionPageItem;
+    KPageWidgetItem*           collectionSelectorPageItem;
+    KPageWidgetItem*           welcomePageItem;
+    KUrl::List                 imageList;
+    QMap<QString, KUrl::List>  collectionMap;
+    bool                       imageDialogOptionSelected;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -197,17 +199,22 @@ void Wizard::updateCollectionSelectorPageValidity()
 void Wizard::getImagesFromCollection()
 {
     d->imageList.clear();
+    d->collectionMap.clear();
 
     foreach(ImageCollection images, d->collectionSelector->selectedImageCollections())
     {
         d->imageList.append(images.images());
+        d->collectionMap.insert(images.name(), images.images());
+        kDebug() << "name" << images.name();
     }
 }
 
 void Wizard::accept()
 {
-    kDebug() << "you clicked finish";
-    d->selectionPage->slotSelectDirectory();
+    if (!d->imageDialogOptionSelected)
+        d->selectionPage->startMediaServer(d->collectionMap);
+    else
+        d->selectionPage->startMediaServer();
     KAssistantDialog::accept();
 }
 

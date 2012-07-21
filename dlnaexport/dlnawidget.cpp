@@ -137,29 +137,18 @@ void DLNAWidget::reactivate()
 {
 }
 
-void DLNAWidget::slotSelectDirectory()
+void DLNAWidget::startMediaServer()
 {
-    /*
-    QString startingPath;
-#if KDE_IS_VERSION(4,1,61)
-    startingPath = KGlobalSettings::picturesPath();
-#else
-    startingPath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
-#endif
-    QString path = KFileDialog::getExistingDirectory(startingPath, this,
-                                                     i18n("Select folder to parse"));
-
-    if (path.isEmpty())
-    {
-        return;
-    }
-
-    kDebug() << path;
-*/
     // TODO : stop properly previous server instance if exist.
     d->dlna = new MediaServer();
-    d->dlna->onAddContentButtonClicked(d->imgList->imageUrls());
-    //    d->dlna->onAddContentButtonClicked(path, true);
+    d->dlna->addImagesOnServer(d->imgList->imageUrls());
+}
+
+void DLNAWidget::startMediaServer(const QMap<QString, KUrl::List>& collectionMap)
+{
+    // TODO : stop properly previous server instance if exist.
+    d->dlna = new MediaServer();
+    d->dlna->addImagesOnServer(collectionMap);
 }
 
 } // namespace KIPIDLNAExportPlugin

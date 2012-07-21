@@ -42,7 +42,8 @@ public:
     MediaServer(QObject* const parent=0);
     virtual ~MediaServer();
 
-    void onAddContentButtonClicked(const KUrl::List&);
+    void addImagesOnServer(const KUrl::List&);
+    void addImagesOnServer(const QMap<QString, KUrl::List>&);
 
 private:
 

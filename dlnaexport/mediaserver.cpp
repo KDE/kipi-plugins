@@ -124,20 +124,40 @@ MediaServer::~MediaServer()
      delete d;
 }
 
-void MediaServer::onAddContentButtonClicked(const KUrl::List& imageUrlList)
+void MediaServer::addImagesOnServer(const KUrl::List& imageUrlList)
 {
-    kDebug() << imageUrlList;
-    QList<HPhoto*> itemList;
-    QFileInfo* file;
-        
+    QList<HItem*> itemList;
+            
     for (int i = 0; i<imageUrlList.size(); i++)
     {
-        file = new QFileInfo(QString(imageUrlList.at(i).path()));
-        itemList.append(new HPhoto(QString(imageUrlList.at(i).fileName()), QString("0"), QString()));
-        itemList.at(i)->setContentFormat(QString("image/%1").arg(file->suffix().toLower()));
+        itemList.append(new HItem(QString(imageUrlList.at(i).fileName()), QString("0"), QString()));
         d->datasource->add(itemList.at(i), imageUrlList.at(i).path());
     }
+}
+
+void MediaServer::addImagesOnServer(const QMap<QString, KUrl::List>& collectionMap)
+{
+    QList<HContainer*> containerList;
+    QList<HItem*> itemList;
+    QList<QString> keys = collectionMap.uniqueKeys();
+    KUrl::List imageUrlList;
+    int currentSize = 0;
     
+    for (int i = 0; i<keys.size(); i++)
+    {
+        containerList.append(new HContainer(keys.at(i), QString("0")));
+        d->datasource->add(containerList.at(i));
+        
+        imageUrlList.clear();
+        imageUrlList = collectionMap.value(keys.at(i));
+        currentSize = itemList.size();
+                
+        for (int j = 0; j<imageUrlList.size(); j++)
+        {
+            itemList.append(new HItem(QString(imageUrlList.at(j).fileName()), containerList.at(i)->id(), QString()));
+            d->datasource->add(itemList.at(j + currentSize), imageUrlList.at(j).path());
+        }
+    }    
 }
 
 } // namespace KIPIDLNAExportPlugin

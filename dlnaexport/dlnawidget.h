@@ -53,10 +53,9 @@ public:
     void setControlButtons(bool);
     void setImages(const KUrl::List&);
 
-public Q_SLOTS:
-
     void reactivate();
-    void slotSelectDirectory();
+    void startMediaServer();
+    void startMediaServer(const QMap<QString, KUrl::List>&);
 
 private:
 
