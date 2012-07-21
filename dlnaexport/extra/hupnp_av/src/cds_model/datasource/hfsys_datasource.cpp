@@ -23,6 +23,7 @@
 #include "hfsys_datasource_p.h"
 #include "hrootdir.h"
 
+#include "../cds_objects/hitem.h"
 #include "../cds_objects/hstoragefolder.h"
 #include "../model_mgmt/hcdsobjectdata_p.h"
 #include "../model_mgmt/hcds_fsys_reader_p.h"
@@ -208,6 +209,23 @@ void HFileSystemDataSource::clear()
     h->add(&root);
 }
 
+bool HFileSystemDataSource::add(HContainer* cdsContainer, AddFlag addFlag)
+{
+    if (!isInitialized())
+    {
+        return false;
+    }
+
+    H_D(HFileSystemDataSource);
+    HCdsObjectData odata(reinterpret_cast<HObject*>(cdsContainer));
+    if (!h->add(&odata, addFlag))
+    {
+        odata.takeObject();
+        return false;
+    }
+    return true;
+}
+
 bool HFileSystemDataSource::add(HItem* item, const QString& path, AddFlag addFlag)
 {
     if (!isInitialized())
@@ -222,6 +240,16 @@ bool HFileSystemDataSource::add(HItem* item, const QString& path, AddFlag addFla
         odata.takeObject();
         return false;
     }
+
+    if (!item->hasContentFormat())
+    {
+        QString mimeType = HCdsFileSystemReader::deduceMimeType(path);
+        if (!mimeType.isEmpty())
+        {
+            item->setContentFormat(mimeType);
+        }
+    }
+
     return true;
 }
 

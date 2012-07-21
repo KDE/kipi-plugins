@@ -100,6 +100,11 @@ public:
     HDuration& operator=(const HDuration&);
 
     /*!
+     * Creates a new instance from QTime object.
+     */
+    HDuration(const QTime& time);
+
+    /*!
      * \brief Returns the hours.
      *
      * \return The hours component of the total duration.
@@ -157,6 +162,11 @@ public:
      * at least one digit long, and F0 < F1.
      */
     QString toString() const;
+
+    /*!
+     * \brief Returns the object as a QTime object.
+     */
+    QTime toTime() const;
 };
 
 /*!

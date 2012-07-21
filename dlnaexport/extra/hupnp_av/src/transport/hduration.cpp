@@ -22,6 +22,7 @@
 #include "hduration.h"
 
 #include <QtCore/QStringList>
+#include <QtCore/QDateTime>
 
 namespace Herqq
 {
@@ -125,12 +126,13 @@ HDuration::HDuration(const QString& arg) :
                 qreal fractions = calculateFraction(tmp.at(2), &ok);
                 if (ok)
                 {
-                    h_ptr->m_duration = trimmed;
-                    h_ptr->m_hours = hours;
-                    h_ptr->m_minutes = minutes;
-                    h_ptr->m_seconds = seconds;
                     h_ptr->m_fractions = fractions;
                 }
+
+                h_ptr->m_seconds = seconds;
+                h_ptr->m_duration = trimmed;
+                h_ptr->m_hours = hours;
+                h_ptr->m_minutes = minutes;
             }
         }
     }
@@ -151,6 +153,15 @@ HDuration& HDuration::operator=(const HDuration& other)
     Q_ASSERT(this != &other);
     h_ptr = other.h_ptr;
     return *this;
+}
+
+HDuration::HDuration(const QTime& time) :
+    h_ptr(new HDurationPrivate())
+{
+    h_ptr->m_hours = time.hour();
+    h_ptr->m_minutes = time.minute();
+    h_ptr->m_seconds = time.second();
+    h_ptr->m_duration = time.toString();
 }
 
 qint32 HDuration::hours() const
@@ -187,6 +198,11 @@ bool HDuration::isZero() const
 QString HDuration::toString() const
 {
     return QString("%1%2").arg(!h_ptr->m_positive ? "-" : "", h_ptr->m_duration);
+}
+
+QTime HDuration::toTime() const
+{
+    return QTime(hours(), minutes(), seconds());
 }
 
 bool operator==(const HDuration& obj1, const HDuration& obj2)

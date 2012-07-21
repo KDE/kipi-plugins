@@ -51,7 +51,7 @@ public:
     HDuration m_relTimePos;
     HDuration m_absTimePos;
     qint32 m_relCounterPos;
-    qint32 m_absCounterPos;
+    quint32 m_absCounterPos;
 
     HPositionInfoPrivate();
 

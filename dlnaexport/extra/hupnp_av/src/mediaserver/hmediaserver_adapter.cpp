@@ -77,12 +77,37 @@ bool HMediaServerAdapter::prepareDevice(HClientDevice* device)
     HClientService* avTransport =
         device->serviceById(HServiceId("urn:upnp-org:serviceId:AVTransport"));
 
+    if (!avTransport)
+    {
+        HClientServices tsServices =
+            device->servicesByType(
+                HAvTransportInfo::supportedServiceType(),
+                HResourceType::Inclusive);
+
+        if (!tsServices.isEmpty())
+        {
+            avTransport = tsServices.first();
+        }
+    }
+
     HClientService* cds = device->serviceById(
         HServiceId("urn:upnp-org:serviceId:ContentDirectory"));
 
     if (!cds)
     {
-        return false;
+        HClientServices cdsServices =
+            device->servicesByType(
+                HContentDirectoryInfo::supportedServiceType(),
+                HResourceType::Inclusive);
+
+        if (!cdsServices.isEmpty())
+        {
+            cds = cdsServices.first();
+        }
+        else
+        {
+            return false;
+        }
     }
 
     HClientService* cm = device->serviceById(
@@ -90,7 +115,19 @@ bool HMediaServerAdapter::prepareDevice(HClientDevice* device)
 
     if (!cm)
     {
-        return false;
+        HClientServices cmServices =
+            device->servicesByType(
+                HConnectionManagerInfo::supportedServiceType(),
+                HResourceType::Inclusive);
+
+        if (!cmServices.isEmpty())
+        {
+            cm = cmServices.first();
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /*srv = device->serviceById(

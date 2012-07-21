@@ -128,7 +128,7 @@ QString HStorageMedium::toString(Type type)
         retVal = "DVD+RW";
         break;
     case DVD_MinusRewritable:
-        retVal = "TRACK_UNAWARE";
+        retVal = "DVD-RW";
         break;
     case DVD_RAM:
         retVal = "DVD-RAM";

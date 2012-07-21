@@ -289,6 +289,20 @@ HObjects HAbstractCdsDataSource::findObjects(const QSet<QString>& ids)
     return retVal;
 }
 
+HContainer* HAbstractCdsDataSource::findContainerWithTitle(const QString& title)
+{
+    HContainer* retVal = 0;
+    foreach(HContainer* container , containers())
+    {
+        if (container->title() == title)
+        {
+            retVal = container;
+            break;
+        }
+    }
+    return retVal;
+}
+
 HObjects HAbstractCdsDataSource::objects() const
 {
     return h_ptr->m_objectsById.values();

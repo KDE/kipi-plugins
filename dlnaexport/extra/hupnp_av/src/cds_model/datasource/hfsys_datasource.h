@@ -105,6 +105,20 @@ public:
     virtual void clear();
 
     /*!
+     * Adds a new CDS container to the data source.
+     *
+     * \param cdsContainer specifies the container to be added.
+     *
+     * \param addFlag specifies the addition mode.
+     *
+     * \return \e true in case the container was successfully added.
+     *
+     * \remarks The data source takes the ownership of the provided HContainer \b if
+     * it is successfully added.
+     */
+    bool add(HContainer* cdsContainer, AddFlag addFlag=AddNewOnly);
+
+    /*!
      * Adds a new CDS object to the data source.
      *
      * \param cdsItem specifies the item to be added.

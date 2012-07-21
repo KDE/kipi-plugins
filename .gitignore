@@ -5,3 +5,5 @@ build/
 *.*~
 *.autosave
 *.user
+*.svn
+*.pri

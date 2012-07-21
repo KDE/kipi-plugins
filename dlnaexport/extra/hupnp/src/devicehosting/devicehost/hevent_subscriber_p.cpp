@@ -211,7 +211,7 @@ void HServiceEventSubscriber::send()
     QByteArray message = m_messagesToSend.head();
     qint32 seq = m_seq++;
 
-    HMessagingInfo* mi = new HMessagingInfo(*m_socket, true, 10000);
+    HMessagingInfo* mi = new HMessagingInfo(*m_socket, false, 10000);
     // timeout specified by UDA v 1.1 is 30 seconds, but that seems absurd
     // in this context. however, if this causes problems change it back.
 

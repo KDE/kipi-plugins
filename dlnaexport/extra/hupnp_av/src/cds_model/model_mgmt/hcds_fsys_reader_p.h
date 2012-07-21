@@ -32,6 +32,8 @@
 
 #include <HUpnpAv/HUpnpAv>
 
+class QString;
+
 namespace Herqq
 {
 
@@ -61,6 +63,8 @@ public:
     virtual ~HCdsFileSystemReader();
 
     bool scan(const HRootDir&, const QString& parentId, QList<HCdsObjectData*>* result);
+
+    static QString deduceMimeType(const QString& filename);
 };
 
 }

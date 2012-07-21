@@ -137,6 +137,15 @@ public:
     bool isRef() const;
 
     /*!
+     * Checks if any of the HResource objects contained by this item has
+     * specified a MIME type.
+     *
+     * \return \e true in case any of the HResource objects contained by this
+     * item has specified a MIME type.
+     */
+    bool hasContentFormat() const;
+
+    /*!
      * \brief Specifies the book mark IDs.
      *
      * \param bookmarkId specifies the book mark IDs.

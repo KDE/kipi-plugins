@@ -367,6 +367,14 @@ public:
     HObjects findObjects(const QSet<QString>& objectIds);
 
     /*!
+     * Indicates if the datasource has a container with the specified title.
+     *
+     * \return true in case the datasource contains a container with the
+     * specified title.
+     */
+    HContainer* findContainerWithTitle(const QString& title);
+
+    /*!
      * \brief Returns all the objects this data source contains.
      *
      * \return all the objects this data source contains.

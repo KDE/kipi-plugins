@@ -19,8 +19,6 @@
  *  along with Herqq UPnP. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>
-
 #include "hactionarguments.h"
 #include "hactionarguments_p.h"
 

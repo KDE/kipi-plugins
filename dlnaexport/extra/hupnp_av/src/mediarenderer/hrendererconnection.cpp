@@ -329,6 +329,7 @@ qint32 HRendererConnection::play(const QString& speed)
     case HTransportState::Stopped:
     case HTransportState::Playing:
     case HTransportState::PausedPlayback:
+    case HTransportState::Transitioning:
     case HTransportState::VendorDefined:
         break;
     default:

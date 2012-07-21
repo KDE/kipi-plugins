@@ -89,6 +89,7 @@ QHash<QString, MimeAndItemCreator> initializeCreatorFunctions()
     retVal["mpa"] = MimeAndItemCreator("video/mpeg", createVideoItem);
     retVal["mpe"] = MimeAndItemCreator("video/mpeg", createVideoItem);
     retVal["mpeg"] = MimeAndItemCreator("video/mpeg", createVideoItem);
+    retVal["wmv"] = MimeAndItemCreator("video/mpeg", createVideoItem);
     retVal["mpg"] = MimeAndItemCreator("video/mpeg", createVideoItem);
     retVal["mov"] = MimeAndItemCreator("video/quicktime", createVideoItem);
     retVal["qt"] = MimeAndItemCreator("video/quicktime", createVideoItem);
@@ -255,6 +256,19 @@ bool HCdsFileSystemReader::scan(
     result->append(tmp);
 
     return true;
+}
+
+QString HCdsFileSystemReader::deduceMimeType(const QString& filename)
+{
+    QString fileSuffix = filename.mid(filename.lastIndexOf('.')+1).toLower();
+
+    MimeAndItemCreator creator = creatorFunctions[fileSuffix];
+    if (!creator.second)
+    {
+        return "";
+    }
+
+    return creator.first;
 }
 
 }

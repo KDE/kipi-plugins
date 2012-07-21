@@ -108,7 +108,7 @@ public:
          * The specified list of state variable value pairs includes variables
          * that are not allowed to be set.
          */
-        StateVariablesSpecifiedImproperly = 710,
+        StateVariablesSpecifiedImproperly = 710
     };
 
     /*!

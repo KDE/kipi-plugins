@@ -28,6 +28,7 @@
 
 #include "../transport/havtransport_adapter.h"
 #include "../connectionmanager/hconnectioninfo.h"
+#include "../renderingcontrol/hrenderingcontrol_info.h"
 #include "../renderingcontrol/hrenderingcontrol_adapter.h"
 #include "../connectionmanager/hconnectionmanager_adapter.h"
 #include "../connectionmanager/hprepareforconnection_result.h"
@@ -223,7 +224,7 @@ void HMediaRendererAdapter::prepareForConnectionCompleted(
 
     pOp.setValue(info.connectionId());
 
-    HConnection* connection = new HConnection(info, connectionManager(),  transport, rc);
+    HConnection* connection = new HConnection(info, connectionManager(), transport, rc);
     h->cacheConnection(connection);
     emit connectionReady(this, info.connectionId());
 }
@@ -304,8 +305,20 @@ bool HMediaRendererAdapter::prepareDevice(HClientDevice* device)
 
     if (!cmService)
     {
-        setLastErrorDescription("Mandatory service [ConnectionManager] is missing");
-        return false;
+        HClientServices cmServices =
+            device->servicesByType(
+                HConnectionManagerInfo::supportedServiceType(),
+                HResourceType::Inclusive);
+
+        if (cmServices.isEmpty())
+        {
+            setLastErrorDescription("Mandatory service [ConnectionManager] is missing");
+            return false;
+        }
+        else
+        {
+            cmService = cmServices.first();
+        }
     }
 
     HClientService* tsService = device->serviceById(
@@ -313,8 +326,20 @@ bool HMediaRendererAdapter::prepareDevice(HClientDevice* device)
 
     if (!tsService)
     {
-        setLastErrorDescription("Mandatory service [AVTransport] is missing");
-        return false;
+        HClientServices tsServices =
+            device->servicesByType(
+                HAvTransportInfo::supportedServiceType(),
+                HResourceType::Inclusive);
+
+        if (tsServices.isEmpty())
+        {
+            setLastErrorDescription("Mandatory service [AVTransport] is missing");
+            return false;
+        }
+        else
+        {
+            tsService = tsServices.first();
+        }
     }
 
     HClientService* rcService = device->serviceById(
@@ -322,8 +347,20 @@ bool HMediaRendererAdapter::prepareDevice(HClientDevice* device)
 
     if (!rcService)
     {
-        setLastErrorDescription("Mandatory service [RenderingControl] is missing");
-        return false;
+        HClientServices rcServices =
+            device->servicesByType(
+                HRenderingControlInfo::supportedServiceType(),
+                HResourceType::Inclusive);
+
+        if (rcServices.isEmpty())
+        {
+            setLastErrorDescription("Mandatory service [RenderingControl] is missing");
+            return false;
+        }
+        else
+        {
+            rcService = rcServices.first();
+        }
     }
 
     h->m_cm.reset(new HConnectionManagerAdapter());

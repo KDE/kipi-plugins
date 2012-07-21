@@ -98,6 +98,19 @@ bool HItem::isRef() const
     return !refId().isEmpty();
 }
 
+bool HItem::hasContentFormat() const
+{
+    foreach(const HResource& resource, resources())
+    {
+        QString contentFormat = resource.protocolInfo().contentFormat();
+        if (!contentFormat.isEmpty() && contentFormat != "*")
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void HItem::setBookmarkIds(const QStringList& bookmarkId)
 {
     bool b = setCdsProperty(HCdsProperties::upnp_bookmarkID, bookmarkId);
