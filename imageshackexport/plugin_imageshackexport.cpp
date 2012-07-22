@@ -78,6 +78,7 @@ Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QV
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
     d->imageshack = new Imageshack();
+
     d->iface = dynamic_cast<Interface*>(parent);
     if (!d->iface)
     {
@@ -85,7 +86,7 @@ Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QV
         return;
     }
 
-    setupActions();
+    setUiBaseName("kipiplugin_imageshackexportui.rc");
     setupXML();
 }
 
@@ -98,6 +99,14 @@ Plugin_ImageshackExport::~Plugin_ImageshackExport()
 void Plugin_ImageshackExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
+
+    clearActions();
+    setupActions();
+
+    if (!d->iface)
+        return;
+
+    d->actionExport->setEnabled(true);
 }
 
 void Plugin_ImageshackExport::setupActions()
@@ -106,14 +115,12 @@ void Plugin_ImageshackExport::setupActions()
     d->actionExport->setText(i18n("Export to &Imageshack..."));
     d->actionExport->setIcon(KIcon("imageshack"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));
-    d->actionExport->setEnabled(true);
+    d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
     addAction(d->actionExport);
-
-    setUiBaseName("kipiplugin_imageshackexportui.rc");
 }
 
 void Plugin_ImageshackExport::setupXML()
