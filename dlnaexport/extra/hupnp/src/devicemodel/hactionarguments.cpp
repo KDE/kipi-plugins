@@ -27,6 +27,8 @@
 #include <QtCore/QUrl>
 #include <QtCore/QStringList>
 
+#include <algorithm>
+
 namespace Herqq
 {
 
