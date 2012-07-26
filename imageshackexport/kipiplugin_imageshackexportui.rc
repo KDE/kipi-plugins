@@ -4,7 +4,7 @@
     <MenuBar>
 
         <Menu name="Export"><text>&amp;Export</text>
-            <Action name="imageshackexport" />
+            <Action name="imageshackexport" group="kipi_export_group" />
         </Menu>
 
     </MenuBar>
