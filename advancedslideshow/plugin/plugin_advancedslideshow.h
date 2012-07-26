@@ -64,6 +64,11 @@ private Q_SLOTS:
 
 private:
 
+    void setupActions();
+    void setupXML();
+
+private:
+
     KAction*         m_actionSlideShow;
     KIPI::Interface* m_interface;
     KUrl::List       m_urlList;
