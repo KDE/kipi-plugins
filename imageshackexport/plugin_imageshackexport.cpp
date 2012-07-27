@@ -104,7 +104,10 @@ void Plugin_ImageshackExport::setup(QWidget* const widget)
     setupActions();
 
     if (!d->iface)
+    {
+        kError() << "Kipi interface is null!";
         return;
+    }
 
     d->actionExport->setEnabled(true);
 }
