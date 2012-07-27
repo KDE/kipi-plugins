@@ -125,8 +125,11 @@ void Plugin_ImageshackExport::setupActions()
 
 void Plugin_ImageshackExport::setupXML()
 {
-    KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
-    mergeXMLFile(host);
+    if (d->iface)
+    {
+        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
+        mergeXMLFile(host);
+    }
 }
 
 void Plugin_ImageshackExport::slotExport()
