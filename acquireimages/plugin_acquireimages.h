@@ -69,6 +69,11 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+    void setupXML();
+
+private:
+
     QWidget*                 m_parentWidget;
 
     KAction*                 m_action_scanimages;
