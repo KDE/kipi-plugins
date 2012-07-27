@@ -1,0 +1,17 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="2" name="kipiplugin_batchprocessimages" >
+
+    <MenuBar>
+
+        <Menu name="Tools"><text>&amp;Tools</text>
+            <Action name="batch_effect_images" group="kipi_batch_group" />
+            <Action name="batch_recompress_images" group="kipi_batch_group" />
+            <Action name="batch_resize_images" group="kipi_batch_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>

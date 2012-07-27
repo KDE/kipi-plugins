@@ -34,6 +34,11 @@
 
 class KAction;
 
+namespace KIPI
+{
+    class Interface;
+};
+
 namespace KIPIBatchProcessImagesPlugin
 {
 
@@ -64,6 +69,11 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+    void setupXML();
+
+private:
+
     KAction*                m_action_borderimages;
     KAction*                m_action_colorimages;
     KAction*                m_action_convertimages;
@@ -81,6 +91,8 @@ private:
     RenameImagesDialog*     m_RenameImagesDialog;
     RecompressImagesDialog* m_RecompressImagesDialog;
     ResizeImagesDialog*     m_ResizeImagesDialog;
+
+    KIPI::Interface*        m_iface;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

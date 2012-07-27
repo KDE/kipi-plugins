@@ -54,3 +54,4 @@ TARGET_LINK_LIBRARIES(
 INSTALL(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES plugin/kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_batchprocessimagesui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
