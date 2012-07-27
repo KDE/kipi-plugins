@@ -81,11 +81,18 @@ public Q_SLOTS:
 
 private:
 
-    KAction*  m_actionImport;
-    KAction*  m_actionExport;
+    void setupActions();
+    void setupXML();
 
-    FbWindow* m_dlgImport;
-    FbWindow* m_dlgExport;
+private:
+
+    KAction*   m_actionImport;
+    KAction*   m_actionExport;
+
+    FbWindow*  m_dlgImport;
+    FbWindow*  m_dlgExport;
+
+    Interface* m_iface;
 };
 
 } // namespace KIPIFacebookPlugin
