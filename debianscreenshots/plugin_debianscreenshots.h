@@ -33,6 +33,11 @@
 
 class KAction;
 
+namespace KIPI
+{
+    class Interface;
+}
+
 using namespace KIPI;
 
 namespace KIPIDebianScreenshotsPlugin
@@ -58,8 +63,15 @@ public Q_SLOTS:
 
 private:
 
-    KAction*  m_actionExport;
-    DsWindow* m_dlgExport;
+    void setupActions();
+    void setupXML();
+
+private:
+
+    KAction*   m_actionExport;
+    DsWindow*  m_dlgExport;
+
+    Interface* m_iface;
 };
 
 } // namespace KIPIDebianScreenshotsPlugin

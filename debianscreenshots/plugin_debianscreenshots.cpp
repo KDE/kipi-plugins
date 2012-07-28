@@ -59,9 +59,20 @@ K_EXPORT_PLUGIN ( DebianScreenshotsFactory("kipiplugin_debianscreenshots") )
 
 Plugin_DebianScreenshots::Plugin_DebianScreenshots(QObject* const parent, const QVariantList&)
     : Plugin(DebianScreenshotsFactory::componentData(),
-                   parent, "Debian Screenshots Export")
+                   parent, "Debian Screenshots Export"),
+      m_iface(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DebianScreenshots plugin loaded";
+
+    m_iface = dynamic_cast<Interface*>(parent);
+    if (!m_iface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    setUiBaseName("kipiplugin_debianscreenshotsui.rc");
+    setupXML();
 }
 
 Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
@@ -76,25 +87,39 @@ void Plugin_DebianScreenshots::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_debianscreenshots");
 
+    clearActions();
+    setupActions();
+
+    if (!m_iface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_DebianScreenshots::setupActions()
+{
     m_actionExport = actionCollection()->addAction("debianscreenshotsexport");
     m_actionExport->setText(i18n("Export to &Debian Screenshots..."));
     m_actionExport->setIcon(KIcon("debianscreenshots"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_D));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
     addAction(m_actionExport);
+}
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+void Plugin_DebianScreenshots::setupXML()
+{
+    if (m_iface)
     {
-        kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
-        return;
+        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(m_iface->parent());
+        mergeXMLFile(host);
     }
-
-    m_actionExport->setEnabled(true);
 }
 
 void Plugin_DebianScreenshots::slotExport()
