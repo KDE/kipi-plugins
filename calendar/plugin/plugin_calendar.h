@@ -62,7 +62,14 @@ protected Q_SLOTS:
 
 private:
 
-    KAction* m_actionCalendar;
+    void setupActions();
+    void setupXML();
+
+private:
+
+    KAction*   m_actionCalendar;
+
+    Interface* m_iface;
 };
 
 }  // NameSpace KIPICalendarPlugin
