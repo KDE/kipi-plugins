@@ -186,7 +186,7 @@ PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget*
     if (m_username.isEmpty())
         slotUserChangeRequest(false);
     else
-        authenticate(m_token, m_username, m_password);
+        authenticate(m_token, m_username, m_password, m_userEmailId);
 }
 
 PicasawebWindow::~PicasawebWindow()
@@ -247,12 +247,12 @@ void PicasawebWindow::reactivate()
     show();
 }
 
-void PicasawebWindow::authenticate(const QString& token, const QString& username, const QString& password)
+void PicasawebWindow::authenticate(const QString& token, const QString& username, const QString& password, const QString& userEmailId)
 {
     m_widget->progressBar()->show();
     m_widget->progressBar()->setFormat("");
 
-    m_talker->authenticate(token, username, password);
+    m_talker->authenticate(token, username, password, userEmailId);
 }
 
 void PicasawebWindow::readSettings()
@@ -261,6 +261,7 @@ void PicasawebWindow::readSettings()
     KConfigGroup grp = config.group( "PicasawebExport Settings");
     m_token          = grp.readEntry("token");
     m_username       = grp.readEntry("username");
+    m_userEmailId    = grp.readEntry("userEmail");
     //m_password     = grp.readEntry("password");
     m_currentAlbumID = grp.readEntry("Current Album");
 
@@ -289,6 +290,7 @@ void PicasawebWindow::writeSettings()
     kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
     grp.writeEntry("token",         m_talker->token());
     grp.writeEntry("username",      m_username);
+    grp.writeEntry("userEmail",     m_userEmailId);
     grp.writeEntry("Current Album", m_currentAlbumID);
     grp.writeEntry("Resize",        m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width", m_widget->m_dimensionSpB->value());
@@ -335,8 +337,9 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
         return;
     }
 
-    m_username = m_talker->getUserName();
-    m_widget->updateLabels(m_talker->getLoginName(), m_username);
+    m_username    = m_talker->getUserName();
+    m_userEmailId = m_talker->getUserEmailId();
+    m_widget->updateLabels(m_userEmailId, m_talker->getLoginName());
 
     m_widget->m_albumsCoB->clear();
     for (int i = 0; i < albumsList.size(); ++i)

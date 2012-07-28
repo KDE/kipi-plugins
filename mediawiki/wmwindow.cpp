@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-02-11
- * Description : a kipi plugin to export images to wikimedia commons
+ * Description : A kipi plugin to export images to a MediaWiki wiki
  *
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -107,17 +107,17 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
-    setWindowTitle(i18n("Export to Wikimedia Commons"));
+    setWindowTitle(i18n("Export to MediaWiki"));
     setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                     i18n("Start upload to Wikimedia Commons")));
+                                     i18n("Start upload to MediaWiki")));
     enableButton(User1, false);
     d->widget->setMinimumSize(700, 500);
     d->widget->installEventFilter(this);
 
-    KPAboutData* about = new KPAboutData(ki18n("Wikimedia Commons Export"), 0,
+    KPAboutData* about = new KPAboutData(ki18n("MediaWiki export"), 0,
                                          KAboutData::License_GPL,
                                          ki18n("A Kipi plugin to export image collection "
-                                               "to Wikimedia Commons.\n"
+                                               "to a MediaWiki installation.\n"
                                                "Using libmediawiki version %1").subs(QString(mediawiki_version)),
                                          ki18n("(c) 2011, Alexandre Mendes"));
 
@@ -172,29 +172,29 @@ void WMWindow::reactivate()
     d->widget->imagesList()->listView()->clear();
     d->widget->imagesList()->loadImagesFromCurrentSelection();
     d->widget->loadImageInfoFirstLoad();
-
+    d->widget->clearEditFields();
     show();
 }
 
 void WMWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Wikimedia Commons settings"));
+    KConfigGroup group = config.group(QString("MediaWiki export settings"));
 
     d->widget->readSettings(group);
 
-    KConfigGroup group2 = config.group(QString("Wikimedia Commons dialog"));
+    KConfigGroup group2 = config.group(QString("MediaWiki export dialog"));
     restoreDialogSize(group2);
 }
 
 void WMWindow::saveSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Wikimedia Commons settings"));
+    KConfigGroup group = config.group(QString("MediaWiki export settings"));
 
     d->widget->saveSettings(group);
 
-    KConfigGroup group2 = config.group(QString("Wikimedia Commons dialog"));
+    KConfigGroup group2 = config.group(QString("MediaWiki export dialog"));
     saveDialogSize(group2);
     config.sync();
 }
@@ -261,7 +261,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    KUrl::List urls                                     = iface()->currentSelection().images();
+    KUrl::List urls = iface()->currentSelection().images();
     QMap <QString, QMap <QString, QString> > imagesDesc = d->widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)
@@ -287,7 +287,7 @@ void WMWindow::slotStartTransfer()
             this, SLOT(slotEndUpload()));
 
     d->widget->progressBar()->show();
-    d->widget->progressBar()->progressScheduled(i18n("Wiki Export"), true, true);
+    d->widget->progressBar()->progressScheduled(i18n("MediaWiki export"), true, true);
     d->widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     d->uploadJob->begin();
 }
@@ -314,7 +314,7 @@ void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QUrl
 
 int WMWindow::slotLoginHandle(KJob* loginJob)
 {
-    kDebug() << loginJob->error();
+    kDebug() << loginJob->error() << loginJob->errorString() << loginJob->errorText();
 
     if(loginJob->error())
     {

@@ -4,12 +4,12 @@
  * http://www.digikam.org
  *
  * Date        : 2011-02-11
- * Description : a kipi plugin to export images to wikimedia commons
+ * Description : A kipi plugin to export images to a MediaWiki wiki
  *
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Nathan Damie <nathan dot damie at gmail dot com>
- * Copyright (C) 2012      by Iliya Ivanov <iliya dot ivanov at etudiant dot univ dash lille1 dot fr>
+ * Copyright (C) 2012      by Iliya Ivanov <ilko2002 at abv dot bg>
  * Copyright (C) 2012      by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -39,7 +39,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-// Mediawiki includes
+// MediaWiki includes
 
 #include <libmediawiki/upload.h>
 #include <libmediawiki/mediawiki.h>
@@ -94,13 +94,14 @@ void WikiMediaJob::begin()
 void WikiMediaJob::setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc)
 {
     d->imageDesc = imageDesc;
+    kDebug() << "Map length:" << imageDesc.size();
 }
 
 void WikiMediaJob::uploadHandle(KJob* j)
 {
     if(j != 0)
     {
-        kDebug() << "Upload" << (int)j->error();
+        kDebug() << "Upload error" << j->error() << j->errorString() << j->errorText();
         emit uploadProgress(100);
 
         disconnect(j, SIGNAL(result(KJob*)), 
@@ -115,11 +116,11 @@ void WikiMediaJob::uploadHandle(KJob* j)
             const QString errorText = j->errorText();
             if(errorText.isEmpty())
             {
-                d->error = i18n("Error on file '%1'\n", d->currentFile);
+                d->error.append(i18n("Error on file '%1'\n", d->currentFile));
             }
             else
             {
-                d->error = i18n("Error on file '%1': %2\n", d->currentFile, errorText.isEmpty());
+                d->error.append(i18n("Error on file '%1': %2\n", d->currentFile, errorText));
             }
         }
     }
@@ -131,7 +132,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
         QMap<QString,QString> info = d->imageDesc.take(keys.first());
         Upload* e1                 = new Upload(*d->mediawiki, this);
 
-        kDebug() << "image path : " << keys.first();
+        kDebug() << "Path:" << keys.first();
 
         QFile* file = new QFile(keys.first(),this);
         file->open(QIODevice::ReadOnly);
@@ -139,8 +140,10 @@ void WikiMediaJob::uploadHandle(KJob* j)
 
         e1->setFile(file);
         d->currentFile = file->fileName();
-        kDebug() << "image name : " << file->fileName();
-        e1->setFilename(info["title"]);
+        kDebug() << "Name:" << file->fileName();
+        e1->setFilename(info["title"].replace(" ", "_"));
+        kDebug() << "Title:" << info["title"];
+        e1->setComment("Upload via KIPI uploader");
         e1->setText(buildWikiText(info));
         keys.removeFirst();
 
@@ -173,37 +176,57 @@ QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
     QString text = QString::fromUtf8("=={{int:filedesc}}==");
     text.append("\n{{Information");
     text.append("\n|Description=").append(info["description"].toUtf8());
-    text.append("\n|Source=").append("{{own}}");
+    text.append("\n|Source=");
+
+    if(!info["source"].isEmpty())
+    {
+        text.append(info["source"].toUtf8());
+    }
+
     text.append("\n|Author=");
 
     if(!info["author"].isEmpty())
     {
-        text.append("[[");
         text.append(info["author"].toUtf8());
-        text.append("]]");
     }
 
-    text.append("\n|Date=").append(info["time"].toUtf8());
+    text.append("\n|Date=").append(info["date"].toUtf8());
     text.append("\n|Permission=");
     text.append("\n|other_versions=");
-    text.append("\n}}");
+    text.append("\n}}\n");
 
     QString latitude  = info["latitude"].toUtf8();
     QString longitude = info["longitude"].toUtf8();
 
     if(!latitude.isEmpty() && !longitude.isEmpty())
     {
-        kDebug() << "Latitude: \"" << latitude << "\"; longitude: \"" << longitude << "\"";
-        text.append("\n{{Location dec").append("|").append(latitude).append("|").append(longitude).append("}}");
+        kDebug() << "Latitude:" << latitude << "; longitude:" << longitude;
+        text.append("{{Location dec").append("|").append(latitude).append("|").append(longitude).append("}}\n");
     }
 
-    text.append("\n\n=={{int:license-header}}==\n");
-    text.append(info["license"].toUtf8()).append("\n");
+    if(!info["genText"].isEmpty())
+    {
+        text.append(info["genText"].toUtf8()).append("\n");
+    }
+
+    text.append("\n=={{int:license-header}}==\n");
+    text.append(info["license"].toUtf8()).append("\n\n");
+
+    QStringList categories;
 
     if(!info["categories"].isEmpty())
     {
-        text.append("\n[[Category:Uploaded with KIPI uploader]]\n");
-        QStringList categories = info["categories"].split("\n", QString::SkipEmptyParts);
+        categories = info["categories"].split("\n", QString::SkipEmptyParts);
+
+        for(int i = 0; i < categories.size(); i++)
+        {
+            text.append("[[Category:").append(categories[i].toUtf8()).append("]]\n");
+        }
+    }
+
+    if(!info["genCategories"].isEmpty())
+    {
+        categories = info["genCategories"].split("\n", QString::SkipEmptyParts);
 
         for(int i = 0; i < categories.size(); i++)
         {

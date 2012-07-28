@@ -96,11 +96,13 @@ void CpCleanTask::run()
     delete process;
     process = 0;
 
+/*
+    //TO HACK
     if (successFlag && !PTOParser::parseFile(cpCleanPtoUrl->toLocalFile(), *ptoUrlData))
     {
         kDebug() << "Parse Failed!!";
     }
-
+*/
     return;
 }
 

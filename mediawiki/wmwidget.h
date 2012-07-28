@@ -74,14 +74,17 @@ public:
     int  quality()   const;
     bool resize()    const;
 
-    QString author()      const;
-    QString license()     const;
-    QString categories()  const;
-    QString title()       const;
-    QString description() const;
-    QString date()        const;
-    QString latitude()    const;
-    QString longitude()   const;
+    QString author()        const;
+    QString source()        const;
+    QString genCategories() const;
+    QString genText()       const;
+    QString license()       const;
+    QString categories()    const;
+    QString title()         const;
+    QString description()   const;
+    QString date()          const;
+    QString latitude()      const;
+    QString longitude()     const;
 
     QMap <QString, QMap <QString, QString> > allImagesDesc();
 
@@ -89,6 +92,7 @@ public:
     void readSettings(KConfigGroup& group);
     void saveSettings(KConfigGroup& group);
     void loadImageInfoFirstLoad();
+    void clearEditFields();
 
 Q_SIGNALS:
 
@@ -103,6 +107,7 @@ private Q_SLOTS:
     void slotNewWikiClicked();
     void slotAddWikiClicked();
     void slotLoadImagesDesc(QTreeWidgetItem* item);
+    void slotRemoveImagesDesc(const KUrl::List urls);
     void slotApplyTitle();
     void slotApplyDate();
     void slotApplyCategories();
