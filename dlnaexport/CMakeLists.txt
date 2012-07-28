@@ -59,3 +59,6 @@ INSTALL(TARGETS kipiplugin_dlnaexport
 
 INSTALL(FILES kipiplugin_dlnaexport.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_dlnaexportui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi)
