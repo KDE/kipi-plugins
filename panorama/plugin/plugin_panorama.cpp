@@ -105,11 +105,12 @@ void Plugin_Panorama::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    if (!m_manager)
+    if (m_manager)
     {
-        m_manager = new Manager(this);
+        delete m_manager;
     }
 
+    m_manager = new Manager(this);
     m_manager->checkBinaries();
     m_manager->setItemsList(images.images());
     m_manager->setIface(m_interface);
