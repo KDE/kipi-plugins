@@ -447,10 +447,33 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 
-void BatchDialog::processingFailed(const KUrl& url)
+void BatchDialog::processingFailed(const KUrl& url, int result)
 {
     d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
+
+    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
+    if (!item) return;
+
+    QString status;
+
+    switch (result)
+    {
+        case DNGWriter::PROCESSFAILED:
+            status = i18n("Process failed");
+            break;
+        case DNGWriter::PROCESSCANCELED:
+            status = i18n("Process Canceled");
+            break;
+        case DNGWriter::FILENOTSUPPORTED:
+            status = i18n("File not supported");
+            break;
+        default:
+            status = i18n("Internal error");
+            break;
+    }
+
+    item->setStatus(status);
 }
 
 void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
@@ -481,7 +504,7 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
     }
     else
     {
-        if (!ad.success)        // Something is failed...
+        if (ad.result != DNGWriter::PROCESSCOMPLETE)        // Something is failed...
         {
             switch (ad.action)
             {
@@ -491,7 +514,7 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
                 }
                 case(PROCESS):
                 {
-                    processingFailed(ad.fileUrl);
+                    processingFailed(ad.fileUrl, ad.result);
                     break;
                 }
                 default:

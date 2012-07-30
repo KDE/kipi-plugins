@@ -53,21 +53,19 @@
 // Local includes
 
 #include "actions.h"
-#include "dngwriter.h"
 #include "kpmetadata.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
-using namespace DNGIface;
 
 namespace KIPIDNGConverterPlugin
 {
 
-class ActionThread::ActionThreadPriv
+class ActionThread::Private
 {
 public:
 
-    ActionThreadPriv()
+    Private()
     {
         backupOriginalRawFile = false;
         compressLossLess      = true;
@@ -97,7 +95,7 @@ public:
 };
 
 
-Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action, ActionThread::ActionThreadPriv* const d)
+Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action, ActionThread::Private* const d)
     : Job(parent)
 {
     m_url    = fileUrl;
@@ -137,7 +135,7 @@ void Task::run()
             ad.action  = m_action;
             ad.fileUrl = m_url;
             ad.message = identify;
-            ad.success = true;
+            ad.result  = DNGWriter::PROCESSCOMPLETE;
             emit signalFinished(ad);
             break;
         }
@@ -150,7 +148,7 @@ void Task::run()
             ad1.starting = true;
             emit signalStarting(ad1);
 
-            int     ret = 0;
+            int     ret = DNGWriter::PROCESSCOMPLETE;
             QString destPath;
 
             {
@@ -173,7 +171,7 @@ void Task::run()
             ad2.action   = PROCESS;
             ad2.fileUrl  = m_url;
             ad2.destPath = destPath;
-            ad2.success  = (ret == 0) ? true : false;
+            ad2.result   = ret;
             emit signalFinished(ad2);
             break;
         }
@@ -189,7 +187,7 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new ActionThreadPriv)
+    : KPActionThreadBase(parent), d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }

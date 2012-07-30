@@ -47,6 +47,15 @@ public:
         FULLSIZE
     };
 
+    enum ConvertError
+    {
+        PROCESSCOMPLETE     =  0,
+        PROCESSFAILED       = -1,
+        PROCESSCANCELED     = -2,
+        FILENOTSUPPORTED    = -3,
+        DNGSDKINTERNALERROR = -4
+    };
+
 public:
 
     DNGWriter();
