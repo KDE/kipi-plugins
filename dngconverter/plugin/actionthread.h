@@ -73,11 +73,11 @@ Q_SIGNALS:
 
 public:
 
-    class ActionThreadPriv;
+    class Private;
 
 private:
 
-    ActionThreadPriv* const d;
+    Private* const d;
 };
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::ActionThreadPriv* const d);
+    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::Private* const d);
     ~Task();
 
 Q_SIGNALS:
@@ -102,10 +102,10 @@ protected:
 
 private:
 
-    KUrl                            m_url;
-    Action                          m_action;
+    KUrl                   m_url;
+    Action                 m_action;
 
-    ActionThread::ActionThreadPriv* m_d;
+    ActionThread::Private* m_d;
 };
 
 }  // namespace KIPIDNGConverterPlugin

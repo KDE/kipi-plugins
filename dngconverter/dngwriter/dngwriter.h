@@ -47,6 +47,15 @@ public:
         FULLSIZE
     };
 
+    enum ConvertError
+    {
+        PROCESSCOMPLETE     =  0,
+        PROCESSFAILED       = -1,
+        PROCESSCANCELED     = -2,
+        FILENOTSUPPORTED    = -3,
+        DNGSDKINTERNALERROR = -4
+    };
+
 public:
 
     DNGWriter();
@@ -79,11 +88,11 @@ public:
 public:
 
     // Declared public because of DNGWriterHost class.
-    class DNGWriterPrivate;
+    class Private;
 
 private:
 
-    DNGWriterPrivate* const d;
+    Private* const d;
 };
 
 }  // namespace DNGIface

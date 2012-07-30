@@ -67,7 +67,7 @@ private:
 
     void processAll();
     void processed(const KUrl& url, const QString& tmpFile);
-    void processingFailed(const KUrl& url);
+    void processingFailed(const KUrl& url, int result);
 
 private Q_SLOTS:
 

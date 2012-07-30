@@ -33,6 +33,12 @@
 
 #include <kurl.h>
 
+// Local includes
+
+#include "dngwriter.h"
+
+using namespace DNGIface;
+
 namespace KIPIDNGConverterPlugin
 {
 
@@ -51,11 +57,11 @@ public:
     ActionData() 
     {
         starting = false;
-        success  = false;
+        result   = DNGWriter::PROCESSCOMPLETE;
     }
 
     bool    starting;
-    bool    success;
+    int     result;
 
     QString destPath;
     QString message;
