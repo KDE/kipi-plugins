@@ -35,7 +35,7 @@ class DNGWriterHost : public dng_host
 
 public:
 
-    DNGWriterHost(DNGWriter::DNGWriterPrivate* const priv, dng_memory_allocator* const allocator=0);
+    DNGWriterHost(DNGWriter::Private* const priv, dng_memory_allocator* const allocator=0);
     ~DNGWriterHost();
 
 private:
@@ -44,7 +44,7 @@ private:
 
 private:
 
-    DNGWriter::DNGWriterPrivate* const m_priv;
+    DNGWriter::Private* const m_priv;
 };
 
 }  // namespace DNGIface

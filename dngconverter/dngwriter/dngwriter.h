@@ -79,11 +79,11 @@ public:
 public:
 
     // Declared public because of DNGWriterHost class.
-    class DNGWriterPrivate;
+    class Private;
 
 private:
 
-    DNGWriterPrivate* const d;
+    Private* const d;
 };
 
 }  // namespace DNGIface

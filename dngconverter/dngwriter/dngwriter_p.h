@@ -66,13 +66,30 @@ using namespace KDcrawIface;
 namespace DNGIface
 {
 
-class DNGWriter::DNGWriterPrivate
+class DNGWriter::Private
 {
 
 public:
 
-    DNGWriterPrivate();
-    ~DNGWriterPrivate();
+    enum DNGBayerPattern
+    {
+        Unknown = 1,
+        LinearRaw,
+        Standard,
+        Fuji,
+        FourColor
+    };
+
+public:
+
+    Private();
+    ~Private();
+
+public:
+
+    void          reset();
+    void          cleanup();
+    dng_date_time dngDateTime(const QDateTime& qDT);
 
 public:
 
@@ -85,12 +102,6 @@ public:
 
     QString inputFile;
     QString outputFile;
-
-public:
-
-    void reset();
-    void cleanup();
-    dng_date_time dngDateTime(const QDateTime& qDT);
 };
 
 }  // namespace DNGIface

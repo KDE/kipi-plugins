@@ -81,17 +81,8 @@ using namespace KIPIPlugins;
 namespace DNGIface
 {
 
-enum DNGBayerPattern
-{
-    Unknown = 1,
-    LinearRaw,
-    Standard,
-    Fuji,
-    FourColor
-};
-
 DNGWriter::DNGWriter()
-    : d(new DNGWriterPrivate)
+    : d(new Private)
 {
 }
 
@@ -201,6 +192,7 @@ int DNGWriter::convert()
         kDebug() << "DNGWriter: Loading RAW data from " << inputInfo.fileName() ;
 
         KDcraw rawProcessor;
+
         if (!rawProcessor.rawFileIdentify(identifyMake, inputFile()))
         {
             kDebug() << "DNGWriter: Reading RAW file failed. Aborted..." ;
@@ -213,6 +205,7 @@ int DNGWriter::convert()
         int activeHeight = 0;
         int outputHeight = 0;
         int outputWidth  = 0;
+
         if ((identifyMake.orientation == 5) || (identifyMake.orientation == 6))
         {
             outputHeight = identifyMake.outputSize.width();
@@ -275,6 +268,7 @@ int DNGWriter::convert()
         kDebug() << "--- CAM->XYZ:" ;
 
         QString matrixVal;
+
         for(int i=0; i<4; ++i)
         {
             kDebug() << "                   "
@@ -284,65 +278,68 @@ int DNGWriter::convert()
         }
 
         // Check if CFA layout is supported by DNG SDK.
-        DNGBayerPattern bayerPattern = Unknown;
-        uint32 filter = 0;
-        bool fujiRotate90 = false;
+        Private::DNGBayerPattern bayerPattern = Private::Unknown;
+        uint32 filter                         = 0;
+        bool fujiRotate90                     = false;
 
         // Standard bayer layouts
         if (identify.filterPattern == QString("GRBGGRBGGRBGGRBG"))
         {
-            bayerPattern = Standard;
-            filter = 0;
+            bayerPattern = Private::Standard;
+            filter       = 0;
         }
         else if (identify.filterPattern == QString("RGGBRGGBRGGBRGGB"))
         {
-            bayerPattern = Standard;
-            filter = 1;
+            bayerPattern = Private::Standard;
+            filter       = 1;
         }
         else if (identify.filterPattern == QString("BGGRBGGRBGGRBGGR"))
         {
-            bayerPattern = Standard;
-            filter = 2;
+            bayerPattern = Private::Standard;
+            filter       = 2;
         }
         else if (identify.filterPattern == QString("GBRGGBRGGBRGGBRG"))
         {
-            bayerPattern = Standard;
-            filter = 3;
+            bayerPattern = Private::Standard;
+            filter       = 3;
         }
         // Fuji layouts
         else if ((identify.filterPattern == QString("RGBGRGBGRGBGRGBG")) &&
                  (identifyMake.make == QString("FUJIFILM")))
         {
-            bayerPattern = Fuji;
+            bayerPattern = Private::Fuji;
             fujiRotate90 = false;
-            filter = 0;
+            filter       = 0;
         }
         else if ((identify.filterPattern == QString("RBGGBRGGRBGGBRGG")) &&
                  (identifyMake.make == QString("FUJIFILM")))
         {
-            bayerPattern = Fuji;
+            bayerPattern = Private::Fuji;
             fujiRotate90 = true;
-            filter = 0;
+            filter       = 0;
         }
-        else if ((identify.rawColors == 3) &&
-                 (identify.filterPattern.isEmpty()) &&
+        else if ((identify.rawColors == 3)                 &&
+                 (identify.filterPattern.isEmpty())        &&
                  //(identify.filterPattern == QString("")) &&
                  ((uint32)rawData.size() == identify.outputSize.width() * identify.outputSize.height() * 3 * sizeof(uint16)))
         {
-            bayerPattern = LinearRaw;
+            bayerPattern = Private::LinearRaw;
         }
         // Four color sensors
         else if (identify.rawColors == 4)
         {
-            bayerPattern = FourColor;
+            bayerPattern = Private::FourColor;
+
             if (identify.filterPattern.length() != 16)
             {
                 kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
                 return -1;
             }
+
             for (int i = 0; i < 16; ++i)
             {
                 filter = filter >> 2;
+
                 if (identify.filterPattern[i] == 'G')
                 {
                     filter |= 0x00000000;
@@ -379,8 +376,9 @@ int DNGWriter::convert()
                 kDebug() << "Can not rotate fuji image. Aborted...";
                 return -1;
             }
-            int tmp = outputWidth;
-            outputWidth = outputHeight;
+
+            int tmp      = outputWidth;
+            outputWidth  = outputHeight;
             outputHeight = tmp;
         }
 
@@ -390,8 +388,8 @@ int DNGWriter::convert()
             activeArea   = dng_rect(identify.topMargin,
                                     identify.leftMargin,
                                     identify.outputSize.height() - identify.bottomMargin,
-                                    identify.outputSize.width() - identify.rightMargin);
-            activeWidth  = identify.outputSize.width() - identify.leftMargin - identify.rightMargin;
+                                    identify.outputSize.width()  - identify.rightMargin);
+            activeWidth  = identify.outputSize.width()  - identify.leftMargin   - identify.rightMargin;
             activeHeight = identify.outputSize.height() - identify.bottomMargin - identify.topMargin;
         }
         else
@@ -413,8 +411,8 @@ int DNGWriter::convert()
             return -1;
         }
 
-        int width      = identify.outputSize.width();
-        int height     = identify.outputSize.height();
+        int width  = identify.outputSize.width();
+        int height = identify.outputSize.height();
 
 /*      // NOTE: code to hack RAW data extraction
 
@@ -446,7 +444,7 @@ int DNGWriter::convert()
         host.SetSaveLinearDNG(false);
         host.SetKeepOriginalFile(true);
 
-        AutoPtr<dng_image> image(new dng_simple_image(rect, (bayerPattern == LinearRaw) ? 3 : 1, ttShort, memalloc));
+        AutoPtr<dng_image> image(new dng_simple_image(rect, (bayerPattern == Private::LinearRaw) ? 3 : 1, ttShort, memalloc));
 
         if (d->cancel) return -2;
 
@@ -456,7 +454,7 @@ int DNGWriter::convert()
 
         buffer.fArea       = rect;
         buffer.fPlane      = 0;
-        buffer.fPlanes     = bayerPattern == LinearRaw ? 3 : 1;
+        buffer.fPlanes     = bayerPattern == Private::LinearRaw ? 3 : 1;
         buffer.fRowStep    = buffer.fPlanes * width;
         buffer.fColStep    = buffer.fPlanes;
         buffer.fPlaneStep  = 1;
@@ -473,8 +471,9 @@ int DNGWriter::convert()
 
         AutoPtr<dng_negative> negative(host.Make_dng_negative());
 
-        negative->SetDefaultScale(dng_urational(outputWidth, activeWidth), dng_urational(outputHeight, activeHeight));    
-        if (bayerPattern != LinearRaw)
+        negative->SetDefaultScale(dng_urational(outputWidth, activeWidth), dng_urational(outputHeight, activeHeight));
+
+        if (bayerPattern != Private::LinearRaw)
         {
             negative->SetDefaultCropOrigin(8, 8);
             negative->SetDefaultCropSize(activeWidth - 16, activeHeight - 16);
@@ -484,15 +483,15 @@ int DNGWriter::convert()
             negative->SetDefaultCropOrigin(0, 0);
             negative->SetDefaultCropSize(activeWidth, activeHeight);
         }
-        negative->SetActiveArea(activeArea);
 
+        negative->SetActiveArea(activeArea);
         negative->SetModelName(identify.model.toAscii());
         negative->SetLocalName(QString("%1 %2").arg(identify.make, identify.model).toAscii());
         negative->SetOriginalRawFileName(inputInfo.fileName().toAscii());
-
         negative->SetColorChannels(identify.rawColors);
 
         ColorKeyCode colorCodes[4] = {colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum};
+
         for(int i = 0; i < qMax(4, identify.colorKeys.length()); ++i)
         {
             if (identify.colorKeys[i] == 'R')
@@ -525,22 +524,22 @@ int DNGWriter::convert()
 
         switch (bayerPattern)
         {
-        case Standard:
-            // Standard bayer mosaicing. All work fine there.
-            // Bayer CCD mask: http://en.wikipedia.org/wiki/Bayer_filter
-            negative->SetBayerMosaic(filter);
-            break;
-        case Fuji:
-            // TODO: Fuji is special case. Need to setup different bayer rules here.
-            // It do not work in all settings. Need indeep investiguations.
-            // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
-            negative->SetFujiMosaic(filter);
-            break;
-        case FourColor:
-            negative->SetQuadMosaic(filter);
-            break;
-        default:
-            break;
+            case Private::Standard:
+                // Standard bayer mosaicing. All work fine there.
+                // Bayer CCD mask: http://en.wikipedia.org/wiki/Bayer_filter
+                negative->SetBayerMosaic(filter);
+                break;
+            case Private::Fuji:
+                // TODO: Fuji is special case. Need to setup different bayer rules here.
+                // It do not work in all settings. Need indeep investiguations.
+                // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
+                negative->SetFujiMosaic(filter);
+                break;
+            case Private::FourColor:
+                negative->SetQuadMosaic(filter);
+                break;
+            default:
+                break;
         }
 
         negative->SetWhiteLevel(identify.whitePoint, 0);
@@ -549,6 +548,7 @@ int DNGWriter::convert()
         negative->SetWhiteLevel(identify.whitePoint, 3);
 
         const dng_mosaic_info* mosaicinfo = negative->GetMosaicInfo();
+
         if ((mosaicinfo != NULL) && (mosaicinfo->fCFAPatternSize == dng_point(2, 2)))
         {
             negative->SetQuadBlacks(identify.blackPoint + identify.blackPointCh[0],
@@ -588,12 +588,11 @@ int DNGWriter::convert()
                 orientation = dng_orientation::Normal();
                 break;
         }
-        negative->SetBaseOrientation(orientation);
 
+        negative->SetBaseOrientation(orientation);
         negative->SetAntiAliasStrength(dng_urational(100, 100));
         negative->SetLinearResponseLimit(1.0);
         negative->SetShadowScale( dng_urational(1, 1) );
-
         negative->SetAnalogBalance(dng_vector_3(1.0, 1.0, 1.0));
 
         // -------------------------------------------------------------------------------
@@ -603,6 +602,7 @@ int DNGWriter::convert()
 
         // Set Camera->XYZ Color matrix as profile.
         dng_matrix matrix;
+
         switch (identify.rawColors)
         {
             case 3:
@@ -617,6 +617,7 @@ int DNGWriter::convert()
                     camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
                     camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
                     camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
+
                     if (camXYZ.MaxEntry() == 0.0)
                     {
                         kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
@@ -642,6 +643,7 @@ int DNGWriter::convert()
                     camXYZ[3][0] = identify.cameraXYZMatrix[3][0];
                     camXYZ[3][1] = identify.cameraXYZMatrix[3][1];
                     camXYZ[3][2] = identify.cameraXYZMatrix[3][2];
+
                     if (camXYZ.MaxEntry() == 0.0)
                     {
                         kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
@@ -659,10 +661,12 @@ int DNGWriter::convert()
         negative->AddProfile(prof);
 
         dng_vector camNeutral(identify.rawColors);
+
         for (int i = 0; i < identify.rawColors; ++i)
         {
             camNeutral[i] = 1.0/identify.cameraMult[i];
         }
+
         negative->SetCameraNeutral(camNeutral);
 
         if (d->cancel) return -2;
@@ -841,7 +845,7 @@ int DNGWriter::convert()
             meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer2, 1);
             meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer3, 2);
             meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer4, 3);
-            long gpsVer = 0;
+            long gpsVer  = 0;
             gpsVer += gpsVer1 << 24;
             gpsVer += gpsVer2 << 16;
             gpsVer += gpsVer3 <<  8;
@@ -903,6 +907,7 @@ int DNGWriter::convert()
                     break;
                 }
             }
+
             if (meta.getExifTagLong("Exif.CanonCs.MeteringMode", val))
             {
                 switch (val)
@@ -1006,14 +1011,15 @@ int DNGWriter::convert()
 
             // -------------------------------------------
 
-            if ((exif->fLensName.IsEmpty()) && 
+            if ((exif->fLensName.IsEmpty())          &&
                 (exif->fLensInfo[0].As_real64() > 0) &&
-                (exif->fLensInfo[1].As_real64() > 0)) 
+                (exif->fLensInfo[1].As_real64() > 0))
             {
-                QString lensName;
+                QString     lensName;
                 QTextStream stream(&lensName);
-                double dval = (double)exif->fLensInfo[0].n / (double)exif->fLensInfo[0].d;
+                double      dval = (double)exif->fLensInfo[0].n / (double)exif->fLensInfo[0].d;
                 stream << QString("%1").arg(dval, 0, 'f', 1);
+
                 if (exif->fLensInfo[0].As_real64() != exif->fLensInfo[1].As_real64())
                 {
                     dval = (double)exif->fLensInfo[1].n / (double)exif->fLensInfo[1].d;
@@ -1040,6 +1046,7 @@ int DNGWriter::convert()
             // Markernote backup.
 
             QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
+
             if (!mkrnts.isEmpty())
             {
                 kDebug() << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" ;
@@ -1101,11 +1108,13 @@ int DNGWriter::convert()
             originalDataBlock.resize(CHUNK);
 
             QTemporaryFile compressedFile;
+
             if (!compressedFile.open())
             {
                 kDebug() << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted...";
                 return -1;
             }
+
             QDataStream compressedDataStream(&compressedFile);
 
             for (quint32 block = 0; block < forkBlocks; ++block)
@@ -1126,6 +1135,7 @@ int DNGWriter::convert()
             dng_memory_stream tempDataStream(memalloc);
             tempDataStream.SetBigEndian(true);
             tempDataStream.Put_uint32(forkLength);
+
             for (qint32 idx = 0; idx < offsets.size(); ++idx)
             {
                 tempDataStream.Put_uint32(offsets[idx]);
@@ -1336,9 +1346,8 @@ int DNGWriter::convert()
 bool DNGWriter::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify)
 {
     QByteArray tmpData(rawData);
-    int height = identify.outputSize.height();
-    int width  = identify.outputSize.width();
-
+    int height             = identify.outputSize.height();
+    int width              = identify.outputSize.width();
     unsigned short* tmp    = (unsigned short*)tmpData.data();
     unsigned short* output = (unsigned short*)rawData.data();
 

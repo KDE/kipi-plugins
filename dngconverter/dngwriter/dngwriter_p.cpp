@@ -40,16 +40,16 @@
 namespace DNGIface
 {
 
-DNGWriter::DNGWriterPrivate::DNGWriterPrivate()
+DNGWriter::Private::Private()
 {
     reset();
 }
 
-DNGWriter::DNGWriterPrivate::~DNGWriterPrivate()
+DNGWriter::Private::~Private()
 {
 }
 
-void DNGWriter::DNGWriterPrivate::reset()
+void DNGWriter::Private::reset()
 {
     cancel                  = false;
     jpegLossLessCompression = true;
@@ -58,12 +58,12 @@ void DNGWriter::DNGWriterPrivate::reset()
     previewMode             = DNGWriter::MEDIUM;
 }
 
-void DNGWriter::DNGWriterPrivate::cleanup()
+void DNGWriter::Private::cleanup()
 {
     ::remove(QFile::encodeName(outputFile));
 }
 
-dng_date_time DNGWriter::DNGWriterPrivate::dngDateTime(const QDateTime& qDT)
+dng_date_time DNGWriter::Private::dngDateTime(const QDateTime& qDT)
 {
     dng_date_time dngDT;
     dngDT.fYear   = qDT.date().year();
