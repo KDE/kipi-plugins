@@ -23,10 +23,6 @@
 #ifndef WELCOMEPAGE_H
 #define WELCOMEPAGE_H
 
-// KDE includes
-
-#include <kcombobox.h>
-
 // Qt includes
 
 #include <QWidget>

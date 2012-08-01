@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "welcomepage.h"
+#include "welcomepage.moc"
 
 // Qt includes
 
@@ -53,12 +53,12 @@ public:
         getImageLbl = 0;
     }
 
-    QLabel*           iconLbl;
-    QLabel*           titleLbl;
-    QLabel*           headerLbl;
-    QLabel*           getImageLbl;
+    QLabel*    iconLbl;
+    QLabel*    titleLbl;
+    QLabel*    headerLbl;
+    QLabel*    getImageLbl;
 
-    KComboBox*        imageGetOption;   
+    KComboBox* imageGetOption;
 };
 
 WelcomePage::WelcomePage(QWidget* const parent)
