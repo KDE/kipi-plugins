@@ -47,17 +47,10 @@ K_PLUGIN_FACTORY(CalendarFactory, registerPlugin<Plugin_Calendar>();)
 K_EXPORT_PLUGIN(CalendarFactory("kipiplugin_calendar"))
 
 Plugin_Calendar::Plugin_Calendar(QObject* const parent, const QVariantList&)
-    : Plugin(CalendarFactory::componentData(), parent, "Calendar"),
-      m_iface(0)
+    : Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
 
-    m_iface = dynamic_cast<Interface*>(parent);
-    if (!m_iface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
 
     setUiBaseName("kipiplugin_calendarui.rc");
     setupXML();
@@ -71,16 +64,13 @@ void Plugin_Calendar::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
-    clearActions();
-    setupActions();
-
-    if (!m_iface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    m_actionCalendar->setEnabled(true);
+    setupActions();
 }
 
 void Plugin_Calendar::setupActions()
@@ -88,21 +78,11 @@ void Plugin_Calendar::setupActions()
     m_actionCalendar = actionCollection()->addAction("calendar");
     m_actionCalendar->setText(i18n("Create Calendar..."));
     m_actionCalendar->setIcon(KIcon("view-pim-calendar"));
-    m_actionCalendar->setEnabled(false);
 
     connect(m_actionCalendar, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
     addAction(m_actionCalendar);
-}
-
-void Plugin_Calendar::setupXML()
-{
-    if (m_iface)
-    {
-        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(m_iface->parent());
-        mergeXMLFile(host);
-    }
 }
 
 void Plugin_Calendar::slotActivate()
