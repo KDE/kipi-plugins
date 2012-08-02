@@ -62,7 +62,7 @@ private Q_SLOTS:
     void slotAlbumChanged(bool anyAlbum);
     void slotSlideShow();
 
-protected:
+private:
 
     void setupActions();
 
