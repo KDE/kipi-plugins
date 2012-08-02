@@ -58,12 +58,10 @@ public:
     Private()
     {
         actionTimeAjust = 0;
-        interface       = 0;
         dialog          = 0;
     }
 
     KAction*          actionTimeAjust;
-    Interface*        interface;
     TimeAdjustDialog* dialog;
 };
 
