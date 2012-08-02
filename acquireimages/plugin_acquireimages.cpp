@@ -59,19 +59,11 @@ K_EXPORT_PLUGIN(AcquireImagesFactory("kipiplugin_acquireimages"))
 Plugin_AcquireImages::Plugin_AcquireImages(QObject* const parent, const QVariantList&)
     : KIPI::Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
-    m_interface         = 0;
     m_action_scanimages = 0;
     m_parentWidget      = 0;
     m_saneWidget        = 0;
     m_scanDlg           = 0;
     kDebug(AREA_CODE_LOADING) << "Plugin_AcquireImages plugin loaded";
-
-    m_interface = dynamic_cast<KIPI::Interface*>(parent);
-    if (!m_interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
 
     setUiBaseName("kipiplugin_acquireimagesui.rc");
     setupXML();
@@ -85,11 +77,9 @@ void Plugin_AcquireImages::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     KIPI::Plugin::setup(m_parentWidget);
-
-    clearActions();
     setupActions();
 
-    if (!m_interface)
+    if (!interface())
         return;
 
     m_action_scanimages->setEnabled(true);
@@ -106,15 +96,6 @@ void Plugin_AcquireImages::setupActions()
             this, SLOT(slotActivate()));
 
     addAction(m_action_scanimages);
-}
-
-void Plugin_AcquireImages::setupXML()
-{
-    if (m_interface)
-    {
-        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(m_interface->parent());
-        mergeXMLFile(host);
-    }
 }
 
 void Plugin_AcquireImages::slotActivate()

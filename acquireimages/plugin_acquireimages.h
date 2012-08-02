@@ -67,10 +67,9 @@ public Q_SLOTS:
 
     void slotActivate();
 
-private:
+protected:
 
     void setupActions();
-    void setupXML();
 
 private:
 
@@ -79,8 +78,6 @@ private:
     KAction*                 m_action_scanimages;
 
     KSaneIface::KSaneWidget* m_saneWidget;
-
-    KIPI::Interface*         m_interface;
 
     QPointer <ScanDialog>    m_scanDlg;
 };
