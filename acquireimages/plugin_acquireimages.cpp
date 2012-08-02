@@ -77,12 +77,11 @@ void Plugin_AcquireImages::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     KIPI::Plugin::setup(m_parentWidget);
-    setupActions();
 
     if (!interface())
         return;
 
-    m_action_scanimages->setEnabled(true);
+    setupActions();
 }
 
 void Plugin_AcquireImages::setupActions()
@@ -90,7 +89,6 @@ void Plugin_AcquireImages::setupActions()
     m_action_scanimages = actionCollection()->addAction("acquireimages");
     m_action_scanimages->setText(i18n("Import from Scanner..."));
     m_action_scanimages->setIcon(KIcon("scanner"));
-    m_action_scanimages->setEnabled(false);
 
     connect(m_action_scanimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));

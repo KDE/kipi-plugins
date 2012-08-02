@@ -67,7 +67,7 @@ public Q_SLOTS:
 
     void slotActivate();
 
-protected:
+private:
 
     void setupActions();
 
