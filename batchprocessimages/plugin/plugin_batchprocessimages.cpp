@@ -78,15 +78,6 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject* const parent, cons
                    parent, "BatchProcessImages")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_BatchProcessImages plugin loaded" ;
-
-    m_iface = dynamic_cast<KIPI::Interface*>(parent);
-
-    if (!m_iface)
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
-
     setUiBaseName("kipiplugin_batchprocessimagesui.rc");
     setupXML();
 }
@@ -100,47 +91,54 @@ void Plugin_BatchProcessImages::setup(QWidget* const widget)
 
     KIPI::Plugin::setup(widget);
 
-    clearActions();
-    setupActions();
-
+    m_iface = interface();
     if (!m_iface)
     {
         kError() << "Kipi interface is null!" ;
         return;
     }
 
+    setupActions();
+
     KIPI::ImageCollection images = m_iface->currentAlbum();
     bool enable                  = images.isValid() && !images.images().isEmpty();
 
     m_action_borderimages->setEnabled(enable);
-    m_action_colorimages->setEnabled(enable);
-    m_action_convertimages->setEnabled(enable);
-    m_action_effectimages->setEnabled(enable);
-    m_action_filterimages->setEnabled(enable);
-    m_action_renameimages->setEnabled(enable);
-    m_action_recompressimages->setEnabled(enable);
-    m_action_resizeimages->setEnabled(enable);
 
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_borderimages, SLOT(setEnabled(bool)));
 
+    m_action_colorimages->setEnabled(enable);
+
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_colorimages, SLOT(setEnabled(bool)));
+
+    m_action_convertimages->setEnabled(enable);
 
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_convertimages, SLOT(setEnabled(bool)));
 
+    m_action_effectimages->setEnabled(enable);
+
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_effectimages, SLOT(setEnabled(bool)));
+
+    m_action_filterimages->setEnabled(enable);
 
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_filterimages, SLOT(setEnabled(bool)));
 
+    m_action_renameimages->setEnabled(enable);
+
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_renameimages, SLOT(setEnabled(bool)));
 
+    m_action_recompressimages->setEnabled(enable);
+
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_recompressimages, SLOT(setEnabled(bool)));
+
+    m_action_resizeimages->setEnabled(enable);
 
     connect(m_iface, SIGNAL(currentAlbumChanged(bool)),
             m_action_resizeimages, SLOT(setEnabled(bool)));
@@ -152,60 +150,49 @@ void Plugin_BatchProcessImages::setupActions()
     m_action_borderimages->setIcon(KIcon("borderimages"));
     m_action_borderimages->setText(i18n("Border Images..."));
 
+    addAction(m_action_borderimages);
+
     m_action_colorimages = actionCollection()->addAction("batch_color_images", this, SLOT(slotActivate()));
     m_action_colorimages->setIcon(KIcon("colorimages"));
     m_action_colorimages->setText(i18n("Color Images..."));
+
+    addAction(m_action_colorimages);
 
     m_action_convertimages = actionCollection()->addAction("batch_convert_images", this, SLOT(slotActivate()));
     m_action_convertimages->setIcon(KIcon("convertimages"));
     m_action_convertimages->setText(i18n("Convert Images..."));
 
+    addAction(m_action_convertimages);
+
     m_action_effectimages = actionCollection()->addAction("batch_effect_images", this, SLOT(slotActivate()));
     m_action_effectimages->setIcon(KIcon("effectimages"));
     m_action_effectimages->setText(i18n("Image Effects..."));
+
+    addAction(m_action_effectimages);
 
     m_action_filterimages = actionCollection()->addAction("batch_filter_images", this, SLOT(slotActivate()));
     m_action_filterimages->setIcon(KIcon("filterimages"));
     m_action_filterimages->setText(i18n("Filter Images..."));
 
+    addAction(m_action_filterimages);
+
     m_action_renameimages = actionCollection()->addAction("batch_rename_images", this, SLOT(slotActivate()));
     m_action_renameimages->setIcon(KIcon("renameimages"));
     m_action_renameimages->setText(i18n("Rename Images..."));
+
+    addAction(m_action_renameimages);
 
     m_action_recompressimages = actionCollection()->addAction("batch_recompress_images", this, SLOT(slotActivate()));
     m_action_recompressimages->setIcon(KIcon("recompressimages"));
     m_action_recompressimages->setText(i18n("Recompress Images..."));
 
+    addAction(m_action_recompressimages);
+
     m_action_resizeimages = actionCollection()->addAction("batch_resize_images", this, SLOT(slotActivate()));
     m_action_resizeimages->setIcon(KIcon("resizeimages"));
     m_action_resizeimages->setText(i18n("Resize Images..."));
 
-    addAction(m_action_borderimages);
-    addAction(m_action_colorimages);
-    addAction(m_action_convertimages);
-    addAction(m_action_effectimages);
-    addAction(m_action_filterimages);
-    addAction(m_action_renameimages);
-    addAction(m_action_recompressimages);
     addAction(m_action_resizeimages);
-
-    m_action_borderimages->setEnabled(false);
-    m_action_colorimages->setEnabled(false);
-    m_action_convertimages->setEnabled(false);
-    m_action_effectimages->setEnabled(false);
-    m_action_filterimages->setEnabled(false);
-    m_action_renameimages->setEnabled(false);
-    m_action_recompressimages->setEnabled(false);
-    m_action_resizeimages->setEnabled(false);
-}
-
-void Plugin_BatchProcessImages::setupXML()
-{
-    if (m_iface)
-    {
-        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(m_iface->parent());
-        mergeXMLFile(host);
-    }
 }
 
 void Plugin_BatchProcessImages::slotActivate()

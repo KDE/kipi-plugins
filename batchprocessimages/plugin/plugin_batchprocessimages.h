@@ -70,7 +70,6 @@ public Q_SLOTS:
 private:
 
     void setupActions();
-    void setupXML();
 
 private:
 
