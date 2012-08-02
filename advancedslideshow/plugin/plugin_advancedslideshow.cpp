@@ -79,14 +79,7 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* const parent, const 
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_AdvancedSlideshow plugin loaded" ;
     m_sharedData = 0;
-
-    m_interface = dynamic_cast<KIPI::Interface*> (parent);
-
-    if (!m_interface)
-    {
-        kError() << "Kipi m_interface is null!";
-        return;
-    }
+    m_interface  = 0;
 
     setUiBaseName("kipiplugin_advancedslideshowui.rc");
     setupXML();
@@ -99,9 +92,14 @@ Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
 void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 {
     KIPI::Plugin::setup(widget);
-
-    clearActions();
     setupActions();
+
+    m_interface = interface();
+    if(!m_interface)
+    {
+        kError() << "KIPI interface is null!";
+        return;
+    }
 
     m_urlList = KUrl::List();
 
@@ -128,18 +126,9 @@ void Plugin_AdvancedSlideshow::setupActions()
     addAction(m_actionSlideShow);
 }
 
-void Plugin_AdvancedSlideshow::setupXML()
-{
-    if (m_interface)
-    {
-        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(m_interface->parent());
-        mergeXMLFile(host);
-    }
-}
-
 void Plugin_AdvancedSlideshow::slotActivate()
 {
-    if (!m_interface)
+    if (!interface())
     {
         kError() << "Kipi m_interface is null!";
         return;
