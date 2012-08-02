@@ -72,6 +72,9 @@ Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
       d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
+
+    setUiBaseName("kipiplugin_timeadjustui.rc");
+    setupXML();
 }
 
 Plugin_TimeAdjust::~Plugin_TimeAdjust()
@@ -82,33 +85,37 @@ Plugin_TimeAdjust::~Plugin_TimeAdjust()
 void Plugin_TimeAdjust::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
+    setupActions();
 
-    d->actionTimeAjust = actionCollection()->addAction("timeadjust");
-    d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
-    d->actionTimeAjust->setIcon(KIcon("timeadjust"));
-
-    connect(d->actionTimeAjust, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(d->actionTimeAjust);
-
-    d->interface = dynamic_cast<Interface*>(parent());
-    if (!d->interface)
+    if (!interface())
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    ImageCollection selection = d->interface->currentSelection();
+    ImageCollection selection = interface()->currentSelection();
     d->actionTimeAjust->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
-    connect(d->interface, SIGNAL(selectionChanged(bool)),
+    connect(interface(), SIGNAL(selectionChanged(bool)),
             d->actionTimeAjust, SLOT(setEnabled(bool)));
+}
+
+void Plugin_TimeAdjust::setupActions()
+{
+    d->actionTimeAjust = actionCollection()->addAction("timeadjust");
+    d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
+    d->actionTimeAjust->setIcon(KIcon("timeadjust"));
+    d->actionTimeAjust->setEnabled(false);
+
+    connect(d->actionTimeAjust, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction(d->actionTimeAjust);
 }
 
 void Plugin_TimeAdjust::slotActivate()
 {
-    ImageCollection images = d->interface->currentSelection();
+    ImageCollection images = interface()->currentSelection();
 
     if (!images.isValid() || images.images().isEmpty())
         return;

@@ -49,6 +49,10 @@ public:
     Category category(KAction* const action) const;
     void setup(QWidget* const);
 
+protected:
+
+    void setupActions();
+
 protected Q_SLOTS:
 
     void slotActivate();
