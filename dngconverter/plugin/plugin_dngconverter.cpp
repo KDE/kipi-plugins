@@ -96,14 +96,13 @@ void Plugin_DNGConverter::setupActions()
 
 void Plugin_DNGConverter::slotActivate()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!" ;
         return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = interface()->currentSelection();
 
     if (!images.isValid())
         return;
