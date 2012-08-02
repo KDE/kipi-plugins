@@ -56,6 +56,8 @@ private:
 
     bool checkBinaries();
 
+    void setupActions();
+
 private Q_SLOTS:
 
     void slotActivate();

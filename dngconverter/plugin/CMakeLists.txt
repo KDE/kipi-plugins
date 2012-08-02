@@ -45,3 +45,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_dngconverter
 
 INSTALL(TARGETS kipiplugin_dngconverter DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_dngconverterui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)

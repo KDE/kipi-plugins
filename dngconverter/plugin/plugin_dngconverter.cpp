@@ -55,6 +55,9 @@ Plugin_DNGConverter::Plugin_DNGConverter(QObject* const parent, const QVariantLi
     : Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DNGConverter plugin loaded" ;
+
+    setUiBaseName("kipiplugin_dngconverterui.rc");
+    setupXML();
 }
 
 Plugin_DNGConverter::~Plugin_DNGConverter()
@@ -65,8 +68,22 @@ void Plugin_DNGConverter::setup(QWidget* const widget)
 {
     m_batchDlg = 0;
 
-    Plugin::setup( widget );
+    Plugin::setup(widget);
 
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    setupActions();
+
+    connect(interface(), SIGNAL(currentAlbumChanged(bool)),
+            m_action, SLOT(setEnabled(bool)));
+}
+
+void Plugin_DNGConverter::setupActions()
+{
     m_action = actionCollection()->addAction("dngconverter");
     m_action->setText(i18n("DNG Converter..."));
     m_action->setIcon(KIcon("dngconverter"));
@@ -75,16 +92,6 @@ void Plugin_DNGConverter::setup(QWidget* const widget)
             this, SLOT(slotActivate()));
 
     addAction(m_action);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    connect(interface, SIGNAL(currentAlbumChanged(bool)),
-            m_action, SLOT(setEnabled(bool)));
 }
 
 void Plugin_DNGConverter::slotActivate()
