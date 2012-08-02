@@ -61,24 +61,17 @@ public:
     {
         actionExport = 0;
         dlgExport    = 0;
-        iface        = 0;
     }
 
     KAction*    actionExport;
     Wizard*     dlgExport;
-    Interface*  iface;
 };
 
 Plugin_DLNAExport::Plugin_DLNAExport(QObject* const parent, const QVariantList&)
     : Plugin(DLNAExportFactory::componentData(), parent, "DLNAExport"),
       d(new Private)
 {
-    d->iface = dynamic_cast<Interface*>(parent);
-    if (!d->iface)
-    {
-        kError() << "KIPI interface is null!";
-        return;
-    }
+    kDebug(AREA_CODE_LOADING) << "Plugin_DLNAExport plugin loaded";
 
     setUiBaseName("kipiplugin_dlnaexportui.rc");
     setupXML();
@@ -93,18 +86,14 @@ void Plugin_DLNAExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_dlnaexport");
-
-    clearActions();
-    setupActions();
-
-    if (!d->iface)
+    if (!interface())
     {
         kError() << "KIPI interface is null!";
         return;
     }
 
-    d->actionExport->setEnabled(true);
+    KIconLoader::global()->addAppDir("kipiplugin_dlnaexport");
+    setupActions();
 }
 
 void Plugin_DLNAExport::setupActions()
@@ -112,21 +101,11 @@ void Plugin_DLNAExport::setupActions()
     d->actionExport = actionCollection()->addAction("dlnaexport");
     d->actionExport->setText(i18n("Export via &DLNA"));
     d->actionExport->setIcon(KIcon("dlna"));
-    d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
     addAction(d->actionExport);
-}
-
-void Plugin_DLNAExport::setupXML()
-{
-    if (d->iface)
-    {
-        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
-        mergeXMLFile(host);
-    }
 }
 
 void Plugin_DLNAExport::slotExport()
