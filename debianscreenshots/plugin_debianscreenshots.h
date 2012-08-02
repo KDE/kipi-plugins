@@ -64,14 +64,11 @@ public Q_SLOTS:
 private:
 
     void setupActions();
-    void setupXML();
 
 private:
 
     KAction*   m_actionExport;
     DsWindow*  m_dlgExport;
-
-    Interface* m_iface;
 };
 
 } // namespace KIPIDebianScreenshotsPlugin
