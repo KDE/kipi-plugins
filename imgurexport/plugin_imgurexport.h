@@ -58,6 +58,10 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     class Plugin_ImgurExportPriv;
     Plugin_ImgurExportPriv* const d;
 };

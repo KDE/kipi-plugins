@@ -73,6 +73,11 @@ Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
+
+    KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
+
+    setUiBaseName("kipiplugin_imgurexportui.rc");
+    setupXML();
 }
 
 Plugin_ImgurExport::~Plugin_ImgurExport()
@@ -86,9 +91,18 @@ void Plugin_ImgurExport::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
 
-    d->actionExport = actionCollection()->addAction("ImgurExport");
+    setupActions();
+}
+
+void Plugin_ImgurExport::setupActions()
+{
+    d->actionExport = actionCollection()->addAction("imgurexport");
     d->actionExport->setText(i18n("Export to &Imgur..."));
     d->actionExport->setIcon(KIcon("imgur"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
@@ -97,17 +111,6 @@ void Plugin_ImgurExport::setup(QWidget* const widget)
             this, SLOT(slotActivate()));
 
     addAction(d->actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        d->actionExport->setEnabled(false);
-        return;
-    }
-
-    d->actionExport->setEnabled(true);
 }
 
 void Plugin_ImgurExport::slotActivate()

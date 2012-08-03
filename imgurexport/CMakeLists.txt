@@ -21,3 +21,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_imgurexport
 
 INSTALL(TARGETS kipiplugin_imgurexport DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_imgurexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_imgurexportui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
