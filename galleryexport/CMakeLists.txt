@@ -25,4 +25,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_galleryexport
 
 INSTALL(TARGETS kipiplugin_galleryexport DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_galleryexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_galleryexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
 INSTALL(FILES gallery_logo.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_galleryexport/pics)

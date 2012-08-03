@@ -18,7 +18,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -77,6 +77,12 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject* const parent, const QVariant
       d(new Private())
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GalleryExport plugin loaded";
+
+    KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
+    d->gallery = new Gallery();
+
+    setUiBaseName("kipiplugin_galleryexportui.rc");
+    setupXML();
 }
 
 Plugin_GalleryExport::~Plugin_GalleryExport()
@@ -86,23 +92,22 @@ Plugin_GalleryExport::~Plugin_GalleryExport()
 
 void Plugin_GalleryExport::setup(QWidget* const widget)
 {
-    KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
-
-    d->gallery = new Gallery();
-
     Plugin::setup(widget);
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
+    setupActions();
+}
+
+void Plugin_GalleryExport::setupActions()
+{
     d->action = actionCollection()->addAction("galleryexport");
     d->action->setText(i18n("Export to &Gallery..."));
     d->action->setIcon(KIcon("gallery"));
-    d->action->setEnabled(true);
     d->action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));
 
     connect(d->action, SIGNAL(triggered(bool)),
