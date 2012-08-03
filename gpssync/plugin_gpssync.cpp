@@ -62,6 +62,9 @@ Plugin_GPSSync::Plugin_GPSSync(QObject* const parent, const QVariantList&)
     : Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
+
+    setUiBaseName("kipiplugin_gpssyncui.rc");
+    setupXML();
 }
 
 Plugin_GPSSync::~Plugin_GPSSync()
@@ -81,9 +84,9 @@ void Plugin_GPSSync::setup(QWidget* const widget)
 
     addAction(m_action_geolocation);
 
-    m_interface = dynamic_cast< Interface* >( parent() );
+    m_interface = interface();
 
-    if ( !m_interface )
+    if (!m_interface)
     {
         kError() << "Kipi interface is null!" ;
         return;

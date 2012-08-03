@@ -78,6 +78,8 @@ INSTALL(TARGETS kipiplugin_gpssync DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_gpssync.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
+INSTALL(FILES kipiplugin_gpssyncui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+
 INSTALL(FILES
     data/bookmarks-marker.png
     data/searchmarker-normal.png
