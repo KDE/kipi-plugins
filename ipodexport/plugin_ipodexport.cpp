@@ -62,6 +62,9 @@ Plugin_iPodExport::Plugin_iPodExport(QObject* const parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "Plugin_iPodExport plugin loaded" ;
 
     g_type_init();
+
+    setUiBaseName("kipiplugin_ipodexportui.rc");
+    setupXML();
 }
 
 Plugin_iPodExport::~Plugin_iPodExport()
@@ -72,6 +75,11 @@ void Plugin_iPodExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
+    setupActions();
+}
+
+void Plugin_iPodExport::setupActions()
+{
     m_actionImageUpload = actionCollection()->addAction("ipodexport");
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
     m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
