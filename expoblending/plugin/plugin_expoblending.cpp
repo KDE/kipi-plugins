@@ -63,6 +63,9 @@ Plugin_ExpoBlending::Plugin_ExpoBlending(QObject* const parent, const QVariantLi
     m_manager      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_ExpoBlending plugin loaded";
+
+    setUiBaseName("kipiplugin_expoblendingui.rc");
+    setupXML();
 }
 
 Plugin_ExpoBlending::~Plugin_ExpoBlending()
@@ -74,6 +77,18 @@ void Plugin_ExpoBlending::setup(QWidget* const widget)
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
 
+    m_interface = interface();
+    if (!m_interface)
+    {
+       kError() << "Kipi interface is null!";
+       return;
+    }
+
+    setupActions();
+}
+
+void Plugin_ExpoBlending::setupActions()
+{
     m_action = actionCollection()->addAction("expoblending");
     m_action->setText(i18n("Blend Bracketed Images..."));
     m_action->setIcon(KIcon("expoblending"));
@@ -82,13 +97,6 @@ void Plugin_ExpoBlending::setup(QWidget* const widget)
             this, SLOT(slotActivate()));
 
     addAction(m_action);
-
-    m_interface = dynamic_cast< Interface* >(parent());
-    if (!m_interface)
-    {
-       kError() << "Kipi interface is null!";
-       return;
-    }
 }
 
 void Plugin_ExpoBlending::slotActivate()
