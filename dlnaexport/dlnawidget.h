@@ -29,13 +29,6 @@
 #include <QString>
 #include <kurl.h>
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIDLNAExportPlugin
 {
 

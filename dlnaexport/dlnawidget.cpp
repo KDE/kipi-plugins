@@ -56,6 +56,7 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin

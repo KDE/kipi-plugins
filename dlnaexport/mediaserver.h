@@ -28,6 +28,9 @@
 
 #include <QObject>
 #include <QString>
+
+// KDE includes
+
 #include <kurl.h>
 
 namespace KIPIDLNAExportPlugin

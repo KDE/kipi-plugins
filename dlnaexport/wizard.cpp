@@ -52,6 +52,7 @@
 #include "dlnawidget.h"
 #include "welcomepage.h"
 
+using namespace KIPI;
 using namespace Herqq;
 
 namespace KIPIDLNAExportPlugin
@@ -215,6 +216,7 @@ void Wizard::accept()
         d->selectionPage->startMediaServer(d->collectionMap);
     else
         d->selectionPage->startMediaServer();
+
     KAssistantDialog::accept();
 }
 

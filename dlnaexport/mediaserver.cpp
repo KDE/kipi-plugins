@@ -46,6 +46,7 @@
 #include <HUpnpAv/HContentDirectoryServiceConfiguration>
 
 // Qt includes
+
 #include <QList>
 #include <QFile>
 
@@ -127,7 +128,7 @@ MediaServer::~MediaServer()
 void MediaServer::addImagesOnServer(const KUrl::List& imageUrlList)
 {
     QList<HItem*> itemList;
-            
+
     for (int i = 0; i<imageUrlList.size(); i++)
     {
         itemList.append(new HItem(QString(imageUrlList.at(i).fileName()), QString("0"), QString()));
@@ -138,27 +139,26 @@ void MediaServer::addImagesOnServer(const KUrl::List& imageUrlList)
 void MediaServer::addImagesOnServer(const QMap<QString, KUrl::List>& collectionMap)
 {
     QList<HContainer*> containerList;
-    QList<HItem*> itemList;
-    QList<QString> keys = collectionMap.uniqueKeys();
-    KUrl::List imageUrlList;
-    int currentSize = 0;
-    
+    QList<HItem*>      itemList;
+    QList<QString>     keys        = collectionMap.uniqueKeys();
+    KUrl::List         imageUrlList;
+    int                currentSize = 0;
+
     for (int i = 0; i<keys.size(); i++)
     {
         containerList.append(new HContainer(keys.at(i), QString("0")));
         d->datasource->add(containerList.at(i));
-        
+
         imageUrlList.clear();
         imageUrlList = collectionMap.value(keys.at(i));
-        currentSize = itemList.size();
-                
+        currentSize  = itemList.size();
+
         for (int j = 0; j<imageUrlList.size(); j++)
         {
             itemList.append(new HItem(QString(imageUrlList.at(j).fileName()), containerList.at(i)->id(), QString()));
             d->datasource->add(itemList.at(j + currentSize), imageUrlList.at(j).path());
         }
-    }    
+    }
 }
 
 } // namespace KIPIDLNAExportPlugin
-

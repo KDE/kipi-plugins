@@ -23,14 +23,11 @@
 #ifndef WIZARD_H
 #define WIZARD_H
 
-// QT incudes
-
 // Local includes
 
 #include "kpimageslist.h"
 #include "kptooldialog.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin

@@ -46,11 +46,11 @@ public:
 
     Private()
     {
-        iconLbl      = 0;
-        titleLbl     = 0;
-        headerLbl    = 0;
+        iconLbl        = 0;
+        titleLbl       = 0;
+        headerLbl      = 0;
         imageGetOption = 0;
-        getImageLbl = 0;
+        getImageLbl    = 0;
     }
 
     QLabel*    iconLbl;
@@ -81,7 +81,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
                                  "</a></h2></b>"));
 
     // ComboBox for image selection method
-    d->getImageLbl = new QLabel(i18n("&Choose image selection method:"),settingsBox);
+    d->getImageLbl    = new QLabel(i18n("&Choose image selection method:"),settingsBox);
     d->imageGetOption = new KComboBox(settingsBox);
     d->imageGetOption->insertItem(WelcomePage::IMAGEDIALOG, "From file system");
     d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");

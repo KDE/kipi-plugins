@@ -63,8 +63,8 @@ public:
         dlgExport    = 0;
     }
 
-    KAction*    actionExport;
-    Wizard*     dlgExport;
+    KAction* actionExport;
+    Wizard*  dlgExport;
 };
 
 Plugin_DLNAExport::Plugin_DLNAExport(QObject* const parent, const QVariantList&)
