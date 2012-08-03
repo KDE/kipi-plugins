@@ -64,6 +64,9 @@ Plugin_Panorama::Plugin_Panorama(QObject* const parent, const QVariantList&)
     m_manager      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Panorama plugin loaded";
+
+    setUiBaseName("kipiplugin_panoramaui.rc");
+    setupXML();
 }
 
 Plugin_Panorama::~Plugin_Panorama()
@@ -75,21 +78,29 @@ void Plugin_Panorama::setup(QWidget* const widget)
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
 
-    m_action = actionCollection()->addAction("panorama");
-    m_action->setText(i18n("Stitch images into a panorama..."));
-    m_action->setIcon(KIcon("layer-visible-on"));
+    setupActions();
 
-    connect(m_action, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(m_action);
-
-    m_interface = dynamic_cast< Interface* >(parent());
+    m_interface = interface();
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
+
+    m_action->setEnabled(true);
+}
+
+void Plugin_Panorama::setupActions()
+{
+    m_action = actionCollection()->addAction("panorama");
+    m_action->setText(i18n("Stitch images into a panorama..."));
+    m_action->setIcon(KIcon("layer-visible-on"));
+    m_action->setEnabled(false);
+
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction(m_action);
 }
 
 void Plugin_Panorama::slotActivate()
