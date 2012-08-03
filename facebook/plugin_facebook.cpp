@@ -63,19 +63,11 @@ K_PLUGIN_FACTORY( FacebookFactory, registerPlugin<Plugin_Facebook>(); )
 K_EXPORT_PLUGIN ( FacebookFactory("kipiplugin_facebook") )
 
 Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(FacebookFactory::componentData(), parent, "Facebook Import/Export"),
-      m_iface(0)
+    : Plugin(FacebookFactory::componentData(), parent, "Facebook Import/Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Facebook plugin loaded";
 
     KIconLoader::global()->addAppDir("kipiplugin_facebook");
-
-    m_iface = dynamic_cast<Interface*>(parent);
-    if (!m_iface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
 
     setUiBaseName("kipiplugin_facebookui.rc");
     setupXML();
@@ -92,20 +84,13 @@ void Plugin_Facebook::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
-    clearActions();
-    setupActions();
-
-    if (!m_iface)
+    if (!interface())
+    {
+        kDebug() << "Kipi interface is null!";
         return;
+    }
 
-    m_actionExport->setEnabled(true);
-    m_actionImport->setEnabled(true);
-}
-
-void Plugin_Facebook::setupXML()
-{
-    KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(m_iface->parent());
-    mergeXMLFile(host);
+    setupActions();
 }
 
 void Plugin_Facebook::setupActions()
@@ -114,7 +99,6 @@ void Plugin_Facebook::setupActions()
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("facebook"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F));
-    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
@@ -125,7 +109,6 @@ void Plugin_Facebook::setupActions()
     m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("facebook"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));
-    m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );

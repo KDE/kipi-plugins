@@ -82,7 +82,6 @@ public Q_SLOTS:
 private:
 
     void setupActions();
-    void setupXML();
 
 private:
 
@@ -91,8 +90,6 @@ private:
 
     FbWindow*  m_dlgImport;
     FbWindow*  m_dlgExport;
-
-    Interface* m_iface;
 };
 
 } // namespace KIPIFacebookPlugin
