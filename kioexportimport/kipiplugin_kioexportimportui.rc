@@ -1,0 +1,20 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="1" name="kipiplugin_imageshackexport" >
+
+    <MenuBar>
+
+        <Menu name="Import"><text>&amp;Import</text>
+            <Action name="kioimport" group="kipi_import_group" />
+        </Menu>
+
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="kioexport" group="kipi_export_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>
+
