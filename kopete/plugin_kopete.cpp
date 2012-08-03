@@ -65,6 +65,9 @@ Plugin_Kopete::Plugin_Kopete(QObject* const parent, const QVariantList& /*args*/
       m_kopeteDBusTest("org.kde.kopete", "/Kopete", "org.freedesktop.DBus.Introspectable")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Kopete plugin loaded";
+
+    setUiBaseName("kipiplugin_kopeteui.rc");
+    setupXML();
 }
 
 Plugin_Kopete::~Plugin_Kopete()
@@ -80,6 +83,7 @@ void Plugin_Kopete::setup(QWidget* const widget)
     m_actionExport = actionCollection()->addAction("kopeteexport");
     m_actionExport->setText(i18n("&Instant Messaging contact..."));
     m_actionExport->setIcon(KIcon("kopete"));
+    m_actionExport->setEnabled(false);
 
     addAction(m_actionExport);
 
@@ -92,11 +96,9 @@ void Plugin_Kopete::setup(QWidget* const widget)
     connect(contactsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotAboutToShowMenu()));
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
         return;
     }
 
@@ -105,8 +107,7 @@ void Plugin_Kopete::setup(QWidget* const widget)
 
 void Plugin_Kopete::slotAboutToShowMenu()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
@@ -178,8 +179,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 {
     kDebug() << "Received a request to transfer file(s) to contact " << contactId;
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    KUrl::List imgList   = interface->currentSelection().images();
+    KUrl::List imgList   = interface()->currentSelection().images();
 
     // Check if Kopete is still running
     if ( contactId.isEmpty() || !kopeteRunning() )

@@ -63,6 +63,7 @@ public Q_SLOTS:
 private:
 
     bool kopeteRunning();
+    void setupActions();
 
 private:
 
