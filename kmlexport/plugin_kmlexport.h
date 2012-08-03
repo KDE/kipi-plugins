@@ -64,6 +64,10 @@ protected Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*   m_actionKMLExport;
 
     Interface* m_interface;

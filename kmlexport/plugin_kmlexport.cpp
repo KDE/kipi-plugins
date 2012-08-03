@@ -64,6 +64,9 @@ Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     : Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
+
+    setUiBaseName("kipiplugin_kmlexportui.rc");
+    setupXML();
 }
 
 Plugin_KMLExport::~Plugin_KMLExport()
@@ -74,26 +77,39 @@ void Plugin_KMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
+    setupActions();
+
+    m_interface = interface();
+    if (!m_interface)
+    {
+        kError() << "Kipi interface is null!" ;
+        return;
+    }
+
+    m_actionKMLExport->setEnabled(true);
+}
+
+void Plugin_KMLExport::setupActions()
+{
     m_actionKMLExport = actionCollection()->addAction("kmlexport");
     m_actionKMLExport->setText(i18n("Export to KML..."));
     m_actionKMLExport->setIcon(KIcon("applications-development-web"));
+    m_actionKMLExport->setEnabled(false);
 
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
 
     addAction( m_actionKMLExport );
-
-    m_interface = dynamic_cast<Interface*>( parent() );
-
-    if ( !m_interface )
-    {
-        kError() << "Kipi interface is null!" ;
-        return;
-    }
 }
 
 void Plugin_KMLExport::slotKMLExport()
 {
+    if (!m_interface)
+    {
+        kError() << "Kipi interface is null!" ;
+        return;
+    }
+
     ImageCollection selection = m_interface->currentSelection();
 
     if ( !selection.isValid() )
