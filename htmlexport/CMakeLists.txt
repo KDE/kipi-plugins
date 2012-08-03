@@ -56,6 +56,10 @@ INSTALL(FILES kipiplugin_htmlexport.desktop
         DESTINATION ${SERVICES_INSTALL_DIR}
        )
 
+INSTALL(FILES kipiplugin_htmlexportui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi
+       )
+
 INSTALL(FILES THEME_HOWTO
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport
        )

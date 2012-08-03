@@ -61,6 +61,10 @@ private Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     struct Private;
     Private* d;
 };

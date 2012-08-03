@@ -59,14 +59,20 @@ K_EXPORT_PLUGIN(HTMLExportFactory("kipiplugin_htmlexport"))
 
 struct Plugin_HTMLExport::Private
 {
+    Private() :
+        mAction(0)
+    {
+    }
+
     KAction* mAction;
 };
 
 Plugin_HTMLExport::Plugin_HTMLExport(QObject* const parent, const QVariantList&)
-    : Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport")
+    : Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport"),
+      d(new Private)
 {
-    d          = new Private;
-    d->mAction = 0;
+    setUiBaseName("kipiplugin_htmlexportui.rc");
+    setupXML();
 }
 
 Plugin_HTMLExport::~Plugin_HTMLExport()
@@ -77,6 +83,18 @@ Plugin_HTMLExport::~Plugin_HTMLExport()
 void Plugin_HTMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    setupActions();
+}
+
+void Plugin_HTMLExport::setupActions()
+{
     d->mAction = actionCollection()->addAction("htmlexport");
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
@@ -90,8 +108,11 @@ void Plugin_HTMLExport::setup(QWidget* const widget)
 
 void Plugin_HTMLExport::slotActivate()
 {
-    Interface* interface = dynamic_cast< Interface* >( parent() );
-    Q_ASSERT(interface);
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
 
     GalleryInfo info;
     info.readConfig();
@@ -106,7 +127,7 @@ void Plugin_HTMLExport::slotActivate()
 
     KPBatchProgressDialog* progressDialog = new KPBatchProgressDialog(parent, i18n("Generating gallery..."));
 
-    Generator generator(interface, &info, progressDialog);
+    Generator generator(interface(), &info, progressDialog);
     progressDialog->show();
     if (!generator.run())
     {
