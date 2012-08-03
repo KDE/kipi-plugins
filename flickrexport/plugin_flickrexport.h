@@ -61,6 +61,10 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*      m_actionFlickr;
     KAction*      m_action23;
     KAction*      m_actionZooomr;

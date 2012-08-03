@@ -67,6 +67,11 @@ Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantLi
     : Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_FlickrExport plugin loaded";
+
+    KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
+
+    setUiBaseName("kipiplugin_flickrexportui.rc");
+    setupXML();
 }
 
 Plugin_FlickrExport::~Plugin_FlickrExport()
@@ -81,12 +86,20 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
 
+    setupActions();
+}
+
+void Plugin_FlickrExport::setupActions()
+{
     m_actionFlickr = actionCollection()->addAction("flickrexport");
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(KIcon("flickr"));
-    m_actionFlickr->setEnabled(false);
     m_actionFlickr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_R));
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
@@ -97,7 +110,6 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
     m_action23 = actionCollection()->addAction("23export");
     m_action23->setText(i18n("Export to &23..."));
     m_action23->setIcon(KIcon("hq"));
-    m_action23->setEnabled(false);
     m_action23->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_2));
 
     connect(m_action23, SIGNAL(triggered(bool)),
@@ -108,25 +120,12 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
     m_actionZooomr = actionCollection()->addAction("Zooomrexport");
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
     m_actionZooomr->setIcon(KIcon("zooomr"));
-    m_actionZooomr->setEnabled(false);
     m_actionZooomr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
 
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));
 
     addAction(m_actionZooomr);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    m_actionFlickr->setEnabled(true);
-    m_action23->setEnabled(true);
-    m_actionZooomr->setEnabled(true);
 }
 
 void Plugin_FlickrExport::slotActivateFlickr()

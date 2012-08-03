@@ -27,3 +27,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_flickrexport
 
 INSTALL(TARGETS kipiplugin_flickrexport DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_flickrexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_flickrexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
