@@ -100,6 +100,9 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject* const parent, const QVariantLi
       d(new Plugin_JPEGLosslessPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_JPEGLossless plugin loaded";
+
+    setUiBaseName("kipiplugin_jpeglosslessui.rc");
+    setupXML();
 }
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()
@@ -112,6 +115,47 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
+    setupActions();
+
+    Interface* iface = interface();
+    if (!iface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    d->thread = new ActionThread(this);
+
+    connect( d->thread, SIGNAL(starting(KUrl, int)),
+             this, SLOT(slotStarting(KUrl, int)));
+
+    connect( d->thread, SIGNAL(finished(KUrl, int)),
+             this, SLOT(slotFinished(KUrl, int)));
+
+    connect( d->thread, SIGNAL(failed(KUrl, int, QString)),
+             this, SLOT(slotFailed(KUrl, int, QString)));
+
+    bool hasSelection = iface->currentSelection().isValid();
+
+    d->action_AutoExif->setEnabled( hasSelection );
+    connect( iface, SIGNAL(selectionChanged(bool)),
+             d->action_AutoExif, SLOT(setEnabled(bool)) );
+
+    d->action_RotateImage->setEnabled( hasSelection );
+    connect( iface, SIGNAL(selectionChanged(bool)),
+             d->action_RotateImage, SLOT(setEnabled(bool)) );
+
+    d->action_FlipImage->setEnabled( hasSelection );
+    connect( iface, SIGNAL(selectionChanged(bool)),
+             d->action_FlipImage, SLOT(setEnabled(bool)) );
+
+    d->action_Convert2GrayScale->setEnabled( hasSelection );
+    connect( iface, SIGNAL(selectionChanged(bool)),
+             d->action_Convert2GrayScale, SLOT(setEnabled(bool)) );
+}
+
+void Plugin_JPEGLossless::setupActions()
+{
     d->action_RotateImage = new KActionMenu(KIcon("object-rotate-right"), i18n("Rotate"), actionCollection());
     d->action_RotateImage->setObjectName("jpeglossless_rotate");
 
@@ -129,6 +173,7 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
             this, SLOT(slotRotateRight()));
     d->action_RotateImage->addAction(right);
 
+    actionCollection()->addAction("jpeglossless_rotate", d->action_RotateImage);
     addAction(d->action_RotateImage);
 
     // -----------------------------------------------------------------------------------
@@ -150,6 +195,7 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
             this, SLOT(slotFlipVertically()));
     d->action_FlipImage->addAction(verti);
 
+    actionCollection()->addAction("jpeglossless_flip", d->action_FlipImage);
     addAction(d->action_FlipImage);
 
     // -----------------------------------------------------------------------------------
@@ -170,44 +216,6 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
             this, SLOT(slotConvert2GrayScale()));
 
     addAction(d->action_Convert2GrayScale);
-
-    // -----------------------------------------------------------------------------------
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    d->thread = new ActionThread(this);
-
-    connect( d->thread, SIGNAL(starting(KUrl, int)),
-             this, SLOT(slotStarting(KUrl, int)));
-
-    connect( d->thread, SIGNAL(finished(KUrl, int)),
-             this, SLOT(slotFinished(KUrl, int)));
-
-    connect( d->thread, SIGNAL(failed(KUrl, int, QString)),
-             this, SLOT(slotFailed(KUrl, int, QString)));
-
-    bool hasSelection = interface->currentSelection().isValid();
-
-    d->action_AutoExif->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             d->action_AutoExif, SLOT(setEnabled(bool)) );
-
-    d->action_RotateImage->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             d->action_RotateImage, SLOT(setEnabled(bool)) );
-
-    d->action_FlipImage->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             d->action_FlipImage, SLOT(setEnabled(bool)) );
-
-    d->action_Convert2GrayScale->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             d->action_Convert2GrayScale, SLOT(setEnabled(bool)) );
 }
 
 void Plugin_JPEGLossless::slotFlipHorizontally()

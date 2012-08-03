@@ -77,6 +77,7 @@ private:
     void flip(FlipAction action, const QString& title);
     void rotate(RotateAction action, const QString& title);
     void oneTaskCompleted();
+    void setupActions();
 
 private:
 
