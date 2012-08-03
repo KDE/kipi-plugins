@@ -59,13 +59,11 @@ public:
 
     Private() :
         actionExport(0),
-        iface(0),
         imageshack(0)
     {
     }
 
     KAction*    actionExport;
-    Interface*  iface;
     Imageshack* imageshack;
 };
 
@@ -78,13 +76,6 @@ Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QV
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
     d->imageshack = new Imageshack();
-
-    d->iface = dynamic_cast<Interface*>(parent);
-    if (!d->iface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
 
     setUiBaseName("kipiplugin_imageshackexportui.rc");
     setupXML();
@@ -100,16 +91,13 @@ void Plugin_ImageshackExport::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
-    clearActions();
-    setupActions();
-
-    if (!d->iface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    d->actionExport->setEnabled(true);
+    setupActions();
 }
 
 void Plugin_ImageshackExport::setupActions()
@@ -118,21 +106,11 @@ void Plugin_ImageshackExport::setupActions()
     d->actionExport->setText(i18n("Export to &Imageshack..."));
     d->actionExport->setIcon(KIcon("imageshack"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));
-    d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
     addAction(d->actionExport);
-}
-
-void Plugin_ImageshackExport::setupXML()
-{
-    if (d->iface)
-    {
-        KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
-        mergeXMLFile(host);
-    }
 }
 
 void Plugin_ImageshackExport::slotExport()
