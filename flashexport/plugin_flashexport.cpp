@@ -62,6 +62,9 @@ Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList
     m_manager      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Flashexport plugin loaded";
+
+    setUiBaseName("kipiplugin_flashexportui.rc");
+    setupXML();
 }
 
 Plugin_FlashExport::~Plugin_FlashExport()
@@ -73,6 +76,18 @@ void Plugin_FlashExport::setup(QWidget* const widget)
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
 
+    m_interface = interface();
+    if (!m_interface)
+    {
+       kError() << "Kipi interface is null!";
+       return;
+    }
+
+    setupActions();
+}
+
+void Plugin_FlashExport::setupActions()
+{
     m_action = actionCollection()->addAction("flashexport");
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(KIcon("flash"));
@@ -82,13 +97,6 @@ void Plugin_FlashExport::setup(QWidget* const widget)
             this, SLOT(slotActivate()));
 
     addAction(m_action);
-
-    m_interface = dynamic_cast<Interface*>(parent());
-    if (!m_interface)
-    {
-       kError() << "Kipi interface is null!";
-       return;
-    }
 }
 
 void Plugin_FlashExport::slotActivate()

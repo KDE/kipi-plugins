@@ -61,6 +61,10 @@ public:
     Category category(KAction* const action) const;
     void setup(QWidget* const);
 
+private:
+
+    void setupActions();
+
 public Q_SLOTS:
 
     void slotActivate();
