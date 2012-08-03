@@ -55,6 +55,10 @@ private Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     class Plugin_viewerPriv;
     Plugin_viewerPriv* const d;
 };

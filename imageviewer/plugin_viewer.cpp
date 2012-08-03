@@ -67,6 +67,9 @@ Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
        d(new Plugin_viewerPriv)
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
+
+    setUiBaseName("kipiplugin_imageviewerui.rc");
+    setupXML();
 }
 
 Plugin_viewer::~Plugin_viewer()
@@ -78,14 +81,17 @@ void Plugin_viewer::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
-    Interface* iface = dynamic_cast<Interface*>(parent());
-
-    if ( !iface )
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
+    setupActions();
+}
+
+void Plugin_viewer::setupActions()
+{
     d->actionViewer = actionCollection()->addAction("oglimageviewer");
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
     d->actionViewer->setIcon(KIcon("ogl"));
@@ -96,7 +102,7 @@ void Plugin_viewer::setup(QWidget* const widget)
     addAction(d->actionViewer);
 }
 
-void  Plugin_viewer::slotActivate()
+void Plugin_viewer::slotActivate()
 {
     d->widget = new ViewerWidget();
 

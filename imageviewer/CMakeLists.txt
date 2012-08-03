@@ -29,3 +29,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
 INSTALL(TARGETS kipiplugin_imageviewer DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_imageviewerui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
