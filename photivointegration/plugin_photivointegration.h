@@ -65,6 +65,10 @@ private slots:
 
 private:
 
+    void setupActions();
+
+private:
+
     /** This is the plugin action that KIPI host application will plug into menu.
      */
     KAction*   m_action;

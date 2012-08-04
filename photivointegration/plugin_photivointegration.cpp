@@ -60,6 +60,10 @@ Plugin_PhotivoIntegration::Plugin_PhotivoIntegration(QObject* const parent, cons
 {
     /// There is a debug space for plugin loading area.
     kDebug(AREA_CODE_LOADING) << "Plugin_PhotivoIntegration plugin loaded";
+
+    /// Merge the gui of the plugin into the host application
+    setUiBaseName("kipiplugin_photivointegrationui.rc");
+    setupXML();
 }
 
 Plugin_PhotivoIntegration::~Plugin_PhotivoIntegration()
@@ -72,22 +76,9 @@ void Plugin_PhotivoIntegration::setup(QWidget* const widget)
      */
     Plugin::setup(widget);
 
-    /** We define plugin action which will be plug in KIPI host application.
-     */
-    m_action = actionCollection()->addAction("photivointegration");
-    m_action->setText(i18n("Photivo Integration"));
-    m_action->setIcon(KIcon("photivo"));
+    setupActions();
 
-    /** Connect action signal to dedicated slot.
-     */
-    connect(m_action, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    /** Action is registered in plugin instance.
-     */
-    addAction(m_action);
-
-    m_iface = dynamic_cast<KIPI::Interface*>(parent());
+    m_iface = interface();
     if (!m_iface)
     {
        /// No need special debug space outside load plugin area, it will be selected automatically.
@@ -106,6 +97,25 @@ void Plugin_PhotivoIntegration::setup(QWidget* const widget)
             m_action, SLOT(setEnabled(bool)));
 }
 
+void Plugin_PhotivoIntegration::setupActions()
+{
+    /** We define plugin action which will be plug in KIPI host application.
+     */
+    m_action = actionCollection()->addAction("photivointegration");
+    m_action->setText(i18n("Photivo Integration"));
+    m_action->setIcon(KIcon("photivo"));
+    m_action->setEnabled(false);
+
+    /** Connect action signal to dedicated slot.
+     */
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    /** Action is registered in plugin instance.
+     */
+    addAction(m_action);
+}
+
 void Plugin_PhotivoIntegration::slotActivate()
 {
     /** When plugin action is actived, we display list of item selected in a message box
@@ -121,12 +131,12 @@ void Plugin_PhotivoIntegration::slotActivate()
     KUrl::List  imageList = images.images();
     QStringList infoList  = imageList.toStringList();
     for (int i = 0, end = infoList.size();  i < end;  i++) {
-	infoList[i] += ": " + xmpInfo.isDerivate(imageList[i].toLocalFile());//KPMetadata seems to be picky (doesn't accept file://)
+        infoList[i] += ": " + xmpInfo.isDerivate(imageList[i].toLocalFile());//KPMetadata seems to be picky (doesn't accept file://)
     }
 
     KMessageBox::informationList(0,
                                  i18n("This is the list of selected items"),
-				 infoList
+                                 infoList
                                 );
 }
 

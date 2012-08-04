@@ -44,3 +44,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_photivointegration
 INSTALL(TARGETS kipiplugin_photivointegration DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_photivointegration.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_photivointegrationui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
