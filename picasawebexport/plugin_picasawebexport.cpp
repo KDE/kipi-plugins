@@ -69,6 +69,9 @@ Plugin_PicasawebExport::Plugin_PicasawebExport(QObject* const parent, const QVar
     m_dlgImport = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_PicasawebExport plugin loaded" ;
+
+    setUiBaseName("kipiplugin_picasawebexportui.rc");
+    setupXML();
 }
 
 Plugin_PicasawebExport::~Plugin_PicasawebExport()
@@ -81,10 +84,25 @@ void Plugin_PicasawebExport::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_picasawebexport");
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionImport->setEnabled(true);
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_PicasawebExport::setupActions()
+{
     m_actionExport = actionCollection()->addAction("picasawebexport");
     m_actionExport->setText(i18n("Export to &PicasaWeb..."));
     m_actionExport->setIcon(KIcon("picasa"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
@@ -95,23 +113,12 @@ void Plugin_PicasawebExport::setup(QWidget* const widget)
     m_actionImport->setText(i18n("Import from &PicasaWeb..."));
     m_actionImport->setIcon(KIcon("picasa"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
+    m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
     addAction(m_actionImport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_actionImport->setEnabled(false);
-        m_actionExport->setEnabled(false);
-        return;
-    }
-
-    m_actionImport->setEnabled(true);
-    m_actionExport->setEnabled(true);
 }
 
 void Plugin_PicasawebExport::slotExport()
