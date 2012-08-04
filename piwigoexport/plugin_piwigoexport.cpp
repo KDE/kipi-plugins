@@ -19,7 +19,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -63,6 +63,9 @@ Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantLi
       m_action(0), m_pPiwigo(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PiwigoExport plugin loaded";
+
+    setUiBaseName("kipiplugin_piwigoexportui.rc");
+    setupXML();
 }
 
 Plugin_PiwigoExport::~Plugin_PiwigoExport()
@@ -78,13 +81,17 @@ void Plugin_PiwigoExport::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
+    setupActions();
+}
+
+void Plugin_PiwigoExport::setupActions()
+{
     m_action = actionCollection()->addAction("piwigoexport");
     m_action->setText(i18n("Export to &Piwigo..."));
     m_action->setIcon(KIcon("piwigo"));
