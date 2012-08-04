@@ -62,6 +62,10 @@ private Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*      m_singleAction;
     KAction*      m_batchAction;
 

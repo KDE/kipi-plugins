@@ -63,6 +63,9 @@ Plugin_RawConverter::Plugin_RawConverter(QObject* const parent, const QVariantLi
     : Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_RawConverter plugin loaded";
+
+    setUiBaseName("kipiplugin_rawconverterui.rc");
+    setupXML();
 }
 
 Plugin_RawConverter::~Plugin_RawConverter()
@@ -78,9 +81,33 @@ void Plugin_RawConverter::setup(QWidget* const widget)
 
     KGlobal::locale()->insertCatalog("libkdcraw");
 
+    setupActions();
+
+    Interface* iface = interface();
+    if (!iface)
+    {
+           kError() << "Kipi interface is null!";
+           return;
+    }
+
+    ImageCollection selection = iface->currentSelection();
+    bool enable = selection.isValid() && !selection.images().isEmpty();
+
+    m_singleAction->setEnabled(enable);
+
+    connect(iface, SIGNAL(selectionChanged(bool)),
+            m_singleAction, SLOT(setEnabled(bool)));
+
+    connect(iface, SIGNAL(currentAlbumChanged(bool)),
+            m_batchAction, SLOT(setEnabled(bool)));
+}
+
+void Plugin_RawConverter::setupActions()
+{
     m_singleAction = actionCollection()->addAction("raw_converter_single");
     m_singleAction->setText(i18n("RAW Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconverter"));
+    m_singleAction->setEnabled(false);
 
     connect(m_singleAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateSingle()));
@@ -90,36 +117,24 @@ void Plugin_RawConverter::setup(QWidget* const widget)
     m_batchAction = actionCollection()->addAction("raw_converter_batch");
     m_batchAction->setText(i18n("Batch RAW Converter..."));
     m_batchAction->setIcon(KIcon("rawconverter"));
+    m_batchAction->setEnabled(false);
 
     connect(m_batchAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateBatch()));
 
     addAction(m_batchAction);
-
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
-    {
-           kError() << "Kipi interface is null!";
-           return;
-    }
-
-    connect(interface, SIGNAL(selectionChanged(bool)),
-            m_singleAction, SLOT(setEnabled(bool)));
-
-    connect(interface, SIGNAL(currentAlbumChanged(bool)),
-            m_batchAction, SLOT(setEnabled(bool)));
 }
 
 void Plugin_RawConverter::slotActivateSingle()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = iface->currentSelection();
 
     if (!images.isValid())
         return;
@@ -152,15 +167,15 @@ void Plugin_RawConverter::slotActivateSingle()
 
 void Plugin_RawConverter::slotActivateBatch()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
     ImageCollection images;
-    images = interface->currentSelection();
+    images = iface->currentSelection();
 
     if (!images.isValid())
         return;
