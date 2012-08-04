@@ -59,6 +59,9 @@ Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject* const parent, cons
     m_manager      = 0;
 
     kDebug() << "Plugin_PhotoLayoutsEditor plugin loaded";
+
+    setUiBaseName("kipiplugin_photolayoutseditorui.rc");
+    setupXML();
 }
 
 Plugin_PhotoLayoutsEditor::~Plugin_PhotoLayoutsEditor()
@@ -70,21 +73,29 @@ void Plugin_PhotoLayoutsEditor::setup(QWidget* const widget)
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
 
-    m_action = actionCollection()->addAction("photolayoutseditor");
-    m_action->setText(i18n("Create photo layouts..."));
-    m_action->setIcon(KIcon("photolayoutseditor"));
+    setupActions();
 
-    connect(m_action, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(m_action);
-
-    m_interface = dynamic_cast< Interface* >(parent());
+    m_interface = interface();
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
+
+    m_action->setEnabled(true);
+}
+
+void Plugin_PhotoLayoutsEditor::setupActions()
+{
+    m_action = actionCollection()->addAction("photolayoutseditor");
+    m_action->setText(i18n("Create photo layouts..."));
+    m_action->setIcon(KIcon("photolayoutseditor"));
+    m_action->setEnabled(false);
+
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction(m_action);
 }
 
 void Plugin_PhotoLayoutsEditor::slotActivate()

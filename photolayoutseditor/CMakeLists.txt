@@ -192,6 +192,7 @@ TARGET_LINK_LIBRARIES( kipiplugin_photolayoutseditor libphotolayoutseditor )
 
 INSTALL( TARGETS kipiplugin_photolayoutseditor DESTINATION ${PLUGIN_INSTALL_DIR} )
 INSTALL( FILES plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+INSTALL( FILES plugin/kipiplugin_photolayoutseditorui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi )
 
 # =======================================================
 # Stand-alone version of PhotoLayoutsEditor
