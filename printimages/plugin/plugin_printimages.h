@@ -62,6 +62,10 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*   m_printImagesAction;
     KAction*   m_printAssistantAction;
     Interface* m_interface;

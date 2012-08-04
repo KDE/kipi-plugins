@@ -68,6 +68,9 @@ Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantLi
     : Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
+
+    setUiBaseName("kipiplugin_printimagesui.rc");
+    setupXML();
 }
 
 Plugin_PrintImages::~Plugin_PrintImages()
@@ -78,25 +81,9 @@ void Plugin_PrintImages::setup(QWidget* const widget)
 {
     Plugin::setup ( widget );
 
-    m_printImagesAction = actionCollection()->addAction ( "printimages" );
-    m_printImagesAction->setText ( i18n ( "Print images" ) );
-    m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
+    setupActions();
 
-    connect ( m_printImagesAction, SIGNAL (triggered(bool)),
-              this, SLOT (slotPrintImagesActivate()) );
-
-    addAction ( m_printImagesAction );
-
-    m_printAssistantAction = actionCollection()->addAction ( "printassistant" );
-    m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
-    m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
-    addAction ( m_printAssistantAction );
-
-    connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
-              this, SLOT (slotPrintAssistantActivate()) );
-
-    m_interface = dynamic_cast<Interface*>(parent());
-
+    m_interface = interface();
     if ( !m_interface )
     {
         kError() << "Kipi interface is null!";
@@ -112,6 +99,29 @@ void Plugin_PrintImages::setup(QWidget* const widget)
 
     connect ( m_interface, SIGNAL (selectionChanged(bool)),
               m_printAssistantAction, SLOT (setEnabled(bool)) );
+}
+
+void Plugin_PrintImages::setupActions()
+{
+    m_printImagesAction = actionCollection()->addAction ( "printimages" );
+    m_printImagesAction->setText ( i18n ( "Print images" ) );
+    m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
+    m_printImagesAction->setEnabled(false);
+
+    connect ( m_printImagesAction, SIGNAL (triggered(bool)),
+              this, SLOT (slotPrintImagesActivate()) );
+
+    addAction ( m_printImagesAction );
+
+    m_printAssistantAction = actionCollection()->addAction ( "printassistant" );
+    m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
+    m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
+    m_printAssistantAction->setEnabled(false);
+
+    connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
+              this, SLOT (slotPrintAssistantActivate()) );
+
+    addAction ( m_printAssistantAction );
 }
 
 void Plugin_PrintImages::slotPrintImagesActivate()
