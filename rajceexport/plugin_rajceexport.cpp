@@ -61,6 +61,10 @@ Plugin_RajceExport::Plugin_RajceExport(QObject* const parent, const QVariantList
       m_actionExport(0),
       m_dlgExport(0)
 {
+    kDebug(AREA_CODE_LOADING) << "Plugin_RajceExport plugin loaded";
+
+    setUiBaseName("kipiplugin_rajceexportui.rc");
+    setupXML();
 }
 
 Plugin_RajceExport::~Plugin_RajceExport()
@@ -73,17 +77,29 @@ void Plugin_RajceExport::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_rajceexport");
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_RajceExport::setupActions()
+{
     m_actionExport = actionCollection()->addAction("rajceexport");
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
     m_actionExport->setIcon(KIcon("rajce"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_J));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
     addAction(m_actionExport);
-
-    m_actionExport->setEnabled(true);
 }
 
 void Plugin_RajceExport::slotExport()

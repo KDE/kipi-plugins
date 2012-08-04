@@ -30,3 +30,6 @@ INSTALL(TARGETS kipiplugin_rajceexport
 
 INSTALL(FILES kipiplugin_rajceexport.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_rajceexportui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi)
