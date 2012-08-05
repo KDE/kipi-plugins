@@ -54,6 +54,9 @@ Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* const parent, const QVariant
       m_action(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
+
+    setUiBaseName("kipiplugin_removeredeyesui.rc");
+    setupXML();
 }
 
 Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
@@ -64,6 +67,23 @@ void Plugin_RemoveRedEyes::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    ImageCollection selection = interface()->currentSelection();
+    m_action->setEnabled(selection.isValid() && !selection.images().isEmpty() );
+
+    connect(interface(), SIGNAL(selectionChanged(bool)),
+            m_action, SLOT(setEnabled(bool)));
+}
+
+void Plugin_RemoveRedEyes::setupActions()
+{
     m_action = actionCollection()->addAction("removeredeyes");
     m_action->setText(i18n("&Red-Eye Removal..."));
     m_action->setIcon(KIcon("draw-eraser"));
@@ -72,17 +92,6 @@ void Plugin_RemoveRedEyes::setup(QWidget* const widget)
             this, SLOT(activate()));
 
     addAction(m_action);
-
-    Interface* interface = dynamic_cast<Interface*> (parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    connect(interface, SIGNAL(selectionChanged(bool)),
-            m_action, SLOT(setEnabled(bool)));
 }
 
 void Plugin_RemoveRedEyes::activate()
