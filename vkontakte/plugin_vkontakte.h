@@ -60,6 +60,10 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*         m_actionExport;
     VkontakteWindow* m_dlgExport;
 };

@@ -56,6 +56,9 @@ Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     // m_dlgImport = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Vkontakte plugin loaded" ;
+
+    setUiBaseName("kipiplugin_vkontakteui.rc");
+    setupXML();
 }
 
 Plugin_Vkontakte::~Plugin_Vkontakte()
@@ -68,28 +71,31 @@ void Plugin_Vkontakte::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_vkontakte");
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_Vkontakte::setupActions()
+{
     m_actionExport = actionCollection()->addAction("VKontakte");
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("vkontakte"));
     m_actionExport->setIcon(KIcon("preferences-web-browser-shortcuts"));
     //m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
     addAction(m_actionExport);
-
-    Interface *interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
-        return;
-    }
-
-    m_actionExport->setEnabled(true);
 }
 
 /*
