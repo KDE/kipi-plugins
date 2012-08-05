@@ -22,3 +22,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_sendimages
 INSTALL(TARGETS kipiplugin_sendimages DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_sendimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_sendimagesui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)

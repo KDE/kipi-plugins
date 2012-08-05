@@ -63,6 +63,10 @@ private Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     class Plugin_SendImagesPriv;
     Plugin_SendImagesPriv* const d;
 };

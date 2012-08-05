@@ -73,6 +73,9 @@ Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
       d(new Plugin_SendImagesPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
+
+    setUiBaseName("kipiplugin_sendimagesui.rc");
+    setupXML();
 }
 
 Plugin_SendImages::~Plugin_SendImages()
@@ -84,6 +87,24 @@ void Plugin_SendImages::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
+    setupActions();
+
+    Interface* iface = interface();
+    if (!iface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    ImageCollection selection = iface->currentSelection();
+    d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
+
+    connect(iface, SIGNAL(selectionChanged(bool)),
+            d->action_sendimages, SLOT(setEnabled(bool)));
+}
+
+void Plugin_SendImages::setupActions()
+{
     d->action_sendimages = actionCollection()->addAction("sendimages");
     d->action_sendimages->setText(i18n("Email Images..."));
     d->action_sendimages->setIcon(KIcon("mail-send"));
@@ -92,31 +113,18 @@ void Plugin_SendImages::setup(QWidget* const widget)
             this, SLOT(slotActivate()));
 
     addAction(d->action_sendimages);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    ImageCollection selection = interface->currentSelection();
-    d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
-
-    connect(interface, SIGNAL(selectionChanged(bool)),
-            d->action_sendimages, SLOT(setEnabled(bool)));
 }
 
 void Plugin_SendImages::slotActivate()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = iface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
