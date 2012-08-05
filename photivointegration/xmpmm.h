@@ -64,7 +64,8 @@ public:
     XmpMM() = default;
     XmpMM(const KPMetadata meta) { load(meta); }
 
-    void load(const KPMetadata& meta);
+    void    load(const KPMetadata& meta);
+    QString pureID(const QString& id) const;
 
 private:
 
