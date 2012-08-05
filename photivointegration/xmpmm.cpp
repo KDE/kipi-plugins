@@ -43,7 +43,21 @@ void XmpMM::load(const KPMetadata& meta)
 
         loadIDs(mmMap);
         loadHistory(mmMap);
+        //TODO: loadDerivedFrom()
     }
+}
+
+// ----------------------------------------------------------------------------
+
+QString XmpMM::pureID (const QString& id) const
+{
+    int split = id.lastIndexOf (':');
+
+    if (split < 0) //no ':' found => no prefix
+        return id;
+
+    else           //split prefix and id after last ':'
+        return id.mid(split + 1);
 }
 
 // private ////////////////////////////////////////////////////////////////////
@@ -56,7 +70,7 @@ void XmpMM::loadHistory(const KExiv2::MetaDataMap& mmMap)
     while (mmMap.contains(QString("Xmp.xmpMM.History[%1]").arg(++i)))
     {
         XmpMMHistory hist;
-        QString      node  = QString("xmpMM.History[%1]/stEvt:").arg(i);
+        QString      node  = QString("Xmp.xmpMM.History[%1]/stEvt:").arg(i);
 
         // Missing key/value pairs will result as an empty string
         hist.action     = mmMap[node + "action"];

@@ -20,10 +20,6 @@
  *
  * ============================================================ */
 
-// C++ includes
-
-#include <iostream>
-
 // KDE includes
 
 #include <kdebug.h>

@@ -22,6 +22,10 @@
 
 #include "plugin_photivointegration.moc"
 
+// Qt includes
+
+#include <qdir.h>
+
 // KDE includes
 
 #include <kaction.h>
@@ -40,6 +44,7 @@
 // local includes
 
 #include "xmpinfo.h"
+#include "xmpidmap.h"
 
 /// You must wrap all your plugin code to a dedicated namespace
 namespace KIPIPhotivoIntegrationPlugin
@@ -124,14 +129,48 @@ void Plugin_PhotivoIntegration::slotActivate()
 
     if (!images.isValid() || images.images().isEmpty())
         return;
-    
+
     // Currently just a provisional arrangement to examine 
     // Photivo (using Exiv2) and this implementation (using KExiv2)
     XmpInfo     xmpInfo;
     KUrl::List  imageList = images.images();
-    QStringList infoList  = imageList.toStringList();
-    for (int i = 0, end = infoList.size();  i < end;  i++) {
-        infoList[i] += ": " + xmpInfo.isDerivate(imageList[i].toLocalFile());//KPMetadata seems to be picky (doesn't accept file://)
+    QStringList infoList;
+    XmpIDMap    &idmap    = XmpIDMap::getMap();
+
+    for (int i = 0, end = imageList.size();  i < end;  i++)
+    {
+        const QString file       = imageList[i].toLocalFile();//KPMetadata seems to be picky (doesn't accept file://)
+        const XmpMM   mm         = xmpInfo.getXmpMM(file);
+        const QString pureOrigID = mm.pureID(mm.originalDocumentID);//remove prefix
+
+        // simple data
+        infoList.append("-- " + file + " --");
+        infoList.append("    isDerivate(): "       + xmpInfo.isDerivate(file));
+        infoList.append("    originalDocumentID: " + mm.originalDocumentID);
+        infoList.append("    documentID: "         + mm.documentID);
+        infoList.append("    instanceID: "         + mm.instanceID);
+
+        // history
+        int hsize = static_cast<int>(mm.history.size());
+        for (int h = 0; h < hsize; h++)
+        {
+            infoList.append(QString("    history %1: action: ").arg(h)     + mm.history[h].action);
+            infoList.append(QString("    history %1: instanceID: ").arg(h) + mm.history[h].instanceID);
+            infoList.append(QString("    history %1: when: ").arg(h)       + mm.history[h].when);
+        }
+
+// TODO: enable when XmpMM::loadDerivedFrom() is implemented
+//         // derived from
+//         int dsize = static_cast<int>(mm.derivedFrom.size());
+//         for (int d = 0; d < dsize; d++)
+//         {
+//             infoList.append(QString("    derivedFrom %1: documentID: ").arg(d) + mm.derivedFrom[d].documentID);
+//             infoList.append(QString("    derivedFrom %1: instanceID: ").arg(d) + mm.derivedFrom[d].instanceID);
+//         }
+
+        // map originalDocumentID to file
+        if (!pureOrigID.isEmpty()) 
+            infoList.append("   Origin file: "     + idmap.value("xmp.did/" + pureOrigID));
     }
 
     KMessageBox::informationList(0,
