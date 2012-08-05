@@ -72,6 +72,9 @@ Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
     m_dlgExport    = 0;
     m_actionExport = 0;
     m_actionImport = 0;
+
+    setUiBaseName("kipiplugin_smugui.rc");
+    setupXML();
 }
 
 Plugin_Smug::~Plugin_Smug()
@@ -84,10 +87,25 @@ void Plugin_Smug::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_smug");
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionImport->setEnabled(true);
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_Smug::setupActions()
+{
     m_actionExport = actionCollection()->addAction("smugexport");
     m_actionExport->setText(i18n("Export to &SmugMug..."));
     m_actionExport->setIcon(KIcon("smugmug"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
@@ -98,23 +116,12 @@ void Plugin_Smug::setup(QWidget* const widget)
     m_actionImport->setText(i18n("Import from &SmugMug..."));
     m_actionImport->setIcon(KIcon("smugmug"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
+    m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
     addAction(m_actionImport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_actionImport->setEnabled(false);
-        m_actionExport->setEnabled(false);
-        return;
-    }
-
-    m_actionImport->setEnabled(true);
-    m_actionExport->setEnabled(true);
 }
 
 void Plugin_Smug::slotExport()

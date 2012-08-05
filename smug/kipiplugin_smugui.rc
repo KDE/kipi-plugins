@@ -1,0 +1,19 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="1" name="kipiplugin_smug" >
+
+    <MenuBar>
+
+        <Menu name="Import"><text>&amp;Import</text>
+            <Action name="smugimport" group="kipi_export_group" />
+        </Menu>
+
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="smugexport" group="kipi_export_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>
