@@ -58,6 +58,10 @@ private Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     class Private;
     Private* const d;
 };

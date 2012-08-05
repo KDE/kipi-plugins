@@ -72,6 +72,9 @@ Plugin_VideoSlideShow::Plugin_VideoSlideShow(QObject* const parent, const QVaria
       d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_VideoSlideShow plugin loaded";
+
+    setUiBaseName("kipiplugin_videoslideshowui.rc");
+    setupXML();
 }
 
 Plugin_VideoSlideShow::~Plugin_VideoSlideShow()
@@ -85,6 +88,24 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
 
     Plugin::setup(widget);
 
+    setupActions();
+
+    Interface* iface = interface();
+    if (!iface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    connect(iface, SIGNAL(selectionChanged(bool)),
+            d->exportAction, SLOT(setEnabled(bool)));
+
+    connect(iface, SIGNAL(currentAlbumChanged(bool)),
+            d->exportAction, SLOT(setEnabled(bool)));
+}
+
+void Plugin_VideoSlideShow::setupActions()
+{
     d->exportAction = actionCollection()->addAction("video_slide_show");
     d->exportAction->setText(i18n("Export to Video Slide Show..."));
     d->exportAction->setIcon(KIcon("media-record"));
@@ -93,31 +114,18 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
             this, SLOT(slotExport()));
 
     addAction(d->exportAction);
-
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
-    {
-           kError() << "Kipi interface is null!";
-           return;
-    }
-
-    connect(interface, SIGNAL(selectionChanged(bool)),
-            d->exportAction, SLOT(setEnabled(bool)));
-
-    connect(interface, SIGNAL(currentAlbumChanged(bool)),
-            d->exportAction, SLOT(setEnabled(bool)));
 }
 
 void Plugin_VideoSlideShow::slotExport()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = iface->currentSelection();
 
     if (!images.isValid())
         return;

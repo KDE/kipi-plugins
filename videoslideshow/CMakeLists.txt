@@ -31,3 +31,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_videoslideshow
 INSTALL(TARGETS kipiplugin_videoslideshow DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES plugin/kipiplugin_videoslideshowui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
