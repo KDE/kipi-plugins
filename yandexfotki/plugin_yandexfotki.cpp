@@ -55,6 +55,9 @@ Plugin_YandexFotki::Plugin_YandexFotki(QObject* const parent, const QVariantList
 
     m_dlgExport = 0;
     // m_dlgImport = 0;
+
+    setUiBaseName("kipiplugin_yandexfotkiui.rc");
+    setupXML();
 }
 
 Plugin_YandexFotki::~Plugin_YandexFotki()
@@ -67,28 +70,31 @@ void Plugin_YandexFotki::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_yandexfotki");
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_YandexFotki::setupActions()
+{
     m_actionExport = actionCollection()->addAction("Yandex.Fotki");
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("yandexfotki"));
     m_actionExport->setIcon(KIcon("document-export"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
     addAction(m_actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
-        return;
-    }
-
-    m_actionExport->setEnabled(true);
 }
 
 /*

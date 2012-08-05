@@ -59,6 +59,10 @@ public Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*           m_actionExport;
     YandexFotkiWindow* m_dlgExport;
 
