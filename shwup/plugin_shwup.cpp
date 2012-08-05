@@ -70,6 +70,9 @@ Plugin_Shwup::Plugin_Shwup(QObject* const parent, const QVariantList& /*args*/)
 
     m_dlgExport    = 0;
     m_actionExport = 0;
+
+    setUiBaseName("kipiplugin_shwupui.rc");
+    setupXML();
 }
 
 Plugin_Shwup::~Plugin_Shwup()
@@ -82,25 +85,29 @@ void Plugin_Shwup::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_shwup");
 
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionExport->setEnabled(true);
+}
+
+void Plugin_Shwup::setupActions()
+{
     m_actionExport = actionCollection()->addAction("shwupexport");
     m_actionExport->setText(i18n("Export to Shwup..."));
     m_actionExport->setIcon(KIcon("shwup"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
+    m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
     addAction(m_actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
-        return;
-    }
-
-    m_actionExport->setEnabled(true);
 }
 
 void Plugin_Shwup::slotExport()
