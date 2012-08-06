@@ -7,7 +7,7 @@
  * Description : a plugin to edit pictures metadata
  *
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011         by Victor Dodon <dodon dot victor at gmail dot com>
+ * Copyright (C) 2011-2012 by Victor Dodon <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -69,13 +69,16 @@ public:
     {
         actionMetadataEdit = 0;
         interface          = 0;
+        parentWidget       = 0;
     }
 
-    KActionMenu* actionMetadataEdit;
+    QWidget*   parentWidget;
 
-    Interface*   interface;
+    KAction*   actionMetadataEdit;
 
-    KUrl         lastSelectedDirectory;
+    Interface* interface;
+
+    KUrl       lastSelectedDirectory;
 };
 
 Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* const parent, const QVariantList&)
@@ -83,6 +86,9 @@ Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* const parent, const QVariantLi
     d(new Plugin_MetadataEditPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_MetadataEdit plugin loaded";
+
+    setUiBaseName("kipiplugin_metadataeditui.rc");
+    setupXML();
 }
 
 Plugin_MetadataEdit::~Plugin_MetadataEdit()
@@ -92,46 +98,13 @@ Plugin_MetadataEdit::~Plugin_MetadataEdit()
 
 void Plugin_MetadataEdit::setup(QWidget* const widget)
 {
+    d->parentWidget = widget;
     Plugin::setup(widget);
 
-    d->actionMetadataEdit = new KActionMenu(KIcon("metadataedit"), i18n("Metadata"), actionCollection());
-    d->actionMetadataEdit->setObjectName("metadataedit");
+    setupActions();
 
-
-    KAction* metadataEdit = actionCollection()->addAction("editallmetadata");
-    metadataEdit->setText(i18n("Edit &All Metadata..."));
-    connect(metadataEdit, SIGNAL(triggered(bool)),
-            this,SLOT(slotEditAllMetadata()));
-    d->actionMetadataEdit->addAction(metadataEdit);
-
-    // ---------------------------------------------------
-
-    d->actionMetadataEdit->menu()->addSeparator();
-
-    KAction* importEXIF = actionCollection()->addAction("importexif");
-    importEXIF->setText(i18n("Import EXIF..."));
-    connect(importEXIF, SIGNAL(triggered(bool)),
-            this, SLOT(slotImportExif()));
-    d->actionMetadataEdit->addAction(importEXIF);
-
-    KAction* importIPTC = actionCollection()->addAction("importiptc");
-    importIPTC->setText(i18n("Import IPTC..."));
-    connect(importIPTC, SIGNAL(triggered(bool)),
-            this, SLOT(slotImportIptc()));
-    d->actionMetadataEdit->addAction(importIPTC);
-
-    KAction* importXMP = actionCollection()->addAction("importxmp");
-    importXMP->setText(i18n("Import XMP..."));
-    connect(importXMP, SIGNAL(triggered(bool)),
-            this, SLOT(slotImportXmp()));
-    d->actionMetadataEdit->addAction(importXMP);
-
-    // ------------------------------------------------------
-
-    addAction( d->actionMetadataEdit );
-
-    d->interface = dynamic_cast<Interface*>( parent() );
-    if ( !d->interface )
+    d->interface = interface();
+    if (!d->interface)
     {
         kError() << "Kipi interface is null!";
         return;
@@ -142,6 +115,47 @@ void Plugin_MetadataEdit::setup(QWidget* const widget)
 
     connect(d->interface, SIGNAL(selectionChanged(bool)),
             d->actionMetadataEdit, SLOT(setEnabled(bool)));
+}
+
+void Plugin_MetadataEdit::setupActions()
+{
+    d->actionMetadataEdit = actionCollection()->addAction("metadataedit");
+    d->actionMetadataEdit->setText(i18n("&Metadata"));
+    d->actionMetadataEdit->setIcon(KIcon("metadataedit"));
+    d->actionMetadataEdit->setEnabled(false);
+
+    addAction( d->actionMetadataEdit );
+
+    KMenu* metadataEditMenu = new KMenu(d->parentWidget);
+    d->actionMetadataEdit->setMenu(metadataEditMenu);
+
+    KAction* metadataEdit = actionCollection()->addAction("editallmetadata");
+    metadataEdit->setText(i18n("Edit &All Metadata..."));
+    connect(metadataEdit, SIGNAL(triggered(bool)),
+            this,SLOT(slotEditAllMetadata()));
+    metadataEditMenu->addAction(metadataEdit);
+
+    // ---------------------------------------------------
+
+    d->actionMetadataEdit->menu()->addSeparator();
+
+    KAction* importEXIF = actionCollection()->addAction("importexif");
+    importEXIF->setText(i18n("Import EXIF..."));
+    connect(importEXIF, SIGNAL(triggered(bool)),
+            this, SLOT(slotImportExif()));
+    metadataEditMenu->addAction(importEXIF);
+
+    KAction* importIPTC = actionCollection()->addAction("importiptc");
+    importIPTC->setText(i18n("Import IPTC..."));
+    connect(importIPTC, SIGNAL(triggered(bool)),
+            this, SLOT(slotImportIptc()));
+    metadataEditMenu->addAction(importIPTC);
+
+    KAction* importXMP = actionCollection()->addAction("importxmp");
+    importXMP->setText(i18n("Import XMP..."));
+    connect(importXMP, SIGNAL(triggered(bool)),
+            this, SLOT(slotImportXmp()));
+    metadataEditMenu->addAction(importXMP);
 }
 
 void Plugin_MetadataEdit::slotEditAllMetadata()
