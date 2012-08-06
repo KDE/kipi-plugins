@@ -78,6 +78,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject* const parent, cons
                    parent, "BatchProcessImages")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_BatchProcessImages plugin loaded" ;
+
     setUiBaseName("kipiplugin_batchprocessimagesui.rc");
     setupXML();
 }
