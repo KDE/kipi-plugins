@@ -124,8 +124,6 @@ void Plugin_MetadataEdit::setupActions()
     d->actionMetadataEdit->setIcon(KIcon("metadataedit"));
     d->actionMetadataEdit->setEnabled(false);
 
-    addAction( d->actionMetadataEdit );
-
     KMenu* metadataEditMenu = new KMenu(d->parentWidget);
     d->actionMetadataEdit->setMenu(metadataEditMenu);
 
@@ -134,6 +132,8 @@ void Plugin_MetadataEdit::setupActions()
     connect(metadataEdit, SIGNAL(triggered(bool)),
             this,SLOT(slotEditAllMetadata()));
     metadataEditMenu->addAction(metadataEdit);
+
+    addAction(metadataEdit);
 
     // ---------------------------------------------------
 
@@ -145,17 +145,23 @@ void Plugin_MetadataEdit::setupActions()
             this, SLOT(slotImportExif()));
     metadataEditMenu->addAction(importEXIF);
 
+    addAction(importEXIF);
+
     KAction* importIPTC = actionCollection()->addAction("importiptc");
     importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
     metadataEditMenu->addAction(importIPTC);
 
+    addAction(importIPTC);
+
     KAction* importXMP = actionCollection()->addAction("importxmp");
     importXMP->setText(i18n("Import XMP..."));
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));
     metadataEditMenu->addAction(importXMP);
+
+    addAction(importXMP);
 }
 
 void Plugin_MetadataEdit::slotEditAllMetadata()
