@@ -87,6 +87,4 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_facebook
 Icon=facebook
-X-KIPI-Mimetypes=image/png,image/jpg
-X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
 author=Luka Renko, lure@kubuntu.org

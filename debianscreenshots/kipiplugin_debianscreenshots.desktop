@@ -63,6 +63,4 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_debianscreenshots
 Icon=debianscreenshots
-X-KIPI-Mimetypes=image/png,image/jpg
-X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
 author=Pau Garcia i Quiles, pgquiles@elpauer.org
