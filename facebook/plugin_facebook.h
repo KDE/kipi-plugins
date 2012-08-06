@@ -37,10 +37,6 @@
 
 #include <libkipi/plugin.h>
 
-#if KDE_IS_VERSION(4,3,60)
-#include <libkipi/exportinterface.h>
-#endif
-
 class KAction;
 
 namespace KIPIFacebookPlugin
@@ -56,14 +52,8 @@ namespace KIPIFacebookPlugin
 {
 
 class Plugin_Facebook : public Plugin
-#if KDE_IS_VERSION(4,3,60)
-                      , public ExportInterface
-#endif
 {
     Q_OBJECT
-#if KDE_IS_VERSION(4,3,60)
-    Q_INTERFACES( ExportInterface )
-#endif
 
 public:
 
