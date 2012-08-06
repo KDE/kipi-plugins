@@ -1,16 +1,8 @@
-Kipi-plugins 2.8.0 - Release date: 2012/08/05
+Kipi-plugins 2.9.0 - Release date: 2012/09/02
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-MediaWiki : GUI improvmenets and new features to export items.
-
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 302755 - Improve usability and fix bugs [patch].
-002 ==> 303188 - Adjust Time and Date keeps executing on previously selected images.
-003 ==> 303464 - Improve usability and fix bugs [patch].
-004 ==> 298022 - The 'Export To' PicasaWeb option shows account names as numbers.
-005 ==> 292223 - Export to picasa plugin don't save my gmail account password.
-006 ==> 304242 - Ricoh GRD 4 DNG file converted to DNG (recompress) has wrong colors.
-007 ==> 
+001 ==> 
