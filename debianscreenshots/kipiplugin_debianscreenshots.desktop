@@ -62,5 +62,6 @@ Comment[zh_TW]=匯出影像到 Debian Screenshots 網站的工具
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_debianscreenshots
+X-KIPI-PluginCategories=Export
 Icon=debianscreenshots
 author=Pau Garcia i Quiles, pgquiles@elpauer.org

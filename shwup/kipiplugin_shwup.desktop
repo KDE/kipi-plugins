@@ -79,4 +79,5 @@ Type=Service
 Icon=shwup
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_shwup
+X-KIPI-PluginCategories=Export
 author=Timothée Groleau, timothee at muvee dot com

@@ -92,4 +92,5 @@ Type=Service
 Icon=flash
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flashexport
+X-KIPI-PluginCategories=Export
 author=Gilles Caulier, caulier dot gilles at gmail dot com

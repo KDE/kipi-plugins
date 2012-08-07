@@ -62,4 +62,5 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kopete
 Icon=kopete
+X-KIPI-PluginCategories=Export
 author=Pau Garcia i Quiles, pgquiles@elpauer.org

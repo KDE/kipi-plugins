@@ -58,4 +58,5 @@ Icon=layer-visible-on
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_panorama
+X-KIPI-PluginCategories=Tools
 author=Benjamin Girault, benjamin dot girault at gmail dot com

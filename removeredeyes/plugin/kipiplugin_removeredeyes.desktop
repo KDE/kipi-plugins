@@ -87,4 +87,5 @@ ServiceTypes=KIPI/Plugin
 Type=Service
 Icon=draw-eraser
 X-KDE-Library=kipiplugin_removeredeyes
+X-KIPI-PluginCategories=Batch
 author=Andi Clemens, andi dot clemens at googlemail dot com

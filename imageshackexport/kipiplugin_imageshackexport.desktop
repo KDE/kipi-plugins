@@ -49,3 +49,5 @@ Type=Service
 Icon=imageshack
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_imageshackexport
+X-KIPI-PluginCategories=Export
+author=Victor Dodon, dodonvictor at gmail dot com

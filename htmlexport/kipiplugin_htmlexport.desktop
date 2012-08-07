@@ -92,3 +92,5 @@ Icon=text-html
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_htmlexport
+X-KIPI-PluginCategories=Export
+author=Aurelien Gateau, aurelien dot gateau at free dot fr
