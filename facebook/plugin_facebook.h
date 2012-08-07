@@ -29,10 +29,6 @@
 
 #include <QVariant>
 
-// KDE includes
-
-#include <kdeversion.h>
-
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
