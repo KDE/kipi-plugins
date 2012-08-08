@@ -98,6 +98,8 @@ void Plugin_DLNAExport::setup(QWidget* const widget)
 
 void Plugin_DLNAExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->actionExport = actionCollection()->addAction("dlnaexport");
     d->actionExport->setText(i18n("Export via &DLNA"));
     d->actionExport->setIcon(KIcon("dlna"));
@@ -126,15 +128,6 @@ void Plugin_DLNAExport::slotExport()
     }
 
     d->dlgExport->show();
-}
-
-Category Plugin_DLNAExport::category(KAction* const action) const
-{
-    if (action == d->actionExport)
-       return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 }  // namespace KIPIDLNAExportPlugin

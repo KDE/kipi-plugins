@@ -45,7 +45,6 @@ public:
     Plugin_DLNAExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_DLNAExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 private Q_SLOTS:
