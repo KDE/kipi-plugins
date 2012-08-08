@@ -91,3 +91,6 @@ Type=Application
 # Exec="" is necessary to get this entry to show up in khelpcenter
 Exec=""
 Icon=kipi-logo
+
+[KipiPlugins Entry]
+Version=${KIPIPLUGINS_VERSION_STRING}
