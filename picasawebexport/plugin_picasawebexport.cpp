@@ -98,6 +98,8 @@ void Plugin_PicasawebExport::setup(QWidget* const widget)
 
 void Plugin_PicasawebExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("picasawebexport");
     m_actionExport->setText(i18n("Export to &PicasaWeb..."));
     m_actionExport->setIcon(KIcon("picasa"));
@@ -118,7 +120,7 @@ void Plugin_PicasawebExport::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(m_actionImport);
+    addAction(m_actionImport, ImportPlugin);
 }
 
 void Plugin_PicasawebExport::slotExport()
@@ -161,17 +163,6 @@ void Plugin_PicasawebExport::slotImport()
     }
 
     m_dlgImport->show();
-}
-
-Category Plugin_PicasawebExport::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-    else if (action == m_actionImport)
-        return ImportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin;
 }
 
 } // namespace KIPIPicasawebExportPlugin

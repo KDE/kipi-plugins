@@ -48,7 +48,6 @@ public:
     Plugin_PicasawebExport(QObject* const parent, const QVariantList& args);
     ~Plugin_PicasawebExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:
