@@ -52,7 +52,6 @@ public:
     Plugin_PrintImages(QObject* const parent, const QVariantList& args);
     ~Plugin_PrintImages();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const widget);
 
 public Q_SLOTS:

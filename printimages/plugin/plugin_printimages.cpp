@@ -103,6 +103,8 @@ void Plugin_PrintImages::setup(QWidget* const widget)
 
 void Plugin_PrintImages::setupActions()
 {
+    setDefaultCategory(ImagesPlugin);
+
     m_printImagesAction = actionCollection()->addAction ( "printimages" );
     m_printImagesAction->setText ( i18n ( "Print images" ) );
     m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
@@ -168,15 +170,6 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     printAssistant.print(fileList, tempPath);
 
     if (printAssistant.exec() == QDialog::Rejected) return;
-}
-
-Category Plugin_PrintImages::category(KAction* const action) const
-{
-    if ( action == m_printImagesAction || action == m_printAssistantAction )
-        return ImagesPlugin;
-
-    kWarning () << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIPrintImagesPlugin
