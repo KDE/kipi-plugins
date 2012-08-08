@@ -84,6 +84,8 @@ void Plugin_DNGConverter::setup(QWidget* const widget)
 
 void Plugin_DNGConverter::setupActions()
 {
+    setDefaultCategory(BatchPlugin);
+
     m_action = actionCollection()->addAction("dngconverter");
     m_action->setText(i18n("DNG Converter..."));
     m_action->setIcon(KIcon("dngconverter"));
@@ -121,15 +123,6 @@ void Plugin_DNGConverter::slotActivate()
 
     m_batchDlg->show();
     m_batchDlg->addItems(images.images());
-}
-
-Category Plugin_DNGConverter::category(KAction* const action) const
-{
-    if (action == m_action)
-       return BatchPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return BatchPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIDNGConverterPlugin
