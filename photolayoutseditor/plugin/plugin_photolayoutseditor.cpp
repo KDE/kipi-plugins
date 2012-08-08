@@ -87,6 +87,8 @@ void Plugin_PhotoLayoutsEditor::setup(QWidget* const widget)
 
 void Plugin_PhotoLayoutsEditor::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     m_action = actionCollection()->addAction("photolayoutseditor");
     m_action->setText(i18n("Create photo layouts..."));
     m_action->setIcon(KIcon("photolayoutseditor"));
@@ -114,15 +116,6 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
         m_manager->setItemsList(images.images());
     m_manager->setInterface(m_interface);
     m_manager->show();
-}
-
-Category Plugin_PhotoLayoutsEditor::category(KAction* const action) const
-{
-    if ( action == m_action )
-       return ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIPhotoLayoutsEditor
