@@ -59,7 +59,6 @@ public:
     Plugin_WikiMedia(QObject* const parent, const QVariantList& args);
     ~Plugin_WikiMedia();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
     void runMWindow();
 

@@ -110,6 +110,8 @@ void Plugin_WikiMedia::setup(QWidget* const widget)
 
 void Plugin_WikiMedia::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->actionExport = actionCollection()->addAction("wikimediaexport");
     d->actionExport->setText(i18n("Export to MediaWiki..."));
     d->actionExport->setIcon(KIcon("wikimedia"));
@@ -138,15 +140,6 @@ void Plugin_WikiMedia::slotExport()
 
         d->dlgExport->reactivate();
     }
-}
-
-Category Plugin_WikiMedia::category(KAction* const action) const
-{
-    if (action == d->actionExport)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIWikiMediaPlugin
