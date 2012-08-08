@@ -89,6 +89,8 @@ void Plugin_ExpoBlending::setup(QWidget* const widget)
 
 void Plugin_ExpoBlending::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     m_action = actionCollection()->addAction("expoblending");
     m_action->setText(i18n("Blend Bracketed Images..."));
     m_action->setIcon(KIcon("expoblending"));
@@ -121,15 +123,6 @@ void Plugin_ExpoBlending::slotActivate()
     m_manager->setItemsList(images.images());
     m_manager->setIface(m_interface);
     m_manager->run();
-}
-
-Category Plugin_ExpoBlending::category(KAction* const action) const
-{
-    if ( action == m_action )
-       return ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIExpoBlendingPlugin

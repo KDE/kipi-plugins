@@ -57,7 +57,6 @@ public:
     Plugin_ExpoBlending(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_ExpoBlending();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:
