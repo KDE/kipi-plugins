@@ -75,6 +75,8 @@ void Plugin_GPSSync::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
+    setDefaultCategory(ImagesPlugin);
+
     m_action_geolocation = actionCollection()->addAction("gpssync");
     m_action_geolocation->setText(i18n("Geo-location"));
     m_action_geolocation->setIcon(KIcon("applications-internet"));
@@ -110,15 +112,6 @@ void Plugin_GPSSync::slotGPSSync()
 
     dialog->setImages( images.images() );
     dialog->show();
-}
-
-Category Plugin_GPSSync::category(KAction* const action) const
-{
-    if ( action == m_action_geolocation )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIGPSSyncPlugin
