@@ -80,6 +80,8 @@ void Plugin_iPodExport::setup(QWidget* const widget)
 
 void Plugin_iPodExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionImageUpload = actionCollection()->addAction("ipodexport");
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
     m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
@@ -107,14 +109,6 @@ void Plugin_iPodExport::slotImageUpload()
 
     m_dlgImageUpload->setMinimumWidth(650);
     m_dlgImageUpload->reactivate();
-}
-
-Category Plugin_iPodExport::category(KAction* const action) const
-{
-    if ( action == m_actionImageUpload )
-        return ExportPlugin;
-
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIIpodExportPlugin

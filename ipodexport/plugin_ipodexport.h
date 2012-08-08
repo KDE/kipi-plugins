@@ -50,7 +50,6 @@ public:
     Plugin_iPodExport(QObject* const parent, const QVariantList& args);
     ~Plugin_iPodExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const widget);
 
 private Q_SLOTS:
