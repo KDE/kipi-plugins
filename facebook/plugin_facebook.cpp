@@ -95,6 +95,8 @@ void Plugin_Facebook::setup(QWidget* const widget)
 
 void Plugin_Facebook::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("facebookexport");
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("facebook"));
@@ -113,7 +115,7 @@ void Plugin_Facebook::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(m_actionImport);
+    addAction(m_actionImport, ImportPlugin);
 }
 
 void Plugin_Facebook::slotExport()
@@ -162,17 +164,6 @@ KJob* Plugin_Facebook::exportFiles(const QString& album)
 {
     Interface* interface = dynamic_cast<Interface*>(parent());
     return new FacebookJob(album, interface->currentSelection().images());
-}
-
-Category Plugin_Facebook::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-    else if (action == m_actionImport)
-        return ImportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIFacebookPlugin
