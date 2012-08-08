@@ -97,6 +97,8 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
 
 void Plugin_FlickrExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionFlickr = actionCollection()->addAction("flickrexport");
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(KIcon("flickr"));
@@ -195,17 +197,6 @@ void Plugin_FlickrExport::slotActivateZooomr()
     }
 
     m_dlgZooomr->reactivate();
-}
-
-Category Plugin_FlickrExport::category(KAction* const action) const
-{
-    if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } //namespace KIPIFlickrExportPlugin
