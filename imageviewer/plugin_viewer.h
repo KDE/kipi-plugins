@@ -47,7 +47,6 @@ public:
     ~Plugin_viewer();
 
     void setup(QWidget* const widget);
-    Category category(KAction* const action) const;
 
 private Q_SLOTS:
 

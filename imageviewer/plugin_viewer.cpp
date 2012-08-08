@@ -92,6 +92,8 @@ void Plugin_viewer::setup(QWidget* const widget)
 
 void Plugin_viewer::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     d->actionViewer = actionCollection()->addAction("oglimageviewer");
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
     d->actionViewer->setIcon(KIcon("ogl"));
@@ -129,19 +131,6 @@ void Plugin_viewer::slotActivate()
             delete d->widget;
             KMessageBox::error(0, i18n("OpenGL error"), i18n("no OpenGL context found"));
             break;
-    }
-}
-
-Category Plugin_viewer::category(KAction* const action) const
-{
-    if ( action == d->actionViewer )
-    {
-        return ToolsPlugin;
-    }
-    else
-    {
-        kWarning() << "Unrecognized action for plugin category identification";
-        return ToolsPlugin; // no warning from compiler, please
     }
 }
 
