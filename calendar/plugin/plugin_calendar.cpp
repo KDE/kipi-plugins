@@ -75,6 +75,8 @@ void Plugin_Calendar::setup(QWidget* const widget)
 
 void Plugin_Calendar::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     m_actionCalendar = actionCollection()->addAction("calendar");
     m_actionCalendar->setText(i18n("Create Calendar..."));
     m_actionCalendar->setIcon(KIcon("view-pim-calendar"));
@@ -89,17 +91,6 @@ void Plugin_Calendar::slotActivate()
 {
     CalWizard w(kapp->activeWindow());
     w.exec();
-}
-
-Category Plugin_Calendar::category(KAction* const action) const
-{
-    if (action == m_actionCalendar)
-    {
-        return ToolsPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 }  // NameSpace KIPICalendarPlugin
