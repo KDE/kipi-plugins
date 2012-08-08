@@ -91,6 +91,8 @@ void Plugin_KMLExport::setup(QWidget* const widget)
 
 void Plugin_KMLExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionKMLExport = actionCollection()->addAction("kmlexport");
     m_actionKMLExport->setText(i18n("Export to KML..."));
     m_actionKMLExport->setIcon(KIcon("applications-development-web"));
@@ -135,17 +137,6 @@ void Plugin_KMLExport::slotKMLGenerate()
         return;
 
     myExport.generate();
-}
-
-Category Plugin_KMLExport::category(KAction* const action) const
-{
-    if ( action == m_actionKMLExport )
-    {
-       return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIKMLExportPlugin
