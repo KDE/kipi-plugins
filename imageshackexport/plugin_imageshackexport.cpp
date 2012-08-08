@@ -102,6 +102,8 @@ void Plugin_ImageshackExport::setup(QWidget* const widget)
 
 void Plugin_ImageshackExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->actionExport = actionCollection()->addAction("imageshackexport");
     d->actionExport->setText(i18n("Export to &Imageshack..."));
     d->actionExport->setIcon(KIcon("imageshack"));
@@ -121,15 +123,6 @@ void Plugin_ImageshackExport::slotExport()
     dlg->exec();
 
     delete dlg;
-}
-
-Category Plugin_ImageshackExport::category(KAction* const action) const
-{
-    if (action == d->actionExport)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIImageshackExportPlugin
