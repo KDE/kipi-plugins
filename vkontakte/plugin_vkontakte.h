@@ -50,7 +50,6 @@ public:
     Plugin_Vkontakte(QObject* const parent, const QVariantList& args);
     ~Plugin_Vkontakte();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:

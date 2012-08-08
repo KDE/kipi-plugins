@@ -84,6 +84,8 @@ void Plugin_Vkontakte::setup(QWidget* const widget)
 
 void Plugin_Vkontakte::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("VKontakte");
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
@@ -122,17 +124,6 @@ void Plugin_Vkontakte::slotExport()
     }
 
     m_dlgExport->startReactivation();
-}
-
-Category Plugin_Vkontakte::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin;
 }
 
 } // namespace KIPIVkontaktePlugin
