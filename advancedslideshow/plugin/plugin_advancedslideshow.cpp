@@ -114,6 +114,8 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 
 void Plugin_AdvancedSlideshow::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     m_actionSlideShow = actionCollection()->addAction("advancedslideshow");
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(KIcon("slideshow"));
@@ -273,16 +275,6 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
             }
         }
     }
-}
-
-KIPI::Category Plugin_AdvancedSlideshow::category(KAction* const action) const
-{
-    if (action == m_actionSlideShow)
-        return KIPI::ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-
-    return KIPI::ToolsPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin
