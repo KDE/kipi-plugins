@@ -102,6 +102,8 @@ void Plugin_ImgurExport::setup(QWidget* const widget)
 
 void Plugin_ImgurExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->actionExport = actionCollection()->addAction("imgurexport");
     d->actionExport->setText(i18n("Export to &Imgur..."));
     d->actionExport->setIcon(KIcon("imgur"));
@@ -133,17 +135,6 @@ void Plugin_ImgurExport::slotActivate()
     d->winExport->reactivate();
 
     kDebug() << "We have activated the imgur exporter!";
-}
-
-Category Plugin_ImgurExport::category(KAction* const action) const
-{
-    if (action == d->actionExport)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIImgurExportPlugin

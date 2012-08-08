@@ -50,7 +50,6 @@ public:
     ~Plugin_ImgurExport();
 
     void setup(QWidget* const);
-    Category category(KAction* const action) const;
 
 public Q_SLOTS:
 
