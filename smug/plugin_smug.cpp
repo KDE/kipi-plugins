@@ -101,6 +101,8 @@ void Plugin_Smug::setup(QWidget* const widget)
 
 void Plugin_Smug::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("smugexport");
     m_actionExport->setText(i18n("Export to &SmugMug..."));
     m_actionExport->setIcon(KIcon("smugmug"));
@@ -121,7 +123,7 @@ void Plugin_Smug::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(m_actionImport);
+    addAction(m_actionImport, ImportPlugin);
 }
 
 void Plugin_Smug::slotExport()
@@ -164,17 +166,6 @@ void Plugin_Smug::slotImport()
     }
 
     m_dlgImport->show();
-}
-
-Category Plugin_Smug::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-    else if (action == m_actionImport)
-        return ImportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPISmugPlugin
