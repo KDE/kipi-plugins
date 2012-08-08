@@ -53,4 +53,4 @@ INSTALL(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 # desktop file used to setup kipi-plugins handbook link and to share kipi-plugins version string.
 CONFIGURE_FILE(kipiplugins.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugins.desktop)
-INSTALL(PROGRAMS kipiplugins.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kipiplugins.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
