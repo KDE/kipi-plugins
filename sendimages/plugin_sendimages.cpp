@@ -105,6 +105,8 @@ void Plugin_SendImages::setup(QWidget* const widget)
 
 void Plugin_SendImages::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->action_sendimages = actionCollection()->addAction("sendimages");
     d->action_sendimages->setText(i18n("Email Images..."));
     d->action_sendimages->setIcon(KIcon("mail-send"));
@@ -150,15 +152,6 @@ void Plugin_SendImages::slotPrepareEmail()
     EmailSettings settings = d->dialog->emailSettings();
     d->sendImagesOperation = new SendImages(settings, this);
     d->sendImagesOperation->firstStage();
-}
-
-Category Plugin_SendImages::category(KAction* const action) const
-{
-    if (action == d->action_sendimages)
-       return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPISendimagesPlugin

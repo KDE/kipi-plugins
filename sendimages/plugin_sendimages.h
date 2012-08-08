@@ -50,7 +50,6 @@ public:
     Plugin_SendImages(QObject* const parent, const QVariantList& args);
     ~Plugin_SendImages();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:
