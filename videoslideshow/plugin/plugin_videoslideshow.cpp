@@ -106,6 +106,8 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
 
 void Plugin_VideoSlideShow::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     d->exportAction = actionCollection()->addAction("video_slide_show");
     d->exportAction->setText(i18n("Export to Video Slide Show..."));
     d->exportAction->setIcon(KIcon("media-record"));
@@ -147,15 +149,6 @@ void Plugin_VideoSlideShow::slotExport()
     }
 
     d->exportDlg->show();
-}
-
-Category Plugin_VideoSlideShow::category(KAction* const action) const
-{
-    if ( action == d->exportAction )
-       return ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIVideoSlideShowPlugin

@@ -49,7 +49,6 @@ public:
     Plugin_VideoSlideShow(QObject* const parent, const QVariantList& args);
     ~Plugin_VideoSlideShow();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const widget);
 
 private Q_SLOTS:
