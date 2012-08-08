@@ -104,6 +104,8 @@ void Plugin_RawConverter::setup(QWidget* const widget)
 
 void Plugin_RawConverter::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     m_singleAction = actionCollection()->addAction("raw_converter_single");
     m_singleAction->setText(i18n("RAW Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconverter"));
@@ -122,7 +124,7 @@ void Plugin_RawConverter::setupActions()
     connect(m_batchAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateBatch()));
 
-    addAction(m_batchAction);
+    addAction(m_batchAction, BatchPlugin);
 }
 
 void Plugin_RawConverter::slotActivateSingle()
@@ -194,17 +196,6 @@ void Plugin_RawConverter::slotActivateBatch()
 
     m_batchDlg->show();
     m_batchDlg->addItems(images.images());
-}
-
-Category Plugin_RawConverter::category(KAction* const action) const
-{
-    if ( action == m_singleAction )
-       return ToolsPlugin;
-    else if ( action == m_batchAction )
-       return BatchPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIRawConverterPlugin
