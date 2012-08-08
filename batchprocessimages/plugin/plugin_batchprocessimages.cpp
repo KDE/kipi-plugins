@@ -147,6 +147,8 @@ void Plugin_BatchProcessImages::setup(QWidget* const widget)
 
 void Plugin_BatchProcessImages::setupActions()
 {
+    setDefaultCategory(BatchPlugin);
+
     m_action_borderimages = actionCollection()->addAction("batch_border_images", this, SLOT(slotActivate()));
     m_action_borderimages->setIcon(KIcon("borderimages"));
     m_action_borderimages->setText(i18n("Border Images..."));
@@ -273,29 +275,6 @@ void Plugin_BatchProcessImages::slotActivate()
         kWarning() << "The impossible happened... unknown batch action specified";
         return;
     }
-}
-
-KIPI::Category Plugin_BatchProcessImages::category(KAction* const action) const
-{
-    if (action == m_action_borderimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_colorimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_convertimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_effectimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_filterimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_renameimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_recompressimages)
-        return KIPI::BatchPlugin;
-    else if (action == m_action_resizeimages)
-        return KIPI::BatchPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::BatchPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

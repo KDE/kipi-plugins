@@ -60,7 +60,6 @@ public:
     Plugin_BatchProcessImages(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_BatchProcessImages();
 
-    KIPI::Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:
