@@ -90,6 +90,8 @@ void Plugin_RajceExport::setup(QWidget* const widget)
 
 void Plugin_RajceExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("rajceexport");
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
     m_actionExport->setIcon(KIcon("rajce"));
@@ -123,15 +125,6 @@ void Plugin_RajceExport::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_RajceExport::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action";
-    return ExportPlugin;
 }
 
 } // namespace KIPIRajceExportPlugin

@@ -51,7 +51,6 @@ public:
     Plugin_RajceExport(QObject* const parent, const QVariantList& args);
     ~Plugin_RajceExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:
