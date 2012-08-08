@@ -105,6 +105,8 @@ void Plugin_GalleryExport::setup(QWidget* const widget)
 
 void Plugin_GalleryExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->action = actionCollection()->addAction("galleryexport");
     d->action->setText(i18n("Export to &Gallery..."));
     d->action->setIcon(KIcon("gallery"));
@@ -134,17 +136,6 @@ void Plugin_GalleryExport::slotSync()
 
     delete configDlg;
     delete dlg;
-}
-
-Category Plugin_GalleryExport::category(KAction* const action) const
-{
-    if (action == d->action)
-        return ExportPlugin;
-//     if (action == d->action_configure)
-//         return ToolsPlugin;
-//
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIGalleryExportPlugin
