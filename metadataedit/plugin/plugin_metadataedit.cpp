@@ -119,6 +119,8 @@ void Plugin_MetadataEdit::setup(QWidget* const widget)
 
 void Plugin_MetadataEdit::setupActions()
 {
+    setDefaultCategory(ImagesPlugin);
+
     d->actionMetadataEdit = actionCollection()->addAction("metadataedit");
     d->actionMetadataEdit->setText(i18n("&Metadata"));
     d->actionMetadataEdit->setIcon(KIcon("metadataedit"));
@@ -441,15 +443,6 @@ void Plugin_MetadataEdit::slotImportXmp()
                     errorFiles,
                     i18n("Import XMP Metadata"));
     }
-}
-
-Category Plugin_MetadataEdit::category(KAction* const action) const
-{
-    if ( action == d->actionMetadataEdit )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIMetadataEditPlugin

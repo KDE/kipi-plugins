@@ -57,7 +57,6 @@ public:
     Plugin_MetadataEdit(QObject* const parent, const QVariantList& args);
     ~Plugin_MetadataEdit();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 protected Q_SLOTS:
