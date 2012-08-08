@@ -52,7 +52,6 @@ public:
     Plugin_HTMLExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_HTMLExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const widget);
 
 private Q_SLOTS:

@@ -71,6 +71,8 @@ Plugin_HTMLExport::Plugin_HTMLExport(QObject* const parent, const QVariantList&)
     : Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport"),
       d(new Private)
 {
+    kDebug(AREA_CODE_LOADING) << "Plugin_HTMLExport plugin loaded";
+
     setUiBaseName("kipiplugin_htmlexportui.rc");
     setupXML();
 }
@@ -95,6 +97,8 @@ void Plugin_HTMLExport::setup(QWidget* const widget)
 
 void Plugin_HTMLExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     d->mAction = actionCollection()->addAction("htmlexport");
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
@@ -153,17 +157,6 @@ void Plugin_HTMLExport::slotActivate()
     }
 
     delete wizard;
-}
-
-Category Plugin_HTMLExport::category(KAction* const action) const
-{
-    if (action == d->mAction)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIHTMLExport
