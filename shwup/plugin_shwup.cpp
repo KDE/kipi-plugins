@@ -98,6 +98,8 @@ void Plugin_Shwup::setup(QWidget* const widget)
 
 void Plugin_Shwup::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("shwupexport");
     m_actionExport->setText(i18n("Export to Shwup..."));
     m_actionExport->setIcon(KIcon("shwup"));
@@ -129,15 +131,6 @@ void Plugin_Shwup::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_Shwup::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIShwupPlugin
