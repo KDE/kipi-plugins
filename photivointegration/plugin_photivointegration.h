@@ -54,7 +54,6 @@ public:
     Plugin_PhotivoIntegration(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_PhotivoIntegration();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 private slots:

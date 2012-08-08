@@ -104,6 +104,8 @@ void Plugin_PhotivoIntegration::setup(QWidget* const widget)
 
 void Plugin_PhotivoIntegration::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
     /** We define plugin action which will be plug in KIPI host application.
      */
     m_action = actionCollection()->addAction("photivointegration");
@@ -177,16 +179,6 @@ void Plugin_PhotivoIntegration::slotActivate()
                                  i18n("This is the list of selected items"),
                                  infoList
                                 );
-}
-
-Category Plugin_PhotivoIntegration::category(KAction* const action) const
-{
-    if (action == m_action)
-       return ToolsPlugin;//Plugin will be listed as an item of the "Tools" menu
-
-    /// No need special debug space outside load plugin area, it will be selected automatically.
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please (return an object)
 }
 
 }  // namespace KIPIPhotivoIntegrationPlugin
