@@ -80,6 +80,8 @@ void Plugin_Kopete::setup(QWidget* const widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_kopete");
 
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("kopeteexport");
     m_actionExport->setText(i18n("&Instant Messaging contact..."));
     m_actionExport->setIcon(KIcon("kopete"));
@@ -212,11 +214,6 @@ bool Plugin_Kopete::kopeteRunning()
           return true;
     }
     return false;
-}
-
-Category Plugin_Kopete::category(KAction* const) const
-{
-    return ExportPlugin;
 }
 
 } // namespace KIPIKopetePlugin
