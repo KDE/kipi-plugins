@@ -156,7 +156,6 @@ void Task::run()
                 QFileInfo fi(m_url.toLocalFile());
                 destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-" +
                         QString::number(QDateTime::currentDateTime().toTime_t()) + QString(m_url.fileName());
-                m_d->mutex.lock();
                 m_d->dngProcessor.reset();
                 m_d->dngProcessor.setInputFile(m_url.toLocalFile());
                 m_d->dngProcessor.setOutputFile(destPath);
@@ -165,7 +164,6 @@ void Task::run()
                 m_d->dngProcessor.setUpdateFileDate(m_d->updateFileDate);
                 m_d->dngProcessor.setPreviewMode(m_d->previewMode);
                 ret = m_d->dngProcessor.convert();
-                m_d->mutex.unlock();
             }
 
             ActionData ad2;
