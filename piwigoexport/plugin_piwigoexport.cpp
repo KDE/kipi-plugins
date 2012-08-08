@@ -92,6 +92,8 @@ void Plugin_PiwigoExport::setup(QWidget* const widget)
 
 void Plugin_PiwigoExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_action = actionCollection()->addAction("piwigoexport");
     m_action->setText(i18n("Export to &Piwigo..."));
     m_action->setIcon(KIcon("piwigo"));
@@ -121,15 +123,6 @@ void Plugin_PiwigoExport::slotSync()
 
     delete configDlg;
     delete dlg;
-}
-
-Category Plugin_PiwigoExport::category(KAction* const action) const
-{
-    if (action == m_action)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIPiwigoExportPlugin

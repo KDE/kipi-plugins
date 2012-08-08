@@ -53,7 +53,6 @@ public:
     Plugin_PiwigoExport(QObject* const parent, const QVariantList& args);
     ~Plugin_PiwigoExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:
