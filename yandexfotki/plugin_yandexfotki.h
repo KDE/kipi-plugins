@@ -49,7 +49,6 @@ public:
     Plugin_YandexFotki(QObject* const parent, const QVariantList& args);
     ~Plugin_YandexFotki();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 public Q_SLOTS:

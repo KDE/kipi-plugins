@@ -83,6 +83,8 @@ void Plugin_YandexFotki::setup(QWidget* const widget)
 
 void Plugin_YandexFotki::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("Yandex.Fotki");
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
@@ -121,17 +123,6 @@ void Plugin_YandexFotki::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_YandexFotki::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin;
 }
 
 } // namespace KIPIYandexFotkiPlugin
