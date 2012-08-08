@@ -84,6 +84,8 @@ void Plugin_RemoveRedEyes::setup(QWidget* const widget)
 
 void Plugin_RemoveRedEyes::setupActions()
 {
+    setDefaultCategory(BatchPlugin);
+
     m_action = actionCollection()->addAction("removeredeyes");
     m_action->setText(i18n("&Red-Eye Removal..."));
     m_action->setIcon(KIcon("draw-eraser"));
@@ -98,17 +100,6 @@ void Plugin_RemoveRedEyes::activate()
 {
     RemoveRedEyesWindow* window = new RemoveRedEyesWindow();
     window->show();
-}
-
-Category Plugin_RemoveRedEyes::category(KAction* const action) const
-{
-    if (action == m_action)
-    {
-        return BatchPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return BatchPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

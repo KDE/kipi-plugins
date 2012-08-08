@@ -49,7 +49,6 @@ public:
     Plugin_RemoveRedEyes(QObject* const parent, const QVariantList& args);
     ~Plugin_RemoveRedEyes();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const widget);
 
 private Q_SLOTS:
