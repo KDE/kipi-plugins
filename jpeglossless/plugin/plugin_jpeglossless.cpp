@@ -156,6 +156,8 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
 
 void Plugin_JPEGLossless::setupActions()
 {
+    setDefaultCategory(ImagesPlugin);
+
     d->action_RotateImage = new KActionMenu(KIcon("object-rotate-right"), i18n("Rotate"), actionCollection());
     d->action_RotateImage->setObjectName("jpeglossless_rotate");
 
@@ -499,21 +501,6 @@ KUrl::List Plugin_JPEGLossless::images()
     // and tells the host app to refresh the images.
     d->images = images.images();
     return images.images();
-}
-
-Category Plugin_JPEGLossless::category(KAction* const action) const
-{
-    if (action == d->action_AutoExif)
-        return ImagesPlugin;
-    else if ( action == d->action_RotateImage )
-       return ImagesPlugin;
-    else if ( action == d->action_FlipImage )
-       return ImagesPlugin;
-    else if ( action == d->action_Convert2GrayScale )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIJPEGLossLessPlugin
