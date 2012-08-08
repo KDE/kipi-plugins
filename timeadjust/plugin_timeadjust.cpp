@@ -100,6 +100,8 @@ void Plugin_TimeAdjust::setup(QWidget* const widget)
 
 void Plugin_TimeAdjust::setupActions()
 {
+    setDefaultCategory(ImagesPlugin);
+
     d->actionTimeAjust = actionCollection()->addAction("timeadjust");
     d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
     d->actionTimeAjust->setIcon(KIcon("timeadjust"));
@@ -132,15 +134,6 @@ void Plugin_TimeAdjust::slotActivate()
 
     d->dialog->show();
     d->dialog->addItems(images.images());
-}
-
-Category Plugin_TimeAdjust::category(KAction* const action) const
-{
-    if ( action == d->actionTimeAjust )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPITimeAdjustPlugin

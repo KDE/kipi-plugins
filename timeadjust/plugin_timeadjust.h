@@ -46,7 +46,6 @@ public:
     Plugin_TimeAdjust(QObject* const parent, const QVariantList& args);
    ~Plugin_TimeAdjust();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 protected:
