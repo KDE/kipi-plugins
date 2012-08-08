@@ -89,6 +89,8 @@ void Plugin_DebianScreenshots::setup(QWidget* const widget)
 
 void Plugin_DebianScreenshots::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("debianscreenshotsexport");
     m_actionExport->setText(i18n("Export to &Debian Screenshots..."));
     m_actionExport->setIcon(KIcon("debianscreenshots"));
@@ -119,11 +121,6 @@ void Plugin_DebianScreenshots::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_DebianScreenshots::category(KAction* const) const
-{
-    return ExportPlugin;
 }
 
 } // namespace KIPIDebianScreenshotsPlugin
