@@ -86,6 +86,8 @@ void Plugin_AcquireImages::setup(QWidget* const widget)
 
 void Plugin_AcquireImages::setupActions()
 {
+    setDefaultCategory(ImportPlugin);
+
     m_action_scanimages = actionCollection()->addAction("acquireimages");
     m_action_scanimages->setText(i18n("Import from Scanner..."));
     m_action_scanimages->setIcon(KIcon("scanner"));
@@ -135,17 +137,6 @@ void Plugin_AcquireImages::slotActivate()
     }
 
     m_scanDlg->show();
-}
-
-KIPI::Category Plugin_AcquireImages::category(KAction* const action) const
-{
-    if (action == m_action_scanimages)
-    {
-        return KIPI::ImportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ImportPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIAcquireImagesPlugin
