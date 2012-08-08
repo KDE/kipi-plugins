@@ -88,6 +88,8 @@ void Plugin_KioExportImport::setup(QWidget* const widget)
 
 void Plugin_KioExportImport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_actionExport = actionCollection()->addAction("kioexport");
     m_actionExport->setText(i18n("Export to remote computer..."));
     m_actionExport->setIcon(KIcon("folder-remote"));
@@ -109,7 +111,7 @@ void Plugin_KioExportImport::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));
 
-    addAction(m_actionImport);
+    addAction(m_actionImport, ImportPlugin);
 }
 
 void Plugin_KioExportImport::slotActivateExport()
@@ -150,23 +152,6 @@ void Plugin_KioExportImport::slotActivateImport()
     }
 
     m_dlgImport->show();
-}
-
-Category Plugin_KioExportImport::category(KAction* const action) const
-{
-    if (action == m_actionExport)
-    {
-        return ExportPlugin;
-    }
-    else if (action == m_actionImport)
-    {
-        return ImportPlugin;
-    }
-    else
-    {
-        kWarning() << "Received unknown action";
-        return ExportPlugin;
-    }
 }
 
 } // namespace KIPIKioExportPlugin

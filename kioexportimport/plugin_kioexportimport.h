@@ -51,7 +51,6 @@ public:
     Plugin_KioExportImport(QObject* const parent, const QVariantList& args);
     ~Plugin_KioExportImport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const widget);
 
 private Q_SLOTS:
