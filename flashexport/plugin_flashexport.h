@@ -58,7 +58,6 @@ public:
     Plugin_FlashExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_FlashExport();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 private:

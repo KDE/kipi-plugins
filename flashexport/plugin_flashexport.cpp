@@ -88,6 +88,8 @@ void Plugin_FlashExport::setup(QWidget* const widget)
 
 void Plugin_FlashExport::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
     m_action = actionCollection()->addAction("flashexport");
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(KIcon("flash"));
@@ -114,15 +116,6 @@ void Plugin_FlashExport::slotActivate()
 
     m_manager->setIface(m_interface);
     m_manager->run();
-}
-
-Category Plugin_FlashExport::category(KAction* const action) const
-{
-    if ( action == m_action )
-       return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIFlashExportPlugin
