@@ -341,7 +341,6 @@ PRINT_PLUGIN_COMPILE_STATUS("Mediawiki"          MEDIAWIKI_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Panorama"           Boost_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
-PRINT_PLUGIN_COMPILE_STATUS("Dlnaexport"         HUPNP_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
