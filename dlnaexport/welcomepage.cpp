@@ -36,6 +36,7 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
+#include "welcomepage.h"
 
 namespace KIPIDLNAExportPlugin
 {
@@ -46,19 +47,22 @@ public:
 
     Private()
     {
-        iconLbl        = 0;
-        titleLbl       = 0;
-        headerLbl      = 0;
-        imageGetOption = 0;
-        getImageLbl    = 0;
+        iconLbl              = 0;
+        titleLbl             = 0;
+        headerLbl            = 0;
+        imageGetOption       = 0;
+        getImageLbl          = 0;
+        getImplementationLbl = 0;
     }
 
     QLabel*    iconLbl;
     QLabel*    titleLbl;
     QLabel*    headerLbl;
     QLabel*    getImageLbl;
+    QLabel*    getImplementationLbl;
 
     KComboBox* imageGetOption;
+    KComboBox* implementationGetOption;
 };
 
 WelcomePage::WelcomePage(QWidget* const parent)
@@ -66,7 +70,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
 {
     QVBoxLayout* mainLayout        = new QVBoxLayout(this);
     QWidget* settingsBox           = new QWidget(this);
-    QHBoxLayout* settingsBoxLayout = new QHBoxLayout(settingsBox);
+    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox);
 
     d->iconLbl  = new QLabel(this);
     d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
@@ -87,8 +91,18 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
     d->getImageLbl->setBuddy(d->imageGetOption);
 
-    settingsBoxLayout->addWidget(d->getImageLbl);
-    settingsBoxLayout->addWidget(d->imageGetOption);
+    // ComboBox for implementation selection method
+    d->getImplementationLbl    = new QLabel(i18n("&Choose the implementation:"),settingsBox);
+    d->implementationGetOption = new KComboBox(settingsBox);
+    d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
+    d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
+    d->getImplementationLbl->setBuddy(d->implementationGetOption);
+    
+    
+    settingsBoxLayout->addWidget(d->getImageLbl,             1, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->imageGetOption,          1, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->getImplementationLbl,    2, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->implementationGetOption, 2, 1, 1, 1);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
     mainLayout->addWidget(d->iconLbl);
@@ -102,12 +116,21 @@ WelcomePage::~WelcomePage()
 {
 }
 
-bool WelcomePage::getImageDialogOptionSelected() const
+WelcomePage::ImageGetOption WelcomePage::getImageDialogOptionSelected() const
 {
     if (d->imageGetOption->currentIndex() == 0)
-        return false;
+        return WelcomePage::COLLECTION;
     else
-        return true;
+        return WelcomePage::IMAGEDIALOG;
 }
+
+WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelected() const
+{
+    if (d->implementationGetOption->currentIndex() == 0)
+        return WelcomePage::HUPNP;
+    else
+        return WelcomePage::MINIDLNA;
+}
+
 
 }   // namespace KIPIDLNAExportPlugin

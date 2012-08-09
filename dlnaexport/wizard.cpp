@@ -70,18 +70,18 @@ public:
         selectionPageItem          = 0;
         collectionSelectorPageItem = 0;
         welcomePageItem            = 0;
-        imageDialogOptionSelected  = true;
+        imageDialogOptionSelected  = WelcomePage::IMAGEDIALOG;
     }
 
-    DLNAWidget*                selectionPage;
-    ImageCollectionSelector*   collectionSelector;
-    WelcomePage*               welcomePage;
-    KPageWidgetItem*           selectionPageItem;
-    KPageWidgetItem*           collectionSelectorPageItem;
-    KPageWidgetItem*           welcomePageItem;
-    KUrl::List                 imageList;
-    QMap<QString, KUrl::List>  collectionMap;
-    bool                       imageDialogOptionSelected;
+    DLNAWidget*                 selectionPage;
+    ImageCollectionSelector*    collectionSelector;
+    WelcomePage*                welcomePage;
+    KPageWidgetItem*            selectionPageItem;
+    KPageWidgetItem*            collectionSelectorPageItem;
+    KPageWidgetItem*            welcomePageItem;
+    KUrl::List                  imageList;
+    QMap<QString, KUrl::List>   collectionMap;
+    WelcomePage::ImageGetOption imageDialogOptionSelected;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -149,7 +149,7 @@ void Wizard::next()
     {
         d->imageDialogOptionSelected = d->welcomePage->getImageDialogOptionSelected();
 
-        if (d->imageDialogOptionSelected)
+        if (d->imageDialogOptionSelected == WelcomePage::IMAGEDIALOG)
         {
             KAssistantDialog::next();
             KAssistantDialog::next();

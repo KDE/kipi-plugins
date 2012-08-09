@@ -41,13 +41,20 @@ public:
         COLLECTION = 0,
         IMAGEDIALOG
     };
+    
+    enum ImplementationGetOption
+    {
+        HUPNP = 0,
+        MINIDLNA
+    };
 
 public:
 
     explicit WelcomePage(QWidget* const parent);
     ~WelcomePage();
 
-    bool getImageDialogOptionSelected() const;
+    WelcomePage::ImageGetOption getImageDialogOptionSelected() const;
+    WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
 
 public Q_SLOTS:
 
