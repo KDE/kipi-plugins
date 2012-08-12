@@ -44,12 +44,12 @@ public:
 
     void next();
     void back();
-    void accept();
 
 private Q_SLOTS:
 
     void updateCollectionSelectorPageValidity();
     void getImagesFromCollection();
+    void getDirectoriesFromCollection();
 
 private:
 

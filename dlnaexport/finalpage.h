@@ -29,26 +29,36 @@
 #include <QString>
 #include <kurl.h>
 
+#include "welcomepage.h"
+
 namespace KIPIDLNAExportPlugin
 {
 
 class MediaServerWindow;
 
-class DLNAWidget : public QWidget
+class FinalPage : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    explicit DLNAWidget(QWidget* const parent);
-    ~DLNAWidget();
+    explicit FinalPage(QWidget* const parent);
+    ~FinalPage();
 
     void setControlButtons(bool);
     void setImages(const KUrl::List&);
+    void setCollectionMap(const QMap<QString, KUrl::List>&);
+    void setDirectories (const QStringList&);
+    void clearImages();
+    void setOptions(WelcomePage::ImageGetOption, WelcomePage::ImplementationGetOption);
+    
+    void startHupnpMediaServer();
+    void startMinidlnaMediaServer();
 
-    void reactivate();
-    void startMediaServer();
-    void startMediaServer(const QMap<QString, KUrl::List>&);
+private Q_SLOTS:
+
+    void turnOff();
+    void turnOn();
 
 private:
 

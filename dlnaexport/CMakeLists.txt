@@ -19,11 +19,12 @@ ELSE(HUPNP_FOUND AND HUPNPAV_FOUND)
 ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
 
 SET(kipiplugin_dlnaexport_PART_SRCS
-    dlnawidget.cpp
+    finalpage.cpp
     plugin_dlnaexport.cpp
-    mediaserver.cpp
+    hupnpmediaserver.cpp
     wizard.cpp
     welcomepage.cpp
+    minidlnamediaserver.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_dlnaexport ${kipiplugin_dlnaexport_PART_SRCS})

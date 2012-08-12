@@ -98,11 +98,13 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
     d->getImplementationLbl->setBuddy(d->implementationGetOption);
     
+    connect(d->implementationGetOption, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(modifyImageGetOption(int)));
     
-    settingsBoxLayout->addWidget(d->getImageLbl,             1, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->imageGetOption,          1, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->getImplementationLbl,    2, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->implementationGetOption, 2, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->getImplementationLbl,    1, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->implementationGetOption, 1, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->getImageLbl,             2, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->imageGetOption,          2, 1, 1, 1);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
     mainLayout->addWidget(d->iconLbl);
@@ -114,6 +116,22 @@ WelcomePage::WelcomePage(QWidget* const parent)
 
 WelcomePage::~WelcomePage()
 {
+}
+
+void WelcomePage::modifyImageGetOption(int index)
+{
+    d->imageGetOption->removeItem(0);
+    d->imageGetOption->removeItem(0);
+    
+    if (d->implementationGetOption->currentIndex() != 0)
+    {
+        d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
+    }
+    else
+    {
+        d->imageGetOption->insertItem(WelcomePage::IMAGEDIALOG, "From file system");
+        d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
+    }
 }
 
 WelcomePage::ImageGetOption WelcomePage::getImageDialogOptionSelected() const

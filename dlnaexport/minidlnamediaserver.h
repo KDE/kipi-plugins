@@ -7,6 +7,7 @@
  * Description : a KIPI plugin to export pics through DLNA technology.
  *
  * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2011 by Tuomo Penttinen <tp at herqq dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,46 +21,34 @@
  *
  * ============================================================ */
 
-#ifndef WELCOMEPAGE_H
-#define WELCOMEPAGE_H
+#ifndef MINIDLNA_CONFIG_H
+#define MINIDLNA_CONFIG_H
 
 // Qt includes
 
-#include <QWidget>
+#include <QObject>
+#include <QString>
+
+// KDE includes
+
+#include <kurl.h>
 
 namespace KIPIDLNAExportPlugin
 {
 
-class WelcomePage : public QWidget
+class MinidlnaServer : public QObject
 {
     Q_OBJECT
 
 public:
 
-    enum ImageGetOption
-    {
-        COLLECTION = 0,
-        IMAGEDIALOG
-    };
+    MinidlnaServer(QObject* const parent=0);
+    virtual ~MinidlnaServer();
     
-    enum ImplementationGetOption
-    {
-        HUPNP = 0,
-        MINIDLNA
-    };
-
-public:
-
-    explicit WelcomePage(QWidget* const parent);
-    ~WelcomePage();
-
-    WelcomePage::ImageGetOption getImageDialogOptionSelected() const;
-    WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
-
-public Q_SLOTS:
+    void setDirectories(const QStringList& directories);
+    void startMinidlnaServer();
+    void generateConfigFile();
     
-    void modifyImageGetOption(int index);
-
 private:
 
     class Private;
@@ -68,4 +57,4 @@ private:
 
 } // namespace KIPIDLNAExportPlugin
 
-#endif // WELCOMEPAGE_H
+#endif // MINIDLNA_CONFIG_H

@@ -28,6 +28,7 @@
 #include <QPalette>
 #include <QtGlobal>
 #include <QMap>
+#include <QProcess>
 
 // KDE includes
 
@@ -49,8 +50,9 @@
 
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
-#include "dlnawidget.h"
+#include "finalpage.h"
 #include "welcomepage.h"
+#include "wizard.h"
 
 using namespace KIPI;
 using namespace Herqq;
@@ -64,24 +66,28 @@ public:
 
     Private()
     {
-        selectionPage              = 0;
+        finalPage              = 0;
         collectionSelector         = 0;
         welcomePage                = 0;
-        selectionPageItem          = 0;
+        finalPageItem          = 0;
         collectionSelectorPageItem = 0;
         welcomePageItem            = 0;
         imageDialogOptionSelected  = WelcomePage::IMAGEDIALOG;
+        implementationOptionSelected = WelcomePage::HUPNP;
     }
 
-    DLNAWidget*                 selectionPage;
+    FinalPage*                  finalPage;
     ImageCollectionSelector*    collectionSelector;
     WelcomePage*                welcomePage;
-    KPageWidgetItem*            selectionPageItem;
+    KPageWidgetItem*            finalPageItem;
     KPageWidgetItem*            collectionSelectorPageItem;
     KPageWidgetItem*            welcomePageItem;
     KUrl::List                  imageList;
     QMap<QString, KUrl::List>   collectionMap;
+    QStringList                 directories;
     WelcomePage::ImageGetOption imageDialogOptionSelected;
+    WelcomePage::ImplementationGetOption implementationOptionSelected;
+    
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -134,8 +140,12 @@ Wizard::Wizard(QWidget* const parent)
     connect(d->collectionSelector, SIGNAL(selectionChanged()),
             this, SLOT(getImagesFromCollection()));
 
-    d->selectionPage     = new DLNAWidget(this);
-    d->selectionPageItem = addPage(d->selectionPage, "Images to be exported");
+    connect(d->collectionSelector, SIGNAL(selectionChanged()),
+            this, SLOT(getDirectoriesFromCollection()));
+    
+    d->finalPage     = new FinalPage(this);
+    d->finalPageItem = addPage(d->finalPage, "Images to be exported");
+    
 }
 
 Wizard::~Wizard()
@@ -148,22 +158,27 @@ void Wizard::next()
     if (currentPage() == d->welcomePageItem)
     {
         d->imageDialogOptionSelected = d->welcomePage->getImageDialogOptionSelected();
+        d->implementationOptionSelected = d->welcomePage->getImplementationOptionSelected();
+        
+        d->finalPage->setOptions(d->imageDialogOptionSelected, d->implementationOptionSelected);
 
         if (d->imageDialogOptionSelected == WelcomePage::IMAGEDIALOG)
         {
+            d->finalPage->setControlButtons(true);
+            d->finalPage->clearImages();
             KAssistantDialog::next();
             KAssistantDialog::next();
-            d->selectionPage->setControlButtons(true);
         }
         else
         {
+            d->finalPage->clearImages();
+            d->finalPage->setControlButtons(false);
             KAssistantDialog::next();
-            d->selectionPage->setControlButtons(false);
         }
     }
     else if (currentPage() == d->collectionSelectorPageItem)
     {
-        d->selectionPage->setImages(d->imageList);
+        d->finalPage->setImages(d->imageList);
         KAssistantDialog::next();
     }
     else
@@ -174,7 +189,7 @@ void Wizard::next()
 
 void Wizard::back()
 {
-    if (currentPage() == d->selectionPageItem)
+    if (currentPage() == d->finalPageItem)
     {
         if (d->imageDialogOptionSelected)
         {
@@ -206,18 +221,21 @@ void Wizard::getImagesFromCollection()
     {
         d->imageList.append(images.images());
         d->collectionMap.insert(images.name(), images.images());
-        kDebug() << "name" << images.name();
     }
+    
+    d->finalPage->setCollectionMap(d->collectionMap);
 }
 
-void Wizard::accept()
+void Wizard::getDirectoriesFromCollection()
 {
-    if (!d->imageDialogOptionSelected)
-        d->selectionPage->startMediaServer(d->collectionMap);
-    else
-        d->selectionPage->startMediaServer();
-
-    KAssistantDialog::accept();
+    d->directories.clear();
+    foreach(ImageCollection images, d->collectionSelector->selectedImageCollections())
+    {
+        kDebug() << images.path().path();
+        d->directories << images.path().path();
+    }
+    
+    d->finalPage->setDirectories(d->directories);
 }
 
 } // namespace KIPIDLNAExportPlugin
