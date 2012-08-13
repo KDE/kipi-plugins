@@ -72,7 +72,6 @@ public:
         finalPageItem          = 0;
         collectionSelectorPageItem = 0;
         welcomePageItem            = 0;
-        imageDialogOptionSelected  = WelcomePage::IMAGEDIALOG;
         implementationOptionSelected = WelcomePage::HUPNP;
     }
 
@@ -85,7 +84,6 @@ public:
     KUrl::List                  imageList;
     QMap<QString, KUrl::List>   collectionMap;
     QStringList                 directories;
-    WelcomePage::ImageGetOption imageDialogOptionSelected;
     WelcomePage::ImplementationGetOption implementationOptionSelected;
     
 };
@@ -146,6 +144,7 @@ Wizard::Wizard(QWidget* const parent)
     d->finalPage     = new FinalPage(this);
     d->finalPageItem = addPage(d->finalPage, "Images to be exported");
     
+    
 }
 
 Wizard::~Wizard()
@@ -157,53 +156,20 @@ void Wizard::next()
 {
     if (currentPage() == d->welcomePageItem)
     {
-        d->imageDialogOptionSelected = d->welcomePage->getImageDialogOptionSelected();
         d->implementationOptionSelected = d->welcomePage->getImplementationOptionSelected();
-        
-        d->finalPage->setOptions(d->imageDialogOptionSelected, d->implementationOptionSelected);
-
-        if (d->imageDialogOptionSelected == WelcomePage::IMAGEDIALOG)
-        {
-            d->finalPage->setControlButtons(true);
-            d->finalPage->clearImages();
-            KAssistantDialog::next();
-            KAssistantDialog::next();
-        }
-        else
-        {
-            d->finalPage->clearImages();
-            d->finalPage->setControlButtons(false);
-            KAssistantDialog::next();
-        }
+        d->finalPage->setOptions(d->implementationOptionSelected);
+        d->finalPage->clearImages();
+        KAssistantDialog::next();
     }
     else if (currentPage() == d->collectionSelectorPageItem)
     {
+        d->finalPage->clearImages();
         d->finalPage->setImages(d->imageList);
         KAssistantDialog::next();
     }
     else
     {
         KAssistantDialog::next();
-    }
-}
-
-void Wizard::back()
-{
-    if (currentPage() == d->finalPageItem)
-    {
-        if (d->imageDialogOptionSelected)
-        {
-            KAssistantDialog::back();
-            KAssistantDialog::back();
-        }
-        else
-        {
-            KAssistantDialog::back();
-        }
-    }
-    else
-    {
-        KAssistantDialog::back();
     }
 }
 
