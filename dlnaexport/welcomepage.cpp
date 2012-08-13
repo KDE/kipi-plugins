@@ -27,6 +27,8 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QVBoxLayout>
+#include <QGroupBox>
+#include <QGridLayout>
 
 // KDE includes
 
@@ -37,6 +39,9 @@
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include "welcomepage.h"
+#include "kpbinarysearch.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -53,6 +58,8 @@ public:
         imageGetOption       = 0;
         getImageLbl          = 0;
         getImplementationLbl = 0;
+        binariesWidget       = 0;
+        binariesLbl          = 0;
     }
 
     QLabel*    iconLbl;
@@ -60,30 +67,33 @@ public:
     QLabel*    headerLbl;
     QLabel*    getImageLbl;
     QLabel*    getImplementationLbl;
+    QLabel*    binariesLbl;
 
     KComboBox* imageGetOption;
     KComboBox* implementationGetOption;
+    KPBinarySearch*  binariesWidget;
 };
 
 WelcomePage::WelcomePage(QWidget* const parent)
     : QWidget(parent), d(new Private)
 {
-    QVBoxLayout* mainLayout        = new QVBoxLayout(this);
+    QGridLayout* mainLayout        = new QGridLayout(this);
     QWidget* settingsBox           = new QWidget(this);
     QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox);
-
+    
     d->iconLbl  = new QLabel(this);
     d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
-    d->iconLbl->setAlignment(Qt::AlignCenter);
-
+    
     d->titleLbl = new QLabel(this);
     d->titleLbl->setOpenExternalLinks(true);
     d->titleLbl->setFocusPolicy(Qt::NoFocus);
-    d->titleLbl->setAlignment(Qt::AlignCenter);
     d->titleLbl->setText(QString("<b><h2><a href='http://www.dlna.org'>"
                                  "<font color=\"#9ACD32\">DLNA Export</font>"
                                  "</a></h2></b>"));
 
+    d->binariesLbl = new QLabel("<b>DLNAExport Binaries' requirement (Optional)</b>", settingsBox);
+    d->binariesWidget = new KPBinarySearch(settingsBox);
+        
     // ComboBox for image selection method
     d->getImageLbl    = new QLabel(i18n("&Choose image selection method:"),settingsBox);
     d->imageGetOption = new KComboBox(settingsBox);
@@ -101,15 +111,17 @@ WelcomePage::WelcomePage(QWidget* const parent)
     connect(d->implementationGetOption, SIGNAL(currentIndexChanged(int)),
             this, SLOT(modifyImageGetOption(int)));
     
-    settingsBoxLayout->addWidget(d->getImplementationLbl,    1, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->implementationGetOption, 1, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->getImageLbl,             2, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->imageGetOption,          2, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->binariesLbl,             1, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 2, 2);
+    settingsBoxLayout->addWidget(d->getImplementationLbl,    4, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->implementationGetOption, 4, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->getImageLbl,             5, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->imageGetOption,          5, 1, 1, 1);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
-    mainLayout->addWidget(d->iconLbl);
-    mainLayout->addWidget(d->titleLbl);
-    mainLayout->addWidget(settingsBox);
+    mainLayout->addWidget(d->iconLbl,           1, 0, 1, 2, Qt::AlignCenter);
+    mainLayout->addWidget(d->titleLbl,          2, 0, 1, 2, Qt::AlignCenter);
+    mainLayout->addWidget(settingsBox,          3, 0, 5, 2);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 }

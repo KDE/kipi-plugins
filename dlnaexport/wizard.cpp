@@ -127,7 +127,7 @@ Wizard::Wizard(QWidget* const parent)
     //-----------------------------------------------------------------------
 
     d->welcomePage     = new WelcomePage(this);
-    d->welcomePageItem = addPage(d->welcomePage, "Welcome to DLNA Export");
+    d->welcomePageItem = addPage(d->welcomePage, "");
 
     d->collectionSelector         = iface()->imageCollectionSelector(this);
     d->collectionSelectorPageItem = addPage(d->collectionSelector, i18n("Select the required collections"));
