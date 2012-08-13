@@ -39,6 +39,7 @@
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include "welcomepage.h"
+#include "minidlnabinary.h"
 #include "kpbinarysearch.h"
 
 using namespace KIPIPlugins;
@@ -72,6 +73,7 @@ public:
     KComboBox* imageGetOption;
     KComboBox* implementationGetOption;
     KPBinarySearch*  binariesWidget;
+    MinidlnaBinary minidlnaBinary;
 };
 
 WelcomePage::WelcomePage(QWidget* const parent)
@@ -93,6 +95,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
 
     d->binariesLbl = new QLabel("<b>DLNAExport Binaries' requirement (Optional)</b>", settingsBox);
     d->binariesWidget = new KPBinarySearch(settingsBox);
+    d->binariesWidget->addBinary(d->minidlnaBinary);
         
     // ComboBox for image selection method
     d->getImageLbl    = new QLabel(i18n("&Choose image selection method:"),settingsBox);
@@ -111,12 +114,12 @@ WelcomePage::WelcomePage(QWidget* const parent)
     connect(d->implementationGetOption, SIGNAL(currentIndexChanged(int)),
             this, SLOT(modifyImageGetOption(int)));
     
-    settingsBoxLayout->addWidget(d->binariesLbl,             1, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 2, 2);
-    settingsBoxLayout->addWidget(d->getImplementationLbl,    4, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->implementationGetOption, 4, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->getImageLbl,             5, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->imageGetOption,          5, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->binariesLbl,             1, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 1, 2);
+    settingsBoxLayout->addWidget(d->getImplementationLbl,    3, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->implementationGetOption, 3, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->getImageLbl,             4, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->imageGetOption,          4, 1, 1, 1);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
     mainLayout->addWidget(d->iconLbl,           1, 0, 1, 2, Qt::AlignCenter);
