@@ -28,6 +28,9 @@ ADD_DEFINITIONS("-std=c++0x")
 SET(kipiplugin_photivointegration_PART_SRCS plugin_photivointegration.cpp
                                             xmpinfo.cpp
                                             xmpmm.cpp
+                                            piwidget.cpp
+                                            piwindow.cpp
+                                            piimglist.cpp
 )
 
 KDE4_ADD_PLUGIN(kipiplugin_photivointegration ${kipiplugin_photivointegration_PART_SRCS})
