@@ -31,6 +31,11 @@
 
 #include <libkipi/plugin.h>
 
+// local includes
+
+#include "piwindow.h"
+
+// forward declaration:
 namespace KIPI
 {
     class Interface;
@@ -40,6 +45,11 @@ using namespace KIPI;
 
 namespace KIPIPhotivoIntegrationPlugin
 {
+
+// forward declaration:
+class PIWindow;
+
+// ----------------------------------------------------------------------------
 
 class Plugin_PhotivoIntegration : public Plugin
 {
@@ -76,7 +86,12 @@ private:
      *  instance of KIPI::PluginLoader singleton which provide a method for that.
      */
     Interface* m_iface;
+
+    /** PIWindow instance */
+    PIWindow*  piWin;
 };
+
+// ----------------------------------------------------------------------------
 
 }  // namespace KIPIPhotivoIntegrationPlugin
 

@@ -30,6 +30,7 @@
 
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kapplication.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -40,9 +41,11 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+#include <kwindowsystem.h>
 
 // local includes
 
+#include "piwindow.h"
 #include "xmpinfo.h"
 #include "xmpidmap.h"
 
@@ -60,11 +63,12 @@ K_PLUGIN_FACTORY(PhotivoIntegrationFactory, registerPlugin<Plugin_PhotivoIntegra
 K_EXPORT_PLUGIN(PhotivoIntegrationFactory("kipiplugin_photivointegration") )
 
 //Contructor is called by the factory that is set up by the macros K_PLUGIN_FACTORY and K_EXPORT_PLUGIN
-Plugin_PhotivoIntegration::Plugin_PhotivoIntegration(QObject* const parent, const QVariantList&)
+Plugin_PhotivoIntegration::Plugin_PhotivoIntegration(QObject* const parent, const QVariantList& args)
     : Plugin(PhotivoIntegrationFactory::componentData(), parent, "PhotivoIntegration")
 {
     /// There is a debug space for plugin loading area.
     kDebug(AREA_CODE_LOADING) << "Plugin_PhotivoIntegration plugin loaded";
+    kDebug(AREA_CODE_LOADING) << args;
 
     /// Merge the gui of the plugin into the host application
     setUiBaseName("kipiplugin_photivointegrationui.rc");
@@ -90,6 +94,9 @@ void Plugin_PhotivoIntegration::setup(QWidget* const widget)
        kError() << "Kipi interface is null!";
        return;
     }
+
+    /// There is no piWin instance yet
+    piWin = nullptr;
 
     /** This will get items selection from KIPI host application
      */
@@ -132,53 +139,22 @@ void Plugin_PhotivoIntegration::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    // Currently just a provisional arrangement to examine 
-    // Photivo (using Exiv2) and this implementation (using KExiv2)
-    XmpInfo     xmpInfo;
-    KUrl::List  imageList = images.images();
-    QStringList infoList;
-    XmpIDMap    &idmap    = XmpIDMap::getMap();
-
-    for (int i = 0, end = imageList.size();  i < end;  i++)
+    if (piWin == nullptr)
     {
-        const QString file       = imageList[i].toLocalFile();//KPMetadata seems to be picky (doesn't accept file://)
-        const XmpMM   mm         = xmpInfo.getXmpMM(file);
-        const QString pureOrigID = mm.pureID(mm.originalDocumentID);//remove prefix
-
-        // simple data
-        infoList.append("-- " + file + " --");
-        infoList.append("    isDerivate(): "       + xmpInfo.isDerivate(file));
-        infoList.append("    originalDocumentID: " + mm.originalDocumentID);
-        infoList.append("    documentID: "         + mm.documentID);
-        infoList.append("    instanceID: "         + mm.instanceID);
-
-        // history
-        int hsize = static_cast<int>(mm.history.size());
-        for (int h = 0; h < hsize; h++)
+        // cleaned it up in close button/destructor
+        piWin = new PIWindow(kapp->activeWindow());
+    }
+    else
+    {
+        if (piWin->isMinimized())
         {
-            infoList.append(QString("    history %1: action: ").arg(h)     + mm.history[h].action);
-            infoList.append(QString("    history %1: instanceID: ").arg(h) + mm.history[h].instanceID);
-            infoList.append(QString("    history %1: when: ").arg(h)       + mm.history[h].when);
+            KWindowSystem::unminimizeWindow(piWin->winId());
         }
 
-// TODO: enable when XmpMM::loadDerivedFrom() is implemented
-//         // derived from
-//         int dsize = static_cast<int>(mm.derivedFrom.size());
-//         for (int d = 0; d < dsize; d++)
-//         {
-//             infoList.append(QString("    derivedFrom %1: documentID: ").arg(d) + mm.derivedFrom[d].documentID);
-//             infoList.append(QString("    derivedFrom %1: instanceID: ").arg(d) + mm.derivedFrom[d].instanceID);
-//         }
-
-        // map originalDocumentID to file
-        if (!pureOrigID.isEmpty()) 
-            infoList.append("   Origin file: "     + idmap.value("xmp.did/" + pureOrigID));
+        KWindowSystem::activateWindow(piWin->winId());
     }
 
-    KMessageBox::informationList(0,
-                                 i18n("This is the list of selected items"),
-                                 infoList
-                                );
+    piWin->reactivate();
 }
 
 }  // namespace KIPIPhotivoIntegrationPlugin
