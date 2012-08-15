@@ -97,7 +97,7 @@ void Plugin_Facebook::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("facebookexport");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("facebook"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F));
@@ -105,9 +105,9 @@ void Plugin_Facebook::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(m_actionExport);
+    addAction("facebookexport", m_actionExport);
 
-    m_actionImport = actionCollection()->addAction("facebookimport");
+    m_actionImport = new KAction(this);
     m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("facebook"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));
@@ -115,7 +115,7 @@ void Plugin_Facebook::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(m_actionImport, ImportPlugin);
+    addAction("facebookimport", m_actionImport, ImportPlugin);
 }
 
 void Plugin_Facebook::slotExport()
