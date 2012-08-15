@@ -92,6 +92,7 @@ Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
 void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 {
     KIPI::Plugin::setup(widget);
+    setupActions();
 
     m_interface = interface();
     if(!m_interface)
@@ -100,16 +101,12 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
         return;
     }
 
-    setupActions();
     m_urlList = KUrl::List();
 
     connect(m_interface, SIGNAL(currentAlbumChanged(bool)),
             this, SLOT(slotAlbumChanged(bool)));
 
-    if (m_interface->currentAlbum().isValid())
-    {
-        slotAlbumChanged(true);
-    }
+    slotAlbumChanged(m_interface->currentAlbum().isValid());
 }
 
 void Plugin_AdvancedSlideshow::setupActions()
@@ -120,6 +117,7 @@ void Plugin_AdvancedSlideshow::setupActions()
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(KIcon("slideshow"));
     m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
+    m_actionSlideShow->setEnabled(false);
 
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
