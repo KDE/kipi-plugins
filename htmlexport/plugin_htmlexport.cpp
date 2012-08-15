@@ -85,6 +85,7 @@ Plugin_HTMLExport::~Plugin_HTMLExport()
 void Plugin_HTMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
+    setupActions();
 
     if (!interface())
     {
@@ -92,22 +93,23 @@ void Plugin_HTMLExport::setup(QWidget* const widget)
         return;
     }
 
-    setupActions();
+    d->mAction->setEnabled(true);
 }
 
 void Plugin_HTMLExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->mAction = actionCollection()->addAction("htmlexport");
+    d->mAction = new KAction(this);
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
     d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
+    d->mAction->setEnabled(false);
 
     connect(d->mAction, SIGNAL(triggered()),
             this, SLOT(slotActivate()) );
 
-    addAction(d->mAction);
+    addAction("htmlexport", d->mAction);
 }
 
 void Plugin_HTMLExport::slotActivate()
