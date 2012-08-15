@@ -91,14 +91,14 @@ void Plugin_ExpoBlending::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_action = actionCollection()->addAction("expoblending");
+    m_action = new KAction(this);
     m_action->setText(i18n("Blend Bracketed Images..."));
     m_action->setIcon(KIcon("expoblending"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action);
+    addAction("expoblending", m_action);
 }
 
 void Plugin_ExpoBlending::slotActivate()

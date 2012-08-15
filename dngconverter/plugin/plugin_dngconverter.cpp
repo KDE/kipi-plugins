@@ -86,14 +86,14 @@ void Plugin_DNGConverter::setupActions()
 {
     setDefaultCategory(BatchPlugin);
 
-    m_action = actionCollection()->addAction("dngconverter");
+    m_action = new KAction(this);
     m_action->setText(i18n("DNG Converter..."));
     m_action->setIcon(KIcon("dngconverter"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action);
+    addAction("dngconverter", m_action);
 }
 
 void Plugin_DNGConverter::slotActivate()

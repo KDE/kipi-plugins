@@ -100,14 +100,14 @@ void Plugin_DLNAExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = actionCollection()->addAction("dlnaexport");
+    d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export via &DLNA"));
     d->actionExport->setIcon(KIcon("dlna"));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(d->actionExport);
+    addAction("dlnaexport", d->actionExport);
 }
 
 void Plugin_DLNAExport::slotExport()

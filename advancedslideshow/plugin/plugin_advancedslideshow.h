@@ -32,9 +32,13 @@
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
-#include <libkipi/interface.h>
 
 class KAction;
+
+namespace KIPI
+{
+    class Interface;
+}
 
 namespace KIPIAdvancedSlideshowPlugin
 {
