@@ -107,7 +107,7 @@ void Plugin_GalleryExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->action = actionCollection()->addAction("galleryexport");
+    d->action = new KAction(this);
     d->action->setText(i18n("Export to &Gallery..."));
     d->action->setIcon(KIcon("gallery"));
     d->action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));
@@ -115,7 +115,7 @@ void Plugin_GalleryExport::setupActions()
     connect(d->action, SIGNAL(triggered(bool)),
             this, SLOT(slotSync()));
 
-    addAction(d->action);
+    addAction("galleryexport", d->action);
 }
 
 // this slot uses GalleryWindow Class
