@@ -74,20 +74,9 @@ Plugin_GPSSync::~Plugin_GPSSync()
 void Plugin_GPSSync::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
-
-    setDefaultCategory(ImagesPlugin);
-
-    m_action_geolocation = actionCollection()->addAction("gpssync");
-    m_action_geolocation->setText(i18n("Geo-location"));
-    m_action_geolocation->setIcon(KIcon("applications-internet"));
-
-    connect(m_action_geolocation, SIGNAL(triggered(bool)),
-            this, SLOT(slotGPSSync()));
-
-    addAction(m_action_geolocation);
+    setupActions();
 
     m_interface = interface();
-
     if (!m_interface)
     {
         kError() << "Kipi interface is null!" ;
@@ -99,6 +88,21 @@ void Plugin_GPSSync::setup(QWidget* const widget)
 
     connect(m_interface, SIGNAL(selectionChanged(bool)),
             m_action_geolocation, SLOT(setEnabled(bool)));
+}
+
+void Plugin_GPSSync::setupActions()
+{
+    setDefaultCategory(ImagesPlugin);
+
+    m_action_geolocation = new KAction(this);
+    m_action_geolocation->setText(i18n("Geo-location"));
+    m_action_geolocation->setIcon(KIcon("applications-internet"));
+    m_action_geolocation->setEnabled(false);
+
+    connect(m_action_geolocation, SIGNAL(triggered(bool)),
+            this, SLOT(slotGPSSync()));
+
+    addAction("gpssync", m_action_geolocation);
 }
 
 void Plugin_GPSSync::slotGPSSync()
