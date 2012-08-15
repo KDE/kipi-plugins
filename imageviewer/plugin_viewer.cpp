@@ -80,6 +80,7 @@ Plugin_viewer::~Plugin_viewer()
 void Plugin_viewer::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
+    setupActions();
 
     if (!interface())
     {
@@ -87,21 +88,21 @@ void Plugin_viewer::setup(QWidget* const widget)
         return;
     }
 
-    setupActions();
 }
 
 void Plugin_viewer::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    d->actionViewer = actionCollection()->addAction("oglimageviewer");
+    d->actionViewer = new KAction(this);
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
     d->actionViewer->setIcon(KIcon("ogl"));
+    d->actionViewer->setEnabled(false);
 
     connect(d->actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->actionViewer);
+    addAction("oglimageviewer", d->actionViewer);
 }
 
 void Plugin_viewer::slotActivate()
