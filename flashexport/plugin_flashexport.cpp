@@ -90,7 +90,7 @@ void Plugin_FlashExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_action = actionCollection()->addAction("flashexport");
+    m_action = new KAction(this);
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(KIcon("flash"));
     m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));
@@ -98,7 +98,7 @@ void Plugin_FlashExport::setupActions()
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action);
+    addAction("flashexport", m_action);
 }
 
 void Plugin_FlashExport::slotActivate()
