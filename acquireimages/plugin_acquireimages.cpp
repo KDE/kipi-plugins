@@ -77,25 +77,30 @@ void Plugin_AcquireImages::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     KIPI::Plugin::setup(m_parentWidget);
+    setupActions();
 
     if (!interface())
+    {
+        kError() << "KIPI interface is null!";
         return;
+    }
 
-    setupActions();
+    m_action_scanimages->setEnabled(true);
 }
 
 void Plugin_AcquireImages::setupActions()
 {
     setDefaultCategory(ImportPlugin);
 
-    m_action_scanimages = actionCollection()->addAction("acquireimages");
+    m_action_scanimages = new KAction(this);
     m_action_scanimages->setText(i18n("Import from Scanner..."));
     m_action_scanimages->setIcon(KIcon("scanner"));
+    m_action_scanimages->setEnabled(false);
 
     connect(m_action_scanimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action_scanimages);
+    addAction("acquireimages", m_action_scanimages);
 }
 
 void Plugin_AcquireImages::slotActivate()

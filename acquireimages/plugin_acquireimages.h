@@ -36,11 +36,6 @@ class QWidget;
 
 class KAction;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KSaneIface
 {
     class KSaneWidget;
