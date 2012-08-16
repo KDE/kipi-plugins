@@ -100,7 +100,7 @@ void Plugin_PicasawebExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("picasawebexport");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &PicasaWeb..."));
     m_actionExport->setIcon(KIcon("picasa"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
@@ -109,9 +109,9 @@ void Plugin_PicasawebExport::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_actionExport);
+    addAction("picasawebexport", m_actionExport);
 
-    m_actionImport = actionCollection()->addAction("picasawebimport");
+    m_actionImport = new KAction(this);
     m_actionImport->setText(i18n("Import from &PicasaWeb..."));
     m_actionImport->setIcon(KIcon("picasa"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
@@ -120,7 +120,7 @@ void Plugin_PicasawebExport::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(m_actionImport, ImportPlugin);
+    addAction("picasawebimport", m_actionImport, ImportPlugin);
 }
 
 void Plugin_PicasawebExport::slotExport()
