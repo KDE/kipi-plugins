@@ -85,7 +85,7 @@ void Plugin_YandexFotki::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("Yandex.Fotki");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("yandexfotki"));
@@ -96,7 +96,7 @@ void Plugin_YandexFotki::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_actionExport);
+    addAction("Yandex.Fotki", m_actionExport);
 }
 
 /*
