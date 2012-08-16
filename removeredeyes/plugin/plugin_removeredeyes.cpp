@@ -86,14 +86,14 @@ void Plugin_RemoveRedEyes::setupActions()
 {
     setDefaultCategory(BatchPlugin);
 
-    m_action = actionCollection()->addAction("removeredeyes");
+    m_action = new KAction(this);
     m_action->setText(i18n("&Red-Eye Removal..."));
     m_action->setIcon(KIcon("draw-eraser"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(activate()));
 
-    addAction(m_action);
+    addAction("removeredeyes", m_action);
 }
 
 void Plugin_RemoveRedEyes::activate()
