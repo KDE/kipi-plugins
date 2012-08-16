@@ -106,7 +106,7 @@ void Plugin_RawConverter::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_singleAction = actionCollection()->addAction("raw_converter_single");
+    m_singleAction = new KAction(this);
     m_singleAction->setText(i18n("RAW Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconverter"));
     m_singleAction->setEnabled(false);
@@ -114,9 +114,9 @@ void Plugin_RawConverter::setupActions()
     connect(m_singleAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateSingle()));
 
-    addAction(m_singleAction);
+    addAction("raw_converter_single", m_singleAction);
 
-    m_batchAction = actionCollection()->addAction("raw_converter_batch");
+    m_batchAction = new KAction(this);
     m_batchAction->setText(i18n("Batch RAW Converter..."));
     m_batchAction->setIcon(KIcon("rawconverter"));
     m_batchAction->setEnabled(false);
@@ -124,7 +124,7 @@ void Plugin_RawConverter::setupActions()
     connect(m_batchAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateBatch()));
 
-    addAction(m_batchAction, BatchPlugin);
+    addAction("raw_converter_batch", m_batchAction, BatchPlugin);
 }
 
 void Plugin_RawConverter::slotActivateSingle()
