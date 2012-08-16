@@ -90,7 +90,7 @@ void Plugin_KioExportImport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("kioexport");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to remote computer..."));
     m_actionExport->setIcon(KIcon("folder-remote"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K));
@@ -99,10 +99,10 @@ void Plugin_KioExportImport::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateExport()));
 
-    addAction(m_actionExport);
+    addAction("kioexport", m_actionExport);
 
     // import
-    m_actionImport = actionCollection()->addAction("kioimport");
+    m_actionImport = new KAction(this);
     m_actionImport->setText(i18n("Import from remote computer..."));
     m_actionImport->setIcon(KIcon("folder-remote"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I));
@@ -111,7 +111,7 @@ void Plugin_KioExportImport::setupActions()
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));
 
-    addAction(m_actionImport, ImportPlugin);
+    addAction("kioimport", m_actionImport, ImportPlugin);
 }
 
 void Plugin_KioExportImport::slotActivateExport()
