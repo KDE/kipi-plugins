@@ -99,7 +99,7 @@ void Plugin_FlickrExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionFlickr = actionCollection()->addAction("flickrexport");
+    m_actionFlickr = new KAction(this);
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(KIcon("flickr"));
     m_actionFlickr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_R));
@@ -107,9 +107,9 @@ void Plugin_FlickrExport::setupActions()
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
 
-    addAction(m_actionFlickr);
+    addAction("flickrexport", m_actionFlickr);
 
-    m_action23 = actionCollection()->addAction("23export");
+    m_action23 = new KAction(this);
     m_action23->setText(i18n("Export to &23..."));
     m_action23->setIcon(KIcon("hq"));
     m_action23->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_2));
@@ -117,9 +117,9 @@ void Plugin_FlickrExport::setupActions()
     connect(m_action23, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate23()));
 
-    addAction(m_action23);
+    addAction("23export", m_action23);
 
-    m_actionZooomr = actionCollection()->addAction("Zooomrexport");
+    m_actionZooomr = new KAction(this);
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
     m_actionZooomr->setIcon(KIcon("zooomr"));
     m_actionZooomr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
@@ -127,7 +127,7 @@ void Plugin_FlickrExport::setupActions()
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));
 
-    addAction(m_actionZooomr);
+    addAction("Zooomrexport", m_actionZooomr);
 }
 
 void Plugin_FlickrExport::slotActivateFlickr()

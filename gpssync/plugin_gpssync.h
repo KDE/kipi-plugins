@@ -64,6 +64,10 @@ protected Q_SLOTS:
 
 private:
 
+    void setupActions();
+
+private:
+
     KAction*   m_action_geolocation;
 
     Interface* m_interface;
