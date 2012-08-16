@@ -102,7 +102,7 @@ void Plugin_TimeAdjust::setupActions()
 {
     setDefaultCategory(ImagesPlugin);
 
-    d->actionTimeAjust = actionCollection()->addAction("timeadjust");
+    d->actionTimeAjust = new KAction(this);
     d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
     d->actionTimeAjust->setIcon(KIcon("timeadjust"));
     d->actionTimeAjust->setEnabled(false);
@@ -110,7 +110,7 @@ void Plugin_TimeAdjust::setupActions()
     connect(d->actionTimeAjust, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->actionTimeAjust);
+    addAction("timeadjust", d->actionTimeAjust);
 }
 
 void Plugin_TimeAdjust::slotActivate()
