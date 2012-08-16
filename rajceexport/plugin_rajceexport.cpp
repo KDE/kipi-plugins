@@ -92,7 +92,7 @@ void Plugin_RajceExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("rajceexport");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
     m_actionExport->setIcon(KIcon("rajce"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_J));
@@ -101,7 +101,7 @@ void Plugin_RajceExport::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_actionExport);
+    addAction("rajceexport", m_actionExport);
 }
 
 void Plugin_RajceExport::slotExport()
