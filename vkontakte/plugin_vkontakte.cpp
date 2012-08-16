@@ -86,7 +86,7 @@ void Plugin_Vkontakte::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("VKontakte");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("vkontakte"));
@@ -97,7 +97,7 @@ void Plugin_Vkontakte::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(m_actionExport);
+    addAction("VKontakte", m_actionExport);
 }
 
 /*
