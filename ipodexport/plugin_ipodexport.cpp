@@ -82,7 +82,7 @@ void Plugin_iPodExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionImageUpload = actionCollection()->addAction("ipodexport");
+    m_actionImageUpload = new KAction(this);
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
     m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
     m_actionImageUpload->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
@@ -90,7 +90,7 @@ void Plugin_iPodExport::setupActions()
     connect(m_actionImageUpload, SIGNAL(triggered(bool)),
             this, SLOT(slotImageUpload()));
 
-    addAction(m_actionImageUpload);
+    addAction("ipodexport", m_actionImageUpload);
 }
 
 void Plugin_iPodExport::slotImageUpload()
