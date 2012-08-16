@@ -47,6 +47,7 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
@@ -121,6 +122,10 @@ void Plugin_MetadataEdit::setupActions()
 {
     setDefaultCategory(ImagesPlugin);
 
+    // NOTE This is a workaround, maybe a better solution?
+    if (PluginLoader::instance()->disabledPluginActions().contains("metadataedit"))
+        return;
+
     d->actionMetadataEdit = actionCollection()->addAction("metadataedit");
     d->actionMetadataEdit->setText(i18n("&Metadata"));
     d->actionMetadataEdit->setIcon(KIcon("metadataedit"));
@@ -129,41 +134,41 @@ void Plugin_MetadataEdit::setupActions()
     KMenu* metadataEditMenu = new KMenu(d->parentWidget);
     d->actionMetadataEdit->setMenu(metadataEditMenu);
 
-    KAction* metadataEdit = actionCollection()->addAction("editallmetadata");
+    KAction* metadataEdit = new KAction(this);
     metadataEdit->setText(i18n("Edit &All Metadata..."));
     connect(metadataEdit, SIGNAL(triggered(bool)),
             this,SLOT(slotEditAllMetadata()));
     metadataEditMenu->addAction(metadataEdit);
 
-    addAction(metadataEdit);
+    addAction("editallmetadata", metadataEdit);
 
     // ---------------------------------------------------
 
     d->actionMetadataEdit->menu()->addSeparator();
 
-    KAction* importEXIF = actionCollection()->addAction("importexif");
+    KAction* importEXIF = new KAction(this);
     importEXIF->setText(i18n("Import EXIF..."));
     connect(importEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotImportExif()));
     metadataEditMenu->addAction(importEXIF);
 
-    addAction(importEXIF);
+    addAction("importexif", importEXIF);
 
-    KAction* importIPTC = actionCollection()->addAction("importiptc");
+    KAction* importIPTC = new KAction(this);
     importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
     metadataEditMenu->addAction(importIPTC);
 
-    addAction(importIPTC);
+    addAction("importiptc", importIPTC);
 
-    KAction* importXMP = actionCollection()->addAction("importxmp");
+    KAction* importXMP = new KAction(this);
     importXMP->setText(i18n("Import XMP..."));
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));
     metadataEditMenu->addAction(importXMP);
 
-    addAction(importXMP);
+    addAction("importxmp", importXMP);
 }
 
 void Plugin_MetadataEdit::slotEditAllMetadata()
