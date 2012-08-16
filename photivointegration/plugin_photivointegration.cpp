@@ -115,7 +115,7 @@ void Plugin_PhotivoIntegration::setupActions()
 
     /** We define plugin action which will be plug in KIPI host application.
      */
-    m_action = actionCollection()->addAction("photivointegration");
+    m_action = new KAction(this);
     m_action->setText(i18n("Photivo Integration"));
     m_action->setIcon(KIcon("photivo"));
     m_action->setEnabled(false);
@@ -127,7 +127,7 @@ void Plugin_PhotivoIntegration::setupActions()
 
     /** Action is registered in plugin instance.
      */
-    addAction(m_action);
+    addAction("photivointegration", m_action);
 }
 
 void Plugin_PhotivoIntegration::slotActivate()
