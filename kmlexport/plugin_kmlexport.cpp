@@ -93,7 +93,7 @@ void Plugin_KMLExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionKMLExport = actionCollection()->addAction("kmlexport");
+    m_actionKMLExport = new KAction(this);
     m_actionKMLExport->setText(i18n("Export to KML..."));
     m_actionKMLExport->setIcon(KIcon("applications-development-web"));
     m_actionKMLExport->setEnabled(false);
@@ -101,7 +101,7 @@ void Plugin_KMLExport::setupActions()
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
 
-    addAction( m_actionKMLExport );
+    addAction("kmlexport", m_actionKMLExport);
 }
 
 void Plugin_KMLExport::slotKMLExport()

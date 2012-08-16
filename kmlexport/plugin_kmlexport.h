@@ -32,7 +32,6 @@
 
 #include <libkipi/plugin.h>
 
-class KActionMenu;
 class KAction;
 
 namespace KIPI
