@@ -107,14 +107,14 @@ void Plugin_SendImages::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->action_sendimages = actionCollection()->addAction("sendimages");
+    d->action_sendimages = new KAction(this);
     d->action_sendimages->setText(i18n("Email Images..."));
     d->action_sendimages->setIcon(KIcon("mail-send"));
 
     connect(d->action_sendimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->action_sendimages);
+    addAction("sendimages", d->action_sendimages);
 }
 
 void Plugin_SendImages::slotActivate()
