@@ -82,12 +82,12 @@ void Plugin_Kopete::setup(QWidget* const widget)
 
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("kopeteexport");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("&Instant Messaging contact..."));
     m_actionExport->setIcon(KIcon("kopete"));
     m_actionExport->setEnabled(false);
 
-    addAction(m_actionExport);
+    addAction("kopeteexport", m_actionExport);
 
     m_signalMapper = new QSignalMapper(widget);
     connect(m_signalMapper, SIGNAL(mapped(QString)),

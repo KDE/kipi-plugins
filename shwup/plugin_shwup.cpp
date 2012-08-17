@@ -100,7 +100,7 @@ void Plugin_Shwup::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = actionCollection()->addAction("shwupexport");
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to Shwup..."));
     m_actionExport->setIcon(KIcon("shwup"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
@@ -109,7 +109,7 @@ void Plugin_Shwup::setupActions()
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(m_actionExport);
+    addAction("shwupexport", m_actionExport);
 }
 
 void Plugin_Shwup::slotExport()

@@ -105,7 +105,7 @@ void Plugin_PrintImages::setupActions()
 {
     setDefaultCategory(ImagesPlugin);
 
-    m_printImagesAction = actionCollection()->addAction ( "printimages" );
+    m_printImagesAction = new KAction(this);
     m_printImagesAction->setText ( i18n ( "Print images" ) );
     m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
     m_printImagesAction->setEnabled(false);
@@ -113,9 +113,9 @@ void Plugin_PrintImages::setupActions()
     connect ( m_printImagesAction, SIGNAL (triggered(bool)),
               this, SLOT (slotPrintImagesActivate()) );
 
-    addAction ( m_printImagesAction );
+    addAction("printimages", m_printImagesAction);
 
-    m_printAssistantAction = actionCollection()->addAction ( "printassistant" );
+    m_printAssistantAction = new KAction(this);
     m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
     m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
     m_printAssistantAction->setEnabled(false);
@@ -123,7 +123,7 @@ void Plugin_PrintImages::setupActions()
     connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
               this, SLOT (slotPrintAssistantActivate()) );
 
-    addAction ( m_printAssistantAction );
+    addAction("printassistant", m_printAssistantAction);
 }
 
 void Plugin_PrintImages::slotPrintImagesActivate()

@@ -112,7 +112,7 @@ void Plugin_WikiMedia::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = actionCollection()->addAction("wikimediaexport");
+    d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export to MediaWiki..."));
     d->actionExport->setIcon(KIcon("wikimedia"));
     d->actionExport->setEnabled(false);
@@ -120,7 +120,7 @@ void Plugin_WikiMedia::setupActions()
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(d->actionExport);
+    addAction("wikimediaexport", d->actionExport);
 }
 
 void Plugin_WikiMedia::slotExport()

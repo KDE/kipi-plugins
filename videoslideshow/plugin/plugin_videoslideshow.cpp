@@ -108,14 +108,14 @@ void Plugin_VideoSlideShow::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    d->exportAction = actionCollection()->addAction("video_slide_show");
+    d->exportAction = new KAction(this);
     d->exportAction->setText(i18n("Export to Video Slide Show..."));
     d->exportAction->setIcon(KIcon("media-record"));
 
     connect(d->exportAction, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction(d->exportAction);
+    addAction("video_slide_show", d->exportAction);
 }
 
 void Plugin_VideoSlideShow::slotExport()

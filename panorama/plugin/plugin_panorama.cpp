@@ -94,7 +94,7 @@ void Plugin_Panorama::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_action = actionCollection()->addAction("panorama");
+    m_action = new KAction(this);
     m_action->setText(i18n("Stitch images into a panorama..."));
     m_action->setIcon(KIcon("layer-visible-on"));
     m_action->setEnabled(false);
@@ -102,7 +102,7 @@ void Plugin_Panorama::setupActions()
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action);
+    addAction("panorama", m_action);
 }
 
 void Plugin_Panorama::slotActivate()

@@ -104,7 +104,7 @@ void Plugin_ImgurExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = actionCollection()->addAction("imgurexport");
+    d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export to &Imgur..."));
     d->actionExport->setIcon(KIcon("imgur"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
@@ -112,7 +112,7 @@ void Plugin_ImgurExport::setupActions()
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->actionExport);
+    addAction("imgurexport", d->actionExport);
 }
 
 void Plugin_ImgurExport::slotActivate()
