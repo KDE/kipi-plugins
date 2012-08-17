@@ -33,7 +33,8 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
-#include <kactionmenu.h>
+#include <kmenu.h>
+#include <kaction.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kdebug.h>
@@ -44,6 +45,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/pluginloader.h>
 
 namespace KIPIWallPaperPlugin
 {
@@ -60,10 +62,12 @@ public:
     {
         actionBackground = 0;
         interface        = 0;
+        widget           = 0;
     }
 
-    KActionMenu* actionBackground;
-    Interface*   interface;
+    KAction*     actionBackground;
+    Interface* interface;
+    QWidget*   widget;
 };
 
 Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
@@ -71,6 +75,9 @@ Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
       d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_WallPaper plugin loaded";
+
+    setUiBaseName("kipiplugin_wallpaperui.rc");
+    setupXML();
 }
 
 Plugin_WallPaper::~Plugin_WallPaper()
@@ -81,23 +88,12 @@ Plugin_WallPaper::~Plugin_WallPaper()
 
 void Plugin_WallPaper::setup(QWidget* const widget)
 {
+    d->widget = widget;
+
     Plugin::setup(widget);
+    setupActions();
 
-    d->actionBackground = new KActionMenu(KIcon("image-jpeg"), i18n("&Set as Background"), actionCollection());
-    d->actionBackground->setObjectName("images2desktop");
-
-    KAction* wallpaper = actionCollection()->addAction("images2desktop_setwallpaper");
-    wallpaper->setText(i18n("Set as wallpaper"));
-
-    connect(wallpaper, SIGNAL(triggered(bool)),
-            this, SLOT(slotSetWallpaper()));
-
-    d->actionBackground->addAction(wallpaper);
-
-    addAction( d->actionBackground );
-
-    d->interface = dynamic_cast<Interface*>( parent() );
-
+    d->interface = interface();
     if ( !d->interface )
     {
         kError() << "Kipi interface is null!";
@@ -105,11 +101,41 @@ void Plugin_WallPaper::setup(QWidget* const widget)
     }
 
     ImageCollection selection = d->interface->currentSelection();
-    d->actionBackground->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
-    connect(d->interface, SIGNAL(selectionChanged(bool)),
-            d->actionBackground, SLOT(setEnabled(bool)));
+    if (d->actionBackground)
+    {
+        d->actionBackground->setEnabled( selection.isValid() && !selection.images().isEmpty() );
+
+        connect(d->interface, SIGNAL(selectionChanged(bool)),
+                d->actionBackground, SLOT(setEnabled(bool)));
+    }
  }
+
+void Plugin_WallPaper::setupActions()
+{
+    QStringList disabledActions = PluginLoader::instance()->disabledPluginActions();
+    if (disabledActions.contains("images2desktop")
+        || disabledActions.contains("images2desktop_setwallpaper"))
+        return;
+
+    d->actionBackground = actionCollection()->addAction("images2desktop");
+    d->actionBackground->setIcon(KIcon("image-jpeg"));
+    d->actionBackground->setText(i18n("&Set as Background"));
+    d->actionBackground->setEnabled(false);
+
+    KMenu* menu = new KMenu(d->widget);
+    d->actionBackground->setMenu(menu);
+
+    KAction* wallpaper = new KAction(this);
+    wallpaper->setText(i18n("Set as wallpaper"));
+
+    connect(wallpaper, SIGNAL(triggered(bool)),
+            this, SLOT(slotSetWallpaper()));
+
+    menu->addAction(wallpaper);
+
+    addAction("images2desktop_setwallpaper", wallpaper);
+}
 
 void Plugin_WallPaper::slotSetWallpaper()
 {
@@ -128,15 +154,6 @@ void Plugin_WallPaper::slotSetWallpaper()
                                         "of kde-workspace."), i18n("Change Background"));
 
    delete dbusInterface;
-}
-
-Category Plugin_WallPaper::category(KAction* const action) const
-{
-    if ( action == d->actionBackground )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIWallPaperPlugin

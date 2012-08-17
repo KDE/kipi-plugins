@@ -49,12 +49,15 @@ public:
     Plugin_WallPaper(QObject* const parent, const QVariantList& args);
     ~Plugin_WallPaper();
 
-    Category category(KAction* const action) const;
     void setup(QWidget* const);
 
 protected Q_SLOTS:
 
     void slotSetWallpaper();
+
+private:
+
+    void setupActions();
 
 private:
 
