@@ -113,6 +113,8 @@ void Plugin_WallPaper::setup(QWidget* const widget)
 
 void Plugin_WallPaper::setupActions()
 {
+    setDefaultCategory(ImagesPlugin);
+
     QStringList disabledActions = PluginLoader::instance()->disabledPluginActions();
     if (disabledActions.contains("images2desktop")
         || disabledActions.contains("images2desktop_setwallpaper"))
