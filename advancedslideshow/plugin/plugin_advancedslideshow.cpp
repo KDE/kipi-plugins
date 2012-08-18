@@ -113,7 +113,7 @@ void Plugin_AdvancedSlideshow::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_actionSlideShow = actionCollection()->addAction("advancedslideshow");
+    m_actionSlideShow = new KAction(this);
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(KIcon("slideshow"));
     m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
@@ -122,7 +122,7 @@ void Plugin_AdvancedSlideshow::setupActions()
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionSlideShow);
+    addAction("advancedslideshow", m_actionSlideShow);
 }
 
 void Plugin_AdvancedSlideshow::slotActivate()
