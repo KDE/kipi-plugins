@@ -157,8 +157,13 @@ void Wizard::next()
     {
         d->implementationOptionSelected = d->welcomePage->getImplementationOptionSelected();
         d->finalPage->setOptions(d->implementationOptionSelected);
-        if (d->implementationOptionSelected == WelcomePage::MINIDLNA)
+        if (d->implementationOptionSelected == WelcomePage::MINIDLNA) {
             d->finalPage->setMinidlnaBinaryPath(d->welcomePage->getMinidlnaBinaryPath());
+            d->collectionSelector->enableTags(false);
+        }
+        else {
+            d->collectionSelector->enableTags(true);
+        }
         d->finalPage->clearImages();
         KAssistantDialog::next();
     }
