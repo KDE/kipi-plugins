@@ -48,6 +48,7 @@ public:
     ~WelcomePage();
 
     WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
+    QString getMinidlnaBinaryPath();
 
 private:
 

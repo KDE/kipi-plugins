@@ -45,7 +45,6 @@ public:
     explicit FinalPage(QWidget* const parent);
     ~FinalPage();
 
-    void setControlButtons(bool);
     void setImages(const KUrl::List&);
     void setCollectionMap(const QMap<QString, KUrl::List>&);
     void setDirectories (const QStringList&);
@@ -54,6 +53,8 @@ public:
     
     void startHupnpMediaServer();
     void startMinidlnaMediaServer();
+    
+    void setMinidlnaBinaryPath(const QString&);
 
 private Q_SLOTS:
 

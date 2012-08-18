@@ -126,5 +126,10 @@ WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelecte
         return WelcomePage::MINIDLNA;
 }
 
+QString WelcomePage::getMinidlnaBinaryPath()
+{
+    return d->minidlnaBinary.path();
+}
+
 
 }   // namespace KIPIDLNAExportPlugin

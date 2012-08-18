@@ -52,7 +52,7 @@ public:
         strictDLNA = "no";
         rootContainer = "P";
         modelNo = "1";
-        filePath = "/home/smit/smit.conf";
+        filePath = "";
     }
 
     QString port;
@@ -80,7 +80,7 @@ MinidlnaServer::~MinidlnaServer()
 void MinidlnaServer::generateConfigFile()
 {
 
-    d->filePath = "/home/smit/smit.conf";
+    d->filePath = KStandardDirs::locateLocal("data", "kipi/minidlna.conf");
     QFile file(d->filePath);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
     

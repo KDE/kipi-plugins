@@ -92,6 +92,7 @@ public:
     QMap<QString, KUrl::List>   collectionMap;
     MinidlnaServer*             Mdlna;
     QStringList     directories;
+    QString          minidlnaBinaryPath;
 };
 
 FinalPage::FinalPage(QWidget* const parent)
@@ -192,5 +193,11 @@ void FinalPage::setDirectories(const QStringList& directories)
 {
     d->directories = directories;
 }
+
+void FinalPage::setMinidlnaBinaryPath(const QString& path )
+{
+    d->minidlnaBinaryPath = path;
+}
+
 
 } // namespace KIPIDLNAExportPlugin

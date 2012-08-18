@@ -84,8 +84,7 @@ public:
     KUrl::List                  imageList;
     QMap<QString, KUrl::List>   collectionMap;
     QStringList                 directories;
-    WelcomePage::ImplementationGetOption implementationOptionSelected;
-    
+    WelcomePage::ImplementationGetOption implementationOptionSelected;    
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -158,6 +157,8 @@ void Wizard::next()
     {
         d->implementationOptionSelected = d->welcomePage->getImplementationOptionSelected();
         d->finalPage->setOptions(d->implementationOptionSelected);
+        if (d->implementationOptionSelected == WelcomePage::MINIDLNA)
+            d->finalPage->setMinidlnaBinaryPath(d->welcomePage->getMinidlnaBinaryPath());
         d->finalPage->clearImages();
         KAssistantDialog::next();
     }
