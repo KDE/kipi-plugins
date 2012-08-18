@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef DLNAWIDGET_H
-#define DLNAWIDGET_H
+#ifndef FINALPAGE_H
+#define FINALPAGE_H
 
 // Qt includes
 
@@ -45,15 +45,16 @@ public:
     explicit FinalPage(QWidget* const parent);
     ~FinalPage();
 
-    void setControlButtons(bool);
     void setImages(const KUrl::List&);
     void setCollectionMap(const QMap<QString, KUrl::List>&);
     void setDirectories (const QStringList&);
     void clearImages();
-    void setOptions(WelcomePage::ImageGetOption, WelcomePage::ImplementationGetOption);
+    void setOptions(WelcomePage::ImplementationGetOption);
+    void setMinidlnaBinaryPath(const QString&);   
     
     void startHupnpMediaServer();
     void startMinidlnaMediaServer();
+     
 
 private Q_SLOTS:
 
@@ -68,4 +69,4 @@ private:
 
 } // namespace KIPIDLNAExportPlugin
 
-#endif // DLNAWIDGET_H
+#endif // FINALPAGE_H

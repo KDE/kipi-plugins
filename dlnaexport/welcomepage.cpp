@@ -56,8 +56,6 @@ public:
         iconLbl              = 0;
         titleLbl             = 0;
         headerLbl            = 0;
-        imageGetOption       = 0;
-        getImageLbl          = 0;
         getImplementationLbl = 0;
         binariesWidget       = 0;
         binariesLbl          = 0;
@@ -66,14 +64,12 @@ public:
     QLabel*    iconLbl;
     QLabel*    titleLbl;
     QLabel*    headerLbl;
-    QLabel*    getImageLbl;
     QLabel*    getImplementationLbl;
     QLabel*    binariesLbl;
 
-    KComboBox* imageGetOption;
-    KComboBox* implementationGetOption;
-    KPBinarySearch*  binariesWidget;
-    MinidlnaBinary minidlnaBinary;
+    KComboBox*      implementationGetOption;
+    KPBinarySearch* binariesWidget;
+    MinidlnaBinary  minidlnaBinary;
 };
 
 WelcomePage::WelcomePage(QWidget* const parent)
@@ -97,13 +93,6 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->binariesWidget = new KPBinarySearch(settingsBox);
     d->binariesWidget->addBinary(d->minidlnaBinary);
         
-    // ComboBox for image selection method
-    d->getImageLbl    = new QLabel(i18n("&Choose image selection method:"),settingsBox);
-    d->imageGetOption = new KComboBox(settingsBox);
-    d->imageGetOption->insertItem(WelcomePage::IMAGEDIALOG, "From file system");
-    d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
-    d->getImageLbl->setBuddy(d->imageGetOption);
-
     // ComboBox for implementation selection method
     d->getImplementationLbl    = new QLabel(i18n("&Choose the implementation:"),settingsBox);
     d->implementationGetOption = new KComboBox(settingsBox);
@@ -111,15 +100,11 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
     d->getImplementationLbl->setBuddy(d->implementationGetOption);
     
-    connect(d->implementationGetOption, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(modifyImageGetOption(int)));
-    
+   
     settingsBoxLayout->addWidget(d->binariesLbl,             1, 0, 1, 1);
     settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 1, 2);
     settingsBoxLayout->addWidget(d->getImplementationLbl,    3, 0, 1, 1);
     settingsBoxLayout->addWidget(d->implementationGetOption, 3, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->getImageLbl,             4, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->imageGetOption,          4, 1, 1, 1);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
     mainLayout->addWidget(d->iconLbl,           1, 0, 1, 2, Qt::AlignCenter);
@@ -133,36 +118,17 @@ WelcomePage::~WelcomePage()
 {
 }
 
-void WelcomePage::modifyImageGetOption(int index)
-{
-    d->imageGetOption->removeItem(0);
-    d->imageGetOption->removeItem(0);
-    
-    if (d->implementationGetOption->currentIndex() != 0)
-    {
-        d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
-    }
-    else
-    {
-        d->imageGetOption->insertItem(WelcomePage::IMAGEDIALOG, "From file system");
-        d->imageGetOption->insertItem(WelcomePage::COLLECTION, "Collections");
-    }
-}
-
-WelcomePage::ImageGetOption WelcomePage::getImageDialogOptionSelected() const
-{
-    if (d->imageGetOption->currentIndex() == 0)
-        return WelcomePage::COLLECTION;
-    else
-        return WelcomePage::IMAGEDIALOG;
-}
-
 WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelected() const
 {
     if (d->implementationGetOption->currentIndex() == 0)
         return WelcomePage::HUPNP;
     else
         return WelcomePage::MINIDLNA;
+}
+
+QString WelcomePage::getMinidlnaBinaryPath()
+{
+    return d->minidlnaBinary.path();
 }
 
 

@@ -71,29 +71,25 @@ public:
 
     Private()
     {
-        Hdlna         = 0;
-        Mdlna       = 0;
-        imgList      = 0;
-        progressBar  = 0;
-        startButton  = 0;
-        stopButton   = 0;
-        implementation = WelcomePage::HUPNP;
-        imageDialogOption = WelcomePage::IMAGEDIALOG;
+        Hdlna           = 0;
+        Mdlna           = 0;
+        imgList         = 0;
+        progressBar     = 0;
+        startButton     = 0;
+        stopButton      = 0;
+        implementation  = WelcomePage::HUPNP;
     }
 
-    MediaServer*      Hdlna;
-
-    KPImagesList*     imgList;
-
-    KPProgressWidget* progressBar;
-    
-    KPushButton*    startButton;
-    KPushButton*    stopButton;
-    WelcomePage::ImplementationGetOption implementation;
-    WelcomePage::ImageGetOption imageDialogOption;
+    MediaServer*        Hdlna;
+    MinidlnaServer*     Mdlna;
+    KPImagesList*       imgList;
+    KPProgressWidget*   progressBar;
+    KPushButton*        startButton;
+    KPushButton*        stopButton;
+    QStringList         directories;
+    QString             minidlnaBinaryPath;
     QMap<QString, KUrl::List>   collectionMap;
-    MinidlnaServer*             Mdlna;
-    QStringList     directories;
+    WelcomePage::ImplementationGetOption implementation;
 };
 
 FinalPage::FinalPage(QWidget* const parent)
@@ -105,7 +101,7 @@ FinalPage::FinalPage(QWidget* const parent)
     // -------------------------------------------------------------------
 
     d->imgList = new KPImagesList(this);
-    d->imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
+    d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
     d->imgList->setAllowRAW(true);
     d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
@@ -128,12 +124,10 @@ FinalPage::FinalPage(QWidget* const parent)
     // ------------------------------------------------------------------------
 }
 
-void FinalPage::setOptions(WelcomePage::ImageGetOption imageDialogOption, WelcomePage::ImplementationGetOption implementation)
+void FinalPage::setOptions(WelcomePage::ImplementationGetOption implementation)
 {
-    d->imageDialogOption = imageDialogOption;
     d->implementation = implementation;
 }
-
 
 void FinalPage::turnOff()
 {
@@ -143,8 +137,6 @@ void FinalPage::turnOff()
         d->Mdlna->~MinidlnaServer();
     d->startButton->setEnabled(true);
     d->stopButton->setEnabled(false);
-    if (d->imageDialogOption == WelcomePage::IMAGEDIALOG)
-        d->imgList->enableControlButtons(true);
 }
 
 void FinalPage::turnOn()
@@ -155,7 +147,6 @@ void FinalPage::turnOn()
         startMinidlnaMediaServer();
     d->startButton->setEnabled(false);
     d->stopButton->setEnabled(true);
-    d->imgList->enableControlButtons(false);
 }
 
 void FinalPage::setCollectionMap(const QMap<QString, KUrl::List>& collectionMap)
@@ -180,18 +171,10 @@ void FinalPage::clearImages()
     d->imgList->listView()->clear();
 }
 
-void FinalPage::setControlButtons(bool select)
-{
-    d->imgList->enableControlButtons(select);
-}
-
 void FinalPage::startHupnpMediaServer()
 {
     d->Hdlna = new MediaServer();
-    if (d->imageDialogOption == WelcomePage::IMAGEDIALOG)
-        d->Hdlna->addImagesOnServer(d->imgList->imageUrls());
-    else
-        d->Hdlna->addImagesOnServer(d->collectionMap);
+    d->Hdlna->addImagesOnServer(d->collectionMap);
 }
 
 void FinalPage::startMinidlnaMediaServer()
@@ -207,6 +190,9 @@ void FinalPage::setDirectories(const QStringList& directories)
     d->directories = directories;
 }
 
-
+void FinalPage::setMinidlnaBinaryPath(const QString& path )
+{
+    d->minidlnaBinaryPath = path;
+}
 
 } // namespace KIPIDLNAExportPlugin

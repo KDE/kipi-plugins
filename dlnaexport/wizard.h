@@ -43,7 +43,6 @@ public:
     ~Wizard();
 
     void next();
-    void back();
 
 private Q_SLOTS:
 

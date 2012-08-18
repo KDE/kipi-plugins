@@ -36,12 +36,6 @@ class WelcomePage : public QWidget
 
 public:
 
-    enum ImageGetOption
-    {
-        COLLECTION = 0,
-        IMAGEDIALOG
-    };
-    
     enum ImplementationGetOption
     {
         HUPNP = 0,
@@ -53,12 +47,8 @@ public:
     explicit WelcomePage(QWidget* const parent);
     ~WelcomePage();
 
-    WelcomePage::ImageGetOption getImageDialogOptionSelected() const;
     WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
-
-public Q_SLOTS:
-    
-    void modifyImageGetOption(int index);
+    QString getMinidlnaBinaryPath();
 
 private:
 

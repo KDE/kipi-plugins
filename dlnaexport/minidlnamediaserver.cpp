@@ -52,11 +52,10 @@ public:
         strictDLNA = "no";
         rootContainer = "P";
         modelNo = "1";
-        filePath = "/home/smit/smit.conf";
+        filePath = "";
     }
 
     QString port;
-    QStringList directories;
     QString name;
     QString serial;
     QString albumArt;
@@ -64,12 +63,12 @@ public:
     QString rootContainer;
     QString modelNo;
     QString filePath;
+    QStringList directories;
 };
 
 MinidlnaServer::MinidlnaServer(QObject* const parent)
     : QObject(parent), d(new Private)
 {
-    
 }
 
 MinidlnaServer::~MinidlnaServer()
@@ -80,7 +79,7 @@ MinidlnaServer::~MinidlnaServer()
 void MinidlnaServer::generateConfigFile()
 {
 
-    d->filePath = "/home/smit/smit.conf";
+    d->filePath = KStandardDirs::locateLocal("data", "kipi/minidlna.conf");
     QFile file(d->filePath);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
     
@@ -99,8 +98,7 @@ void MinidlnaServer::generateConfigFile()
     out <<"model_number=" << d->modelNo << "\n";
     out <<"root_container=" << d->rootContainer << "\n";
     
-    file.close();
-  
+    file.close(); 
 }
 
 void MinidlnaServer::setDirectories(const QStringList& directories)
@@ -117,8 +115,4 @@ void MinidlnaServer::startMinidlnaServer()
     QProcess *minidlnaProcess = new QProcess(this);
     minidlnaProcess->start(program, arguments);
 }
-
-    
-    
-    
 } // namespace KIPIDLNAExportPlugin
