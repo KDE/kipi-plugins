@@ -49,4 +49,3 @@ TARGET_LINK_LIBRARIES(kipicmd
                      )
 
 ADD_SUBDIRECTORY(multithreading)
-ADD_SUBDIRECTORY(helloworld)
