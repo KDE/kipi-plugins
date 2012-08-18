@@ -71,28 +71,25 @@ public:
 
     Private()
     {
-        Hdlna         = 0;
-        Mdlna       = 0;
-        imgList      = 0;
-        progressBar  = 0;
-        startButton  = 0;
-        stopButton   = 0;
-        implementation = WelcomePage::HUPNP;
+        Hdlna           = 0;
+        Mdlna           = 0;
+        imgList         = 0;
+        progressBar     = 0;
+        startButton     = 0;
+        stopButton      = 0;
+        implementation  = WelcomePage::HUPNP;
     }
 
-    MediaServer*      Hdlna;
-
-    KPImagesList*     imgList;
-
-    KPProgressWidget* progressBar;
-    
-    KPushButton*    startButton;
-    KPushButton*    stopButton;
-    WelcomePage::ImplementationGetOption implementation;
+    MediaServer*        Hdlna;
+    MinidlnaServer*     Mdlna;
+    KPImagesList*       imgList;
+    KPProgressWidget*   progressBar;
+    KPushButton*        startButton;
+    KPushButton*        stopButton;
+    QStringList         directories;
+    QString             minidlnaBinaryPath;
     QMap<QString, KUrl::List>   collectionMap;
-    MinidlnaServer*             Mdlna;
-    QStringList     directories;
-    QString          minidlnaBinaryPath;
+    WelcomePage::ImplementationGetOption implementation;
 };
 
 FinalPage::FinalPage(QWidget* const parent)
@@ -131,7 +128,6 @@ void FinalPage::setOptions(WelcomePage::ImplementationGetOption implementation)
 {
     d->implementation = implementation;
 }
-
 
 void FinalPage::turnOff()
 {
@@ -198,6 +194,5 @@ void FinalPage::setMinidlnaBinaryPath(const QString& path )
 {
     d->minidlnaBinaryPath = path;
 }
-
 
 } // namespace KIPIDLNAExportPlugin

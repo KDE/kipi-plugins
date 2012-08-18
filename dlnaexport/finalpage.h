@@ -50,11 +50,11 @@ public:
     void setDirectories (const QStringList&);
     void clearImages();
     void setOptions(WelcomePage::ImplementationGetOption);
+    void setMinidlnaBinaryPath(const QString&);   
     
     void startHupnpMediaServer();
     void startMinidlnaMediaServer();
-    
-    void setMinidlnaBinaryPath(const QString&);
+     
 
 private Q_SLOTS:
 

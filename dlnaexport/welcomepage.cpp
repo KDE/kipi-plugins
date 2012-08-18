@@ -67,9 +67,9 @@ public:
     QLabel*    getImplementationLbl;
     QLabel*    binariesLbl;
 
-    KComboBox* implementationGetOption;
-    KPBinarySearch*  binariesWidget;
-    MinidlnaBinary minidlnaBinary;
+    KComboBox*      implementationGetOption;
+    KPBinarySearch* binariesWidget;
+    MinidlnaBinary  minidlnaBinary;
 };
 
 WelcomePage::WelcomePage(QWidget* const parent)

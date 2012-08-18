@@ -67,11 +67,11 @@ public:
     Private()
     {
         finalPage              = 0;
-        collectionSelector         = 0;
-        welcomePage                = 0;
+        collectionSelector     = 0;
+        welcomePage            = 0;
         finalPageItem          = 0;
+        welcomePageItem        = 0;
         collectionSelectorPageItem = 0;
-        welcomePageItem            = 0;
         implementationOptionSelected = WelcomePage::HUPNP;
     }
 
