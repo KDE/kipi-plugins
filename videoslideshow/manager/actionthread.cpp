@@ -54,18 +54,26 @@ public:
         processImg = 0;
         framerate  = 25;
         number     = 0;
+        encoder    = 0;
     }
 
     MagickApi*            api;
     ProcessImage*         processImg;
+    EncoderDecoder*       encoder;
     int                   framerate;
     ASPECTCORRECTION_TYPE aspectcorrection;
+    ASPECT_RATIO          aspectRatio;
+    VIDEO_TYPE            videoType;
+    VIDEO_FORMAT          videoFormat;
     int                   frameWidth;
     int                   frameHeight;
     int                   number;
     QString               path;
+    QString               audioPath;
+    QString               savePath;
     MyImageListViewItem*  item;
     bool                  running;
+    QDir                  dir;
 };
 
 ActionThread::ActionThread()
@@ -76,6 +84,7 @@ ActionThread::ActionThread()
 
 ActionThread::~ActionThread()
 {
+    cleanTempDir();
     delete d;
 }
 
@@ -104,7 +113,7 @@ void ActionThread::run()
         ad.action      = TYPE_IMAGE;
         ad.fileUrl     = d->item->getPrevImageItem()->url();
         ad.totalFrames = upperBound;
-        emit frameCompleted(ad);
+        Q_EMIT frameCompleted(ad);
 
         upperBound = getTransitionFrames(d->item);
         processItem(upperBound, img, imgnext, TYPE_TRANSITION); 
@@ -113,7 +122,7 @@ void ActionThread::run()
         tad.action      = TYPE_TRANSITION;
         tad.fileUrl     = d->item->url();
         tad.totalFrames = upperBound;
-        emit frameCompleted(tad);
+        Q_EMIT frameCompleted(tad);
     }
 
     if(img)
@@ -128,21 +137,44 @@ void ActionThread::run()
     ad.action      = TYPE_IMAGE;
     ad.fileUrl     = d->item->url();
     ad.totalFrames = upperBound;
-    emit frameCompleted(ad);
+    Q_EMIT frameCompleted(ad);
 
     if(img)
         d->api->freeImage(*img);
 
-    emit finished();
+    d->encoder->encodeVideo(d->savePath, d->audioPath, d->videoFormat, d->videoType, d->path, d->aspectRatio);
+
+    connect(d->encoder, SIGNAL(finished()), this, SLOT(quit()));
+    exec();
+    Q_EMIT finished();
+}
+
+void ActionThread::cleanTempDir()
+{
+    d->dir.setPath(d->path);
+
+    QStringList tempFiles = d->dir.entryList(QDir::Files);
+    QString tempFile;
+    for(int i = 0; i < tempFiles.size(); i++)
+    {
+        tempFile = tempFiles.at(i);
+        if(tempFile.endsWith(".ppm"))
+            d->dir.remove(tempFile);
+    }
+    
+    d->dir.rmdir(d->savePath);
 }
 
 void ActionThread::processItem(int upperBound, MagickImage* const img, MagickImage* const imgNext, Action action)
 {
-    if(action == TYPE_IMAGE)
+    /**
+     * need to reimplement using appsrc plugin of gstreamer
+     if(action == TYPE_IMAGE)
     {
         if(d->item->EffectName() == EFFECT_NONE)
             upperBound = 1;
     }
+    */
 
     for(int n = 0; n < upperBound && d->running; n++)
     {
@@ -156,17 +188,34 @@ void ActionThread::processItem(int upperBound, MagickImage* const img, MagickIma
 void ActionThread::cancel()
 {
     d->running = false;
+    d->encoder->cancel();
+    cleanTempDir();
 }
 
-void ActionThread::doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, int frameWidth, int frameHeight,
-                                   const QString& path, MyImageListViewItem* const item)
+void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspectRatio,int frameWidth, int frameHeight,
+                                   const QString& path, MyImageListViewItem* const item, VIDEO_FORMAT format,
+                                   VIDEO_TYPE videotype, const QString& audioPath, const QString& savePath)
 {
-    d->framerate        = framerate;
     d->aspectcorrection = type;
+    d->aspectRatio      = aspectRatio;
     d->frameHeight      = frameHeight;
     d->frameWidth       = frameWidth;
     d->item             = item;
     d->number           = 0;
+    d->audioPath        = audioPath;
+    d->videoFormat      = format;
+    d->videoType        = videotype;
+
+    switch(d->videoFormat) {
+    case VIDEO_FORMAT_NTSC:
+        d->framerate = 30;
+        break;
+    case VIDEO_FORMAT_SECAM:
+    case VIDEO_FORMAT_PAL:
+    default:
+        d->framerate = 25;
+	break;
+    };
 
     if(!d->api)
     {
@@ -180,7 +229,18 @@ void ActionThread::doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, in
                 this, SIGNAL(signalProcessError(QString)));
     }
 
-    d->path = path;
+    if(!d->encoder)
+    {
+        d->encoder  = new EncoderDecoder();
+
+        connect(d->encoder,SIGNAL(encoderError(QString)),
+                this, SIGNAL(signalProcessError(QString)));
+    }
+
+    d->dir.setPath(path);
+    d->dir.mkdir("vss");
+    d->path     = path + QDir::separator() + "vss";
+    d->savePath = savePath;
 }
 
 MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
@@ -197,8 +257,20 @@ MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
     }
     else if(!(img = d->api->loadImage(imgItem->url().path())))
         return 0;
-
-    if(!(img = d->processImg->aspectRatioCorrection(*img, (double)d->frameHeight/d->frameWidth, d->aspectcorrection)))
+    
+    double ratio = (double)d->frameWidth/d->frameHeight;
+    switch(d->aspectRatio) {
+    case ASPECT_RATIO_4_3:
+        ratio = (double)4/3;
+        break;
+    case ASPECT_RATIO_16_9:
+        ratio = (double)16/9;
+        break;
+    default:
+        break;
+    };
+    
+    if(!(img = d->processImg->aspectRatioCorrection(*img, ratio, d->aspectcorrection)))
         return 0;
 
     if(d->api->scaleImage(*img, d->frameWidth, d->frameHeight) != 1)
@@ -313,9 +385,9 @@ void ActionThread::ProcessFrame(Frame* const frm)
 
 void ActionThread::WriteFrame(Frame* const frame)
 {
-    ++d->number;
-    QString path = QString("%1/tempvss%2.ppm").arg(d->path).arg(QString::number(d->number));
+    QString path = QString("%1" + QDir::separator() + "tempvss%2.ppm").arg(d->path).arg(QString::number(d->number));
     d->api->saveToFile(frame->imgout ? *(frame->imgout) : *(frame->img), path);
+    ++d->number;
 }
 
 int ActionThread::getTotalFrames(MyImageListViewItem* const item) const

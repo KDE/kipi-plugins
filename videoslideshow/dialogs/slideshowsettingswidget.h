@@ -32,6 +32,7 @@
 // Local includes
 
 #include "myimagelist.h"
+#include "encoderdecoder.h"
 
 namespace KIPIVideoSlideShowPlugin
 {
@@ -51,9 +52,16 @@ public:
     int                   getFrameHeight()      const;
     int                   getFrameWidth()       const;
     ASPECTCORRECTION_TYPE getAspectCorrection() const;
+    ASPECT_RATIO          getAspectRatio()      const;
 
     void resetToDefault();
     void updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect);
+
+    VIDEO_FORMAT getVideoFormat() const;
+    VIDEO_TYPE   getVideoType()   const;
+
+    QString  getAudioFile() const;
+    QString  getSaveFile()  const;
 
 Q_SIGNALS:
 
@@ -70,10 +78,15 @@ private:
 private Q_SLOTS:
 
     void slotSelectTempDirectory();
+    void slotSelectAudio();
+    void slotSelectSaveFileName();
+    void slotAudioChecked();
     void effectIndexChanged(int index);
     void transIndexChanged(int index);
     void transSpeedIndexChanged(int index);
     void timeValueChanged(int time);
+    void videoTypeChanged(int index);
+    void videoFormatChanged(int index);
 
 private:
 

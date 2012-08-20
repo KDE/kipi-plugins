@@ -82,7 +82,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 
     // Duplicate the signalImageListChanged of the ImageWindow, to enable the
     // upload button again.
-    emit signalImageListChanged();
+    Q_EMIT signalImageListChanged();
 }
 
 void MyImageList::slotRemoveItems()
@@ -134,7 +134,7 @@ public:
 MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
     : KPImagesListViewItem(view, url), d(new Private)
 {
-    setTime(25);
+    setTime(2);
     setEffectName("None",        EFFECT_NONE);
     setTransition("Random",      TRANSITION_TYPE_RANDOM);
     setTransitionSpeed("Medium", TRANSITION_MEDIUM);
@@ -164,6 +164,8 @@ void MyImageListViewItem::setTime(const int time)
 
 void MyImageListViewItem::setTransition(const QString& str, TRANSITION_TYPE type)
 {
+    if(type == TRANSITION_TYPE_RANDOM)
+        type = (TRANSITION_TYPE)(rand() % TRANS_MAX + 1);
     d->transition = type;
     setText(MyImageList::TRANSITION, str);
 }

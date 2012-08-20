@@ -126,7 +126,7 @@ public:
         /* allocate a new image */
         if (!(img = new MagickImage()))
         {
-            parent->emit signalsAPIError("Out of memory");
+            parent->Q_EMIT signalsAPIError("Out of memory");
             return 0;
         }
 
@@ -138,7 +138,7 @@ public:
 
         if (!(img->setImage(ConstituteImage(1, 1, "RGB", CharPixel, pixels, &exception))))
         {
-            parent->emit signalsAPIError("ConstituteImage() failed");
+            parent->Q_EMIT signalsAPIError("ConstituteImage() failed");
             return 0;
         }
 
@@ -209,7 +209,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     if (!(image = ResizeImage(img->getImage(), qimage.width(), qimage.height(), SCALE_FILTER_FAST, 
           1.0, &img->getImage()->exception)))
     {
-        emit signalsAPIError("ResizeImage() failed\n");
+        Q_EMIT signalsAPIError("ResizeImage() failed\n");
         return 0;
     }
     
@@ -221,7 +221,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     if (!(img_data = GetAuthenticPixels(img->getImage(), 0, 0, img->getWidth(), img->getHeight(), 
           &img->getImage()->exception)))
     {
-        emit signalsAPIError("GetImagePixels() failed\n");
+        Q_EMIT signalsAPIError("GetImagePixels() failed\n");
         return 0;
     }
 
@@ -255,7 +255,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
 
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
-        emit signalsAPIError("CloneImageInfo() failed\n");
+        Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
         return 0;
     }
 
@@ -266,7 +266,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
 
     if (!(img->setImage(ReadImage(info, &exception))))
     {
-        emit signalsAPIError("ReadImage(%s) failed\n");
+        Q_EMIT signalsAPIError("ReadImage(%s) failed\n");
         return 0;
     }
 
@@ -296,7 +296,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
     GetExceptionInfo(&exception);
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
-        emit signalsAPIError("CloneImageInfo() failed\n");
+        Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
         return 0;
     }
 
@@ -308,7 +308,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
 
     if (!(img->setImage(ReadImage(info,&exception))))
     {
-        emit signalsAPIError("ReadImage(%s) failed\n");
+        Q_EMIT signalsAPIError("ReadImage(%s) failed\n");
         return 0;
     }
 
@@ -326,7 +326,7 @@ int MagickApi::saveToFile(const MagickImage& img, const QString& file)
 
     if (!(info = CloneImageInfo(NULL)))
     {
-        emit signalsAPIError("CloneImageInfo() failed\n");
+        Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
         return -1;
     }
 
@@ -341,7 +341,7 @@ int MagickApi::saveToFile(const MagickImage& img, const QString& file)
 
     if (WriteImage(info,img.getImage()) != MagickTrue)
     {
-        emit signalsAPIError("WriteImage() failed\n");
+        Q_EMIT signalsAPIError("WriteImage() failed\n");
         return -1;
     }
 
@@ -359,7 +359,7 @@ int MagickApi::saveToStream(const MagickImage& img, QFile& stream)
 
     if (!(info = CloneImageInfo(NULL)))
     {
-        emit signalsAPIError("CloneImageInfo() failed\n");
+        Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
         return -1;
     }
 
@@ -374,7 +374,7 @@ int MagickApi::saveToStream(const MagickImage& img, QFile& stream)
 
     if (WriteImage(info,img.getImage()) != MagickTrue)
     {
-        emit signalsAPIError("WriteImage() failed\n");
+        Q_EMIT signalsAPIError("WriteImage() failed\n");
         return -1;
     }
 
@@ -399,7 +399,7 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
 
     if (!(image = ResizeImage(img->getImage(), width, height, SCALE_FILTER_FAST, 1.0, &exception)))
     {
-        emit signalsAPIError("ResizeImage() failed\n");
+        Q_EMIT signalsAPIError("ResizeImage() failed\n");
         return 0;
     }
 
@@ -411,7 +411,7 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
     
     if (img->getWidth() != width || img->getHeight() != height)
     {
-        emit signalsAPIError("frame doesn't have expected dimensions\n");
+        Q_EMIT signalsAPIError("frame doesn't have expected dimensions\n");
         return 0;
     }    
 
@@ -433,7 +433,7 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
 
     if (!(dst->setImage(CloneImage(src.getImage(), 0, 0, (MagickBooleanType)1, &exception))))
     {
-        emit signalsAPIError("CloneImageInfo() failed\n");
+        Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
         return 0;
     }
 
@@ -471,14 +471,14 @@ int MagickApi::bitblitImage(MagickImage& dst, int dx, int dy, const MagickImage&
 
         if (!(source = cropped = CropImage(src.getImage(), &geometry, &exception)))
         {
-            emit signalsAPIError("CropImage() failed\n");
+            Q_EMIT signalsAPIError("CropImage() failed\n");
             return -1;
         }
     }
 
     if (CompositeImage(dst.getImage(), SrcOverCompositeOp, source, dx, dy) != MagickTrue)
     {
-        emit signalsAPIError("CompositeImage() failed\n");
+        Q_EMIT signalsAPIError("CompositeImage() failed\n");
         return -1;
     }
 
@@ -500,31 +500,31 @@ int MagickApi::blendImage(MagickImage& dst, const MagickImage& src0, const Magic
     /* check if the size matches */
     if (src0.getWidth() != src1.getWidth() || src0.getHeight() != src1.getHeight())
     {
-        emit signalsAPIError("scr0 size is not equal to src1");
+        Q_EMIT signalsAPIError("scr0 size is not equal to src1");
         return -1;
     }
 
     if (dst.getWidth() != src0.getWidth() || dst.getHeight() != src0.getHeight())
     {
-        emit signalsAPIError("scr0 size is not equal to dst");
+        Q_EMIT signalsAPIError("scr0 size is not equal to dst");
         return -1;
     }
 
     if (!(src0_data = GetAuthenticPixels(src0.getImage(), 0, 0, src0.getWidth(), src0.getHeight(), &src0.getImage()->exception)))
     {
-        emit signalsAPIError("GetImagePixels() failed\n");
+        Q_EMIT signalsAPIError("GetImagePixels() failed\n");
         return -1;
     }
 
     if (!(src1_data = GetAuthenticPixels(src1.getImage(), 0, 0, src1.getWidth(), src1.getHeight(), &src1.getImage()->exception)))
     {
-        emit signalsAPIError("GetImagePixels() failed\n");
+        Q_EMIT signalsAPIError("GetImagePixels() failed\n");
         return -1;
     }
 
     if (!(dst_data = GetAuthenticPixels(dst.getImage(), 0, 0, dst.getWidth(), dst.getHeight(), &dst.getImage()->exception)))
     {
-        emit signalsAPIError("GetImagePixels() failed\n");
+        Q_EMIT signalsAPIError("GetImagePixels() failed\n");
         return -1;
     }
 
@@ -608,7 +608,7 @@ int MagickApi::scaleImage(MagickImage& img, int width, int height)
         GetExceptionInfo(&exception);
         if (!(image = ResizeImage(img.getImage(), width, height,(FilterTypes)d->filter, 1.0, &exception)))
         {
-            emit signalsAPIError("ResizeImage() failed\n");
+            Q_EMIT signalsAPIError("ResizeImage() failed\n");
             return -1;
         }
 
@@ -620,7 +620,7 @@ int MagickApi::scaleImage(MagickImage& img, int width, int height)
 
         if (img.getWidth() != width || img.getHeight() != height)
         {
-            emit signalsAPIError("actual size is not equal to the expected size\n");
+            Q_EMIT signalsAPIError("actual size is not equal to the expected size\n");
             return -1;
         }
     }
@@ -638,7 +638,7 @@ bool MagickApi::displayImage(MagickImage& img)
 
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
-        emit signalsAPIError("CloneImageInfo() failed\n");
+        Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
         return false;
     }
 

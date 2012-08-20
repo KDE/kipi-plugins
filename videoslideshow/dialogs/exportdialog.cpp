@@ -262,11 +262,15 @@ void ExportDialog::slotThreadFinished()
 
 void ExportDialog::processAll(MyImageListViewItem* const item)
 {
-    int framerate              = 25; // we will provided later based on video format and settings
     int frameHeight            = d->settingsBox->getFrameHeight();
     int frameWidth             = d->settingsBox->getFrameWidth();
     QString path               = d->settingsBox->getTempDirPath();
+    QString audioPath          = d->settingsBox->getAudioFile();
     ASPECTCORRECTION_TYPE type = d->settingsBox->getAspectCorrection();
+    ASPECT_RATIO aspectRatio   = d->settingsBox->getAspectRatio();
+    VIDEO_FORMAT format        = d->settingsBox->getVideoFormat();
+    VIDEO_TYPE videotype       = d->settingsBox->getVideoType();
+    QString savePath           = d->settingsBox->getSaveFile();
 
     if(!KUrl(path).isValid())
     {
@@ -274,7 +278,7 @@ void ExportDialog::processAll(MyImageListViewItem* const item)
         d->settingsBox->setTempDirPath(path);
     }
 
-    d->thread->doPreProcessing(framerate, type, frameWidth, frameHeight, path, item);
+    d->thread->doPreProcessing(type, aspectRatio, frameWidth, frameHeight, path, item, format, videotype, audioPath, savePath);
 }
 
 void ExportDialog::busy(bool busy)

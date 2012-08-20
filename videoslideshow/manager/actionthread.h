@@ -36,6 +36,7 @@
 #include "processimage.h"
 #include "myimagelist.h"
 #include "actions.h"
+#include "encoderdecoder.h"
 
 using namespace KIPIPlugins;
 
@@ -51,8 +52,9 @@ public:
     ActionThread();
     ~ActionThread();
 
-    void doPreProcessing(int framerate, ASPECTCORRECTION_TYPE type, int frameWidth, int frameHeight,
-                         const QString& path, MyImageListViewItem* const item);
+    void doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO ratio, int frameWidth, int frameHeight,
+                         const QString& path, MyImageListViewItem* const item, VIDEO_FORMAT format,
+                         VIDEO_TYPE videeotype, const QString& audioPath, const QString& savePath);
     int  getTotalFrames(MyImageListViewItem* const item) const;
 
     void cancel();
@@ -93,6 +95,8 @@ private:
 
     Frame* getFrame(MyImageListViewItem* const item, MagickImage* const img, MagickImage* const imgNext,
                     int number, Action action) const;
+	
+    void cleanTempDir();
 
 private:
 

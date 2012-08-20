@@ -175,6 +175,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For V
 MACRO_OPTIONAL_FIND_PACKAGE(Boost)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
 MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
+MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
@@ -259,6 +260,7 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"           MEDIAWIKI_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"          LIBKVKONTAKTE_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("boost"                  Boost_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick"         ImageMagick_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer"         QTGSTREAMER_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -339,7 +341,7 @@ PRINT_PLUGIN_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki"          MEDIAWIKI_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Panorama"           Boost_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
@@ -499,9 +501,9 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(panorama)
     ENDIF(Boost_FOUND)
 
-    IF(ImageMagick_FOUND)
+    IF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
         ADD_SUBDIRECTORY(videoslideshow)
-    ENDIF(ImageMagick_FOUND)
+    ENDIF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 
     IF(BUILD_WALLPAPER)
         ADD_SUBDIRECTORY(wallpaper)

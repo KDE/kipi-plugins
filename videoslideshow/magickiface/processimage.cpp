@@ -70,7 +70,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // resulting image will have black bars on right and left side
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio,img.getHeight())))
-                    emit signalProcessError("couldn't create image\n");
+                    Q_EMIT signalProcessError("couldn't create image\n");
 
                 m_api->overlayImage(*newimg, (newimg->getWidth() - img.getWidth()) / 2,0, img);
             }
@@ -78,7 +78,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // resulting image will have black bars on top and bottom
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
-                    emit signalProcessError("couldn't create image\n");
+                    Q_EMIT signalProcessError("couldn't create image\n");
 
                 m_api->overlayImage(*newimg, 0, (newimg->getHeight() - img.getHeight()) / 2, img);
             }
@@ -90,7 +90,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // cut on top and bottom side
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
-                    emit signalProcessError("couldn't create image\n");
+                    Q_EMIT signalProcessError("couldn't create image\n");
 
                 m_api->bitblitImage(*newimg, 0, 0, img, 0, (img.getHeight() - newimg->getHeight()) / 2, newimg->getWidth(), newimg->getHeight());
             }
@@ -98,7 +98,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // cut on right and left side
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
-                    emit signalProcessError("couldn't create image\n");
+                    Q_EMIT signalProcessError("couldn't create image\n");
 
                 m_api->bitblitImage(*newimg, 0, 0, img,(img.getWidth() - newimg->getWidth()) / 2,0, newimg->getWidth(), newimg->getHeight());
             }
@@ -134,14 +134,11 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
     int w, h;
 
     if (step < 0 || step >= steps)
-        emit signalProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
+        Q_EMIT signalProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
 
     // create a new target image and copy the from image onto
     MagickImage* dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
     
-    if(type == TRANSITION_TYPE_RANDOM)
-        type = (TRANSITION_TYPE)(rand() % TRANS_MAX + 1);   
-
     switch (type)
     {
         // sliding
