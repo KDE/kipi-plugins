@@ -46,6 +46,7 @@ public:
     virtual ~MinidlnaServer();
     
     void setDirectories(const QStringList& directories);
+    void setBinaryPath(const QString& path);
     void startMinidlnaServer();
     void generateConfigFile();
     

@@ -87,7 +87,6 @@ public:
     KPushButton*        startButton;
     KPushButton*        stopButton;
     QStringList         directories;
-    QString             minidlnaBinaryPath;
     QMap<QString, KUrl::List>   collectionMap;
     WelcomePage::ImplementationGetOption implementation;
 };
@@ -192,7 +191,7 @@ void FinalPage::setDirectories(const QStringList& directories)
 
 void FinalPage::setMinidlnaBinaryPath(const QString& path )
 {
-    d->minidlnaBinaryPath = path;
+    d->Mdlna->setBinaryPath(path);
 }
 
 } // namespace KIPIDLNAExportPlugin

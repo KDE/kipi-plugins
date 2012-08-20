@@ -50,6 +50,10 @@ public:
     WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
     QString getMinidlnaBinaryPath();
 
+public Q_SLOTS:
+    
+    void slotChangeOptions(bool flag = false);
+    
 private:
 
     class Private;

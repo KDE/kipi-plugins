@@ -159,10 +159,10 @@ void Wizard::next()
         d->finalPage->setOptions(d->implementationOptionSelected);
         if (d->implementationOptionSelected == WelcomePage::MINIDLNA) {
             d->finalPage->setMinidlnaBinaryPath(d->welcomePage->getMinidlnaBinaryPath());
-            d->collectionSelector->enableTags(false);
+            d->collectionSelector->enableVirtualCollections(false);
         }
         else {
-            d->collectionSelector->enableTags(true);
+            d->collectionSelector->enableVirtualCollections(true);
         }
         d->finalPage->clearImages();
         KAssistantDialog::next();

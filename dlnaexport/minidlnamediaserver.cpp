@@ -53,6 +53,7 @@ public:
         rootContainer = "P";
         modelNo = "1";
         filePath = "";
+        minidlnaBinaryPath = "minidlna";
     }
 
     QString port;
@@ -64,6 +65,7 @@ public:
     QString modelNo;
     QString filePath;
     QStringList directories;
+    QString minidlnaBinaryPath;
 };
 
 MinidlnaServer::MinidlnaServer(QObject* const parent)
@@ -106,10 +108,16 @@ void MinidlnaServer::setDirectories(const QStringList& directories)
     d->directories = directories;
 }
 
+void MinidlnaServer::setBinaryPath(const QString& path)
+{
+    if (!path.isEmpty())
+        d->minidlnaBinaryPath = path;
+}
 
 void MinidlnaServer::startMinidlnaServer()
 {
-    QString program = "minidlna";
+    QString program = d->minidlnaBinaryPath;
+    kDebug() << d->minidlnaBinaryPath;
     QStringList arguments;
     arguments << "-d" << "-R" << "-f" << d->filePath;
     QProcess *minidlnaProcess = new QProcess(this);
