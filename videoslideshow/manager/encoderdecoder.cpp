@@ -61,6 +61,10 @@ EncoderDecoder::EncoderDecoder()
     
     videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace !"
                           " theoraenc ! oggmux ! filesink location=\"%3\"");
+    
+    videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace ! "
+                          " xvidenc ! queue ! mux. filesrc location =\"%3\" ! decodebin ! audioconvert !"
+                          " audio/x-raw-int, rate=44100 ! lamemp3enc ! queue ! mux. avimux name=mux ! filesink location=\"%4\"");
 }
 
 EncoderDecoder::~EncoderDecoder()
@@ -120,9 +124,16 @@ void EncoderDecoder::encodeVideo(QString destination, QString audiFile, VIDEO_FO
         break;
     };
     
+    bool audio = false;
+    if(KUrl(audiFile).isValid() && !audiFile.isEmpty())
+        audio = true;
+    
     switch(type) {
     case VIDEO_AVI:
+        if(!audio)
         pipeDescr = videoPipelines.at(1).arg(location, "25/1", destination);
+        else 
+        pipeDescr = videoPipelines.at(3).arg(location, "25/1", audiFile, destination);
         break;
     case VIDEO_OGG:
         pipeDescr = videoPipelines.at(2).arg(location, "25/1", destination);
@@ -158,7 +169,13 @@ void EncoderDecoder::encodeVideo(QString destination, QString audiFile, VIDEO_FO
     } catch(QGlib::Error e) {
     Q_EMIT encoderError(e.message());
     }
-
+    
+    if(!pipeline)
+    {
+        Q_EMIT encoderError("could not create pipeline");
+        return;
+    }
+    
     pipeline->bus()->enableSyncMessageEmission();
     QGlib::connect(pipeline->bus(), "sync-message", this, &EncoderDecoder::onBusMessage);
 
