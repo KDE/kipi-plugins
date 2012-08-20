@@ -128,7 +128,8 @@ WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelecte
 
 QString WelcomePage::getMinidlnaBinaryPath()
 {
-    return d->minidlnaBinary.path();
+    //return d->minidlnaBinary.path();
+    return QString();
 }
 
 
