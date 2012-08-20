@@ -39,7 +39,7 @@ public:
 
     MinidlnaBinary()
         : KPBinaryIface(QString("minidlna"), 
-                        QString("1.0.21"), 
+                        QString("1.0.24"), 
                         QString("Version "),
                         0, 
                         QString("Minidlna"), 

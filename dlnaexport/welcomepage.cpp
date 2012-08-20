@@ -97,7 +97,6 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->getImplementationLbl    = new QLabel(i18n("&Choose the implementation:"),settingsBox);
     d->implementationGetOption = new KComboBox(settingsBox);
     d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
-    d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
     d->getImplementationLbl->setBuddy(d->implementationGetOption);
     
    
@@ -112,6 +111,13 @@ WelcomePage::WelcomePage(QWidget* const parent)
     mainLayout->addWidget(settingsBox,          3, 0, 5, 2);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
+    
+    connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
+            this, SLOT(slotChangeOptions(bool)));
+
+#ifdef Q_WS_WIN
+    d->binariesWidget->setEnabled(false);
+#endif
 }
 
 WelcomePage::~WelcomePage()
@@ -124,6 +130,18 @@ WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelecte
         return WelcomePage::HUPNP;
     else
         return WelcomePage::MINIDLNA;
+}
+
+void WelcomePage::slotChangeOptions(bool flag)
+{
+    d->implementationGetOption->clear();
+    
+    if (flag == false)
+        d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
+    else
+        d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
+        d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
+        
 }
 
 QString WelcomePage::getMinidlnaBinaryPath()
