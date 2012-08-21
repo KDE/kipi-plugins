@@ -49,7 +49,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread();
+    ActionThread(QObject* const parent);
     ~ActionThread();
 
     void doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO ratio, int frameWidth, int frameHeight,
@@ -62,7 +62,7 @@ public:
 Q_SIGNALS:
 
     void signalProcessError(const QString& errMess);
-    void frameCompleted(const ActionData& ad);
+    void frameCompleted(const KIPIVideoSlideShowPlugin::ActionData& ad);
     void finished();
 
 private:

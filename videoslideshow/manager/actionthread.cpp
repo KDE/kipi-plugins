@@ -76,8 +76,8 @@ public:
     QDir                  dir;
 };
 
-ActionThread::ActionThread()
-    : d(new Private)
+ActionThread::ActionThread(QObject* const parent)
+    : QThread(parent), d(new Private)
 {
     qRegisterMetaType<ActionData>();
     d->running = true;

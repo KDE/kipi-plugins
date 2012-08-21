@@ -84,7 +84,7 @@ private Q_SLOTS:
     void slotAborted();
     void slotThreadFinished();
     void slotShowError(const QString& error);
-    void slotProcessedFrame(const ActionData& ad);
+    void slotProcessedFrame(const KIPIVideoSlideShowPlugin::ActionData& ad);
     void updateSettingWidget();
     void updateImageTime(int time);
     void updateImageEffect(const QString& data,     EFFECT effect);

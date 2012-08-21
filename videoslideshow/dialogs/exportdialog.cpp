@@ -141,7 +141,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread();
+    d->thread = new ActionThread(this);
     addItems(images.images());
 
     connect(d->listView->listView(), SIGNAL(itemSelectionChanged()),
@@ -174,8 +174,8 @@ ExportDialog::ExportDialog(const ImageCollection& images)
     connect(d->thread, SIGNAL(signalProcessError(QString)),
             this, SLOT(slotShowError(QString)));
 
-    connect(d->thread, SIGNAL(frameCompleted(ActionData)),
-            this, SLOT(slotProcessedFrame(ActionData)));
+    connect(d->thread, SIGNAL(frameCompleted(KIPIVideoSlideShowPlugin::ActionData)),
+            this, SLOT(slotProcessedFrame(KIPIVideoSlideShowPlugin::ActionData)));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotStartStop()));
