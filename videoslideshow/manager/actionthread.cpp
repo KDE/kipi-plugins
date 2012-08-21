@@ -79,6 +79,7 @@ public:
 ActionThread::ActionThread()
     : d(new Private)
 {
+    qRegisterMetaType<ActionData>();
     d->running = true;
 }
 
@@ -96,7 +97,7 @@ void ActionThread::run()
     // have to keep dummy items at first and last
     imgnext              = loadImage(d->item);
     int upperBound       = 0;
- 
+
     while(d->item->getNextImageItem() && d->running)
     {
         if(img)
