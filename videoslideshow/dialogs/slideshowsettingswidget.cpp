@@ -74,7 +74,7 @@ public:
         frameHeight         = 0;
         frameWidth          = 0;
         saveBtn             = 0;
-        saveFileLabel            = 0;
+        saveFileLabel       = 0;
     }
 
     QWidget*     PPMSettingsWidget;
@@ -131,10 +131,10 @@ SlideShowSettingsWidget::SlideShowSettingsWidget(QWidget* const parent, Qt::WFla
 
     connect(d->transitionSpeed, SIGNAL(currentIndexChanged(int)),
             this, SLOT(transSpeedIndexChanged(int)));
-    
+
     connect(d->videoType, SIGNAL(currentIndexChanged(int)),
             this, SLOT(videoTypeChanged(int)));
-    
+
     connect(d->videoFormat, SIGNAL(currentIndexChanged(int)),
             this, SLOT(videoFormatChanged(int)));
 }
@@ -166,49 +166,54 @@ void SlideShowSettingsWidget::timeValueChanged(int time)
 
 void SlideShowSettingsWidget::videoTypeChanged(int index)
 {
-    VIDEO_TYPE type = (VIDEO_TYPE)d->videoType->itemData(index).toInt();
+    VIDEO_TYPE type     = (VIDEO_TYPE)d->videoType->itemData(index).toInt();
     VIDEO_FORMAT format = (VIDEO_FORMAT)d->videoFormat->itemData(d->videoFormat->currentIndex()).toInt();
+
     // set frame width and frame height for dvd, vcd,etc to standard tv size
-    switch(type) {
-    case VIDEO_VCD:
-        if(format == VIDEO_FORMAT_NTSC)
-        {
-            d->frameWidth->setValue(352);
-            d->frameHeight->setValue(240);
-        }
-        else
-        {
-            d->frameWidth->setValue(352);
-            d->frameHeight->setValue(288);
-        }
-        break;
-    case VIDEO_DVD:
-    case VIDEO_XVCD:
-        if(format == VIDEO_FORMAT_NTSC)
-        {
-            d->frameWidth->setValue(720);
-            d->frameHeight->setValue(480);
-        }
-        else
-        {
-            d->frameWidth->setValue(720);
-            d->frameHeight->setValue(576);
-        }
-        break;
-    case VIDEO_SVCD:
-        if(format == VIDEO_FORMAT_NTSC)
-        {
-            d->frameWidth->setValue(480);
-            d->frameHeight->setValue(480);
-        }
-        else
-        {
-            d->frameWidth->setValue(576);
-            d->frameHeight->setValue(480);
-        }
-        break;
-    default:
-        break;
+    switch(type)
+    {
+        case VIDEO_VCD:
+            if(format == VIDEO_FORMAT_NTSC)
+            {
+                d->frameWidth->setValue(352);
+                d->frameHeight->setValue(240);
+            }
+            else
+            {
+                d->frameWidth->setValue(352);
+                d->frameHeight->setValue(288);
+            }
+            break;
+
+        case VIDEO_DVD:
+        case VIDEO_XVCD:
+            if(format == VIDEO_FORMAT_NTSC)
+            {
+                d->frameWidth->setValue(720);
+                d->frameHeight->setValue(480);
+            }
+            else
+            {
+                d->frameWidth->setValue(720);
+                d->frameHeight->setValue(576);
+            }
+            break;
+
+        case VIDEO_SVCD:
+            if(format == VIDEO_FORMAT_NTSC)
+            {
+                d->frameWidth->setValue(480);
+                d->frameHeight->setValue(480);
+            }
+            else
+            {
+                d->frameWidth->setValue(576);
+                d->frameHeight->setValue(480);
+            }
+            break;
+
+        default:
+            break;
     };
 }
 
@@ -217,63 +222,71 @@ void SlideShowSettingsWidget::videoFormatChanged(int index)
     VIDEO_TYPE type = (VIDEO_TYPE)d->videoType->itemData(d->videoType->currentIndex()).toInt();
     VIDEO_FORMAT format = (VIDEO_FORMAT)d->videoFormat->itemData(index).toInt();
     // set frame width and frame height for dvd, vcd,etc to standard tv size
-    if(format == VIDEO_FORMAT_NTSC)    {
-    switch(type)
+    if(format == VIDEO_FORMAT_NTSC)
     {
-    case VIDEO_DVD:
-    case VIDEO_XVCD:
+        switch(type)
+        {
+            case VIDEO_DVD:
+            case VIDEO_XVCD:
+            {
+                d->frameWidth->setValue(720);
+                d->frameHeight->setValue(480);
+            }
+            break;
+
+            case VIDEO_SVCD:
+            {
+                d->frameWidth->setValue(480);
+                d->frameHeight->setValue(480);
+            }
+            break;
+
+            case VIDEO_VCD:
+            {
+                d->frameWidth->setValue(352);
+                d->frameHeight->setValue(240);
+            }
+            break;
+
+            default:
+                break;
+        }
+    }
+    else
     {
-        d->frameWidth->setValue(720);
-        d->frameHeight->setValue(480);
-    }
-    break;
-    case VIDEO_SVCD:
-    {
-        d->frameWidth->setValue(480);
-        d->frameHeight->setValue(480);
-    }
-    break;
-    case VIDEO_VCD:
-    {
-        d->frameWidth->setValue(352);
-        d->frameHeight->setValue(240);
-    }
-    break;
-    default:
-    break;
-    }
-    } else {
-    switch(type)
-    {
-    case VIDEO_DVD:
-    case VIDEO_XVCD:
-    {
-        d->frameWidth->setValue(720);
-        d->frameHeight->setValue(576);
-    }
-    break;
-    case VIDEO_SVCD:
-    {
-        d->frameWidth->setValue(576);
-        d->frameHeight->setValue(480);
-    }
-    break;
-    case VIDEO_VCD:
-    {
-        d->frameWidth->setValue(352);
-        d->frameHeight->setValue(288);
-    }
-    break;
-    default:
-    break;
-    }
+        switch(type)
+        {
+            case VIDEO_DVD:
+            case VIDEO_XVCD:
+            {
+                d->frameWidth->setValue(720);
+                d->frameHeight->setValue(576);
+            }
+            break;
+
+            case VIDEO_SVCD:
+            {
+                d->frameWidth->setValue(576);
+                d->frameHeight->setValue(480);
+            }
+            break;
+
+            case VIDEO_VCD:
+            {
+                d->frameWidth->setValue(352);
+                d->frameHeight->setValue(288);
+            }
+            break;
+
+            default:
+                break;
+        }
     }
 }
 
 void SlideShowSettingsWidget::setUpPPMSettings()
 {
     QGridLayout* mainLayout = new QGridLayout(d->PPMSettingsWidget);
-
     QLabel* timeLabel       = new QLabel("Image Display Time");
     QLabel* effectLabel     = new QLabel("Special Effect");
     QLabel* transitionLabel = new QLabel("Transition");
@@ -331,8 +344,8 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     QLabel* heightLabel       = new QLabel("Frame Height");
     QLabel* widthLabel        = new QLabel("Frame Width");
     QLabel* aspectLabel       = new QLabel("Aspect Ratio");
+    d->selectBtn              = new KPushButton("Browse");
 
-    d->selectBtn       = new KPushButton("Browse");
     connect(d->selectBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectTempDirectory()));
 
@@ -342,11 +355,11 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     d->asptRatioCorrct->addItem(i18n("None"),    (int)ASPECTCORRECTION_TYPE_NONE);
     d->asptRatioCorrct->addItem(i18n("Fill In"), (int)ASPECTCORRECTION_TYPE_FITIN);
     d->asptRatioCorrct->addItem(i18n("Fit In"),  (int)ASPECTCORRECTION_TYPE_FILLIN);
-    
+
     d->aspectRatio     = new QComboBox();
-    d->aspectRatio->addItem(i18n("default"),  (int)ASPECT_RATIO_DEFAULT);
-    d->aspectRatio->addItem(i18n("4:3"),      (int)ASPECT_RATIO_4_3);
-    d->aspectRatio->addItem(i18n("16:9"),     (int)ASPECT_RATIO_16_9);
+    d->aspectRatio->addItem(i18n("default"),     (int)ASPECT_RATIO_DEFAULT);
+    d->aspectRatio->addItem(i18n("4:3"),         (int)ASPECT_RATIO_4_3);
+    d->aspectRatio->addItem(i18n("16:9"),        (int)ASPECT_RATIO_16_9);
 
     d->frameHeight     = new QSpinBox();
     d->frameHeight->setRange(100, 1000);
@@ -363,7 +376,6 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     mainLayout->addWidget(d->frameWidth,      9, 1, 1, 1);
     mainLayout->addWidget(aspectLabel,        10, 0, 1, 1);
     mainLayout->addWidget(d->aspectRatio,     10, 1, 1, 1);
-
     mainLayout->addItem(new QSpacerItem(1,1), 11, 0, 1, 2);
     mainLayout->setRowStretch(11, 10);
 }
@@ -384,7 +396,6 @@ void SlideShowSettingsWidget::resetToDefault()
 void SlideShowSettingsWidget::setUpVideoSettings()
 {
     QGridLayout* mainLayout = new QGridLayout(d->VideoSettingsWidget);
-
     QLabel* typeLabel       = new QLabel("VideoType");
     QLabel* formatLabel     = new QLabel("Video Format");
 
@@ -403,11 +414,10 @@ void SlideShowSettingsWidget::setUpVideoSettings()
     d->videoFormat->addItem(i18n("NTSC"),  (int)VIDEO_FORMAT_NTSC);
     d->videoFormat->addItem(i18n("SECAM"), (int)VIDEO_FORMAT_SECAM);
 
-    mainLayout->addWidget(typeLabel,          0, 0, 1, 1);
-    mainLayout->addWidget(d->videoType,       0, 1, 1, 1);
-    mainLayout->addWidget(formatLabel,        1, 0, 1, 1);
-    mainLayout->addWidget(d->videoFormat,     1, 1, 1, 1);
-
+    mainLayout->addWidget(typeLabel,                      0, 0, 1, 1);
+    mainLayout->addWidget(d->videoType,                   0, 1, 1, 1);
+    mainLayout->addWidget(formatLabel,                    1, 0, 1, 1);
+    mainLayout->addWidget(d->videoFormat,                 1, 1, 1, 1);
     mainLayout->addWidget(new KSeparator(Qt::Horizontal), 2, 0, 1, 2);
 
     d->audioFile    = new QLabel(i18n("Audio Disabled"));
@@ -415,13 +425,15 @@ void SlideShowSettingsWidget::setUpVideoSettings()
     d->checkbox     = new QCheckBox("Add Audio");
     d->audioBtn->setEnabled(false);
 
-    d->saveFileLabel     = new QLabel(i18n("Save video"));
-    d->saveBtn      = new KPushButton("Brrowse");
+    d->saveFileLabel = new QLabel(i18n("Save video"));
+    d->saveBtn       = new KPushButton("Brrowse");
 
     connect(d->saveBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectSaveFileName()));
+
     connect(d->audioBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectAudio()));
+
     connect(d->checkbox, SIGNAL(stateChanged(int)),
             this, SLOT(slotAudioChecked()));
 
@@ -450,7 +462,6 @@ void SlideShowSettingsWidget::slotSelectTempDirectory()
 void SlideShowSettingsWidget::slotSelectAudio()
 {
     QString path = KFileDialog::getOpenUrl().path();
-
     d->audioPath = path;
     d->audioFile->setText(path);
 }
@@ -461,7 +472,7 @@ void SlideShowSettingsWidget::slotAudioChecked()
     {
         d->audioPath = "";
         d->audioFile->setText("audio Disabled");
-	d->audioBtn->setEnabled(false);
+        d->audioBtn->setEnabled(false);
     }
     else
     {
@@ -473,9 +484,8 @@ void SlideShowSettingsWidget::slotAudioChecked()
 void SlideShowSettingsWidget::slotSelectSaveFileName()
 {
     QString path = KFileDialog::getSaveFileName();
-
     d->saveFileLabel->setText(path);
-    d->savePath = path;
+    d->savePath  = path;
 }
 
 
@@ -484,7 +494,7 @@ QString SlideShowSettingsWidget::getTempDirPath() const
     return d->path;
 }
 
-void SlideShowSettingsWidget::setTempDirPath(QString& path)
+void SlideShowSettingsWidget::setTempDirPath(const QString& path)
 {
     if(KUrl(path).isValid())
         d->path = path;

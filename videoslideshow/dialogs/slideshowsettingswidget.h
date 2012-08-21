@@ -47,7 +47,7 @@ public:
     ~SlideShowSettingsWidget();
 
     QString getTempDirPath() const;
-    void    setTempDirPath(QString& path);
+    void    setTempDirPath(const QString& path);
 
     int                   getFrameHeight()      const;
     int                   getFrameWidth()       const;
@@ -59,9 +59,8 @@ public:
 
     VIDEO_FORMAT getVideoFormat() const;
     VIDEO_TYPE   getVideoType()   const;
-
-    QString  getAudioFile() const;
-    QString  getSaveFile()  const;
+    QString      getAudioFile()   const;
+    QString      getSaveFile()    const;
 
 Q_SIGNALS:
 

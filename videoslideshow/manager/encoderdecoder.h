@@ -25,22 +25,27 @@
 #ifndef ENCODERDECODER_H
 #define ENCODERDECODER_H
 
-#include <QGst/Pipeline>
-#include <QGst/Utils/ApplicationSource>
+// Qt includes
 
 #include <QStringList>
 #include <QObject>
 
+// QtGstreamer includes
+
+#include <QGst/Pipeline>
+#include <QGst/Utils/ApplicationSource>
 
 namespace KIPIVideoSlideShowPlugin
 {
 
-enum AUDIO_TYPE {
+enum AUDIO_TYPE
+{
     AUDIO_MP2,
     AUDIO_MP3
 };
 
-enum VIDEO_TYPE {
+enum VIDEO_TYPE
+{
     VIDEO_VCD,
     VIDEO_SVCD,
     VIDEO_XVCD,
@@ -49,13 +54,15 @@ enum VIDEO_TYPE {
     VIDEO_OGG
 };
 
-enum VIDEO_FORMAT {
+enum VIDEO_FORMAT
+{
     VIDEO_FORMAT_PAL,
     VIDEO_FORMAT_NTSC,
     VIDEO_FORMAT_SECAM
 };
 
-enum ASPECT_RATIO {
+enum ASPECT_RATIO
+{
     ASPECT_RATIO_DEFAULT,
     ASPECT_RATIO_4_3,
     ASPECT_RATIO_16_9
@@ -69,8 +76,8 @@ public:
     EncoderDecoder();
     ~EncoderDecoder();
 
-    void encodeVideo(QString destination, QString audiFile, VIDEO_FORMAT format, VIDEO_TYPE type, QString imagePath,
-                     ASPECT_RATIO ratio);
+    void encodeVideo(const QString& destination, const QString& audiFile, VIDEO_FORMAT format, VIDEO_TYPE type,
+                     const QString& imagePath, ASPECT_RATIO ratio);
     void cancel();
 
 Q_SIGNALS:
@@ -85,13 +92,14 @@ private:
     //QGst::BinPtr createVideoSrcBin(VIDEO_TYPE type, VIDEO_FORMAT format);
 
 private:
-    QGst::PipelinePtr pipeline;
-    QStringList       audioPipelines;
-    QStringList       videoPipelines;
+
+    QGst::PipelinePtr              pipeline;
+    QStringList                    audioPipelines;
+    QStringList                    videoPipelines;
 
     QGst::Utils::ApplicationSource src;
 };
 
-}
+} // namespace KIPIVideoSlideShowPlugin
 
 #endif // ENCODERDECODER_H

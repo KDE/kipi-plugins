@@ -1,6 +1,6 @@
 ADD_SUBDIRECTORY(magickiface)
 
-add_definitions(${QTGSTREAMER_DEFINITIONS} ${KDE4_ENABLE_EXCEPTIONS})
+ADD_DEFINITIONS(${QTGSTREAMER_DEFINITIONS} ${KDE4_ENABLE_EXCEPTIONS})
 
 INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                     ${QTGSTREAMER_INCLUDES}
@@ -18,7 +18,7 @@ SET(kipiplugin_videoslideshow_PART_SRCS plugin/plugin_videoslideshow.cpp
                                         dialogs/slideshowsettingswidget.cpp
    )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QTGSTREAMER_FLAGS}")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QTGSTREAMER_FLAGS}")
 
 KDE4_ADD_PLUGIN(kipiplugin_videoslideshow ${kipiplugin_videoslideshow_PART_SRCS})
 

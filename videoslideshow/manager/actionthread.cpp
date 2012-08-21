@@ -94,8 +94,8 @@ void ActionThread::run()
     MagickImage* imgnext = 0;
 
     // have to keep dummy items at first and last
-    imgnext        = loadImage(d->item);
-    int upperBound = 0;
+    imgnext              = loadImage(d->item);
+    int upperBound       = 0;
  
     while(d->item->getNextImageItem() && d->running)
     {
@@ -128,8 +128,7 @@ void ActionThread::run()
     if(img)
         d->api->freeImage(*img);
 
-    img = imgnext;
-
+    img        = imgnext;
     upperBound = d->item->getTime() * d->framerate;
     processItem(upperBound, img, imgnext, TYPE_IMAGE);
 
@@ -144,7 +143,9 @@ void ActionThread::run()
 
     d->encoder->encodeVideo(d->savePath, d->audioPath, d->videoFormat, d->videoType, d->path, d->aspectRatio);
 
-    connect(d->encoder, SIGNAL(finished()), this, SLOT(quit()));
+    connect(d->encoder, SIGNAL(finished()),
+            this, SLOT(quit()));
+
     exec();
     Q_EMIT finished();
 }
@@ -154,14 +155,16 @@ void ActionThread::cleanTempDir()
     d->dir.setPath(d->path);
 
     QStringList tempFiles = d->dir.entryList(QDir::Files);
-    QString tempFile;
+    QString     tempFile;
+
     for(int i = 0; i < tempFiles.size(); i++)
     {
         tempFile = tempFiles.at(i);
+
         if(tempFile.endsWith(".ppm"))
             d->dir.remove(tempFile);
     }
-    
+
     d->dir.rmdir(d->savePath);
 }
 
@@ -178,7 +181,7 @@ void ActionThread::processItem(int upperBound, MagickImage* const img, MagickIma
 
     for(int n = 0; n < upperBound && d->running; n++)
     {
-        Frame* frm = getFrame(d->item, img, imgNext, n, action);
+        Frame* const frm = getFrame(d->item, img, imgNext, n, action);
         ProcessFrame(frm);
         WriteFrame(frm);
         delete frm;
@@ -206,15 +209,17 @@ void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspe
     d->videoFormat      = format;
     d->videoType        = videotype;
 
-    switch(d->videoFormat) {
-    case VIDEO_FORMAT_NTSC:
-        d->framerate = 30;
-        break;
-    case VIDEO_FORMAT_SECAM:
-    case VIDEO_FORMAT_PAL:
-    default:
-        d->framerate = 25;
-	break;
+    switch(d->videoFormat)
+    {
+        case VIDEO_FORMAT_NTSC:
+            d->framerate = 30;
+            break;
+
+        case VIDEO_FORMAT_SECAM:
+        case VIDEO_FORMAT_PAL:
+        default:
+            d->framerate = 25;
+            break;
     };
 
     if(!d->api)
@@ -231,7 +236,7 @@ void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspe
 
     if(!d->encoder)
     {
-        d->encoder  = new EncoderDecoder();
+        d->encoder = new EncoderDecoder();
 
         connect(d->encoder,SIGNAL(encoderError(QString)),
                 this, SIGNAL(signalProcessError(QString)));
@@ -246,30 +251,34 @@ void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspe
 MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
 {
     MagickImage* img = 0;
-    
+
     if(KPMetadata::isRawFile(imgItem->url()))
-    {   
+    {
         QImage image;
         KDcrawIface::KDcraw::loadEmbeddedPreview(image, imgItem->url().path());
 
         if(!(img = d->api->loadQImage(image)))
-            return 0;        
+           return 0;
     }
     else if(!(img = d->api->loadImage(imgItem->url().path())))
+    {
         return 0;
-    
+    }
+
     double ratio = (double)d->frameWidth/d->frameHeight;
-    switch(d->aspectRatio) {
-    case ASPECT_RATIO_4_3:
-        ratio = (double)4/3;
-        break;
-    case ASPECT_RATIO_16_9:
-        ratio = (double)16/9;
-        break;
-    default:
-        break;
+
+    switch(d->aspectRatio)
+    {
+        case ASPECT_RATIO_4_3:
+            ratio = (double)4/3;
+            break;
+        case ASPECT_RATIO_16_9:
+            ratio = (double)16/9;
+            break;
+        default:
+            break;
     };
-    
+
     if(!(img = d->processImg->aspectRatioCorrection(*img, ratio, d->aspectcorrection)))
         return 0;
 
@@ -296,7 +305,7 @@ MagickImage* ActionThread::getDynamicImage(MyImageListViewItem* const imgItem, M
 {
     MagickImage* imgout = 0;
     int steps           = imgItem->getTime() * d->framerate + getTransitionFrames(imgItem->getPrevImageItem()) +
-                          getTransitionFrames(imgItem->getNextImageItem());
+                                                              getTransitionFrames(imgItem->getNextImageItem());
 
     switch(imgItem->EffectName())
     {
@@ -312,6 +321,7 @@ MagickImage* ActionThread::getDynamicImage(MyImageListViewItem* const imgItem, M
             delete(currentGeo);
         }
         break;
+
         case EFFECT_NONE:
             return imgout;
         break;
@@ -372,12 +382,14 @@ void ActionThread::ProcessFrame(Frame* const frm)
             frm->imgout = transImg;
             break;
         }
+
         case TYPE_IMAGE:
         {
             int step   = getTransitionFrames(frm->item) + frm->number;
             frm->imgout = getDynamicImage(frm->item, frm->img, step);
             break;
         }
+
         default:
             break;
     }

@@ -113,7 +113,7 @@ public:
     }
 
     /// allocate a new image
-    MagickImage* allocImage()
+    MagickImage* allocImage() const
     {
         MagickImage* img = 0;
         unsigned char pixels[4];
@@ -201,7 +201,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     PixelPacket* img_data = 0;
     Image*       image;
     int x, y;
-    
+
     img = d->allocImage();
     if (!img)
         return 0;
@@ -212,7 +212,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
         Q_EMIT signalsAPIError("ResizeImage() failed\n");
         return 0;
     }
-    
+
     DestroyImage(img->getImage());
     img->setImage(image);
     img->setWidth(img->getImage()->columns);
@@ -408,12 +408,12 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
     img->setWidth(img->getImage()->columns);
     img->setHeight(img->getImage()->rows);
     DestroyExceptionInfo(&exception);
-    
+
     if (img->getWidth() != width || img->getHeight() != height)
     {
         Q_EMIT signalsAPIError("frame doesn't have expected dimensions\n");
         return 0;
-    }    
+    }
 
     return img;
 }
@@ -585,7 +585,7 @@ int MagickApi::scaleblitImage(MagickImage& dimg, int dx, int dy, int dw, int dh,
                               int sx, int sy, int sw, int sh)
 {
     /* scale the source image */
-    MagickImage* img = geoscaleImage(simg, sx, sy, sw, sh, dw, dh);
+    MagickImage* const img = geoscaleImage(simg, sx, sy, sw, sh, dw, dh);
     if (!img)
         return -1;
 
@@ -643,6 +643,7 @@ bool MagickApi::displayImage(MagickImage& img)
     }
 
     MagickBooleanType done = DisplayImages(info, img.getImage());
+
     if (done == MagickTrue)
         return true;
 

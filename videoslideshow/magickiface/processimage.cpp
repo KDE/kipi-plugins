@@ -137,8 +137,8 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
         Q_EMIT signalProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
 
     // create a new target image and copy the from image onto
-    MagickImage* dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
-    
+    MagickImage* const dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
+
     switch (type)
     {
         // sliding
@@ -283,7 +283,7 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
 GeoImage* ProcessImage::getGeometry(const GeoImage& from, const GeoImage& to, int image_width, int image_height, 
                                     int step, int steps) const
 {
-    GeoImage* geometry = new GeoImage();
+    GeoImage* const geometry = new GeoImage();
     // compute the dimesions in current step
     steps--;
 

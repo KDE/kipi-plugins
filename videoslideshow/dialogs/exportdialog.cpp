@@ -179,7 +179,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotStartStop()));
-    
+
     // ---------------------------------------------------------------
 
     busy(false);
@@ -202,7 +202,9 @@ void ExportDialog::closeEvent(QCloseEvent* e)
     if (!e) return;
 
     // Stop current conversion if necessary
-    if (d->busy) slotStartStop();
+    if (d->busy)
+        slotStartStop();
+
     saveSettings();
     d->listView->listView()->clear();
     e->accept();
@@ -211,7 +213,9 @@ void ExportDialog::closeEvent(QCloseEvent* e)
 void ExportDialog::slotClose()
 {
     // Stop current conversion if necessary
-    if (d->busy) slotStartStop();
+    if (d->busy)
+        slotStartStop();
+
     saveSettings();
     d->listView->listView()->clear();
     done(Close);
@@ -303,7 +307,8 @@ void ExportDialog::busy(bool busy)
     d->settingsBox->setEnabled(!d->busy);
     d->listView->listView()->viewport()->setEnabled(!d->busy);
 
-    d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
+    d->busy ? d->page->setCursor(Qt::WaitCursor)
+            : d->page->unsetCursor();
 }
 
 void ExportDialog::slotStartStop()
@@ -374,14 +379,14 @@ void ExportDialog::updateSettingWidget()
     // When more than one image is selected, only the first images data will be shown in settings Widget
     if(!d->listView->listView()->selectedItems().isEmpty())
     {
-        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->selectedItems().at(0));
+        MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->selectedItems().at(0));
         d->settingsBox->updateData(item->getTime(), item->getTransition(), item->getTransitionSpeed(), item->EffectName());
     }
 }
 
 void ExportDialog::updateImageEffect(const QString& data, EFFECT effect)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
+    QList<QTreeWidgetItem*>           imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
@@ -390,7 +395,7 @@ void ExportDialog::updateImageEffect(const QString& data, EFFECT effect)
 
 void ExportDialog::updateImageTime(int time)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
+    QList<QTreeWidgetItem*>           imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
@@ -399,7 +404,7 @@ void ExportDialog::updateImageTime(int time)
 
 void ExportDialog::updateImageTransition(const QString& data, TRANSITION_TYPE type)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
+    QList<QTreeWidgetItem*>           imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
@@ -408,7 +413,7 @@ void ExportDialog::updateImageTransition(const QString& data, TRANSITION_TYPE ty
 
 void ExportDialog::updateImageTransSpeed(const QString& data, TRANSITION_SPEED speed)
 {
-    QList<QTreeWidgetItem*> imgLst = d->listView->listView()->selectedItems();
+    QList<QTreeWidgetItem*>           imgLst = d->listView->listView()->selectedItems();
     QList<QTreeWidgetItem*>::iterator it;
 
     for(it = imgLst.begin(); it != imgLst.end(); ++it)
@@ -426,7 +431,8 @@ MyImageListViewItem* ExportDialog::setUpImageItems() const
     {
         dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setPrevImageItem(prev);
         prev = dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i));
-        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1)) : 0;
+        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1))
+                                : 0;
         dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setNextImageItem(next);
     }
 

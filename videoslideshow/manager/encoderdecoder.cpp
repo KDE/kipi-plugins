@@ -22,9 +22,13 @@
  *
  * ============================================================ */
 
-#include "encoderdecoder.h"
+#include "encoderdecoder.moc"
 
-// QtGstreamer Includes
+// Qt includes
+
+#include <QDir>
+
+// QtGstreamer includes
 
 #include <QGlib/Error>
 #include <QGlib/Connect>
@@ -35,9 +39,9 @@
 #include <QGst/Parse>
 #include <QGst/Message>
 
+// KDE includes
 
-#include <KUrl>
-#include <QDir>
+#include <kurl.h>
 
 namespace KIPIVideoSlideShowPlugin
 {
@@ -54,14 +58,14 @@ EncoderDecoder::EncoderDecoder()
 
     videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace !"
                           " y4menc ! y4mdec ! videoscale ! mpeg2enc format=%3 norm=%4 bitrate=%5 aspect=%6 ! "
-			  " filesink location=\"%7\"");
-    
+                          " filesink location=\"%7\"");
+
     videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace !"
                           " xvidenc ! avimux ! filesink location=\"%3\"");
-    
+
     videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace !"
                           " theoraenc ! oggmux ! filesink location=\"%3\"");
-    
+
     videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace ! "
                           " xvidenc ! queue ! mux. filesrc location =\"%3\" ! decodebin ! audioconvert !"
                           " audio/x-raw-int, rate=44100 ! lamemp3enc ! queue ! mux. avimux name=mux ! filesink location=\"%4\"");
@@ -74,108 +78,118 @@ EncoderDecoder::~EncoderDecoder()
 
 void EncoderDecoder::onBusMessage(const QGst::MessagePtr& message)
 {
-    switch(message->type()) {
-    case QGst::MessageAsyncDone:
-    case QGst::MessageEos:
-        Q_EMIT finished();
-        break;
-    case QGst::MessageError:
-        Q_EMIT encoderError(message.staticCast<QGst::ErrorMessage>()->debugMessage());
-        break;
-    default:
-        break;
+    switch(message->type())
+    {
+        case QGst::MessageAsyncDone:
+        case QGst::MessageEos:
+            Q_EMIT finished();
+            break;
+
+        case QGst::MessageError:
+            Q_EMIT encoderError(message.staticCast<QGst::ErrorMessage>()->debugMessage());
+            break;
+
+        default:
+            break;
     }
 }
 
-void EncoderDecoder::encodeVideo(QString destination, QString audiFile, VIDEO_FORMAT format, VIDEO_TYPE type, QString imagePath,
-                                 ASPECT_RATIO ratio)
+void EncoderDecoder::encodeVideo(const QString& destination, const QString& audiFile, VIDEO_FORMAT format, VIDEO_TYPE type,
+                                 const QString& imagePath, ASPECT_RATIO ratio)
 {
     Q_UNUSED(audiFile);
     QString pipeDescr;
     QString location(imagePath + QDir::separator() + "tempvss%d.ppm");
-    
+
     QString framerate;
     QString typeLetter;
     QString aspectRatio;
 
-    switch(format) {
-    case VIDEO_FORMAT_PAL:
-        framerate  = "25/1";
-        typeLetter = "p";
-        break;
-    case VIDEO_FORMAT_NTSC:
-        framerate  = "30000/1001";
-        typeLetter = "n";
-        break;
-    case VIDEO_FORMAT_SECAM:
-        framerate  = "25/1";
-        typeLetter = "s";
+    switch(format)
+    {
+        case VIDEO_FORMAT_PAL:
+            framerate  = "25/1";
+            typeLetter = "p";
+            break;
+        case VIDEO_FORMAT_NTSC:
+            framerate  = "30000/1001";
+            typeLetter = "n";
+            break;
+        case VIDEO_FORMAT_SECAM:
+            framerate  = "25/1";
+            typeLetter = "s";
     }
-    
-    switch(ratio) {
-    case ASPECT_RATIO_DEFAULT:
-        aspectRatio = "0";
-        break;
-    case ASPECT_RATIO_4_3:
-        aspectRatio = "2";
-        break;
-    case ASPECT_RATIO_16_9:
-        aspectRatio = "3";
-        break;
+
+    switch(ratio)
+    {
+        case ASPECT_RATIO_DEFAULT:
+            aspectRatio = "0";
+            break;
+        case ASPECT_RATIO_4_3:
+            aspectRatio = "2";
+            break;
+        case ASPECT_RATIO_16_9:
+            aspectRatio = "3";
+            break;
     };
-    
+
     bool audio = false;
+
     if(KUrl(audiFile).isValid() && !audiFile.isEmpty())
         audio = true;
-    
-    switch(type) {
-    case VIDEO_AVI:
-        if(!audio)
-        pipeDescr = videoPipelines.at(1).arg(location, "25/1", destination);
-        else 
-        pipeDescr = videoPipelines.at(3).arg(location, "25/1", audiFile, destination);
-        break;
-    case VIDEO_OGG:
-        pipeDescr = videoPipelines.at(2).arg(location, "25/1", destination);
-        break;
-    case VIDEO_SVCD:
-        pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(4), typeLetter,
-                                             QString::number(2500), aspectRatio, destination);
-        break;
-    case VIDEO_XVCD:
-        pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(5), typeLetter,
-                                             QString::number(2500), aspectRatio, destination);
-        break;
-    case VIDEO_VCD:
-        pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(1), typeLetter,
-                                             QString::number(1150), aspectRatio, destination);
-        break;
-    case VIDEO_DVD:
-        pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(8), typeLetter,
-                                             QString::number(8000), aspectRatio, destination);
-        break;
+
+    switch(type)
+    {
+        case VIDEO_AVI:
+            if(!audio)
+            pipeDescr = videoPipelines.at(1).arg(location, "25/1", destination);
+            else
+            pipeDescr = videoPipelines.at(3).arg(location, "25/1", audiFile, destination);
+            break;
+        case VIDEO_OGG:
+            pipeDescr = videoPipelines.at(2).arg(location, "25/1", destination);
+            break;
+        case VIDEO_SVCD:
+            pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(4), typeLetter,
+                                                QString::number(2500), aspectRatio, destination);
+            break;
+        case VIDEO_XVCD:
+            pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(5), typeLetter,
+                                                QString::number(2500), aspectRatio, destination);
+            break;
+        case VIDEO_VCD:
+            pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(1), typeLetter,
+                                                QString::number(1150), aspectRatio, destination);
+            break;
+        case VIDEO_DVD:
+            pipeDescr = videoPipelines.at(0).arg(location, framerate, QString::number(8), typeLetter,
+                                                QString::number(8000), aspectRatio, destination);
+            break;
     }
-    
+
     if(pipeline)
     {
         pipeline->setState(QGst::StateNull);
         pipeline.clear();
     }
-    
-    try {
-    QGst::ElementPtr ptr = QGst::Parse::launch(pipeDescr);
-    if(ptr)
-        pipeline = ptr.dynamicCast<QGst::Pipeline>();
-    } catch(QGlib::Error e) {
-    Q_EMIT encoderError(e.message());
+
+    try
+    {
+        QGst::ElementPtr ptr = QGst::Parse::launch(pipeDescr);
+        if(ptr)
+            pipeline = ptr.dynamicCast<QGst::Pipeline>();
     }
-    
+    catch(QGlib::Error e)
+    {
+        Q_EMIT encoderError(e.message());
+    }
+
     if(!pipeline)
     {
         Q_EMIT encoderError("could not create pipeline");
         return;
     }
-    
+
     pipeline->bus()->enableSyncMessageEmission();
     QGlib::connect(pipeline->bus(), "sync-message", this, &EncoderDecoder::onBusMessage);
 
@@ -349,5 +363,4 @@ QGst::BinPtr EncoderDecoder::createVideoSrcBin(VIDEO_TYPE type, VIDEO_FORMAT for
 
 */
 
-
-}
+} // namespace KIPIVideoSlideShowPlugin

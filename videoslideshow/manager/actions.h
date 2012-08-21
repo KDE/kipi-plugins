@@ -57,11 +57,11 @@ public:
         action      = TYPE_NONE;
     }
 
-    KUrl    fileUrl;
+    KUrl   fileUrl;
 
-    Action  action;
+    Action action;
 
-    int     totalFrames;
+    int    totalFrames;
 };
 
 }  // namespace KIPIVideoSlideShowPlugin

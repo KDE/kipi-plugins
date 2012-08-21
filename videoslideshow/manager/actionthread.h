@@ -95,7 +95,7 @@ private:
 
     Frame* getFrame(MyImageListViewItem* const item, MagickImage* const img, MagickImage* const imgNext,
                     int number, Action action) const;
-	
+
     void cleanTempDir();
 
 private:

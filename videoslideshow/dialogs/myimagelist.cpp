@@ -66,7 +66,8 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
         {
-            MyImageListViewItem* currItem = dynamic_cast<MyImageListViewItem*>(listView()->topLevelItem(i));
+            MyImageListViewItem* const currItem = dynamic_cast<MyImageListViewItem*>(listView()->topLevelItem(i));
+
             if (currItem && currItem->url() == imageUrl)
             {
                 found = true;
@@ -94,14 +95,16 @@ void MyImageList::slotRemoveItems()
         QTreeWidgetItemIterator it(listView());
         while (*it)
         {
-            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(*it);
+            MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(*it);
+
             if (item->isSelected())
             {
                 delete item;
                 find = true;
                 break;
             }
-        ++it;
+
+            ++it;
         }
     }
     while(find);
@@ -166,6 +169,7 @@ void MyImageListViewItem::setTransition(const QString& str, TRANSITION_TYPE type
 {
     if(type == TRANSITION_TYPE_RANDOM)
         type = (TRANSITION_TYPE)(rand() % TRANS_MAX + 1);
+
     d->transition = type;
     setText(MyImageList::TRANSITION, str);
 }
