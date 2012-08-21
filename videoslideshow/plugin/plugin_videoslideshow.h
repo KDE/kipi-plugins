@@ -31,8 +31,6 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
-
 using namespace KIPI;
 
 namespace KIPIVideoSlideShowPlugin

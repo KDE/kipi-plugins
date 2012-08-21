@@ -63,6 +63,7 @@ public:
         exportAction = 0;
         exportDlg    = 0;
     }
+
     KAction*      exportAction;
     ExportDialog* exportDlg;
 };
