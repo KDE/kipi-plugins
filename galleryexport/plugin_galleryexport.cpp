@@ -88,6 +88,7 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject* const parent, const QVariant
 Plugin_GalleryExport::~Plugin_GalleryExport()
 {
     delete d->gallery;
+    delete d;
 }
 
 void Plugin_GalleryExport::setup(QWidget* const widget)
@@ -116,12 +117,6 @@ void Plugin_GalleryExport::setupActions()
             this, SLOT(slotSync()));
 
     addAction("galleryexport", d->action);
-}
-
-Plugin_GalleryExport::~Plugin_GalleryExport()
-{
-    delete d->gallery;
-    delete d;
 }
 
 // this slot uses GalleryWindow Class
