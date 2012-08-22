@@ -109,6 +109,7 @@ void Plugin_GalleryExport::setup(QWidget* const widget)
 Plugin_GalleryExport::~Plugin_GalleryExport()
 {
     delete d->gallery;
+    delete d;
 }
 
 // this slot uses GalleryWindow Class
