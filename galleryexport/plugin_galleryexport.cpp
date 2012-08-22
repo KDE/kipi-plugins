@@ -118,6 +118,12 @@ void Plugin_GalleryExport::setupActions()
     addAction("galleryexport", d->action);
 }
 
+Plugin_GalleryExport::~Plugin_GalleryExport()
+{
+    delete d->gallery;
+    delete d;
+}
+
 // this slot uses GalleryWindow Class
 void Plugin_GalleryExport::slotSync()
 {
