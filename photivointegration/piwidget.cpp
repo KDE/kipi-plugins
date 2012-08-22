@@ -119,7 +119,7 @@ PIImgList* PIWidget::imagesList() const
 
 // public Q_SLOTS /////////////////////////////////////////////////////////////
 
-void PIWidget::slotCurrentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
+void PIWidget::slotCurrentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* /*previous*/)
 {
     // Warning: 'previous' could be nullptr!
 

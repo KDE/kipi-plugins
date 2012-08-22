@@ -48,7 +48,7 @@ public:
 
 // public /////////////////////////////////////////////////////////////////////
 
-PIWindow::PIWindow(QWidget* const parent /* = 0 */)
+PIWindow::PIWindow(QWidget* const /*parent*/ /* = 0 */)
     : KPToolDialog(0),
       d(new PIWindowPriv(this))
 {
