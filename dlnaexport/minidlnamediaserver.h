@@ -44,12 +44,12 @@ public:
 
     MinidlnaServer(QObject* const parent=0);
     virtual ~MinidlnaServer();
-    
+
     void setDirectories(const QStringList& directories);
     void setBinaryPath(const QString& path);
     void startMinidlnaServer();
     void generateConfigFile();
-    
+
 private:
 
     class Private;

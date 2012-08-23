@@ -45,14 +45,14 @@ public:
 
     Private()
     {
-        port = "8200";
-        name = "KIPI Plugin - DLNAExport";
-        serial = "123456789";
-        albumArt = "Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg";
-        strictDLNA = "no";
-        rootContainer = "P";
-        modelNo = "1";
-        filePath = "";
+        port               = "8200";
+        name               = "KIPI Plugin - DLNAExport";
+        serial             = "123456789";
+        albumArt           = "Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg";
+        strictDLNA         = "no";
+        rootContainer      = "P";
+        modelNo            = "1";
+        filePath           = "";
         minidlnaBinaryPath = "minidlna";
     }
 
@@ -84,23 +84,23 @@ void MinidlnaServer::generateConfigFile()
     d->filePath = KStandardDirs::locateLocal("data", "kipi/minidlna.conf");
     QFile file(d->filePath);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
-    
+
     QTextStream out(&file);
-    out <<"port="<< d->port <<"\n";
-    
+    out << "port=" << d->port << "\n";
+
     foreach (QString directory, d->directories)
     {
-        out <<"media_dir=P,"<< directory <<"\n";
+        out << "media_dir=P," << directory << "\n";
     }
-    
-    out <<"friendly_name="<< d->name <<"\n";
-    out <<"album_art_names="<< d->albumArt <<"\n";
-    out <<"strict_dlna="<< d->strictDLNA <<"\n";
-    out <<"serial="<< d->port <<"\n";
-    out <<"model_number=" << d->modelNo << "\n";
-    out <<"root_container=" << d->rootContainer << "\n";
-    
-    file.close(); 
+
+    out << "friendly_name=" << d->name << "\n";
+    out << "album_art_names=" << d->albumArt << "\n";
+    out << "strict_dlna=" << d->strictDLNA << "\n";
+    out << "serial=" << d->port << "\n";
+    out << "model_number=" << d->modelNo << "\n";
+    out << "root_container=" << d->rootContainer << "\n";
+
+    file.close();
 }
 
 void MinidlnaServer::setDirectories(const QStringList& directories)
@@ -123,4 +123,5 @@ void MinidlnaServer::startMinidlnaServer()
     QProcess *minidlnaProcess = new QProcess(this);
     minidlnaProcess->start(program, arguments);
 }
+
 } // namespace KIPIDLNAExportPlugin

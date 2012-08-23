@@ -52,7 +52,6 @@
 #include "kpaboutdata.h"
 #include "finalpage.h"
 #include "welcomepage.h"
-#include "wizard.h"
 
 using namespace KIPI;
 using namespace Herqq;
@@ -66,25 +65,25 @@ public:
 
     Private()
     {
-        finalPage              = 0;
-        collectionSelector     = 0;
-        welcomePage            = 0;
-        finalPageItem          = 0;
-        welcomePageItem        = 0;
-        collectionSelectorPageItem = 0;
+        finalPage                    = 0;
+        collectionSelector           = 0;
+        welcomePage                  = 0;
+        finalPageItem                = 0;
+        welcomePageItem              = 0;
+        collectionSelectorPageItem   = 0;
         implementationOptionSelected = WelcomePage::HUPNP;
     }
 
-    FinalPage*                  finalPage;
-    ImageCollectionSelector*    collectionSelector;
-    WelcomePage*                welcomePage;
-    KPageWidgetItem*            finalPageItem;
-    KPageWidgetItem*            collectionSelectorPageItem;
-    KPageWidgetItem*            welcomePageItem;
-    KUrl::List                  imageList;
-    QMap<QString, KUrl::List>   collectionMap;
-    QStringList                 directories;
-    WelcomePage::ImplementationGetOption implementationOptionSelected;    
+    FinalPage*                           finalPage;
+    ImageCollectionSelector*             collectionSelector;
+    WelcomePage*                         welcomePage;
+    KPageWidgetItem*                     finalPageItem;
+    KPageWidgetItem*                     collectionSelectorPageItem;
+    KPageWidgetItem*                     welcomePageItem;
+    KUrl::List                           imageList;
+    QMap<QString, KUrl::List>            collectionMap;
+    QStringList                          directories;
+    WelcomePage::ImplementationGetOption implementationOptionSelected;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -123,9 +122,8 @@ Wizard::Wizard(QWidget* const parent)
 
     //-----------------------------------------------------------------------
 
-    d->welcomePage     = new WelcomePage(this);
-    d->welcomePageItem = addPage(d->welcomePage, "");
-
+    d->welcomePage                = new WelcomePage(this);
+    d->welcomePageItem            = addPage(d->welcomePage, "");
     d->collectionSelector         = iface()->imageCollectionSelector(this);
     d->collectionSelectorPageItem = addPage(d->collectionSelector, i18n("Select the required collections"));
 
@@ -139,11 +137,9 @@ Wizard::Wizard(QWidget* const parent)
 
     connect(d->collectionSelector, SIGNAL(selectionChanged()),
             this, SLOT(getDirectoriesFromCollection()));
-    
+
     d->finalPage     = new FinalPage(this);
     d->finalPageItem = addPage(d->finalPage, "Images to be exported");
-    
-    
 }
 
 Wizard::~Wizard()
@@ -157,13 +153,17 @@ void Wizard::next()
     {
         d->implementationOptionSelected = d->welcomePage->getImplementationOptionSelected();
         d->finalPage->setOptions(d->implementationOptionSelected);
-        if (d->implementationOptionSelected == WelcomePage::MINIDLNA) {
+
+        if (d->implementationOptionSelected == WelcomePage::MINIDLNA)
+        {
             d->finalPage->setMinidlnaBinaryPath(d->welcomePage->getMinidlnaBinaryPath());
             d->collectionSelector->enableVirtualCollections(false);
         }
-        else {
+        else
+        {
             d->collectionSelector->enableVirtualCollections(true);
         }
+
         d->finalPage->clearImages();
         KAssistantDialog::next();
     }
@@ -194,19 +194,20 @@ void Wizard::getImagesFromCollection()
         d->imageList.append(images.images());
         d->collectionMap.insert(images.name(), images.images());
     }
-    
+
     d->finalPage->setCollectionMap(d->collectionMap);
 }
 
 void Wizard::getDirectoriesFromCollection()
 {
     d->directories.clear();
+
     foreach(ImageCollection images, d->collectionSelector->selectedImageCollections())
     {
         kDebug() << images.path().path();
         d->directories << images.path().path();
     }
-    
+
     d->finalPage->setDirectories(d->directories);
 }
 
