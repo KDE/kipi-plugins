@@ -29,6 +29,8 @@
 #include <QString>
 #include <kurl.h>
 
+// Local includes
+
 #include "welcomepage.h"
 
 namespace KIPIDLNAExportPlugin
@@ -50,11 +52,11 @@ public:
     void setDirectories (const QStringList&);
     void clearImages();
     void setOptions(WelcomePage::ImplementationGetOption);
-    void setMinidlnaBinaryPath(const QString&);   
-    
+    void setMinidlnaBinaryPath(const QString&);
+
     void startHupnpMediaServer();
     void startMinidlnaMediaServer();
-     
+
 
 private Q_SLOTS:
 

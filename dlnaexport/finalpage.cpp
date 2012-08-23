@@ -54,7 +54,6 @@
 
 #include "hupnpmediaserver.h"
 #include "welcomepage.h"
-#include "finalpage.h"
 #include "minidlnamediaserver.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
@@ -71,49 +70,48 @@ public:
 
     Private()
     {
-        Hdlna           = 0;
-        Mdlna           = 0;
-        imgList         = 0;
-        progressBar     = 0;
-        startButton     = 0;
-        stopButton      = 0;
-        implementation  = WelcomePage::HUPNP;
+        Hdlna          = 0;
+        Mdlna          = 0;
+        imgList        = 0;
+        progressBar    = 0;
+        startButton    = 0;
+        stopButton     = 0;
+        implementation = WelcomePage::HUPNP;
     }
 
-    MediaServer*        Hdlna;
-    MinidlnaServer*     Mdlna;
-    KPImagesList*       imgList;
-    KPProgressWidget*   progressBar;
-    KPushButton*        startButton;
-    KPushButton*        stopButton;
-    QStringList         directories;
-    QMap<QString, KUrl::List>   collectionMap;
+    MediaServer*                         Hdlna;
+    MinidlnaServer*                      Mdlna;
+    KPImagesList*                        imgList;
+    KPProgressWidget*                    progressBar;
+    KPushButton*                         startButton;
+    KPushButton*                         stopButton;
+    QStringList                          directories;
+    QMap<QString, KUrl::List>            collectionMap;
     WelcomePage::ImplementationGetOption implementation;
 };
 
 FinalPage::FinalPage(QWidget* const parent)
     : QWidget(parent), d(new Private)
 {
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-    QVBoxLayout* mainLayout        = new QVBoxLayout(this);
-        
     // -------------------------------------------------------------------
 
-    d->imgList = new KPImagesList(this);
+    d->imgList     = new KPImagesList(this);
     d->imgList->setControlButtonsPlacement(KPImagesList::NoControlButtons);
     d->imgList->setAllowRAW(true);
     d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
     d->startButton = new KPushButton("Start", this);
-    d->stopButton = new KPushButton("Stop", this);
+    d->stopButton  = new KPushButton("Stop", this);
     d->stopButton->setEnabled(false);
-    
+
     connect(d->stopButton, SIGNAL(clicked()),
             this, SLOT(turnOff()));
-    
+
     connect(d->startButton, SIGNAL(clicked()),
             this, SLOT(turnOn()));
-    
+
     mainLayout->addWidget(d->imgList);
     mainLayout->addWidget(d->startButton);
     mainLayout->addWidget(d->stopButton);
@@ -134,6 +132,7 @@ void FinalPage::turnOff()
         d->Hdlna->~MediaServer();
     else
         d->Mdlna->~MinidlnaServer();
+
     d->startButton->setEnabled(true);
     d->stopButton->setEnabled(false);
 }
@@ -144,6 +143,7 @@ void FinalPage::turnOn()
         startHupnpMediaServer();
     else
         startMinidlnaMediaServer();
+
     d->startButton->setEnabled(false);
     d->stopButton->setEnabled(true);
 }
@@ -189,8 +189,14 @@ void FinalPage::setDirectories(const QStringList& directories)
     d->directories = directories;
 }
 
-void FinalPage::setMinidlnaBinaryPath(const QString& path )
+void FinalPage::setMinidlnaBinaryPath(const QString& path)
 {
+    if (!d->Mdlna)
+    {
+        kDebug() << "d->Mdlna is null";
+        return;
+    }
+
     d->Mdlna->setBinaryPath(path);
 }
 
