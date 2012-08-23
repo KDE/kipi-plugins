@@ -139,7 +139,6 @@ void WelcomePage::slotChangeOptions(bool flag)
     if (flag == false)
         d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
     else
-        d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
         d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
         
 }
