@@ -38,16 +38,16 @@ class MinidlnaBinary : public KPBinaryIface
 public:
 
     MinidlnaBinary()
-        : KPBinaryIface(QString("minidlna"), 
+        : KPBinaryIface(QString("minidlna"),
                         QString("1.0.24"), 
                         QString("Version "),
                         0, 
-                        QString("Minidlna"), 
-                        QString("http://minidlna.sourceforge.net"), 
+                        QString("Minidlna"),
+                        QString("http://minidlna.sourceforge.net"),
                         QString("DLNAExport"),
                         QStringList("-V")
                        )
-        { 
+        {
             setup();
         }
 

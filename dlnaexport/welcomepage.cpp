@@ -38,7 +38,9 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
-#include "welcomepage.h"
+
+// Local includes
+
 #include "minidlnabinary.h"
 #include "kpbinarysearch.h"
 
@@ -61,11 +63,11 @@ public:
         binariesLbl          = 0;
     }
 
-    QLabel*    iconLbl;
-    QLabel*    titleLbl;
-    QLabel*    headerLbl;
-    QLabel*    getImplementationLbl;
-    QLabel*    binariesLbl;
+    QLabel*         iconLbl;
+    QLabel*         titleLbl;
+    QLabel*         headerLbl;
+    QLabel*         getImplementationLbl;
+    QLabel*         binariesLbl;
 
     KComboBox*      implementationGetOption;
     KPBinarySearch* binariesWidget;
@@ -78,10 +80,10 @@ WelcomePage::WelcomePage(QWidget* const parent)
     QGridLayout* mainLayout        = new QGridLayout(this);
     QWidget* settingsBox           = new QWidget(this);
     QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox);
-    
+
     d->iconLbl  = new QLabel(this);
     d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
-    
+
     d->titleLbl = new QLabel(this);
     d->titleLbl->setOpenExternalLinks(true);
     d->titleLbl->setFocusPolicy(Qt::NoFocus);
@@ -92,26 +94,25 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->binariesLbl = new QLabel("<b>DLNAExport Binaries' requirement (Optional)</b>", settingsBox);
     d->binariesWidget = new KPBinarySearch(settingsBox);
     d->binariesWidget->addBinary(d->minidlnaBinary);
-        
+
     // ComboBox for implementation selection method
     d->getImplementationLbl    = new QLabel(i18n("&Choose the implementation:"),settingsBox);
     d->implementationGetOption = new KComboBox(settingsBox);
     d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
     d->getImplementationLbl->setBuddy(d->implementationGetOption);
-    
-   
+
     settingsBoxLayout->addWidget(d->binariesLbl,             1, 0, 1, 1);
     settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 1, 2);
     settingsBoxLayout->addWidget(d->getImplementationLbl,    3, 0, 1, 1);
     settingsBoxLayout->addWidget(d->implementationGetOption, 3, 1, 1, 1);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
-    mainLayout->addWidget(d->iconLbl,           1, 0, 1, 2, Qt::AlignCenter);
-    mainLayout->addWidget(d->titleLbl,          2, 0, 1, 2, Qt::AlignCenter);
-    mainLayout->addWidget(settingsBox,          3, 0, 5, 2);
+    mainLayout->addWidget(d->iconLbl,                        1, 0, 1, 2, Qt::AlignCenter);
+    mainLayout->addWidget(d->titleLbl,                       2, 0, 1, 2, Qt::AlignCenter);
+    mainLayout->addWidget(settingsBox,                       3, 0, 5, 2);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
-    
+
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
             this, SLOT(slotChangeOptions(bool)));
 
@@ -122,6 +123,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
 
 WelcomePage::~WelcomePage()
 {
+    delete d;
 }
 
 WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelected() const
@@ -135,19 +137,16 @@ WelcomePage::ImplementationGetOption WelcomePage::getImplementationOptionSelecte
 void WelcomePage::slotChangeOptions(bool flag)
 {
     d->implementationGetOption->clear();
-    
-    if (flag == false)
+
+    if (!flag)
         d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
     else
         d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
-        
 }
 
-QString WelcomePage::getMinidlnaBinaryPath()
+QString WelcomePage::getMinidlnaBinaryPath() const
 {
-    //return d->minidlnaBinary.path();
-    return QString();
+    return d->minidlnaBinary.path();
 }
-
 
 }   // namespace KIPIDLNAExportPlugin

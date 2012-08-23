@@ -48,12 +48,12 @@ public:
     ~WelcomePage();
 
     WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
-    QString getMinidlnaBinaryPath();
+    QString getMinidlnaBinaryPath() const;
 
 public Q_SLOTS:
-    
-    void slotChangeOptions(bool flag = false);
-    
+
+    void slotChangeOptions(bool flag);
+
 private:
 
     class Private;
