@@ -41,6 +41,7 @@
 
 // Local includes
 
+#include "kptooldialog.h"
 #include "kppreviewmanager.h"
 #include "kpbatchprogressdialog.h"
 #include "manager.h"
@@ -52,16 +53,17 @@
 namespace KIPIPanoramaPlugin
 {
 
-struct PreviewPage::PreviewPagePriv
+struct PreviewPage::Private
 {
-    PreviewPagePriv(Manager* const m)
+    Private(Manager* const m)
         : title(0), 
           previewWidget(0), 
           previewBusy(false), 
           stitchingBusy(false),
           postProcessing(0), 
           canceled(false), 
-          mngr(m)
+          mngr(m),
+          dlg(0)
     {}
 
     QLabel*                title;
@@ -77,12 +79,16 @@ struct PreviewPage::PreviewPagePriv
     QString                output;
 
     Manager*               mngr;
+
+    KAssistantDialog*      dlg;
+
 };
 
 PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
-        : KPWizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
-          d(new PreviewPagePriv(mngr))
+    : KPWizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
+      d(new Private(mngr))
 {
+    d->dlg            = dlg;
     KVBox* vbox       = new KVBox(this);
     d->title          = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
@@ -111,6 +117,9 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    connect(d->postProcessing, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotCancel()));
 }
 
 PreviewPage::~PreviewPage()
@@ -118,13 +127,18 @@ PreviewPage::~PreviewPage()
     delete d;
 }
 
+void PreviewPage::slotCancel()
+{
+    d->dlg->reject();
+}
+
 bool PreviewPage::cancel()
 {
     d->canceled = true;
-
     d->mngr->thread()->cancel();
 
     QMutexLocker lock(&d->actionMutex);
+
     if (d->previewBusy)
     {
         d->previewBusy = false;
@@ -139,6 +153,7 @@ bool PreviewPage::cancel()
         resetPage();
         return false;
     }
+
     return true;
 }
 
@@ -149,6 +164,7 @@ void PreviewPage::computePreview()
     {
         cancel();
     }
+
     d->mngr->thread()->finish();
 
     QMutexLocker lock(&d->actionMutex);
@@ -178,8 +194,7 @@ void PreviewPage::startStitching()
     }
 
     QMutexLocker lock(&d->actionMutex);
-    d->canceled = false;
-
+    d->canceled      = false;
     d->stitchingBusy = true;
     d->curProgress   = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
@@ -190,6 +205,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
+    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("layer-visible-on").pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
@@ -211,6 +227,7 @@ void PreviewPage::resetPage()
                            "<p>Pressing the <i>Next</i> button launches the final "
                            "stitching process.</p>"
                            "</qt>"));
+    d->postProcessing->progressCompleted();
     d->postProcessing->hide();
     d->previewWidget->show();
     computePreview();
@@ -218,9 +235,9 @@ void PreviewPage::resetPage()
 
 void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
-    QString text;
-
+    QString      text;
     QMutexLocker lock(&d->actionMutex);
+
     if (!ad.starting)           // Something is complete...
     {
         if (!ad.success)        // Something is failed...
@@ -229,6 +246,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 return;
             }
+
             switch (ad.action)
             {
                 case CREATEPREVIEWPTO:
@@ -239,7 +257,8 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
-                    d->output = ad.message;
+
+                    d->output      = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     kDebug() << "Preview compilation failed: " << ad.message;
@@ -258,12 +277,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
+
                     d->stitchingBusy = false;
-                    QString message = i18n("Processing file %1 / %2: %3",
-                                           QString::number(ad.id + 1),
-                                           QString::number(d->totalProgress - 1),
-                                           ad.message
-                                          );
+                    QString message  = i18n("Processing file %1 / %2: %3",
+                                            QString::number(ad.id + 1),
+                                            QString::number(d->totalProgress - 1),
+                                            ad.message
+                                           );
                     kDebug() << "Nona call failed for file #" << ad.id;
                     d->postProcessing->addedAction(message, ErrorMessage);
                     emit signalStitchingFinished(false);
@@ -275,6 +295,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
+
                     d->stitchingBusy = false;
                     d->postProcessing->addedAction(i18n("Panorama compilation: %1", Qt::escape(ad.message)), ErrorMessage);
                     kDebug() << "Enblend call failed";
@@ -331,10 +352,12 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
+
                     d->stitchingBusy = false;
                     d->postProcessing->addedAction(i18n("Panorama compilation"), SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
+                    d->postProcessing->progressCompleted();
                     d->postProcessing->hide();
                     kDebug() << "Panorama stitched";
                     emit signalStitchingFinished(true);
