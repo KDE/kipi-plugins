@@ -426,7 +426,7 @@ void SlideShowSettingsWidget::setUpVideoSettings()
     d->audioBtn->setEnabled(false);
 
     d->saveFileLabel = new QLabel(i18n("Save video"));
-    d->saveBtn       = new KPushButton("Brrowse");
+    d->saveBtn       = new KPushButton("Browse");
 
     connect(d->saveBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectSaveFileName()));
