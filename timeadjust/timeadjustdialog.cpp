@@ -372,19 +372,6 @@ void TimeAdjustDialog::slotApplyClicked()
         d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
         d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
         d->progressBar->setMaximum(d->itemsUsedMap.keys().size());
-
-        // NOTE: this loop is not yet re-entrant due to use KPImageInfo. It must still in main thread.
-        foreach (const KUrl& url, d->itemsUpdatedMap.keys())
-        {
-            if (prm.updAppDate)
-            {
-                KPImageInfo info(url);
-                QDateTime dt = d->itemsUpdatedMap.value(url);
-                if (dt.isValid()) info.setDate(dt);
-                kapp->processEvents();
-            }
-        }
-
         d->thread->setSettings(prm);
         d->thread->setUpdatedDates(d->itemsUpdatedMap);
 
