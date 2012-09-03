@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui version="1" name="kipiplugin_metadaedit" >
+<gui version="1" name="kipiplugin_metadataedit" >
 
     <MenuBar>
 
@@ -13,5 +13,3 @@
     </ToolBar>
 
 </gui>
-
-
