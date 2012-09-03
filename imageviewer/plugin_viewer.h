@@ -46,12 +46,15 @@ public:
     Plugin_viewer(QObject* const parent, const QVariantList&);
     ~Plugin_viewer();
 
-    void setup(QWidget* widget);
-    Category category(KAction* action) const;
+    void setup(QWidget* const widget);
 
 private Q_SLOTS:
 
     void  slotActivate();
+
+private:
+
+    void setupActions();
 
 private:
 

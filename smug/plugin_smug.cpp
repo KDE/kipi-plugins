@@ -72,40 +72,26 @@ Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
     m_dlgExport    = 0;
     m_actionExport = 0;
     m_actionImport = 0;
+
+    setUiBaseName("kipiplugin_smugui.rc");
+    setupXML();
 }
 
-void Plugin_Smug::setup(QWidget* widget)
+Plugin_Smug::~Plugin_Smug()
+{
+}
+
+void Plugin_Smug::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_smug");
 
-    m_actionExport = actionCollection()->addAction("smugexport");
-    m_actionExport->setText(i18n("Export to &SmugMug..."));
-    m_actionExport->setIcon(KIcon("smugmug"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
+    setupActions();
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotExport()) );
-
-    addAction(m_actionExport);
-
-    m_actionImport = actionCollection()->addAction("smugimport");
-    m_actionImport->setText(i18n("Import from &SmugMug..."));
-    m_actionImport->setIcon(KIcon("smugmug"));
-    m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
-
-    connect(m_actionImport, SIGNAL(triggered(bool)),
-            this, SLOT(slotImport()) );
-
-    addAction(m_actionImport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionImport->setEnabled(false);
-        m_actionExport->setEnabled(false);
         return;
     }
 
@@ -113,8 +99,31 @@ void Plugin_Smug::setup(QWidget* widget)
     m_actionExport->setEnabled(true);
 }
 
-Plugin_Smug::~Plugin_Smug()
+void Plugin_Smug::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
+    m_actionExport->setText(i18n("Export to &SmugMug..."));
+    m_actionExport->setIcon(KIcon("smugmug"));
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
+    m_actionExport->setEnabled(false);
+
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
+
+    addAction("smugexport", m_actionExport);
+
+    m_actionImport = new KAction(this);
+    m_actionImport->setText(i18n("Import from &SmugMug..."));
+    m_actionImport->setIcon(KIcon("smugmug"));
+    m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
+    m_actionImport->setEnabled(false);
+
+    connect(m_actionImport, SIGNAL(triggered(bool)),
+            this, SLOT(slotImport()) );
+
+    addAction("smugimport", m_actionImport, ImportPlugin);
 }
 
 void Plugin_Smug::slotExport()
@@ -157,17 +166,6 @@ void Plugin_Smug::slotImport()
     }
 
     m_dlgImport->show();
-}
-
-Category Plugin_Smug::category( KAction* action ) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-    else if (action == m_actionImport)
-        return ImportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPISmugPlugin

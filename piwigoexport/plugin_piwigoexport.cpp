@@ -19,7 +19,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -63,9 +63,17 @@ Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantLi
       m_action(0), m_pPiwigo(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PiwigoExport plugin loaded";
+
+    setUiBaseName("kipiplugin_piwigoexportui.rc");
+    setupXML();
 }
 
-void Plugin_PiwigoExport::setup(QWidget* widget)
+Plugin_PiwigoExport::~Plugin_PiwigoExport()
+{
+    delete m_pPiwigo;
+}
+
+void Plugin_PiwigoExport::setup(QWidget* const widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_piwigoexport");
 
@@ -73,14 +81,20 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
 
     Plugin::setup(widget);
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    m_action = actionCollection()->addAction("piwigoexport");
+    setupActions();
+}
+
+void Plugin_PiwigoExport::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    m_action = new KAction(this);
     m_action->setText(i18n("Export to &Piwigo..."));
     m_action->setIcon(KIcon("piwigo"));
     m_action->setEnabled(true);
@@ -88,12 +102,7 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotSync()));
 
-    addAction(m_action);
-}
-
-Plugin_PiwigoExport::~Plugin_PiwigoExport()
-{
-    delete m_pPiwigo;
+    addAction("piwigoexport", m_action);
 }
 
 // this slot uses PiwigoWindow Class
@@ -114,15 +123,6 @@ void Plugin_PiwigoExport::slotSync()
 
     delete configDlg;
     delete dlg;
-}
-
-Category Plugin_PiwigoExport::category(KAction* action) const
-{
-    if (action == m_action)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIPiwigoExportPlugin

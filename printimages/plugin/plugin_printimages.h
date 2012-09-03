@@ -49,11 +49,10 @@ class Plugin_PrintImages : public Plugin
 
 public:
 
-    Plugin_PrintImages( QObject* const parent, const QVariantList& args );
-
+    Plugin_PrintImages(QObject* const parent, const QVariantList& args);
     ~Plugin_PrintImages();
-    virtual Category category( KAction* action ) const;
-    virtual void setup( QWidget* widget );
+
+    void setup(QWidget* const widget);
 
 public Q_SLOTS:
 
@@ -62,8 +61,12 @@ public Q_SLOTS:
 
 private:
 
-    KAction*         m_printImagesAction;
-    KAction*         m_printAssistantAction;
+    void setupActions();
+
+private:
+
+    KAction*   m_printImagesAction;
+    KAction*   m_printAssistantAction;
     Interface* m_interface;
 };
 

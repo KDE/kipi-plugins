@@ -52,6 +52,5 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_imgurexport
 X-KDE-Icon=imgur
-X-KIPI-Mimetypes=image/png,image/jpg
-X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
+X-KIPI-PluginCategories=Export
 author=Marius Orcsik, marius@habarnam.ro

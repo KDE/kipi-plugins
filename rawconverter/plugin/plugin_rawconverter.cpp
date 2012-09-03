@@ -63,9 +63,16 @@ Plugin_RawConverter::Plugin_RawConverter(QObject* const parent, const QVariantLi
     : Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_RawConverter plugin loaded";
+
+    setUiBaseName("kipiplugin_rawconverterui.rc");
+    setupXML();
 }
 
-void Plugin_RawConverter::setup(QWidget* widget)
+Plugin_RawConverter::~Plugin_RawConverter()
+{
+}
+
+void Plugin_RawConverter::setup(QWidget* const widget)
 {
     m_singleDlg = 0;
     m_batchDlg  = 0;
@@ -74,52 +81,62 @@ void Plugin_RawConverter::setup(QWidget* widget)
 
     KGlobal::locale()->insertCatalog("libkdcraw");
 
-    m_singleAction = actionCollection()->addAction("raw_converter_single");
-    m_singleAction->setText(i18n("RAW Image Converter..."));
-    m_singleAction->setIcon(KIcon("rawconverter"));
+    setupActions();
 
-    connect(m_singleAction, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivateSingle()));
-
-    addAction(m_singleAction);
-
-    m_batchAction = actionCollection()->addAction("raw_converter_batch");
-    m_batchAction->setText(i18n("Batch RAW Converter..."));
-    m_batchAction->setIcon(KIcon("rawconverter"));
-
-    connect(m_batchAction, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivateBatch()));
-
-    addAction(m_batchAction);
-
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
+    Interface* iface = interface();
+    if (!iface)
     {
            kError() << "Kipi interface is null!";
            return;
     }
 
-    connect(interface, SIGNAL(selectionChanged(bool)),
+    ImageCollection selection = iface->currentSelection();
+    bool enable = selection.isValid() && !selection.images().isEmpty();
+
+    m_singleAction->setEnabled(enable);
+
+    connect(iface, SIGNAL(selectionChanged(bool)),
             m_singleAction, SLOT(setEnabled(bool)));
 
-    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+    connect(iface, SIGNAL(currentAlbumChanged(bool)),
             m_batchAction, SLOT(setEnabled(bool)));
 }
 
-Plugin_RawConverter::~Plugin_RawConverter()
+void Plugin_RawConverter::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
+    m_singleAction = new KAction(this);
+    m_singleAction->setText(i18n("RAW Image Converter..."));
+    m_singleAction->setIcon(KIcon("rawconverter"));
+    m_singleAction->setEnabled(false);
+
+    connect(m_singleAction, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateSingle()));
+
+    addAction("raw_converter_single", m_singleAction);
+
+    m_batchAction = new KAction(this);
+    m_batchAction->setText(i18n("Batch RAW Converter..."));
+    m_batchAction->setIcon(KIcon("rawconverter"));
+    m_batchAction->setEnabled(false);
+
+    connect(m_batchAction, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateBatch()));
+
+    addAction("raw_converter_batch", m_batchAction, BatchPlugin);
 }
 
 void Plugin_RawConverter::slotActivateSingle()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = iface->currentSelection();
 
     if (!images.isValid())
         return;
@@ -152,15 +169,15 @@ void Plugin_RawConverter::slotActivateSingle()
 
 void Plugin_RawConverter::slotActivateBatch()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
     ImageCollection images;
-    images = interface->currentSelection();
+    images = iface->currentSelection();
 
     if (!images.isValid())
         return;
@@ -179,17 +196,6 @@ void Plugin_RawConverter::slotActivateBatch()
 
     m_batchDlg->show();
     m_batchDlg->addItems(images.images());
-}
-
-Category Plugin_RawConverter::category(KAction* action) const
-{
-    if ( action == m_singleAction )
-       return ToolsPlugin;
-    else if ( action == m_batchAction )
-       return BatchPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIRawConverterPlugin

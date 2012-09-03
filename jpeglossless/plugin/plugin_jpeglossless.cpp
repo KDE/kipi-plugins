@@ -36,6 +36,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kmenu.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -46,6 +47,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
@@ -84,15 +86,16 @@ public:
 
     KAction*               action_Convert2GrayScale;
     KAction*               action_AutoExif;
-
-    KActionMenu*           action_RotateImage;
-    KActionMenu*           action_FlipImage;
+    KAction*               action_RotateImage;
+    KAction*               action_FlipImage;
 
     KUrl::List             images;
 
     KPBatchProgressDialog* progressDlg;
 
     ActionThread*          thread;
+
+    QWidget*               parentWidget;
 };
 
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject* const parent, const QVariantList&)
@@ -100,6 +103,9 @@ Plugin_JPEGLossless::Plugin_JPEGLossless(QObject* const parent, const QVariantLi
       d(new Plugin_JPEGLosslessPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_JPEGLossless plugin loaded";
+
+    setUiBaseName("kipiplugin_jpeglosslessui.rc");
+    setupXML();
 }
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()
@@ -108,73 +114,15 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
     delete d;
 }
 
-void Plugin_JPEGLossless::setup(QWidget* widget)
+void Plugin_JPEGLossless::setup(QWidget* const widget)
 {
+    d->parentWidget = widget;
+
     Plugin::setup( widget );
+    setupActions();
 
-    d->action_RotateImage = new KActionMenu(KIcon("object-rotate-right"), i18n("Rotate"), actionCollection());
-    d->action_RotateImage->setObjectName("jpeglossless_rotate");
-
-    KAction* left = actionCollection()->addAction("rotate_ccw");
-    left->setText(i18nc("rotate image left", "Left"));
-    left->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left));
-    connect(left, SIGNAL(triggered(bool)),
-            this, SLOT(slotRotateLeft()));
-    d->action_RotateImage->addAction(left);
-
-    KAction* right = actionCollection()->addAction("rotate_cw");
-    right->setText(i18nc("rotate image right", "Right"));
-    right->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right));
-    connect(right, SIGNAL(triggered(bool)),
-            this, SLOT(slotRotateRight()));
-    d->action_RotateImage->addAction(right);
-
-    addAction(d->action_RotateImage);
-
-    // -----------------------------------------------------------------------------------
-
-    d->action_FlipImage = new KActionMenu(KIcon("flip-horizontal"), i18n("Flip"), actionCollection());
-    d->action_FlipImage->setObjectName("jpeglossless_flip");
-
-    KAction* hori = actionCollection()->addAction("flip_horizontal");
-    hori->setText(i18n("Horizontally"));
-    hori->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Asterisk));
-    connect(hori, SIGNAL(triggered(bool)),
-            this, SLOT(slotFlipHorizontally()));
-    d->action_FlipImage->addAction(hori);
-
-    KAction* verti = actionCollection()->addAction("flip_vertical");
-    verti->setText(i18n("Vertically"));
-    verti->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Slash));
-    connect(verti, SIGNAL(triggered(bool)),
-            this, SLOT(slotFlipVertically()));
-    d->action_FlipImage->addAction(verti);
-
-    addAction(d->action_FlipImage);
-
-    // -----------------------------------------------------------------------------------
-
-    d->action_AutoExif = actionCollection()->addAction("rotate_exif");
-    d->action_AutoExif->setText(i18n("Auto Rotate/Flip Using Exif Information"));
-    connect(d->action_AutoExif, SIGNAL(triggered(bool)),
-            this, SLOT(slotRotateExif()));
-
-    addAction(d->action_AutoExif);
-
-    // -----------------------------------------------------------------------------------
-
-    d->action_Convert2GrayScale = actionCollection()->addAction("jpeglossless_convert2grayscale");
-    d->action_Convert2GrayScale->setText(i18n("Convert to Black && White"));
-    d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
-    connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
-            this, SLOT(slotConvert2GrayScale()));
-
-    addAction(d->action_Convert2GrayScale);
-
-    // -----------------------------------------------------------------------------------
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
         kError() << "Kipi interface is null!";
         return;
@@ -191,23 +139,119 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
     connect( d->thread, SIGNAL(failed(KUrl, int, QString)),
              this, SLOT(slotFailed(KUrl, int, QString)));
 
-    bool hasSelection = interface->currentSelection().isValid();
+    bool hasSelection = iface->currentSelection().isValid();
 
     d->action_AutoExif->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
+    connect( iface, SIGNAL(selectionChanged(bool)),
              d->action_AutoExif, SLOT(setEnabled(bool)) );
 
-    d->action_RotateImage->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             d->action_RotateImage, SLOT(setEnabled(bool)) );
-
-    d->action_FlipImage->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
-             d->action_FlipImage, SLOT(setEnabled(bool)) );
-
     d->action_Convert2GrayScale->setEnabled( hasSelection );
-    connect( interface, SIGNAL(selectionChanged(bool)),
+    connect( iface, SIGNAL(selectionChanged(bool)),
              d->action_Convert2GrayScale, SLOT(setEnabled(bool)) );
+
+    // We need to check these two actions
+    if (d->action_RotateImage)
+    {
+        d->action_RotateImage->setEnabled( hasSelection );
+        connect( iface, SIGNAL(selectionChanged(bool)),
+                 d->action_RotateImage, SLOT(setEnabled(bool)) );
+    }
+
+    if (d->action_FlipImage)
+    {
+        d->action_FlipImage->setEnabled( hasSelection );
+        connect( iface, SIGNAL(selectionChanged(bool)),
+                 d->action_FlipImage, SLOT(setEnabled(bool)) );
+    }
+
+}
+
+void Plugin_JPEGLossless::setupActions()
+{
+    setDefaultCategory(ImagesPlugin);
+
+    QStringList disabledActions = PluginLoader::instance()->disabledPluginActions();
+
+    if (!disabledActions.contains("jpeglossless_rotate"))
+    {
+        d->action_RotateImage = actionCollection()->addAction("jpeglossless_rotate");
+        d->action_RotateImage->setText(i18n("Rotate"));
+        d->action_RotateImage->setIcon(KIcon("object-rotate-right"));
+
+        KMenu* rotateMenu = new KMenu(d->parentWidget);
+        d->action_RotateImage->setMenu(rotateMenu);
+
+        KAction* left = new KAction(this);
+        left->setText(i18nc("rotate image left", "Rotate Left"));
+        left->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left));
+        rotateMenu->addAction(left);
+
+        connect(left, SIGNAL(triggered(bool)),
+                this, SLOT(slotRotateLeft()));
+
+        addAction("rotate_ccw", left);
+
+        KAction* right = new KAction(this);
+        right->setText(i18nc("rotate image right", "Rotate Right"));
+        right->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right));
+        rotateMenu->addAction(right);
+
+        connect(right, SIGNAL(triggered(bool)),
+                this, SLOT(slotRotateRight()));
+
+        addAction("rotate_cw", right);
+    }
+
+    // -----------------------------------------------------------------------------------
+
+    if (!disabledActions.contains("jpeglossless_flip"))
+    {
+        d->action_FlipImage = actionCollection()->addAction("jpeglossless_flip");
+        d->action_FlipImage->setText(i18n("Flip"));
+        d->action_FlipImage->setIcon(KIcon("flip-horizontal"));
+
+        KMenu* flipMenu = new KMenu(d->parentWidget);
+        d->action_FlipImage->setMenu(flipMenu);
+
+        KAction* hori = new KAction(this);
+        hori->setText(i18n("Flip Horizontally"));
+        hori->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Asterisk));
+        flipMenu->addAction(hori);
+
+        connect(hori, SIGNAL(triggered(bool)),
+                this, SLOT(slotFlipHorizontally()));
+
+        addAction("flip_horizontal", hori);
+
+        KAction* verti = new KAction(this);
+        verti->setText(i18n("Flip Vertically"));
+        verti->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Slash));
+        flipMenu->addAction(verti);
+
+        connect(verti, SIGNAL(triggered(bool)),
+                this, SLOT(slotFlipVertically()));
+
+        addAction("flip_vertical", verti);
+    }
+
+    // -----------------------------------------------------------------------------------
+
+    d->action_AutoExif = new KAction(this);
+    d->action_AutoExif->setText(i18n("Auto Rotate/Flip Using Exif Information"));
+    connect(d->action_AutoExif, SIGNAL(triggered(bool)),
+            this, SLOT(slotRotateExif()));
+
+    addAction("rotate_exif", d->action_AutoExif);
+
+    // -----------------------------------------------------------------------------------
+
+    d->action_Convert2GrayScale = new KAction(this);
+    d->action_Convert2GrayScale->setText(i18n("Convert to Black && White"));
+    d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
+    connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
+            this, SLOT(slotConvert2GrayScale()));
+
+    addAction("jpeglossless_convert2grayscale", d->action_Convert2GrayScale);
 }
 
 void Plugin_JPEGLossless::slotFlipHorizontally()
@@ -471,21 +515,6 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
         interface->refreshImages( d->images );
     }
-}
-
-Category Plugin_JPEGLossless::category(KAction* action) const
-{
-    if (action == d->action_AutoExif)
-        return ImagesPlugin;
-    else if ( action == d->action_RotateImage )
-       return ImagesPlugin;
-    else if ( action == d->action_FlipImage )
-       return ImagesPlugin;
-    else if ( action == d->action_Convert2GrayScale )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 KUrl::List Plugin_JPEGLossless::images()

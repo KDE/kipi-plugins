@@ -52,12 +52,15 @@ public:
     Plugin_Shwup(QObject* const parent, const QVariantList& args);
     ~Plugin_Shwup();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotExport();
+
+private:
+
+    void setupActions();
 
 private:
 

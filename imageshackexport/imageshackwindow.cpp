@@ -79,7 +79,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     m_widget     = new ImageshackWidget(this, imghack);
     m_widget->setMinimumSize(700, 500);
     setMainWidget(m_widget);
-    setWindowTitle(i18n("Imageshack Export"));
+    setWindowTitle(i18n("Export to Imageshack"));
     setModal(false);
 
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
@@ -384,10 +384,12 @@ void ImageshackWindow::slotLoginDone(int errCode, const QString& errMsg)
     {
         // TODO implement galeries
         m_imageshack->saveSettings();
+        enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
     }
     else
     {
         KMessageBox::error(this, i18n("Login failed: %1\n", errMsg));
+        enableButton(User1, false);
     }
 }
 

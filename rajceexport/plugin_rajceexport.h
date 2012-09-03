@@ -51,13 +51,15 @@ public:
     Plugin_RajceExport(QObject* const parent, const QVariantList& args);
     ~Plugin_RajceExport();
 
-    Category category(KAction* action) const;
-
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotExport();
+
+private:
+
+    void setupActions();
 
 private:
 

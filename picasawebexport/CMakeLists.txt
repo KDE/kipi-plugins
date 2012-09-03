@@ -28,3 +28,6 @@ INSTALL(TARGETS kipiplugin_picasawebexport
 
 INSTALL(FILES kipiplugin_picasawebexport.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_picasawebexportui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi)

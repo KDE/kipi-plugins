@@ -66,18 +66,38 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
     : Plugin(FacebookFactory::componentData(), parent, "Facebook Import/Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Facebook plugin loaded";
+
+    KIconLoader::global()->addAppDir("kipiplugin_facebook");
+
+    setUiBaseName("kipiplugin_facebookui.rc");
+    setupXML();
 }
 
-void Plugin_Facebook::setup(QWidget* widget)
+Plugin_Facebook::~Plugin_Facebook()
+{
+}
+
+void Plugin_Facebook::setup(QWidget* const widget)
 {
     m_dlgImport = 0;
     m_dlgExport = 0;
 
     Plugin::setup(widget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_facebook");
+    if (!interface())
+    {
+        kDebug() << "Kipi interface is null!";
+        return;
+    }
 
-    m_actionExport = actionCollection()->addAction("facebookexport");
+    setupActions();
+}
+
+void Plugin_Facebook::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("facebook"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F));
@@ -85,9 +105,9 @@ void Plugin_Facebook::setup(QWidget* widget)
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction(m_actionExport);
+    addAction("facebookexport", m_actionExport);
 
-    m_actionImport = actionCollection()->addAction("facebookimport");
+    m_actionImport = new KAction(this);
     m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("facebook"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));
@@ -95,23 +115,7 @@ void Plugin_Facebook::setup(QWidget* widget)
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction(m_actionImport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
-        m_actionImport->setEnabled(false);
-        return;
-    }
-
-    m_actionExport->setEnabled(true);
-    m_actionImport->setEnabled(true);
-}
-
-Plugin_Facebook::~Plugin_Facebook()
-{
+    addAction("facebookimport", m_actionImport, ImportPlugin);
 }
 
 void Plugin_Facebook::slotExport()
@@ -160,17 +164,6 @@ KJob* Plugin_Facebook::exportFiles(const QString& album)
 {
     Interface* interface = dynamic_cast<Interface*>(parent());
     return new FacebookJob(album, interface->currentSelection().images());
-}
-
-Category Plugin_Facebook::category(KAction* action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-    else if (action == m_actionImport)
-        return ImportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIFacebookPlugin

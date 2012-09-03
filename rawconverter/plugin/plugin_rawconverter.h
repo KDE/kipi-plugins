@@ -52,13 +52,16 @@ public:
     Plugin_RawConverter(QObject* const parent, const QVariantList& args);
     ~Plugin_RawConverter();
 
-    Category category(KAction* action) const;
-    void setup(QWidget* widget);
+    void setup(QWidget* const widget);
 
 private Q_SLOTS:
 
     void slotActivateSingle();
     void slotActivateBatch();
+
+private:
+
+    void setupActions();
 
 private:
 

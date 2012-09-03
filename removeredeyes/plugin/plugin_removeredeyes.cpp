@@ -54,52 +54,52 @@ Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* const parent, const QVariant
       m_action(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
-}
 
-void Plugin_RemoveRedEyes::setup(QWidget* widget)
-{
-    Plugin::setup(widget);
-
-    m_action = actionCollection()->addAction("removeredeyes");
-    m_action->setText(i18n("&Red-Eye Removal..."));
-    m_action->setIcon(KIcon("draw-eraser"));
-
-    connect(m_action, SIGNAL(triggered(bool)),
-            this, SLOT(activate()));
-
-    addAction(m_action);
-
-    Interface* interface = dynamic_cast<Interface*> (parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    connect(interface, SIGNAL(selectionChanged(bool)),
-            m_action, SLOT(setEnabled(bool)));
+    setUiBaseName("kipiplugin_removeredeyesui.rc");
+    setupXML();
 }
 
 Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
 {
 }
 
+void Plugin_RemoveRedEyes::setup(QWidget* const widget)
+{
+    Plugin::setup(widget);
+
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    ImageCollection selection = interface()->currentSelection();
+    m_action->setEnabled(selection.isValid() && !selection.images().isEmpty() );
+
+    connect(interface(), SIGNAL(selectionChanged(bool)),
+            m_action, SLOT(setEnabled(bool)));
+}
+
+void Plugin_RemoveRedEyes::setupActions()
+{
+    setDefaultCategory(BatchPlugin);
+
+    m_action = new KAction(this);
+    m_action->setText(i18n("&Red-Eye Removal..."));
+    m_action->setIcon(KIcon("draw-eraser"));
+
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(activate()));
+
+    addAction("removeredeyes", m_action);
+}
+
 void Plugin_RemoveRedEyes::activate()
 {
     RemoveRedEyesWindow* window = new RemoveRedEyesWindow();
     window->show();
-}
-
-Category Plugin_RemoveRedEyes::category(KAction* action) const
-{
-    if (action == m_action)
-    {
-        return BatchPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return BatchPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

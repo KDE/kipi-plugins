@@ -73,6 +73,9 @@ Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
       d(new Plugin_SendImagesPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
+
+    setUiBaseName("kipiplugin_sendimagesui.rc");
+    setupXML();
 }
 
 Plugin_SendImages::~Plugin_SendImages()
@@ -80,43 +83,50 @@ Plugin_SendImages::~Plugin_SendImages()
     delete d;
 }
 
-void Plugin_SendImages::setup(QWidget* widget)
+void Plugin_SendImages::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
-    d->action_sendimages = actionCollection()->addAction("sendimages");
+    setupActions();
+
+    Interface* iface = interface();
+    if (!iface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    ImageCollection selection = iface->currentSelection();
+    d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
+
+    connect(iface, SIGNAL(selectionChanged(bool)),
+            d->action_sendimages, SLOT(setEnabled(bool)));
+}
+
+void Plugin_SendImages::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    d->action_sendimages = new KAction(this);
     d->action_sendimages->setText(i18n("Email Images..."));
     d->action_sendimages->setIcon(KIcon("mail-send"));
 
     connect(d->action_sendimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->action_sendimages);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    ImageCollection selection = interface->currentSelection();
-    d->action_sendimages->setEnabled(selection.isValid() && !selection.images().isEmpty() );
-
-    connect(interface, SIGNAL(selectionChanged(bool)),
-            d->action_sendimages, SLOT(setEnabled(bool)));
+    addAction("sendimages", d->action_sendimages);
 }
 
 void Plugin_SendImages::slotActivate()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    Interface* iface = interface();
+    if (!iface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = iface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -142,15 +152,6 @@ void Plugin_SendImages::slotPrepareEmail()
     EmailSettings settings = d->dialog->emailSettings();
     d->sendImagesOperation = new SendImages(settings, this);
     d->sendImagesOperation->firstStage();
-}
-
-Category Plugin_SendImages::category(KAction* action) const
-{
-    if (action == d->action_sendimages)
-       return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPISendimagesPlugin

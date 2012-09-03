@@ -56,40 +56,48 @@ Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     // m_dlgImport = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Vkontakte plugin loaded" ;
+
+    setUiBaseName("kipiplugin_vkontakteui.rc");
+    setupXML();
 }
 
-void Plugin_Vkontakte::setup(QWidget* widget)
+Plugin_Vkontakte::~Plugin_Vkontakte()
+{
+}
+
+void Plugin_Vkontakte::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_vkontakte");
 
-    m_actionExport = actionCollection()->addAction("VKontakte");
-    m_actionExport->setText(i18n("Export to &VKontakte..."));
-    // TODO: icon file
-    //m_actionExport->setIcon(KIcon("vkontakte"));
-    m_actionExport->setIcon(KIcon("preferences-web-browser-shortcuts"));
-    //m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    setupActions();
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotExport()));
-
-    addAction(m_actionExport);
-
-    Interface *interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
         return;
     }
 
     m_actionExport->setEnabled(true);
 }
 
-Plugin_Vkontakte::~Plugin_Vkontakte()
+void Plugin_Vkontakte::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
+    m_actionExport->setText(i18n("Export to &VKontakte..."));
+    // TODO: icon file
+    //m_actionExport->setIcon(KIcon("vkontakte"));
+    m_actionExport->setIcon(KIcon("preferences-web-browser-shortcuts"));
+    //m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    m_actionExport->setEnabled(false);
+
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()));
+
+    addAction("VKontakte", m_actionExport);
 }
 
 /*
@@ -116,17 +124,6 @@ void Plugin_Vkontakte::slotExport()
     }
 
     m_dlgExport->startReactivation();
-}
-
-Category Plugin_Vkontakte::category(KAction* action) const
-{
-    if (action == m_actionExport)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin;
 }
 
 } // namespace KIPIVkontaktePlugin

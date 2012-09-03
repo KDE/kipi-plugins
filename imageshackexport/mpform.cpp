@@ -42,7 +42,6 @@ namespace KIPIImageshackExportPlugin
 
 MPForm::MPForm()
 {
-//     m_boundary = "----------------314159265358979323846";
     m_boundary = KRandom::randomString(42 + 13).toAscii();
     reset();
 }
@@ -55,9 +54,7 @@ void MPForm::reset()
 {
     m_buffer.resize(0);
     QByteArray str(contentType().toLatin1());
-    str += "\r\n";
-    str += "MIME-version: 1.0";
-    str += "\r\n\r\n";
+    str += "\r\nMIME-version: 1.0\r\n\r\n";
     m_buffer.append(str);
 }
 
@@ -81,9 +78,9 @@ void MPForm::addPair(const QString& name, const QString& value)
 
     if (!name.isEmpty())
     {
-      	str += "Content-Disposition: form-data; name=\"";
-    	str += name.toAscii();
-    	str += "\"\r\n";
+        str += "Content-Disposition: form-data; name=\"";
+        str += name.toAscii();
+        str += "\"\r\n";
     }
     str += "\r\n";
     str += value.toUtf8();

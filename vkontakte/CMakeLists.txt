@@ -31,3 +31,6 @@ install(TARGETS kipiplugin_vkontakte
 
 install(FILES kipiplugin_vkontakte.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+install(FILES kipiplugin_vkontakteui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi)

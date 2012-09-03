@@ -80,6 +80,9 @@ Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*
       d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_MediaWiki plugin loaded";
+
+    setUiBaseName("kipiplugin_wikimediaui.rc");
+    setupXML();
 }
 
 Plugin_WikiMedia::~Plugin_WikiMedia()
@@ -87,31 +90,37 @@ Plugin_WikiMedia::~Plugin_WikiMedia()
     delete d;
 }
 
-void Plugin_WikiMedia::setup(QWidget* widget)
+void Plugin_WikiMedia::setup(QWidget* const widget)
 {
     d->dlgExport = 0;
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_wikimedia");
 
-    d->actionExport = actionCollection()->addAction("wikimediaexport");
-    d->actionExport->setText(i18n("Export to MediaWiki..."));
-    d->actionExport->setIcon(KIcon("wikimedia"));
+    setupActions();
 
-    connect(d->actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotExport()) );
-
-    addAction(d->actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        d->actionExport->setEnabled(false);
         return;
     }
 
     d->actionExport->setEnabled(true);
+}
+
+void Plugin_WikiMedia::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    d->actionExport = new KAction(this);
+    d->actionExport->setText(i18n("Export to MediaWiki..."));
+    d->actionExport->setIcon(KIcon("wikimedia"));
+    d->actionExport->setEnabled(false);
+
+    connect(d->actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
+
+    addAction("wikimediaexport", d->actionExport);
 }
 
 void Plugin_WikiMedia::slotExport()
@@ -131,15 +140,6 @@ void Plugin_WikiMedia::slotExport()
 
         d->dlgExport->reactivate();
     }
-}
-
-Category Plugin_WikiMedia::category(KAction* action) const
-{
-    if (action == d->actionExport)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIWikiMediaPlugin

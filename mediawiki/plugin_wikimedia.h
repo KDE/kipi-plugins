@@ -28,10 +28,6 @@
 
 #include <QVariant>
 
-// KDE includes
-
-#include <kdeversion.h>
-
 // KIPI includes
 
 #include <libkipi/plugin.h>
@@ -59,13 +55,16 @@ public:
     Plugin_WikiMedia(QObject* const parent, const QVariantList& args);
     ~Plugin_WikiMedia();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
     void runMWindow();
 
 public Q_SLOTS:
 
     void slotExport();
+
+private:
+
+    void setupActions();
 
 private:
 

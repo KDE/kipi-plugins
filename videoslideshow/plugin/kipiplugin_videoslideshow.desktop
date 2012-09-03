@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=VideoSlideShow
+Comment=A tool to export images as Video Slide Show
+Type=Service
+Icon=media-record
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_videoslideshow
+author=A Janardhan Reddy, annapareddyjanardhanreddy at gmail dot com
+X-KIPI-ReqFeatures=
+X-KIPI-PluginCategories=Tools

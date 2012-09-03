@@ -55,48 +55,56 @@ Plugin_DNGConverter::Plugin_DNGConverter(QObject* const parent, const QVariantLi
     : Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DNGConverter plugin loaded" ;
-}
 
-void Plugin_DNGConverter::setup( QWidget* widget )
-{
-    m_batchDlg = 0;
-
-    Plugin::setup( widget );
-
-    m_action = actionCollection()->addAction("dngconverter");
-    m_action->setText(i18n("DNG Converter..."));
-    m_action->setIcon(KIcon("dngconverter"));
-
-    connect(m_action, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(m_action);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        return;
-    }
-
-    connect(interface, SIGNAL(currentAlbumChanged(bool)),
-            m_action, SLOT(setEnabled(bool)));
+    setUiBaseName("kipiplugin_dngconverterui.rc");
+    setupXML();
 }
 
 Plugin_DNGConverter::~Plugin_DNGConverter()
 {
 }
 
+void Plugin_DNGConverter::setup(QWidget* const widget)
+{
+    m_batchDlg = 0;
+
+    Plugin::setup(widget);
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    setupActions();
+
+    connect(interface(), SIGNAL(currentAlbumChanged(bool)),
+            m_action, SLOT(setEnabled(bool)));
+}
+
+void Plugin_DNGConverter::setupActions()
+{
+    setDefaultCategory(BatchPlugin);
+
+    m_action = new KAction(this);
+    m_action->setText(i18n("DNG Converter..."));
+    m_action->setIcon(KIcon("dngconverter"));
+
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction("dngconverter", m_action);
+}
+
 void Plugin_DNGConverter::slotActivate()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!" ;
         return;
     }
 
-    ImageCollection images = interface->currentSelection();
+    ImageCollection images = interface()->currentSelection();
 
     if (!images.isValid())
         return;
@@ -115,15 +123,6 @@ void Plugin_DNGConverter::slotActivate()
 
     m_batchDlg->show();
     m_batchDlg->addItems(images.images());
-}
-
-Category Plugin_DNGConverter::category( KAction* action ) const
-{
-    if (action == m_action)
-       return BatchPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return BatchPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIDNGConverterPlugin

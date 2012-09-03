@@ -49,12 +49,13 @@ public:
     Plugin_DNGConverter(QObject* const parent, const QVariantList& args);
     ~Plugin_DNGConverter();
 
-    Category category(KAction* action) const;
-    void setup(QWidget* widget);
+    void setup(QWidget* const widget);
 
 private:
 
     bool checkBinaries();
+
+    void setupActions();
 
 private Q_SLOTS:
 

@@ -31,6 +31,7 @@ KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
 INSTALL(TARGETS kipiplugin_flashexport DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_flashexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_flashexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 INSTALL(FILES data/space.png       DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport/simpleviewer_html)
 INSTALL(FILES data/index.template  DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)

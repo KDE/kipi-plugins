@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=DLNAExport
+Comment=A tool to export collection on DLNA network service
+Type=Service
+Icon=dlna
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_dlnaexport
+author=Smit Mehta, smit dot meh at gmail dot com
+X-KIPI-PluginCategories=Export
+X-KIPI-ReqFeatures=

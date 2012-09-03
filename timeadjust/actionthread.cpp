@@ -45,6 +45,7 @@ extern "C"
 // Local includes
 
 #include "kpmetadata.h"
+#include "kpimageinfo.h"
 #include "myimagelist.h"
 
 namespace KIPITimeAdjustPlugin
@@ -218,6 +219,13 @@ void Task::run()
 
         if (!ret)
             status |= MyImageList::FILE_NAME_ERROR;
+    }
+    
+    if (m_d->settings.updAppDate)
+    {
+        KPImageInfo info(m_url);
+        QDateTime dt = m_d->itemsMap.value(m_url);
+        if (dt.isValid()) info.setDate(dt);
     }
 
     m_mutex.lock();

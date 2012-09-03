@@ -57,11 +57,12 @@ Q_SIGNALS:
 private Q_SLOTS:
 
     void slotAction(const KIPIPanoramaPlugin::ActionData&);
+    void slotCancel();
 
 private:
 
-    struct PreviewPagePriv;
-    PreviewPagePriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin

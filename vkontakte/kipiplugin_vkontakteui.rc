@@ -1,0 +1,16 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="1" name="kipiplugin_vkontakte" >
+
+    <MenuBar>
+
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="VKontakte" group="kipi_export_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>
+

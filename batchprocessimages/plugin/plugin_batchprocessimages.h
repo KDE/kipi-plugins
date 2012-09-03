@@ -34,6 +34,11 @@
 
 class KAction;
 
+namespace KIPI
+{
+    class Interface;
+};
+
 namespace KIPIBatchProcessImagesPlugin
 {
 
@@ -55,12 +60,15 @@ public:
     Plugin_BatchProcessImages(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_BatchProcessImages();
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotActivate();
+
+private:
+
+    void setupActions();
 
 private:
 
@@ -81,6 +89,8 @@ private:
     RenameImagesDialog*     m_RenameImagesDialog;
     RecompressImagesDialog* m_RecompressImagesDialog;
     ResizeImagesDialog*     m_ResizeImagesDialog;
+
+    KIPI::Interface*        m_iface;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

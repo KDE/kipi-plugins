@@ -29,17 +29,9 @@
 
 #include <QVariant>
 
-// KDE includes
-
-#include <kdeversion.h>
-
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
-
-#if KDE_IS_VERSION(4,3,60)
-#include <libkipi/exportinterface.h>
-#endif
 
 class KAction;
 
@@ -56,22 +48,15 @@ namespace KIPIFacebookPlugin
 {
 
 class Plugin_Facebook : public Plugin
-#if KDE_IS_VERSION(4,3,60)
-                      , public ExportInterface
-#endif
 {
     Q_OBJECT
-#if KDE_IS_VERSION(4,3,60)
-    Q_INTERFACES( ExportInterface )
-#endif
 
 public:
 
     Plugin_Facebook(QObject* const parent, const QVariantList& args);
     ~Plugin_Facebook();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
     virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
@@ -81,11 +66,15 @@ public Q_SLOTS:
 
 private:
 
-    KAction*  m_actionImport;
-    KAction*  m_actionExport;
+    void setupActions();
 
-    FbWindow* m_dlgImport;
-    FbWindow* m_dlgExport;
+private:
+
+    KAction*   m_actionImport;
+    KAction*   m_actionExport;
+
+    FbWindow*  m_dlgImport;
+    FbWindow*  m_dlgExport;
 };
 
 } // namespace KIPIFacebookPlugin

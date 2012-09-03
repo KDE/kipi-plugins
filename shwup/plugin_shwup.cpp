@@ -70,37 +70,46 @@ Plugin_Shwup::Plugin_Shwup(QObject* const parent, const QVariantList& /*args*/)
 
     m_dlgExport    = 0;
     m_actionExport = 0;
+
+    setUiBaseName("kipiplugin_shwupui.rc");
+    setupXML();
 }
 
-void Plugin_Shwup::setup(QWidget* widget)
+Plugin_Shwup::~Plugin_Shwup()
+{
+}
+
+void Plugin_Shwup::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_shwup");
 
-    m_actionExport = actionCollection()->addAction("shwupexport");
-    m_actionExport->setText(i18n("Export to Shwup..."));
-    m_actionExport->setIcon(KIcon("shwup"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
+    setupActions();
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotExport()) );
-
-    addAction(m_actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
         return;
     }
 
     m_actionExport->setEnabled(true);
 }
 
-Plugin_Shwup::~Plugin_Shwup()
+void Plugin_Shwup::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
+    m_actionExport->setText(i18n("Export to Shwup..."));
+    m_actionExport->setIcon(KIcon("shwup"));
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
+    m_actionExport->setEnabled(false);
+
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
+
+    addAction("shwupexport", m_actionExport);
 }
 
 void Plugin_Shwup::slotExport()
@@ -122,15 +131,6 @@ void Plugin_Shwup::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_Shwup::category(KAction* action) const
-{
-    if (action == m_actionExport)
-        return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIShwupPlugin

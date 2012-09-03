@@ -59,41 +59,48 @@ K_EXPORT_PLUGIN(AcquireImagesFactory("kipiplugin_acquireimages"))
 Plugin_AcquireImages::Plugin_AcquireImages(QObject* const parent, const QVariantList&)
     : KIPI::Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
-    m_interface         = 0;
     m_action_scanimages = 0;
     m_parentWidget      = 0;
     m_saneWidget        = 0;
     m_scanDlg           = 0;
     kDebug(AREA_CODE_LOADING) << "Plugin_AcquireImages plugin loaded";
-}
 
-void Plugin_AcquireImages::setup(QWidget* widget)
-{
-    m_parentWidget = widget;
-    KIPI::Plugin::setup(m_parentWidget);
-
-    m_action_scanimages = actionCollection()->addAction("acquireimages");
-    m_action_scanimages->setText(i18n("Import from Scanner..."));
-    m_action_scanimages->setIcon(KIcon("scanner"));
-
-    connect(m_action_scanimages, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(m_action_scanimages);
-
-    m_interface = dynamic_cast<KIPI::Interface*>(parent());
-
-    if (!m_interface)
-    {
-        kError() << "Kipi interface is null!";
-        m_action_scanimages->setEnabled(false);
-        return;
-    }
-    m_action_scanimages->setEnabled(true);
+    setUiBaseName("kipiplugin_acquireimagesui.rc");
+    setupXML();
 }
 
 Plugin_AcquireImages::~Plugin_AcquireImages()
 {
+}
+
+void Plugin_AcquireImages::setup(QWidget* const widget)
+{
+    m_parentWidget = widget;
+    KIPI::Plugin::setup(m_parentWidget);
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "KIPI interface is null!";
+        return;
+    }
+
+    m_action_scanimages->setEnabled(true);
+}
+
+void Plugin_AcquireImages::setupActions()
+{
+    setDefaultCategory(ImportPlugin);
+
+    m_action_scanimages = new KAction(this);
+    m_action_scanimages->setText(i18n("Import from Scanner..."));
+    m_action_scanimages->setIcon(KIcon("scanner"));
+    m_action_scanimages->setEnabled(false);
+
+    connect(m_action_scanimages, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction("acquireimages", m_action_scanimages);
 }
 
 void Plugin_AcquireImages::slotActivate()
@@ -135,17 +142,6 @@ void Plugin_AcquireImages::slotActivate()
     }
 
     m_scanDlg->show();
-}
-
-KIPI::Category Plugin_AcquireImages::category(KAction* action) const
-{
-    if (action == m_action_scanimages)
-    {
-        return KIPI::ImportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ImportPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIAcquireImagesPlugin

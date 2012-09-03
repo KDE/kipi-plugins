@@ -57,12 +57,15 @@ public:
     Plugin_ExpoBlending(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_ExpoBlending();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotActivate();
+
+private:
+
+    void setupActions();
 
 private:
 

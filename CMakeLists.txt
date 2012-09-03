@@ -7,12 +7,12 @@ MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
 # Information to update before to release this package.
 
 # kipi-plugins version
-SET(KIPIPLUGINS_MAJOR_VERSION "2")
-SET(KIPIPLUGINS_MINOR_VERSION "9")
+SET(KIPIPLUGINS_MAJOR_VERSION "3")
+SET(KIPIPLUGINS_MINOR_VERSION "0")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2012-09-02")
+SET (KIPIPLUGINS_RELEASE_DATE "2012-09-03")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -21,7 +21,7 @@ SET (KIPIPLUGINS_RELEASE_DATE "2012-09-02")
 # "-beta3" : beta3 release.
 # "-rc"    : release candidate.
 # ""       : final relase. Can be used in production.
-SET(KIPIPLUGINS_SUFFIX_VERSION "")
+SET(KIPIPLUGINS_SUFFIX_VERSION "-beta1")
 
 # =======================================================
 # Set env. variables accordinly.
@@ -118,13 +118,27 @@ INCLUDE(FindPackageHandleStandardArgs)
 INCLUDE(KDE4Defaults)
 INCLUDE(MacroLibrary)
 
+# Put local modules first
+SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+
 # Depencies detection required by all plugins
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
-FIND_PACKAGE(Kipi REQUIRED)
-FIND_PACKAGE(JPEG REQUIRED)
-FIND_PACKAGE(PNG REQUIRED)
-FIND_PACKAGE(TIFF REQUIRED)
+FIND_PACKAGE(Kipi   REQUIRED)
+FIND_PACKAGE(JPEG   REQUIRED)
+FIND_PACKAGE(PNG    REQUIRED)
+FIND_PACKAGE(TIFF   REQUIRED)
+
+# check libkipi version
+SET(KIPI_MIN_VERSION "2.0.0")
+IF(KIPI_VERSION)
+    MESSAGE(STATUS "libkipi: Found version ${KIPI_VERSION} (required: ${KIPI_MIN_VERSION})")
+    IF(${KIPI_VERSION} VERSION_LESS ${KIPI_MIN_VERSION})
+        SET(KIPI_FOUND FALSE)
+    ENDIF(${KIPI_VERSION} VERSION_LESS ${KIPI_MIN_VERSION})
+ELSE(KIPI_VERSION)
+    MESSAGE(WARNING "libkipi: Version information not found, your version is probably too old.")
+ENDIF(KIPI_VERSION)
 
 # check the libkdcraw version
 # note that old versions don't specify version information, so for now
@@ -141,26 +155,27 @@ ENDIF (KDCRAW_VERSION)
 
 # Optional depencies detection required by some plugins
 
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
-
-MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)         # For DNGConverter: XMP SDK need Expat library to compile.
-MACRO_OPTIONAL_FIND_PACKAGE(Threads)       # For DNGConverter: DNG SDK need native threads support.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)       # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)       # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)        # For AdvancedSlideshow and ImageViewer.
-MACRO_OPTIONAL_FIND_PACKAGE(Ipod)          # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(Gdk)           # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)         # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GObject)       # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)    # For Calendar (libkcal).
-MACRO_OPTIONAL_FIND_PACKAGE(QCA2)          # For Shwup and YandexFotki.
-MACRO_OPTIONAL_FIND_PACKAGE(KSane)         # For AcquireImages.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)        # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and Facebook, and Imgur.
-MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
-MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
-MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
-MACRO_OPTIONAL_FIND_PACKAGE(Boost)         # For Panorama
+MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
+MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                     # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)                                      # For AdvancedSlideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(Ipod)                                        # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GObject)                                     # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
+MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)                                      # For RemoveRedEyes.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots and Facebook, and Imgur.
+MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
+MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
+MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
+MACRO_OPTIONAL_FIND_PACKAGE(Boost)                                       # For Panorama.
+MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
+MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
+MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
@@ -219,31 +234,33 @@ MESSAGE(STATUS "")
 
 # Require shared libraries results.
 
-PRINT_LIBRARY_STATUS("libjpeg" "http://www.ijg.org" "" JPEG_FOUND)
-PRINT_LIBRARY_STATUS("libtiff" "http://www.remotesensing.org/libtiff" "" TIFF_FOUND)
-PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)" PNG_FOUND)
-PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KIPI_FOUND)
-PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KEXIV2_FOUND)
-PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
+PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                        ""                                    JPEG_FOUND)
+PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"      ""                                    TIFF_FOUND)
+PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)"                 PNG_FOUND)
+PRINT_LIBRARY_STATUS("libkipi"   "http://www.digikam.org/sharedlibs"         " (version >= 2.0.0)"                 KIPI_FOUND)
+PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs"         " (version >= 1.2.0)"                 KEXIV2_FOUND)
+PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs"         " (version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
 
 # Optional shared libraries results.
 
-PRINT_OPTIONAL_LIBRARY_STATUS("libxml2" LIBXML2_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libxslt" LIBXSLT_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libexpat" EXPAT_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"                LIBXML2_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"                LIBXSLT_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"               EXPAT_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-PRINT_OPTIONAL_LIBRARY_STATUS("libopengl" OPENGL_FOUND AND OPENGL_GLU_FOUND)
-PRINT_OPTIONAL_QTMODULE_STATUS("Qt4 OpenGL" QT_QTOPENGL_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libopencv" OpenCV_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("QJson" QJSON_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libgpod" IPOD_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("Gdk" GDK_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim" KDEPIMLIBS_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap" KGEOMAP_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki" MEDIAWIKI_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte" LIBKVKONTAKTE_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("boost" Boost_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libopengl"              OPENGL_FOUND AND OPENGL_GLU_FOUND)
+PRINT_OPTIONAL_QTMODULE_STATUS("Qt4 OpenGL"            QT_QTOPENGL_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"              OpenCV_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("QJson"                  QJSON_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libgpod"                IPOD_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("Gdk"                    GDK_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim"              KDEPIMLIBS_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("qca2"                   QCA2_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"             KGEOMAP_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"           MEDIAWIKI_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"          LIBKVKONTAKTE_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("boost"                  Boost_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick"         ImageMagick_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer"         QTGSTREAMER_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -255,6 +272,12 @@ IF(NOT WIN32 AND NOT APPLE)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 PRINT_OPTIONAL_LIBRARY_STATUS("libksane" KSANE_FOUND)
+
+IF(HUPNP_FOUND)
+    MESSAGE(STATUS " Hupnp library found...................... YES (optional)")
+ELSE(HUPNP_FOUND)
+    MESSAGE(STATUS " Hupnp library found...................... NO  (optional - internal version used instead)")
+ENDIF(HUPNP_FOUND)
 
 # Optional plugins results ----------------------------------------------------------------------------
 
@@ -289,20 +312,37 @@ ELSE(NOT WIN32 AND NOT APPLE)
     ENDIF (OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-PRINT_PLUGIN_COMPILE_STATUS("AdvancedSlideshow" BUILD_VIEWERS)
-PRINT_PLUGIN_COMPILE_STATUS("ImageViewer" BUILD_VIEWERS)
-PRINT_PLUGIN_COMPILE_STATUS("AcquireImages" KSANE_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("DNGConverter" EXPAT_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OpenCV_FOUND)
+# decide if wallpaper plugin can be built
+# NOTE: See relevant patch which must be applied to KDE Plasma API :
+# https://git.reviewboard.kde.org/r/105319/
+# Relevant Bugzilla entry :
+# https://bugs.kde.org/show_bug.cgi?id=217950
+SET (WALLPAPER_KDE_REQ_VER "5.0.0")
+
+IF (KDE_VERSION)
+    IF (${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
+        SET(BUILD_WALLPAPER FALSE)
+    ELSE (${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
+        SET(BUILD_WALLPAPER TRUE)
+    ENDIF (${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
+ENDIF (KDE_VERSION)
+
+PRINT_PLUGIN_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
+PRINT_PLUGIN_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
+PRINT_PLUGIN_COMPILE_STATUS("AcquireImages"      KSANE_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("DNGConverter"       EXPAT_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Facebook" QJSON_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Imgur" QJSON_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("VKontakte" LIBKVKONTAKTE_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("IpodExport" IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KGEOMAP_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Mediawiki" MEDIAWIKI_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Panorama" Boost_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Facebook"           QJSON_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Imgur"              QJSON_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("VKontakte"          LIBKVKONTAKTE_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Mediawiki"          MEDIAWIKI_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Panorama"           Boost_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -398,6 +438,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(kmlexport)
     ADD_SUBDIRECTORY(imageshackexport)
     ADD_SUBDIRECTORY(photolayoutseditor)
+    ADD_SUBDIRECTORY(dlnaexport)
+    ADD_SUBDIRECTORY(photivointegration)
 
     # Plugins which are optional depencies.
 
@@ -459,15 +501,13 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(panorama)
     ENDIF(Boost_FOUND)
 
-#   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
-#
-#   FIND_FILE(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
-#
-#   IF(KDESKTOP_INTERFACE_FILE_FOUND)
-#       ADD_SUBDIRECTORY( wallpaper )
-#   ELSE(KDESKTOP_INTERFACE_FILE_FOUND)
-#       MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
-#   ENDIF(KDESKTOP_INTERFACE_FILE_FOUND)
+    IF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+        ADD_SUBDIRECTORY(videoslideshow)
+    ENDIF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+
+    IF(BUILD_WALLPAPER)
+        ADD_SUBDIRECTORY(wallpaper)
+    ENDIF(BUILD_WALLPAPER)
 
     IF(NOT WIN32)
         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)

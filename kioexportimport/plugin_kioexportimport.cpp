@@ -58,46 +58,60 @@ Plugin_KioExportImport::Plugin_KioExportImport(QObject* const parent, const QVar
     : Plugin(KioFactory::componentData(), parent, "KioExportImport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KioExportImport plugin loaded";
+
+    setUiBaseName("kipiplugin_kioexportimportui.rc");
+    setupXML();
 }
 
-void Plugin_KioExportImport::setup(QWidget* widget)
+Plugin_KioExportImport::~Plugin_KioExportImport()
+{
+}
+
+void Plugin_KioExportImport::setup(QWidget* const widget)
 {
     m_dlgExport = 0;
     m_dlgImport = 0;
 
     Plugin::setup(widget);
 
-    // export
-    m_actionExport = actionCollection()->addAction("kioexport");
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionExport->setEnabled(true);
+    m_actionImport->setEnabled(true);
+}
+
+void Plugin_KioExportImport::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to remote computer..."));
     m_actionExport->setIcon(KIcon("folder-remote"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K));
+    m_actionExport->setEnabled(false);
 
-    connect(m_actionExport, SIGNAL(triggered(bool)), 
+    connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateExport()));
 
-    addAction(m_actionExport);
+    addAction("kioexport", m_actionExport);
 
     // import
-    m_actionImport = actionCollection()->addAction("kioimport");
+    m_actionImport = new KAction(this);
     m_actionImport->setText(i18n("Import from remote computer..."));
     m_actionImport->setIcon(KIcon("folder-remote"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I));
+    m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));
 
-    addAction(m_actionImport);
-
-    // check interface availability
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
-    {
-        kError() << "Interface empty";
-        m_actionExport->setEnabled(false);
-        m_actionImport->setEnabled(false);
-        return;
-    }
+    addAction("kioimport", m_actionImport, ImportPlugin);
 }
 
 void Plugin_KioExportImport::slotActivateExport()
@@ -138,23 +152,6 @@ void Plugin_KioExportImport::slotActivateImport()
     }
 
     m_dlgImport->show();
-}
-
-Category Plugin_KioExportImport::category(KAction* action) const
-{
-    if (action == m_actionExport)
-    {
-        return ExportPlugin;
-    }
-    else if (action == m_actionImport)
-    {
-        return ImportPlugin;
-    }
-    else
-    {
-        kWarning() << "Received unknown action";
-        return ExportPlugin;
-    }
 }
 
 } // namespace KIPIKioExportPlugin

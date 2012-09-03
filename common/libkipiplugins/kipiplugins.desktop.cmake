@@ -92,5 +92,5 @@ Type=Application
 Exec=""
 Icon=kipi-logo
 
-[KipiPlugins Entry]
+[X-KipiPlugins Entry]
 Version=${KIPIPLUGINS_VERSION_STRING}

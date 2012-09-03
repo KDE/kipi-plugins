@@ -67,6 +67,9 @@ Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
        d(new Plugin_viewerPriv)
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
+
+    setUiBaseName("kipiplugin_imageviewerui.rc");
+    setupXML();
 }
 
 Plugin_viewer::~Plugin_viewer()
@@ -74,29 +77,35 @@ Plugin_viewer::~Plugin_viewer()
     delete d;
 }
 
-void Plugin_viewer::setup(QWidget* widget)
+void Plugin_viewer::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
+    setupActions();
 
-    Interface* iface = dynamic_cast<Interface*>(parent());
-
-    if ( !iface )
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    d->actionViewer = actionCollection()->addAction("oglimageviewer");
+}
+
+void Plugin_viewer::setupActions()
+{
+    setDefaultCategory(ToolsPlugin);
+
+    d->actionViewer = new KAction(this);
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
     d->actionViewer->setIcon(KIcon("ogl"));
+    d->actionViewer->setEnabled(false);
 
     connect(d->actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->actionViewer);
+    addAction("oglimageviewer", d->actionViewer);
 }
 
-void  Plugin_viewer::slotActivate()
+void Plugin_viewer::slotActivate()
 {
     d->widget = new ViewerWidget();
 
@@ -123,19 +132,6 @@ void  Plugin_viewer::slotActivate()
             delete d->widget;
             KMessageBox::error(0, i18n("OpenGL error"), i18n("no OpenGL context found"));
             break;
-    }
-}
-
-Category Plugin_viewer::category(KAction* action) const
-{
-    if ( action == d->actionViewer )
-    {
-        return ToolsPlugin;
-    }
-    else
-    {
-        kWarning() << "Unrecognized action for plugin category identification";
-        return ToolsPlugin; // no warning from compiler, please
     }
 }
 

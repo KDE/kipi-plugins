@@ -62,39 +62,46 @@ Plugin_DebianScreenshots::Plugin_DebianScreenshots(QObject* const parent, const 
                    parent, "Debian Screenshots Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DebianScreenshots plugin loaded";
+
+    setUiBaseName("kipiplugin_debianscreenshotsui.rc");
+    setupXML();
 }
 
-void Plugin_DebianScreenshots::setup(QWidget* widget)
+Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
+{
+}
+
+void Plugin_DebianScreenshots::setup(QWidget* const widget)
 {
     m_dlgExport = 0;
 
     Plugin::setup(widget);
-
     KIconLoader::global()->addAppDir("kipiplugin_debianscreenshots");
+    setupActions();
 
-    m_actionExport = actionCollection()->addAction("debianscreenshotsexport");
-    m_actionExport->setText(i18n("Export to &Debian Screenshots..."));
-    m_actionExport->setIcon(KIcon("debianscreenshots"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_D));
-
-    connect(m_actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotExport()) );
-
-    addAction(m_actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
         return;
     }
 
     m_actionExport->setEnabled(true);
 }
 
-Plugin_DebianScreenshots::~Plugin_DebianScreenshots()
+void Plugin_DebianScreenshots::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
+    m_actionExport->setText(i18n("Export to &Debian Screenshots..."));
+    m_actionExport->setIcon(KIcon("debianscreenshots"));
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_D));
+    m_actionExport->setEnabled(false);
+
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
+
+    addAction("debianscreenshotsexport", m_actionExport);
 }
 
 void Plugin_DebianScreenshots::slotExport()
@@ -116,11 +123,6 @@ void Plugin_DebianScreenshots::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_DebianScreenshots::category(KAction*) const
-{
-    return ExportPlugin;
 }
 
 } // namespace KIPIDebianScreenshotsPlugin

@@ -55,40 +55,48 @@ Plugin_YandexFotki::Plugin_YandexFotki(QObject* const parent, const QVariantList
 
     m_dlgExport = 0;
     // m_dlgImport = 0;
+
+    setUiBaseName("kipiplugin_yandexfotkiui.rc");
+    setupXML();
 }
 
-void Plugin_YandexFotki::setup(QWidget* widget)
+Plugin_YandexFotki::~Plugin_YandexFotki()
+{
+}
+
+void Plugin_YandexFotki::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_yandexfotki");
 
-    m_actionExport = actionCollection()->addAction("Yandex.Fotki");
-    m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
-    // TODO: icon file
-    //m_actionExport->setIcon(KIcon("yandexfotki"));
-    m_actionExport->setIcon(KIcon("document-export"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    setupActions();
 
-    connect(m_actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotExport()));
-
-    addAction(m_actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
         return;
     }
 
     m_actionExport->setEnabled(true);
 }
 
-Plugin_YandexFotki::~Plugin_YandexFotki()
+void Plugin_YandexFotki::setupActions()
 {
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
+    m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
+    // TODO: icon file
+    //m_actionExport->setIcon(KIcon("yandexfotki"));
+    m_actionExport->setIcon(KIcon("document-export"));
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
+    m_actionExport->setEnabled(false);
+
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()));
+
+    addAction("Yandex.Fotki", m_actionExport);
 }
 
 /*
@@ -115,17 +123,6 @@ void Plugin_YandexFotki::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-Category Plugin_YandexFotki::category( KAction* action ) const
-{
-    if (action == m_actionExport)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin;
 }
 
 } // namespace KIPIYandexFotkiPlugin

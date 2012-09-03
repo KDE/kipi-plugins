@@ -21,4 +21,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_piwigoexport
 
 INSTALL(TARGETS kipiplugin_piwigoexport DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_piwigoexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_piwigoexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
 INSTALL(FILES piwigo_logo.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_piwigoexport/pics)

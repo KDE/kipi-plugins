@@ -83,4 +83,5 @@ Type=Service
 Icon=flickr
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
+X-KIPI-PluginCategories=Export
 author=Vardhman Jain, vardhman@gmail.com

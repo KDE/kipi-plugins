@@ -73,6 +73,11 @@ Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
+
+    KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
+
+    setUiBaseName("kipiplugin_imgurexportui.rc");
+    setupXML();
 }
 
 Plugin_ImgurExport::~Plugin_ImgurExport()
@@ -80,15 +85,26 @@ Plugin_ImgurExport::~Plugin_ImgurExport()
     delete d;
 }
 
-void Plugin_ImgurExport::setup(QWidget* widget)
+void Plugin_ImgurExport::setup(QWidget* const widget)
 {
     d->winExport = 0;
 
     Plugin::setup(widget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
 
-    d->actionExport = actionCollection()->addAction("ImgurExport");
+    setupActions();
+}
+
+void Plugin_ImgurExport::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export to &Imgur..."));
     d->actionExport->setIcon(KIcon("imgur"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
@@ -96,18 +112,7 @@ void Plugin_ImgurExport::setup(QWidget* widget)
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(d->actionExport);
-
-    Interface* interface = dynamic_cast<Interface*>(parent());
-
-    if (!interface)
-    {
-        kError() << "Kipi interface is null!";
-        d->actionExport->setEnabled(false);
-        return;
-    }
-
-    d->actionExport->setEnabled(true);
+    addAction("imgurexport", d->actionExport);
 }
 
 void Plugin_ImgurExport::slotActivate()
@@ -130,17 +135,6 @@ void Plugin_ImgurExport::slotActivate()
     d->winExport->reactivate();
 
     kDebug() << "We have activated the imgur exporter!";
-}
-
-Category Plugin_ImgurExport::category(KAction* action) const
-{
-    if (action == d->actionExport)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin;
 }
 
 } // namespace KIPIImgurExportPlugin

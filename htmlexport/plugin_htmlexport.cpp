@@ -59,14 +59,22 @@ K_EXPORT_PLUGIN(HTMLExportFactory("kipiplugin_htmlexport"))
 
 struct Plugin_HTMLExport::Private
 {
+    Private() :
+        mAction(0)
+    {
+    }
+
     KAction* mAction;
 };
 
 Plugin_HTMLExport::Plugin_HTMLExport(QObject* const parent, const QVariantList&)
-    : Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport")
+    : Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport"),
+      d(new Private)
 {
-    d          = new Private;
-    d->mAction = 0;
+    kDebug(AREA_CODE_LOADING) << "Plugin_HTMLExport plugin loaded";
+
+    setUiBaseName("kipiplugin_htmlexportui.rc");
+    setupXML();
 }
 
 Plugin_HTMLExport::~Plugin_HTMLExport()
@@ -74,24 +82,43 @@ Plugin_HTMLExport::~Plugin_HTMLExport()
     delete d;
 }
 
-void Plugin_HTMLExport::setup( QWidget* widget )
+void Plugin_HTMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
-    d->mAction = actionCollection()->addAction("htmlexport");
+    setupActions();
+
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    d->mAction->setEnabled(true);
+}
+
+void Plugin_HTMLExport::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    d->mAction = new KAction(this);
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
     d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
+    d->mAction->setEnabled(false);
 
     connect(d->mAction, SIGNAL(triggered()),
             this, SLOT(slotActivate()) );
 
-    addAction(d->mAction);
+    addAction("htmlexport", d->mAction);
 }
 
 void Plugin_HTMLExport::slotActivate()
 {
-    Interface* interface = dynamic_cast< Interface* >( parent() );
-    Q_ASSERT(interface);
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
 
     GalleryInfo info;
     info.readConfig();
@@ -106,7 +133,7 @@ void Plugin_HTMLExport::slotActivate()
 
     KPBatchProgressDialog* progressDialog = new KPBatchProgressDialog(parent, i18n("Generating gallery..."));
 
-    Generator generator(interface, &info, progressDialog);
+    Generator generator(interface(), &info, progressDialog);
     progressDialog->show();
     if (!generator.run())
     {
@@ -132,17 +159,6 @@ void Plugin_HTMLExport::slotActivate()
     }
 
     delete wizard;
-}
-
-Category Plugin_HTMLExport::category(KAction* action) const
-{
-    if (action == d->mAction)
-    {
-        return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIHTMLExport

@@ -52,5 +52,9 @@ TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_advancedslideshow DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS     kipiplugin_advancedslideshow
+        DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES       plugin/kipiplugin_advancedslideshow.desktop
+        DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES       plugin/kipiplugin_advancedslideshowui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi)

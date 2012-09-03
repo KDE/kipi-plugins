@@ -50,41 +50,49 @@ Plugin_Calendar::Plugin_Calendar(QObject* const parent, const QVariantList&)
     : Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
+
+
+    setUiBaseName("kipiplugin_calendarui.rc");
+    setupXML();
 }
 
 Plugin_Calendar::~Plugin_Calendar()
 {
 }
 
-void Plugin_Calendar::setup(QWidget* widget)
+void Plugin_Calendar::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
+    setupActions();
 
-    m_actionCalendar = actionCollection()->addAction("calendar");
+    if (!interface())
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    m_actionCalendar->setEnabled(true);
+}
+
+void Plugin_Calendar::setupActions()
+{
+    setDefaultCategory(ToolsPlugin);
+
+    m_actionCalendar = new KAction(this);
     m_actionCalendar->setText(i18n("Create Calendar..."));
     m_actionCalendar->setIcon(KIcon("view-pim-calendar"));
+    m_actionCalendar->setEnabled(false);
 
     connect(m_actionCalendar, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionCalendar);
+    addAction("calendar", m_actionCalendar);
 }
 
 void Plugin_Calendar::slotActivate()
 {
     CalWizard w(kapp->activeWindow());
     w.exec();
-}
-
-Category Plugin_Calendar::category(KAction* action) const
-{
-    if (action == m_actionCalendar)
-    {
-        return ToolsPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 }  // NameSpace KIPICalendarPlugin

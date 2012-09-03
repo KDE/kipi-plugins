@@ -1,0 +1,15 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="1" name="kipiplugin_acquireimages" >
+
+    <MenuBar>
+
+        <Menu name="Import"><text>&amp;Import</text>
+            <Action name="acquireimages" group="kipi_import_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>

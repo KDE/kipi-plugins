@@ -49,9 +49,9 @@ class Plugin_KioExportImport: public Plugin
 public:
 
     Plugin_KioExportImport(QObject* const parent, const QVariantList& args);
+    ~Plugin_KioExportImport();
 
-    Category category(KAction* action) const;
-    void setup(QWidget* widget);
+    void setup(QWidget* const widget);
 
 private Q_SLOTS:
 
@@ -64,6 +64,10 @@ private Q_SLOTS:
      * Activates the import tool.
      */
     void slotActivateImport();
+
+private:
+
+    void setupActions();
 
 private:
 

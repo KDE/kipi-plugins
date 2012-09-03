@@ -49,6 +49,10 @@ INSTALL(FILES plugin/kipiplugin_printimages.desktop
         DESTINATION ${SERVICES_INSTALL_DIR}
        )
 
+INSTALL(FILES plugin/kipiplugin_printimagesui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi
+       )
+
 INSTALL(FILES TEMPLATE_HOWTO
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
        )

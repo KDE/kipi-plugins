@@ -92,4 +92,5 @@ Type=Service
 Icon=gallery
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_galleryexport
+X-KIPI-PluginCategories=Export
 author=Andrea Diamantini, adjam7@gmail.com

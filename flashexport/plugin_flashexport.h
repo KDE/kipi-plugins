@@ -58,8 +58,11 @@ public:
     Plugin_FlashExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_FlashExport();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
+
+private:
+
+    void setupActions();
 
 public Q_SLOTS:
 

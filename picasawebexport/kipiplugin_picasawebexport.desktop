@@ -90,4 +90,5 @@ Type=Service
 Icon=picasa
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_picasawebexport
+X-KIPI-PluginCategories=Export,Import
 author=Vardhman Jain, vardhman@gmail.com

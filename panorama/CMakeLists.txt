@@ -87,6 +87,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_panorama libpanorama)
 
 INSTALL(TARGETS kipiplugin_panorama DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_panoramaui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Stand alone version of Panorama plugin

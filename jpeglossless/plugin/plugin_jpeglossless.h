@@ -52,8 +52,7 @@ public:
     Plugin_JPEGLossless(QObject* const parent, const QVariantList& args);
     ~Plugin_JPEGLossless();
 
-    Category category(KAction* action) const;
-    void setup(QWidget* widget);
+    void setup(QWidget* const widget);
 
 protected:
 
@@ -77,6 +76,7 @@ private:
     void flip(FlipAction action, const QString& title);
     void rotate(RotateAction action, const QString& title);
     void oneTaskCompleted();
+    void setupActions();
 
 private:
 

@@ -56,3 +56,4 @@ Icon=preferences-web-browser-shortcuts
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_vkontakte
 author=Alexander Potashev, aspotashev@gmail.com
+X-KIPI-PluginCategories=Export

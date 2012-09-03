@@ -37,3 +37,6 @@ INSTALL(TARGETS kipiplugin_yandexfotki
 
 INSTALL(FILES kipiplugin_yandexfotki.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES kipiplugin_yandexfotkiui.rc
+        DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -27,3 +27,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_wikimedia
 
 INSTALL(TARGETS kipiplugin_wikimedia DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_wikimedia.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_wikimediaui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)

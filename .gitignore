@@ -1,4 +1,9 @@
+.kdev_include_paths
 *.kate-swp
 *.kdev4
 build/
 *.*~
+*.autosave
+*.user
+*.svn
+*.pri

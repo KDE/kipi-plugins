@@ -36,11 +36,6 @@ class QWidget;
 
 class KAction;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KSaneIface
 {
     class KSaneWidget;
@@ -60,12 +55,15 @@ public:
     Plugin_AcquireImages(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_AcquireImages();
 
-    KIPI::Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotActivate();
+
+private:
+
+    void setupActions();
 
 private:
 
@@ -74,8 +72,6 @@ private:
     KAction*                 m_action_scanimages;
 
     KSaneIface::KSaneWidget* m_saneWidget;
-
-    KIPI::Interface*         m_interface;
 
     QPointer <ScanDialog>    m_scanDlg;
 };

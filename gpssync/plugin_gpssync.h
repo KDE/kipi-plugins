@@ -54,13 +54,17 @@ class Plugin_GPSSync : public Plugin
 public:
 
     Plugin_GPSSync(QObject* const parent, const QVariantList& args);
+    ~Plugin_GPSSync();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 protected Q_SLOTS:
 
     void slotGPSSync();
+
+private:
+
+    void setupActions();
 
 private:
 

@@ -23,3 +23,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_timeadjust
 INSTALL(TARGETS kipiplugin_timeadjust DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_timeadjust.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_timeadjustui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)

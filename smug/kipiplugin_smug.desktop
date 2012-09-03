@@ -87,4 +87,5 @@ Type=Service
 Icon=smugmug
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_smug
+X-KIPI-PluginCategories=Export,Import
 author=Luka Renko, lure@kubuntu.org

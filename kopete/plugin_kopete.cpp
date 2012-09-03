@@ -65,19 +65,29 @@ Plugin_Kopete::Plugin_Kopete(QObject* const parent, const QVariantList& /*args*/
       m_kopeteDBusTest("org.kde.kopete", "/Kopete", "org.freedesktop.DBus.Introspectable")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Kopete plugin loaded";
+
+    setUiBaseName("kipiplugin_kopeteui.rc");
+    setupXML();
 }
 
-void Plugin_Kopete::setup(QWidget* widget)
+Plugin_Kopete::~Plugin_Kopete()
+{
+}
+
+void Plugin_Kopete::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_kopete");
 
-    m_actionExport = actionCollection()->addAction("kopeteexport");
+    setDefaultCategory(ExportPlugin);
+
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("&Instant Messaging contact..."));
     m_actionExport->setIcon(KIcon("kopete"));
+    m_actionExport->setEnabled(false);
 
-    addAction(m_actionExport);
+    addAction("kopeteexport", m_actionExport);
 
     m_signalMapper = new QSignalMapper(widget);
     connect(m_signalMapper, SIGNAL(mapped(QString)),
@@ -88,25 +98,18 @@ void Plugin_Kopete::setup(QWidget* widget)
     connect(contactsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotAboutToShowMenu()));
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
-        m_actionExport->setEnabled(false);
         return;
     }
 
     m_actionExport->setEnabled(true);
 }
 
-Plugin_Kopete::~Plugin_Kopete()
-{
-}
-
 void Plugin_Kopete::slotAboutToShowMenu()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    if (!interface)
+    if (!interface())
     {
         kError() << "Kipi interface is null!";
         return;
@@ -178,8 +181,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 {
     kDebug() << "Received a request to transfer file(s) to contact " << contactId;
 
-    Interface* interface = dynamic_cast<Interface*>(parent());
-    KUrl::List imgList   = interface->currentSelection().images();
+    KUrl::List imgList   = interface()->currentSelection().images();
 
     // Check if Kopete is still running
     if ( contactId.isEmpty() || !kopeteRunning() )
@@ -212,11 +214,6 @@ bool Plugin_Kopete::kopeteRunning()
           return true;
     }
     return false;
-}
-
-Category Plugin_Kopete::category( KAction* /* action */ ) const
-{
-    return ExportPlugin;
 }
 
 } // namespace KIPIKopetePlugin

@@ -62,18 +62,35 @@ Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList
     m_manager      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Flashexport plugin loaded";
+
+    setUiBaseName("kipiplugin_flashexportui.rc");
+    setupXML();
 }
 
 Plugin_FlashExport::~Plugin_FlashExport()
 {
 }
 
-void Plugin_FlashExport::setup(QWidget* widget)
+void Plugin_FlashExport::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
 
-    m_action = actionCollection()->addAction("flashexport");
+    m_interface = interface();
+    if (!m_interface)
+    {
+       kError() << "Kipi interface is null!";
+       return;
+    }
+
+    setupActions();
+}
+
+void Plugin_FlashExport::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    m_action = new KAction(this);
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(KIcon("flash"));
     m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));
@@ -81,14 +98,7 @@ void Plugin_FlashExport::setup(QWidget* widget)
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action);
-
-    m_interface = dynamic_cast<Interface*>(parent());
-    if (!m_interface)
-    {
-       kError() << "Kipi interface is null!";
-       return;
-    }
+    addAction("flashexport", m_action);
 }
 
 void Plugin_FlashExport::slotActivate()
@@ -106,15 +116,6 @@ void Plugin_FlashExport::slotActivate()
 
     m_manager->setIface(m_interface);
     m_manager->run();
-}
-
-Category Plugin_FlashExport::category(KAction* action) const
-{
-    if ( action == m_action )
-       return ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIFlashExportPlugin

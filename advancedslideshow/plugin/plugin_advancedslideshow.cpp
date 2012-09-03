@@ -79,28 +79,25 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* const parent, const 
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_AdvancedSlideshow plugin loaded" ;
     m_sharedData = 0;
+    m_interface  = 0;
+
+    setUiBaseName("kipiplugin_advancedslideshowui.rc");
+    setupXML();
 }
 
-void Plugin_AdvancedSlideshow::setup(QWidget* widget)
+Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
+{
+}
+
+void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 {
     KIPI::Plugin::setup(widget);
+    setupActions();
 
-    m_actionSlideShow = actionCollection()->addAction("advancedslideshow");
-    m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
-    m_actionSlideShow->setIcon(KIcon("slideshow"));
-    m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
-    m_actionSlideShow->setEnabled(false);
-
-    connect(m_actionSlideShow, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(m_actionSlideShow);
-
-    m_interface = dynamic_cast<KIPI::Interface*> (parent());
-
-    if (!m_interface)
+    m_interface = interface();
+    if(!m_interface)
     {
-        kError() << "Kipi m_interface is null!";
+        kError() << "KIPI interface is null!";
         return;
     }
 
@@ -109,19 +106,28 @@ void Plugin_AdvancedSlideshow::setup(QWidget* widget)
     connect(m_interface, SIGNAL(currentAlbumChanged(bool)),
             this, SLOT(slotAlbumChanged(bool)));
 
-    if (m_interface->currentAlbum().isValid())
-    {
-        slotAlbumChanged(true);
-    }
+    slotAlbumChanged(m_interface->currentAlbum().isValid());
 }
 
-Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
+void Plugin_AdvancedSlideshow::setupActions()
 {
+    setDefaultCategory(ToolsPlugin);
+
+    m_actionSlideShow = new KAction(this);
+    m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
+    m_actionSlideShow->setIcon(KIcon("slideshow"));
+    m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
+    m_actionSlideShow->setEnabled(false);
+
+    connect(m_actionSlideShow, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction("advancedslideshow", m_actionSlideShow);
 }
 
 void Plugin_AdvancedSlideshow::slotActivate()
 {
-    if (!m_interface)
+    if (!interface())
     {
         kError() << "Kipi m_interface is null!";
         return;
@@ -267,16 +273,6 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
             }
         }
     }
-}
-
-KIPI::Category Plugin_AdvancedSlideshow::category(KAction* action) const
-{
-    if (action == m_actionSlideShow)
-        return KIPI::ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-
-    return KIPI::ToolsPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

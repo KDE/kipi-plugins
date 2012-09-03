@@ -62,24 +62,22 @@ Plugin_GPSSync::Plugin_GPSSync(QObject* const parent, const QVariantList&)
     : Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
+
+    setUiBaseName("kipiplugin_gpssyncui.rc");
+    setupXML();
 }
 
-void Plugin_GPSSync::setup(QWidget* widget)
+Plugin_GPSSync::~Plugin_GPSSync()
+{
+}
+
+void Plugin_GPSSync::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
+    setupActions();
 
-    m_action_geolocation = actionCollection()->addAction("gpssync");
-    m_action_geolocation->setText(i18n("Geo-location"));
-    m_action_geolocation->setIcon(KIcon("applications-internet"));
-
-    connect(m_action_geolocation, SIGNAL(triggered(bool)),
-            this, SLOT(slotGPSSync()));
-
-    addAction(m_action_geolocation);
-
-    m_interface = dynamic_cast< Interface* >( parent() );
-
-    if ( !m_interface )
+    m_interface = interface();
+    if (!m_interface)
     {
         kError() << "Kipi interface is null!" ;
         return;
@@ -90,6 +88,21 @@ void Plugin_GPSSync::setup(QWidget* widget)
 
     connect(m_interface, SIGNAL(selectionChanged(bool)),
             m_action_geolocation, SLOT(setEnabled(bool)));
+}
+
+void Plugin_GPSSync::setupActions()
+{
+    setDefaultCategory(ImagesPlugin);
+
+    m_action_geolocation = new KAction(this);
+    m_action_geolocation->setText(i18n("Geo-location"));
+    m_action_geolocation->setIcon(KIcon("applications-internet"));
+    m_action_geolocation->setEnabled(false);
+
+    connect(m_action_geolocation, SIGNAL(triggered(bool)),
+            this, SLOT(slotGPSSync()));
+
+    addAction("gpssync", m_action_geolocation);
 }
 
 void Plugin_GPSSync::slotGPSSync()
@@ -103,15 +116,6 @@ void Plugin_GPSSync::slotGPSSync()
 
     dialog->setImages( images.images() );
     dialog->show();
-}
-
-Category Plugin_GPSSync::category( KAction* action ) const
-{
-    if ( action == m_action_geolocation )
-       return ImagesPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIGPSSyncPlugin

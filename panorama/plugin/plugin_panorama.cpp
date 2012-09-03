@@ -64,32 +64,45 @@ Plugin_Panorama::Plugin_Panorama(QObject* const parent, const QVariantList&)
     m_manager      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_Panorama plugin loaded";
+
+    setUiBaseName("kipiplugin_panoramaui.rc");
+    setupXML();
 }
 
 Plugin_Panorama::~Plugin_Panorama()
 {
 }
 
-void Plugin_Panorama::setup(QWidget* widget)
+void Plugin_Panorama::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
     Plugin::setup(m_parentWidget);
 
-    m_action = actionCollection()->addAction("panorama");
-    m_action->setText(i18n("Stitch images into a panorama..."));
-    m_action->setIcon(KIcon("layer-visible-on"));
+    setupActions();
 
-    connect(m_action, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
-
-    addAction(m_action);
-
-    m_interface = dynamic_cast< Interface* >(parent());
+    m_interface = interface();
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
+
+    m_action->setEnabled(true);
+}
+
+void Plugin_Panorama::setupActions()
+{
+    setDefaultCategory(ToolsPlugin);
+
+    m_action = new KAction(this);
+    m_action->setText(i18n("Stitch images into a panorama..."));
+    m_action->setIcon(KIcon("layer-visible-on"));
+    m_action->setEnabled(false);
+
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
+    addAction("panorama", m_action);
 }
 
 void Plugin_Panorama::slotActivate()
@@ -115,15 +128,6 @@ void Plugin_Panorama::slotActivate()
     m_manager->setItemsList(images.images());
     m_manager->setIface(m_interface);
     m_manager->run();
-}
-
-Category Plugin_Panorama::category( KAction* action ) const
-{
-    if ( action == m_action )
-       return ToolsPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ToolsPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIPanoramaPlugin

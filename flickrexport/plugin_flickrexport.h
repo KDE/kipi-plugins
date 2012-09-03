@@ -50,14 +50,17 @@ public:
     Plugin_FlickrExport(QObject* const parent, const QVariantList& args);
     ~Plugin_FlickrExport();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotActivateFlickr();
     void slotActivate23();
     void slotActivateZooomr();
+
+private:
+
+    void setupActions();
 
 private:
 

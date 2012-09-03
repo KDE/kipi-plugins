@@ -40,3 +40,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
 
 INSTALL(TARGETS kipiplugin_jpeglossless DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES plugin/kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_jpeglosslessui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)

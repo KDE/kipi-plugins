@@ -49,13 +49,16 @@ public:
     Plugin_YandexFotki(QObject* const parent, const QVariantList& args);
     ~Plugin_YandexFotki();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotExport();
 //    void slotImport();
+
+private:
+
+    void setupActions();
 
 private:
 

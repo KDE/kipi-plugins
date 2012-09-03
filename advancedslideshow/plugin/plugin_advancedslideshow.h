@@ -32,9 +32,13 @@
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
-#include <libkipi/interface.h>
 
 class KAction;
+
+namespace KIPI
+{
+    class Interface;
+}
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -50,8 +54,7 @@ public:
     Plugin_AdvancedSlideshow(QObject* const parent, const QVariantList& args);
     ~Plugin_AdvancedSlideshow();
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
@@ -61,6 +64,10 @@ private Q_SLOTS:
 
     void slotAlbumChanged(bool anyAlbum);
     void slotSlideShow();
+
+private:
+
+    void setupActions();
 
 private:
 

@@ -49,8 +49,7 @@ public:
     Plugin_DebianScreenshots(QObject* const parent, const QVariantList& args);
     ~Plugin_DebianScreenshots();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
@@ -58,8 +57,12 @@ public Q_SLOTS:
 
 private:
 
-    KAction*  m_actionExport;
-    DsWindow* m_dlgExport;
+    void setupActions();
+
+private:
+
+    KAction*   m_actionExport;
+    DsWindow*  m_dlgExport;
 };
 
 } // namespace KIPIDebianScreenshotsPlugin

@@ -78,3 +78,5 @@ INSTALL(FILES widgets/controlwidget.svg plugin/removeredeyes_classifier_eye_20_2
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
 
 INSTALL(FILES plugin/kipiplugin_removeredeyes.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES plugin/kipiplugin_removeredeyesui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)

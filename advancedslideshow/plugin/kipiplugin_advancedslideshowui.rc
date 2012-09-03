@@ -1,0 +1,18 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="1" name="kipiplugin_advancedslideshow" >
+
+    <MenuBar>
+
+        <Menu name="View"><text>&amp;View</text>
+            <Menu name="slideshow">
+                <text>Slideshow</text>
+                <Action name="advancedslideshow" />
+            </Menu>
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>

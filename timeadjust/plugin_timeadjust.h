@@ -46,8 +46,11 @@ public:
     Plugin_TimeAdjust(QObject* const parent, const QVariantList& args);
    ~Plugin_TimeAdjust();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget*);
+    void setup(QWidget* const);
+
+protected:
+
+    void setupActions();
 
 protected Q_SLOTS:
 

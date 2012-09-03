@@ -53,8 +53,7 @@ public:
     Plugin_Calendar(QObject* const parent, const QVariantList& args);
     ~Plugin_Calendar();
 
-    virtual Category category(KAction* action) const;
-    virtual void setup(QWidget* widget);
+    virtual void setup(QWidget* const widget);
 
 protected Q_SLOTS:
 
@@ -62,7 +61,11 @@ protected Q_SLOTS:
 
 private:
 
-    KAction* m_actionCalendar;
+    void setupActions();
+
+private:
+
+    KAction*   m_actionCalendar;
 };
 
 }  // NameSpace KIPICalendarPlugin

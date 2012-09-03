@@ -31,3 +31,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
 INSTALL(TARGETS kipiplugin_rawconverter DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES plugin/kipiplugin_rawconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES plugin/kipiplugin_rawconverterui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)

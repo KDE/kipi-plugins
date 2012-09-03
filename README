@@ -51,15 +51,11 @@ Vkontakte          : A tool to export images to VKontakte web service (http://ww
 PhotoLayoutEditor  : A tool to assemble images together.
 ImageShackExport   : A tool to export images to ImageShack web service (http://imageshack.us)
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
+DLNAExport         : A tool to export collection on DLNA network service (http://www.dlna.org).
 
-Porting under progress to Qt4/KDE4:
+Not yet ported under Qt4/KDE4:
 
 WallPaper          : A tool to set image as background on your desktop.
-
-Not yet ported to Qt4/KDE4:
-
-CDArchiving        : A tool to archive your image collections to a CD or DVD.
-MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 
 -- DEPENDENCIES -------------------------------------------------------
 
@@ -94,6 +90,7 @@ libksane        >= 0.3.0                        https://projects.kde.org/project
 libkgeomap      >= 2.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
 libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
+libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -115,6 +112,7 @@ ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblen
 GPSSync            : libkmap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
+DLNAExport         : libhupnp.
 
 -- CONTACT ------------------------------------------------------------
 

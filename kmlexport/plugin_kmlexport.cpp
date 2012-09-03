@@ -64,32 +64,54 @@ Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     : Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
+
+    setUiBaseName("kipiplugin_kmlexportui.rc");
+    setupXML();
 }
 
-void Plugin_KMLExport::setup(QWidget* widget)
+Plugin_KMLExport::~Plugin_KMLExport()
+{
+}
+
+void Plugin_KMLExport::setup(QWidget* const widget)
 {
     Plugin::setup( widget );
 
-    m_actionKMLExport = actionCollection()->addAction("kmlexport");
-    m_actionKMLExport->setText(i18n("Export to KML..."));
-    m_actionKMLExport->setIcon(KIcon("applications-development-web"));
+    setupActions();
 
-    connect(m_actionKMLExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotKMLExport()));
-
-    addAction( m_actionKMLExport );
-
-    m_interface = dynamic_cast<Interface*>( parent() );
-
-    if ( !m_interface )
+    m_interface = interface();
+    if (!m_interface)
     {
         kError() << "Kipi interface is null!" ;
         return;
     }
+
+    m_actionKMLExport->setEnabled(true);
+}
+
+void Plugin_KMLExport::setupActions()
+{
+    setDefaultCategory(ExportPlugin);
+
+    m_actionKMLExport = new KAction(this);
+    m_actionKMLExport->setText(i18n("Export to KML..."));
+    m_actionKMLExport->setIcon(KIcon("applications-development-web"));
+    m_actionKMLExport->setEnabled(false);
+
+    connect(m_actionKMLExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotKMLExport()));
+
+    addAction("kmlexport", m_actionKMLExport);
 }
 
 void Plugin_KMLExport::slotKMLExport()
 {
+    if (!m_interface)
+    {
+        kError() << "Kipi interface is null!" ;
+        return;
+    }
+
     ImageCollection selection = m_interface->currentSelection();
 
     if ( !selection.isValid() )
@@ -115,17 +137,6 @@ void Plugin_KMLExport::slotKMLGenerate()
         return;
 
     myExport.generate();
-}
-
-Category Plugin_KMLExport::category(KAction* action) const
-{
-    if ( action == m_actionKMLExport )
-    {
-       return ExportPlugin;
-    }
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace KIPIKMLExportPlugin

@@ -77,4 +77,5 @@ Type=Service
 Icon=folder-remote
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kioexportimport
+X-KIPI-PluginCategories=Export,Import
 author=Johannes Wienke, languitar at semipol dot de

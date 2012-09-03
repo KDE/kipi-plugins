@@ -1,0 +1,15 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="1" name="kipiplugin_calendar" >
+
+    <MenuBar>
+
+        <Menu name="Tools"><text>&amp;Tools</text>
+            <Action name="calendar" group="kipi_tool_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>

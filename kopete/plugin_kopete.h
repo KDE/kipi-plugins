@@ -52,8 +52,7 @@ public:
     Plugin_Kopete(QObject* const parent, const QVariantList& args);
     ~Plugin_Kopete();
 
-    Category category(KAction* action) const;
-    void setup(QWidget*);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 

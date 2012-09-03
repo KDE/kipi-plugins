@@ -31,5 +31,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_calendar
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_calendar DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_calendar.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_calendar                DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_calendar.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_calendarui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -18,7 +18,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -52,12 +52,15 @@ public:
     Plugin_GalleryExport(QObject* const parent, const QVariantList& args);
     ~Plugin_GalleryExport();
 
-    virtual Category category(KAction* const action) const;
-    virtual void setup(QWidget* const);
+    void setup(QWidget* const);
 
 public Q_SLOTS:
 
     void slotSync();
+
+private:
+
+    void setupActions();
 
 private:
 

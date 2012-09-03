@@ -97,4 +97,5 @@ Icon=view-pim-calendar
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar
 X-KIPI-MergeMenu=false
+X-KIPI-PluginCategories=Tools
 author=Orgad Shaneh, orgads at gmail dot com
