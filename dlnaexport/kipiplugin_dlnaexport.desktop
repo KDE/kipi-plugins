@@ -1,7 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=DLNAExport
+Name[nl]=DLNA-export
+Name[pt]=DLNAExport
+Name[pt_BR]=Exportar para DLNA
+Name[uk]=Експорт до DLNA
+Name[x-test]=xxDLNAExportxx
 Comment=A tool to export collection on DLNA network service
+Comment[nl]=Een hulpmiddel om een verzameling naar een DLNA-netwerk te exporteren
+Comment[pt]=Uma ferramenta para exportar a colecção num serviço de rede DLNA
+Comment[pt_BR]=Uma ferramenta para exportar a coleção para um serviço de rede DLNA
+Comment[uk]=Інструмент для експорту збірок до служби DLNA у мережі
+Comment[x-test]=xxA tool to export collection on DLNA network servicexx
 Type=Service
 Icon=dlna
 ServiceTypes=KIPI/Plugin

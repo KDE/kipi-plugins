@@ -1,6 +1,16 @@
 [Desktop Entry]
 Name=Imageshack Export
+Name[nl]=Imageshack-export
+Name[pt]=Exportação para o Imageshack
+Name[pt_BR]=Exportar para o Imageshack
+Name[uk]=Експорт до Imageshack
+Name[x-test]=xxImageshack Exportxx
 Comment=A tool to export images to Imageshack web service
+Comment[nl]=Een hulpmiddel om afbeeldingen naar de Imageshack-webservice te exporteren
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web Imageshack
+Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço da Internet Imageshack
+Comment[uk]=Інструмент для експорту зображення до служби Imageshack
+Comment[x-test]=xxA tool to export images to Imageshack web servicexx
 Type=Service
 Icon=imageshack
 ServiceTypes=KIPI/Plugin

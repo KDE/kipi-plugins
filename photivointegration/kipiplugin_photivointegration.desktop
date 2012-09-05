@@ -1,7 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Photivo Integration
+Name[nl]=Photivo-integratie
+Name[pt]=Integração com o Photivo
+Name[uk]=Інтеграція Photivo
+Name[x-test]=xxPhotivo Integrationxx
 Comment=Integration of the Photivo RAW-Processor
+Comment[nl]=Integratie van de Photivo RAW-processor
+Comment[pt]=Integração com o Processador RAW Photivo
+Comment[uk]=Інтеграція програми для обробки цифрових негативів Photivo
+Comment[x-test]=xxIntegration of the Photivo RAW-Processorxx
 Type=Service
 Icon=photivo
 ServiceTypes=KIPI/Plugin
