@@ -129,9 +129,9 @@ void FinalPage::setOptions(WelcomePage::ImplementationGetOption implementation)
 void FinalPage::turnOff()
 {
     if (d->implementation == WelcomePage::HUPNP)
-        d->Hdlna->~MediaServer();
+        delete d->Hdlna;
     else
-        d->Mdlna->~MinidlnaServer();
+        delete d->Mdlna;
 
     d->startButton->setEnabled(true);
     d->stopButton->setEnabled(false);
