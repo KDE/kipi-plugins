@@ -1,15 +1,22 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=DLNAExport
+Name[cs]=DLNAExport
+Name[el]=DLNAExport
+Name[is]=DLNA-útflutningur
 Name[nl]=DLNA-export
 Name[pt]=DLNAExport
 Name[pt_BR]=Exportar para DLNA
+Name[sv]=Export till DLNA
 Name[uk]=Експорт до DLNA
 Name[x-test]=xxDLNAExportxx
 Comment=A tool to export collection on DLNA network service
+Comment[el]=Εργαλείο εξαγωγής συλλογής σε δικτυακή υπηρεσία DLNA
+Comment[is]=Tól til að flytja myndasöfn yfir í DLNA netþjónustu
 Comment[nl]=Een hulpmiddel om een verzameling naar een DLNA-netwerk te exporteren
 Comment[pt]=Uma ferramenta para exportar a colecção num serviço de rede DLNA
 Comment[pt_BR]=Uma ferramenta para exportar a coleção para um serviço de rede DLNA
+Comment[sv]=Ett verktyg för att exportera bilder till en DLNA nätverkstjänst
 Comment[uk]=Інструмент для експорту збірок до служби DLNA у мережі
 Comment[x-test]=xxA tool to export collection on DLNA network servicexx
 Type=Service
