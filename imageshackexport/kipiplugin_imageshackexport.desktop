@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Imageshack Export
+Name[cs]=Export do Imageshacku
 Name[el]=Εξαγωγή Imageshack
 Name[is]=Imageshack útflutningur
 Name[nl]=Imageshack-export
@@ -9,6 +10,7 @@ Name[sv]=Export till Imageshack
 Name[uk]=Експорт до Imageshack
 Name[x-test]=xxImageshack Exportxx
 Comment=A tool to export images to Imageshack web service
+Comment[cs]=Nástroj pro export obrázků do webové služby Imageshack
 Comment[el]=Εργαλείο εξαγωγής εικόνων στην υπηρεσία ιστού Imageshack
 Comment[is]=Verkfæri til að senda myndir á Imageshack vefþjónustu
 Comment[nl]=Een hulpmiddel om afbeeldingen naar de Imageshack-webservice te exporteren

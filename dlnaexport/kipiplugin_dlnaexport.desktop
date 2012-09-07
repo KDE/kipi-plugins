@@ -11,6 +11,7 @@ Name[sv]=Export till DLNA
 Name[uk]=Експорт до DLNA
 Name[x-test]=xxDLNAExportxx
 Comment=A tool to export collection on DLNA network service
+Comment[cs]=Nástroj pro export kolekce do síťové služby DLNA
 Comment[el]=Εργαλείο εξαγωγής συλλογής σε δικτυακή υπηρεσία DLNA
 Comment[is]=Tól til að flytja myndasöfn yfir í DLNA netþjónustu
 Comment[nl]=Een hulpmiddel om een verzameling naar een DLNA-netwerk te exporteren
