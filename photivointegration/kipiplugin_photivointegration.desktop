@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Name=Photivo Integration
 Name[el]=Ενσωμάτωση Photivo
+Name[hu]=Photivo integráció
 Name[is]=Innbygging Photivo
+Name[it]=Integrazione di Photivo
 Name[nl]=Photivo-integratie
 Name[pt]=Integração com o Photivo
 Name[pt_BR]=Integração com o Photivo
@@ -13,6 +15,7 @@ Name[x-test]=xxPhotivo Integrationxx
 Comment=Integration of the Photivo RAW-Processor
 Comment[el]=Ενσωμάτωση του RAW-επεξεργαστή Photivo
 Comment[is]=Innbygging Photivo RAW-meðhöndlunar í kerfið
+Comment[it]=Integrazione dell'elaboratore RAW Photivo
 Comment[nl]=Integratie van de Photivo RAW-processor
 Comment[pt]=Integração com o Processador RAW Photivo
 Comment[pt_BR]=Integração com o Processador RAW Photivo
