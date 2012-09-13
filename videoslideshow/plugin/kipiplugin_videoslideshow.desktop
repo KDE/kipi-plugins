@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=VideoSlideShow
+Name[da]=Video-diasshow
 Name[el]=VideoSlideShow
 Name[is]=Vídeóskyggnusýning
 Name[it]=Presentazione video
@@ -12,6 +13,7 @@ Name[sv]=Videobildspel
 Name[uk]=Відеопоказ слайдів
 Name[x-test]=xxVideoSlideShowxx
 Comment=A tool to export images as Video Slide Show
+Comment[da]=Et værktøj til at eksportere billeder som et video-diasshow
 Comment[el]=Εργαλείο εξαγωγής εικόνων ως παρουσίαση διαφανειών βίντεο
 Comment[is]=Verkfæri til að flytja myndir út vídóskyggnusýningu
 Comment[it]=Uno strumento per esportare immagini come presentazione video

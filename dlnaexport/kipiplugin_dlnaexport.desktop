@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=DLNAExport
 Name[cs]=DLNAExport
+Name[da]=DLNAExport
 Name[el]=DLNAExport
 Name[hu]=DLNA exportálás
 Name[is]=DLNA-útflutningur
@@ -15,6 +16,7 @@ Name[uk]=Експорт до DLNA
 Name[x-test]=xxDLNAExportxx
 Comment=A tool to export collection on DLNA network service
 Comment[cs]=Nástroj pro export kolekce do síťové služby DLNA
+Comment[da]=Et værktøj til at eksportere samling på DLNA-netværkstjenesten
 Comment[el]=Εργαλείο εξαγωγής συλλογής σε δικτυακή υπηρεσία DLNA
 Comment[hu]=Egy eszköz gyűjtemények exportálásához DLNA hálózati szolgáltatásba
 Comment[is]=Tól til að flytja myndasöfn yfir í DLNA netþjónustu
