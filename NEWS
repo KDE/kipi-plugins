@@ -11,5 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 305224 - Configure Shortcuts does not provide the option of config.
 002 ==> 306193 - Desktop-file-validate fails on kipiplugins.desktop.
-003 ==> 
-
+003 ==> 300723 - Crash when "Next" button clicked from "Set panorama images" window.
+004 ==> 
