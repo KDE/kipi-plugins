@@ -5,7 +5,7 @@ NEW FEATURES:
 
 General : New tool to export Collection to DLNA device.
 General : New tool to make video slideshow.
-
+General : Port all plugins to KDE XML-GUI framework.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
