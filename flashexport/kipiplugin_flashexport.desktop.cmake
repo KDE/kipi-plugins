@@ -93,4 +93,5 @@ Icon=flash
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flashexport
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Gilles Caulier, caulier dot gilles at gmail dot com
