@@ -88,5 +88,6 @@ Icon=slideshow
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_advancedslideshow
 X-KIPI-PluginCategories=Tools
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 X-KIPI-MergeMenu=true
 author=Renchi Raju, renchi dot raju at gmail dot com

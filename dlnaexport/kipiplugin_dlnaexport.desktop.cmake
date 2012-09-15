@@ -34,4 +34,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_dlnaexport
 author=Smit Mehta, smit dot meh at gmail dot com
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 X-KIPI-ReqFeatures=

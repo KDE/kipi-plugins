@@ -43,6 +43,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_dngconverter
                       libdng
                      )
 
-INSTALL(TARGETS kipiplugin_dngconverter DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_dngconverterui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_dngconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dngconverter.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_dngconverter                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_dngconverterui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

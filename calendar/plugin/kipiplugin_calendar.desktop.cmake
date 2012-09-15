@@ -98,4 +98,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar
 X-KIPI-MergeMenu=false
 X-KIPI-PluginCategories=Tools
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Orgad Shaneh, orgads at gmail dot com

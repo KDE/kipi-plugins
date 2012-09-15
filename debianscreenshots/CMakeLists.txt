@@ -26,6 +26,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_debianscreenshots
                       ${KDE4_KDEUI_LIBS}
                      )
 
-INSTALL(TARGETS kipiplugin_debianscreenshots         DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_debianscreenshots.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_debianscreenshotsui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_debianscreenshots.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_debianscreenshots                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_debianscreenshotsui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -55,11 +55,8 @@ ELSE(HUPNP_FOUND AND HUPNPAV_FOUND)
 
 ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
 
-INSTALL(TARGETS kipiplugin_dlnaexport
-        DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(kipiplugin_dlnaexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
 
-INSTALL(FILES kipiplugin_dlnaexport.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_dlnaexportui.rc
-        DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_dlnaexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES kipiplugin_dlnaexportui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
