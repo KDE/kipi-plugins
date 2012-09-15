@@ -22,6 +22,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_facebook
                       ${QJSON_LIBRARIES}
                      )
 
-INSTALL(TARGETS kipiplugin_facebook         DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_facebook.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_facebookui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_facebook.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_facebook                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_facebookui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

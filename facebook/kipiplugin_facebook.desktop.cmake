@@ -88,4 +88,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_facebook
 Icon=facebook
 X-KIPI-PluginCategories=Export,Import
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Luka Renko, lure@kubuntu.org
