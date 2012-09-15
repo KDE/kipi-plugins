@@ -67,9 +67,11 @@ KDE4_ADD_PLUGIN(kipiplugin_expoblending ${kipiplugin_expoblending_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_expoblending libexpoblending)
 
-INSTALL(TARGETS kipiplugin_expoblending DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_expoblendingui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(plugin/kipiplugin_expoblending.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_expoblending                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_expoblendingui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Stand alone version of ExpoBlending plugin
