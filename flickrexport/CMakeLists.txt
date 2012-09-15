@@ -25,6 +25,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_flickrexport
                       ${KDE4_KDEUI_LIBS}
                      )
 
-INSTALL(TARGETS kipiplugin_flickrexport DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_flickrexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_flickrexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_flickrexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_flickrexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_flickrexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
