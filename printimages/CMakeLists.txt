@@ -41,22 +41,10 @@ TARGET_LINK_LIBRARIES(kipiplugin_printimages
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_printimages
-        DESTINATION ${PLUGIN_INSTALL_DIR}
-       )
+CONFIGURE_FILE(plugin/kipiplugin_printimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
 
-INSTALL(FILES plugin/kipiplugin_printimages.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR}
-       )
-
-INSTALL(FILES plugin/kipiplugin_printimagesui.rc
-        DESTINATION ${DATA_INSTALL_DIR}/kipi
-       )
-
-INSTALL(FILES TEMPLATE_HOWTO
-        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
-       )
-
-INSTALL(DIRECTORY templates
-        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
-       )
+INSTALL(FILES     ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS   kipiplugin_printimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES     plugin/kipiplugin_printimagesui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES     TEMPLATE_HOWTO                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)
+INSTALL(DIRECTORY templates                                                         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)

@@ -19,8 +19,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_sendimages
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_sendimages DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(kipiplugin_sendimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
 
-INSTALL(FILES kipiplugin_sendimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_sendimagesui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_sendimages                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_sendimagesui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -1,5 +1,9 @@
 SUBDIRS(icons)
 
+INCLUDE_DIRECTORIES(${QCA2_INCLUDE_DIR})
+
+ADD_DEFINITIONS(${QCA2_DEFINITIONS})
+
 SET(kipiplugin_shwup_PART_SRCS
     plugin_shwup.cpp
     swwindow.cpp
@@ -21,14 +25,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_shwup
                       kipiplugins
                      )
 
-INCLUDE_DIRECTORIES(
-    ${QCA2_INCLUDE_DIR}
-    )
+CONFIGURE_FILE(kipiplugin_shwup.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_shwup.desktop)
 
-ADD_DEFINITIONS(
-    ${QCA2_DEFINITIONS}
-    )
-
-INSTALL(TARGETS kipiplugin_shwup DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_shwup.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_shwupui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_shwup.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_shwup                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_shwupui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

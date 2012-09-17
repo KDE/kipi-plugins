@@ -23,11 +23,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_picasawebexport
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_picasawebexport
-        DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(kipiplugin_picasawebexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_picasawebexport.desktop)
 
-INSTALL(FILES kipiplugin_picasawebexport.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_picasawebexportui.rc
-        DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_picasawebexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_picasawebexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_picasawebexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

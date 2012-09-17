@@ -38,6 +38,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_jpeglossless DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_jpeglosslessui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(plugin/kipiplugin_jpeglossless.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_jpeglossless                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_jpeglosslessui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

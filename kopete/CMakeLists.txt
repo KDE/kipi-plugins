@@ -12,6 +12,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_kopete
                       ${KDE4_KDEUI_LIBS}
                      )
 
-INSTALL(TARGETS kipiplugin_kopete DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_kopete.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_kopeteui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_kopete.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_kopete                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_kopeteui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

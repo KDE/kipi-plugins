@@ -26,8 +26,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_imageviewer DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(kipiplugin_imageviewer.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
 
-INSTALL(FILES kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_imageviewerui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_imageviewer                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_imageviewerui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

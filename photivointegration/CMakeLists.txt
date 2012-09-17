@@ -44,8 +44,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_photivointegration
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_photivointegration DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(kipiplugin_photivointegration.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop)
 
-INSTALL(FILES kipiplugin_photivointegration.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_photivointegrationui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_photivointegration                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_photivointegrationui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -20,6 +20,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageshackexport
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_imageshackexport       DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_imageshackexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_imageshackexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_imageshackexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageshackexport.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageshackexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_imageshackexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_imageshackexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -48,22 +48,10 @@ ADD_DEFINITIONS(${LIBXSLT_DEFINITIONS}
                 ${LIBXML2_DEFINITIONS}
                )
 
-INSTALL(TARGETS kipiplugin_htmlexport
-        DESTINATION ${PLUGIN_INSTALL_DIR}
-       )
+CONFIGURE_FILE(kipiplugin_htmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop)
 
-INSTALL(FILES kipiplugin_htmlexport.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR}
-       )
-
-INSTALL(FILES kipiplugin_htmlexportui.rc
-        DESTINATION ${DATA_INSTALL_DIR}/kipi
-       )
-
-INSTALL(FILES THEME_HOWTO
-        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport
-       )
-
-INSTALL(DIRECTORY themes
-        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport
-       )
+INSTALL(FILES     ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS   kipiplugin_htmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES     kipiplugin_htmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES     THEME_HOWTO                                               DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)
+INSTALL(DIRECTORY themes                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)

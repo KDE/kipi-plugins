@@ -52,8 +52,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_metadataedit DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(plugin/kipiplugin_metadataedit.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop)
 
-INSTALL(FILES plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES plugin/kipiplugin_metadataeditui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_metadataedit                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_metadataeditui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

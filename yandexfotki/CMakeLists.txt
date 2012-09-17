@@ -1,5 +1,9 @@
 SUBDIRS(icons)
 
+INCLUDE_DIRECTORIES(${QCA2_INCLUDE_DIR})
+
+ADD_DEFINITIONS(${QCA2_DEFINITIONS})
+
 SET(kipiplugin_yandexfotki_PART_SRCS
     plugin_yandexfotki.cpp
     logindialog.cpp
@@ -24,19 +28,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_yandexfotki
                       kipiplugins
                      )
 
-INCLUDE_DIRECTORIES(
-    ${QCA2_INCLUDE_DIR}
-    )
+CONFIGURE_FILE(kipiplugin_yandexfotki.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop)
 
-ADD_DEFINITIONS(
-    ${QCA2_DEFINITIONS}
-    )
-
-INSTALL(TARGETS kipiplugin_yandexfotki
-        DESTINATION ${PLUGIN_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_yandexfotki.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_yandexfotkiui.rc
-        DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_yandexfotki                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES kipiplugin_yandexfotkiui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -19,6 +19,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_imgurexport
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_imgurexport DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_imgurexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_imgurexportui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_imgurexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_imgurexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_imgurexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

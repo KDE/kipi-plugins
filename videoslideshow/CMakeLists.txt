@@ -36,8 +36,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_videoslideshow
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_videoslideshow DESTINATION ${PLUGIN_INSTALL_DIR})
+CONFIGURE_FILE(plugin/kipiplugin_videoslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop)
 
-INSTALL(FILES plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES plugin/kipiplugin_videoslideshowui.rc DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_videoslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_videoslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

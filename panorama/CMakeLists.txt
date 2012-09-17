@@ -85,9 +85,11 @@ KDE4_ADD_PLUGIN(kipiplugin_panorama ${kipiplugin_panorama_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_panorama libpanorama)
 
-INSTALL(TARGETS kipiplugin_panorama DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_panoramaui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(plugin/kipiplugin_panorama.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_panorama                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_panoramaui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Stand alone version of Panorama plugin

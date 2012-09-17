@@ -24,6 +24,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
                       kipiplugins
                      )
 
-INSTALL(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES kipiplugin_ipodexportui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(kipiplugin_ipodexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_ipodexport.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_ipodexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   kipiplugin_ipodexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
