@@ -31,4 +31,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_photivointegration
 author=Dominic Lyons, domlyons at googlemail dot com
 X-KIPI-PluginCategories=Tools
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 X-KIPI-ReqFeatures=

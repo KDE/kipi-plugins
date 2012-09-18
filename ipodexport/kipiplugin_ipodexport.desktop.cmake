@@ -91,4 +91,5 @@ Icon=multimedia-player-apple-ipod
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_ipodexport
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Seb Ruiz, me@sebruiz.net

@@ -32,4 +32,5 @@ Icon=imageshack
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_imageshackexport
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Victor Dodon, dodonvictor at gmail dot com

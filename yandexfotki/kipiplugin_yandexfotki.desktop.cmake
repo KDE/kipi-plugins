@@ -65,3 +65,4 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_yandexfotki
 author=Roman Tsisyk, roman@tsisyk.com
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}

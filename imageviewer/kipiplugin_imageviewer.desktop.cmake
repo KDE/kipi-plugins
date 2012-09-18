@@ -91,4 +91,5 @@ Icon=ogl
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_imageviewer
 X-KIPI-PluginCategories=Tools
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Markus Leuthold

@@ -92,4 +92,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_printimages
 X-KIPI-MergeMenu=true
 X-KIPI-PluginCategories=Image
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Angelo Naselli, anaselli@linux.it

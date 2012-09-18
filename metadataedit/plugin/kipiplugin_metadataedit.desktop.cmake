@@ -95,4 +95,5 @@ ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_metadataedit
 X-KIPI-PluginCategories=Image
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Gilles Caulier, caulier dot gilles at gmail dot com

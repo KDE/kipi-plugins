@@ -93,4 +93,5 @@ Icon=gallery
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_galleryexport
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Andrea Diamantini, adjam7@gmail.com

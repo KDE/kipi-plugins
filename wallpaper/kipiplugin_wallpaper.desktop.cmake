@@ -98,3 +98,4 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_wallpaper
 author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-PluginCategories=Image
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}

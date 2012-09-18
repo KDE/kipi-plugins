@@ -80,4 +80,5 @@ Icon=shwup
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_shwup
 X-KIPI-PluginCategories=Export
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Timothée Groleau, timothee at muvee dot com

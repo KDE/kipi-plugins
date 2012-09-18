@@ -52,4 +52,5 @@ ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_photolayoutseditor
 X-KIPI-PluginCategories=Tools
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Łukasz Spas, lukasz dot spas at gmail dot com

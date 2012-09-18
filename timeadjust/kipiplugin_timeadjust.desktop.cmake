@@ -97,3 +97,4 @@ X-KDE-Library=kipiplugin_timeadjust
 author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-ReqFeatures=ImagesHasTime
 X-KIPI-PluginCategories=Image
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}

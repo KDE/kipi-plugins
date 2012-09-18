@@ -96,4 +96,5 @@ Icon=mail-send
 X-KDE-Library=kipiplugin_sendimages
 author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-MergeMenu=true
+X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 X-KIPI-PluginCategories=Export
