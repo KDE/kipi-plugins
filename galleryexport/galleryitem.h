@@ -7,9 +7,9 @@
 * Description : a plugin to export to a remote Gallery server.
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
-* Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+* Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
 * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
-* Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+* Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
 * and/or modify it under the terms of the GNU General
@@ -74,24 +74,25 @@ public:
         {
             return ref_num < rhs.ref_num;
         }
+
         return parent_ref_num < rhs.parent_ref_num;
     }
 
     // permissions
-    bool               add;
-    bool               write;
-    bool               del_item;
-    bool               del_alb;
-    bool               create_sub;
+    bool    add;
+    bool    write;
+    bool    del_item;
+    bool    del_alb;
+    bool    create_sub;
 
-    int                ref_num;         // album reference number
-    int                parent_ref_num;  // parent's album reference number
+    int     ref_num;         // album reference number
+    int     parent_ref_num;  // parent's album reference number
 
-    QString            name;            // ?
-    QString            parentName;      // ?
-    QString            title;           // album title
-    QString            summary;         // album summary
-    QString            baseurl;         // album partial (gallery) URL
+    QString name;            // ?
+    QString parentName;      // ?
+    QString title;           // album title
+    QString summary;         // album summary
+    QString baseurl;         // album partial (gallery) URL
 };
 
 } // namespace KIPIGalleryExportPlugin

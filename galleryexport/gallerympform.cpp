@@ -7,9 +7,9 @@
  * Description : a plugin to export to a remote Gallery server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  *
  * This program is free software; you can redistribute it
@@ -68,6 +68,7 @@ GalleryMPForm::GalleryMPForm()
     {
         addPairRaw("g2_controller", "remote:GalleryRemote");
         QString auth_token = GalleryTalker::getAuthToken();
+
         if (!auth_token.isEmpty())
             addPairRaw("g2_authToken", auth_token);
     }
@@ -121,8 +122,8 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 
 bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 {
-
     QString filename = "userfile_name";
+
     if (GalleryTalker::isGallery2())
         filename = "g2_userfile_name";
 
@@ -132,7 +133,8 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     }
 
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
-    QString mime = ptr->name();
+    QString mime       = ptr->name();
+
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,
@@ -141,8 +143,10 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     }
 
     QFile imageFile(path);
+
     if (!imageFile.open(QIODevice::ReadOnly))
         return false;
+
     QByteArray imageData = imageFile.readAll();
     imageFile.close();
 
@@ -169,7 +173,7 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 
     d->buffer.append(str.toUtf8());
 
-    int oldSize = d->buffer.size();
+    int oldSize                   = d->buffer.size();
     d->buffer.resize(oldSize + imageData.size() + 2);
     memcpy(d->buffer.data() + oldSize, imageData.data(), imageData.size());
     d->buffer[d->buffer.size()-2] = '\r';
@@ -182,7 +186,7 @@ QString GalleryMPForm::contentType() const
 {
     return QString("Content-Type: multipart/form-data; boundary=" + d->boundary);
 }
-  
+
 QString GalleryMPForm::boundary() const
 {
     return d->boundary;
