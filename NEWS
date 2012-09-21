@@ -14,4 +14,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 300723 - Crash when "Next" button clicked from "Set panorama images" window.
 004 ==> 303173 - Gallery export busyloop [patch].
 005 ==> 249066 - digiKam crashes when attempting to upload photo using gallery remote 2 protocol.
-006 ==> 
+006 ==> 147268 - Problem with unicode export.
+007 ==> 
