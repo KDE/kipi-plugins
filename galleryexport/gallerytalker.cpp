@@ -488,8 +488,13 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
                 else if (key.startsWith(QLatin1String("album.name")))
                 {
                         GAlbum album;
-                        album.name    = value;
-                        album.ref_num = key.section('.', 2, 2).toInt();
+                        album.name = value;
+
+                        if (s_using_gallery2)
+                            album.ref_num = value.toInt();
+                        else
+                            album.ref_num = key.section('.', 2, 2).toInt();
+
                         iter = albumList.insert(iter, album);
                 }
                 else if (key.startsWith(QLatin1String("album.title")))
