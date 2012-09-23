@@ -34,11 +34,11 @@ namespace KIPIPhotivoIntegrationPlugin
 
 // pImpl idiom for stable ABI /////////////////////////////////////////////////
 
-class PIWindow::PIWindowPriv
+class PIWindow::Private
 {
 public:
 
-    PIWindowPriv(PIWindow* const parent)
+    Private(PIWindow* const parent)
         : widget(new PIWidget(parent))
     {
     }
@@ -50,7 +50,7 @@ public:
 
 PIWindow::PIWindow(QWidget* const /*parent*/ /* = 0 */)
     : KPToolDialog(0),
-      d(new PIWindowPriv(this))
+      d(new Private(this))
 {
     // window & widget settings
     setMainWidget(d->widget);

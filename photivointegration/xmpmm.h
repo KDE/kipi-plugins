@@ -51,6 +51,21 @@ struct XmpMMDerivedFrom;
 class XmpMM
 {
 
+
+public:
+
+    XmpMM()
+    {
+    };
+
+    XmpMM(const KPMetadata meta)
+    {
+        load(meta);
+    };
+
+    void    load(const KPMetadata& meta);
+    QString pureID(const QString& id) const;
+
 public:
 
     QString                  originalDocumentID;
@@ -58,14 +73,6 @@ public:
     QString                  instanceID;
     vector<XmpMMDerivedFrom> derivedFrom;
     vector<XmpMMHistory>     history;
-
-public:
-
-    XmpMM() = default;
-    XmpMM(const KPMetadata meta) { load(meta); }
-
-    void    load(const KPMetadata& meta);
-    QString pureID(const QString& id) const;
 
 private:
 

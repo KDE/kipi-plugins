@@ -96,7 +96,7 @@ void Plugin_PhotivoIntegration::setup(QWidget* const widget)
     }
 
     /// There is no piWin instance yet
-    piWin = nullptr;
+    piWin = 0;
 
     /** This will get items selection from KIPI host application
      */
@@ -139,7 +139,7 @@ void Plugin_PhotivoIntegration::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    if (piWin == nullptr)
+    if (!piWin)
     {
         // cleaned it up in close button/destructor
         piWin = new PIWindow(kapp->activeWindow());

@@ -45,14 +45,14 @@ namespace KIPIPhotivoIntegrationPlugin
 
 // pImpl //////////////////////////////////////////////////////////////////////
 
-class PIWidget::PIWidgetPriv
+class PIWidget::Private
 {
 public:
 
-    PIWidgetPriv()
-        : photivoLink { nullptr },
-          imagesList  { nullptr },
-          info        { nullptr }
+    Private()
+        : photivoLink(0),
+          imagesList(0),
+          info(0)
     {
     }
 
@@ -65,56 +65,56 @@ public:
 
 PIWidget::PIWidget(QWidget* const parent /* = 0 */)
     : QWidget(parent),
-      d(*new PIWidgetPriv)
+      d(new Private)
 {
     // list of currently selected images
-    d.imagesList = new PIImgList(this);
-    d.imagesList->loadImagesFromCurrentSelection();
+    d->imagesList = new PIImgList(this);
+    d->imagesList->loadImagesFromCurrentSelection();
 
     // group all information widgets 
     QWidget* infoBox = new QWidget(this);
 
     // link to Photivo homepage
-    d.photivoLink = new QLabel(infoBox);
-    d.photivoLink->setWhatsThis(i18n("This is a clickable link to open the Photivo home page in a web browser"));
-    d.photivoLink->setText(QString("<h3><a href='http://photivo.org'>photivo.org</a></h3>"));
-    d.photivoLink->setOpenExternalLinks(true);
-    d.photivoLink->setFocusPolicy(Qt::NoFocus);
+    d->photivoLink = new QLabel(infoBox);
+    d->photivoLink->setWhatsThis(i18n("This is a clickable link to open the Photivo home page in a web browser"));
+    d->photivoLink->setText(QString("<h3><a href='http://photivo.org'>photivo.org</a></h3>"));
+    d->photivoLink->setOpenExternalLinks(true);
+    d->photivoLink->setFocusPolicy(Qt::NoFocus);
 
     // info about selected image
-    d.info = new QListWidget;
+    d->info = new QListWidget;
 
     // vertical layout: photivo link abouve, info below
     QVBoxLayout* infoBoxLayout = new QVBoxLayout(infoBox);
-    infoBoxLayout->addWidget(d.photivoLink);
-    infoBoxLayout->addWidget(d.info);
+    infoBoxLayout->addWidget(d->photivoLink);
+    infoBoxLayout->addWidget(d->info);
     infoBoxLayout->addStretch(10);
-    infoBoxLayout->setAlignment(d.photivoLink, Qt::AlignTop);
+    infoBoxLayout->setAlignment(d->photivoLink, Qt::AlignTop);
     infoBoxLayout->setSpacing(KDialog::spacingHint());
     infoBoxLayout->setMargin(KDialog::spacingHint());
 
     // horizontal layout: image list on the left side; link and info on the right
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    mainLayout->addWidget(d.imagesList);
+    mainLayout->addWidget(d->imagesList);
     mainLayout->addWidget(infoBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
     // update image info after selected image has changed
-    connect(d.imagesList->listView(), SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+    connect(d->imagesList->listView(), SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this, SLOT(slotCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
 }
 
 PIWidget::~PIWidget()
 {
-    delete &d;
+    delete d;
 }
 
 // ----------------------------------------------------------------------------
 
 PIImgList* PIWidget::imagesList() const
 {
-    return d.imagesList;
+    return d->imagesList;
 }
 
 // public Q_SLOTS /////////////////////////////////////////////////////////////
@@ -176,8 +176,8 @@ void PIWidget::slotCurrentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem*
     }
 
     // update the widget
-    d.info->clear();
-    d.info->addItems(infoList);
+    d->info->clear();
+    d->info->addItems(infoList);
 }
 
 // ----------------------------------------------------------------------------

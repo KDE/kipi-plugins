@@ -69,8 +69,8 @@ public:
  private:
 
     // pImpl idiom
-    class PIWindowPriv;
-    PIWindowPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 // ----------------------------------------------------------------------------

@@ -23,23 +23,22 @@
 ADD_SUBDIRECTORY(icons)
 
 ###REMOVE_DEFINITIONS(-DQT_NO_STL)
-ADD_DEFINITIONS("-std=c++0x")
 
-SET(kipiplugin_photivointegration_PART_SRCS plugin_photivointegration.cpp
+SET(kipiplugin_photivointegration_PART_SRCS xmpmm.cpp
                                             xmpinfo.cpp
-                                            xmpmm.cpp
-                                            piwidget.cpp
                                             piwindow.cpp
                                             piimglist.cpp
+                                            piwidget.cpp
+                                            plugin_photivointegration.cpp
 )
 
 KDE4_ADD_PLUGIN(kipiplugin_photivointegration ${kipiplugin_photivointegration_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_photivointegration
-                      ${KDE4_KPARTS_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${KIPI_LIBRARIES} 
-                      ${KEXIV2_LIBRARIES} 
+                      ${KDE4_KPARTS_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${KIPI_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       kipiplugins
                      )

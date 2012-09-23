@@ -59,9 +59,8 @@ public Q_SLOTS:
 
 private:
 
-    // pImpl
-    class PIWidgetPriv;
-    PIWidgetPriv& d;
+    class Private;
+    Private* const d;
 };
 
 // ----------------------------------------------------------------------------
@@ -69,4 +68,3 @@ private:
 } // namespace KIPIPhotivoIntegrationPlugin
 
 #endif // KIPI_PIWIDGET_H
-
