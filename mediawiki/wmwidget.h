@@ -108,6 +108,7 @@ private Q_SLOTS:
     void slotAddWikiClicked();
     void slotLoadImagesDesc(QTreeWidgetItem* item);
     void slotRemoveImagesDesc(const KUrl::List urls);
+    void slotRestoreExtension();
     void slotApplyTitle();
     void slotApplyDate();
     void slotApplyCategories();

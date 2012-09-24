@@ -261,7 +261,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    KUrl::List urls = iface()->currentSelection().images();
+    KUrl::List urls = d->widget->imagesList()->imageUrls(false);
     QMap <QString, QMap <QString, QString> > imagesDesc = d->widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)
@@ -346,7 +346,6 @@ void WMWindow::slotEndUpload()
     KMessageBox::information(this, i18n("Upload finished with no errors."));
     d->widget->progressBar()->hide();
     d->widget->progressBar()->progressCompleted();
-    hide();
 }
 
 bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
