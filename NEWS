@@ -16,4 +16,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 249066 - digiKam crashes when attempting to upload photo using gallery remote 2 protocol.
 006 ==> 147268 - Problem with unicode export.
 007 ==> 155980 - Cannot connect to remote galleries where apache has mod_security enabled.
-008 ==> 
+008 ==> 307291 - Improve usability and fix bugs [patch].
+009 ==> 
