@@ -88,7 +88,6 @@ public:
     KUrl::List& itemsList() const;
 
     KUrl& cpFindUrl() const;
-    PTOType& cpFindUrlData() const;
     KUrl& autoOptimiseUrl() const;
     KUrl& previewUrl() const;
     KUrl& panoUrl() const;
@@ -112,7 +111,6 @@ public:
 private Q_SLOTS:
 
     void setCPFindUrl(const KUrl& url);
-    void setCPFindUrlData(const PTOType& urlData);
     void setAutoOptimiseUrl(const KUrl& url);
     void setPreviewUrl(const KUrl& url);
     void setPanoUrl(const KUrl& url);

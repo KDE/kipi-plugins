@@ -23,26 +23,32 @@
  *
  * ============================================================ */
 
-#ifndef IMAGELINE_H
-#define IMAGELINE_H
+#ifndef PTOPARSER_H
+#define PTOPARSER_H
 
-#include "ptoparser/common.h"
+// Qt includes
 
-namespace KIPIPanoramaPlugin { namespace PtoParser
+#include <QString>
+
+namespace KIPIPanoramaPlugin
 {
 
-    template <typename Iterator>
-    struct imageLineGrammar : qi::grammar<Iterator, PTOType::Image(), ascii::blank_type>
-    {
-        imageLineGrammar();
+class PTOFile
+{
 
-        qi::rule<Iterator, PTOType::Image::LensParameter<int>() > lensParameterInt;
-        qi::rule<Iterator, PTOType::Image::LensParameter<double>() > lensParameterDouble;
-        qi::rule<Iterator, PTOType::Image(), ascii::blank_type> line;
-        stringGrammar<Iterator> string;
-        rectangleGrammar<Iterator> rectangle;
-    };
+public:
+    PTOFile();
+    ~PTOFile();
 
-}} /* namespace KIPIPanoramaPlugin::PtoParser */
+    bool openFile(const QString& path);
 
-#endif /* IMAGELINE_H */
+private:
+    struct PTOFilePriv;
+
+    PTOFilePriv* d;
+};
+
+} /* namespace KIPIPanoramaPlugin */
+
+#endif /* PTOPARSER_H */
+

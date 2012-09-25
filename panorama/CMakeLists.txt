@@ -3,20 +3,20 @@ ADD_SUBDIRECTORY(icons)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
-#                     ${CMAKE_CURRENT_SOURCE_DIR}/ptogenerator
                     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser
-                    ${CMAKE_CURRENT_SOURCE_DIR}/ptotype
                     ${CMAKE_CURRENT_SOURCE_DIR}/tasks
-                    ${Boost_INCLUDE_DIR}/boost              # NOTICE: this is the only way for my system to compile it
-#                     ${Boost_INCLUDE_DIRS}
                    )
 
-# Enable exceptions for boost::spirit::karma, because of a bug in
-#     boost/numeric/conversion/converter_policies.hpp
-# that prevent us from karma without exceptions
-# Note that adding -fexceptions is not enough because -DQT_NO_EXCEPTIONS
-# should be unset at the same time, hence the following line:
-ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
+IF(BUILD_PARSER AND FLEX_FOUND AND BISON_FOUND)
+    FLEX_TARGET(PTOScanner ptoparser/panoScanner.l ${CMAKE_CURRENT_BINARY_DIR}/panoScanner.c)
+    BISON_TARGET(PTOParser ptoparser/panoParser.y ${CMAKE_CURRENT_BINARY_DIR}/panoParser.c)
+    ADD_FLEX_BISON_DEPENDENCY(PTOScanner PTOParser)
+    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+ELSE(BUILD_PARSER AND FLEX_FOUND AND BISON_FOUND)
+    SET(FLEX_PTOScanner_OUTPUTS ptoparser/precompiled/panoScanner.c)
+    SET(BISON_PTOParser_OUTPUTS ptoparser/precompiled/panoParser.c)
+    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/precompiled)
+ENDIF(BUILD_PARSER AND FLEX_FOUND AND BISON_FOUND)
 
 INSTALL(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
@@ -26,14 +26,12 @@ INSTALL(DIRECTORY pics
 
 SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/ptotype/ptotype.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/common.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/controlpointline.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/imageline.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/optimisationline.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/projectline.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/ptoparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/variousgrammar.cpp
-#     ${CMAKE_CURRENT_SOURCE_DIR}/ptogenerator/ptogenerator.cpp
+    ${FLEX_PTOScanner_OUTPUTS}
+    ${BISON_PTOParser_OUTPUTS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/tparser.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/tparserprivate.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/tparsergetters.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/ptofile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp

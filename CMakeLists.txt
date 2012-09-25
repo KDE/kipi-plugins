@@ -160,6 +160,8 @@ MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For G
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
 MACRO_OPTIONAL_FIND_PACKAGE(Boost)                                       # For Panorama.
+MACRO_OPTIONAL_FIND_PACKAGE(FLEX)                                        # For Panorama.
+MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
 MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
 MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
@@ -327,7 +329,7 @@ PRINT_PLUGIN_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND 
 PRINT_PLUGIN_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki"          MEDIAWIKI_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Panorama"           Boost_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Panorama"           (NOT BUILD_PARSER) OR (FLEX_FOUND AND BISON_FOUND))
 PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 
