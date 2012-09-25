@@ -230,7 +230,7 @@ WmWidget::WmWidget(QWidget* const parent)
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadPanel);
 
     d->fileBox = new QWidget(uploadBox);
-    d->fileBox->setWhatsThis(i18n("This is the login form to your account on the choosen wiki."));
+    d->fileBox->setWhatsThis(i18n("This is the login form to your account on the chosen wiki."));
     QGridLayout* fileBoxLayout = new QGridLayout(d->fileBox);
 
     loadImageInfoFirstLoad();
@@ -395,7 +395,7 @@ WmWidget::WmWidget(QWidget* const parent)
     // --------------------- Login area ----------------------------------
 
     d->textBox                 = new QWidget(panel2);
-    d->textBox->setWhatsThis(i18n("This is the login form to your account on the choosen wiki."));
+    d->textBox->setWhatsThis(i18n("This is the login form to your account on the chosen wiki."));
     QGridLayout* textBoxLayout = new QGridLayout(d->textBox);
 
     QLabel* authorLbl      = new QLabel(i18n("Author:"), d->textBox);
