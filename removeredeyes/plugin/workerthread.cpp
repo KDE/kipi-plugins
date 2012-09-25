@@ -44,7 +44,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-Task::Task(const KUrl& urli, QObject* const parent, WorkerThreadPriv* const d)
+Task::Task(const KUrl& urli, QObject* const parent, WorkerThread::Private* const d)
     : Job(parent), url(urli)
 {
     this->ld = d;
@@ -123,7 +123,7 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------
 
 WorkerThread::WorkerThread(QObject* const parent, bool updateFileTimeStamp)
-    : KPActionThreadBase(parent), pd(new WorkerThreadPriv)
+    : KPActionThreadBase(parent), pd(new Private)
 {
     pd->updateFileTimeStamp = updateFileTimeStamp;
 }

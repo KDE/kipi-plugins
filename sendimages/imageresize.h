@@ -31,6 +31,7 @@
 // KDE includes
 
 #include <kurl.h>
+#include <threadweaver/Job.h>
 
 // Local includes
 

@@ -57,11 +57,11 @@
 namespace KIPIRawConverterPlugin
 {
 
-class ActionThread::ActionThreadPriv
+class ActionThread::Private
 {
 public:
 
-    ActionThreadPriv()
+    Private()
     {
         cancel           = false;
         iface            = 0;
@@ -88,7 +88,7 @@ public:
 //------------------------------------------------------
 
 Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
-           ActionThread::ActionThreadPriv* const d): Job(parent)
+           ActionThread::Private* const d): Job(parent)
 {
     m_url    = fileUrl;
     m_action = action;
@@ -247,7 +247,7 @@ void Task::run()
 //------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new ActionThreadPriv)
+    : KPActionThreadBase(parent), d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }

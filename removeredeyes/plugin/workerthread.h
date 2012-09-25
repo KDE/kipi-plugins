@@ -26,11 +26,12 @@
 
 // Qt includes
 
-#include <ThreadWeaver/Job>
+#include <QMutex>
 
 // KDE includes
 
 #include <kurl.h>
+#include <threadweaver/Job.h>
 
 // local includes
 
@@ -46,7 +47,6 @@ namespace KIPIRemoveRedEyesPlugin
 {
 
 class WorkerThreadData;
-struct WorkerThreadPriv;
 
 class WorkerThread : public KPActionThreadBase
 {
@@ -89,16 +89,22 @@ public:
 
     void cancel();
 
+public:
+
+    class Private;
+
 private:
 
-    WorkerThreadPriv* const pd;
+    Private* const pd;
 };
 
 // --------------------------------------------------------------------------
 
-struct WorkerThreadPriv
+class WorkerThread::Private
 {
-    WorkerThreadPriv()
+public:
+
+    Private()
     {
         runtype             = WorkerThread::Testrun;
         cancel              = false;
@@ -132,7 +138,7 @@ class Task : public Job
 
 public:
 
-    Task(const KUrl& url, QObject* const parent = 0, WorkerThreadPriv* const d = 0);
+    Task(const KUrl& url, QObject* const parent = 0, WorkerThread::Private* const d = 0);
 
     const KUrl& url;
 
@@ -140,13 +146,13 @@ Q_SIGNALS:
 
     void calculationFinished(WorkerThreadData*);
 
-private:
-
-    WorkerThreadPriv* ld;
-
 protected:
 
     void run();
+
+private:
+
+    WorkerThread::Private* ld;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

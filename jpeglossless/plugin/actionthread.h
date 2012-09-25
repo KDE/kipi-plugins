@@ -39,6 +39,11 @@
 #include "actions.h"
 #include "kpactionthreadbase.h"
 
+namespace ThreadWeaver
+{
+    class Job;
+}
+
 using namespace KIPIPlugins;
 
 namespace KIPIJPEGLossLessPlugin
