@@ -196,8 +196,21 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
 
 bool Utils::isJPEG(const QString& file)
 {
+    QFileInfo* fileInfo = new QFileInfo(file);
+    
+    // Check if the file is an JPEG image
     QString format = QString(QImageReader::imageFormat(file)).toUpper();
-    return format=="JPEG";
+    // Check if its not MPO format.
+    QString ext = fileInfo->suffix().toUpper();
+    
+    kDebug() << "mimetype = " << format << " ext = " << ext;
+
+    if (format !="JPEG" || ext == "MPO")
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool Utils::copyOneFile(const QString& src, const QString& dst)
