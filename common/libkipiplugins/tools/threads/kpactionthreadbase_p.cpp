@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-12-28
- * Description : prints debugging messages about the thread activity in action thread class
+ * Description : internal KPActionThreadBase classes
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  *
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpweaverobserver.moc"
+#include "kpactionthreadbase_p.moc"
 
 // KDE includes
 

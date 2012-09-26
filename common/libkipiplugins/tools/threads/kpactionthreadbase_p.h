@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-12-28
- * Description : prints debugging messages about the thread activity in action thread class
+ * Description : internal KPActionThreadBase classes
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  *
@@ -20,8 +20,14 @@
  *
  * ============================================================ */
 
-#ifndef KPWEAVEROBSERVER_H
-#define KPWEAVEROBSERVER_H
+#ifndef KP_ACTION_THREAD_BASE_P_H
+#define KP_ACTION_THREAD_BASE_P_H
+
+// Qt includes
+
+#include <QWaitCondition>
+#include <QMutex>
+#include <QList>
 
 // KDE includes
 
@@ -32,7 +38,12 @@
 
 // Local includes
 
-#include "kipiplugins_export.h"
+#include "kpactionthreadbase.h"
+
+namespace ThreadWeaver
+{
+    class Weaver;
+}
 
 using namespace ThreadWeaver;
 
@@ -42,7 +53,7 @@ namespace KIPIPlugins
 /** KPWeaverObserver is a simple wrapper to plug on the ActionThread class to
     prints debug messages when signals are received.
 */
-class KIPIPLUGINS_EXPORT KPWeaverObserver : public WeaverObserver
+class KPWeaverObserver : public WeaverObserver
 {
     Q_OBJECT
 
@@ -60,6 +71,31 @@ protected Q_SLOTS:
     void slotThreadExited(ThreadWeaver::Thread*);
 };
 
+// ----------------------------------------------------------------------------------
+
+class KPActionThreadBase::Private
+{
+public:
+
+    Private()
+    {
+        running       = false;
+        weaverRunning = false;
+        weaver        = 0;
+        log           = 0;
+    }
+
+    volatile bool         running;
+    volatile bool         weaverRunning;
+
+    QWaitCondition        condVarJobs;
+    QMutex                mutex;
+    QList<JobCollection*> todo;
+
+    Weaver*               weaver;
+    KPWeaverObserver*     log;
+};
+
 }  // namespace KIPIPlugins
 
-#endif // KPWEAVEROBSERVER_H
+#endif // KP_ACTION_THREAD_BASE_P_H

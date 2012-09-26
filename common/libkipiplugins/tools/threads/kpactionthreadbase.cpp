@@ -26,10 +26,7 @@
 
 // Qt includes
 
-#include <QList>
-#include <QMutex>
 #include <QMutexLocker>
-#include <QWaitCondition>
 
 // KDE includes
 
@@ -44,35 +41,12 @@
 
 // Local includes
 
-#include "kpweaverobserver.h"
+#include "kpactionthreadbase_p.h"
 
 using namespace Solid;
 
 namespace KIPIPlugins
 {
-
-class KPActionThreadBase::Private
-{
-public:
-
-    Private()
-    {
-        running       = false;
-        weaverRunning = false;
-        weaver        = 0;
-        log           = 0;
-    }
-
-    volatile bool         running;
-    volatile bool         weaverRunning;
-
-    QWaitCondition        condVarJobs;
-    QMutex                mutex;
-    QList<JobCollection*> todo;
-
-    Weaver*               weaver;
-    KPWeaverObserver*     log;
-};
 
 KPActionThreadBase::KPActionThreadBase(QObject* const parent)
     : QThread(parent), d(new Private)
