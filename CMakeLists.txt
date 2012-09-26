@@ -124,21 +124,13 @@ SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_P
 # Depencies detection required by all plugins
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
-FIND_PACKAGE(Kipi   REQUIRED)
 FIND_PACKAGE(JPEG   REQUIRED)
 FIND_PACKAGE(PNG    REQUIRED)
 FIND_PACKAGE(TIFF   REQUIRED)
 
 # check libkipi version
 SET(KIPI_MIN_VERSION "2.0.0")
-IF(KIPI_VERSION)
-    MESSAGE(STATUS "libkipi: Found version ${KIPI_VERSION} (required: ${KIPI_MIN_VERSION})")
-    IF(${KIPI_VERSION} VERSION_LESS ${KIPI_MIN_VERSION})
-        SET(KIPI_FOUND FALSE)
-    ENDIF(${KIPI_VERSION} VERSION_LESS ${KIPI_MIN_VERSION})
-ELSE(KIPI_VERSION)
-    MESSAGE(WARNING "libkipi: Version information not found, your version is probably too old.")
-ENDIF(KIPI_VERSION)
+FIND_PACKAGE(Kipi   REQUIRED)
 
 # check the libkdcraw version
 # note that old versions don't specify version information, so for now
@@ -237,7 +229,7 @@ MESSAGE(STATUS "")
 PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                        ""                                    JPEG_FOUND)
 PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"      ""                                    TIFF_FOUND)
 PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)"                 PNG_FOUND)
-PRINT_LIBRARY_STATUS("libkipi"   "http://www.digikam.org/sharedlibs"         " (version >= 2.0.0)"                 KIPI_FOUND)
+PRINT_LIBRARY_STATUS("libkipi"   "http://www.digikam.org/sharedlibs"         " (version >= ${KIPI_MIN_VERSION})"   KIPI_FOUND)
 PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs"         " (version >= 1.2.0)"                 KEXIV2_FOUND)
 PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs"         " (version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
 
