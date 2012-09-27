@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef ACTION_THREAD_BASE_P_H
-#define ACTION_THREAD_BASE_P_H
+#ifndef RACTION_THREAD_BASE_P_H
+#define RACTION_THREAD_BASE_P_H
 
 // Qt includes
 
@@ -98,4 +98,4 @@ public:
 
 }  // namespace KIPIPlugins
 
-#endif // ACTION_THREAD_BASE_P_H
+#endif // RACTION_THREAD_BASE_P_H
