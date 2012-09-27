@@ -36,12 +36,15 @@
 #include <kurl.h>
 #include <threadweaver/Job.h>
 
+// Libkdcraw includes
+
+#include <libkdcraw/ractionthreadbase.h>
+
 // Local includes
 
 #include "timeadjustsettings.h"
-#include "ractionthreadbase.h"
 
-using namespace KIPIPlugins;
+using namespace KDcrawIface;
 using namespace ThreadWeaver;
 
 namespace KIPITimeAdjustPlugin

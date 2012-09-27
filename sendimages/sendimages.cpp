@@ -56,6 +56,7 @@
 #include "imageresize.h"
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
 {

@@ -37,11 +37,12 @@
 // LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
+#include <libkdcraw/ractionthreadbase.h>
 
 // Local includes
 
 #include "kpsavesettingswidget.h"
-#include "ractionthreadbase.h"
+
 #include "actions.h"
 
 using namespace KIPIPlugins;

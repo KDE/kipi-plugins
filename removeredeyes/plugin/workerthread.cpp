@@ -41,6 +41,8 @@
 #include "storagesettingsbox.h"
 #include "kpmetadata.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIRemoveRedEyesPlugin
 {
 

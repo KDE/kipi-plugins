@@ -53,7 +53,7 @@
 #include "kpwriteimage.h"
 #include "kpmetadata.h"
 
-using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
 {

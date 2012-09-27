@@ -133,9 +133,7 @@ SET(KIPI_MIN_VERSION "2.0.0")
 FIND_PACKAGE(Kipi   REQUIRED)
 
 # check the libkdcraw version
-# note that old versions don't specify version information, so for now
-# just inform the user if version information was found
-SET(KDCRAW_MIN_VERSION "1.1.0")
+SET(KDCRAW_MIN_VERSION "2.2.0")
 IF (KDCRAW_VERSION)
     MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
     IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
@@ -373,8 +371,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/widgets
                         ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools
-                        ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/threads
-                        ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools/threads
                         ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools/imageio
                         ${KEXIV2_INCLUDE_DIR}

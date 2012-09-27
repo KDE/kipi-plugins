@@ -33,15 +33,18 @@
 #include <kurl.h>
 #include <threadweaver/Job.h>
 
+// Libkdcraw includes
+
+#include <libkdcraw/ractionthreadbase.h>
+
 // local includes
 
-#include "ractionthreadbase.h"
 #include "commonsettings.h"
 #include "savemethods.h"
 #include "locator.h"
 #include "workerthreaddata.h"
 
-using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIRemoveRedEyesPlugin
 {

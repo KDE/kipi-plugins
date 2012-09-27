@@ -31,14 +31,17 @@
 #include <kurl.h>
 #include <threadweaver/Job.h>
 
+// Libkdcraw includes
+
+#include <libkdcraw/ractionthreadbase.h>
+
 // Local includes
 
-#include "ractionthreadbase.h"
 #include "settingswidget.h"
 #include "actions.h"
 
-using namespace KIPIPlugins;
 using namespace ThreadWeaver;
+using namespace KDcrawIface;
 
 namespace KIPIDNGConverterPlugin
 {

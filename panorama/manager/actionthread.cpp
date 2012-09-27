@@ -45,15 +45,14 @@
 #include "ptotype.h"
 #include "tasks.h"
 
-using namespace KIPIPlugins;
 using namespace ThreadWeaver;
 
 namespace KIPIPanoramaPlugin
 {
 
-struct ActionThread::ActionThreadPriv
+struct ActionThread::Private
 {
-    ActionThreadPriv()
+    Private()
         : ptoUrl(0),
           cpFindPtoUrl(0),
           previewPtoUrl(0),
@@ -61,7 +60,7 @@ struct ActionThread::ActionThreadPriv
           preprocessingTmpDir(0)
     {}
 
-    ~ActionThreadPriv()
+    ~Private()
     {
         cleanPreprocessingTmpDir();
 
@@ -106,7 +105,7 @@ struct ActionThread::ActionThreadPriv
 };
 
 ActionThread::ActionThread(QObject* const parent)
-    : RActionThreadBase(parent), d(new ActionThreadPriv)
+    : RActionThreadBase(parent), d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }

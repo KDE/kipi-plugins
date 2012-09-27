@@ -39,12 +39,12 @@
 // LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
+#include <libkdcraw/ractionthreadbase.h>
 
 // Local includes
 
 #include "actions.h"
 #include "ptotype.h"
-#include "ractionthreadbase.h"
 
 using namespace KDcrawIface;
 
@@ -53,7 +53,7 @@ namespace KIPIPanoramaPlugin
 
 struct ActionData;
 
-class ActionThread : public KIPIPlugins::RActionThreadBase
+class ActionThread : public RActionThreadBase
 {
     Q_OBJECT
 
@@ -109,8 +109,8 @@ private:
 
 private:
 
-    struct ActionThreadPriv;
-    ActionThreadPriv* const d;
+    struct Private;
+    Private* const d;
 
 };
 

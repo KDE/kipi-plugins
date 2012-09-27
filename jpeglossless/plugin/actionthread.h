@@ -34,17 +34,20 @@
 
 #include <kurl.h>
 
+// Libkdcraw includes
+
+#include <libkdcraw/ractionthreadbase.h>
+
 // Local includes
 
 #include "actions.h"
-#include "ractionthreadbase.h"
 
 namespace ThreadWeaver
 {
     class Job;
 }
 
-using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIJPEGLossLessPlugin
 {
