@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kpactionthreadbase.moc"
+#include "ractionthreadbase.moc"
 
 // Qt includes
 
@@ -41,25 +41,25 @@
 
 // Local includes
 
-#include "kpactionthreadbase_p.h"
+#include "ractionthreadbase_p.h"
 
 using namespace Solid;
 
 namespace KIPIPlugins
 {
 
-KPActionThreadBase::KPActionThreadBase(QObject* const parent)
+RActionThreadBase::RActionThreadBase(QObject* const parent)
     : QThread(parent), d(new Private)
 {
     const int maximumNumberOfThreads = qMax(Device::listFromType(DeviceInterface::Processor).count(), 1);
-    d->log                           = new KPWeaverObserver(this);
+    d->log                           = new RWeaverObserver(this);
     d->weaver                        = new Weaver(this);
     d->weaver->registerObserver(d->log);
     d->weaver->setMaximumNumberOfThreads(maximumNumberOfThreads);
     kDebug() << "Starting Main Thread";
 }
 
-KPActionThreadBase::~KPActionThreadBase()
+RActionThreadBase::~RActionThreadBase()
 {
     kDebug() << "calling action thread destructor";
     // cancel the thread
@@ -72,7 +72,7 @@ KPActionThreadBase::~KPActionThreadBase()
     delete d;
 }
 
-void KPActionThreadBase::slotFinished()
+void RActionThreadBase::slotFinished()
 {
     kDebug() << "Finish Main Thread";
     emit QThread::finished();
@@ -80,7 +80,7 @@ void KPActionThreadBase::slotFinished()
     d->condVarJobs.wakeAll();
 }
 
-void KPActionThreadBase::cancel()
+void RActionThreadBase::cancel()
 {
     kDebug() << "Cancel Main Thread";
     QMutexLocker lock(&d->mutex);
@@ -92,19 +92,19 @@ void KPActionThreadBase::cancel()
     d->condVarJobs.wakeAll();
 }
 
-void KPActionThreadBase::finish()
+void RActionThreadBase::finish()
 {
     d->weaver->finish();
 }
 
-void KPActionThreadBase::appendJob(JobCollection* const job)
+void RActionThreadBase::appendJob(JobCollection* const job)
 {
     QMutexLocker lock(&d->mutex);
     d->todo << job;
     d->condVarJobs.wakeAll();
 }
 
-void KPActionThreadBase::run()
+void RActionThreadBase::run()
 {
     d->running       = true;
     d->weaverRunning = false;

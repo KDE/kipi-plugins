@@ -35,7 +35,7 @@
 
 // local includes
 
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 #include "commonsettings.h"
 #include "savemethods.h"
 #include "locator.h"
@@ -48,7 +48,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 class WorkerThreadData;
 
-class WorkerThread : public KPActionThreadBase
+class WorkerThread : public RActionThreadBase
 {
     Q_OBJECT
 

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-12-28
- * Description : internal KPActionThreadBase classes
+ * Description : internal RActionThreadBase classes
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  *
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpactionthreadbase_p.moc"
+#include "ractionthreadbase_p.moc"
 
 // KDE includes
 
@@ -29,7 +29,7 @@
 namespace KIPIPlugins
 {
 
-KPWeaverObserver::KPWeaverObserver(QObject* const parent)
+RWeaverObserver::RWeaverObserver(QObject* const parent)
     : WeaverObserver(parent)
 {
     connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),
@@ -48,33 +48,33 @@ KPWeaverObserver::KPWeaverObserver(QObject* const parent)
             this, SLOT(slotThreadExited(ThreadWeaver::Thread*)));
 }
 
-KPWeaverObserver::~KPWeaverObserver()
+RWeaverObserver::~RWeaverObserver()
 {
 }
 
-void KPWeaverObserver::slotWeaverStateChanged(State* state)
+void RWeaverObserver::slotWeaverStateChanged(State* state)
 {
-    kDebug() << "KPWeaverObserver: thread state changed to " << state->stateName();
+    kDebug() << "RWeaverObserver: thread state changed to " << state->stateName();
 }
 
-void KPWeaverObserver::slotThreadStarted(Thread* th)
+void RWeaverObserver::slotThreadStarted(Thread* th)
 {
-    kDebug() << "KPWeaverObserver: thread " << th->id()  <<" started";
+    kDebug() << "RWeaverObserver: thread " << th->id()  <<" started";
 }
 
-void KPWeaverObserver::slotThreadBusy(Thread* th, Job*)
+void RWeaverObserver::slotThreadBusy(Thread* th, Job*)
 {
-    kDebug() << "KPWeaverObserver: thread " << th->id()  << " busy";
+    kDebug() << "RWeaverObserver: thread " << th->id()  << " busy";
 }
 
-void KPWeaverObserver::slotThreadSuspended(Thread* th )
+void RWeaverObserver::slotThreadSuspended(Thread* th )
 {
-    kDebug() << "KPWeaverObserver: thread " << th->id()  << " suspended";
+    kDebug() << "RWeaverObserver: thread " << th->id()  << " suspended";
 }
 
-void KPWeaverObserver::slotThreadExited(Thread* th)
+void RWeaverObserver::slotThreadExited(Thread* th)
 {
-    kDebug() << "KPWeaverObserver: thread " << th->id()  << " exited";
+    kDebug() << "RWeaverObserver: thread " << th->id()  << " exited";
 }
 
 }  // namespace KIPIPlugins

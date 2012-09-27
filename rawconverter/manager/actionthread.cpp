@@ -247,7 +247,7 @@ void Task::run()
 //------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new Private)
+    : RActionThreadBase(parent), d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }
@@ -381,7 +381,7 @@ void ActionThread::cancel()
 {
     d->dcrawIface.cancel();
     d->cancel = true;
-    KPActionThreadBase::cancel();
+    RActionThreadBase::cancel();
 }
 
 }  // namespace KIPIRawConverterPlugin

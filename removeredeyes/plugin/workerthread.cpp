@@ -123,7 +123,7 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------
 
 WorkerThread::WorkerThread(QObject* const parent, bool updateFileTimeStamp)
-    : KPActionThreadBase(parent), pd(new Private)
+    : RActionThreadBase(parent), pd(new Private)
 {
     pd->updateFileTimeStamp = updateFileTimeStamp;
 }
@@ -150,7 +150,7 @@ void WorkerThread::cancel()
 {
     pd->cancel = true;
 
-    KPActionThreadBase::cancel();
+    RActionThreadBase::cancel();
 }
 
 void WorkerThread::loadSettings(const CommonSettings& newSettings)

@@ -39,7 +39,7 @@
 // Local includes
 
 #include "timeadjustsettings.h"
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 
 using namespace KIPIPlugins;
 using namespace ThreadWeaver;
@@ -47,7 +47,7 @@ using namespace ThreadWeaver;
 namespace KIPITimeAdjustPlugin
 {
 
-class ActionThread : public KPActionThreadBase
+class ActionThread : public RActionThreadBase
 {
     Q_OBJECT
 

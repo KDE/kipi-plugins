@@ -189,7 +189,7 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new Private)
+    : RActionThreadBase(parent), d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }
@@ -281,7 +281,7 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
 void ActionThread::cancel()
 {
     d->cancel = true;
-    KPActionThreadBase::cancel();
+    RActionThreadBase::cancel();
 }
 
 }  // namespace KIPIDNGConverterPlugin

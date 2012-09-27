@@ -115,7 +115,7 @@ protected:
 // ----------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent)
+    : RActionThreadBase(parent)
 {
 }
 

@@ -36,7 +36,7 @@
 // Local includes
 
 #include "emailsettings.h"
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 
 using namespace KIPIPlugins;
 using namespace ThreadWeaver;
@@ -80,7 +80,7 @@ private:
 
 // ----------------------------------------------------------------------------------------------------
 
-class ImageResize : public KPActionThreadBase
+class ImageResize : public RActionThreadBase
 {
     Q_OBJECT
 

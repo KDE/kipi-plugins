@@ -37,7 +37,7 @@
 // Local includes
 
 #include "actions.h"
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 
 namespace ThreadWeaver
 {
@@ -49,7 +49,7 @@ using namespace KIPIPlugins;
 namespace KIPIJPEGLossLessPlugin
 {
 
-class ActionThread : public KPActionThreadBase
+class ActionThread : public RActionThreadBase
 {
     Q_OBJECT
 

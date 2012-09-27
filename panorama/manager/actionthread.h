@@ -44,7 +44,7 @@
 
 #include "actions.h"
 #include "ptotype.h"
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 
 using namespace KDcrawIface;
 
@@ -53,7 +53,7 @@ namespace KIPIPanoramaPlugin
 
 struct ActionData;
 
-class ActionThread : public KIPIPlugins::KPActionThreadBase
+class ActionThread : public KIPIPlugins::RActionThreadBase
 {
     Q_OBJECT
 

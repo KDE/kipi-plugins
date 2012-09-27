@@ -106,7 +106,7 @@ struct ActionThread::ActionThreadPriv
 };
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new ActionThreadPriv)
+    : RActionThreadBase(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
 }

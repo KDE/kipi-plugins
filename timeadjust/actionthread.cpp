@@ -239,7 +239,7 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(QObject* const parent)
-    : KPActionThreadBase(parent), d(new Private)
+    : RActionThreadBase(parent), d(new Private)
 {
 }
 
@@ -279,7 +279,7 @@ void ActionThread::setSettings(const TimeAdjustSettings& settings)
 void ActionThread::cancel()
 {
     d->cancel = true;
-    KPActionThreadBase::cancel();
+    RActionThreadBase::cancel();
 }
 
 /** Static public method also called from GUI to update listview information about new filename

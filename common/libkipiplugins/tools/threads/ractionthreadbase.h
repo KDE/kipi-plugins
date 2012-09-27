@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef KPACTIONTHREADBASE_H
-#define KPACTIONTHREADBASE_H
+#ifndef RACTIONTHREADBASE_H
+#define RACTIONTHREADBASE_H
 
 // Qt includes
 
@@ -43,14 +43,14 @@ using namespace ThreadWeaver;
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT KPActionThreadBase : public QThread
+class KIPIPLUGINS_EXPORT RActionThreadBase : public QThread
 {
     Q_OBJECT
 
 public:
 
-    KPActionThreadBase(QObject* const parent=0);
-    ~KPActionThreadBase();
+    RActionThreadBase(QObject* const parent=0);
+    ~RActionThreadBase();
 
     void cancel();
     void finish();
@@ -72,4 +72,4 @@ private:
 
 }  // namespace KIPIPlugins
 
-#endif // KPACTIONTHREADBASE_H
+#endif // RACTIONTHREADBASE_H

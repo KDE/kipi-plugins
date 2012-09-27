@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-12-28
- * Description : internal KPActionThreadBase classes
+ * Description : internal RActionThreadBase classes
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  *
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KP_ACTION_THREAD_BASE_P_H
-#define KP_ACTION_THREAD_BASE_P_H
+#ifndef ACTION_THREAD_BASE_P_H
+#define ACTION_THREAD_BASE_P_H
 
 // Qt includes
 
@@ -38,7 +38,7 @@
 
 // Local includes
 
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 
 namespace ThreadWeaver
 {
@@ -50,17 +50,17 @@ using namespace ThreadWeaver;
 namespace KIPIPlugins
 {
 
-/** KPWeaverObserver is a simple wrapper to plug on the ActionThread class to
+/** RWeaverObserver is a simple wrapper to plug on the ActionThread class to
     prints debug messages when signals are received.
 */
-class KPWeaverObserver : public WeaverObserver
+class RWeaverObserver : public WeaverObserver
 {
     Q_OBJECT
 
 public:
 
-    KPWeaverObserver(QObject* const parent=0);
-    ~KPWeaverObserver();
+    RWeaverObserver(QObject* const parent=0);
+    ~RWeaverObserver();
 
 protected Q_SLOTS:
 
@@ -73,7 +73,7 @@ protected Q_SLOTS:
 
 // ----------------------------------------------------------------------------------
 
-class KPActionThreadBase::Private
+class RActionThreadBase::Private
 {
 public:
 
@@ -93,9 +93,9 @@ public:
     QList<JobCollection*> todo;
 
     Weaver*               weaver;
-    KPWeaverObserver*     log;
+    RWeaverObserver*      log;
 };
 
 }  // namespace KIPIPlugins
 
-#endif // KP_ACTION_THREAD_BASE_P_H
+#endif // ACTION_THREAD_BASE_P_H

@@ -33,7 +33,7 @@
 
 // Local includes
 
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 #include "settingswidget.h"
 #include "actions.h"
 
@@ -45,7 +45,7 @@ namespace KIPIDNGConverterPlugin
 
 class ActionData;
 
-class ActionThread : public KPActionThreadBase
+class ActionThread : public RActionThreadBase
 {
     Q_OBJECT
 

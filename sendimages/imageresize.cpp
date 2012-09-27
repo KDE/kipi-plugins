@@ -208,7 +208,7 @@ bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
 // ----------------------------------------------------------------------------------------------------
 
 ImageResize::ImageResize(QObject* const parent)
-    : KPActionThreadBase(parent)
+    : RActionThreadBase(parent)
 {
     m_count  = new int;
     *m_count = 0;
@@ -258,13 +258,13 @@ void ImageResize::resize(const EmailSettings& settings)
 void ImageResize::cancel()
 {
     *m_count   = 0;
-    KPActionThreadBase::cancel();
+    RActionThreadBase::cancel();
 }
 
 void ImageResize::slotFinished()
 {
     emit completeResize();
-    KPActionThreadBase::slotFinished();
+    RActionThreadBase::slotFinished();
 }
 
 }  // namespace KIPISendimagesPlugin

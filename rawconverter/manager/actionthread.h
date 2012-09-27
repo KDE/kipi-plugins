@@ -41,7 +41,7 @@
 // Local includes
 
 #include "kpsavesettingswidget.h"
-#include "kpactionthreadbase.h"
+#include "ractionthreadbase.h"
 #include "actions.h"
 
 using namespace KIPIPlugins;
@@ -53,7 +53,7 @@ namespace KIPIRawConverterPlugin
 
 class ActionData;
 
-class ActionThread : public KPActionThreadBase
+class ActionThread : public RActionThreadBase
 {
     Q_OBJECT
 
