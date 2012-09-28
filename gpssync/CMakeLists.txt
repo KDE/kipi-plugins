@@ -34,7 +34,7 @@ SET(kipiplugin_gpssync_PART_SRCS
 
 IF(KDE4_BUILD_TESTS)
     INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
-    ADD_DEFINITIONS(-DGPSSYNC_MODELTEST)
+    #ADD_DEFINITIONS(-DGPSSYNC_MODELTEST)
     SET(kipiplugin_gpssync_PART_SRCS
         ${kipiplugin_gpssync_PART_SRCS}
         ${CMAKE_CURRENT_SOURCE_DIR}/borrowed/modeltest.cpp
