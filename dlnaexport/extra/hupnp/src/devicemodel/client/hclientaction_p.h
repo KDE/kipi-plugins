@@ -146,7 +146,7 @@ public:
 class HClientActionOp_ :
     public HClientActionOp
 {
-H_DECLARE_PRIVATE(HClientActionOp);
+H_DECLARE_PRIVATE(HClientActionOp)
 public:
     HClientActionOp_();
     HClientActionOp_(const HActionArguments& inArgs);

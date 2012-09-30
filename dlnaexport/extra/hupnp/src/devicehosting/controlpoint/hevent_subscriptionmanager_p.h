@@ -83,7 +83,7 @@ public:
     {
         Sub_Success = 0,
         Sub_AlreadySubscribed = 1,
-        Sub_Failed_NotEvented = 2,
+        Sub_Failed_NotEvented = 2
     };
 
     bool subscribe(HClientDevice*, DeviceVisitType, qint32 timeout);

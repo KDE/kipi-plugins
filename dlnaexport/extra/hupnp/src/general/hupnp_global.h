@@ -145,7 +145,7 @@ enum UpnpErrorCode
      * \remarks
      * This value is defined and used by HUPnP in-process only.
      */
-    UpnpInvocationAborted = 0x00f00001,
+    UpnpInvocationAborted = 0x00f00001
 };
 
 /*!

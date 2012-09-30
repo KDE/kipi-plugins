@@ -115,7 +115,7 @@ public:
         All = 0x1f
     };
 
-    Q_DECLARE_FLAGS(InterestingDeviceTypes, InterestingDeviceType);
+    Q_DECLARE_FLAGS(InterestingDeviceTypes, InterestingDeviceType)
 
     /*!
      * \brief Creates a new instance.

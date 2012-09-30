@@ -37,7 +37,7 @@ class KAction;
 namespace KIPI
 {
     class Interface;
-};
+}
 
 namespace KIPIBatchProcessImagesPlugin
 {

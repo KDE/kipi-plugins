@@ -284,7 +284,7 @@ public:
         All = 0x1f
     };
 
-    Q_DECLARE_FLAGS(Tokens, Token);
+    Q_DECLARE_FLAGS(Tokens, Token)
 
     /*!
      * \brief Returns the version of the resource type.

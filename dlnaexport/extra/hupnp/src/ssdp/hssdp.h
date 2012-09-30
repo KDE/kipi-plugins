@@ -261,7 +261,7 @@ public:
         All = 0x1f
     };
 
-    Q_DECLARE_FLAGS(AllowedMessages, AllowedMessage);
+    Q_DECLARE_FLAGS(AllowedMessages, AllowedMessage)
 
     /*!
      * \brief Sets the filter of what message types are accepted for processing.

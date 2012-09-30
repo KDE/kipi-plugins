@@ -74,7 +74,7 @@ public:
         /*!
          * An object was deleted.
          */
-        ObjectDeleted,
+        ObjectDeleted
     };
 
 private:

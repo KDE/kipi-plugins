@@ -57,7 +57,7 @@ class HClientActionOpPrivate;
 class H_UPNP_CORE_EXPORT HClientActionOp :
     public HAsyncOp
 {
-H_DECLARE_PRIVATE(HClientActionOp);
+H_DECLARE_PRIVATE(HClientActionOp)
 
 public:
 
