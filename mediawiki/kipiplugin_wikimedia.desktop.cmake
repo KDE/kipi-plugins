@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=MediaWiki Export
 Name[cs]=Export MediaWiki
+Name[da]=MediaWiki-eksport
 Name[el]=Εξαγωγή στο MediaWiki
 Name[nl]=Naar MediaWiki exporteren
 Name[pt]=Exportação para o MediaWiki
@@ -10,6 +11,7 @@ Name[uk]=Експорт до MediaWiki
 Name[x-test]=xxMediaWiki Exportxx
 Comment=A tool to export images to a remote MediaWiki web service
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby MediaWiki
+Comment[da]=Et værktøj til at eksportere billeder til en ekstern MediaWiki-webtjeneste
 Comment[el]=Εργαλείο εξαγωγής εικόνων σε μια απομακρυσμένη υπηρεσία ιστού MediaWiki
 Comment[nl]=Een hulpmiddel om afbeeldingen naar een MediaWiki-webservice te exporteren
 Comment[pt]=Uma ferramenta de exportação de imagens para um serviço Web remoto do MediaWiki
