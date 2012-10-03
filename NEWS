@@ -17,4 +17,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 147268 - Problem with unicode export.
 007 ==> 155980 - Cannot connect to remote galleries where apache has mod_security enabled.
 008 ==> 307291 - Improve usability and fix bugs [patch].
-009 ==> 
+009 ==> 307709 - photivo.png in 48x48 icon folder has a size of 64x64.
+010 ==> 
