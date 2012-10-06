@@ -18,6 +18,7 @@ Name[zh_TW]=Photivo 整合
 Comment=Integration of the Photivo RAW-Processor
 Comment[da]=Integration af RAW-behandleren Photivo
 Comment[el]=Ενσωμάτωση του RAW-επεξεργαστή Photivo
+Comment[hu]=A Photivo RAW feldolgozó integrációja
 Comment[is]=Innbygging Photivo RAW-meðhöndlunar í kerfið
 Comment[it]=Integrazione dell'elaboratore RAW Photivo
 Comment[nl]=Integratie van de Photivo RAW-processor
