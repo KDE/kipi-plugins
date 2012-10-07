@@ -30,6 +30,7 @@
 // change or the file may be removed without of notice.
 //
 
+#include <HUpnpCore/HServiceId>
 #include <HUpnpCore/HDeviceInfo>
 #include <HUpnpCore/HDeviceStatus>
 #include <HUpnpCore/HResourceType>
