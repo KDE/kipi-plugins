@@ -19,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> 307291 - Improve usability and fix bugs [patch].
 009 ==> 307709 - photivo.png in 48x48 icon folder has a size of 64x64.
 010 ==> 306511 - digikam crash during start.
-011 ==> 
+011 ==> 269929 - DLNA interface : Materialize searches using "virtual albums" containing images by links.
+012 ==> 
