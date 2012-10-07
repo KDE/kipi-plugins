@@ -21,4 +21,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 306511 - digikam crash during start.
 011 ==> 269929 - DLNA interface : Materialize searches using "virtual albums" containing images by links.
 012 ==> 304246 - Adjusting Date & Time adjusts wrong images
-013 ==>
+013 ==> 189998 - EXIF date information incorrect use of AM/PM
+014 ==> 
