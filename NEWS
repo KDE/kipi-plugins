@@ -22,4 +22,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 269929 - DLNA interface : Materialize searches using "virtual albums" containing images by links.
 012 ==> 304246 - Adjusting Date & Time adjusts wrong images
 013 ==> 189998 - EXIF date information incorrect use of AM/PM
-014 ==> 
+014 ==> 269869 - Option to import date from file name in annotate dialog
+015 ==>
