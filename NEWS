@@ -18,10 +18,11 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> 155980 - Cannot connect to remote galleries where apache has mod_security enabled.
 008 ==> 307291 - Improve usability and fix bugs [patch].
 009 ==> 307709 - photivo.png in 48x48 icon folder has a size of 64x64.
-010 ==> 306511 - digikam crash during start.
+010 ==> 306511 - digiKam crash during start.
 011 ==> 269929 - DLNA interface : Materialize searches using "virtual albums" containing images by links.
-012 ==> 304246 - Adjusting Date & Time adjusts wrong images
-013 ==> 189998 - EXIF date information incorrect use of AM/PM
-014 ==> 269869 - Option to import date from file name in annotate dialog
-015 ==> 299191 - Digikam Advanced slideshow crash
-016 ==>
+012 ==> 304246 - Adjusting Date & Time adjusts wrong images.
+013 ==> 189998 - EXIF date information incorrect use of AM/PM.
+014 ==> 269869 - Option to import date from file name in annotate dialog.
+015 ==> 299191 - digiKam Advanced slideshow crash.
+016 ==> 308442 - Images are not associated to album if album name contains &amp;.
+017 ==> 
