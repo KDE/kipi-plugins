@@ -25,4 +25,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> 269869 - Option to import date from file name in annotate dialog.
 015 ==> 299191 - digiKam Advanced slideshow crash.
 016 ==> 308442 - Images are not associated to album if album name contains &amp;.
-017 ==> 
+017 ==> 308465 - Cannot change file modification timestamp with files having non ASCII characters
+018 ==>

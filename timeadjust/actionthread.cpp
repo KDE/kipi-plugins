@@ -201,7 +201,7 @@ void Task::run()
         times.actime  = QDateTime::currentDateTime().toTime_t();
         times.modtime = dt.toTime_t();
 
-        if (utime(m_url.path().toLatin1().constData(), &times) != 0)
+        if (utime(QFile::encodeName(m_url.toLocalFile()).constData(), &times) != 0)
         {
             status |= MyImageList::FILE_TIME_ERROR;
         }
