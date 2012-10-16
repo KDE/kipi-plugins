@@ -1,10 +1,10 @@
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
- * Date        : 2010-02-04
- * Description : a tool to export images to imgur.com
+ * Date        : 2012-04-21
+ * Description : a kipi plugin to export images to the Imgur web service
  *
  * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
@@ -15,58 +15,52 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#ifndef PLUGIN_IMGUREXPORT_H
-#define PLUGIN_IMGUREXPORT_H
+#ifndef IMGURUPLOADINFORMATION_H
+#define IMGURUPLOADINFORMATION_H
 
 // Qt includes
 
-#include <QVariant>
+#include <QDialog>
+#include <QString>
 
-// LibKIPI includes
+// KDE includes
 
-#include <libkipi/plugin.h>
+#include <KUrl>
 
 // Local includes
 
-#include "imgurwindow.h"
-
-using namespace KIPI;
+#include "imgurtalker.h"
 
 namespace KIPIImgurExportPlugin
 {
 
-class Plugin_ImgurExport : public Plugin
+class ImgurUploadInformation : public QDialog
 {
     Q_OBJECT
 
+private:
+    ImgurUpload d;
+
 public:
+    ImgurUploadInformation(QWidget* const parent = 0);
+    ~ImgurUploadInformation();
 
-    explicit Plugin_ImgurExport(QObject* const parent, const QVariantList& args);
-    ~Plugin_ImgurExport();
+    void setTitle (QString &text);
+    QString title (void);
 
-    void setup(QWidget*);
-    Category category(KAction* action) const;
-    static QString name() { return "ImgurExport"; }
+    void setCaption (QString &text);
+    QString Caption (void);
 
-public Q_SLOTS:
+    void setFileUrl (KUrl filePath);
+    KUrl fileUrl (void);
 
-    void slotActivate();
-
-private:
-
-    void setupActions();
-
-private:
-
-    class Plugin_ImgurExportPriv;
-    Plugin_ImgurExportPriv* const d;
 };
-
 } // namespace KIPIImgurExportPlugin
 
-#endif // PLUGIN_IMGUREXPORT_H
+#endif /* IMGURUPLOADINFORMATION_H */
+

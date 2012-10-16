@@ -48,16 +48,16 @@ public:
 
     ImgurWindowPriv()
     {
-        imagesCount = 0;
-        imagesTotal = 0;
         webService  = 0;
         widget      = 0;
     }
 
-    int          imagesCount;
-    int          imagesTotal;
-
+#ifdef OAUTH_ENABLED
+    ImgurTalkerAuth* webService;
+#else
     ImgurTalker* webService;
+#endif //OAUTH_ENABLED
+
     ImgurWidget* widget;
 };
 
@@ -65,7 +65,11 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     : KPToolDialog(0), d(new ImgurWindowPriv)
 {
     d->widget     = new ImgurWidget(this);
+#ifdef OAUTH_ENABLED
+    d->webService = new ImgurTalkerAuth(iface(), this);
+#else
     d->webService = new ImgurTalker(iface(), this);
+#endif //OAUTH_ENABLED
 
     setMainWidget(d->widget);
     setWindowIcon(KIcon("imgur"));
@@ -107,27 +111,46 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     connect(d->webService, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(d->webService, SIGNAL(signalError(ImgurError)),
-            this, SLOT(slotAddPhotoError(ImgurError)));
+    connect(d->webService, SIGNAL(signalUploadStart(KUrl)),
+            d->widget, SLOT(slotImageUploadStart(KUrl)));
 
-    connect(d->webService, SIGNAL(signalSuccess(ImgurSuccess)),
-            this, SLOT(slotAddPhotoSuccess(ImgurSuccess)));
+    connect(d->webService, SIGNAL(signalError(KUrl, ImgurError)),
+            d->widget, SLOT(slotImageUploadError(KUrl, ImgurError)));
 
+    connect(d->webService, SIGNAL(signalSuccess(KUrl, ImgurSuccess)),
+            d->widget, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
+
+    // this signal/slot controls if the webservice should continue upload or not
+    connect(d->webService, SIGNAL(signalError(KUrl, ImgurError)),
+            this, SLOT(slotAddPhotoError(KUrl, ImgurError)));
+
+    connect(d->webService, SIGNAL(signalSuccess(KUrl, ImgurSuccess)),
+            this, SLOT(slotAddPhotoSuccess(KUrl, ImgurSuccess)));
+
+    connect(this, SIGNAL(signalContinueUpload(bool)),
+            d->webService, SLOT(slotContinueUpload(bool)));
+
+    // adding/removing items from the image list
     connect(d->widget, SIGNAL(signalAddItems(KUrl::List)),
             d->webService, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->widget, SIGNAL(signalRemoveItems(KUrl::List)),
             d->webService, SLOT(slotRemoveItems(KUrl::List)));
 
-    // connecting the current window to the imgur widget
-    connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
-            d->widget, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
-
-    connect(this, SIGNAL(signalImageUploadError(KUrl, ImgurError)),
-            d->widget, SLOT(slotImageUploadError(KUrl, ImgurError)));
-
    // ---------------------------------------------------------------
+#ifdef OAUTH_ENABLED
+    connect(d->widget, SIGNAL(signalClickedChangeUser()),
+            d->webService, SLOT(slotOAuthLogin()));
 
+//    connect(d->webService, SIGNAL(signalAuthenticated(bool)),
+//            d->widget, SLOT(slotAuthenticated(bool)));
+
+    connect(d->webService, SIGNAL(signalAuthenticated(bool, QString)),
+            d->widget, SLOT(slotAuthenticated(bool, QString)));
+
+    connect(d->webService, SIGNAL(signalAuthenticated(bool, QString)),
+            this, SLOT(slotAuthenticated(bool, QString)));
+#endif //OAUTH_ENABLED
     readSettings();
 }
 
@@ -137,40 +160,15 @@ ImgurWindow::~ImgurWindow()
     delete d;
 }
 
-void ImgurWindow::slotStartUpload()
-{
-    d->widget->imagesList()->clearProcessedStatus();
-    KUrl::List* m_transferQueue = d->webService->imageQueue();
-
-    if (m_transferQueue->isEmpty())
-    {
-        kDebug() << "Upload queue empty. Exiting.";
-        return;
-    }
-
-    d->imagesTotal = m_transferQueue->count();
-    d->imagesCount = 0;
-
-    d->widget->progressBar()->setFormat(i18n("%v / %m"));
-    d->widget->progressBar()->progressScheduled(i18n("Export to Imgur"), true, true);
-    d->widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
-    d->widget->progressBar()->setMaximum(d->imagesTotal);
-    d->widget->progressBar()->setValue(0);
-    d->widget->progressBar()->setVisible(true);
-
-    kDebug() << "Upload queue has" << m_transferQueue->length() << "items";
-
-    uploadNextItem();
-}
-
 void ImgurWindow::slotButtonClicked(KDialog::ButtonCode button)
 {
     switch (button)
     {
         case KDialog::User1:
-            slotStartUpload();
+            emit signalContinueUpload(true);
             break;
         case KDialog::Close:
+            emit signalContinueUpload(false);
             // Must cancel the transfer
             d->webService->cancel();
             d->webService->imageQueue()->clear();
@@ -200,60 +198,49 @@ void ImgurWindow::slotImageQueueChanged()
     enableButton(User1, !d->webService->imageQueue()->isEmpty());
 }
 
-void ImgurWindow::slotAddPhotoError(ImgurError error)
+void ImgurWindow::slotAddPhotoError(KUrl currentImage, ImgurError error)
 {
-    KUrl::List* m_transferQueue = d->webService->imageQueue();
-    KUrl currentImage           = m_transferQueue->first();
+    if (!d->webService->imageQueue()->isEmpty()) {
+        if (KMessageBox::warningContinueCancel(this,
+                                               i18n("Failed to upload photo to Imgur: %1\n"
+                                                    "Do you want to continue?", error.message))
+            == KMessageBox::Continue)
+        {
+            emit signalContinueUpload(true);
+        } else
+        {
+            emit signalContinueUpload(false);
+        }
 
-    kError() << error.message;
-    d->widget->imagesList()->processed(currentImage, false);
-
-    d->imagesCount++;
-    emit signalImageUploadError(currentImage, error);
-
-    if (KMessageBox::warningContinueCancel(this,
-                                           i18n("Failed to upload photo to Imgur: %1\n"
-                                                "Do you want to continue?", error.message))
-        == KMessageBox::Continue)
-    {
-        uploadNextItem();
-        return;
+    } else {
+        KMessageBox::sorry(this,i18n("Failed to upload photo to Imgur: %1\n", error.message));
     }
-
-    d->widget->progressBar()->setVisible(false);
-    d->widget->progressBar()->progressCompleted();
-    m_transferQueue->clear();
     return;
-
 }
 
-void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
+void ImgurWindow::slotAddPhotoSuccess(KUrl currentImage, ImgurSuccess success)
 {
-    KUrl currentImage        = d->webService->geCurrentUrl();
+   emit signalContinueUpload(true);
+}
 
-    d->widget->imagesList()->processed(currentImage, true);
+void ImgurWindow::slotAuthenticated(bool yes,const QString& message)
+{
+    QString err;
+    if (!message.isEmpty())
+    {
+        err = "\n" + message;
+    }
 
-    d->imagesCount++;
-
-    const QString sUrl       = success.links.imgur_page.toEncoded();
-    const QString sDeleteUrl = success.links.delete_page.toEncoded();
-
-    const QString path       = currentImage.toLocalFile();
-
-    // we add tags to the image
-    KPMetadata meta(path);
-    meta.setXmpTagString("Xmp.kipi.ImgurURL", sUrl);
-    meta.setXmpTagString("Xmp.kipi.ImgurDeleteURL", sDeleteUrl);
-    bool saved = meta.applyChanges();
-
-    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
-    kDebug() << "URL" << sUrl;
-    kDebug() << "Delete URL" << sDeleteUrl;
-
-    emit signalImageUploadSuccess(currentImage, success);
-    uploadNextItem();
-
-    return;
+    if (yes)
+    {
+        enableButton(User1, yes);
+    } else if (KMessageBox::warningContinueCancel(this,
+                                                  i18n("Failed to authenticate to Imgur.%1\n"
+                                                       "Do you want to continue?", err))
+               == KMessageBox::Continue)
+    {
+        enableButton(User1, true);
+    }
 }
 
 void ImgurWindow::slotBusy(bool val)
@@ -275,44 +262,21 @@ void ImgurWindow::closeEvent(QCloseEvent*)
     saveSettings();
 }
 
-void ImgurWindow::uploadNextItem()
-{
-    KUrl::List* m_transferQueue = d->webService->imageQueue();
-
-    if (m_transferQueue->isEmpty())
-    {
-        d->widget->progressBar()->hide();
-        d->widget->progressBar()->progressCompleted();
-        return;
-    }
-
-    KUrl current = m_transferQueue->first();
-    d->widget->imagesList()->processing(current);
-
-    d->widget->progressBar()->setMaximum(d->imagesTotal);
-    d->widget->progressBar()->setValue(d->imagesCount);
-    d->widget->progressBar()->progressStatusChanged(i18n("Processing %1", current.fileName()));
-
-    kDebug() << "Starting upload for:" << current;
-
-    d->webService->imageUpload(current);
-}
-
 void ImgurWindow::readSettings()
 {
     KConfig config("kipirc");
-//    KConfigGroup group = config.group(QString("ImgUr Settings"));
+//    KConfigGroup group = config.group(QString("Imgur Settings"));
 
-    KConfigGroup group2 = config.group(QString("ImgUr Dialog"));
+    KConfigGroup group2 = config.group(QString("Imgur Dialog"));
     restoreDialogSize(group2);
 }
 
 void ImgurWindow::saveSettings()
 {
     KConfig config("kipirc");
-//    KConfigGroup group = config.group(QString("ImgUr Settings"));
+//    KConfigGroup group = config.group(QString("Imgur Settings"));
 
-    KConfigGroup group2 = config.group(QString("ImgUr Dialog"));
+    KConfigGroup group2 = config.group(QString("Imgur Dialog"));
     saveDialogSize(group2);
     config.sync();
 }

@@ -92,8 +92,8 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
 
         KPMetadata meta(imageUrl.toLocalFile());
 
-        const QString sUrl       = meta.getXmpTagString("Xmp.kipi.ImgurURL");
-        const QString sDeleteUrl = meta.getXmpTagString("Xmp.kipi.ImgurDeleteURL");
+        const QString sUrl       = meta.getXmpTagString("Xmp.kipi.Imgur.Hash");
+        const QString sDeleteUrl = meta.getXmpTagString("Xmp.kipi.Imgur.Delete");
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
         {

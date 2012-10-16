@@ -43,9 +43,11 @@
 
 #include "mpform.h"
 #include "kpversion.h"
+#include "plugin_imgurexport.h"
 
 namespace KIPIImgurExportPlugin
 {
+typedef QMultiMap<QString, QString> KQOAuthParameters;
 
 class ImgurTalker::ImgurTalkerPriv
 {
@@ -56,21 +58,24 @@ public:
         parent    = 0;
         interface = 0;
         job       = 0;
-        queue     = 0;
+        continueUpload       = true;
+
+        userAgent = QString("KIPI-Plugins-" + Plugin_ImgurExport::name() + "/" + kipipluginsVersion());
+
+        const char _imgurApiKey[] = _IMGUR_API_ANONYMOUS_KEY;
+        anonymousKey = QByteArray( _imgurApiKey );
     }
 
-    QString     apiKey;
-    QString     userAgent;
+    bool           continueUpload;
+    QString        userAgent;
+
+    QByteArray     anonymousKey;
 
     QWidget*    parent;
     Interface*  interface;
     QByteArray  buffer;
 
-    State       state;
-    KUrl        currentUrl;
     KIO::Job*   job;
-
-    KUrl::List* queue;
 };
 
 ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
@@ -80,20 +85,20 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
     d->interface           = interface;
 
     d->job                 = 0;
-    d->userAgent           = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
 
-    d->apiKey              = _IMGUR_API_KEY;
+    m_queue               = new KUrl::List();
 
-    d->queue               = new KUrl::List();
+    connect(this, SIGNAL(signalUploadDone(KUrl)),
+            this, SLOT(slotUploadDone(KUrl)));
 
-    connect(this, SIGNAL(signalUploadDone()),
-            this, SLOT(slotUploadDone()));
-
+    // -------------------------------------------------------------------------
+/**/
     ImageCollection images = interface->currentSelection();
     if (images.isValid())
     {
         slotAddItems(images.images());
     }
+/**/
 }
 
 ImgurTalker::~ImgurTalker()
@@ -121,6 +126,33 @@ void ImgurTalker::slotData(KIO::Job* j, const QByteArray& data)
     emit signalUploadProgress(j->percent());
 }
 
+void ImgurTalker::parseResponse(QByteArray buffer)
+{
+    bool parseOk = false;
+    emit signalUploadDone(m_currentUrl);
+
+    switch(state)
+    {
+        case IE_REMOVEPHOTO:
+            parseOk = parseResponseImageRemove(buffer);
+            break;
+
+        case IE_ADDPHOTO:
+            parseOk = parseResponseImageUpload(buffer);
+            break;
+        default:
+            break;
+    }
+
+    if (!parseOk)
+    {
+        // received something unexpected
+        kDebug() <<  "Unexpected response from the web-service";
+    }
+
+    emit signalBusy(false);
+}
+
 void ImgurTalker::slotResult(KJob* kjob)
 {
     KIO::Job* job = static_cast<KIO::Job*>(kjob);
@@ -129,49 +161,40 @@ void ImgurTalker::slotResult(KJob* kjob)
     {
         ImgurError err;
         err.message = tr("Upload failed");
-        emit signalError(err); //job->errorString()
+        emit signalError(m_currentUrl, err); //job->errorString()
         kDebug() << "Error :" << job->errorString();
     }
 
-    bool parseOk = false;
-
-    switch(d->state)
-    {
-        case IE_REMOVEPHOTO:
-            parseOk = parseResponseImageRemove(d->buffer);
-            break;
-
-        case IE_ADDPHOTO:
-            parseOk = parseResponseImageUpload(d->buffer);
-            break;
-        default:
-            break;
-    }
-    kDebug() << "ParseOk :" << parseOk;
+    parseResponse(d->buffer);
 
     d->buffer.resize(0);
-
-    emit signalBusy(false);
 
     return;
 }
 
-void ImgurTalker::slotUploadDone()
+void ImgurTalker::slotUploadDone(KUrl currentFile)
 {
-    if (d->queue->isEmpty())
+    // removing the top of the queue
+    if (!m_queue->isEmpty())
     {
-        return;
+        m_queue->removeFirst();
+        emit signalQueueChanged();
     }
+    kDebug () << "Upload done for" << currentFile << "Queue has" << m_queue->length() << "items";
+}
 
-    kDebug () << "Upload done for" << d->currentUrl << "Queue has" << d->queue->length() << "items";
-    d->queue->removeFirst();
-
-    emit signalQueueChanged();
+void ImgurTalker::slotContinueUpload(bool yes)
+{
+    d->continueUpload = yes;
+    if (yes && !m_queue->isEmpty()) {
+        // the top of the queue was already removed - first() is a new image
+        imageUpload(m_queue->first());
+    }
+    return;
 }
 
 bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
 {
-    emit signalUploadDone();
     if (data.isEmpty())
     {
         // TODO
@@ -189,7 +212,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     QJson::Parser* p = new QJson::Parser();
     QVariant       r = p->parse(data, &ok);
 
-    emit signalUploadDone();
+//    kDebug() << data;
     if (ok)
     {
         QMap<QString, QVariant> m = r.toMap();
@@ -243,8 +266,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                 }
             }
 
-            emit signalError(error); // p->errorString()
-            return false;
+            emit signalError(m_currentUrl, error); // p->errorString()
+            kDebug() << "Imgur Error:" << p->errorString();
         }
 
         if (responseType == "upload" )
@@ -277,13 +300,13 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                         {
                             success.image.hash = value;
                         }
-                        if (it.key() == "deleteHash")
+                        if (it.key() == "deletehash")
                         {
                             success.image.deletehash = value;
                         }
-                        if (it.key() == "dateTime")
+                        if (it.key() == "datetime")
                         {
-                            //success.image.datetime = QDateTime(value);
+//                            success.image.datetime = QDateTime(value);
                         }
                         if (it.key() == "type")
                         {
@@ -347,7 +370,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                 }
             }
 
-            emit signalSuccess(success);
+            emit signalSuccess(m_currentUrl, success);
         }
     }
     else
@@ -355,23 +378,29 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         ImgurError error;
         error.message = "Parse error";
 
-        emit signalError (error); // p->errorString()
-        kDebug() << "Parser error :" << p->errorString();
-        return false;
+        emit signalError (m_currentUrl, error);
+        kDebug() << "Parse Error:" << p->errorString();
     }
 
-    return true;
+    return ok;
 }
 
-bool ImgurTalker::imageUpload(const KUrl& filePath)
+void ImgurTalker::imageUpload (const KUrl& filePath)
 {
-    d->currentUrl  = filePath;
+    state = IE_ADDPHOTO;
+
+    setCurrentUrl(filePath);
+
+    kDebug() << "Anonymous upload of " << filePath;
+
+    emit signalUploadStart(filePath);
+    emit signalBusy(true);
 
     MPForm form;
 
-    KUrl exportUrl = KUrl("http://api.imgur.com/2/upload.json");
-    exportUrl.addQueryItem("key", d->apiKey);
+    KUrl exportUrl = KUrl(ImgurConnection::APIuploadURL());
 
+    exportUrl.addQueryItem("key", d->anonymousKey.data());
     exportUrl.addQueryItem("name", filePath.fileName());
     exportUrl.addQueryItem("title", filePath.fileName()); // this should be replaced with something the user submits
 //    exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
@@ -391,13 +420,6 @@ bool ImgurTalker::imageUpload(const KUrl& filePath)
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
-
-    d->state = IE_ADDPHOTO;
-
-    emit signalUploadStart(filePath);
-    emit signalBusy(true);
-
-    return true;
 }
 
 bool ImgurTalker::imageRemove(const QString& delete_hash)
@@ -405,7 +427,7 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
     // @TODO : make sure it works
     MPForm form;
 
-    KUrl removeUrl = KUrl("http://api.imgur.com/2/delete/");
+    KUrl removeUrl = KUrl(ImgurConnection::APIdeleteURL());
     removeUrl.addPath(delete_hash + ".json");
 
     form.finish();
@@ -414,7 +436,7 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("UserAgent", d->userAgent);
 
-    d->state = IE_REMOVEPHOTO;
+    state = IE_REMOVEPHOTO;
 
     emit signalBusy(true);
     emit signalQueueChanged();
@@ -442,16 +464,16 @@ void ImgurTalker::slotAddItems(const KUrl::List& list)
 
     for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
-        if (!d->queue->contains(*it))
+        if (!m_queue->contains(*it))
         {
-            d->queue->append(*it);
+            m_queue->append(*it);
         }
     }
 
     emit signalQueueChanged();
 }
 
-void ImgurTalker::slotRemoveItems(const KUrl::List list)
+void ImgurTalker::slotRemoveItems(const KUrl::List &list)
 {
     if (list.isEmpty())
     {
@@ -460,20 +482,25 @@ void ImgurTalker::slotRemoveItems(const KUrl::List list)
 
     for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
-        d->queue->removeAll(*it);
+        m_queue->removeAll(*it);
     }
 
     emit signalQueueChanged();
 }
 
-KUrl::List* ImgurTalker::imageQueue() const
+void ImgurTalker::setCurrentUrl(const KUrl url)
 {
-    return d->queue;
+    m_currentUrl = url;
 }
 
-KUrl ImgurTalker::geCurrentUrl() const
+KUrl::List* ImgurTalker::imageQueue() const
 {
-    return d->currentUrl;
+    return m_queue;
+}
+
+KUrl ImgurTalker::currentUrl() const
+{
+    return m_currentUrl;
 }
 
 } // namespace KIPIImgurExportPlugin

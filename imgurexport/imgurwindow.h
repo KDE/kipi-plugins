@@ -34,9 +34,13 @@
 // Local includes
 
 #include "kpimageslist.h"
-#include "imgurtalker.h"
 #include "imgurwidget.h"
 #include "kptooldialog.h"
+#include "imgurtalker.h"
+
+#ifdef OAUTH_ENABLED
+#include "imgurtalkerauth.h"
+#endif //OAUTH_ENABLED
 
 namespace KIPIPlugins
 {
@@ -70,23 +74,24 @@ public:
 public Q_SLOTS:
 
     void slotImageQueueChanged();
-    void slotStartUpload();
     void slotBusy(bool val);
 
     void slotButtonClicked(KDialog::ButtonCode button);
-    void slotAddPhotoSuccess(ImgurSuccess success);
-    void slotAddPhotoError(ImgurError error);
+    void slotAddPhotoSuccess(KUrl currentImage, ImgurSuccess success);
+    void slotAddPhotoError(KUrl currentImage, ImgurError error);
+//    void slotAuthenticated(bool yes);
+    void slotAuthenticated(bool yes, const QString& message = "");
 
 Q_SIGNALS:
 
     void signalImageUploadSuccess(const KUrl&, ImgurSuccess);
     void signalImageUploadError(const KUrl&, ImgurError);
+    void signalImageUploadCompleted();
+    void signalContinueUpload(bool yes);
 
 private:
 
-    void uploadNextItem();
     void closeEvent(QCloseEvent* e);
-    void close();
     void readSettings();
     void saveSettings();
 

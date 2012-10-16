@@ -1,0 +1,97 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2010-02-04
+ * Description : a tool to export images to imgur.com
+ *
+ * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#ifndef IMGURTALKERAUTH_H
+#define IMGURTALKERAUTH_H
+
+#include "imgurtalker_common.h"
+
+// Qt includes
+
+#include <QWidget>
+#include <QObject>
+#include <QFileInfo>
+#include <QDateTime>
+#include <QSettings>
+
+// QtOAuth includes
+
+#include <QtKOAuth>
+
+// KDE includes
+
+#include <kurl.h>
+#include <kio/jobclasses.h>
+
+// LibKIPI includes
+
+#include <libkipi/interface.h>
+
+// Local includes
+
+#include "imgurtalker.h"
+
+using namespace KIPI;
+
+namespace KIPIImgurExportPlugin
+{
+
+// QtOauth
+
+//class KQOAuthManager;
+//class KQOAuthRequest;
+
+class ImgurTalkerAuth : public ImgurTalker
+{
+    Q_OBJECT
+
+public:
+    ImgurTalkerAuth(Interface* const iface, QWidget* const parent = 0);
+    ~ImgurTalkerAuth();
+    void        imageUpload(const KUrl& filePath);
+    void        cancel();
+
+Q_SIGNALS:
+    void        signalAuthenticated (bool authenticated, const QString& message = "");
+
+private:
+    bool            parseLoginResponse (const QByteArray& data);
+    const QString   getAuthError (KQOAuthManager::KQOAuthError error);
+
+private Q_SLOTS:
+    void slotOAuthLogin();
+    void slotTemporaryTokenReceived(QString temporaryToken, QString temporaryTokenSecret);
+    void slotAuthorizationReceived(QString token, QString verifier);
+    void slotAccessTokenReceived(QString token, QString tokenSecret);
+    void slotAuthorizedRequestDone();
+    void slotRequestReady(QByteArray);
+    void slotContinueUpload(bool yes);
+
+private:
+    class ImgurTalkerAuthPriv;
+    ImgurTalkerAuthPriv* const d;
+
+};
+
+} // namespace KIPIImgurExportPlugin
+
+#endif // IMGURTALKERAUTH_H

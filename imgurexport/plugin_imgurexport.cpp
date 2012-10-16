@@ -41,10 +41,6 @@
 
 #include <libkipi/interface.h>
 
-// Local includes
-
-#include <imgurwindow.h>
-
 using namespace KIPIPlugins;
 
 namespace KIPIImgurExportPlugin
@@ -135,6 +131,11 @@ void Plugin_ImgurExport::slotActivate()
     d->winExport->reactivate();
 
     kDebug() << "We have activated the imgur exporter!";
+}
+
+Category Plugin_ImgurExport::category(KAction* action) const
+{
+    return ExportPlugin;
 }
 
 } // namespace KIPIImgurExportPlugin

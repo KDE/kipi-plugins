@@ -59,17 +59,31 @@ Q_SIGNALS:
 
     void signalAddItems(const KUrl::List& list);
     void signalRemoveItems(const KUrl::List& list);
-    void signalImageUploadSuccess (const KUrl& imgPath, ImgurSuccess success);
-    void signalImageUploadError (const KUrl& imgPath, ImgurError error);
     void signalImageListChanged();
+
+    void signalEnableAuthentication(bool yes);
+    void signalClickedChangeUser();
+    void signalImageUploadSuccess(const KUrl& imgPath, ImgurSuccess success);
+    void signalImageUploadError(const KUrl& imgPath, ImgurError error);
+//    void signalLoggedUserChanged(QString loggedUser);
+//    void signalCredentialsChanged(QString loggedUser, QString passwd);
 
 public Q_SLOTS:
 
     void slotAddItems(const KUrl::List& list);
     void slotRemoveItems(const KUrl::List& list);
+    void slotImageUploadStart(const KUrl& imgPath);
     void slotImageUploadSuccess(const KUrl& imgPath, ImgurSuccess success);
     void slotImageUploadError(const KUrl& imgPath, ImgurError error);
     void slotImageListChanged();
+
+
+    void slotAuthenticated (bool authenticated, const QString& message);
+    void slotClickedChangeUser();
+//    void slotChangeUserDialog();
+//    void slotSetLoggedUser(bool ok);
+//    void slotCredentialsSet();
+//    void slotLoadedNamePass(QString name, QString pass);
 
 private:
 
