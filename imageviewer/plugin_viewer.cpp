@@ -88,6 +88,7 @@ void Plugin_viewer::setup(QWidget* const widget)
         return;
     }
 
+    d->actionViewer->setEnabled(true);
 }
 
 void Plugin_viewer::setupActions()
