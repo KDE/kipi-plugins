@@ -70,8 +70,8 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
     if (!KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings, imageData, width, height, rgbmax))
         return false;
 
-    return (loadedFromDcraw(filePath, destPath, outputFileFormat,
-                            imageData, width, height, rgbmax, rawDecodingSettings));
+    return (loadedFromDecoder(filePath, destPath, outputFileFormat,
+                              imageData, width, height, rgbmax, rawDecodingSettings));
 }
 
 bool RawDecodingIface::decodeRAWImage(const QString& filePath, 
@@ -83,16 +83,16 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
     if (!KDcraw::decodeRAWImage(filePath, rawDecodingSettings, imageData, width, height, rgbmax))
         return false;
 
-    return (loadedFromDcraw(filePath, destPath, outputFileFormat,
-                            imageData, width, height, rgbmax, rawDecodingSettings));
+    return (loadedFromDecoder(filePath, destPath, outputFileFormat,
+                              imageData, width, height, rgbmax, rawDecodingSettings));
 }
 
 // ----------------------------------------------------------------------------------
 
-bool RawDecodingIface::loadedFromDcraw(const QString& filePath, 
-                                       QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
-                                       const QByteArray& imageData, int width, int height, int rgbmax, 
-                                       const RawDecodingSettings& rawDecodingSettings)
+bool RawDecodingIface::loadedFromDecoder(const QString& filePath, 
+                                         QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
+                                         const QByteArray& imageData, int width, int height, int rgbmax, 
+                                         const RawDecodingSettings& rawDecodingSettings)
 {
     bool sixteenBits = rawDecodingSettings.sixteenBitsImage;
     uchar* sptr      = (uchar*)imageData.data();

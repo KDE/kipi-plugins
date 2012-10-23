@@ -117,7 +117,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     if (KPMetadata::isRawFile(d->filename))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadDcrawPreview(d->qimage, d->filename);
+        KDcraw::loadRawPreview(d->qimage, d->filename);
     }
     else
     {

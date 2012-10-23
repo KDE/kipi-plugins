@@ -455,7 +455,7 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     if (isRAW)
     {
         kDebug() << "Get RAW preview " << imgPath;
-        KDcraw::loadDcrawPreview(image, imgPath);
+        KDcraw::loadRawPreview(image, imgPath);
     }
     else
     {

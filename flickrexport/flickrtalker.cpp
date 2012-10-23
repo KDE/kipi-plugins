@@ -611,7 +611,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     // Check if RAW file.
     if (KPMetadata::isRawFile(photoPath))
     {
-        KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
+        KDcrawIface::KDcraw::loadRawPreview(image, photoPath);
     }
     else
     {

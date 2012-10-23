@@ -174,7 +174,7 @@ void Task::run()
             QImage image;
             {
                 KPFileReadLocker(m_d->iface, m_url.toLocalFile());
-                m_d->dcrawIface.loadDcrawPreview(image, m_url.toLocalFile());
+                m_d->dcrawIface.loadRawPreview(image, m_url.toLocalFile());
             }
 
             ActionData ad;

@@ -557,7 +557,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
     if (isRaw)
     {
         kDebug() << "Get RAW preview " << path;
-        KDcrawIface::KDcraw::loadDcrawPreview(m_image, path);
+        KDcrawIface::KDcraw::loadRawPreview(m_image, path);
     }
     else
     {

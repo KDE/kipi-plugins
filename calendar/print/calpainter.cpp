@@ -316,7 +316,7 @@ void CalPainter::paint(int month)
     // Check if RAW file.
     if (KPMetadata::isRawFile(imagePath_))
     {
-        KDcrawIface::KDcraw::loadDcrawPreview(image_, imagePath_.path());
+        KDcrawIface::KDcraw::loadRawPreview(image_, imagePath_.path());
     }
     else
     {

@@ -211,7 +211,7 @@ bool DsWindow::prepareImageForUpload(const QString& imgPath, MassageType massage
     if ( massage == DsWindow::ImageIsRaw )
     {
         kDebug() << "Get RAW preview " << imgPath;
-        KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
+        KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
     }
     else
     {
