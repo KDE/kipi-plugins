@@ -251,7 +251,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
     // Check if RAW file.
     if (KPMetadata::isRawFile(photoPath))
-        KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
+        KDcrawIface::KDcraw::loadRawPreview(image, photoPath);
     else
         image.load(photoPath);
 

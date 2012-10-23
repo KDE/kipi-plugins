@@ -553,7 +553,7 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     if (isRAW)
     {
         kDebug() << "Get RAW preview " << imgPath;
-        KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
+        KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
     }
     else
     {

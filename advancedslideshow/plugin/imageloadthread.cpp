@@ -173,7 +173,7 @@ bool ImageLoadThread::loadImage()
     if (KPMetadata::isRawFile(path))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadDcrawPreview(image, path);
+        KDcraw::loadRawPreview(image, path);
     }
     else
     {

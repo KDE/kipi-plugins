@@ -78,7 +78,7 @@ void LoadThread::run()
     if (KPMetadata::isRawFile(m_path))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadDcrawPreview(newImage, m_path.toLocalFile());
+        KDcraw::loadRawPreview(newImage, m_path.toLocalFile());
     }
     else
     {

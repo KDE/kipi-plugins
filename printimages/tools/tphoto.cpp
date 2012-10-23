@@ -125,7 +125,7 @@ QImage TPhoto::loadPhoto()
 
     // Check if RAW file.
     if (KPMetadata::isRawFile(filename))
-        KDcrawIface::KDcraw::loadDcrawPreview(photo, filename.path());
+        KDcrawIface::KDcraw::loadRawPreview(photo, filename.path());
     else
         photo.load(filename.path()); // PENDING(blackie) handle URL
 

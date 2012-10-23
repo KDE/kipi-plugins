@@ -109,7 +109,7 @@ void KPRawThumbThread::run()
         if (!url.isEmpty())
         {
             QImage img;
-            bool ret = KDcraw::loadDcrawPreview(img, url.path());
+            bool ret = KDcraw::loadRawPreview(img, url.path());
             if (ret)
             {
                 kDebug() << url << " :: processed as RAW file";

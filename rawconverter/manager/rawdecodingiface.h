@@ -66,10 +66,10 @@ public:
 
 private:
 
-    bool loadedFromDcraw(const QString& filePath,
-                         QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
-                         const QByteArray& imageData, int width, int height, int rgbmax,
-                         const RawDecodingSettings& rawDecodingSettings);
+    bool loadedFromDecoder(const QString& filePath,
+                           QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
+                           const QByteArray& imageData, int width, int height, int rgbmax,
+                           const RawDecodingSettings& rawDecodingSettings);
 };
 
 }  // namespace KIPIRawConverterPlugin

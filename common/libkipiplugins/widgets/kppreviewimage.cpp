@@ -555,7 +555,7 @@ bool KPPreviewImage::load(const QString& file) const
 
     if (KPMetadata::isRawFile(file))
     {
-        KDcraw::loadDcrawPreview(image, file);
+        KDcraw::loadRawPreview(image, file);
     }
     else
     {

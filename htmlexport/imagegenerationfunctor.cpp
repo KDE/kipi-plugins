@@ -106,7 +106,7 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
     // Check if RAW file.
     if (KPMetadata::isRawFile(path))
     {
-        if (!KDcraw::loadDcrawPreview(originalImage, path))
+        if (!KDcraw::loadRawPreview(originalImage, path))
         {
             emitWarning(i18n("Error loading RAW image '%1'", path));
             return;

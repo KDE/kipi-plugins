@@ -125,7 +125,7 @@ bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
 
     // Check if RAW file.
     if (KPMetadata::isRawFile(orgUrl))
-        KDcraw::loadDcrawPreview(img, orgUrl.path());
+        KDcraw::loadRawPreview(img, orgUrl.path());
     else
         img.load(orgUrl.path());
 

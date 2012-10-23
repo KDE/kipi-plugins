@@ -771,7 +771,7 @@ void YandexFotkiWindow::updateNextPhoto()
             bool isRAW = KPMetadata::isRawFile(photo.originalUrl());
             if (isRAW)
             {
-                KDcraw::loadDcrawPreview(image, photo.originalUrl());
+                KDcraw::loadRawPreview(image, photo.originalUrl());
             }
             else
             {

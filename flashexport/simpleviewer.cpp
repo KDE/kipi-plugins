@@ -483,7 +483,7 @@ void SimpleViewer::processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
 
         // Check if RAW file.
         if (KPMetadata::isRawFile(url))
-            KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
+            KDcrawIface::KDcraw::loadRawPreview(image, url.path());
         else
             image.load(url.path());
 
