@@ -344,7 +344,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
     {
         if (m_dateTime.isValid())
         {
-            return m_dateTime.toString(Qt::LocalDate);
+            return (KGlobal::locale()->formatDateTime(m_dateTime, KLocale::ShortDate, true));
         }
         return i18n("Not available");
     }
