@@ -26,4 +26,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> 299191 - digiKam Advanced slideshow crash.
 016 ==> 308442 - Images are not associated to album if album name contains &amp;.
 017 ==> 308465 - Cannot change file modification timestamp with files having non ASCII characters
-018 ==>
+018 ==> 308834 - Display "Date and time" with seconds in geolocation.
+019 ==> 
+
