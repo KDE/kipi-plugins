@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.6.2.  */
+/* A Bison parser, made by GNU Bison 2.6.4.  */
 
 /* Bison interface for Yacc-like parsers in C
    
@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_TMP_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H
-# define YY_TMP_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H
+#ifndef YY_YY_TMP_DIGIKAM_SC_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H_INCLUDED
+# define YY_YY_TMP_DIGIKAM_SC_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -75,7 +75,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-/* Line 2049 of yacc.c  */
+/* Line 2077 of yacc.c  */
 #line 69 "ptoparser/panoParser.y"
 
     int     iVal;
@@ -84,8 +84,8 @@ typedef union YYSTYPE
     char    cVal;
 
 
-/* Line 2049 of yacc.c  */
-#line 89 "/tmp/build/extra/kipi-plugins/panorama/panoParser.h"
+/* Line 2077 of yacc.c  */
+#line 89 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -108,4 +108,4 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_TMP_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H  */
+#endif /* !YY_YY_TMP_DIGIKAM_SC_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H_INCLUDED  */

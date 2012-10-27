@@ -941,7 +941,7 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
             case 'X':
             case 'Y':
             case 'Z':
-                image->translationCoef[*(keyword + 1) - 'X'] = $2;
+                image->translationCoef[*(keyword + 2) - 'X'] = $2;
                 break;
             default:
                 panoScriptParserError("Invalid variable name [%s]\n", keyword);

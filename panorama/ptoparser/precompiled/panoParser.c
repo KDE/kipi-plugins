@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.6.2.  */
+/* A Bison parser, made by GNU Bison 2.6.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
    
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.6.2"
+#define YYBISON_VERSION "2.6.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -62,8 +62,9 @@
 
 
 /* Copy the first part of user declarations.  */
-/* Line 336 of yacc.c  */
-#line 27 "ptoparser/panoParser.y"
+/* Line 358 of yacc.c  */
+#line 26 "ptoparser/panoParser.y"
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -103,8 +104,8 @@ static void ParserStringCopy(char **dest, const char *from)
 
 
 
-/* Line 336 of yacc.c  */
-#line 108 "/tmp/build/extra/kipi-plugins/panorama/panoParser.c"
+/* Line 358 of yacc.c  */
+#line 109 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -124,8 +125,8 @@ static void ParserStringCopy(char **dest, const char *from)
 
 /* In a future release of Bison, this section will be replaced
    by #include "panoParser.h".  */
-#ifndef YY_TMP_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H
-# define YY_TMP_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H
+#ifndef YY_YY_TMP_DIGIKAM_SC_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H_INCLUDED
+# define YY_YY_TMP_DIGIKAM_SC_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -169,7 +170,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-/* Line 350 of yacc.c  */
+/* Line 374 of yacc.c  */
 #line 69 "ptoparser/panoParser.y"
 
     int     iVal;
@@ -178,8 +179,8 @@ typedef union YYSTYPE
     char    cVal;
 
 
-/* Line 350 of yacc.c  */
-#line 183 "/tmp/build/extra/kipi-plugins/panorama/panoParser.c"
+/* Line 374 of yacc.c  */
+#line 184 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -202,12 +203,12 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_TMP_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H  */
+#endif /* !YY_YY_TMP_DIGIKAM_SC_BUILD_EXTRA_KIPI_PLUGINS_PANORAMA_PANOPARSER_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-/* Line 353 of yacc.c  */
-#line 211 "/tmp/build/extra/kipi-plugins/panorama/panoParser.c"
+/* Line 377 of yacc.c  */
+#line 212 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
 
 #ifdef short
 # undef short
@@ -260,24 +261,24 @@ typedef short int yytype_int16;
 # if defined YYENABLE_NLS && YYENABLE_NLS
 #  if ENABLE_NLS
 #   include <libintl.h> /* INFRINGES ON USER NAME SPACE */
-#   define YY_(msgid) dgettext ("bison-runtime", msgid)
+#   define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 #  endif
 # endif
 # ifndef YY_
-#  define YY_(msgid) msgid
+#  define YY_(Msgid) Msgid
 # endif
 #endif
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(e) ((void) (e))
+# define YYUSE(E) ((void) (E))
 #else
-# define YYUSE(e) /* empty */
+# define YYUSE(E) /* empty */
 #endif
 
 /* Identity function, used to suppress warnings about constant conditions.  */
 #ifndef lint
-# define YYID(n) (n)
+# define YYID(N) (N)
 #else
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
@@ -662,10 +663,10 @@ static const yytype_uint8 yytable[] =
      110,   112,     7,    99,   105,    62,   100,   108
 };
 
-#define yypact_value_is_default(yystate) \
-  ((yystate) == (-46))
+#define yypact_value_is_default(Yystate) \
+  (!!((Yystate) == (-46)))
 
-#define yytable_value_is_error(yytable_value) \
+#define yytable_value_is_error(Yytable_value) \
   YYID (0)
 
 static const yytype_uint8 yycheck[] =
@@ -1248,6 +1249,15 @@ yydestruct (yymsg, yytype, yyvaluep)
 /* The lookahead symbol.  */
 int yychar;
 
+
+#ifndef YYLVAL_INITIALIZE
+# define YYLVAL_INITIALIZE()
+#endif
+#ifndef YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END
+#endif
+
 /* The semantic value of the lookahead symbol.  */
 YYSTYPE yylval;
 
@@ -1307,7 +1317,7 @@ yyparse ()
   int yyn;
   int yyresult;
   /* Lookahead token as an internal (translated) token number.  */
-  int yytoken;
+  int yytoken = 0;
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
@@ -1325,7 +1335,6 @@ yyparse ()
      Keep to zero when no symbol should be popped.  */
   int yylen = 0;
 
-  yytoken = 0;
   yyss = yyssa;
   yyvs = yyvsa;
   yystacksize = YYINITDEPTH;
@@ -1343,6 +1352,8 @@ yyparse ()
      The wasted elements are never initialized.  */
   yyssp = yyss;
   yyvsp = yyvs;
+
+  YYLVAL_INITIALIZE ();
   goto yysetstate;
 
 /*------------------------------------------------------------.
@@ -1483,7 +1494,9 @@ yybackup:
   yychar = YYEMPTY;
 
   yystate = yyn;
+  YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
+  YY_IGNORE_MAYBE_UNINITIALIZED_END
 
   goto yynewstate;
 
@@ -1520,7 +1533,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 111 "ptoparser/panoParser.y"
     {
         script.iEndingCommentsCount = nbCommentLine;
@@ -1529,7 +1542,7 @@ yyreduce:
     break;
 
   case 5:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 120 "ptoparser/panoParser.y"
     {
         nbCommentLine = 0;
@@ -1538,7 +1551,7 @@ yyreduce:
     break;
 
   case 8:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 129 "ptoparser/panoParser.y"
     {
         char** curComment = (char**) panoScriptReAlloc((void**) &commentLines,
@@ -1555,7 +1568,7 @@ yyreduce:
     break;
 
   case 9:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 143 "ptoparser/panoParser.y"
     {
         int prevNbImages = script.iInputImagesCount - 1;
@@ -1573,7 +1586,7 @@ yyreduce:
     break;
 
   case 10:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 157 "ptoparser/panoParser.y"
     {
         script.iPano_prevCommentsCount = nbCommentLine;
@@ -1582,7 +1595,7 @@ yyreduce:
     break;
 
   case 11:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 162 "ptoparser/panoParser.y"
     {
         script.iOptimize_prevCommentsCount = nbCommentLine;
@@ -1591,7 +1604,7 @@ yyreduce:
     break;
 
   case 12:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 167 "ptoparser/panoParser.y"
     {
         int prevNbVars = script.iVarsToOptimizeCount - 1;
@@ -1609,7 +1622,7 @@ yyreduce:
     break;
 
   case 13:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 181 "ptoparser/panoParser.y"
     {
         int prevNbCP = script.iCtrlPointsCount - 1;
@@ -1627,7 +1640,7 @@ yyreduce:
     break;
 
   case 14:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 195 "ptoparser/panoParser.y"
     {
         int prevNbMasks = script.iCtrlPointsCount - 1;
@@ -1645,7 +1658,7 @@ yyreduce:
     break;
 
   case 15:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 211 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_INPUT_LINE;
@@ -1662,7 +1675,7 @@ yyreduce:
     break;
 
   case 17:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 226 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_PANO_LINE;
@@ -1670,7 +1683,7 @@ yyreduce:
     break;
 
   case 19:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 232 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_OPTIMIZE_OPT_LINE;
@@ -1678,7 +1691,7 @@ yyreduce:
     break;
 
   case 21:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 240 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_OPTIMIZE_VARS_LINE;
@@ -1686,7 +1699,7 @@ yyreduce:
     break;
 
   case 24:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 246 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_CONTROL_PT_LINE;
@@ -1701,7 +1714,7 @@ yyreduce:
     break;
 
   case 26:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 259 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_MASK_PT_LINE;
@@ -1714,7 +1727,7 @@ yyreduce:
     break;
 
   case 27:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 268 "ptoparser/panoParser.y"
     {
         if ((yyvsp[(4) - (4)].iVal) == -1) {
@@ -1738,7 +1751,7 @@ yyreduce:
     break;
 
   case 28:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 289 "ptoparser/panoParser.y"
     {
         DEBUG_1("ENDOFLINE");
@@ -1747,7 +1760,7 @@ yyreduce:
     break;
 
   case 31:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 304 "ptoparser/panoParser.y"
     {
         pt_script_optimize_var* varToOptimize = (pt_script_optimize_var*) panoScriptReAlloc((void**) &script.varsToOptimize,
@@ -1764,7 +1777,7 @@ yyreduce:
     break;
 
   case 32:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 317 "ptoparser/panoParser.y"
     {
         pt_script_optimize_var* varToOptimize = (pt_script_optimize_var*) panoScriptReAlloc((void**) &script.varsToOptimize,
@@ -1785,7 +1798,7 @@ yyreduce:
     break;
 
   case 45:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 354 "ptoparser/panoParser.y"
     {
         (yyval.iVal) = (yyvsp[(1) - (1)].iVal);
@@ -1793,7 +1806,7 @@ yyreduce:
     break;
 
   case 46:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 358 "ptoparser/panoParser.y"
     {
         if ((yyvsp[(1) - (3)].iVal) != -1)
@@ -1804,7 +1817,7 @@ yyreduce:
     break;
 
   case 47:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 366 "ptoparser/panoParser.y"
     {
         (yyval.iVal) = -1;
@@ -1824,7 +1837,7 @@ yyreduce:
     break;
 
   case 48:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 382 "ptoparser/panoParser.y"
     {
         (yyval.iVal) = -1;
@@ -1834,7 +1847,7 @@ yyreduce:
     break;
 
   case 51:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 392 "ptoparser/panoParser.y"
     {
         pt_point* maskPointPtr = (pt_point*) panoScriptReAlloc((void**) &mask->points,
@@ -1851,7 +1864,7 @@ yyreduce:
     break;
 
   case 52:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 407 "ptoparser/panoParser.y"
     {
         if (currentLine != PT_TOKEN_PANO_LINE && currentLine != PT_TOKEN_INPUT_LINE) {
@@ -1874,7 +1887,7 @@ yyreduce:
     break;
 
   case 53:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 428 "ptoparser/panoParser.y"
     {
         if (currentLine != PT_TOKEN_INPUT_LINE) {
@@ -1981,7 +1994,7 @@ yyreduce:
     break;
 
   case 54:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 531 "ptoparser/panoParser.y"
     {
         int imageRef = (yyvsp[(3) - (3)].iVal);
@@ -2027,7 +2040,7 @@ yyreduce:
     break;
 
   case 55:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 576 "ptoparser/panoParser.y"
     {
         /* For the case where the keyword is one char, followed by a string */
@@ -2078,7 +2091,7 @@ yyreduce:
     break;
 
   case 56:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 623 "ptoparser/panoParser.y"
     {
         if (currentLine != PT_TOKEN_PANO_LINE) {
@@ -2090,7 +2103,7 @@ yyreduce:
     break;
 
   case 57:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 631 "ptoparser/panoParser.y"
     {
         /* Processing of int variables with keyword of one character only */
@@ -2228,7 +2241,7 @@ yyreduce:
     break;
 
   case 58:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 765 "ptoparser/panoParser.y"
     {
         /* Processing of int variables with keyword of one character only */
@@ -2327,7 +2340,7 @@ yyreduce:
     break;
 
   case 59:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 860 "ptoparser/panoParser.y"
     {
         char *keyword = (yyvsp[(1) - (2)].strVal);
@@ -2413,7 +2426,7 @@ yyreduce:
             case 'X':
             case 'Y':
             case 'Z':
-                image->translationCoef[*(keyword + 1) - 'X'] = (yyvsp[(2) - (2)].fVal);
+                image->translationCoef[*(keyword + 2) - 'X'] = (yyvsp[(2) - (2)].fVal);
                 break;
             default:
                 panoScriptParserError("Invalid variable name [%s]\n", keyword);
@@ -2429,7 +2442,7 @@ yyreduce:
     break;
 
   case 60:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 961 "ptoparser/panoParser.y"
     {
         switch (currentLine) {
@@ -2451,7 +2464,7 @@ yyreduce:
     break;
 
   case 61:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 980 "ptoparser/panoParser.y"
     {
         float* param = (float*) panoScriptReAlloc((void**) &projParms,
@@ -2462,7 +2475,7 @@ yyreduce:
     break;
 
   case 62:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 987 "ptoparser/panoParser.y"
     {
         float* param = (float*) panoScriptReAlloc((void**) &projParms,
@@ -2473,32 +2486,32 @@ yyreduce:
     break;
 
   case 63:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 994 "ptoparser/panoParser.y"
     {(yyval.fVal) = (yyvsp[(1) - (1)].fVal);}
     break;
 
   case 64:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 996 "ptoparser/panoParser.y"
     {(yyval.iVal) = (yyvsp[(1) - (1)].iVal);}
     break;
 
   case 65:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 998 "ptoparser/panoParser.y"
     {(yyval.fVal) = (yyvsp[(1) - (1)].fVal);}
     break;
 
   case 66:
-/* Line 1787 of yacc.c  */
+/* Line 1813 of yacc.c  */
 #line 999 "ptoparser/panoParser.y"
     {(yyval.fVal) = (yyvsp[(1) - (1)].iVal);}
     break;
 
 
-/* Line 1787 of yacc.c  */
-#line 2502 "/tmp/build/extra/kipi-plugins/panorama/panoParser.c"
+/* Line 1813 of yacc.c  */
+#line 2515 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2661,7 +2674,9 @@ yyerrlab1:
       YY_STACK_PRINT (yyss, yyssp);
     }
 
+  YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
+  YY_IGNORE_MAYBE_UNINITIALIZED_END
 
 
   /* Shift the error token.  */
@@ -2727,7 +2742,7 @@ yyreturn:
 }
 
 
-/* Line 2048 of yacc.c  */
+/* Line 2076 of yacc.c  */
 #line 1002 "ptoparser/panoParser.y"
 
 

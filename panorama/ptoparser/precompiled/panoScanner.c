@@ -1,6 +1,6 @@
-#line 2 "/tmp/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 2 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
-#line 4 "/tmp/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 4 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -534,35 +534,32 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "ptoparser/panoScanner.l"
-/*
- *  panoScanner.h
- *
- *  Copyright  Daniel M. German
- *
- *  April 2007
- *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public
- *  License as published by the Free Software Foundation; either
- *  version 2 of the License, or (at your option) any later version.
- *
- *  This software is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public
- *  License along with this software; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- *  Author: Daniel M German dmgerman at uvic doooot ca
+/*============================================================
  * 
- *  This lex input file implements the panotools and hugin input scripts
+ * This file is a part of kipi-plugins project
+ * http://www.digikam.org
  *
- */
+ * Description : Hugin pto file lexer
+ *
+ * Copyright (C) 2007 Daniel M German <dmgerman at uvic doooot ca>
+ * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of 
+ * the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ============================================================ */
 #define YY_NO_INPUT 1
-#line 34 "ptoparser/panoScanner.l"
+#line 31 "ptoparser/panoScanner.l"
 
 /* need this for the call to atof() below */
 #include <math.h>
@@ -590,7 +587,7 @@ int first_eof;
 
 
 
-#line 594 "/tmp/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 591 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 #define INITIAL 0
 #define str 1
@@ -779,12 +776,12 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 69 "ptoparser/panoScanner.l"
+#line 66 "ptoparser/panoScanner.l"
 
 
   /* Simple rules for all purpose */
 
-#line 788 "/tmp/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 785 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 	if ( !(yy_init) )
 		{
@@ -871,7 +868,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 73 "ptoparser/panoScanner.l"
+#line 70 "ptoparser/panoScanner.l"
 { /* Ignore empty lines */
     DEBUG_1("Empty line");
 }
@@ -879,7 +876,7 @@ YY_RULE_SETUP
 /* Simple rules to read numbers */
 case 2:
 YY_RULE_SETUP
-#line 80 "ptoparser/panoScanner.l"
+#line 77 "ptoparser/panoScanner.l"
 { /* Simple integer */
     BEGIN(INITIAL);
     panoScriptScannerTokenBegin(yytext);
@@ -890,7 +887,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 88 "ptoparser/panoScanner.l"
+#line 85 "ptoparser/panoScanner.l"
 { /* float point with period */
     BEGIN(INITIAL);
     panoScriptScannerTokenBegin(yytext);
@@ -902,7 +899,7 @@ YY_RULE_SETUP
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 96 "ptoparser/panoScanner.l"
+#line 93 "ptoparser/panoScanner.l"
 { /* END OF LINE is an important marker when processing a rule */
     DEBUG_1("End of line");
     panoScriptScannerTokenBegin(yytext);
@@ -917,7 +914,7 @@ case YY_STATE_EOF(hugin):
 case YY_STATE_EOF(mask):
 case YY_STATE_EOF(maskcoordinate):
 case YY_STATE_EOF(projparms):
-#line 103 "ptoparser/panoScanner.l"
+#line 100 "ptoparser/panoScanner.l"
 { /* We are done */
     DEBUG_1("End of file");
     panoScriptScannerTokenBegin(yytext);
@@ -930,7 +927,7 @@ case YY_STATE_EOF(projparms):
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 113 "ptoparser/panoScanner.l"
+#line 110 "ptoparser/panoScanner.l"
 {
     panoScriptScannerTokenBegin(yytext); 
     return PT_TOKEN_COMMA;
@@ -938,7 +935,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 118 "ptoparser/panoScanner.l"
+#line 115 "ptoparser/panoScanner.l"
 {  /* token separator */
     panoScriptScannerTokenBegin(yytext); 
     return PT_TOKEN_SEP;
@@ -949,7 +946,7 @@ YY_RULE_SETUP
 /******************************************/
 case 7:
 YY_RULE_SETUP
-#line 128 "ptoparser/panoScanner.l"
+#line 125 "ptoparser/panoScanner.l"
 {    /* panorama line */
     DEBUG_1("Panorama line");
     panoScriptScannerTokenBegin(yytext);
@@ -959,7 +956,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 135 "ptoparser/panoScanner.l"
+#line 132 "ptoparser/panoScanner.l"
 {    /* input line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -968,7 +965,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 141 "ptoparser/panoScanner.l"
+#line 138 "ptoparser/panoScanner.l"
 {    /* Optimization options line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -977,7 +974,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 147 "ptoparser/panoScanner.l"
+#line 144 "ptoparser/panoScanner.l"
 {    /* Var optimization line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -986,7 +983,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 153 "ptoparser/panoScanner.l"
+#line 150 "ptoparser/panoScanner.l"
 {    /* Mask line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -996,7 +993,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 160 "ptoparser/panoScanner.l"
+#line 157 "ptoparser/panoScanner.l"
 {    /* Control point line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -1005,7 +1002,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 166 "ptoparser/panoScanner.l"
+#line 163 "ptoparser/panoScanner.l"
 {
     DEBUG_2("Comment "%s"", yytext);
     panoScriptScannerTokenBegin(yytext);
@@ -1020,7 +1017,7 @@ YY_RULE_SETUP
 /******************************************/
 case 14:
 YY_RULE_SETUP
-#line 179 "ptoparser/panoScanner.l"
+#line 176 "ptoparser/panoScanner.l"
 {
     panoScriptScannerTokenBegin(yytext);
     BEGIN(parm);
@@ -1029,7 +1026,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 185 "ptoparser/panoScanner.l"
+#line 182 "ptoparser/panoScanner.l"
 {   /* Reference to a variable */
     panoScriptScannerTokenBegin(yytext);
     return PT_TOKEN_REFERENCE;
@@ -1037,7 +1034,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 191 "ptoparser/panoScanner.l"
+#line 188 "ptoparser/panoScanner.l"
 {
     /* Read the rest of the parameter as a string by default */
     /* move back to default mode */
@@ -1051,7 +1048,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 202 "ptoparser/panoScanner.l"
+#line 199 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1063,7 +1060,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 211 "ptoparser/panoScanner.l"
+#line 208 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1075,7 +1072,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 220 "ptoparser/panoScanner.l"
+#line 217 "ptoparser/panoScanner.l"
 {
     panoScriptScannerTokenBegin(yytext);
     BEGIN(mask);
@@ -1083,7 +1080,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 225 "ptoparser/panoScanner.l"
+#line 222 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     panoScriptScannerTokenBegin(yytext);
@@ -1095,7 +1092,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 234 "ptoparser/panoScanner.l"
+#line 231 "ptoparser/panoScanner.l"
 {  /* These are the C and S parameters that contain multiple values */
     DEBUG_2("An identifier for a variable: %s", yytext);
     BEGIN(parm);
@@ -1105,7 +1102,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 241 "ptoparser/panoScanner.l"
+#line 238 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1117,7 +1114,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 250 "ptoparser/panoScanner.l"
+#line 247 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1132,14 +1129,14 @@ YY_RULE_SETUP
 /*********************************/
 case 24:
 YY_RULE_SETUP
-#line 263 "ptoparser/panoScanner.l"
+#line 260 "ptoparser/panoScanner.l"
 {
     BEGIN(INITIAL);
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 267 "ptoparser/panoScanner.l"
+#line 264 "ptoparser/panoScanner.l"
 { /* Begin of string */
     panoScriptScannerTokenBegin(yytext);
     strBuffer_ptr = strBuffer;
@@ -1148,7 +1145,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 273 "ptoparser/panoScanner.l"
+#line 270 "ptoparser/panoScanner.l"
 { /* saw closing quote - all done */
     BEGIN(INITIAL);
     *strBuffer_ptr = '\0';
@@ -1161,7 +1158,7 @@ YY_RULE_SETUP
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 282 "ptoparser/panoScanner.l"
+#line 279 "ptoparser/panoScanner.l"
 {
     /* error - unterminated string constant */
     /* generate error message */
@@ -1171,38 +1168,38 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 289 "ptoparser/panoScanner.l"
+#line 286 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\n';
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 290 "ptoparser/panoScanner.l"
+#line 287 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\t';
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 291 "ptoparser/panoScanner.l"
+#line 288 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\r';
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 292 "ptoparser/panoScanner.l"
+#line 289 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\b';
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 293 "ptoparser/panoScanner.l"
+#line 290 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\f';
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 295 "ptoparser/panoScanner.l"
+#line 292 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = yytext[1];
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 297 "ptoparser/panoScanner.l"
+#line 294 "ptoparser/panoScanner.l"
 {
     int currentLen = strlen(strBuffer);
     char *yptr = yytext;
@@ -1215,7 +1212,7 @@ YY_RULE_SETUP
 /* Catch errors */
 case 35:
 YY_RULE_SETUP
-#line 310 "ptoparser/panoScanner.l"
+#line 307 "ptoparser/panoScanner.l"
 {
     panoScriptParserError("Unrecognized character: [%s]", yytext);
     return PT_TOKEN_ERROR;
@@ -1223,10 +1220,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 317 "ptoparser/panoScanner.l"
+#line 314 "ptoparser/panoScanner.l"
 ECHO;
 	YY_BREAK
-#line 1230 "/tmp/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 1227 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2184,7 +2181,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 317 "ptoparser/panoScanner.l"
+#line 314 "ptoparser/panoScanner.l"
 
 
 
