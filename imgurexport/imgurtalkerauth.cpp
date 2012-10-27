@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurtalkerauth.h"
+#include "imgurtalkerauth.moc"
 
 // QtKOAuth includes
 

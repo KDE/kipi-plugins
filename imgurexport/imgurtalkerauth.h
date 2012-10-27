@@ -33,14 +33,14 @@
 #include <QDateTime>
 #include <QSettings>
 
-// QtOAuth includes
-
-#include <QtKOAuth>
-
 // KDE includes
 
 #include <kurl.h>
 #include <kio/jobclasses.h>
+
+// QtKOAuth includes
+
+#include <QtKOAuth>
 
 // LibKIPI includes
 

@@ -1,31 +1,26 @@
 SUBDIRS(icons)
 
-find_library(LINUX_KQOAUTH kqoauth /usr/lib)
-
 SET(kipiplugin_imgurexport_PART_SRCS
     plugin_imgurexport.cpp
     imgurtalker.cpp
-    imgurtalkerauth.cpp
     imgurwidget.cpp
     imgurwindow.cpp
     imgurimageslist.cpp
     mpform.cpp
 )
 
-IF(LINUX_KQOAUTH)
-    SET( LIB_KQOAUTH ${LINUX_KQOAUTH} )
-
-    INCLUDE_DIRECTORIES( ${LINUX_INCLUDE_KQOAUTH} )
+IF(QTKOAUTH_FOUND)
+    INCLUDE_DIRECTORIES(${QTKOAUTH_INCLUDE_DIR})
     ADD_DEFINITIONS(
                     -DOAUTH_ENABLED
-                    ${QCA2_DEFINITIONS}
+                    ${QTKOAUTH_DEFINITIONS}
     )
 
     SET(kipiplugin_imgurexport_PART_SRCS
         ${kipiplugin_imgurexport_PART_SRCS}
         imgurtalkerauth.cpp
     )
-ENDIF(LINUX_KQOAUTH)
+ENDIF(QTKOAUTH_FOUND)
 
 KDE4_ADD_PLUGIN(kipiplugin_imgurexport ${kipiplugin_imgurexport_PART_SRCS})
 
@@ -37,16 +32,11 @@ TARGET_LINK_LIBRARIES(kipiplugin_imgurexport
                       kipiplugins
 )
 
-
-IF(LINUX_KQOAUTH)
-    find_file(LINUX_INCLUDE_KQOAUTH QtKOAuth /usr/include)
-
+IF(QTKOAUTH_FOUND)
     TARGET_LINK_LIBRARIES(kipiplugin_imgurexport
-                          ${QCA2_LIBRARIES}
-                          ${LINUX_KQOAUTH}
+                          ${QTKOAUTH_LIBRARIES}
     )
-
-ENDIF(LINUX_KQOAUTH)
+ENDIF(QTKOAUTH_FOUND)
 
 CONFIGURE_FILE(kipiplugin_imgurexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop)
 

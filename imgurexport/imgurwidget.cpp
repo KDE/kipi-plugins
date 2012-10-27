@@ -199,20 +199,18 @@ ImgurWidget::~ImgurWidget()
 void ImgurWidget::slotAddItems(const KUrl::List& list)
 {
     emit signalAddItems(list);
-
-    progressBar()->setMaximum(imagesList()->imageUrls().size());
 }
 
 void ImgurWidget::slotRemoveItems(const KUrl::List& list)
 {
     emit signalRemoveItems(list);
-
-    progressBar()->setMaximum(imagesList()->imageUrls().size());
 }
 
 void ImgurWidget::slotImageListChanged()
 {
     emit signalImageListChanged();
+
+    progressBar()->setMaximum(imagesList()->imageUrls().size());
 }
 
 void ImgurWidget::slotImageUploadStart(const KUrl& imgPath)
@@ -227,7 +225,7 @@ void ImgurWidget::slotImageUploadStart(const KUrl& imgPath)
     {
         progressBar()->setVisible(true);
     }
-    progressBar()->setValue(d->processedCount);
+
     progressBar()->progressStatusChanged(i18n("Processing %1", imgPath.fileName()));
 }
 
@@ -246,6 +244,8 @@ void ImgurWidget::slotImageUploadSuccess(const KUrl& imgPath, ImgurSuccess succe
     kDebug() << "Delete URL" << ImgurConnection::deleteURL(success.image.deletehash);
 
     imagesList()->processed(imgPath, true);
+
+    progressBar()->setValue(d->processedCount);
 
     emit signalImageUploadSuccess(imgPath, success);
 }
@@ -268,6 +268,7 @@ KPProgressWidget* ImgurWidget::progressBar() const
 
 void ImgurWidget::slotAuthenticated(bool authenticated, const QString &message)
 {
+#ifdef OAUTH_ENABLED
 //    kDebug () << "Disable the button.";
     if (authenticated)
     {
@@ -275,7 +276,8 @@ void ImgurWidget::slotAuthenticated(bool authenticated, const QString &message)
     }
 
     d->m_changeUserBtn->setEnabled(!authenticated);
-//    emit signalEnableAuthentication(!authenticated); // heh
+//    emit signalEnableAuthentication(!authenticated);
+#endif //OAUTH_ENABLED
 }
 
 
