@@ -91,6 +91,7 @@ libkgeomap      >= 2.0.0                        https://projects.kde.org/project
 libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
+kqoauth         >= 0.97                         http://gitorious.org/kqoauth
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -113,6 +114,7 @@ GPSSync            : libkmap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 DLNAExport         : libhupnp.
+ImgurExport        : kqoauth for Imgur.com's authenticated API
 
 -- CONTACT ------------------------------------------------------------
 
