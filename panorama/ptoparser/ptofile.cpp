@@ -23,25 +23,73 @@
  *
  * ============================================================ */
 
-#ifndef PROJECTLINE_H
-#define PROJECTLINE_H
+// C++ includes
 
-#include "ptoparser/common.h"
+#include <string>
+#include <iostream>
 
-namespace KIPIPanoramaPlugin { namespace PtoParser
+#include <mcheck.h>
+
+// Qt includes
+
+#include <QFile>
+
+// KDE includes
+
+#include <kdebug.h>
+
+// Local includes
+
+#include "ptofile.h"
+extern "C" {
+    #include "tparser.h"
+    #include "tparsergetters.h"
+}
+
+namespace KIPIPanoramaPlugin
 {
 
-    template <typename Iterator>
-    struct projectLineGrammar : qi::grammar<Iterator, PTOType::Project(), ascii::blank_type>
+struct PTOFile::PTOFilePriv {
+    pt_script* script;
+};
+
+PTOFile::PTOFile()
+{
+    d = new PTOFilePriv();
+    d->script = NULL;
+}
+
+PTOFile::~PTOFile()
+{
+    if (d->script != NULL)
     {
-        projectLineGrammar();
+        panoScriptFree(d->script);
+        delete d->script;
+    }
+}
 
-        qi::rule<Iterator, PTOType::Project::FileFormat(), ascii::blank_type> projectFileType;
-        qi::rule<Iterator, PTOType::Project(), ascii::blank_type> line;
-        stringGrammar<Iterator> string;
-        rectangleGrammar<Iterator> rectangle;
-    };
+bool PTOFile::openFile(const QString& path)
+{
+    mtrace();
+    char* tmp = path.toUtf8().data();
 
-}} /* namespace KIPIPanoramaPlugin::PtoParser */
+    if (d->script != NULL)
+    {
+        panoScriptFree(d->script);
+        delete d->script;
+        d->script = NULL;
+    }
 
-#endif /* PROJECTLINE_H */
+    d->script = new pt_script();
+    if (!panoScriptParse(tmp, d->script))
+    {
+        return false;
+    }
+
+    muntrace();
+
+    return true;
+}
+
+
+} // namespace KIPIPanoramaPlugin

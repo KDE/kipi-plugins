@@ -40,10 +40,6 @@
 
 #include <libkdcraw/kdcraw.h>
 
-// Local includes
-
-#include "ptotype.h"
-
 namespace KIPIPanoramaPlugin
 {
 

@@ -42,7 +42,6 @@ class CpCleanTask : public Task
 private:
 
     KUrl* const                         cpCleanPtoUrl;
-    PTOType* const                      ptoUrlData;
     const KUrl* const                   cpFindPtoUrl;
     const QString                       cpCleanPath;
 
@@ -51,9 +50,9 @@ private:
 public:
 
     CpCleanTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                KUrl& cpCleanPtoUrl, PTOType& ptoUrlData, const QString& cpCleanPath);
+                KUrl& cpCleanPtoUrl, const QString& cpCleanPath);
     CpCleanTask(const KUrl& workDir, const KUrl& input,
-                KUrl& cpCleanPtoUrl, PTOType& ptoUrlData, const QString& cpCleanPath);
+                KUrl& cpCleanPtoUrl, const QString& cpCleanPath);
     ~CpCleanTask();
 
     void requestAbort();

@@ -29,20 +29,20 @@
 
 // Local includes
 
-#include "ptoparser.h"
+#include "ptofile.h"
 
 namespace KIPIPanoramaPlugin
 {
 
 CpCleanTask::CpCleanTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                         KUrl& cpCleanPtoUrl, PTOType& ptoUrlData, const QString& cpCleanPath)
-    : Task(parent, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl), ptoUrlData(&ptoUrlData),
+                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+    : Task(parent, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
       cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
 {}
 
 CpCleanTask::CpCleanTask(const KUrl& workDir, const KUrl& input,
-                         KUrl& cpCleanPtoUrl, PTOType& ptoUrlData, const QString& cpCleanPath)
-    : Task(0, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl), ptoUrlData(&ptoUrlData),
+                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+    : Task(0, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
       cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
 {}
 
@@ -96,13 +96,12 @@ void CpCleanTask::run()
     delete process;
     process = 0;
 
-/*
-    //TO HACK
-    if (successFlag && !PTOParser::parseFile(cpCleanPtoUrl->toLocalFile(), *ptoUrlData))
+    PTOFile f;
+    if (successFlag && !f.openFile(cpCleanPtoUrl->toLocalFile()))
     {
         kDebug() << "Parse Failed!!";
     }
-*/
+
     return;
 }
 

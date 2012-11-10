@@ -44,7 +44,6 @@
 // Local includes
 
 #include "actions.h"
-#include "ptotype.h"
 
 using namespace KDcrawIface;
 
@@ -63,8 +62,7 @@ public:
     ~ActionThread();
 
     void preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap, KUrl& cpCleanPtoUrl,
-                         PTOType& cpCleanPtoData, bool celeste, bool hdr,
-                         PanoramaFileType fileType, const RawDecodingSettings& settings,
+                         bool celeste, bool hdr, PanoramaFileType fileType, const RawDecodingSettings& settings,
                          const QString& cpCleanPath, const QString& cpFindPath);
     void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool levelHorizon,
                          bool optimizeProjectionAndSize, const QString& autooptimiserPath);

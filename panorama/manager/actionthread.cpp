@@ -42,7 +42,6 @@
 
 // Local includes
 
-#include "ptotype.h"
 #include "tasks.h"
 
 using namespace ThreadWeaver;
@@ -116,8 +115,7 @@ ActionThread::~ActionThread()
 }
 
 void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap, KUrl& cpCleanPtoUrl,
-                                   PTOType& cpCleanPtoData, bool celeste, bool hdr,
-                                   PanoramaFileType fileType, const RawDecodingSettings& rawSettings,
+                                   bool celeste, bool hdr, PanoramaFileType fileType, const RawDecodingSettings& rawSettings,
                                    const QString& cpCleanPath, const QString& cpFindPath)
 {
     d->cleanPreprocessingTmpDir();
@@ -198,7 +196,6 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
     CpCleanTask *cpClean = new CpCleanTask(d->preprocessingTmpDir->name(),
                                            *d->cpFindPtoUrl,
                                            cpCleanPtoUrl,
-                                           cpCleanPtoData,
                                            cpCleanPath);
 
     connect(cpClean, SIGNAL(started(ThreadWeaver::Job*)),

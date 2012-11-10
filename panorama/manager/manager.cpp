@@ -69,7 +69,6 @@ struct Manager::ManagerPriv
 
     KUrl::List                     inputUrls;
     KUrl                           cpFindUrl;
-    PTOType                        cpFindUrlData;
     KUrl                           autoOptimiseUrl;
     KUrl                           previewUrl;
     KUrl                           panoUrl;
@@ -235,16 +234,6 @@ void Manager::setCPFindUrl(const KUrl& url)
 KUrl& Manager::cpFindUrl() const
 {
     return d->cpFindUrl;
-}
-
-void Manager::setCPFindUrlData(const KIPIPanoramaPlugin::PTOType& urlData)
-{
-    d->cpFindUrlData = urlData;
-}
-
-PTOType& Manager::cpFindUrlData() const
-{
-    return d->cpFindUrlData;
 }
 
 void Manager::setAutoOptimiseUrl(const KUrl& url)
