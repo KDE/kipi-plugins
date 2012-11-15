@@ -27,5 +27,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> 308442 - Images are not associated to album if album name contains &amp;.
 017 ==> 308465 - Cannot change file modification timestamp with files having non ASCII characters
 018 ==> 308834 - Display "Date and time" with seconds in geolocation.
-019 ==> 
+019 ==> 309997 - kipi-plugins-3.0.0beta3 installs several static libraries.
+020 ==> 
 
