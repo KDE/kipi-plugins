@@ -59,4 +59,4 @@ CONFIGURE_FILE(kipiplugin_dlnaexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/k
 
 INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 INSTALL(TARGETS kipiplugin_dlnaexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_dlnaexportui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   kipiplugin_dlnaexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
