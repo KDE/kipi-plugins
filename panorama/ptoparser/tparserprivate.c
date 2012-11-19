@@ -222,8 +222,7 @@ void* panoScriptReAlloc(void** ptr, int size, int* count)
 {
     void* temp;
 
-    (*count)++;
-    void* new_ptr = realloc(*ptr, (*count) * size);
+    void* new_ptr = realloc(*ptr, (*count + 1) * size);
 
     if (new_ptr == NULL)
     {
@@ -232,6 +231,7 @@ void* panoScriptReAlloc(void** ptr, int size, int* count)
         return NULL;
     }
 
+    (*count)++;
     *ptr = new_ptr;
 
     /* point to the newly allocated record */

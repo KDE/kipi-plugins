@@ -25,58 +25,306 @@
 
 #include "ptotype.h"
 
+#include <kdebug.h>
+#include <QFile>
+
 #include <math.h>
 
 namespace KIPIPanoramaPlugin
 {
 
-void PTOType::setProject(PTOType::Project& p)
+bool PTOType::createFile(const QString& filepath)
 {
-    project = Project(p);
-    project.previousComments = QStringList(lastComments);
-    lastComments = QStringList();
+    QFile file(filepath);
+    if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
+        kDebug() << "Cannot open " << filepath << " to write the pto file";
+        return false;
+    }
+
+    QTextStream out(&file);
+    out.setRealNumberPrecision(15);
+
+    // First, the pano line
+    if (project.previousComments.size() > 0)
+        out << project.previousComments.join("\n") << endl;
+    out << "p";
+    out << " f" << project.projection;
+    out << " w" << project.size.width();
+    out << " h" << project.size.height();
+    out << " v" << project.fieldOfView;
+    out << " k" << project.photometricReferenceId;
+    out << " E" << project.exposure;
+    out << " R" << project.hdr;
+    switch (project.bitDepth)
+    {
+        case Project::UINT16:
+            out << " T\"UINT16\"";
+            break;
+        case Project::FLOAT:
+            out << " T\"FLOAT\"";
+            break;
+        default:
+            break;
+    }
+    if (project.crop.height() > 1 && project.crop.width() > 1)
+    {
+        out << " C";
+        out << "\"" << project.crop.left();
+        out <<  " " << project.crop.right();
+        out <<  " " << project.crop.top();
+        out <<  " " << project.crop.bottom();
+        out << '"';
+    }
+    out << " n\"";
+    switch (project.fileFormat.fileType)
+    {
+        case Project::FileFormat::PNG:
+            out << "PNG";
+            break;
+        case Project::FileFormat::JPEG:
+            out <<  "JPEG";
+            out << " q" << project.fileFormat.quality;
+            break;
+        case Project::FileFormat::TIFF:
+            out << "TIFF c:" << project.fileFormat.compressionMethod;
+            break;
+        case Project::FileFormat::TIFF_m:
+            out << "TIFF_m";
+        case Project::FileFormat::TIFF_multilayer:
+            if (project.fileFormat.fileType == Project::FileFormat::TIFF_multilayer)
+                out << "TIFF_multilayer";
+            out << " c:";
+            switch (project.fileFormat.compressionMethod)
+            {
+                case Project::FileFormat::NONE:
+                    out << "NONE";
+                    break;
+                case Project::FileFormat::LZW:
+                    out << "LZW";
+                    break;
+                case Project::FileFormat::DEFLATE:
+                    out << "DEFLATE";
+                    break;
+            }
+            if (project.fileFormat.savePositions)
+                out << " p1";
+            if (project.fileFormat.cropped)
+                out << " r:CROP";
+            break;
+        default:
+            kError() << "Unkown file format for pto file generation!";
+            file.close();
+            return false;
+    }
+    out << "\"";
+    out << project.unmatchedParameters.join(" ") << endl;
+
+    // Second, the stitcher line
+    if (stitcher.previousComments.size() > 0)
+        out << stitcher.previousComments.join("\n") << endl;
+    out << "m";
+    out << " g" << stitcher.gamma;
+    out << " i" << (int) stitcher.interpolator;
+    if (stitcher.speedUp != Stitcher::SLOW)
+    {
+        out << " f" << 2 - ((int) stitcher.speedUp);
+    }
+    out << " m" << stitcher.huberSigma;
+    out << " p" << stitcher.photometricHuberSigma;
+    out << stitcher.unmatchedParameters.join(" ") << endl;
+
+    // Third, the images
+    // Note: the order is very important here
+    for (int id = 0; id < images.size(); id++)
+    {
+        const Image &image = images[id];
+
+        if (image.previousComments.size() > 0)
+            out << image.previousComments.join("\n") << endl;
+        out << "i";
+        out << " w" << image.size.width();
+        out << " h" << image.size.height();
+        out << " f" << (int) image.lensProjection;
+        out << " v" << image.fieldOfView;
+        out << " Ra" << image.photometricEMoRA;
+        out << " Rb" << image.photometricEMoRB;
+        out << " Rc" << image.photometricEMoRC;
+        out << " Rd" << image.photometricEMoRD;
+        out << " Re" << image.photometricEMoRE;
+        out << " Eev" << image.exposure;
+        out << " Er" << image.whiteBalanceRed;
+        out << " Eb" << image.whiteBalanceBlue;
+        out << " r" << image.roll;
+        out << " p" << image.pitch;
+        out << " y" << image.yaw;
+        out << " TrX" << image.mosaicModeOffsetX;
+        out << " TrY" << image.mosaicModeOffsetY;
+        out << " TrZ" << image.mosaicModeOffsetZ;
+        out << " j" << image.stackNumber;
+        out << " a" << image.lensBarrelCoefficientA;
+        out << " b" << image.lensBarrelCoefficientB;
+        out << " c" << image.lensBarrelCoefficientC;
+        out << " d" << image.lensCenterOffsetX;
+        out << " e" << image.lensCenterOffsetY;
+        out << " g" << image.lensShearX;
+        out << " t" << image.lensShearY;
+        const Image* imageVM = &image;
+        if (image.vignettingMode.referenceId >= 0)
+            imageVM = &images[image.vignettingMode.referenceId];
+        if (((int) imageVM->vignettingMode.value) & ((int) Image::RADIAL))
+        {
+            out << " Va" << image.vignettingCorrectionI;
+            out << " Vb" << image.vignettingCorrectionJ;
+            out << " Vc" << image.vignettingCorrectionK;
+            out << " Vd" << image.vignettingCorrectionL;
+        }
+        else
+        {
+            out << " Vf" << image.vignettingFlatfieldImageName;
+        }
+        out << " Vx" << image.vignettingOffsetX;
+        out << " Vy" << image.vignettingOffsetY;
+        out << " Vm" << image.vignettingMode;
+        out << image.unmatchedParameters.join(" ");
+        out << " n\"" << image.fileName << "\"";
+        out << endl;
+    }
+
+    // Fourth, the variable to optimize
+    for (int id = 0; id < images.size(); id++)
+    {
+        const Image& image = images[id];
+
+        foreach (Optimisation optim, image.optimisationParameters)
+        {
+            if (optim.previousComments.size() > 0)
+                out << optim.previousComments.join("\n") << endl;
+            out << "v ";
+            switch (optim.parameter)
+            {
+                case Optimisation::LENSA:
+                    out << 'a';
+                    break;
+                case Optimisation::LENSB:
+                    out << 'b';
+                    break;
+                case Optimisation::LENSC:
+                    out << 'c';
+                    break;
+                case Optimisation::LENSD:
+                    out << 'd';
+                    break;
+                case Optimisation::LENSE:
+                    out << 'e';
+                    break;
+                case Optimisation::LENSHFOV:
+                    out << 'v';
+                    break;
+                case Optimisation::LENSYAW:
+                    out << 'y';
+                    break;
+                case Optimisation::LENSPITCH:
+                    out << 'p';
+                    break;
+                case Optimisation::LENSROLL:
+                    out << 'r';
+                    break;
+                case Optimisation::EXPOSURE:
+                    out << "Eev";
+                    break;
+                case Optimisation::WBR:
+                    out << "Er";
+                    break;
+                case Optimisation::WBB:
+                    out << "Eb";
+                    break;
+                case Optimisation::VA:
+                    out << "Va";
+                    break;
+                case Optimisation::VB:
+                    out << "Vb";
+                    break;
+                case Optimisation::VC:
+                    out << "Vc";
+                    break;
+                case Optimisation::VD:
+                    out << "Vd";
+                    break;
+                case Optimisation::VX:
+                    out << "Vx";
+                    break;
+                case Optimisation::VY:
+                    out << "Vy";
+                    break;
+                case Optimisation::RA:
+                    out << "Ra";
+                    break;
+                case Optimisation::RB:
+                    out << "Rb";
+                    break;
+                case Optimisation::RC:
+                    out << "Rc";
+                    break;
+                case Optimisation::RD:
+                    out << "Rd";
+                    break;
+                case Optimisation::RE:
+                    out << "Re";
+                    break;
+                case Optimisation::UNKNOWN:
+                    kError() << "Unknown optimisation parameter!";
+                    file.close();
+                    return false;
+            }
+            out << id << endl;
+        }
+    }
+    out << "v" << endl;
+
+    // Fifth, the masks
+    for (int id = 0; id < images.size(); id++)
+    {
+        const Image& image = images[id];
+
+        foreach (Mask mask, image.masks)
+        {
+            if (mask.previousComments.size() > 0)
+                out << mask.previousComments.join("\n") << endl;
+            out << "k i" << id;
+            out << " t" << (int) mask.type;
+            out << " p\"";
+            for (int pid = 0; pid < mask.hull.size(); pid++)
+            {
+                out << (pid == 0 ? "" : " ");
+                out << mask.hull[pid].x() << ' ' << mask.hull[pid].y();
+            }
+            out << "\"" << endl;
+        }
+    }
+
+    // Sixth, the control points
+    foreach (ControlPoint cp, controlPoints)
+    {
+        if (cp.previousComments.size() > 0)
+            out << cp.previousComments.join("\n") << endl;
+        out << "c n" << cp.image1Id;
+        out << " N" << cp.image2Id;
+        out << " x" << cp.p1_x;
+        out << " y" << cp.p1_y;
+        out << " X" << cp.p2_x;
+        out << " Y" << cp.p2_y;
+        out << " t" << cp.type;
+        out << endl;
+    }
+
+    // Finally the ending comments
+    out << lastComments.join("\n") << endl;
+
+    file.close();
+    return true;
 }
 
-void PTOType::setStitcher(PTOType::Stitcher& s)
-{
-    stitcher = Stitcher(s);
-    stitcher.previousComments = QStringList(lastComments);
-    lastComments = QStringList();
-}
-
-void PTOType::addImage(PTOType::Image& i)
-{
-    images.push_back(i);
-    int last = images.size() - 1;
-    images[last].id = last;
-    images[last].previousComments = QStringList(lastComments);
-    lastComments = QStringList();
-}
-
-void PTOType::addMask(PTOType::Mask& m, int imageId)
-{
-    images[imageId].masks.push_back(m);
-    int last = images[imageId].masks.size() - 1;
-    images[imageId].masks[last].previousComments = QStringList(lastComments);
-    lastComments = QStringList();
-}
-
-void PTOType::addOptimisation(PTOType::Optimisation& m, int imageId)
-{
-    images[imageId].optimisationParameters.push_back(m);
-    int last = images[imageId].optimisationParameters.size() - 1;
-    images[imageId].optimisationParameters[last].previousComments = QStringList(lastComments);
-    lastComments = QStringList();
-}
-
-void PTOType::addControlPoint(PTOType::ControlPoint& c)
-{
-    controlPoints.push_back(c);
-    int last = controlPoints.size() - 1;
-    controlPoints[last].previousComments = QStringList(lastComments);
-    lastComments = QStringList();
-}
-
+/*
 QPair<double, int> PTOType::standardDeviation(int image1Id, int image2Id)
 {
     double mean_x = 0, mean_y = 0;
@@ -85,8 +333,8 @@ QPair<double, int> PTOType::standardDeviation(int image1Id, int image2Id)
     {
         if ((cp.image1Id == image1Id && cp.image2Id == image2Id) || (cp.image1Id == image2Id && cp.image2Id == image1Id))
         {
-            mean_x += cp.p2.x() - cp.p1.x();
-            mean_y += cp.p2.y() - cp.p1.y();
+            mean_x += cp.p2_x - cp.p1_x;
+            mean_y += cp.p2_y - cp.p1_y;
             n++;
         }
     }
@@ -101,8 +349,8 @@ QPair<double, int> PTOType::standardDeviation(int image1Id, int image2Id)
     {
         if ((cp.image1Id == image1Id && cp.image2Id == image2Id) || (cp.image1Id == image2Id && cp.image2Id == image1Id))
         {
-            double epsilon_x = (cp.p2 - cp.p1).x() - mean_x;
-            double epsilon_y = (cp.p2 - cp.p1).y() - mean_y;
+            double epsilon_x = (cp.p2_x - cp.p1_x) - mean_x;
+            double epsilon_y = (cp.p2_y - cp.p1_y) - mean_y;
             result += epsilon_x * epsilon_x + epsilon_y * epsilon_y;
         }
     }
@@ -134,5 +382,6 @@ QPair<double, int> PTOType::standardDeviation()
     }
     return QPair<double, int>(result, n);
 }
+*/
 
 } // namespace KIPIPanoramaPlugin

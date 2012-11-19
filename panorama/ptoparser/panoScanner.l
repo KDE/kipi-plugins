@@ -29,7 +29,7 @@
 
 %{
 
-/* need this for the call to atof() below */
+/* need this for the call to strtold() below */
 #include <math.h>
 #include <string.h>
 
@@ -44,7 +44,6 @@ int first_eof;
 #define YY_INPUT(buf,result,max_size)  {\
     result = panoScriptScannerGetNextChar(buf, max_size); \
     if (  result <= 0  ) {\
-      printf("EOF\n");\
       result = YY_NULL; \
     }\
     }
@@ -74,20 +73,20 @@ ID       [a-zA-Z]
     /* Simple rules to read numbers */
 
 
+<INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+"."{DIGIT}* { /* float point with period */
+    BEGIN(INITIAL);
+    panoScriptScannerTokenBegin(yytext);
+    yylval.fVal = strtod(yytext, NULL);
+    DEBUG_3("A  float: %s (%lg)", yytext, yylval.fVal);
+    return PT_TOKEN_NUMBER_FLOAT;
+}
+
 <INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+ { /* Simple integer */
     BEGIN(INITIAL);
     panoScriptScannerTokenBegin(yytext);
     yylval.iVal = atoi(yytext);
     DEBUG_3("An integer: %s (%d)", yytext, yylval.iVal);
     return PT_TOKEN_NUMBER_INT;
-}
-
-<INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+"."{DIGIT}* { /* float point with period */
-    BEGIN(INITIAL);
-    panoScriptScannerTokenBegin(yytext);
-    yylval.fVal = atof( yytext );
-    DEBUG_3("A  float: %s (%g)", yytext, yylval.fVal);
-    return PT_TOKEN_NUMBER_FLOAT;
 }
 
 [ \t]*\r?\n { /* END OF LINE is an important marker when processing a rule */

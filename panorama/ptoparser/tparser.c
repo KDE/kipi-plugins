@@ -28,6 +28,7 @@
 #include <ctype.h>
 #include <assert.h>
 #include <stdio.h>
+#include <locale.h>
 
 #include "tparser.h"
 #include "tparserprivate.h"
@@ -69,6 +70,11 @@ void panoScriptParserSetDefaults(pt_script* ptr)
 
 int panoScriptParse(char* filename, pt_script* scriptOut)
 {
+    /* First, set the locale to C */
+    char* old_locale = setlocale(LC_NUMERIC, NULL);
+    old_locale = strdup(old_locale);
+    setlocale(LC_NUMERIC, "C");
+
     /* filename: input file */
 
     DEBUG_1("Starting to parse");
@@ -76,6 +82,8 @@ int panoScriptParse(char* filename, pt_script* scriptOut)
     if (!panoScriptParserReset())
     {
         fprintf(stderr, "This parser is not reentrant");
+        setlocale(LC_NUMERIC, old_locale);
+        free(old_locale);
         return FALSE;
     }
 
@@ -91,6 +99,8 @@ int panoScriptParse(char* filename, pt_script* scriptOut)
         panoScriptParserClose();
         /* We do not call panoScriptParserDispose here because its allocated values
          * are still referenced in scriptOut */
+        setlocale(LC_NUMERIC, old_locale);
+        free(old_locale);
         return TRUE;
     }
     else
@@ -100,6 +110,8 @@ int panoScriptParse(char* filename, pt_script* scriptOut)
 
     panoScriptFree(&script);
     panoScriptParserClose();
+    setlocale(LC_NUMERIC, old_locale);
+    free(old_locale);
     return FALSE;
 }
 

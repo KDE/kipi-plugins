@@ -30,6 +30,10 @@
 
 #include <QString>
 
+// Local includes
+
+#include "ptotype/ptotype.h"
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -40,7 +44,8 @@ public:
     PTOFile();
     ~PTOFile();
 
-    bool openFile(const QString& path);
+    bool        openFile(const QString& path);
+    PTOType*    getPTO();
 
 private:
     struct PTOFilePriv;

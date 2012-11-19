@@ -104,18 +104,19 @@ typedef struct
 {
     int width;
     int height;
+    int cropArea[PANO_PARSER_COEF_COUNT]; /* the rectangle to crop to */
+
     int projection;
-
     int projectionParmsCount;
-    float projectionParms[PANO_PARSER_MAX_PROJECTION_PARMS];
+    double projectionParms[PANO_PARSER_MAX_PROJECTION_PARMS];
 
-    float fHorFOV;
+    double fHorFOV;
     char* outputFormat;  /* n : file format of output */
 
     /* Hugin parameters */
     int dynamicRangeMode; /* R[01] 0 -> LDR; 1 -> HDR */
-    pt_bitdepthoutput bitDepthOutput; /* T bitdepth of output images, possible values are */
-    float exposureValue;  /* E exposure value of final panorama */
+    pt_bitdepthoutput bitDepthOutput;
+    double exposureValue;  /* E exposure value of final panorama */
     int iImagePhotometricReference;
 }  pt_script_pano;
 
@@ -125,23 +126,24 @@ typedef struct
     int width;
     int height;
 
-    float fHorFOV;
-    float yaw;
-    float pitch;
-    float roll;
+    double fHorFOV;
+    double yaw;
+    double pitch;
+    double roll;
 
-    float geometryCoef[PANO_PARSER_COEF_COUNT]; /* a, b, c, d, e, g, t */
+    double geometryCoef[PANO_PARSER_COEF_COUNT]; /* a, b, c, d, e, g, t */
 
     /* Exposure related */
-    float imageEV;  /* Exposure value of image Eev */
-    float whiteBalanceFactorRed;  /* Er */
-    float whiteBalanceFactorBlue; /* Eb */
+    double imageEV;  /* Exposure value of image Eev */
+    double whiteBalanceFactorRed;  /* Er */
+    double whiteBalanceFactorBlue; /* Eb */
 
-    float photometricCoef[PANO_PARSER_RESP_CURVE_COEF_COUNT]; /* R[abcde] */
+    double photometricCoef[PANO_PARSER_RESP_CURVE_COEF_COUNT]; /* R[abcde] */
 
     int vignettingCorrectionMode; /* Vm */
-    float vignettingCorrectionCoef[PANO_PARSER_VIGN_COEF_COUNT]; /* V[abcdxy] */
-    float translationCoef[PANO_TRANSLATION_COEF_COUNT]; /* TrX parms */
+    double vignettingCorrectionCoef[PANO_PARSER_VIGN_COEF_COUNT]; /* V[abcdxy] */
+    char* vignettingFlatFieldFile;
+    double translationCoef[PANO_TRANSLATION_COEF_COUNT]; /* TrX parms */
 
 
     char* name;
@@ -152,7 +154,7 @@ typedef struct
     /* these variables hold pointers to equivalent variables in other images
      *  they are equivalent to the format <var>=<index> where
      * <var> is variable name, and index is a base-zero pointer to another image
-     * For the sake of simplicity they start at 1, if they are zero they are unused */
+     * If they are -1 they are unused */
     int fHorFOVRef;
     int yawRef;
     int pitchRef;
@@ -171,19 +173,17 @@ typedef struct
     int vignettingCorrectionModeRef; /* Vm */
     int vignettingCorrectionCoefRef[PANO_PARSER_VIGN_COEF_COUNT]; /* V[abcdxy] */
 
-    int translationCoefRef[PANO_TRANSLATION_COEF_COUNT]; /* TrX parms */
-
     int stackRef;
 }  pt_script_image;
 
 
 typedef struct
 {
-    float   fGamma;
+    double  fGamma;
     int     interpolator;
     int     fastFT;
     int     huberEstimator;
-    float   photometricHuberSigma;
+    double  photometricHuberSigma;
 } pt_script_optimize;
 
 typedef struct

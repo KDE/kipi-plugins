@@ -47,7 +47,7 @@ static pt_script_image *image = NULL;
 static pt_script_ctrl_point *ctrlPoint = NULL;
 static pt_script_mask *mask = NULL;
 static int nbProjParms = 0;
-static float* projParms = NULL;
+static double* projParms = NULL;
 static int nbCommentLine = 0;
 static char** commentLines = NULL;
 
@@ -68,7 +68,7 @@ static void ParserStringCopy(char **dest, const char *from)
 
 %union {
     int     iVal;
-    float   fVal;
+    double  fVal;
     char    strVal[PT_TOKEN_MAX_LEN + 1];
     char    cVal;
 }
@@ -145,12 +145,20 @@ realline: inputline eoln
         int* curImageCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iImage_prevCommentsCount),
                                                               sizeof(int),
                                                               &prevNbImages);
+        if (curImageCommentsCount == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curImageCommentsCount = nbCommentLine;
 
         prevNbImages--;
         char*** curImageComments = (char***) panoScriptReAlloc((void**) &(script.image_prevComments),
                                                                sizeof(char**),
                                                                &prevNbImages);
+        if (curImageComments == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curImageComments = commentLines;
     }
     | panoline eoln
@@ -209,6 +217,7 @@ realline: inputline eoln
 
 inputline: PT_TOKEN_INPUT_LINE PT_TOKEN_SEP
     {
+        int i;
         currentLine = PT_TOKEN_INPUT_LINE;
 
         image = (pt_script_image*) panoScriptReAlloc((void**) &(script.inputImageSpec),
@@ -219,6 +228,24 @@ inputline: PT_TOKEN_INPUT_LINE PT_TOKEN_SEP
             yyerror("Not enough memory");
             return -1;
         }
+
+        image->fHorFOVRef = -1;
+        image->yawRef = -1;
+        image->pitchRef = -1;
+        for (i = 0; i < PANO_PARSER_COEF_COUNT; i++) {
+            image->geometryCoefRef[i] = -1;
+        }
+        image->imageEVRef = -1;
+        image->whiteBalanceFactorRedRef = -1;
+        image->whiteBalanceFactorBlueRef = -1;
+        for (i = 0; i < PANO_PARSER_RESP_CURVE_COEF_COUNT; i++) {
+            image->photometricCoefRef[i] = -1;
+        }
+        image->vignettingCorrectionModeRef = -1;
+        for (i = 0; i < PANO_PARSER_VIGN_COEF_COUNT; i++) {
+            image->vignettingCorrectionCoefRef[i] = -1;
+        }
+        image->stackRef = -1;
     }
     varsinput
 
@@ -409,13 +436,20 @@ varcropping: PT_TOKEN_KEYWORD_CROPPING int PT_TOKEN_COMMA int PT_TOKEN_COMMA int
             panoScriptParserError("Error: There shouldn't be any cropping parameter here!\n");
             return -1;
         }
+
+        int* cropArea = NULL;
+        if (currentLine == PT_TOKEN_PANO_LINE) {
+            cropArea = script.pano.cropArea;
+        } else {
+            cropArea = image->cropArea;
+        }
         switch ($1) {
         case 'C':
         case 'S':
-            image->cropArea[0] = $2;
-            image->cropArea[1] = $4;
-            image->cropArea[2] = $6;
-            image->cropArea[3] = $8;
+            cropArea[0] = $2;
+            cropArea[1] = $4;
+            cropArea[2] = $6;
+            cropArea[3] = $8;
             break;
         default:
             panoScriptParserError("Invalid variable name- [%c] in image line\n", $1);
@@ -497,24 +531,6 @@ varreference: PT_TOKEN_KEYWORD_MULTICHAR PT_TOKEN_REFERENCE int
                 break;
             case 'b':
                 image->whiteBalanceFactorBlueRef = imageRef;
-                break;
-            default:
-                panoScriptParserError("Invalid variable name [%s]\n", keyword);
-                return -1;
-            }
-            break;
-        }
-        case 'T':
-        {
-            if (*(keyword + 1) != 'r' || *(keyword + 3) != '\0') {
-                panoScriptParserError("Invalid variable name [%s]\n", keyword);
-                return -1;
-            }
-            switch (*(keyword + 2)) {
-            case 'X':
-            case 'Y':
-            case 'Z':
-                image->translationCoefRef[*(keyword + 2) - 'X'] = imageRef;
                 break;
             default:
                 panoScriptParserError("Invalid variable name [%s]\n", keyword);
@@ -743,7 +759,7 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
                 script.optimize.interpolator = $2;
                 break;
             case 'f':
-                script.optimize.fastFT = $2;
+                script.optimize.fastFT = 2 - $2;
                 break;
             case 'm':
                 script.optimize.huberEstimator = $2;
@@ -855,6 +871,19 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
             panoScriptParserError("Error. Not handled (token int [%c])\n", $1);
             return -1;
         }
+    }
+    | PT_TOKEN_KEYWORD_MULTICHAR PT_TOKEN_STRING
+    {
+        if (currentLine != PT_TOKEN_INPUT_LINE) {
+            panoScriptParserError("Invalid variable name [%s]\n", $1);
+            return -1;
+        }
+        if (strcmp($1, "Vf") != 0) {
+            panoScriptParserError("Invalid variable name [%s] in image line...\n", $1);
+            return -1;
+        }
+        ParserStringCopy(&image->vignettingFlatFieldFile, $2);
+        break;
     }
     | PT_TOKEN_KEYWORD_MULTICHAR intorfloat
     {
@@ -978,16 +1007,16 @@ varonly: PT_TOKEN_KEYWORD
 
 projparams: intorfloat
     {
-        float* param = (float*) panoScriptReAlloc((void**) &projParms,
-                                                  sizeof(float),
-                                                  &nbProjParms);
+        double* param = (double*) panoScriptReAlloc((void**) &projParms,
+                                                    sizeof(double),
+                                                    &nbProjParms);
         *param = $1;
     }
     | projparams PT_TOKEN_COMMA intorfloat
     {
-        float* param = (float*) panoScriptReAlloc((void**) &projParms,
-                                                  sizeof(float),
-                                                  &nbProjParms);
+        double* param = (double*) panoScriptReAlloc((void**) &projParms,
+                                                    sizeof(double),
+                                                    &nbProjParms);
         *param = $3;
     }
 

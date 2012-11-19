@@ -33,6 +33,7 @@
 #include <QRect>
 #include <QStringList>
 #include <QPair>
+#include <QTextStream>
 
 namespace KIPIPanoramaPlugin
 {
@@ -42,7 +43,7 @@ struct PTOType
     struct Project
     {
         struct FileFormat {
-            typedef enum { PNG, TIFF, TIFF_m, TIFF_multilayer } FileType;
+            typedef enum { PNG, TIFF, TIFF_m, TIFF_multilayer, JPEG } FileType;
             typedef enum { NONE, LZW, DEFLATE } CompressionMethod;
 
             FileType                    fileType;
@@ -63,13 +64,13 @@ struct PTOType
 
         QStringList                 previousComments;
         QSize                       size;
+        QRect                       crop;
         ProjectionType              projection;
         double                      fieldOfView;
         FileFormat                  fileFormat;
         double                      exposure;
         bool                        hdr;
         BitDepth                    bitDepth;
-        QRect                       crop;
         int                         photometricReferenceId;
         QStringList                 unmatchedParameters;
     };
@@ -87,9 +88,14 @@ struct PTOType
             SINC1024 = 7
         } Interpolator;
 
+        typedef enum { SLOW, MEDIUM, FAST } SpeedUp;
+
         QStringList                 previousComments;
         double                      gamma;
         Interpolator                interpolator;
+        SpeedUp                     speedUp;
+        double                      huberSigma;
+        double                      photometricHuberSigma;
         QStringList                 unmatchedParameters;
     };
 
@@ -111,8 +117,8 @@ struct PTOType
     struct Optimisation
     {
         typedef enum {
-            LENSA, LENSB, LENSC, LENSD, LENSE, LENSV, LENSR, LENSP, LENSY,
-            EEV, ER, EB,
+            LENSA, LENSB, LENSC, LENSD, LENSE, LENSHFOV, LENSYAW, LENSPITCH, LENSROLL,
+            EXPOSURE, WBR, WBB,
             VA, VB, VC, VD, VX, VY,
             RA, RB, RC, RD, RE,
             UNKNOWN
@@ -130,6 +136,17 @@ struct PTOType
 
             T           value;
             int         referenceId;
+
+            friend
+            QTextStream& operator<<(QTextStream& qts, const LensParameter<T>& p)
+            {
+               if (p.referenceId == -1)
+                   qts << p.value;
+               else
+                   qts << "=" << p.referenceId;
+
+                return qts;
+            }
         };
 
         typedef enum {
@@ -148,46 +165,46 @@ struct PTOType
             PROPORTIONNALFLATFIELD = 6
         } VignettingMode;
 
-        QStringList                 previousComments;
-        QSize                       size;
-        int                         id;
-        QList<Mask>                 masks;
-        QList<Optimisation>         optimisationParameters;
-        LensProjection              lensProjection;
-        LensParameter<double>       fieldOfView;
-        double                      yaw;
-        double                      pitch;
-        double                      roll;
-        LensParameter<double>       lensBarrelCoefficientA;
-        LensParameter<double>       lensBarrelCoefficientB;
-        LensParameter<double>       lensBarrelCoefficientC;
-        LensParameter<int>          lensCenterOffsetX;
-        LensParameter<int>          lensCenterOffsetY;
-        LensParameter<int>          lensShearX;
-        LensParameter<int>          lensShearY;
-        double                      exposure;
-        double                      whiteBalanceRed;
-        double                      whiteBalanceBlue;
-        VignettingMode              vignettingMode;
-        LensParameter<double>       vignettingCorrectionI;      // Va
-        LensParameter<double>       vignettingCorrectionJ;      // Vb
-        LensParameter<double>       vignettingCorrectionK;      // Vc
-        LensParameter<double>       vignettingCorrectionL;      // Vd
-        LensParameter<int>          vignettingOffsetX;
-        LensParameter<int>          vignettingOffsetY;
-        QString                     vignettingFlatfieldImageName;
-        LensParameter<double>       photometricEMoRA;
-        LensParameter<double>       photometricEMoRB;
-        LensParameter<double>       photometricEMoRC;
-        LensParameter<double>       photometricEMoRD;
-        LensParameter<double>       photometricEMoRE;
-        int                         mosaicModeOffsetX;
-        int                         mosaicModeOffsetY;
-        int                         mosaicModeOffsetZ;
-        QRect                       crop;
-        int                         stackNumber;
-        QString                     fileName;
-        QStringList                 unmatchedParameters;
+        QStringList                     previousComments;
+        QSize                           size;
+        int                             id;
+        QList<Mask>                     masks;
+        QList<Optimisation>             optimisationParameters;
+        LensProjection                  lensProjection;
+        LensParameter<double>           fieldOfView;
+        double                          yaw;
+        double                          pitch;
+        double                          roll;
+        LensParameter<double>           lensBarrelCoefficientA;
+        LensParameter<double>           lensBarrelCoefficientB;
+        LensParameter<double>           lensBarrelCoefficientC;
+        LensParameter<int>              lensCenterOffsetX;
+        LensParameter<int>              lensCenterOffsetY;
+        LensParameter<int>              lensShearX;
+        LensParameter<int>              lensShearY;
+        LensParameter<double>           exposure;
+        LensParameter<double>           whiteBalanceRed;
+        LensParameter<double>           whiteBalanceBlue;
+        LensParameter<VignettingMode>   vignettingMode;
+        LensParameter<double>           vignettingCorrectionI;      // Va
+        LensParameter<double>           vignettingCorrectionJ;      // Vb
+        LensParameter<double>           vignettingCorrectionK;      // Vc
+        LensParameter<double>           vignettingCorrectionL;      // Vd
+        LensParameter<int>              vignettingOffsetX;
+        LensParameter<int>              vignettingOffsetY;
+        QString                         vignettingFlatfieldImageName;
+        LensParameter<double>           photometricEMoRA;
+        LensParameter<double>           photometricEMoRB;
+        LensParameter<double>           photometricEMoRC;
+        LensParameter<double>           photometricEMoRD;
+        LensParameter<double>           photometricEMoRE;
+        int                             mosaicModeOffsetX;
+        int                             mosaicModeOffsetY;
+        int                             mosaicModeOffsetZ;
+        QRect                           crop;
+        LensParameter<int>              stackNumber;
+        QString                         fileName;
+        QStringList                     unmatchedParameters;
     };
 
     struct ControlPoint
@@ -195,24 +212,21 @@ struct PTOType
         QStringList                 previousComments;
         int                         image1Id;
         int                         image2Id;
-        QPoint                      p1;
-        QPoint                      p2;
-        int                         t;                      // FIXME: what's this !??
+        double                      p1_x;
+        double                      p1_y;
+        double                      p2_x;
+        double                      p2_y;
+        int                         type;   // FIXME: change that for an enum if possible
         QStringList                 unmatchedParameters;
     };
 
+    bool                createFile(const QString& filepath);
 
-    void setProject(Project& p);
-    void setStitcher(Stitcher& s);
-    void addImage(Image& i);
-    void addMask(Mask& m, int imageId);
-    void addOptimisation(Optimisation& o, int imageId);
-    void addControlPoint(ControlPoint& c);
-
+    /* NOTE: Work in progress
     QPair<double, int>  standardDeviation(int image1Id, int image2Id);
     QPair<double, int>  standardDeviation(int imageId);
     QPair<double, int>  standardDeviation();
-
+    */
 
     Project                 project;
     Stitcher                stitcher;
