@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=VideoSlideShow
+Name[ca]=Passi de diapositives
 Name[da]=Video-diasshow
 Name[el]=VideoSlideShow
 Name[et]=Videoslaidiseanss
@@ -18,6 +19,7 @@ Name[uk]=Відеопоказ слайдів
 Name[x-test]=xxVideoSlideShowxx
 Name[zh_TW]=VideoSlideShow
 Comment=A tool to export images as Video Slide Show
+Comment[ca]=Una eina per exportar imatges com un passi de diapositives
 Comment[da]=Et værktøj til at eksportere billeder som et video-diasshow
 Comment[el]=Εργαλείο εξαγωγής εικόνων ως παρουσίαση διαφανειών βίντεο
 Comment[et]=Tööriist piltide eksportimiseks videoslaidiseansina

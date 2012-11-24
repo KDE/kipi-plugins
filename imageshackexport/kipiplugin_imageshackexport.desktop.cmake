@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Imageshack Export
+Name[ca]=Exportador a Imageshack
 Name[cs]=Export do Imageshacku
 Name[da]=Eksport til Imageshack
 Name[el]=Εξαγωγή Imageshack
@@ -18,6 +19,7 @@ Name[uk]=Експорт до Imageshack
 Name[x-test]=xxImageshack Exportxx
 Name[zh_TW]=Imageshack 匯出
 Comment=A tool to export images to Imageshack web service
+Comment[ca]=Una eina per exportar imatges al servei web Imageshack
 Comment[cs]=Nástroj pro export obrázků do webové služby Imageshack
 Comment[da]=Et værktøj til at eksportere billeder til webtjenesten Imageshack
 Comment[el]=Εργαλείο εξαγωγής εικόνων στην υπηρεσία ιστού Imageshack

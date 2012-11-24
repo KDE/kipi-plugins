@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=DLNAExport
+Name[ca]=DLNAExport
 Name[cs]=DLNAExport
 Name[da]=DLNAExport
 Name[el]=DLNAExport
@@ -19,6 +20,7 @@ Name[uk]=Експорт до DLNA
 Name[x-test]=xxDLNAExportxx
 Name[zh_TW]=DLNA匯出
 Comment=A tool to export collection on DLNA network service
+Comment[ca]=Una eina per exportar col·leccions sobre el servei de xarxa DLNA
 Comment[cs]=Nástroj pro export kolekce do síťové služby DLNA
 Comment[da]=Et værktøj til at eksportere samling på DLNA-netværkstjenesten
 Comment[el]=Εργαλείο εξαγωγής συλλογής σε δικτυακή υπηρεσία DLNA

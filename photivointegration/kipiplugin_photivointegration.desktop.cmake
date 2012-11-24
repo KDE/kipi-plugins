@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Photivo Integration
+Name[ca]=Integració de Photivo
 Name[da]=Photivo-integration
 Name[el]=Ενσωμάτωση Photivo
 Name[et]=Photivo lõimimine
@@ -18,6 +19,7 @@ Name[uk]=Інтеграція Photivo
 Name[x-test]=xxPhotivo Integrationxx
 Name[zh_TW]=Photivo 整合
 Comment=Integration of the Photivo RAW-Processor
+Comment[ca]=Integració del processador RAW Photivo
 Comment[da]=Integration af RAW-behandleren Photivo
 Comment[el]=Ενσωμάτωση του RAW-επεξεργαστή Photivo
 Comment[et]=Lõimimine Photivo toorpiltide töötlejaga
