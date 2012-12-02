@@ -5,6 +5,7 @@ Name[cs]=Export MediaWiki
 Name[da]=MediaWiki-eksport
 Name[el]=Εξαγωγή στο MediaWiki
 Name[et]=MediaWiki eksport
+Name[ga]=Easpórtáil MediaWiki
 Name[hu]=MediaWiki exportálás
 Name[is]=MediaWiki útflutningur
 Name[it]=Esportazione a MediaWiki

@@ -6,6 +6,7 @@ Name[cs]=DLNAExport
 Name[da]=DLNAExport
 Name[el]=DLNAExport
 Name[et]=DLNA eksport
+Name[ga]=DLNAExport
 Name[hu]=DLNA exportálás
 Name[is]=DLNA-útflutningur
 Name[it]=Esportazione a DLNA

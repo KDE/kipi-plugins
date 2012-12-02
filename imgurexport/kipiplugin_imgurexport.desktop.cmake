@@ -32,6 +32,7 @@ Comment[de]=Ein Werkzeug, um Bilder zum imgur.com-Service zu exportieren.
 Comment[el]=Εργαλείο εξαγωγής εικόνων στην υπηρεσία φιλοξενίας εικόνων imgur.com
 Comment[es]=Una herramienta para exportar las imágenes al servicio imgur.com
 Comment[et]=Tööriist piltide eksportimiseks imgur.com-i veebiteenusesse
+Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís óstála imgur.com
 Comment[gl]=Unha ferramenta para exportar imaxes a un servizo web imgur.com remoto
 Comment[hu]=Egy eszköz képek exportálásához az imgur.com webhelyszolgáltatásba
 Comment[is]=Verkfæri til að senda myndir á imgur.com vefþjónustu
