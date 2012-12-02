@@ -21,6 +21,7 @@
  * ============================================================ */
 
 #include "createptotask.h"
+#include <ptotype/ptotype.h>
 
 // Qt includes
 
@@ -74,23 +75,25 @@ void CreatePtoTask::run()
         return;
     }
 
-    QTextStream pto_stream(&pto);
-
-    // The pto is created following the file format described here:
-    // http://hugin.sourceforge.net/docs/nona/nona.txt
-
     // 1. Project parameters
-    pto_stream << "p";
-    pto_stream << " f1";                        // Cylindrical projection
-    pto_stream << " n\"TIFF_m c:LZW\"";
-    pto_stream << " R" << (hdr ? '1' : '0');    // HDR output
-    //pto_stream << " T\"FLOAT\"";              // 32bits color depth
-    //pto_stream << " S," << X_left << "," << X_right << "," << X_top << "," << X_bottom;   // Crop values
-    pto_stream << " k0";                        // Reference image
-    pto_stream << endl;
+    PTOType panoBase;
+    panoBase.project.projection = PTOType::Project::CYLINDRICAL;
+    panoBase.project.fieldOfView = 0;
+    panoBase.project.fileFormat.fileType = PTOType::Project::FileFormat::TIFF_m;
+    panoBase.project.fileFormat.compressionMethod = PTOType::Project::FileFormat::LZW;
+    panoBase.project.fileFormat.savePositions = false;
+    panoBase.project.fileFormat.cropped = false;
+    panoBase.project.hdr = hdr;
+//     panoBase.project.bitDepth = PTOType::Project::FLOAT;
+//     panoBase.project.crop.setLeft(X_left);
+//     panoBase.project.crop.setRight(X_right);
+//     panoBase.project.crop.setTop(X_top);
+//     panoBase.project.crop.setBottom(X_bottom);
+    panoBase.project.photometricReferenceId = 0;
 
     // 2. Images
-    pto_stream << endl;
+    panoBase.images.reserve(inputFiles->size());
+    panoBase.images.resize(inputFiles->size());
     int i = 0;
     for (i = 0; i < inputFiles->size(); ++i)
     {
@@ -100,64 +103,89 @@ void CreatePtoTask::run()
         meta.load(preprocessedUrl.toLocalFile());
         QSize size = meta.getPixelSize();
 
-        pto_stream << "i";
-        pto_stream << " f0";                    // Lens projection type (rectilinear)
-        pto_stream << " w" << size.width();     // Image width
-        pto_stream << " h" << size.height();    // Image height
+        panoBase.images[i] = PTOType::Image();
+        panoBase.images[i].lensProjection = PTOType::Image::RECTILINEAR;
+        panoBase.images[i].size = size;
         if (i > 0)
         {
             // We suppose that the pictures are all taken with the same camera and lens
-            pto_stream << " a=0 b=0 c=0 d=0 e=0 v=0 g=0 t=0";           // Geometry
-            pto_stream << " Va=0 Vb=0 Vc=0 Vd=0 Vx=0 Vy=0";             // Vignetting
+            panoBase.images[i].lensBarrelCoefficientA.referenceId = 0;
+            panoBase.images[i].lensBarrelCoefficientB.referenceId = 0;
+            panoBase.images[i].lensBarrelCoefficientC.referenceId = 0;
+            panoBase.images[i].lensCenterOffsetX.referenceId = 0;
+            panoBase.images[i].lensCenterOffsetY.referenceId = 0;
+            panoBase.images[i].lensShearX.referenceId = 0;
+            panoBase.images[i].lensShearY.referenceId = 0;
+            panoBase.images[i].vignettingCorrectionI.referenceId = 0;
+            panoBase.images[i].vignettingCorrectionJ.referenceId = 0;
+            panoBase.images[i].vignettingCorrectionK.referenceId = 0;
+            panoBase.images[i].vignettingCorrectionL.referenceId = 0;
+            panoBase.images[i].vignettingOffsetX.referenceId = 0;
+            panoBase.images[i].vignettingOffsetY.referenceId = 0;
         }
-        pto_stream << " n\"" << preprocessedUrl.toLocalFile() << '"';
-        pto_stream << endl;
-    }
+        else
+        {
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::LENSA;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::LENSB;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::LENSC;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::LENSD;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::LENSE;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::VA;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::VB;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::VC;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::VD;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::VX;
+            panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+            panoBase.images[i].optimisationParameters.last().parameter = PTOType::Optimisation::VY;
+        }
 
-    // 3. Variables to optimize
-    pto_stream << endl;
-    // Geometry optimization
-    pto_stream << "v a0" << endl;
-    pto_stream << "v b0" << endl;
-    pto_stream << "v c0" << endl;
-    pto_stream << "v d0" << endl;
-    pto_stream << "v e0" << endl;
-    pto_stream << "v Va0" << endl;
-    pto_stream << "v Vb0" << endl;
-    pto_stream << "v Vc0" << endl;
-    pto_stream << "v Vd0" << endl;
-    pto_stream << "v Vx0" << endl;
-    pto_stream << "v Vy0" << endl;
-    for (int j = 0; j < i; ++j)
-    {
-        // Colors optimization
-        pto_stream << "v Ra" << j << endl;
-        pto_stream << "v Rb" << j << endl;
-        pto_stream << "v Rc" << j << endl;
-        pto_stream << "v Rd" << j << endl;
-        pto_stream << "v Re" << j << endl;
-        pto_stream << "v Eev" << j << endl;
-        pto_stream << "v Erv" << j << endl;
-        pto_stream << "v Ebv" << j << endl;
-        // Position optimization
-        pto_stream << "v y" << j << endl;
-        pto_stream << "v p" << j << endl;
-        pto_stream << "v r" << j << endl;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::RA;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::RB;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::RC;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::RD;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::RE;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::EXPOSURE;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::WBR;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::WBB;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::LENSYAW;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::LENSPITCH;
+        panoBase.images[i].optimisationParameters.push_back(PTOType::Optimisation());
+        panoBase.images[i].optimisationParameters.last().parameter =  PTOType::Optimisation::LENSROLL;
+        panoBase.images[i].fileName = preprocessedUrl.toLocalFile();
     }
 
     switch (fileType)
     {
         case TIFF:
-            pto_stream << "#hugin_outputImageType tif" << endl;
-            pto_stream << "#hugin_outputImageTypeCompression LZW" << endl;
+            panoBase.lastComments << "#hugin_outputImageType tif";
+            panoBase.lastComments << "#hugin_outputImageTypeCompression LZW";
             break;
         case JPEG:
-            pto_stream << "#hugin_outputImageType jpg" << endl;
-            pto_stream << "#hugin_outputJPEGQuality 95" << endl;
+            panoBase.lastComments << "#hugin_outputImageType jpg";
+            panoBase.lastComments << "#hugin_outputJPEGQuality 95";
             break;
     }
-
-    pto.close();
+    panoBase.createFile(ptoUrl->toLocalFile());
 
     successFlag = true;
     return;
