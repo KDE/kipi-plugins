@@ -1,4 +1,4 @@
-NOTE: this tool is under developement as a part of GoSC2011.
+NOTE: this tool was originally developped during the GoSC2011.
 
 -- Dependencies --
 
@@ -8,6 +8,8 @@ NOTE: this tool is under developement as a part of GoSC2011.
 -- Data Input --
 
 This plugin takes several images taken from the same point of view, either RAW images, TIFF images or JPEG images.
+
+Throughout the process, project files (i.e. dot pto files) are analyzed and modified with GNU Flex and GNU Bison.
 
 -- Processing --
 
@@ -20,6 +22,8 @@ The panorama workflow is the following:
  5) Optimization of positions and photometric parameters are performed (using autooptimise from the hugin project)
  6) A Makefile which will perform the stitching is generated (using pto2mk from the hugin project)
  7) The Makefile is run (uses nona from the hugin project, and enblend)
+
+All images are supposed to be taken from the same point of view, and with the same camera and lens.
 
 -- Preview --
 
