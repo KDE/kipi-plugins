@@ -93,11 +93,12 @@ bool PTOFile::openFile(const QString& path)
 
 PTOType* PTOFile::getPTO()
 {
-    PTOType* out = new PTOType();
     if (d->script == NULL)
     {
-        return out;
+        return NULL;
     }
+
+    PTOType* out = new PTOType();
 
     // Project data conversion
     for (int c = 0; c < panoScriptGetPanoPrevCommentsCount(d->script); c++)
@@ -247,37 +248,37 @@ PTOType* PTOFile::getPTO()
         }
         tmpRef = panoScriptGetImageVignettingCoeffARef(d->script, i);
         if (tmpRef == -1) {
-            image.vignettingCorrectionI.value = PTOType::Image::VignettingMode(panoScriptGetImageVignettingCoeffA(d->script, i));
+            image.vignettingCorrectionI.value = panoScriptGetImageVignettingCoeffA(d->script, i);
         } else {
             image.vignettingCorrectionI.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImageVignettingCoeffBRef(d->script, i);
         if (tmpRef == -1) {
-            image.vignettingCorrectionJ.value = PTOType::Image::VignettingMode(panoScriptGetImageVignettingCoeffB(d->script, i));
+            image.vignettingCorrectionJ.value = panoScriptGetImageVignettingCoeffB(d->script, i);
         } else {
             image.vignettingCorrectionJ.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImageVignettingCoeffCRef(d->script, i);
         if (tmpRef == -1) {
-            image.vignettingCorrectionK.value = PTOType::Image::VignettingMode(panoScriptGetImageVignettingCoeffC(d->script, i));
+            image.vignettingCorrectionK.value = panoScriptGetImageVignettingCoeffC(d->script, i);
         } else {
             image.vignettingCorrectionK.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImageVignettingCoeffDRef(d->script, i);
         if (tmpRef == -1) {
-            image.vignettingCorrectionL.value = PTOType::Image::VignettingMode(panoScriptGetImageVignettingCoeffD(d->script, i));
+            image.vignettingCorrectionL.value = panoScriptGetImageVignettingCoeffD(d->script, i);
         } else {
             image.vignettingCorrectionL.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImageVignettingCoeffXRef(d->script, i);
         if (tmpRef == -1) {
-            image.vignettingOffsetX.value = PTOType::Image::VignettingMode(panoScriptGetImageVignettingCoeffX(d->script, i));
+            image.vignettingOffsetX.value = panoScriptGetImageVignettingCoeffX(d->script, i);
         } else {
             image.vignettingOffsetX.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImageVignettingCoeffYRef(d->script, i);
         if (tmpRef == -1) {
-            image.vignettingOffsetY.value = PTOType::Image::VignettingMode(panoScriptGetImageVignettingCoeffY(d->script, i));
+            image.vignettingOffsetY.value = panoScriptGetImageVignettingCoeffY(d->script, i);
         } else {
             image.vignettingOffsetY.referenceId = tmpRef;
         }
@@ -287,39 +288,33 @@ PTOType* PTOFile::getPTO()
         }
         tmpRef = panoScriptGetImagePhotometricCoeffARef(d->script, i);
         if (tmpRef == -1) {
-            image.photometricEMoRA.value = PTOType::Image::VignettingMode(panoScriptGetImagePhotometricCoeffA(d->script, i));
+            image.photometricEMoRA.value = panoScriptGetImagePhotometricCoeffA(d->script, i);
         } else {
             image.photometricEMoRA.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImagePhotometricCoeffBRef(d->script, i);
         if (tmpRef == -1) {
-            image.photometricEMoRB.value = PTOType::Image::VignettingMode(panoScriptGetImagePhotometricCoeffB(d->script, i));
+            image.photometricEMoRB.value = panoScriptGetImagePhotometricCoeffB(d->script, i);
         } else {
             image.photometricEMoRB.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImagePhotometricCoeffCRef(d->script, i);
         if (tmpRef == -1) {
-            image.photometricEMoRC.value = PTOType::Image::VignettingMode(panoScriptGetImagePhotometricCoeffC(d->script, i));
+            image.photometricEMoRC.value = panoScriptGetImagePhotometricCoeffC(d->script, i);
         } else {
             image.photometricEMoRC.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImagePhotometricCoeffDRef(d->script, i);
         if (tmpRef == -1) {
-            image.photometricEMoRD.value = PTOType::Image::VignettingMode(panoScriptGetImagePhotometricCoeffD(d->script, i));
+            image.photometricEMoRD.value = panoScriptGetImagePhotometricCoeffD(d->script, i);
         } else {
             image.photometricEMoRD.referenceId = tmpRef;
         }
         tmpRef = panoScriptGetImagePhotometricCoeffERef(d->script, i);
         if (tmpRef == -1) {
-            image.photometricEMoRE.value = PTOType::Image::VignettingMode(panoScriptGetImagePhotometricCoeffE(d->script, i));
+            image.photometricEMoRE.value = panoScriptGetImagePhotometricCoeffE(d->script, i);
         } else {
             image.photometricEMoRE.referenceId = tmpRef;
-        }
-        tmpRef = panoScriptGetImagePhotometricCoeffARef(d->script, i);
-        if (tmpRef == -1) {
-            image.photometricEMoRA.value = PTOType::Image::VignettingMode(panoScriptGetImagePhotometricCoeffA(d->script, i));
-        } else {
-            image.photometricEMoRA.referenceId = tmpRef;
         }
         image.mosaicModeOffsetX = panoScriptGetImageTranslationX(d->script, i);
         image.mosaicModeOffsetY = panoScriptGetImageTranslationY(d->script, i);

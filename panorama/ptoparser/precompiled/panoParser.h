@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.6.4.  */
+/* A Bison parser, made by GNU Bison 2.6.5.  */
 
 /* Bison interface for Yacc-like parsers in C
    
@@ -75,16 +75,16 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-/* Line 2077 of yacc.c  */
+/* Line 2042 of yacc.c  */
 #line 69 "ptoparser/panoParser.y"
 
     int     iVal;
-    float   fVal;
+    double  fVal;
     char    strVal[PT_TOKEN_MAX_LEN + 1];
     char    cVal;
 
 
-/* Line 2077 of yacc.c  */
+/* Line 2042 of yacc.c  */
 #line 89 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1

@@ -111,6 +111,8 @@ input: lines commentlines
     {
         script.iEndingCommentsCount = nbCommentLine;
         script.endingComments = commentLines;
+        nbCommentLine = 0;
+        commentLines = NULL;
     }
 
 lines:  lines line

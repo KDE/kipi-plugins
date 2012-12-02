@@ -373,17 +373,19 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[89] =
+static yyconst flex_int16_t yy_accept[92] =
     {   0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,   37,   35,    6,    4,   35,   35,
-        2,   23,   21,   23,   23,   23,   23,   23,    6,    1,
+        3,   23,   21,   23,   23,   23,   23,   23,    6,    1,
        35,   13,   12,    8,   11,    9,    7,   10,   34,    6,
-       27,   26,   36,   36,    6,   25,   36,   14,    2,   15,
-       36,   17,   36,    5,   19,   24,    6,    4,    0,    2,
-        3,   20,    0,   22,    0,    6,    1,    0,   13,   34,
+       27,   26,   36,   36,    6,   25,   36,   14,    3,   15,
+       36,   17,   36,    5,   19,   24,    6,    4,    0,    3,
+        2,   20,    0,   22,    0,    6,    1,    0,   13,   34,
         6,   33,   31,   32,   28,   30,   29,    6,    0,   18,
-        5,    3,    0,    0,    0,    0,   16,    0
+        5,    2,    0,    0,    0,    2,    0,    0,    0,   16,
+        0
+
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -427,37 +429,37 @@ static yyconst flex_int32_t yy_meta[42] =
         4
     } ;
 
-static yyconst flex_int16_t yy_base[96] =
+static yyconst flex_int16_t yy_base[99] =
     {   0,
         0,   40,   46,   53,   78,  102,   48,   52,   58,   64,
-       92,  113,  115,  124,  207,  208,  139,  208,  203,  193,
-       50,  208,  208,   56,  198,  125,  166,    0,  143,  208,
-      190,    0,  208,  208,  208,  208,  208,  208,    0,   63,
-      208,  208,  129,  208,   76,  208,  180,  208,  120,  208,
-      177,  208,  159,  104,  208,  208,  166,  208,  161,  123,
-      150,  208,  121,  208,  134,  170,  208,  122,    0,    0,
-      111,  208,  208,  208,  208,  208,  208,  134,   82,  208,
-      156,   87,   78,   64,   41,    0,    0,  208,  175,  180,
-       41,  185,  190,  195,  197
+       92,  113,  115,  124,  213,  214,  139,  214,  209,  199,
+       50,  214,  214,   56,  204,  125,  172,    0,  143,  214,
+      205,    0,  214,  214,  214,  214,  214,  214,    0,   63,
+      214,  214,  129,  214,   76,  214,  195,  214,  120,  214,
+      196,  214,  199,  104,  214,  214,  166,  214,  192,  123,
+       87,  214,  155,  214,  134,  170,  214,  186,    0,    0,
+      134,  214,  214,  214,  214,  214,  214,  156,  135,  214,
+      160,  148,  113,  150,  101,   80,   64,   41,    0,    0,
+      214,  177,  182,   41,  187,  192,  197,  199
 
     } ;
 
-static yyconst flex_int16_t yy_def[96] =
+static yyconst flex_int16_t yy_def[99] =
     {   0,
-       88,    1,   89,   89,   90,   90,   90,   90,   90,   90,
-        6,    6,    6,    6,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   91,   88,   88,
-       88,   92,   88,   88,   88,   88,   88,   88,   93,   93,
-       88,   88,   94,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   92,   93,
-       93,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   95,   95,    0,   88,   88,
-       88,   88,   88,   88,   88
+       91,    1,   92,   92,   93,   93,   93,   93,   93,   93,
+        6,    6,    6,    6,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   94,   91,   91,
+       91,   95,   91,   91,   91,   91,   91,   91,   96,   96,
+       91,   91,   97,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   95,   96,
+       96,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   98,   98,
+        0,   91,   91,   91,   91,   91,   91,   91
 
     } ;
 
-static yyconst flex_int16_t yy_nxt[250] =
+static yyconst flex_int16_t yy_nxt[256] =
     {   0,
        16,   17,   18,   19,   17,   16,   16,   20,   16,   20,
        16,   21,   16,   22,   22,   23,   24,   25,   26,   27,
@@ -465,58 +467,60 @@ static yyconst flex_int16_t yy_nxt[250] =
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
        22,   29,   30,   31,   29,   62,   32,   40,   41,   45,
        40,   42,   45,   45,   40,   41,   45,   40,   42,   45,
-       61,   60,   45,   86,   71,   45,   33,   71,   45,   43,
-       34,   35,   36,   85,   34,   37,   43,   78,   38,   45,
+       61,   60,   45,   89,   71,   45,   33,   71,   45,   43,
+       34,   35,   36,   88,   34,   37,   43,   78,   38,   45,
        78,   62,   45,   46,   63,   47,   48,   47,   52,   49,
-       50,   84,   62,   53,   52,   52,   54,   55,   82,   53,
+       50,   86,   62,   53,   52,   52,   54,   55,   82,   53,
 
        44,   52,   51,   45,   44,   78,   45,   46,   81,   47,
-       48,   47,   71,   49,   50,   71,   44,   54,   55,   54,
-       56,   44,   83,   44,   67,   44,   51,   44,   54,   56,
-       61,   60,   44,   61,   60,   78,   44,   44,   78,   44,
+       48,   47,   86,   49,   50,   83,   44,   54,   55,   54,
+       56,   44,   85,   44,   86,   44,   51,   44,   54,   56,
+       61,   60,   44,   61,   60,   71,   44,   44,   71,   44,
        57,   58,   59,   57,   66,   67,   68,   66,   44,   62,
-       62,   62,   62,   62,   73,   62,   62,   78,   74,   62,
-       81,   82,   75,   58,   80,   76,   77,   57,   58,   59,
-       57,   66,   67,   68,   66,   39,   39,   39,   39,   39,
-       44,   44,   44,   44,   44,   69,   79,   69,   69,   69,
-       70,   60,   67,   70,   70,   72,   72,   72,   72,   72,
+       62,   62,   62,   62,   73,   62,   62,   78,   74,   82,
+       78,   78,   75,   87,   81,   76,   77,   57,   58,   59,
+       57,   66,   67,   68,   66,   84,   83,   39,   39,   39,
+       39,   39,   44,   44,   44,   44,   44,   69,   67,   69,
+       69,   69,   70,   62,   58,   70,   70,   72,   72,   72,
 
-       87,   87,   65,   64,   60,   58,   88,   15,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88
+       72,   72,   90,   90,   80,   79,   60,   67,   65,   64,
+       60,   58,   91,   15,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91
     } ;
 
-static yyconst flex_int16_t yy_chk[250] =
+static yyconst flex_int16_t yy_chk[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    2,    2,    2,   91,    2,    3,    3,    7,
+        1,    2,    2,    2,    2,   94,    2,    3,    3,    7,
         3,    3,    7,    8,    4,    4,    8,    4,    4,    9,
-       21,   21,    9,   85,   40,   10,    2,   40,   10,    3,
-        2,    2,    2,   84,    2,    2,    4,   45,    2,    5,
+       21,   21,    9,   88,   40,   10,    2,   40,   10,    3,
+        2,    2,    2,   87,    2,    2,    4,   45,    2,    5,
        45,   24,    5,    5,   24,    5,    5,    5,    9,    5,
-        5,   83,   24,    9,   10,    9,   11,   11,   82,   10,
+        5,   86,   24,    9,   10,    9,   11,   11,   61,   10,
 
        11,   10,    5,    6,   11,   54,    6,    6,   54,    6,
-        6,    6,   71,    6,    6,   71,   11,   12,   12,   13,
-       13,   12,   79,   13,   68,   12,    6,   13,   14,   14,
-       49,   49,   14,   60,   60,   78,   14,   12,   78,   13,
+        6,    6,   85,    6,    6,   61,   11,   12,   12,   13,
+       13,   12,   83,   13,   83,   12,    6,   13,   14,   14,
+       49,   49,   14,   60,   60,   71,   14,   12,   71,   13,
        17,   17,   17,   17,   29,   29,   29,   29,   14,   26,
-       26,   26,   26,   26,   43,   65,   65,   81,   43,   63,
-       81,   61,   43,   59,   53,   43,   43,   57,   57,   57,
-       57,   66,   66,   66,   66,   89,   89,   89,   89,   89,
-       90,   90,   90,   90,   90,   92,   51,   92,   92,   92,
-       93,   47,   31,   93,   93,   94,   94,   94,   94,   94,
+       26,   26,   26,   26,   43,   65,   65,   78,   43,   82,
+       78,   81,   43,   84,   81,   43,   43,   57,   57,   57,
+       57,   66,   66,   66,   66,   79,   82,   92,   92,   92,
+       92,   92,   93,   93,   93,   93,   93,   95,   68,   95,
+       95,   95,   96,   63,   59,   96,   96,   97,   97,   97,
 
-       95,   95,   27,   25,   20,   19,   15,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88,   88,
-       88,   88,   88,   88,   88,   88,   88,   88,   88
+       97,   97,   98,   98,   53,   51,   47,   31,   27,   25,
+       20,   19,   15,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -561,7 +565,7 @@ char *yytext;
 #define YY_NO_INPUT 1
 #line 31 "ptoparser/panoScanner.l"
 
-/* need this for the call to atof() below */
+/* need this for the call to strtold() below */
 #include <math.h>
 #include <string.h>
 
@@ -576,7 +580,6 @@ int first_eof;
 #define YY_INPUT(buf,result,max_size)  {\
     result = panoScriptScannerGetNextChar(buf, max_size); \
     if (  result <= 0  ) {\
-      printf("EOF\n");\
       result = YY_NULL; \
     }\
     }
@@ -587,7 +590,7 @@ int first_eof;
 
 
 
-#line 591 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 594 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 #define INITIAL 0
 #define str 1
@@ -776,12 +779,12 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 66 "ptoparser/panoScanner.l"
+#line 65 "ptoparser/panoScanner.l"
 
 
   /* Simple rules for all purpose */
 
-#line 785 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 788 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 	if ( !(yy_init) )
 		{
@@ -835,13 +838,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 89 )
+				if ( yy_current_state >= 92 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 208 );
+		while ( yy_base[yy_current_state] != 214 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -868,7 +871,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 70 "ptoparser/panoScanner.l"
+#line 69 "ptoparser/panoScanner.l"
 { /* Ignore empty lines */
     DEBUG_1("Empty line");
 }
@@ -876,7 +879,18 @@ YY_RULE_SETUP
 /* Simple rules to read numbers */
 case 2:
 YY_RULE_SETUP
-#line 77 "ptoparser/panoScanner.l"
+#line 76 "ptoparser/panoScanner.l"
+{ /* float point with period */
+    BEGIN(INITIAL);
+    panoScriptScannerTokenBegin(yytext);
+    yylval.fVal = strtod(yytext, NULL);
+    DEBUG_3("A  float: %s (%lg)", yytext, yylval.fVal);
+    return PT_TOKEN_NUMBER_FLOAT;
+}
+	YY_BREAK
+case 3:
+YY_RULE_SETUP
+#line 84 "ptoparser/panoScanner.l"
 { /* Simple integer */
     BEGIN(INITIAL);
     panoScriptScannerTokenBegin(yytext);
@@ -885,21 +899,10 @@ YY_RULE_SETUP
     return PT_TOKEN_NUMBER_INT;
 }
 	YY_BREAK
-case 3:
-YY_RULE_SETUP
-#line 85 "ptoparser/panoScanner.l"
-{ /* float point with period */
-    BEGIN(INITIAL);
-    panoScriptScannerTokenBegin(yytext);
-    yylval.fVal = atof( yytext );
-    DEBUG_3("A  float: %s (%g)", yytext, yylval.fVal);
-    return PT_TOKEN_NUMBER_FLOAT;
-}
-	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 93 "ptoparser/panoScanner.l"
+#line 92 "ptoparser/panoScanner.l"
 { /* END OF LINE is an important marker when processing a rule */
     DEBUG_1("End of line");
     panoScriptScannerTokenBegin(yytext);
@@ -914,7 +917,7 @@ case YY_STATE_EOF(hugin):
 case YY_STATE_EOF(mask):
 case YY_STATE_EOF(maskcoordinate):
 case YY_STATE_EOF(projparms):
-#line 100 "ptoparser/panoScanner.l"
+#line 99 "ptoparser/panoScanner.l"
 { /* We are done */
     DEBUG_1("End of file");
     panoScriptScannerTokenBegin(yytext);
@@ -927,7 +930,7 @@ case YY_STATE_EOF(projparms):
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 110 "ptoparser/panoScanner.l"
+#line 109 "ptoparser/panoScanner.l"
 {
     panoScriptScannerTokenBegin(yytext); 
     return PT_TOKEN_COMMA;
@@ -935,7 +938,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 115 "ptoparser/panoScanner.l"
+#line 114 "ptoparser/panoScanner.l"
 {  /* token separator */
     panoScriptScannerTokenBegin(yytext); 
     return PT_TOKEN_SEP;
@@ -946,7 +949,7 @@ YY_RULE_SETUP
 /******************************************/
 case 7:
 YY_RULE_SETUP
-#line 125 "ptoparser/panoScanner.l"
+#line 124 "ptoparser/panoScanner.l"
 {    /* panorama line */
     DEBUG_1("Panorama line");
     panoScriptScannerTokenBegin(yytext);
@@ -956,7 +959,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 132 "ptoparser/panoScanner.l"
+#line 131 "ptoparser/panoScanner.l"
 {    /* input line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -965,7 +968,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 138 "ptoparser/panoScanner.l"
+#line 137 "ptoparser/panoScanner.l"
 {    /* Optimization options line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -974,7 +977,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 144 "ptoparser/panoScanner.l"
+#line 143 "ptoparser/panoScanner.l"
 {    /* Var optimization line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -983,7 +986,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 150 "ptoparser/panoScanner.l"
+#line 149 "ptoparser/panoScanner.l"
 {    /* Mask line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -993,7 +996,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 157 "ptoparser/panoScanner.l"
+#line 156 "ptoparser/panoScanner.l"
 {    /* Control point line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
@@ -1002,7 +1005,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 163 "ptoparser/panoScanner.l"
+#line 162 "ptoparser/panoScanner.l"
 {
     DEBUG_2("Comment "%s"", yytext);
     panoScriptScannerTokenBegin(yytext);
@@ -1017,7 +1020,7 @@ YY_RULE_SETUP
 /******************************************/
 case 14:
 YY_RULE_SETUP
-#line 176 "ptoparser/panoScanner.l"
+#line 175 "ptoparser/panoScanner.l"
 {
     panoScriptScannerTokenBegin(yytext);
     BEGIN(parm);
@@ -1026,7 +1029,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 182 "ptoparser/panoScanner.l"
+#line 181 "ptoparser/panoScanner.l"
 {   /* Reference to a variable */
     panoScriptScannerTokenBegin(yytext);
     return PT_TOKEN_REFERENCE;
@@ -1034,7 +1037,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 188 "ptoparser/panoScanner.l"
+#line 187 "ptoparser/panoScanner.l"
 {
     /* Read the rest of the parameter as a string by default */
     /* move back to default mode */
@@ -1048,7 +1051,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 199 "ptoparser/panoScanner.l"
+#line 198 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1060,7 +1063,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 208 "ptoparser/panoScanner.l"
+#line 207 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1072,7 +1075,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 217 "ptoparser/panoScanner.l"
+#line 216 "ptoparser/panoScanner.l"
 {
     panoScriptScannerTokenBegin(yytext);
     BEGIN(mask);
@@ -1080,7 +1083,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 222 "ptoparser/panoScanner.l"
+#line 221 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     panoScriptScannerTokenBegin(yytext);
@@ -1092,7 +1095,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 231 "ptoparser/panoScanner.l"
+#line 230 "ptoparser/panoScanner.l"
 {  /* These are the C and S parameters that contain multiple values */
     DEBUG_2("An identifier for a variable: %s", yytext);
     BEGIN(parm);
@@ -1102,7 +1105,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 238 "ptoparser/panoScanner.l"
+#line 237 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1114,7 +1117,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 247 "ptoparser/panoScanner.l"
+#line 246 "ptoparser/panoScanner.l"
 {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
@@ -1129,14 +1132,14 @@ YY_RULE_SETUP
 /*********************************/
 case 24:
 YY_RULE_SETUP
-#line 260 "ptoparser/panoScanner.l"
+#line 259 "ptoparser/panoScanner.l"
 {
     BEGIN(INITIAL);
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 264 "ptoparser/panoScanner.l"
+#line 263 "ptoparser/panoScanner.l"
 { /* Begin of string */
     panoScriptScannerTokenBegin(yytext);
     strBuffer_ptr = strBuffer;
@@ -1145,7 +1148,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 270 "ptoparser/panoScanner.l"
+#line 269 "ptoparser/panoScanner.l"
 { /* saw closing quote - all done */
     BEGIN(INITIAL);
     *strBuffer_ptr = '\0';
@@ -1158,7 +1161,7 @@ YY_RULE_SETUP
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 279 "ptoparser/panoScanner.l"
+#line 278 "ptoparser/panoScanner.l"
 {
     /* error - unterminated string constant */
     /* generate error message */
@@ -1168,38 +1171,38 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 286 "ptoparser/panoScanner.l"
+#line 285 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\n';
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 287 "ptoparser/panoScanner.l"
+#line 286 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\t';
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 288 "ptoparser/panoScanner.l"
+#line 287 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\r';
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 289 "ptoparser/panoScanner.l"
+#line 288 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\b';
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 290 "ptoparser/panoScanner.l"
+#line 289 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = '\f';
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 292 "ptoparser/panoScanner.l"
+#line 291 "ptoparser/panoScanner.l"
 *strBuffer_ptr++ = yytext[1];
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 294 "ptoparser/panoScanner.l"
+#line 293 "ptoparser/panoScanner.l"
 {
     int currentLen = strlen(strBuffer);
     char *yptr = yytext;
@@ -1212,7 +1215,7 @@ YY_RULE_SETUP
 /* Catch errors */
 case 35:
 YY_RULE_SETUP
-#line 307 "ptoparser/panoScanner.l"
+#line 306 "ptoparser/panoScanner.l"
 {
     panoScriptParserError("Unrecognized character: [%s]", yytext);
     return PT_TOKEN_ERROR;
@@ -1220,10 +1223,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 314 "ptoparser/panoScanner.l"
+#line 313 "ptoparser/panoScanner.l"
 ECHO;
 	YY_BREAK
-#line 1227 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
+#line 1230 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoScanner.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1514,7 +1517,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 89 )
+			if ( yy_current_state >= 92 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1542,11 +1545,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 89 )
+		if ( yy_current_state >= 92 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 88);
+	yy_is_jam = (yy_current_state == 91);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2181,7 +2184,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 314 "ptoparser/panoScanner.l"
+#line 313 "ptoparser/panoScanner.l"
 
 
 

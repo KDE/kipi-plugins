@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.6.4.  */
+/* A Bison parser, made by GNU Bison 2.6.5.  */
 
 /* Bison implementation for Yacc-like parsers in C
    
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.6.4"
+#define YYBISON_VERSION "2.6.5"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-/* Line 358 of yacc.c  */
+/* Line 360 of yacc.c  */
 #line 26 "ptoparser/panoParser.y"
 
 
@@ -88,7 +88,7 @@ static pt_script_image *image = NULL;
 static pt_script_ctrl_point *ctrlPoint = NULL;
 static pt_script_mask *mask = NULL;
 static int nbProjParms = 0;
-static float* projParms = NULL;
+static double* projParms = NULL;
 static int nbCommentLine = 0;
 static char** commentLines = NULL;
 
@@ -104,7 +104,7 @@ static void ParserStringCopy(char **dest, const char *from)
 
 
 
-/* Line 358 of yacc.c  */
+/* Line 360 of yacc.c  */
 #line 109 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
 
 # ifndef YY_NULL
@@ -170,16 +170,16 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-/* Line 374 of yacc.c  */
+/* Line 376 of yacc.c  */
 #line 69 "ptoparser/panoParser.y"
 
     int     iVal;
-    float   fVal;
+    double  fVal;
     char    strVal[PT_TOKEN_MAX_LEN + 1];
     char    cVal;
 
 
-/* Line 374 of yacc.c  */
+/* Line 376 of yacc.c  */
 #line 184 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
@@ -207,7 +207,7 @@ int yyparse ();
 
 /* Copy the second part of user declarations.  */
 
-/* Line 377 of yacc.c  */
+/* Line 379 of yacc.c  */
 #line 212 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
 
 #ifdef short
@@ -428,16 +428,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   87
+#define YYLAST   91
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  25
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  39
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  66
+#define YYNRULES  67
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  114
+#define YYNSTATES  115
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -490,7 +490,7 @@ static const yytype_uint8 yyprhs[] =
       81,    85,    88,    91,    93,    97,    99,   103,   105,   107,
      109,   111,   113,   115,   117,   121,   123,   127,   130,   133,
      135,   139,   143,   152,   156,   160,   163,   166,   169,   172,
-     175,   177,   179,   183,   185,   187,   189
+     175,   178,   180,   182,   186,   188,   190,   192
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -513,21 +513,21 @@ static const yytype_int8 yyrhs[] =
       20,    62,    -1,     9,    62,    20,    62,    20,    62,    20,
       62,    -1,     8,    21,    62,    -1,     7,    21,    62,    -1,
        7,     5,    -1,    19,    60,    -1,     7,    62,    -1,     7,
-      61,    -1,     8,    63,    -1,     7,    -1,    63,    -1,    60,
-      20,    63,    -1,     4,    -1,     3,    -1,     4,    -1,     3,
-      -1
+      61,    -1,     8,     5,    -1,     8,    63,    -1,     7,    -1,
+      63,    -1,    60,    20,    63,    -1,     4,    -1,     3,    -1,
+       4,    -1,     3,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   110,   110,   116,   117,   119,   125,   126,   128,   142,
-     156,   161,   166,   180,   194,   211,   210,   226,   225,   232,
-     231,   240,   239,   243,   246,   245,   259,   258,   288,   300,
-     301,   303,   316,   334,   335,   337,   338,   342,   343,   344,
-     346,   347,   348,   350,   351,   353,   357,   365,   381,   388,
-     389,   391,   406,   427,   530,   575,   622,   630,   764,   859,
-     960,   979,   986,   994,   996,   998,   999
+       0,   110,   110,   118,   119,   121,   127,   128,   130,   144,
+     166,   171,   176,   190,   204,   221,   220,   255,   254,   261,
+     260,   269,   268,   272,   275,   274,   288,   287,   317,   329,
+     330,   332,   345,   363,   364,   366,   367,   371,   372,   373,
+     375,   376,   377,   379,   380,   382,   386,   394,   410,   417,
+     418,   420,   435,   463,   548,   593,   640,   648,   782,   877,
+     890,   991,  1010,  1017,  1025,  1027,  1029,  1030
 };
 #endif
 
@@ -575,7 +575,7 @@ static const yytype_uint8 yyr1[] =
       45,    46,    46,    47,    47,    48,    48,    49,    49,    49,
       50,    50,    50,    51,    51,    52,    52,    53,    53,    54,
       54,    55,    56,    57,    57,    58,    58,    58,    58,    58,
-      59,    60,    60,    61,    62,    63,    63
+      58,    59,    60,    60,    61,    62,    63,    63
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -587,7 +587,7 @@ static const yytype_uint8 yyr2[] =
        3,     2,     2,     1,     3,     1,     3,     1,     1,     1,
        1,     1,     1,     1,     3,     1,     3,     2,     2,     1,
        3,     3,     8,     3,     3,     2,     2,     2,     2,     2,
-       1,     1,     3,     1,     1,     1,     1
+       2,     1,     1,     3,     1,     1,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
@@ -600,13 +600,13 @@ static const yytype_uint8 yydefact[] =
        0,     0,     0,    28,     8,    15,    17,    24,    19,    21,
       26,     9,    10,    11,    12,    13,    14,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,    16,    33,    37,
-      38,    39,    60,     0,    18,    35,    40,    41,    42,     0,
+      38,    39,    61,     0,    18,    35,    40,    41,    42,     0,
       25,    43,    20,     0,     0,    22,    29,     0,     0,    27,
-      45,    64,    63,    55,     0,    58,    57,    66,    65,     0,
-      59,     0,    56,    61,     0,     0,     0,    32,    31,     0,
-      47,    48,    49,     0,     0,    54,    53,     0,     0,    34,
-      36,    44,    30,     0,     0,    46,     0,    62,    50,    51,
-       0,     0,     0,    52
+      45,    65,    64,    55,     0,    58,    57,    67,    66,    59,
+       0,    60,     0,    56,    62,     0,     0,     0,    32,    31,
+       0,    47,    48,    49,     0,     0,    54,    53,     0,     0,
+      34,    36,    44,    30,     0,     0,    46,     0,    63,    50,
+      51,     0,     0,     0,    52
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -614,8 +614,8 @@ static const yytype_int8 yydefgoto[] =
 {
       -1,     1,     2,     3,     4,    15,    16,    17,    37,    18,
       38,    19,    40,    20,    41,    21,    39,    22,    42,    24,
-      65,    66,    47,    54,    48,    55,    60,    69,    70,    91,
-      92,    56,    50,    57,    58,    82,    75,    76,    80
+      65,    66,    47,    54,    48,    55,    60,    69,    70,    92,
+      93,    56,    50,    57,    58,    83,    75,    76,    81
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -623,27 +623,27 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -46
 static const yytype_int8 yypact[] =
 {
-     -46,     5,   -46,   -46,    22,   -46,   -46,    22,    14,    21,
-      28,    35,    37,    43,    44,   -46,   -46,    14,    14,    14,
-      14,    14,    14,   -46,   -46,   -46,   -46,   -46,   -46,   -46,
-     -46,   -46,   -46,   -46,   -46,   -46,   -46,     7,    34,    38,
-      34,    13,    10,     3,     6,    57,    27,    49,   -46,   -46,
-     -46,   -46,     8,    27,    50,   -46,   -46,   -46,   -46,     8,
-      52,   -46,    50,    57,    57,    54,   -46,    57,    57,    62,
-     -46,   -46,   -46,   -46,    57,   -46,   -46,   -46,   -46,    57,
-     -46,    55,    56,   -46,     7,    34,    38,   -46,   -46,    13,
-     -46,    58,   -46,    59,    10,   -46,   -46,    57,    27,   -46,
-     -46,   -46,   -46,    57,    57,   -46,    60,   -46,   -46,   -46,
-      57,    61,    57,   -46
+     -46,    25,   -46,   -46,    23,   -46,   -46,    23,    -6,    22,
+      29,    38,    49,    50,    51,   -46,   -46,    -6,    -6,    -6,
+      -6,    -6,    -6,   -46,   -46,   -46,   -46,   -46,   -46,   -46,
+     -46,   -46,   -46,   -46,   -46,   -46,   -46,     7,    35,    13,
+      35,     5,    10,     3,     6,    61,    27,    55,   -46,   -46,
+     -46,   -46,    43,    53,    63,   -46,   -46,   -46,   -46,    43,
+      64,   -46,    63,    61,    61,    65,   -46,    61,    61,    66,
+     -46,   -46,   -46,   -46,    61,   -46,   -46,   -46,   -46,   -46,
+      61,   -46,    45,    59,   -46,     7,    35,    13,   -46,   -46,
+       5,   -46,    60,   -46,    62,    10,   -46,   -46,    61,    27,
+     -46,   -46,   -46,   -46,    61,    61,   -46,    67,   -46,   -46,
+     -46,    61,    68,    61,   -46
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -46,   -46,   -46,    75,    80,   -46,   -46,   -46,   -46,   -46,
-     -46,   -46,   -46,   -46,   -46,   -46,   -46,   -46,   -46,    51,
-     -46,   -26,   -46,    45,    -1,     1,   -46,   -46,   -10,   -46,
-     -16,   -33,   -46,   -36,   -46,   -46,   -46,   -45,   -44
+     -46,   -46,   -46,    79,    81,   -46,   -46,   -46,   -46,   -46,
+     -46,   -46,   -46,   -46,   -46,   -46,   -46,   -46,   -46,    52,
+     -46,    -5,   -46,    44,     1,     4,   -46,   -46,    -4,   -46,
+     -15,   -33,   -46,   -36,   -46,   -46,   -46,   -45,   -44
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -652,15 +652,16 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      81,    51,    83,    61,    49,     5,    71,    72,    73,    77,
-      78,    71,    72,    73,    43,    44,    45,    67,    87,    88,
-      63,    64,    90,    93,    74,    23,    46,    79,    68,    95,
-      77,    78,     8,    25,    96,     9,    10,    11,    12,    13,
-      26,    52,    53,    45,    14,    59,    53,    27,    51,    28,
-     101,    49,   106,    46,   107,    29,    30,    46,    93,   109,
-      71,    84,    85,   102,    86,   111,    89,   113,    31,    32,
-      33,    34,    35,    36,    94,    97,    98,     6,   103,   104,
-     110,   112,     7,    99,   105,    62,   100,   108
+      82,    51,    84,    61,    49,    23,    71,    72,    73,    77,
+      78,    79,    63,    64,    43,    44,    45,    67,    88,    89,
+      59,    53,    91,    94,    74,     5,    46,    80,    68,    96,
+      77,    78,    46,     8,    25,    97,     9,    10,    11,    12,
+      13,    26,    52,    53,    45,    14,    71,    72,    73,    51,
+      27,   102,    49,   107,    46,   108,    77,    78,    79,    94,
+     110,    28,    29,    30,    71,    98,   112,    85,   114,    31,
+      32,    33,    34,    35,    36,    86,    87,    90,    95,    99,
+     104,     6,   105,     7,    62,   103,   100,   111,   113,   109,
+     101,   106
 };
 
 #define yypact_value_is_default(Yystate) \
@@ -671,15 +672,16 @@ static const yytype_uint8 yytable[] =
 
 static const yytype_uint8 yycheck[] =
 {
-      45,    37,    46,    39,    37,     0,     3,     4,     5,     3,
-       4,     3,     4,     5,     7,     8,     9,     7,    63,    64,
-       7,     8,    67,    68,    21,    11,    19,    21,    18,    74,
-       3,     4,    10,    12,    79,    13,    14,    15,    16,    17,
-      12,     7,     8,     9,    22,     7,     8,    12,    84,    12,
-      86,    84,    97,    19,    98,    12,    12,    19,   103,   104,
-       3,    12,    12,    89,    12,   110,    12,   112,    17,    18,
-      19,    20,    21,    22,    12,    20,    20,     2,    20,    20,
-      20,    20,     2,    84,    94,    40,    85,   103
+      45,    37,    46,    39,    37,    11,     3,     4,     5,     3,
+       4,     5,     7,     8,     7,     8,     9,     7,    63,    64,
+       7,     8,    67,    68,    21,     0,    19,    21,    18,    74,
+       3,     4,    19,    10,    12,    80,    13,    14,    15,    16,
+      17,    12,     7,     8,     9,    22,     3,     4,     5,    85,
+      12,    87,    85,    98,    19,    99,     3,     4,     5,   104,
+     105,    12,    12,    12,     3,    20,   111,    12,   113,    17,
+      18,    19,    20,    21,    22,    12,    12,    12,    12,    20,
+      20,     2,    20,     2,    40,    90,    85,    20,    20,   104,
+      86,    95
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -693,11 +695,11 @@ static const yytype_uint8 yystos[] =
       37,    39,    43,     7,     8,     9,    19,    47,    49,    56,
       57,    58,     7,     8,    48,    50,    56,    58,    59,     7,
       51,    58,    48,     7,     8,    45,    46,     7,    18,    52,
-      53,     3,     4,     5,    21,    61,    62,     3,     4,    21,
-      63,    62,    60,    63,    12,    12,    12,    62,    62,    12,
-      62,    54,    55,    62,    12,    62,    62,    20,    20,    49,
-      50,    58,    46,    20,    20,    53,    62,    63,    55,    62,
-      20,    62,    20,    62
+      53,     3,     4,     5,    21,    61,    62,     3,     4,     5,
+      21,    63,    62,    60,    63,    12,    12,    12,    62,    62,
+      12,    62,    54,    55,    62,    12,    62,    62,    20,    20,
+      49,    50,    58,    46,    20,    20,    53,    62,    63,    55,
+      62,    20,    62,    20,    62
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -744,47 +746,18 @@ do                                                              \
     }								\
 while (YYID (0))
 
-
+/* Error token number */
 #define YYTERROR	1
 #define YYERRCODE	256
 
-/* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
-   If N is 0, then set CURRENT to the empty location which ends
-   the previous symbol: RHS[0] (always defined).  */
-
-#ifndef YYLLOC_DEFAULT
-# define YYLLOC_DEFAULT(Current, Rhs, N)                                \
-    do                                                                  \
-      if (YYID (N))                                                     \
-        {                                                               \
-          (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;        \
-          (Current).first_column = YYRHSLOC (Rhs, 1).first_column;      \
-          (Current).last_line    = YYRHSLOC (Rhs, N).last_line;         \
-          (Current).last_column  = YYRHSLOC (Rhs, N).last_column;       \
-        }                                                               \
-      else                                                              \
-        {                                                               \
-          (Current).first_line   = (Current).last_line   =              \
-            YYRHSLOC (Rhs, 0).last_line;                                \
-          (Current).first_column = (Current).last_column =              \
-            YYRHSLOC (Rhs, 0).last_column;                              \
-        }                                                               \
-    while (YYID (0))
-#endif
-
-#define YYRHSLOC(Rhs, K) ((Rhs)[K])
-
-
 
 /* This macro is provided for backward compatibility. */
-
 #ifndef YY_LOCATION_PRINT
 # define YY_LOCATION_PRINT(File, Loc) ((void) 0)
 #endif
 
 
 /* YYLEX -- calling `yylex' with the right arguments.  */
-
 #ifdef YYLEX_PARAM
 # define YYLEX yylex (YYLEX_PARAM)
 #else
@@ -1250,16 +1223,16 @@ yydestruct (yymsg, yytype, yyvaluep)
 int yychar;
 
 
-#ifndef YYLVAL_INITIALIZE
-# define YYLVAL_INITIALIZE()
-#endif
 #ifndef YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
 # define YY_IGNORE_MAYBE_UNINITIALIZED_END
 #endif
+#ifndef YY_INITIAL_VALUE
+# define YY_INITIAL_VALUE(Value) /* Nothing. */
+#endif
 
 /* The semantic value of the lookahead symbol.  */
-YYSTYPE yylval;
+YYSTYPE yylval YY_INITIAL_VALUE(yyval_default);
 
 /* Number of syntax errors so far.  */
 int yynerrs;
@@ -1335,8 +1308,8 @@ yyparse ()
      Keep to zero when no symbol should be popped.  */
   int yylen = 0;
 
-  yyss = yyssa;
-  yyvs = yyvsa;
+  yyssp = yyss = yyssa;
+  yyvsp = yyvs = yyvsa;
   yystacksize = YYINITDEPTH;
 
   YYDPRINTF ((stderr, "Starting parse\n"));
@@ -1345,15 +1318,6 @@ yyparse ()
   yyerrstatus = 0;
   yynerrs = 0;
   yychar = YYEMPTY; /* Cause a token to be read.  */
-
-  /* Initialize stack pointers.
-     Waste one element of value and location stack
-     so that they stay on the same level as the state stack.
-     The wasted elements are never initialized.  */
-  yyssp = yyss;
-  yyvsp = yyvs;
-
-  YYLVAL_INITIALIZE ();
   goto yysetstate;
 
 /*------------------------------------------------------------.
@@ -1533,17 +1497,19 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-/* Line 1813 of yacc.c  */
+/* Line 1778 of yacc.c  */
 #line 111 "ptoparser/panoParser.y"
     {
         script.iEndingCommentsCount = nbCommentLine;
         script.endingComments = commentLines;
+        nbCommentLine = 0;
+        commentLines = NULL;
     }
     break;
 
   case 5:
-/* Line 1813 of yacc.c  */
-#line 120 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 122 "ptoparser/panoParser.y"
     {
         nbCommentLine = 0;
         commentLines = NULL;
@@ -1551,8 +1517,8 @@ yyreduce:
     break;
 
   case 8:
-/* Line 1813 of yacc.c  */
-#line 129 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 131 "ptoparser/panoParser.y"
     {
         char** curComment = (char**) panoScriptReAlloc((void**) &commentLines,
                                                        sizeof(char*),
@@ -1568,26 +1534,34 @@ yyreduce:
     break;
 
   case 9:
-/* Line 1813 of yacc.c  */
-#line 143 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 145 "ptoparser/panoParser.y"
     {
         int prevNbImages = script.iInputImagesCount - 1;
         int* curImageCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iImage_prevCommentsCount),
                                                               sizeof(int),
                                                               &prevNbImages);
+        if (curImageCommentsCount == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curImageCommentsCount = nbCommentLine;
 
         prevNbImages--;
         char*** curImageComments = (char***) panoScriptReAlloc((void**) &(script.image_prevComments),
                                                                sizeof(char**),
                                                                &prevNbImages);
+        if (curImageComments == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curImageComments = commentLines;
     }
     break;
 
   case 10:
-/* Line 1813 of yacc.c  */
-#line 157 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 167 "ptoparser/panoParser.y"
     {
         script.iPano_prevCommentsCount = nbCommentLine;
         script.pano_prevComments = commentLines;
@@ -1595,8 +1569,8 @@ yyreduce:
     break;
 
   case 11:
-/* Line 1813 of yacc.c  */
-#line 162 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 172 "ptoparser/panoParser.y"
     {
         script.iOptimize_prevCommentsCount = nbCommentLine;
         script.optimize_prevComments = commentLines;
@@ -1604,8 +1578,8 @@ yyreduce:
     break;
 
   case 12:
-/* Line 1813 of yacc.c  */
-#line 167 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 177 "ptoparser/panoParser.y"
     {
         int prevNbVars = script.iVarsToOptimizeCount - 1;
         int* curVarCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iVarsToOptimize_prevCommentsCount),
@@ -1622,8 +1596,8 @@ yyreduce:
     break;
 
   case 13:
-/* Line 1813 of yacc.c  */
-#line 181 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 191 "ptoparser/panoParser.y"
     {
         int prevNbCP = script.iCtrlPointsCount - 1;
         int* curCPCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iCtrlPoints_prevCommentsCount),
@@ -1640,8 +1614,8 @@ yyreduce:
     break;
 
   case 14:
-/* Line 1813 of yacc.c  */
-#line 195 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 205 "ptoparser/panoParser.y"
     {
         int prevNbMasks = script.iCtrlPointsCount - 1;
         int* curMaskCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iMasks_prevCommentsCount),
@@ -1658,9 +1632,10 @@ yyreduce:
     break;
 
   case 15:
-/* Line 1813 of yacc.c  */
-#line 211 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 221 "ptoparser/panoParser.y"
     {
+        int i;
         currentLine = PT_TOKEN_INPUT_LINE;
 
         image = (pt_script_image*) panoScriptReAlloc((void**) &(script.inputImageSpec),
@@ -1671,36 +1646,54 @@ yyreduce:
             yyerror("Not enough memory");
             return -1;
         }
+
+        image->fHorFOVRef = -1;
+        image->yawRef = -1;
+        image->pitchRef = -1;
+        for (i = 0; i < PANO_PARSER_COEF_COUNT; i++) {
+            image->geometryCoefRef[i] = -1;
+        }
+        image->imageEVRef = -1;
+        image->whiteBalanceFactorRedRef = -1;
+        image->whiteBalanceFactorBlueRef = -1;
+        for (i = 0; i < PANO_PARSER_RESP_CURVE_COEF_COUNT; i++) {
+            image->photometricCoefRef[i] = -1;
+        }
+        image->vignettingCorrectionModeRef = -1;
+        for (i = 0; i < PANO_PARSER_VIGN_COEF_COUNT; i++) {
+            image->vignettingCorrectionCoefRef[i] = -1;
+        }
+        image->stackRef = -1;
     }
     break;
 
   case 17:
-/* Line 1813 of yacc.c  */
-#line 226 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 255 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_PANO_LINE;
     }
     break;
 
   case 19:
-/* Line 1813 of yacc.c  */
-#line 232 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 261 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_OPTIMIZE_OPT_LINE;
     }
     break;
 
   case 21:
-/* Line 1813 of yacc.c  */
-#line 240 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 269 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_OPTIMIZE_VARS_LINE;
     }
     break;
 
   case 24:
-/* Line 1813 of yacc.c  */
-#line 246 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 275 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_CONTROL_PT_LINE;
         ctrlPoint = (pt_script_ctrl_point*) panoScriptReAlloc((void**) &script.ctrlPointsSpec,
@@ -1714,8 +1707,8 @@ yyreduce:
     break;
 
   case 26:
-/* Line 1813 of yacc.c  */
-#line 259 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 288 "ptoparser/panoParser.y"
     {
         currentLine = PT_TOKEN_MASK_PT_LINE;
         mask = (pt_script_mask*) malloc(sizeof(pt_script_mask));
@@ -1727,8 +1720,8 @@ yyreduce:
     break;
 
   case 27:
-/* Line 1813 of yacc.c  */
-#line 268 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 297 "ptoparser/panoParser.y"
     {
         if ((yyvsp[(4) - (4)].iVal) == -1) {
             yyerror("Mask line without an image reference");
@@ -1751,8 +1744,8 @@ yyreduce:
     break;
 
   case 28:
-/* Line 1813 of yacc.c  */
-#line 289 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 318 "ptoparser/panoParser.y"
     {
         DEBUG_1("ENDOFLINE");
         currentLine = -1; /* This says we don't know the type of line being processed */
@@ -1760,8 +1753,8 @@ yyreduce:
     break;
 
   case 31:
-/* Line 1813 of yacc.c  */
-#line 304 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 333 "ptoparser/panoParser.y"
     {
         pt_script_optimize_var* varToOptimize = (pt_script_optimize_var*) panoScriptReAlloc((void**) &script.varsToOptimize,
                                                                                             sizeof(pt_script_optimize_var),
@@ -1777,8 +1770,8 @@ yyreduce:
     break;
 
   case 32:
-/* Line 1813 of yacc.c  */
-#line 317 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 346 "ptoparser/panoParser.y"
     {
         pt_script_optimize_var* varToOptimize = (pt_script_optimize_var*) panoScriptReAlloc((void**) &script.varsToOptimize,
                                                                                             sizeof(pt_script_optimize_var),
@@ -1798,16 +1791,16 @@ yyreduce:
     break;
 
   case 45:
-/* Line 1813 of yacc.c  */
-#line 354 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 383 "ptoparser/panoParser.y"
     {
         (yyval.iVal) = (yyvsp[(1) - (1)].iVal);
     }
     break;
 
   case 46:
-/* Line 1813 of yacc.c  */
-#line 358 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 387 "ptoparser/panoParser.y"
     {
         if ((yyvsp[(1) - (3)].iVal) != -1)
             (yyval.iVal) = (yyvsp[(1) - (3)].iVal);
@@ -1817,8 +1810,8 @@ yyreduce:
     break;
 
   case 47:
-/* Line 1813 of yacc.c  */
-#line 366 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 395 "ptoparser/panoParser.y"
     {
         (yyval.iVal) = -1;
         switch ((yyvsp[(1) - (2)].cVal)) {
@@ -1837,8 +1830,8 @@ yyreduce:
     break;
 
   case 48:
-/* Line 1813 of yacc.c  */
-#line 382 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 411 "ptoparser/panoParser.y"
     {
         (yyval.iVal) = -1;
         mask->points = NULL;
@@ -1847,8 +1840,8 @@ yyreduce:
     break;
 
   case 51:
-/* Line 1813 of yacc.c  */
-#line 392 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 421 "ptoparser/panoParser.y"
     {
         pt_point* maskPointPtr = (pt_point*) panoScriptReAlloc((void**) &mask->points,
                                                                sizeof(pt_point),
@@ -1864,20 +1857,27 @@ yyreduce:
     break;
 
   case 52:
-/* Line 1813 of yacc.c  */
-#line 407 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 436 "ptoparser/panoParser.y"
     {
         if (currentLine != PT_TOKEN_PANO_LINE && currentLine != PT_TOKEN_INPUT_LINE) {
             panoScriptParserError("Error: There shouldn't be any cropping parameter here!\n");
             return -1;
         }
+
+        int* cropArea = NULL;
+        if (currentLine == PT_TOKEN_PANO_LINE) {
+            cropArea = script.pano.cropArea;
+        } else {
+            cropArea = image->cropArea;
+        }
         switch ((yyvsp[(1) - (8)].cVal)) {
         case 'C':
         case 'S':
-            image->cropArea[0] = (yyvsp[(2) - (8)].iVal);
-            image->cropArea[1] = (yyvsp[(4) - (8)].iVal);
-            image->cropArea[2] = (yyvsp[(6) - (8)].iVal);
-            image->cropArea[3] = (yyvsp[(8) - (8)].iVal);
+            cropArea[0] = (yyvsp[(2) - (8)].iVal);
+            cropArea[1] = (yyvsp[(4) - (8)].iVal);
+            cropArea[2] = (yyvsp[(6) - (8)].iVal);
+            cropArea[3] = (yyvsp[(8) - (8)].iVal);
             break;
         default:
             panoScriptParserError("Invalid variable name- [%c] in image line\n", (yyvsp[(1) - (8)].cVal));
@@ -1887,8 +1887,8 @@ yyreduce:
     break;
 
   case 53:
-/* Line 1813 of yacc.c  */
-#line 428 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 464 "ptoparser/panoParser.y"
     {
         if (currentLine != PT_TOKEN_INPUT_LINE) {
             panoScriptParserError("Error: References should only be present on i lines!\n");
@@ -1968,24 +1968,6 @@ yyreduce:
             }
             break;
         }
-        case 'T':
-        {
-            if (*(keyword + 1) != 'r' || *(keyword + 3) != '\0') {
-                panoScriptParserError("Invalid variable name [%s]\n", keyword);
-                return -1;
-            }
-            switch (*(keyword + 2)) {
-            case 'X':
-            case 'Y':
-            case 'Z':
-                image->translationCoefRef[*(keyword + 2) - 'X'] = imageRef;
-                break;
-            default:
-                panoScriptParserError("Invalid variable name [%s]\n", keyword);
-                return -1;
-            }
-            break;
-        }
         default:
             panoScriptParserError("Invalid variable name [%s]\n", keyword);
             return -1;
@@ -1994,8 +1976,8 @@ yyreduce:
     break;
 
   case 54:
-/* Line 1813 of yacc.c  */
-#line 531 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 549 "ptoparser/panoParser.y"
     {
         int imageRef = (yyvsp[(3) - (3)].iVal);
 
@@ -2040,8 +2022,8 @@ yyreduce:
     break;
 
   case 55:
-/* Line 1813 of yacc.c  */
-#line 576 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 594 "ptoparser/panoParser.y"
     {
         /* For the case where the keyword is one char, followed by a string */
 
@@ -2091,8 +2073,8 @@ yyreduce:
     break;
 
   case 56:
-/* Line 1813 of yacc.c  */
-#line 623 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 641 "ptoparser/panoParser.y"
     {
         if (currentLine != PT_TOKEN_PANO_LINE) {
             panoScriptParserError("Unexpected 'P' parameter!!\n");
@@ -2103,8 +2085,8 @@ yyreduce:
     break;
 
   case 57:
-/* Line 1813 of yacc.c  */
-#line 631 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 649 "ptoparser/panoParser.y"
     {
         /* Processing of int variables with keyword of one character only */
         switch (currentLine) {
@@ -2220,7 +2202,7 @@ yyreduce:
                 script.optimize.interpolator = (yyvsp[(2) - (2)].iVal);
                 break;
             case 'f':
-                script.optimize.fastFT = (yyvsp[(2) - (2)].iVal);
+                script.optimize.fastFT = 2 - (yyvsp[(2) - (2)].iVal);
                 break;
             case 'm':
                 script.optimize.huberEstimator = (yyvsp[(2) - (2)].iVal);
@@ -2241,8 +2223,8 @@ yyreduce:
     break;
 
   case 58:
-/* Line 1813 of yacc.c  */
-#line 765 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 783 "ptoparser/panoParser.y"
     {
         /* Processing of int variables with keyword of one character only */
         switch (currentLine) {
@@ -2340,8 +2322,25 @@ yyreduce:
     break;
 
   case 59:
-/* Line 1813 of yacc.c  */
-#line 860 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 878 "ptoparser/panoParser.y"
+    {
+        if (currentLine != PT_TOKEN_INPUT_LINE) {
+            panoScriptParserError("Invalid variable name [%s]\n", (yyvsp[(1) - (2)].strVal));
+            return -1;
+        }
+        if (strcmp((yyvsp[(1) - (2)].strVal), "Vf") != 0) {
+            panoScriptParserError("Invalid variable name [%s] in image line...\n", (yyvsp[(1) - (2)].strVal));
+            return -1;
+        }
+        ParserStringCopy(&image->vignettingFlatFieldFile, (yyvsp[(2) - (2)].strVal));
+        break;
+    }
+    break;
+
+  case 60:
+/* Line 1778 of yacc.c  */
+#line 891 "ptoparser/panoParser.y"
     {
         char *keyword = (yyvsp[(1) - (2)].strVal);
 
@@ -2441,9 +2440,9 @@ yyreduce:
     }
     break;
 
-  case 60:
-/* Line 1813 of yacc.c  */
-#line 961 "ptoparser/panoParser.y"
+  case 61:
+/* Line 1778 of yacc.c  */
+#line 992 "ptoparser/panoParser.y"
     {
         switch (currentLine) {
         case PT_TOKEN_PANO_LINE:
@@ -2463,55 +2462,55 @@ yyreduce:
     }
     break;
 
-  case 61:
-/* Line 1813 of yacc.c  */
-#line 980 "ptoparser/panoParser.y"
+  case 62:
+/* Line 1778 of yacc.c  */
+#line 1011 "ptoparser/panoParser.y"
     {
-        float* param = (float*) panoScriptReAlloc((void**) &projParms,
-                                                  sizeof(float),
-                                                  &nbProjParms);
+        double* param = (double*) panoScriptReAlloc((void**) &projParms,
+                                                    sizeof(double),
+                                                    &nbProjParms);
         *param = (yyvsp[(1) - (1)].fVal);
     }
     break;
 
-  case 62:
-/* Line 1813 of yacc.c  */
-#line 987 "ptoparser/panoParser.y"
+  case 63:
+/* Line 1778 of yacc.c  */
+#line 1018 "ptoparser/panoParser.y"
     {
-        float* param = (float*) panoScriptReAlloc((void**) &projParms,
-                                                  sizeof(float),
-                                                  &nbProjParms);
+        double* param = (double*) panoScriptReAlloc((void**) &projParms,
+                                                    sizeof(double),
+                                                    &nbProjParms);
         *param = (yyvsp[(3) - (3)].fVal);
     }
     break;
 
-  case 63:
-/* Line 1813 of yacc.c  */
-#line 994 "ptoparser/panoParser.y"
-    {(yyval.fVal) = (yyvsp[(1) - (1)].fVal);}
-    break;
-
   case 64:
-/* Line 1813 of yacc.c  */
-#line 996 "ptoparser/panoParser.y"
-    {(yyval.iVal) = (yyvsp[(1) - (1)].iVal);}
+/* Line 1778 of yacc.c  */
+#line 1025 "ptoparser/panoParser.y"
+    {(yyval.fVal) = (yyvsp[(1) - (1)].fVal);}
     break;
 
   case 65:
-/* Line 1813 of yacc.c  */
-#line 998 "ptoparser/panoParser.y"
-    {(yyval.fVal) = (yyvsp[(1) - (1)].fVal);}
+/* Line 1778 of yacc.c  */
+#line 1027 "ptoparser/panoParser.y"
+    {(yyval.iVal) = (yyvsp[(1) - (1)].iVal);}
     break;
 
   case 66:
-/* Line 1813 of yacc.c  */
-#line 999 "ptoparser/panoParser.y"
+/* Line 1778 of yacc.c  */
+#line 1029 "ptoparser/panoParser.y"
+    {(yyval.fVal) = (yyvsp[(1) - (1)].fVal);}
+    break;
+
+  case 67:
+/* Line 1778 of yacc.c  */
+#line 1030 "ptoparser/panoParser.y"
     {(yyval.fVal) = (yyvsp[(1) - (1)].iVal);}
     break;
 
 
-/* Line 1813 of yacc.c  */
-#line 2515 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
+/* Line 1778 of yacc.c  */
+#line 2514 "/tmp/digikam-sc/build/extra/kipi-plugins/panorama/panoParser.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2742,7 +2741,7 @@ yyreturn:
 }
 
 
-/* Line 2076 of yacc.c  */
-#line 1002 "ptoparser/panoParser.y"
+/* Line 2041 of yacc.c  */
+#line 1033 "ptoparser/panoParser.y"
 
 

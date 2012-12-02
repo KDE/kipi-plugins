@@ -222,7 +222,7 @@ void* panoScriptReAlloc(void** ptr, int size, int* count)
 {
     void* temp;
 
-    void* new_ptr = realloc(*ptr, (*count + 1) * size);
+    void* new_ptr = realloc(*ptr, ((*count) + 1) * size);
 
     if (new_ptr == NULL)
     {

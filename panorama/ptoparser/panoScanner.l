@@ -73,7 +73,7 @@ ID       [a-zA-Z]
     /* Simple rules to read numbers */
 
 
-<INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+"."{DIGIT}* { /* float point with period */
+<INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+"."{DIGIT}*(e-?{DIGIT}+)? { /* float point with period */
     BEGIN(INITIAL);
     panoScriptScannerTokenBegin(yytext);
     yylval.fVal = strtod(yytext, NULL);
