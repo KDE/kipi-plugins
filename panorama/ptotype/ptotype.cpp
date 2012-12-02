@@ -49,9 +49,12 @@ bool PTOType::createFile(const QString& filepath)
         out << project.previousComments.join("\n") << endl;
     out << "p";
     out << " f" << project.projection;
-    out << " w" << project.size.width();
-    out << " h" << project.size.height();
-    out << " v" << project.fieldOfView;
+    if (project.size.width() > 0)
+        out << " w" << project.size.width();
+    if (project.size.height() > 0)
+        out << " h" << project.size.height();
+    if (project.fieldOfView > 0)
+        out << " v" << project.fieldOfView;
     out << " k" << project.photometricReferenceId;
     out << " E" << project.exposure;
     out << " R" << project.hdr;
@@ -145,7 +148,8 @@ bool PTOType::createFile(const QString& filepath)
         out << " w" << image.size.width();
         out << " h" << image.size.height();
         out << " f" << (int) image.lensProjection;
-        out << " v" << image.fieldOfView;
+        if (image.fieldOfView.referenceId >= 0 || image.fieldOfView.value > 0)
+            out << " v" << image.fieldOfView;
         out << " Ra" << image.photometricEMoRA;
         out << " Rb" << image.photometricEMoRB;
         out << " Rc" << image.photometricEMoRC;

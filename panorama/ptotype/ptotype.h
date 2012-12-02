@@ -51,6 +51,10 @@ struct PTOType
             CompressionMethod           compressionMethod;         // TIFF
             bool                        cropped;            // TIFF
             bool                        savePositions;      // TIFF
+
+            FileFormat()
+            : fileType(JPEG), quality(90), compressionMethod(LZW),
+              cropped(false), savePositions(false) {}
         };
 
         typedef enum {
@@ -73,6 +77,10 @@ struct PTOType
         BitDepth                    bitDepth;
         int                         photometricReferenceId;
         QStringList                 unmatchedParameters;
+
+        Project()
+        : size(0, 0), crop(0, 0, 0, 0), projection(RECTILINEAR), fieldOfView(0), exposure(0), hdr(false),
+          bitDepth(UINT8), photometricReferenceId(0) {}
     };
 
     struct Stitcher
@@ -88,7 +96,7 @@ struct PTOType
             SINC1024 = 7
         } Interpolator;
 
-        typedef enum { SLOW, MEDIUM, FAST } SpeedUp;
+        typedef enum { SLOW, MEDIUM = 1, FAST = 2 } SpeedUp;
 
         QStringList                 previousComments;
         double                      gamma;
@@ -97,6 +105,9 @@ struct PTOType
         double                      huberSigma;
         double                      photometricHuberSigma;
         QStringList                 unmatchedParameters;
+
+        Stitcher()
+        : gamma(1), interpolator(POLY3), speedUp(FAST), huberSigma(0), photometricHuberSigma(0) {}
     };
 
     struct Mask
@@ -132,7 +143,8 @@ struct PTOType
     {
         template<typename T>
         struct LensParameter {
-            LensParameter() { referenceId = -1; }
+            LensParameter() : referenceId(-1) {}
+            LensParameter(T v) : value(v), referenceId(-1) {}
 
             T           value;
             int         referenceId;
@@ -205,6 +217,17 @@ struct PTOType
         LensParameter<int>              stackNumber;
         QString                         fileName;
         QStringList                     unmatchedParameters;
+
+        Image()
+        : size(0, 0), id(0), lensProjection(RECTILINEAR), fieldOfView(0), yaw(0), pitch(0), roll(0),
+          lensBarrelCoefficientA(0), lensBarrelCoefficientB(0), lensBarrelCoefficientC(0),
+          lensCenterOffsetX(0), lensCenterOffsetY(0), lensShearX(0), lensShearY(0), exposure(0),
+          whiteBalanceRed(1), whiteBalanceBlue(1), vignettingMode(NONE),
+          vignettingCorrectionI(0), vignettingCorrectionJ(0), vignettingCorrectionK(0), vignettingCorrectionL(0),
+          vignettingOffsetX(0), vignettingOffsetY(0),
+          photometricEMoRA(0), photometricEMoRB(0), photometricEMoRC(0), photometricEMoRD(0), photometricEMoRE(0),
+          mosaicModeOffsetX(0), mosaicModeOffsetY(0), mosaicModeOffsetZ(0),
+          crop(0, 0, 0, 0), stackNumber(0) {}
     };
 
     struct ControlPoint
