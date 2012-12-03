@@ -68,6 +68,7 @@ public:
     void setButtonText(const QString& text);
     void setButtonVisible(bool b);
     void setSelectionAreaPossible(bool b);
+    QRectF getSelectionArea();
 
 Q_SIGNALS:
 

@@ -549,6 +549,11 @@ void KPPreviewImage::enableSelectionArea(bool b)
     d->enableSelection = b;
 }
 
+QRectF KPPreviewImage::getSelectionArea()
+{
+    return d->selection->rect();
+}
+
 bool KPPreviewImage::load(const QString& file) const
 {
     QImage image;

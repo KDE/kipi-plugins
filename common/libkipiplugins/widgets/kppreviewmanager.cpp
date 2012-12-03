@@ -200,6 +200,11 @@ void KPPreviewManager::setSelectionAreaPossible(bool b)
     d->preview->enableSelectionArea(b);
 }
 
+QRectF KPPreviewManager::getSelectionArea()
+{
+    return d->preview->getSelectionArea();
+}
+
 void KPPreviewManager::setText(const QString& text, const QColor& color)
 {
     d->textLabel->setText(QString("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));

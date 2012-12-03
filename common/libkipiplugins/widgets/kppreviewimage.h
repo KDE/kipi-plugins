@@ -109,6 +109,7 @@ public:
     bool load(const QString& file) const;
     bool setImage(const QImage& img) const;
     void enableSelectionArea(bool b);
+    QRectF getSelectionArea();
 
 public Q_SLOTS:
 
