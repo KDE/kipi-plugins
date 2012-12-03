@@ -24,6 +24,7 @@ Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby MediaWik
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern MediaWiki-webtjeneste
 Comment[el]=Εργαλείο εξαγωγής εικόνων σε μια απομακρυσμένη υπηρεσία ιστού MediaWiki
 Comment[et]=Tööriist piltide eksportimiseks MediaWiki veebiteenusesse
+Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís Ghréasáin MediaWiki i gcéin
 Comment[hu]=Egy eszköz képek exportálásához egy távoli MediaWiki webszolgáltatásba
 Comment[is]=Verkfæri til að senda myndir á fjarlæga MediaWiki vefþjónustu
 Comment[it]=Uno strumento per esportare immagini al servizio Web remoto MediaWiki

@@ -5,6 +5,7 @@ Name[ca]=Passi de diapositives
 Name[da]=Video-diasshow
 Name[el]=VideoSlideShow
 Name[et]=Videoslaidiseanss
+Name[ga]=VideoSlideShow
 Name[hu]=Videóbemutató
 Name[is]=Vídeóskyggnusýning
 Name[it]=Presentazione video

@@ -7,6 +7,7 @@ Name[de]=Imgur-Export
 Name[el]=Εξαγωγή Imgur
 Name[es]=Exportar a Imgur
 Name[et]=Imguri eksport
+Name[ga]=Easpórtáil Imgur
 Name[gl]=Exportación a Imgur
 Name[hu]=Imgur exportálás
 Name[is]=Imgur útflutningur

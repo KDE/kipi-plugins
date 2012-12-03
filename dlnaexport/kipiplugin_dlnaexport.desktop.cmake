@@ -26,6 +26,7 @@ Comment[cs]=Nástroj pro export kolekce do síťové služby DLNA
 Comment[da]=Et værktøj til at eksportere samling på DLNA-netværkstjenesten
 Comment[el]=Εργαλείο εξαγωγής συλλογής σε δικτυακή υπηρεσία DLNA
 Comment[et]=Tööriist kogu eksportimiseks DLNA võrguteenusesse
+Comment[ga]=Uirlis a easpórtálann bailiúchán ar seirbhís líonra DLNA
 Comment[hu]=Egy eszköz gyűjtemények exportálásához DLNA hálózati szolgáltatásba
 Comment[is]=Tól til að flytja myndasöfn yfir í DLNA netþjónustu
 Comment[it]=Uno strumento per esportare raccolte sul servizio in rete DLNA
