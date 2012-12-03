@@ -52,10 +52,7 @@ namespace KIPIPanoramaPlugin
 struct ActionThread::Private
 {
     Private()
-        : ptoUrl(0),
-          cpFindPtoUrl(0),
-          previewPtoUrl(0),
-          mkUrl(0),
+        : mkUrl(0),
           preprocessingTmpDir(0)
     {}
 
@@ -63,21 +60,6 @@ struct ActionThread::Private
     {
         cleanPreprocessingTmpDir();
 
-        if (ptoUrl)
-        {
-            delete ptoUrl;
-            ptoUrl = 0;
-        }
-        if (cpFindPtoUrl)
-        {
-            delete cpFindPtoUrl;
-            cpFindPtoUrl = 0;
-        }
-        if (previewPtoUrl)
-        {
-            delete previewPtoUrl;
-            previewPtoUrl = 0;
-        }
         if (mkUrl)
         {
             delete mkUrl;
@@ -85,9 +67,6 @@ struct ActionThread::Private
         }
     }
 
-    KUrl*                           ptoUrl;
-    KUrl*                           cpFindPtoUrl;
-    KUrl*                           previewPtoUrl;
     KUrl*                           mkUrl;
 
     KTempDir*                       preprocessingTmpDir;
@@ -114,8 +93,10 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap, KUrl& cpCleanPtoUrl,
-                                   bool celeste, bool hdr, PanoramaFileType fileType, const RawDecodingSettings& rawSettings,
+void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
+                                   KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
+                                   bool celeste, bool hdr, PanoramaFileType fileType,
+                                   const RawDecodingSettings& rawSettings,
                                    const QString& cpCleanPath, const QString& cpFindPath)
 {
     d->cleanPreprocessingTmpDir();
@@ -149,16 +130,10 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
         jobs->addJob(t);
     }
 
-    if (d->ptoUrl)
-    {
-        // Just in case (shouldn't happen)
-        deletePtoUrl();
-    }
-    d->ptoUrl          = new KUrl();
     CreatePtoTask *pto = new CreatePtoTask(d->preprocessingTmpDir->name(),
                                            fileType,
                                            hdr,
-                                           *d->ptoUrl,
+                                           baseUrl,
                                            urlList,
                                            preProcessedMap);
 
@@ -173,15 +148,9 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
     }
     jobs->addJob(pto);
 
-    if (d->cpFindPtoUrl)
-    {
-        // Just in case (shouldn't happen)
-        deleteCPFindPtoUrl();
-    }
-    d->cpFindPtoUrl       = new KUrl();
     CpFindTask *cpFind = new CpFindTask(d->preprocessingTmpDir->name(),
-                                        *d->ptoUrl,
-                                        *d->cpFindPtoUrl,
+                                        baseUrl,
+                                        cpFindPtoUrl,
                                         celeste,
                                         cpFindPath);
 
@@ -194,7 +163,7 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
     DependencyPolicy::instance().addDependency(cpFind, pto);
 
     CpCleanTask *cpClean = new CpCleanTask(d->preprocessingTmpDir->name(),
-                                           *d->cpFindPtoUrl,
+                                           cpFindPtoUrl,
                                            cpCleanPtoUrl,
                                            cpCleanPath);
 
@@ -205,11 +174,6 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
 
     jobs->addJob(cpClean);
     DependencyPolicy::instance().addDependency(cpClean, cpFind);
-
-    connect(jobs, SIGNAL(done(ThreadWeaver::Job*)),
-            this, SLOT(deletePtoUrl()));
-    connect(jobs, SIGNAL(done(ThreadWeaver::Job*)),
-            this, SLOT(deleteCPFindPtoUrl()));
 
     appendJob(jobs);
 }
@@ -236,21 +200,16 @@ void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool leve
     appendJob(jobs);
 }
 
-void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewUrl,
+void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewUrl,
                                            const ItemUrlsMap& preProcessedUrlsMap,
                                            const QString& makePath, const QString& pto2mkPath,
                                            const QString& enblendPath, const QString& nonaPath)
 {
     JobCollection   *jobs                                   = new JobCollection();
 
-    if (d->previewPtoUrl)
-    {
-        deletePreviewPtoUrl();
-    }
-    d->previewPtoUrl = new KUrl();
     CreatePreviewTask *ptoTask = new CreatePreviewTask(d->preprocessingTmpDir->name(),
                                                        ptoUrl,
-                                                       *d->previewPtoUrl,
+                                                       previewPtoUrl,
                                                        preProcessedUrlsMap);
 
     connect(ptoTask, SIGNAL(started(ThreadWeaver::Job*)),
@@ -262,7 +221,7 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewUrl,
 
     appendStitchingJobs(ptoTask,
                         jobs,
-                        *d->previewPtoUrl,
+                        previewPtoUrl,
                         previewUrl,
                         preProcessedUrlsMap,
                         JPEG,
@@ -271,9 +230,6 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewUrl,
                         enblendPath,
                         nonaPath,
                         true);
-
-    connect(jobs, SIGNAL(done(ThreadWeaver::Job*)),
-            this, SLOT(deletePreviewPtoUrl()));
 
     appendJob(jobs);
 }
@@ -396,24 +352,6 @@ void ActionThread::slotDone(Job* j)
     emit finished(ad);
 
     ((QObject*) t)->deleteLater();
-}
-
-void ActionThread::deletePtoUrl()
-{
-    delete d->ptoUrl;
-    d->ptoUrl = 0;
-}
-
-void ActionThread::deleteCPFindPtoUrl()
-{
-    delete d->cpFindPtoUrl;
-    d->cpFindPtoUrl = 0;
-}
-
-void ActionThread::deletePreviewPtoUrl()
-{
-    delete d->previewPtoUrl;
-    d->previewPtoUrl = 0;
 }
 
 void ActionThread::deleteMkUrl()

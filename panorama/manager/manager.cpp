@@ -43,6 +43,7 @@
 #include "makebinary.h"
 #include "nonabinary.h"
 #include "pto2mkbinary.h"
+#include <ptofile.h>
 
 namespace KIPIPanoramaPlugin
 {
@@ -50,7 +51,12 @@ namespace KIPIPanoramaPlugin
 struct Manager::ManagerPriv
 {
     ManagerPriv()
-    : iface(0),
+    : basePtoData(0),
+      cpFindPtoData(0),
+      cpCleanPtoData(0),
+      autoOptimisePtoData(0),
+      previewPtoData(0),
+      iface(0),
       thread(0),
       wizard(0),
       config("kipirc"),
@@ -65,11 +71,31 @@ struct Manager::ManagerPriv
     {
         group.writeEntry("HDR", hdr);
         config.sync();
+        if (basePtoData != 0)
+            delete basePtoData;
+        if (cpFindPtoData != 0)
+            delete cpFindPtoData;
+        if (cpCleanPtoData != 0)
+            delete cpCleanPtoData;
+        if (autoOptimisePtoData != 0)
+            delete autoOptimisePtoData;
+        if (previewPtoData != 0)
+            delete previewPtoData;
     }
 
     KUrl::List                     inputUrls;
-    KUrl                           cpFindUrl;
-    KUrl                           autoOptimiseUrl;
+
+    KUrl                           basePtoUrl;
+    PTOType*                       basePtoData;
+    KUrl                           cpFindPtoUrl;
+    PTOType*                       cpFindPtoData;
+    KUrl                           cpCleanPtoUrl;
+    PTOType*                       cpCleanPtoData;
+    KUrl                           autoOptimisePtoUrl;
+    PTOType*                       autoOptimisePtoData;
+    KUrl                           previewPtoUrl;
+    PTOType*                       previewPtoData;
+
     KUrl                           previewUrl;
     KUrl                           panoUrl;
 
@@ -186,19 +212,157 @@ Pto2MkBinary& Manager::pto2MkBinary() const
     return d->pto2MkBinary;
 }
 
-void Manager::setPreviewUrl(const KUrl& url)
+KUrl& Manager::basePtoUrl() const
 {
-    d->previewUrl = url;
+    return d->basePtoUrl;
+}
+
+const PTOType& Manager::basePtoData()
+{
+    if (d->basePtoData == 0)
+    {
+        PTOFile file;
+        file.openFile(d->basePtoUrl.toLocalFile());
+        d->basePtoData = file.getPTO();
+
+        if (d->basePtoData == 0)
+            d->basePtoData = new PTOType();
+    }
+
+    return *(d->basePtoData);
+}
+
+void Manager::resetBasePto()
+{
+    if (d->basePtoData != 0)
+    {
+        delete d->basePtoData;
+        d->basePtoData = 0;
+    }
+    d->basePtoUrl = KUrl();
+}
+
+KUrl& Manager::cpFindPtoUrl() const
+{
+    return d->cpFindPtoUrl;
+}
+
+const PTOType& Manager::cpFindPtoData()
+{
+    if (d->cpFindPtoData == 0)
+    {
+        PTOFile file;
+        file.openFile(d->cpFindPtoUrl.toLocalFile());
+        d->cpFindPtoData = file.getPTO();
+
+        if (d->cpFindPtoData == 0)
+            d->cpFindPtoData = new PTOType();
+    }
+
+    return *(d->cpFindPtoData);
+}
+
+void Manager::resetCpFindPto()
+{
+    if (d->cpFindPtoData != 0)
+    {
+        delete d->cpFindPtoData;
+        d->cpFindPtoData = 0;
+    }
+    d->cpFindPtoUrl = KUrl();
+}
+
+KUrl& Manager::cpCleanPtoUrl() const
+{
+    return d->cpCleanPtoUrl;
+}
+
+const PTOType& Manager::cpCleanPtoData()
+{
+    if (d->cpCleanPtoData == 0)
+    {
+        PTOFile file;
+        file.openFile(d->cpCleanPtoUrl.toLocalFile());
+        d->cpCleanPtoData = file.getPTO();
+
+        if (d->cpCleanPtoData == 0)
+            d->cpCleanPtoData = new PTOType();
+    }
+
+    return *(d->cpCleanPtoData);
+}
+
+void Manager::resetCpCleanPto()
+{
+    if (d->cpCleanPtoData != 0)
+    {
+        delete d->cpCleanPtoData;
+        d->cpCleanPtoData = 0;
+    }
+    d->cpCleanPtoUrl = KUrl();
+}
+
+KUrl& Manager::autoOptimisePtoUrl() const
+{
+    return d->autoOptimisePtoUrl;
+}
+
+const PTOType& Manager::autoOptimisePtoData()
+{
+    if (d->autoOptimisePtoData == 0)
+    {
+        PTOFile file;
+        file.openFile(d->autoOptimisePtoUrl.toLocalFile());
+        d->autoOptimisePtoData = file.getPTO();
+
+        if (d->autoOptimisePtoData == 0)
+            d->autoOptimisePtoData = new PTOType();
+    }
+
+    return *(d->autoOptimisePtoData);
+}
+
+void Manager::resetAutoOptimisePto()
+{
+    if (d->autoOptimisePtoData != 0) {
+        delete d->autoOptimisePtoData;
+        d->autoOptimisePtoData = 0;
+    }
+    d->autoOptimisePtoUrl = KUrl();
+}
+
+KUrl& Manager::previewPtoUrl() const
+{
+    return d->previewPtoUrl;
+}
+
+const PTOType& Manager::previewPtoData()
+{
+    if (d->previewPtoData == 0)
+    {
+        PTOFile file;
+        file.openFile(d->previewUrl.toLocalFile());
+        d->previewPtoData = file.getPTO();
+
+        if (d->previewPtoData == 0)
+            d->previewPtoData = new PTOType();
+    }
+
+    return *(d->previewPtoData);
+}
+
+void Manager::resetPreviewPto()
+{
+    if (d->previewPtoData != 0) {
+        delete d->previewPtoData;
+        d->previewPtoData = 0;
+    }
+    d->previewPtoUrl = KUrl();
 }
 
 KUrl& Manager::previewUrl() const
 {
     return d->previewUrl;
-}
-
-void Manager::setPanoUrl(const KUrl& url)
-{
-    d->panoUrl = url;
 }
 
 KUrl& Manager::panoUrl() const
@@ -224,26 +388,6 @@ void Manager::setItemsList(const KUrl::List& urls)
 KUrl::List& Manager::itemsList() const
 {
     return d->inputUrls;
-}
-
-void Manager::setCPFindUrl(const KUrl& url)
-{
-    d->cpFindUrl = url;
-}
-
-KUrl& Manager::cpFindUrl() const
-{
-    return d->cpFindUrl;
-}
-
-void Manager::setAutoOptimiseUrl(const KUrl& url)
-{
-    d->autoOptimiseUrl = url;
-}
-
-KUrl& Manager::autoOptimiseUrl() const
-{
-    return d->autoOptimiseUrl;
 }
 
 void Manager::setRawDecodingSettings(const RawDecodingSettings& settings)

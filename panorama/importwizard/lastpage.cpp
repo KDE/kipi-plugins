@@ -153,7 +153,7 @@ void LastPage::copyFiles()
 
     KUrl panoUrl(d->mngr->preProcessedMap().begin().key());
     panoUrl.setFileName(panoFileName(d->fileTemplateKLineEdit->text()));
-    d->mngr->thread()->copyFiles(d->mngr->autoOptimiseUrl(),
+    d->mngr->thread()->copyFiles(d->mngr->autoOptimisePtoUrl(),
                                  d->mngr->panoUrl(),
                                  panoUrl.toLocalFile(),
                                  d->mngr->preProcessedMap(),

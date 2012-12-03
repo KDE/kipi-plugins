@@ -61,12 +61,13 @@ public:
     explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap, KUrl& cpCleanPtoUrl,
+    void preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
+                         KUrl& baseUrl, KUrl& cpFindUrl, KUrl& cpCleanPtoUrl,
                          bool celeste, bool hdr, PanoramaFileType fileType, const RawDecodingSettings& settings,
                          const QString& cpCleanPath, const QString& cpFindPath);
     void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool levelHorizon,
                          bool optimizeProjectionAndSize, const QString& autooptimiserPath);
-    void generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewUrl,
+    void generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
                                  const QString& enblendPath, const QString& nonaPath);
@@ -83,6 +84,8 @@ Q_SIGNALS:
     void stepFinished(const KIPIPanoramaPlugin::ActionData& ad);
     void finished(const KIPIPanoramaPlugin::ActionData& ad);
 
+    void cpFindPtoReady(const KUrl& cpFindPtoUrl);
+    void cpCleanPtoReady(const KUrl& cpCleanPtoUrl);
     void optimizePtoReady(const KUrl& optimizePtoUrl);
     void previewFileReady(const KUrl& previewFileUrl);
     void panoFileReady(const KUrl& panoFileUrl);
@@ -93,9 +96,6 @@ private Q_SLOTS:
     void slotStepDone(ThreadWeaver::Job* j);
     void slotStarting(ThreadWeaver::Job* j);
 
-    void deletePtoUrl();
-    void deleteCPFindPtoUrl();
-    void deletePreviewPtoUrl();
     void deleteMkUrl();
 
 private:

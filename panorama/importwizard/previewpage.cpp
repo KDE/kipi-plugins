@@ -141,6 +141,7 @@ bool PreviewPage::cancel()
 
     if (d->previewBusy)
     {
+        d->mngr->resetPreviewPto();
         d->previewBusy = false;
         d->previewWidget->setBusy(false);
         d->previewWidget->setText(i18n("Preview Processing Cancelled."));
@@ -173,7 +174,8 @@ void PreviewPage::computePreview()
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
     d->previewBusy = true;
 
-    d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimiseUrl(),
+    d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimisePtoUrl(),
+                                               d->mngr->previewPtoUrl(),
                                                d->mngr->previewUrl(),
                                                d->mngr->preProcessedMap(),
                                                d->mngr->makeBinary().path(),
@@ -208,7 +210,7 @@ void PreviewPage::startStitching()
     d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("layer-visible-on").pixmap(22, 22));
     d->postProcessing->show();
 
-    d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
+    d->mngr->thread()->compileProject(d->mngr->autoOptimisePtoUrl(),
                                       d->mngr->panoUrl(),
                                       d->mngr->preProcessedMap(),
                                       d->mngr->format(),

@@ -41,6 +41,7 @@
 
 #include "actions.h"
 #include "actionthread.h"
+#include "ptotype/ptotype.h"
 
 namespace KIPI
 {
@@ -87,10 +88,24 @@ public:
     void setItemsList(const KUrl::List& urls);
     KUrl::List& itemsList() const;
 
-    KUrl& cpFindUrl() const;
-    KUrl& autoOptimiseUrl() const;
-    KUrl& previewUrl() const;
-    KUrl& panoUrl() const;
+    KUrl&           basePtoUrl() const;
+    const PTOType&  basePtoData();
+    void            resetBasePto();
+    KUrl&           cpFindPtoUrl() const;
+    const PTOType&  cpFindPtoData();
+    void            resetCpFindPto();
+    KUrl&           cpCleanPtoUrl() const;
+    const PTOType&  cpCleanPtoData();
+    void            resetCpCleanPto();
+    KUrl&           autoOptimisePtoUrl() const;
+    const PTOType&  autoOptimisePtoData();
+    void            resetAutoOptimisePto();
+    KUrl&           previewPtoUrl() const;
+    const PTOType&  previewPtoData();
+    void            resetPreviewPto();
+
+    KUrl&           previewUrl() const;
+    KUrl&           panoUrl() const;
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings& rawDecodingSettings() const;
@@ -110,10 +125,6 @@ public:
 
 private Q_SLOTS:
 
-    void setCPFindUrl(const KUrl& url);
-    void setAutoOptimiseUrl(const KUrl& url);
-    void setPreviewUrl(const KUrl& url);
-    void setPanoUrl(const KUrl& url);
     void setPreProcessedMap(const ItemUrlsMap& urls);
 
 private:
