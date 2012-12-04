@@ -187,6 +187,7 @@ realline: inputline eoln
                                                              &prevNbVars);
         *curVarComments = commentLines;
     }
+    | optimizeVarslineEmpty eoln /* Prev comments go to the next line entry */
     | ctrlPtsLine eoln
     {
         int prevNbCP = script.iCtrlPointsCount - 1;
@@ -203,7 +204,7 @@ realline: inputline eoln
     }
     | maskPtsLine eoln
     {
-        int prevNbMasks = script.iCtrlPointsCount - 1;
+        int prevNbMasks = script.iMasksCount - 1;
         int* curMaskCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iMasks_prevCommentsCount),
                                                            sizeof(int),
                                                            &prevNbMasks);
@@ -268,8 +269,9 @@ optimizeOptsline: PT_TOKEN_OPTIMIZE_OPT_LINE PT_TOKEN_SEP
 optimizeVarsline: PT_TOKEN_OPTIMIZE_VARS_LINE PT_TOKEN_SEP
     {
         currentLine = PT_TOKEN_OPTIMIZE_VARS_LINE;
-    } varsOpt 
-    | PT_TOKEN_OPTIMIZE_VARS_LINE
+    } varsOpt
+
+optimizeVarslineEmpty: PT_TOKEN_OPTIMIZE_VARS_LINE
 
 ctrlPtsLine: PT_TOKEN_CONTROL_PT_LINE  PT_TOKEN_SEP
     {

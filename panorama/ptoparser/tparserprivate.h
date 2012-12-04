@@ -39,7 +39,7 @@ int  panoScriptScannerGetNextChar(char* b, int maxBuffer);
 void panoScriptScannerTokenBegin(char* t);
 void panoScriptParserError(char const* errorstring, ...);
 void yyerror(char const* st);
-void* panoScriptReAlloc(void** ptr, int size, int* count);
+void* panoScriptReAlloc(void** ptr, size_t size, int* count);
 
 
 #endif

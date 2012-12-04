@@ -218,7 +218,7 @@ void yyerror(char const* st)
  *  ptr has value 20
  *  *ptr is 1000
  */
-void* panoScriptReAlloc(void** ptr, int size, int* count)
+void* panoScriptReAlloc(void** ptr, size_t size, int* count)
 {
     void* temp;
 
