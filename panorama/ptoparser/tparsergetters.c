@@ -605,7 +605,7 @@ int panoScriptGetPanoOutputCropped(pt_script* script)
 
 int panoScriptGetPanoOutputQuality(pt_script* script)
 {
-    assert(script != NULL && panoScriptGetPanoOutputFormat(script) > 1 && panoScriptGetPanoOutputFormat(script) < 4);
+    assert(script != NULL && panoScriptGetPanoOutputFormat(script) == 4);
     char* str = script->pano.outputFormat;
     while (str != NULL) {
         str = strchr(str, ' ');

@@ -341,7 +341,7 @@ const PTOType& Manager::previewPtoData()
     if (d->previewPtoData == 0)
     {
         PTOFile file;
-        file.openFile(d->previewUrl.toLocalFile());
+        file.openFile(d->previewPtoUrl.toLocalFile());
         d->previewPtoData = file.getPTO();
 
         if (d->previewPtoData == 0)

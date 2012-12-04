@@ -177,8 +177,8 @@ void panoScriptFree(pt_script* ptr)
         }
         FREE(ptr->varsToOptimize_prevComments[i]);
     }
-    free(ptr->iVarsToOptimize_prevCommentsCount);
-    free(ptr->varsToOptimize_prevComments);
+    FREE(ptr->iVarsToOptimize_prevCommentsCount);
+    FREE(ptr->varsToOptimize_prevComments);
 
     for (i = 0; i < ptr->iCtrlPointsCount; i++) {
         int j;
@@ -187,8 +187,8 @@ void panoScriptFree(pt_script* ptr)
         }
         FREE(ptr->ctrlPoints_prevComments[i]);
     }
-    free(ptr->iCtrlPoints_prevCommentsCount);
-    free(ptr->ctrlPoints_prevComments);
+    FREE(ptr->iCtrlPoints_prevCommentsCount);
+    FREE(ptr->ctrlPoints_prevComments);
 
     for (i = 0; i < ptr->iMasksCount; i++) {
         int j;
@@ -197,8 +197,8 @@ void panoScriptFree(pt_script* ptr)
         }
         FREE(ptr->masks_prevComments[i]);
     }
-    free(ptr->iMasks_prevCommentsCount);
-    free(ptr->masks_prevComments);
+    FREE(ptr->iMasks_prevCommentsCount);
+    FREE(ptr->masks_prevComments);
 
     for (i = 0; i < ptr->iEndingCommentsCount; i++) {
         free(ptr->endingComments[i]);

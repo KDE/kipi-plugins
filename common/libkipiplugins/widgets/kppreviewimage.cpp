@@ -90,21 +90,22 @@ struct KPSelectionItem::KPSelectionItemPriv
 KPSelectionItem::KPSelectionItem(const QRectF& rect)
     : QGraphicsItem(), d(new KPSelectionItemPriv)
 {
+    d->invZoom   = 1;
+    d->selMargin = selMargin;
+    d->showAnchors = true;
+
     d->hasMaxX = false;
     d->hasMaxY = false;
     d->hasMax  = false;
     setRect(rect);
 
+    // FIXME We should probably use some standard KDE color here and not hard code it
     d->penDark.setColor(Qt::black);
     d->penDark.setStyle(Qt::SolidLine);
     d->penLight.setColor(Qt::white);
     d->penLight.setStyle(Qt::DashLine);
     d->penAnchors.setColor(Qt::white);
     d->penAnchors.setStyle(Qt::SolidLine);
-
-    // FIXME We should probably use some standard KDE color here and not hard code it
-    d->invZoom   = 1;
-    d->selMargin = selMargin;
 }
 
 KPSelectionItem::~KPSelectionItem()

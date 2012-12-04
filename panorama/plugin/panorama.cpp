@@ -78,5 +78,7 @@ int main(int argc, char* argv[])
     app.exec();
     KPMetadata::cleanupExiv2();
 
+    delete aboutData;
+
     return 0;
 }

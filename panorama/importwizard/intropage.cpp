@@ -182,6 +182,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
 IntroPage::~IntroPage()
 {
+    delete d;
 }
 
 bool IntroPage::binariesFound()

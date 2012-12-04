@@ -66,6 +66,7 @@ PTOFile::~PTOFile()
         panoScriptFree(d->script);
         delete d->script;
     }
+    delete d;
 }
 
 bool PTOFile::openFile(const QString& path)
