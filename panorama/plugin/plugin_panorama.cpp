@@ -71,6 +71,10 @@ Plugin_Panorama::Plugin_Panorama(QObject* const parent, const QVariantList&)
 
 Plugin_Panorama::~Plugin_Panorama()
 {
+    if (m_action != 0)
+        delete m_action;
+    if (m_manager != 0)
+        delete m_manager;
 }
 
 void Plugin_Panorama::setup(QWidget* const widget)
