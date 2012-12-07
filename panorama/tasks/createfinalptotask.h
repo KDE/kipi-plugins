@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-03-15
+ * Date        : 2012-12-05
  * Description : a plugin to create panorama by fusion of several images.
  *
  * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
@@ -20,19 +20,44 @@
  *
  * ============================================================ */
 
-#ifndef TASKS_H
-#define TASKS_H
+#ifndef CREATEPFINALTOTASK_H
+#define CREATEPFINALTOTASK_H
 
-#include "preprocesstask.h"
-#include "createptotask.h"
-#include "cpfindtask.h"
-#include "cpcleantask.h"
-#include "optimisationtask.h"
-#include "createpreviewtask.h"
-#include "createfinalptotask.h"
-#include "createmktask.h"
-#include "compilemksteptask.h"
-#include "compilemktask.h"
-#include "copyfilestask.h"
+// KDE includes
 
-#endif /* TASKS_H */
+#include <threadweaver/Job.h>
+
+// Local includes
+
+#include "task.h"
+#include "ptotype/ptotype.h"
+
+using namespace KDcrawIface;
+
+namespace KIPIPanoramaPlugin
+{
+
+class CreateFinalPtoTask : public Task
+{
+
+private:
+
+    PTOType                 ptoData;
+    KUrl* const             finalPtoUrl;
+    const QRect             crop;
+
+public:
+
+    CreateFinalPtoTask(QObject* parent, const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop);
+    CreateFinalPtoTask(const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop);
+    ~CreateFinalPtoTask();
+
+protected:
+
+    void run();
+
+};
+
+}  // namespace KIPIPanoramaPlugin
+
+#endif /* CREATEPFINALTOTASK_H */

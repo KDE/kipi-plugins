@@ -24,6 +24,10 @@
 
 #include "manager.moc"
 
+// Qt includes
+
+#include <QFile>
+
 // KDE includes
 
 #include <kdebug.h>
@@ -56,6 +60,7 @@ struct Manager::ManagerPriv
       cpCleanPtoData(0),
       autoOptimisePtoData(0),
       previewPtoData(0),
+      panoPtoData(0),
       iface(0),
       thread(0),
       wizard(0),
@@ -81,6 +86,8 @@ struct Manager::ManagerPriv
             delete autoOptimisePtoData;
         if (previewPtoData != 0)
             delete previewPtoData;
+        if (panoPtoData != 0)
+            delete panoPtoData;
     }
 
     KUrl::List                     inputUrls;
@@ -95,8 +102,12 @@ struct Manager::ManagerPriv
     PTOType*                       autoOptimisePtoData;
     KUrl                           previewPtoUrl;
     PTOType*                       previewPtoData;
+    KUrl                           panoPtoUrl;
+    PTOType*                       panoPtoData;
 
+    KUrl                           previewMkUrl;
     KUrl                           previewUrl;
+    KUrl                           mkUrl;
     KUrl                           panoUrl;
 
     bool                           hdr;
@@ -239,6 +250,8 @@ void Manager::resetBasePto()
         delete d->basePtoData;
         d->basePtoData = 0;
     }
+    QFile pto(d->basePtoUrl.toLocalFile());
+    pto.remove();
     d->basePtoUrl = KUrl();
 }
 
@@ -269,6 +282,8 @@ void Manager::resetCpFindPto()
         delete d->cpFindPtoData;
         d->cpFindPtoData = 0;
     }
+    QFile pto(d->cpFindPtoUrl.toLocalFile());
+    pto.remove();
     d->cpFindPtoUrl = KUrl();
 }
 
@@ -299,6 +314,8 @@ void Manager::resetCpCleanPto()
         delete d->cpCleanPtoData;
         d->cpCleanPtoData = 0;
     }
+    QFile pto(d->cpCleanPtoUrl.toLocalFile());
+    pto.remove();
     d->cpCleanPtoUrl = KUrl();
 }
 
@@ -328,6 +345,8 @@ void Manager::resetAutoOptimisePto()
         delete d->autoOptimisePtoData;
         d->autoOptimisePtoData = 0;
     }
+    QFile pto(d->autoOptimisePtoUrl.toLocalFile());
+    pto.remove();
     d->autoOptimisePtoUrl = KUrl();
 }
 
@@ -357,7 +376,52 @@ void Manager::resetPreviewPto()
         delete d->previewPtoData;
         d->previewPtoData = 0;
     }
+    QFile pto(d->previewPtoUrl.toLocalFile());
+    pto.remove();
     d->previewPtoUrl = KUrl();
+}
+
+KUrl& Manager::panoPtoUrl() const
+{
+    return d->panoPtoUrl;
+}
+
+const PTOType& Manager::panoPtoData()
+{
+    if (d->panoPtoData == 0)
+    {
+        PTOFile file;
+        file.openFile(d->panoPtoUrl.toLocalFile());
+        d->panoPtoData = file.getPTO();
+
+        if (d->panoPtoData == 0)
+            d->panoPtoData = new PTOType();
+    }
+
+    return *(d->panoPtoData);
+}
+
+void Manager::resetPanoPto()
+{
+    if (d->panoPtoData != 0) {
+        delete d->panoPtoData;
+        d->panoPtoData = 0;
+    }
+    QFile pto(d->panoPtoUrl.toLocalFile());
+    pto.remove();
+    d->panoPtoUrl = KUrl();
+}
+
+KUrl& Manager::previewMkUrl() const
+{
+    return d->previewMkUrl;
+}
+
+void Manager::resetPreviewMkUrl()
+{
+    QFile pto(d->previewMkUrl.toLocalFile());
+    pto.remove();
+    d->previewMkUrl = KUrl();
 }
 
 KUrl& Manager::previewUrl() const
@@ -365,9 +429,35 @@ KUrl& Manager::previewUrl() const
     return d->previewUrl;
 }
 
+void Manager::resetPreviewUrl()
+{
+    QFile pto(d->previewUrl.toLocalFile());
+    pto.remove();
+    d->previewUrl = KUrl();
+}
+
+KUrl& Manager::mkUrl() const
+{
+    return d->mkUrl;
+}
+
+void Manager::resetMkUrl()
+{
+    QFile pto(d->mkUrl.toLocalFile());
+    pto.remove();
+    d->mkUrl = KUrl();
+}
+
 KUrl& Manager::panoUrl() const
 {
     return d->panoUrl;
+}
+
+void Manager::resetPanoUrl()
+{
+    QFile pto(d->panoUrl.toLocalFile());
+    pto.remove();
+    d->panoUrl = KUrl();
 }
 
 void Manager::setIface(Interface* const iface)

@@ -187,6 +187,9 @@ void PreProcessingPage::process()
 
 //     d->nbFilesProcessed = 0;
 
+    d->mngr->resetBasePto();
+    d->mngr->resetCpFindPto();
+    d->mngr->resetCpCleanPto();
     d->mngr->thread()->preProcessFiles(d->mngr->itemsList(),
                                        d->mngr->preProcessedMap(),
                                        d->mngr->basePtoUrl(),
@@ -212,9 +215,6 @@ bool PreProcessingPage::cancel()
     d->mngr->thread()->cancel();
 
     QMutexLocker lock(&d->progressMutex);
-    d->mngr->resetBasePto();
-    d->mngr->resetCpFindPto();
-    d->mngr->resetCpCleanPto();
     if (d->progressTimer->isActive())
     {
         d->progressTimer->stop();

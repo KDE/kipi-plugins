@@ -71,12 +71,11 @@ bool PTOType::createFile(const QString& filepath)
     }
     if (project.crop.height() > 1 && project.crop.width() > 1)
     {
-        out << " C";
-        out << "\"" << project.crop.left();
-        out <<  " " << project.crop.right();
-        out <<  " " << project.crop.top();
-        out <<  " " << project.crop.bottom();
-        out << '"';
+        out << " S";
+        out << project.crop.left();
+        out <<  "," << project.crop.right();
+        out <<  "," << project.crop.top();
+        out <<  "," << project.crop.bottom();
     }
     out << " n\"";
     switch (project.fileFormat.fileType)

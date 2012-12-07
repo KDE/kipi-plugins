@@ -186,6 +186,7 @@ void OptimizePage::process()
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
+    d->mngr->resetAutoOptimisePto();
     d->mngr->thread()->optimizeProject(d->mngr->cpCleanPtoUrl(),
                                        d->mngr->autoOptimisePtoUrl(),
                                        d->horizonCheckbox->isChecked(),
@@ -204,7 +205,6 @@ bool OptimizePage::cancel()
     d->mngr->thread()->cancel();
 
     QMutexLocker lock(&d->progressMutex);
-    d->mngr->resetAutoOptimisePto();
     if (d->progressTimer->isActive())
     {
         d->progressTimer->stop();

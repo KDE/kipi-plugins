@@ -52,22 +52,13 @@ namespace KIPIPanoramaPlugin
 struct ActionThread::Private
 {
     Private()
-        : mkUrl(0),
-          preprocessingTmpDir(0)
+         : preprocessingTmpDir(0)
     {}
 
     ~Private()
     {
         cleanPreprocessingTmpDir();
-
-        if (mkUrl)
-        {
-            delete mkUrl;
-            mkUrl = 0;
-        }
     }
-
-    KUrl*                           mkUrl;
 
     KTempDir*                       preprocessingTmpDir;
 
@@ -200,7 +191,7 @@ void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool leve
     appendJob(jobs);
 }
 
-void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewUrl,
+void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                            const ItemUrlsMap& preProcessedUrlsMap,
                                            const QString& makePath, const QString& pto2mkPath,
                                            const QString& enblendPath, const QString& nonaPath)
@@ -222,6 +213,7 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoU
     appendStitchingJobs(ptoTask,
                         jobs,
                         previewPtoUrl,
+                        previewMkUrl,
                         previewUrl,
                         preProcessedUrlsMap,
                         JPEG,
@@ -234,15 +226,30 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoU
     appendJob(jobs);
 }
 
-void ActionThread::compileProject(const KUrl& ptoUrl, KUrl& panoUrl,
+void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, KUrl& mkUrl, KUrl& panoUrl,
                                   const ItemUrlsMap& preProcessedUrlsMap,
-                                  PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                                  PanoramaFileType fileType, const QRect& crop,
+                                  const QString& makePath, const QString& pto2mkPath,
                                   const QString& enblendPath, const QString& nonaPath)
 {
     JobCollection *jobs = new JobCollection();
-    appendStitchingJobs(0,
+
+    CreateFinalPtoTask *ptoTask = new CreateFinalPtoTask(d->preprocessingTmpDir->name(),
+                                                         basePtoData,
+                                                         panoPtoUrl,
+                                                         crop);
+
+    connect(ptoTask, SIGNAL(started(ThreadWeaver::Job*)),
+            this, SLOT(slotStarting(ThreadWeaver::Job*)));
+    connect(ptoTask, SIGNAL(done(ThreadWeaver::Job*)),
+            this, SLOT(slotStepDone(ThreadWeaver::Job*)));
+
+    jobs->addJob(ptoTask);
+
+    appendStitchingJobs(ptoTask,
                         jobs,
-                        ptoUrl,
+                        panoPtoUrl,
+                        mkUrl,
                         panoUrl,
                         preProcessedUrlsMap,
                         fileType,
@@ -354,26 +361,15 @@ void ActionThread::slotDone(Job* j)
     ((QObject*) t)->deleteLater();
 }
 
-void ActionThread::deleteMkUrl()
-{
-    delete d->mkUrl;
-    d->mkUrl = 0;
-}
-
-void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KUrl& ptoUrl,
+void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KUrl& ptoUrl, KUrl& mkUrl,
                                        KUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                                       PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                                       PanoramaFileType fileType,
+                                       const QString& makePath, const QString& pto2mkPath,
                                        const QString& enblendPath, const QString& nonaPath, bool preview)
 {
-    if (d->mkUrl)
-    {
-        // Just in case (shouldn't happen)
-        deleteMkUrl();
-    }
-    d->mkUrl = new KUrl();
     CreateMKTask *createMKTask = new CreateMKTask(d->preprocessingTmpDir->name(),
                                                   ptoUrl,
-                                                  *d->mkUrl,
+                                                  mkUrl,
                                                   outputUrl,
                                                   fileType,
                                                   pto2mkPath,
@@ -397,7 +393,7 @@ void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KU
     {
         CompileMKStepTask *t = new CompileMKStepTask(d->preprocessingTmpDir->name(),
                                                      i,
-                                                     *d->mkUrl,
+                                                     mkUrl,
                                                      makePath,
                                                      preview);
 
@@ -413,7 +409,7 @@ void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KU
     }
 
     CompileMKTask *compileMKTask = new CompileMKTask(d->preprocessingTmpDir->name(),
-                                                     *d->mkUrl,
+                                                     mkUrl,
                                                      outputUrl,
                                                      makePath,
                                                      preview);

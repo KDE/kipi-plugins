@@ -103,9 +103,18 @@ public:
     KUrl&           previewPtoUrl() const;
     const PTOType&  previewPtoData();
     void            resetPreviewPto();
+    KUrl&           panoPtoUrl() const;
+    const PTOType&  panoPtoData();
+    void            resetPanoPto();
 
+    KUrl&           previewMkUrl() const;
+    void            resetPreviewMkUrl();
     KUrl&           previewUrl() const;
+    void            resetPreviewUrl();
+    KUrl&           mkUrl() const;
+    void            resetMkUrl();
     KUrl&           panoUrl() const;
+    void            resetPanoUrl();
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings& rawDecodingSettings() const;

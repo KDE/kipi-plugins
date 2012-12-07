@@ -141,7 +141,6 @@ bool PreviewPage::cancel()
 
     if (d->previewBusy)
     {
-        d->mngr->resetPreviewPto();
         d->previewBusy = false;
         d->previewWidget->setBusy(false);
         d->previewWidget->setText(i18n("Preview Processing Cancelled."));
@@ -174,8 +173,12 @@ void PreviewPage::computePreview()
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
     d->previewBusy = true;
 
+    d->mngr->resetPreviewPto();
+    d->mngr->resetPreviewUrl();
+    d->mngr->resetPreviewMkUrl();
     d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimisePtoUrl(),
                                                d->mngr->previewPtoUrl(),
+                                               d->mngr->previewMkUrl(),
                                                d->mngr->previewUrl(),
                                                d->mngr->preProcessedMap(),
                                                d->mngr->makeBinary().path(),
@@ -201,6 +204,22 @@ void PreviewPage::startStitching()
     d->curProgress   = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
+
+    QSize previewSize = d->mngr->previewPtoData().project.size;
+    QSize panoSize = d->mngr->autoOptimisePtoData().project.size;
+    QRectF selection = d->previewWidget->getSelectionArea();
+    QRectF proportionSelection(selection.x() / previewSize.width(),
+                               selection.y() / previewSize.height(),
+                               selection.width() / previewSize.width(),
+                               selection.height() / previewSize.height());
+
+    // At this point, if no selection area was created, proportionSelection is null,
+    // hence panoSelection becomes a null rectangle
+    QRect panoSelection(proportionSelection.x() * panoSize.width(),
+                        proportionSelection.y() * panoSize.height(),
+                        proportionSelection.width() * panoSize.width(),
+                        proportionSelection.height() * panoSize.height());
+
     d->title->setText(i18n("<qt>"
                            "<p><h1>Panorama Post-Processing</h1></p>"
                            "</qt>"));
@@ -210,10 +229,16 @@ void PreviewPage::startStitching()
     d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("layer-visible-on").pixmap(22, 22));
     d->postProcessing->show();
 
-    d->mngr->thread()->compileProject(d->mngr->autoOptimisePtoUrl(),
+    d->mngr->resetPanoPto();
+    d->mngr->resetMkUrl();
+    d->mngr->resetPanoUrl();
+    d->mngr->thread()->compileProject(d->mngr->autoOptimisePtoData(),
+                                      d->mngr->panoPtoUrl(),
+                                      d->mngr->mkUrl(),
                                       d->mngr->panoUrl(),
                                       d->mngr->preProcessedMap(),
                                       d->mngr->format(),
+                                      panoSelection,
                                       d->mngr->makeBinary().path(),
                                       d->mngr->pto2MkBinary().path(),
                                       d->mngr->enblendBinary().path(),
@@ -332,7 +357,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewBusy = false;
 
                     d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
-                    //     d->previewWidget->setSelectionAreaPossible(true);
+                    d->previewWidget->setSelectionAreaPossible(true);
                     kDebug() << "Preview URL: " << d->mngr->previewUrl();
 
                     emit signalPreviewStitchingFinished(true);

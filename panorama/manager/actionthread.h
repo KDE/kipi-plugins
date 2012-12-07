@@ -44,6 +44,7 @@
 // Local includes
 
 #include "actions.h"
+#include "ptotype/ptotype.h"
 
 using namespace KDcrawIface;
 
@@ -67,13 +68,14 @@ public:
                          const QString& cpCleanPath, const QString& cpFindPath);
     void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool levelHorizon,
                          bool optimizeProjectionAndSize, const QString& autooptimiserPath);
-    void generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewUrl,
+    void generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
                                  const QString& enblendPath, const QString& nonaPath);
-    void compileProject(const KUrl& ptoUrl, KUrl& panoUrl,
+    void compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, KUrl& mkUrl, KUrl& panoUrl,
                         const ItemUrlsMap& preProcessedUrlsMap,
-                        PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                        PanoramaFileType fileType, const QRect& crop,
+                        const QString& makePath, const QString& pto2mkPath,
                         const QString& enblendPath, const QString& nonaPath);
     void copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
                    const ItemUrlsMap& preProcessedUrlsMap, bool savePTO);
@@ -96,13 +98,12 @@ private Q_SLOTS:
     void slotStepDone(ThreadWeaver::Job* j);
     void slotStarting(ThreadWeaver::Job* j);
 
-    void deleteMkUrl();
-
 private:
 
-    void appendStitchingJobs(Job* prevJob, JobCollection* jc, const KUrl& ptoUrl,
+    void appendStitchingJobs(Job* prevJob, JobCollection* jc, const KUrl& ptoUrl, KUrl& mkUrl,
                              KUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                             PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                             PanoramaFileType fileType,
+                             const QString& makePath, const QString& pto2mkPath,
                              const QString& enblendPath, const QString& nonaPath, bool preview);
 
 private:
