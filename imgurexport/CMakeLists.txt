@@ -1,5 +1,7 @@
 SUBDIRS(icons)
 
+INCLUDE_DIRECTORIES(${QJSON_INCLUDE_DIR})
+
 SET(kipiplugin_imgurexport_PART_SRCS
     plugin_imgurexport.cpp
     imgurtalker.cpp

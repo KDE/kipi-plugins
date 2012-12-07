@@ -1,5 +1,7 @@
 subdirs(icons)
 
+INCLUDE_DIRECTORIES(${QJSON_INCLUDE_DIR})
+
 SET(kipiplugin_debianscreenshots_PART_SRCS
     plugin_debianscreenshots.cpp
     dswindow.cpp

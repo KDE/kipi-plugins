@@ -1,5 +1,7 @@
 SUBDIRS(icons)
 
+INCLUDE_DIRECTORIES(${QJSON_INCLUDE_DIR})
+
 SET(kipiplugin_facebook_PART_SRCS
     plugin_facebook.cpp
     fbwindow.cpp
