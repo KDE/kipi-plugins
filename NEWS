@@ -28,5 +28,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> 308465 - Cannot change file modification timestamp with files having non ASCII characters
 018 ==> 308834 - Display "Date and time" with seconds in geolocation.
 019 ==> 309997 - kipi-plugins-3.0.0beta3 installs several static libraries.
-020 ==> 
-
+020 ==> 311310 - kipi-plugins don't build against libkdcraw 2.0.1.
+021 ==> 
