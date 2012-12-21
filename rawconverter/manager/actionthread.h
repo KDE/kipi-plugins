@@ -63,8 +63,8 @@ public:
     ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void setRawDecodingSettings(const RawDecodingSettings& rawDecodingSettings,
-                                KPSaveSettingsWidget::OutputFormat outputFormat);
+    void setSettings(const RawDecodingSettings& rawDecodingSettings,
+                     KPSaveSettingsWidget::OutputFormat outputFormat);
 
     void identifyRawFile(const KUrl& url, bool full=false);
     void identifyRawFiles(const KUrl::List& urlList, bool full=false);
@@ -85,12 +85,13 @@ Q_SIGNALS:
     void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
     void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
 
-public:
-
-    class Private;
+    /** Signal to emit to sub-tasks to cancel processing.
+     */
+    void signalCancelTask();
 
 private:
 
+    class Private;
     Private* const d;
 };
 
@@ -102,13 +103,20 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::Private* const dp);
+    Task(QObject* const parent, const KUrl& url, const Action& action);
     ~Task();
+
+    void setSettings(const RawDecodingSettings& rawDecodingSettings,
+                     KPSaveSettingsWidget::OutputFormat outputFormat);
 
 Q_SIGNALS:
 
     void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
     void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
+
+public Q_SLOTS:
+
+    void slotCancel();
 
 protected:
 

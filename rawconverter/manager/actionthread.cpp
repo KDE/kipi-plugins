@@ -24,13 +24,6 @@
 
 #include "actionthread.moc"
 
-// Qt includes
-
-#include <QMutex>
-#include <QMutexLocker>
-#include <QWaitCondition>
-#include <QtDebug>
-
 // KDE includes
 
 #include <klocale.h>
@@ -63,6 +56,21 @@ public:
 
     Private()
     {
+    }
+
+    KPSaveSettingsWidget::OutputFormat outputFormat;
+
+    RawDecodingSettings                rawDecodingSettings;
+};
+
+//------------------------------------------------------------
+
+class Task::Private
+{
+public:
+
+    Private()
+    {
         cancel                 = false;
         iface                  = 0;
         PluginLoader* const pl = PluginLoader::instance();
@@ -74,51 +82,47 @@ public:
 
     bool                               cancel;
 
-    QMutex                             mutex;
+    KUrl                               url;
+    Action                             action;
 
     RawDecodingIface                   dcrawIface;
+
+    Interface*                         iface;
 
     KPSaveSettingsWidget::OutputFormat outputFormat;
 
     RawDecodingSettings                rawDecodingSettings;
-
-    Interface*                         iface;
 };
 
-//------------------------------------------------------------
-
-class Task::Private
-{
-public:
-
-    Private()
-    {
-        dp = 0;
-    }
-
-    KUrl                   url;
-    Action                 action;
-
-    ActionThread::Private* dp;
-};
-
-Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
-           ActionThread::Private* const dp)
+Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action)
     : Job(parent), d(new Private)
 {
     d->url    = fileUrl;
     d->action = action;
-    d->dp     = dp;
 }
 
 Task::~Task()
 {
+    slotCancel();
     delete d;
+}
+
+void Task::setSettings(const RawDecodingSettings& rawDecodingSettings,
+                       KPSaveSettingsWidget::OutputFormat outputFormat)
+{
+    d->rawDecodingSettings = rawDecodingSettings;
+    d->outputFormat        = outputFormat;
+}
+
+void Task::slotCancel()
+{
+    d->cancel = true;
+    d->dcrawIface.cancel();
 }
 
 void Task::run()
 {
-    if (d->dp->cancel)
+    if (d->cancel)
     {
         return;
     }
@@ -131,11 +135,12 @@ void Task::run()
             // Identify Camera model.
             DcrawInfoContainer info;
             {
-                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
-                d->dp->dcrawIface.rawFileIdentify(info, d->url.toLocalFile());
+                KPFileReadLocker(d->iface, d->url.toLocalFile());
+                d->dcrawIface.rawFileIdentify(info, d->url.toLocalFile());
             }
 
             QString identify = i18n("Cannot identify RAW image");
+
             if (info.isDecodable)
             {
                 if (d->action == IDENTIFY)
@@ -190,8 +195,8 @@ void Task::run()
             // Get embedded RAW file thumbnail.
             QImage image;
             {
-                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
-                d->dp->dcrawIface.loadRawPreview(image, d->url.toLocalFile());
+                KPFileReadLocker(d->iface, d->url.toLocalFile());
+                d->dcrawIface.loadRawPreview(image, d->url.toLocalFile());
             }
 
             ActionData ad;
@@ -214,9 +219,9 @@ void Task::run()
             QString destPath;
             bool result = false;
             {
-                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
-                result = d->dp->dcrawIface.decodeHalfRAWImage(d->url.toLocalFile(), destPath,
-                                                              d->dp->outputFormat, d->dp->rawDecodingSettings);
+                KPFileReadLocker(d->iface, d->url.toLocalFile());
+                result = d->dcrawIface.decodeHalfRAWImage(d->url.toLocalFile(), destPath,
+                                                          d->outputFormat, d->rawDecodingSettings);
             }
 
             ActionData ad2;
@@ -240,9 +245,9 @@ void Task::run()
             bool result = false;
 
             {
-                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
-                result = d->dp->dcrawIface.decodeRAWImage(d->url.toLocalFile(), destPath,
-                                                          d->dp->outputFormat, d->dp->rawDecodingSettings);
+                KPFileReadLocker(d->iface, d->url.toLocalFile());
+                result = d->dcrawIface.decodeRAWImage(d->url.toLocalFile(), destPath,
+                                                      d->outputFormat, d->rawDecodingSettings);
             }
 
             ActionData ad2;
@@ -279,8 +284,8 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setRawDecodingSettings(const RawDecodingSettings& rawDecodingSettings,
-                                          KPSaveSettingsWidget::OutputFormat outputFormat)
+void ActionThread::setSettings(const RawDecodingSettings& rawDecodingSettings,
+                               KPSaveSettingsWidget::OutputFormat outputFormat)
 {
     d->rawDecodingSettings = rawDecodingSettings;
     d->outputFormat        = outputFormat;
@@ -316,17 +321,21 @@ void ActionThread::thumbRawFile(const KUrl& url)
 
 void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* t = new Task(this, *it, full ? IDENTIFY_FULL : IDENTIFY, d);
+        Task* const t = new Task(this, *it, full ? IDENTIFY_FULL : IDENTIFY);
+        t->setSettings(d->rawDecodingSettings, d->outputFormat);
 
         connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
 
         connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        connect(this, SIGNAL(signalCancelTask()),
+                t, SLOT(slotCancel()), Qt::QueuedConnection);
 
         collection->addJob(t);
     }
@@ -336,17 +345,21 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
 
 void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* t = new Task(this, *it, THUMBNAIL, d);
+        Task* const t = new Task(this, *it, THUMBNAIL);
+        t->setSettings(d->rawDecodingSettings, d->outputFormat);
 
         connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
 
         connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        connect(this, SIGNAL(signalCancelTask()),
+                t, SLOT(slotCancel()), Qt::QueuedConnection);
 
         collection->addJob(t);
     }
@@ -356,17 +369,21 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* t = new Task(this, *it, PROCESS, d);
+        Task* const t = new Task(this, *it, PROCESS);
+        t->setSettings(d->rawDecodingSettings, d->outputFormat);
 
         connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
 
         connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        connect(this, SIGNAL(signalCancelTask()),
+                t, SLOT(slotCancel()), Qt::QueuedConnection);
 
         collection->addJob(t);
     }
@@ -376,17 +393,21 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
 
 void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* t = new Task(this, *it, PREVIEW, d);
+        Task* const t = new Task(this, *it, PREVIEW);
+        t->setSettings(d->rawDecodingSettings, d->outputFormat);
 
         connect(t, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalStarting(KIPIRawConverterPlugin::ActionData)));
 
         connect(t, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)),
                 this, SIGNAL(signalFinished(KIPIRawConverterPlugin::ActionData)));
+
+        connect(this, SIGNAL(signalCancelTask()),
+                t, SLOT(slotCancel()), Qt::QueuedConnection);
 
         collection->addJob(t);
     }
@@ -396,8 +417,9 @@ void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
 
 void ActionThread::cancel()
 {
-    d->dcrawIface.cancel();
-    d->cancel = true;
+    if (isRunning())
+        emit signalCancelTask();
+
     RActionThreadBase::cancel();
 }
 

@@ -343,7 +343,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->progressScheduled(i18n("RAW Converter"), true, true);
         d->progressBar->progressThumbnailChanged(KIcon("rawconverter").pixmap(22));
 
-        d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
+        d->thread->setSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
         processAll();
     }
     else

@@ -308,7 +308,7 @@ void SingleDialog::saveSettings()
 // 'Preview' dialog button.
 void SingleDialog::slotUser1()
 {
-    d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), KPSaveSettingsWidget::OUTPUT_PNG);
+    d->thread->setSettings(d->decodingSettingsBox->settings(), KPSaveSettingsWidget::OUTPUT_PNG);
     d->thread->processHalfRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
@@ -317,7 +317,7 @@ void SingleDialog::slotUser1()
 // 'Convert' dialog button.
 void SingleDialog::slotUser2()
 {
-    d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
+    d->thread->setSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
     d->thread->processRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
