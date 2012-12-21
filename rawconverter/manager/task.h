@@ -22,68 +22,54 @@
  *
  * ============================================================ */
 
-#ifndef ACTIONTHREAD_H
-#define ACTIONTHREAD_H
-
-// Qt includes
-
-#include <QThread>
+#ifndef TASK_H
+#define TASK_H
 
 // KDE includes
 
 #include <kurl.h>
+#include <threadweaver/Job.h>
 
 // LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
-#include <libkdcraw/ractionthreadbase.h>
 
 // Local includes
 
 #include "kpsavesettingswidget.h"
 #include "actions.h"
 
-using namespace KDcrawIface;
 using namespace ThreadWeaver;
 using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIRawConverterPlugin
 {
 
-class ActionThread : public RActionThreadBase
+class Task : public Job
 {
     Q_OBJECT
 
 public:
 
-    ActionThread(QObject* const parent);
-    ~ActionThread();
+    Task(QObject* const parent, const KUrl& url, const Action& action);
+    ~Task();
 
     void setSettings(const RawDecodingSettings& rawDecodingSettings,
                      KPSaveSettingsWidget::OutputFormat outputFormat);
-
-    void identifyRawFile(const KUrl& url, bool full=false);
-    void identifyRawFiles(const KUrl::List& urlList, bool full=false);
-
-    void thumbRawFile(const KUrl& url);
-    void thumbRawFiles(const KUrl::List& urlList);
-
-    void processHalfRawFile(const KUrl& url);
-    void processHalfRawFiles(const KUrl::List& urlList);
-
-    void processRawFile(const KUrl& url);
-    void processRawFiles(const KUrl::List& urlList);
-
-    void cancel();
 
 Q_SIGNALS:
 
     void signalStarting(const KIPIRawConverterPlugin::ActionData& ad);
     void signalFinished(const KIPIRawConverterPlugin::ActionData& ad);
 
-    /** Signal to emit to sub-tasks to cancel processing.
-     */
-    void signalCancelTask();
+public Q_SLOTS:
+
+    void slotCancel();
+
+protected:
+
+    void run();
 
 private:
 
@@ -93,4 +79,4 @@ private:
 
 }  // namespace KIPIRawConverterPlugin
 
-#endif /* ACTIONTHREAD_H */
+#endif /* TASK_H */

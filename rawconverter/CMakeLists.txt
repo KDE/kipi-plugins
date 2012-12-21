@@ -11,6 +11,7 @@ INCLUDE_DIRECTORIES(
 SET(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
                                       manager/rawdecodingiface.cpp
                                       manager/actionthread.cpp
+                                      manager/task.cpp
                                       dialogs/batchdialog.cpp
                                       dialogs/singledialog.cpp
                                       dialogs/myimagelist.cpp
