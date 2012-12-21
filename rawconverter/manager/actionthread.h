@@ -63,7 +63,7 @@ public:
     ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings, 
+    void setRawDecodingSettings(const RawDecodingSettings& rawDecodingSettings,
                                 KPSaveSettingsWidget::OutputFormat outputFormat);
 
     void identifyRawFile(const KUrl& url, bool full=false);

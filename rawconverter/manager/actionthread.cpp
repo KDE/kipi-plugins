@@ -262,7 +262,7 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setRawDecodingSettings(RawDecodingSettings rawDecodingSettings,
+void ActionThread::setRawDecodingSettings(const RawDecodingSettings& rawDecodingSettings,
                                           KPSaveSettingsWidget::OutputFormat outputFormat)
 {
     d->rawDecodingSettings = rawDecodingSettings;
