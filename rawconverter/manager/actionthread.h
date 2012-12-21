@@ -102,7 +102,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::Private* const d);
+    Task(QObject* const parent, const KUrl& url, const Action& action, ActionThread::Private* const dp);
     ~Task();
 
 Q_SIGNALS:
@@ -116,10 +116,8 @@ protected:
 
 private:
 
-    KUrl                   m_url;
-    Action                 m_action;
-
-    ActionThread::Private* m_d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIRawConverterPlugin

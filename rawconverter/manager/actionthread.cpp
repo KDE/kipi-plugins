@@ -63,9 +63,9 @@ public:
 
     Private()
     {
-        cancel           = false;
-        iface            = 0;
-        PluginLoader* pl = PluginLoader::instance();
+        cancel                 = false;
+        iface                  = 0;
+        PluginLoader* const pl = PluginLoader::instance();
         if (pl)
         {
             iface = pl->interface();
@@ -85,28 +85,45 @@ public:
     Interface*                         iface;
 };
 
-//------------------------------------------------------
+//------------------------------------------------------------
+
+class Task::Private
+{
+public:
+
+    Private()
+    {
+        dp = 0;
+    }
+
+    KUrl                   url;
+    Action                 action;
+
+    ActionThread::Private* dp;
+};
 
 Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action,
-           ActionThread::Private* const d): Job(parent)
+           ActionThread::Private* const dp)
+    : Job(parent), d(new Private)
 {
-    m_url    = fileUrl;
-    m_action = action;
-    m_d      = d;
+    d->url    = fileUrl;
+    d->action = action;
+    d->dp     = dp;
 }
 
 Task::~Task()
 {
+    delete d;
 }
 
 void Task::run()
 {
-    if (m_d->cancel)
+    if (d->dp->cancel)
     {
         return;
     }
 
-    switch (m_action)
+    switch (d->action)
     {
         case IDENTIFY:
         case IDENTIFY_FULL:
@@ -114,14 +131,14 @@ void Task::run()
             // Identify Camera model.
             DcrawInfoContainer info;
             {
-                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
-                m_d->dcrawIface.rawFileIdentify(info, m_url.toLocalFile());
+                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
+                d->dp->dcrawIface.rawFileIdentify(info, d->url.toLocalFile());
             }
 
             QString identify = i18n("Cannot identify RAW image");
             if (info.isDecodable)
             {
-                if (m_action == IDENTIFY)
+                if (d->action == IDENTIFY)
                 {
                     identify = info.make + QString("-") + info.model;
                 }
@@ -160,8 +177,8 @@ void Task::run()
             }
 
             ActionData ad;
-            ad.action  = m_action;
-            ad.fileUrl = m_url;
+            ad.action  = d->action;
+            ad.fileUrl = d->url;
             ad.message = identify;
             ad.success = true;
             emit signalFinished(ad);
@@ -173,13 +190,13 @@ void Task::run()
             // Get embedded RAW file thumbnail.
             QImage image;
             {
-                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
-                m_d->dcrawIface.loadRawPreview(image, m_url.toLocalFile());
+                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
+                d->dp->dcrawIface.loadRawPreview(image, d->url.toLocalFile());
             }
 
             ActionData ad;
-            ad.action  = m_action;
-            ad.fileUrl = m_url;
+            ad.action  = d->action;
+            ad.fileUrl = d->url;
             ad.image   = image;
             ad.success = true;
             emit signalFinished(ad);
@@ -190,21 +207,21 @@ void Task::run()
         {
             ActionData ad1;
             ad1.action   = PREVIEW;
-            ad1.fileUrl  = m_url;
+            ad1.fileUrl  = d->url;
             ad1.starting = true;
             emit signalStarting(ad1);
 
             QString destPath;
             bool result = false;
             {
-                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
-                result = m_d->dcrawIface.decodeHalfRAWImage(m_url.toLocalFile(), destPath,
-                                                            m_d->outputFormat, m_d->rawDecodingSettings);
+                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
+                result = d->dp->dcrawIface.decodeHalfRAWImage(d->url.toLocalFile(), destPath,
+                                                              d->dp->outputFormat, d->dp->rawDecodingSettings);
             }
 
             ActionData ad2;
             ad2.action   = PREVIEW;
-            ad2.fileUrl  = m_url;
+            ad2.fileUrl  = d->url;
             ad2.destPath = destPath;
             ad2.success  = result;
             emit signalFinished(ad2);
@@ -215,7 +232,7 @@ void Task::run()
         {
             ActionData ad1;
             ad1.action   = PROCESS;
-            ad1.fileUrl  = m_url;
+            ad1.fileUrl  = d->url;
             ad1.starting = true;
             emit signalStarting(ad1);
 
@@ -223,14 +240,14 @@ void Task::run()
             bool result = false;
 
             {
-                KPFileReadLocker(m_d->iface, m_url.toLocalFile());
-                result = m_d->dcrawIface.decodeRAWImage(m_url.toLocalFile(), destPath,
-                                                        m_d->outputFormat, m_d->rawDecodingSettings);
+                KPFileReadLocker(d->dp->iface, d->url.toLocalFile());
+                result = d->dp->dcrawIface.decodeRAWImage(d->url.toLocalFile(), destPath,
+                                                          d->dp->outputFormat, d->dp->rawDecodingSettings);
             }
 
             ActionData ad2;
             ad2.action   = PROCESS;
-            ad2.fileUrl  = m_url;
+            ad2.fileUrl  = d->url;
             ad2.destPath = destPath;
             ad2.success  = result;
             emit signalFinished(ad2);
