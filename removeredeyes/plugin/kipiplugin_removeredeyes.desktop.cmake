@@ -2,7 +2,6 @@
 Name=Remove Red Eyes
 Name[ast]=Desanicia los güeyos bermeyos
 Name[bg]=Премахване на червени очи
-Name[bs]=Ukloni crvene oči
 Name[ca]=Eliminació d'ulls vermells
 Name[ca@valencia]=Eliminació d'ulls vermells
 Name[cs]=Odstranění červených očí
@@ -45,7 +44,6 @@ Name[zh_TW]=移除紅眼
 Comment=A tool to remove red eyes automatically from images
 Comment[ast]=Un ferramienta pa desaniciar los güeyos bermeyos automáticamente de les semeyes
 Comment[bg]=Инструмент за автоматично премахване на червени очи от изображенията
-Comment[bs]=Alat za automatsko uklanjanje crvenih očiju sa slika
 Comment[ca]=Una eina per a eliminar automàticament els ulls vermells de les imatges
 Comment[ca@valencia]=Una eina per a eliminar automàticament els ulls vermells de les imatges
 Comment[cs]=Nástroj pro automatické odstranění červených očí

@@ -2,7 +2,6 @@
 Name=Calendar
 Name[ast]=Calendariu
 Name[bg]=Календар
-Name[bs]=Kalendar
 Name[ca]=Calendar
 Name[ca@valencia]=Calendar
 Name[cs]=Kalendář
@@ -51,7 +50,6 @@ Name[zh_TW]=月曆
 Comment=A tool to create calendars
 Comment[ast]=Una ferramienta pa criar calendarios
 Comment[bg]=Инструмент за създаване на календари
-Comment[bs]=Alat za kreiranje kalendara
 Comment[ca]=Una eina per a crear calendaris
 Comment[ca@valencia]=Una eina per a crear calendaris
 Comment[cs]=Nástroj pro vytváření kalendářů

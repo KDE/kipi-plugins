@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=Expo Blending
 Name[bg]=Сливане на експозиция
-Name[bs]=ExpoBlending
 Name[ca]=Fusió d'exposició
 Name[ca@valencia]=Barreja d'exposició
 Name[cs]=Smísení expozice
@@ -32,7 +31,6 @@ Name[zh_CN]=曝光混合
 Name[zh_TW]=曝光混合
 Comment=A tool to blend bracketed images
 Comment[bg]=Инструмент за сливане на снимани "в клин" снимки
-Comment[bs]=Alat za miješanje kockastih slika
 Comment[ca]=Una eina per fusionar imatges fetes amb bràqueting
 Comment[ca@valencia]=Una eina per barrejar imatges fetes amb bràqueting
 Comment[cs]=Nástroj pro mísení sekvence obrázků

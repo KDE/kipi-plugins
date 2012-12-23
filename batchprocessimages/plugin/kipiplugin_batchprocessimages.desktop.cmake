@@ -2,7 +2,6 @@
 Name=BatchProcessImages
 Name[ast]=BatchProcessImages
 Name[bg]=Пакетна обработка на изображения
-Name[bs]=BatchProcessImages
 Name[ca]=BatchProcessImages
 Name[ca@valencia]=BatchProcessImages
 Name[cs]=Dávkové zpracování obrázků
@@ -44,7 +43,6 @@ Name[zh_TW]=批次處理影像
 Comment=KIPI Batch Processing Images Plugin
 Comment[ast]=Complementu KIPI de procesamientu d'imáxenes por llotes
 Comment[bg]=Приставка за KIPI за пакетна обработка
-Comment[bs]=KIPI dodatak za skupnu obradu slika
 Comment[ca]=Connector KIPI per a processar imatges per lots
 Comment[ca@valencia]=Connector KIPI per a processar imatges per lots
 Comment[cs]=KIPI modul pro dávkové zpracování obrázků

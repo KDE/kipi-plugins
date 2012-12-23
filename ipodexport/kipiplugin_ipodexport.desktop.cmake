@@ -2,7 +2,6 @@
 Name=iPodExport
 Name[ast]=iPodExport
 Name[bg]=Изнасяне към iPod
-Name[bs]=iPod Izvoz
 Name[ca]=iPodExport
 Name[ca@valencia]=iPodExport
 Name[cs]=iPodExport
@@ -46,7 +45,6 @@ Name[zh_TW]=iPod 匯出
 Comment=A tool to export pictures to an Ipod device
 Comment[ast]=Una ferramienta pa esportar imáxenes a un preséu Ipod
 Comment[bg]=Инструмент за изнасяне на снимки към устройство ipod
-Comment[bs]=Alat za izvoz slika na Ipod uređaj
 Comment[ca]=Una eina per exportar fotografies a un dispositiu Ipod
 Comment[ca@valencia]=Una eina per exportar fotografies a un dispositiu Ipod
 Comment[cs]=Nástroj pro export obrázků na iPod

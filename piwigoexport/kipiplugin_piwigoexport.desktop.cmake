@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=Remote Piwigo Export
 Name[bg]=Изнасяне към Piwigo
-Name[bs]=Udaljeni Piwigo Izvoz
 Name[ca]=Exportador a Piwigo remot
 Name[ca@valencia]=Remote Piwigo Export
 Name[cs]=Export na vzdálené Piwigo
@@ -35,7 +34,6 @@ Name[zh_CN]=远程 Piwigo 导出
 Name[zh_TW]=遠端 Piwigo 匯出
 Comment=A tool to export images to a remote Piwigo
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Piwigo
-Comment[bs]=Alat za izvoz slika na udaljeni Piwigo
 Comment[ca]=Una eina per exportar imatges al servei remot Piwigo
 Comment[ca@valencia]=Una eina per exportar imatges al servei remot Piwigo
 Comment[cs]=;Nástroj pro export obrázků na vzdálené Piwigo

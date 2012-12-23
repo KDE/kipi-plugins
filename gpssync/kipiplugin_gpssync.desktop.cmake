@@ -2,7 +2,6 @@
 Comment=A tool to geolocalize pictures
 Comment[ast]=Una ferramienta pa llocalizar xeográficamente imáxenes
 Comment[bg]=Инструмент за геолокация на снимки
-Comment[bs]=Alat za geolokalizaciju slika
 Comment[ca]=Una eina per a geolocalitzar fotografies
 Comment[ca@valencia]=Una eina per a geolocalitzar fotografies
 Comment[cs]=Nástroj pro geolokaci obrázků
@@ -47,7 +46,6 @@ Icon=applications-internet
 Name=GPSSync
 Name[ast]=GPSSync
 Name[bg]=Синхронизиране по GPS
-Name[bs]=GPSSync
 Name[ca]=GPSSync
 Name[ca@valencia]=GPSSync
 Name[cs]=GPSSync

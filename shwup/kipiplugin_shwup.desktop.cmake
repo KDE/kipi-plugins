@@ -2,7 +2,6 @@
 Name=Shwup Export
 Name[ast]=Shwup Export
 Name[bg]=Изнасяне към Shwup
-Name[bs]=Shwup Izvoz
 Name[ca]=Exportador a Shwup
 Name[ca@valencia]=Exportació a Shwup
 Name[cs]=Export Shwup
@@ -40,7 +39,6 @@ Name[zh_TW]=Shwup 匯出
 Comment=A tool to export images to a remote Shwup web service
 Comment[ast]=Una ferramienta pa esportar imáxenes a un serviciu web remotu Shwup
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Shwup
-Comment[bs]=Alat za izvoz slika na udaljeni Shwup web servis
 Comment[ca]=Una eina per exportar imatges al servei web remot Shwup
 Comment[ca@valencia]=Una eina per exportar imatges al servei web remot Shwup
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Shwup

@@ -2,7 +2,6 @@
 Name=Print images
 Name[ast]=Imprentar imáxenes
 Name[bg]=Отпечатване на изображения
-Name[bs]=Štampaj slike
 Name[ca]=Impressió d'imatges
 Name[ca@valencia]=Impressió d'imatges
 Name[cs]=Vytisknout obrázky
@@ -47,7 +46,6 @@ Name[zh_TW]=列印影像
 Comment=A tool to print images in various formats
 Comment[ast]=Una ferramienta pa imprentar imáxenes en dellos formatos
 Comment[bg]=Инструмент за отпечатване на изображения в различни формати
-Comment[bs]=Alat za štampanje slika u različitim formatima
 Comment[ca]=Una eina per a imprimir imatges en diversos formats
 Comment[ca@valencia]=Una eina per a imprimir imatges en diversos formats
 Comment[cs]=Nástroj pro tisk obrázků v různých formátech

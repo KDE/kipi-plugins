@@ -2,7 +2,6 @@
 Name=SendImages
 Name[ast]=SendImages
 Name[bg]=Изпращане на изображения
-Name[bs]=Pošalji slike
 Name[ca]=SendImages
 Name[ca@valencia]=SendImages
 Name[cs]=Odeslání obrázků
@@ -48,7 +47,6 @@ Name[zh_TW]=郵寄影像
 Comment=A tool to send images by e-mail
 Comment[ast]=Una ferramienta pa unviar imáxenes per corréu electrónicu
 Comment[bg]=Инструмент за изпращане на изображения по е-поща
-Comment[bs]=Alat za slanje slika putem e-pošte
 Comment[ca]=Una eina per a enviar imatges per correu electrònic
 Comment[ca@valencia]=Una eina per a enviar imatges per correu electrònic
 Comment[cs]=Nástroj pro odeslání obrázků e-mailem

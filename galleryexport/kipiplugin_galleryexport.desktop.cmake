@@ -2,7 +2,6 @@
 Name=Remote Gallery Export
 Name[ast]=Exportador de galería remota
 Name[bg]=Изнасяне към Gallery
-Name[bs]=Izvoz u udaljenu galeriju
 Name[ca]=Exportador a Gallery remot
 Name[ca@valencia]=Remote Gallery Export
 Name[cs]=Export do vzdálené galerie
@@ -47,7 +46,6 @@ Name[zh_TW]=遠端 Gallery 匯出
 Comment=A tool to export images to a remote Gallery
 Comment[ast]=Una ferramienta pa esportar imáxenes a una galería remota
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Gallery
-Comment[bs]=Alat za izvoz slika u udaljenu galeriju
 Comment[ca]=Una eina per exportar imatges a una galeria remota
 Comment[ca@valencia]=Una eina per exportar imatges a una galeria remota
 Comment[cs]=Nástroj pro export obrázků do vzdálené galerie

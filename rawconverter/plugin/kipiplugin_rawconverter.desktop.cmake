@@ -2,7 +2,6 @@
 Name=RawConverter
 Name[ast]=RawConverter
 Name[bg]=Конвертор за RAW
-Name[bs]=Raw Konvertor
 Name[ca]=RawConverter
 Name[ca@valencia]=RawConverter
 Name[cs]=RawConverter
@@ -48,7 +47,6 @@ Name[zh_TW]=Raw 轉換程式
 Comment=A tool to convert Raw Image to JPEG/PNG/TIFF
 Comment[ast]=Una ferramienta pa convertir imáxenes RAW en JPEG/PNG/TIFF
 Comment[bg]=Инструмент за конвертиране (проявяване) на изображения от RAW към JPEG/PNG/TIFF
-Comment[bs]=Alat za konvertovanje Raw slika u JPEG/PNG/TIFF
 Comment[ca]=Una eina per a convertir imatges RAW a JPEG/PNG/TIFF
 Comment[ca@valencia]=Una eina per a convertir imatges RAW a JPEG/PNG/TIFF
 Comment[cs]=Nástroj pro převod RAW obrázků do JPEG/PNG/TIFF
