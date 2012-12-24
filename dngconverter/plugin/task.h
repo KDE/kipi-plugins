@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2008-09-24
+ * Date        : 2012-12-24
  * Description : a class to manage plugin actions using threads
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef ACTIONTHREAD_H
-#define ACTIONTHREAD_H
+#ifndef TASK_H
+#define TASK_H
 
 // KDE includes
 
@@ -44,45 +43,39 @@ using namespace KDcrawIface;
 namespace KIPIDNGConverterPlugin
 {
 
-class ActionData;
-
-class ActionThread : public RActionThreadBase
+class Task : public Job
 {
     Q_OBJECT
 
 public:
 
-    ActionThread(QObject* const parent);
-    ~ActionThread();
+    Task(QObject* const parent, const KUrl& url, const Action& action);
+    ~Task();
 
     void setBackupOriginalRawFile(bool b);
     void setCompressLossLess(bool b);
     void setUpdateFileDate(bool b);
     void setPreviewMode(int mode);
-
-    void identifyRawFile(const KUrl& url);
-    void identifyRawFiles(const KUrl::List& urlList);
-
-    void processRawFile(const KUrl& url);
-    void processRawFiles(const KUrl::List& urlList);
-
-    void cancel();
-
+    
 Q_SIGNALS:
 
     void signalStarting(const KIPIDNGConverterPlugin::ActionData& ad);
     void signalFinished(const KIPIDNGConverterPlugin::ActionData& ad);
-    
-    /** Signal to emit to sub-tasks to cancel processing.
-     */
-    void signalCancelTask();
 
+public Q_SLOTS:
+
+    void slotCancel();
+    
+protected:
+
+    void run();
 
 private:
 
     class Private;
     Private* const d;
 };
+
 }  // namespace KIPIDNGConverterPlugin
 
-#endif /* ACTIONTHREAD_H */
+#endif /* TASK_H */

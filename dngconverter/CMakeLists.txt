@@ -229,6 +229,7 @@ SET(libdngwriter_SRCS
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/plugin )
 
 SET(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
+                             ${CMAKE_CURRENT_SOURCE_DIR}/plugin/task.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/batchdialog.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/settingswidget.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/myimagelist.cpp
