@@ -2,6 +2,7 @@
 Name=Picasaweb Exporter
 Name[ast]=Esportador Picasaweb
 Name[bg]=Изнасяне към Picasaweb
+Name[bs]=Picasaweb izvoznik
 Name[ca]=Exportador a Picasaweb
 Name[ca@valencia]=Picasaweb Exporter
 Name[cs]=Picasaweb Exportér
@@ -45,6 +46,7 @@ Name[zh_TW]=Picasaweb 匯出程式
 Comment=A tool to export images to a remote Picasa web service
 Comment[ast]=Una ferramienta pa esportar imáxenes a un serviciu web remotu Picasa
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Picasa
+Comment[bs]=Alat za izvoz slika na udaljeni Picasa web servis
 Comment[ca]=Una eina per exportar imatges al servei web remot Picasa
 Comment[ca@valencia]=Una eina per exportar imatges al servei web remot Picasa
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Picasa

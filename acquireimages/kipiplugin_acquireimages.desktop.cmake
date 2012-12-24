@@ -2,6 +2,7 @@
 Name=AcquireImages
 Name[ast]=AcquireImages
 Name[bg]=Сканиране на снимки
+Name[bs]=Dohvatanje slika
 Name[ca]=AcquireImages
 Name[ca@valencia]=AcquireImages
 Name[cs]=Získat obrázky
@@ -49,6 +50,7 @@ Name[zh_TW]=擷取影像
 Comment=A tool to acquire images using flat scanner
 Comment[ast]=Una ferramienta p'alquirir imáxenes emplegando un escáner planu
 Comment[bg]=Инструмент за сканиране на снимки с плосък скенер
+Comment[bs]=Alat za dohvatanje slika koristeći ravni skener
 Comment[ca]=Una eina per capturar imatges des d'un escàner pla
 Comment[ca@valencia]=Una eina per capturar imatges des d'un escàner pla
 Comment[cs]=Nástroj pro získání obrázků pomocí plochého skeneru

@@ -2,6 +2,7 @@
 Name=Flickr/23/Zooomr Exporter
 Name[ast]=Esportador Flickr/23/Zooomr
 Name[bg]=Изнасяне към Flickr, 23 или Zooomr
+Name[bs]=Flickr/23/Zooomr Exporter
 Name[ca]=Exportador a Flickr/23/Zooomr
 Name[ca@valencia]=Exportador a Flickr/23/Zooomr
 Name[cs]=Flickr/23/Zooomr Exporter
@@ -42,6 +43,7 @@ Name[zh_TW]=Flickr/23/Zooomr 匯出程式
 Comment=A tool to export images to remote Flickr, 23 and Zooomr web services.
 Comment[ast]=Un preséu pa esportar imáxenes a servicios web remotos como Flickr, 23 y Zooomr
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Flickr, 23 или Zooomr.
+Comment[bs]=Alat za izvoz slika u udaljeni Flickr, 23 i Zoomr web servis.
 Comment[ca]=Una eina per exportar imatges als serveis web remots Flickr, 23 i Zooomr
 Comment[ca@valencia]=Una eina per exportar imatges als serveis web remots Flickr, 23 i Zooomr
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Flickr, 23 a Zooomr.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Rajce.net Exporter
 Name[bg]=Изнасяне към Rajce.net
+Name[bs]=Rajce.net izvoznik
 Name[ca]=Exportador a Rajce.net
 Name[ca@valencia]=Exportador a Rajce.net
 Name[cs]=Exportér Rajce.net
@@ -31,6 +32,7 @@ Name[x-test]=xxRajce.net Exporterxx
 Name[zh_TW]=Rajce.net 匯出器
 Comment=A tool to export images to a remote rajce.net service
 Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга rajce.net
+Comment[bs]=Alat za izvoz slika na udaljeni rajce.net web servis
 Comment[ca]=Una eina per exportar imatges al servei web remot rajce.net
 Comment[ca@valencia]=Una eina per exportar imatges al servei web remot rajce.net
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby rajce.net

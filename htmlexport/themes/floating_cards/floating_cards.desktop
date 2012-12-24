@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Floating Cards
 Name[bg]=Плаващи карти
+Name[bs]=Tekuće kartice
 Name[ca]=Targetes flotants
 Name[ca@valencia]=Targetes flotants
 Name[cs]=Plovoucí karty
@@ -33,6 +34,7 @@ Name[zh_CN]=浮动卡片
 Name[zh_TW]=紙牌浮空
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[bg]=Тъмен изглед с плаващи карти с миниатюри и описания. Бързо прелистване на галериите.
+Comment[bs]=Tamna tema s tekućim sličicama/karticama opisa. Brzo kretanje kroz galeriju.
 Comment[ca]=Un tema fosc amb targetes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
 Comment[ca@valencia]=Un tema fosc amb targetes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
 Comment[cs]=Tmavý motiv s plovoucími kartami s náhledem / popisem. Rychlé prohledávání sbírky.
@@ -68,6 +70,7 @@ Comment[zh_TW]=使用浮空縮圖/描述卡的暗色主題。快速瀏覽藝廊�
 Name=Jiří Boháč
 Name[ast]=Jiří Boháč
 Name[bg]=Jiří Boháč
+Name[bs]=Jiří Boháč
 Name[ca]=Jiří Boháč
 Name[ca@valencia]=Jiří Boháč
 Name[cs]=Jiří Boháč
@@ -107,6 +110,7 @@ Url=mailto:jbohac@jikos.cz
 [X-HTMLExport Preview]
 Name=Floating Cards
 Name[bg]=Плаващи карти
+Name[bs]=Tekuće kartice
 Name[ca]=Targetes flotants
 Name[ca@valencia]=Targetes flotants
 Name[cs]=Plovoucí karty

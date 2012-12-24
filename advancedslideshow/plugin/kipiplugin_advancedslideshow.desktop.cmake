@@ -2,6 +2,7 @@
 Name=Advanced Slideshow
 Name[ast]=Presentación de diapositives avanzaes
 Name[bg]=Подробна прожекция
+Name[bs]=Napredni slideshow
 Name[ca]=Passi de diapositives avançat
 Name[ca@valencia]=Passe de diapositives avançat
 Name[cs]=Pokročilé promítání
@@ -44,6 +45,7 @@ Name[zh_TW]=進階投影片放映
 Comment=A tool to slide images with 2D and 3D effects using OpenGL
 Comment[ast]=Una ferramienta pa diapositives con efeutos en 2D y 3D emplegando OpenGL
 Comment[bg]=Инструмент за прожекции на изображения с дву- и итриизмерни ефекти
+Comment[bs]=Alat za projekciju slika sa 2D i 3D efektima koristeći OpenGL
 Comment[ca]=Una eina per fer dispositives d'imatges amb efectes 2D i 3D utilitzant l'OpenGL
 Comment[ca@valencia]=Una eina per fer dispositives d'imatges amb efectes 2D i 3D utilitzant l'OpenGL
 Comment[cs]=Nástroj na prohlížení obrázků s 2D a 3D efekty pomocí OpenGL

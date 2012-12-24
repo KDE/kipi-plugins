@@ -2,6 +2,7 @@
 Name=SmugMug Import/Export
 Name[ast]=Importar/esportar SmugMug
 Name[bg]=Внасяне и изнасяне от и към SmugMug
+Name[bs]=SmugMug Uzvoz/Izvoz
 Name[ca]=Importador/Exportador a SmugMug
 Name[ca@valencia]=SmugMug Import/Export
 Name[cs]=SmugMug Import/Export
@@ -43,6 +44,7 @@ Name[zh_TW]=SmugMug 匯入/匯出
 Comment=A tool to import/export images to/from a remote SmugMug web service
 Comment[ast]=Una ferramienta pa importar/esportar imáxenes pa/dende'l serviciu web remotu de SmugMug
 Comment[bg]=Инструмент за внасяне и изнасяне на изображения от и към отдалечена уеб-услуга SmugMug
+Comment[bs]=Alat za uvoz/izvoz slika na/iz udaljeni/udaljenog SmugMug web servisa
 Comment[ca]=Una eina per importar/exportar imatges a un servei web remot SmugMug
 Comment[ca@valencia]=Una eina per importar/exportar imatges a un servei web remot SmugMug
 Comment[cs]=Nástroj pro import/export obrázků z/do webové služby SmugMug

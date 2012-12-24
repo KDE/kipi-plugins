@@ -2,6 +2,7 @@
 Comment=A tool to edit EXIF, IPTC and XMP metadata
 Comment[ast]=Una ferramienta pa editar EXIF, IPTC y metadatos XMP
 Comment[bg]=Инструмент за редактиране на метаданни EXIF, IPTC и XMP
+Comment[bs]=Alat za obradu EXIF, IPTC i XMP meta podataka
 Comment[ca]=Una eina per a editar metadades EXIF, IPTC i XMP
 Comment[ca@valencia]=Una eina per a editar metadades EXIF, IPTC i XMP
 Comment[cs]=Nástroj pro úpravu metadat EXIF, IPTC a XMP
@@ -47,6 +48,7 @@ Icon=metadataedit
 Name=MetadataEdit
 Name[ast]=MetadataEdit
 Name[bg]=Редактиране на метаданни
+Name[bs]=MetadataEdit
 Name[ca]=MetadataEdit
 Name[ca@valencia]=MetadataEdit
 Name[cs]=MetadataEdit

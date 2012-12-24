@@ -1,6 +1,7 @@
 [Desktop Entry]
 Comment=A plugin to create KML files to present images with coordinates.
 Comment[bg]=Приставка за създаване на KML-файлове, представящи изображенията с координати.
+Comment[bs]=Dodatak za kreiranje KML za predstavljanje slika s koordinatama.
 Comment[ca]=Un connector per crear fitxers KML per presentar imatges amb coordenades.
 Comment[ca@valencia]=Un connector per crear fitxers KML per presentar imatges amb coordenades.
 Comment[cs]=Modul pro vytváření KML souborů k zobrazování snímků se souřadnicemi.
@@ -28,6 +29,7 @@ Comment[zh_TW]=建立 KML 檔來將影像展示在座標軸上的外掛程式。
 Icon=applications-development-web
 Name=KMLExport
 Name[bg]=Изнасяне в KML
+Name[bs]=KMLExport
 Name[ca]=KMLExport
 Name[ca@valencia]=KMLExport
 Name[cs]=KMLExport

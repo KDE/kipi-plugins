@@ -2,6 +2,7 @@
 Name=Flash Export
 Name[ast]=Esportar flash
 Name[bg]=Изнасяне във Flash
+Name[bs]=Flash izvoz
 Name[ca]=Exportador a Flash
 Name[ca@valencia]=Flash Export
 Name[cs]=Flash Export
@@ -45,6 +46,7 @@ Name[zh_TW]=Flash 匯出
 Comment=A tool to export images to Flash
 Comment[ast]=Una ferramienta pa esportar imáxenes a Flash
 Comment[bg]=Инструмент за изнасяне на изображения във Flash
+Comment[bs]=Alat za izvoz slika u Flash
 Comment[ca]=Una eina per exportar imatges a Flash
 Comment[ca@valencia]=Una eina per exportar imatges a Flash
 Comment[cs]=Nástroj pro export obrázků do Flashe

@@ -2,6 +2,7 @@
 Name=DNGConverter
 Name[ast]=DNGConverter
 Name[bg]=Конвертор към DNG
+Name[bs]=DNG konvertor
 Name[ca]=DNGConverter
 Name[ca@valencia]=DNGConverter
 Name[cs]=DNGConverter
@@ -46,6 +47,7 @@ Name[zh_TW]=DNG 轉換程式
 Comment=A tool to convert Raw Image to Digital NeGative
 Comment[ast]=Una ferramienta pa convertir les imáxenes RAW en Negativu Dixital
 Comment[bg]=Инструмент за конвертиране на изображения от RAW към DNG (Digital NeGative)
+Comment[bs]=Alat za konvertovanje Raw slika u Digital NeGative
 Comment[ca]=Una eina per a convertir imatges RAW a «Digital NeGative»
 Comment[ca@valencia]=Una eina per a convertir imatges RAW a «Digital NeGative»
 Comment[cs]=Nástroj pro převod RAW obrázků do Digital NeGative

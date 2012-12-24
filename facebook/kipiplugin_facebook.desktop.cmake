@@ -2,6 +2,7 @@
 Name=Facebook Import/Export
 Name[ast]=Esportador/Importador Facebook
 Name[bg]=Внасяне и изнасяне от Facebook
+Name[bs]=Facebook uvoz/izvoz
 Name[ca]=Importador/Exportador a Facebook
 Name[ca@valencia]=Facebook Import/Export
 Name[cs]=Facebook Import/Export
@@ -44,6 +45,7 @@ Name[zh_TW]=Facebook 匯入/匯出
 Comment=A tool to import/export images to/from a remote Facebook web service
 Comment[ast]=Una ferramienta pa importar/esportar imáxenes pa/dende'l serviciu web remotu de Facebook
 Comment[bg]=Инструмент за внасяне и изнасяне на изображения към и от отдалечена уеб-услуга Facebook
+Comment[bs]=Alat za uvoz/izvoz slika u/iz udaljeni/udaljenog Facebook web servis
 Comment[ca]=Una eina per importar/exportar imatges a un servei web remot Facebook
 Comment[ca@valencia]=Una eina per importar/exportar imatges a un servei web remot Facebook
 Comment[cs]=Nástroj pro import/export obrázků z/do vzdálené webové služby Facebook
