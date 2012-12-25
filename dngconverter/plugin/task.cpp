@@ -130,9 +130,6 @@ void Task::run()
         return;
     }
 
-    kDebug() << d->url;
-    kDebug() << d->action;
-    
     switch (d->action)
     {
         case IDENTIFY:
