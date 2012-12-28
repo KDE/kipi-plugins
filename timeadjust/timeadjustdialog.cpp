@@ -54,6 +54,7 @@
 #include <kstandarddirs.h>
 #include <kvbox.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 // Local includes
 
@@ -155,10 +156,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     d->thread = new ActionThread(this);
 
-    connect(d->thread, SIGNAL(signalProgressChanged(int)),
-            this, SLOT(slotProgressChanged(int)));
-
-    connect(d->thread, SIGNAL(finished()),
+   connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
     connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
@@ -458,11 +456,7 @@ void TimeAdjustDialog::slotProcessEnded(const KUrl& url, int status)
 {
     d->listView->processed(url, (status == MyImageList::NOPROCESS_ERROR));
     d->itemsStatusMap.insert(url, status);
-}
-
-void TimeAdjustDialog::slotProgressChanged(int progress)
-{
-    d->progressBar->setValue(progress);
+    d->progressBar->setValue(d->progressBar->value()+1);
 }
 
 void TimeAdjustDialog::slotThreadFinished()

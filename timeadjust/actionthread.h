@@ -67,7 +67,6 @@ public:
 
 Q_SIGNALS:
 
-    void signalProgressChanged(int);
     void signalProcessStarted(const KUrl&);
     void signalProcessEnded(const KUrl&, int);
 
@@ -93,7 +92,6 @@ public:
 
 Q_SIGNALS:
 
-    void signalProgressChanged(int);
     void signalProcessStarted(const KUrl&);
     void signalProcessEnded(const KUrl&, int);
 

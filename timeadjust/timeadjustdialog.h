@@ -66,7 +66,6 @@ private Q_SLOTS:
 
     void slotApplyClicked();
     void slotCloseClicked();
-    void slotProgressChanged(int);
     void slotThreadFinished();
     void slotCancelThread();
     void slotButtonClicked(int);

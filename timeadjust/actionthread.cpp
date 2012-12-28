@@ -58,12 +58,10 @@ public:
     Private()
     {
         cancel   = false;
-        progress = 0;
     }
 
     // To manage items processing.
     bool                  cancel;
-    int                   progress;
 
     // Settings from GUI.
     TimeAdjustSettings    settings;
@@ -228,11 +226,6 @@ void Task::run()
         if (dt.isValid()) info.setDate(dt);
     }
 
-    m_mutex.lock();
-    m_d->progress++;
-    emit signalProgressChanged(m_d->progress);
-    m_mutex.unlock();
-
     emit signalProcessEnded(m_url, status);
 }
 
@@ -255,9 +248,6 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
     foreach (const KUrl& url, d->itemsMap.keys())
     {
         Task* t = new Task(this, url, d);
-
-        connect(t, SIGNAL(signalProgressChanged(int)),
-                this, SIGNAL(signalProgressChanged(int)));
 
         connect(t, SIGNAL(signalProcessStarted(KUrl)),
                 this, SIGNAL(signalProcessStarted(KUrl)));
