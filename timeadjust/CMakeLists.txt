@@ -4,6 +4,7 @@ SET(kipiplugin_timeadjust_PART_SRCS plugin_timeadjust.cpp
                                     timeadjustdialog.cpp
                                     clockphotodialog.cpp
                                     actionthread.cpp
+                                    task.cpp
                                     myimagelist.cpp
                                     settingswidget.cpp
    )

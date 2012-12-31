@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2004-05-16
- * Description : a plugin to set time stamp of picture files.
+ * Date        : 2012-12-31
+ * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,15 +20,9 @@
  *
  * ============================================================ */
 
-#ifndef ACTION_THREAD_H
-#define ACTION_THREAD_H
 
-// Qt includes
-
-#include <QObject>
-#include <QDateTime>
-#include <QMutex>
-#include <QMap>
+#ifndef TASK_H
+#define TASK_H
 
 // KDE includes
 
@@ -50,36 +43,37 @@ using namespace ThreadWeaver;
 namespace KIPITimeAdjustPlugin
 {
 
-class ActionThread : public RActionThreadBase
+class Task : public Job
 {
     Q_OBJECT
 
 public:
 
-    ActionThread(QObject* const parent);
-    ~ActionThread();
-
-    void setUpdatedDates(const QMap<KUrl, QDateTime>& map);
+    Task(QObject* const parent, const KUrl& url);
+    ~Task();
+    
     void setSettings(const TimeAdjustSettings& settings);
-    void cancel();
-
-    static KUrl newUrl(const KUrl& url, const QDateTime& dt);
+    void setItemsMap(QMap<KUrl, QDateTime> itemsMap);
 
 Q_SIGNALS:
 
     void signalProcessStarted(const KUrl&);
     void signalProcessEnded(const KUrl&, int);
 
-    void signalCancelTask();
+protected:
+
+    void run();
+
+public Q_SLOTS:
+
+    void slotCancel();
     
-public:
-
-    class Private;
-
 private:
 
+    class Private;
     Private* const d;
 };
+
 }  // namespace KIPITimeAdjustPlugin
 
-#endif /* ACTION_THREAD_H */
+#endif /* TASK_H */
