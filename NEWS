@@ -30,4 +30,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 019 ==> 309997 - kipi-plugins-3.0.0beta3 installs several static libraries.
 020 ==> 311310 - kipi-plugins don't build against libkdcraw 2.0.1.
 021 ==> 303980 - Batch DNG Conversion of files produces multiple files of last file in the queue
-022 ==> 
+022 ==> 290652 - Gwenview segfaults when opening the OpenGL image viewer [patch].
+023 ==> 
