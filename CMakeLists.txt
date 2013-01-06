@@ -166,7 +166,6 @@ MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For D
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
-MACRO_OPTIONAL_FIND_PACKAGE(Boost)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(FLEX)                                        # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
@@ -255,7 +254,6 @@ PRINT_OPTIONAL_LIBRARY_STATUS("qca2"                   QCA2_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"             KGEOMAP_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"           MEDIAWIKI_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"          LIBKVKONTAKTE_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("boost"                  Boost_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick"         ImageMagick_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer"         QTGSTREAMER_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("QtKOAuth"               QTKOAUTH_FOUND)
