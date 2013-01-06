@@ -249,11 +249,7 @@ void PreviewPage::startStitching()
 
 void PreviewPage::resetPage()
 {
-    d->title->setText(i18n("<qt>"
-                           "<p><h1>Panorama Preview</h1></p>"
-                           "<p>Pressing the <i>Next</i> button launches the final "
-                           "stitching process.</p>"
-                           "</qt>"));
+    d->title->setText("");
     d->postProcessing->progressCompleted();
     d->postProcessing->hide();
     d->previewWidget->show();
@@ -356,6 +352,12 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     kDebug() << "Preview Stitching finished";
                     d->previewBusy = false;
 
+                    d->title->setText(i18n("<qt>"
+                                           "<p><h1>Panorama Preview</h1></p>"
+                                           "<p>Draw a rectangle if you want to crop the image.</p>"
+                                           "<p>Pressing the <i>Next</i> button will then launch the final "
+                                           "stitching process.</p>"
+                                           "</qt>"));
                     d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
                     d->previewWidget->setSelectionAreaPossible(true);
                     kDebug() << "Preview URL: " << d->mngr->previewUrl();
