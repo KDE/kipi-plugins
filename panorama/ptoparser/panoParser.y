@@ -143,10 +143,13 @@ commentline: PT_TOKEN_COMMENT eoln
 
 realline: inputline eoln
     {
+        int* curImageCommentsCount = NULL;
+        char*** curImageComments = NULL;
         int prevNbImages = script.iInputImagesCount - 1;
-        int* curImageCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iImage_prevCommentsCount),
-                                                              sizeof(int),
-                                                              &prevNbImages);
+
+        curImageCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iImage_prevCommentsCount),
+                                                         sizeof(int),
+                                                         &prevNbImages);
         if (curImageCommentsCount == NULL) {
             yyerror("Not enough memory");
             return -1;
@@ -154,9 +157,9 @@ realline: inputline eoln
         *curImageCommentsCount = nbCommentLine;
 
         prevNbImages--;
-        char*** curImageComments = (char***) panoScriptReAlloc((void**) &(script.image_prevComments),
-                                                               sizeof(char**),
-                                                               &prevNbImages);
+        curImageComments = (char***) panoScriptReAlloc((void**) &(script.image_prevComments),
+                                                       sizeof(char**),
+                                                       &prevNbImages);
         if (curImageComments == NULL) {
             yyerror("Not enough memory");
             return -1;
@@ -175,45 +178,54 @@ realline: inputline eoln
     }
     | optimizeVarsline eoln
     {
+        int* curVarCommentsCount = NULL;
+        char*** curVarComments = NULL;
         int prevNbVars = script.iVarsToOptimizeCount - 1;
-        int* curVarCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iVarsToOptimize_prevCommentsCount),
-                                                            sizeof(int),
-                                                            &prevNbVars);
+
+        curVarCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iVarsToOptimize_prevCommentsCount),
+                                                       sizeof(int),
+                                                       &prevNbVars);
         *curVarCommentsCount = nbCommentLine;
 
         prevNbVars--;
-        char*** curVarComments = (char***) panoScriptReAlloc((void**) &(script.varsToOptimize_prevComments),
-                                                             sizeof(char**),
-                                                             &prevNbVars);
+        curVarComments = (char***) panoScriptReAlloc((void**) &(script.varsToOptimize_prevComments),
+                                                     sizeof(char**),
+                                                     &prevNbVars);
         *curVarComments = commentLines;
     }
     | optimizeVarslineEmpty eoln /* Prev comments go to the next line entry */
     | ctrlPtsLine eoln
     {
+        int* curCPCommentsCount = NULL;
+        char*** curCPComments = NULL;
         int prevNbCP = script.iCtrlPointsCount - 1;
-        int* curCPCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iCtrlPoints_prevCommentsCount),
-                                                           sizeof(int),
-                                                           &prevNbCP);
+
+        curCPCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iCtrlPoints_prevCommentsCount),
+                                                      sizeof(int),
+                                                      &prevNbCP);
         *curCPCommentsCount = nbCommentLine;
 
         prevNbCP--;
-        char*** curCPComments = (char***) panoScriptReAlloc((void**) &(script.ctrlPoints_prevComments),
-                                                            sizeof(char**),
-                                                            &prevNbCP);
+        curCPComments = (char***) panoScriptReAlloc((void**) &(script.ctrlPoints_prevComments),
+                                                    sizeof(char**),
+                                                    &prevNbCP);
         *curCPComments = commentLines;
     }
     | maskPtsLine eoln
     {
+        int* curMaskCommentsCount = NULL;
+        char*** curMaskComments = NULL;
         int prevNbMasks = script.iMasksCount - 1;
-        int* curMaskCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iMasks_prevCommentsCount),
-                                                           sizeof(int),
-                                                           &prevNbMasks);
+
+        curMaskCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iMasks_prevCommentsCount),
+                                                        sizeof(int),
+                                                        &prevNbMasks);
         *curMaskCommentsCount = nbCommentLine;
 
         prevNbMasks--;
-        char*** curMaskComments = (char***) panoScriptReAlloc((void**) &(script.masks_prevComments),
-                                                            sizeof(char**),
-                                                            &prevNbMasks);
+        curMaskComments = (char***) panoScriptReAlloc((void**) &(script.masks_prevComments),
+                                                      sizeof(char**),
+                                                      &prevNbMasks);
         *curMaskComments = commentLines;
     }
 
@@ -297,6 +309,8 @@ maskPtsLine: PT_TOKEN_MASK_PT_LINE  PT_TOKEN_SEP
     }
     varsparmsmask
     {
+        pt_script_mask** maskPtr = NULL;
+
         if ($4 == -1) {
             yyerror("Mask line without an image reference");
             return -1;
@@ -305,9 +319,9 @@ maskPtsLine: PT_TOKEN_MASK_PT_LINE  PT_TOKEN_SEP
             yyerror("Mask line referencing a missing input image");
             return -1;
         }
-        pt_script_mask** maskPtr = (pt_script_mask**) panoScriptReAlloc((void**) &script.masks,
-                                                                        sizeof(pt_script_mask*),
-                                                                        &script.iMasksCount);
+        maskPtr = (pt_script_mask**) panoScriptReAlloc((void**) &script.masks,
+                                                       sizeof(pt_script_mask*),
+                                                       &script.iMasksCount);
 
         if (maskPtr == NULL) {
             yyerror("Not enough memory");
@@ -346,6 +360,8 @@ varOpt: PT_TOKEN_KEYWORD_MULTICHAR int
     }
     | PT_TOKEN_KEYWORD int
     {
+        char keyword[2];
+
         pt_script_optimize_var* varToOptimize = (pt_script_optimize_var*) panoScriptReAlloc((void**) &script.varsToOptimize,
                                                                                             sizeof(pt_script_optimize_var),
                                                                                             &script.iVarsToOptimizeCount);
@@ -354,7 +370,6 @@ varOpt: PT_TOKEN_KEYWORD_MULTICHAR int
             return -1;
         }
 
-        char keyword[2];
         keyword[0] = $1;
         keyword[1] = 0;
 
@@ -436,12 +451,13 @@ maskpoint: int PT_TOKEN_COMMA int
 /* Rule for [CS]<x>,<x>,<x>,<x> */
 varcropping: PT_TOKEN_KEYWORD_CROPPING int PT_TOKEN_COMMA int PT_TOKEN_COMMA int PT_TOKEN_COMMA int
     {
+        int* cropArea = NULL;
+
         if (currentLine != PT_TOKEN_PANO_LINE && currentLine != PT_TOKEN_INPUT_LINE) {
             panoScriptParserError("Error: There shouldn't be any cropping parameter here!\n");
             return -1;
         }
 
-        int* cropArea = NULL;
         if (currentLine == PT_TOKEN_PANO_LINE) {
             cropArea = script.pano.cropArea;
         } else {
@@ -464,12 +480,13 @@ varcropping: PT_TOKEN_KEYWORD_CROPPING int PT_TOKEN_COMMA int PT_TOKEN_COMMA int
 /* Rule for input image field references <var>=<index> */
 varreference: PT_TOKEN_KEYWORD_MULTICHAR PT_TOKEN_REFERENCE int
     {
+        int imageRef = $3;
+        char *keyword = $1;
+
         if (currentLine != PT_TOKEN_INPUT_LINE) {
             panoScriptParserError("Error: References should only be present on i lines!\n");
             return -1;
         }
-        int imageRef = $3;
-        char *keyword = $1;
 
         switch (*keyword) {
         case 'R':
@@ -608,15 +625,15 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
             case 'T':
                 if (strncmp($2, "UINT", 4) == 0) {
                     if (strcmp($2 + 4, "8") == 0) {
-                        script.pano.bitDepthOutput = UINT8;
+                        script.pano.bitDepthOutput = BD_UINT8;
                     } else if (strcmp($2 + 4, "16") == 0) {
-                        script.pano.bitDepthOutput = UINT16;
+                        script.pano.bitDepthOutput = BD_UINT16;
                     } else {
                         panoScriptParserError("Invalid bitdepth [%s] in pano line\n", $2);
                         return -1;
                     }
                 } else if (strcmp($2, "FLOAT") == 0) {
-                        script.pano.bitDepthOutput = FLOAT;
+                        script.pano.bitDepthOutput = BD_FLOAT;
                 } else {
                     panoScriptParserError("Invalid bitdepth [%s] in pano line\n", $2);
                     return -1;
@@ -998,7 +1015,7 @@ varonly: PT_TOKEN_KEYWORD
                 panoScriptParserError("Invalid variable name [%c] in pano line\n", $1);
                 return -1;
             }
-            script.pano.bitDepthOutput = UINT8;
+            script.pano.bitDepthOutput = BD_UINT8;
             break;
         case PT_TOKEN_INPUT_LINE:
             panoScriptParserError("Invalid variable name [%c] in image line....\n", $1);

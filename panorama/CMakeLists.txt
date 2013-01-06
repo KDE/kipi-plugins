@@ -7,16 +7,10 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/tasks
                    )
 
-IF(BUILD_PARSER AND FLEX_FOUND AND BISON_FOUND)
-    FLEX_TARGET(PTOScanner ptoparser/panoScanner.l ${CMAKE_CURRENT_BINARY_DIR}/panoScanner.c)
-    BISON_TARGET(PTOParser ptoparser/panoParser.y ${CMAKE_CURRENT_BINARY_DIR}/panoParser.c)
-    ADD_FLEX_BISON_DEPENDENCY(PTOScanner PTOParser)
-    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
-ELSE(BUILD_PARSER AND FLEX_FOUND AND BISON_FOUND)
-    SET(FLEX_PTOScanner_OUTPUTS ptoparser/precompiled/panoScanner.c)
-    SET(BISON_PTOParser_OUTPUTS ptoparser/precompiled/panoParser.c)
-    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/precompiled)
-ENDIF(BUILD_PARSER AND FLEX_FOUND AND BISON_FOUND)
+FLEX_TARGET(PTOScanner ptoparser/panoScanner.l ${CMAKE_CURRENT_BINARY_DIR}/panoScanner.c)
+BISON_TARGET(PTOParser ptoparser/panoParser.y ${CMAKE_CURRENT_BINARY_DIR}/panoParser.c)
+ADD_FLEX_BISON_DEPENDENCY(PTOScanner PTOParser)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 INSTALL(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
