@@ -165,7 +165,6 @@ void panoScriptScannerTokenBegin(char* t)
 /* Display parsing error, including the current line and a pointer to the error token */
 void panoScriptParserError(char const* errorstring, ...)
 {
-    static char errmsg[1000];
     va_list args;
 
     int start = g_nTokenNextStart;
@@ -202,15 +201,15 @@ void panoScriptParserError(char const* errorstring, ...)
 
     /* print it using variable arguments -----------------------------*/
     va_start(args, errorstring);
-    vsprintf(errmsg, errorstring, args);
+    vfprintf(stdout, errorstring, args);
     va_end(args);
 
-    fprintf(stdout, "%s\n", errmsg);
+    printf("\n");
 }
 
 void yyerror(char const* st)
 {
-    panoScriptParserError(st);
+    panoScriptParserError("%s\n", st);
 }
 
 /* Reallocs ptr by size, count is the variable with the current number of records allocated

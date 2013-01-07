@@ -37,7 +37,11 @@ void panoScriptParserClose(void);
 
 int  panoScriptScannerGetNextChar(char* b, int maxBuffer);
 void panoScriptScannerTokenBegin(char* t);
+#ifndef _MSC_VER
+void panoScriptParserError(char const* errorstring, ...) __attribute__ ((format (printf, 1, 2)));
+#else
 void panoScriptParserError(char const* errorstring, ...);
+#endif
 void yyerror(char const* st);
 void* panoScriptReAlloc(void** ptr, size_t size, int* count);
 
