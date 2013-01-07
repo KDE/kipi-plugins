@@ -6,6 +6,8 @@ NEW FEATURES:
 General : New tool to export Collection to DLNA device.
 General : New tool to make video slideshow.
 General : Port all plugins to KDE XML-GUI framework.
+Panorama : New parser using GNU Flex and GNU Bison instead of Boost::spirit
+Panorama : Manual cropping of the final result
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
