@@ -28,7 +28,7 @@
 #include <string>
 #include <iostream>
 
-#include <mcheck.h>
+// #include <mcheck.h>
 
 // Qt includes
 
@@ -71,7 +71,7 @@ PTOFile::~PTOFile()
 
 bool PTOFile::openFile(const QString& path)
 {
-    mtrace();
+//     mtrace();
     char* tmp = path.toUtf8().data();
 
     if (d->script != NULL)
@@ -87,7 +87,7 @@ bool PTOFile::openFile(const QString& path)
         return false;
     }
 
-    muntrace();
+//     muntrace();
 
     return true;
 }

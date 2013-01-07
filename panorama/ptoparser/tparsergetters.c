@@ -506,9 +506,11 @@ double panoScriptGetPanoHFOV(pt_script* script)
 
 int panoScriptGetPanoOutputFormat(pt_script* script)
 {
+    char* str = NULL;
+
     assert(script != NULL);
 
-    char* str = script->pano.outputFormat;
+    str = script->pano.outputFormat;
     switch (str[0]) {
         case 'P':
             if (strncmp("NG", str + 1, 2) == 0)
@@ -536,8 +538,11 @@ int panoScriptGetPanoOutputFormat(pt_script* script)
 
 int panoScriptGetPanoOutputCompression(pt_script* script)
 {
+    char* str = NULL;
+
     assert(script != NULL && panoScriptGetPanoOutputFormat(script) > 0 && panoScriptGetPanoOutputFormat(script) < 4);
-    char* str = script->pano.outputFormat;
+
+    str = script->pano.outputFormat;
     while (str != NULL) {
         str = strchr(str, ' ');
         if (str != NULL) {
@@ -569,8 +574,11 @@ int panoScriptGetPanoOutputCompression(pt_script* script)
 
 int panoScriptGetPanoOutputSaveCoordinates(pt_script* script)
 {
+    char* str = NULL;
+
     assert(script != NULL && panoScriptGetPanoOutputFormat(script) > 1 && panoScriptGetPanoOutputFormat(script) < 4);
-    char* str = script->pano.outputFormat;
+
+    str = script->pano.outputFormat;
     while (str != NULL) {
         str = strchr(str, ' ');
         if (str != NULL) {
@@ -587,8 +595,11 @@ int panoScriptGetPanoOutputSaveCoordinates(pt_script* script)
 
 int panoScriptGetPanoOutputCropped(pt_script* script)
 {
+    char* str = NULL;
+
     assert(script != NULL && panoScriptGetPanoOutputFormat(script) > 1 && panoScriptGetPanoOutputFormat(script) < 4);
-    char* str = script->pano.outputFormat;
+
+    str = script->pano.outputFormat;
     while (str != NULL) {
         str = strchr(str, ' ');
         if (str != NULL) {
@@ -605,8 +616,11 @@ int panoScriptGetPanoOutputCropped(pt_script* script)
 
 int panoScriptGetPanoOutputQuality(pt_script* script)
 {
+    char* str = NULL;
+
     assert(script != NULL && panoScriptGetPanoOutputFormat(script) == 4);
-    char* str = script->pano.outputFormat;
+
+    str = script->pano.outputFormat;
     while (str != NULL) {
         str = strchr(str, ' ');
         if (str != NULL) {
@@ -727,8 +741,11 @@ int panoScriptGetVarsToOptimizeImageId(pt_script* script, int v)
 
 int panoScriptGetVarsToOptimizeName(pt_script* script, int v)
 {
+    char* var = NULL;
+
     assert(script != NULL && v >= 0 && v < script->iVarsToOptimizeCount);
-    char* var = script->varsToOptimize[v].varName;
+
+    var = script->varsToOptimize[v].varName;
     switch (var[0]) {
         case 'a':
         case 'b':

@@ -62,7 +62,7 @@ void panoScriptParserSetDefaults(pt_script* ptr)
 {
     /* This is where the defaults will be
      * At this point. Just clear the data structure. */
-    bzero(ptr, sizeof(*ptr));
+    memset(ptr, 0, sizeof(*ptr));
 
     /* but some parameters are meaningful when zero */
     script.pano.projection = -1;

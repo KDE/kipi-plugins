@@ -220,7 +220,7 @@ void yyerror(char const* st)
  */
 void* panoScriptReAlloc(void** ptr, size_t size, int* count)
 {
-    void* temp;
+    char* temp;
 
     void* new_ptr = realloc(*ptr, ((*count) + 1) * size);
 
@@ -235,9 +235,9 @@ void* panoScriptReAlloc(void** ptr, size_t size, int* count)
     *ptr = new_ptr;
 
     /* point to the newly allocated record */
-    temp = (void*) *ptr;
+    temp = (char*) *ptr;
     temp += size * ((*count) - 1);
     /* clear the area */
-    bzero(temp, size);
-    return temp;
+    memset(temp, 0, size);
+    return (void*) temp;
 }
