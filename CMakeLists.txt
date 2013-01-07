@@ -166,7 +166,6 @@ MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For D
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
-MACRO_OPTIONAL_FIND_PACKAGE(Boost)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(FLEX)                                        # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
@@ -255,7 +254,6 @@ PRINT_OPTIONAL_LIBRARY_STATUS("qca2"                   QCA2_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"             KGEOMAP_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"           MEDIAWIKI_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"          LIBKVKONTAKTE_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("boost"                  Boost_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick"         ImageMagick_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer"         QTGSTREAMER_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("QtKOAuth"               QTKOAUTH_FOUND)
@@ -338,7 +336,7 @@ PRINT_PLUGIN_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND 
 PRINT_PLUGIN_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki"          MEDIAWIKI_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("Panorama"           (NOT BUILD_PARSER) OR (FLEX_FOUND AND BISON_FOUND))
+PRINT_PLUGIN_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 
@@ -495,9 +493,9 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(mediawiki)
     ENDIF(MEDIAWIKI_FOUND)
 
-    IF(Boost_FOUND)
+    IF(FLEX_FOUND AND BISON_FOUND)
         ADD_SUBDIRECTORY(panorama)
-    ENDIF(Boost_FOUND)
+    ENDIF(FLEX_FOUND AND BISON_FOUND)
 
     IF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
         ADD_SUBDIRECTORY(videoslideshow)

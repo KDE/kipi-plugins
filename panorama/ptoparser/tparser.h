@@ -95,9 +95,9 @@ typedef struct
 
 typedef enum
 {
-    UINT8 = 0,
-    UINT16 = 1,
-    FLOAT = 2
+    BD_UINT8 = 0,
+    BD_UINT16 = 1,
+    BD_FLOAT = 2
 } pt_bitdepthoutput;
 
 typedef struct
