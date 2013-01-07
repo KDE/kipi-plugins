@@ -32,4 +32,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 021 ==> 303980 - Batch DNG Conversion of files produces multiple files of last file in the queue
 022 ==> 290652 - Gwenview segfaults when opening the OpenGL image viewer [patch].
 023 ==> 312453 - Panorama tool seems to always attempt 360 degree stitching.
-024 ==> 
+024 ==> 300206 - Bugzilla crash.
+025 ==> 
