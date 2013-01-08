@@ -125,8 +125,9 @@ void panoScriptParserClose(void)
 /* This is the function that lex will use to read the next character */
 int panoScriptScannerGetNextChar(char* b, int maxBuffer)
 {
-    (void)maxBuffer;
     int frc;
+
+    (void) maxBuffer; /* Avoid a warning about unused parameter */
 
     if (g_eof)
         return 0;
