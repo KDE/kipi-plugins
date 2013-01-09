@@ -35,4 +35,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 022 ==> 290652 - Gwenview segfaults when opening the OpenGL image viewer [patch].
 023 ==> 312453 - Panorama tool seems to always attempt 360 degree stitching.
 024 ==> 300206 - Bugzilla crash.
-025 ==> 
+025 ==> 309339 - Panorama stitching- minor quality of resolution 150
+026 ==>
