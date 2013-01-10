@@ -133,9 +133,4 @@ void Plugin_ImgurExport::slotActivate()
     kDebug() << "We have activated the imgur exporter!";
 }
 
-Category Plugin_ImgurExport::category(KAction* action) const
-{
-    return ExportPlugin;
-}
-
 } // namespace KIPIImgurExportPlugin

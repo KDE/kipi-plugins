@@ -266,7 +266,7 @@ KPProgressWidget* ImgurWidget::progressBar() const
     return d->progressBar;
 }
 
-void ImgurWidget::slotAuthenticated(bool authenticated, const QString &message)
+void ImgurWidget::slotAuthenticated(bool authenticated, const QString& message)
 {
 #ifdef OAUTH_ENABLED
 //    kDebug () << "Disable the button.";
@@ -277,6 +277,9 @@ void ImgurWidget::slotAuthenticated(bool authenticated, const QString &message)
 
     d->m_changeUserBtn->setEnabled(!authenticated);
 //    emit signalEnableAuthentication(!authenticated);
+#else //OAUTH_ENABLED
+    Q_UNUSED(authenticated);
+    Q_UNUSED(message);
 #endif //OAUTH_ENABLED
 }
 
