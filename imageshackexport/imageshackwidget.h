@@ -32,6 +32,7 @@ class QSpinBox;
 class QCheckBox;
 class QLineEdit;
 class QLabel;
+class QGroupBox;
 class KComboBox;
 class KPushButton;
 
@@ -57,15 +58,26 @@ public:
     KIPIPlugins::KPImagesList* imagesList() const;
     KIPIPlugins::KPProgressWidget* progressBar() const;
 
+    void getGalleriesDone(int errCode);
+
+Q_SIGNALS:
+
+    void signalReloadGalleries();
+
 private:
 
     void updateLabels();
     void updateResizeOpts();
 
+    void removeVideosFromList();
+
 private Q_SLOTS:
 
     void slotEnablePredefComboBox(bool checked);
     void slotEnableCustomSize(bool checked);
+    void slotGetGalleries(const QStringList& gTexts, const QStringList& gNames);
+    void slotEnableNewGalleryLE(int index);
+    void slotReloadGalleries();
 
 private:
 
@@ -79,12 +91,15 @@ private:
     QLabel*                    m_accountEmailLbl;
 
     QLineEdit*                 m_tagsFld;
+    QLineEdit*                 m_newGalleryName;
+
     QRadioButton*              m_noResizeRdb;
     QRadioButton*              m_predefSizeRdb;
     QRadioButton*              m_customSizeRdb;
 
     QCheckBox*                 m_privateImagesChb;
     QCheckBox*                 m_remBarChb;
+    QCheckBox*                 m_useGalleriesChb;
 
     KPushButton*               m_chgRegCodeBtn;
     KPushButton*               m_newGalleryBtn;
@@ -95,6 +110,9 @@ private:
 
     QSpinBox*                  m_widthSpb;
     QSpinBox*                  m_heightSpb;
+
+    QGroupBox*                 m_galleriesBox;
+    QWidget*                   m_galleriesWidget;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 

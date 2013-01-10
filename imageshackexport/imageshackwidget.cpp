@@ -72,6 +72,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false);
     m_imgList->loadImagesFromCurrentSelection();
+    removeVideosFromList();
     m_imgList->setWhatsThis("Images to upload to Imageshack web service");
 
     QWidget* settingsBox           = new QWidget(this);
@@ -109,29 +110,55 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     // ----------------------------------------------
 
-    QGroupBox* galleriesBox = new QGroupBox(settingsBox);
+    m_galleriesBox = new QGroupBox(settingsBox);
 
     // TODO implement the download
 
-    galleriesBox->setTitle(i18n("Destination"));
-    galleriesBox->setWhatsThis(i18n("This is the ImageShack gallery to which selected items will be uploaded"));
+    m_galleriesBox->setTitle(i18n("Destination"));
+    m_galleriesBox->setWhatsThis(i18n("This is the ImageShack gallery to which selected items will be uploaded"));
 
-    QGridLayout* galleriesBoxLayout = new QGridLayout(galleriesBox);
+    QGridLayout* galleriesBoxLayout = new QGridLayout(m_galleriesBox);
 
-    QLabel* galLbl = new QLabel(i18n("Gallery:"), galleriesBox);
-    m_galleriesCob = new KComboBox(galleriesBox);
+    m_useGalleriesChb = new QCheckBox(m_galleriesBox);
+    m_useGalleriesChb->setText("Upload to galleries");
+//    useGalleries->setEnabled(false);
+
+    m_galleriesWidget = new QWidget(m_galleriesBox);
+    QGridLayout* gwLayout = new QGridLayout(m_galleriesWidget);
+
+    QLabel* galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
+    m_galleriesCob = new KComboBox(m_galleriesWidget);
+    m_galleriesCob->addItem("Create new gallery.", "--new-gallery--");
     m_galleriesCob->setEditable(false);
 
-    m_newGalleryBtn = new KPushButton(KGuiItem(i18n("Create new gallery"), "list-add",
-                                               i18n("Create new ImageShack gallery")), galleriesBox);
+    QLabel* gallNameLbl = new QLabel(m_galleriesWidget);
+    gallNameLbl->setText("Name:");
+
+    m_newGalleryName = new QLineEdit(m_galleriesWidget);
 
     m_reloadGalleriesBtn = new KPushButton(KGuiItem(i18nc("ImageShack galleries list", "Reload"),
-                                                    "view-refresh", i18n("Reload ImageShack galleries list")), galleriesBox);
+                                                    "view-refresh", i18n("Reload ImageShack galleries list")), m_galleriesWidget);
 
-    galleriesBoxLayout->addWidget(galLbl,               0, 0, 1, 1);
-    galleriesBoxLayout->addWidget(m_galleriesCob,       0, 1, 1, 4);
-    galleriesBoxLayout->addWidget(m_newGalleryBtn,      1, 3, 1, 1);
-    galleriesBoxLayout->addWidget(m_reloadGalleriesBtn, 1, 4, 1, 1);
+    galleriesBoxLayout->addWidget(m_useGalleriesChb,    0, 0, 1, 5);
+    galleriesBoxLayout->addWidget(m_galleriesWidget,    1, 0, 5, 5);
+
+    gwLayout->addWidget(galLbl,               0, 0, 1, 1);
+    gwLayout->addWidget(m_galleriesCob,       0, 1, 1, 4);
+    gwLayout->addWidget(gallNameLbl,          1, 0, 1, 1);
+    gwLayout->addWidget(m_newGalleryName,     1, 1, 1, 3);
+    gwLayout->addWidget(m_reloadGalleriesBtn, 1, 4, 1, 1);
+
+
+    connect(m_useGalleriesChb, SIGNAL(toggled(bool)),
+            m_galleriesWidget, SLOT(setEnabled(bool)));
+
+    connect(m_galleriesCob, SIGNAL(activated(int)),
+            this, SLOT(slotEnableNewGalleryLE(int)));
+
+    connect(m_reloadGalleriesBtn, SIGNAL(clicked()),
+            this, SLOT(slotReloadGalleries()));
+
+    m_galleriesWidget->setEnabled(m_useGalleriesChb->isChecked());
 
     // ----------------------------------------------
 
@@ -220,7 +247,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
-    settingsBoxLayout->addWidget(galleriesBox);
+    settingsBoxLayout->addWidget(m_galleriesBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
@@ -240,6 +267,18 @@ ImageshackWidget::~ImageshackWidget()
 {
 }
 
+void ImageshackWidget::removeVideosFromList()
+{
+    KUrl::List urls = m_imgList->imageUrls();
+
+    for (int i = 0; i < urls.size(); ++i)
+    {
+        KMimeType::Ptr mimePtr = KMimeType::findByUrl(urls[i]);
+        if (mimePtr->name().startsWith("video/"))
+            m_imgList->removeItemByUrl(urls[i]);
+    }
+}
+
 KIPIPlugins::KPImagesList* ImageshackWidget::imagesList() const
 {
     return m_imgList;
@@ -254,7 +293,6 @@ void ImageshackWidget::updateLabels()
 {
     if (m_imageshack->loggedIn())
     {
-        kDebug() << m_imageshack->username() << " -- " << m_imageshack->email();
         m_accountNameLbl->setText(m_imageshack->username());
         m_accountEmailLbl->setText(m_imageshack->email());
     }
@@ -296,6 +334,33 @@ void ImageshackWidget::slotEnableCustomSize(bool checked)
 {
     m_widthSpb->setEnabled(checked);
     m_heightSpb->setEnabled(checked);
+}
+
+void ImageshackWidget::getGalleriesDone(int errCode)
+{
+    m_galleriesBox->setEnabled(errCode == 0);
+}
+
+void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QStringList &gNames)
+{
+    m_galleriesCob->clear();
+
+    m_galleriesCob->addItem("Create new gallery.", "--new-gallery--");
+
+    // TODO check if the lists have the same size
+    for (int i = 0; i < gTexts.size(); ++i)
+        m_galleriesCob->addItem(gTexts[i], gNames[i]);
+    slotEnableNewGalleryLE(m_galleriesCob->currentIndex());
+}
+
+void ImageshackWidget::slotEnableNewGalleryLE(int index)
+{
+    m_newGalleryName->setEnabled(!index);
+}
+
+void ImageshackWidget::slotReloadGalleries()
+{
+    emit signalReloadGalleries();
 }
 
 }  // namespace KIPIImageshackExportPlugin

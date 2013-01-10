@@ -76,17 +76,20 @@ private Q_SLOTS:
 
     void slotButtonClicked(int button);
     void slotNeedRegistrationCode();
-    void slotLoginInProgress(int step, int maxStep, const QString& format);
+    void slotJobInProgress(int step, int, const QString& format);
     void slotLoginDone(int errCode, const QString& errMsg);
+    void slotGetGalleriesDone(int errCode, const QString& errMsg);
+    void slotGetGalleries();
 
     void slotAddPhotoDone(int errCode, const QString& errMsg);
+
+    void authenticate();
 
 private:
 
     void readSettings();
     void saveSettings();
 
-    void authenticate();
     void askRegistrationCode();
     void authenticationDone(int errCode, const QString& errMsg);
 

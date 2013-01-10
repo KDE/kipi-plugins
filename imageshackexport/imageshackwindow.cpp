@@ -80,7 +80,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     m_widget->setMinimumSize(700, 500);
     setMainWidget(m_widget);
     setWindowTitle(i18n("Export to Imageshack"));
-    setModal(false);
+    setModal(true);
 
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotChangeRegistrantionCode()));
@@ -89,13 +89,10 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     setButtonGuiItem(User1,
                      KGuiItem(i18n("Upload"), "network-workgroup",
                               i18n("Start upload to Imageshack web service")));
-    enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
+    enableButton(User1, false);
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotStartUpload()));
 
     // About data
     KPAboutData* about = new KPAboutData(ki18n("Imageshack Export"),
@@ -103,7 +100,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
                                          KAboutData::License_GPL,
                                          ki18n("A kipi plugin to export images to Imageshack web service."),
                                          ki18n("(c) 2012, Dodon Victor\n"));
-    
+
     about->addAuthor(ki18n("Dodon Victor"), ki18n("Author"),
                      "dodonvictor at gmail dot com");
 
@@ -123,20 +120,30 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     connect(m_talker, SIGNAL(signalNeedRegistrationCode()),
             this, SLOT(slotNeedRegistrationCode()));
 
-    connect(m_talker, SIGNAL(signalLoginInProgress(int,int,QString)),
-            this, SLOT(slotLoginInProgress(int,int,QString)));
+    connect(m_talker, SIGNAL(signalJobInProgress(int, int, QString)),
+            this, SLOT(slotJobInProgress(int, int, QString)));
 
     connect(m_talker, SIGNAL(signalLoginDone(int,QString)),
             this, SLOT(slotLoginDone(int,QString)));
 
+    connect(m_talker, SIGNAL(signalGetGalleriesDone(int,QString)),
+            this, SLOT(slotGetGalleriesDone(int,QString)));
+
+    connect(m_talker, SIGNAL(signalUpdateGalleries(QStringList, QStringList)),
+            m_widget, SLOT(slotGetGalleries(QStringList, QStringList)));
+
     connect(m_talker, SIGNAL(signalAddPhotoDone(int,QString)),
             this, SLOT(slotAddPhotoDone(int,QString)));
+
+    connect(m_widget, SIGNAL(signalReloadGalleries()),
+            this, SLOT(slotGetGalleries()));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()));
 
     readSettings();
-    authenticate();
+
+    QTimer::singleShot(20, this, SLOT(authenticate()));
 }
 
 ImageshackWindow::~ImageshackWindow()
@@ -228,9 +235,6 @@ void ImageshackWindow::saveSettings()
 
 void ImageshackWindow::slotStartTransfer()
 {
-    // TODO implement import
-    kDebug() << "Transfer started!";
-
     m_widget->m_imgList->clearProcessedStatus();
     m_transferQueue = m_widget->m_imgList->imageUrls();
 
@@ -238,6 +242,8 @@ void ImageshackWindow::slotStartTransfer()
     {
         return;
     }
+
+    kDebug() << "Transfer started!";
 
     m_imagesTotal = m_transferQueue.count();
     m_imagesCount = 0;
@@ -296,14 +302,13 @@ void ImageshackWindow::authenticate()
     emit signalBusy(true);
     m_widget->progressBar()->show();
     m_widget->m_progressBar->setValue(0);
-    m_widget->progressBar()->setFormat("");
+    m_widget->m_progressBar->setMaximum(4);
+    m_widget->progressBar()->setFormat("Authenticating..");
 
     if (m_imageshack->registrationCode().isEmpty())
     {
-        kDebug() << "Need new registration code";
         askRegistrationCode();
     }
-    kDebug() << "Check the registration code";
     m_talker->authenticate();
 }
 
@@ -355,11 +360,11 @@ void ImageshackWindow::slotBusy(bool val)
     {
         setCursor(Qt::ArrowCursor);
         m_widget->m_chgRegCodeBtn->setEnabled(true);
-        enableButton(User1, m_widget->imagesList()->imageUrls().isEmpty());
+        enableButton(User1, m_imageshack->loggedIn() && !m_widget->imagesList()->imageUrls().isEmpty());
     }
 }
 
-void ImageshackWindow::slotLoginInProgress(int step, int maxStep, const QString& format)
+void ImageshackWindow::slotJobInProgress(int step, int maxStep, const QString &format)
 {
     if (maxStep > 0)
     {
@@ -375,22 +380,33 @@ void ImageshackWindow::slotLoginInProgress(int step, int maxStep, const QString&
 
 void ImageshackWindow::slotLoginDone(int errCode, const QString& errMsg)
 {
-    emit signalBusy(false);
-    m_widget->m_progressBar->setVisible(false);
     m_widget->updateLabels();
-    enableButton(User1, m_imageshack->loggedIn());
 
     if (!errCode && m_imageshack->loggedIn())
     {
-        // TODO implement galeries
         m_imageshack->saveSettings();
         enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
+        m_talker->getGalleries();
     }
     else
     {
         KMessageBox::error(this, i18n("Login failed: %1\n", errMsg));
         enableButton(User1, false);
+        m_widget->m_progressBar->setVisible(false);
+        slotBusy(false);
     }
+}
+
+void ImageshackWindow::slotGetGalleriesDone(int errCode, const QString &errMsg)
+{
+    slotBusy(false);
+    m_widget->m_progressBar->setVisible(false);
+
+    if (errCode)
+    {
+        KMessageBox::error(this, i18n("Failed to get galleries list: %1\n", errMsg));
+    }
+    m_widget->getGalleriesDone(errCode);
 }
 
 void ImageshackWindow::uploadNextItem()
@@ -443,12 +459,26 @@ void ImageshackWindow::uploadNextItem()
 
     opts["cookie"] = m_imageshack->registrationCode();
 
-    m_talker->uploadItem(imgPath, opts);
+    bool uploadToGalleries = m_widget->m_useGalleriesChb->isChecked();
+
+    if (uploadToGalleries)
+    {
+        int gidx = m_widget->m_galleriesCob->currentIndex();
+        QString gallery;
+        if (gidx == 0)
+            gallery = m_widget->m_newGalleryName->text();
+        else
+            gallery = m_widget->m_galleriesCob->itemData(gidx).toString();
+        m_talker->uploadItemToGallery(imgPath, gallery, opts);
+    }
+    else
+    {
+        m_talker->uploadItem(imgPath, opts);
+    }
 }
 
 void ImageshackWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
 {
-    kDebug() << errCode << "----------------------++++";
     m_widget->m_imgList->processed(m_transferQueue.first(), (errCode == 0));
 
     if (!errCode)
@@ -470,6 +500,12 @@ void ImageshackWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     }
 
     uploadNextItem();
+}
+
+void ImageshackWindow::slotGetGalleries()
+{
+    m_widget->m_progressBar->setVisible(true);
+    m_talker->getGalleries();
 }
 
 } // namespace KIPIImageshackExportPlugin

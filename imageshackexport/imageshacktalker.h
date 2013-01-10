@@ -41,6 +41,10 @@ namespace KIPIImageshackExportPlugin
 
 class Imageshack;
 
+struct ImageshackImageInfo
+{
+};
+
 class ImageshackTalker : public QObject
 {
     Q_OBJECT
@@ -55,25 +59,39 @@ public:
     void authenticate();
     void cancelLogIn();
     void cancel();
+    void getGalleries();
 
     void uploadItem(QString path, QMap<QString, QString> opts);
+    void uploadItemToGallery(QString path, const QString& gallery, QMap<QString, QString> opts);
 
 Q_SIGNALS:
 
     void signalNeedRegistrationCode();
     void signalBusy(bool busy);
-    void signalLoginInProgress(int step, int maxStep = 0, const QString& label = QString());
+    void signalJobInProgress(int step, int maxStep = 0, const QString& label = QString());
     void signalLoginDone(int errCode,  const QString &errMsg);
+    void signalGetGalleriesDone(int errCode, const QString &errMsg);
 
     void signalAddPhotoDone(int errCode, const QString& errMsg);
+    void signalUpdateGalleries(const QStringList& gTexts, const QStringList& gNames);
 
 private:
 
     enum State
     {
-        IMGHCK_CHECKREGCODE = 0,
+        IMGHCK_DONOTHING,
+        IMGHCK_CHECKREGCODE,
+        IMGHCK_GETGALLERIES,
         IMGHCK_ADDPHOTO,
-        IMGHCK_ADDVIDEO
+        IMGHCK_ADDVIDEO,
+        IMGHCK_ADDPHOTOGALLERY
+    };
+
+    enum Step
+    {
+        STEP_UPLOADITEM,
+        STEP_CREATEGALLERY,
+        STEP_ADDITEMTOGALLERY
     };
 
 private Q_SLOTS:
@@ -86,6 +104,7 @@ private:
     QString getCallString(QMap<QString, QString>& args);
     void checkRegistrationCode();
     void parseCheckRegistrationCode(const QByteArray& data);
+    void parseGetGalleries(const QByteArray& data);
     void checkRegistrationCodeDone(int errCode, const QString& errMsg);
     void authenticationDone(int errCode, const QString& errMsg);
 
@@ -94,6 +113,7 @@ private:
     int parseErrorResponse(QDomElement elem, QString& errMsg);
 
     void parseUploadPhotoDone(QByteArray data);
+    void parseAddPhotoToGalleryDone(QByteArray data);
 
     QString mimeType(const QString& path);
 
@@ -107,6 +127,7 @@ private:
     KUrl        m_photoApiUrl;
     KUrl        m_videoApiUrl;
     KUrl        m_loginApiUrl;
+    KUrl        m_galleryUrl;
     QString     m_appKey;
 
     bool        m_loginInProgress;
