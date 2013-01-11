@@ -182,7 +182,7 @@ typedef struct
     double  fGamma;
     int     interpolator;
     int     fastFT;
-    int     huberEstimator;
+    double  huberEstimator;
     double  photometricHuberSigma;
 } pt_script_optimize;
 

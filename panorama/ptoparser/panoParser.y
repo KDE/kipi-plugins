@@ -816,9 +816,6 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
             case 'Y':
                 ctrlPoint->p2.y = $2;
                 break;
-            case 't':
-                ctrlPoint->type = $2;
-                break;
             default:
                 panoScriptParserError("Invalid variable name [%c] in control point line.\n", $1);
                 return -1;
@@ -944,7 +941,7 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
                 image->vignettingCorrectionCoef[*(keyword + 1) - 'a'] = $2;
                 break;
             case 'm':
-                image->vignettingCorrectionMode = lroundf($2);
+                image->vignettingCorrectionMode = lround($2);
                 break;
             case 'x':
             case 'y':
