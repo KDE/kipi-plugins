@@ -284,7 +284,7 @@ void ImageshackTalker::parseGetGalleries(const QByteArray &data)
     m_state = IMGHCK_DONOTHING;
 
     emit signalUpdateGalleries(gTexts, gNames);
-    emit signalGetGalleriesDone(0, i18n("Successfuly retrieved galleries"));
+    emit signalGetGalleriesDone(0, i18n("Successfully retrieved galleries"));
 }
 
 void ImageshackTalker::parseCheckRegistrationCode(const QByteArray& data)
@@ -332,7 +332,7 @@ void ImageshackTalker::parseCheckRegistrationCode(const QByteArray& data)
 
     if (m_imageshack->loggedIn())
     {
-        authenticationDone(0, i18n("Registration code successfuly verified"));
+        authenticationDone(0, i18n("Registration code successfully verified"));
     }
     else
     {
