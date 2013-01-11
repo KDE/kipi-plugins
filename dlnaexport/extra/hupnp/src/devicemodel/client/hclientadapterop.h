@@ -24,6 +24,7 @@
 
 #include <HUpnpCore/HAsyncOp>
 #include <QtCore/QExplicitlySharedDataPointer>
+#include <QtCore/QString>
 
 namespace Herqq
 {

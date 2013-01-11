@@ -31,6 +31,7 @@
 //
 
 #include "hserverdevicecontroller_p.h"
+#include "hdevicehost_ssdp_handler_p.h"
 
 #include "../../general/hupnp_global_p.h"
 #include "../../devicemodel/hdevicestatus.h"
