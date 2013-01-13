@@ -178,7 +178,7 @@ EXIFLight::EXIFLight(QWidget* const parent)
     d->flashEnergyEdit->setValue(1.0);
     d->flashEnergyEdit->setDecimals(1);
     d->flashEnergyEdit->setWhatsThis(i18n("Set here the flash energy used to take the picture "
-                                          "in BCPS units.  Beam Candle Power Seconds is the measure "
+                                          "in BCPS units. Beam Candle Power Seconds is the measure "
                                           "of effective intensity of a light source when it is "
                                           "focused into a beam by a reflector or lens. This value "
                                           "is the effective intensity for a period of one second."));
