@@ -148,7 +148,6 @@ ELSE (KDCRAW_VERSION)
 ENDIF (KDCRAW_VERSION)
 
 # Optional depencies detection required by some plugins
-
 MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
 MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
@@ -158,6 +157,8 @@ MACRO_OPTIONAL_FIND_PACKAGE(Ipod)                                        # For i
 MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GObject)                                     # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(FLEX)                                        # For Panorama (must be found before KdepimLibs for MacOS).
+MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For Panorama (must be found before KdepimLibs for MacOS).
 MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
@@ -166,8 +167,6 @@ MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For D
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
-MACRO_OPTIONAL_FIND_PACKAGE(FLEX)                                        # For Panorama.
-MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For Panorama.
 MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
 MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
 MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
