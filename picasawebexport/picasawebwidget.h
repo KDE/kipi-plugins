@@ -8,8 +8,8 @@
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
- * Copyright (C) 2010 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010      by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2010-2013 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -72,10 +72,8 @@ public:
 
     void updateLabels(const QString& login = QString(), const QString& name = QString());
 
-    QString getDestinationPath();
-
-    KPImagesList* imagesList() const;
-
+    QString getDestinationPath()    const;
+    KPImagesList* imagesList()      const;
     KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
@@ -91,28 +89,28 @@ private:
 
     friend class PicasawebWindow;
 
-    QLabel*       m_headerLbl;
-    QLabel*       m_userNameLbl;
-    QLabel*       m_userName;
+    QLabel*           m_headerLbl;
+    QLabel*           m_userNameLbl;
+    QLabel*           m_userName;
 
-    QRadioButton* m_anonymousRBtn;
-    QRadioButton* m_accountRBtn;
+    QRadioButton*     m_anonymousRBtn;
+    QRadioButton*     m_accountRBtn;
 
-    QCheckBox*    m_resizeChB;
+    QCheckBox*        m_resizeChB;
 
-    QSpinBox*     m_dimensionSpB;
-    QSpinBox*     m_imageQualitySpB;
+    QSpinBox*         m_dimensionSpB;
+    QSpinBox*         m_imageQualitySpB;
 
-    KComboBox*    m_albumsCoB;
-    KComboBox*    m_dlDimensionCoB;
-    QButtonGroup* m_tagsBGrp;
+    KComboBox*        m_albumsCoB;
+    KComboBox*        m_dlDimensionCoB;
+    QButtonGroup*     m_tagsBGrp;
 
-    KPushButton*  m_newAlbumBtn;
-    KPushButton*  m_reloadAlbumsBtn;
-    KPushButton*  m_changeUserBtn;
+    KPushButton*      m_newAlbumBtn;
+    KPushButton*      m_reloadAlbumsBtn;
+    KPushButton*      m_changeUserBtn;
 
-    KPImagesList* m_imgList;
-    UploadWidget* m_uploadWidget;
+    KPImagesList*     m_imgList;
+    UploadWidget*     m_uploadWidget;
 
     KPProgressWidget* m_progressBar;
 };

@@ -9,7 +9,7 @@
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010      by Jens Mueller <tschenser at gmx dot de>
- * Copyright (C) 2010-2012 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010-2013 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -67,8 +67,7 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
     m_headerLbl                    = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(
-        i18n("This is a clickable link to open the Picasaweb home page in a web browser."));
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Picasaweb home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -78,10 +77,10 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     accountBox->setWhatsThis(i18n("This is the Picasaweb account that will be used to authenticate."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    m_anonymousRBtn     = new QRadioButton(i18nc("Picasaweb account login", "Anonymous"), accountBox);
+    m_anonymousRBtn               = new QRadioButton(i18nc("Picasaweb account login", "Anonymous"), accountBox);
     m_anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Picasaweb web service."));
 
-    m_accountRBtn       = new QRadioButton(i18n("Picasaweb Account"), accountBox);
+    m_accountRBtn                 = new QRadioButton(i18n("Picasaweb Account"), accountBox);
     m_accountRBtn->setWhatsThis(i18n("Login to Picasaweb web service using username and password."));
 
     m_userNameLbl       = new QLabel(i18nc("Picasaweb account settings", "Name:"), accountBox);
@@ -132,10 +131,10 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where Picasaweb images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget = iface->uploadWidget(uploadBox);
+    m_uploadWidget               = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
@@ -144,11 +143,11 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
-    m_resizeChB     = new QCheckBox(optionsBox);
+    m_resizeChB          = new QCheckBox(optionsBox);
     m_resizeChB->setText(i18n("Resize photos before uploading"));
     m_resizeChB->setChecked(false);
 
-    m_dimensionSpB  = new QSpinBox(optionsBox);
+    m_dimensionSpB       = new QSpinBox(optionsBox);
     m_dimensionSpB->setMinimum(0);
     m_dimensionSpB->setMaximum(5000);
     m_dimensionSpB->setSingleStep(10);
@@ -157,7 +156,7 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     m_dimensionSpB->setEnabled(false);
     QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
-    m_imageQualitySpB = new QSpinBox(optionsBox);
+    m_imageQualitySpB       = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
     m_imageQualitySpB->setMaximum(100);
     m_imageQualitySpB->setSingleStep(1);
@@ -226,10 +225,10 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 
     connect(m_resizeChB, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
-
+/*
     connect(m_anonymousRBtn, SIGNAL(toggled(bool)),
             this, SLOT(slotAnonymousToggled(bool)) );
-
+*/
     // ------------------------------------------------------------------------
 
     if (import)
@@ -265,7 +264,7 @@ KPProgressWidget* PicasawebWidget::progressBar() const
     return m_progressBar;
 }
 
-QString PicasawebWidget::getDestinationPath()
+QString PicasawebWidget::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
