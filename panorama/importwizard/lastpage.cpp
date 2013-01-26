@@ -56,6 +56,7 @@ struct LastPage::LastPagePriv
           saveSettingsGroupBox(0),
           fileTemplateKLineEdit(0),
           savePtoCheckBox(0),
+          warningLabel(0),
           mngr(0)
     {
     }

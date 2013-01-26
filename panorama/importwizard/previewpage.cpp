@@ -60,7 +60,9 @@ struct PreviewPage::Private
           previewWidget(0), 
           previewBusy(false), 
           stitchingBusy(false),
-          postProcessing(0), 
+          postProcessing(0),
+          curProgress(0),
+          totalProgress(0),
           canceled(false), 
           mngr(m),
           dlg(0)

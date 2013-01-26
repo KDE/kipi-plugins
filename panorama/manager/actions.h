@@ -89,7 +89,7 @@ typedef QMap<KUrl, ItemPreprocessedUrls> ItemUrlsMap;   // Map between original 
 struct ActionData
 {
     ActionData()
-        : starting(false), success(false) {}
+        : starting(false), success(false), id(0), action(NONE) {}
 
     bool                starting;
     bool                success;

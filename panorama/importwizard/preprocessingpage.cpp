@@ -71,6 +71,7 @@ struct PreProcessingPage::PreProcessingPagePriv
           progressLabel(0),
           progressTimer(0),
           canceled(false),
+          nbFilesProcessed(0),
           title(0),
           celesteCheckBox(0),
           detailsBtn(0),

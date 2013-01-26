@@ -63,6 +63,7 @@ struct OptimizePage::OptimizePagePriv
           progressTimer(0),
           canceled(false),
           title(0),
+          preprocessResults(0),
           horizonCheckbox(0),
           projectionAndSizeCheckbox(0),
           detailsBtn(0),

@@ -293,7 +293,7 @@ void ActionThread::slotStarting(Job* j)
     ad.action       = t->action;
     ad.id           = -1;
 
-    if (t->action == NONAFILE || t->action == NONAFILE)
+    if (t->action == NONAFILE)
     {
         CompileMKStepTask* c =  static_cast<CompileMKStepTask*>(j);
         ad.id = c->id;
@@ -318,7 +318,7 @@ void ActionThread::slotStepDone(Job* j)
     ad.success      = t->success();
     ad.message      = t->errString;
 
-    if (t->action == NONAFILE || t->action == NONAFILE)
+    if (t->action == NONAFILE)
     {
         CompileMKStepTask* c =  static_cast<CompileMKStepTask*>(j);
         ad.id = c->id;
@@ -345,7 +345,7 @@ void ActionThread::slotDone(Job* j)
     ad.success      = t->success();
     ad.message      = t->errString;
 
-    if (t->action == NONAFILE || t->action == NONAFILE)
+    if (t->action == NONAFILE)
     {
         CompileMKStepTask* c =  static_cast<CompileMKStepTask*>(j);
         ad.id = c->id;
