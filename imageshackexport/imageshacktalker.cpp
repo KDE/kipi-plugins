@@ -50,16 +50,15 @@ namespace KIPIImageshackExportPlugin
 {
 
 ImageshackTalker::ImageshackTalker(Imageshack* imghack)
+    : m_imageshack(imghack), m_loginInProgress(false), m_job(0),
+    m_state(IMGHCK_DONOTHING)
 {
-    m_job         = 0;
-    m_imageshack  = imghack;
     m_userAgent   = QString("KIPI-Plugin-Imageshack/%1").arg(kipiplugins_version);
     m_photoApiUrl = KUrl("http://www.imageshack.us/upload_api.php");
     m_videoApiUrl = KUrl("http://render.imageshack.us/upload_api.php");
     m_loginApiUrl = KUrl("http://my.imageshack.us/setlogin.php");
     m_galleryUrl  = KUrl("http://www.imageshack.us/gallery_api.php");
     m_appKey      = "YPZ2L9WV2de2a1e08e8fbddfbcc1c5c39f94f92a";
-    m_state       = IMGHCK_DONOTHING;
 }
 
 ImageshackTalker::~ImageshackTalker()

@@ -58,11 +58,10 @@ namespace KIPIImageshackExportPlugin
 {
 
 ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imageshack)
-    : QWidget(parent)
+    : QWidget(parent), m_imageshack(imageshack)
 {
     setObjectName("ImageshackWidget");
 
-    m_imageshack = imageshack;
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 

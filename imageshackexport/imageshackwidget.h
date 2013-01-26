@@ -84,7 +84,6 @@ private:
     KIPIPlugins::KPImagesList* m_imgList;
 
     Imageshack*                m_imageshack;
-    bool                       m_hasAccount;
 
     QLabel*                    m_headerLbl;
     QLabel*                    m_accountNameLbl;
