@@ -1,5 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
+UntranslatedGenericName=Photivo Integration
 Name=Photivo Integration
 Name[ca]=Integració de Photivo
 Name[da]=Photivo-integration

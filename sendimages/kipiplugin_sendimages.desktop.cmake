@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=SendImages
 Name=SendImages
 Name[ast]=SendImages
 Name[bg]=Изпращане на изображения

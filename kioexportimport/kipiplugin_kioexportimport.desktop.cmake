@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=KioExportImport
 Name=KioExportImport
 Name[ast]=KioExportImport
 Name[bg]=Изнасяне и внасяне през Kio

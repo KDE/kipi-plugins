@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Expo Blending
 Name=Expo Blending
 Name[bg]=Сливане на експозиция
 Name[bs]=ExpoBlending

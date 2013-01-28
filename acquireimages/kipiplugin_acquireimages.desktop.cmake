@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=AcquireImages
 Name=AcquireImages
 Name[ast]=AcquireImages
 Name[bg]=Сканиране на снимки

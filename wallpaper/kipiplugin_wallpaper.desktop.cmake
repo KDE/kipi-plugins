@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=WallPaper
 Name=WallPaper
 Name[ar]=الخلفية
 Name[ast]=Fondu d'escritoriu

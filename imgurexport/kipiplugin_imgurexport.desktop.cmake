@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Imgur Export
 Name=Imgur Export
 Name[ca]=Exportador a Imgur
 Name[cs]=Export Imgur

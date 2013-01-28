@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Remote Piwigo Export
 Name=Remote Piwigo Export
 Name[bg]=Изнасяне към Piwigo
 Name[bs]=Udaljeni Piwigo Izvoz

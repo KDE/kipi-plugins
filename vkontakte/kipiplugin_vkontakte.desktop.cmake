@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=VKontakte.ru Exporter
 Name=VKontakte.ru Exporter
 Name[ca]=Exportador a VKontakte.ru
 Name[ca@valencia]=Exportador a VKontakte.ru

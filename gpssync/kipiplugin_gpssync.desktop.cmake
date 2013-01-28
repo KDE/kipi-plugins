@@ -44,6 +44,7 @@ Comment[x-test]=xxA tool to geolocalize picturesxx
 Comment[zh_CN]=一个图片地理化工具
 Comment[zh_TW]=圖片地理定位的工具
 Icon=applications-internet
+UntranslatedGenericName=GPSSync
 Name=GPSSync
 Name[ast]=GPSSync
 Name[bg]=Синхронизиране по GPS

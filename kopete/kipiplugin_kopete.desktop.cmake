@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Instant Messaging Export
 Name=Instant Messaging Export
 Name[bg]=Изнасяне в моментни съобщения
 Name[bs]=Izvoz za instant poruke

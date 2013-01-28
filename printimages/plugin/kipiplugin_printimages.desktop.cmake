@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Print images
 Name=Print images
 Name[ast]=Imprentar imáxenes
 Name[bg]=Отпечатване на изображения

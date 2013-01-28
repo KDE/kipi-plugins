@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Panorama
 Name=Panorama
 Name[bg]=Панорама
 Name[ca]=Panorama

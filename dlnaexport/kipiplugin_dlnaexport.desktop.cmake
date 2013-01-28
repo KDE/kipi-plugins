@@ -1,5 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
+UntranslatedGenericName=DLNAExport
 Name=DLNAExport
 Name[ca]=DLNAExport
 Name[cs]=DLNAExport

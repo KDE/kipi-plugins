@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=JPEGLossless
 Name=JPEGLossless
 Name[ar]=JPEG بدون ضياع
 Name[ast]=JPEGLossless

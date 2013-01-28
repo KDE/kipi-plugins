@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Advanced Slideshow
 Name=Advanced Slideshow
 Name[ast]=Presentación de diapositives avanzaes
 Name[bg]=Подробна прожекция

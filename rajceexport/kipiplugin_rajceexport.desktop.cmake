@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Rajce.net Exporter
 Name=Rajce.net Exporter
 Name[bg]=Изнасяне към Rajce.net
 Name[bs]=Rajce.net izvoznik

@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Shwup Export
 Name=Shwup Export
 Name[ast]=Shwup Export
 Name[bg]=Изнасяне към Shwup

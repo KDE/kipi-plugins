@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=SmugMug Import/Export
 Name=SmugMug Import/Export
 Name[ast]=Importar/esportar SmugMug
 Name[bg]=Внасяне и изнасяне от и към SmugMug

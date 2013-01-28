@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Debian Screenshots Export
 Name=Debian Screenshots Export
 Name[bg]=Изнасяне на снимки на екрана от Debian
 Name[bs]=Izvoz Debian slika ekrana

@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Facebook Import/Export
 Name=Facebook Import/Export
 Name[ast]=Esportador/Importador Facebook
 Name[bg]=Внасяне и изнасяне от Facebook

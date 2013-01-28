@@ -1,5 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
+UntranslatedGenericName=VideoSlideShow
 Name=VideoSlideShow
 Name[ca]=Passi de diapositives
 Name[da]=Video-diasshow

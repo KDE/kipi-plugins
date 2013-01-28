@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=HTML Gallery
 Name=HTML Gallery
 Name[ast]=Galería HTML
 Name[bg]=Галерия в HTML

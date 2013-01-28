@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=RawConverter
 Name=RawConverter
 Name[ast]=RawConverter
 Name[bg]=Конвертор за RAW

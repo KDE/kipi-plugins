@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Yandex.Fotki Exporter
 Name=Yandex.Fotki Exporter
 Name[bg]=Изнасяне към Yandex.Fotki
 Name[bs]=Yandex.Fotki izvoz

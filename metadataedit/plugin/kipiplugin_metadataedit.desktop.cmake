@@ -45,6 +45,7 @@ Comment[x-test]=xxA tool to edit EXIF, IPTC and XMP metadataxx
 Comment[zh_CN]=一个编辑 EXIF、IPTC 和 XMP 元数据的工具
 Comment[zh_TW]=編輯 EXIF、IPTC 和 XMP 中繼資料
 Icon=metadataedit
+UntranslatedGenericName=MetadataEdit
 Name=MetadataEdit
 Name[ast]=MetadataEdit
 Name[bg]=Редактиране на метаданни

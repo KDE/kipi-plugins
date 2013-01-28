@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=MediaWiki Export
 Name=MediaWiki Export
 Name[ca]=Exportador a MediaWiki
 Name[cs]=Export MediaWiki

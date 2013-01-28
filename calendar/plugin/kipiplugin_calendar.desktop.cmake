@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Calendar
 Name=Calendar
 Name[ast]=Calendariu
 Name[bg]=Календар

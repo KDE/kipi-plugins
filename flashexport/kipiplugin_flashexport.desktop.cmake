@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Flash Export
 Name=Flash Export
 Name[ast]=Esportar flash
 Name[bg]=Изнасяне във Flash

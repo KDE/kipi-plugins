@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Flickr/23/Zooomr Exporter
 Name=Flickr/23/Zooomr Exporter
 Name[ast]=Esportador Flickr/23/Zooomr
 Name[bg]=Изнасяне към Flickr, 23 или Zooomr

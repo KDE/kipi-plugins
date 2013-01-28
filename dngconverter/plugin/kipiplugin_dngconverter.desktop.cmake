@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=DNGConverter
 Name=DNGConverter
 Name[ast]=DNGConverter
 Name[bg]=Конвертор към DNG

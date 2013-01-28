@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=BatchProcessImages
 Name=BatchProcessImages
 Name[ast]=BatchProcessImages
 Name[bg]=Пакетна обработка на изображения

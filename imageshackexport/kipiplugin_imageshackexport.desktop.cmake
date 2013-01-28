@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Imageshack Export
 Name=Imageshack Export
 Name[ca]=Exportador a Imageshack
 Name[cs]=Export do Imageshacku

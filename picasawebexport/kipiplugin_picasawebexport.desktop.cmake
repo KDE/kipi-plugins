@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Picasaweb Exporter
 Name=Picasaweb Exporter
 Name[ast]=Esportador Picasaweb
 Name[bg]=Изнасяне към Picasaweb

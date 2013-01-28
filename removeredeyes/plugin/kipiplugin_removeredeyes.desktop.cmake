@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Remove Red Eyes
 Name=Remove Red Eyes
 Name[ast]=Desanicia los güeyos bermeyos
 Name[bg]=Премахване на червени очи

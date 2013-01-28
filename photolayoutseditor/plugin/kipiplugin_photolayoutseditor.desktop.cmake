@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Photo Layouts Editor
 Name=Photo Layouts Editor
 Name[ca]=Editor de presentacions de foto
 Name[ca@valencia]=Editor de formats de foto

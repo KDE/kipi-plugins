@@ -27,6 +27,7 @@ Comment[uk]=Додаток для створення файлів KML для п�
 Comment[x-test]=xxA plugin to create KML files to present images with coordinates.xx
 Comment[zh_TW]=建立 KML 檔來將影像展示在座標軸上的外掛程式。
 Icon=applications-development-web
+UntranslatedGenericName=KMLExport
 Name=KMLExport
 Name[bg]=Изнасяне в KML
 Name[bs]=KMLExport

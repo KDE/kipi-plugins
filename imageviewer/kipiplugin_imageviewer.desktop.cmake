@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Imageviewer
 Name=Imageviewer
 Name[ast]=Imageviewer
 Name[bg]=Преглед на изображения

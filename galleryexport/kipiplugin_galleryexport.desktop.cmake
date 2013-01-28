@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=Remote Gallery Export
 Name=Remote Gallery Export
 Name[ast]=Exportador de galería remota
 Name[bg]=Изнасяне към Gallery

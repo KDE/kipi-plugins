@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=iPodExport
 Name=iPodExport
 Name[ast]=iPodExport
 Name[bg]=Изнасяне към iPod

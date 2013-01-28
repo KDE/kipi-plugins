@@ -1,4 +1,5 @@
 [Desktop Entry]
+UntranslatedGenericName=TimeDateAdjust
 Name=TimeDateAdjust
 Name[ar]=ضبط‌التاريخ‌الوقت
 Name[ast]=TimeDateAdjust
