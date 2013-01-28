@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=Photivo Integration
 Name[ca]=Integració de Photivo
 Name[da]=Photivo-integration
+Name[de]=Photivo-Einbindung
 Name[el]=Ενσωμάτωση Photivo
 Name[es]=Integración con Photivo
 Name[et]=Photivo lõimimine
