@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici@gmail.com>
+ * Copyright (C) 2011-2013 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -73,11 +73,12 @@ public:
         totalActions = 0;
         action       = 0;
         canceled     = true;
-//        dataLocal    = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/simpleviewer/", true);
         tempDir      = 0;
         interface    = 0;
         progressWdg  = 0;
         settings     = 0;
+        width        = 0;
+        height       = 0;
     }
 
     bool                              canceled;
@@ -705,6 +706,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
             QDomText captiontxt1  = xmlDoc.createTextNode(comment+keywords);
             caption1.appendChild(captiontxt1);
+            break;
         }
 
         case 3: //PostcardViewer
@@ -721,7 +723,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
             img.appendChild( caption2 );
             QDomText captiontxt2 = xmlDoc.createTextNode(comment+keywords);
             caption2.appendChild(captiontxt2);
-        break;
+            break;
         }
 
         default:
@@ -986,6 +988,10 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
         return false;
 
     const KArchiveFile* entryFile = dynamic_cast<const KArchiveFile*>(entry);
+
+    if(entryFile == NULL)
+        return false;
+
     QByteArray array              = entryFile->data();
 
     QFile file( d->dataLocal + entry->name() );

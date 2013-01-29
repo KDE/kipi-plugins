@@ -6,7 +6,7 @@
  * Date        : 2011-09-13
  * Description : a plugin to export images to flash
  *
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
+ * Copyright (C) 2011-2013 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,6 +55,7 @@ public:
         imageCollectionSelector = 0;
         imageList               = 0;
         vbox                    = 0;
+        manager                 = 0;
     }
 
     ImageCollectionSelector* imageCollectionSelector;
