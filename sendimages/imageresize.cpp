@@ -6,7 +6,7 @@
  * Date        : 2007-11-09
  * Description : a class to resize image in a separate thread.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
@@ -192,6 +192,7 @@ bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
             QByteArray data((const char*)img.bits(), img.numBytes());
             KPWriteImage wImageIface;
             wImageIface.setImageData(data, img.width(), img.height(), false, true, QByteArray(), meta);
+
             if ( !wImageIface.write2PNG(destPath) )
             {
                 err = i18n("Cannot save resized image (PNG). Aborting.");
@@ -226,11 +227,11 @@ void ImageResize::resize(const EmailSettings& settings)
     int i                     = 1;
 
     for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
-            it != settings.itemsList.constEnd(); ++it)
+         it != settings.itemsList.constEnd(); ++it)
     {
         QString tmp;
 
-        Task* t       = new Task(this, m_count);
+        Task* const t = new Task(this, m_count);
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 

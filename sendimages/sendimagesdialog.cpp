@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : a dialog to edit EXIF metadata
  *
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006      by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006      by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -58,12 +58,12 @@
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialog::SendImagesDialogPrivate
+class SendImagesDialog::Private
 {
 
 public:
 
-    SendImagesDialogPrivate()
+    Private()
     {
         imagesList     = 0;
         settingsWidget = 0;
@@ -76,7 +76,7 @@ public:
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& urls)
-    : KPToolDialog(0), d(new SendImagesDialogPrivate)
+    : KPToolDialog(0), d(new Private)
 {
     d->urls = urls;
 
@@ -106,7 +106,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
                              0,
                              KAboutData::License_GPL,
                              ki18n("A plugin to e-mail items"),
-                             ki18n("(c) 2003-2012, Gilles Caulier"));
+                             ki18n("(c) 2003-2013, Gilles Caulier"));
 
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                      "caulier dot gilles at gmail dot com");
@@ -165,7 +165,7 @@ void SendImagesDialog::slotOk()
 EmailSettings SendImagesDialog::emailSettings() const
 {
     EmailSettings settings = d->settingsWidget->emailSettings(); 
-    settings.itemsList              = d->imagesList->imagesList(); 
+    settings.itemsList     = d->imagesList->imagesList();
     return settings;
 }
 

@@ -6,7 +6,7 @@
  * Date        : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2006      by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006      by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
@@ -61,17 +61,18 @@ using namespace KIPIPlugins;
 namespace KIPISendimagesPlugin
 {
 
-class SendImages::SendImagesPriv
+class SendImages::Private
 {
 public:
 
-    SendImagesPriv()
+    Private()
     {
-        cancel           = false;
-        threadImgResize  = 0;
-        progressDlg      = 0;
-        iface            = 0;
-        PluginLoader* pl = PluginLoader::instance();
+        cancel                 = false;
+        threadImgResize        = 0;
+        progressDlg            = 0;
+        iface                  = 0;
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -93,7 +94,7 @@ public:
 };
 
 SendImages::SendImages(const EmailSettings& settings, QObject* const parent)
-    : QObject(parent), d(new SendImagesPriv)
+    : QObject(parent), d(new Private)
 {
     d->settings        = settings;
     d->threadImgResize = new ImageResize(this);
@@ -133,6 +134,7 @@ void SendImages::firstStage()
 
     QDir tmp(d->settings.tempPath);
     QStringList folders = tmp.absolutePath().split('/', QString::SkipEmptyParts);
+
     if (!folders.isEmpty())
     {
         d->settings.tempFolderName = folders.last();
@@ -165,6 +167,7 @@ void SendImages::firstStage()
             d->attachementFiles.append(item.orgUrl);
             d->settings.setEmailUrl(item.orgUrl, item.orgUrl);
         }
+
         d->progressDlg->progressWidget()->setProgress(50, 100);
         secondStage();
     }
@@ -301,6 +304,7 @@ bool SendImages::showFailedResizedImages() const
     if (!d->failedResizedImages.isEmpty())
     {
         QStringList list;
+
         for (KUrl::List::const_iterator it = d->failedResizedImages.constBegin();
             it != d->failedResizedImages.constEnd(); ++it)
         {
@@ -325,6 +329,7 @@ bool SendImages::showFailedResizedImages() const
                     d->attachementFiles.append(*it);
                     d->settings.setEmailUrl(*it, *it);
                 }
+
                 break;
             }
             case KMessageBox::No:
@@ -391,6 +396,7 @@ bool SendImages::invokeMailAgent()
 
     bool       agentInvoked = false;
     KUrl::List fileList;
+
     do
     {
         fileList = divideEmails();
@@ -398,6 +404,7 @@ bool SendImages::invokeMailAgent()
         if (!fileList.isEmpty())
         {
             QStringList stringFileList;
+
             foreach( const KUrl& file, fileList)
             {
                 stringFileList << file.path();

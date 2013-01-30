@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,11 +50,11 @@ namespace KIPISendimagesPlugin
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
 K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
 
-class Plugin_SendImages::Plugin_SendImagesPriv
+class Plugin_SendImages::Private
 {
 public:
 
-    Plugin_SendImagesPriv()
+    Private()
     {
         dialog              = 0;
         action_sendimages   = 0;
@@ -70,7 +70,7 @@ public:
 
 Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
     : Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
-      d(new Plugin_SendImagesPriv)
+      d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
 
@@ -89,7 +89,8 @@ void Plugin_SendImages::setup(QWidget* const widget)
 
     setupActions();
 
-    Interface* iface = interface();
+    Interface* const iface = interface();
+
     if (!iface)
     {
         kError() << "Kipi interface is null!";
@@ -119,7 +120,8 @@ void Plugin_SendImages::setupActions()
 
 void Plugin_SendImages::slotActivate()
 {
-    Interface* iface = interface();
+    Interface* const iface = interface();
+
     if (!iface)
     {
        kError() << "Kipi interface is null!";
@@ -142,7 +144,8 @@ void Plugin_SendImages::slotActivate()
 
 void Plugin_SendImages::slotPrepareEmail()
 {
-    Interface* interface = dynamic_cast<Interface*>(parent());
+    Interface* const interface = dynamic_cast<Interface*>(parent());
+
     if (!interface)
     {
        kError() << "Kipi interface is null!";
