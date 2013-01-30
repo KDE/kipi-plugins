@@ -47,10 +47,10 @@ class SmugTalker : public QObject
 
 public:
 
-    SmugTalker(QWidget* parent);
+    SmugTalker(QWidget* const parent);
     ~SmugTalker();
 
-    SmugUser    getUser() const;
+    SmugUser getUser() const;
 
     bool    loggedIn() const;
     void    cancel();
@@ -94,7 +94,6 @@ Q_SIGNALS:
                                      const QList <SmugCategory>& categoriesList);
 
 private:
-
 
     QString htmlToText(const QString& htmlText);
     QString errorToText(int errCode, const QString& errMsg);

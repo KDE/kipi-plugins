@@ -57,6 +57,8 @@ public:
     int         fileSizeLimit;
 };
 
+// ---------------------------------------------------------------------------------
+
 class SmugAlbum
 {
 
@@ -64,11 +66,12 @@ public:
 
     SmugAlbum()
     {
-        id = -1;
-        categoryID = -1;
+        id            = -1;
+        categoryID    = -1;
         subCategoryID = -1;
-        tmplID = -1;
-        isPublic = true;
+        tmplID        = -1;
+        isPublic      = true;
+        imageCount    = 0;
     }
 
     int     id;
@@ -95,6 +98,8 @@ public:
     QString tmpl;
 };
 
+// ---------------------------------------------------------------------------------
+
 class SmugPhoto
 {
 
@@ -115,6 +120,8 @@ public:
     QString originalURL;
 };
 
+// ---------------------------------------------------------------------------------
+
 class SmugAlbumTmpl
 {
 
@@ -122,7 +129,7 @@ public:
 
     SmugAlbumTmpl()
     {
-        id = -1;
+        id       = -1;
         isPublic = true;
     }
 
@@ -133,6 +140,8 @@ public:
     QString password;
     QString passwordHint;
 };
+
+// ---------------------------------------------------------------------------------
 
 class SmugCategory
 {

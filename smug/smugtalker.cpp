@@ -48,11 +48,11 @@
 namespace KIPISmugPlugin
 {
 
-SmugTalker::SmugTalker(QWidget* parent)
+SmugTalker::SmugTalker(QWidget* const parent)
 {
-    m_parent = parent;
-    m_job    = 0;
-
+    m_parent     = parent;
+    m_job        = 0;
+    m_state      = SMUG_LOGOUT;
     m_userAgent  = QString("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion = "1.2.0";
     m_apiURL     = QString("https://api.smugmug.com/hack/rest/%1/").arg(m_apiVersion);
@@ -96,10 +96,12 @@ void SmugTalker::login(const QString& email, const QString& password)
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
     emit signalLoginProgress(1, 4, i18n("Logging in to SmugMug service..."));
 
     KUrl url(m_apiURL);
+
     if (email.isEmpty()) 
     {
         url.addQueryItem("method", "smugmug.login.anonymously");
@@ -114,7 +116,7 @@ void SmugTalker::login(const QString& email, const QString& password)
     }
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -139,6 +141,7 @@ void SmugTalker::logout()
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -146,7 +149,7 @@ void SmugTalker::logout()
     url.addQueryItem("SessionID", m_sessionID);
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -170,6 +173,7 @@ void SmugTalker::listAlbums(const QString& nickName)
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -180,7 +184,7 @@ void SmugTalker::listAlbums(const QString& nickName)
         url.addQueryItem("NickName", nickName);
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -205,6 +209,7 @@ void SmugTalker::listPhotos(int albumID,
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -212,13 +217,15 @@ void SmugTalker::listPhotos(int albumID,
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("AlbumID", QString::number(albumID));
     url.addQueryItem("Heavy", "1");
+
     if (!albumPassword.isEmpty())
         url.addQueryItem("Password", albumPassword);
+
     if (!sitePassword.isEmpty())
         url.addQueryItem("SitePassword", sitePassword);
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -241,6 +248,7 @@ void SmugTalker::listAlbumTmpl()
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -248,7 +256,7 @@ void SmugTalker::listAlbumTmpl()
     url.addQueryItem("SessionID", m_sessionID);
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -271,6 +279,7 @@ void SmugTalker::listCategories()
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -278,7 +287,7 @@ void SmugTalker::listCategories()
     url.addQueryItem("SessionID", m_sessionID);
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -301,6 +310,7 @@ void SmugTalker::listSubCategories(int categoryID)
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -309,7 +319,7 @@ void SmugTalker::listSubCategories(int categoryID)
     url.addQueryItem("CategoryID", QString::number(categoryID));
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -332,6 +342,7 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     KUrl url(m_apiURL);
@@ -339,10 +350,13 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("Title", album.title);
     url.addQueryItem("CategoryID", QString::number(album.categoryID));
+
     if (album.subCategoryID > 0)
         url.addQueryItem("SubCategoryID", QString::number(album.subCategoryID));
+
     if (!album.description.isEmpty())
         url.addQueryItem("Description", album.description);
+
     if (album.tmplID > 0)
     {
         // template will also define privacy settings
@@ -361,7 +375,7 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
     }
 
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -385,17 +399,20 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID,
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
     QString imgName = QFileInfo(imgPath).fileName();
     // load temporary image to buffer
     QFile imgFile(imgPath);
+
     if (!imgFile.open(QIODevice::ReadOnly))
     {
         emit signalBusy(false);
         return false;
     }
-    long long imgSize = imgFile.size();
+
+    long long imgSize  = imgFile.size();
     QByteArray imgData = imgFile.readAll();
     imgFile.close();
     KMD5 imgMD5(imgData);
@@ -406,6 +423,7 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID,
     form.addPair("MD5Sum", QString(imgMD5.hexDigest()));
     form.addPair("AlbumID", QString::number(albumID));
     form.addPair("ResponseType", "REST");
+
     if (!caption.isEmpty())
         form.addPair("Caption", caption);
 
@@ -416,8 +434,7 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID,
 
     QString customHdr;
     KUrl url("http://upload.smugmug.com/photos/xmladd.mg");
-    KIO::TransferJob *job = KIO::http_post(url, form.formData(),
-            KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("UserAgent", m_userAgent);
     customHdr += "X-Smug-SessionID: " + m_sessionID + "\r\n";
@@ -443,9 +460,10 @@ void SmugTalker::getPhoto(const QString& imgPath)
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
-    KIO::TransferJob* job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -497,8 +515,8 @@ QString SmugTalker::errorToText(int errCode, const QString &errMsg)
 
 void SmugTalker::slotResult(KJob* kjob)
 {
-    m_job         = 0;
-    KIO::Job* job = static_cast<KIO::Job*>(kjob);
+    m_job               = 0;
+    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
     {
@@ -526,6 +544,7 @@ void SmugTalker::slotResult(KJob* kjob)
             job->ui()->setWindow(m_parent);
             job->ui()->showErrorMessage();
         }
+
         return;
     }
 
@@ -572,13 +591,16 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     QString errMsg;
 
     emit signalLoginProgress(3);
+
     QDomDocument doc("login");
+
     if (!doc.setContent(data))
         return;
 
     kDebug() << "Parse Login response:" << endl << data;
 
     QDomElement e = doc.documentElement();
+
     for (QDomNode node = e.firstChild();
          !node.isNull();
          node = node.nextSibling())
@@ -590,12 +612,10 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
 
         if (e.tagName() == "Login")
         {
-            m_user.accountType = e.attribute("AccountType");
+            m_user.accountType   = e.attribute("AccountType");
             m_user.fileSizeLimit = e.attribute("FileSizeLimit").toInt();
 
-            for (QDomNode nodeL = e.firstChild();
-                 !nodeL.isNull();
-                 nodeL = nodeL.nextSibling())
+            for (QDomNode nodeL = e.firstChild(); !nodeL.isNull(); nodeL = nodeL.nextSibling())
             {
                 if (!nodeL.isElement())
                     continue;
@@ -608,7 +628,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
                 }
                 else if (e.tagName() == "User")
                 {
-                    m_user.nickName = e.attribute("NickName");
+                    m_user.nickName    = e.attribute("NickName");
                     m_user.displayName = e.attribute("DisplayName");
                 }
             }
@@ -623,6 +643,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     }
 
     emit signalLoginProgress(4);
+
     if (errCode != 0) // if login failed, reset user properties
     {
         m_sessionID.clear();
@@ -639,15 +660,15 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     QString errMsg;
 
     QDomDocument doc("logout");
+
     if (!doc.setContent(data))
         return;
 
     kDebug() << "Parse Logout response:" << endl << data;
 
     QDomElement e = doc.documentElement();
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-        node = node.nextSibling())
+
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -661,7 +682,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
@@ -697,12 +718,14 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("addphoto");
+
     if (!doc.setContent(data))
         return;
 
     kDebug() << "Parse Add Photo response:" << endl << data;
 
     QDomElement document = doc.documentElement();
+
     if (document.tagName() == "rsp")
     {
         kDebug() << "rsp stat: " << document.attribute("stat");
@@ -721,7 +744,7 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
     else
     {
         errCode = -2;
-        errMsg = "Malformed response from smugmug: " + document.tagName();
+        errMsg  = "Malformed response from smugmug: " + document.tagName();
         kDebug() << "Error:" << errCode << errMsg;
     }
 
@@ -734,18 +757,16 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("createalbum");
+
     if (!doc.setContent(data))
         return;
-
 
     kDebug() << "Parse Create Album response:" << endl << data;
 
     int newAlbumID = -1;
     QDomElement e  = doc.documentElement();
 
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -762,7 +783,7 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
@@ -777,6 +798,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("albums.get");
+
     if (!doc.setContent(data))
         return;
 
@@ -784,9 +806,8 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
     QList <SmugAlbum> albumsList;
     QDomElement e = doc.documentElement();
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -795,9 +816,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
         if (e.tagName() == "Albums")
         {
-            for (QDomNode nodeA = e.firstChild();
-                 !nodeA.isNull();
-                 nodeA = nodeA.nextSibling())
+            for (QDomNode nodeA = e.firstChild(); !nodeA.isNull(); nodeA = nodeA.nextSibling())
             {
                 if (!nodeA.isElement())
                     continue;
@@ -807,19 +826,17 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                 if (e.tagName() == "Album")
                 {
                     SmugAlbum album;
-                    album.id = e.attribute("id").toInt();
-                    album.key = e.attribute("Key");
-                    album.title = htmlToText(e.attribute("Title"));
-                    album.description = htmlToText(e.attribute("Description"));
-                    album.keywords = htmlToText(e.attribute("Keywords"));
-                    album.isPublic = e.attribute("Public") == "1";
-                    album.password = htmlToText(e.attribute("Password"));
+                    album.id           = e.attribute("id").toInt();
+                    album.key          = e.attribute("Key");
+                    album.title        = htmlToText(e.attribute("Title"));
+                    album.description  = htmlToText(e.attribute("Description"));
+                    album.keywords     = htmlToText(e.attribute("Keywords"));
+                    album.isPublic     = e.attribute("Public") == "1";
+                    album.password     = htmlToText(e.attribute("Password"));
                     album.passwordHint = htmlToText(e.attribute("PasswordHint"));
-                    album.imageCount = e.attribute("ImageCount").toInt();
+                    album.imageCount   = e.attribute("ImageCount").toInt();
 
-                    for (QDomNode nodeC = e.firstChild();
-                         !nodeC.isNull();
-                         nodeC = node.nextSibling())
+                    for (QDomNode nodeC = e.firstChild(); !nodeC.isNull(); nodeC = node.nextSibling())
                     {
                         if (!nodeC.isElement())
                             continue;
@@ -840,6 +857,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                     albumsList.append(album);
                 }
             }
+
             errCode = 0;
         }
         else if (e.tagName() == "err")
@@ -854,8 +872,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
         errCode = 0;
 
     emit signalBusy(false);
-    emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
-                              albumsList);
+    emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg), albumsList);
 }
 
 void SmugTalker::parseResponseListPhotos(const QByteArray& data)
@@ -863,6 +880,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("images.get");
+
     if (!doc.setContent(data))
         return;
 
@@ -871,9 +889,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
     QList <SmugPhoto> photosList;
     QDomElement e = doc.documentElement();
 
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -882,9 +898,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 
         if (e.tagName() == "Images")
         {
-            for (QDomNode nodeP = e.firstChild();
-                 !nodeP.isNull();
-                 nodeP = nodeP.nextSibling())
+            for (QDomNode nodeP = e.firstChild(); !nodeP.isNull(); nodeP = nodeP.nextSibling())
             {
                 if (!nodeP.isElement())
                     continue;
@@ -894,11 +908,12 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
                 if (e.tagName() == "Image")
                 {
                     SmugPhoto photo;
-                    photo.id = e.attribute("id").toInt();
-                    photo.key = e.attribute("Key");
-                    photo.caption = htmlToText(e.attribute("Caption"));
+                    photo.id       = e.attribute("id").toInt();
+                    photo.key      = e.attribute("Key");
+                    photo.caption  = htmlToText(e.attribute("Caption"));
                     photo.keywords = htmlToText(e.attribute("Keywords"));
                     photo.thumbURL = e.attribute("ThumbURL");
+
                     // try to get largest size available
                     if (e.hasAttribute("Video1280URL"))
                         photo.originalURL = e.attribute("Video1280URL");
@@ -922,9 +937,11 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
                         photo.originalURL = e.attribute("MediumURL");
                     else if (e.hasAttribute("SmallURL"))
                         photo.originalURL = e.attribute("SmallURL");
+
                     photosList.append(photo);
                 }
             }
+
             errCode = 0;
         }
         else if (e.tagName() == "err")
@@ -937,9 +954,9 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+
     emit signalBusy(false);
-    emit signalListPhotosDone(errCode, errorToText(errCode, errMsg),
-                              photosList);
+    emit signalListPhotosDone(errCode, errorToText(errCode, errMsg), photosList);
 }
 
 void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
@@ -947,6 +964,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("albumtemplates.get");
+
     if (!doc.setContent(data))
         return;
 
@@ -954,9 +972,8 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
 
     QList<SmugAlbumTmpl> albumTList;
     QDomElement e = doc.documentElement();
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -965,9 +982,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
 
         if (e.tagName() == "AlbumTemplates")
         {
-            for (QDomNode nodeT = e.firstChild();
-                 !nodeT.isNull();
-                 nodeT = nodeT.nextSibling())
+            for (QDomNode nodeT = e.firstChild(); !nodeT.isNull(); nodeT = nodeT.nextSibling())
             {
                 if (!nodeT.isElement())
                     continue;
@@ -977,14 +992,15 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
                 if (e.tagName() == "AlbumTemplate")
                 {
                     SmugAlbumTmpl tmpl;
-                    tmpl.id = e.attribute("id").toInt();
-                    tmpl.name = htmlToText(e.attribute("AlbumTemplateName"));
-                    tmpl.isPublic = e.attribute("Public") == "1";
-                    tmpl.password = htmlToText(e.attribute("Password"));
+                    tmpl.id           = e.attribute("id").toInt();
+                    tmpl.name         = htmlToText(e.attribute("AlbumTemplateName"));
+                    tmpl.isPublic     = e.attribute("Public") == "1";
+                    tmpl.password     = htmlToText(e.attribute("Password"));
                     tmpl.passwordHint = htmlToText(e.attribute("PasswordHint"));
                     albumTList.append(tmpl);
                 }
             }
+
             errCode = 0;
         }
         else if (e.tagName() == "err")
@@ -999,8 +1015,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
         errCode = 0;
 
     emit signalBusy(false);
-    emit signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg),
-                                 albumTList);
+    emit signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg), albumTList);
 }
 
 void SmugTalker::parseResponseListCategories(const QByteArray& data)
@@ -1008,6 +1023,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("categories.get");
+
     if (!doc.setContent(data))
         return;
 
@@ -1016,9 +1032,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
 
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -1027,9 +1041,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
 
         if (e.tagName() == "Categories")
         {
-            for (QDomNode nodeC = e.firstChild();
-                 !nodeC.isNull();
-                 nodeC = nodeC.nextSibling())
+            for (QDomNode nodeC = e.firstChild(); !nodeC.isNull(); nodeC = nodeC.nextSibling())
             {
                 if (!nodeC.isElement())
                     continue;
@@ -1039,11 +1051,12 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
                 if (e.tagName() == "Category")
                 {
                     SmugCategory category;
-                    category.id = e.attribute("id").toInt();
+                    category.id   = e.attribute("id").toInt();
                     category.name = htmlToText(e.attribute("Title")); // Name in 1.2.1
                     categoriesList.append(category);
                 }
             }
+
             errCode = 0;
         }
         else if (e.tagName() == "err")
@@ -1058,8 +1071,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
         errCode = 0;
 
     emit signalBusy(false);
-    emit signalListCategoriesDone(errCode, errorToText(errCode, errMsg),
-                                  categoriesList);
+    emit signalListCategoriesDone(errCode, errorToText(errCode, errMsg), categoriesList);
 }
 
 void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
@@ -1067,6 +1079,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("subcategories.get");
+
     if (!doc.setContent(data))
         return;
 
@@ -1075,9 +1088,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
 
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+    for (QDomNode node = e.firstChild(); !node.isNull(); node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
@@ -1086,9 +1097,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 
         if (e.tagName() == "SubCategories")
         {
-            for (QDomNode nodeC = e.firstChild();
-                 !nodeC.isNull();
-                 nodeC = nodeC.nextSibling())
+            for (QDomNode nodeC = e.firstChild(); !nodeC.isNull(); nodeC = nodeC.nextSibling())
             {
                 if (!nodeC.isElement())
                     continue;
@@ -1098,17 +1107,18 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
                 if (e.tagName() == "SubCategory")
                 {
                     SmugCategory category;
-                    category.id = e.attribute("id").toInt();
+                    category.id   = e.attribute("id").toInt();
                     category.name = htmlToText(e.attribute("Title")); // Name in 1.2.1
                     categoriesList.append(category);
                 }
             }
+
             errCode = 0;
         }
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
@@ -1117,8 +1127,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
         errCode = 0;
 
     emit signalBusy(false);
-    emit signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg),
-                                     categoriesList);
+    emit signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg), categoriesList);
 }
 
 
