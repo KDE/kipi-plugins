@@ -6,7 +6,7 @@
  * Date        : 2003-05-16
  * Description : a plugin to acquire image using flat scanner.
  *
- * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -57,7 +57,7 @@ K_PLUGIN_FACTORY(AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>();)
 K_EXPORT_PLUGIN(AcquireImagesFactory("kipiplugin_acquireimages"))
 
 Plugin_AcquireImages::Plugin_AcquireImages(QObject* const parent, const QVariantList&)
-    : KIPI::Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
+    : Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
     m_action_scanimages = 0;
     m_parentWidget      = 0;
@@ -76,7 +76,7 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 void Plugin_AcquireImages::setup(QWidget* const widget)
 {
     m_parentWidget = widget;
-    KIPI::Plugin::setup(m_parentWidget);
+    Plugin::setup(m_parentWidget);
     setupActions();
 
     if (!interface())

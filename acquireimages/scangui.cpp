@@ -6,7 +6,7 @@
  * Date        : 2008-09-30
  * Description : stand alone Scanner interface.
  *
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,7 +48,7 @@ using namespace KSaneIface;
 
 int main(int argc, char* argv[])
 {
-    ScanDialogAboutData* aboutData = new ScanDialogAboutData;
+    ScanDialogAboutData* const aboutData = new ScanDialogAboutData;
     aboutData->setAppName("scangui");
     aboutData->setCatalogName("kipiplugin_acquireimages");
     KCmdLineArgs::init(argc, argv, aboutData);
@@ -58,11 +58,13 @@ int main(int argc, char* argv[])
     KApplication app;
     aboutData->setProgramLogo(KIcon("scanner"));
 
-    KSaneWidget* saneWidget = new KSaneWidget(0);
+    KSaneWidget* const saneWidget = new KSaneWidget(0);
+
     if (!saneWidget)
       return -1;
 
     QString dev = saneWidget->selectDevice(0);
+
     if (dev.isEmpty())
         return -1;
 
@@ -73,7 +75,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    ScanDialog* dlg = new ScanDialog(saneWidget, app.activeWindow(), aboutData);
+    ScanDialog* const dlg = new ScanDialog(saneWidget, app.activeWindow(), aboutData);
     app.setTopWidget(dlg);
     dlg->show();
 

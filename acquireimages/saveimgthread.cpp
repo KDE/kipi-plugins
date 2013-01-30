@@ -6,7 +6,7 @@
  * Date        : 2009-10-11
  * Description : save image thread
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,12 +47,16 @@ using namespace KIPIPlugins;
 namespace KIPIAcquireImagesPlugin
 {
 
-class SaveImgThread::SaveImgThreadPriv
+class SaveImgThread::Private
 {
 public:
 
-    SaveImgThreadPriv()
+    Private()
     {
+        width        = 0;
+        height       = 0;
+        bytesPerLine = 0;
+        frmt         = 0;
     }
 
     int        width;
@@ -71,8 +75,8 @@ public:
     KUrl       newUrl;
 };
 
-SaveImgThread::SaveImgThread(QObject* parent)
-    : QThread(parent), d(new SaveImgThreadPriv)
+SaveImgThread::SaveImgThread(QObject* const parent)
+    : QThread(parent), d(new Private)
 {
 }
 
@@ -122,8 +126,10 @@ void SaveImgThread::run()
     KPMetadata meta;
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(d->img.size());
+
     if (d->format != QString("JPEG"))
         meta.setImagePreview(prev);
+
     meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
     meta.setExifTagString("Exif.Image.Make",  d->make);
@@ -135,6 +141,7 @@ void SaveImgThread::run()
     meta.setImageColorWorkSpace(KPMetadata::WORKSPACE_SRGB);
 
     KPWriteImage wImageIface;
+
     if (d->frmt != KSaneIface::KSaneWidget::FormatRGB_16_C)
     {
         QByteArray data((const char*)d->img.bits(), d->img.numBytes());
@@ -146,9 +153,9 @@ void SaveImgThread::run()
         wImageIface.setImageData(d->ksaneData, d->width, d->height, true, false, prof, meta);
     }
 
-    bool ret = false;
-
+    bool    ret = false;
     QString path;
+
     if(d->newUrl.isLocalFile())
         path = d->newUrl.toLocalFile();
     else
