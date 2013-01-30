@@ -38,4 +38,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 025 ==> 309339 - Panorama stitching - minor quality of resolution 150.
 026 ==> 313672 - Object::connect: No such slot KIPIPicasawebExportPlugin::PicasawebWidget::slotAnonymousToggled(bool).
 027 ==> 221202 - Export html exif IPTC name data.
-028 ==> 
+028 ==> 314117 - Segmentation fault on launching import from scanner.
+029 ==> 
