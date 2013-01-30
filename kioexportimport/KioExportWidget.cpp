@@ -51,9 +51,10 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
 {
     // setup kio target selection
 
-    KHBox* hbox   = new KHBox(this);
-    QLabel* label = new QLabel(hbox);
-    m_targetLabel = new KUrlComboRequester(hbox);
+    KHBox* const hbox   = new KHBox(this);
+    QLabel* const label = new QLabel(hbox);
+    m_targetLabel       = new KUrlComboRequester(hbox);
+    m_targetDialog      = 0;
 
     if(m_targetLabel->button())
         m_targetLabel->button()->hide();
@@ -77,7 +78,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     m_imageList->loadImagesFromCurrentSelection();
 
     // layout dialog
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout* const layout = new QVBoxLayout(this);
 
     layout->addWidget(hbox);
     layout->addWidget(m_targetSearchButton);
@@ -110,6 +111,7 @@ KUrl KioExportWidget::targetUrl() const
 KUrl::List KioExportWidget::history() const
 {
     KUrl::List urls;
+
     for (int i=0; i <= m_targetLabel->comboBox()->count(); i++)
         urls << m_targetLabel->comboBox()->itemText(i);
 
@@ -157,6 +159,7 @@ void KioExportWidget::updateTargetLabel()
              << m_targetUrl.isValid();
 
     QString urlString = '<' + i18n("not selected") + '>';
+
     if (m_targetUrl.isValid())
     {
         urlString = m_targetUrl.prettyUrl();
