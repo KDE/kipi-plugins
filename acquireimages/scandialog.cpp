@@ -103,6 +103,9 @@ ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/,
 
     connect(d->saveThread, SIGNAL(signalComplete(KUrl, bool)),
             this, SLOT(slotThreadDone(KUrl, bool)));
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotCloseClicked()));
 }
 
 ScanDialog::~ScanDialog()
@@ -130,6 +133,12 @@ void ScanDialog::closeEvent(QCloseEvent *e)
     d->saneWidget->closeDevice();
     saveSettings();
     e->accept();
+}
+
+void ScanDialog::slotCloseClicked()
+{
+    d->saneWidget->closeDevice();
+    saveSettings();
 }
 
 void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, int bytes_per_line, int ksaneformat)

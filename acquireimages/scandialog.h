@@ -63,6 +63,7 @@ private Q_SLOTS:
 
     void slotSaveImage(QByteArray&, int, int, int, int);
     void slotThreadDone(const KUrl&, bool);
+    void slotCloseClicked();
 
 private:
 
