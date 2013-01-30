@@ -54,7 +54,14 @@ KPBinaryIface::KPBinaryIface(const QString& binaryName, const QString& minimalVe
       m_isFound(false), 
       m_developmentVersion(false),
       m_version(""), 
-      m_pathDir("")
+      m_pathDir(""),
+      m_pathWidget(0),
+      m_binaryLabel(0),
+      m_versionLabel(0),
+      m_pathButton(0),
+      m_downloadButton(0),
+      m_lineEdit(0),
+      m_statusIcon(0)
 {
 }
 

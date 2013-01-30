@@ -393,7 +393,28 @@ class KPPreviewImage::KPPreviewImagePriv
 
 public:
 
-    enum 
+    KPPreviewImagePriv()
+        : mouseDragAction(NONE),
+          lastdx(0),
+          lastdy(0),
+          scene(0),
+          pixmapItem(0),
+          selection(0),
+          enableSelection(false),
+          mouseZone(KPSelectionItem::None),
+          zoomInAction(0),
+          zoomOutAction(0),
+          zoom2FitAction(0),
+          toolBar(0),
+          highLightLeft(0),
+          highLightRight(0),
+          highLightTop(0),
+          highLightBottom(0),
+          highLightArea(0)
+    {
+    }
+
+    enum
     {
         NONE,
         LOOKAROUND,
@@ -402,18 +423,6 @@ public:
         MOVESELECTION
     }
     mouseDragAction;
-
-public:
-
-    KPPreviewImagePriv()
-    {
-        pixmapItem     = 0;
-        scene          = 0;
-        zoomInAction   = 0;
-        zoomOutAction  = 0;
-        zoom2FitAction = 0;
-        toolBar        = 0;
-    }
 
     int                         lastdx;
     int                         lastdy;
