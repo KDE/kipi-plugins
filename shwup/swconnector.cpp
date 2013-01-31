@@ -67,10 +67,11 @@ bool operator< (const SwAlbum& first, const SwAlbum& second)
     return first.title < second.title;
 }
 
-SwConnector::SwConnector(QWidget* parent)
+SwConnector::SwConnector(QWidget* const parent)
 {
     m_parent        = parent;
     m_job           = 0;
+    m_resultHandler = 0;
 
     m_userAgent     = QString("KIPI-Plugin-Shwup/%1 (kde@timotheegroleau.com)").arg(kipiplugins_version);
     m_apiVersion    = "1.0";
@@ -83,7 +84,7 @@ SwConnector::SwConnector(QWidget* parent)
     m_apiSecretKey  = "2QnKLEgARWiAH3dcdxJAqGVmID+R5I5z8EnXJ1fj";
 
     setUser(SwUser());
-    m_loggedIn = false;
+    m_loggedIn      = false;
 }
 
 SwConnector::~SwConnector()
@@ -126,7 +127,8 @@ void SwConnector::logout()
     m_user.clear();
 }
 
-void SwConnector::setupRequest(KIO::TransferJob* job, const QString& requestPath, const QString& method, const QString& md5, const QString& type, 
+void SwConnector::setupRequest(KIO::TransferJob* const job, const QString& requestPath, const QString& method,
+                               const QString& md5, const QString& type,
                                const QString& length, bool needsPassword = true)
 {
     QCA::Initializer init;
@@ -143,8 +145,8 @@ void SwConnector::setupRequest(KIO::TransferJob* job, const QString& requestPath
 
     if (needsPassword)
     {
-        QString encodedPassword = QCA::Hash( "sha1" ).hashToString( m_user.password.toUtf8() );
-        authorizationRaw += ('\n' + encodedPassword);
+        QString encodedPassword  = QCA::Hash( "sha1" ).hashToString( m_user.password.toUtf8() );
+        authorizationRaw        += ('\n' + encodedPassword);
     }
 
     QCA::SecureArray key( m_apiSecretKey.toUtf8() );
@@ -200,8 +202,8 @@ void SwConnector::getRestServiceURL()
     QString type(   "text/plain" );
     QString length( "0" );
 
-    m_resultHandler = &SwConnector::requestRestURLResultHandler;
-    KIO::TransferJob* job = KIO::get(m_apiStartURL, KIO::Reload, KIO::HideProgressInfo);
+    m_resultHandler             = &SwConnector::requestRestURLResultHandler;
+    KIO::TransferJob* const job = KIO::get(m_apiStartURL, KIO::Reload, KIO::HideProgressInfo);
     setupRequest(job, KUrl(m_apiStartURL).path(), method, md5, type, length, false); // initial request will NOT send password
 
     connect(job, SIGNAL(redirection(KIO::Job*,KUrl)),
@@ -217,7 +219,9 @@ void SwConnector::slotRequestRestURLRedirection(KIO::Job* job, const KUrl& newUr
 
     // we need to submit the data differently to the new url
     // so we must kill the existing job to prevent internal redirection
-    disconnect(job, SIGNAL(result(KJob*)), this, SLOT(slotResult(KJob*)));
+    disconnect(job, SIGNAL(result(KJob*)),
+               this, SLOT(slotResult(KJob*)));
+
     job->kill();
     m_job = 0;
 
@@ -233,6 +237,7 @@ void SwConnector::listAlbums()
         m_job           = 0;
         m_resultHandler = 0;
     }
+
     emit signalBusy(true);
 
     QString requestPath = QString("/user/%1/albums")
@@ -243,8 +248,8 @@ void SwConnector::listAlbums()
     QString type(   "text/plain" );
     QString length( "0" );
 
-    m_resultHandler       = &SwConnector::listAlbumsResultHandler;
-    KIO::TransferJob* job = KIO::get(QString(m_apiDomainURL + m_apiRestPath + requestPath), KIO::Reload, KIO::HideProgressInfo);
+    m_resultHandler             = &SwConnector::listAlbumsResultHandler;
+    KIO::TransferJob* const job = KIO::get(QString(m_apiDomainURL + m_apiRestPath + requestPath), KIO::Reload, KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
     m_job = job;
@@ -266,17 +271,15 @@ void SwConnector::createAlbum(const SwAlbum& album)
     QString type(   "text/plain" );
     QString length( "0" );
 
-    m_resultHandler = &SwConnector::createAlbumResultHandler;
-    KIO::TransferJob* job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), QByteArray(), KIO::HideProgressInfo);
+    m_resultHandler             = &SwConnector::createAlbumResultHandler;
+    KIO::TransferJob* const job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), QByteArray(), KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
-    m_job   = job;
+    m_job = job;
     m_buffer.resize(0);
 }
 
-bool SwConnector::addPhoto(const QString& imgPath,
-                           long long albumID,
-                           const QString& /*caption*/)
+bool SwConnector::addPhoto(const QString& imgPath, long long albumID, const QString& /*caption*/)
 {
     kDebug() << "addPhoto" << endl;
 
@@ -288,6 +291,7 @@ bool SwConnector::addPhoto(const QString& imgPath,
                 .arg( QString(QUrl::toPercentEncoding(KUrl(imgPath).fileName())) );
 
     QFile imageFile(imgPath);
+
     if (!imageFile.open(QIODevice::ReadOnly))
         return false;
 
@@ -301,8 +305,8 @@ bool SwConnector::addPhoto(const QString& imgPath,
     QString type   = KMimeType::findByUrl(imgPath)->name();
     QString length = file_size;
 
-    m_resultHandler       = &SwConnector::addPhotoResultHandler;
-    KIO::TransferJob* job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), imageData, KIO::HideProgressInfo);
+    m_resultHandler             = &SwConnector::addPhotoResultHandler;
+    KIO::TransferJob* const job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), imageData, KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
     m_job = job;
@@ -323,12 +327,12 @@ void SwConnector::data(KIO::Job*, const QByteArray& data)
 
 void SwConnector::slotResult(KJob *kjob)
 {
-    m_job         = 0;
-    KIO::Job *job = static_cast<KIO::Job*>(kjob);
+    m_job               = 0;
+    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
     (this->*m_resultHandler)( job, m_buffer );
 }
 
-QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) const
+QDomElement SwConnector::getResponseDoc(KIO::Job* const job, const QByteArray& data) const
 {
     QDomDocument failureDoc("failure");
     failureDoc.setContent( QString("<failure />") );
@@ -348,6 +352,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
 
     // check response content
     QDomDocument doc("response");
+
     if (!doc.setContent(data))
     {
         // not XML data!
@@ -356,6 +361,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
     }
 
     QDomElement docElem = doc.documentElement();
+
     if (docElem.tagName() != "resp")
     {
         // unexpected xml content
@@ -364,10 +370,11 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
     }
 
     QString stat( docElem.attribute("stat") );
+
     if ("error" == stat)
     {
         QDomNode errorNode = docElem.firstChild();
-        QString errorCode = errorNode.toElement().attribute("code");
+        QString errorCode  = errorNode.toElement().attribute("code");
         kDebug() << "getResponseDoc: service error: " << errorCode << endl;
         // more work needed...
 
@@ -378,6 +385,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
             emit signalShwupKipiBlackListed();
             return failureDocElem;
         }
+
         if ("signature.not.matched" == errorCode)
         {
             // mot likely cause is wrong password...
@@ -385,6 +393,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
             // emit signalShwupSignatureError();
             return failureDocElem;
         }
+
         if ("authorization.invalid" == errorCode)
         {
             emit signalShwupInvalidCredentials();
@@ -397,12 +406,12 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
     return docElem;
 }
 
-
-void SwConnector::requestRestURLResultHandler(KIO::Job* job, const QByteArray& data)
+void SwConnector::requestRestURLResultHandler(KIO::Job* const job, const QByteArray& data)
 {
     kDebug() << "requestRestURLResultHandler: " << endl;
 
     QDomElement docElem = getResponseDoc(job, data);
+
     if (docElem.tagName() == "failure")
     {
         // there was an error, handle specifics now
@@ -419,13 +428,14 @@ void SwConnector::requestRestURLResultHandler(KIO::Job* job, const QByteArray& d
     }
 
     QDomNodeList urlNodes = docElem.elementsByTagName("serviceUrl");
+
     if (urlNodes.length() == 1)
     {
         QRegExp rx("^(https?://[^/]+)(.+)$");
         if ( rx.exactMatch( urlNodes.at(0).toElement().text() ) )
         {
-            m_apiDomainURL  = rx.cap(1);
-            m_apiRestPath   = rx.cap(2);
+            m_apiDomainURL = rx.cap(1);
+            m_apiRestPath  = rx.cap(2);
             kDebug() << "requestRestURLResultHandler: " << m_apiDomainURL << m_apiRestPath << endl;
             emit signalBusy(false);
             emit signalRequestRestURLDone(0, "");
@@ -444,11 +454,12 @@ void SwConnector::requestRestURLResultHandler(KIO::Job* job, const QByteArray& d
     }
 }
 
-void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
+void SwConnector::listAlbumsResultHandler(KIO::Job* const job, const QByteArray& data)
 {
     QList <SwAlbum> albumsList;
 
     QDomElement docElem = getResponseDoc(job, data);
+
     if (docElem.tagName() == "failure")
     {
         // there was an error, handle specifics now
@@ -465,9 +476,9 @@ void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
     }
 
     // call was successful, credentials are valid, user is now logged in
-    m_loggedIn = true;
-
+    m_loggedIn              = true;
     QDomNodeList albumNodes = docElem.elementsByTagName("album");
+
     for (uint idx=0; idx < albumNodes.length(); ++idx)
     {
         QDomNode albumNode = albumNodes.at(idx);
@@ -475,6 +486,7 @@ void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
         // album found, can user upload to it?
         // in list view response, we expect a single node "userCanUpload" corresponding to current user
         QDomNodeList canUploadNodes = albumNode.toElement().elementsByTagName("userCanUpload");
+
         if (canUploadNodes.length() == 1 && canUploadNodes.at(0).toElement().text().toLower() != "true")
         {
             // user is now allowed to upload in that album, ignoring it for album list of export plugin
@@ -487,8 +499,8 @@ void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
 
         // album is valid, extract album info
         SwAlbum album;
-        for (QDomNode albumInfoNode = albumNode.toElement().firstChild();
-            !albumInfoNode.isNull();
+
+        for (QDomNode albumInfoNode = albumNode.toElement().firstChild(); !albumInfoNode.isNull();
             albumInfoNode = albumInfoNode.nextSibling())
         {
             if (!albumInfoNode.isElement())
@@ -514,6 +526,7 @@ void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
             else if ("albumurl" == nodeName)
                 album.albumUrl = albumInfoNode.toElement().text();
         }
+
         albumsList.append(album);
     }
 
@@ -523,11 +536,12 @@ void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
     emit signalListAlbumsDone(0, "", albumsList);
 }
 
-void SwConnector::createAlbumResultHandler(KIO::Job* job, const QByteArray& data)
+void SwConnector::createAlbumResultHandler(KIO::Job* const job, const QByteArray& data)
 {
     SwAlbum newAlbum;
 
     QDomElement docElem = getResponseDoc(job, data);
+
     if (docElem.tagName() == "failure")
     {
         // there was an error, handle specifics now
@@ -544,11 +558,11 @@ void SwConnector::createAlbumResultHandler(KIO::Job* job, const QByteArray& data
     }
 
     QDomNode albumNode = docElem.firstChild();
+
     if (albumNode.isElement() && albumNode.nodeName() == "album")
     {
-        for (QDomNode albumInfoNode = albumNode.toElement().firstChild();
-        !albumInfoNode.isNull();
-        albumInfoNode = albumInfoNode.nextSibling())
+        for (QDomNode albumInfoNode = albumNode.toElement().firstChild(); !albumInfoNode.isNull();
+             albumInfoNode = albumInfoNode.nextSibling())
         {
             if (!albumInfoNode.isElement())
                 continue;
@@ -579,9 +593,10 @@ void SwConnector::createAlbumResultHandler(KIO::Job* job, const QByteArray& data
     emit signalCreateAlbumDone(0, "", newAlbum);
 }
 
-void SwConnector::addPhotoResultHandler(KIO::Job* job, const QByteArray& data)
+void SwConnector::addPhotoResultHandler(KIO::Job* const job, const QByteArray& data)
 {
     QDomElement docElem = getResponseDoc(job, data);
+
     if (docElem.tagName() == "failure")
     {
         // there was an error, handle specifics now

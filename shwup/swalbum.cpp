@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
+ * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,7 +42,7 @@
 namespace KIPIShwupPlugin
 {
 
-SwNewAlbum::SwNewAlbum(QWidget* parent)
+SwNewAlbum::SwNewAlbum(QWidget* const parent)
     : KDialog(parent)
 {
     QString header(i18n("Shwup New Album"));
@@ -51,16 +51,16 @@ SwNewAlbum::SwNewAlbum(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget* mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(300, 0);
 
     // ------------------------------------------------------------------------
 
-    m_titleEdt          = new KLineEdit;
+    m_titleEdt = new KLineEdit;
     m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
-    QFormLayout* albumBoxLayout = new QFormLayout;
+    QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("album edit", "Title:"), m_titleEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());

@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
  *
@@ -110,11 +110,11 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Shwup Export"), 0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to export images "
-                                   "to Shwup web service."),
-                             ki18n("(c) 2009, Timothée Groleau"));
+    KPAboutData* const about = new KPAboutData(ki18n("Shwup Export"), 0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to export images "
+                                         "to Shwup web service."),
+                                   ki18n("(c) 2009, Timothée Groleau"));
 
     about->addAuthor(ki18n("Timothée Groleau"), ki18n("Author and maintainer"),
                      "kde at timotheegroleau dot com");
@@ -201,8 +201,8 @@ void SwWindow::readSettings()
     KConfigGroup grp = config.group("Shwup Settings");
 
     SwUser user;
-    user.email    = grp.readEntry("User Email", "");
-    user.password = grp.readEntry("User Password", "");
+    user.email       = grp.readEntry("User Email", "");
+    user.password    = grp.readEntry("User Password", "");
     m_connector->setUser(user);
 
     m_currentAlbumID = grp.readEntry("Current Album", -1LL);
@@ -414,6 +414,7 @@ void SwWindow::slotStartTransfer()
 QString SwWindow::getImageCaption(const KPMetadata& meta) const
 {
     QString caption = meta.getCommentsDecoded();
+
     if (!caption.isEmpty())
         return caption;
 
@@ -452,6 +453,7 @@ QString SwWindow::getImageCaption(const KPMetadata& meta) const
 bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption)
 {
     QImage image;
+
     if (isRAW)
     {
         kDebug() << "Get RAW preview " << imgPath;
@@ -470,8 +472,8 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
 
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
-    if (m_widget->m_resizeChB->isChecked()
-        && (image.width() > maxDim || image.height() > maxDim))
+
+    if (m_widget->m_resizeChB->isChecked() && (image.width() > maxDim || image.height() > maxDim))
     {
         kDebug() << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
@@ -483,6 +485,7 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
 
     // copy meta data to temporary image
     KPMetadata meta;
+
     if (meta.load(imgPath))
     {
         caption = getImageCaption(meta);
@@ -530,6 +533,7 @@ void SwWindow::uploadNextPhoto()
 
     // check if we have to RAW file -> use preview image then
     bool isRAW = KPMetadata::isRawFile(imgPath);
+
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW, caption))
@@ -581,6 +585,7 @@ void SwWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     else
     {
         m_imagesTotal--;
+
         if (KMessageBox::warningContinueCancel(this,
                          i18n("Failed to upload photo into Shwup: %1\n"
                               "Do you want to continue?", errMsg))

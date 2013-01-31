@@ -40,7 +40,7 @@ class SwLogin : public KDialog
 
 public:
 
-    SwLogin(QWidget* parent);
+    SwLogin(QWidget* const parent);
     ~SwLogin();
 
     void getUserProperties(SwUser& user);

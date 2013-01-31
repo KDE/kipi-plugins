@@ -41,7 +41,7 @@
 namespace KIPIShwupPlugin
 {
 
-SwLogin::SwLogin(QWidget* parent)
+SwLogin::SwLogin(QWidget* const parent)
     : KDialog(parent)
 {
     QString header(i18n("Shwup Login"));
@@ -50,7 +50,7 @@ SwLogin::SwLogin(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(true);
 
-    QWidget* mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(300, 0);
 
@@ -62,8 +62,8 @@ SwLogin::SwLogin(QWidget* parent)
     m_passwordEdt->setEchoMode( QLineEdit::Password );
     m_passwordEdt->setWhatsThis(i18n("Password of shwup account (required)."));
 
-    QFormLayout* loginBoxLayout = new QFormLayout;
-    loginBoxLayout->addRow(i18nc("login settings", "Email:"), m_emailEdt);
+    QFormLayout* const loginBoxLayout = new QFormLayout;
+    loginBoxLayout->addRow(i18nc("login settings", "Email:"),    m_emailEdt);
     loginBoxLayout->addRow(i18nc("login settings", "Password:"), m_passwordEdt);
     loginBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     loginBoxLayout->setSpacing(KDialog::spacingHint());

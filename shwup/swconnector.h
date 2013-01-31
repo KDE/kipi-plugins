@@ -49,7 +49,7 @@ class SwConnector : public QObject
 
 public:
 
-    SwConnector(QWidget* parent);
+    SwConnector(QWidget* const parent);
     ~SwConnector();
 
     SwUser  getUser() const;
@@ -80,26 +80,24 @@ Q_SIGNALS:
                                const SwAlbum& newAlbum);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
 
-private:
-
-    void setupRequest(KIO::TransferJob* job, const QString& requestPath, const QString& method, 
-                      const QString& md5, const QString& type, const QString& length, bool needsPassword);
-
-    QDomElement getResponseDoc(KIO::Job* job, const QByteArray &data) const;
-    void requestRestURLResultHandler(KIO::Job* job, const QByteArray &data);
-    void listAlbumsResultHandler(KIO::Job* job, const QByteArray &data);
-    void createAlbumResultHandler(KIO::Job* job, const QByteArray &data);
-    void addPhotoResultHandler(KIO::Job* job, const QByteArray &data);
-
 private Q_SLOTS:
 
     void slotRequestRestURLRedirection(KIO::Job* job, const KUrl& newUrl);
-    void data(KIO::Job *job, const QByteArray& data);
-    void slotResult(KJob *job);
+    void data(KIO::Job* job, const QByteArray& data);
+    void slotResult(KJob* job);
 
 private:
 
-    void (SwConnector::*m_resultHandler)(KIO::Job* job, const QByteArray& data);
+    void        setupRequest(KIO::TransferJob* const job, const QString& requestPath, const QString& method, 
+                             const QString& md5, const QString& type, const QString& length, bool needsPassword);
+
+    QDomElement getResponseDoc(KIO::Job* const job, const QByteArray &data) const;
+    void        requestRestURLResultHandler(KIO::Job* const job, const QByteArray &data);
+    void        listAlbumsResultHandler(KIO::Job* const job, const QByteArray &data);
+    void        createAlbumResultHandler(KIO::Job* const job, const QByteArray &data);
+    void        addPhotoResultHandler(KIO::Job* const job, const QByteArray &data);
+
+    void (SwConnector::*m_resultHandler)(KIO::Job* const job, const QByteArray& data);
 
 private:
 
