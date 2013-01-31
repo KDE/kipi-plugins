@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP credits settings page.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,11 +45,11 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPCredits::XMPCreditsPriv
+class XMPCredits::Private
 {
 public:
 
-    XMPCreditsPriv()
+    Private()
     {
         bylineEdit       = 0;
         bylineTitleEdit  = 0;
@@ -72,6 +72,7 @@ public:
         postalCodeCheck  = 0;
         cityCheck        = 0;
         countryCheck     = 0;
+        contactCheck     = 0;
     }
 
     QCheckBox*        bylineTitleCheck;
@@ -101,14 +102,14 @@ public:
 };
 
 XMPCredits::XMPCredits(QWidget* const parent)
-    : QWidget(parent), d(new XMPCreditsPriv)
+    : QWidget(parent), d(new Private)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
-    d->bylineEdit  = new MultiStringsEdit(this, i18n("Byline:"),
-                                          i18n("Set here the name of content creator."));
+    d->bylineEdit = new MultiStringsEdit(this, i18n("Byline:"),
+                                         i18n("Set here the name of content creator."));
 
     // --------------------------------------------------------
 
@@ -119,8 +120,8 @@ XMPCredits::XMPCredits(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    QGroupBox *contactBox = new QGroupBox(i18n("Contact"), this);
-    QGridLayout* grid2    = new QGridLayout(contactBox);
+    QGroupBox* const contactBox = new QGroupBox(i18n("Contact"), this);
+    QGridLayout* const grid2    = new QGridLayout(contactBox);
 
     d->emailCheck = new QCheckBox(i18nc("contact email address", "E-mail:"), contactBox);
     d->emailEdit  = new KLineEdit(contactBox);
@@ -323,96 +324,115 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
     d->bylineTitleEdit->clear();
     d->bylineTitleCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.AuthorsPosition", false);
+
     if (!data.isNull())
     {
         d->bylineTitleEdit->setText(data);
         d->bylineTitleCheck->setChecked(true);
     }
+
     d->bylineTitleEdit->setEnabled(d->bylineTitleCheck->isChecked());
 
     d->emailEdit->clear();
     d->emailCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiEmailWork", false);
+
     if (!data.isNull())
     {
         d->emailEdit->setText(data);
         d->emailCheck->setChecked(true);
     }
+
     d->emailEdit->setEnabled(d->emailCheck->isChecked());
 
     d->urlEdit->clear();
     d->urlCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiUrlWork", false);
+
     if (!data.isNull())
     {
         d->urlEdit->setText(data);
         d->urlCheck->setChecked(true);
     }
+
     d->urlEdit->setEnabled(d->urlCheck->isChecked());
 
     d->phoneEdit->clear();
     d->phoneCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiTelWork", false);
+
     if (!data.isNull())
     {
         d->phoneEdit->setText(data);
         d->phoneCheck->setChecked(true);
     }
+
     d->phoneEdit->setEnabled(d->phoneCheck->isChecked());
 
     d->addressEdit->clear();
     d->addressCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);
+
     if (!data.isNull())
     {
         d->addressEdit->setText(data);
         d->addressCheck->setChecked(true);
     }
+
     d->addressEdit->setEnabled(d->addressCheck->isChecked());
 
     d->postalCodeEdit->clear();
     d->postalCodeCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiAdrPcode", false);
+
     if (!data.isNull())
     {
         d->postalCodeEdit->setText(data);
         d->postalCodeCheck->setChecked(true);
     }
+
     d->postalCodeEdit->setEnabled(d->postalCodeCheck->isChecked());
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiAdrCity", false);
+
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
         d->cityCheck->setChecked(true);
     }
+
     d->cityEdit->setEnabled(d->cityCheck->isChecked());
 
     d->countryEdit->clear();
     d->countryCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CiAdrCtry", false);
+
     if (!data.isNull())
     {
         d->countryEdit->setText(data);
         d->countryCheck->setChecked(true);
     }
+
     d->countryEdit->setEnabled(d->countryCheck->isChecked());
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.Credit", false);
+
     if (!data.isNull())
     {
         d->creditEdit->setText(data);
         d->creditCheck->setChecked(true);
     }
+
     d->creditEdit->setEnabled(d->creditCheck->isChecked());
 
     d->sourceEdit->clear();
     d->sourceCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.Source", false);
+
     if (data.isNull())
         data = meta.getXmpTagString("Xmp.dc.source", false);
 
@@ -421,6 +441,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
         d->sourceEdit->setText(data);
         d->sourceCheck->setChecked(true);
     }
+
     d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
 
     blockSignals(false);

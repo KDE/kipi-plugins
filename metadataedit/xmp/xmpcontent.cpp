@@ -6,7 +6,7 @@
  * Date        : 2007-10-18
  * Description : XMP content settings page.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,11 +49,11 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPContent::XMPContentPriv
+class XMPContent::Private
 {
 public:
 
-    XMPContentPriv()
+    Private()
     {
         writerCheck          = 0;
         headlineCheck        = 0;
@@ -63,6 +63,7 @@ public:
         syncJFIFCommentCheck = 0;
         syncHOSTCommentCheck = 0;
         syncEXIFCommentCheck = 0;
+        copyrightEdit        = 0;
     }
 
     QCheckBox*          headlineCheck;
@@ -79,9 +80,9 @@ public:
 };
 
 XMPContent::XMPContent(QWidget* const parent)
-    : QWidget(parent), d(new XMPContentPriv)
+    : QWidget(parent), d(new Private)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
@@ -95,8 +96,8 @@ XMPContent::XMPContent(QWidget* const parent)
     d->captionEdit          = new AltLangStringsEdit(this, i18nc("content description", "Caption:"),
                                                      i18n("Enter the content description."));
 
-    QGroupBox *syncOptions  = new QGroupBox(i18n("Default Language Caption Options"), this);
-    QVBoxLayout *vlay       = new QVBoxLayout(syncOptions);
+    QGroupBox* const syncOptions  = new QGroupBox(i18n("Default Language Caption Options"), this);
+    QVBoxLayout* const vlay       = new QVBoxLayout(syncOptions);
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), syncOptions);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",
@@ -227,28 +228,34 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.Headline", false);
+
     if (!data.isNull())
     {
         d->headlineEdit->setText(data);
         d->headlineCheck->setChecked(true);
     }
+
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
     d->captionEdit->setValid(false);
     map = meta.getXmpTagStringListLangAlt("Xmp.dc.description", false);
+
     if (!map.isEmpty())
         d->captionEdit->setValues(map);
 
     data = meta.getXmpTagString("Xmp.photoshop.CaptionWriter", false);
+
     if (!data.isNull())
     {
         d->writerEdit->setText(data);
         d->writerCheck->setChecked(true);
     }
+
     d->writerEdit->setEnabled(d->writerCheck->isChecked());
 
     d->copyrightEdit->setValid(false);
     map = meta.getXmpTagStringListLangAlt("Xmp.dc.rights", false);
+
     if (!map.isEmpty())
         d->copyrightEdit->setValues(map);
 
@@ -267,6 +274,7 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
         meta.removeXmpTag("Xmp.photoshop.Headline");
 
     KPMetadata::AltLangMap oldAltLangMap, newAltLangMap;
+
     if (d->captionEdit->getValues(oldAltLangMap, newAltLangMap))
     {
         meta.setXmpTagStringListLangAlt("Xmp.dc.description", newAltLangMap, false);
@@ -278,7 +286,9 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
             meta.setComments(getXMPCaption().toUtf8());
     }
     else if (d->captionEdit->isValid())
+    {
         meta.removeXmpTag("Xmp.dc.description");
+    }
 
     if (d->writerCheck->isChecked())
         meta.setXmpTagString("Xmp.photoshop.CaptionWriter", d->writerEdit->text());

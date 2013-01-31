@@ -6,7 +6,7 @@
  * Date        : 2007-11-10
  * Description : IPTC workflow status properties settings page.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,11 +56,11 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCProperties::IPTCPropertiesPriv
+class IPTCProperties::Private
 {
 public:
 
-    IPTCPropertiesPriv()
+    Private()
     {
         dateReleasedSel     = 0;
         dateExpiredSel      = 0;
@@ -83,7 +83,7 @@ public:
         languageCheck       = 0;
         originalTransCheck  = 0;
         originalTransEdit   = 0;
-
+        objectTypeDescEdit  = 0;
     }
 
     QCheckBox*                     dateReleasedCheck;
@@ -119,13 +119,13 @@ public:
 };
 
 IPTCProperties::IPTCProperties(QWidget* const parent)
-    : QWidget(parent), d(new IPTCPropertiesPriv)
+    : QWidget(parent), d(new Private)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* const asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -168,6 +168,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     d->languageBtn   = new KLanguageButton(this);
 
     QStringList list = KGlobal::locale()->allLanguagesList();
+
     for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
     {
         // Only get all ISO 639 language code based on 2 characters
@@ -233,7 +234,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    QLabel* note = new QLabel(i18n("<b>Note: "
+    QLabel* const note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC_Information_Interchange_Model'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
@@ -418,28 +419,34 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->dateReleasedCheck->setChecked(false);
+
     if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
+
         if (date.isValid())
         {
             d->dateReleasedSel->setDate(date);
             d->dateReleasedCheck->setChecked(true);
         }
     }
+
     d->dateReleasedSel->setEnabled(d->dateReleasedCheck->isChecked());
 
     d->timeReleasedSel->setTime(QTime::currentTime());
     d->timeReleasedCheck->setChecked(false);
+
     if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
+
         if (time.isValid())
         {
             d->timeReleasedSel->setTime(time);
             d->timeReleasedCheck->setChecked(true);
         }
     }
+
     d->timeReleasedSel->setEnabled(d->timeReleasedCheck->isChecked());
 
     dateStr = meta.getIptcTagString("Iptc.Application2.ExpirationDate", false);
@@ -447,32 +454,39 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->dateExpiredCheck->setChecked(false);
+
     if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
+
         if (date.isValid())
         {
             d->dateExpiredSel->setDate(date);
             d->dateExpiredCheck->setChecked(true);
         }
     }
+
     d->dateExpiredSel->setEnabled(d->dateExpiredCheck->isChecked());
 
     d->timeExpiredSel->setTime(QTime::currentTime());
     d->timeExpiredCheck->setChecked(false);
+
     if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
+
         if (time.isValid())
         {
             d->timeExpiredSel->setTime(time);
             d->timeExpiredCheck->setChecked(true);
         }
     }
+
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
 
     d->languageCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Application2.Language", false);
+
     if (!data.isNull())
     {
         if (d->languageBtn->contains(data))
@@ -481,13 +495,17 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->languageCheck->setChecked(true);
         }
         else
+        {
             d->languageCheck->setValid(false);
+        }
     }
+
     d->languageBtn->setEnabled(d->languageCheck->isChecked());
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Application2.Urgency", false);
+
     if (!data.isNull())
     {
         val = data.toInt();
@@ -497,13 +515,16 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->priorityCheck->setChecked(true);
         }
         else
+        {
             d->priorityCheck->setValid(false);
+        }
     }
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
     d->objectCycleCB->setCurrentIndex(0);
     d->objectCycleCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Application2.ObjectCycle", false);
+
     if (!data.isNull())
     {
         if (data == QString("a"))
@@ -524,18 +545,22 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
         else
             d->objectCycleCheck->setValid(false);
     }
+
     d->objectCycleCB->setEnabled(d->objectCycleCheck->isChecked());
 
     d->objectTypeCB->setCurrentIndex(0);
     d->objectTypeDescEdit->clear();
     d->objectTypeCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Application2.ObjectType", false);
+
     if (!data.isNull())
     {
         QString typeSec = data.section(':', 0, 0);
+
         if (!typeSec.isEmpty())
         {
             int type = typeSec.toInt()-1;
+
             if (type >= 0 && type < 3)
             {
                 d->objectTypeCB->setCurrentIndex(type);
@@ -543,9 +568,12 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
                 d->objectTypeCheck->setChecked(true);
             }
             else
+            {
                 d->objectTypeCheck->setValid(false);
+            }
         }
     }
+
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
@@ -555,11 +583,13 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     d->originalTransEdit->clear();
     d->originalTransCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Application2.TransmissionReference", false);
+
     if (!data.isNull())
     {
         d->originalTransEdit->setText(data);
         d->originalTransCheck->setChecked(true);
     }
+
     d->originalTransEdit->setEnabled(d->originalTransCheck->isChecked());
 
     blockSignals(false);
@@ -622,7 +652,9 @@ void IPTCProperties::applyMetadata(QByteArray& iptcData)
         }
     }
     else if (d->objectCycleCheck->isValid())
+    {
         meta.removeIptcTag("Iptc.Application2.ObjectCycle");
+    }
 
     if (d->objectTypeCheck->isChecked())
     {
@@ -632,9 +664,12 @@ void IPTCProperties::applyMetadata(QByteArray& iptcData)
         meta.setIptcTagString("Iptc.Application2.ObjectType", objectType);
     }
     else if (d->objectTypeCheck->isValid())
+    {
         meta.removeIptcTag("Iptc.Application2.ObjectType");
+    }
 
     QStringList oldList, newList;
+
     if (d->objectAttribute->getValues(oldList, newList))
         meta.setIptcTagsStringList("Iptc.Application2.ObjectAttribute", 64, oldList, newList);
     else if (d->objectAttribute->isValid())

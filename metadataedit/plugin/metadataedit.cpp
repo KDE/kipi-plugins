@@ -7,7 +7,7 @@
  * Description : a dialog to edit EXIF,IPTC and XMP metadata
  *
  * Copyright (C) 2011      by Victor Dodon <dodon dot victor at gmail dot com>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -63,11 +63,11 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class MetadataEditDialog::MetadataEditDialogPrivate
+class MetadataEditDialog::Private
 {
 public:
 
-    MetadataEditDialogPrivate()
+    Private()
     {
         isReadOnly = false;
         tabWidget  = 0;
@@ -89,7 +89,7 @@ public:
 };
 
 MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& urls)
-    : KPToolDialog(parent), d(new MetadataEditDialogPrivate)
+    : KPToolDialog(parent), d(new Private)
 {
     d->urls     = urls;
     d->currItem = d->urls.begin();
@@ -152,11 +152,11 @@ MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& 
 
     enableButton(Apply, false);
 
-    KPAboutData* about = new KPAboutData(ki18n("Edit Metadata"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Plugin to edit pictures' metadata."),
-                             ki18n("(c) 2006-2012, Gilles Caulier"));
+    KPAboutData* const about = new KPAboutData(ki18n("Edit Metadata"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Plugin to edit pictures' metadata."),
+                                   ki18n("(c) 2006-2013, Gilles Caulier"));
 
     about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                      "caulier dot gilles at gmail dot com");

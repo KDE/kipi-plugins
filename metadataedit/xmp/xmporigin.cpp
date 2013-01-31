@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP origin settings page.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,11 +61,11 @@ using namespace KDcrawIface;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPOrigin::XMPOriginPriv
+class XMPOrigin::Private
 {
 public:
 
-    XMPOriginPriv()
+    Private()
     {
         cityEdit               = 0;
         sublocationEdit        = 0;
@@ -82,6 +82,7 @@ public:
         syncEXIFDateCheck      = 0;
         setTodayCreatedBtn     = 0;
         setTodayDigitalizedBtn = 0;
+        countryCB              = 0;
     }
 
     QCheckBox*                     dateCreatedCheck;
@@ -108,9 +109,9 @@ public:
 };
 
 XMPOrigin::XMPOrigin(QWidget* const parent)
-    : QWidget(parent), d(new XMPOriginPriv)
+    : QWidget(parent), d(new Private)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
@@ -327,6 +328,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     QString     dateTimeStr;
 
     dateTimeStr = meta.getXmpTagString("Xmp.photoshop.DateCreated", false);
+
     if (dateTimeStr.isEmpty())
         dateTimeStr = meta.getXmpTagString("Xmp.xmp.CreateDate", false);
     else if (dateTimeStr.isEmpty())
@@ -342,9 +344,11 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->dateCreatedCheck->setChecked(false);
+
     if (!dateTimeStr.isEmpty())
     {
         dateTime = QDateTime::fromString(dateTimeStr, Qt::ISODate);
+
         if (dateTime.isValid())
         {
             d->dateCreatedSel->setDateTime(dateTime);
@@ -359,9 +363,11 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
     d->dateDigitalizedCheck->setChecked(false);
+
     if (!dateTimeStr.isEmpty())
     {
         dateTime = QDateTime::fromString(dateTimeStr, Qt::ISODate);
+
         if (dateTime.isValid())
         {
             d->dateDigitalizedSel->setDateTime(dateTime);
@@ -373,42 +379,52 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.City", false);
+
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
         d->cityCheck->setChecked(true);
     }
+
     d->cityEdit->setEnabled(d->cityCheck->isChecked());
 
     d->sublocationEdit->clear();
     d->sublocationCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.Location", false);
+
     if (!data.isNull())
     {
         d->sublocationEdit->setText(data);
         d->sublocationCheck->setChecked(true);
     }
+
     d->sublocationEdit->setEnabled(d->sublocationCheck->isChecked());
 
     d->provinceEdit->clear();
     d->provinceCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.State", false);
+
     if (!data.isNull())
     {
         d->provinceEdit->setText(data);
         d->provinceCheck->setChecked(true);
     }
+
     d->provinceEdit->setEnabled(d->provinceCheck->isChecked());
 
     d->countryCB->setCurrentIndex(0);
     d->countryCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.iptc.CountryCode", false);
+
     if (!data.isNull())
     {
         int item = -1;
+
         for (int i = 0 ; i < d->countryCB->count() ; ++i)
+        {
             if (d->countryCB->itemText(i).left(3) == data)
                 item = i;
+        }
 
         if (item != -1)
         {
@@ -416,7 +432,9 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
             d->countryCheck->setChecked(true);
         }
         else
+        {
             d->countryCheck->setValid(false);
+        }
     }
     d->countryCB->setEnabled(d->countryCheck->isChecked());
 
@@ -443,6 +461,7 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
         meta.setXmpTagString("Xmp.xmp.MetadataDate",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+
         if (syncEXIFDateIsChecked())
         {
             meta.setExifTagString("Exif.Image.DateTime",
