@@ -2,6 +2,7 @@
 UntranslatedGenericName=Imageshack Export
 Name=Imageshack Export
 Name[ca]=Exportador a Imageshack
+Name[ca@valencia]=Exportador a Imageshack
 Name[cs]=Export do Imageshacku
 Name[da]=Eksport til Imageshack
 Name[de]=Imageshack-Export
@@ -25,6 +26,7 @@ Name[x-test]=xxImageshack Exportxx
 Name[zh_TW]=Imageshack 匯出
 Comment=A tool to export images to Imageshack web service
 Comment[ca]=Una eina per exportar imatges al servei web Imageshack
+Comment[ca@valencia]=Una eina per exportar imatges al servei web Imageshack
 Comment[cs]=Nástroj pro export obrázků do webové služby Imageshack
 Comment[da]=Et værktøj til at eksportere billeder til webtjenesten Imageshack
 Comment[de]=Ein Werkzeug, um Bilder zu einem Imageshack-Webdienst zu exportieren.
