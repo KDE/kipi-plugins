@@ -65,7 +65,7 @@ private:
 
 private:
 
-    KAction*   m_actionCalendar;
+    KAction* m_actionCalendar;
 };
 
 }  // NameSpace KIPICalendarPlugin

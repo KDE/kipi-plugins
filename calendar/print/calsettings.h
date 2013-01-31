@@ -8,8 +8,8 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2011 by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2011      by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,8 +42,9 @@
 
 #include <kurl.h>
 
-namespace KIPI {
-class Interface;
+namespace KIPI
+{
+    class Interface;
 }
 
 namespace KIPICalendarPlugin
@@ -99,10 +100,10 @@ public:
     QString getDayDescr(int month, int day) const;
     QPrinter::PrinterMode resolution() const;
 
-    void setKipiInterface(KIPI::Interface* interface);
-    KIPI::Interface* kipiInterface();
-    
-    static CalSettings* instance(QObject* parent = 0);
+    void setKipiInterface(KIPI::Interface* const interface);
+    KIPI::Interface* kipiInterface() const;
+
+    static CalSettings* instance(QObject* const parent = 0);
 
     ~CalSettings();
 
@@ -129,16 +130,16 @@ protected:
 
 private:
 
-    CalSettings(QObject* parent);
+    CalSettings(QObject* const parent);
     CalSettings(CalSettings const&);
     CalSettings& operator=(CalSettings const&);
 
 private:
 
-    static QPointer<CalSettings> instance_;
+    static QPointer<CalSettings> s_instance;
 
-    QMap<int, KUrl>              monthMap_;
-    QMap<QDate, Day>             special;
+    QMap<int, KUrl>              m_monthMap;
+    QMap<QDate, Day>             m_special;
 };
 
 }  // NameSpace KIPICalendarPlugin

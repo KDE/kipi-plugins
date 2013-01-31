@@ -9,7 +9,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,7 +40,7 @@ using namespace KIPIPlugins;
 namespace KIPICalendarPlugin
 {
 
-CalWidget::CalWidget(QWidget* parent)
+CalWidget::CalWidget(QWidget* const parent)
     : QWidget(parent, 0), _current(1)
 {
     setAttribute(Qt::WA_NoBackground);
@@ -55,7 +55,7 @@ void CalWidget::paintEvent(QPaintEvent* e)
 {
     int month = _current;
     CalPainter painter(this);
-    
+
     KUrl imgUrl = CalSettings::instance()->image(month);
     KPImageInfo info(imgUrl);
     KPMetadata::ImageOrientation orientation = info.orientation();

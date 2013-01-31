@@ -8,8 +8,8 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2011 by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2011      by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,9 +41,9 @@
 namespace KIPICalendarPlugin
 {
 
-QPointer<CalSettings> CalSettings::instance_;
+QPointer<CalSettings> CalSettings::s_instance;
 
-CalSettings::CalSettings(QObject* parent)
+CalSettings::CalSettings(QObject* const parent)
     : QObject(parent)
 {
     params.year = KGlobal::locale()->calendar()->earliestValidDate().year() + 1;
@@ -56,14 +56,14 @@ CalSettings::~CalSettings()
 {
 }
 
-CalSettings* CalSettings::instance(QObject* parent)
+CalSettings* CalSettings::instance(QObject* const parent)
 {
-    if (instance_.isNull())
+    if (s_instance.isNull())
     {
-        instance_ = new CalSettings(parent);
+        s_instance = new CalSettings(parent);
     }
 
-    return instance_;
+    return s_instance;
 }
 
 void CalSettings::setYear(int year)
@@ -79,12 +79,12 @@ int CalSettings::year() const
 
 void CalSettings::setImage(int month, const KUrl& path)
 {
-    monthMap_.insert(month, path);
+    m_monthMap.insert(month, path);
 }
 
 KUrl CalSettings::image(int month) const
 {
-    return monthMap_.contains(month) ? monthMap_[month] : KUrl();
+    return m_monthMap.contains(month) ? m_monthMap[month] : KUrl();
 }
 
 void CalSettings::setPaperSize(const QString& paperSize)
@@ -191,18 +191,18 @@ void CalSettings::setFont(const QString& font)
 
 void CalSettings::clearSpecial()
 {
-    special.clear();
+    m_special.clear();
 }
 
 void CalSettings::addSpecial(const QDate& date, const Day& info)
 {
-    if (special.contains(date))
+    if (m_special.contains(date))
     {
-        special[date].second.append("; ").append(info.second);
+        m_special[date].second.append("; ").append(info.second);
     }
     else
     {
-        special[date] = info;
+        m_special[date] = info;
     }
 }
 
@@ -233,7 +233,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
         KDateTime dtLast(qLast);
         KDateTime dtCurrent;
 
-        int counter = 0;
+        int counter                = 0;
         KCalCore::Event::List list = memCal->rawEvents(qFirst, qLast);
 
         foreach(const KCalCore::Event::Ptr event, list)
@@ -270,14 +270,14 @@ bool CalSettings::isPrayDay(const QDate& date) const
 }
 
 /*!
-    \returns true if special formatting is to be applied to the particular day
+    \returns true if m_special formatting is to be applied to the particular day
  */
 bool CalSettings::isSpecial(int month, int day) const
 {
     QDate dt;
     KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
 
-    return (isPrayDay(dt) || special.contains(dt));
+    return (isPrayDay(dt) || m_special.contains(dt));
 }
 
 /*!
@@ -293,9 +293,9 @@ QColor CalSettings::getDayColor(int month, int day) const
         return Qt::red;
     }
 
-    if (special.contains(dt))
+    if (m_special.contains(dt))
     {
-        return special[dt].first;
+        return m_special[dt].first;
     }
 
     //default
@@ -310,12 +310,11 @@ QString CalSettings::getDayDescr(int month, int day) const
     QDate dt;
     KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
 
-    return special[dt].second;
     QString ret;
 
-    if (special.contains(dt))
+    if (m_special.contains(dt))
     {
-        ret = special[dt].second;
+        ret = m_special[dt].second;
     }
 
     return ret;
@@ -326,15 +325,14 @@ QPrinter::PrinterMode CalSettings::resolution() const
     return params.printResolution;
 }
 
-
-void CalSettings::setKipiInterface(KIPI::Interface* interface)
+void CalSettings::setKipiInterface(KIPI::Interface* const interface)
 {
-  params.interface = interface;
+    params.interface = interface;
 }
 
-KIPI::Interface* CalSettings::kipiInterface()
+KIPI::Interface* CalSettings::kipiInterface() const
 {
-  return params.interface;
+    return params.interface;
 }
 
 }  // NameSpace KIPICalendarPlugin

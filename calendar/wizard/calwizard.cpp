@@ -11,7 +11,7 @@
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  * Copyright (C) 2011      by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
- * Copyright (C) 2012      by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -92,13 +92,13 @@ CalWizard::CalWizard(QWidget* const parent)
 
     // About data and help button.
 
-    KPAboutData* about = new KPAboutData(ki18n("Calendar"),
-                                         0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A Kipi plugin to create a calendar"),
-                                         ki18n("(c) 2003-2005, Renchi Raju\n"
-                                               "(c) 2006 Tom Albers\n"
-                                               "(c) 2007-2008 Orgad Shaneh"));
+    KPAboutData* const about = new KPAboutData(ki18n("Calendar"),
+                                               0,
+                                               KAboutData::License_GPL,
+                                               ki18n("A Kipi plugin to create a calendar"),
+                                               ki18n("(c) 2003-2005, Renchi Raju\n"
+                                                     "(c) 2006 Tom Albers\n"
+                                                     "(c) 2007-2008 Orgad Shaneh"));
 
     about->addAuthor(ki18n("Orgad Shaneh"), ki18n("Author and maintainer"),
                      "orgads@gmail.com");
@@ -174,7 +174,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
             if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
                  KGlobal::locale()->calendar()->year(QDate::currentDate()) == year) ||
-                KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
+                 KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
                 extra = "<br/><br/><b>" + i18n("Please note that you are making a "
                                                "calendar for<br/>the current year or a year in the "
                                                "past.") + "</b>";
@@ -258,10 +258,7 @@ void CalWizard::print()
     cSettings_->loadSpecial(calEventsUI.ohUrlRequester->url(), Qt::red);
     cSettings_->loadSpecial(calEventsUI.fhUrlRequester->url(), Qt::darkGreen);
 
-    printThread_ = new CalPrinter(printer_,
-                                  months_,
-                                  iface(),
-                                  this);
+    printThread_ = new CalPrinter(printer_, months_, iface(), this);
 
     connect(printThread_, SIGNAL(pageChanged(int)),
             this,         SLOT(updatePage(int)));

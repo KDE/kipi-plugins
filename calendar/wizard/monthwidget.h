@@ -65,9 +65,9 @@ public:
     int month();
 
 Q_SIGNALS:
-  
+
   void monthSelected(int);
-  
+
 protected:
 
     void dragEnterEvent(QDragEnterEvent* event);
@@ -79,6 +79,7 @@ private Q_SLOTS:
 
     void gotThumbnail(const KUrl& url, const QPixmap& pix);
     void monthSelected();
+
 private:
 
     QPixmap thumb() const;

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,21 +48,19 @@ class CalTemplate : public QWidget
 
 public:
 
-    CalTemplate(KIPI::Interface* interface, QWidget* parent);
+    CalTemplate(KIPI::Interface* const interface, QWidget* const parent);
     ~CalTemplate();
 
 private Q_SLOTS:
 
     void yearChanged(int year);
     void monthChanged(int);
+
 private:
-  
-    KIPI::Interface* _interface;
-    Ui::CalTemplate ui;
 
-    QVector<MonthWidget*>  mwVector_;
-    QGridLayout*           monthBoxLayout_;
-
+    KIPI::Interface*       m_interface;
+    Ui::CalTemplate        m_ui;
+    QVector<MonthWidget*>  m_wVector;
 };
 
 }  // NameSpace KIPICalendarPlugin

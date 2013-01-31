@@ -10,7 +10,7 @@
  * Copyright (C) 2006      by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
- * Copyright (C) 2012      by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,23 +80,23 @@ private Q_SLOTS:
 
 private:
 
-    CalSettings*              cSettings_;
-    CalTemplate*              wTemplate_;
-    QWidget*                  wEvents_;
-    Ui::CalEvents             calEventsUI;
-    Ui::CalProgress           calProgressUI;
+    CalSettings*     cSettings_;
+    CalTemplate*     wTemplate_;
+    QWidget*         wEvents_;
+    Ui::CalEvents    calEventsUI;
+    Ui::CalProgress  calProgressUI;
 
-    QLabel*                   wPrintLabel_;
-    QWidget*                  wFinish_;
+    QLabel*          wPrintLabel_;
+    QWidget*         wFinish_;
 
-    KPageWidgetItem*          wPrintPage_;
-    KPageWidgetItem*          wFinishPage_;
+    KPageWidgetItem* wPrintPage_;
+    KPageWidgetItem* wFinishPage_;
 
-    QPrinter*                 printer_;
+    QPrinter*        printer_;
 
-    CalPrinter*               printThread_;
+    CalPrinter*      printThread_;
 
-    QMap<int, KUrl>           months_;
+    QMap<int, KUrl>  months_;
 };
 
 }  // NameSpace KIPICalendarPlugin

@@ -40,10 +40,10 @@ using namespace KIPIPlugins;
 namespace KIPICalendarPlugin
 {
 
-CalPrinter::CalPrinter(QPrinter* printer,
+CalPrinter::CalPrinter(QPrinter* const printer,
                        QMap<int, KUrl>& months,
-                       Interface* interface,
-                       QObject* parent)
+                       Interface* const interface,
+                       QObject* const parent)
     : QThread(parent)
 {
     printer_   = printer;

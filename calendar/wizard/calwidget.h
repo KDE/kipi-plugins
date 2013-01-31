@@ -40,9 +40,9 @@ class CalWidget : public QWidget
 
 public:
 
-    CalWidget(QWidget* parent);
+    CalWidget(QWidget* const parent);
     ~CalWidget();
-    
+
     void setCurrent(int curr) {_current = curr;}
     int current()             {return _current;}
 
@@ -53,6 +53,9 @@ public Q_SLOTS:
 protected:
 
     void paintEvent(QPaintEvent* e);
+
+protected:
+
     int _current;
 };
 

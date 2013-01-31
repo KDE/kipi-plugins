@@ -52,10 +52,10 @@ class CalPrinter : public QThread
 
 public:
 
-    CalPrinter(QPrinter* printer,
+    CalPrinter(QPrinter* const printer,
                QMap<int, KUrl>& months,
-               Interface* interface,
-               QObject* parent);
+               Interface* const interface,
+               QObject* const parent);
 
     virtual ~CalPrinter();
 

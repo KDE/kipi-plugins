@@ -81,11 +81,10 @@ void CalPainter::paint(int month)
         return;
     }
 
-    int width  = device()->width();
-    int height = device()->height();
-
-    CalSettings* settings = CalSettings::instance();
-    CalParams& params     = CalSettings::instance()->params;
+    int width                   = device()->width();
+    int height                  = device()->height();
+    CalSettings* const settings = CalSettings::instance();
+    CalParams& params           = CalSettings::instance()->params;
 
     // --------------------------------------------------
 
@@ -235,7 +234,7 @@ void CalPainter::paint(int month)
             dayname = dayname - 7;
         }
 
-        sx = cellSizeX * i + rCal.left();
+        sx     = cellSizeX * i + rCal.left();
         r.moveTopLeft(QPoint(sx, sy));
         rsmall = r;
         rsmall.setWidth(r.width() - 2);
@@ -336,6 +335,7 @@ void CalPainter::paint(int month)
         }
 
         emit signalProgress(0);
+
         image_ = image_.scaled(rImage.width(), rImage.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         emit signalTotal(image_.height());
@@ -346,12 +346,14 @@ void CalPainter::paint(int month)
 
         int blockSize = 10;
         int block = 0;
+
         while (block < h && !cancelled_)
         {
             if (block + blockSize > h)
             {
                 blockSize = h - block;
             }
+
             drawImage(x, y + block, image_, 0, block, image_.width(), blockSize);
             block += blockSize;
             emit signalProgress(block);
