@@ -77,8 +77,8 @@ public Q_SLOTS:
     void slotBusy(bool val);
 
     void slotButtonClicked(KDialog::ButtonCode button);
-    void slotAddPhotoSuccess(KUrl currentImage, ImgurSuccess success);
-    void slotAddPhotoError(KUrl currentImage, ImgurError error);
+    void slotAddPhotoSuccess(const KUrl& currentImage, ImgurSuccess success);
+    void slotAddPhotoError(const KUrl& currentImage, ImgurError error);
 //    void slotAuthenticated(bool yes);
     void slotAuthenticated(bool yes, const QString& message = "");
 
@@ -97,8 +97,8 @@ private:
 
 private:
 
-    class ImgurWindowPriv;
-    ImgurWindowPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

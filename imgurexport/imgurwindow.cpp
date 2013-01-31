@@ -41,28 +41,28 @@
 namespace KIPIImgurExportPlugin
 {
 
-class ImgurWindow::ImgurWindowPriv
+class ImgurWindow::Private
 
 {
 public:
 
-    ImgurWindowPriv()
+    Private()
     {
-        webService  = 0;
-        widget      = 0;
+        webService = 0;
+        widget     = 0;
     }
 
 #ifdef OAUTH_ENABLED
     ImgurTalkerAuth* webService;
 #else
-    ImgurTalker* webService;
+    ImgurTalker*     webService;
 #endif //OAUTH_ENABLED
 
-    ImgurWidget* widget;
+    ImgurWidget*     widget;
 };
 
 ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0), d(new ImgurWindowPriv)
+    : KPToolDialog(0), d(new Private)
 {
     d->widget     = new ImgurWidget(this);
 #ifdef OAUTH_ENABLED
@@ -85,11 +85,11 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KPAboutData* about = new KPAboutData(ki18n("Imgur Export"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A tool to export images to Imgur web service"),
-                             ki18n("(c) 2012, Marius Orcsik"));
+    KPAboutData* const about = new KPAboutData(ki18n("Imgur Export"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A tool to export images to Imgur web service"),
+                                   ki18n("(c) 2012, Marius Orcsik"));
 
     about->addAuthor(ki18n("Marius Orcsik"), ki18n("Author and Maintainer"),
                      "marius at habarnam dot ro");
@@ -198,9 +198,10 @@ void ImgurWindow::slotImageQueueChanged()
     enableButton(User1, !d->webService->imageQueue()->isEmpty());
 }
 
-void ImgurWindow::slotAddPhotoError(KUrl currentImage, ImgurError error)
+void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, ImgurError error)
 {
-    if (!d->webService->imageQueue()->isEmpty()) {
+    if (!d->webService->imageQueue()->isEmpty())
+    {
         if (KMessageBox::warningContinueCancel(this,
                                                i18n("Failed to upload photo to Imgur: %1\n"
                                                     "Do you want to continue?", error.message))
@@ -212,20 +213,24 @@ void ImgurWindow::slotAddPhotoError(KUrl currentImage, ImgurError error)
             emit signalContinueUpload(false);
         }
 
-    } else {
+    }
+    else
+    {
         KMessageBox::sorry(this,i18n("Failed to upload photo to Imgur: %1\n", error.message));
     }
+
     return;
 }
 
-void ImgurWindow::slotAddPhotoSuccess(KUrl currentImage, ImgurSuccess success)
+void ImgurWindow::slotAddPhotoSuccess(const KUrl& /*currentImage*/, ImgurSuccess /*success*/)
 {
    emit signalContinueUpload(true);
 }
 
-void ImgurWindow::slotAuthenticated(bool yes,const QString& message)
+void ImgurWindow::slotAuthenticated(bool yes, const QString& message)
 {
     QString err;
+
     if (!message.isEmpty())
     {
         err = "\n" + message;
@@ -234,9 +239,9 @@ void ImgurWindow::slotAuthenticated(bool yes,const QString& message)
     if (yes)
     {
         enableButton(User1, yes);
-    } else if (KMessageBox::warningContinueCancel(this,
-                                                  i18n("Failed to authenticate to Imgur.%1\n"
-                                                       "Do you want to continue?", err))
+    }
+    else if (KMessageBox::warningContinueCancel(this, i18n("Failed to authenticate to Imgur.%1\n"
+                                                           "Do you want to continue?", err))
                == KMessageBox::Continue)
     {
         enableButton(User1, true);
