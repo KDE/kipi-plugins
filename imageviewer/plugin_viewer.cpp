@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,11 +48,11 @@ namespace KIPIViewerPlugin
 K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
 K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
-class Plugin_viewer::Plugin_viewerPriv
+class Plugin_viewer::Private
 {
 public:
 
-    Plugin_viewerPriv()
+    Private()
     {
         widget       = 0;
         actionViewer = 0;
@@ -64,7 +64,7 @@ public:
 
 Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
      : Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer"),
-       d(new Plugin_viewerPriv)
+       d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 

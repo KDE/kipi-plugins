@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,11 +34,11 @@
 namespace KIPIViewerPlugin
 {
 
-class Timer::TimerPriv
+class Timer::Private
 {
 public:
 
-    TimerPriv()
+    Private()
     {
         meantime = 0;
     }
@@ -48,7 +48,7 @@ public:
 };
 
 Timer::Timer()
-    : d(new TimerPriv)
+    : d(new Private)
 {
 }
 

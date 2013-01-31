@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -79,7 +79,7 @@ private:
     void mouseDoubleClickEvent(QMouseEvent* e);
     void mouseReleaseEvent(QMouseEvent* e);
 
-    Texture* loadImage(int file_index);
+    Texture* loadImage(int file_index) const;
     void     drawImage(Texture* const tex);
     void     downloadTexture(Texture* const tex);
 
@@ -91,8 +91,8 @@ private Q_SLOTS:
 
 private:
 
-    class ViewerWidgetPriv;
-    ViewerWidgetPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIViewerPlugin

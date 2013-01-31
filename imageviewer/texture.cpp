@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,13 +46,26 @@ using namespace KDcrawIface;
 namespace KIPIViewerPlugin
 {
 
-class Texture::TexturePriv
+class Texture::Private
 {
 public:
 
-    TexturePriv()
+    Private()
     {
-        rotate_idx    = 0;
+        rdx            = 0.0;
+        rdy            = 0.0;
+        z              = 0.0;
+        ux             = 0.0;
+        uy             = 0.0;
+        rtx            = 0.0;
+        rty            = 0.0;
+        vtop           = 0.0;
+        vbottom        = 0.0;
+        vleft          = 0.0;
+        vright         = 0.0;
+        display_x      = 0;
+        display_y      = 0;
+        rotate_idx     = 0;
         rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
         rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
         rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
@@ -72,7 +85,7 @@ public:
 };
 
 Texture::Texture()
-    : d(new TexturePriv)
+    : d(new Private)
 {
     reset();
 }
@@ -127,6 +140,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 
     //handle rotation
     KPImageInfo info(d->filename);
+
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
@@ -201,9 +215,9 @@ bool Texture::loadInternal()
 }
 
 /*!
-    \fn Texture::data()
+    \fn Texture::data() const
  */
-GLvoid* Texture::data()
+GLvoid* Texture::data() const
 {
     return d->glimage.bits();
 }
