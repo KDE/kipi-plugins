@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -66,12 +66,13 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     setCaption(i18n("KML Export"));
     setModal(true);
 
-    QWidget *page = new QWidget( this );
+    QWidget* const page = new QWidget( this );
     setMainWidget( page );
     KMLExportConfigLayout = new QGridLayout(page);
 
     // --------------------------------------------------------------
     // Target preferences
+
     TargetPreferenceGroupBox       = new QGroupBox(i18n("Target Preferences" ), page);
     TargetPreferenceGroupBoxLayout = new QGridLayout(TargetPreferenceGroupBox);
 
@@ -95,8 +96,8 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     // --------------------------------------------------------------
     // target preference, suite
 
-    QLabel *AltitudeLabel_ = new QLabel(i18n("Picture Altitude:" ), TargetPreferenceGroupBox);
-    AltitudeCB_            = new KComboBox( TargetPreferenceGroupBox );
+    QLabel* const AltitudeLabel_ = new QLabel(i18n("Picture Altitude:" ), TargetPreferenceGroupBox);
+    AltitudeCB_                  = new KComboBox( TargetPreferenceGroupBox );
     AltitudeCB_->addItem(i18n("clamp to ground"));
     AltitudeCB_->addItem(i18n("relative to ground"));
     AltitudeCB_->addItem(i18n("absolute"));
@@ -137,10 +138,11 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     // --------------------------------------------------------------
     // Sizes
-    QGroupBox *SizeGroupBox = new QGroupBox(i18n("Sizes" ), page);
-    SizeGroupBoxLayout      = new QGridLayout(SizeGroupBox);
-    IconSizeLabel           = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
-    IconSizeInput_          = new KIntNumInput(SizeGroupBox);
+
+    QGroupBox* const SizeGroupBox = new QGroupBox(i18n("Sizes" ), page);
+    SizeGroupBoxLayout            = new QGridLayout(SizeGroupBox);
+    IconSizeLabel                 = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
+    IconSizeInput_                = new KIntNumInput(SizeGroupBox);
     IconSizeInput_->setValue(33);
 
     ImageSizeLabel  = new QLabel(i18n("Image Size:"), SizeGroupBox);
@@ -157,8 +159,9 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     // --------------------------------------------------------------
     // GPX Tracks
-    QGroupBox *GPXTracksGroupBox         = new QGroupBox(i18n("GPX Tracks"), page);
-    QGridLayout *GPXTracksGroupBoxLayout = new QGridLayout(GPXTracksGroupBox);
+
+    QGroupBox* const GPXTracksGroupBox         = new QGroupBox(i18n("GPX Tracks"), page);
+    QGridLayout* const GPXTracksGroupBoxLayout = new QGridLayout(GPXTracksGroupBox);
 
     // add a gpx track checkbox
     GPXTracksCheckBox_ = new QCheckBox(i18n("Draw GPX Track"), GPXTracksGroupBox);
@@ -273,11 +276,11 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     // --------------------------------------------------------------
     // About data and help button.
 
-    KPAboutData* about = new KPAboutData(ki18n("KML Export"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin for KML exporting"),
-                             ki18n("(c) 2006-2007, Stéphane Pontier"));
+    KPAboutData* const about = new KPAboutData(ki18n("KML Export"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin for KML exporting"),
+                                   ki18n("(c) 2006-2007, Stéphane Pontier"));
 
     about->addAuthor(ki18n("Stéphane Pontier"),
                      ki18n("Developer and maintainer"),
@@ -455,6 +458,7 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("size",               ImageSizeInput_->value());
 
     QString destination = DestinationDirectory_->url().path();
+
     if (!destination.endsWith('/'))
     {
         destination.append('/');
@@ -462,6 +466,7 @@ void KMLExportConfig::saveSettings()
 
     group.writeEntry("baseDestDir", destination);
     QString url = DestinationUrl_->text();
+
     if (!url.endsWith('/'))
     {
         url.append('/');

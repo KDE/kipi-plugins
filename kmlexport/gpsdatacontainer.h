@@ -6,7 +6,7 @@
  * Date        : 2006-09-19
  * Description : GPS data container.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,7 +37,8 @@ public:
           m_altitude(0.0),
           m_latitude(0.0),
           m_longitude(0.0)
-    {};
+    {
+    };
 
     GPSDataContainer(double altitude, double latitude,
                      double longitude, bool interpolated)
@@ -45,10 +46,12 @@ public:
           m_altitude(altitude),
           m_latitude(latitude),
           m_longitude(longitude)
-    {};
+    {
+    };
 
     ~GPSDataContainer()
-    {};
+    {
+    };
 
     GPSDataContainer& operator=(const GPSDataContainer& data)
     {
@@ -68,18 +71,18 @@ public:
                ( a.m_longitude == m_longitude);
     }
 
-    void setInterpolated(bool ite) { m_interpolated = ite; };
-    void setAltitude(double alt)   { m_altitude     = alt; };
-    void setLatitude(double lat)   { m_latitude     = lat; };
-    void setLongitude(double lng)  { m_longitude    = lng; };
+    void setInterpolated(bool ite)  { m_interpolated = ite; };
+    void setAltitude(double alt)    { m_altitude     = alt; };
+    void setLatitude(double lat)    { m_latitude     = lat; };
+    void setLongitude(double lng)   { m_longitude    = lng; };
 
-    bool   isInterpolated() const { return m_interpolated; };
-    double altitude()       const { return m_altitude;     };
-    double latitude()       const { return m_latitude;     };
-    double longitude()      const { return m_longitude;    };
+    bool   isInterpolated() const   { return m_interpolated; };
+    double altitude()       const   { return m_altitude;     };
+    double latitude()       const   { return m_latitude;     };
+    double longitude()      const   { return m_longitude;    };
 
-    QString altitudeString() const  { return QString::number(m_altitude,  'g', 12); }
-    QString latitudeString() const  { return QString::number(m_latitude,  'g', 12); }
+    QString altitudeString()  const { return QString::number(m_altitude,  'g', 12); }
+    QString latitudeString()  const { return QString::number(m_latitude,  'g', 12); }
     QString longitudeString() const { return QString::number(m_longitude, 'g', 12); }
 
     QString geoUrl() const

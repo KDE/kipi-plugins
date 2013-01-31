@@ -6,7 +6,7 @@
  * Date        : 2006-05-16
  * Description : A plugin to create KML files to present images with coordinates.
  *
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,6 +80,7 @@ void Plugin_KMLExport::setup(QWidget* const widget)
     setupActions();
 
     m_interface = interface();
+
     if (!m_interface)
     {
         kError() << "Kipi interface is null!" ;
@@ -120,7 +121,7 @@ void Plugin_KMLExport::slotKMLExport()
     }
     else
     {
-        KMLExportConfig* kmlExportConfigGui = new KMLExportConfig(kapp->activeWindow());
+        KMLExportConfig* const kmlExportConfigGui = new KMLExportConfig(kapp->activeWindow());
 
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
                 this, SLOT(slotKMLGenerate()));
@@ -133,6 +134,7 @@ void Plugin_KMLExport::slotKMLGenerate()
 {
     ImageCollection selection = m_interface->currentSelection();
     KmlExport myExport(m_interface);
+
     if(!myExport.getConfig())
         return;
 

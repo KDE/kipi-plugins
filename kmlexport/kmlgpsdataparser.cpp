@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,8 +32,9 @@ namespace KIPIKMLExportPlugin
 {
 
 KMLGPSDataParser::KMLGPSDataParser()
-                : GPSDataParser()
+    : GPSDataParser()
 {
+    kmlDocument = 0;
 }
 
 KMLGPSDataParser::~KMLGPSDataParser()
@@ -45,12 +46,12 @@ QString KMLGPSDataParser::lineString()
     QString line = "";
     // cache the end to not recalculate it with large number of points
     GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
-    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
-         it != end; ++it )
+
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin(); it != end; ++it )
     {
-        line += QString("%1,%2,%3")
-                        .arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
+        line += QString("%1,%2,%3").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
     }
+
     return line;
 }
 
@@ -79,8 +80,7 @@ void KMLGPSDataParser::CreateTrackLine(QDomElement& parent, QDomDocument& root, 
     }
 }
 
-void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root,
-                                         int timeZone, int altitudeMode)
+void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root, int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
     kDebug(AREA_CODE_LOADING) << "creation d'un trackpoint" ;
@@ -95,8 +95,7 @@ void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root
     // cache the end to not recalculate it with large number of points
     GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
 
-    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
-         it != end; ++it, ++i)
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin(); it != end; ++it, ++i)
     {
         QDomElement kmlPointPlacemark = addKmlElement(kmlPointsFolder, "Placemark");
         addKmlTextElement(kmlPointPlacemark, "name", QString("%1 %2 ").arg(i18n("Point")).arg(i));

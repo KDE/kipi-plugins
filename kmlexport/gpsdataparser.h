@@ -7,7 +7,7 @@
  * Description : GPS data file parser.
  *               (GPX format http://www.topografix.com/gpx.asp).
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,7 +46,7 @@ class GPSDataParser
 public:
 
     GPSDataParser();
-    ~GPSDataParser(){};
+    ~GPSDataParser() {};
 
     bool loadGPXFile(const KUrl& url);
 
@@ -65,7 +65,7 @@ private:
 
 protected:
 
-    typedef QMap<QDateTime, GPSDataContainer> GPSDataMap; 
+    typedef QMap<QDateTime, GPSDataContainer> GPSDataMap;
 
     GPSDataMap                                m_GPSDataMap;
 };

@@ -67,7 +67,7 @@ QDateTime GPSDataParserParseTime(QString timeString)
         const int hourOffset   = timeZoneString.mid(1, 2).toInt(&okayHour);
         const int minuteOffset = timeZoneString.mid(4, 2).toInt(&okayMinute);
 
-        if (okayHour&&okayMinute)
+        if (okayHour && okayMinute)
         {
             timeZoneOffsetSeconds =  hourOffset*3600 + minuteOffset*60;
             timeZoneOffsetSeconds *= timeZoneSign;

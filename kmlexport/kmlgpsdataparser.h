@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,13 +50,14 @@ public:
      *  @return the string containing the time ordered point (lon,lat,alt)
      */
     QString lineString();
+
     /*! Create a KML Element that will contain the linetrace of the GPS
      *  @param parent the QDomElement to which the track will be added
      *  @param root the QDomDocument used to create all elements
      *  @param altitudeMode altitude mode of the line and points
      */
-
     void CreateTrackLine(QDomElement& parent, QDomDocument& root, int altitudeMode);
+
     /*! Create a KML Element that will contain the points and of the GPS
      *  @param parent the QDomElement to which the track will be added
      *  @param root the QDomDocument used to create all elements

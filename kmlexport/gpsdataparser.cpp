@@ -7,7 +7,7 @@
  * Description : GPS data file parser.
  *               (GPX format http://www.topografix.com/gpx.asp).
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -64,6 +64,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
 {
     // GPS device are sync in time by satelite using GMT time.
     QDateTime cameraGMTDateTime = photoDateTime.addSecs(secondsOffset*(-1));
+
     if (offsetContainsTimeZone)
     {
         cameraGMTDateTime.setTimeSpec(Qt::UTC);
@@ -77,8 +78,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
     int nbSecItem = maxGapTime;
     int nbSecs;
 
-    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
-         it != m_GPSDataMap.constEnd(); ++it )
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin(); it != m_GPSDataMap.constEnd(); ++it )
     {
         // Here we check a possible accuracy in seconds between the
         // Camera GMT time and the GPS device GMT time.
@@ -92,6 +92,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
         {
             if (gpsData)
                 *gpsData = m_GPSDataMap[it.key()];
+
             findItem  = true;
             nbSecItem = nbSecs;
         }
@@ -148,8 +149,7 @@ QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
     QDateTime itemFound = dateTime.addSecs(secs);
     bool found          = false;
 
-    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
-        it != m_GPSDataMap.constEnd(); ++it )
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin(); it != m_GPSDataMap.constEnd(); ++it )
     {
         if (it.key() > dateTime)
         {
@@ -174,8 +174,7 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
     QDateTime itemFound = dateTime.addSecs((-1)*secs);
     bool found          = false;
 
-    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
-        it != m_GPSDataMap.constEnd(); ++it )
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin(); it != m_GPSDataMap.constEnd(); ++it )
     {
         if (it.key() < dateTime)
         {
@@ -201,32 +200,37 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
         return false;
 
     QDomDocument gpxDoc("gpx");
+
     if (!gpxDoc.setContent(&gpxfile))
         return false;
 
     QDomElement gpxDocElem = gpxDoc.documentElement();
+
     if (gpxDocElem.tagName()!="gpx")
         return false;
 
-    for (QDomNode nTrk = gpxDocElem.firstChild();
-         !nTrk.isNull(); nTrk = nTrk.nextSibling())
+    for (QDomNode nTrk = gpxDocElem.firstChild(); !nTrk.isNull(); nTrk = nTrk.nextSibling())
     {
         QDomElement trkElem = nTrk.toElement();
-        if (trkElem.isNull()) continue;
+
+        if (trkElem.isNull())           continue;
+
         if (trkElem.tagName() != "trk") continue;
 
-        for (QDomNode nTrkseg = trkElem.firstChild();
-            !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling())
+        for (QDomNode nTrkseg = trkElem.firstChild(); !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling())
         {
             QDomElement trksegElem = nTrkseg.toElement();
-            if (trksegElem.isNull()) continue;
+
+            if (trksegElem.isNull())              continue;
+
             if (trksegElem.tagName() != "trkseg") continue;
 
-            for (QDomNode nTrkpt = trksegElem.firstChild();
-                !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling())
+            for (QDomNode nTrkpt = trksegElem.firstChild(); !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling())
             {
                 QDomElement trkptElem = nTrkpt.toElement();
-                if (trkptElem.isNull()) continue;
+
+                if (trkptElem.isNull())             continue;
+
                 if (trkptElem.tagName() != "trkpt") continue;
 
                 QDateTime ptDateTime;
@@ -237,28 +241,34 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
                 // Get GPS position. If not available continue to next point.
                 QString lat = trkptElem.attribute("lat");
                 QString lon = trkptElem.attribute("lon");
+
                 if (lat.isEmpty() || lon.isEmpty()) continue;
 
                 ptLatitude  = lat.toDouble();
                 ptLongitude = lon.toDouble();
 
                 // Get metadata of track point (altitude and time stamp)
-                for (QDomNode nTrkptMeta = trkptElem.firstChild();
-                    !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling())
+                for (QDomNode nTrkptMeta = trkptElem.firstChild(); !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling())
                 {
                     QDomElement trkptMetaElem = nTrkptMeta.toElement();
+
                     if (trkptMetaElem.isNull()) continue;
+
                     if (trkptMetaElem.tagName() == QString("time"))
                     {
                         // Get GPS point time stamp. If not available continue to next point.
                         const QString time = trkptMetaElem.text();
+
                         if (time.isEmpty()) continue;
+
                         ptDateTime = GPSDataParserParseTime(time);
                     }
+
                     if (trkptMetaElem.tagName() == QString("ele"))
                     {
                         // Get GPS point altitude. If not available continue to next point.
                         QString ele = trkptMetaElem.text();
+
                         if (!ele.isEmpty())
                             ptAltitude  = ele.toDouble();
                     }
