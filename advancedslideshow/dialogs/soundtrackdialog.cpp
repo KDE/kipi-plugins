@@ -55,8 +55,8 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview(QWidget* parent, KUrl::List& urls, SharedContainer* sharedData)
-                 : KDialog(parent)
+SoundtrackPreview::SoundtrackPreview(QWidget* const parent, KUrl::List& urls, SharedContainer* const sharedData)
+    : KDialog(parent)
 {
     setModal(true);
     setButtons(KDialog::Close);
@@ -72,8 +72,8 @@ SoundtrackPreview::~SoundtrackPreview()
 
 // ------------------------------------------------------------------------------------
 
-SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedContainer* sharedData)
-                : QWidget(parent)
+SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const sharedData)
+    : QWidget(parent)
 {
     setupUi(this);
 
@@ -195,7 +195,7 @@ void SoundtrackDialog::addItems(const KUrl::List& fileList)
         KUrl currentFile             = *it;
         KUrl path                    = KUrl(currentFile.path().section('/', 0, -1));
         m_sharedData->soundtrackPath = path;
-        SoundItem *item              = new SoundItem(m_SoundFilesListBox, path);
+        SoundItem* const item        = new SoundItem(m_SoundFilesListBox, path);
         item->setName(currentFile.path().section('/', -1));
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
@@ -225,7 +225,7 @@ void SoundtrackDialog::updateTracksNumber()
 
         for (QMap<KUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); ++it)
         {
-            int hours = it.value().hour() + displayTime.hour();
+            int hours = it.value().hour()   + displayTime.hour();
             int mins  = it.value().minute() + displayTime.minute();
             int secs  = it.value().second() + displayTime.second();
 
@@ -356,6 +356,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd()
 void SoundtrackDialog::slotSoundFilesButtonDelete()
 {
     int Index = m_SoundFilesListBox->currentRow();
+
     if( Index < 0 )
        return;
 
@@ -369,7 +370,9 @@ void SoundtrackDialog::slotSoundFilesButtonDelete()
     delete pitem;
     slotSoundFilesSelected(m_SoundFilesListBox->currentRow());
 
-    if (m_SoundFilesListBox->count() == 0) m_previewButton->setEnabled(false);
+    if (m_SoundFilesListBox->count() == 0)
+        m_previewButton->setEnabled(false);
+
     updateFileList();
 }
 
@@ -378,8 +381,10 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
     int Cpt = 0;
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
+    {
         if (m_SoundFilesListBox->currentRow() == i)
             ++Cpt;
+    }
 
     if  (Cpt == 0)
         return;
@@ -395,7 +400,7 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
     if (Index == 0)
         return;
 
-    SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
+    SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
 
     m_SoundFilesListBox->insertItem(Index - 1, pitem);
     m_SoundFilesListBox->setCurrentItem(pitem);
@@ -408,8 +413,10 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
     int Cpt = 0;
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
+    {
         if (m_SoundFilesListBox->currentRow() == i)
             ++Cpt;
+    }
 
     if (Cpt == 0)
         return;
@@ -425,7 +432,7 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
     if (Index == m_SoundFilesListBox->count())
         return;
 
-    SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
+    SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
 
     m_SoundFilesListBox->insertItem(Index + 1, pitem);
     m_SoundFilesListBox->setCurrentItem(pitem);
@@ -443,8 +450,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
 
     if (dlg->exec() != KFileDialog::Accepted)
     {
-
-	delete dlg;
+        delete dlg;
         return;
     }
 
@@ -453,6 +459,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
     if (!filename.isEmpty())
     {
         QFile file(filename);
+
         if (file.open(QIODevice::ReadOnly|QIODevice::Text))
         {
             QTextStream in(&file);
@@ -467,6 +474,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
                     continue;
 
                 KUrl fUrl(line);
+
                 if (fUrl.isValid())
                 {
                     if (fUrl.isLocalFile())
@@ -498,7 +506,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
 
     if (dlg->exec() != KFileDialog::Accepted)
     {
-	delete dlg;
+        delete dlg;
         return;
     }
 
@@ -507,6 +515,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
     if (!filename.isEmpty())
     {
         QFile file(filename);
+
         if (file.open(QIODevice::WriteOnly|QIODevice::Text))
         {
             QTextStream out(&file);
@@ -515,6 +524,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
             for (int i = 0; i < playlistFiles.count(); ++i)
             {
                 KUrl fUrl(playlistFiles.at(i));
+
                 if (fUrl.isValid())
                 {
                     if (fUrl.isLocalFile())
@@ -542,13 +552,12 @@ void SoundtrackDialog::slotPreviewButtonClicked()
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {
-        SoundItem *pitem = static_cast<SoundItem*>( m_SoundFilesListBox->item(i) );
-        QString path = pitem->url().toLocalFile();
+        SoundItem* const pitem = static_cast<SoundItem*>( m_SoundFilesListBox->item(i) );
+        QString path           = pitem->url().toLocalFile();
 
         if (!QFile::exists(path))
         {
-            KMessageBox::error(this,
-                               i18n("Cannot access file %1. Please check the path is correct.", path));
+            KMessageBox::error(this, i18n("Cannot access file %1. Please check the path is correct.", path));
             return;
         }
 
@@ -557,8 +566,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
 
     if ( urlList.isEmpty() )
     {
-        KMessageBox::error(this,
-                           i18n("Cannot create a preview of an empty file list."));
+        KMessageBox::error(this, i18n("Cannot create a preview of an empty file list."));
         return;
     }
 
