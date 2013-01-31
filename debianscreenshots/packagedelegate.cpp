@@ -29,7 +29,7 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-PackageDelegate::PackageDelegate(QObject* parent)
+PackageDelegate::PackageDelegate(QObject* const parent)
     : QStyledItemDelegate(parent)
 {
 }

@@ -103,11 +103,11 @@ DsWindow::DsWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Debian Screenshots Export"), 0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to export an image collection "
-                                   "to the Debian Screenshots web site."),
-                              ki18n("(c) 2010, Pau Garcia i Quiles\n"));
+    KPAboutData* const about = new KPAboutData(ki18n("Debian Screenshots Export"), 0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to export an image collection "
+                                         "to the Debian Screenshots web site."),
+                                   ki18n("(c) 2010, Pau Garcia i Quiles\n"));
 
     about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
                      "pgquiles at elpauer dot org");
@@ -208,6 +208,7 @@ void DsWindow::slotStartTransfer()
 bool DsWindow::prepareImageForUpload(const QString& imgPath, MassageType massage)
 {
     QImage image;
+
     if ( massage == DsWindow::ImageIsRaw )
     {
         kDebug() << "Get RAW preview " << imgPath;
@@ -259,6 +260,7 @@ void DsWindow::uploadNextPhoto()
     // check if format is PNG
     QImageReader imgReader(imgPath);
     QByteArray imgFormat = imgReader.format();
+
     if( QString::compare(QString(imgFormat), QString("PNG"), Qt::CaseInsensitive) != 0 )
     {
         massageRequired = DsWindow::NotPNG;
@@ -266,6 +268,7 @@ void DsWindow::uploadNextPhoto()
 
     // check if image > 800x600
     QImage img = imgReader.read();
+
     if( (img.width() > maxWidth) || (img.height() > maxHeight) )
     {
         massageRequired = DsWindow::ResizeRequired;
@@ -278,6 +281,7 @@ void DsWindow::uploadNextPhoto()
     }
 
     bool res;
+
     if (massageRequired)
     {
         if (!prepareImageForUpload(imgPath, massageRequired))

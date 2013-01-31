@@ -37,8 +37,8 @@ class KClickableImageLabel : public QLabel
 
 public:
 
-    explicit KClickableImageLabel(QWidget* parent = 0, Qt::WindowFlags f = 0);
-    explicit KClickableImageLabel(const QString& text, QWidget* parent = 0, Qt::WindowFlags f = 0);
+    explicit KClickableImageLabel(QWidget* const parent = 0, Qt::WindowFlags f = 0);
+    explicit KClickableImageLabel(const QString& text, QWidget* const parent = 0, Qt::WindowFlags f = 0);
     void setUrl(const QUrl& url);
     QUrl url() const;
 

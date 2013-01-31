@@ -36,7 +36,8 @@ class PackageDelegate : public QStyledItemDelegate
 
 public:
 
-    explicit PackageDelegate(QObject* parent = 0);
+    explicit PackageDelegate(QObject* const parent = 0);
+
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };

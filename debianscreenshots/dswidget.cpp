@@ -73,14 +73,16 @@ namespace KIPIDebianScreenshotsPlugin
 
 DsWidget::DsWidget(QWidget* const parent)
     : QWidget(parent),
+      m_dlGrp(0),
       m_lastTip( QString() ),
       m_lastQueryUrl( QUrl() ),
       m_httpManager( new KIO::AccessManager(this) ),
-      m_jsonManager( new KIO::AccessManager(this) )
+      m_jsonManager( new KIO::AccessManager(this) ),
+      m_uploadWidget(0)
 {
     setObjectName("DsWidget");
 
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
 
@@ -90,8 +92,8 @@ DsWidget::DsWidget(QWidget* const parent)
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis( i18n("This is the list of images to upload to Debian Screenshots.") );
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget* const settingsBox           = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
 //    m_headerLabel = new QLabel(settingsBox);
 //    m_headerLabel->setText(QString("<b><h2><a href='%1'>"
@@ -105,21 +107,21 @@ DsWidget::DsWidget(QWidget* const parent)
     m_headerLabel->setOpenExternalLinks(true);
     m_headerLabel->setFocusPolicy(Qt::NoFocus);
 
-    QGroupBox* pkgGroupBox   = new QGroupBox(settingsBox);
+    QGroupBox* const pkgGroupBox   = new QGroupBox(settingsBox);
     pkgGroupBox->setTitle(i18n("Package"));
     pkgGroupBox->setWhatsThis(i18n("This is the Debian Screenshots package to which selected photos will be uploaded."));
 
-    QGridLayout* sdnLayout   = new QGridLayout(pkgGroupBox);
+    QGridLayout* const sdnLayout   = new QGridLayout(pkgGroupBox);
 
-    QLabel* pkgLabel         = new QLabel(i18n("Package:"), pkgGroupBox);
+    QLabel* const pkgLabel         = new QLabel(i18n("Package:"), pkgGroupBox);
 
-    m_pkgLineEdit            = new KLineEdit(pkgGroupBox);
-    QCompleter* pkgCompleter = new QCompleter(this);
+    m_pkgLineEdit                  = new KLineEdit(pkgGroupBox);
+    QCompleter* const pkgCompleter = new QCompleter(this);
     pkgCompleter->setCompletionMode(QCompleter::PopupCompletion);
     pkgCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     m_pkgLineEdit->setCompleter(pkgCompleter);
 
-    QListView* listView = new QListView;
+    QListView* const listView      = new QListView;
     pkgCompleter->setPopup(listView);
     listView->setItemDelegateForColumn(0, new PackageDelegate);
 
@@ -135,16 +137,17 @@ DsWidget::DsWidget(QWidget* const parent)
     connect(m_jsonManager, SIGNAL(finished(QNetworkReply*)), 
             this, SLOT(slotFindVersionsForPackageFinished(QNetworkReply*)));
 
-    QLabel* versionLabel = new QLabel(i18n("Software version:"), pkgGroupBox);
-    m_versionsComboBox   = new KComboBox(pkgGroupBox);
+    QLabel* const versionLabel = new QLabel(i18n("Software version:"), pkgGroupBox);
+    m_versionsComboBox         = new KComboBox(pkgGroupBox);
     m_versionsComboBox->setEditable(false);
     m_versionsComboBox->setEnabled(false); // Disable until we have a package name
     m_versionsComboBox->setMinimumContentsLength(40);
+
     connect(m_versionsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEnableUpload()));
 
-    QLabel* descriptionLabel  = new QLabel(i18n("Screenshot description:"), pkgGroupBox);
-    m_descriptionLineEdit = new KLineEdit(pkgGroupBox);
+    QLabel* const descriptionLabel  = new QLabel(i18n("Screenshot description:"), pkgGroupBox);
+    m_descriptionLineEdit           = new KLineEdit(pkgGroupBox);
     m_descriptionLineEdit->setMaxLength(40); // 40 is taken from screenshots.debian.net/upload page source
     m_descriptionLineEdit->setEnabled(false);
 
@@ -240,15 +243,15 @@ void DsWidget::slotCompletePackageNameFinished(QNetworkReply* reply)
 
         QList<QByteArray> pkgSuggestions = ba.split('\n');
 
-        QStandardItemModel *m = new QStandardItemModel(pkgSuggestions.count(), 2, m_pkgLineEdit->completer());
+        QStandardItemModel* const m = new QStandardItemModel(pkgSuggestions.count(), 2, m_pkgLineEdit->completer());
 
         for( int i = 0; i < pkgSuggestions.count(); ++i)
         {
-            QModelIndex pkgIdx = m->index(i, 0);
-            QModelIndex descIdx = m->index(i, 1);
+            QModelIndex pkgIdx             = m->index(i, 0);
+            QModelIndex descIdx            = m->index(i, 1);
             QList<QByteArray> pkgDescSplit = pkgSuggestions.at(i).split('|');
-            QString pkg = pkgDescSplit.at(0);
-            QString desc =pkgDescSplit.at(1);
+            QString pkg                    = pkgDescSplit.at(0);
+            QString desc                   = pkgDescSplit.at(1);
             m->setData(pkgIdx, pkg);
             m->setData(descIdx, desc);
         }
@@ -292,11 +295,13 @@ void DsWidget::slotFindVersionsForPackageFinished(QNetworkReply* reply)
             QMap<QString, QVariant> versions = versionSuggestions.toMap();
 
             QMap<QString, QVariant>::const_iterator i = versions.constBegin();
+
             while (i != versions.constEnd())
             {
                 m_versionsComboBox->addItem(i.value().toString());
                 ++i;
             }
+
             m_versionsComboBox->setEnabled(true);
 
             if( versions.size() == 1 )
@@ -311,6 +316,7 @@ void DsWidget::slotFindVersionsForPackageFinished(QNetworkReply* reply)
             kDebug() << "Query " << replyUrl.toEncoded().constData() << "failed";
         }
     }
+
     reply->deleteLater();
 }
 

@@ -52,11 +52,12 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-DsTalker::DsTalker(QWidget* parent) : QObject(parent), m_parent(parent), m_job(0)
+DsTalker::DsTalker(QWidget* const parent)
+    : QObject(parent),
+      m_parent(parent),
+      m_job(0)
 {
-    m_parent = parent;
-
-    m_userAgent  = QString("KIPI-Plugin-DebianScreenshots/%1 (pgquiles@elpauer.org)").arg(kipiplugins_version);
+    m_userAgent = QString("KIPI-Plugin-DebianScreenshots/%1 (pgquiles@elpauer.org)").arg(kipiplugins_version);
     m_uploadUrl = KIPIDebianScreenshotsPlugin::debshotsUrl + "/uploadfile";
 }
 
@@ -79,9 +80,10 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
 
-    MPForm  form;
+    MPForm form;
     form.addPair("packagename", packageName);
     form.addPair("version", packageVersion);
     form.addPair("description", description);
@@ -90,7 +92,7 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
 
     kDebug() << "FORM: " << endl << form.formData();
 
-    KIO::TransferJob* job = KIO::http_post(m_uploadUrl, form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(m_uploadUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type", form.contentType());
 
@@ -120,8 +122,8 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
  }
  void DsTalker::slotResult(KJob* kjob)
  {
-     m_job         = 0;
-     KIO::Job* job = static_cast<KIO::Job*>(kjob);
+     m_job               = 0;
+     KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
      if (job->error())
      {

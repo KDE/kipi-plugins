@@ -31,7 +31,7 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-DebianScreenshotsJob::DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* parent)
+DebianScreenshotsJob::DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* const parent)
     : KJob(parent), m_urls(url), m_packageName(packageName)
 {
     setObjectName("DebianScreenshotsJob");

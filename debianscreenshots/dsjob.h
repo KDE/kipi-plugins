@@ -38,7 +38,7 @@ class DebianScreenshotsJob : public KJob
 
 public:
 
-    DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* parent=0);
+    DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* const parent=0);
 
     virtual void start();
     virtual QList< KUrl > urls() const;

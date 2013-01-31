@@ -63,10 +63,8 @@ public:
     DsWidget(QWidget* const parent);
     ~DsWidget();
 
-    QString getDestinationPath() const;
-
-    KIPIPlugins::KPImagesList* imagesList() const;
-
+    QString getDestinationPath()                 const;
+    KIPIPlugins::KPImagesList* imagesList()      const;
     KIPIPlugins::KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
@@ -83,21 +81,21 @@ private Q_SLOTS:
 
 private:
 
-    QButtonGroup*              m_dlGrp;
-    QString                    m_lastTip;
-    QUrl                       m_lastQueryUrl;
+    QButtonGroup*                  m_dlGrp;
+    QString                        m_lastTip;
+    QUrl                           m_lastQueryUrl;
 
-    KLineEdit*                 m_pkgLineEdit;
-    KComboBox*                 m_versionsComboBox;
-    KLineEdit*                 m_descriptionLineEdit;
+    KLineEdit*                     m_pkgLineEdit;
+    KComboBox*                     m_versionsComboBox;
+    KLineEdit*                     m_descriptionLineEdit;
 
-    KIO::AccessManager*        m_httpManager;
-    KIO::AccessManager*        m_jsonManager;
+    KIO::AccessManager*            m_httpManager;
+    KIO::AccessManager*            m_jsonManager;
 
-    KClickableImageLabel*      m_headerLabel;
+    KClickableImageLabel*          m_headerLabel;
 
-    KIPIPlugins::KPImagesList* m_imgList;
-    KIPI::UploadWidget*        m_uploadWidget;
+    KIPIPlugins::KPImagesList*     m_imgList;
+    KIPI::UploadWidget*            m_uploadWidget;
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
     friend class DsWindow;

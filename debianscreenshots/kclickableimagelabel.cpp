@@ -32,13 +32,13 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-KClickableImageLabel::KClickableImageLabel(QWidget* parent, Qt::WindowFlags f)
+KClickableImageLabel::KClickableImageLabel(QWidget* const parent, Qt::WindowFlags f)
     : QLabel(parent, f), m_url(QUrl())
 {
     setMouseTracking(true);
 }
 
-KClickableImageLabel::KClickableImageLabel(const QString& text, QWidget* parent, Qt::WindowFlags f)
+KClickableImageLabel::KClickableImageLabel(const QString& text, QWidget* const parent, Qt::WindowFlags f)
     : QLabel(text, parent, f), m_url(QUrl())
 {
 }
