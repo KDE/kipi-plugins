@@ -6,8 +6,8 @@
  * Date        : 2012-02-20
  * Description : Metadata interface for kipi-plugins.
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,10 +80,10 @@ class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 
 public:
 
-    /** Standard contructor. 
+    /** Standard contructor.
      *  KIPI interface from plugin loader instance is used to lock item.
      *  If no interface is available, for ex when plugin is loaded as stand-alone application,
-     *  default metadata settings is used, and no file lock will be performed with 
+     *  default metadata settings is used, and no file lock will be performed with
      *  read and write operations. In this case, this contructor work like KExiv2 constructor.
      */
     KPMetadata();

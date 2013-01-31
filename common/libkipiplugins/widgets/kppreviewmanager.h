@@ -6,8 +6,8 @@
  * Date        : 2009-12-23
  * Description : a widget to manage preview.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -84,8 +84,8 @@ private Q_SLOTS:
 
 private:
 
-    class KPPreviewManagerPriv;
-    KPPreviewManagerPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPlugins

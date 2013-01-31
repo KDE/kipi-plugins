@@ -37,9 +37,9 @@
 namespace KIPIPlugins
 {
 
-struct KPBinarySearch::KPBinarySearchPriv
+struct KPBinarySearch::Private
 {
-    KPBinarySearchPriv()
+    Private()
     {
         downloadLabel = 0;
     }
@@ -47,11 +47,10 @@ struct KPBinarySearch::KPBinarySearchPriv
     QVector<KPBinaryIface*>   binaryIfaces;
     QVector<QTreeWidgetItem*> items;
     QLabel*                   downloadLabel;
-
 };
 
 KPBinarySearch::KPBinarySearch(QWidget* const parent)
-    : QTreeWidget(parent), d(new KPBinarySearchPriv)
+    : QTreeWidget(parent), d(new Private)
 {
     setIconSize(QSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall));
     setAlternatingRowColors(true);
@@ -172,6 +171,7 @@ bool KPBinarySearch::allBinariesFound()
             ret = false;
         }
     }
+
     if (ret)
     {
         d->downloadLabel->hide();

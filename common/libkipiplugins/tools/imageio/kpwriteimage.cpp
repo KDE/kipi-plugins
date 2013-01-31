@@ -7,7 +7,7 @@
  * Description : Kipi-Plugins shared library.
  *               Interface to write image data to common picture format.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -59,11 +59,11 @@ extern "C"
 namespace KIPIPlugins
 {
 
-class KPWriteImage::KPWriteImagePriv
+class KPWriteImage::Private
 {
 public:
 
-    KPWriteImagePriv()
+    Private()
     {
         sixteenBit     = false;
         hasAlpha       = false;
@@ -91,7 +91,7 @@ public:
 };
 
 KPWriteImage::KPWriteImage()
-    : d(new KPWriteImagePriv)
+    : d(new Private)
 {
 }
 
@@ -150,6 +150,7 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
 bool KPWriteImage::write2JPEG(const QString& destPath)
 {
     QFile file(destPath);
+
     if (!file.open(QIODevice::ReadWrite))
     {
         kDebug() << "Failed to open JPEG file for writing" ;
@@ -188,8 +189,8 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
         write_icc_profile (&cinfo, (JOCTET *)d->iccProfile.data(), d->iccProfile.size());
 
     // Write image data
-    uchar* line   = new uchar[d->width*3];
-    uchar* dstPtr = 0;
+    uchar* line = new uchar[d->width*3];
+    uchar* dstPtr     = 0;
 
     if (!d->sixteenBit)     // 8 bits image.
     {
@@ -263,7 +264,8 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
 bool KPWriteImage::write2PPM(const QString& destPath)
 {
-    FILE* file = fopen(QFile::encodeName(destPath), "wb");
+    FILE* const file = fopen(QFile::encodeName(destPath), "wb");
+
     if (!file)
     {
         kDebug() << "Failed to open ppm file for writing" ;
@@ -273,8 +275,8 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     fprintf(file, "P6\n%d %d\n255\n", d->width, d->height);
 
     // Write image data
-    uchar* line   = new uchar[d->width*3];
-    uchar* dstPtr = 0;
+    uchar* const line = new uchar[d->width*3];
+    uchar* dstPtr     = 0;
 
     if (!d->sixteenBit)     // 8 bits image.
     {
@@ -348,6 +350,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     http://lxr.kde.org/source/playground/graphics/krita-exp/kis_png_converter.cpp#607
     */
     QFile file(destPath);
+
     if (!file.open(QIODevice::ReadWrite))
     {
         kDebug() << "Failed to open PNG file for writing" ;
@@ -526,9 +529,9 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
 bool KPWriteImage::write2TIFF(const QString& destPath)
 {
-    uint32 w    = d->width;
-    uint32 h    = d->height;
-    uchar* data = (uchar*)d->data.data();
+    uint32 w          = d->width;
+    uint32 h          = d->height;
+    uchar* const data = (uchar*)d->data.data();
 
     // TIFF error handling. If an errors/warnings occurs during reading,
     // libtiff will call these methods
@@ -538,7 +541,8 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Open target file
 
-    TIFF *tif = TIFFOpen(QFile::encodeName(destPath), "w");
+    TIFF* const tif = TIFFOpen(QFile::encodeName(destPath), "w");
+
     if (!tif)
     {
         kDebug() << "Failed to open TIFF file for writing" ;
@@ -564,6 +568,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFFSetField(tif, TIFFTAG_PREDICTOR,           2);
 
     uint16 sampleinfo[1];
+
     if (d->hasAlpha)
     {
         sampleinfo[0] = EXTRASAMPLE_ASSOCALPHA;
@@ -624,7 +629,8 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     uint16  r16, g16, b16, a16=0;
     int     i=0;
 
-    uint8 *buf = (uint8 *)_TIFFmalloc(TIFFScanlineSize(tif));
+    uint8* const buf = (uint8 *)_TIFFmalloc(TIFFScanlineSize(tif));
+
     if (!buf)
     {
         kDebug() << "Cannot allocate memory buffer for main TIFF image." ;
@@ -722,6 +728,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     // Write thumbnail in tiff directory IFD1
 
     QImage thumb = d->metadata.getExifThumbnail(false);
+
     if (!thumb.isNull())
     {
         TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,      (uint32)thumb.width());
@@ -735,9 +742,9 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
         TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
 
-        uchar* pixelThumb = 0;
-        uchar* dataThumb  = thumb.bits();
-        uint8* bufThumb   = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
+        uchar* pixelThumb      = 0;
+        uchar* const dataThumb = thumb.bits();
+        uint8* const bufThumb  = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
 
         if (!bufThumb)
         {
@@ -814,6 +821,7 @@ QByteArray KPWriteImage::getICCProfilFromFile(RawDecodingSettings::OutputColorSp
         return QByteArray();
 
     QFile file(filePath);
+
     if ( !file.open(QIODevice::ReadOnly) )
         return QByteArray();
 
@@ -847,9 +855,9 @@ void KPWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_
     description_length = strlen((const char *) profile_type);
     allocated_length   = (png_uint_32) (length*2 + (length >> 5) + 20 + description_length);
 
-    text[0].text   = (png_charp) png_malloc(ping, allocated_length);
-    text[0].key    = (png_charp) png_malloc(ping, (png_uint_32) 80);
-    text[0].key[0] = '\0';
+    text[0].text       = (png_charp) png_malloc(ping, allocated_length);
+    text[0].key        = (png_charp) png_malloc(ping, (png_uint_32) 80);
+    text[0].key[0]     = '\0';
 
     concatenateString(text[0].key, "Raw profile type ", 4096);
     concatenateString(text[0].key, (const char *) profile_type, 62);
@@ -996,6 +1004,7 @@ void KPWriteImage::tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag,
                                        const char* exifTagName)
 {
     QByteArray tag = metadata.getExifTagData(exifTagName);
+
     if (!tag.isEmpty())
     {
         QByteArray str(tag.data(), tag.size());
@@ -1008,6 +1017,7 @@ void KPWriteImage::tiffSetExifDataTag(TIFF* const tif, ttag_t tiffTag,
                                       const char* exifTagName)
 {
     QByteArray tag = metadata.getExifTagData(exifTagName);
+
     if (!tag.isEmpty())
     {
         TIFFSetField (tif, tiffTag, (uint32)tag.size(), (char *)tag.data());

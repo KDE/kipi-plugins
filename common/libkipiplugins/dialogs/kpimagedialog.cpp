@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,19 +62,20 @@ using namespace KDcrawIface;
 namespace KIPIPlugins
 {
 
-class KPImageDialogPreview::KPImageDialogPreviewPrivate
+class KPImageDialogPreview::Private
 {
 
 public:
 
-    KPImageDialogPreviewPrivate()
+    Private()
     {
         imageLabel   = 0;
         infoLabel    = 0;
         iface        = 0;
         loadRawThumb = 0;
 
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -94,7 +95,7 @@ public:
 };
 
 KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
-    : KPreviewWidgetBase(parent), d(new KPImageDialogPreviewPrivate)
+    : KPreviewWidgetBase(parent), d(new Private)
 {
     QVBoxLayout* vlay = new QVBoxLayout(this);
     d->imageLabel     = new QLabel(this);
@@ -161,6 +162,7 @@ void KPImageDialogPreview::showPreview(const KUrl& url)
         QString unavailable(i18n("<i>unavailable</i>"));
         clearPreview();
         d->currentUrl = url;
+
         if (d->iface)
         {
             d->iface->thumbnail(d->currentUrl, 256);
@@ -350,18 +352,19 @@ void KPImageDialogPreview::clearPreview()
 
 // ------------------------------------------------------------------------
 
-class KPImageDialog::KPImageDialogPrivate
+class KPImageDialog::Private
 {
 
 public:
 
-    KPImageDialogPrivate()
+    Private()
     {
         onlyRaw      = false;
         singleSelect = false;
         iface        = 0;
 
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -380,7 +383,7 @@ public:
 };
 
 KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool onlyRaw)
-           : d(new KPImageDialogPrivate)
+           : d(new Private)
 {
     d->singleSelect = singleSelect;
     d->onlyRaw      = onlyRaw;

@@ -7,7 +7,7 @@
  * Description : Kipi-Plugins shared library.
  *
  * Copyright (C) 2006-2010 Angelo Naselli <anaselli at linux dot it>
- * Copyright (C) 2010-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -103,9 +103,9 @@ void KPAboutData::setHelpButton(KPushButton* const help)
 {
     if (!help) return;
 
-    KHelpMenu* helpMenu = new KHelpMenu(help, this, false);
+    KHelpMenu* const helpMenu = new KHelpMenu(help, this, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), helpMenu);
+    KAction* const handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), helpMenu);
 
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));

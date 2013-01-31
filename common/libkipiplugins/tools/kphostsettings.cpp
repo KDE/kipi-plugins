@@ -7,7 +7,7 @@
  * Description : help wrapper around libkipi Interface to manage easily
  *               KIPI host application settings.
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,14 +41,15 @@ using namespace KIPI;
 namespace KIPIPlugins
 {
 
-class KPHostSettings::KPHostSettingsPrivate
+class KPHostSettings::Private
 {
 public:
 
-    KPHostSettingsPrivate()
+    Private()
         : iface(0)
     {
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -63,10 +64,12 @@ public:
     QVariant setting(const QString& name) const
     {
         QVariant v;
+
         if (hasValidData())
         {
             v = iface->hostSetting(name);
         }
+
         return v;
     }
 
@@ -76,6 +79,7 @@ public:
         {
             return (!setting(name).isNull());
         }
+
         return false;
     }
 
@@ -85,7 +89,7 @@ public:
 };
 
 KPHostSettings::KPHostSettings()
-    : d(new KPHostSettingsPrivate)
+    : d(new Private)
 {
 }
 

@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -77,11 +77,11 @@ namespace KIPIPlugins
 
 const int DEFAULTSIZE = KIconLoader::SizeLarge;
 
-class KPImagesListViewItem::KPImagesListViewItemPriv
+class KPImagesListViewItem::Private
 {
 public:
 
-    KPImagesListViewItemPriv()
+    Private()
     {
         rating   = -1;
         view     = 0;
@@ -101,7 +101,7 @@ public:
 };
 
 KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const KUrl& url)
-    : QTreeWidgetItem(view), d(new KPImagesListViewItemPriv)
+    : QTreeWidgetItem(view), d(new Private)
 {
     kDebug() << "Creating new ImageListViewItem with url " << url
              << " for list view " << view;
@@ -475,11 +475,11 @@ CtrlButton::~CtrlButton()
 
 // ---------------------------------------------------------------------------
 
-class KPImagesList::KPImagesListPriv
+class KPImagesList::Private
 {
 public:
 
-    KPImagesListPriv()
+    Private()
     {
         listView              = 0;
         iface                 = 0;
@@ -530,7 +530,7 @@ public:
 };
 
 KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
-    : QWidget(parent), d(new KPImagesListPriv)
+    : QWidget(parent), d(new Private)
 {
     if (iconSize != -1)  // default = ICONSIZE
     {
@@ -589,7 +589,7 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     connect(d->listView, SIGNAL(signalContextMenuRequested()),
             this, SIGNAL(signalContextMenuRequested()));
-    
+
     // queue this connection because itemSelectionChanged is emitted
     // while items are deleted, and accessing selectedItems at that
     // time causes a crash ...
@@ -736,7 +736,7 @@ void KPImagesList::setAllowDuplicate(bool allow)
 {
   d->allowDuplicate = allow;
 }
-    
+
 void KPImagesList::setAllowRAW(bool allow)
 {
     d->allowRAW = allow;
@@ -845,15 +845,15 @@ void KPImagesList::slotRemoveItems()
 {
     QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
     KUrl::List urls;
-    
+
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it != selectedItemsList.constEnd(); ++it)
     {
         KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
-        
+
         emit signalRemovingItem(item);
         urls.append(item->url());
-        
+
         if (item && d->processItems.contains(item->url()))
         {
             d->processItems.removeAll(item->url());
@@ -1008,7 +1008,7 @@ void KPImagesList::slotSaveItems()
     xmlWriter.writeStartDocument();
 
     xmlWriter.writeStartElement("Images");
-    
+
     QTreeWidgetItemIterator it(listView());
 
     while (*it)
@@ -1020,11 +1020,11 @@ void KPImagesList::slotSaveItems()
             xmlWriter.writeStartElement("Image");
 
             xmlWriter.writeAttribute("url", lvItem->url().prettyUrl().toAscii());
-            
+
             //emit xmlWriter, item?
             emit signalXMLSaveItem(xmlWriter, lvItem);
-            
-            xmlWriter.writeEndElement(); //Image        
+
+            xmlWriter.writeEndElement(); //Image
         }
         ++it;
     }
@@ -1052,7 +1052,7 @@ void KPImagesList::removeItemByUrl(const KUrl& url)
             if (item->url() == url)
             {
                 emit signalRemovingItem(item);
-               
+
                 if (d->processItems.contains(item->url()))
                 {
                     d->processItems.removeAll(item->url());

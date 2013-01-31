@@ -6,8 +6,8 @@
  * Date        : 2012-02-20
  * Description : Metadata interface for kipi-plugins.
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -72,11 +72,13 @@ KPMetadata::~KPMetadata()
 void KPMetadata::init()
 {
     m_iface          = 0;
-    PluginLoader* pl = PluginLoader::instance();
+    PluginLoader* const pl = PluginLoader::instance();
+
     if (pl)
     {
         m_iface = pl->interface();
     }
+
     KPHostSettings hset;
     setSettings(hset.metadataSettings());
 }
@@ -155,7 +157,7 @@ bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
 {
     if (hasSidecar(src.toLocalFile()))
     {
-        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()), 
+        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()),
                        QFile::encodeName(sidecarUrl(dst).toLocalFile())) != 0)
             return false;
     }

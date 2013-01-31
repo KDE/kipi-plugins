@@ -6,8 +6,8 @@
  * Date        : 2009-12-23
  * Description : Autodetect binary program and version
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -92,6 +92,7 @@ QString KPBinaryIface::findHeader(const QStringList& output, const QString& head
         if (s.startsWith(header))
             return s;
     }
+
     return QString();
 }
 
@@ -99,17 +100,21 @@ bool KPBinaryIface::parseHeader(const QString& output)
 {
     QString firstLine = output.section('\n', m_headerLine, m_headerLine);
     kDebug() << path() << " help header line: \n" << firstLine;
+
     if (firstLine.startsWith(m_headerStarts))
     {
         QString version = firstLine.remove(0, m_headerStarts.length());
+
         if (version.startsWith("Pre-Release "))
         {
             version.remove("Pre-Release ");            // Special case with Hugin beta.
             m_developmentVersion = true;
         }
+
         setVersion(version);
         return true;
     }
+
     return false;
 }
 
@@ -123,6 +128,7 @@ void KPBinaryIface::setVersion(QString& version)
 void KPBinaryIface::slotNavigateAndCheck()
 {
     KUrl start;
+
     if (isValid() && m_pathDir != "")
     {
         start = KUrl(m_pathDir);
@@ -137,12 +143,14 @@ void KPBinaryIface::slotNavigateAndCheck()
         start = KUrl(QString("/usr/bin/"));
 #endif
     }
+
     QString f = KFileDialog::getOpenFileName(start,
                                              QString(m_binaryBaseName),
                                              0,
                                              QString(i18n("Navigate to %1", m_binaryBaseName)));
     QString dir = KUrl(f).directory();
     m_searchPaths << dir;
+
     if (checkDir(dir))
     {
         emit signalSearchDirectoryAdded(dir);
@@ -188,6 +196,7 @@ QString KPBinaryIface::path(const QString& dir) const
     {
         return baseName();
     }
+
     return QString("%1%2%3").arg(dir).arg('/').arg(baseName());
 }
 
@@ -196,6 +205,7 @@ void KPBinaryIface::setup()
     QString previous_dir = readConfig();
     m_searchPaths << previous_dir;
     checkDir(previous_dir);
+
     if (previous_dir != "" && !isValid())
     {
         m_searchPaths << "";
@@ -205,7 +215,7 @@ void KPBinaryIface::setup()
 
 bool KPBinaryIface::checkDir(const QString& possibleDir)
 {
-    bool ret = false;
+    bool ret             = false;
     QString possiblePath = path(possibleDir);
 
     kDebug() << "Testing " << possiblePath << "...";
@@ -219,6 +229,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
         m_isFound = true;
 
         QString stdOut(process.readAllStandardOutput());
+
         if (parseHeader(stdOut))
         {
             m_pathDir = possibleDir;
@@ -232,6 +243,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
             // TODO: do something if the version is not right or not found
         }
     }
+
     emit signalBinaryValid();
     return ret;
 }
@@ -243,6 +255,7 @@ bool KPBinaryIface::recheckDirectories()
         // No need for recheck if it is already valid...
         return true;
     }
+
     foreach(QString dir, m_searchPaths)
     {
         checkDir(dir);
@@ -251,6 +264,7 @@ bool KPBinaryIface::recheckDirectories()
             return true;
         }
     }
+
     return false;
 }
 

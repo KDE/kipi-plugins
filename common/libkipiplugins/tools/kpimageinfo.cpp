@@ -7,7 +7,7 @@
  * Description : help wrapper around libkipi ImageInfo to manage easily
  *               item properties with KIPI host application.
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,14 +44,15 @@ using namespace KIPI;
 namespace KIPIPlugins
 {
 
-class KPImageInfo::KPImageInfoPrivate
+class KPImageInfo::Private
 {
 public:
 
-    KPImageInfoPrivate()
+    Private()
         : iface(0)
     {
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -66,12 +67,14 @@ public:
     QVariant attribute(const QString& name) const
     {
         QMap<QString, QVariant> map;
+
         if (hasValidData())
         {
             ImageInfo info = iface->info(url);
             map            = info.attributes();
             if (!map.isEmpty()) return map.value(name, QVariant());
         }
+
         return QVariant();
     }
 
@@ -104,7 +107,7 @@ public:
 };
 
 KPImageInfo::KPImageInfo(const KUrl& url)
-    : d(new KPImageInfoPrivate)
+    : d(new Private)
 {
     d->url = url;
 }

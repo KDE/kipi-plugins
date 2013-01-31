@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a widget to preview image effect.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Kare Sars <kare dot sars at iki dot fi>
  * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
@@ -91,8 +91,8 @@ private:
 
 private:
 
-    struct KPSelectionItemPriv;
-    KPSelectionItemPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 // -----------------------------------------------------------------------------------------
@@ -166,8 +166,8 @@ protected:
 
 private:
 
-    class KPPreviewImagePriv;
-    KPPreviewImagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPlugins

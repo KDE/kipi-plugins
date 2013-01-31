@@ -6,7 +6,7 @@
  * Date        : 2004-05-04
  * Description : Batch progress dialog
  *
- * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -89,11 +89,11 @@ KPBatchProgressItem(QListWidget* const parent, const QString& message, int messa
 
 // ----------------------------------------------------------------------
 
-class KPBatchProgressWidget::KPBatchProgressWidgetPriv
+class KPBatchProgressWidget::Private
 {
 public:
 
-    KPBatchProgressWidgetPriv()
+    Private()
     {
         progress    = 0;
         actionsList = 0;
@@ -104,7 +104,7 @@ public:
 };
 
 KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
-   : KVBox(parent), d(new KPBatchProgressWidgetPriv)
+   : KVBox(parent), d(new Private)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     layout()->setSpacing(KDialog::spacingHint());
@@ -188,6 +188,7 @@ void KPBatchProgressWidget::slotContextMenu()
 {
     KMenu popmenu(this);
     KAction* action = new KAction(KIcon("edit-copy"), i18n("Copy to Clipboard"), this);
+
     connect(action, SIGNAL(triggered(bool)),
             this, SLOT(slotCopy2ClipBoard()));
 
@@ -220,7 +221,7 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
     setDefaultButton(Cancel);
     setModal(false);
 
-    KPBatchProgressWidget* w = new KPBatchProgressWidget(this);
+    KPBatchProgressWidget* const w = new KPBatchProgressWidget(this);
     w->progressScheduled(caption, KIcon("kipi").pixmap(22, 22));
     setMainWidget(w);
     resize(600, 400);

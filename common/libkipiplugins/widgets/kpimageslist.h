@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -112,8 +112,8 @@ private:
 
 private:
 
-    class KPImagesListViewItemPriv;
-    KPImagesListViewItemPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 // -------------------------------------------------------------------------
@@ -296,8 +296,8 @@ private:
 
 private:
 
-    class KPImagesListPriv;
-    KPImagesListPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIPlugins

@@ -6,8 +6,8 @@
  * Date        : 2009-12-23
  * Description : a widget to manage preview.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,11 +49,11 @@
 namespace KIPIPlugins
 {
 
-class KPPreviewManager::KPPreviewManagerPriv
+class KPPreviewManager::Private
 {
 public:
 
-    KPPreviewManagerPriv()
+    Private()
     {
         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
@@ -82,7 +82,7 @@ public:
 };
 
 KPPreviewManager::KPPreviewManager(QWidget* const parent)
-    : QStackedWidget(parent), d(new KPPreviewManagerPriv)
+    : QStackedWidget(parent), d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(QSize(400, 300));

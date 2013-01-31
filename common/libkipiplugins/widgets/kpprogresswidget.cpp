@@ -6,7 +6,7 @@
  * Date        : 2012-01-26
  * Description : a progress bar with progress information dispatched to kipi host
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,14 +38,15 @@ using namespace KIPI;
 namespace KIPIPlugins
 {
 
-class KPProgressWidget::KPProgressWidgetPriv
+class KPProgressWidget::Private
 {
 public:
 
-    KPProgressWidgetPriv()
+    Private()
         :iface(0)
     {
         PluginLoader* pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -57,7 +58,7 @@ public:
 };
 
 KPProgressWidget::KPProgressWidget(QWidget* const parent)
-    : QProgressBar(parent), d(new KPProgressWidgetPriv)
+    : QProgressBar(parent), d(new Private)
 {
     connect(this, SIGNAL(valueChanged(int)),
             this, SLOT(slotValueChanged(int)));

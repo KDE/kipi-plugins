@@ -6,7 +6,7 @@
  * Date        : 2006-09-13
  * Description : a widget to provide options to save image.
  *
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,11 +39,11 @@
 namespace KIPIPlugins
 {
 
-class KPSaveSettingsWidget::KPSaveSettingsWidgetPriv
+class KPSaveSettingsWidget::Private
 {
 public:
 
-    KPSaveSettingsWidgetPriv()
+    Private()
     {
         formatLabel         = 0;
         conflictLabel       = 0;
@@ -68,7 +68,7 @@ public:
 };
 
 KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
-    : QWidget(parent), d(new KPSaveSettingsWidgetPriv)
+    : QWidget(parent), d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 

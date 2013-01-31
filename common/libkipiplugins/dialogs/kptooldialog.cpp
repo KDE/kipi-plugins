@@ -6,7 +6,7 @@
  * Date        : 2012-04-04
  * Description : Tool dialog
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,18 +45,19 @@
 namespace KIPIPlugins
 {
 
-class KPDialogBase::KPDialogBasePrivate
+class KPDialogBase::Private
 {
 
 public:
 
-    KPDialogBasePrivate()
+    Private()
     {
         about  = 0;
         dialog = 0;
         iface  = 0;
 
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -70,7 +71,7 @@ public:
 };
 
 KPDialogBase::KPDialogBase(KDialog* const dlg)
-    : d(new KPDialogBasePrivate)
+    : d(new Private)
 {
     d->dialog = dlg;
 }

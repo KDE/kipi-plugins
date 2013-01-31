@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -68,8 +68,8 @@ private:
 
 private:
 
-    class KPImageDialogPreviewPrivate;
-    KPImageDialogPreviewPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 // ------------------------------------------------------------------------
@@ -94,8 +94,8 @@ public:
 
 private:
 
-    class KPImageDialogPrivate;
-    KPImageDialogPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPlugins
