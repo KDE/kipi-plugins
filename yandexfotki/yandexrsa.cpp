@@ -27,6 +27,7 @@
  *
  * Included by Roman Tsisyk <roman at tsisyk dot com>
  * All unneeded parts was commented out and can be removed
+ *
  * ============================================================ */
 
 #include "yandexrsa.h"
@@ -1046,6 +1047,7 @@ void CCryptoProviderRSA::Encrypt(const char* inbuf, size_t in_size,char* outbuf,
     // must ensure that any data block would be < key's modulus
     // hence -1
     int portion_len = (prkface.m.bits() - 1)  / 8;
+    if (portion_len < 0) portion_len = 0;
     char* prev_crypted = new char[portion_len];
     memset(prev_crypted, 0, portion_len);
 
@@ -1054,7 +1056,7 @@ void CCryptoProviderRSA::Encrypt(const char* inbuf, size_t in_size,char* outbuf,
     while (in_size)
     {
         size_t uportion_len = (portion_len < 0) ? 0 : (std::size_t) (portion_len);
-        size_t cur_size = in_size > uportion_len ? uportion_len : in_size;
+        size_t cur_size     = in_size > uportion_len ? uportion_len : in_size;
 
         for (i=0; i<cur_size; ++i)
         {

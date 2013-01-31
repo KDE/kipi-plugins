@@ -27,6 +27,7 @@
  *
  * Included by Roman Tsisyk <roman at tsisyk dot com>
  * All unneeded parts was commented out and can be removed
+ *
  * ============================================================ */
 
 #ifndef YANDEX_RSA_H
