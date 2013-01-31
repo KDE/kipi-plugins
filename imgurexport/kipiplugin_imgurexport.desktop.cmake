@@ -2,6 +2,7 @@
 UntranslatedGenericName=Imgur Export
 Name=Imgur Export
 Name[ca]=Exportador a Imgur
+Name[ca@valencia]=Exportador a Imgur
 Name[cs]=Export Imgur
 Name[da]=Eksport til Imgur
 Name[de]=Imgur-Export
@@ -28,6 +29,7 @@ Name[zh_CN]=Imgur导出
 Name[zh_TW]=Imgur 匯出
 Comment=A tool to export images to the imgur.com image hosting service
 Comment[ca]=Una eina per exportar imatges al servei d'allotjament d'imatges imgur.com
+Comment[ca@valencia]=Una eina per exportar imatges al servei d'allotjament d'imatges imgur.com
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby imgur.com
 Comment[da]=Et værktøj til at eksportere billeder til billedupload-tjenesten imgur.com
 Comment[de]=Ein Werkzeug, um Bilder zum imgur.com-Service zu exportieren.

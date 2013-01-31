@@ -2,7 +2,7 @@
 UntranslatedGenericName=Photo Layouts Editor
 Name=Photo Layouts Editor
 Name[ca]=Editor de presentacions de foto
-Name[ca@valencia]=Editor de formats de foto
+Name[ca@valencia]=Editor de presentacions de foto
 Name[cs]=Editor rozvržení snímků
 Name[da]=Editor til fotolayout
 Name[de]=Fotolayout-Editor
@@ -26,7 +26,7 @@ Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器
 Comment=Photo layouts management tool
 Comment[ca]=Eina de gestió de presentacions de foto
-Comment[ca@valencia]=Eina de gestió de formats de foto
+Comment[ca@valencia]=Eina de gestió de presentacions de foto
 Comment[cs]=Nástroj pro správu rozvržení snímků
 Comment[da]=Håndteringsværktøj til fotolayout
 Comment[de]=Programm für Fotolayouts

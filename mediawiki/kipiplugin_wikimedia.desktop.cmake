@@ -2,6 +2,7 @@
 UntranslatedGenericName=MediaWiki Export
 Name=MediaWiki Export
 Name[ca]=Exportador a MediaWiki
+Name[ca@valencia]=Exportador a MediaWiki
 Name[cs]=Export MediaWiki
 Name[da]=MediaWiki-eksport
 Name[de]=MediaWiki-Export
@@ -25,6 +26,7 @@ Name[x-test]=xxMediaWiki Exportxx
 Name[zh_TW]=MediaWiki 匯出
 Comment=A tool to export images to a remote MediaWiki web service
 Comment[ca]=Una eina per exportar imatges a un servei web remot de MediaWiki
+Comment[ca@valencia]=Una eina per exportar imatges a un servei web remot de MediaWiki
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby MediaWiki
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern MediaWiki-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten MediaWiki-Webdienst zu exportieren.
