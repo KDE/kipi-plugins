@@ -45,39 +45,37 @@
 namespace KIPIYandexFotkiPlugin
 {
 
-YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* parent,
-                                               YandexFotkiAlbum& album)
+YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotkiAlbum& album)
     : KDialog(parent), m_album(album)
 {
     setWindowTitle(i18n("New album"));
     setButtons(KDialog::Ok | KDialog::Cancel);
     setDefaultButton(KDialog::Cancel);
 
-    QWidget *mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 300);
 
-    QGroupBox* albumBox = new QGroupBox(i18n("Album"), mainWidget);
-    albumBox->setWhatsThis(
-        i18n("These are basic settings for the new Yandex album."));
+    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
+    albumBox->setWhatsThis(i18n("These are basic settings for the new Yandex album."));
 
-    m_titleEdit = new KLineEdit(album.title());
+    m_titleEdit    = new KLineEdit(album.title());
     m_titleEdit->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
-    m_summaryEdit = new KTextEdit(album.summary());
+    m_summaryEdit  = new KTextEdit(album.summary());
     m_summaryEdit->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
     m_passwordEdit = new KLineEdit();
     m_passwordEdit->setWhatsThis(i18n("Password for the album (optional)."));
 
-    QFormLayout* albumBoxLayout  = new QFormLayout;
+    QFormLayout* const albumBoxLayout  = new QFormLayout;
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdit);
     albumBoxLayout->addRow(i18n("Summary:"), m_summaryEdit);
     albumBoxLayout->addRow(i18n("Password:"), m_passwordEdit);
 
     albumBox->setLayout(albumBoxLayout);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainWidget->setLayout(mainLayout);
@@ -116,4 +114,3 @@ void YandexFotkiAlbumDialog::slotButtonClicked(int button)
 }
 
 } // namespace KIPIYandexFotkiPlugin
-

@@ -53,21 +53,19 @@ namespace KIPIYandexFotkiPlugin
 /*
  * static API constants
  */
-const QString YandexFotkiTalker::SESSION_URL = "http://auth.mobile.yandex.ru/yamrsa/key/";
-const QString YandexFotkiTalker::AUTH_REALM = "fotki.yandex.ru";
-
-const QString YandexFotkiTalker::TOKEN_URL = "http://auth.mobile.yandex.ru/yamrsa/token/";
-const QString YandexFotkiTalker::SERVICE_URL = "http://api-fotki.yandex.ru/api/users/%1/";
-
-const QString YandexFotkiTalker::USERPAGE_URL = "http://fotki.yandex.ru/users/%1/";
+const QString YandexFotkiTalker::SESSION_URL          = "http://auth.mobile.yandex.ru/yamrsa/key/";
+const QString YandexFotkiTalker::AUTH_REALM           = "fotki.yandex.ru";
+const QString YandexFotkiTalker::TOKEN_URL            = "http://auth.mobile.yandex.ru/yamrsa/token/";
+const QString YandexFotkiTalker::SERVICE_URL          = "http://api-fotki.yandex.ru/api/users/%1/";
+const QString YandexFotkiTalker::USERPAGE_URL         = "http://fotki.yandex.ru/users/%1/";
 const QString YandexFotkiTalker::USERPAGE_DEFAULT_URL = "http://fotki.yandex.ru/";
+const QString YandexFotkiTalker::ACCESS_STRINGS[]     = { "public", "friends", "private" };
 
-const QString YandexFotkiTalker::ACCESS_STRINGS[] = { "public", "friends", "private" };
-
-YandexFotkiTalker::YandexFotkiTalker( QObject* parent )
+YandexFotkiTalker::YandexFotkiTalker( QObject* const parent )
     : QObject(parent),
       m_state(STATE_UNAUTHENTICATED),
-      m_job( 0 )
+      m_lastPhoto(0),
+      m_job(0)
 {
 }
 
@@ -78,9 +76,9 @@ YandexFotkiTalker::~YandexFotkiTalker()
 
 void YandexFotkiTalker::getService()
 {
-    m_state = STATE_GETSERVICE;
-    KIO::TransferJob* job = KIO::get(SERVICE_URL.arg(m_login),
-                                     KIO::NoReload, KIO::HideProgressInfo);
+    m_state                     = STATE_GETSERVICE;
+    KIO::TransferJob* const job = KIO::get(SERVICE_URL.arg(m_login),
+                                  KIO::NoReload, KIO::HideProgressInfo);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(handleJobData(KIO::Job*,QByteArray)));
@@ -97,13 +95,14 @@ void YandexFotkiTalker::getService()
 void YandexFotkiTalker::checkToken()
 {
     // try to get somthing with our token, if it is invalid catch 401
-    KIO::TransferJob *job = KIO::get(m_apiAlbumsUrl,
+    KIO::TransferJob* const job = KIO::get(m_apiAlbumsUrl,
                                      KIO::NoReload, KIO::HideProgressInfo);
     job->addMetaData("customHTTPHeader",
                      QString("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_CHECKTOKEN;
+
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
@@ -121,14 +120,16 @@ void YandexFotkiTalker::getSession()
     if (m_state != STATE_GETSERVICE_DONE)
         return;
 
-    KIO::TransferJob* job = KIO::get(SESSION_URL,
-                                     KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(SESSION_URL,
+                                  KIO::NoReload, KIO::HideProgressInfo);
 
     //job->ui()->setWindow(m_parent);
 
     m_state = STATE_GETSESSION;
+
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(handleJobData(KIO::Job*,QByteArray)));
+
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseGetSession(KJob*)));
 
@@ -154,7 +155,7 @@ void YandexFotkiTalker::getToken()
 
     QString params = paramList.join("&");
 
-    KIO::TransferJob* job = KIO::http_post(TOKEN_URL, params.toUtf8(),
+    KIO::TransferJob* const job = KIO::http_post(TOKEN_URL, params.toUtf8(),
                                            KIO::HideProgressInfo);
 
     job->addMetaData("content-type",
@@ -187,8 +188,8 @@ void YandexFotkiTalker::listAlbumsNext()
 {
     kDebug() << "listAlbumsNext";
 
-    KIO::TransferJob* job = KIO::get(m_albumsNextUrl,
-                                     KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(m_albumsNextUrl,
+                                  KIO::NoReload, KIO::HideProgressInfo);
 
     job->addMetaData("content-type", "Content-Type: application/atom+xml; "
                      "charset=utf-8; type=feed");
@@ -197,6 +198,7 @@ void YandexFotkiTalker::listAlbumsNext()
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_LISTALBUMS;
+
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
@@ -223,8 +225,8 @@ void YandexFotkiTalker::listPhotosNext()
 {
     kDebug() << "listPhotosNext";
 
-    KIO::TransferJob* job = KIO::get(m_photosNextUrl,
-                                     KIO::NoReload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(m_photosNextUrl,
+                                  KIO::NoReload, KIO::HideProgressInfo);
 
     job->addMetaData("content-type", "Content-Type: application/atom+xml; "
                      "charset=utf-8; type=feed");
@@ -233,6 +235,7 @@ void YandexFotkiTalker::listPhotosNext()
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_LISTPHOTOS;
+
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
@@ -244,8 +247,7 @@ void YandexFotkiTalker::listPhotosNext()
     m_job->start();
 }
 
-void YandexFotkiTalker::updatePhoto(YandexFotkiPhoto& photo,
-                                    const YandexFotkiAlbum& album)
+void YandexFotkiTalker::updatePhoto(YandexFotkiPhoto& photo, const YandexFotkiAlbum& album)
 {
     if (isErrorState() || !isAuthenticated())
         return;
@@ -286,7 +288,7 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
         return;
     }
 
-    KIO::TransferJob* job = KIO::http_post(m_lastPhotosUrl, imageFile.readAll());
+    KIO::TransferJob* const job = KIO::http_post(m_lastPhotosUrl, imageFile.readAll());
     //job->ui()->setWindow(m_parent);
     job->addMetaData("content-type",
                      "Content-Type: image/jpeg");
@@ -296,7 +298,7 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
     job->addMetaData("slug", "Slug: " +
                      QUrl::toPercentEncoding(photo.title()) + ".jpg");
 
-    m_state = STATE_UPDATEPHOTO_FILE;
+    m_state     = STATE_UPDATEPHOTO_FILE;
     m_lastPhoto = &photo;
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -313,8 +315,7 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
 void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
 {
     QDomDocument doc;
-    QDomProcessingInstruction instr = doc.createProcessingInstruction(
-                                          "xml", "version='1.0' encoding='UTF-8'");
+    QDomProcessingInstruction instr = doc.createProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
 
     doc.appendChild(instr);
     QDomElement entryElem = doc.createElement("entry");
@@ -375,7 +376,7 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
      * KIO::put uses dataReq slot for getting data
      * It's really unsuable, but anyway...
      */
-    KIO::TransferJob* job = KIO::put(photo.m_apiEditUrl, -1/*, KIO::HideProgressInfo*/);
+    KIO::TransferJob* const job = KIO::put(photo.m_apiEditUrl, -1/*, KIO::HideProgressInfo*/);
     job->addMetaData("customHTTPHeader",
                      QString("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
@@ -414,8 +415,7 @@ void YandexFotkiTalker::updateAlbum(YandexFotkiAlbum& album)
 void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
 {
     QDomDocument doc;
-    QDomProcessingInstruction instr = doc.createProcessingInstruction(
-                "xml", "version='1.0' encoding='UTF-8'");
+    QDomProcessingInstruction instr = doc.createProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
 
     doc.appendChild(instr);
     QDomElement entryElem = doc.createElement("entry");
@@ -439,8 +439,8 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
     kDebug() << "Prepared data: " << postData;
     kDebug() << "Url" << m_apiAlbumsUrl;
 
-    KIO::TransferJob* job = KIO::http_post(m_apiAlbumsUrl, postData,
-                                           KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(m_apiAlbumsUrl, postData,
+                                  KIO::HideProgressInfo);
     job->addMetaData("content-type", "Content-Type: application/atom+xml; "
                      "charset=utf-8; type=entry");
     job->addMetaData("customHTTPHeader",
@@ -501,7 +501,7 @@ bool YandexFotkiTalker::prepareJobResult(KJob* job, State error)
 {
     m_job = 0;
 
-    KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
+    KIO::TransferJob* const transferJob = static_cast<KIO::TransferJob*>(job);
 
     if (transferJob->error() || transferJob->isErrorPage())
     {
@@ -547,7 +547,7 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 {
     m_job = 0;
 
-    KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
+    KIO::TransferJob* const transferJob = static_cast<KIO::TransferJob*>(job);
 
     if (transferJob->isErrorPage())
     {
@@ -683,7 +683,7 @@ void YandexFotkiTalker::parseResponseGetSession(KJob* job)
     }
 
     m_sessionKey = keyElem.text();
-    m_sessionId = requestIdElem.text();
+    m_sessionId  = requestIdElem.text();
 
     kDebug() << "Session started" << m_sessionKey << m_sessionId;
 
@@ -704,8 +704,7 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
         return setErrorState(STATE_GETTOKEN_ERROR);
     }
 
-    const QDomElement rootElem = doc.documentElement();
-
+    const QDomElement rootElem  = doc.documentElement();
     const QDomElement tokenElem =  rootElem.firstChildElement("token");
 
     if (tokenElem.isNull() || tokenElem.nodeType() != QDomNode::ElementNode)
@@ -752,8 +751,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
         return setErrorState(STATE_LISTALBUMS_ERROR);
     }
 
-    bool errorOccurred = false;
-
+    bool errorOccurred         = false;
     const QDomElement rootElem = doc.documentElement();
 
     // find next page link
@@ -777,14 +775,14 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
           entryElem = entryElem.nextSiblingElement("entry"))
     {
 
-        const QDomElement urn = entryElem.firstChildElement("id");
-        const QDomElement author = entryElem.firstChildElement("author");
-        const QDomElement title = entryElem.firstChildElement("title");
-        const QDomElement summary = entryElem.firstChildElement("summary");
+        const QDomElement urn       = entryElem.firstChildElement("id");
+        const QDomElement author    = entryElem.firstChildElement("author");
+        const QDomElement title     = entryElem.firstChildElement("title");
+        const QDomElement summary   = entryElem.firstChildElement("summary");
         const QDomElement published = entryElem.firstChildElement("published");
-        const QDomElement edited = entryElem.firstChildElement("app:edited");
-        const QDomElement updated = entryElem.firstChildElement("updated");
-        const QDomElement prot = entryElem.firstChildElement("protected");
+        const QDomElement edited    = entryElem.firstChildElement("app:edited");
+        const QDomElement updated   = entryElem.firstChildElement("updated");
+        const QDomElement prot      = entryElem.firstChildElement("protected");
 
         QDomElement linkSelf;
         QDomElement linkEdit;
@@ -860,23 +858,22 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
     }
 }
 
-bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem,
-                                      YandexFotkiPhoto& photo)
+bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiPhoto& photo)
 {
 
-    const QDomElement urn = entryElem.firstChildElement("id");
-    const QDomElement author = entryElem.firstChildElement("author");
-    const QDomElement title = entryElem.firstChildElement("title");
-    const QDomElement summary = entryElem.firstChildElement("summary");
-    const QDomElement published = entryElem.firstChildElement("published");
-    const QDomElement edited = entryElem.firstChildElement("app:edited");
-    const QDomElement updated = entryElem.firstChildElement("updated");
-    const QDomElement created = entryElem.firstChildElement("f:created");
-    const QDomElement accessAttr = entryElem.firstChildElement("f:access");
-    const QDomElement hideOriginal = entryElem.firstChildElement("f:hide_original");
+    const QDomElement urn             = entryElem.firstChildElement("id");
+    const QDomElement author          = entryElem.firstChildElement("author");
+    const QDomElement title           = entryElem.firstChildElement("title");
+    const QDomElement summary         = entryElem.firstChildElement("summary");
+    const QDomElement published       = entryElem.firstChildElement("published");
+    const QDomElement edited          = entryElem.firstChildElement("app:edited");
+    const QDomElement updated         = entryElem.firstChildElement("updated");
+    const QDomElement created         = entryElem.firstChildElement("f:created");
+    const QDomElement accessAttr      = entryElem.firstChildElement("f:access");
+    const QDomElement hideOriginal    = entryElem.firstChildElement("f:hide_original");
     const QDomElement disableComments = entryElem.firstChildElement("f:disable_comments");
-    const QDomElement adult = entryElem.firstChildElement("f:xxx");
-    const QDomElement content = entryElem.firstChildElement("content");
+    const QDomElement adult           = entryElem.firstChildElement("f:xxx");
+    const QDomElement content         = entryElem.firstChildElement("content");
 
     QDomElement linkSelf;
     QDomElement linkEdit;
@@ -929,19 +926,19 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem,
         access = YandexFotkiPhoto::ACCESS_PUBLIC;
     }
 
-    photo.m_urn = urn.text();
+    photo.m_urn    = urn.text();
     photo.m_author = author.text();
 
     photo.setTitle(title.text());
     photo.setSummary(summary.text());
-    photo.m_apiEditUrl = linkEdit.attribute("href");
-    photo.m_apiSelfUrl = linkSelf.attribute("href");
-    photo.m_apiMediaUrl = linkMedia.attribute("href");
-    photo.m_apiAlbumUrl = linkAlbum.attribute("href");
+    photo.m_apiEditUrl    = linkEdit.attribute("href");
+    photo.m_apiSelfUrl    = linkSelf.attribute("href");
+    photo.m_apiMediaUrl   = linkMedia.attribute("href");
+    photo.m_apiAlbumUrl   = linkAlbum.attribute("href");
     photo.m_publishedDate = QDateTime::fromString(published.text(), "yyyy-MM-ddTHH:mm:ssZ");
-    photo.m_editedDate = QDateTime::fromString(edited.text(), "yyyy-MM-ddTHH:mm:ssZ");
-    photo.m_updatedDate = QDateTime::fromString(updated.text(), "yyyy-MM-ddTHH:mm:ssZ");
-    photo.m_createdDate = QDateTime::fromString(created.text(), "yyyy-MM-ddTHH:mm:ss");
+    photo.m_editedDate    = QDateTime::fromString(edited.text(), "yyyy-MM-ddTHH:mm:ssZ");
+    photo.m_updatedDate   = QDateTime::fromString(updated.text(), "yyyy-MM-ddTHH:mm:ssZ");
+    photo.m_createdDate   = QDateTime::fromString(created.text(), "yyyy-MM-ddTHH:mm:ss");
 
     photo.setAccess(access);
     photo.setHideOriginal(hideOriginal.attribute("value", "false") == "true");
@@ -979,13 +976,14 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
         return;
 
     QDomDocument doc("feed");
+
     if ( !doc.setContent( m_buffer ) )
     {
         kError() << "Invalid XML, parse error: " << m_buffer;
         return setErrorState(STATE_LISTPHOTOS_ERROR);
     }
 
-    int initialSize = m_photos.size();
+    int initialSize    = m_photos.size();
     bool errorOccurred = false;
 
     const QDomElement rootElem = doc.documentElement();
@@ -1068,14 +1066,13 @@ void YandexFotkiTalker::parseResponseUpdatePhotoFile(KJob* job)
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }
 
-    photo.m_urn = tmpPhoto.m_urn;
-    photo.m_apiEditUrl = tmpPhoto.m_apiEditUrl;
-    photo.m_apiSelfUrl = tmpPhoto.m_apiSelfUrl;
+    photo.m_urn         = tmpPhoto.m_urn;
+    photo.m_apiEditUrl  = tmpPhoto.m_apiEditUrl;
+    photo.m_apiSelfUrl  = tmpPhoto.m_apiSelfUrl;
     photo.m_apiMediaUrl = tmpPhoto.m_apiMediaUrl;
-    photo.m_remoteUrl = tmpPhoto.m_remoteUrl;
-    photo.m_remoteUrl = tmpPhoto.m_remoteUrl;
-
-    photo.m_author = tmpPhoto.m_author;
+    photo.m_remoteUrl   = tmpPhoto.m_remoteUrl;
+    photo.m_remoteUrl   = tmpPhoto.m_remoteUrl;
+    photo.m_author      = tmpPhoto.m_author;
 
     // update info
     updatePhotoInfo(photo);
@@ -1091,7 +1088,8 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
     /*
     // reload all information
     QDomDocument doc("entry");
-    if ( !doc.setContent( m_buffer ) ) {
+    if ( !doc.setContent( m_buffer ) )
+    {
         kDebug() << "Invalid XML: parse error" << m_buffer;
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }
@@ -1103,7 +1101,7 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }*/
 
-    m_state = STATE_UPDATEPHOTO_DONE;
+    m_state     = STATE_UPDATEPHOTO_DONE;
     m_lastPhoto = 0;
     emit signalUpdatePhotoDone(photo);
 }
@@ -1111,12 +1109,13 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
 void YandexFotkiTalker::parseResponseUpdateAlbum(KJob* job)
 {
     kDebug() << "!!!";
+
     if (!prepareJobResult(job, STATE_UPDATEALBUM_ERROR))
         return;
 
     kDebug() << "Updated album" << m_buffer;
 
-    m_state = STATE_UPDATEALBUM_DONE;
+    m_state     = STATE_UPDATEALBUM_DONE;
     m_lastPhoto = 0;
 
     emit signalUpdateAlbumDone();

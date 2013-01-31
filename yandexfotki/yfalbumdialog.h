@@ -42,7 +42,7 @@ class YandexFotkiAlbumDialog: public KDialog
 
 public:
 
-    YandexFotkiAlbumDialog(QWidget* parent, YandexFotkiAlbum& album);
+    YandexFotkiAlbumDialog(QWidget* const parent, YandexFotkiAlbum& album);
     ~YandexFotkiAlbumDialog();
 
     YandexFotkiAlbum& album() const

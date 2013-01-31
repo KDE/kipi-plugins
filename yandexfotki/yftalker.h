@@ -53,7 +53,7 @@ class YandexFotkiTalker : public QObject
 
 public:
 
-    YandexFotkiTalker(QObject* parent = 0);
+    YandexFotkiTalker(QObject* const parent = 0);
     ~YandexFotkiTalker();
 
     /*
@@ -230,14 +230,14 @@ protected:
      */
 
     // fields
-    QString m_sessionKey;
-    QString m_sessionId;
-    QString m_token;
-    QString m_login;
-    QString m_password;
-    QString m_apiAlbumsUrl;
-    QString m_apiPhotosUrl;
-    QString m_apiTagsUrl;
+    QString              m_sessionKey;
+    QString              m_sessionId;
+    QString              m_token;
+    QString              m_login;
+    QString              m_password;
+    QString              m_apiAlbumsUrl;
+    QString              m_apiPhotosUrl;
+    QString              m_apiTagsUrl;
 
     // constants
     static const QString SESSION_URL; // use QString insted of KUrl, we need .arg

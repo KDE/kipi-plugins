@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Yandex.Fotki web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2011 by Roman Tsisyk <roman at tsisyk dot com>
+ * Copyright (C) 2011      by Roman Tsisyk <roman at tsisyk dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,13 +43,12 @@
 namespace KIPIYandexFotkiPlugin
 {
 
-LoginDialog::LoginDialog(QWidget* parent,
-                         const QString& login, const QString& password)
+LoginDialog::LoginDialog(QWidget* const parent, const QString& login, const QString& password)
     : QDialog(parent)
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox = new QVBoxLayout(this);
+    QVBoxLayout* const vbox = new QVBoxLayout(this);
 
     m_headerLabel = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -63,43 +62,44 @@ LoginDialog::LoginDialog(QWidget* parent,
                            .arg(i18nc("Yandex.Fotki", "andex."))
                            .arg(i18nc("Yandex.Fotki", "Fotki")));
 
-    QFrame* hline = new QFrame(this);
+    QFrame* const hline = new QFrame(this);
     hline->setObjectName("hline");
     hline->setFrameShape( QFrame::HLine );
     hline->setFrameShadow( QFrame::Sunken );
     hline->setFrameShape( QFrame::HLine );
 
-    QGridLayout* centerLayout = new QGridLayout();
+    QGridLayout* const centerLayout = new QGridLayout();
 
-    m_loginEdit   = new KLineEdit(this);
+    m_loginEdit    = new KLineEdit(this);
     m_passwordEdit = new KLineEdit(this);
     m_passwordEdit->setEchoMode(KLineEdit::Password);
 
-    QLabel* loginLabel = new QLabel(this);
+    QLabel* const loginLabel    = new QLabel(this);
     loginLabel->setText(i18n( "Login:" ));
 
-    QLabel* passwordLabel = new QLabel(this);
+    QLabel* const passwordLabel = new QLabel(this);
     passwordLabel->setText(i18n("Password:"));
 
-    KUrlLabel *forgotLabel = new KUrlLabel(this);
+    KUrlLabel* const forgotLabel = new KUrlLabel(this);
     forgotLabel->setText(i18n("Forgot your password?"));
     forgotLabel->setUrl("http://passport.yandex.ru/passport?mode=restore");
+
     connect(forgotLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
 
-    centerLayout->addWidget(m_loginEdit,   0, 1);
+    centerLayout->addWidget(m_loginEdit,    0, 1);
     centerLayout->addWidget(m_passwordEdit, 1, 1);
-    centerLayout->addWidget(loginLabel,    0, 0);
+    centerLayout->addWidget(loginLabel,     0, 0);
     centerLayout->addWidget(passwordLabel,  1, 0);
-    centerLayout->addWidget(forgotLabel,  2, 1);
+    centerLayout->addWidget(forgotLabel,    2, 1);
 
-    QHBoxLayout* btnLayout = new QHBoxLayout();
-    QPushButton* okBtn = new QPushButton(this);
+    QHBoxLayout* const btnLayout = new QHBoxLayout();
+    QPushButton* const okBtn     = new QPushButton(this);
     okBtn->setAutoDefault(true);
     okBtn->setDefault(true);
     okBtn->setText(i18n("&Login"));
 
-    QPushButton* cancelBtn = new QPushButton(this);
+    QPushButton* const cancelBtn = new QPushButton(this);
     cancelBtn->setText(i18n("&Skip"));
 
     btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
@@ -108,10 +108,11 @@ LoginDialog::LoginDialog(QWidget* parent,
     btnLayout->setMargin(0);
     btnLayout->setSpacing(5);
 
-    QHBoxLayout* footerLayout = new QHBoxLayout();
+    QHBoxLayout* const footerLayout = new QHBoxLayout();
     KUrlLabel *licenseLabel = new KUrlLabel(this);
     licenseLabel->setText(i18n("Yandex User Agreement"));
     licenseLabel->setUrl("http://fotki.yandex.ru/agreement.xml");
+
     connect(licenseLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
 
@@ -171,8 +172,7 @@ void LoginDialog::slotAccept()
     }
     else
     {
-        KMessageBox::error(this, i18n("Password cannot be empty."),
-                           i18n("Error"));
+        KMessageBox::error(this, i18n("Password cannot be empty."), i18n("Error"));
     }
 }
 

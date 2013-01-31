@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Yandex.Fotki web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2011 by Roman Tsisyk <roman at tsisyk dot com>
+ * Copyright (C) 2011      by Roman Tsisyk <roman at tsisyk dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,7 +38,7 @@ class LoginDialog : public QDialog
 
 public:
 
-    LoginDialog(QWidget* parent, const QString& header,
+    LoginDialog(QWidget* const parent, const QString& header,
                 const QString& passwd=QString());
     ~LoginDialog();
 

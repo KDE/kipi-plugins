@@ -34,8 +34,7 @@
 namespace YandexAuth
 {
 
-QString makeCredentials(const QString& publicKey, const QString& login,
-                        const QString& password);
+QString makeCredentials(const QString& publicKey, const QString& login, const QString& password);
 
 } // namespace YandexAuth
 
