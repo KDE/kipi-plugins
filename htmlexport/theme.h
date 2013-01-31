@@ -32,7 +32,8 @@
 // KDE
 #include <ksharedptr.h>
 
-namespace KIPIHTMLExport {
+namespace KIPIHTMLExport
+{
 
 class AbstractThemeParameter;
 
@@ -41,44 +42,48 @@ class AbstractThemeParameter;
  * An HTML theme. This class gives access to the various theme properties,
  * including the theme parameters.
  */
-class Theme : public KShared {
+class Theme : public KShared
+{
 public:
-	typedef KSharedPtr<Theme> Ptr;
-	typedef QList<Ptr> List;
-	typedef QList<AbstractThemeParameter*> ParameterList;
 
-	~Theme();
-	/**
-	 * Internal theme name == name of theme folder
-	 */
-	QString internalName() const;
-	QString name() const;
-	QString comment() const;
+    typedef KSharedPtr<Theme> Ptr;
+    typedef QList<Ptr> List;
+    typedef QList<AbstractThemeParameter*> ParameterList;
 
-	QString authorName() const;
-	QString authorUrl() const;
-	
-	QString previewName() const;
-	QString previewUrl() const;
+    ~Theme();
+    /**
+     * Internal theme name == name of theme folder
+     */
+    QString internalName() const;
+    QString name() const;
+    QString comment() const;
+
+    QString authorName() const;
+    QString authorUrl() const;
+    
+    QString previewName() const;
+    QString previewUrl() const;
         QBool allowNonsquareThumbnails() const;
 
-	/**
-	 * Theme directory on hard disk
-	 */
-	QString directory() const;
+    /**
+     * Theme directory on hard disk
+     */
+    QString directory() const;
 
-	ParameterList parameterList() const;
+    ParameterList parameterList() const;
 
-	/**
-	 * Returns the list of available themes
-	 */
-	static const List& getList();
-	static Ptr findByInternalName(const QString& internalName);
+    /**
+     * Returns the list of available themes
+     */
+    static const List& getList();
+    static Ptr findByInternalName(const QString& internalName);
 
 private:
-	Theme();
-	struct Private;
-	Private* d;
+
+    Theme();
+
+    struct Private;
+    Private* d;
 };
 
 } // namespace
