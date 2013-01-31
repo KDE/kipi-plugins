@@ -49,10 +49,10 @@ class FbTalker : public QObject
 
 public:
 
-    FbTalker(QWidget* parent);
+    FbTalker(QWidget* const parent);
     ~FbTalker();
 
-    QString      getAccessToken() const;
+    QString      getAccessToken()    const;
     unsigned int getSessionExpires() const;
 
     FbUser  getUser() const;

@@ -31,7 +31,7 @@
 namespace KIPIFacebookPlugin
 {
 
-FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent)
+FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* const parent)
     : KJob(parent), m_urls(url), m_talk(0), m_albumName(albumName)
 {
     setObjectName("FacebookJob");
@@ -86,7 +86,7 @@ void FacebookJob::loginDone(int errCode, const QString& error)
 
 void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAlbum>& albums)
 {
-    if(errCode!=0)
+    if(errCode != 0)
     {
         setError(errCode);
         setErrorText(errMsg);
@@ -123,8 +123,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
     kDebug() << "listed" << id;
 }
 
-
-void FacebookJob::albumCreated(int errCode, const QString& error, const QString &albumId)
+void FacebookJob::albumCreated(int errCode, const QString& error, const QString& albumId)
 {
     if(errCode != 0)
     {
@@ -158,6 +157,7 @@ void FacebookJob::addPhoto(int code, const QString& message)
             setError(code);
             setErrorText(message);
         }
+
         emitResult();
     }
 }

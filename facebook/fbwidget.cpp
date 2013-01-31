@@ -60,7 +60,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 {
     setObjectName("FbWidget");
 
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
 
@@ -70,8 +70,8 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Facebook account."));
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget* const settingsBox           = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Facebook home page in a web browser."));
@@ -80,13 +80,13 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
+    QGroupBox* const accountBox         = new QGroupBox(i18n("Account"), settingsBox);
     accountBox->setWhatsThis(i18n("This is the Facebook account that is currently logged in."));
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
+    QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel* userNameLbl     = new QLabel(i18nc("facebook account settings", "Name:"), accountBox);
-    m_userNameDisplayLbl    = new QLabel(accountBox);
-    QLabel* permissionLbl   = new QLabel(i18n("Permission:"), accountBox);
+    QLabel* const userNameLbl   = new QLabel(i18nc("facebook account settings", "Name:"), accountBox);
+    m_userNameDisplayLbl        = new QLabel(accountBox);
+    QLabel* const permissionLbl = new QLabel(i18n("Permission:"), accountBox);
     permissionLbl->setWhatsThis(i18n("Permission of KIPI Plugin application to upload photos directly. "
                                      "If not, user will need to manually approve uploaded photos in Facebook."));
     m_permissionLbl         = new QLabel(accountBox);
@@ -104,7 +104,8 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albBox    = new QGroupBox(settingsBox);
+    QGroupBox* const albBox    = new QGroupBox(settingsBox);
+
     if (import)
     {
         albBox->setTitle(i18n("Download Selection"));
@@ -115,15 +116,16 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
         albBox->setTitle(i18n("Destination"));
         albBox->setWhatsThis(i18n("This is the Facebook album to which selected photos will be uploaded."));
     }
-    QGridLayout* albumsBoxLayout  = new QGridLayout(albBox);
 
-    QRadioButton* albMeRBtn = new QRadioButton(i18n("My &Album"), albBox);
+    QGridLayout* const albumsBoxLayout  = new QGridLayout(albBox);
+
+    QRadioButton* const albMeRBtn = new QRadioButton(i18n("My &Album"), albBox);
     albMeRBtn->setWhatsThis(i18n("Download complete album of currently logged in user."));
-    QRadioButton* albFrRBtn = new QRadioButton(i18n("Album &of My Friend"), albBox);
+    QRadioButton* const albFrRBtn = new QRadioButton(i18n("Album &of My Friend"), albBox);
     albFrRBtn->setWhatsThis(i18n("Download complete album of selected friend."));
-    QRadioButton* phMeRBtn  = new QRadioButton(i18n("Photos of &Me"), albBox);
+    QRadioButton* const phMeRBtn  = new QRadioButton(i18n("Photos of &Me"), albBox);
     phMeRBtn->setWhatsThis(i18n("Download all photos of currently logged in user."));
-    QRadioButton* phFrRBtn  = new QRadioButton(i18n("Photos of My &Friend"), albBox);
+    QRadioButton* const phFrRBtn  = new QRadioButton(i18n("Photos of My &Friend"), albBox);
     phFrRBtn->setWhatsThis(i18n("Download all photos of selected friend."));
 
     m_dlGrp = new QButtonGroup(albBox);
@@ -132,12 +134,12 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_dlGrp->addButton(phMeRBtn, FbPhotosMe);
     m_dlGrp->addButton(phFrRBtn, FbPhotosFriend);
 
-    QLabel* frLbl  = new QLabel(i18n("Friend:"), albBox);
-    m_friendsCoB   = new KComboBox(albBox);
+    QLabel* const frLbl  = new QLabel(i18n("Friend:"), albBox);
+    m_friendsCoB         = new KComboBox(albBox);
     m_friendsCoB->setEditable(false);
 
-    QLabel* albLbl = new QLabel(i18n("Album:"), albBox);
-    m_albumsCoB    = new KComboBox(albBox);
+    QLabel* const albLbl = new QLabel(i18n("Album:"), albBox);
+    m_albumsCoB          = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
@@ -158,17 +160,17 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location to which Facebook images will be downloaded."));
-    QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget               = iface->uploadWidget(uploadBox);
+    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
+    m_uploadWidget                     = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_resizeChB     = new QCheckBox(optionsBox);
     m_resizeChB->setText(i18n("Resize photos before uploading"));
@@ -181,7 +183,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_dimensionSpB->setValue(600);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
-    QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
     m_imageQualitySpB = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
@@ -189,7 +191,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_imageQualitySpB->setSingleStep(1);
     m_imageQualitySpB->setValue(85);
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
+    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     optionsBoxLayout->addWidget(m_resizeChB,        0, 0, 1, 5);
     optionsBoxLayout->addWidget(imageQualityLbl,    1, 1, 1, 1);
@@ -288,6 +290,7 @@ QString FbWidget::getDestinationPath() const
 void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPerm)
 {
     QString web("http://www.facebook.com");
+
     if (!url.isEmpty())
         web = url;
 
@@ -302,6 +305,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
     else
     {
         m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
+
         if (uplPerm)
         {
             m_permissionLbl->setText(i18n("Direct upload"));
@@ -311,8 +315,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
         else
         {
             m_permissionLbl->setText(i18n("Manual upload approval"));
-            m_permissionLbl->setWhatsThis(
-                i18n("Uploaded photos will wait in pending state until manually approved by user."));
+            m_permissionLbl->setWhatsThis(i18n("Uploaded photos will wait in pending state until manually approved by user."));
         }
     }
 }
@@ -351,6 +354,7 @@ void FbWidget::slotReloadAlbumsRequest()
 {
     // always list user's album, unless FriendAlbum is selected
     long long usrID = 0;
+
     if (m_dlGrp->checkedId() == FbFriendAlbum)
         usrID = m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong();
 

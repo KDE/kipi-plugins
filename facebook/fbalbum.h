@@ -42,10 +42,10 @@ class FbNewAlbum : public KDialog
 
 public:
 
-    FbNewAlbum(QWidget* parent);
+    FbNewAlbum(QWidget* const parent);
     ~FbNewAlbum();
 
-    void getAlbumProperties(FbAlbum &album);
+    void getAlbumProperties(FbAlbum& album);
 
 private:
 

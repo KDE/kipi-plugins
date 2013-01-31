@@ -7,7 +7,7 @@
  * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -45,11 +45,11 @@ Q_OBJECT
 
 public:
 
-    FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
+    FacebookJob(const QString& albumName, const KUrl::List& url, QObject* const parent=0);
 
     virtual void start();
     virtual KUrl::List urls() const;
-    virtual KIcon icon() const;
+    virtual KIcon icon()      const;
 
 private slots:
 
@@ -57,10 +57,6 @@ private slots:
     void loginDone(int, const QString&);
     void albumCreated(int, const QString&, const QString& albumId);
     void addPhoto(int code, const QString& message);
-
-private:
-
-    void sendPhoto(const QString &album);
 
 private:
 

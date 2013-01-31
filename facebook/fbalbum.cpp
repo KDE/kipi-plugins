@@ -41,7 +41,7 @@
 namespace KIPIFacebookPlugin
 {
 
-FbNewAlbum::FbNewAlbum(QWidget* parent)
+FbNewAlbum::FbNewAlbum(QWidget* const parent)
     : KDialog(parent)
 {
     QString header(i18n("Facebook New Album"));
@@ -50,7 +50,7 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget* mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 300);
 
@@ -72,7 +72,7 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     m_privacyCoB->addItem(KIcon("network-workgroup"),     i18n("My Networks and Friends"), FB_NETWORKS);
     m_privacyCoB->addItem(KIcon("applications-internet"), i18n("Everyone"),                FB_EVERYONE);
 
-    QFormLayout* albumBoxLayout = new QFormLayout;
+    QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("new facebook album", "Title:"),       m_titleEdt);
     albumBoxLayout->addRow(i18nc("new facebook album", "Location:"),    m_locEdt);
     albumBoxLayout->addRow(i18nc("new facebook album", "Description:"), m_descEdt);
@@ -87,7 +87,7 @@ FbNewAlbum::~FbNewAlbum()
 {
 }
 
-void FbNewAlbum::getAlbumProperties(FbAlbum &album)
+void FbNewAlbum::getAlbumProperties(FbAlbum& album)
 {
     album.title       = m_titleEdt->text();
     album.location    = m_locEdt->text();

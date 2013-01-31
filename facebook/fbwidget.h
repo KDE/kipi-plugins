@@ -69,12 +69,11 @@ public:
 
     void updateLabels(const QString& name = QString(), const QString& url = QString(), bool uplPerm = false);
 
-    long long getFriendID() const;
-    QString   getAlbumID() const;
+    long long getFriendID()        const;
+    QString   getAlbumID()         const;
     QString   getDestinationPath() const;
 
-    KIPIPlugins::KPImagesList* imagesList() const;
-
+    KIPIPlugins::KPImagesList* imagesList()      const;
     KIPIPlugins::KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
@@ -90,23 +89,23 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::KPImagesList* m_imgList;
-    KIPI::UploadWidget*        m_uploadWidget;
+    KIPIPlugins::KPImagesList*     m_imgList;
+    KIPI::UploadWidget*            m_uploadWidget;
 
-    QLabel*                    m_headerLbl;
-    QLabel*                    m_userNameDisplayLbl;
-    QLabel*                    m_permissionLbl;
-    KPushButton*               m_changeUserBtn;
+    QLabel*                        m_headerLbl;
+    QLabel*                        m_userNameDisplayLbl;
+    QLabel*                        m_permissionLbl;
+    KPushButton*                   m_changeUserBtn;
 
-    QButtonGroup*              m_dlGrp;
-    KComboBox*                 m_friendsCoB;
-    KComboBox*                 m_albumsCoB;
-    KPushButton*               m_newAlbumBtn;
-    KPushButton*               m_reloadAlbumsBtn;
+    QButtonGroup*                  m_dlGrp;
+    KComboBox*                     m_friendsCoB;
+    KComboBox*                     m_albumsCoB;
+    KPushButton*                   m_newAlbumBtn;
+    KPushButton*                   m_reloadAlbumsBtn;
 
-    QCheckBox*                 m_resizeChB;
-    QSpinBox*                  m_dimensionSpB;
-    QSpinBox*                  m_imageQualitySpB;
+    QCheckBox*                     m_resizeChB;
+    QSpinBox*                      m_dimensionSpB;
+    QSpinBox*                      m_imageQualitySpB;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
