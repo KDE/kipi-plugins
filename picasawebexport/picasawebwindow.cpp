@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010      by Jens Mueller <tschenser at gmx dot de>
  *
@@ -65,17 +65,18 @@
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
 #include "kpversion.h"
-#include "newalbumdialog.h"
 #include "picasawebalbum.h"
 #include "picasawebitem.h"
 #include "picasawebtalker.h"
 #include "picasawebwidget.h"
 #include "picasawebreplacedialog.h"
 
+using namespace KIPI;
+
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget* /*parent*/)
+PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget* const /*parent*/)
     : KPToolDialog(0)
 {
     m_tmpPath.clear();
@@ -83,6 +84,7 @@ PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget*
     m_import      = import;
     m_imagesCount = 0;
     m_imagesTotal = 0;
+    m_renamingOpt = 0;
     m_widget      = new PicasawebWidget(this, iface(), import);
 
     setMainWidget(m_widget);
@@ -125,15 +127,15 @@ PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget*
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("PicasaWeb Export"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to export image collections to "
-                                   "PicasaWeb web service."),
-                             ki18n( "(c) 2007-2009, Vardhman Jain\n"
-                             "(c) 2008-2012, Gilles Caulier\n"
-                             "(c) 2009, Luka Renko\n"
-                             "(c) 2010, Jens Mueller" ));
+    KPAboutData* const about = new KPAboutData(ki18n("PicasaWeb Export"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to export image collections to "
+                                         "PicasaWeb web service."),
+                                    ki18n( "(c) 2007-2009, Vardhman Jain\n"
+                                           "(c) 2008-2013, Gilles Caulier\n"
+                                           "(c) 2009, Luka Renko\n"
+                                           "(c) 2010, Jens Mueller" ));
 
     about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
                      "Vardhman at gmail dot com");
@@ -300,7 +302,7 @@ void PicasawebWindow::writeSettings()
 
 void PicasawebWindow::slotLoginProgress(int step, int maxStep, const QString &label)
 {
-    KPProgressWidget* progressBar = m_widget->progressBar();
+    KPProgressWidget* const progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
         progressBar->setFormat(label);
@@ -340,11 +342,12 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     m_username    = m_talker->getUserName();
     m_userEmailId = m_talker->getUserEmailId();
     m_widget->updateLabels(m_userEmailId, m_talker->getLoginName());
-
     m_widget->m_albumsCoB->clear();
+
     for (int i = 0; i < albumsList.size(); ++i)
     {
         QString albumIcon;
+
         if (albumsList.at(i).access == "public")
             albumIcon = "folder-image";
         else if (albumsList.at(i).access == "protected")
@@ -359,8 +362,7 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
-void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &errMsg,
-                                                    const QList <PicasaWebPhoto>& photosList)
+void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &errMsg, const QList <PicasaWebPhoto>& photosList)
 {
     disconnect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<PicasaWebPhoto>)),
                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<PicasaWebPhoto>)));
@@ -374,6 +376,7 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
     typedef QPair<KUrl,PicasaWebPhoto> Pair;
     m_transferQueue.clear();
     QList<PicasaWebPhoto>::const_iterator itPWP;
+
     for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
     {
         m_transferQueue.push_back(Pair((*itPWP).originalURL, (*itPWP)));
@@ -382,10 +385,9 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
     if (m_transferQueue.isEmpty())
         return;
 
-    m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                 m_widget->m_albumsCoB->currentIndex()).toString();
-    m_imagesTotal = m_transferQueue.count();
-    m_imagesCount = 0;
+    m_currentAlbumID = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_imagesTotal    = m_transferQueue.count();
+    m_imagesCount    = 0;
 
     m_widget->progressBar()->setFormat(i18n("%v / %m"));
     m_widget->progressBar()->show();
@@ -396,8 +398,7 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
     downloadNextPhoto();
 }
 
-void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &errMsg,
-                                                  const QList <PicasaWebPhoto>& photosList)
+void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &errMsg, const QList <PicasaWebPhoto>& photosList)
 {
     disconnect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<PicasaWebPhoto>)),
                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<PicasaWebPhoto>)));
@@ -431,11 +432,14 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
         // check for existing items
         QString localId;
         KPMetadata meta;
+
         if (meta.load((*it).toLocalFile()))
         {
             localId = meta.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
         }
+
         QList<PicasaWebPhoto>::const_iterator itPWP;
+
         for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
         {
             if ((*itPWP).id == localId)
@@ -458,10 +462,9 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
     if (m_transferQueue.isEmpty())
         return;
 
-    m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                 m_widget->m_albumsCoB->currentIndex()).toString();
-    m_imagesTotal = m_transferQueue.count();
-    m_imagesCount = 0;
+    m_currentAlbumID = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_imagesTotal    = m_transferQueue.count();
+    m_imagesCount    = 0;
 
     m_widget->progressBar()->setFormat(i18n("%v / %m"));
     m_widget->progressBar()->setMaximum(m_imagesTotal);
@@ -469,7 +472,6 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Picasa Export"), true, true);
     m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
-
 
     m_renamingOpt = 0;
 
@@ -493,6 +495,7 @@ void PicasawebWindow::slotBusy(bool val)
     {
         setCursor(Qt::ArrowCursor);
     }
+
     m_widget->m_changeUserBtn->setEnabled(!val);
     buttonStateChange(!val);
 }
@@ -550,6 +553,7 @@ void PicasawebWindow::slotStartTransfer()
 bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 {
     QImage image;
+
     if (isRAW)
     {
         kDebug() << "Get RAW preview " << imgPath;
@@ -569,8 +573,7 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
 
-    if (m_widget->m_resizeChB->isChecked()
-        && (image.width() > maxDim || image.height() > maxDim))
+    if (m_widget->m_resizeChB->isChecked() && (image.width() > maxDim || image.height() > maxDim))
     {
         kDebug() << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
@@ -582,6 +585,7 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 
     // copy meta data to temporary image
     KPMetadata meta;
+
     if (meta.load(imgPath))
     {
         meta.setImageDimensions(image.size());
@@ -612,12 +616,11 @@ void PicasawebWindow::uploadNextPhoto()
     m_widget->progressBar()->setValue(m_imagesCount);
 
     m_widget->m_imgList->processing(pathComments.first);
-    QString imgPath  = pathComments.first.toLocalFile();
-    QString itemPath = imgPath;
-
+    QString imgPath    = pathComments.first.toLocalFile();
+    QString itemPath   = imgPath;
     bool res           = false;
     KMimeType::Ptr ptr = KMimeType::findByUrl(imgPath);
-    
+
     if(((ptr->is("image/bmp") || ptr->is("image/gif") || ptr->is("image/jpeg") || ptr->is("image/png")) &&
         !m_widget->m_resizeChB->isChecked()) || ptr->name().startsWith("video"))
     {
@@ -633,6 +636,7 @@ void PicasawebWindow::uploadNextPhoto()
             slotAddPhotoDone(666, i18n("Cannot open file"), "");
             return;
         }
+
         itemPath = m_tmpPath;
     }
 
@@ -651,7 +655,8 @@ void PicasawebWindow::uploadNextPhoto()
                 break;
             default:
                 {
-                    PicasawebReplaceDialog dlg(this, "", m_interface, imgPath, info.thumbURL);
+                    PicasawebReplaceDialog dlg(this, "", iface(), imgPath, info.thumbURL);
+
                     switch(dlg.exec())
                     {
                     case PWR_ADD_ALL:
@@ -678,47 +683,56 @@ void PicasawebWindow::uploadNextPhoto()
     switch (m_widget->m_tagsBGrp->checkedId())
     {
         case PwTagLeaf:
+        {
+            QStringList newTags;
+            QStringList::const_iterator itT;
+
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
-                QStringList newTags;
-                QStringList::const_iterator itT;
-                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                QString strTmp = *itT;
+                int idx        = strTmp.lastIndexOf("/");
+
+                if (idx > 0)
                 {
-                    QString strTmp = *itT;
-                    int idx        = strTmp.lastIndexOf("/");
-                    if (idx > 0)
-                    {
-                        strTmp.remove(0, idx + 1);
-                    }
-                    newTags.append(strTmp);
+                    strTmp.remove(0, idx + 1);
                 }
-                info.tags = newTags;
+
+                newTags.append(strTmp);
             }
+
+            info.tags = newTags;
             break;
-        
+        }
+
         case PwTagSplit:
+        {
+            QSet<QString> newTagsSet;
+            QStringList::const_iterator itT;
+
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
-                QSet<QString> newTagsSet;
-                QStringList::const_iterator itT;
-                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                QStringList strListTmp = itT->split('/');
+                QStringList::const_iterator itT2;
+
+                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
                 {
-                    QStringList strListTmp = itT->split('/');
-                    QStringList::const_iterator itT2;
-                    for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
+                    if (!newTagsSet.contains(*itT2))
                     {
-                        if (!newTagsSet.contains(*itT2))
-                        {
-                            newTagsSet.insert(*itT2);
-                        }
+                        newTagsSet.insert(*itT2);
                     }
                 }
-                info.tags.clear();
-                QSet<QString>::const_iterator itT3;
-                for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
-                {
-                    info.tags.append(*itT3);
-                }
             }
+
+            info.tags.clear();
+            QSet<QString>::const_iterator itT3;
+
+            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
+            {
+                info.tags.append(*itT3);
+            }
+
             break;
+        }
 
         case PwTagCombined:
         default:
@@ -767,6 +781,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
         bRet = meta.save(fileName);
     }
+
     kDebug() << "bRet : " << bRet;
 
     m_widget->m_imgList->processed(m_transferQueue.first().first, (errCode == 0));
@@ -810,11 +825,11 @@ void PicasawebWindow::downloadNextPhoto()
     m_talker->getPhoto(imgPath);
 }
 
-void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
-                                  const QByteArray& photoData)
+void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
 {
     PicasaWebPhoto item = m_transferQueue.first().second;
-    KUrl tmpUrl = QString(m_tmpDir + item.title);
+    KUrl tmpUrl         = QString(m_tmpDir + item.title);
+
     if (item.mimeType == "video/mpeg4")
     {
         tmpUrl.setFileName(item.title + ".mp4");
@@ -824,6 +839,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     {
         QString errText;
         QFile imgFile(tmpUrl.toLocalFile());
+
         if (!imgFile.open(QIODevice::WriteOnly))
         {
             errText = imgFile.errorString();
@@ -854,8 +870,10 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                 {
                     bRet = meta.setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble(), false);
                 }
+
                 bRet = meta.save(tmpUrl.toLocalFile());
             }
+
             kDebug() << "bRet : " << bRet;
 
             m_transferQueue.pop_front();
@@ -886,9 +904,10 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     }
 
     KUrl newUrl = QString(m_widget->getDestinationPath() + tmpUrl.fileName());
-    bool bSkip = false;
+    bool bSkip  = false;
 
     QFileInfo targetInfo(newUrl.toLocalFile());
+
     if (targetInfo.exists())
     {
         switch (m_renamingOpt)
@@ -971,6 +990,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
             KPImageInfo info(newUrl);
             info.setName(item.description);
             info.setTagsPath(item.tags);
+
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
             {
                 info.setLatitude(item.gpsLat.toDouble());
@@ -991,8 +1011,7 @@ void PicasawebWindow::slotTransferCancel()
     m_talker->cancel();
 }
 
-void PicasawebWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
-                                          const QString& newAlbumID)
+void PicasawebWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const QString& newAlbumID)
 {
     if (errCode != 0)
     {

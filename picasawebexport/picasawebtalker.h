@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,7 +55,8 @@ public:
 
     enum State
     {
-        FE_LOGIN = 0,
+        FE_LOGOUT = -1,
+        FE_LOGIN  = 0,
         FE_LISTALBUMS,
         FE_LISTPHOTOS,
         FE_ADDPHOTO,
@@ -71,7 +72,6 @@ public:
     PicasawebTalker(QWidget* const parent);
     ~PicasawebTalker();
 
-    QString token() { return m_token;}
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=QString(), const QString& username=QString(), const QString& password=QString(), const QString& userEmailId=QString()) ;
@@ -82,17 +82,21 @@ public:
     bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
     bool updatePhoto(const QString& photoPath, PicasaWebPhoto& info);
     void getPhoto(const QString& imgPath);
-    
-    QString getLoginName() const;
-    QString getUserName() const;
+
+    QString getLoginName()   const;
+    QString getUserName()    const;
     QString getUserEmailId() const;
+    QString token()          const
+    {
+        return m_token;
+    }
 
     void cancel();
 
 Q_SIGNALS:
 
-    void signalError( const QString& msg );
-    void signalBusy( bool val );
+    void signalError(const QString& msg);
+    void signalBusy(bool val);
     void signalLoginProgress(int, int, const QString&);
     void signalLoginDone(int, const QString&);
     void signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&);
@@ -104,20 +108,20 @@ Q_SIGNALS:
 
 private:
 
-    void parseResponseListAlbums(const QByteArray &data);
-    void parseResponseListPhotos(const QByteArray &data);
-    void parseResponseCreateAlbum(const QByteArray &data);
-    void parseResponseAddPhoto(const QByteArray &data);
-    void parseResponseGetToken(const QByteArray &data);
-    void parseResponseCheckToken(const QByteArray &data);
+    void parseResponseListAlbums(const QByteArray& data);
+    void parseResponseListPhotos(const QByteArray& data);
+    void parseResponseCreateAlbum(const QByteArray& data);
+    void parseResponseAddPhoto(const QByteArray& data);
+    void parseResponseGetToken(const QByteArray& data);
+    void parseResponseCheckToken(const QByteArray& data);
 
 private Q_SLOTS:
 
     void slotError( const QString& msg );
-    void data(KIO::Job *job, const QByteArray &data);
-    void dataReq(KIO::Job* job, QByteArray &data);
-    void info(KIO::Job *job, const QString& str);
-    void slotResult (KJob *job);
+    void data(KIO::Job* job, const QByteArray& data);
+    void dataReq(KIO::Job* job, QByteArray& data);
+    void info(KIO::Job* job, const QString& str);
+    void slotResult(KJob* job);
 
 private:
 

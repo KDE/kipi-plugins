@@ -39,7 +39,7 @@ class PicasawebLogin : public QDialog
 
 public:
 
-    PicasawebLogin(QWidget* parent, const QString& header, const QString& _name=QString(),
+    PicasawebLogin(QWidget* const parent, const QString& header, const QString& _name=QString(),
                    const QString& _passwd=QString());
     ~PicasawebLogin();
 

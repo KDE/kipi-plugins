@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -106,6 +106,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 {
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
+
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,
@@ -114,6 +115,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     }
 
     QFile imageFile(path);
+
     if (!imageFile.open(QIODevice::ReadOnly))
         return false;
 

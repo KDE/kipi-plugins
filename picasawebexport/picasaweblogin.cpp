@@ -40,35 +40,35 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
+PicasawebLogin::PicasawebLogin(QWidget* const parent, const QString& header,
                                const QString& _name, const QString& _passwd)
               : QDialog(parent)
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox = new QVBoxLayout(this);
+    QVBoxLayout* const vbox = new QVBoxLayout(this);
 
     m_headerLabel = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
 
-    QFrame* hline = new QFrame(this);
+    QFrame* const hline = new QFrame(this);
     hline->setObjectName("hline");
     hline->setFrameShape( QFrame::HLine );
     hline->setFrameShadow( QFrame::Sunken );
     hline->setFrameShape( QFrame::HLine );
 
-    QGridLayout* centerLayout = new QGridLayout();
+    QGridLayout* const centerLayout = new QGridLayout();
 
     m_nameEdit   = new KLineEdit(this);
     m_passwdEdit = new KLineEdit(this);
     m_passwdEdit->setEchoMode(KLineEdit::Password);
 
-    QLabel* nameLabel = new QLabel(this);
+    QLabel* const nameLabel = new QLabel(this);
     nameLabel->setText(i18n( "Google Login:" ));
     // centerLayout->addWidget(nameLabel, 0, 0);
 
-    QLabel* passwdLabel = new QLabel(this);
+    QLabel* const passwdLabel = new QLabel(this);
     passwdLabel->setText(i18n("Password:"));
 
     centerLayout->addWidget(m_nameEdit,   0, 1);
@@ -76,13 +76,13 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
     centerLayout->addWidget(nameLabel,    0, 0);
     centerLayout->addWidget(passwdLabel,  1, 0);
 
-    QHBoxLayout* btnLayout = new QHBoxLayout();
-    QPushButton *okBtn     = new QPushButton(this);
+    QHBoxLayout* const btnLayout = new QHBoxLayout();
+    QPushButton* const okBtn     = new QPushButton(this);
     okBtn->setAutoDefault(true);
     okBtn->setDefault(true);
     okBtn->setText(i18n("&OK"));
 
-    QPushButton *cancelBtn = new QPushButton(this);
+    QPushButton* const cancelBtn = new QPushButton(this);
     cancelBtn->setText(i18n("&Cancel"));
 
     btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));

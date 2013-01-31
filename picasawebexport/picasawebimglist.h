@@ -58,8 +58,8 @@ public:
 
 private:
 
-    class PicasawebImageDialogPrivate;  
-    PicasawebImageDialogPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIPicasawebExportPlugin

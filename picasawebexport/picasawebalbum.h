@@ -49,7 +49,7 @@ class PicasawebNewAlbum : public KDialog
 
 public:
 
-    PicasawebNewAlbum(QWidget* parent);
+    PicasawebNewAlbum(QWidget* const parent);
     ~PicasawebNewAlbum();
 
     void getAlbumProperties(PicasaWebAlbum& album);

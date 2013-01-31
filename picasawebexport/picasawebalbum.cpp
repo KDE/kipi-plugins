@@ -45,8 +45,8 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
-                 : KDialog(parent)
+PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
+    : KDialog(parent)
 {
     QString header(i18n("Picasaweb New Album"));
     setWindowTitle(header);
@@ -54,11 +54,11 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget *mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 400);
 
-    QGroupBox* albumBox = new QGroupBox(i18n("Album"), mainWidget);
+    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
         i18n("These are basic settings for the new Picasaweb album."));
 
@@ -75,7 +75,7 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
     m_locEdt            = new KLineEdit;
     m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));    
 
-    QFormLayout* albumBoxLayout  = new QFormLayout;
+    QFormLayout* const albumBoxLayout  = new QFormLayout;
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Title:"), m_titleEdt);
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Date & Time:"), m_dtEdt);
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Description:"), m_descEdt);
@@ -87,7 +87,7 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* privBox = new QGroupBox(i18n("Access Level"), mainWidget);
+    QGroupBox* const privBox = new QGroupBox(i18n("Access Level"), mainWidget);
     privBox->setWhatsThis(i18n("These are security and privacy settings for the new Picasaweb album."));
 
     m_publicRBtn        = new QRadioButton(i18nc("picasaweb album privacy", "Public"));
@@ -98,12 +98,12 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
     m_protectedRBtn     = new QRadioButton(i18nc("picasaweb album privacy", "Sign-In Required to View"));
     m_protectedRBtn->setWhatsThis(i18n("Unlisted album require Sign-In to View"));
 
-    QVBoxLayout* radioLayout = new QVBoxLayout;
+    QVBoxLayout* const radioLayout = new QVBoxLayout;
     radioLayout->addWidget(m_publicRBtn);
     radioLayout->addWidget(m_unlistedRBtn);
     radioLayout->addWidget(m_protectedRBtn);
 
-    QFormLayout* privBoxLayout = new QFormLayout;
+    QFormLayout* const privBoxLayout = new QFormLayout;
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
     privBoxLayout->setSpacing(KDialog::spacingHint());
     privBoxLayout->setMargin(KDialog::spacingHint());
@@ -111,7 +111,7 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(privBox);
     mainLayout->setSpacing(KDialog::spacingHint());
@@ -123,7 +123,7 @@ PicasawebNewAlbum::~PicasawebNewAlbum()
 {
 }
 
-void PicasawebNewAlbum::getAlbumProperties(PicasaWebAlbum &album)
+void PicasawebNewAlbum::getAlbumProperties(PicasaWebAlbum& album)
 {
     album.title       = m_titleEdt->text();
     album.description = m_descEdt->toPlainText();

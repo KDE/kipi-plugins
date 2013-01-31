@@ -37,11 +37,14 @@ using namespace KIPI;
 namespace KIPIPicasawebExportPlugin
 {
 
-enum PicasawebReplaceDialog_Result { PWR_REPLACE = 3,
-                                     PWR_REPLACE_ALL = 4,
-                                     PWR_ADD = 1,
-                                     PWR_ADD_ALL = 2,
-                                     PWR_CANCEL = 0 };
+enum PicasawebReplaceDialog_Result
+{
+    PWR_REPLACE     = 3,
+    PWR_REPLACE_ALL = 4,
+    PWR_ADD         = 1,
+    PWR_ADD_ALL     = 2,
+    PWR_CANCEL      = 0
+};
 
 class PicasawebReplaceDialog : public QDialog
 {
@@ -49,8 +52,8 @@ class PicasawebReplaceDialog : public QDialog
 
 public:
 
-    PicasawebReplaceDialog(QWidget* parent, const QString& caption,
-                           Interface* iface, const KUrl& src, const KUrl& dest);
+    PicasawebReplaceDialog(QWidget* const parent, const QString& caption,
+                           Interface* const iface, const KUrl& src, const KUrl& dest);
     ~PicasawebReplaceDialog();
 
 public Q_SLOTS:
@@ -74,9 +77,8 @@ private:
 
 private:
 
-    class PicasawebReplaceDialogPrivate;
-
-    PicasawebReplaceDialogPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPicasawebExportPlugin

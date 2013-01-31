@@ -40,11 +40,11 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-class PicasawebReplaceDialog::PicasawebReplaceDialogPrivate
+class PicasawebReplaceDialog::Private
 {
 public:
 
-    PicasawebReplaceDialogPrivate()
+    Private()
     {
         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         bCancel       = 0;
@@ -76,9 +76,9 @@ public:
     QTimer*         progressTimer;
 };
 
-PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _caption,
-                                               Interface* _iface, const KUrl& _src, const KUrl& _dest)
-                      : QDialog(parent), d(new PicasawebReplaceDialogPrivate)
+PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* const parent, const QString& _caption,
+                                               Interface* const _iface, const KUrl& _src, const KUrl& _dest)
+                      : QDialog(parent), d(new Private)
 {
     setObjectName("PicasawebReplaceDialog");
 
@@ -112,10 +112,10 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
     connect(d->bReplaceAll, SIGNAL(clicked()),
             this, SLOT(replaceAllPressed()));
 
-    QVBoxLayout* pLayout = new QVBoxLayout(this);
+    QVBoxLayout* const pLayout = new QVBoxLayout(this);
     pLayout->addStrut(360);	// makes dlg at least that wide
 
-    QGridLayout* gridLayout = new QGridLayout();
+    QGridLayout* const gridLayout = new QGridLayout();
     pLayout->addLayout(gridLayout);
 
     QString sentence1 = i18n("A linked item already exists.");
@@ -143,13 +143,13 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
     lb1->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb1, 2, 2, 1, 1);
 
-    QHBoxLayout* layout2 = new QHBoxLayout();
+    QHBoxLayout* const layout2 = new QHBoxLayout();
     pLayout->addLayout(layout2);
 
-    KSeparator* separator = new KSeparator(this);
+    KSeparator* const separator = new KSeparator(this);
     pLayout->addWidget(separator);
 
-    QHBoxLayout* layout = new QHBoxLayout();
+    QHBoxLayout* const layout = new QHBoxLayout();
     pLayout->addLayout(layout);
 
     layout->addStretch(1);
@@ -190,7 +190,7 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
 
     if (d->dest.isValid())
     {
-        KIO::TransferJob* job = KIO::get(d->dest, KIO::NoReload, KIO::HideProgressInfo);
+        KIO::TransferJob* const job = KIO::get(d->dest, KIO::NoReload, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
         connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -206,6 +206,7 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
 void PicasawebReplaceDialog::slotResult(KJob *job)
 {
     d->progressTimer->stop();
+
     if (job->error() || static_cast<KIO::TransferJob*>(job)->isErrorPage())
     {
         return;
@@ -280,8 +281,8 @@ QPixmap PicasawebReplaceDialog::setProgressAnimation(const QPixmap& thumb, const
 void PicasawebReplaceDialog::slotProgressTimerDone()
 {
     d->lbDest->setPixmap(setProgressAnimation(d->mimePix, d->progressPix.frameAt(d->progressCount)));
-
     d->progressCount++;
+
     if (d->progressCount == 8)
         d->progressCount = 0;
 

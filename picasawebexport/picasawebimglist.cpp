@@ -79,12 +79,12 @@ void PicasawebImagesList::slotAddItems()
 
 // ------------------------------------------------------------------------
 
-class PicasawebImageDialog::PicasawebImageDialogPrivate
+class PicasawebImageDialog::Private
 {
 
 public:
 
-    PicasawebImageDialogPrivate()
+    Private()
     {
     }
 
@@ -94,7 +94,7 @@ public:
 // ------------------------------------------------------------------------
 
 PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interface* const iface)
-    : d(new PicasawebImageDialogPrivate)
+    : d(new Private)
 {
     QStringList patternList;
     QString     allPictures;
@@ -130,7 +130,7 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interfac
     QPointer<KFileDialog> dlg = new KFileDialog(iface ? iface->currentAlbum().path().path()
                                                       : KGlobalSettings::documentPath(),
                                                 fileFormats, parent);
-    KIPIPlugins::KPImageDialogPreview* preview = new KIPIPlugins::KPImageDialogPreview(dlg);
+    KIPIPlugins::KPImageDialogPreview* const preview = new KIPIPlugins::KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 

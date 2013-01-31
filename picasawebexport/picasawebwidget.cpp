@@ -62,20 +62,20 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 {
     setObjectName("PicasawebWidget");
 
-    QHBoxLayout* mainLayout        = new QHBoxLayout(this);
-    m_imgList                      = new PicasawebImagesList(this);
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
-    m_headerLbl                    = new QLabel(settingsBox);
+    QHBoxLayout* const mainLayout        = new QHBoxLayout(this);
+    m_imgList                            = new PicasawebImagesList(this);
+    QWidget* const settingsBox           = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
+    m_headerLbl                          = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Picasaweb home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
+    QGroupBox* const accountBox         = new QGroupBox(i18n("Account"), settingsBox);
     accountBox->setWhatsThis(i18n("This is the Picasaweb account that will be used to authenticate."));
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
+    QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
     m_anonymousRBtn               = new QRadioButton(i18nc("Picasaweb account login", "Anonymous"), accountBox);
     m_anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Picasaweb web service."));
@@ -98,9 +98,9 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
+    QGroupBox* const albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
     albumsBox->setWhatsThis(i18n("This is the Picasaweb album that will be used for transfer."));
-    QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
+    QGridLayout* const albumsBoxLayout = new QGridLayout(albumsBox);
 
     m_albumsCoB         = new KComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
@@ -116,10 +116,10 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* sizeBox         = new QGroupBox(i18n("Max Dimension"), settingsBox);
+    QGroupBox* const sizeBox         = new QGroupBox(i18n("Max Dimension"), settingsBox);
     sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
-    QVBoxLayout* sizeBoxLayout = new QVBoxLayout(sizeBox);
-    m_dlDimensionCoB           = new KComboBox(sizeBox);
+    QVBoxLayout* const sizeBoxLayout = new QVBoxLayout(sizeBox);
+    m_dlDimensionCoB                 = new KComboBox(sizeBox);
     m_dlDimensionCoB->addItem("Original Size", "d");
     m_dlDimensionCoB->addItem("1600 px", "1600");
     m_dlDimensionCoB->addItem("1440 px", "1440");
@@ -131,30 +131,30 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where Picasaweb images will be downloaded."));
-    QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget               = iface->uploadWidget(uploadBox);
+    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
+    m_uploadWidget                     = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_resizeChB          = new QCheckBox(optionsBox);
     m_resizeChB->setText(i18n("Resize photos before uploading"));
     m_resizeChB->setChecked(false);
 
-    m_dimensionSpB       = new QSpinBox(optionsBox);
+    m_dimensionSpB             = new QSpinBox(optionsBox);
     m_dimensionSpB->setMinimum(0);
     m_dimensionSpB->setMaximum(5000);
     m_dimensionSpB->setSingleStep(10);
     m_dimensionSpB->setValue(600);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
-    QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
     m_imageQualitySpB       = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
@@ -164,14 +164,14 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
-    QSpacerItem* spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QLabel* tagsLbl     = new QLabel(i18n("Tag path behavior:"), optionsBox);
+    QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QLabel* const tagsLbl     = new QLabel(i18n("Tag path behavior:"), optionsBox);
 
-    QRadioButton* leafTagsBtn     = new QRadioButton(i18n("Leaf tags only"), optionsBox);
+    QRadioButton* const leafTagsBtn     = new QRadioButton(i18n("Leaf tags only"), optionsBox);
     leafTagsBtn->setWhatsThis(i18n("Export only the leaf tags of tag hierarchies"));
-    QRadioButton* splitTagsBtn    = new QRadioButton(i18n("Split tags"), optionsBox);
+    QRadioButton* const splitTagsBtn    = new QRadioButton(i18n("Split tags"), optionsBox);
     splitTagsBtn->setWhatsThis(i18n("Export the leaf tag and all ancestors as single tags."));
-    QRadioButton* combinedTagsBtn = new QRadioButton(i18n("Combined String"), optionsBox);
+    QRadioButton* const combinedTagsBtn = new QRadioButton(i18n("Combined String"), optionsBox);
     combinedTagsBtn->setWhatsThis(i18n("Build a combined tag string."));
 
     m_tagsBGrp = new QButtonGroup(optionsBox);

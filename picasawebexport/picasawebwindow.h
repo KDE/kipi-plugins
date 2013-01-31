@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010      by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
@@ -42,12 +42,6 @@
 
 class KUrl;
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPicasawebExportPlugin
@@ -66,7 +60,7 @@ class PicasawebWindow : public KPToolDialog
 
 public:
 
-    PicasawebWindow(const QString& tmpFolder, bool import, QWidget* parent);
+    PicasawebWindow(const QString& tmpFolder, bool import, QWidget* const parent);
     ~PicasawebWindow();
 
     /**
@@ -84,10 +78,8 @@ private Q_SLOTS:
     void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg, const QString& newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <PicasaWebAlbum>& albumsList);
-    void slotListPhotosDoneForUpload(int errCode, const QString& errMsg,
-                                     const QList <PicasaWebPhoto>& photosList);
-    void slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
-                                       const QList <PicasaWebPhoto>& photosList);
+    void slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <PicasaWebPhoto>& photosList);
+    void slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <PicasaWebPhoto>& photosList);
     void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
@@ -135,8 +127,6 @@ private:
     PicasawebTalker*                          m_talker;
     PicasawebWidget*                          m_widget;
     PicasawebNewAlbum*                        m_albumDlg;
-
-    Interface*                                m_interface;
 };
 
 } // namespace KIPIPicasawebExportPlugin
