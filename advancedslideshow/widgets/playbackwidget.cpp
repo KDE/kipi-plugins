@@ -40,8 +40,8 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedContainer* sharedData)
-              : QWidget(parent)
+PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedContainer* const sharedData)
+    : QWidget(parent)
 {
     setupUi(this);
 
@@ -107,7 +107,6 @@ PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedContaine
     Phonon::createPath(m_mediaObject, m_audioOutput);
 
     m_volumeSlider->setAudioOutput(m_audioOutput);
-
     m_volumeSlider->setOrientation(Qt::Horizontal);
 
     setZeroTime();
@@ -227,8 +226,7 @@ void PlaybackWidget::keyPressEvent(QKeyEvent* event)
 
 void PlaybackWidget::slotPlay()
 {
-    if ( m_mediaObject->state() == Phonon::PlayingState ||
-         m_mediaObject->state() == Phonon::BufferingState )
+    if ( m_mediaObject->state() == Phonon::PlayingState || m_mediaObject->state() == Phonon::BufferingState )
     {
         m_mediaObject->pause();
         setGUIPlay(true);
@@ -237,8 +235,7 @@ void PlaybackWidget::slotPlay()
         return;
     }
 
-    if ( m_mediaObject->state() == Phonon::PausedState ||
-         m_mediaObject->state() == Phonon::StoppedState )
+    if ( m_mediaObject->state() == Phonon::PausedState || m_mediaObject->state() == Phonon::StoppedState )
     {
         m_mediaObject->play();
         setGUIPlay(false);
@@ -313,18 +310,16 @@ void PlaybackWidget::slotTimeUpdaterTimeout()
     }
 
     long int current = m_mediaObject->currentTime();
-
-    int hours = (int)(current / (long int)( 60 * 60 * 1000 ));
-    int mins  = (int)((current / (long int)( 60 * 1000 )) - (long int)(hours * 60));
-    int secs  = (int)((current / (long int)1000) - (long int)(hours * 60 + mins * 60));
+    int hours        = (int)(current  / (long int)( 60 * 60 * 1000 ));
+    int mins         = (int)((current / (long int)( 60 * 1000 )) - (long int)(hours * 60));
+    int secs         = (int)((current / (long int)1000) - (long int)(hours * 60 + mins * 60));
     QTime elapsedTime(hours, mins, secs);
 
     if ( m_isZeroTime )
     {
-        m_isZeroTime = false;
-
+        m_isZeroTime   = false;
         long int total = m_mediaObject->totalTime();
-        hours          = (int)(total / (long int)( 60 * 60 * 1000 ));
+        hours          = (int)(total  / (long int)( 60 * 60 * 1000 ));
         mins           = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
         secs           = (int)((total / (long int)1000) - (long int)(hours * 60 + mins * 60));
         QTime totalTime(hours, mins, secs);

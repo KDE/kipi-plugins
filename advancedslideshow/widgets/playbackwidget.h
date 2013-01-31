@@ -54,7 +54,7 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 
 public:
 
-    PlaybackWidget(QWidget*, KUrl::List&, SharedContainer* sharedData);
+    PlaybackWidget(QWidget* const, KUrl::List&, SharedContainer* const sharedData);
     ~PlaybackWidget();
 
     void enqueue(const KUrl::List&);
@@ -90,7 +90,6 @@ private:
     SharedContainer*     m_sharedData;
     KUrl::List           m_urlList;
     int                  m_currIndex;
-    bool                 m_muted;
     bool                 m_stopCalled;
     bool                 m_isZeroTime;
     bool                 m_canHide;
