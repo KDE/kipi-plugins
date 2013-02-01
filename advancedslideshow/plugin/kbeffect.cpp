@@ -42,11 +42,12 @@ int KBEffect::m_numKBEffectRepeated = 0;
 
 // -------------------------------------------------------------------------
 
-KBEffect::KBEffect(SlideShowKB* parent, bool needFadeIn)
+KBEffect::KBEffect(SlideShowKB* const parent, bool needFadeIn)
 {
-
-    this->slideWidget  = parent;
-    this->m_needFadeIn = needFadeIn;
+    m_img[0]      = 0;
+    m_img[1]      = 0;
+    m_slideWidget = parent;
+    m_needFadeIn  = needFadeIn;
 }
 
 KBEffect::~KBEffect()
@@ -55,21 +56,19 @@ KBEffect::~KBEffect()
 
 void KBEffect::setupNewImage(int img)
 {
-
-    slideWidget->setupNewImage(img);
+    m_slideWidget->setupNewImage(img);
 }
 
 void KBEffect::swapImages()
 {
-
-    slideWidget->swapImages();
+    m_slideWidget->swapImages();
 }
 
 Image* KBEffect::image(int img) const
 {
+    Q_ASSERT (img >= 0 && img < 2);
 
-    assert(img >= 0 && img < 2);
-    return slideWidget->m_image[img];
+    return m_slideWidget->m_image[img];
 }
 
 KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
@@ -81,7 +80,7 @@ KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
     {
         type = (rand() < RAND_MAX / 2) ? KBEffect::Fade : KBEffect::Blend;
     }
-    while (type == oldType && m_numKBEffectRepeated >= 1);
+    while ((type == oldType) && (m_numKBEffectRepeated >= 1));
 
     if (type == oldType)
         m_numKBEffectRepeated++;
@@ -93,8 +92,8 @@ KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
 
 // -------------------------------------------------------------------------
 
-FadeKBEffect::FadeKBEffect(SlideShowKB* parent, bool needFadeIn):
-        KBEffect(parent, needFadeIn)
+FadeKBEffect::FadeKBEffect(SlideShowKB* const parent, bool needFadeIn)
+    : KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);
 }
@@ -105,7 +104,6 @@ FadeKBEffect::~FadeKBEffect()
 
 bool FadeKBEffect::done()
 {
-
     if (m_img[0]->m_pos >= 1.0)
     {
         setupNewImage(0);
@@ -117,7 +115,6 @@ bool FadeKBEffect::done()
 
 void FadeKBEffect::advanceTime(float step)
 {
-
     m_img[0]->m_pos += step;
 
     if (m_img[0]->m_pos >= 1.0)
@@ -133,8 +130,8 @@ void FadeKBEffect::advanceTime(float step)
 
 // -------------------------------------------------------------------------
 
-BlendKBEffect::BlendKBEffect(SlideShowKB* parent, bool needFadeIn)
-             : KBEffect(parent, needFadeIn)
+BlendKBEffect::BlendKBEffect(SlideShowKB* const parent, bool needFadeIn)
+    : KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);
     m_img[1] = 0;
@@ -146,7 +143,6 @@ BlendKBEffect::~BlendKBEffect()
 
 bool BlendKBEffect::done()
 {
-
     if (m_img[0]->m_pos >= 1.0)
     {
         m_img[0]->m_paint = false;

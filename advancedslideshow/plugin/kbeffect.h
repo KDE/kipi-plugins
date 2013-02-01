@@ -45,16 +45,17 @@ public:
 
 public:
 
-    explicit KBEffect(SlideShowKB* parent, bool m_needFadeIn = true);
+    explicit KBEffect(SlideShowKB* const parent, bool m_needFadeIn = true);
     virtual ~KBEffect();
 
-    virtual void advanceTime(float step) = 0;
-    virtual Type type() = 0;
-    virtual bool done() = 0;
     virtual bool fadeIn() const
     {
         return m_needFadeIn;
     };
+
+    virtual void advanceTime(float step) = 0;
+    virtual Type type()                  = 0;
+    virtual bool done()                  = 0;
 
     static Type chooseKBEffect(Type oldType);
 
@@ -66,13 +67,13 @@ protected:
 
 protected:
 
-    static int m_numKBEffectRepeated;
-    bool       m_needFadeIn;
-    Image*     m_img[2];
+    static int   m_numKBEffectRepeated;
+    bool         m_needFadeIn;
+    Image*       m_img[2];
 
 private:
 
-    SlideShowKB* slideWidget;
+    SlideShowKB* m_slideWidget;
 };
 
 // -------------------------------------------------------------------------
@@ -82,15 +83,15 @@ class FadeKBEffect: public KBEffect
 
 public:
 
-    explicit FadeKBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
+    explicit FadeKBEffect(SlideShowKB* const parent, bool m_needFadeIn = true);
     virtual ~FadeKBEffect();
 
-    virtual void advanceTime(float step);
     virtual Type type()
     {
         return Fade;
     };
 
+    virtual void advanceTime(float step);
     virtual bool done();
 };
 
@@ -101,15 +102,15 @@ class BlendKBEffect: public KBEffect
 
 public:
 
-    explicit BlendKBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
+    explicit BlendKBEffect(SlideShowKB* const parent, bool m_needFadeIn = true);
     virtual ~BlendKBEffect();
 
-    virtual void advanceTime(float step);
     virtual Type type()
     {
         return Blend;
     };
 
+    virtual void advanceTime(float step);
     virtual bool done();
 };
 
