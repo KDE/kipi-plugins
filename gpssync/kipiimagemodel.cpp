@@ -33,25 +33,28 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class KipiImageModelPrivate
+class KipiImageModel::Private
 {
 public:
-    KipiImageModelPrivate()
-    : items(),
-      columnCount(0)
+    
+    Private()
+      : items(),
+        columnCount(0),
+        pixmapCache(0),
+        interface(0)
     {
     }
 
-    QList<KipiImageItem*> items;
-    int columnCount;
-    QMap<QPair<int, int>, QVariant> headerData;
-    KPixmapCache* pixmapCache;
-    KIPI::Interface* interface;
+    QList<KipiImageItem*>                     items;
+    int                                       columnCount;
+    QMap<QPair<int, int>, QVariant>           headerData;
+    KPixmapCache*                             pixmapCache;
+    KIPI::Interface*                          interface;
     QList<QPair<QPersistentModelIndex, int> > requestedPixmaps;
 };
 
 KipiImageModel::KipiImageModel(QObject* const parent)
-: QAbstractItemModel(parent), d(new KipiImageModelPrivate)
+: QAbstractItemModel(parent), d(new Private)
 {
     // TODO: find an appropriate name
     d->pixmapCache = new KPixmapCache("somename");
@@ -72,8 +75,13 @@ int KipiImageModel::columnCount(const QModelIndex& /*parent*/) const
 
 QVariant KipiImageModel::data(const QModelIndex& index, int role) const
 {
-    if (index.isValid()) { Q_ASSERT(index.model()==this); }
+    if (index.isValid())
+    {
+        Q_ASSERT(index.model()==this);
+    }
+    
     const int rowNumber = index.row();
+    
     if ((rowNumber<0)||(rowNumber>=d->items.count()))
     {
         return QVariant();
@@ -84,8 +92,13 @@ QVariant KipiImageModel::data(const QModelIndex& index, int role) const
 
 QModelIndex KipiImageModel::index(int row, int column, const QModelIndex& parent) const
 {
-    if (parent.isValid()) { Q_ASSERT(parent.model()==this); }
+    if (parent.isValid())
+    {
+        Q_ASSERT(parent.model()==this);
+    }
+    
 //     kDebug()<<row<<column<<parent;
+
     if (parent.isValid())
     {
         // there are no child items, only top level items
@@ -123,21 +136,27 @@ void KipiImageModel::setColumnCount(const int nColumns)
 void KipiImageModel::itemChanged(KipiImageItem* const changedItem)
 {
     const int itemIndex = d->items.indexOf(changedItem);
+
     if (itemIndex<0)
         return;
 
     const QModelIndex itemModelIndexStart = createIndex(itemIndex, 0, 0);
-    const QModelIndex itemModelIndexEnd = createIndex(itemIndex, d->columnCount - 1, 0);
+    const QModelIndex itemModelIndexEnd   = createIndex(itemIndex, d->columnCount - 1, 0);
     emit(dataChanged(itemModelIndexStart, itemModelIndexEnd));
 }
 
 KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
 {
-    if (index.isValid()) { Q_ASSERT(index.model()==this); }
+    if (index.isValid())
+    {
+        Q_ASSERT(index.model()==this);
+    }
+    
     if (!index.isValid())
         return 0;
 
     const int row = index.row();
+
     if ((row<0)||(row>=d->items.count()))
         return 0;
 
@@ -146,7 +165,11 @@ KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
 
 int KipiImageModel::rowCount(const QModelIndex& parent) const
 {
-    if (parent.isValid()) { Q_ASSERT(parent.model()==this); }
+    if (parent.isValid())
+    {
+        Q_ASSERT(parent.model()==this);
+    }
+    
     if (parent.isValid())
         return 0;
 
@@ -155,18 +178,18 @@ int KipiImageModel::rowCount(const QModelIndex& parent) const
 
 bool KipiImageModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant& value, int role)
 {
-    if ((section>=d->columnCount)||(orientation!=Qt::Horizontal))
+    if ((section >= d->columnCount) || (orientation != Qt::Horizontal))
         return false;
 
     const QPair<int, int> headerIndex = QPair<int, int>(section, role);
-    d->headerData[headerIndex] = value;
+    d->headerData[headerIndex]        = value;
 
     return true;
 }
 
 QVariant KipiImageModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if ((section>=d->columnCount)||(orientation!=Qt::Horizontal))
+    if ((section >= d->columnCount) || (orientation != Qt::Horizontal))
         return false;
 
     const QPair<int, int> headerIndex = QPair<int, int>(section, role);
@@ -184,7 +207,10 @@ bool KipiImageModel::setData(const QModelIndex& index, const QVariant& value, in
 
 Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const
 {
-    if (index.isValid()) { Q_ASSERT(index.model()==this); }
+    if (index.isValid())
+    {
+        Q_ASSERT(index.model()==this);
+    }
 
     if (!index.isValid())
         return 0;
@@ -221,19 +247,24 @@ static QString CacheKeyFromSizeAndUrl(const int size, const KUrl& url)
 
 QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size)
 {
-    if (itemIndex.isValid()) { Q_ASSERT(itemIndex.model()==this); }
+    if (itemIndex.isValid())
+    {
+        Q_ASSERT(itemIndex.model()==this);
+    }
 
     // TODO: should we cache the pixmap on our own here or does the interface usually cache it for us?
     // TODO: do we need to make sure we do not request the same pixmap twice in a row?
     // construct the key under which we stored the pixmap in the cache:
     KipiImageItem* const imageItem = itemFromIndex(itemIndex);
+
     if (!imageItem)
         return QPixmap();
 
-    const QString itemKeyString = CacheKeyFromSizeAndUrl(size, imageItem->url());
+    const QString itemKeyString  = CacheKeyFromSizeAndUrl(size, imageItem->url());
     QPixmap thumbnailPixmap;
     const bool havePixmapInCache = d->pixmapCache->find(itemKeyString, thumbnailPixmap);
 //     kDebug()<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
+    
     if (havePixmapInCache)
         return thumbnailPixmap;
 
@@ -270,12 +301,12 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     }
 
     return QPixmap();
-
 }
 
 void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap)
 {
     kDebug()<<url<<pixmap.size();
+
     if (pixmap.isNull())
         return;
 
@@ -284,6 +315,7 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
     // find the item corresponding to the URL:
     const QModelIndex imageIndex = indexFromUrl(url);
     kDebug()<<url<<imageIndex.isValid();
+
     if (imageIndex.isValid())
     {
         // this is tricky: some kipi interfaces return pixmaps at the requested size, others do not.
@@ -292,11 +324,13 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
 
         // index, size
         QList<QPair<int, int> > openRequests;
+
         for (int i=0; i<d->requestedPixmaps.count(); ++i)
         {
             if (d->requestedPixmaps.at(i).first==imageIndex)
             {
                 const int requestedSize = d->requestedPixmaps.at(i).second;
+
                 if (requestedSize==effectiveSize)
                 {
                     // match, send it out.
@@ -344,23 +378,29 @@ void KipiImageModel::setKipiInterface(KIPI::Interface* const interface)
             this, SLOT(slotThumbnailFromInterface(KUrl,QPixmap)));
 }
 
-class KipiImageSortProxyModelPrivate
+// --------------------------------------------------------------------------------------------
+
+class KipiImageSortProxyModel::Private
 {
 public:
-    KipiImageSortProxyModelPrivate()
+    
+    Private()
     {
+        imageModel             = 0;
+        sourceSelectionModel   = 0;
+        linkItemSelectionModel = 0;
     }
 
-    KipiImageModel* imageModel;
-    QItemSelectionModel* sourceSelectionModel;
+    KipiImageModel*          imageModel;
+    QItemSelectionModel*     sourceSelectionModel;
     KLinkItemSelectionModel* linkItemSelectionModel;
 };
 
 KipiImageSortProxyModel::KipiImageSortProxyModel(KipiImageModel* const kipiImageModel, QItemSelectionModel* const sourceSelectionModel)
-: QSortFilterProxyModel(kipiImageModel), d(new KipiImageSortProxyModelPrivate())
+: QSortFilterProxyModel(kipiImageModel), d(new Private())
 {
-    d->imageModel = kipiImageModel;
-    d->sourceSelectionModel = sourceSelectionModel;
+    d->imageModel             = kipiImageModel;
+    d->sourceSelectionModel   = sourceSelectionModel;
     setSourceModel(kipiImageModel);
     d->linkItemSelectionModel = new KLinkItemSelectionModel(this, d->sourceSelectionModel);
 }
@@ -378,16 +418,15 @@ bool KipiImageSortProxyModel::lessThan(const QModelIndex& left, const QModelInde
         return false;
     }
 
-    const int column = left.column();
-
-    const KipiImageItem* const itemLeft = d->imageModel->itemFromIndex(left);
+    const int column                     = left.column();
+    const KipiImageItem* const itemLeft  = d->imageModel->itemFromIndex(left);
     const KipiImageItem* const itemRight = d->imageModel->itemFromIndex(right);
 
 //     kDebug()<<itemLeft<<itemRight<<column<<rowCount()<<d->imageModel->rowCount();
     return itemLeft->lessThan(itemRight, column);
 }
 
-QItemSelectionModel* KipiImageSortProxyModel::mappedSelectionModel()
+QItemSelectionModel* KipiImageSortProxyModel::mappedSelectionModel() const
 {
     return d->linkItemSelectionModel;
 }

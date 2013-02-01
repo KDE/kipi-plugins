@@ -43,8 +43,6 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class KipiImageModelPrivate;
-
 class KipiImageModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -53,6 +51,16 @@ public:
 
     KipiImageModel(QObject* const parent = 0);
     ~KipiImageModel();
+
+    // own functions:
+    void addItem(KipiImageItem* const newItem);
+    void setColumnCount(const int nColumns);
+    KipiImageItem* itemFromIndex(const QModelIndex& index) const;
+    KipiImageItem* itemFromUrl(const KUrl& url) const;
+    QModelIndex indexFromUrl(const KUrl& url) const;
+
+    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size);
+    void setKipiInterface(KIPI::Interface* const interface);
 
     // QAbstractItemModel:
     virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
@@ -64,16 +72,6 @@ public:
     virtual bool setHeaderData(int section, Qt::Orientation orientation, const QVariant& value, int role);
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-
-    // own functions:
-    void addItem(KipiImageItem* const newItem);
-    void setColumnCount(const int nColumns);
-    KipiImageItem* itemFromIndex(const QModelIndex& index) const;
-    KipiImageItem* itemFromUrl(const KUrl& url) const;
-    QModelIndex indexFromUrl(const KUrl& url) const;
-
-    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size);
-    void setKipiInterface(KIPI::Interface* const interface);
 
 protected:
 
@@ -89,12 +87,13 @@ protected Q_SLOTS:
 
 private:
 
-    KipiImageModelPrivate* const d;
+    class Private;
+    Private* const d;
 
     friend class KipiImageItem;
 };
 
-class KipiImageSortProxyModelPrivate;
+// --------------------------------------------------------------------------------------------------------------------
 
 class KipiImageSortProxyModel : public QSortFilterProxyModel
 {
@@ -105,7 +104,7 @@ public:
     KipiImageSortProxyModel(KipiImageModel* const kipiImageModel, QItemSelectionModel* const sourceSelectionModel);
     ~KipiImageSortProxyModel();
 
-    QItemSelectionModel* mappedSelectionModel();
+    QItemSelectionModel* mappedSelectionModel() const;
 
 protected:
 
@@ -113,7 +112,8 @@ protected:
 
 private:
 
-    KipiImageSortProxyModelPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } /* KIPIGPSSyncPlugin */
