@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -82,6 +82,7 @@ Utils::~Utils()
 bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
 {
     QFileInfo finfo(src);
+
     if (src.isEmpty() || !finfo.isReadable())
     {
         err = i18n("unable to open source file");
@@ -112,11 +113,13 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     KTemporaryFile exifTemp;
     exifTemp.setSuffix(QString("kipipluginsexif.app1"));
     exifTemp.setAutoRemove(true);
+
     if ( !exifTemp.open() )
     {
         err = i18n("unable to open temp file");
         return false;
     }
+
     QString exifFile = exifTemp.fileName();
     QDataStream streamExif( &exifTemp );
     streamExif.writeRawData(exifData.data(), exifData.size());
@@ -126,11 +129,13 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     iptcTemp.setSuffix(QString("kipipluginsiptc.8bim"));
     iptcTemp.setAutoRemove(true);
     iptcTemp.open();
+
     if ( !iptcTemp.open() )
     {
         err = i18n("Cannot rotate: unable to open temp file");
         return false;
     }
+
     QString iptcFile = iptcTemp.fileName();
     QDataStream streamIptc( &iptcTemp );
     streamIptc.writeRawData(iptcData.data(), iptcData.size());
@@ -139,11 +144,13 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     KTemporaryFile xmpTemp;
     xmpTemp.setSuffix(QString("kipipluginsxmp.xmp"));
     xmpTemp.setAutoRemove(true);
+
     if ( !xmpTemp.open() )
     {
         err = i18n("unable to open temp file");
         return false;
     }
+
     QString xmpFile = xmpTemp.fileName();
     QDataStream streamXmp( &xmpTemp );
     streamXmp.writeRawData(xmpData.data(), xmpData.size());
@@ -229,8 +236,8 @@ bool Utils::copyOneFile(const QString& src, const QString& dst)
 
     const int MAX_IPC_SIZE = (1024*32);
     char buffer[MAX_IPC_SIZE];
-
     qint64 len;
+
     while ((len = sFile.read(buffer, MAX_IPC_SIZE)) != 0)
     {
         if (len == -1 || dFile.write(buffer, (qint64)len) == -1)
@@ -250,6 +257,7 @@ bool Utils::copyOneFile(const QString& src, const QString& dst)
 bool Utils::moveOneFile(const QString& src, const QString& dst)
 {
     struct stat stbuf;
+
     if (::stat(QFile::encodeName(dst), &stbuf) != 0)
     {
         kError() << "KIPIJPEGLossLessPlugin:moveOneFile: failed to stat src";
@@ -262,6 +270,7 @@ bool Utils::moveOneFile(const QString& src, const QString& dst)
     struct utimbuf timbuf;
     timbuf.actime  = stbuf.st_atime;
     timbuf.modtime = stbuf.st_mtime;
+
     if (::utime(QFile::encodeName(dst), &timbuf) != 0)
     {
         kError() << "KIPIJPEGLossLessPlugin:moveOneFile: failed to update dst time";
@@ -271,18 +280,21 @@ bool Utils::moveOneFile(const QString& src, const QString& dst)
     {
         kError() << "KIPIJPEGLossLessPlugin:moveOneFile: failed to unlink src";
     }
+
     return true;
 }
 
 bool Utils::deleteDir(const QString& dirPath)
 {
     QDir dir(dirPath);
+
     if (!dir.exists())
         return false;
 
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
 
     QFileInfoList infoList = dir.entryInfoList();
+
     if (infoList.isEmpty())
         return false;
 
@@ -292,6 +304,7 @@ bool Utils::deleteDir(const QString& dirPath)
     while( it != infoList.end() )
     {
         fi = *it;
+
         if(fi.fileName() == "." || fi.fileName() == ".." )
         {
             ++it;
@@ -303,7 +316,9 @@ bool Utils::deleteDir(const QString& dirPath)
             deleteDir(fi.absoluteFilePath());
         }
         else if( fi.isFile() )
+        {
             dir.remove(fi.absoluteFilePath());
+        }
 
         ++it;
     }

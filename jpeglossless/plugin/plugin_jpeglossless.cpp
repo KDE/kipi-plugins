@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,11 +62,11 @@ namespace KIPIJPEGLossLessPlugin
 K_PLUGIN_FACTORY( JPEGLosslessFactory, registerPlugin<Plugin_JPEGLossless>(); )
 K_EXPORT_PLUGIN ( JPEGLosslessFactory("kipiplugin_jpeglossless") )
 
-class Plugin_JPEGLossless::Plugin_JPEGLosslessPriv
+class Plugin_JPEGLossless::Private
 {
 public:
 
-    Plugin_JPEGLosslessPriv()
+    Private()
     {
         total                    = 0;
         current                  = 0;
@@ -100,7 +100,7 @@ public:
 
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject* const parent, const QVariantList&)
     : Plugin(JPEGLosslessFactory::componentData(), parent, "JPEGLossless"),
-      d(new Plugin_JPEGLosslessPriv)
+      d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_JPEGLossless plugin loaded";
 
@@ -121,7 +121,8 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
     Plugin::setup( widget );
     setupActions();
 
-    Interface* iface = interface();
+    Interface* const iface = interface();
+
     if (!iface)
     {
         kError() << "Kipi interface is null!";
@@ -142,10 +143,12 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
     bool hasSelection = iface->currentSelection().isValid();
 
     d->action_AutoExif->setEnabled( hasSelection );
+
     connect( iface, SIGNAL(selectionChanged(bool)),
              d->action_AutoExif, SLOT(setEnabled(bool)) );
 
     d->action_Convert2GrayScale->setEnabled( hasSelection );
+
     connect( iface, SIGNAL(selectionChanged(bool)),
              d->action_Convert2GrayScale, SLOT(setEnabled(bool)) );
 
@@ -153,6 +156,7 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
     if (d->action_RotateImage)
     {
         d->action_RotateImage->setEnabled( hasSelection );
+
         connect( iface, SIGNAL(selectionChanged(bool)),
                  d->action_RotateImage, SLOT(setEnabled(bool)) );
     }
@@ -160,10 +164,10 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
     if (d->action_FlipImage)
     {
         d->action_FlipImage->setEnabled( hasSelection );
+
         connect( iface, SIGNAL(selectionChanged(bool)),
                  d->action_FlipImage, SLOT(setEnabled(bool)) );
     }
-
 }
 
 void Plugin_JPEGLossless::setupActions()
@@ -178,10 +182,10 @@ void Plugin_JPEGLossless::setupActions()
         d->action_RotateImage->setText(i18n("Rotate"));
         d->action_RotateImage->setIcon(KIcon("object-rotate-right"));
 
-        KMenu* rotateMenu = new KMenu(d->parentWidget);
+        KMenu* const rotateMenu = new KMenu(d->parentWidget);
         d->action_RotateImage->setMenu(rotateMenu);
 
-        KAction* left = new KAction(this);
+        KAction* const left = new KAction(this);
         left->setText(i18nc("rotate image left", "Rotate Left"));
         left->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left));
         rotateMenu->addAction(left);
@@ -191,7 +195,7 @@ void Plugin_JPEGLossless::setupActions()
 
         addAction("rotate_ccw", left);
 
-        KAction* right = new KAction(this);
+        KAction* const right = new KAction(this);
         right->setText(i18nc("rotate image right", "Rotate Right"));
         right->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right));
         rotateMenu->addAction(right);
@@ -210,10 +214,10 @@ void Plugin_JPEGLossless::setupActions()
         d->action_FlipImage->setText(i18n("Flip"));
         d->action_FlipImage->setIcon(KIcon("flip-horizontal"));
 
-        KMenu* flipMenu = new KMenu(d->parentWidget);
+        KMenu* const flipMenu = new KMenu(d->parentWidget);
         d->action_FlipImage->setMenu(flipMenu);
 
-        KAction* hori = new KAction(this);
+        KAction* const hori = new KAction(this);
         hori->setText(i18n("Flip Horizontally"));
         hori->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Asterisk));
         flipMenu->addAction(hori);
@@ -223,7 +227,7 @@ void Plugin_JPEGLossless::setupActions()
 
         addAction("flip_horizontal", hori);
 
-        KAction* verti = new KAction(this);
+        KAction* const verti = new KAction(this);
         verti->setText(i18n("Flip Vertically"));
         verti->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Slash));
         flipMenu->addAction(verti);
@@ -238,6 +242,7 @@ void Plugin_JPEGLossless::setupActions()
 
     d->action_AutoExif = new KAction(this);
     d->action_AutoExif->setText(i18n("Auto Rotate/Flip Using Exif Information"));
+
     connect(d->action_AutoExif, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateExif()));
 
@@ -248,6 +253,7 @@ void Plugin_JPEGLossless::setupActions()
     d->action_Convert2GrayScale = new KAction(this);
     d->action_Convert2GrayScale->setText(i18n("Convert to Black && White"));
     d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
+
     connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
             this, SLOT(slotConvert2GrayScale()));
 
@@ -267,7 +273,9 @@ void Plugin_JPEGLossless::slotFlipVertically()
 void Plugin_JPEGLossless::flip(FlipAction action, const QString& title)
 {
     KUrl::List items = images();
-    if (items.count() <= 0) return;
+
+    if (items.count() <= 0)
+        return;
 
     d->thread->flip(items, action);
 
@@ -308,7 +316,9 @@ void Plugin_JPEGLossless::slotRotateExif()
 void Plugin_JPEGLossless::rotate(RotateAction action, const QString& title)
 {
     KUrl::List items = images();
-    if (items.count() <= 0) return;
+
+    if (items.count() <= 0)
+        return;
 
     d->thread->rotate(items, action);
 
@@ -333,6 +343,7 @@ void Plugin_JPEGLossless::rotate(RotateAction action, const QString& title)
 void Plugin_JPEGLossless::slotConvert2GrayScale()
 {
     KUrl::List items = images();
+
     if (items.count() <= 0 ||
         KMessageBox::No == KMessageBox::warningYesNo(kapp->activeWindow(),
                      i18n("<p>Are you sure you wish to convert the selected image(s) to "
@@ -365,7 +376,7 @@ void Plugin_JPEGLossless::slotCancel()
 {
     d->thread->cancel();
 
-    Interface* interface = dynamic_cast<Interface*>( parent() );
+    Interface* const interface = dynamic_cast<Interface*>( parent() );
 
     if ( !interface )
     {
@@ -505,7 +516,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
             d->progressDlg = 0;
         }
 
-        Interface* interface = dynamic_cast<Interface*>( parent() );
+        Interface* const interface = dynamic_cast<Interface*>( parent() );
 
         if ( !interface )
         {
@@ -519,7 +530,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
 KUrl::List Plugin_JPEGLossless::images()
 {
-    Interface* interface = dynamic_cast<Interface*>( parent() );
+    Interface* const interface = dynamic_cast<Interface*>( parent() );
 
     if ( !interface )
     {
@@ -528,6 +539,7 @@ KUrl::List Plugin_JPEGLossless::images()
     }
 
     ImageCollection images = interface->currentSelection();
+
     if ( !images.isValid() )
         return KUrl::List();
 

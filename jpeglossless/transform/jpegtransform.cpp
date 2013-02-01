@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2004      by Ralf Hoelzer <kde at ralfhoelzer.com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -94,7 +94,7 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo);
 
 static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
 {
-    jpegtransform_jpeg_error_mgr* myerr = (jpegtransform_jpeg_error_mgr*) cinfo->err;
+    jpegtransform_jpeg_error_mgr* const myerr = (jpegtransform_jpeg_error_mgr*) cinfo->err;
 
     char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
@@ -152,6 +152,7 @@ bool transformJPEG(const QString& src, const QString& dest, Matrix& userAction, 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
     kDebug() << "Transforming with option " << flip << " " << rotate;
+
     if (!transformJPEG(src, dest, flip, rotate, err))
         return false;
 
@@ -178,6 +179,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         {
             QFile::remove(destGiven);
             QFile file(src);
+
             if (!file.copy(destGiven))
             {
                 err = file.errorString();
@@ -187,7 +189,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         return true;
     }
 
-    bool twoPass = (flip != JXFORM_NONE);
+    bool twoPass            = (flip != JXFORM_NONE);
 
     //may be modified
     QString dest(destGiven);
@@ -219,6 +221,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
     dstinfo.err->output_message = jpegtransform_jpeg_output_message;
 
     QFile input_file(src);
+
     if (!input_file.open(QIODevice::ReadOnly))
     {
         kError() << "ImageRotate/ImageFlip: Error in opening input file";
@@ -236,6 +239,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
     }
 
     QFile output_file(dest);
+
     if (!output_file.open(QIODevice::ReadWrite))
     {
         input_file.close();
@@ -253,6 +257,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         err = i18n("The JPEG library reported an error: %1", jsrcerr.error_message);
         return false;
     }
+
     if (setjmp(jdsterr.setjmp_buffer))
     {
         jpeg_destroy_decompress(&srcinfo);
@@ -277,13 +282,12 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
     jtransform_request_workspace(&srcinfo, &transformoption);
 
      // Read source file as DCT coefficients
-    src_coef_arrays = jpeg_read_coefficients(&srcinfo);
+    src_coef_arrays           = jpeg_read_coefficients(&srcinfo);
 
     // Initialize destination compression parameters from source values
     jpeg_copy_critical_parameters(&srcinfo, &dstinfo);
 
-    dst_coef_arrays = jtransform_adjust_parameters(&srcinfo, &dstinfo,
-                                                   src_coef_arrays, &transformoption);
+    dst_coef_arrays = jtransform_adjust_parameters(&srcinfo, &dstinfo, src_coef_arrays, &transformoption);
 
     // Specify data destination for compression
     kp_jpeg_qiodevice_dest(&dstinfo, &output_file);
@@ -292,14 +296,13 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
     dstinfo.write_JFIF_header = false;
 
     // Start compressor (note no image data is actually written here)
-    dstinfo.optimize_coding = true;
+    dstinfo.optimize_coding   = true;
     jpeg_write_coefficients(&dstinfo, dst_coef_arrays);
 
     // Copy to the output file any extra markers that we want to preserve
     jcopy_markers_execute(&srcinfo, &dstinfo, copyoption);
 
-    jtransform_execute_transformation(&srcinfo, &dstinfo,
-                                      src_coef_arrays, &transformoption);
+    jtransform_execute_transformation(&srcinfo, &dstinfo, src_coef_arrays, &transformoption);
 
     // Finish compression and release memory
     jpeg_finish_compress(&dstinfo);
@@ -322,6 +325,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         jpeg_create_compress(&dstinfo);
 
         input_file.setFileName(dest);
+
         if (!input_file.open(QIODevice::ReadOnly))
         {
             kError() << "ImageRotate/ImageFlip: Error in opening input file";
@@ -330,6 +334,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         }
 
         output_file.setFileName(destGiven);
+
         if (!output_file.open(QIODevice::ReadWrite))
         {
             input_file.close();
@@ -352,10 +357,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         // Initialize destination compression parameters from source values
         jpeg_copy_critical_parameters(&srcinfo, &dstinfo);
 
-        dst_coef_arrays = jtransform_adjust_parameters(&srcinfo,
-                &dstinfo,
-                src_coef_arrays,
-                &transformoption);
+        dst_coef_arrays = jtransform_adjust_parameters(&srcinfo, &dstinfo, src_coef_arrays, &transformoption);
 
         // Specify data destination for compression
         kp_jpeg_qiodevice_dest(&dstinfo, &output_file);
@@ -364,14 +366,13 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         dstinfo.write_JFIF_header = false;
 
         // Start compressor (note no image data is actually written here)
-        dstinfo.optimize_coding = true;
+        dstinfo.optimize_coding   = true;
         jpeg_write_coefficients(&dstinfo, dst_coef_arrays);
 
         // Copy to the output file any extra markers that we want to preserve
         jcopy_markers_execute(&srcinfo, &dstinfo, copyoption);
 
-        jtransform_execute_transformation(&srcinfo, &dstinfo,
-                                          src_coef_arrays, &transformoption);
+        jtransform_execute_transformation(&srcinfo, &dstinfo, src_coef_arrays, &transformoption);
 
         // Finish compression and release memory
         jpeg_finish_compress(&dstinfo);

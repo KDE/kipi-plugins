@@ -9,7 +9,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -64,6 +64,9 @@ public:
     Task(QObject* const parent = 0)
         :Job(parent)
     {
+        action     = Rotate;
+        rotAction  = Rot0;
+        flipAction = FlipHorizontal;
     }
 
     QString      errString;
@@ -93,13 +96,13 @@ protected:
                 ImageFlip imageFlip;
                 imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString);
 
+                break;
             }
             case GrayScale:
             {
 
                 ImageGrayScale imageGrayScale;
                 imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString);
-
 
                 break;
             }
@@ -125,15 +128,14 @@ ActionThread::~ActionThread()
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
     {
-        Task* t      = new Task(this);
-        t->fileUrl   = *it;
-        t->action    = Rotate;
-        t->rotAction = val;
+        Task* const t = new Task(this);
+        t->fileUrl    = *it;
+        t->action     = Rotate;
+        t->rotAction  = val;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
                 this, SLOT(slotJobStarted(ThreadWeaver::Job*)));
@@ -149,12 +151,11 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 
 void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
     {
-        Task* t       = new Task(this);
+        Task* const t = new Task(this);
         t->fileUrl    = *it;
         t->action     = Flip;
         t->flipAction = val;
@@ -173,14 +174,13 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
-    JobCollection* collection = new JobCollection();
+    JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
     {
-        ActionThread::Task* t = new Task(this);
-        t->fileUrl            = *it;
-        t->action             = GrayScale;
+        ActionThread::Task* const t = new Task(this);
+        t->fileUrl                  = *it;
+        t->action                   = GrayScale;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
                 this, SLOT(slotJobStarted(ThreadWeaver::Job*)));
@@ -196,7 +196,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
 
 void ActionThread::slotJobDone(ThreadWeaver::Job* job)
 {
-    Task* task = static_cast<Task*>(job);
+    Task* const task = static_cast<Task*>(job);
 
     if (task->errString.isEmpty())
     {
@@ -214,7 +214,7 @@ void ActionThread::slotJobDone(ThreadWeaver::Job* job)
 
 void ActionThread::slotJobStarted(ThreadWeaver::Job* job)
 {
-    Task* task = static_cast<Task*>(job);
+    Task* const task = static_cast<Task*>(job);
     kDebug() << "Job Started:" << task->fileUrl.toLocalFile();
     emit starting(task->fileUrl, task->action);
 }
