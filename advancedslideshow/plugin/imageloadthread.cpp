@@ -63,6 +63,7 @@ ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList, int widt
     m_width         = width;
     m_height        = height;
     m_loop          = loop;
+    m_textureAspect = 0.0;
 }
 
 void ImageLoadThread::quit()
@@ -93,13 +94,11 @@ void ImageLoadThread::run()
 
     while (true)
     {
-
         if (m_quitRequested)
             break;
 
         if (m_needImage)
         {
-
             if ( m_fileIndex == (int)m_fileList.count() )
             {
                 if ( m_loop )
@@ -115,9 +114,7 @@ void ImageLoadThread::run()
             }
 
             m_needImage = false;
-
             m_condLock.unlock();
-
             bool ok;
 
             do
@@ -193,8 +190,8 @@ bool ImageLoadThread::loadImage()
         return false;
     }
 
-    float aspect = (float)image.width() / (float)image.height();
-    image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    float aspect    = (float)image.width() / (float)image.height();
+    image           = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     m_imageLock.lock();
 

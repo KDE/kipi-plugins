@@ -49,6 +49,7 @@ public:
 
     void  quit();
     void  requestNewImage();
+
     bool  grabImage()
     {
         m_imageLock.lock();
@@ -60,17 +61,17 @@ public:
         m_imageLock.unlock();
     };
 
-    bool  ready()
+    bool  ready() const
     {
         return m_initialized;
     };
 
-    const QImage &image()
+    const QImage& image() const
     {
         return m_texture;
     };
 
-    float imageAspect()
+    float imageAspect() const
     {
         return m_textureAspect;
     };
@@ -82,7 +83,6 @@ Q_SIGNALS:
 protected:
 
     void run();
-
     bool loadImage();
     void invalidateCurrentImageName();
 
@@ -95,7 +95,7 @@ private:
 
     QWaitCondition              m_imageRequest;
     QMutex                      m_condLock, m_imageLock;
-    bool                        m_initialized, m_needImage, m_haveImages, m_quitRequested, m_scanSubdirectories, m_loop;
+    bool                        m_initialized, m_needImage, m_haveImages, m_quitRequested, m_loop;
 
     float                       m_textureAspect;
     QImage                      m_texture;
