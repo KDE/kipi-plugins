@@ -7,7 +7,7 @@
  * Description : RAW decoding interface
  *
  * Copyright (C) 2006-2012 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -67,6 +67,7 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
 {
     int width, height, rgbmax;
     QByteArray imageData;
+
     if (!KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings, imageData, width, height, rgbmax))
         return false;
 
@@ -80,6 +81,7 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
 {
     int width, height, rgbmax;
     QByteArray imageData;
+
     if (!KDcraw::decodeRAWImage(filePath, rawDecodingSettings, imageData, width, height, rgbmax))
         return false;
 
@@ -101,7 +103,7 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
     unsigned short tmp16[3];
 
     // Set RGB color components.
-    for (int i = 0 ; i < width * height ; ++i)
+    for (int i = 0 ; i < (width * height) ; ++i)
     {
         if (!sixteenBits)   // 8 bits color depth image.
         {
@@ -135,12 +137,12 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
     uchar* sptr8           = (uchar*)imageData.data();
     unsigned short* sptr16 = (unsigned short*)imageData.data();
 
-    for (int i = 0 ; i < width * height ; ++i)
+    for (int i = 0 ; i < (width * height) ; ++i)
     {
         if (!sixteenBits)   // 8 bits color depth image.
         {
-            *dptr++ = qRgba(sptr8[2], sptr8[1], sptr8[0], 0xFF);
-            sptr8 += 3;
+            *dptr++  = qRgba(sptr8[2], sptr8[1], sptr8[0], 0xFF);
+            sptr8   += 3;
         }
         else                // 16 bits color depth image.
         {

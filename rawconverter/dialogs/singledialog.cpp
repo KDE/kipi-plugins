@@ -7,7 +7,7 @@
  * Description : Raw converter single dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -86,18 +86,19 @@ using namespace KDcrawIface;
 namespace KIPIRawConverterPlugin
 {
 
-class SingleDialog::SingleDialogPriv
+class SingleDialog::Private
 {
 public:
 
-    SingleDialogPriv()
+    Private()
     {
-        previewWidget       = 0;
-        thread              = 0;
-        saveSettingsBox     = 0;
-        decodingSettingsBox = 0;
-        iface               = 0;
-        PluginLoader* pl    = PluginLoader::instance();
+        previewWidget          = 0;
+        thread                 = 0;
+        saveSettingsBox        = 0;
+        decodingSettingsBox    = 0;
+        iface                  = 0;
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -120,7 +121,7 @@ public:
 };
 
 SingleDialog::SingleDialog(const QString& file)
-    : KPToolDialog(0), d(new SingleDialogPriv)
+    : KPToolDialog(0), d(new Private)
 {
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(Close);
@@ -130,19 +131,19 @@ SingleDialog::SingleDialog(const QString& file)
     setCaption(i18n("RAW Image Converter"));
     setModal(false);
 
-    QWidget* page           = new QWidget( this );
+    QWidget* const page           = new QWidget( this );
     setMainWidget( page );
-    QGridLayout* mainLayout = new QGridLayout(page);
+    QGridLayout* const mainLayout = new QGridLayout(page);
 
-    d->previewWidget        = new KPPreviewManager(page);
+    d->previewWidget       = new KPPreviewManager(page);
 
     // ---------------------------------------------------------------
 
-    d->decodingSettingsBox  = new DcrawSettingsWidget(page, DcrawSettingsWidget::SIXTEENBITS    |
-                                                            DcrawSettingsWidget::COLORSPACE     |
-                                                            DcrawSettingsWidget::POSTPROCESSING |
-                                                            DcrawSettingsWidget::BLACKWHITEPOINTS);
-    d->saveSettingsBox      = new KPSaveSettingsWidget(d->decodingSettingsBox);
+    d->decodingSettingsBox = new DcrawSettingsWidget(page, DcrawSettingsWidget::SIXTEENBITS    |
+                                                           DcrawSettingsWidget::COLORSPACE     |
+                                                           DcrawSettingsWidget::POSTPROCESSING |
+                                                           DcrawSettingsWidget::BLACKWHITEPOINTS);
+    d->saveSettingsBox     = new KPSaveSettingsWidget(d->decodingSettingsBox);
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
@@ -162,13 +163,13 @@ SingleDialog::SingleDialog(const QString& file)
 
     // ---------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("RAW Image Converter"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to convert RAW images"),
-                             ki18n("(c) 2003-2005, Renchi Raju\n"
-                                   "(c) 2006-2012, Gilles Caulier\n"
-                                   "(c) 2012, Smit Mehta"));
+    KPAboutData* const about = new KPAboutData(ki18n("RAW Image Converter"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to convert RAW images"),
+                                   ki18n("(c) 2003-2005, Renchi Raju\n"
+                                         "(c) 2006-2013, Gilles Caulier\n"
+                                         "(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n("Renchi Raju"),
                      ki18n("Author"),
@@ -310,6 +311,7 @@ void SingleDialog::slotUser1()
 {
     d->thread->setSettings(d->decodingSettingsBox->settings(), KPSaveSettingsWidget::OUTPUT_PNG);
     d->thread->processHalfRawFile(KUrl(d->inputFile));
+
     if (!d->thread->isRunning())
         d->thread->start();
 }
@@ -319,6 +321,7 @@ void SingleDialog::slotUser2()
 {
     d->thread->setSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
     d->thread->processRawFile(KUrl(d->inputFile));
+
     if (!d->thread->isRunning())
         d->thread->start();
 }
@@ -344,6 +347,7 @@ void SingleDialog::slotIdentify()
     }
 
     d->thread->identifyRawFile(KUrl(d->inputFile), true);
+
     if (!d->thread->isRunning())
         d->thread->start();
 }
@@ -424,6 +428,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
     if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
+
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
             KIO::RenameDialog dlg(this, i18n("Save RAW image converted from '%1' as", fi.fileName()),

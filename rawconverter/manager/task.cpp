@@ -7,7 +7,7 @@
  * Description : a class to manage plugin actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -55,6 +55,7 @@ public:
         cancel                 = false;
         iface                  = 0;
         PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -136,8 +137,7 @@ void Task::run()
                     if (info.dateTime.isValid())
                     {
                         identify.append(i18n("Created: %1<br>",
-                        KGlobal::locale()->formatDateTime(info.dateTime,
-                                                          KLocale::ShortDate, true)));
+                        KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true)));
                     }
 
                     if (info.aperture != -1.0)
@@ -201,8 +201,7 @@ void Task::run()
             bool result = false;
             {
                 KPFileReadLocker(d->iface, d->url.toLocalFile());
-                result = d->dcrawIface.decodeHalfRAWImage(d->url.toLocalFile(), destPath,
-                                                          d->outputFormat, d->rawDecodingSettings);
+                result = d->dcrawIface.decodeHalfRAWImage(d->url.toLocalFile(), destPath, d->outputFormat, d->rawDecodingSettings);
             }
 
             ActionData ad2;
@@ -227,8 +226,7 @@ void Task::run()
 
             {
                 KPFileReadLocker(d->iface, d->url.toLocalFile());
-                result = d->dcrawIface.decodeRAWImage(d->url.toLocalFile(), destPath,
-                                                      d->outputFormat, d->rawDecodingSettings);
+                result = d->dcrawIface.decodeRAWImage(d->url.toLocalFile(), destPath, d->outputFormat, d->rawDecodingSettings);
             }
 
             ActionData ad2;

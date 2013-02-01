@@ -7,7 +7,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -87,11 +87,11 @@ using namespace KDcrawIface;
 namespace KIPIRawConverterPlugin
 {
 
-class BatchDialog::BatchDialogPriv
+class BatchDialog::Private
 {
 public:
 
-    BatchDialogPriv()
+    Private()
     {
         busy                = false;
         page                = 0;
@@ -120,7 +120,7 @@ public:
 };
 
 BatchDialog::BatchDialog()
-    : KPToolDialog(0), d(new BatchDialogPriv)
+    : KPToolDialog(0), d(new Private)
 {
     setButtons(Help | Default | Apply | Close );
     setDefaultButton(Close);
@@ -131,7 +131,7 @@ BatchDialog::BatchDialog()
 
     d->page = new QWidget(this);
     setMainWidget(d->page);
-    QGridLayout* mainLayout = new QGridLayout(d->page);
+    QGridLayout* const mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
@@ -172,13 +172,13 @@ BatchDialog::BatchDialog()
 
     // ---------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("RAW Image Converter"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to convert RAW images"),
-                             ki18n("(c) 2003-2005, Renchi Raju\n"
-                                   "(c) 2006-2012, Gilles Caulier\n"
-                                   "(c) 2012, Smit Mehta"));
+    KPAboutData* const about = new KPAboutData(ki18n("RAW Image Converter"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to convert RAW images"),
+                                   ki18n("(c) 2003-2005, Renchi Raju\n"
+                                         "(c) 2006-2013, Gilles Caulier\n"
+                                         "(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n("Renchi Raju"),
                      ki18n("Author"),
@@ -257,10 +257,13 @@ void BatchDialog::slotSixteenBitsImageToggled(bool)
 
 void BatchDialog::closeEvent(QCloseEvent* e)
 {
-    if (!e) return;
+    if (!e)
+        return;
 
     // Stop current conversion if necessary
-    if (d->busy) slotStartStop();
+    if (d->busy)
+        slotStartStop();
+
     saveSettings();
     d->listView->listView()->clear();
     e->accept();
@@ -269,7 +272,9 @@ void BatchDialog::closeEvent(QCloseEvent* e)
 void BatchDialog::slotClose()
 {
     // Stop current conversion if necessary
-    if (d->busy) slotStartStop();
+    if (d->busy)
+        slotStartStop();
+
     saveSettings();
     d->listView->listView()->clear();
     done(Close);
@@ -312,11 +317,12 @@ void BatchDialog::slotStartStop()
     if (!d->busy)
     {
         d->fileList.clear();
-
         QTreeWidgetItemIterator it(d->listView->listView());
+
         while (*it)
         {
-            MyImageListViewItem* lvItem = dynamic_cast<MyImageListViewItem*>(*it);
+            MyImageListViewItem* const lvItem = dynamic_cast<MyImageListViewItem*>(*it);
+
             if (lvItem)
             {
                 if (!lvItem->isDisabled() && (lvItem->state() != MyImageListViewItem::Success))
@@ -392,8 +398,7 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
 
     KUrl::List urlList = d->listView->imageUrls(true);
 
-    for (KUrl::List::const_iterator  it = urlList.constBegin();
-         it != urlList.constEnd(); ++it)
+    for (KUrl::List::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
 
@@ -403,7 +408,6 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
             MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
             if (item) item->setDestFileName(dest);
         }
-
         else
         {
             int i        = 0;
@@ -422,6 +426,7 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
                 while(fileNotFound)
                 {
                     a = QFileInfo(dest);
+
                     if (!a.exists())
                     {
                         fileNotFound = false;
@@ -436,14 +441,17 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
                 dest = fi.completeBaseName() + QString("_") + QString::number(i) + ext;
             }
 
-            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
-            if (item) item->setDestFileName(dest);
+            MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+
+            if (item)
+                item->setDestFileName(dest);
         }
     }
 
     if (!urlList.empty())
     {
         d->thread->identifyRawFiles(urlList);
+
         if (!d->thread->isRunning())
             d->thread->start();
     }
@@ -491,8 +499,10 @@ void BatchDialog::busy(bool busy)
 
 void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
-    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
-    if (!item) return;
+    MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
+
+    if (!item)
+        return;
 
     QString destFile(item->destPath());
 
@@ -593,7 +603,8 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
             {
                 case(IDENTIFY):
                 {
-                    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(ad.fileUrl));
+                    MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(ad.fileUrl));
+
                     if (item)
                     {
                         item->setIdentity(ad.message);
