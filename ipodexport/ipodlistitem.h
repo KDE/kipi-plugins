@@ -69,7 +69,7 @@ public:
 
 private:
 
-    Itdb_Artwork *m_artwork;
+    Itdb_Artwork* m_artwork;
 };
 
 } // namespace KIPIIpodExportPlugin

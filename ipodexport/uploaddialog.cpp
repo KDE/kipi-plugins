@@ -7,7 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -97,8 +97,8 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
       m_deviceNode(QString()),
       m_ipodAlbumList(0)
 {
-    s_instance   = this;
-    QWidget* box = new QWidget();
+    s_instance         = this;
+    QWidget* const box = new QWidget();
     setMainWidget( box );
     setCaption( caption );
     setButtons( Close|Help );
@@ -112,7 +112,7 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
                                          KAboutData::License_GPL,
                                          ki18n("A tool to export image to an iPod device"),
                                          ki18n("(c) 2006-2008, Seb Ruiz\n"
-                                               "(c) 2008-2012, Gilles Caulier"));
+                                               "(c) 2008-2013, Gilles Caulier"));
 
     about->addAuthor(ki18n("Seb Ruiz"), ki18n("Author and Maintainer"),
                      "ruiz@kde.org");
@@ -125,20 +125,20 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
 
     // ------------------------------------------------------------
 
-    QGridLayout* grid = new QGridLayout(box);
-    m_ipodHeader      = new IpodHeader(box);
+    QGridLayout* const grid = new QGridLayout(box);
+    m_ipodHeader            = new IpodHeader(box);
 
     // Setup widgets and layout for the source
     m_urlListBox = new QGroupBox( i18n("Hard Disk"), box );
 
-    QHBoxLayout* urlLayout = new QHBoxLayout;
+    QHBoxLayout* const urlLayout = new QHBoxLayout;
 
     m_uploadList = new ImageList( ImageList::UploadType, this );
     m_uploadList->setMinimumHeight( 80 );
 
     m_uploadList->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
 
-    QVBoxLayout* uploadUrlLayout = new QVBoxLayout;
+    QVBoxLayout* const uploadUrlLayout = new QVBoxLayout;
     m_addImagesButton = new QPushButton( i18n("&Add..."), this );
     m_addImagesButton->setWhatsThis(i18n("Add images to be queued for the iPod."));
 
@@ -154,7 +154,7 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
     m_imagePreview->setSizePolicy( QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred) );
     m_imagePreview->setWhatsThis( i18n("The preview of the selected image in the list.") );
 
-    QLabel* hdd_icon = new QLabel;
+    QLabel* const hdd_icon = new QLabel;
     hdd_icon->setPixmap(KIconLoader::global()->loadIcon("computer",
                                                         KIconLoader::Desktop,
                                                         KIconLoader::SizeHuge));
@@ -173,13 +173,13 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
     m_urlListBox->setLayout( urlLayout );
 
     // Setup widgets and layout for the iPod (destination)
-    m_destinationBox = new QGroupBox( i18n("iPod"), box );
-    QHBoxLayout *destinationBoxLayout = new QHBoxLayout( m_destinationBox );
+    m_destinationBox                        = new QGroupBox( i18n("iPod"), box );
+    QHBoxLayout* const destinationBoxLayout = new QHBoxLayout( m_destinationBox );
 
     m_ipodAlbumList = new ImageList( ImageList::IpodType, this );
     m_ipodAlbumList->setMinimumHeight( 80 );
 
-    QVBoxLayout *ipodButtonLayout = new QVBoxLayout;
+    QVBoxLayout* const ipodButtonLayout = new QVBoxLayout;
 
     m_createAlbumButton = new QPushButton( i18n("&New..."), this );
     m_createAlbumButton->setWhatsThis( i18n( "Create a new photo album on the iPod." ) );
@@ -193,8 +193,8 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
     m_removeAlbumButton->setWhatsThis( i18n("Remove the selected photos or albums from the iPod.") );
     m_renameAlbumButton->setWhatsThis( i18n("Rename the selected photo album on the iPod.") );
 
-    QLabel *ipod_icon = new QLabel;
-    ipod_icon->setPixmap(KIconLoader::global()->loadIcon( "multimedia-player-apple-ipod",
+    QLabel* const ipod_icon = new QLabel;
+    ipod_icon->setPixmap(KIconLoader::global()->loadIcon("multimedia-player-apple-ipod",
                                                          KIconLoader::Desktop,
                                                          KIconLoader::SizeHuge ) );
 
@@ -294,6 +294,7 @@ void UploadDialog::loadImagesFromCurrentSelection()
     if( images.isValid() )
     {
         KUrl::List selected = images.images();
+
         for( KUrl::List::Iterator it = selected.begin(); it != selected.end(); ++it )
         {
             addUrlToList( (*it).path() );
@@ -314,14 +315,12 @@ void UploadDialog::getIpodAlbums()
 
     for( GList* it = m_itdb->photoalbums; it; it = it->next )
     {
-        Itdb_PhotoAlbum *ipodAlbum = (Itdb_PhotoAlbum*) it->data;
+        Itdb_PhotoAlbum* const ipodAlbum = (Itdb_PhotoAlbum*) it->data;
 
         kDebug() << " found album: " << ipodAlbum->name ;
 
-        IpodAlbumItem* albumItem   = new IpodAlbumItem( m_ipodAlbumList, ipodAlbum );
-
+        IpodAlbumItem* const albumItem   = new IpodAlbumItem( m_ipodAlbumList, ipodAlbum );
         m_ipodAlbumList->addTopLevelItem( albumItem );
-
         getIpodAlbumPhotos( albumItem, ipodAlbum );
     }
 }
@@ -335,9 +334,9 @@ void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem* const item, Itdb_PhotoAlbum
 
     for( GList* it = album->members; it; it = it->next )
     {
-        Itdb_Artwork* photo = (Itdb_Artwork*) it->data;
-        gint photo_id       = photo->id;
-        last                = new IpodPhotoItem( item, last, photo );
+        Itdb_Artwork* const photo = (Itdb_Artwork*) it->data;
+        gint photo_id             = photo->id;
+        last                      = new IpodPhotoItem( item, last, photo );
         last->setText( 0, QString::number( photo_id ) );
     }
 }
@@ -354,6 +353,7 @@ void UploadDialog::reloadIpodAlbum(IpodAlbumItem* const item, Itdb_PhotoAlbum* c
     for( GList* it = m_itdb->photoalbums; it; it = it->next )
     {
         ipodAlbum = (Itdb_PhotoAlbum*)it->data;
+
         if( strcmp( ipodAlbum->name, album->name ) == 0 )
             break; // we found the album
     }
@@ -378,11 +378,8 @@ void UploadDialog::enableButtons()
     enableButton( Close, !m_transferring );
 
     const QList<QTreeWidgetItem*> ipodSelection = m_ipodAlbumList->selectedItems();
-
     const bool hasSelection                     = ipodSelection.count() != 0;
-
     const bool isMasterLibrary                  = hasSelection && ipodSelection.first() == m_ipodAlbumList->topLevelItem( 0 );
-
     const bool isAlbum                          = hasSelection && ( dynamic_cast<IpodAlbumItem*>( ipodSelection.first() ) != 0 );
 
     m_removeAlbumButton->setEnabled( hasSelection && !isMasterLibrary );
@@ -394,27 +391,27 @@ void UploadDialog::startTransfer()
     if( !m_itdb || !m_uploadList->model()->hasChildren() )
         return;
 
-    QTreeWidgetItem* selected = m_ipodAlbumList->currentItem();
-    IpodAlbumItem* ipodAlbum  = dynamic_cast<IpodAlbumItem*>( selected );
+    QTreeWidgetItem* const selected = m_ipodAlbumList->currentItem();
+    IpodAlbumItem* const ipodAlbum  = dynamic_cast<IpodAlbumItem*>( selected );
 
     if( !selected || !ipodAlbum )
         return;
 
-    m_transferring         = true;
-    Itdb_PhotoAlbum* album = ipodAlbum->photoAlbum();
+    m_transferring               = true;
+    Itdb_PhotoAlbum* const album = ipodAlbum->photoAlbum();
 
     enableButton(User1, false);
     enableButton(Close, false);
 
     GError* err = 0;
 
-    while( QTreeWidgetItem* item = m_uploadList->takeTopLevelItem(0) )
+    while( QTreeWidgetItem* const item = m_uploadList->takeTopLevelItem(0) )
     {
 #define item static_cast<ImageListItem*>(item)
         kDebug() << "Uploading "      << item->pathSrc()
                  << " to ipod album " << album->name ;
 
-        Itdb_Artwork* art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
+        Itdb_Artwork* const art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
 
         if( !art )
         {
@@ -435,11 +432,13 @@ void UploadDialog::startTransfer()
     }
 
     itdb_photodb_write( m_itdb, &err );
-    if( err ) kDebug() << "Failed with error: " << err->message ;
+
+    if( err )
+        kDebug() << "Failed with error: " << err->message ;
 
     reloadIpodAlbum( ipodAlbum, album );
 
-    IpodAlbumItem* library = static_cast<IpodAlbumItem*>( m_ipodAlbumList->topLevelItem(0) );
+    IpodAlbumItem* const library = static_cast<IpodAlbumItem*>( m_ipodAlbumList->topLevelItem(0) );
     reloadIpodAlbum( library, library->photoAlbum() );
 
     m_transferring = false;
@@ -461,8 +460,12 @@ void UploadDialog::ipodItemSelected(QTreeWidgetItem* item)
     if( !item )
         return;
 
-    Itdb_Artwork* artwork = item->artwork();
-    GdkPixbuf* gpixbuf    = 0;
+    Itdb_Artwork* const artwork = item->artwork();
+
+    if (!artwork)
+        return;
+
+    GdkPixbuf* gpixbuf = 0;
 
     // First arg in itdb_artwork_get_pixbuf(...) is pointer to Itdb_Device struct,
     // in kipiplugin-ipodexport it is m_itdb->device. i hope it _is_ initialiezed
@@ -496,8 +499,10 @@ void UploadDialog::imageSelected(QTreeWidgetItem* item)
         return;
     }
 
-    ImageListItem* pitem = static_cast<ImageListItem*>( item );
-    if ( !pitem ) return;
+    ImageListItem* const pitem = dynamic_cast<ImageListItem*>( item );
+
+    if ( !pitem )
+        return;
 
     m_imagePreview->clear();
 
@@ -511,9 +516,9 @@ void UploadDialog::imageSelected(QTreeWidgetItem* item)
 #if KDE_IS_VERSION(4,7,0)
     KFileItemList items;
     items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
-    KIO::PreviewJob* m_thumbJob = KIO::filePreview(items, QSize(m_imagePreview->height(), m_imagePreview->height()));
+    KIO::PreviewJob* const m_thumbJob = KIO::filePreview(items, QSize(m_imagePreview->height(), m_imagePreview->height()));
 #else
-    KIO::PreviewJob* m_thumbJob = KIO::filePreview(url, m_imagePreview->height());
+    KIO::PreviewJob* const m_thumbJob = KIO::filePreview(url, m_imagePreview->height());
 #endif
 
     connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*,QPixmap)),
@@ -546,7 +551,7 @@ void UploadDialog::gotImagePreview(const KFileItem* url, const QPixmap& pixmap)
 void UploadDialog::imagesFilesButtonAdd()
 {
     QStringList fileList;
-    KUrl::List urls;
+    KUrl::List  urls;
 
 #if KIPI_PLUGIN
     urls = KPImageDialog::getImageUrls(this);
@@ -583,11 +588,12 @@ void UploadDialog::createIpodAlbum()
 
 #if KIPI_PLUGIN
     ImageCollection album = iface()->currentAlbum();
+
     if( album.isValid() )
         helper = album.name();
 #endif
 
-    bool ok = false;
+    bool ok          = false;
     QString newAlbum = KInputDialog::getText( i18n("New iPod Photo Album"),
                                               i18n("Create a new album:"),
                                               helper, &ok, this );
@@ -595,7 +601,7 @@ void UploadDialog::createIpodAlbum()
     {
         kDebug() << "creating album " << newAlbum ;
 
-        Itdb_PhotoAlbum* photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
+        Itdb_PhotoAlbum* const photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
         // add the new album to the list view
         new IpodAlbumItem( m_ipodAlbumList, photoAlbum );
         m_ipodAlbumList->clearSelection();
@@ -614,10 +620,10 @@ void UploadDialog::renameIpodAlbum()
     if( selectedItems.size() != 1 )
         return;
 
-    IpodAlbumItem* selected = dynamic_cast<IpodAlbumItem*>( selectedItems.first() );
+    IpodAlbumItem* const selected = dynamic_cast<IpodAlbumItem*>( selectedItems.first() );
+
     if( !selected )
         return;
-
 
     bool ok         = false;
     QString newName = KInputDialog::getText( i18n("Rename iPod Photo Album"),
@@ -643,7 +649,7 @@ bool UploadDialog::deleteIpodPhoto(IpodPhotoItem* const photo) const
     if( !album )
         return false;
 
-    Itdb_Artwork* artwork = photo->artwork();
+    Itdb_Artwork* const artwork = photo->artwork();
 
     if( !artwork )
     {
@@ -651,7 +657,7 @@ bool UploadDialog::deleteIpodPhoto(IpodPhotoItem* const photo) const
         return false;
     }
 
-    Itdb_PhotoAlbum* photo_album = album->photoAlbum();
+    Itdb_PhotoAlbum* const photo_album = album->photoAlbum();
     itdb_photodb_remove_photo( m_itdb, photo_album, artwork );
 
     // if we remove from the library, remove from all sub albums too
@@ -660,11 +666,11 @@ bool UploadDialog::deleteIpodPhoto(IpodPhotoItem* const photo) const
         for( int i = 1; // skip library
              i < m_ipodAlbumList->topLevelItemCount(); ++ i )
         {
-            QTreeWidgetItem* albumItem = m_ipodAlbumList->topLevelItem( i );
+            QTreeWidgetItem* const albumItem = m_ipodAlbumList->topLevelItem( i );
 
             for( int j = 0; j < albumItem->childCount(); ++j )
             {
-                QTreeWidgetItem *photoItem = albumItem->child( j );
+                QTreeWidgetItem* const photoItem = albumItem->child( j );
 
                 if( photoItem->text(0) == photo->text(0) ) // FIXME
                 {
@@ -675,6 +681,7 @@ bool UploadDialog::deleteIpodPhoto(IpodPhotoItem* const photo) const
             }
         }
     }
+
     return true;
 }
 
@@ -690,21 +697,25 @@ void UploadDialog::deleteIpodAlbum()
 {
     QList<QTreeWidgetItem*> selected = m_ipodAlbumList->selectedItems();
 
-    Q_FOREACH(QTreeWidgetItem* item, selected)
+    Q_FOREACH(QTreeWidgetItem* const item, selected)
     {
-        IpodAlbumItem* album = dynamic_cast<IpodAlbumItem*>( item );
+        IpodAlbumItem* const album = dynamic_cast<IpodAlbumItem*>( item );
+
         if( album )
         {
             if( deleteIpodAlbum( album ) )
                delete album;
+
             continue;
         }
 
-        IpodPhotoItem* photo = dynamic_cast<IpodPhotoItem*>( item );
+        IpodPhotoItem* const photo = dynamic_cast<IpodPhotoItem*>( item );
+
         if( photo )
         {
             if( deleteIpodPhoto( photo ) )
                 delete photo;
+
             continue;
         }
     }
@@ -715,9 +726,10 @@ void UploadDialog::deleteIpodAlbum()
 
 void UploadDialog::addDropItems(const QStringList& filesPath)
 {
-    if( filesPath.isEmpty() ) return;
+    if( filesPath.isEmpty() )
+        return;
 
-    Q_FOREACH( const QString &dropFile, filesPath )
+    Q_FOREACH( const QString& dropFile, filesPath )
     {
         // TODO: Check if the new item already exist in the list.
         addUrlToList( dropFile );
@@ -729,7 +741,6 @@ void UploadDialog::addDropItems(const QStringList& filesPath)
 void UploadDialog::addUrlToList(const QString& file)
 {
     QFileInfo fi( file );
-
     new ImageListItem( m_uploadList, file.section('/', 0, -1), fi.fileName() );
 }
 
@@ -784,6 +795,7 @@ bool UploadDialog::openDevice()
         if( err )
         {
             g_error_free( err );
+
             if( m_itdb )
             {
                 itdb_photodb_free( m_itdb );
@@ -796,11 +808,13 @@ bool UploadDialog::openDevice()
     if( !ipodFound )
     {
         kDebug() << "no mounted ipod found" ;
+
         if( m_itdb )
         {
             itdb_photodb_free( m_itdb );
             m_itdb = 0;
         }
+
         return false;
     }
 
@@ -847,13 +861,15 @@ Itdb_Artwork* UploadDialog::photoFromId(const uint id) const
 
     for( GList* it = m_itdb->photos; it; it=it->next )
     {
-        Itdb_Artwork* photo = (Itdb_Artwork*)it->data;
+        Itdb_Artwork* const photo = (Itdb_Artwork*)it->data;
+
         if( !photo )
             return 0;
 
         if( photo->id == id )
             return photo;
     }
+
     return 0;
 }
 
@@ -883,7 +899,7 @@ void UploadDialog::refreshDevices()
     }
     else //device opened! hooray!
     {
-        m_ipodInfo = const_cast<Itdb_IpodInfo*>( itdb_device_get_ipod_info( m_itdb->device ) );
+        m_ipodInfo          = const_cast<Itdb_IpodInfo*>( itdb_device_get_ipod_info( m_itdb->device ) );
         const QString model = ipodModel();
 
         if( !m_ipodInfo || model.isEmpty() || model == "Invalid" )

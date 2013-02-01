@@ -43,9 +43,10 @@ namespace KIPIIpodExportPlugin
 IpodHeader::IpodHeader(QWidget* const parent, Qt::WFlags f)
     : QFrame(parent, f)
 {
+    m_viewType = NoIpod;
     setAutoFillBackground( true );
 
-    QVBoxLayout* layout = new QVBoxLayout( this );
+    QVBoxLayout* const layout = new QVBoxLayout( this );
     layout->setContentsMargins( 10, 10, 10, 10 );
     layout->setSpacing( 5 );
 
@@ -54,8 +55,8 @@ IpodHeader::IpodHeader(QWidget* const parent, Qt::WFlags f)
     m_messageLabel = new QLabel( QString(), this );
     m_messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
-    m_button                  = new KPushButton( this );
+    QHBoxLayout* const buttonLayout = new QHBoxLayout();
+    m_button                        = new KPushButton( this );
     m_button->hide();
 
     buttonLayout->addStretch( 1 );
@@ -143,6 +144,7 @@ void IpodHeader::setValidIpod()
         m_messageLabel->setText( i18n("<p align=\"center\"><b>iPod %1 detected</b></p>",
                                  modelType) );
     }
+
     QPalette p = palette();
     p.setColor( QPalette::Window, QColor(0, 98, 0) );
     p.setColor( QPalette::WindowText, Qt::white );

@@ -52,7 +52,12 @@ public:
     ~IpodHeader() {};
 
     void     setViewType(ViewType view);
-    ViewType viewType() const { return m_viewType; };
+
+    ViewType viewType() const
+    {
+        return m_viewType;
+
+    };
 
 Q_SIGNALS:
 
