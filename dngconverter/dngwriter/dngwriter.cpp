@@ -6,7 +6,7 @@
  * Date        : 2008-09-25
  * Description : a tool to convert RAW file to DNG
  *
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
@@ -223,8 +223,7 @@ int DNGWriter::convert()
 
         // disable general fullsensor image see #240750
         // seems this bug is fixed with libRaw 0.12beta4
-        if ((identifyMake.make == "Canon") && 
-            (identify.filterPattern != QString("")))
+        if ((identifyMake.make == "Canon") && (identify.filterPattern != QString("")))
         {
             useFullSensorImage = true;
         }
@@ -244,7 +243,8 @@ int DNGWriter::convert()
         }
 #endif
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         kDebug() << "DNGWriter: Raw data loaded:" ;
         kDebug() << "--- Data Size:     " << rawData.size() << " bytes";
@@ -303,17 +303,16 @@ int DNGWriter::convert()
             bayerPattern = Private::Standard;
             filter       = 3;
         }
-        // Fuji layouts
-        else if ((identify.filterPattern == QString("RGBGRGBGRGBGRGBG")) &&
-                 (identifyMake.make == QString("FUJIFILM")))
+        else if ((identify.filterPattern == QString("RGBGRGBGRGBGRGBG")) && (identifyMake.make == QString("FUJIFILM")))
         {
+            // Fuji layouts
             bayerPattern = Private::Fuji;
             fujiRotate90 = false;
             filter       = 0;
         }
-        else if ((identify.filterPattern == QString("RBGGBRGGRBGGBRGG")) &&
-                 (identifyMake.make == QString("FUJIFILM")))
+        else if ((identify.filterPattern == QString("RBGGBRGGRBGGBRGG")) && (identifyMake.make == QString("FUJIFILM")))
         {
+            // Fuji layouts
             bayerPattern = Private::Fuji;
             fujiRotate90 = true;
             filter       = 0;
@@ -325,8 +324,7 @@ int DNGWriter::convert()
         {
             bayerPattern = Private::LinearRaw;
         }
-        // Four color sensors
-        else if (identify.rawColors == 4)
+        else if (identify.rawColors == 4)           // Four color sensors
         {
             bayerPattern = Private::FourColor;
 
@@ -431,7 +429,8 @@ int DNGWriter::convert()
 */
         // -----------------------------------------------------------------------------------------
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         kDebug() << "DNGWriter: DNG memory allocation and initialization" ;
 
@@ -446,7 +445,8 @@ int DNGWriter::convert()
 
         AutoPtr<dng_image> image(new dng_simple_image(rect, (bayerPattern == Private::LinearRaw) ? 3 : 1, ttShort, memalloc));
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
@@ -463,7 +463,8 @@ int DNGWriter::convert()
         buffer.fData       = rawData.data();
         image->Put(buffer);
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
@@ -490,7 +491,7 @@ int DNGWriter::convert()
         negative->SetOriginalRawFileName(inputInfo.fileName().toAscii());
         negative->SetColorChannels(identify.rawColors);
 
-        ColorKeyCode colorCodes[4] = {colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum};
+        ColorKeyCode colorCodes[4] = { colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum };
 
         for(int i = 0; i < qMax(4, identify.colorKeys.length()); ++i)
         {
@@ -547,7 +548,7 @@ int DNGWriter::convert()
         negative->SetWhiteLevel(identify.whitePoint, 2);
         negative->SetWhiteLevel(identify.whitePoint, 3);
 
-        const dng_mosaic_info* mosaicinfo = negative->GetMosaicInfo();
+        const dng_mosaic_info* const mosaicinfo = negative->GetMosaicInfo();
 
         if ((mosaicinfo != NULL) && (mosaicinfo->fCFAPatternSize == dng_point(2, 2)))
         {
@@ -566,6 +567,7 @@ int DNGWriter::convert()
         negative->SetBaselineSharpness(1.0);
 
         dng_orientation orientation;
+
         switch (identify.orientation)
         {
             case DcrawInfoContainer::ORIENTATION_180:
@@ -669,13 +671,14 @@ int DNGWriter::convert()
 
         negative->SetCameraNeutral(camNeutral);
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
         kDebug() << "DNGWriter: Updating metadata to DNG Negative" ;
 
-        dng_exif* exif = negative->GetExif();
+        dng_exif* const exif = negative->GetExif();
         exif->fModel.Set_ASCII(identify.model.toAscii());
         exif->fMake.Set_ASCII(identify.make.toAscii());
 
@@ -891,20 +894,20 @@ int DNGWriter::convert()
             {
                 switch (val)
                 {
-                case 1:
-                    exif->fExposureProgram = 2;
-                    break;
-                case 2:
-                    exif->fExposureProgram = 4;
-                    break;
-                case 3:
-                    exif->fExposureProgram = 3;
-                    break;
-                case 4:
-                    exif->fExposureProgram = 1;
-                    break;
-                default:
-                    break;
+                    case 1:
+                        exif->fExposureProgram = 2;
+                        break;
+                    case 2:
+                        exif->fExposureProgram = 4;
+                        break;
+                    case 3:
+                        exif->fExposureProgram = 3;
+                        break;
+                    case 4:
+                        exif->fExposureProgram = 1;
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -912,23 +915,23 @@ int DNGWriter::convert()
             {
                 switch (val)
                 {
-                case 1:
-                    exif->fMeteringMode = 3;
-                    break;
-                case 2:
-                    exif->fMeteringMode = 1;
-                    break;
-                case 3:
-                    exif->fMeteringMode = 5;
-                    break;
-                case 4:
-                    exif->fMeteringMode = 6;
-                    break;
-                case 5:
-                    exif->fMeteringMode = 2;
-                    break;
-                default:
-                    break;
+                    case 1:
+                        exif->fMeteringMode = 3;
+                        break;
+                    case 2:
+                        exif->fMeteringMode = 1;
+                        break;
+                    case 3:
+                        exif->fMeteringMode = 5;
+                        break;
+                    case 4:
+                        exif->fMeteringMode = 6;
+                        break;
+                    case 5:
+                        exif->fMeteringMode = 2;
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -940,8 +943,11 @@ int DNGWriter::convert()
             long canonLensType = 65535;
             if (meta.getExifTagLong("Exif.CanonCs.LensType", canonLensType))           exif->fLensID.Set_ASCII((QString("%1").arg(canonLensType)).toAscii());
             str = meta.getExifTagString("Exif.Canon.LensModel");
+
             if (!str.isEmpty())
+            {
                 exif->fLensName.Set_ASCII(str.trimmed().toAscii());
+            }
             else if (canonLensType != 65535)
             {
                 str = meta.getExifTagString("Exif.CanonCs.LensType");
@@ -962,6 +968,7 @@ int DNGWriter::convert()
             // Pentax Markernotes
 
             str = meta.getExifTagString("Exif.Pentax.LensType");
+
             if (str.length()) 
             {
                 exif->fLensName.Set_ASCII(str.trimmed().toAscii());
@@ -971,6 +978,7 @@ int DNGWriter::convert()
 
             long pentaxLensId1 = 0;
             long pentaxLensId2 = 0;
+
             if ((meta.getExifTagLong("Exif.Pentax.LensType", pentaxLensId1, 0)) && 
                 (meta.getExifTagLong("Exif.Pentax.LensType", pentaxLensId2, 1)))
             {
@@ -1011,9 +1019,7 @@ int DNGWriter::convert()
 
             // -------------------------------------------
 
-            if ((exif->fLensName.IsEmpty())          &&
-                (exif->fLensInfo[0].As_real64() > 0) &&
-                (exif->fLensInfo[1].As_real64() > 0))
+            if ((exif->fLensName.IsEmpty()) && (exif->fLensInfo[0].As_real64() > 0) && (exif->fLensInfo[1].As_real64() > 0))
             {
                 QString     lensName;
                 QTextStream stream(&lensName);
@@ -1025,6 +1031,7 @@ int DNGWriter::convert()
                     dval = (double)exif->fLensInfo[1].n / (double)exif->fLensInfo[1].d;
                     stream << QString("-%1").arg(dval, 0, 'f', 1);
                 }
+
                 stream << " mm";
 
                 if (exif->fLensInfo[2].As_real64() > 0)
@@ -1168,7 +1175,8 @@ int DNGWriter::convert()
             negative->ValidateOriginalRawFileDigest();
         }
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
@@ -1186,7 +1194,8 @@ int DNGWriter::convert()
         negative->SynchronizeMetadata();
         negative->RebuildIPTC(true, false);
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
@@ -1220,6 +1229,7 @@ int DNGWriter::convert()
             dms.Reset();
 
             QImage pre_image;
+
             if (!pre_image.loadFromData((uchar*)&tiff_mem_buffer.front(), tiff_mem_buffer.size(), "TIFF"))
             {
                 kDebug() << "DNGWriter: Cannot load TIFF preview data in memory. Aborted..." ;
@@ -1227,6 +1237,7 @@ int DNGWriter::convert()
             }
 
             QTemporaryFile previewFile;
+
             if (!previewFile.open())
             {
                 kDebug() << "DNGWriter: Cannot open temporary file to write JPEG preview. Aborted..." ;
@@ -1258,7 +1269,8 @@ int DNGWriter::convert()
 
 #endif /* QT_VERSION >= 0x40400 */
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
@@ -1271,7 +1283,8 @@ int DNGWriter::convert()
         thumbnail_render.SetMaximumSize(256);
         thumbnail.fImage.Reset(thumbnail_render.Render());
 
-        if (d->cancel) return PROCESSCANCELED;
+        if (d->cancel)
+            return PROCESSCANCELED;
 
         // -----------------------------------------------------------------------------------------
 
@@ -1302,6 +1315,7 @@ int DNGWriter::convert()
                 // Don't touch DNG file and create XMP sidecar depending of KIPI host application settings.
                 meta.setWriteRawFiles(false);
             }
+
             meta.applyChanges();
         }
 
@@ -1343,7 +1357,7 @@ int DNGWriter::convert()
     return PROCESSCOMPLETE;
 }
 
-bool DNGWriter::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify)
+bool DNGWriter::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify) const
 {
     QByteArray tmpData(rawData);
     int height             = identify.outputSize.height();

@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : save settings widgets
  *
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,24 +62,24 @@ using namespace KIPIPlugins;
 namespace KIPIDNGConverterPlugin
 {
 
-class SettingsWidget::SettingsWidgetPriv
+class SettingsWidget::Private
 {
 public:
 
-    SettingsWidgetPriv()
+    Private()
     {
-        conflictLabel         = 0;
-        conflictButtonGroup   = 0;
-        overwriteButton       = 0;
-        promptButton          = 0;
-        compressLossLess      = 0;
-        previewModeCB         = 0;
-        previewModeLabel      = 0;
-        backupOriginalRawFile = 0;
-        updateFileDate        = 0;
-        iface                 = 0;
+        conflictLabel          = 0;
+        conflictButtonGroup    = 0;
+        overwriteButton        = 0;
+        promptButton           = 0;
+        compressLossLess       = 0;
+        previewModeCB          = 0;
+        previewModeLabel       = 0;
+        backupOriginalRawFile  = 0;
+        updateFileDate         = 0;
+        iface                  = 0;
+        PluginLoader* const pl = PluginLoader::instance();
 
-        PluginLoader* pl = PluginLoader::instance();
         if (pl)
         {
             iface = pl->interface();
@@ -104,13 +104,13 @@ public:
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
-    : QWidget(parent), d(new SettingsWidgetPriv)
+    : QWidget(parent), d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QGridLayout* settingsBoxLayout = new QGridLayout(this);
+    QGridLayout* const settingsBoxLayout = new QGridLayout(this);
 
-    KUrlLabel* dngLogoLabel        = new KUrlLabel(this);
+    KUrlLabel* const dngLogoLabel        = new KUrlLabel(this);
     dngLogoLabel->setText(QString());
     dngLogoLabel->setUrl("http://en.wikipedia.org/wiki/Digital_Negative_(file_format)");
     dngLogoLabel->setPixmap(KIconLoader::global()->loadIcon("dngconverter", KIconLoader::NoGroup, 96));
@@ -126,7 +126,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     d->updateFileDate        = new QCheckBox(i18n("Update File Modification Date"), this);
     d->updateFileDate->setWhatsThis(i18n("Sets the file modification date "
-        "to the creation date provided in the image metadata."));
+                                         "to the creation date provided in the image metadata."));
 
     if (d->iface)
     {
@@ -147,13 +147,13 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    KSeparator* line       = new KSeparator(Qt::Horizontal, this);
-    d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
-    QWidget* conflictBox   = new QWidget(this);
-    QVBoxLayout* vlay      = new QVBoxLayout(conflictBox);
-    d->conflictButtonGroup = new QButtonGroup(conflictBox);
-    d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
-    d->promptButton        = new QRadioButton(i18n("Store as a different name"), conflictBox);
+    KSeparator* const line     = new KSeparator(Qt::Horizontal, this);
+    d->conflictLabel           = new QLabel(i18n("If Target File Exists:"), this);
+    QWidget* const conflictBox = new QWidget(this);
+    QVBoxLayout* const vlay    = new QVBoxLayout(conflictBox);
+    d->conflictButtonGroup     = new QButtonGroup(conflictBox);
+    d->overwriteButton         = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
+    d->promptButton            = new QRadioButton(i18n("Store as a different name"), conflictBox);
     d->conflictButtonGroup->addButton(d->overwriteButton, OVERWRITE);
     d->conflictButtonGroup->addButton(d->promptButton,    DIFFNAME);
     d->conflictButtonGroup->setExclusive(true);
@@ -251,4 +251,5 @@ void SettingsWidget::setConflictRule(SettingsWidget::ConflictRule r)
 {
     d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
+
 } // namespace KIPIDNGConverterPlugin

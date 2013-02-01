@@ -7,7 +7,7 @@
  * Description : DNG converter batch dialog
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
  * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
@@ -71,11 +71,11 @@ using namespace DNGIface;
 namespace KIPIDNGConverterPlugin
 {
 
-class BatchDialog::BatchDialogPriv
+class BatchDialog::Private
 {
 public:
 
-    BatchDialogPriv()
+    Private()
     {
         busy        = false;
         page        = 0;
@@ -101,7 +101,7 @@ public:
 };
 
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
-    : KPToolDialog(0), d(new BatchDialogPriv)
+    : KPToolDialog(0), d(new Private)
 {
     setWindowIcon(KIcon("dngconverter"));
     setButtons(Help | Default | Apply | Close);
@@ -113,7 +113,7 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
-    QGridLayout* mainLayout = new QGridLayout(d->page);
+    QGridLayout* const mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
@@ -180,7 +180,9 @@ void BatchDialog::closeEvent(QCloseEvent* e)
     if (!e) return;
 
     // Stop current conversion if necessary
-    if (d->busy) slotStartStop();
+    if (d->busy)
+        slotStartStop();
+
     saveSettings();
     d->listView->listView()->clear();
     e->accept();
@@ -189,7 +191,9 @@ void BatchDialog::closeEvent(QCloseEvent* e)
 void BatchDialog::slotClose()
 {
     // Stop current conversion if necessary
-    if (d->busy) slotStartStop();
+    if (d->busy)
+        slotStartStop();
+
     saveSettings();
     d->listView->listView()->clear();
     d->fileList.clear();
@@ -239,9 +243,11 @@ void BatchDialog::slotStartStop()
         d->fileList.clear();
 
         QTreeWidgetItemIterator it(d->listView->listView());
+
         while (*it)
         {
-            MyImageListViewItem* lvItem = dynamic_cast<MyImageListViewItem*>(*it);
+            MyImageListViewItem* const lvItem = dynamic_cast<MyImageListViewItem*>(*it);
+
             if (lvItem)
             {
                 if (!lvItem->isDisabled() && (lvItem->state() != MyImageListViewItem::Success))
@@ -304,17 +310,18 @@ void BatchDialog::slotIdentify()
 
         if(d->settingsBox->conflictRule() == SettingsWidget::OVERWRITE)
         {
-            QString dest              = fi.completeBaseName() + QString(".dng");
-            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
-            if (item) item->setDestFileName(dest);
+            QString dest                    = fi.completeBaseName() + QString(".dng");
+            MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+
+            if (item)
+                item->setDestFileName(dest);
         }
 
         else
         {
-            int i        = 0;
-            QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
+            int i             = 0;
+            QString dest      = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
             QFileInfo a(dest);
-
             bool fileNotFound = (a.exists());
 
             if (!fileNotFound)
@@ -327,6 +334,7 @@ void BatchDialog::slotIdentify()
                 while(fileNotFound)
                 {
                     a = QFileInfo(dest);
+
                     if (!a.exists())
                     {
                         fileNotFound = false;
@@ -341,14 +349,17 @@ void BatchDialog::slotIdentify()
                 dest = fi.completeBaseName() + QString("_") + QString::number(i) + QString(".dng");
             }
 
-            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
-            if (item) item->setDestFileName(dest);
+            MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+
+            if (item)
+                item->setDestFileName(dest);
         }
     }
 
     if (!urlList.empty())
     {
         d->thread->identifyRawFiles(urlList);
+
         if (!d->thread->isRunning())
             d->thread->start();
     }
@@ -361,6 +372,7 @@ void BatchDialog::processAll()
     d->thread->setPreviewMode(d->settingsBox->previewMode());
     d->thread->setUpdateFileDate(d->settingsBox->updateFileDate());
     d->thread->processRawFiles(d->listView->imageUrls(true));
+
     if (!d->thread->isRunning())
     {
         d->thread->start();
@@ -394,14 +406,15 @@ void BatchDialog::busy(bool busy)
 
     d->settingsBox->setEnabled(!d->busy);
     d->listView->listView()->viewport()->setEnabled(!d->busy);
-
     d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
 }
 
 void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
-    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
-    if (!item) return;
+    MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
+
+    if (!item)
+        return;
 
     QString destFile(item->destPath());
 
@@ -452,8 +465,10 @@ void BatchDialog::processingFailed(const KUrl& url, int result)
     d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
 
-    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
-    if (!item) return;
+    MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
+
+    if (!item)
+        return;
 
     QString status;
 
@@ -530,7 +545,8 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             {
                 case(IDENTIFY):
                 {
-                    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(ad.fileUrl));
+                    MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(ad.fileUrl));
+
                     if (item)
                     {
                         item->setIdentity(ad.message);

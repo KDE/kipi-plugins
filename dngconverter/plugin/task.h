@@ -6,7 +6,7 @@
  * Date        : 2012-12-24
  * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,7 +56,7 @@ public:
     void setCompressLossLess(bool b);
     void setUpdateFileDate(bool b);
     void setPreviewMode(int mode);
-    
+
 Q_SIGNALS:
 
     void signalStarting(const KIPIDNGConverterPlugin::ActionData& ad);
@@ -65,7 +65,7 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     void slotCancel();
-    
+
 protected:
 
     void run();

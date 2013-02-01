@@ -6,7 +6,7 @@
  * Date        : 2006-09-24
  * Description : DNG converter plugin action descriptions
  *
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,10 +54,11 @@ class ActionData
 
 public:
 
-    ActionData() 
+    ActionData()
     {
         starting = false;
         result   = DNGWriter::PROCESSCOMPLETE;
+        action   = NONE;
     }
 
     bool    starting;

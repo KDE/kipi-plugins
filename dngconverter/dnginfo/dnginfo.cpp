@@ -44,6 +44,7 @@
 int main(int argc, char** argv)
 {
     bool extractOriginal = false;
+
     if(argc == 1) 
     {
         fprintf(stderr,
@@ -58,9 +59,11 @@ int main(int argc, char** argv)
     }
 
     qint32 index;
+
     for (index = 1; index < argc && argv[index][0] == '-'; ++index)
     {
         QString option = &argv[index][1];
+
         if (option == "extractraw")
         {
             extractOriginal = true;
@@ -151,6 +154,7 @@ int main(int argc, char** argv)
             }
         }
     }
+
     dng_xmp_sdk::TerminateSDK();
 
     return 0;

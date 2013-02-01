@@ -6,7 +6,7 @@
  * Date        : 2012-12-24
  * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,13 +61,14 @@ public:
 
     Private()
     {
-        backupOriginalRawFile = false;
-        compressLossLess      = true;
-        updateFileDate        = false;
-        cancel                = false;
-        previewMode           = DNGWriter::MEDIUM;
-        iface                 = 0;
-        PluginLoader* pl      = PluginLoader::instance();
+        backupOriginalRawFile  = false;
+        compressLossLess       = true;
+        updateFileDate         = false;
+        cancel                 = false;
+        previewMode            = DNGWriter::MEDIUM;
+        iface                  = 0;
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -80,7 +81,7 @@ public:
     bool       cancel;
 
     int        previewMode;
-    
+
     KUrl       url;
     Action     action;
 
@@ -142,6 +143,7 @@ void Task::run()
             }
 
             QString identify = i18n("Cannot identify Raw image");
+
             if (info.isDecodable)
             {
                 identify = info.make + QString("-") + info.model;
@@ -171,7 +173,7 @@ void Task::run()
                 KPFileReadLocker(d->iface, d->url.toLocalFile());
                 QFileInfo fi(d->url.toLocalFile());
                 destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-" +
-                        QString::number(QDateTime::currentDateTime().toTime_t()) + QString(d->url.fileName());
+                           QString::number(QDateTime::currentDateTime().toTime_t()) + QString(d->url.fileName());
 
                 d->dngProcessor.reset();
                 d->dngProcessor.setInputFile(d->url.toLocalFile());
