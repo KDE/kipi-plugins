@@ -133,15 +133,14 @@ void MainDialog::readSettings()
 
     m_selectedFilesButton->setEnabled( m_sharedData->showSelectedFilesOnly );
 
-    m_delaySpinBox->setValue(m_sharedData->useMilliseconds ?
-                             m_sharedData->delay : m_sharedData->delay / 1000 );
+    m_delaySpinBox->setValue(m_sharedData->useMilliseconds ? m_sharedData->delay
+                                                           : m_sharedData->delay / 1000 );
 
     slotUseMillisecondsToggled();
 
     // --------------------------------------------------------
 
     setupConnections();
-
     slotOpenGLToggled();
     slotPrintCommentsToggled();
     slotEffectChanged();
@@ -150,20 +149,16 @@ void MainDialog::readSettings()
 
 void MainDialog::saveSettings()
 {
-    m_sharedData->opengl            = m_openglCheckBox->isChecked();
-    m_sharedData->openGlFullScale   = m_openGlFullScale->isChecked();
+    m_sharedData->opengl                = m_openglCheckBox->isChecked();
+    m_sharedData->openGlFullScale       = m_openGlFullScale->isChecked();
+    m_sharedData->delay                 = m_sharedData->useMilliseconds ? m_delaySpinBox->value()
+                                                                        : m_delaySpinBox->value() * 1000;
 
-    m_sharedData->delay             = m_sharedData->useMilliseconds ?
-                                      m_delaySpinBox->value() :
-                                      m_delaySpinBox->value() * 1000;
-
-    m_sharedData->printFileName     = m_printNameCheckBox->isChecked();
-    m_sharedData->printProgress     = m_printProgressCheckBox->isChecked();
-    m_sharedData->printFileComments = m_printCommentsCheckBox->isChecked();
-
-    m_sharedData->loop    = m_loopCheckBox->isChecked();
-    m_sharedData->shuffle = m_shuffleCheckBox->isChecked();
-
+    m_sharedData->printFileName         = m_printNameCheckBox->isChecked();
+    m_sharedData->printProgress         = m_printProgressCheckBox->isChecked();
+    m_sharedData->printFileComments     = m_printCommentsCheckBox->isChecked();
+    m_sharedData->loop                  = m_loopCheckBox->isChecked();
+    m_sharedData->shuffle               = m_shuffleCheckBox->isChecked();
     m_sharedData->showSelectedFilesOnly = m_selectedFilesButton->isChecked();
 
     if (!m_openglCheckBox->isChecked())
@@ -313,11 +308,12 @@ void MainDialog::loadEffectNamesGL()
 bool MainDialog::updateUrlList()
 {
     m_sharedData->urlList.clear();
-
     QTreeWidgetItemIterator it(m_ImagesFilesListBox->listView());
+
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
+
         if (!item)
             continue;
 
@@ -332,6 +328,7 @@ bool MainDialog::updateUrlList()
         m_sharedData->urlList.append(url);  // Input images files.
         ++it;
     }
+
     return true;
 }
 
@@ -344,7 +341,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
         return;
     }
 
-    KPImagesListViewItem* pitem = static_cast<KPImagesListViewItem*>(item);
+    KPImagesListViewItem* const pitem = static_cast<KPImagesListViewItem*>(item);
 
     if (!pitem)
         return;
@@ -358,6 +355,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     m_sharedData->iface()->thumbnail(url, ICONSIZE);
 
     QModelIndex index = m_ImagesFilesListBox->listView()->currentIndex();
+
     if (index.isValid())
     {
         int rowindex = index.row();
@@ -369,6 +367,7 @@ void MainDialog::addItems(const KUrl::List& fileList)
 {
     if (fileList.isEmpty())
         return;
+
     KUrl::List files = fileList;
 
     m_ImagesFilesListBox->slotAddImages(files);
@@ -398,8 +397,7 @@ void MainDialog::slotEffectChanged()
     m_printProgressCheckBox->setEnabled(!isKB);
     m_printCommentsCheckBox->setEnabled(!isKB);
     m_openGlFullScale->setEnabled(!isKB && m_openglCheckBox->isChecked());
-    m_sharedData->page_caption->setEnabled((!isKB) &&
-                                           m_printCommentsCheckBox->isChecked());
+    m_sharedData->page_caption->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
 }
 
 void MainDialog::slotDelayChanged( int delay )
@@ -428,6 +426,7 @@ void MainDialog::slotUseMillisecondsToggled()
         delay /= 1000;
 
     }
+
     m_delaySpinBox->setValue(delay);
 }
 
@@ -450,6 +449,7 @@ void MainDialog::slotSelection()
         urlList = m_sharedData->iface()->currentAlbum().images();
 
         QList<KIPI::ImageCollection>::iterator it;
+
         for (it = albumList.begin(); it != albumList.end(); ++it)
         {
             if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))

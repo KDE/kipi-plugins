@@ -86,7 +86,6 @@ private:
     void setupConnections();
     void loadEffectNames();
     void loadEffectNamesGL();
-
     void showNumberImages();
     void addItems(const KUrl::List& fileList);
 

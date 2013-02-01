@@ -45,11 +45,12 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedCo
 {
     setupUi(this);
 
-    m_sharedData = sharedData;
-    m_currIndex  = 0;
-    m_urlList    = urls;
-    m_stopCalled = false;
-    m_canHide    = true;
+    m_sharedData  = sharedData;
+    m_currIndex   = 0;
+    m_urlList     = urls;
+    m_stopCalled  = false;
+    m_canHide     = true;
+    m_isZeroTime  = false;
 
     m_soundLabel->setPixmap(KIcon("speaker").pixmap(64, 64));
 
@@ -88,9 +89,7 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedCo
 
     // Phonon
     m_mediaObject = new Phonon::MediaObject(this);
-
     m_mediaObject->setTransitionTime(1000);
-
     m_mediaObject->setTickInterval(500);
 
     connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
@@ -103,12 +102,9 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedCo
             this, SLOT(slotTimeUpdaterTimeout()));
 
     m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-
     Phonon::createPath(m_mediaObject, m_audioOutput);
-
     m_volumeSlider->setAudioOutput(m_audioOutput);
     m_volumeSlider->setOrientation(Qt::Horizontal);
-
     setZeroTime();
 
     // Loading first song
@@ -151,7 +147,7 @@ void PlaybackWidget::checkSkip()
 void PlaybackWidget::setGUIPlay(bool isPlaying)
 {
     m_playButton->setIcon(KIcon( isPlaying ? "media-playback-start" :
-                                 "media-playback-pause" ));
+                                             "media-playback-pause" ));
 }
 
 void PlaybackWidget::setZeroTime()
@@ -164,7 +160,7 @@ void PlaybackWidget::setZeroTime()
 
 void PlaybackWidget::enqueue(const KUrl::List& urls)
 {
-    m_urlList = urls;
+    m_urlList   = urls;
     m_currIndex = 0;
 
     if ( m_urlList.isEmpty() )
@@ -273,7 +269,6 @@ void PlaybackWidget::slotPrev()
     }
 
     setZeroTime();
-
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
     m_mediaObject->play();
 }
@@ -296,7 +291,6 @@ void PlaybackWidget::slotNext()
     }
 
     setZeroTime();
-
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
     m_mediaObject->play();
 }
@@ -333,7 +327,6 @@ void PlaybackWidget::slotMediaStateChanged(Phonon::State newstate, Phonon::State
 {
     switch (newstate)
     {
-
         case Phonon::StoppedState :
             m_playButton->setEnabled(true);
             setGUIPlay(true);
@@ -347,7 +340,6 @@ void PlaybackWidget::slotMediaStateChanged(Phonon::State newstate, Phonon::State
                     checkSkip();
                 }
             }
-
             break;
 
         case Phonon::ErrorState :
