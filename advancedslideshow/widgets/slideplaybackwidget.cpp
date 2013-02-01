@@ -40,13 +40,11 @@
 
 namespace KIPIAdvancedSlideshowPlugin
 {
-SlidePlaybackWidget::SlidePlaybackWidget(QWidget* parent)
-                   : QWidget(parent)
+SlidePlaybackWidget::SlidePlaybackWidget(QWidget* const parent)
+    : QWidget(parent)
 {
     setupUi(this);
-
     m_playButton->setCheckable(true);
-
     m_slideLabel->setPixmap(KIcon("view-presentation").pixmap(64, 64));
 
     m_prevButton->setText("");
@@ -125,15 +123,15 @@ void SlidePlaybackWidget::slotPlayButtonToggled()
 {
     if (m_playButton->isChecked())
     {
-        m_canHide = false;
-        KIconLoader* loader = KIconLoader::global();
+        m_canHide                 = false;
+        KIconLoader* const loader = KIconLoader::global();
         m_playButton->setIcon(loader->loadIcon("media-playback-start", KIconLoader::NoGroup, 22));
         emit signalPause();
     }
     else
     {
-        m_canHide = true;
-        KIconLoader* loader = KIconLoader::global();
+        m_canHide                 = true;
+        KIconLoader* const loader = KIconLoader::global();
         m_playButton->setIcon(loader->loadIcon("media-playback-pause", KIconLoader::NoGroup, 22));
         emit signalPlay();
     }
@@ -144,8 +142,8 @@ void SlidePlaybackWidget::slotNexPrevClicked()
     if (!m_playButton->isChecked())
     {
         m_playButton->setChecked(true);
-        m_canHide = false;
-        KIconLoader* loader = KIconLoader::global();
+        m_canHide                 = false;
+        KIconLoader* const loader = KIconLoader::global();
         m_playButton->setIcon(loader->loadIcon("media-playback-start", KIconLoader::NoGroup, 22));
         emit signalPause();
     }

@@ -103,7 +103,7 @@ void LoadThread::run()
 // -----------------------------------------------------------------------------------------
 
 SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
-                                 SharedContainer* sharedData, int beginAtIndex)
+                                 SharedContainer* const sharedData, int beginAtIndex)
 {
     m_currIndex      = beginAtIndex;
     m_cacheSize      = cacheSize;
@@ -125,8 +125,8 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
-        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                               filePath, orientation, m_swidth, m_sheight);
+        LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                                     filePath, orientation, m_swidth, m_sheight);
         m_threadLock->lock();
         m_loadingThreads->insert(filePath, newThread);
         newThread->start();
@@ -140,8 +140,8 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
-        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                               filePath, orientation, m_swidth, m_sheight);
+        LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                                     filePath, orientation, m_swidth, m_sheight);
         m_threadLock->lock();
         m_loadingThreads->insert(filePath, newThread);
         newThread->start();
@@ -173,9 +173,9 @@ SlideShowLoader::~SlideShowLoader()
 
 void SlideShowLoader::next()
 {
-    int victim = (m_currIndex - (m_cacheSize % 2 == 0 ?
-                 (m_cacheSize / 2) - 1 :
-                  int(m_cacheSize / 2))) % m_pathList.count();
+    int victim = (m_currIndex - (m_cacheSize % 2 == 0 ? (m_cacheSize / 2) - 1
+                                                      :  int(m_cacheSize / 2))) % m_pathList.count();
+
     int newBorn = (m_currIndex + int(m_cacheSize / 2) + 1) % m_pathList.count();
 
     if (victim == newBorn)
@@ -183,13 +183,14 @@ void SlideShowLoader::next()
 
     m_threadLock->lock();
 
-    LoadThread* oldThread = m_loadingThreads->value(m_pathList[victim].first);
+    LoadThread* const oldThread = m_loadingThreads->value(m_pathList[victim].first);
+
     if (oldThread)
         oldThread->wait();
+
     delete oldThread;
 
     m_loadingThreads->remove(m_pathList[victim].first);
-
     m_imageLock->lock();
     m_loadedImages->remove(m_pathList[victim].first);
     m_imageLock->unlock();
@@ -199,7 +200,7 @@ void SlideShowLoader::next()
     KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
-    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
+    LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
@@ -223,7 +224,8 @@ void SlideShowLoader::prev()
     m_threadLock->lock();
     m_imageLock->lock();
 
-    LoadThread* oldThread = m_loadingThreads->value(m_pathList[victim].first);
+    LoadThread* const oldThread = m_loadingThreads->value(m_pathList[victim].first);
+
     if (oldThread)
         oldThread->wait();
 
@@ -239,7 +241,7 @@ void SlideShowLoader::prev()
     KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
-    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
+    LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
@@ -254,7 +256,6 @@ void SlideShowLoader::prev()
 QImage SlideShowLoader::getCurrent()
 {
     checkIsIn(m_currIndex);
-
     m_imageLock->lock();
     QImage returned = (*m_loadedImages)[m_pathList[m_currIndex].first];
     m_imageLock->unlock();
@@ -289,7 +290,7 @@ void SlideShowLoader::checkIsIn(int index)
         KPImageInfo info(filePath);
         KPMetadata::ImageOrientation orientation = info.orientation();
 
-        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
+        LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
         m_loadingThreads->insert(m_pathList[index].first, newThread);
         newThread->start();

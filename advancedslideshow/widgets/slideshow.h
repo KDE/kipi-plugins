@@ -61,7 +61,7 @@ class SlideShow : public QWidget
 
 public:
 
-    SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* sharedData);
+    SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* const sharedData);
     ~SlideShow();
 
     void registerEffects();
@@ -93,6 +93,8 @@ protected:
 
     void    paintEvent(QPaintEvent*);
     void    startPainter();
+
+protected:
 
     bool    m_simplyShow;
     bool    m_startPainter;

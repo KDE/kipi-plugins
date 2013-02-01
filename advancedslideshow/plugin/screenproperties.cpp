@@ -43,7 +43,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-ScreenProperties::ScreenProperties(QWidget* mainWidget)
+ScreenProperties::ScreenProperties(QWidget* const mainWidget)
 {
     activeScreen = QApplication::desktop()->screenNumber(mainWidget);
 }

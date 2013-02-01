@@ -38,7 +38,7 @@ class AdvancedDialog : public QWidget, Ui::AdvancedDialog
 
 public:
 
-    AdvancedDialog(QWidget* parent, SharedContainer* sharedData);
+    AdvancedDialog(QWidget* const parent, SharedContainer* const sharedData);
     ~AdvancedDialog();
 
     void readSettings();

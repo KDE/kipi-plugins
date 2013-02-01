@@ -44,8 +44,8 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundItem::SoundItem(QListWidget* parent, const KUrl& url)
-         : QListWidgetItem(parent)
+SoundItem::SoundItem(QListWidget* const parent, const KUrl& url)
+    : QListWidgetItem(parent)
 {
     m_url = url;
     setIcon(SmallIcon("audio-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
@@ -129,8 +129,8 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
 
 // ------------------------------------------------------------------
 
-ListSoundItems::ListSoundItems(QWidget* parent)
-              : QListWidget(parent)
+ListSoundItems::ListSoundItems(QWidget* const parent)
+    : QListWidget(parent)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setAcceptDrops(true);
@@ -158,6 +158,7 @@ void ListSoundItems::dropEvent(QDropEvent* e)
     foreach(const QUrl &url, list)
     {
         QFileInfo fi(url.toLocalFile());
+
         if (fi.isFile() && fi.exists())
             urls.append(KUrl(url));
     }
@@ -174,7 +175,8 @@ KUrl::List ListSoundItems::fileUrls()
 
     for (int i = 0; i < count(); ++i)
     {
-        SoundItem *sitem = dynamic_cast<SoundItem*>(item(i));
+        SoundItem* const sitem = dynamic_cast<SoundItem*>(item(i));
+
         if (sitem)
         {
             files << KUrl(sitem->url());

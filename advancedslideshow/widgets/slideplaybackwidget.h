@@ -43,10 +43,10 @@ class SlidePlaybackWidget : public QWidget, public Ui::SlidePlaybackWidget
 
 public:
 
-    SlidePlaybackWidget(QWidget* parent);
+    SlidePlaybackWidget(QWidget* const parent);
     ~SlidePlaybackWidget();
 
-    bool canHide() const;
+    bool canHide()  const;
     bool isPaused() const;
     void setPaused(bool val);
 
@@ -76,7 +76,6 @@ private:
     bool         m_canHide;
 
     friend class SlideShow;
-
     friend class SlideShowGL;
 };
 

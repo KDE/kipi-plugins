@@ -59,7 +59,7 @@ public:
     ~SharedContainer();
 
     KIPI::Interface* iface() const;
-    void             setIface(KIPI::Interface* iface);
+    void             setIface(KIPI::Interface* const iface);
 
 public:
 
@@ -130,7 +130,7 @@ class VolumeSlider : public Phonon::VolumeSlider
 
 public:
 
-    VolumeSlider(QWidget* parent);
+    VolumeSlider(QWidget* const parent);
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

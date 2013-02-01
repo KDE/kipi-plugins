@@ -95,6 +95,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
     setupActions();
 
     m_interface = interface();
+
     if(!m_interface)
     {
         kError() << "KIPI interface is null!";
@@ -146,7 +147,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
         m_sharedData->showSelectedFilesOnly = false;
     }
 
-    SlideShowConfig *slideShowConfig = new SlideShowConfig(kapp->activeWindow(), m_sharedData);
+    SlideShowConfig* const slideShowConfig = new SlideShowConfig(kapp->activeWindow(), m_sharedData);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
@@ -162,7 +163,7 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
         return;
     }
 
-    KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*> (parent());
+    KIPI::Interface* const m_interface = dynamic_cast<KIPI::Interface*> (parent());
 
     if (!m_interface)
     {
@@ -196,8 +197,8 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     bool opengl      = grp.readEntry("OpenGL",  false);
     bool shuffle     = grp.readEntry("Shuffle", false);
     bool wantKB      = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
+    m_urlList        = m_sharedData->urlList;
 
-    m_urlList = m_sharedData->urlList;
     if (m_urlList.isEmpty())
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
@@ -206,8 +207,8 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     typedef QPair<QString, int>  FileAnglePair;
     typedef QList<FileAnglePair> FileList;
-    FileList    fileList;
-    QStringList commentsList;
+    FileList                     fileList;
+    QStringList                  commentsList;
 
     for (KUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
     {
@@ -228,7 +229,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         gettimeofday(&tv, 0);
         srand(tv.tv_sec);
 
-        FileList::iterator it  = fileList.begin();
+        FileList::iterator it       = fileList.begin();
         FileList::iterator it1;
 
         QStringList::iterator itcom = commentsList.begin();
@@ -238,10 +239,10 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         {
             int inc = (int) (float(fileList.count()) * rand() / (RAND_MAX + 1.0));
 
-            it1 = fileList.begin();
+            it1  = fileList.begin();
             it1 += inc;
 
-            itcom1 = commentsList.begin();
+            itcom1  = commentsList.begin();
             itcom1 += inc;
 
             qSwap(*(it++), *(it1));
@@ -251,7 +252,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     if (!opengl)
     {
-        SlideShow* slideShow = new SlideShow(fileList, commentsList, m_sharedData);
+        SlideShow* const slideShow = new SlideShow(fileList, commentsList, m_sharedData);
         slideShow->show();
     }
     else
@@ -263,12 +264,12 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         {
             if (wantKB)
             {
-                SlideShowKB* slideShow = new SlideShowKB(fileList, commentsList, m_sharedData);
+                SlideShowKB* const slideShow = new SlideShowKB(fileList, commentsList, m_sharedData);
                 slideShow->show();
             }
             else
             {
-                SlideShowGL* slideShow = new SlideShowGL(fileList, commentsList, m_sharedData);
+                SlideShowGL* const slideShow = new SlideShowGL(fileList, commentsList, m_sharedData);
                 slideShow->show();
             }
         }

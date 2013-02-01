@@ -38,7 +38,7 @@ class CaptionDialog : public QWidget, Ui::CaptionDialog
 
 public:
 
-    CaptionDialog(QWidget* parent, SharedContainer* sharedData);
+    CaptionDialog(QWidget* const parent, SharedContainer* const sharedData);
     ~CaptionDialog();
 
     void readSettings();

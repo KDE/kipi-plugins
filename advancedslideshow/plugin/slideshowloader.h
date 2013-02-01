@@ -70,7 +70,6 @@ private:
 
     QMutex*                      m_imageLock;
     LoadedImages*                m_loadedImages;
-
     KUrl                         m_path;
     QString                      m_filename;
     KPMetadata::ImageOrientation m_orientation;
@@ -88,7 +87,7 @@ class SlideShowLoader
 public:
 
     SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
-                    SharedContainer* sharedData, int beginAtIndex = 0);
+                    SharedContainer* const sharedData, int beginAtIndex = 0);
     ~SlideShowLoader();
 
     void    next();
@@ -101,6 +100,8 @@ public:
 private:
 
     void checkIsIn(int index);
+
+private:
 
     LoadingThreads*  m_loadingThreads;
     LoadedImages*    m_loadedImages;

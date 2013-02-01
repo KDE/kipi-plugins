@@ -64,7 +64,7 @@ class SlideShowGL : public QGLWidget
 public:
 
     SlideShowGL(const QList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, SharedContainer* sharedData);
+                const QStringList& commentsList, SharedContainer* const sharedData);
     ~SlideShowGL();
 
     void registerEffects();

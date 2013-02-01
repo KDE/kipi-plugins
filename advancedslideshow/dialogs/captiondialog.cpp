@@ -33,8 +33,8 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-CaptionDialog::CaptionDialog( QWidget* parent, SharedContainer* sharedData)
-             : QWidget(parent)
+CaptionDialog::CaptionDialog( QWidget* const parent, SharedContainer* const sharedData)
+    : QWidget(parent)
 {
     setupUi(this);
     m_sharedData = sharedData;

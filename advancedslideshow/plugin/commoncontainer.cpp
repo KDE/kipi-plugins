@@ -84,14 +84,14 @@ KIPI::Interface* SharedContainer::iface() const
     return kipiIface;
 }
 
-void SharedContainer::setIface(KIPI::Interface* iface)
+void SharedContainer::setIface(KIPI::Interface* const iface)
 {
     kipiIface = iface;
 }
 
 // -------------------------------------------------------------
 
-VolumeSlider::VolumeSlider(QWidget* parent)
+VolumeSlider::VolumeSlider(QWidget* const parent)
             : Phonon::VolumeSlider(parent)
 {
 }

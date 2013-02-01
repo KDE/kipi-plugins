@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2012      by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,12 +55,12 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlideShowConfig::SlideShowConfigPrivate
+class SlideShowConfig::Private
 {
 
 public:
 
-    SlideShowConfigPrivate()
+    Private()
     {
         sharedData = 0;
         config     = 0;
@@ -71,7 +71,7 @@ public:
 };
 
 SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const sharedData)
-    : KPPageDialog(parent), d(new SlideShowConfigPrivate)
+    : KPPageDialog(parent), d(new Private)
 {
     setObjectName("Advanced Slideshow Settings");
     setWindowTitle(i18n("Advanced Slideshow"));

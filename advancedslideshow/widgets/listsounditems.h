@@ -53,12 +53,12 @@ class SoundItem : public QObject, public QListWidgetItem
 
 public:
 
-    SoundItem(QListWidget* parent, const KUrl& url);
+    SoundItem(QListWidget* const parent, const KUrl& url);
     ~SoundItem();
 
-    KUrl    url() const;
-    QString artist() const;
-    QString title() const;
+    KUrl    url()       const;
+    QString artist()    const;
+    QString title()     const;
     QTime   totalTime() const;
     void    setName(const QString& text);
 
@@ -87,7 +87,7 @@ class ListSoundItems : public QListWidget
 
 public:
 
-    ListSoundItems(QWidget* parent = 0);
+    ListSoundItems(QWidget* const parent = 0);
 
 public:
 
