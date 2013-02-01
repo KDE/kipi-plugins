@@ -77,9 +77,10 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
         s[0]  = 0.3 * rnd() + 1.0;
         s[1]  = 0.3 * rnd() + 1.0;
     }
-    while (fabs(s[0] - s[1]) < 0.15 && ++i < 10);
+    while ((fabs(s[0] - s[1]) < 0.15) && (++i < 10));
 
-    if ((!zoomIn || (s[0] > s[1]))||(zoomIn || !(s[0] > s[1])))
+    if ((!zoomIn ||  (s[0] > s[1])) ||
+        ( zoomIn || !(s[0] > s[1])))
     {
         double tmp = s[0];
         s[0]       = s[1];
@@ -87,7 +88,6 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     }
 
     m_deltaScale = s[1] / s[0] - 1.0;
-
     m_baseScale  = s[0];
 
     // additional scale factors to ensure proper m_aspect of the displayed image
@@ -105,9 +105,8 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
         sy = 1.0;
     }
 
-    m_xScale = sx;
-
-    m_yScale = sy;
+    m_xScale   = sx;
+    m_yScale   = sy;
 
     // calculate path
     xMargin[0] = (s[0] * sx - 1.0) / 2.0;
@@ -115,16 +114,16 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     xMargin[1] = (s[1] * sx - 1.0) / 2.0;
     yMargin[1] = (s[1] * sy - 1.0) / 2.0;
 
-    i = 0;
+    i        = 0;
     bestDist = 0.0;
 
     do
     {
         double sign = rndSign();
-        x[0] = xMargin[0] * (0.2 * rnd() + 0.8) *  sign;
-        y[0] = yMargin[0] * (0.2 * rnd() + 0.8) * -sign;
-        x[1] = xMargin[1] * (0.2 * rnd() + 0.8) * -sign;
-        y[1] = yMargin[1] * (0.2 * rnd() + 0.8) *  sign;
+        x[0]        = xMargin[0] * (0.2 * rnd() + 0.8) *  sign;
+        y[0]        = yMargin[0] * (0.2 * rnd() + 0.8) * -sign;
+        x[1]        = xMargin[1] * (0.2 * rnd() + 0.8) * -sign;
+        y[1]        = yMargin[1] * (0.2 * rnd() + 0.8) *  sign;
 
         if (fabs(x[1] - x[0]) + fabs(y[1] - y[0]) > bestDist)
         {
@@ -136,12 +135,12 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
         }
 
     }
-    while (bestDist < 0.3 && ++i < 10);
+    while ((bestDist < 0.3) && (++i < 10));
 }
 
 // -------------------------------------------------------------------------
 
-Image::Image(ViewTrans* viewTrans, float aspect)
+Image::Image(ViewTrans* const viewTrans, float aspect)
 {
     this->m_viewTrans = viewTrans;
     this->m_aspect    = aspect;
@@ -162,12 +161,11 @@ Image::~Image()
 // -------------------------------------------------------------------------
 
 SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
-                         const QStringList& commentsList, SharedContainer* sharedData)
+                         const QStringList& commentsList, SharedContainer* const sharedData)
            : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setWindowFlags(Qt::X11BypassWindowManagerHint |
-                   Qt::WindowStaysOnTopHint | Qt::Popup);
+    setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::Popup);
 
     QRect deskRect = KGlobalSettings::desktopGeometry( kapp->activeWindow() );
     m_deskX        = deskRect.x();
@@ -178,13 +176,11 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
 
-    m_sharedData = sharedData;
+    m_sharedData   = sharedData;
 
-    // =======================================================
     // Avoid boring compile time "unused parameter" warning :P
     // These parameters could be useful for future implementations
     m_commentsList = commentsList;
-    // =======================================================
 
     srand(QTime::currentTime().msec());
     readSettings();
@@ -241,7 +237,6 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     // -- load image and let's start
 
     m_imageLoadThread->start();
-
     m_timer->start(1000 / frameRate);
 }
 
@@ -269,7 +264,7 @@ SlideShowKB::~SlideShowKB()
 void SlideShowKB::setNewKBEffect()
 {
     KBEffect::Type type;
-    bool needFadeIn = (m_effect == 0 || m_effect->type() == KBEffect::Fade);
+    bool needFadeIn = ((m_effect == 0) || (m_effect->type() == KBEffect::Fade));
 
     // we currently only have two effects
 
@@ -323,18 +318,17 @@ bool SlideShowKB::setupNewImage(int idx)
     if ( !m_haveImages)
         return false;
 
-    bool ok = false;
-
-    m_zoomIn  = !m_zoomIn;
+    bool ok  = false;
+    m_zoomIn = !m_zoomIn;
 
     if (m_imageLoadThread->grabImage())
     {
         delete m_image[idx];
 
         // we have the image lock and there is an image
-        float imageAspect    = m_imageLoadThread->imageAspect();
-        ViewTrans *viewTrans = new ViewTrans(m_zoomIn, aspect() / imageAspect);
-        m_image[idx]         = new Image(viewTrans, imageAspect);
+        float imageAspect          = m_imageLoadThread->imageAspect();
+        ViewTrans* const viewTrans = new ViewTrans(m_zoomIn, aspect() / imageAspect);
+        m_image[idx]               = new Image(viewTrans, imageAspect);
 
         applyTexture(m_image[idx], m_imageLoadThread->image());
         ok = true;
@@ -358,7 +352,7 @@ void SlideShowKB::startSlideShowOnce()
     // the first image
     if (m_initialized == false && m_imageLoadThread->ready())
     {
-        setupNewImage(0);                   // setup the first image and
+        setupNewImage(0);                     // setup the first image and
         m_imageLoadThread->requestNewImage(); // load the next one in background
         setNewKBEffect();                     // set the initial effect
 
@@ -368,9 +362,9 @@ void SlideShowKB::startSlideShowOnce()
 
 void SlideShowKB::swapImages()
 {
-    Image *tmp = m_image[0];
-    m_image[0] = m_image[1];
-    m_image[1] = tmp;
+    Image* const tmp = m_image[0];
+    m_image[0]       = m_image[1];
+    m_image[1]       = tmp;
 }
 
 void SlideShowKB::initializeGL()
@@ -402,18 +396,13 @@ void SlideShowKB::paintGL()
 
     // only clear the color buffer, if none of the active images is fully opaque
 
-    if ( !((m_image[0]->m_paint && m_image[0]->m_opacity == 1.0) ||
-            (m_image[1]->m_paint && m_image[1]->m_opacity == 1.0)) )
+    if (!((m_image[0]->m_paint && m_image[0]->m_opacity == 1.0) || (m_image[1]->m_paint && m_image[1]->m_opacity == 1.0)))
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-
     glMatrixMode(GL_PROJECTION);
-
     glLoadIdentity();
-
     glMatrixMode(GL_MODELVIEW);
-
     glLoadIdentity();
 
     if (m_endOfShow && m_image[0]->m_paint && m_image[1]->m_paint)
@@ -438,21 +427,21 @@ void SlideShowKB::resizeGL(int w, int h)
     glViewport(0, 0, (GLint) w, (GLint) h);
 }
 
-void SlideShowKB::applyTexture(Image *img, const QImage &texture)
+void SlideShowKB::applyTexture(Image* const img, const QImage &texture)
 {
     /* create the texture */
     glGenTextures(1, &img->m_texture);
     glBindTexture(GL_TEXTURE_2D, img->m_texture);
 
     /* actually generate the texture */
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, texture.width(), texture.height(), 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, texture.width(), texture.height(), 0,GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
+
     /* enable linear filtering  */
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
-void SlideShowKB::paintTexture(Image* img)
+void SlideShowKB::paintTexture(Image* const img)
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -460,14 +449,13 @@ void SlideShowKB::paintTexture(Image* img)
     float sx = img->m_viewTrans->m_xScaleCorrect();
     float sy = img->m_viewTrans->m_yScaleCorrect();
 
-    glTranslatef(img->m_viewTrans->transX(img->m_pos) * 2.0,
-                 img->m_viewTrans->transY(img->m_pos) * 2.0, 0.0);
-    glScalef(img->m_viewTrans->scale(img->m_pos),
-             img->m_viewTrans->scale(img->m_pos), 0.0);
+    glTranslatef(img->m_viewTrans->transX(img->m_pos) * 2.0, img->m_viewTrans->transY(img->m_pos) * 2.0, 0.0);
+    glScalef(img->m_viewTrans->scale(img->m_pos), img->m_viewTrans->scale(img->m_pos), 0.0);
 
     GLuint& tex = img->m_texture;
 
     glBindTexture(GL_TEXTURE_2D, tex);
+
     glBegin(GL_QUADS);
     {
         glColor4f(1.0, 1.0, 1.0, img->m_opacity);
@@ -497,10 +485,12 @@ void SlideShowKB::readSettings()
     m_disableCrossFade = group.readEntry("KB Disable Crossfade", false);
     m_forceFrameRate   = group.readEntry("KB Force Framerate", 0);
 
-    if (m_delay < 5)  m_delay = 5;
+    if (m_delay < 5)
+        m_delay = 5;
 
 //       if (m_delay > 20) m_delay = 20;
-    if (m_forceFrameRate > 120) m_forceFrameRate = 120;
+    if (m_forceFrameRate > 120)
+        m_forceFrameRate = 120;
 }
 
 void SlideShowKB::endOfShow()
@@ -529,8 +519,8 @@ void SlideShowKB::endOfShow()
     glBindTexture(GL_TEXTURE_2D, tex);
 
     /* actually generate the texture */
-    glTexImage2D( GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0,
-                  GL_RGBA, GL_UNSIGNED_BYTE, t.bits() );
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, t.bits());
+
     /* enable linear filtering  */
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -539,8 +529,8 @@ void SlideShowKB::endOfShow()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
     glBindTexture(GL_TEXTURE_2D, tex);
+
     glBegin(GL_QUADS);
     {
         glColor4f(1.0, 1.0, 1.0, 1.0);
@@ -590,7 +580,6 @@ void SlideShowKB::keyPressEvent(QKeyEvent* event)
         close();
 }
 
-
 void SlideShowKB::mousePressEvent(QMouseEvent* e)
 {
     if ( !e )
@@ -611,8 +600,7 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
 
     QPoint pos(e->pos());
 
-    if ((pos.y() > (m_deskY + 20)) &&
-            (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
+    if ((pos.y() > (m_deskY + 20)) && (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
     {
         if (m_playbackWidget->isHidden())
             return;
@@ -634,8 +622,7 @@ void SlideShowKB::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
 
-    if ((pos.y() < (m_deskY + 20)) ||
-            (pos.y() > (m_deskY + m_deskHeight - 20 - 1)))
+    if ((pos.y() < (m_deskY + 20)) || (pos.y() > (m_deskY + m_deskHeight - 20 - 1)))
         return;
 
     setCursor(QCursor(Qt::BlankCursor));

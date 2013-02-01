@@ -63,6 +63,22 @@ class ViewTrans
 
 public:
 
+    ViewTrans()
+    {
+        m_deltaX     = 0.0;
+        m_deltaY     = 0.0;
+        m_deltaScale = 0.0;
+        m_baseScale  = 0.0;
+        m_baseX      = 0.0;
+        m_baseY      = 0.0;
+        m_xScale     = 0.0;
+        m_yScale     = 0.0;
+    }
+
+    ~ViewTrans()
+    {
+    }
+
     ViewTrans(bool m_zoomIn, float relAspect);
 
     float transX(float pos) const
@@ -80,12 +96,12 @@ public:
         return m_baseScale * (1.0 + m_deltaScale * pos);
     };
 
-    float m_xScaleCorrect()
+    float m_xScaleCorrect() const
     {
         return m_xScale;
     };
 
-    float m_yScaleCorrect()
+    float m_yScaleCorrect() const
     {
         return m_yScale;
     };
@@ -117,8 +133,10 @@ class Image
 
 public:
 
-    explicit Image(ViewTrans* viewTrans, float aspect = 1.0);
+    explicit Image(ViewTrans* const viewTrans, float aspect = 1.0);
     ~Image();
+
+public:
 
     ViewTrans* m_viewTrans;
     float      m_aspect;
@@ -137,7 +155,7 @@ class SlideShowKB : public QGLWidget
 public:
 
     SlideShowKB(const QList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, SharedContainer* sharedData);
+                const QStringList& commentsList, SharedContainer* const sharedData);
 
     ~SlideShowKB();
 
@@ -146,7 +164,7 @@ public:
 
 private:
 
-    float aspect()
+    float aspect() const
     {
         return (float)width() / (float)height();
     };
@@ -160,8 +178,8 @@ private:
     void     initializeGL();
     void     paintGL();
     void     resizeGL(int w, int h);
-    void     applyTexture(Image* img, const QImage& image);
-    void     paintTexture(Image* img);
+    void     applyTexture(Image* const img, const QImage& image);
+    void     paintTexture(Image* const img);
     unsigned suggestFrameRate(unsigned forceRate);
 
     void     readSettings();
