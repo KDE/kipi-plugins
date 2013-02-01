@@ -39,9 +39,6 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class RGTagModelPrivate;
-
-
 class TreeBranch
 {
 public:
@@ -137,7 +134,8 @@ public Q_SLOTS:
 
 private:
 
-    RGTagModelPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIGPSSyncPlugin
