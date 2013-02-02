@@ -45,8 +45,10 @@ namespace KIPIGPSSyncPlugin
 class SetupGeneral::Private
 {
 public:
+
     Private()
     {
+        cbMapLayout = 0;
     }
 
     KComboBox* cbMapLayout;
@@ -55,15 +57,15 @@ public:
 SetupGeneral::SetupGeneral(QWidget* const parent)
   : SetupTemplate(parent), d(new Private())
 {
-    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* const mainLayout  = new QVBoxLayout(this);
 
     QHBoxLayout* const hboxLayout1 = new QHBoxLayout();
-    d->cbMapLayout = new KComboBox(this);
+    d->cbMapLayout                 = new KComboBox(this);
     d->cbMapLayout->addItem(i18n("One map"), QVariant::fromValue(MapLayoutOne));
     d->cbMapLayout->addItem(i18n("Two maps - horizontal"), QVariant::fromValue(MapLayoutHorizontal));
     d->cbMapLayout->addItem(i18n("Two maps - vertical"), QVariant::fromValue(MapLayoutVertical));
-    
-    QLabel* const labelMapLayout = new QLabel(i18n("Layout:"), this);
+
+    QLabel* const labelMapLayout   = new QLabel(i18n("Layout:"), this);
     labelMapLayout->setBuddy(d->cbMapLayout);
     hboxLayout1->addWidget(labelMapLayout);
     hboxLayout1->addWidget(d->cbMapLayout);
@@ -82,7 +84,7 @@ SetupGeneral::~SetupGeneral()
 void SetupGeneral::readSettings()
 {
     SetupGlobalObject* const setupGlobalObject = SetupGlobalObject::instance();
-    const MapLayout targetLayout = setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
+    const MapLayout targetLayout               = setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
 
     for (int i=0; i<d->cbMapLayout->count(); ++i)
     {
@@ -99,8 +101,7 @@ void SetupGeneral::readSettings()
 void SetupGeneral::slotApplySettings()
 {
     SetupGlobalObject* const setupGlobalObject = SetupGlobalObject::instance();
-    setupGlobalObject->writeEntry("Map Layout",
-            d->cbMapLayout->itemData(d->cbMapLayout->currentIndex()));
+    setupGlobalObject->writeEntry("Map Layout", d->cbMapLayout->itemData(d->cbMapLayout->currentIndex()));
 }
 
 } /* namespace KIPIGPSSyncPlugin */

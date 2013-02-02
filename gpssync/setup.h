@@ -39,6 +39,7 @@ class SetupGlobalObject : public QObject
     Q_OBJECT
 
 public:
+
     static SetupGlobalObject* instance();
 
     QVariant readEntry(const QString& name);
@@ -47,11 +48,15 @@ public:
     void triggerSignalSetupChanged();
 
 Q_SIGNALS:
+
     void signalSetupChanged();
 
 private:
+
     SetupGlobalObject();
     ~SetupGlobalObject();
+
+private:
 
     class Private;
     Private* const d;
@@ -59,18 +64,24 @@ private:
     friend class SetupGlobalObjectCreator;
 };
 
+// --------------------------------------------------------------------------
+
 class SetupTemplate : public QWidget
 {
     Q_OBJECT
 
 public:
+
     SetupTemplate(QWidget* const parent=0);
     ~SetupTemplate();
 
 public Q_SLOTS:
+
     virtual void slotApplySettings() = 0;
 
 };
+
+// --------------------------------------------------------------------------
 
 class Setup : public KPageDialog
 {
@@ -100,4 +111,3 @@ private:
 } /* namespace KIPIGPSSyncPlugin */
 
 #endif /* SETUP_H */
-

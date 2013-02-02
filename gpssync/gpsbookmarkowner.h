@@ -44,18 +44,24 @@ namespace KIPIGPSSyncPlugin
 
 class KipiImageModel;
 class GPSUndoCommand;
-class GPSBookmarkModelHelperPrivate;
+
 class GPSBookmarkModelHelper : public KGeoMap::ModelHelper
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
+
     enum Constants
     {
         CoordinatesRole = Qt::UserRole + 1
     };
 
+public:
+
     GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent = 0);
     virtual ~GPSBookmarkModelHelper();
+
+    void setVisible(const bool state);
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
@@ -65,33 +71,30 @@ public:
     virtual Flags itemFlags(const QModelIndex& index) const;
     virtual void snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices);
 
-    void setVisible(const bool state);
-
 private Q_SLOTS:
+
     void slotUpdateBookmarksModel();
 
-
 Q_SIGNALS:
+
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
-    GPSBookmarkModelHelperPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
-class GPSBookmarkOwnerPrivate;
+// ----------------------------------------------------------------------------------------------
+
 class GPSBookmarkOwner : public QObject, public KBookmarkOwner
 {
     Q_OBJECT
 
 public:
+
     GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget* const parent);
     virtual ~GPSBookmarkOwner();
-
-    virtual bool supportsTabs() const;
-    virtual QString currentTitle() const;
-    virtual QString currentUrl() const;
-    virtual bool enableOption(BookmarkOption option) const;
-    virtual void openBookmark(const KBookmark&, Qt::MouseButtons, Qt::KeyboardModifiers);
 
     KMenu* getMenu() const;
 
@@ -102,16 +105,23 @@ public:
 
     GPSBookmarkModelHelper* bookmarkModelHelper() const;
 
+    virtual bool supportsTabs() const;
+    virtual QString currentTitle() const;
+    virtual QString currentUrl() const;
+    virtual bool enableOption(BookmarkOption option) const;
+    virtual void openBookmark(const KBookmark&, Qt::MouseButtons, Qt::KeyboardModifiers);
+
 Q_SIGNALS:
+
     void positionSelected(GPSDataContainer position);
 
 private:
-    GPSBookmarkOwnerPrivate* const d;
+
+    class Private;
+    Private* const d;
 
 };
 
 }  // namespace KIPIGPSSyncPlugin
 
 #endif // GPSBOOKMARKOWNER_H
-
-

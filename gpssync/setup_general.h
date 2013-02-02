@@ -37,22 +37,24 @@ class SetupGeneral : public SetupTemplate
     Q_OBJECT
 
 public:
+
     SetupGeneral(QWidget* const parent = 0);
     ~SetupGeneral();
 
 public Q_SLOTS:
+
     void slotApplySettings();
 
 private:
 
     void readSettings();
 
+private:
+
     class Private;
     Private* const d;
-
 };
 
 } /* namespace KIPIGPSSyncPlugin */
 
 #endif /* SETUP_GENERAL_H */
-

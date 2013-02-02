@@ -44,44 +44,45 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSBookmarkOwnerPrivate
+class GPSBookmarkOwner::Private
 {
 public:
-    GPSBookmarkOwnerPrivate()
-    : parent(0),
-      actionCollection(0),
-      bookmarkManager(0),
-      bookmarkMenuController(0),
-      bookmarkMenu(0),
-      addBookmarkEnabled(true)
+
+    Private()
+      : parent(0),
+        actionCollection(0),
+        bookmarkManager(0),
+        bookmarkMenuController(0),
+        bookmarkMenu(0),
+        addBookmarkEnabled(true),
+        bookmarkModelHelper(0)
     {
     }
 
-    QWidget             *parent;
-    KActionCollection   *actionCollection;
-    KBookmarkManager    *bookmarkManager;
-    KBookmarkMenu       *bookmarkMenuController;
-    KMenu               *bookmarkMenu;
-    bool                addBookmarkEnabled;
-    GPSBookmarkModelHelper *bookmarkModelHelper;
+    QWidget*                parent;
+    KActionCollection*      actionCollection;
+    KBookmarkManager*       bookmarkManager;
+    KBookmarkMenu*          bookmarkMenuController;
+    KMenu*                  bookmarkMenu;
+    bool                    addBookmarkEnabled;
+    GPSBookmarkModelHelper* bookmarkModelHelper;
     KGeoMap::GeoCoordinates lastCoordinates;
-    QString             lastTitle;
+    QString                 lastTitle;
 };
 
 GPSBookmarkOwner::GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget* const parent)
-: d(new GPSBookmarkOwnerPrivate())
+: d(new Private())
 {
     d->parent = parent;
-    
+
     // TODO: where do we save the bookmarks? right now, they are kipi-specific
     const QString bookmarksFileName = KStandardDirs::locateLocal("data", "kipi/geobookmarks.xml");
-    d->actionCollection = new KActionCollection(this);
-    d->bookmarkManager = KBookmarkManager::managerForFile(bookmarksFileName, "kipigeobookmarks");
+    d->actionCollection             = new KActionCollection(this);
+    d->bookmarkManager              = KBookmarkManager::managerForFile(bookmarksFileName, "kipigeobookmarks");
     d->bookmarkManager->setUpdate(true);
-    d->bookmarkMenu = new KMenu(parent);
-    d->bookmarkMenuController = new KBookmarkMenu(d->bookmarkManager, this, d->bookmarkMenu, d->actionCollection);
-
-    d->bookmarkModelHelper = new GPSBookmarkModelHelper(d->bookmarkManager, kipiImageModel, this);
+    d->bookmarkMenu                 = new KMenu(parent);
+    d->bookmarkMenuController       = new KBookmarkMenu(d->bookmarkManager, this, d->bookmarkMenu, d->actionCollection);
+    d->bookmarkModelHelper          = new GPSBookmarkModelHelper(d->bookmarkManager, kipiImageModel, this);
 }
 
 GPSBookmarkOwner::~GPSBookmarkOwner()
@@ -135,8 +136,7 @@ bool GPSBookmarkOwner::enableOption(BookmarkOption option) const
 
 void GPSBookmarkOwner::openBookmark(const KBookmark& bookmark, Qt::MouseButtons, Qt::KeyboardModifiers)
 {
-    const QString url = bookmark.url().url().toLower();
-
+    const QString url                        = bookmark.url().url().toLower();
     bool okay;
     const KGeoMap::GeoCoordinates coordinate = KGeoMap::GeoCoordinates::fromGeoUrl(url, &okay);
 
@@ -164,33 +164,68 @@ KBookmarkManager* GPSBookmarkOwner::bookmarkManager() const
     return d->bookmarkManager;
 }
 
-class GPSBookmarkModelHelperPrivate
+// -----------------------------------------------------------------------------------------------------------------
+
+class GPSBookmarkModelHelper::Private
 {
 public:
-    GPSBookmarkModelHelperPrivate()
-    : visible(false)
+
+    Private()
+      : model(0),
+        bookmarkManager(0),
+        kipiImageModel(0),
+        visible(false)
     {
     }
 
-    QStandardItemModel* model;
-    KBookmarkManager* bookmarkManager;
-    KipiImageModel* kipiImageModel;
-    QPixmap pixmap;
-    KUrl bookmarkIconUrl;
-    bool visible;
-
     void addBookmarkGroupToModel(const KBookmarkGroup& group);
-    
+
+public:
+
+    QStandardItemModel* model;
+    KBookmarkManager*   bookmarkManager;
+    KipiImageModel*     kipiImageModel;
+    QPixmap             pixmap;
+    KUrl                bookmarkIconUrl;
+    bool                visible;
 };
 
-GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent)
-: ModelHelper(parent), d(new GPSBookmarkModelHelperPrivate())
+void GPSBookmarkModelHelper::Private::addBookmarkGroupToModel(const KBookmarkGroup& group)
 {
-    d->model = new QStandardItemModel(this);
+    KBookmark currentBookmark = group.first();
+
+    while (!currentBookmark.isNull())
+    {
+        if (currentBookmark.isGroup())
+        {
+            addBookmarkGroupToModel(currentBookmark.toGroup());
+        }
+        else
+        {
+            bool okay                                 = false;
+            const KGeoMap::GeoCoordinates coordinates = KGeoMap::GeoCoordinates::fromGeoUrl(currentBookmark.url().url(), &okay);
+
+            if (okay)
+            {
+                QStandardItem* const item = new QStandardItem();
+                item->setData(currentBookmark.text(), Qt::DisplayRole);
+                item->setData(QVariant::fromValue(coordinates), GPSBookmarkModelHelper::CoordinatesRole);
+                model->appendRow(item);
+            }
+        }
+
+        currentBookmark = group.next(currentBookmark);
+    }
+}
+
+GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent)
+    : ModelHelper(parent), d(new Private())
+{
+    d->model           = new QStandardItemModel(this);
     d->bookmarkManager = bookmarkManager;
-    d->kipiImageModel = kipiImageModel;
+    d->kipiImageModel  = kipiImageModel;
     d->bookmarkIconUrl = KStandardDirs::locate("data", "gpssync/bookmarks-marker.png");
-    d->pixmap = QPixmap(d->bookmarkIconUrl.toLocalFile());
+    d->pixmap          = QPixmap(d->bookmarkIconUrl.toLocalFile());
 
     connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),
             this, SLOT(slotUpdateBookmarksModel()));
@@ -254,33 +289,6 @@ bool GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const of
     return true;
 }
 
-void GPSBookmarkModelHelperPrivate::addBookmarkGroupToModel(const KBookmarkGroup& group)
-{
-    KBookmark currentBookmark = group.first();
-    while (!currentBookmark.isNull())
-    {
-        if (currentBookmark.isGroup())
-        {
-            addBookmarkGroupToModel(currentBookmark.toGroup());
-        }
-        else
-        {
-            bool okay = false;
-            const KGeoMap::GeoCoordinates coordinates = KGeoMap::GeoCoordinates::fromGeoUrl(currentBookmark.url().url(), &okay);
-            if (okay)
-            {
-                QStandardItem* const item = new QStandardItem();
-                item->setData(currentBookmark.text(), Qt::DisplayRole);
-                item->setData(QVariant::fromValue(coordinates), GPSBookmarkModelHelper::CoordinatesRole);
-
-                model->appendRow(item);
-            }
-        }
-
-        currentBookmark = group.next(currentBookmark);
-    }
-}
-
 void GPSBookmarkModelHelper::slotUpdateBookmarksModel()
 {
     d->model->clear();
@@ -303,7 +311,7 @@ void GPSBookmarkModelHelper::setVisible(const bool state)
 void GPSBookmarkOwner::setPositionAndTitle(const KGeoMap::GeoCoordinates& coordinates, const QString& title)
 {
     d->lastCoordinates = coordinates;
-    d->lastTitle = title;
+    d->lastTitle       = title;
 }
 
 KGeoMap::ModelHelper::Flags GPSBookmarkModelHelper::modelFlags() const
@@ -319,28 +327,29 @@ KGeoMap::ModelHelper::Flags GPSBookmarkModelHelper::itemFlags(const QModelIndex&
 void GPSBookmarkModelHelper::snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices)
 {
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
-
     KGeoMap::GeoCoordinates targetCoordinates;
+
     if (!itemCoordinates(targetIndex, &targetCoordinates))
         return;
 
     for (int i=0; i<snappedIndices.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
-        KipiImageItem* const item = d->kipiImageModel->itemFromIndex(itemIndex);
-        
+        KipiImageItem* const item             = d->kipiImageModel->itemFromIndex(itemIndex);
+
         GPSDataContainer newData;
         newData.setCoordinates(targetCoordinates);
-        
+
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(item);
- 
+
         item->setGPSData(newData);
         undoInfo.readNewDataFromItem(item);
 
         //undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData, oldTagList, newTagList));
         undoCommand->addUndoInfo(undoInfo);
     }
+
     kDebug()<<targetIndex.data(Qt::DisplayRole).toString();
     undoCommand->setText(i18np("1 image snapped to '%2'",
                                "%1 images snapped to '%2'", snappedIndices.count(), targetIndex.data(Qt::DisplayRole).toString()));

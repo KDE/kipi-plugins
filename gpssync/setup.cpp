@@ -45,9 +45,12 @@ public:
 
 K_GLOBAL_STATIC(SetupGlobalObjectCreator, setupGlobalObjectCreator)
 
+// ----------------------------------------------------------------------------------
+
 class SetupGlobalObject::Private
 {
 public:
+
     Private()
     {
     }
@@ -56,10 +59,10 @@ public:
 };
 
 SetupGlobalObject::SetupGlobalObject()
- : QObject(), d(new Private())
+    : QObject(), d(new Private())
 {
 }
-    
+
 SetupGlobalObject::~SetupGlobalObject()
 {
     delete d;
@@ -85,8 +88,10 @@ void SetupGlobalObject::triggerSignalSetupChanged()
     emit(signalSetupChanged());
 }
 
+// ----------------------------------------------------------------------------------
+
 SetupTemplate::SetupTemplate(QWidget* const parent)
-  : QWidget(parent)
+    : QWidget(parent)
 {
 }
 
@@ -94,20 +99,25 @@ SetupTemplate::~SetupTemplate()
 {
 }
 
+// ----------------------------------------------------------------------------------
+
 class Setup::Private
 {
 public:
+
     Private()
     {
+        pageGeneral  = 0;
+        setupGeneral = 0;
     }
 
     KPageWidgetItem* pageGeneral;
-    SetupGeneral* setupGeneral;
+    SetupGeneral*    setupGeneral;
 
 };
 
 Setup::Setup(QWidget* const parent)
-  : KPageDialog(parent), d(new Private())
+    : KPageDialog(parent), d(new Private())
 {
     setCaption(i18n("Configure"));
     setButtons(Apply|Ok|Cancel);
@@ -115,7 +125,7 @@ Setup::Setup(QWidget* const parent)
     setModal(true);
 
     d->setupGeneral = new SetupGeneral(this);
-    d->pageGeneral = addPage(d->setupGeneral, i18nc("General setup", "General"));
+    d->pageGeneral  = addPage(d->setupGeneral, i18nc("General setup", "General"));
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotApplyClicked()));
@@ -143,4 +153,3 @@ void Setup::slotOkClicked()
 }
 
 } /* namespace KIPIGPSSyncPlugin */
-
