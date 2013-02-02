@@ -53,20 +53,32 @@ namespace KIPIGPSSyncPlugin
 class GPSBookmarkOwner;
 class GPSUndoCommand;
 class SearchResultItem;
-class SearchResultModelPrivate;
+
 class SearchResultModel : public QAbstractItemModel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     class SearchResultItem
     {
     public:
+
         SearchBackend::SearchResult result;
     };
 
+public:
+
     SearchResultModel(QObject* const parent = 0);
     ~SearchResultModel();
+
+    void addResults(const SearchBackend::SearchResult::List& results);
+    SearchResultItem resultItem(const QModelIndex& index) const;
+    bool getMarkerIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const;
+    void setSelectionModel(QItemSelectionModel* const selectionModel);
+    void clearResults();
+    void removeRowsByIndexes(const QModelIndexList& rowsList);
+    void removeRowsBySelection(const QItemSelection& selection);
 
     // QAbstractItemModel:
     virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
@@ -79,28 +91,27 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
-    void addResults(const SearchBackend::SearchResult::List& results);
-    SearchResultItem resultItem(const QModelIndex& index) const;
-    bool getMarkerIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const;
-    void setSelectionModel(QItemSelectionModel* const selectionModel);
-    void clearResults();
-    void removeRowsByIndexes(const QModelIndexList& rowsList);
-    void removeRowsBySelection(const QItemSelection& selection);
-
 private:
-    SearchResultModelPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
-class SearchResultModelHelperPrivate;
+// ------------------------------------------------------------------------------------------------
+
 class SearchResultModelHelper : public KGeoMap::ModelHelper
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
+
     SearchResultModelHelper(SearchResultModel* const resultModel,
                             QItemSelectionModel* const selectionModel,
                             KipiImageModel* const imageModel,
                             QObject* const parent = 0);
     ~SearchResultModelHelper();
+
+    void setVisibility(const bool state);
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
@@ -110,21 +121,24 @@ public:
     virtual Flags itemFlags(const QModelIndex& index) const;
     virtual void snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices);
 
-    void setVisibility(const bool state);
-
 Q_SIGNALS:
+
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
-    SearchResultModelHelperPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
-class SearchWidgetPrivate;
+// ------------------------------------------------------------------------------------------------
+
 class SearchWidget : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
     ~SearchWidget();
 
@@ -135,6 +149,7 @@ public:
     void setPrimaryMapWidget(KGeoMap::KGeoMapWidget* const mapWidget);
 
 private Q_SLOTS:
+
     void slotSearchCompleted();
     void slotTriggerSearch();
     void slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous);
@@ -146,15 +161,19 @@ private Q_SLOTS:
     void slotRemoveSelectedFromResultsList();
 
 protected:
+
     virtual bool eventFilter(QObject *watched, QEvent *event);
 
 Q_SIGNALS:
+
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
-    SearchWidgetPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
-} /* KIPIGPSSyncPlugin */
+} /* namespace KIPIGPSSyncPlugin */
 
 #endif /* SEARCHWIDGET_H */
