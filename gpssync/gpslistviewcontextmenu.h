@@ -45,7 +45,6 @@ class KUrl;
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSListViewContextMenuPriv;
 class GPSBookmarkOwner;
 class GPSUndoCommand;
 
@@ -92,7 +91,8 @@ Q_SIGNALS:
 
 private:
 
-    GPSListViewContextMenuPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIGPSSyncPlugin

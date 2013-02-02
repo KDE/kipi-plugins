@@ -58,44 +58,50 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSListViewContextMenuPriv
+class GPSListViewContextMenu::Private
 {
 public:
 
-    GPSListViewContextMenuPriv()
-    : enabled(true)
+    Private()
     {
-        imagesList     = 0;
-        actionCopy     = 0;
-        actionPaste    = 0;
-        actionBookmark = 0;
-        altitudeUndoCommand = 0;
+        enabled                      = true;
+        actionCopy                   = 0;
+        actionPaste                  = 0;
+        actionBookmark               = 0;
+        actionRemoveCoordinates      = 0;
+        actionRemoveAltitude         = 0;
+        actionRemoveUncertainty      = 0;
+        actionRemoveSpeed            = 0;
+        actionLookupMissingAltitudes = 0;
+        bookmarkOwner                = 0;
+        imagesList                   = 0;
+        altitudeUndoCommand          = 0;
     }
 
-    bool              enabled;
+    bool                              enabled;
 
-    KAction          *actionCopy;
-    KAction          *actionPaste;
-    KAction          *actionBookmark;
-    KAction          *actionRemoveCoordinates;
-    KAction          *actionRemoveAltitude;
-    KAction          *actionRemoveUncertainty;
-    KAction          *actionRemoveSpeed;
-    KAction          *actionLookupMissingAltitudes;
+    KAction*                          actionCopy;
+    KAction*                          actionPaste;
+    KAction*                          actionBookmark;
+    KAction*                          actionRemoveCoordinates;
+    KAction*                          actionRemoveAltitude;
+    KAction*                          actionRemoveUncertainty;
+    KAction*                          actionRemoveSpeed;
+    KAction*                          actionLookupMissingAltitudes;
 
-    GPSBookmarkOwner *bookmarkOwner;
+    GPSBookmarkOwner*                 bookmarkOwner;
 
-    KipiImageList    *imagesList;
+    KipiImageList*                    imagesList;
 
     // Altitude lookup
     QPointer<KGeoMap::LookupAltitude> altitudeLookup;
-    GPSUndoCommand        *altitudeUndoCommand;
-    int                    altitudeRequestedCount;
-    int                    altitudeReceivedCount;
+    GPSUndoCommand*                   altitudeUndoCommand;
+    int                               altitudeRequestedCount;
+    int                               altitudeReceivedCount;
 };
 
 GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner)
-                      : QObject(imagesList), d(new GPSListViewContextMenuPriv)
+    : QObject(imagesList), d(new Private)
 {
     d->imagesList  = imagesList;
 
@@ -104,9 +110,9 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     d->actionPaste = new KAction(i18n("Paste coordinates"), this);
     d->actionPaste->setIcon(SmallIcon("edit-paste"));
     d->actionRemoveCoordinates = new KAction(i18n("Remove coordinates"), this);
-    d->actionRemoveAltitude = new KAction(i18n("Remove altitude"), this);
+    d->actionRemoveAltitude    = new KAction(i18n("Remove altitude"), this);
     d->actionRemoveUncertainty = new KAction(i18n("Remove uncertainty"), this);
-    d->actionRemoveSpeed = new KAction(i18n("Remove speed"), this);
+    d->actionRemoveSpeed       = new KAction(i18n("Remove speed"), this);
     d->actionLookupMissingAltitudes = new KAction(i18n("Look up missing altitude values"), this);
 
     connect(d->actionCopy, SIGNAL(triggered()),
@@ -132,7 +138,7 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
 
     if (bookmarkOwner)
     {
-        d->bookmarkOwner = bookmarkOwner;
+        d->bookmarkOwner  = bookmarkOwner;
         d->actionBookmark = new KAction(i18n("Bookmarks"), this);
         d->actionBookmark->setMenu(d->bookmarkOwner->getMenu());
 
@@ -155,32 +161,33 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
     if ((event->type()==QEvent::ContextMenu)&&d->enabled)
     {
         // enable or disable the actions:
-        KipiImageModel* const imageModel = d->imagesList->getModel();
+        KipiImageModel* const imageModel          = d->imagesList->getModel();
         QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
-        const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
-        const int nSelected = selectedIndices.size();
+        const QList<QModelIndex> selectedIndices  = selectionModel->selectedRows();
+        const int nSelected                       = selectedIndices.size();
 
         // "copy" and "Add bookmark" are only available for one selected image with geo data:
-        bool copyAvailable = (nSelected==1);
-        bool removeAltitudeAvailable = false;
-        bool removeCoordinatesAvailable = false;
-        bool removeUncertaintyAvailable = false;
-        bool removeSpeedAvailable = false;
+        bool copyAvailable                   = (nSelected==1);
+        bool removeAltitudeAvailable         = false;
+        bool removeCoordinatesAvailable      = false;
+        bool removeUncertaintyAvailable      = false;
+        bool removeSpeedAvailable            = false;
         bool lookupMissingAltitudesAvailable = false;
+
         for (int i=0; i<nSelected; ++i)
         {
             KipiImageItem* const gpsItem = imageModel->itemFromIndex(selectedIndices.at(i));
+
             if (gpsItem)
             {
-                const GPSDataContainer gpsData = gpsItem->gpsData();
-
-                const bool itemHasCoordinates = gpsData.getCoordinates().hasCoordinates();
-                copyAvailable&= itemHasCoordinates;
-                removeCoordinatesAvailable|= itemHasCoordinates;
-                removeAltitudeAvailable|= gpsData.getCoordinates().hasAltitude();
-                removeUncertaintyAvailable|= gpsData.hasNSatellites() | gpsData.hasDop() | gpsData.hasFixType();
-                removeSpeedAvailable|= gpsData.hasSpeed();
-                lookupMissingAltitudesAvailable|= itemHasCoordinates && !gpsData.getCoordinates().hasAltitude();
+                const GPSDataContainer gpsData   = gpsItem->gpsData();
+                const bool itemHasCoordinates    = gpsData.getCoordinates().hasCoordinates();
+                copyAvailable                   &= itemHasCoordinates;
+                removeCoordinatesAvailable      |= itemHasCoordinates;
+                removeAltitudeAvailable         |= gpsData.getCoordinates().hasAltitude();
+                removeUncertaintyAvailable      |= gpsData.hasNSatellites() | gpsData.hasDop() | gpsData.hasFixType();
+                removeSpeedAvailable            |= gpsData.hasSpeed();
+                lookupMissingAltitudesAvailable |= itemHasCoordinates && !gpsData.getCoordinates().hasAltitude();
             }
         }
 
@@ -190,6 +197,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         d->actionRemoveUncertainty->setEnabled(removeUncertaintyAvailable);
         d->actionRemoveSpeed->setEnabled(removeSpeedAvailable);
         d->actionLookupMissingAltitudes->setEnabled(lookupMissingAltitudesAvailable);
+
         if (d->bookmarkOwner)
         {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
@@ -201,12 +209,14 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         // "paste" is only available if there is geo data in the clipboard
         // and at least one photo is selected:
         bool pasteAvailable = (nSelected >= 1);
+
         if (pasteAvailable)
         {
             QClipboard * const clipboard = QApplication::clipboard();
-            const QMimeData * mimedata = clipboard->mimeData();
-            pasteAvailable = mimedata->hasFormat("application/gpx+xml") || mimedata->hasText();
+            const QMimeData * mimedata   = clipboard->mimeData();
+            pasteAvailable               = mimedata->hasFormat("application/gpx+xml") || mimedata->hasText();
         }
+
         d->actionPaste->setEnabled(pasteAvailable);
 
         // construct the context-menu:
@@ -219,6 +229,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         menu->addAction(d->actionRemoveUncertainty);
         menu->addAction(d->actionRemoveSpeed);
         menu->addAction(d->actionLookupMissingAltitudes);
+
         if (d->actionBookmark)
         {
             menu->addSeparator();
@@ -229,7 +240,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
         menu->exec(e->globalPos());
 
-	delete menu;
+        delete menu;
         return true;
     }
     else
@@ -242,21 +253,24 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
 bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl)
 {
     // NOTE: currentIndex does not seem to work any more since we use KLinkItemSelectionModel
-    KipiImageModel* const imageModel = d->imagesList->getModel();
+    KipiImageModel* const imageModel          = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
-    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
+    const QList<QModelIndex> selectedIndices  = selectionModel->selectedRows();
+
     if (selectedIndices.count()!=1)
     {
         return false;
     }
-    
+
     const QModelIndex currentIndex = selectedIndices.first();
+
     if (!currentIndex.isValid())
     {
         return false;
     }
 
     KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
+
     if (gpsItem)
     {
         if (gpsInfo)
@@ -301,11 +315,11 @@ void GPSListViewContextMenu::pasteActionTriggered()
     if (mimedata->hasFormat("application/gpx+xml"))
     {
         const QByteArray data = mimedata->data("application/gpx+xml");
-
-        bool xmlOkay = true;
+        bool xmlOkay          = true;
 
         // code adapted from gpsdataparser.cpp
         QDomDocument gpxDoc("gpx");
+
         if (!gpxDoc.setContent(data))
         {
             xmlOkay = false;
@@ -314,6 +328,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         if (xmlOkay)
         {
             const QDomElement gpxDocElem = gpxDoc.documentElement();
+
             if (gpxDocElem.tagName()!="gpx")
             {
                 xmlOkay = false;
@@ -321,14 +336,15 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
             if (xmlOkay)
             {
-                for (QDomNode nWpt = gpxDocElem.firstChild();
-                    !nWpt.isNull(); nWpt = nWpt.nextSibling())
+                for (QDomNode nWpt = gpxDocElem.firstChild(); !nWpt.isNull(); nWpt = nWpt.nextSibling())
                 {
                     const QDomElement wptElem = nWpt.toElement();
+
                     if (wptElem.isNull())
                     {
                         continue;
                     }
+
                     if (wptElem.tagName() != "wpt")
                     {
                         continue;
@@ -337,11 +353,12 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     double    ptAltitude  = 0.0;
                     double    ptLatitude  = 0.0;
                     double    ptLongitude = 0.0;
-                    bool haveAltitude = false;
+                    bool haveAltitude     = false;
 
                     // Get GPS position. If not available continue to next point.
                     const QString lat = wptElem.attribute("lat");
                     const QString lon = wptElem.attribute("lon");
+
                     if (lat.isEmpty() || lon.isEmpty())
                     {
                         continue;
@@ -357,10 +374,10 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     }
 
                     // Get metadata of way point (altitude and time stamp)
-                    for (QDomNode nWptMeta = wptElem.firstChild();
-                        !nWptMeta.isNull(); nWptMeta = nWptMeta.nextSibling())
+                    for (QDomNode nWptMeta = wptElem.firstChild(); !nWptMeta.isNull(); nWptMeta = nWptMeta.nextSibling())
                     {
                         const QDomElement wptMetaElem = nWptMeta.toElement();
+
                         if (wptMetaElem.isNull())
                         {
                             continue;
@@ -370,6 +387,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                         {
                             // Get GPS point altitude. If not available continue to next point.
                             QString ele = wptMetaElem.text();
+
                             if (!ele.isEmpty())
                             {
                                 ptAltitude  = ele.toDouble(&haveAltitude);
@@ -380,10 +398,12 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
                     foundData = true;
                     KGeoMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
+
                     if (haveAltitude)
                     {
                         coordinates.setAlt(ptAltitude);
                     }
+
                     gpsData.setCoordinates(coordinates);
                 }
             }
@@ -391,18 +411,16 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
         if (foundDoubleData)
         {
-            KMessageBox::sorry(d->imagesList,
-              i18n("Found more than one point on the clipboard - can only assign one point at a time.")
-              , i18n("GPS Sync"));
+            KMessageBox::sorry(d->imagesList, i18n("Found more than one point on the clipboard - can only assign one point at a time."), i18n("GPS Sync"));
         }
     }
 
     if ((!foundData)&&(mimedata->hasText()))
     {
-        const QString textdata  = mimedata->text();
-
-        bool foundGeoUrl = false;
+        const QString textdata                  = mimedata->text();
+        bool foundGeoUrl                        = false;
         KGeoMap::GeoCoordinates testCoordinates = KGeoMap::GeoCoordinates::fromGeoUrl(textdata, &foundGeoUrl);
+
         if (foundGeoUrl)
         {
             gpsData.setCoordinates(testCoordinates);
@@ -415,13 +433,13 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
             if ((parts.size()==3)||(parts.size()==2))
             {
-                bool okay = true;
+                bool okay             = true;
                 double    ptLongitude = 0.0;
                 double    ptLatitude  = 0.0;
                 double    ptAltitude  = 0.0;
-                bool haveAltitude = false;
+                bool haveAltitude     = false;
+                ptLongitude           = parts[0].toDouble(&okay);
 
-                ptLongitude = parts[0].toDouble(&okay);
                 if (okay)
                 {
                     ptLatitude = parts[1].toDouble(&okay);
@@ -429,18 +447,21 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
                 if (okay&&(parts.size()==3))
                 {
-                    ptAltitude = parts[2].toDouble(&okay);
+                    ptAltitude   = parts[2].toDouble(&okay);
                     haveAltitude = okay;
                 }
 
                 foundData = okay;
+
                 if (okay)
                 {
                     KGeoMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
+
                     if (haveAltitude)
                     {
                         coordinates.setAlt(ptAltitude);
                     }
+
                     gpsData.setCoordinates(coordinates);
                 }
             }
@@ -449,8 +470,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
     if (!foundData)
     {
-        KMessageBox::sorry(d->imagesList,
-                     i18n("Could not find any coordinates on the clipboard."), i18n("GPS Sync"));
+        KMessageBox::sorry(d->imagesList, i18n("Could not find any coordinates on the clipboard."), i18n("GPS Sync"));
         return;
     }
 
@@ -459,17 +479,17 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
 void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer& gpsData, const QString& undoDescription)
 {
-    KipiImageModel* const imageModel = d->imagesList->getModel();
+    KipiImageModel* const imageModel          = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
-    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
-    const int nSelected = selectedIndices.size();
+    const QList<QModelIndex> selectedIndices  = selectionModel->selectedRows();
+    const int nSelected                       = selectedIndices.size();
+    GPSUndoCommand* const undoCommand         = new GPSUndoCommand();
 
-    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
     for (int i=0; i<nSelected; ++i)
     {
-        const QModelIndex itemIndex = selectedIndices.at(i);
+        const QModelIndex itemIndex  = selectedIndices.at(i);
         KipiImageItem* const gpsItem = imageModel->itemFromIndex(itemIndex);
-        
+
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(gpsItem);
 
@@ -503,23 +523,23 @@ bool GPSListViewContextMenu::getCurrentPosition(GPSDataContainer* position, void
 void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription)
 {
     // enable or disable the actions:
-    KipiImageModel* const imageModel = d->imagesList->getModel();
+    KipiImageModel* const imageModel          = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
-    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
-    const int nSelected = selectedIndices.size();
+    const QList<QModelIndex> selectedIndices  = selectionModel->selectedRows();
+    const int nSelected                       = selectedIndices.size();
+    GPSUndoCommand* const undoCommand         = new GPSUndoCommand();
 
-    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
     for (int i=0; i<nSelected; ++i)
     {
-        const QModelIndex itemIndex = selectedIndices.at(i);
+        const QModelIndex itemIndex  = selectedIndices.at(i);
         KipiImageItem* const gpsItem = imageModel->itemFromIndex(itemIndex);
 
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(gpsItem);
 
-        GPSDataContainer newGPSData = gpsItem->gpsData();
+        GPSDataContainer newGPSData  = gpsItem->gpsData();
+        bool didSomething            = false;
 
-        bool didSomething = false;
         if (flagsToClear.testFlag(GPSDataContainer::HasCoordinates))
         {
             if (newGPSData.hasCoordinates())
@@ -528,6 +548,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clear();
             }
         }
+
         if (flagsToClear.testFlag(GPSDataContainer::HasAltitude))
         {
             if (newGPSData.hasAltitude())
@@ -536,6 +557,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clearAltitude();
             }
         }
+
         if (flagsToClear.testFlag(GPSDataContainer::HasNSatellites))
         {
             if (newGPSData.hasNSatellites())
@@ -544,6 +566,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clearNSatellites();
             }
         }
+
         if (flagsToClear.testFlag(GPSDataContainer::HasDop))
         {
             if (newGPSData.hasDop())
@@ -552,6 +575,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clearDop();
             }
         }
+
         if (flagsToClear.testFlag(GPSDataContainer::HasFixType))
         {
             if (newGPSData.hasFixType())
@@ -560,6 +584,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clearFixType();
             }
         }
+
         if (flagsToClear.testFlag(GPSDataContainer::HasSpeed))
         {
             if (newGPSData.hasSpeed())
@@ -568,6 +593,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clearSpeed();
             }
         }
+
         if (didSomething)
         {
             gpsItem->setGPSData(newGPSData);
@@ -599,10 +625,8 @@ void GPSListViewContextMenu::slotRemoveAltitude()
 
 void GPSListViewContextMenu::slotRemoveUncertainty()
 {
-    removeInformationFromSelectedImages(
-            GPSDataContainer::HasNSatellites|GPSDataContainer::HasDop|GPSDataContainer::HasFixType,
-            i18n("Remove uncertainty information")
-        );
+    removeInformationFromSelectedImages(GPSDataContainer::HasNSatellites|GPSDataContainer::HasDop|GPSDataContainer::HasFixType,
+                                        i18n("Remove uncertainty information"));
 }
 
 void GPSListViewContextMenu::setEnabled(const bool state)
@@ -617,23 +641,26 @@ void GPSListViewContextMenu::slotRemoveSpeed()
 
 void GPSListViewContextMenu::slotLookupMissingAltitudes()
 {
-    KipiImageModel* const imageModel = d->imagesList->getModel();
+    KipiImageModel* const imageModel          = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
-    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
+    const QList<QModelIndex> selectedIndices  = selectionModel->selectedRows();
 //     const int nSelected = selectedIndices.size();
 
     // find the indices which have coordinates but no altitude
     KGeoMap::LookupAltitude::Request::List altitudeQueries;
+
     Q_FOREACH (const QModelIndex& currentIndex, selectedIndices)
     {
         KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
+
         if (!gpsItem)
         {
             continue;
         }
 
-        const GPSDataContainer gpsData = gpsItem->gpsData();
+        const GPSDataContainer gpsData            = gpsItem->gpsData();
         const KGeoMap::GeoCoordinates coordinates = gpsData.getCoordinates();
+
         if ((!coordinates.hasCoordinates()) || coordinates.hasAltitude())
         {
             continue;
@@ -642,7 +669,7 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
         // the item has coordinates but no altitude, create a query
         KGeoMap::LookupAltitude::Request myLookup;
         myLookup.coordinates = coordinates;
-        myLookup.data = QVariant::fromValue(QPersistentModelIndex(currentIndex));
+        myLookup.data        = QVariant::fromValue(QPersistentModelIndex(currentIndex));
 
         altitudeQueries << myLookup;
     }
@@ -662,9 +689,10 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
 
     emit(signalSetUIEnabled(false, this, SLOT(slotAltitudeLookupCancel())));
     emit(signalProgressSetup(altitudeQueries.count(), i18n("Looking up altitudes")));
-    d->altitudeUndoCommand = new GPSUndoCommand();
+
+    d->altitudeUndoCommand    = new GPSUndoCommand();
     d->altitudeRequestedCount = altitudeQueries.count();
-    d->altitudeReceivedCount = 0;
+    d->altitudeReceivedCount  = 0;
     d->altitudeLookup->addRequests(altitudeQueries);
     d->altitudeLookup->startLookup();
 }
@@ -672,16 +700,19 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
 void GPSListViewContextMenu::slotAltitudeLookupReady(const QList<int>& readyRequests)
 {
     KipiImageModel* const imageModel = d->imagesList->getModel();
+
     Q_FOREACH(const int requestIndex, readyRequests)
     {
         const KGeoMap::LookupAltitude::Request myLookup = d->altitudeLookup->getRequest(requestIndex);
-        const QPersistentModelIndex markerIndex = myLookup.data.value<QPersistentModelIndex>();
+        const QPersistentModelIndex markerIndex         = myLookup.data.value<QPersistentModelIndex>();
+
         if (!markerIndex.isValid())
         {
             continue;
         }
 
         KipiImageItem* const gpsItem = imageModel->itemFromIndex(markerIndex);
+
         if (!gpsItem)
         {
             continue;
@@ -705,12 +736,11 @@ void GPSListViewContextMenu::slotAltitudeLookupReady(const QList<int>& readyRequ
 void GPSListViewContextMenu::slotAltitudeLookupDone()
 {
     KGeoMap::LookupAltitude::Status requestStatus = d->altitudeLookup->getStatus();
+
     if (requestStatus==KGeoMap::LookupAltitude::StatusError)
     {
         const QString errorMessage = i18n("Altitude lookup failed:\n%1", d->altitudeLookup->errorMessage());
-        KMessageBox::sorry(d->imagesList,
-                           errorMessage,
-                           i18n("GPS Sync"));
+        KMessageBox::sorry(d->imagesList, errorMessage, i18n("GPS Sync"));
     }
 
     if (d->altitudeReceivedCount>0)
@@ -723,6 +753,7 @@ void GPSListViewContextMenu::slotAltitudeLookupDone()
     {
         delete d->altitudeUndoCommand;
     }
+
     d->altitudeUndoCommand = 0;
     d->altitudeLookup->deleteLater();
 
