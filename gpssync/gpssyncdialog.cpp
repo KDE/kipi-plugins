@@ -7,7 +7,7 @@
  * @date   2006-05-16
  * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * @author Copyright (C) 2006-2012 by Gilles Caulier
+ * @author Copyright (C) 2006-2013 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010, 2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -114,13 +114,11 @@ namespace KIPIGPSSyncPlugin
 struct SaveChangedImagesHelper
 {
 public:
+
     SaveChangedImagesHelper(KipiImageModel* const model)
         : imageModel(model)
     {
     }
-
-    typedef QPair<KUrl, QString> result_type;
-    KipiImageModel* const imageModel;
 
     QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
     {
@@ -130,6 +128,11 @@ public:
 
         return QPair<KUrl, QString>(item->url(), item->saveChanges(true, true));
     }
+
+public:
+
+    typedef QPair<KUrl, QString> result_type;
+    KipiImageModel* const        imageModel;
 };
 
 // ---------------------------------------------------------------------------------
@@ -142,9 +145,6 @@ public:
     {
     }
 
-    typedef QPair<KUrl, QString> result_type;
-    KipiImageModel* const imageModel;
-
     QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
     {
         KipiImageItem* const item = imageModel->itemFromIndex(itemIndex);
@@ -155,83 +155,119 @@ public:
 
         return QPair<KUrl, QString>(item->url(), QString());
     }
+
+public:
+
+    typedef QPair<KUrl, QString> result_type;
+    KipiImageModel* const        imageModel;
 };
 
 // ---------------------------------------------------------------------------------
 
-class GPSSyncDialog::GPSSyncDialogPriv
+class GPSSyncDialog::Private
 {
 public:
 
-    GPSSyncDialogPriv()
+    Private()
     {
-        // TODO: initialize in the initializer list
-        mapWidget         = 0;
-        uiEnabled         = true;
-        splitterSize      = 0;
-        mapWidget2        = 0;
-        setupGlobalObject = SetupGlobalObject::instance();
+        imageModel               = 0;
+        selectionModel           = 0;
+        uiEnabled                = true;
+        setupGlobalObject        = SetupGlobalObject::instance();
+        bookmarkOwner            = 0;
+        actionBookmarkVisibility = 0;
+        listViewContextMenu      = 0;
+        fileIOFutureWatcher      = 0;
+        fileIOCountDone          = 0;
+        fileIOCountTotal         = 0;
+        fileIOCloseAfterSaving   = false;
+        buttonBox                = 0;
+        tabWidget                = 0;
+        VSplitter                = 0;
+        HSplitter                = 0;
+        treeView                 = 0;
+        stackedWidget            = 0;
+        tabBar                   = 0;
+        splitterSize             = 0;
+        undoStack                = 0;
+        undoView                 = 0;
+        progressBar              = 0;
+        progressCancelButton     = 0;
+        progressCancelObject     = 0;
+        detailsWidget            = 0;
+        correlatorWidget         = 0;
+        rgWidget                 = 0;
+        searchWidget             = 0;
+        mapSplitter              = 0;
+        mapWidget                = 0;
+        mapWidget2               = 0;
+        mapDragDropHandler       = 0;
+        mapModelHelper           = 0;
+        kgeomapMarkerModel       = 0;
+        sortActionOldestFirst    = 0;
+        sortActionYoungestFirst  = 0;
+        sortMenu                 = 0;
     }
 
     // General things
-    KipiImageModel                          *imageModel;
-    QItemSelectionModel                     *selectionModel;
+    KipiImageModel*                          imageModel;
+    QItemSelectionModel*                     selectionModel;
     bool                                     uiEnabled;
-    SetupGlobalObject                       *setupGlobalObject;
-    GPSBookmarkOwner                        *bookmarkOwner;
-    KAction                                 *actionBookmarkVisibility;
-    GPSListViewContextMenu                  *listViewContextMenu;
+    SetupGlobalObject*                       setupGlobalObject;
+    GPSBookmarkOwner*                        bookmarkOwner;
+    KAction*                                 actionBookmarkVisibility;
+    GPSListViewContextMenu*                  listViewContextMenu;
 
     // Loading and saving
     QFuture<QPair<KUrl,QString> >            fileIOFuture;
-    QFutureWatcher<QPair<KUrl,QString> >    *fileIOFutureWatcher;
+    QFutureWatcher<QPair<KUrl,QString> >*    fileIOFutureWatcher;
     int                                      fileIOCountDone;
     int                                      fileIOCountTotal;
     bool                                     fileIOCloseAfterSaving;
 
     // UI
-    KDialogButtonBox                        *buttonBox;
-    KTabWidget                              *tabWidget;
-    QSplitter                               *VSplitter;
-    QSplitter                               *HSplitter;
-    KipiImageList                           *treeView;
-    QStackedWidget                          *stackedWidget;
-    QTabBar                                 *tabBar;
+    KDialogButtonBox*                        buttonBox;
+    KTabWidget*                              tabWidget;
+    QSplitter*                               VSplitter;
+    QSplitter*                               HSplitter;
+    KipiImageList*                           treeView;
+    QStackedWidget*                          stackedWidget;
+    QTabBar*                                 tabBar;
     int                                      splitterSize;
-    KUndoStack                              *undoStack;
-    QUndoView                               *undoView;
+    KUndoStack*                              undoStack;
+    QUndoView*                               undoView;
 
     // UI: progress
-    KPProgressWidget                        *progressBar;
-    QPushButton                             *progressCancelButton;
-    QObject                                 *progressCancelObject;
+    KPProgressWidget*                        progressBar;
+    QPushButton*                             progressCancelButton;
+    QObject*                                 progressCancelObject;
     QString                                  progressCancelSlot;
 
     // UI: tab widgets
-    GPSImageDetails                         *detailsWidget;
-    GPSCorrelatorWidget                     *correlatorWidget;
-    GPSReverseGeocodingWidget               *rgWidget;
-    SearchWidget                            *searchWidget;
+    GPSImageDetails*                         detailsWidget;
+    GPSCorrelatorWidget*                     correlatorWidget;
+    GPSReverseGeocodingWidget*               rgWidget;
+    SearchWidget*                            searchWidget;
 
     // map: UI
     MapLayout                                mapLayout;
-    QSplitter                               *mapSplitter;
-    KGeoMapWidget                           *mapWidget;
-    KGeoMapWidget                           *mapWidget2;
+    QSplitter*                               mapSplitter;
+    KGeoMapWidget*                           mapWidget;
+    KGeoMapWidget*                           mapWidget2;
 
     // map: helpers
-    MapDragDropHandler                      *mapDragDropHandler;
-    GPSSyncKGeoMapModelHelper               *mapModelHelper;
-    ItemMarkerTiler                         *kgeomapMarkerModel;
+    MapDragDropHandler*                      mapDragDropHandler;
+    GPSSyncKGeoMapModelHelper*               mapModelHelper;
+    ItemMarkerTiler*                         kgeomapMarkerModel;
 
     // map: actions
-    QAction                                 *sortActionOldestFirst;
-    QAction                                 *sortActionYoungestFirst;
-    QMenu                                   *sortMenu;
+    QAction*                                 sortActionOldestFirst;
+    QAction*                                 sortActionYoungestFirst;
+    QMenu*                                   sortMenu;
 };
 
 GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
-    : KPToolDialog(parent), d(new GPSSyncDialogPriv)
+    : KPToolDialog(parent), d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose, true);
     setButtons(0);
@@ -285,6 +321,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->progressCancelButton->setVisible(false);
     d->progressCancelButton->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
     d->progressCancelButton->setIcon(SmallIcon("dialog-cancel"));
+
     connect(d->progressCancelButton, SIGNAL(clicked()),
             this, SLOT(slotProgressCancelButtonClicked()));
 
@@ -299,18 +336,21 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     // make sure the 'Apply' button is not triggered when enter is pressed,
     // because that causes problems with the search widget
     QAbstractButton* testButton = 0;
+
     Q_FOREACH(testButton, d->buttonBox->buttons())
     {
 //         if (d->buttonBox->buttonRole(testButton)==QDialogButtonBox::AcceptRole)
         {
             QPushButton* const pushButton = dynamic_cast<QPushButton*>(testButton);
             kDebug() << pushButton << pushButton->isDefault();
+
             if (pushButton)
             {
                 pushButton->setDefault(false);
             }
         }
     }
+
     setDefaultButton(NoDefault);
 
     d->VSplitter = new QSplitter(Qt::Vertical, d->HSplitter);
@@ -321,6 +361,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->sortMenu->setTitle(i18n("Sorting"));
     QActionGroup* const sortOrderExclusive = new QActionGroup(d->sortMenu);
     sortOrderExclusive->setExclusive(true);
+
     connect(sortOrderExclusive, SIGNAL(triggered(QAction*)),
             this, SLOT(slotSortOptionTriggered(QAction*)));
 
@@ -336,13 +377,13 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
             this, SLOT(slotBookmarkVisibilityToggled()));
 
     QWidget* mapVBox = 0;
-    d->mapWidget     = makeMapWidget(&mapVBox);
+    d->mapWidget           = makeMapWidget(&mapVBox);
     d->searchWidget->setPrimaryMapWidget(d->mapWidget);
-    d->mapSplitter   = new QSplitter(this);
+    d->mapSplitter         = new QSplitter(this);
     d->mapSplitter->addWidget(mapVBox);
     d->VSplitter->addWidget(d->mapSplitter);
 
-    d->treeView      = new KipiImageList(iface(), this);
+    d->treeView            = new KipiImageList(iface(), this);
     d->treeView->setModelAndSelectionModel(d->imageModel, d->selectionModel);
     d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
     d->treeView->setDragEnabled(true);
@@ -354,13 +395,11 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->VSplitter->addWidget(d->treeView);
 
     d->listViewContextMenu = new GPSListViewContextMenu(d->treeView, d->bookmarkOwner);
-
     d->HSplitter->setCollapsible(1, true);
-
     d->HSplitter->addWidget(d->stackedWidget);
-    d->splitterSize = 0;
+    d->splitterSize        = 0;
 
-    KVBox* vboxTabBar = new KVBox(hboxMain);
+    KVBox* const vboxTabBar = new KVBox(hboxMain);
     vboxTabBar->layout()->setSpacing(0);
     vboxTabBar->layout()->setMargin(0);
 
@@ -388,17 +427,16 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 
     d->rgWidget = new GPSReverseGeocodingWidget(iface(), d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
-
     d->stackedWidget->addWidget(d->searchWidget);
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KPAboutData* about = new KPAboutData(ki18n("GPS Sync"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
-                             ki18n("(c) 2006-2012, Gilles Caulier"));
+    KPAboutData* const about = new KPAboutData(ki18n("GPS Sync"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
+                                   ki18n("(c) 2006-2013, Gilles Caulier"));
 
     about->addAuthor(ki18n("Michael G. Hansen"),
                      ki18n("Developer and maintainer"),
@@ -514,6 +552,7 @@ bool GPSSyncDialog::eventFilter(QObject* const o, QEvent* const e)
         }
 
         QList<int> sizes = d->HSplitter->sizes();
+
         if (d->splitterSize == 0)
         {
             if (sizes.at(1) == 0)
@@ -554,15 +593,15 @@ void GPSSyncDialog::setCurrentTab(int index)
 {
     d->tabBar->setCurrentIndex(index);
     d->stackedWidget->setCurrentIndex(index);
-
     QList<int> sizes = d->HSplitter->sizes();
+
     if (d->splitterSize >= 0)
     {
         sizes[1] = d->splitterSize;
         d->splitterSize = 0;
     }
-    d->HSplitter->setSizes(sizes);
 
+    d->HSplitter->setSizes(sizes);
     d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
 }
 
@@ -576,6 +615,7 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
     }
 
     QList<QPersistentModelIndex> imagesToLoad;
+
     for (int i=0; i<d->imageModel->rowCount(); ++i)
     {
         imagesToLoad << d->imageModel->index(i, 0);
@@ -656,6 +696,7 @@ void GPSSyncDialog::readSettings()
     if (group.hasKey("SplitterState V1"))
     {
         const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState V1"), QByteArray()));
+
         if (!splitterState.isEmpty())
         {
             d->VSplitter->restoreState(splitterState);
@@ -664,11 +705,13 @@ void GPSSyncDialog::readSettings()
     if (group.hasKey("SplitterState H1"))
     {
         const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState H1"), QByteArray()));
+
         if (!splitterState.isEmpty())
         {
             d->HSplitter->restoreState(splitterState);
         }
     }
+
     d->splitterSize = group.readEntry("Splitter H1 CollapsedSize", 0);
 
     // ----------------------------------
@@ -676,6 +719,7 @@ void GPSSyncDialog::readSettings()
     d->mapLayout = MapLayout(group.readEntry("Map Layout", QVariant::fromValue(int(MapLayoutOne))).value<int>());
     d->setupGlobalObject->writeEntry("Map Layout", QVariant::fromValue(d->mapLayout));
     adjustMapLayout(false);
+
     if (d->mapWidget2)
     {
         const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget 2");
@@ -748,7 +792,7 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
     for (int i=0; i < d->imageModel->rowCount(); ++i)
     {
         const QModelIndex itemIndex = d->imageModel->index(i, 0);
-        KipiImageItem* const item = d->imageModel->itemFromIndex(itemIndex);
+        KipiImageItem* const item   = d->imageModel->itemFromIndex(itemIndex);
 
         if (item->isDirty() || item->isTagListDirty())
         {
@@ -802,10 +846,12 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
         return;
 
     KipiImageItem* const item = d->imageModel->itemFromIndex(index);
+
     if (!item)
         return;
 
     const GeoCoordinates imageCoordinates = item->coordinates();
+
     if (imageCoordinates.hasCoordinates())
     {
         d->mapWidget->setCenter(imageCoordinates);
@@ -842,24 +888,23 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
 
 // ------------------------------------------------------------------------------------------------
 
-class GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelperPrivate
+class GPSSyncKGeoMapModelHelper::Private
 {
 public:
 
-    GPSSyncKGeoMapModelHelperPrivate()
+    Private()
     {
         model          = 0;
         selectionModel = 0;
     }
 
-    KipiImageModel*              model;
-    QItemSelectionModel*         selectionModel;
-    QList<ModelHelper*> ungroupedModelHelpers;
+    KipiImageModel*      model;
+    QItemSelectionModel* selectionModel;
+    QList<ModelHelper*>  ungroupedModelHelpers;
 };
 
-GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelper(KipiImageModel* const model, 
-                                                     QItemSelectionModel* const selectionModel, QObject* const parent)
-    : ModelHelper(parent), d(new GPSSyncKGeoMapModelHelperPrivate())
+GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
+    : ModelHelper(parent), d(new Private())
 {
     d->model          = model;
     d->selectionModel = selectionModel;
@@ -884,6 +929,7 @@ QItemSelectionModel* GPSSyncKGeoMapModelHelper::selectionModel() const
 bool GPSSyncKGeoMapModelHelper::itemCoordinates(const QModelIndex& index, GeoCoordinates* const coordinates) const
 {
     KipiImageItem* const item = d->model->itemFromIndex(index);
+
     if (!item)
         return false;
 
@@ -908,17 +954,16 @@ QPixmap GPSSyncKGeoMapModelHelper::pixmapFromRepresentativeIndex(const QPersiste
 QPersistentModelIndex GPSSyncKGeoMapModelHelper::bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey)
 {
     const bool oldestFirst = sortKey & 1;
-
     QPersistentModelIndex bestIndex;
     QDateTime             bestTime;
 
     for (int i=0; i<list.count(); ++i)
     {
         const QPersistentModelIndex currentIndex = list.at(i);
-        const KipiImageItem* const currentItem = static_cast<KipiImageItem*>(d->model->itemFromIndex(currentIndex));
-        const QDateTime currentTime = currentItem->dateTime();
+        const KipiImageItem* const currentItem   = static_cast<KipiImageItem*>(d->model->itemFromIndex(currentIndex));
+        const QDateTime currentTime              = currentItem->dateTime();
+        bool takeThisIndex                       = bestTime.isNull();
 
-        bool takeThisIndex = bestTime.isNull();
         if (!takeThisIndex)
         {
             if (oldestFirst)
@@ -930,10 +975,11 @@ QPersistentModelIndex GPSSyncKGeoMapModelHelper::bestRepresentativeIndexFromList
                 takeThisIndex = bestTime < currentTime;
             }
         }
+
         if (takeThisIndex)
         {
             bestIndex = currentIndex;
-            bestTime = currentTime;
+            bestTime  = currentTime;
         }
     }
 
@@ -952,19 +998,21 @@ void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex
     if (targetSnapIndex.isValid())
     {
         const QAbstractItemModel* const targetModel = targetSnapIndex.model();
+
         for (int i=0; i<d->ungroupedModelHelpers.count(); ++i)
         {
             ModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
+
             if (ungroupedHelper->model()==targetModel)
             {
                 QList<QModelIndex> iMovedMarkers;
+
                 for (int i=0; i<movedMarkers.count(); ++i)
                 {
                     iMovedMarkers << movedMarkers.at(i);
                 }
 
                 ungroupedHelper->snapItemsTo(targetSnapIndex, iMovedMarkers);
-
                 return;
             }
         }
@@ -975,7 +1023,7 @@ void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex
     for (int i=0; i<movedMarkers.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = movedMarkers.at(i);
-        KipiImageItem* const item = static_cast<KipiImageItem*>(d->model->itemFromIndex(itemIndex));
+        KipiImageItem* const item             = static_cast<KipiImageItem*>(d->model->itemFromIndex(itemIndex));
 
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(item);
@@ -985,11 +1033,10 @@ void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex
         item->setGPSData(newData);
 
         undoInfo.readNewDataFromItem(item);
-
         undoCommand->addUndoInfo(undoInfo);
     }
-    undoCommand->setText(i18np("1 image moved",
-                               "%1 images moved", movedMarkers.count()));
+
+    undoCommand->setText(i18np("1 image moved", "%1 images moved", movedMarkers.count()));
 
     emit(signalUndoCommand(undoCommand));
 }
@@ -1003,7 +1050,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     for (int i=0; i<d->imageModel->rowCount(); ++i)
     {
         const QModelIndex itemIndex = d->imageModel->index(i, 0);
-        KipiImageItem* const item = d->imageModel->itemFromIndex(itemIndex);
+        KipiImageItem* const item   = d->imageModel->itemFromIndex(itemIndex);
 
         if (item->isDirty() || item->isTagListDirty())
         {
@@ -1017,6 +1064,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
         {
             close();
         }
+
         return;
     }
 
@@ -1025,10 +1073,10 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     slotProgressSetup(dirtyImages.count(), i18n("Saving changes - %p%"));
 
     // initiate the saving
-    d->fileIOCountDone = 0;
-    d->fileIOCountTotal = dirtyImages.count();
+    d->fileIOCountDone        = 0;
+    d->fileIOCountTotal       = dirtyImages.count();
     d->fileIOCloseAfterSaving = closeAfterwards;
-    d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    d->fileIOFutureWatcher    = new QFutureWatcher<QPair<KUrl, QString> >(this);
 
     connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
             this, SLOT(slotFileChangesSaved(int,int)));
@@ -1050,19 +1098,23 @@ void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
 
         // any errors?
         QList<QPair<KUrl, QString> > errorList;
+
         for (int i=0; i<d->fileIOFuture.resultCount(); ++i)
         {
             if (!d->fileIOFuture.resultAt(i).second.isEmpty())
                 errorList << d->fileIOFuture.resultAt(i);
         }
+
         if (!errorList.isEmpty())
         {
             QStringList errorStrings;
+
             for (int i=0; i<errorList.count(); ++i)
             {
                 // TODO: how to do kurl->qstring?
                 errorStrings << QString("%1: %2").arg(errorList.at(i).first.toLocalFile()).arg(errorList.at(i).second);
             }
+
             KMessageBox::errorList(this, i18n("Failed to save some information:"), errorStrings, i18n("Error"));
         }
 
@@ -1104,6 +1156,7 @@ void GPSSyncDialog::slotGPSUndoCommand(GPSUndoCommand* undoCommand)
 void GPSSyncDialog::slotSortOptionTriggered(QAction* /*sortAction*/)
 {
     int newSortKey = 0;
+
     if (d->sortActionOldestFirst->isChecked())
     {
         newSortKey |= 1;
@@ -1142,7 +1195,6 @@ void GPSSyncDialog::slotConfigureClicked()
 void GPSSyncDialog::slotSetupChanged()
 {
     d->mapLayout = d->setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
-
     adjustMapLayout(true);
 }
 
@@ -1196,7 +1248,6 @@ void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
                 KConfigGroup group                = config.group(QString("GPS Sync 2 Settings"));
                 const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
                 d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
-
                 d->mapWidget2->setActive(true);
             }
         }

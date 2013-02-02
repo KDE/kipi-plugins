@@ -7,7 +7,7 @@
  * @date   2006-05-16
  * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * @author Copyright (C) 2006-2012 by Gilles Caulier
+ * @author Copyright (C) 2006-2013 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -98,8 +98,8 @@ Q_SIGNALS:
 
 private:
 
-    class GPSSyncKGeoMapModelHelperPrivate;
-    GPSSyncKGeoMapModelHelperPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 // ------------------------------------------------------------------------------------------------
@@ -149,8 +149,8 @@ private Q_SLOTS:
 
 private:
 
-    class GPSSyncDialogPriv;
-    GPSSyncDialogPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIGPSSyncPlugin
