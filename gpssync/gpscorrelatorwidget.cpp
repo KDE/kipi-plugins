@@ -70,73 +70,78 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSCorrelatorWidgetPrivate
+class GPSCorrelatorWidget::Private
 {
 public:
-    GPSCorrelatorWidgetPrivate(const int pMarginHint, const int pSpacingHint)
-    : marginHint(pMarginHint),
-      spacingHint(pSpacingHint),
-      gpxFileList(0),
-      maxTimeLabel(0),
-      timeZoneGroup(0),
-      timeZoneSystem(0),
-      timeZoneManual(0),
-      timeZoneCB(0),
-      offsetEnabled(0),
-      offsetSign(0),
-      offsetMin(0),
-      offsetSec(0),
-      interpolateBox(0),
-      maxGapInput(0),
-      maxTimeInput(0),
-      correlateButton(0),
-      uiEnabledInternal(true),
-      uiEnabledExternal(true),
-      correlationTotalCount(0),
-      correlationCorrelatedCount(0),
-      correlationTriedCount(0),
-      correlationUndoCommand(0)
+
+    Private(const int pMarginHint, const int pSpacingHint)
+      : marginHint(pMarginHint),
+        spacingHint(pSpacingHint),
+        gpxLoadFilesButton(0),
+        gpxFileList(0),
+        maxTimeLabel(0),
+        timeZoneGroup(0),
+        timeZoneSystem(0),
+        timeZoneManual(0),
+        timeZoneCB(0),
+        offsetEnabled(0),
+        offsetSign(0),
+        offsetMin(0),
+        offsetSec(0),
+        interpolateBox(0),
+        maxGapInput(0),
+        maxTimeInput(0),
+        correlateButton(0),
+        gpsDataParser(0),
+        uiEnabledInternal(true),
+        uiEnabledExternal(true),
+        imageModel(0),
+        correlationTotalCount(0),
+        correlationCorrelatedCount(0),
+        correlationTriedCount(0),
+        correlationUndoCommand(0)
     {
     }
 
-    int marginHint;
-    int spacingHint;
-    KUrl gpxFileOpenLastDirectory;
-    QPushButton              *gpxLoadFilesButton;
-    QTreeWidget              *gpxFileList;
-    QLabel                   *maxTimeLabel;
+    int                     marginHint;
+    int                     spacingHint;
 
-    QButtonGroup             *timeZoneGroup;
-    QRadioButton             *timeZoneSystem;
-    QRadioButton             *timeZoneManual;
-    KComboBox                *timeZoneCB;
-    QCheckBox                *offsetEnabled;
-    KComboBox                *offsetSign;
-    KIntSpinBox              *offsetMin;
-    KIntSpinBox              *offsetSec;
+    KUrl                    gpxFileOpenLastDirectory;
+    QPushButton*            gpxLoadFilesButton;
+    QTreeWidget*            gpxFileList;
+    QLabel*                 maxTimeLabel;
 
-    QCheckBox                *interpolateBox;
+    QButtonGroup*           timeZoneGroup;
+    QRadioButton*           timeZoneSystem;
+    QRadioButton*           timeZoneManual;
+    KComboBox*              timeZoneCB;
+    QCheckBox*              offsetEnabled;
+    KComboBox*              offsetSign;
+    KIntSpinBox*            offsetMin;
+    KIntSpinBox*            offsetSec;
 
-    KIntSpinBox              *maxGapInput;
-    KIntSpinBox              *maxTimeInput;
+    QCheckBox*              interpolateBox;
 
-    QPushButton              *correlateButton;
+    KIntSpinBox*            maxGapInput;
+    KIntSpinBox*            maxTimeInput;
 
-    GPSDataParser            *gpsDataParser;
-    bool uiEnabledInternal;
-    bool uiEnabledExternal;
-    KipiImageModel           *imageModel;
+    QPushButton*            correlateButton;
 
-    int correlationTotalCount;
-    int correlationCorrelatedCount;
-    int correlationTriedCount;
-    GPSUndoCommand *correlationUndoCommand;
+    GPSDataParser*          gpsDataParser;
+    bool                    uiEnabledInternal;
+    bool                    uiEnabledExternal;
+    KipiImageModel*         imageModel;
+
+    int                     correlationTotalCount;
+    int                     correlationCorrelatedCount;
+    int                     correlationTriedCount;
+    GPSUndoCommand*         correlationUndoCommand;
 };
 
 GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
-: QWidget(parent), d(new GPSCorrelatorWidgetPrivate(marginHint, spacingHint))
+    : QWidget(parent), d(new Private(marginHint, spacingHint))
 {
-    d->imageModel = imageModel;
+    d->imageModel    = imageModel;
     d->gpsDataParser = new GPSDataParser(this);
 
     connect(d->gpsDataParser, SIGNAL(signalGPXFilesReadyAt(int,int)),
@@ -169,30 +174,29 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     gpxHeaderLabels << i18n("Filename") << i18n("#points");
     d->gpxFileList->setHeaderLabels(gpxHeaderLabels);
 
-    KSeparator* const line = new KSeparator(Qt::Horizontal, this);
-
-    QLabel *maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), this);
-    d->maxGapInput = new KIntSpinBox(0, 1000000, 1, 30, this);
+    KSeparator* const line    = new KSeparator(Qt::Horizontal, this);
+    QLabel* const maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), this);
+    d->maxGapInput            = new KIntSpinBox(0, 1000000, 1, 30, this);
     d->maxGapInput->setWhatsThis(i18n("Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match will be attempted."));
 
     QLabel* const timeZoneLabel = new QLabel(i18n("Camera time zone:"), this);
-    d->timeZoneSystem = new QRadioButton(i18n("Same as system"), this);
+    d->timeZoneSystem           = new QRadioButton(i18n("Same as system"), this);
     d->timeZoneSystem->setWhatsThis(i18n(
                     "Use this option if the timezone of the camera "
                     "is the same as the timezone of this system. "
                     "The conversion to GMT will be done automatically."));
-    d->timeZoneManual = new QRadioButton(i18nc("manual time zone selection for gps syncing", "Manual:"), this);
+    d->timeZoneManual           = new QRadioButton(i18nc("manual time zone selection for gps syncing", "Manual:"), this);
     d->timeZoneManual->setWhatsThis(i18n(
                     "Use this option if the timezone of the camera "
                     "is different from this system and you have to "
                     "specify the difference to GMT manually."));
-    d->timeZoneGroup = new QButtonGroup(this);
+    d->timeZoneGroup            = new QButtonGroup(this);
     d->timeZoneGroup->addButton(d->timeZoneSystem, 1);
     d->timeZoneGroup->addButton(d->timeZoneManual, 2);
 
-    d->timeZoneCB         = new KComboBox(this);
+    d->timeZoneCB               = new KComboBox(this);
 
     // See list of time zones over the world :
     // http://en.wikipedia.org/wiki/List_of_time_zones
@@ -253,7 +257,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
                         "wrong camera clock."));
 
     QWidget* const offsetWidget = new QWidget(this);
-    d->offsetSign = new KComboBox(offsetWidget);
+    d->offsetSign               = new KComboBox(offsetWidget);
     d->offsetSign->addItem("+");
     d->offsetSign->addItem("-");
     d->offsetSign->setWhatsThis(i18n("Set whether the camera offset "
@@ -289,31 +293,31 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
 
     // layout form
     int row = 0;
-    settingsLayout->addWidget(d->gpxLoadFilesButton,     row, 0, 1, 2);
+    settingsLayout->addWidget(d->gpxLoadFilesButton, row, 0, 1, 2);
     row++;
-    settingsLayout->addWidget(d->gpxFileList,    row, 0, 1, 2);
+    settingsLayout->addWidget(d->gpxFileList,        row, 0, 1, 2);
     row++;
-    settingsLayout->addWidget(line,              row, 0, 1, 2);
+    settingsLayout->addWidget(line,                  row, 0, 1, 2);
     row++;
-    settingsLayout->addWidget(maxGapLabel,       row, 0, 1, 1);
-    settingsLayout->addWidget(d->maxGapInput,    row, 1, 1, 1);
+    settingsLayout->addWidget(maxGapLabel,           row, 0, 1, 1);
+    settingsLayout->addWidget(d->maxGapInput,        row, 1, 1, 1);
     row++;
-    settingsLayout->addWidget(timeZoneLabel,     row, 0, 1, 2);
+    settingsLayout->addWidget(timeZoneLabel,         row, 0, 1, 2);
     row++;
-    settingsLayout->addWidget(d->timeZoneSystem, row, 0, 1, 2);
+    settingsLayout->addWidget(d->timeZoneSystem,     row, 0, 1, 2);
     row++;
-    settingsLayout->addWidget(d->timeZoneManual, row, 0, 1, 1);
-    settingsLayout->addWidget(d->timeZoneCB,     row, 1, 1, 1);
+    settingsLayout->addWidget(d->timeZoneManual,     row, 0, 1, 1);
+    settingsLayout->addWidget(d->timeZoneCB,         row, 1, 1, 1);
     row++;
-    settingsLayout->addWidget(d->offsetEnabled,  row, 0, 1, 1);
-    settingsLayout->addWidget(offsetWidget,      row, 1, 1, 1);
+    settingsLayout->addWidget(d->offsetEnabled,      row, 0, 1, 1);
+    settingsLayout->addWidget(offsetWidget,          row, 1, 1, 1);
     row++;
-    settingsLayout->addWidget(d->interpolateBox, row, 0, 1, 2);
+    settingsLayout->addWidget(d->interpolateBox,     row, 0, 1, 2);
     row++;
-    settingsLayout->addWidget(d->maxTimeLabel,   row, 0, 1, 1);
-    settingsLayout->addWidget(d->maxTimeInput,   row, 1, 1, 1);
+    settingsLayout->addWidget(d->maxTimeLabel,       row, 0, 1, 1);
+    settingsLayout->addWidget(d->maxTimeInput,       row, 1, 1, 1);
     row++;
-    settingsLayout->addWidget(d->correlateButton,row, 0, 1, 1);
+    settingsLayout->addWidget(d->correlateButton,    row, 0, 1, 1);
     settingsLayout->setSpacing(d->spacingHint);
     settingsLayout->setMargin(d->marginHint);
 
@@ -338,7 +342,6 @@ GPSCorrelatorWidget::~GPSCorrelatorWidget()
 {
     delete d;
 }
-
 
 void GPSCorrelatorWidget::slotLoadGPXFiles()
 {
@@ -378,6 +381,7 @@ void GPSCorrelatorWidget::slotAllGPXFilesReady()
     // are there any invalid files?
     QStringList invalidFiles;
     const QList<QPair<KUrl, QString> > loadErrorFiles = d->gpsDataParser->readLoadErrors();
+
     for (int i=0; i<loadErrorFiles.count(); ++i)
     {
         const QPair<KUrl, QString> currentError = loadErrorFiles.at(i);
@@ -436,12 +440,15 @@ void GPSCorrelatorWidget::updateUIState()
     d->maxTimeInput->setEnabled(state && d->interpolateBox->isChecked());
 
     bool haveValidGpxFiles = false;
+
     for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
     {
         haveValidGpxFiles = d->gpsDataParser->fileData(i).isValid;
+
         if (haveValidGpxFiles)
             break;
     }
+
     d->correlateButton->setEnabled(state && haveValidGpxFiles);
 }
 
@@ -452,15 +459,18 @@ void GPSCorrelatorWidget::slotCorrelate()
 
     // store the options:
     GPSDataParser::GPXCorrelationOptions options;
-    options.maxGapTime = d->maxGapInput->value();
+    options.maxGapTime               = d->maxGapInput->value();
     options.photosHaveSystemTimeZone = (d->timeZoneGroup->checkedId() == 1);
+
     if (!options.photosHaveSystemTimeZone)
     {
-        const QString tz = d->timeZoneCB->currentText();
-        const int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
-        const int mm     = QString(QString(tz[7])+QString(tz[8])).toInt();
+        const QString tz   = d->timeZoneCB->currentText();
+        const int hh       = QString(QString(tz[4])+QString(tz[5])).toInt();
+        const int mm       = QString(QString(tz[7])+QString(tz[8])).toInt();
         int timeZoneOffset = hh*3600 + mm*60;
-        if (tz[3] == QChar('-')) {
+
+        if (tz[3] == QChar('-'))
+        {
             timeZoneOffset = (-1) * timeZoneOffset;
         }
 
@@ -470,22 +480,28 @@ void GPSCorrelatorWidget::slotCorrelate()
     if (d->offsetEnabled->isChecked())
     {
         int userOffset = d->offsetMin->value() * 60 + d->offsetSec->value();
-        if (d->offsetSign->currentText() == "-") {
+
+        if (d->offsetSign->currentText() == "-")
+        {
             userOffset = (-1) * userOffset;
         }
+
         options.secondsOffset+=userOffset;
     }
-    options.interpolate = d->interpolateBox->isChecked();
+
+    options.interpolate          = d->interpolateBox->isChecked();
     options.interpolationDstTime = d->maxTimeInput->value()*60;
 
     // create a list of items to be correlated
     GPSDataParser::GPXCorrelation::List itemList;
 
     const int imageCount = d->imageModel->rowCount();
+
     for (int i = 0; i<imageCount; ++i)
     {
         QPersistentModelIndex imageIndex = d->imageModel->index(i, 0);
-        KipiImageItem* const imageItem = d->imageModel->itemFromIndex(imageIndex);
+        KipiImageItem* const imageItem   = d->imageModel->itemFromIndex(imageIndex);
+
         if (!imageItem)
             continue;
 
@@ -496,10 +512,11 @@ void GPSCorrelatorWidget::slotCorrelate()
         itemList << correlationItem;
     }
 
-    d->correlationTotalCount = imageCount;
+    d->correlationTotalCount      = imageCount;
     d->correlationCorrelatedCount = 0;
-    d->correlationTriedCount = 0;
-    d->correlationUndoCommand = new GPSUndoCommand;
+    d->correlationTriedCount      = 0;
+    d->correlationUndoCommand     = new GPSUndoCommand;
+
     emit(signalProgressSetup(imageCount, i18n("Correlating images - %p%")));
 
     d->gpsDataParser->correlate(itemList, options);
@@ -511,15 +528,17 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
 {
     kDebug()<<correlatedItems.count();
     d->correlationTriedCount+=correlatedItems.count();
+
     for (int i=0; i<correlatedItems.count(); ++i)
     {
         const GPSDataParser::GPXCorrelation& itemCorrelation = correlatedItems.at(i);
+        const QPersistentModelIndex itemIndex                = itemCorrelation.userData.value<QPersistentModelIndex>();
 
-        const QPersistentModelIndex itemIndex = itemCorrelation.userData.value<QPersistentModelIndex>();
         if (!itemIndex.isValid())
             continue;
 
-        KipiImageItem* const imageItem = d->imageModel->itemFromIndex(itemIndex);
+        KipiImageItem* const imageItem                       = d->imageModel->itemFromIndex(itemIndex);
+
         if (!imageItem)
             continue;
 
@@ -529,6 +548,7 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
 
             GPSDataContainer newData;
             newData.setCoordinates(itemCorrelation.coordinates);
+
             if (itemCorrelation.nSatellites>=0)
                 newData.setNSatellites(itemCorrelation.nSatellites);
 
@@ -647,5 +667,4 @@ void GPSCorrelatorWidget::slotCorrelationCanceled()
     emit(signalSetUIEnabled(true));
 }
 
-} /* KIPIGPSSyncPlugin */
-
+} /* namespace KIPIGPSSyncPlugin */

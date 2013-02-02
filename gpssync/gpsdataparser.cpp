@@ -7,7 +7,7 @@
  * @date   2006-09-19
  * @brief  GPS data file parser (GPX format http://www.topografix.com/gpx.asp).
  *
- * @author Copyright (C) 2006-2010 by Gilles Caulier
+ * @author Copyright (C) 2006-2013 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -44,14 +44,17 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSDataParserPrivate
+class GPSDataParser::Private
 {
 public:
-    GPSDataParserPrivate()
+
+    Private()
     {
+        gpxLoadFutureWatcher = 0;
+        thread               = 0;
     }
 
-    QFutureWatcher<GPSDataParser::GPXFileData> *gpxLoadFutureWatcher;
+    QFutureWatcher<GPSDataParser::GPXFileData>* gpxLoadFutureWatcher;
     QFuture<GPSDataParser::GPXFileData>         gpxLoadFuture;
     GPSDataParser::GPXFileData::List            gpxFileDataList;
     GPSDataParserThread*                        thread;
@@ -59,7 +62,7 @@ public:
 };
 
 GPSDataParser::GPSDataParser(QObject* const parent)
-: QObject(parent), d(new GPSDataParserPrivate())
+    : QObject(parent), d(new Private())
 {
     qRegisterMetaType<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>("KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List");
 }
@@ -90,7 +93,7 @@ void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
 
     connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
             this, SLOT(slotGPXFilesReadyAt(int,int)));
-    
+
     connect(d->gpxLoadFutureWatcher, SIGNAL(finished()),
             this, SLOT(slotGPXFilesFinished()));
 
@@ -108,6 +111,7 @@ void GPSDataParser::slotGPXFilesReadyAt(int beginIndex, int endIndex)
     for (int i=beginIndex; i<endIndex; ++i)
     {
         const GPXFileData nextFile = d->gpxLoadFuture.resultAt(i);
+
         if (nextFile.isValid)
         {
             d->gpxFileDataList << nextFile;
@@ -141,13 +145,14 @@ QDateTime GPXFileReader::ParseTime(QString timeString)
     // "2010-01-14T09:26:02.287+02:00" <-- here we have to cut off the +02:00 and replace it with 'Z'
     // "2009-03-11T13:39:55.622Z"
 
-    const int timeStringLength = timeString.length();
-    const int timeZoneSignPosition = timeStringLength-6;
+    const int timeStringLength      = timeString.length();
+    const int timeZoneSignPosition  = timeStringLength-6;
 
     // does the string contain a timezone offset?
-    int timeZoneOffsetSeconds = 0;
-    const int timeZonePlusPosition = timeString.lastIndexOf("+");
+    int timeZoneOffsetSeconds       = 0;
+    const int timeZonePlusPosition  = timeString.lastIndexOf("+");
     const int timeZoneMinusPosition = timeString.lastIndexOf("-");
+
     if ( (timeZonePlusPosition == timeZoneSignPosition)||(timeZoneMinusPosition == timeZoneSignPosition) )
     {
         const int timeZoneSign = (timeZonePlusPosition == timeZoneSignPosition) ? +1 : -1;
@@ -158,20 +163,20 @@ QDateTime GPXFileReader::ParseTime(QString timeString)
         timeString+='Z';
 
         // determine the time zone offset:
-        bool okayHour = false;
-        bool okayMinute = false;
-        const int hourOffset = timeZoneString.mid(1, 2).toInt(&okayHour);
+        bool okayHour          = false;
+        bool okayMinute        = false;
+        const int hourOffset   = timeZoneString.mid(1, 2).toInt(&okayHour);
         const int minuteOffset = timeZoneString.mid(4, 2).toInt(&okayMinute);
 
         if (okayHour&&okayMinute)
         {
-            timeZoneOffsetSeconds = hourOffset*3600 + minuteOffset*60;
-            timeZoneOffsetSeconds*= timeZoneSign;
+            timeZoneOffsetSeconds  = hourOffset*3600 + minuteOffset*60;
+            timeZoneOffsetSeconds *= timeZoneSign;
         }
     }
 
     QDateTime theTime = QDateTime::fromString(timeString, Qt::ISODate);
-    theTime = theTime.addSecs(-timeZoneOffsetSeconds);
+    theTime           = theTime.addSecs(-timeZoneOffsetSeconds);
 
     return theTime;
 }
@@ -181,9 +186,9 @@ QDateTime GPXFileReader::ParseTime(QString timeString)
  */
 void GPSDataParser::correlate(const GPXCorrelation::List& itemsToCorrelate, const GPXCorrelationOptions& options)
 {
-    d->thread = new GPSDataParserThread(this);
-    d->thread->options = options;
-    d->thread->fileList = d->gpxFileDataList;
+    d->thread                   = new GPSDataParserThread(this);
+    d->thread->options          = options;
+    d->thread->fileList         = d->gpxFileDataList;
     d->thread->itemsToCorrelate = itemsToCorrelate;
 
     connect(d->thread, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)),
@@ -204,7 +209,7 @@ void GPSDataParser::slotThreadFinished()
 {
     const bool threadCanceled = d->thread->canceled;
     delete d->thread;
-    d->thread = 0;
+    d->thread                 = 0;
 
     if (threadCanceled)
     {
@@ -216,10 +221,34 @@ void GPSDataParser::slotThreadFinished()
     }
 }
 
+
+int GPSDataParser::fileCount() const
+{
+    return d->gpxFileDataList.count();
+}
+
+QList<QPair<KUrl, QString> > GPSDataParser::readLoadErrors()
+{
+    const QList<QPair<KUrl, QString> > result = d->loadErrorFiles;
+    d->loadErrorFiles.clear();
+
+    return result;
+}
+
+void GPSDataParser::cancelCorrelation()
+{
+    if (d->thread)
+    {
+        d->thread->doCancel = true;
+    }
+}
+
+// ----------------------------------------------------------------------------------------------------
+
 GPSDataParserThread::GPSDataParserThread(QObject* const parent)
-: QThread(parent),
-  doCancel(false),
-  canceled(false)
+    : QThread(parent),
+      doCancel(false),
+      canceled(false)
 {
 }
 
@@ -241,6 +270,7 @@ void GPSDataParserThread::run()
     // we search all loaded gpx data files in parallel for the points with the best match
     const int nFiles = fileList.count();
     QList<int> currentIndices;
+
     for (int i=0; i<nFiles; ++i)
         currentIndices << 0;
 
@@ -254,17 +284,20 @@ void GPSDataParserThread::run()
 
         // GPS device are sync in time by satelite using GMT time.
         QDateTime itemDateTime = it->dateTime.addSecs(options.secondsOffset*(-1));
+
         if (!options.photosHaveSystemTimeZone)
         {
             // the timezone offset was already included in secondsOffset
             itemDateTime.setTimeSpec(Qt::UTC);
         }
+
         kDebug()<<itemDateTime;
         // find the last point before our item:
         QDateTime lastSmallerTime;
         QPair<int, int> lastIndexPair;
         QDateTime firstBiggerTime;
         QPair<int, int> firstIndexPair;
+
         for (int f = 0; f<nFiles; ++f)
         {
             if (doCancel)
@@ -275,6 +308,7 @@ void GPSDataParserThread::run()
 
             const GPSDataParser::GPXFileData& currentFile = fileList.at(f);
             int index = currentIndices.at(f);
+
             for (; index<currentFile.gpxDataPoints.count(); ++index)
             {
                 if (doCancel)
@@ -284,9 +318,11 @@ void GPSDataParserThread::run()
                 }
 
                 const QDateTime& indexTime = currentFile.gpxDataPoints.at(index).dateTime;
+
                 if (indexTime<itemDateTime)
                 {
                     bool timeIsBetter = false;
+
                     if (lastSmallerTime.isValid())
                     {
                         timeIsBetter = (indexTime>lastSmallerTime);
@@ -295,6 +331,7 @@ void GPSDataParserThread::run()
                     {
                         timeIsBetter = true;
                     }
+
                     if (timeIsBetter)
                     {
                         lastSmallerTime = indexTime;
@@ -305,6 +342,7 @@ void GPSDataParserThread::run()
                 {
                     // is it the first time after our item?
                     bool timeIsBetter = false;
+
                     if (firstBiggerTime.isValid())
                     {
                         timeIsBetter = (indexTime<firstBiggerTime);
@@ -313,6 +351,7 @@ void GPSDataParserThread::run()
                     {
                         timeIsBetter = true;
                     }
+
                     if (timeIsBetter)
                     {
                         firstBiggerTime = indexTime;
@@ -322,7 +361,7 @@ void GPSDataParserThread::run()
                     break;
                 }
             }
-            
+
             // Remember the last index which we searched in this file
             // to save time when looking for matching times for the next
             // item.
@@ -340,22 +379,27 @@ void GPSDataParserThread::run()
 
         // do we have a timestamp within maxGap?
         bool canUseTimeBefore = lastSmallerTime.isValid();
-        int dtimeBefore = 0;
+        int dtimeBefore       = 0;
+
         if (canUseTimeBefore)
         {
-            dtimeBefore = abs(lastSmallerTime.secsTo(itemDateTime));
+            dtimeBefore      = abs(lastSmallerTime.secsTo(itemDateTime));
             canUseTimeBefore = dtimeBefore <= options.maxGapTime;
         }
+
         bool canUseTimeAfter = firstBiggerTime.isValid();
-        int dtimeAfter = 0;
+        int dtimeAfter       = 0;
+
         if (canUseTimeAfter)
         {
-            dtimeAfter = abs(firstBiggerTime.secsTo(itemDateTime));
+            dtimeAfter      = abs(firstBiggerTime.secsTo(itemDateTime));
             canUseTimeAfter = dtimeAfter <= options.maxGapTime;
         }
+
         if (canUseTimeAfter||canUseTimeBefore)
         {
             QPair<int, int> indexToUse(-1, -1);
+
             if (canUseTimeAfter&&canUseTimeBefore)
             {
                 indexToUse = (dtimeBefore < dtimeAfter) ? lastIndexPair:firstIndexPair;
@@ -372,60 +416,64 @@ void GPSDataParserThread::run()
             if (indexToUse.first>=0)
             {
                 const GPSDataParser::GPXDataPoint& dataPoint = fileList.at(indexToUse.first).gpxDataPoints.at(indexToUse.second);
-                correlatedData.coordinates = dataPoint.coordinates;
-                correlatedData.flags = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
-
-                correlatedData.nSatellites = dataPoint.nSatellites;
-                correlatedData.hDop = dataPoint.hDop;
-                correlatedData.pDop = dataPoint.pDop;
-                correlatedData.fixType = dataPoint.fixType;
-                correlatedData.speed = dataPoint.speed;
+                correlatedData.coordinates                   = dataPoint.coordinates;
+                correlatedData.flags                         = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
+                correlatedData.nSatellites                   = dataPoint.nSatellites;
+                correlatedData.hDop                          = dataPoint.hDop;
+                correlatedData.pDop                          = dataPoint.pDop;
+                correlatedData.fixType                       = dataPoint.fixType;
+                correlatedData.speed                         = dataPoint.speed;
             }
         }
         else
         {
             // no, we may have to interpolate
             bool canInterpolate = options.interpolate && lastSmallerTime.isValid() && firstBiggerTime.isValid();
+
             if (canInterpolate)
             {
                 canInterpolate = abs(lastSmallerTime.secsTo(itemDateTime)) <= options.interpolationDstTime;
             }
+
             if (canInterpolate)
             {
                 canInterpolate = abs(firstBiggerTime.secsTo(itemDateTime)) <= options.interpolationDstTime;
             }
+
             if (canInterpolate)
             {
                 const GPSDataParser::GPXDataPoint& dataPointBefore = fileList.at(lastIndexPair.first).gpxDataPoints.at(lastIndexPair.second);
-                const GPSDataParser::GPXDataPoint& dataPointAfter = fileList.at(firstIndexPair.first).gpxDataPoints.at(firstIndexPair.second);
+                const GPSDataParser::GPXDataPoint& dataPointAfter  = fileList.at(firstIndexPair.first).gpxDataPoints.at(firstIndexPair.second);
 
                 const uint tBefore = dataPointBefore.dateTime.toTime_t();
-                const uint tAfter = dataPointAfter.dateTime.toTime_t();
-                const uint tCor = itemDateTime.toTime_t();
+                const uint tAfter  = dataPointAfter.dateTime.toTime_t();
+                const uint tCor    = itemDateTime.toTime_t();
+
                 if (tCor-tBefore!=0)
                 {
                     KGeoMap::GeoCoordinates resultCoordinates;
-                    const double latBefore = dataPointBefore.coordinates.lat();
-                    const double lonBefore = dataPointBefore.coordinates.lon();
-                    const double latAfter = dataPointAfter.coordinates.lat();
-                    const double lonAfter = dataPointAfter.coordinates.lon();
-
+                    const double latBefore  = dataPointBefore.coordinates.lat();
+                    const double lonBefore  = dataPointBefore.coordinates.lon();
+                    const double latAfter   = dataPointAfter.coordinates.lat();
+                    const double lonAfter   = dataPointAfter.coordinates.lon();
                     const qreal interFactor = qreal(tCor-tBefore)/qreal(tAfter-tBefore);
+
                     resultCoordinates.setLatLon(
                             latBefore + (latAfter - latBefore) * interFactor,
                             lonBefore + (lonAfter - lonBefore) * interFactor
                         );
 
                     const bool hasAlt = dataPointBefore.coordinates.hasAltitude() && dataPointAfter.coordinates.hasAltitude();
+
                     if (hasAlt)
                     {
                         const double altBefore = dataPointBefore.coordinates.alt();
-                        const double altAfter = dataPointAfter.coordinates.alt();
+                        const double altAfter  = dataPointAfter.coordinates.alt();
                         resultCoordinates.setAlt(altBefore + (altAfter - altBefore) * interFactor);
                     }
 
                     correlatedData.coordinates = resultCoordinates;
-                    correlatedData.flags = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
+                    correlatedData.flags       = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
                 }
 
             }
@@ -441,35 +489,16 @@ void GPSDataParserThread::run()
     }
 }
 
-int GPSDataParser::fileCount() const
-{
-    return d->gpxFileDataList.count();
-}
-
-QList<QPair<KUrl, QString> > GPSDataParser::readLoadErrors()
-{
-    const QList<QPair<KUrl, QString> > result = d->loadErrorFiles;
-    d->loadErrorFiles.clear();
-    
-    return result;
-}
-
-void GPSDataParser::cancelCorrelation()
-{
-    if (d->thread)
-    {
-        d->thread->doCancel = true;
-    }
-}
+// --------------------------------------------------------------------------------------------------------------------------
 
 GPXFileReader::GPXFileReader(GPSDataParser::GPXFileData* const dataTarget)
-: QXmlDefaultHandler(),
-  fileData(dataTarget),
-  currentElementPath(),
-  currentElements(),
-  currentText(),
-  currentDataPoint(),
-  verifyFoundGPXElement(false)
+    : QXmlDefaultHandler(),
+    fileData(dataTarget),
+    currentElementPath(),
+    currentElements(),
+    currentText(),
+    currentDataPoint(),
+    verifyFoundGPXElement(false)
 {
 
 }
@@ -485,8 +514,8 @@ bool GPXFileReader::characters(const QString& ch)
 
 QString GPXFileReader::myQName(const QString& namespaceURI, const QString& localName)
 {
-    if (    (namespaceURI=="http://www.topografix.com/GPX/1/0")
-         || (namespaceURI=="http://www.topografix.com/GPX/1/1") )
+    if ( (namespaceURI=="http://www.topografix.com/GPX/1/0")  ||
+         (namespaceURI=="http://www.topografix.com/GPX/1/1") )
     {
         return "gpx:"+localName;
     }
@@ -506,42 +535,47 @@ bool GPXFileReader::endElement(const QString& namespaceURI, const QString& local
     currentText.clear();
     rebuildElementPath();
 
-    if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
+    if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
     {
         if (currentDataPoint.dateTime.isValid()&&currentDataPoint.coordinates.hasCoordinates())
         {
             fileData->gpxDataPoints << currentDataPoint;
         }
+
         currentDataPoint = GPSDataParser::GPXDataPoint();
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:time")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:time")
     {
         currentDataPoint.dateTime = ParseTime(eText.trimmed());
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:sat")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:sat")
     {
-        bool okay = false;
+        bool okay       = false;
         int nSatellites = eText.toInt(&okay);
+
         if (okay&&(nSatellites>=0))
             currentDataPoint.nSatellites = nSatellites;
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:hdop")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:hdop")
     {
-        bool okay = false;
+        bool okay  = false;
         qreal hDop = eText.toDouble(&okay);
+
         if (okay)
             currentDataPoint.hDop = hDop;
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:pdop")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:pdop")
     {
-        bool okay = false;
+        bool okay  = false;
         qreal pDop = eText.toDouble(&okay);
+
         if (okay)
             currentDataPoint.pDop = pDop;
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:fix")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:fix")
     {
         int fixType = -1;
+
         if (eText=="2d")
         {
             fixType = 2;
@@ -556,19 +590,21 @@ bool GPXFileReader::endElement(const QString& namespaceURI, const QString& local
             currentDataPoint.fixType = fixType;
         }
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:ele")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:ele")
     {
         bool haveAltitude = false;
-        const qreal alt = eText.toDouble(&haveAltitude);
+        const qreal alt   = eText.toDouble(&haveAltitude);
+
         if (haveAltitude)
         {
             currentDataPoint.coordinates.setAlt(alt);
         }
     }
-    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:speed")
+    else if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:speed")
     {
-        bool haveSpeed = false;
+        bool haveSpeed    = false;
         const qreal speed = eText.toDouble(&haveSpeed);
+
         if (haveSpeed)
         {
             currentDataPoint.speed = speed;
@@ -582,27 +618,28 @@ bool GPXFileReader::startElement(const QString& namespaceURI, const QString& loc
 {
     Q_UNUSED(qName)
 
-    const QString eName = myQName(namespaceURI, localName);
+    const QString eName  = myQName(namespaceURI, localName);
     currentElements << eName;
     rebuildElementPath();
     const QString& ePath = currentElementPath;
 
-    if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
+    if (ePath == "gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
     {
-        qreal lat = 0.0;
-        qreal lon = 0.0;
+        qreal lat    = 0.0;
+        qreal lon    = 0.0;
         bool haveLat = false;
         bool haveLon = false;
 
         for (int i=0; i<atts.count(); ++i)
         {
-            const QString attName = myQName(atts.uri(i), atts.localName(i));
+            const QString attName  = myQName(atts.uri(i), atts.localName(i));
             const QString attValue = atts.value(i);
-            if (attName=="lat")
+
+            if (attName == "lat")
             {
                 lat = attValue.toDouble(&haveLat);
             }
-            else if (attName=="lon")
+            else if (attName == "lon")
             {
                 lon = attValue.toDouble(&haveLon);
             }
@@ -630,10 +667,11 @@ GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
 {
     // TODO: store some kind of error message
     GPSDataParser::GPXFileData parsedData;
-    parsedData.url = url;
+    parsedData.url     = url;
     parsedData.isValid = false;
 
     QFile file(url.toLocalFile());
+
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
         parsedData.loadError = i18n("Could not open: %1", file.errorString());
@@ -651,11 +689,11 @@ GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
     QXmlSimpleReader reader;
     reader.setContentHandler(&gpxFileReader);
     reader.setErrorHandler(&gpxFileReader);
-
     QXmlInputSource xmlInputSource(&file);
 
     // TODO: error handling
     parsedData.isValid = reader.parse(xmlInputSource);
+
     if (!parsedData.isValid)
     {
         parsedData.loadError = i18n("Parsing error: %1", gpxFileReader.errorString());
@@ -663,6 +701,7 @@ GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
     }
 
     parsedData.isValid = !parsedData.gpxDataPoints.isEmpty();
+
     if (!parsedData.isValid)
     {
         if (!gpxFileReader.verifyFoundGPXElement)
@@ -673,6 +712,7 @@ GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
         {
             parsedData.loadError = i18n("File is a GPX file, but no datapoints were found.");
         }
+
         return parsedData;
     }
 

@@ -7,7 +7,7 @@
  * @date   2006-09-19
  * @brief  GPS data file parser (GPX format http://www.topografix.com/gpx.asp).
  *
- * @author Copyright (C) 2006-2010 by Gilles Caulier
+ * @author Copyright (C) 2006-2013 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -45,11 +45,10 @@ class TestGPXParsing;
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSDataParserPrivate;
-
 class GPSDataParser : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
 
     enum GPXFlags
@@ -59,9 +58,12 @@ public:
         GPXFlagAltitude = 3
     };
 
+public:
+
     class GPXDataPoint
     {
     public:
+
         GPXDataPoint()
         : dateTime(),
           coordinates(),
@@ -73,22 +75,27 @@ public:
         {
         }
 
-        QDateTime dateTime;
-        KGeoMap::GeoCoordinates coordinates;
-        int nSatellites;
-        qreal hDop;
-        qreal pDop;
-        int fixType;
-        qreal speed;
-
         static bool EarlierThan(const GPXDataPoint& a, const GPXDataPoint& b);
+
+    public:
+
+        QDateTime                   dateTime;
+        KGeoMap::GeoCoordinates     coordinates;
+        int                         nSatellites;
+        qreal                       hDop;
+        qreal                       pDop;
+        int                         fixType;
+        qreal                       speed;
 
         typedef QList<GPXDataPoint> List;
     };
 
+    // -------------------------------------
+
     class GPXCorrelation
     {
     public:
+
         GPXCorrelation()
         : dateTime(),
           userData(),
@@ -104,20 +111,23 @@ public:
 
         typedef QList<GPXCorrelation> List;
 
-        QDateTime dateTime;
-        QVariant userData;
-        int nSatellites;
-        qreal hDop;
-        qreal pDop;
-        int fixType;
-        qreal speed;
-        GPXFlags flags;
-        KGeoMap::GeoCoordinates coordinates;
+        QDateTime                     dateTime;
+        QVariant                      userData;
+        int                           nSatellites;
+        qreal                         hDop;
+        qreal                         pDop;
+        int                           fixType;
+        qreal                         speed;
+        GPXFlags                      flags;
+        KGeoMap::GeoCoordinates       coordinates;
     };
+
+    // -------------------------------------
 
     class GPXCorrelationOptions
     {
     public:
+
         GPXCorrelationOptions()
         : photosHaveSystemTimeZone(false),
           interpolate(false),
@@ -126,18 +136,19 @@ public:
           secondsOffset(0)
         {
         }
+
         bool photosHaveSystemTimeZone;
         bool interpolate;
-        int interpolationDstTime;
-        int maxGapTime;
-        int secondsOffset;
+        int  interpolationDstTime;
+        int  maxGapTime;
+        int  secondsOffset;
     };
+
+    // -------------------------------------
 
     class GPXFileData
     {
     public:
-
-        typedef QList<GPXFileData> List;
 
         GPXFileData()
         : url(),
@@ -147,11 +158,14 @@ public:
         {
         }
 
-        KUrl url;
-        bool isValid;
-        QString loadError;
-        QList<GPXDataPoint> gpxDataPoints;
+        KUrl                       url;
+        bool                       isValid;
+        QString                    loadError;
+        QList<GPXDataPoint>        gpxDataPoints;
+        typedef QList<GPXFileData> List;
     };
+
+public:
 
     GPSDataParser(QObject* const parent = 0);
     ~GPSDataParser();
@@ -166,6 +180,7 @@ public:
     void cancelCorrelation();
 
 Q_SIGNALS:
+
     void signalGPXFilesReadyAt(const int startIndex, const int endIndex);
     void signalAllGPXFilesReady();
     void signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
@@ -173,32 +188,43 @@ Q_SIGNALS:
     void signalCorrelationCanceled();
 
 private Q_SLOTS:
+
     void slotGPXFilesReadyAt(int beginIndex, int endIndex);
     void slotGPXFilesFinished();
     void slotThreadItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
     void slotThreadFinished();
 
 private:
-    GPSDataParserPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
+
+// ----------------------------------------------------------------------------------------------------------------------
 
 class GPSDataParserThread : public QThread
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
+
     GPSDataParserThread(QObject* const parent = 0);
     ~GPSDataParserThread();
 
-    GPSDataParser::GPXCorrelation::List itemsToCorrelate;
+public:
+
+    GPSDataParser::GPXCorrelation::List  itemsToCorrelate;
     GPSDataParser::GPXCorrelationOptions options;
-    GPSDataParser::GPXFileData::List fileList;
-    bool doCancel;
-    bool canceled;
+    GPSDataParser::GPXFileData::List     fileList;
+    bool                                 doCancel;
+    bool                                 canceled;
 
 protected:
+
     virtual void run();
 
 Q_SIGNALS:
+
     void signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
 };
 

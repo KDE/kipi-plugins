@@ -45,11 +45,9 @@ namespace KIPIGPSSyncPlugin
 class KipiImageModel;
 class GPSUndoCommand;
 
-class GPSCorrelatorWidgetPrivate;
-
 class GPSCorrelatorWidget : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -61,9 +59,11 @@ public:
     void readSettingsFromGroup(const KConfigGroup* const group);
 
 protected:
+
     void setUIEnabledInternal(const bool state);
 
 Q_SIGNALS:
+
     void signalSetUIEnabled(const bool enabledState);
     void signalSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
     void signalProgressSetup(const int maxProgress, const QString& progressText);
@@ -71,9 +71,11 @@ Q_SIGNALS:
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 public Q_SLOTS:
+
     void slotCancelCorrelation();
 
 private Q_SLOTS:
+
     void updateUIState();
     void slotLoadGPXFiles();
     void slotGPXFilesReadyAt(int beginIndex, int endIndex);
@@ -84,10 +86,12 @@ private Q_SLOTS:
     void slotCorrelationCanceled();
 
 private:
-    GPSCorrelatorWidgetPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
-} /* KIPIGPSSyncPlugin */
+} /* namespace KIPIGPSSyncPlugin */
 
 #endif /* GPSCORRELATORWIDGET_H */
 
