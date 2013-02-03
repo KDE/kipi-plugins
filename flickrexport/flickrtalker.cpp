@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2009 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -76,13 +76,15 @@ namespace KIPIFlickrExportPlugin
 
 FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 {
-    m_parent        = parent;
-    m_job           = 0;
-    m_photoSetsList = 0;
+    m_parent          = parent;
+    m_job             = 0;
+    m_photoSetsList   = 0;
+    m_authProgressDlg = 0;
+    m_state           = FE_LOGOUT;
 
     m_serviceName = serviceName;
 
-    if (serviceName == "23")
+    if (serviceName == QString("23"))
     {
         m_apiUrl    = QString("http://www.23hq.com/services/rest/");
         m_authUrl   = QString("http://www.23hq.com/services/auth/");
@@ -90,17 +92,17 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 
         // bshanks: do 23 and flickr really share API keys? or does 23 not need
         // one?
-        m_apikey = "49d585bafa0758cb5c58ab67198bf632";
-        m_secret = "34b39925e6273ffd";
+        m_apikey    = "49d585bafa0758cb5c58ab67198bf632";
+        m_secret    = "34b39925e6273ffd";
     }
-    else if (serviceName == "Zooomr")
+    else if (serviceName == QString("Zooomr"))
     {
         m_apiUrl    = QString("http://api.zooomr.com/services/rest/");
         m_authUrl   = QString("http://www.zooomr.com/services/auth/");
         m_uploadUrl = QString("http://upload.zooomr.com/services/upload/");
 
-        m_apikey = "18c8db5ce9ed4e15a7b484136f5080c5";
-        m_secret = "1ea4af14e3";
+        m_apikey    = "18c8db5ce9ed4e15a7b484136f5080c5";
+        m_secret    = "1ea4af14e3";
     }
     else
     {
@@ -108,8 +110,8 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
         m_authUrl   = QString("http://www.flickr.com/services/auth/");
         m_uploadUrl = QString("http://api.flickr.com/services/upload/");
 
-        m_apikey = "49d585bafa0758cb5c58ab67198bf632";
-        m_secret = "34b39925e6273ffd";
+        m_apikey    = "49d585bafa0758cb5c58ab67198bf632";
+        m_secret    = "34b39925e6273ffd";
     }
 
     /* Initialize selected photo set as empty. */
@@ -127,7 +129,6 @@ FlickrTalker::~FlickrTalker()
     }
 
     delete m_photoSetsList;
-
 }
 
 /** Compute MD5 signature using url queries keys and values following Flickr notice:
@@ -630,8 +631,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         else
         {
             if (rescale && (image.width() > maxDim || image.height() > maxDim))
-                image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
-                                     Qt::SmoothTransformation);
+                image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
             image.save(path, "JPEG", imageQuality);
         }
@@ -666,7 +666,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -800,9 +800,9 @@ void FlickrTalker::slotError(const QString& error)
 
 void FlickrTalker::slotResult(KJob* kjob)
 {
-    m_job = 0;
+    m_job               = 0;
     emit signalBusy(false);
-    KIO::Job* job = static_cast<KIO::Job*>(kjob);
+    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
     {
@@ -1186,8 +1186,8 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "photosets")
         {
-            e                = node.toElement();
-            QDomNode details = e.firstChild();
+            e                    = node.toElement();
+            QDomNode details     = e.firstChild();
             FPhotoSet fps;
             QDomNode detailsNode = details;
 
@@ -1312,9 +1312,9 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
         {
             e                = node.toElement();           // try to convert the node to an element.
             QDomNode details = e.firstChild();
-            photoId = e.text();
+            photoId          = e.text();
             kDebug() << "Photoid= " << photoId;
-            success = true;
+            success          = true;
         }
 
         if (node.isElement() && node.nodeName() == "err")
@@ -1377,7 +1377,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "photoid")
         {
-            e = node.toElement();                 // try to convert the node to an element.
+            e       = node.toElement();                 // try to convert the node to an element.
             QDomNode details = e.firstChild();
             kDebug() << "Photoid=" << e.text();
             success = true;

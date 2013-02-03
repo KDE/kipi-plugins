@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -70,7 +70,6 @@
 #include "flickrnewphotosetdialog.h"
 #include "flickrwidget.h"
 #include "ui_flickralbumdialog.h"
-//#include "flickrviewitem.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -84,11 +83,11 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     setDefaultButton(Close);
     setModal(false);
 
-    if (serviceName == "23")
+    if (serviceName == QString("23"))
     {
         setWindowIcon(KIcon("hq"));
     }
-    else if (serviceName == "Zooomr")
+    else if (serviceName == QString("Zooomr"))
     {
         setWindowIcon(KIcon("zooomr"));
     }
@@ -136,14 +135,14 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     // --------------------------------------------------------------------------
     // About data and help button.
 
-    KPAboutData* about = new KPAboutData(ki18n("Flickr/23/Zooomr Export"),
-                                         0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A Kipi plugin to export an image collection to a "
-                                               "Flickr / 23 / Zooomr web service."),
-                                         ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                               "(c) 2008-2012, Gilles Caulier\n"
-                                               "(c) 2009, Luka Renko"));
+    KPAboutData* const about = new KPAboutData(ki18n("Flickr/23/Zooomr Export"),
+                                               0,
+                                               KAboutData::License_GPL,
+                                               ki18n("A Kipi plugin to export an image collection to a "
+                                                     "Flickr / 23 / Zooomr web service."),
+                                               ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                                     "(c) 2008-2013, Gilles Caulier\n"
+                                                     "(c) 2009, Luka Renko"));
 
     about->addAuthor(ki18n("Vardhman Jain"), ki18n("Author and maintainer"),
                      "Vardhman at gmail dot com");
@@ -356,8 +355,8 @@ void FlickrWindow::readSettings()
 
     m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
 
-    m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width", 1600));
-    m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality", 85));
+    m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width",       1600));
+    m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",    85));
 
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     restoreDialogSize(dialogGroup);
@@ -448,7 +447,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
     // Call the dialog
     QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
-    int resp = dlg->exec();
+    int resp                              = dlg->exec();
 
     if ((resp == QDialog::Accepted) && (!dlg->titleEdit->text().isEmpty()))
     {
@@ -522,7 +521,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
 
     if (m_talker && m_talker->m_photoSetsList)
     {
-        QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
+        QLinkedList <FPhotoSet>* const list = m_talker->m_photoSetsList;
         m_albumsListComboBox->clear();
         m_albumsListComboBox->insertItem(0, i18n("&lt;Photostream Only&gt;"));
         m_albumsListComboBox->insertSeparator(1);
@@ -568,81 +567,83 @@ void FlickrWindow::slotUser1()
 
     for (int i = 0; i < m_imglst->listView()->topLevelItemCount(); ++i)
     {
-        FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>
-                                     (m_imglst->listView()->topLevelItem(i));
+        FlickrListViewItem* const lvItem = dynamic_cast<FlickrListViewItem*>(m_imglst->listView()->topLevelItem(i));
 
-        KPImageInfo info(lvItem->url());
-        kDebug() << "Adding images to the list";
-        FPhotoInfo temp;
-
-        temp.title                 = info.title();
-        temp.description           = info.description();
-        temp.is_public             = lvItem->isPublic()  ? 1 : 0;
-        temp.is_family             = lvItem->isFamily()  ? 1 : 0;
-        temp.is_friend             = lvItem->isFriends() ? 1 : 0;
-        temp.safety_level          = lvItem->safetyLevel();
-        temp.content_type          = lvItem->contentType();
-        QStringList tagsFromDialog = m_tagsLineEdit->text().split(',', QString::SkipEmptyParts);
-        QStringList tagsFromList   = lvItem->extraTags();
-
-        QStringList           allTags;
-        QStringList::Iterator itTags;
-
-        // Tags from the dialog
-        itTags = tagsFromDialog.begin();
-
-        while (itTags != tagsFromDialog.end())
+        if (lvItem)
         {
-            allTags.append(*itTags);
-            ++itTags;
-        }
+            KPImageInfo info(lvItem->url());
+            kDebug() << "Adding images to the list";
+            FPhotoInfo temp;
 
-        // Tags from the database
-        if (m_exportHostTagsCheckBox->isChecked())
-        {
-            QStringList tagsFromDatabase;
+            temp.title                 = info.title();
+            temp.description           = info.description();
+            temp.is_public             = lvItem->isPublic()  ? 1 : 0;
+            temp.is_family             = lvItem->isFamily()  ? 1 : 0;
+            temp.is_friend             = lvItem->isFriends() ? 1 : 0;
+            temp.safety_level          = lvItem->safetyLevel();
+            temp.content_type          = lvItem->contentType();
+            QStringList tagsFromDialog = m_tagsLineEdit->text().split(',', QString::SkipEmptyParts);
+            QStringList tagsFromList   = lvItem->extraTags();
 
-            tagsFromDatabase = info.keywords();
-            itTags           = tagsFromDatabase.begin();
+            QStringList           allTags;
+            QStringList::Iterator itTags;
 
-            while (itTags != tagsFromDatabase.end())
+            // Tags from the dialog
+            itTags = tagsFromDialog.begin();
+
+            while (itTags != tagsFromDialog.end())
             {
                 allTags.append(*itTags);
                 ++itTags;
             }
-        }
 
-        // Tags from the list view.
-        itTags = tagsFromList.begin();
-
-        while (itTags != tagsFromList.end())
-        {
-            allTags.append(*itTags);
-            ++itTags;
-        }
-
-        // Remove spaces if the user doesn't like them.
-        if (m_stripSpaceTagsCheckBox->isChecked())
-        {
-            for (QStringList::iterator it = allTags.begin();
-                 it != allTags.end();
-                 ++it)
+            // Tags from the database
+            if (m_exportHostTagsCheckBox->isChecked())
             {
-                *it = (*it).trimmed().remove(' ');
+                QStringList tagsFromDatabase;
+
+                tagsFromDatabase = info.keywords();
+                itTags           = tagsFromDatabase.begin();
+
+                while (itTags != tagsFromDatabase.end())
+                {
+                    allTags.append(*itTags);
+                    ++itTags;
+                }
             }
+
+            // Tags from the list view.
+            itTags = tagsFromList.begin();
+
+            while (itTags != tagsFromList.end())
+            {
+                allTags.append(*itTags);
+                ++itTags;
+            }
+
+            // Remove spaces if the user doesn't like them.
+            if (m_stripSpaceTagsCheckBox->isChecked())
+            {
+                for (QStringList::iterator it = allTags.begin();
+                    it != allTags.end();
+                    ++it)
+                {
+                    *it = (*it).trimmed().remove(' ');
+                }
+            }
+
+            // Debug the tag list.
+            itTags = allTags.begin();
+
+            while (itTags != allTags.end())
+            {
+                kDebug() << "Tags list: " << (*itTags);
+                ++itTags;
+            }
+
+            temp.tags = allTags;
+            m_uploadQueue.append(Pair(lvItem->url(), temp));
         }
-
-        // Debug the tag list.
-        itTags = allTags.begin();
-
-        while (itTags != allTags.end())
-        {
-            kDebug() << "Tags list: " << (*itTags);
-            ++itTags;
-        }
-
-        temp.tags = allTags;
-        m_uploadQueue.append(Pair(lvItem->url(), temp));
     }
 
     m_uploadTotal = m_uploadQueue.count();
@@ -668,7 +669,7 @@ void FlickrWindow::slotAddPhotoNext()
     FPhotoInfo info   = pathComments.second;
 
     // Find out the selected photo set.
-    if (m_serviceName != "Zooomr")
+    if (m_serviceName != QString("Zooomr"))
     {
         // mutable photosets are not supported by Zooomr (Zooomr only has smart folder-type photosets)
         QString selectedPhotoSetId = m_albumsListComboBox->itemData(m_albumsListComboBox->currentIndex()).toString();
@@ -728,13 +729,12 @@ void FlickrWindow::slotAddPhotoSucceeded()
 
 void FlickrWindow::slotListPhotoSetsFailed(const QString& msg)
 {
-    KMessageBox::error(this,
-                       i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
+    KMessageBox::error(this, i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
 }
+
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
-    if (KMessageBox::warningContinueCancel(this,
-                                           i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg))
+    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg))
         != KMessageBox::Continue)
     {
         m_uploadQueue.clear();

@@ -39,7 +39,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
+FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
                          const QString& _name, const QString& _passwd)
     : KDialog(parent)
 {
@@ -51,23 +51,23 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     QWidget* widget = new QWidget(this);
     setMainWidget(widget);
 
-    QVBoxLayout* vbox = new QVBoxLayout(widget);
+    QVBoxLayout* const vbox = new QVBoxLayout(widget);
     m_headerLabel     = new QLabel(widget);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
 
-    KSeparator* hline = new KSeparator(Qt::Horizontal, widget);
+    KSeparator* const hline = new KSeparator(Qt::Horizontal, widget);
 
-    QGridLayout* centerLayout = new QGridLayout();
+    QGridLayout* const centerLayout = new QGridLayout();
 
     m_nameEdit   = new KLineEdit(widget);
     m_passwdEdit = new KLineEdit(widget);
     m_passwdEdit->setEchoMode(KLineEdit::Password);
 
-    QLabel* nameLabel = new QLabel(widget);
+    QLabel* const nameLabel = new QLabel(widget);
     nameLabel->setText(i18nc("flickr login", "Username:"));
 
-    QLabel* passwdLabel = new QLabel(widget);
+    QLabel* const passwdLabel = new QLabel(widget);
     passwdLabel->setText(i18n("Password:"));
 
     centerLayout->addWidget(m_nameEdit,   0, 1);

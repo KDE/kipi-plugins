@@ -44,7 +44,7 @@ class FlickrLogin : public KDialog
 
 public:
 
-    FlickrLogin(QWidget* parent, const QString& header,
+    FlickrLogin(QWidget* const parent, const QString& header,
                 const QString& _name=QString(),
                 const QString& _passwd=QString());
     ~FlickrLogin();

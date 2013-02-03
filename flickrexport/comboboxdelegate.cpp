@@ -79,7 +79,7 @@ void ComboBoxDelegate::paint(QPainter* painter,
                              const QModelIndex& index) const
 {
     // Draw a panel item primitive element as background.
-    QStyle* style = QApplication::style();
+    QStyle* const style = QApplication::style();
     style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter);
 
     // If the element that gets painted is not currently edited, the item text
@@ -121,7 +121,7 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
     // This method returns the widget that should be used to edit the current
     // element, which is in this case a QComboBox with the items supplied by
     // the user items list on construction.
-    QComboBox* cb = new QComboBox(parent);
+    QComboBox* const cb = new QComboBox(parent);
     QMapIterator<int, QString> i(m_items);
 
     while (i.hasNext())
@@ -149,7 +149,7 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
 void ComboBoxDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
     // Scroll the combobox to the current selected state on initialization.
-    QComboBox* cb = qobject_cast<QComboBox*>(editor);
+    QComboBox* const cb = qobject_cast<QComboBox*>(editor);
 
     for (int i = 0; i < cb->count(); ++i)
     {
@@ -164,7 +164,7 @@ void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
                                     const QModelIndex& index) const
 {
     // Write the data to the model when finishing has completed.
-    QComboBox* cb = qobject_cast<QComboBox*>(editor);
+    QComboBox* const cb = qobject_cast<QComboBox*>(editor);
     int selected  = cb->itemData(cb->currentIndex()).toInt();
     model->setData(index, selected);
 }
@@ -172,7 +172,7 @@ void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
 void ComboBoxDelegate::commitAndCloseEditor(int)
 {
     // Emit the proper signals when editing has finished.
-    QComboBox* editor = qobject_cast<QComboBox*>(sender());
+    QComboBox* const editor = qobject_cast<QComboBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
 }
