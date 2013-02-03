@@ -7,8 +7,8 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -64,25 +64,25 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
+FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     : QWidget(parent)
 {
     setObjectName("FlickrWidget");
 
-    QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this);
-    m_photoView                     = 0; //new KHTMLPart(splitter);
-    KSeparator* line                = new KSeparator(Qt::Horizontal, this);
-    m_tab                           = new KTabWidget(this);
-    QLabel* headerLabel             = new QLabel(this);
+    QVBoxLayout* const flickrWidgetLayout = new QVBoxLayout(this);
+    m_photoView                           = 0; //new KHTMLPart(splitter);
+    KSeparator* const line                = new KSeparator(Qt::Horizontal, this);
+    m_tab                                 = new KTabWidget(this);
+    QLabel* const headerLabel             = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
 
-    if (serviceName == "23")
+    if (serviceName == QString("23"))
         headerLabel->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
-    else if (serviceName == "Zooomr")
+    else if (serviceName == QString("Zooomr"))
         headerLabel->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
                                   "<font color=\"#7CD164\">zooomr</font></a>"
                                   " Export"
@@ -102,12 +102,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
 
     // -- The image list tab --------------------------------------------------
 
-    m_imglst             = new FlickrList(m_tab, (serviceName == "23"));
+    m_imglst               = new FlickrList(m_tab, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
-    QHeaderView* hdr     = m_imglst->listView()->header();
-    QFontMetrics hdrFont = QFontMetrics(hdr->font());
-    int permColWidth     = hdrFont.width(i18nc("photo permissions", "Public"));
+    QHeaderView* const hdr = m_imglst->listView()->header();
+    QFontMetrics hdrFont   = QFontMetrics(hdr->font());
+    int permColWidth       = hdrFont.width(i18nc("photo permissions", "Public"));
 
     m_imglst->setAllowRAW(true);
     m_imglst->loadImagesFromCurrentSelection();
@@ -118,7 +118,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::TAGS),
                                     i18n("Extra tags"), true);
 
-    if (serviceName != "23")
+    if (serviceName != QString("23"))
     {
         int tmpWidth;
 
@@ -153,12 +153,10 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
         contentTypeItems[FlickrList::PHOTO]      = i18nc("photo content type", "Photo");
         contentTypeItems[FlickrList::SCREENSHOT] = i18nc("photo content type", "Screenshot");
         contentTypeItems[FlickrList::OTHER]      = i18nc("photo content type", "Other");
-        ComboBoxDelegate* safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
-        ComboBoxDelegate* contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
-        m_imglst->listView()->setItemDelegateForColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
-                                                       safetyLevelDelegate);
-        m_imglst->listView()->setItemDelegateForColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
-                                                       contentTypeDelegate);
+        ComboBoxDelegate* const safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
+        ComboBoxDelegate* const contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
+        m_imglst->listView()->setItemDelegateForColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL), safetyLevelDelegate);
+        m_imglst->listView()->setItemDelegateForColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE), contentTypeDelegate);
 
     }
 
@@ -170,29 +168,29 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     // Wrap everything in a scroll area, so that it can be resized without
     // squeezing the contents.
 
-    QScrollArea* settingsScrollArea = new QScrollArea(m_tab);
-    QWidget*     settingsBox        = new QWidget;
-    QVBoxLayout* settingsBoxLayout  = new QVBoxLayout(settingsBox);
+    QScrollArea* const settingsScrollArea = new QScrollArea(m_tab);
+    QWidget*     const settingsBox        = new QWidget;
+    QVBoxLayout* const settingsBoxLayout  = new QVBoxLayout(settingsBox);
     settingsScrollArea->setWidget(settingsBox);
     settingsScrollArea->setWidgetResizable(true);
     settingsScrollArea->setFrameShadow(QFrame::Plain);
 
     // -- Layout for account and album ----------------------------------------
 
-    QGroupBox*   accountBox    = new QGroupBox(i18n("Account"), settingsBox);
-    QGridLayout* accountLayout = new QGridLayout(accountBox);
+    QGroupBox*   const accountBox    = new QGroupBox(i18n("Account"), settingsBox);
+    QGridLayout* const accountLayout = new QGridLayout(accountBox);
 
-    QLabel* userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
-    m_userNameDisplayLabel = new QLabel(accountBox);
-    m_changeUserButton     = new QPushButton(accountBox);
+    QLabel* const userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
+    m_userNameDisplayLabel       = new QLabel(accountBox);
+    m_changeUserButton           = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
     m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
 
-    QLabel* albumLabel   = new QLabel(i18n("PhotoSet:"), accountBox);
-    m_newAlbumBtn        = new QPushButton(accountBox);
+    QLabel* const albumLabel     = new QLabel(i18n("PhotoSet:"), accountBox);
+    m_newAlbumBtn                = new QPushButton(accountBox);
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
-    m_albumsListComboBox = new KComboBox(settingsBox);
+    m_albumsListComboBox         = new KComboBox(settingsBox);
 
     accountLayout->addWidget(userNameLabel,          0, 0);
     accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);
@@ -206,13 +204,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
 
     // -- Layout for the tags -------------------------------------------------
 
-    QGroupBox*   tagsBox       = new QGroupBox(i18n("Tag options"), settingsBox);
-    QGridLayout* tagsBoxLayout = new QGridLayout(tagsBox);
+    QGroupBox* const tagsBox         = new QGroupBox(i18n("Tag options"), settingsBox);
+    QGridLayout* const tagsBoxLayout = new QGridLayout(tagsBox);
 
-    m_exportHostTagsCheckBox   = new QCheckBox(tagsBox);
+    m_exportHostTagsCheckBox         = new QCheckBox(tagsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
-    m_extendedTagsButton       = new QPushButton(i18n("More tag options"));
+    m_extendedTagsButton             = new QPushButton(i18n("More tag options"));
     m_extendedTagsButton->setCheckable(true);
     // Initialize this button to checked, so extended options are shown.
     // FlickrWindow::readSettings can change this, but if checked is false it
@@ -226,16 +224,15 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     m_extendedTagsBox->setFlat(true);
     QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
-    QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "),
-                                          m_extendedTagsBox);
-    m_tagsLineEdit           = new KLineEdit(m_extendedTagsBox);
+    QLabel* const tagsLabel         = new QLabel(i18n("Added Tags: "), m_extendedTagsBox);
+    m_tagsLineEdit                  = new KLineEdit(m_extendedTagsBox);
     m_tagsLineEdit->setToolTip(i18n("Enter new tags here, separated by commas."));
-    m_addExtraTagsCheckBox   = new QCheckBox(m_extendedTagsBox);
+    m_addExtraTagsCheckBox          = new QCheckBox(m_extendedTagsBox);
     m_addExtraTagsCheckBox->setText(i18n("Add tags per image"));
     m_addExtraTagsCheckBox->setToolTip(i18n("If checked, you can set extra tags for "
                                             "each image in the File List tab"));
     m_addExtraTagsCheckBox->setChecked(true);
-    m_stripSpaceTagsCheckBox = new QCheckBox(m_extendedTagsBox);
+    m_stripSpaceTagsCheckBox        = new QCheckBox(m_extendedTagsBox);
     m_stripSpaceTagsCheckBox->setText(i18n("Strip Spaces From Tags"));
 
     extendedTagsLayout->addWidget(tagsLabel,                0, 0);
@@ -249,8 +246,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
 
     // -- Layout for the publication options ----------------------------------
 
-    QGroupBox*   publicationBox       = new QGroupBox(i18n("Publication Options"), settingsBox);
-    QGridLayout* publicationBoxLayout = new QGridLayout;
+    QGroupBox* const publicationBox         = new QGroupBox(i18n("Publication Options"), settingsBox);
+    QGridLayout* const publicationBoxLayout = new QGridLayout;
     publicationBox->setLayout(publicationBoxLayout);
 
     m_publicCheckBox = new QCheckBox(publicationBox);
@@ -272,18 +269,18 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     m_extendedPublicationButton->setChecked(true);
     m_extendedPublicationButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
 
-    m_extendedPublicationBox            = new QGroupBox("", publicationBox);
+    m_extendedPublicationBox                  = new QGroupBox("", publicationBox);
     m_extendedPublicationBox->setFlat(true);
-    QGridLayout* extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
+    QGridLayout* const extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
 
-    QLabel* imageSafetyLabel = new QLabel(i18n("Safety level:"));
-    m_safetyLevelComboBox    = new ComboBoxIntermediate();
+    QLabel* const imageSafetyLabel = new QLabel(i18n("Safety level:"));
+    m_safetyLevelComboBox          = new ComboBoxIntermediate();
     m_safetyLevelComboBox->addItem(i18n("Safe"),       QVariant(FlickrList::SAFE));
     m_safetyLevelComboBox->addItem(i18n("Moderate"),   QVariant(FlickrList::MODERATE));
     m_safetyLevelComboBox->addItem(i18n("Restricted"), QVariant(FlickrList::RESTRICTED));
 
-    QLabel* imageTypeLabel = new QLabel(i18n("Content type:"));
-    m_contentTypeComboBox  = new ComboBoxIntermediate();
+    QLabel* const imageTypeLabel = new QLabel(i18n("Content type:"));
+    m_contentTypeComboBox        = new ComboBoxIntermediate();
     m_contentTypeComboBox->addItem(i18nc("photo content type", "Photo"),      QVariant(FlickrList::PHOTO));
     m_contentTypeComboBox->addItem(i18nc("photo content type", "Screenshot"), QVariant(FlickrList::SCREENSHOT));
     m_contentTypeComboBox->addItem(i18nc("photo content type", "Other"),      QVariant(FlickrList::OTHER));
@@ -303,8 +300,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
 
     // -- Layout for the resizing options -------------------------------------
 
-    m_resizingBox  = new QGroupBox(i18n("Resizing Options"), settingsBox);
-    QGridLayout* resizingBoxLayout = new QGridLayout;
+    m_resizingBox                        = new QGroupBox(i18n("Resizing Options"), settingsBox);
+    QGridLayout* const resizingBoxLayout = new QGridLayout;
     m_resizingBox->setLayout(resizingBoxLayout);
 
     m_sendOriginalCheckBox = new QCheckBox(m_resizingBox);
@@ -324,9 +321,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpinBox->setEnabled(false);
 
-    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), m_resizingBox);
-
-    m_imageQualitySpinBox = new QSpinBox(m_resizingBox);
+    QLabel* const resizeLabel = new QLabel(i18n("Maximum dimension (pixels):"), m_resizingBox);
+    m_imageQualitySpinBox     = new QSpinBox(m_resizingBox);
     m_imageQualitySpinBox->setMinimum(0);
     m_imageQualitySpinBox->setMaximum(100);
     m_imageQualitySpinBox->setSingleStep(1);
@@ -334,7 +330,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), m_resizingBox);
+    QLabel* const imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), m_resizingBox);
 
     resizingBoxLayout->addWidget(imageQualityLabel,     0, 0, 1, 3);
     resizingBoxLayout->addWidget(m_imageQualitySpinBox, 0, 3, 1, 1);
@@ -387,7 +383,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
             this, SLOT(slotAddExtraTagsToggled(bool)));
 
     // Zooomr doesn't support explicit Photosets.
-    if (serviceName == "Zooomr")
+    if (serviceName == QString("Zooomr"))
     {
         albumLabel->hide();
         m_albumsListComboBox->hide();
@@ -396,7 +392,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     }
 
     // 23HQ doesn't support the Family and Friends concept.
-    if (serviceName != "23")
+    if (serviceName != QString("23"))
     {
         connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFamilyToggled(int)));
@@ -411,7 +407,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     }
 
     // 23HQ and Zooomr don't support the Safety Level and Content Type concept.
-    if ((serviceName != "23") && (serviceName != "Zooomr"))
+    if ((serviceName != QString("23")) && (serviceName != QString("Zooomr")))
     {
         connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainSafetyLevelChanged(int)));
@@ -432,10 +428,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     {
         m_extendedPublicationBox->hide();
         m_extendedPublicationButton->hide();
-        m_imglst->listView()->setColumnEnabled(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
-                                               false);
-        m_imglst->listView()->setColumnEnabled(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
-                                               false);
+        m_imglst->listView()->setColumnEnabled(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL), false);
+        m_imglst->listView()->setColumnEnabled(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE), false);
     }
 }
 
@@ -468,7 +462,7 @@ void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox, Qt::Che
      * changed. */
 
     // Select the proper checkbox.
-    QCheckBox* currBox;
+    QCheckBox* currBox = 0;
 
     if (checkbox == FlickrList::PUBLIC)
     {
