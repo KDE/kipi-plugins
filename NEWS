@@ -39,4 +39,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 026 ==> 313672 - Object::connect: No such slot KIPIPicasawebExportPlugin::PicasawebWidget::slotAnonymousToggled(bool).
 027 ==> 221202 - Export html exif IPTC name data.
 028 ==> 314117 - Segmentation fault on launching import from scanner.
-029 ==> 
+029 ==> 314244 - Crash while doing a panorama
+030 ==>
