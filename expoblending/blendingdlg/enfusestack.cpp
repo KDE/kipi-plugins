@@ -147,6 +147,7 @@ public:
 
     EnfuseStackListPriv()
     {
+        outputFormat = KPSaveSettingsWidget::OUTPUT_PNG;
         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;

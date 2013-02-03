@@ -80,6 +80,7 @@ public:
     {
         starting = false;
         success  = false;
+        action = NONE;
     }
 
     bool           starting;
