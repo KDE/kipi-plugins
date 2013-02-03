@@ -39,6 +39,11 @@ TemplateIcon::TemplateIcon(int height, const QSize &template_size)
     m_icon_size   = QSize( height-2*m_icon_margin, height-2*m_icon_margin );
     // remark: m_icon_size is the real size of the icon, in the combo-box there is no space
     // between the icons, therefore the variable m_icon_margin
+    //FIX static analysis (UNINIT_CTOR)
+    m_icon_size.rwidth() = (int)(float(m_icon_size.height()) * float(m_paper_size.width()) / float(m_paper_size.height()));
+    scale_width          = float(m_icon_size.width())  / float(m_paper_size.width());
+    scale_height         = float(m_icon_size.height()) / float(m_paper_size.height());
+    rotate               = false;
 
     pixmap  = NULL;
     painter = NULL;
