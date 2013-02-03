@@ -52,9 +52,10 @@ class BackendOsmRG : public RGBackend
     Q_OBJECT
 
 public:
- 
+
     BackendOsmRG(QObject* const parent);
     virtual ~BackendOsmRG();
+
     QMap<QString,QString> makeQMapFromXML(const QString& xmlData);
 
     virtual void callRGBackend(const QList<RGInfo>& rgList,const QString& language);
@@ -70,8 +71,8 @@ private Q_SLOTS:
 
 private:
 
-    class BackendOsmRGPrivate;
-    BackendOsmRGPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 

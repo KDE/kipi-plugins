@@ -37,34 +37,35 @@ class GPSDataContainer
 public:
 
     GPSDataContainer()
-    : m_hasFlags(0),
-      m_coordinates(),
-      m_nSatellites(-1),
-      m_dop(-1),
-      m_fixType(-1),
-      m_speed(0)
+      : m_hasFlags(0),
+        m_coordinates(),
+        m_nSatellites(-1),
+        m_dop(-1),
+        m_fixType(-1),
+        m_speed(0)
     {
     }
 
-    enum HasFlagsEnum {
-        HasCoordinates = 1,
-        HasAltitude = 2,
+    enum HasFlagsEnum
+    {
+        HasCoordinates    = 1,
+        HasAltitude       = 2,
         HasIsInterpolated = 4,
-        HasNSatellites = 8,
-        HasDop = 16,
-        HasFixType = 32,
-        HasSpeed = 64
+        HasNSatellites    = 8,
+        HasDop            = 16,
+        HasFixType        = 32,
+        HasSpeed          = 64
     };
     Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
 private:
 
-    HasFlags m_hasFlags;
+    HasFlags                m_hasFlags;
     KGeoMap::GeoCoordinates m_coordinates;
-    int m_nSatellites;
-    qreal m_dop;
-    int m_fixType;
-    qreal m_speed;
+    int                     m_nSatellites;
+    qreal                   m_dop;
+    int                     m_fixType;
+    qreal                   m_speed;
 
 public:
 
@@ -288,4 +289,3 @@ public:
 Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIGPSSyncPlugin::GPSDataContainer::HasFlags)
 
 #endif /* GPSDATACONTAINER_H */
-

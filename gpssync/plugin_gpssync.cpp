@@ -77,6 +77,7 @@ void Plugin_GPSSync::setup(QWidget* const widget)
     setupActions();
 
     m_interface = interface();
+
     if (!m_interface)
     {
         kError() << "Kipi interface is null!" ;
@@ -112,7 +113,7 @@ void Plugin_GPSSync::slotGPSSync()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    GPSSyncDialog* dialog = new GPSSyncDialog(kapp->activeWindow());
+    GPSSyncDialog* const dialog = new GPSSyncDialog(kapp->activeWindow());
 
     dialog->setImages( images.images() );
     dialog->show();

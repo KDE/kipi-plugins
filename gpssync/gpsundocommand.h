@@ -43,8 +43,9 @@ public:
     class UndoInfo
     {
     public:
+
         UndoInfo(QPersistentModelIndex pModelIndex)
-        : modelIndex(pModelIndex)
+            : modelIndex(pModelIndex)
         {
         }
 
@@ -64,17 +65,18 @@ public:
     GPSUndoCommand(QUndoCommand* const parent = 0);
 
     void addUndoInfo(const UndoInfo& info);
-
-    virtual void redo();
-    virtual void undo();
-
     void changeItemData(const bool redoIt);
+
     inline int affectedItemCount() const
     {
         return undoList.count();
     }
 
+    virtual void redo();
+    virtual void undo();
+
 private:
+
     UndoInfo::List undoList;
 };
 

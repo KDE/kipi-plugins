@@ -40,27 +40,27 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class SearchBackendPrivate
+class Private
 {
 public:
-    SearchBackendPrivate()
-    : results(),
-      kioJob(0),
-      runningBackend(),
-      searchData(),
-      errorMessage()
+    Private()
+      : results(),
+        kioJob(0),
+        runningBackend(),
+        searchData(),
+        errorMessage()
     {
     }
 
     SearchBackend::SearchResult::List results;
-    KIO::Job* kioJob;
-    QString runningBackend;
-    QByteArray searchData;
-    QString errorMessage;
+    KIO::Job*                         kioJob;
+    QString                           runningBackend;
+    QByteArray                        searchData;
+    QString                           errorMessage;
 };
 
 SearchBackend::SearchBackend(QObject* const parent)
-: QObject(parent), d(new SearchBackendPrivate())
+    : QObject(parent), d(new Private())
 {
 }
 
@@ -148,6 +148,7 @@ void SearchBackend::slotResult(KJob* kJob)
         QDomDocument doc;
         doc.setContent(resultString); // error-handling
         QDomElement docElement = doc.documentElement(); // error-handling
+
         for (QDomNode resultNode = docElement.firstChild(); !resultNode.isNull(); resultNode = resultNode.nextSibling())
         {
             QDomElement resultElement = resultNode.toElement();
@@ -155,16 +156,17 @@ void SearchBackend::slotResult(KJob* kJob)
             {
                 continue;
             }
+
             if (resultElement.tagName()!="place")
             {
                 continue;
             }
 
             const QString boundingBoxString = resultElement.attribute("boundingbox");
-            const QString latString = resultElement.attribute("lat");
-            const QString lonString = resultElement.attribute("lon");
-            const QString displayName = resultElement.attribute("display_name");
-            const QString placeId = resultElement.attribute("place_id");
+            const QString latString         = resultElement.attribute("lat");
+            const QString lonString         = resultElement.attribute("lon");
+            const QString displayName       = resultElement.attribute("display_name");
+            const QString placeId           = resultElement.attribute("place_id");
 
             if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
             {
@@ -175,7 +177,8 @@ void SearchBackend::slotResult(KJob* kJob)
             qreal lat;
             qreal lon;
             bool okay = false;
-            lat = latString.toDouble(&okay);
+            lat       = latString.toDouble(&okay);
+
             if (okay)
             {
                 lon = lonString.toDouble(&okay);
@@ -188,7 +191,7 @@ void SearchBackend::slotResult(KJob* kJob)
 
             SearchResult result;
             result.coordinates = KGeoMap::GeoCoordinates(lat, lon);
-            result.name = displayName;
+            result.name        = displayName;
 
             if (!placeId.isEmpty())
             {
@@ -206,14 +209,17 @@ void SearchBackend::slotResult(KJob* kJob)
         doc.setContent(resultString); // error-handling
         QDomElement docElement = doc.documentElement(); // error-handling
         kDebug()<<docElement.toElement().tagName();
+
         for (QDomNode resultNode = docElement.firstChild(); !resultNode.isNull(); resultNode = resultNode.nextSibling())
         {
             QDomElement resultElement = resultNode.toElement();
             kDebug()<<resultElement.tagName();
+
             if (resultElement.isNull())
             {
                 continue;
             }
+
             if (resultElement.tagName()!="geoname")
             {
                 continue;
@@ -223,9 +229,11 @@ void SearchBackend::slotResult(KJob* kJob)
             QString lonString;
             QString displayName;
             QString geoNameId;
+
             for (QDomNode resultSubNode = resultElement.firstChild(); !resultSubNode.isNull(); resultSubNode = resultSubNode.nextSibling())
             {
                 QDomElement resultSubElement = resultSubNode.toElement();
+
                 if (resultSubElement.isNull())
                 {
                     continue;
@@ -248,6 +256,7 @@ void SearchBackend::slotResult(KJob* kJob)
                     geoNameId = resultSubElement.text();
                 }
             }
+
             if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
             {
                 continue;
@@ -257,7 +266,8 @@ void SearchBackend::slotResult(KJob* kJob)
             qreal lat;
             qreal lon;
             bool okay = false;
-            lat = latString.toDouble(&okay);
+            lat       = latString.toDouble(&okay);
+
             if (okay)
             {
                 lon = lonString.toDouble(&okay);
@@ -270,7 +280,7 @@ void SearchBackend::slotResult(KJob* kJob)
 
             SearchResult result;
             result.coordinates = KGeoMap::GeoCoordinates(lat, lon);
-            result.name = displayName;
+            result.name        = displayName;
 
             if (!geoNameId.isEmpty())
             {

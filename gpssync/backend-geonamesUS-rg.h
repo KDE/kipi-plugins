@@ -41,7 +41,11 @@
 
 #include "backend-rg.h"
 
-namespace KIO { class Job; }
+namespace KIO
+{
+    class Job;
+}
+
 class KJob;
 
 namespace KIPIGPSSyncPlugin
@@ -49,13 +53,13 @@ namespace KIPIGPSSyncPlugin
 
 class BackendGeonamesUSRG : public RGBackend
 {
-
     Q_OBJECT
 
 public:
 
     BackendGeonamesUSRG(QObject* const parent);
     virtual ~BackendGeonamesUSRG();
+
     QMap<QString, QString> makeQMapFromXML(const QString& xmlData);
 
     virtual void callRGBackend(const QList<RGInfo>& rgList, const QString& language);
@@ -64,15 +68,15 @@ public:
     virtual void cancelRequests();
 
 private Q_SLOTS:
- 
-    void nextPhoto(); 
-    void dataIsHere(KIO::Job* kJob, const QByteArray &); 
+
+    void nextPhoto();
+    void dataIsHere(KIO::Job* kJob, const QByteArray &);
     void slotResult(KJob* kJob);
 
 private:
 
-    class BackendGeonamesUSRGPrivate;
-    BackendGeonamesUSRGPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } //KIPIGISSyncPlugin

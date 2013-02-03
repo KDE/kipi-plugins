@@ -36,7 +36,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKGeoMapModelHelper* const parent)
- : DragDropHandler(parent), model(pModel), gpsSyncKGeoMapModelHelper(parent)
+    : DragDropHandler(parent), model(pModel), gpsSyncKGeoMapModelHelper(parent)
 {
 }
 
@@ -52,19 +52,23 @@ Qt::DropAction MapDragDropHandler::accepts(const QDropEvent* /*e*/)
 bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KGeoMap::GeoCoordinates& dropCoordinates)
 {
     const MapDragData* const mimeData = qobject_cast<const MapDragData*>(e->mimeData());
+
     if (!mimeData)
         return false;
 
     QList<QPersistentModelIndex> droppedIndices;
+
     for (int i=0; i<mimeData->draggedIndices.count(); ++i)
     {
         // TODO: correctly handle items with multiple columns
         QModelIndex itemIndex = mimeData->draggedIndices.at(i);
+
         if (itemIndex.column()==0)
         {
             droppedIndices << itemIndex;
         }
     }
+    
     gpsSyncKGeoMapModelHelper->onIndicesMoved(droppedIndices, dropCoordinates, QPersistentModelIndex());
 
     return true;
@@ -73,9 +77,7 @@ bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KGeoMap::GeoCoordi
 QMimeData* MapDragDropHandler::createMimeData(const QList<QPersistentModelIndex>& modelIndices)
 {
     Q_UNUSED(modelIndices);
-
     return 0;
 }
 
 } /* KIPIGPSSyncPlugin */
-

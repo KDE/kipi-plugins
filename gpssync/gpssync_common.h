@@ -45,9 +45,9 @@ namespace KIPIGPSSyncPlugin
 
 enum MapLayout
 {
-    MapLayoutOne = 0,
+    MapLayoutOne        = 0,
     MapLayoutHorizontal = 1,
-    MapLayoutVertical = 2
+    MapLayoutVertical   = 2
 };
 
 inline QString getKipiUserAgentName()
@@ -57,18 +57,16 @@ inline QString getKipiUserAgentName()
 
 inline void CoordinatesToClipboard(const KGeoMap::GeoCoordinates& coordinates, const KUrl& url, const QString& title)
 {
-    const QString lat = coordinates.latString();
-    const QString lon = coordinates.lonString();
+    const QString lat       = coordinates.latString();
+    const QString lon       = coordinates.lonString();
     const bool haveAltitude = coordinates.hasAltitude();
-    const QString altitude = coordinates.altString();
-
+    const QString altitude  = coordinates.altString();
     const QString nameToUse = title.isEmpty() ? url.toLocalFile() : title;
 
     // importing this representation into Marble does not show anything,
     // but Merkaartor shows the point
-    const QString kmlCoordinatesString = haveAltitude ?
-        QString::fromLatin1("%1,%2,%3").arg(lon).arg(lat).arg(altitude) :
-        QString::fromLatin1("%1,%2").arg(lon).arg(lat);
+    const QString kmlCoordinatesString = haveAltitude ? QString::fromLatin1("%1,%2,%3").arg(lon).arg(lat).arg(altitude)
+                                                      : QString::fromLatin1("%1,%2").arg(lon).arg(lat);
 
     const QString kmlRepresentation = QString::fromLatin1(
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -85,8 +83,10 @@ inline void CoordinatesToClipboard(const KGeoMap::GeoCoordinates& coordinates, c
       ).arg(nameToUse).arg(kmlCoordinatesString);
 
     // importing this data into Marble and Merkaartor works
-    const QString gpxElevationString = haveAltitude ? QString::fromLatin1("   <ele>%1</ele>\n").arg(altitude) : QString();
-    const QString gpxRepresentation = QString::fromLatin1(
+    const QString gpxElevationString = haveAltitude ? QString::fromLatin1("   <ele>%1</ele>\n").arg(altitude)
+                                                    : QString();
+
+    const QString gpxRepresentation  = QString::fromLatin1(
       "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
       "<gpx xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"trippy\" version=\"0.1\"\n"
       " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
@@ -99,12 +99,12 @@ inline void CoordinatesToClipboard(const KGeoMap::GeoCoordinates& coordinates, c
       "</gpx>\n"
       ).arg(lat).arg(lon).arg(gpxElevationString).arg(nameToUse);
 
-    QMimeData * const myMimeData = new QMimeData();
+    QMimeData* const myMimeData = new QMimeData();
     myMimeData->setText(coordinates.geoUrl());
     myMimeData->setData(QLatin1String("application/vnd.google-earth.kml+xml"), kmlRepresentation.toUtf8());
-    myMimeData->setData(QLatin1String("application/gpx+xml"), gpxRepresentation.toUtf8());
+    myMimeData->setData(QLatin1String("application/gpx+xml"),                  gpxRepresentation.toUtf8());
 
-    QClipboard * const clipboard = QApplication::clipboard();
+    QClipboard* const clipboard = QApplication::clipboard();
     clipboard->setMimeData(myMimeData);
 }
 

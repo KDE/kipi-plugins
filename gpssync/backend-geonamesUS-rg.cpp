@@ -51,17 +51,16 @@ namespace KIPIGPSSyncPlugin
  *
  * @brief This class calls Geonames' get address service available only for USA locations.
  */
-  
 class GeonamesUSInternalJobs
 {
 
 public:
 
     GeonamesUSInternalJobs()
-    : language(),
-      request(),
-      data(),
-      kioJob(0)
+      : language(),
+        request(),
+        data(),
+        kioJob(0)
     {
     }
 
@@ -71,44 +70,43 @@ public:
             kioJob->deleteLater();
     }
 
-    QString language;
-    QList<RGInfo> request;
-    QByteArray data;
+    QString            language;
+    QList<RGInfo>      request;
+    QByteArray         data;
     QPointer<KIO::Job> kioJob;
 };
 
-
-class BackendGeonamesUSRG::BackendGeonamesUSRGPrivate
+class BackendGeonamesUSRG::Private
 {
 
 public:
 
-    BackendGeonamesUSRGPrivate()
-    : itemCounter(0),
-      itemCount(0),
-      jobs(),
-      errorMessage()
+    Private()
+      : itemCounter(0),
+        itemCount(0),
+        jobs(),
+        errorMessage()
     {
     }
 
-    int itemCounter;
-    int itemCount;
+    int                           itemCounter;
+    int                           itemCount;
     QList<GeonamesUSInternalJobs> jobs;
-    QString errorMessage;
+    QString                       errorMessage;
 };
 
 /**
  * Constructor
  * @param Parent object.
- */ 
+ */
 BackendGeonamesUSRG::BackendGeonamesUSRG(QObject* const parent)
-: RGBackend(parent), d(new BackendGeonamesUSRGPrivate())
+    : RGBackend(parent), d(new Private())
 {
 }
 
 /**
  * Destructor
- */ 
+ */
 BackendGeonamesUSRG::~BackendGeonamesUSRG()
 {
     delete d;
@@ -116,7 +114,7 @@ BackendGeonamesUSRG::~BackendGeonamesUSRG()
 
 /**
  * This slot calls Geonames's get address service for each image.
- */ 
+ */
 void BackendGeonamesUSRG::nextPhoto()
 {
     if (d->jobs.isEmpty())
@@ -129,14 +127,13 @@ void BackendGeonamesUSRG::nextPhoto()
 
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
-
     d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*,QByteArray)), 
+    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(dataIsHere(KIO::Job*,QByteArray)));
 
     connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));    
+            this, SLOT(slotResult(KJob*)));
 }
 
 /**
@@ -151,6 +148,7 @@ void BackendGeonamesUSRG::callRGBackend(const QList<RGInfo>& rgList, const QStri
     for (int i = 0; i < rgList.count(); ++i)
     {
         bool foundIt = false;
+
         for (int j=0; j < d->jobs.count(); ++j)
         {
             if (d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
@@ -172,6 +170,7 @@ void BackendGeonamesUSRG::callRGBackend(const QList<RGInfo>& rgList, const QStri
             d->jobs << newJob;
         }
     }
+
     nextPhoto();
 }
 
@@ -190,29 +189,28 @@ void BackendGeonamesUSRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 /**
  * The data is returned from Open Street Map in a XML. This function translates the XML into a QMap.
  * @param xmlData The returned XML.
- */ 
+ */
 QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlData)
 {
     QMap<QString, QString> mappedData;
     QString resultString;
     QDomDocument doc;
-
     doc.setContent(xmlData);
 
     QDomElement docElem =  doc.documentElement();
-
-    QDomNode n = docElem.firstChild().firstChild();
+    QDomNode n          = docElem.firstChild().firstChild();
 
     while (!n.isNull())
     {
         const QDomElement e = n.toElement();
+
         if (!e.isNull())
         {
 
             if ((e.tagName().compare(QString("adminName2")) == 0) ||
-               (e.tagName().compare(QString("adminName1")) == 0) ||
-               (e.tagName().compare(QString("placeName")) == 0))
-            { 
+               (e.tagName().compare(QString("adminName1"))  == 0) ||
+               (e.tagName().compare(QString("placeName"))   == 0))
+            {
                 mappedData.insert(e.tagName(), e.text());
                 resultString.append(e.tagName() + ':' + e.text() + '\n');
             }
@@ -227,7 +225,7 @@ QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlDat
 
 /**
  * @return Error message, if any.
- */ 
+ */
 QString BackendGeonamesUSRG::getErrorMessage()
 {
     return d->errorMessage;
@@ -235,7 +233,7 @@ QString BackendGeonamesUSRG::getErrorMessage()
 
 /**
  * @return Backend name.
- */ 
+ */
 QString BackendGeonamesUSRG::backendName()
 {
     return QString("GeonamesUS");
@@ -243,7 +241,7 @@ QString BackendGeonamesUSRG::backendName()
 
 void BackendGeonamesUSRG::slotResult(KJob* kJob)
 {
-    KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
+    KIO::Job* const kioJob = qobject_cast<KIO::Job*>(kJob);
 
     if (kioJob->error())
     {
@@ -259,10 +257,9 @@ void BackendGeonamesUSRG::slotResult(KJob* kJob)
         {
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
-            int pos = dataString.indexOf("<geonames");
+            int pos    = dataString.indexOf("<geonames");
             dataString.remove(0,pos);
             dataString.chop(1);
-
             QMap<QString,QString> resultMap = makeQMapFromXML(dataString);
 
             for (int j = 0; j < d->jobs[i].request.count(); ++j)
@@ -271,6 +268,7 @@ void BackendGeonamesUSRG::slotResult(KJob* kJob)
                 d->jobs[i].request[j].rgData =  resultMap;
 
             }
+
             emit(signalRGReady(d->jobs[i].request));
 
             d->jobs.removeAt(i);

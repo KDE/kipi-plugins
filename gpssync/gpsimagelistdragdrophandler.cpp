@@ -28,7 +28,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 GPSImageListDragDropHandler::GPSImageListDragDropHandler(QObject* const parent)
-: KipiImageListDragDropHandler(parent)
+    : KipiImageListDragDropHandler(parent)
 {
 }
 
@@ -39,10 +39,9 @@ GPSImageListDragDropHandler::~GPSImageListDragDropHandler()
 QMimeData* GPSImageListDragDropHandler::createMimeData(const QList<QPersistentModelIndex>& modelIndices)
 {
     MapDragData* const mimeData = new MapDragData();
-    mimeData->draggedIndices = modelIndices;
+    mimeData->draggedIndices    = modelIndices;
 
     return mimeData;
 }
 
 } /* GPSIMAGELISTDRAGDROPHANDLER_H */
-

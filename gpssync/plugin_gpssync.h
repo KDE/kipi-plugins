@@ -69,7 +69,6 @@ private:
 private:
 
     KAction*   m_action_geolocation;
-
     Interface* m_interface;
 };
 

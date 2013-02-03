@@ -39,9 +39,10 @@ namespace KIPIGPSSyncPlugin
 
 class GPSImageListDragDropHandler : public KipiImageListDragDropHandler
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     GPSImageListDragDropHandler(QObject* const parent = 0);
     ~GPSImageListDragDropHandler();
 
@@ -51,4 +52,3 @@ public:
 } /* GPSIMAGELISTDRAGDROPHANDLER_H */
 
 #endif /* GPSIMAGELISTDRAGDROPHANDLER_H */
-

@@ -32,31 +32,32 @@ class QCloseEvent;
 namespace KIPIGPSSyncPlugin
 {
 
-class InputBoxNoCancelPrivate;
-
 class InputBoxNoCancel : public KDialog
 {
     Q_OBJECT
 
 public:
-    InputBoxNoCancel(const QString& title, const QString& label, QString* const workString, QWidget* parent);
+
+    InputBoxNoCancel(const QString& title, const QString& label, QString* const workString, QWidget* const parent);
     ~InputBoxNoCancel();
 
     static QString AskForString(const QString& title, const QString& label, const QString& initialString, QWidget* const parent);
 
 private Q_SLOTS:
+
     void slotOkClicked();
     void slotTextChanged(const QString& text);
 
 protected:
+
     virtual void closeEvent(QCloseEvent *e);
 
 private:
-    InputBoxNoCancelPrivate* const d;
 
+    class Private;
+    Private* const d;
 };
 
 } /* KIPIGPSSyncPlugin */
 
 #endif // INPUTBOXNOCANCEL_H
-

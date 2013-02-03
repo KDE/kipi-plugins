@@ -41,12 +41,13 @@ class GPSSyncKGeoMapModelHelper;
 
 class MapDragData : public QMimeData
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     MapDragData()
-    : QMimeData(),
-      draggedIndices()
+      : QMimeData(),
+        draggedIndices()
     {
     }
 
@@ -55,9 +56,10 @@ public:
 
 class MapDragDropHandler : public KGeoMap::DragDropHandler
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKGeoMapModelHelper* const parent);
     virtual ~MapDragDropHandler();
 
@@ -66,7 +68,8 @@ public:
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices);
 
 private:
-    QAbstractItemModel* const model;
+
+    QAbstractItemModel* const        model;
     GPSSyncKGeoMapModelHelper* const gpsSyncKGeoMapModelHelper;
 };
 

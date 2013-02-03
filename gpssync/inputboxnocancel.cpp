@@ -39,32 +39,33 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class InputBoxNoCancelPrivate
+class InputBoxNoCancel::Private
 {
 public:
 
-    InputBoxNoCancelPrivate()
-    : workString(0),
-      stringEdit(0),
-      okayPressed(false)
+    Private()
+      : workString(0),
+        stringEdit(0),
+        okayPressed(false)
     {
     }
-    QString   *workString;
-    KLineEdit *stringEdit;
+
+    QString*   workString;
+    KLineEdit* stringEdit;
     bool       okayPressed;
 };
 
-InputBoxNoCancel::InputBoxNoCancel(const QString& title, const QString& label, QString* const inputString, QWidget* parent)
-: KDialog(parent), d(new InputBoxNoCancelPrivate)
+InputBoxNoCancel::InputBoxNoCancel(const QString& title, const QString& label, QString* const inputString, QWidget* const parent)
+    : KDialog(parent), d(new Private)
 {
     d->workString = inputString;
-    
+
     setCaption(title);
     setButtons(Ok);
     setDefaultButton(Ok);
     setModal(true);
 
-    KVBox* box = new KVBox(this);
+    KVBox* const box = new KVBox(this);
     setMainWidget(box);
 
     new QLabel(label, box);
@@ -88,8 +89,7 @@ InputBoxNoCancel::~InputBoxNoCancel()
 
 void InputBoxNoCancel::slotOkClicked()
 {
-    d->okayPressed = true;
-
+    d->okayPressed   = true;
     *(d->workString) = d->stringEdit->text();
 }
 
@@ -125,4 +125,3 @@ void InputBoxNoCancel::closeEvent(QCloseEvent *e)
 }
 
 } /* KIPIGPSSyncPlugin */
-

@@ -38,32 +38,36 @@
 #include "gpsreversegeocodingwidget.h"
 
 /// @cond false
-namespace KIO { class Job; }
+namespace KIO
+{
+    class Job;
+}
+
 class KJob;
 /// @endcond
 
 namespace KIPIGPSSyncPlugin
 {
 
-class SearchBackendPrivate;
 class SearchBackend : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     class SearchResult
     {
     public:
+
         SearchResult()
         {
         }
 
-        typedef QList<SearchResult> List;
-
-        KGeoMap::GeoCoordinates coordinates;
-        QString name;
+        typedef QList<SearchResult>   List;
+        KGeoMap::GeoCoordinates       coordinates;
+        QString                       name;
         KGeoMap::GeoCoordinates::Pair boundingBox;
-        QString internalId;
+        QString                       internalId;
     };
 
     SearchBackend(QObject* const parent = 0);
@@ -75,14 +79,18 @@ public:
     QList<QPair<QString, QString> >  getBackends() const;
 
 Q_SIGNALS:
+
     void signalSearchCompleted();
 
 private Q_SLOTS:
+
     void slotData(KIO::Job* kioJob, const QByteArray& data);
     void slotResult(KJob* kJob);
 
 private:
-    SearchBackendPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
 } /* KIPIGPSSyncPlugin */

@@ -39,14 +39,14 @@ namespace KIPIGPSSyncPlugin
  * Constructor
  */ 
 RGBackend::RGBackend(QObject* const parent)
-: QObject(parent)
+    : QObject(parent)
 {
 
 }
 
 /**
  * Destructor
- */ 
+ */
 RGBackend::~RGBackend()
 {
 }
