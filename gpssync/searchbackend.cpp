@@ -40,7 +40,7 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class Private
+class SearchBackend::Private
 {
 public:
     Private()
