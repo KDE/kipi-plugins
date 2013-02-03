@@ -46,7 +46,10 @@ CropFrame::CropFrame(QWidget* const parent)
 {
     m_mouseDown = false;
     m_drawRec   = true;
-    m_pixmap    = 0;
+    m_pixmap    = NULL;
+    m_photo     = NULL;
+    m_pixmapX   = 0;
+    m_pixmapY   = 0;
 }
 
 CropFrame::~CropFrame()
