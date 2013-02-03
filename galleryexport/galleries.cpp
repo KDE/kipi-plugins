@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -44,27 +44,27 @@ class Gallery::Private
 {
 public:
 
+    Private()
+    {
+    };
+
     unsigned int     mVersion;
-
     unsigned int     mGalleryId;
-
     QString          mName;
-
     QString          mUrl;
-
     QString          mUsername;
-
     QString          mPassword;
 };
 
 Gallery::Gallery()
     : d(new Private())
 {
-        load();
+    load();
 }
 
 Gallery::~Gallery()
 {
+    delete d;
 }
 
 QString Gallery::name() const
@@ -96,8 +96,6 @@ unsigned int Gallery::galleryId() const
 {
     return d->mGalleryId;
 }
-
-// -------------------------------------
 
 void Gallery::setName(const QString& name)
 {
@@ -133,7 +131,10 @@ void Gallery::load()
 {
     // FIXME: sure we need this?? (perhaps YES..)
     static bool bln_loaded = false;
-    if (bln_loaded) return;
+
+    if (bln_loaded)
+        return;
+
     bln_loaded = true;
 
     // read config

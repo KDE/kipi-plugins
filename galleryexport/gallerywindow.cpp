@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -81,32 +81,19 @@ public:
     Private(GalleryWindow* const parent);
 
     QWidget*               widget;
-
     QTreeWidget*           albumView;
-
     QPushButton*           newAlbumBtn;
     QPushButton*           addPhotoBtn;
-
     QCheckBox*             resizeCheckBox;
-
     QSpinBox*              dimensionSpinBox;
-
     QHash<QString, GAlbum> albumDict;
-
     KUrlLabel*             logo;
-
     Gallery*               gallery;
-
     GalleryTalker*         talker;
-
     QProgressDialog*       progressDlg;
-
     unsigned int           uploadCount;
-
     unsigned int           uploadTotal;
-
     QStringList*           uploadList;
-
     QString                firstAlbumName;
 };
 
@@ -116,12 +103,14 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     talker      = 0;
     progressDlg = 0;
     uploadList  = 0;
+    uploadCount = 0;
+    uploadTotal = 0;
+    widget      = new QWidget(parent);
 
-    widget = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
 
-    QHBoxLayout* hlay = new QHBoxLayout(widget);
+    QHBoxLayout* const hlay = new QHBoxLayout(widget);
 
     // ---------------------------------------------------------------------------
 
@@ -140,8 +129,8 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    QFrame *optionFrame = new QFrame;
-    QVBoxLayout *vlay   = new QVBoxLayout();
+    QFrame* const optionFrame = new QFrame;
+    QVBoxLayout* const vlay   = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
     newAlbumBtn->setText(i18n("&New Album"));
@@ -155,16 +144,15 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addPhotoBtn->setEnabled(false);
 
-    QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
-    QVBoxLayout *vlay2    = new QVBoxLayout();
+    QGroupBox* const optionsBox = new QGroupBox(i18n("Override Default Options"));
+    QVBoxLayout* const vlay2    = new QVBoxLayout();
 
-    resizeCheckBox        = new QCheckBox(optionsBox);
+    resizeCheckBox = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
-    QHBoxLayout *hlay2    = new QHBoxLayout;
-    QLabel *resizeLabel   = new QLabel(i18n("Maximum dimension:"));
-
-    dimensionSpinBox      = new QSpinBox;
+    QHBoxLayout* const hlay2    = new QHBoxLayout;
+    QLabel* const resizeLabel   = new QLabel(i18n("Maximum dimension:"));
+    dimensionSpinBox            = new QSpinBox;
     dimensionSpinBox->setRange(1,3200);
     dimensionSpinBox->setValue(600);
 
@@ -227,7 +215,7 @@ GalleryWindow::GalleryWindow(QWidget* const parent, Gallery* const pGallery)
                                          ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
                                          ki18n("(c) 2003-2005, Renchi Raju\n"
                                                "(c) 2006-2007, Colin Guthrie\n"
-                                               "(c) 2006-2012, Gilles Caulier\n"
+                                               "(c) 2006-2013, Gilles Caulier\n"
                                                "(c) 2008, Andrea Diamantini\n"));
 
     about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
@@ -246,22 +234,21 @@ GalleryWindow::GalleryWindow(QWidget* const parent, Gallery* const pGallery)
     setAboutData(about);
 
     // User1 Button : to conf gallery settings
-    KPushButton* confButton = button( User1 );
+    KPushButton* const confButton = button( User1 );
     confButton->setText( i18n("Settings") );
     confButton->setIcon( KIcon("configure") );
+
     connect(confButton, SIGNAL(clicked()),
             this, SLOT(slotSettings()) );
 
     // we need to let d->talker work..
-    d->talker = new GalleryTalker(d->widget);
+    d->talker      = new GalleryTalker(d->widget);
 
     // setting progressDlg and its numeric hints
     d->progressDlg = new QProgressDialog(this);
     d->progressDlg->setModal(true);
     d->progressDlg->setAutoReset(true);
     d->progressDlg->setAutoClose(true);
-    d->uploadCount = 0;
-    d->uploadTotal = 0;
     d->uploadList  = new QStringList;
 
     // connect functions
@@ -356,8 +343,8 @@ void GalleryWindow::readSettings()
 void GalleryWindow::slotDoLogin()
 {
     GalleryTalker::setGallery2((2 == d->gallery->version()));
-
     KUrl url(d->gallery->url());
+
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
@@ -395,11 +382,13 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
     }
 
     QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
+
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
         return;
     }
+
     slotDoLogin();
     delete configDlg;
 }
@@ -441,12 +430,12 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
     while( !workList.isEmpty() )
     {
         // the album to work on
-        GAlbum album = workList.takeFirst();
-
+        GAlbum album     = workList.takeFirst();
         int parentRefNum = album.parent_ref_num;
+
         if ( parentRefNum == 0 )
         {
-            QTreeWidgetItem *item = new QTreeWidgetItem();
+            QTreeWidgetItem* const item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.title) );
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
@@ -460,16 +449,17 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         }
         else
         {
-            QTreeWidgetItem *parentItem = 0;
+            QTreeWidgetItem* parentItem = 0;
             bool found                  = false;
             int i                       = 0;
 
             while( !found && i < parentItemList.size() )
             {
                 parentItem = parentItemList.at(i);
+
                 if(parentItem && (parentItem->text(3) == QString::number(parentRefNum)))
                 {
-                    QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+                    QTreeWidgetItem* const item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.title) );
                     item->setIcon(0, KIcon("inode-directory") );
                     item->setText(1, album.name );
@@ -494,14 +484,14 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 // FIXME: avoid duplications
 void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 {
-    QTreeWidgetItem* parentItem = d->albumView->currentItem();
-
+    QTreeWidgetItem* const parentItem = d->albumView->currentItem();
     typedef QList<GPhoto> GPhotoList;
     GPhotoList::const_iterator iterator;
+
     for (iterator = photoList.begin(); iterator != photoList.end(); ++iterator)
     {
-        QString plain = (*iterator).caption;
-        QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+        QString plain               = (*iterator).caption;
+        QTreeWidgetItem* const item = new QTreeWidgetItem(parentItem);
         item->setText(0, cleanName(plain) );
         item->setIcon(0, KIcon("image-x-generic") );
         item->setText(1, (*iterator).name);
@@ -511,7 +501,8 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 
 void GalleryWindow::slotAlbumSelected()
 {
-    QTreeWidgetItem* item = d->albumView->currentItem();
+    QTreeWidgetItem* const item = d->albumView->currentItem();
+
     if (!item)
     {
         return;
@@ -548,6 +539,7 @@ void GalleryWindow::slotNewAlbum()
 {
     QPointer<AlbumDlg> dlg = new AlbumDlg(d->widget);
     dlg->titleEdit->setFocus();
+
     if ( dlg->exec() != QDialog::Accepted )
     {
         delete dlg;
@@ -661,8 +653,8 @@ void GalleryWindow::slotNewAlbum()
 
     QString parentAlbumName;
 
-    QTreeWidgetItem* item = d->albumView->currentItem();
-    int column            = d->albumView->currentColumn();
+    QTreeWidgetItem* const item = d->albumView->currentItem();
+    int column                  = d->albumView->currentColumn();
     if (item)
     {
         const GAlbum& album = d->albumDict.value( item->text(column) );
@@ -677,18 +669,21 @@ void GalleryWindow::slotNewAlbum()
 
 void GalleryWindow::slotAddPhoto()
 {
-    QTreeWidgetItem* item = d->albumView->currentItem();
-    int column            = d->albumView->currentColumn();
+    QTreeWidgetItem* const item = d->albumView->currentItem();
+    int column                  = d->albumView->currentColumn();
+
     if (!item)
         return;     // NO album selected: FIXME: do something
 
     // albumName
     QString albumTitle = item->text(column);
+
     if(!d->albumDict.contains(albumTitle))
         return;     // NO album name found: FIXME: do something
 
     // photoPath
     const KUrl::List urls(iface()->currentSelection().images());
+
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
@@ -714,17 +709,17 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    QTreeWidgetItem* item = d->albumView->currentItem();
-    int column            = d->albumView->currentColumn();
-    QString albumTitle    = item->text(column);
-    const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = d->uploadList->takeFirst();
+    QTreeWidgetItem* const item = d->albumView->currentItem();
+    int column                  = d->albumView->currentColumn();
+    QString albumTitle          = item->text(column);
+    const GAlbum& album         = d->albumDict.value(albumTitle);
+    QString photoPath           = d->uploadList->takeFirst();
     KPImageInfo info(photoPath);
-    QString title         = info.title();
-    QString description   = info.description();
-    bool res              = d->talker->addPhoto(album.name, photoPath, title, description,
-                                               d->resizeCheckBox->isChecked(),
-                                               d->dimensionSpinBox->value() );
+    QString title               = info.title();
+    QString description         = info.description();
+    bool res                    = d->talker->addPhoto(album.name, photoPath, title, description,
+                                                      d->resizeCheckBox->isChecked(),
+                                                      d->dimensionSpinBox->value() );
 
     if (!res)
     {
@@ -774,6 +769,7 @@ void GalleryWindow::slotAddPhotoCancel()
 void GalleryWindow::slotEnableSpinBox(int n)
 {
     bool b;
+
     switch(n)
     {
         case 0:
@@ -794,10 +790,12 @@ void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
     QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
+
     if( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
     }
+
     delete dlg;
 }
 

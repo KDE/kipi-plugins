@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
@@ -38,7 +38,7 @@
 
 namespace KIO
 {
-class Job;
+    class Job;
 }
 
 class KUrl;
@@ -58,7 +58,8 @@ public:
 
     enum State
     {
-        GE_LOGIN = 0,
+        GE_LOGOUT = -1,
+        GE_LOGIN  = 0,
         GE_LISTALBUMS,
         GE_LISTPHOTOS,
         GE_CREATEALBUM,
@@ -132,8 +133,8 @@ private:
     class Private;
     Private* const d;
 
-    static bool       s_using_gallery2;
-    static QString    s_authToken;
+    static bool    s_using_gallery2;
+    static QString s_authToken;
 };
 
 } // namespace KIPIGalleryExportPlugin

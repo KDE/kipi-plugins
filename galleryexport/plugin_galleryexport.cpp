@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -68,7 +68,6 @@ public:
     }
 
     KAction* action;
-
     Gallery* gallery;
 };
 
@@ -126,6 +125,7 @@ void Plugin_GalleryExport::slotSync()
     QPointer<GalleryWindow> dlg;
 
     KConfig config("kipirc");
+
     if(!config.hasGroup("Gallery Settings") )
     {
         configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );

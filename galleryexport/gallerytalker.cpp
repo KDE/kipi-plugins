@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
@@ -73,17 +73,11 @@ public:
     Private(QWidget* const parent);
 
     QWidget*          widget;
-
     State             state;
-
     QString           cookie;
-
     KUrl              galleryUrl;
-
     KIO::TransferJob* job;
-
     bool              loggedIn;
-
     QByteArray        talker_buffer;
 };
 
@@ -92,6 +86,7 @@ GalleryTalker::Private::Private(QWidget* const parent)
     job      = 0;
     loggedIn = false;
     widget   = new QWidget(parent);
+    state    = GE_LOGOUT;
 }
 
 GalleryTalker::GalleryTalker(QWidget* const parent)
@@ -103,6 +98,8 @@ GalleryTalker::~GalleryTalker()
 {
     if (d->job)
         d->job->kill();
+
+    delete d;
 }
 
 bool GalleryTalker::loggedIn() const
@@ -144,10 +141,12 @@ void GalleryTalker::listAlbums()
     d->talker_buffer.resize(0);
 
     GalleryMPForm form;
+
     if (s_using_gallery2)
         form.addPair("cmd", "fetch-albums-prune");
     else
         form.addPair("cmd", "fetch-albums");
+
     form.addPair("protocol_version", "2.11");
     form.finish();
 
@@ -290,6 +289,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
     if (!title.isEmpty())
         form.addPair("caption", title);
+
     if (!description.isEmpty())
         form.addPair("extrafield.Description", description);
 
@@ -332,7 +332,7 @@ void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
 
 void GalleryTalker::slotResult(KJob *job)
 {
-    KIO::Job *tempjob = static_cast<KIO::Job*>(job);
+    KIO::Job* const tempjob = static_cast<KIO::Job*>(job);
 
     if (tempjob->error())
     {
@@ -352,6 +352,7 @@ void GalleryTalker::slotResult(KJob *job)
                 tempjob->ui()->showErrorMessage();
             }
         }
+
         emit signalBusy(false);
         return;
     }
@@ -378,34 +379,36 @@ void GalleryTalker::slotResult(KJob *job)
     if (d->state == GE_LOGIN && d->loggedIn)
     {
         const QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
-        d->cookie = "Cookie:";
-
+        d->cookie                    = "Cookie:";
 
         if(!cookielist.isEmpty())
         {
             QRegExp rx("^GALLERYSID=.+");
             QString app;
+
             foreach(const QString &str, cookielist)
             {
                 if(str.contains("Set-Cookie: "))
                 {
                     const QStringList cl = str.split(' ');
-                    int n = cl.lastIndexOf(rx);
+                    int n                = cl.lastIndexOf(rx);
+
                     if(n!= -1)
                     {
                         app = cl.at(n);
                     }
                 }
             }
+
             d->cookie += app;
         }
 
         tempjob->kill();
         listAlbums();
     }
+
     emit signalBusy(false);
 }
-
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
@@ -418,6 +421,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     while (!ts.atEnd())
     {
         line = ts.readLine();
+
         if (!foundResponse)
         {
             foundResponse = line.startsWith(QLatin1String("#__GR2PROTO__"));
@@ -425,6 +429,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
         else
         {
             QStringList strlist = line.split('=');
+
             if (strlist.count() == 2)
             {
                 if (("status" == strlist[0]) && ("0" == strlist[1]))
@@ -469,6 +474,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
     while (!ts.atEnd())
     {
         line = ts.readLine();
+
         if (!foundResponse)
         {
             foundResponse = line.startsWith(QLatin1String("#__GR2PROTO__"));
@@ -476,6 +482,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
         else
         {
             QStringList strlist = line.split('=');
+
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];
@@ -487,15 +494,15 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
                 }
                 else if (key.startsWith(QLatin1String("album.name")))
                 {
-                        GAlbum album;
-                        album.name = value;
+                    GAlbum album;
+                    album.name = value;
 
-                        if (s_using_gallery2)
-                            album.ref_num = value.toInt();
-                        else
-                            album.ref_num = key.section('.', 2, 2).toInt();
+                    if (s_using_gallery2)
+                        album.ref_num = value.toInt();
+                    else
+                        album.ref_num = key.section('.', 2, 2).toInt();
 
-                        iter = albumList.insert(iter, album);
+                    iter = albumList.insert(iter, album);
                 }
                 else if (key.startsWith(QLatin1String("album.title")))
                 {
@@ -581,6 +588,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
         else
         {
             QStringList strlist = line.split('=');
+
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];
@@ -649,10 +657,12 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
         else
         {
             QStringList strlist = line.split('=');
+
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];
                 QString value = strlist[1];
+
                 if (key == "status")      // key == "status" NOT FOUND!!!
                 {
                     success = (value == "0");
@@ -704,6 +714,7 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray& data)
         else
         {
             QStringList strlist = line.split('=');
+
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];

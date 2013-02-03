@@ -28,14 +28,14 @@ namespace KIPIGalleryExportPlugin
 {
 
 AlbumDlg::AlbumDlg(QWidget* const parent)
-        : QDialog(parent)
+    : QDialog(parent)
 {
     setupUi(this);
 
-    connect(buttonOk, SIGNAL(clicked()), 
+    connect(buttonOk, SIGNAL(clicked()),
             this, SLOT(accept()));
 
-    connect(buttonCancel, SIGNAL(clicked()), 
+    connect(buttonCancel, SIGNAL(clicked()),
             this, SLOT(reject()));
 }
 
