@@ -214,7 +214,7 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
     }
 
     // Section 2.1
-    LayoutNode* bestTree = 0;
+    LayoutNode* bestTree = NULL;
     double highScore     = 0;
 
     for (int i=0; i< m_count; ++i)
@@ -261,7 +261,8 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
 
     delete m_root;
     m_root = bestTree;
-    m_root->computeDivisions();
+    if (m_root)
+        m_root->computeDivisions();
 
     m_count += 2;
     return index;
