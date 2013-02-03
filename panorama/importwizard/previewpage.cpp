@@ -194,8 +194,10 @@ void PreviewPage::computePreview()
 void PreviewPage::startStitching()
 {
     // Cancel any preview being processed
+    bool previewReady = true;
     if (d->previewBusy)
     {
+        previewReady = false;
         cancel();
         d->mngr->thread()->finish();
     }
@@ -207,20 +209,27 @@ void PreviewPage::startStitching()
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
 
-    QSize previewSize = d->mngr->previewPtoData().project.size;
     QSize panoSize = d->mngr->autoOptimisePtoData().project.size;
-    QRectF selection = d->previewWidget->getSelectionArea();
-    QRectF proportionSelection(selection.x() / previewSize.width(),
-                               selection.y() / previewSize.height(),
-                               selection.width() / previewSize.width(),
-                               selection.height() / previewSize.height());
+    QRect panoSelection(0,
+                        0,
+                        panoSize.width(),
+                        panoSize.height());
 
-    // At this point, if no selection area was created, proportionSelection is null,
-    // hence panoSelection becomes a null rectangle
-    QRect panoSelection(proportionSelection.x() * panoSize.width(),
-                        proportionSelection.y() * panoSize.height(),
-                        proportionSelection.width() * panoSize.width(),
-                        proportionSelection.height() * panoSize.height());
+    if (previewReady) {
+        QSize previewSize = d->mngr->previewPtoData().project.size;
+        QRectF selection = d->previewWidget->getSelectionArea();
+        QRectF proportionSelection(selection.x() / previewSize.width(),
+                                   selection.y() / previewSize.height(),
+                                   selection.width() / previewSize.width(),
+                                   selection.height() / previewSize.height());
+
+        // At this point, if no selection area was created, proportionSelection is null,
+        // hence panoSelection becomes a null rectangle
+        panoSelection = QRect(proportionSelection.x() * panoSize.width(),
+                              proportionSelection.y() * panoSize.height(),
+                              proportionSelection.width() * panoSize.width(),
+                              proportionSelection.height() * panoSize.height());
+    }
 
     d->title->setText(i18n("<qt>"
                            "<p><h1>Panorama Post-Processing</h1></p>"

@@ -511,6 +511,10 @@ int panoScriptGetPanoOutputFormat(pt_script* script)
     assert(script != NULL);
 
     str = script->pano.outputFormat;
+    if (str == 0) {
+        return 4;
+    }
+
     switch (str[0]) {
         case 'P':
             if (strncmp("NG", str + 1, 2) == 0)
