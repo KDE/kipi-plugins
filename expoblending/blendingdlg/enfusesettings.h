@@ -48,13 +48,14 @@ public:
 
     EnfuseSettings()
     {
-        hardMask   = false;
-        autoLevels = true;
-        ciecam02   = false;
-        levels     = 20;
-        exposure   = 1.0;
-        saturation = 0.2;
-        contrast   = 0.0;
+        hardMask        = false;
+        autoLevels      = true;
+        ciecam02        = false;
+        levels          = 20;
+        exposure        = 1.0;
+        saturation      = 0.2;
+        contrast        = 0.0;
+        outputFormat    = KPSaveSettingsWidget::OUTPUT_PNG;
     }
 
     ~EnfuseSettings()

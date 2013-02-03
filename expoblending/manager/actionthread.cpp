@@ -70,6 +70,7 @@ public:
     {
         align               = true;
         cancel              = false;
+        enfuseVersion4x     = true;
         enfuseProcess       = 0;
         alignProcess        = 0;
         preprocessingTmpDir = 0;
@@ -419,8 +420,8 @@ void ActionThread::run()
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
                     KPMetadata meta;
                     meta.load(t->urls[0].toLocalFile());
-                    meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
-                    meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace('\n', " ; "), false);
+                    result = result & meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
+                    result = result & meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace('\n', " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
                     if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
                     {

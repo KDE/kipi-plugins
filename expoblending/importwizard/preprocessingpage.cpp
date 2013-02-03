@@ -73,6 +73,7 @@ public:
         progressLabel = 0,
         mngr          = 0;
         title         = 0;
+        alignCheckBox = 0;
         detailsBtn    = 0;
     }
 

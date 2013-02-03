@@ -278,7 +278,7 @@ void BracketStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
-        BracketStackItem* item = dynamic_cast<BracketStackItem*>(*it);
+        BracketStackItem* item = static_cast<BracketStackItem*>(*it);
         if (item->url() == url)
         {
             if (pix.isNull())
