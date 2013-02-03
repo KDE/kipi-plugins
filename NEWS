@@ -40,4 +40,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 027 ==> 221202 - Export html exif IPTC name data.
 028 ==> 314117 - Segmentation fault on launching import from scanner.
 029 ==> 314244 - Crash while doing a panorama
-030 ==>
+030 ==> 305807 - digiKam crash while scanning.
+031 ==> 
