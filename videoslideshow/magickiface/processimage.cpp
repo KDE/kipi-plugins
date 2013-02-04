@@ -134,13 +134,13 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
 
 int ProcessImage::incValue(int v, int step, int steps) const
 {
-    Q_ASSERT(steps == 0);
+    Q_ASSERT(steps != 0);
     return (v) * (step + 1) / steps;
 }
 
 int ProcessImage::decValue(int v, int step, int steps) const
 {
-    Q_ASSERT(steps == 0);
+    Q_ASSERT(steps != 0);
     return (v) * (steps - step - 1) / steps;
 }
 
