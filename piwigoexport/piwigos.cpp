@@ -7,10 +7,10 @@
  * Description : a plugin to export to a remote Piwigo server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,6 +43,7 @@ namespace KIPIPiwigoExportPlugin
 
 Piwigo::Piwigo()
 {
+    mpWallet = 0;
     load();
 }
 
@@ -65,8 +66,6 @@ QString Piwigo::password() const
     return mPassword;
 }
 
-// -------------------------------------
-
 void Piwigo::setUrl(const QString& url)
 {
     mUrl = url;
@@ -86,7 +85,10 @@ void Piwigo::load()
 {
     // FIXME: sure we need this?? (perhaps YES..)
     static bool bln_loaded = false;
-    if (bln_loaded) return;
+
+    if (bln_loaded)
+        return;
+
     bln_loaded = true;
 
     // read config
@@ -95,9 +97,9 @@ void Piwigo::load()
 
     kDebug() << "Reading data from kipirc file..";
 
-    mUrl      = group.readEntry("URL",      QString() );
-    mUsername = group.readEntry("Username", QString() );
-    mPassword = group.readEntry("Password", QString() );
+    mUrl      = group.readEntry("URL",      QString());
+    mUsername = group.readEntry("Username", QString());
+    mPassword = group.readEntry("Password", QString());
 }
 
 void Piwigo::save()
@@ -107,9 +109,9 @@ void Piwigo::save()
 
     kDebug() << "Saving data to kipirc file..";
 
-    group.writeEntry(QString("URL"),      url() );
-    group.writeEntry(QString("Username"), username() );
-    group.writeEntry(QString("Password"), password() );
+    group.writeEntry(QString("URL"),      url());
+    group.writeEntry(QString("Username"), username());
+    group.writeEntry(QString("Password"), password());
 
     kDebug() << "syncing..";
     config.sync();
