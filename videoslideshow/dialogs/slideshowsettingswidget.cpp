@@ -219,8 +219,9 @@ void SlideShowSettingsWidget::videoTypeChanged(int index)
 
 void SlideShowSettingsWidget::videoFormatChanged(int index)
 {
-    VIDEO_TYPE type = (VIDEO_TYPE)d->videoType->itemData(d->videoType->currentIndex()).toInt();
+    VIDEO_TYPE type     = (VIDEO_TYPE)d->videoType->itemData(d->videoType->currentIndex()).toInt();
     VIDEO_FORMAT format = (VIDEO_FORMAT)d->videoFormat->itemData(index).toInt();
+
     // set frame width and frame height for dvd, vcd,etc to standard tv size
     if(format == VIDEO_FORMAT_NTSC)
     {
@@ -286,11 +287,11 @@ void SlideShowSettingsWidget::videoFormatChanged(int index)
 
 void SlideShowSettingsWidget::setUpPPMSettings()
 {
-    QGridLayout* mainLayout = new QGridLayout(d->PPMSettingsWidget);
-    QLabel* timeLabel       = new QLabel("Image Display Time");
-    QLabel* effectLabel     = new QLabel("Special Effect");
-    QLabel* transitionLabel = new QLabel("Transition");
-    QLabel* transSpeedLabel = new QLabel("Transition Speed");
+    QGridLayout* const mainLayout = new QGridLayout(d->PPMSettingsWidget);
+    QLabel* const timeLabel       = new QLabel("Image Display Time");
+    QLabel* const effectLabel     = new QLabel("Special Effect");
+    QLabel* const transitionLabel = new QLabel("Transition");
+    QLabel* const transSpeedLabel = new QLabel("Transition Speed");
 
     d->timeVal      = new QSpinBox();
     d->timeVal->setRange(1,60);
@@ -339,12 +340,12 @@ void SlideShowSettingsWidget::setUpPPMSettings()
 
     mainLayout->addWidget(new KSeparator(Qt::Horizontal), 4, 0, 1, 2);
 
-    d->tempDirLabel           = new QLabel(i18n("Temporary Directory"));
-    QLabel* asptRatioCorLabel = new QLabel("Aspect Ratio Correction");
-    QLabel* heightLabel       = new QLabel("Frame Height");
-    QLabel* widthLabel        = new QLabel("Frame Width");
-    QLabel* aspectLabel       = new QLabel("Aspect Ratio");
-    d->selectBtn              = new KPushButton("Browse");
+    d->tempDirLabel                 = new QLabel(i18n("Temporary Directory"));
+    QLabel* const asptRatioCorLabel = new QLabel("Aspect Ratio Correction");
+    QLabel* const heightLabel       = new QLabel("Frame Height");
+    QLabel* const widthLabel        = new QLabel("Frame Width");
+    QLabel* const aspectLabel       = new QLabel("Aspect Ratio");
+    d->selectBtn                    = new KPushButton("Browse");
 
     connect(d->selectBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectTempDirectory()));
@@ -395,9 +396,9 @@ void SlideShowSettingsWidget::resetToDefault()
 
 void SlideShowSettingsWidget::setUpVideoSettings()
 {
-    QGridLayout* mainLayout = new QGridLayout(d->VideoSettingsWidget);
-    QLabel* typeLabel       = new QLabel("VideoType");
-    QLabel* formatLabel     = new QLabel("Video Format");
+    QGridLayout* const mainLayout = new QGridLayout(d->VideoSettingsWidget);
+    QLabel* const typeLabel       = new QLabel("VideoType");
+    QLabel* const formatLabel     = new QLabel("Video Format");
 
     d->videoType    = new QComboBox();
     d->videoType->setEditable(false);
@@ -449,8 +450,7 @@ void SlideShowSettingsWidget::setUpVideoSettings()
 
 void SlideShowSettingsWidget::slotSelectTempDirectory()
 {
-    QString path = KFileDialog::getExistingDirectory(KUrl(), this,
-                                                     i18n("Select temporary directory"));
+    QString path = KFileDialog::getExistingDirectory(KUrl(), this, i18n("Select temporary directory"));
 
     if (!path.isEmpty())
     {

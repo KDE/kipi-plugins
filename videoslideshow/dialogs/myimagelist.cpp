@@ -93,6 +93,7 @@ void MyImageList::slotRemoveItems()
     {
         find = false;
         QTreeWidgetItemIterator it(listView());
+
         while (*it)
         {
             MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(*it);
@@ -205,12 +206,12 @@ MyImageListViewItem* MyImageListViewItem::getPrevImageItem() const
     return d->prev;
 }
 
-void MyImageListViewItem::setNextImageItem(MyImageListViewItem* nextItem)
+void MyImageListViewItem::setNextImageItem(MyImageListViewItem* const nextItem)
 {
     d->next = nextItem;
 }
 
-void MyImageListViewItem::setPrevImageItem(MyImageListViewItem* prevItem)
+void MyImageListViewItem::setPrevImageItem(MyImageListViewItem* const prevItem)
 {
     d->prev = prevItem;
 }

@@ -7,8 +7,8 @@
  * @date   2012-06-01
  * @brief  UnitTests for ImageMagick API
  *
- * @author Copyright (C) 2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
- *         Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ *         Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,9 +43,9 @@ QTEST_MAIN(TestMagickIface)
 TestMagickIface::TestMagickIface()
 {
     api  = new MagickApi(QDir::tempPath());
+    file = new QFile(QFileDialog::getOpenFileName(NULL, tr("SelectImage"), "/home", tr("Image Files (*.png *.jpg)")));
     spy  = new QSignalSpy(api, SIGNAL(signalsAPIError(const QString&)));
     QVERIFY(spy->isValid());
-    file = new QFile(QFileDialog::getOpenFileName(NULL, tr("SelectImage"), "/home", tr("Image Files (*.png *.jpg)")));
 }
 
 TestMagickIface::~TestMagickIface()
@@ -63,7 +63,7 @@ void TestMagickIface::testCreateImage()
 {
     spy->clear();
 
-    MagickImage* img = api->createImage(QString("green"), 300, 300);
+    MagickImage* const img = api->createImage(QString("green"), 300, 300);
     QVERIFY( img != 0 );
 
     bool done = api->displayImage(*img);
@@ -80,10 +80,11 @@ void TestMagickIface::testDuplicateImage()
     spy->clear();
 
     QVERIFY(file != 0);
+
     if (file->isOpen())
         file->close();
 
-    MagickImage* img = api->loadImage(file->fileName());
+    MagickImage* const img = api->loadImage(file->fileName());
     QVERIFY( img != 0 );
 
     MagickImage* dupImg = api->duplicateImage(*img);
@@ -105,10 +106,10 @@ void TestMagickIface::testOverlayImage()
 {
     spy->clear();
 
-    MagickImage* src = api->createImage(QString("red"), 100, 100);
+    MagickImage* const src = api->createImage(QString("red"), 100, 100);
     QVERIFY( src != 0 );
 
-    MagickImage* dst = api->createImage(QString("yellow"), 300, 300);
+    MagickImage* const dst = api->createImage(QString("yellow"), 300, 300);
     QVERIFY( dst != 0);
 
     bool done = api->overlayImage(*dst,1,1,*src);
@@ -130,13 +131,13 @@ void TestMagickIface::testBlendImage()
 {
     spy->clear();
 
-    MagickImage* src0 = api->createImage(QString("green"), 100, 100);
+    MagickImage* const src0 = api->createImage(QString("green"), 100, 100);
     QVERIFY( src0 != 0 );
 
-    MagickImage* src1 = api->createImage(QString("white"), 100, 100);
+    MagickImage* const src1 = api->createImage(QString("white"), 100, 100);
     QVERIFY( src1 != 0 );
 
-    MagickImage* dst = api->createImage(QString("yellow"), 100, 100);
+    MagickImage* const dst = api->createImage(QString("yellow"), 100, 100);
     QVERIFY( dst != 0);
 
     int done = api->blendImage(*dst, *src0, *src1, 0.75);
@@ -161,10 +162,10 @@ void TestMagickIface::testBitblitImage()
 {
     spy->clear();
 
-    MagickImage* src = api->createImage(QString("green"), 200, 200);
+    MagickImage* const src = api->createImage(QString("green"), 200, 200);
     QVERIFY( src != 0 );
 
-    MagickImage* dst = api->createImage(QString("blue"), 300, 300);
+    MagickImage* const dst = api->createImage(QString("blue"), 300, 300);
     QVERIFY( dst != 0);
 
     int done = api->bitblitImage(*dst, 100, 100, *src, 0, 0, 100, 100);
@@ -186,7 +187,7 @@ void TestMagickIface::testScaleImage()
 {
     spy->clear();
 
-    MagickImage* src = api->createImage(QString("white"), 150, 150);
+    MagickImage* const src = api->createImage(QString("white"), 150, 150);
     QVERIFY( src != 0 );
 
     int done = api->scaleImage(*src, 300, 300);
@@ -205,10 +206,10 @@ void TestMagickIface::testScaleblitImage()
 {
     spy->clear();
 
-    MagickImage* src = api->createImage(QString("green"), 200, 200);
+    MagickImage* const src = api->createImage(QString("green"), 200, 200);
     QVERIFY( src != 0 );
 
-    MagickImage* dst = api->createImage(QString("blue"), 300, 300);
+    MagickImage* const dst = api->createImage(QString("blue"), 300, 300);
     QVERIFY( dst != 0);
 
     int done = api->scaleblitImage(*dst, 0, 0, 200, 200, *src, 0, 0, 100, 100);
@@ -232,10 +233,10 @@ void TestMagickIface::testBorderImage()
 
     QVERIFY( file != 0);
 
-    MagickImage* src = api->loadStream(*file);
+    MagickImage* const src = api->loadStream(*file);
     QVERIFY( src != 0 );
 
-    MagickImage* bimg = api->borderImage(*src, QString("green"), 50, 50);
+    MagickImage* const bimg = api->borderImage(*src, QString("green"), 50, 50);
     QVERIFY( bimg != 0);
 
     bool done = api->displayImage(*bimg);
@@ -256,10 +257,10 @@ void TestMagickIface::testGeoScaleImage()
 
     QVERIFY( file != 0);
 
-    MagickImage* src = api->loadImage(file->fileName());
+    MagickImage* const src = api->loadImage(file->fileName());
     QVERIFY( src != 0 );
 
-    MagickImage* gsimg = api->geoscaleImage(*src, 0, 0, 300, 300, 600, 600);
+    MagickImage* const gsimg = api->geoscaleImage(*src, 0, 0, 300, 300, 600, 600);
     QVERIFY( gsimg != 0);
 
     bool done = api->freeImage(*src);
@@ -280,7 +281,7 @@ void TestMagickIface::testLoadAndSaveFile()
 
     QVERIFY( file != 0);
 
-    MagickImage* testImage = api->loadImage(file->fileName());
+    MagickImage* const testImage = api->loadImage(file->fileName());
     QVERIFY(testImage != 0);
 
     int isSaved = api->saveToFile(*testImage, QString("test.ppm"));
@@ -300,7 +301,7 @@ void TestMagickIface::testLoadAndSaveStream()
 
     QFile file2("test2.ppm");
 
-    MagickImage* testImage = api->loadStream(*file);
+    MagickImage* const testImage = api->loadStream(*file);
     QVERIFY(testImage != 0);
 
     int isSaved = api->saveToStream(*testImage,file2);

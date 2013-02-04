@@ -126,11 +126,11 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     // ---------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Video Slide Show"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to export images as video slideshow"),
-                             ki18n("(c) 2012, A Janardhan Reddy\n"));
+    KPAboutData* const about = new KPAboutData(ki18n("Video Slide Show"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to export images as video slideshow"),
+                                   ki18n("(c) 2012, A Janardhan Reddy\n"));
 
     about->addAuthor(ki18n("A Janardhan Reddy"),
                      ki18n("Developer"),
@@ -323,7 +323,7 @@ void ExportDialog::slotStartStop()
             return;
         }
 
-        MyImageListViewItem* item = setUpImageItems();
+        MyImageListViewItem* const item = setUpImageItems();
 
         processAll(item);
 
@@ -422,17 +422,16 @@ void ExportDialog::updateImageTransSpeed(const QString& data, TRANSITION_SPEED s
 
 MyImageListViewItem* ExportDialog::setUpImageItems() const
 {
-    KPImagesListView* view    = d->listView->listView();
-    MyImageListViewItem* prev = 0;
-    MyImageListViewItem* next = 0;
-    int total                 = view->topLevelItemCount();
+    KPImagesListView* const view = d->listView->listView();
+    MyImageListViewItem* prev    = 0;
+    MyImageListViewItem* next    = 0;
+    int total                    = view->topLevelItemCount();
 
     for(int i = 0; i < total; i++)
     {
         dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setPrevImageItem(prev);
         prev = dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i));
-        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1))
-                                : 0;
+        next = (i != total - 1) ? dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i + 1)) : 0;
         dynamic_cast<MyImageListViewItem*>(view->topLevelItem(i))->setNextImageItem(next);
     }
 

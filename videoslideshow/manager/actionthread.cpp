@@ -386,7 +386,7 @@ void ActionThread::ProcessFrame(Frame* const frm)
 
         case TYPE_IMAGE:
         {
-            int step   = getTransitionFrames(frm->item) + frm->number;
+            int step    = getTransitionFrames(frm->item) + frm->number;
             frm->imgout = getDynamicImage(frm->item, frm->img, step);
             break;
         }

@@ -7,8 +7,8 @@
  * @date   2012-06-01
  * @brief  Transitions, AspectRatioCorrection and otherImageEffects
  *
- * @author Copyright (C) 2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
- *         Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ *         Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -70,7 +70,10 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // resulting image will have black bars on right and left side
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio,img.getHeight())))
+                {
                     Q_EMIT signalProcessError("couldn't create image\n");
+                    return &img;
+                }
 
                 m_api->overlayImage(*newimg, (newimg->getWidth() - img.getWidth()) / 2,0, img);
             }
@@ -78,7 +81,10 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // resulting image will have black bars on top and bottom
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
+                {
                     Q_EMIT signalProcessError("couldn't create image\n");
+                    return &img;
+                }
 
                 m_api->overlayImage(*newimg, 0, (newimg->getHeight() - img.getHeight()) / 2, img);
             }
@@ -90,7 +96,10 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // cut on top and bottom side
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
+                {
                     Q_EMIT signalProcessError("couldn't create image\n");
+                    return &img;
+                }
 
                 m_api->bitblitImage(*newimg, 0, 0, img, 0, (img.getHeight() - newimg->getHeight()) / 2, newimg->getWidth(), newimg->getHeight());
             }
@@ -98,7 +107,10 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
             {
                 // cut on right and left side
                 if (!(newimg = m_api->createImage("black", img.getHeight() * aspectratio, img.getHeight())))
+                {
                     Q_EMIT signalProcessError("couldn't create image\n");
+                    return &img;
+                }
 
                 m_api->bitblitImage(*newimg, 0, 0, img,(img.getWidth() - newimg->getWidth()) / 2,0, newimg->getWidth(), newimg->getHeight());
             }
@@ -116,16 +128,19 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
         m_api->freeImage(img);
         img = *newimg;
     }
+
     return &img;
 }
 
 int ProcessImage::incValue(int v, int step, int steps) const
 {
+    Q_ASSERT(steps == 0);
     return (v) * (step + 1) / steps;
 }
 
 int ProcessImage::decValue(int v, int step, int steps) const
 {
+    Q_ASSERT(steps == 0);
     return (v) * (steps - step - 1) / steps;
 }
 
@@ -138,6 +153,9 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
 
     // create a new target image and copy the from image onto
     MagickImage* const dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
+
+    if (!dst)
+        return 0;
 
     switch (type)
     {
