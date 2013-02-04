@@ -73,6 +73,7 @@ class EncoderDecoder : public QObject
     Q_OBJECT
 
 public:
+
     EncoderDecoder();
     ~EncoderDecoder();
 
@@ -86,6 +87,7 @@ Q_SIGNALS:
     void finished();
 
 private:
+
     void onBusMessage(const QGst::MessagePtr& message);
 
     //QGst::BinPtr createAudioSrcBin(QString file, AUDIO_TYPE type, int sampleRate, int bitRate);
@@ -93,11 +95,11 @@ private:
 
 private:
 
-    QGst::PipelinePtr              pipeline;
-    QStringList                    audioPipelines;
-    QStringList                    videoPipelines;
+    QGst::PipelinePtr              m_pipeline;
+    QStringList                    m_audioPipelines;
+    QStringList                    m_videoPipelines;
 
-    QGst::Utils::ApplicationSource src;
+    QGst::Utils::ApplicationSource m_src;
 };
 
 } // namespace KIPIVideoSlideShowPlugin
