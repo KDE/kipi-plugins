@@ -47,7 +47,7 @@ public:
 
 public:
 
-    HaarSettingsWidget(QWidget* parent = 0);
+    HaarSettingsWidget(QWidget* const parent = 0);
     ~HaarSettingsWidget();
 
     void         loadSettings(HaarSettings&);
@@ -65,8 +65,8 @@ private:
 
 private:
 
-    struct SettingsTabPriv;
-    SettingsTabPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

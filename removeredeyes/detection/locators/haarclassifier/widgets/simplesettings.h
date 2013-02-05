@@ -48,7 +48,7 @@ public:
 
 public:
 
-    SimpleSettings(QWidget* parent = 0);
+    SimpleSettings(QWidget* const parent = 0);
     ~SimpleSettings();
 
     void loadSettings(HaarSettings&);
@@ -67,8 +67,8 @@ private Q_SLOTS:
 
 private:
 
-    struct SimpleSettingsPriv;
-    SimpleSettingsPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

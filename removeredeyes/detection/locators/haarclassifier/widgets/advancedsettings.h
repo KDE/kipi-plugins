@@ -39,7 +39,7 @@ class AdvancedSettings : public QWidget
 
 public:
 
-    AdvancedSettings(QWidget* parent = 0);
+    AdvancedSettings(QWidget* const parent = 0);
     ~AdvancedSettings();
 
     void         loadSettings(HaarSettings&);
@@ -59,8 +59,8 @@ private:
 
 private:
 
-    struct AdvancedSettingsPriv;
-    AdvancedSettingsPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

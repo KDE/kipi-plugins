@@ -44,9 +44,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct HaarClassifierLocator::HaarClassifierLocatorPriv
+struct HaarClassifierLocator::Private
 {
-    HaarClassifierLocatorPriv() :
+    Private() :
         aChannel(0),
         gray(0),
         lab(0),
@@ -78,23 +78,24 @@ struct HaarClassifierLocator::HaarClassifierLocatorPriv
     HaarSettingsWidget*   settingsWidget;
     HaarSettings          settings;
 };
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configGroupName("RemoveRedEyes %1 Settings");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configSimpleModeEntry("Simple Mode");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configMinimumBlobSizeEntry("Minimum Blob Size");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configMinimumRoundnessEntry("Minimum Roundness");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configNeighborGroupsEntry("Neighbor Groups");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configScalingFactorEntry("Scaling Factor");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configUseStandardClassifierEntry("Use Standard Classifier");
-const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configClassifierEntry("Classifier");
+
+const QString HaarClassifierLocator::Private::configGroupName("RemoveRedEyes %1 Settings");
+const QString HaarClassifierLocator::Private::configSimpleModeEntry("Simple Mode");
+const QString HaarClassifierLocator::Private::configMinimumBlobSizeEntry("Minimum Blob Size");
+const QString HaarClassifierLocator::Private::configMinimumRoundnessEntry("Minimum Roundness");
+const QString HaarClassifierLocator::Private::configNeighborGroupsEntry("Neighbor Groups");
+const QString HaarClassifierLocator::Private::configScalingFactorEntry("Scaling Factor");
+const QString HaarClassifierLocator::Private::configUseStandardClassifierEntry("Use Standard Classifier");
+const QString HaarClassifierLocator::Private::configClassifierEntry("Classifier");
 
 // --------------------------------------------------------
 
 int HaarClassifierLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile)
 {
     // eyes sequence will reside in the storage
-    CvMemStorage* storage = cvCreateMemStorage(0);
-    CvSeq* eyes           = 0;
-    int numEyes           = 0;
+    CvMemStorage* storage            = cvCreateMemStorage(0);
+    CvSeq* eyes                      = 0;
+    int numEyes                      = 0;
 
     // load classifier cascade from XML file
     CvHaarClassifierCascade* cascade = (CvHaarClassifierCascade*)cvLoad(classifierFile);
@@ -137,8 +138,8 @@ void HaarClassifierLocator::removeRedEyes()
     cvCopy(d->original, removed_redchannel);
 
     // number of channels
-    int nc     = removed_redchannel->nChannels;
-    uchar* ptr = 0;
+    int nc                       = removed_redchannel->nChannels;
+    uchar* ptr                   = 0;
 
     for (int y = 0; y < removed_redchannel->height; ++y)
     {
@@ -161,10 +162,10 @@ void HaarClassifierLocator::removeRedEyes()
     cvReleaseImage(&removed_redchannel);
 }
 
-void HaarClassifierLocator::generateMask(int i_v, CvSeq* i_eyes)
+void HaarClassifierLocator::generateMask(int i_v, CvSeq* const i_eyes)
 {
     // get ROI
-    CvRect* r = (CvRect*)cvGetSeqElem(i_eyes, i_v);
+    CvRect* const r = (CvRect*)cvGetSeqElem(i_eyes, i_v);
     cvSetImageROI(d->aChannel, *r);
     cvSetImageROI(d->redMask, *r);
 
@@ -183,7 +184,7 @@ void HaarClassifierLocator::generateMask(int i_v, CvSeq* i_eyes)
     findBlobs(d->redMask, minSize);
 }
 
-void HaarClassifierLocator::findBlobs(IplImage* i_mask, int minsize)
+void HaarClassifierLocator::findBlobs(IplImage* const i_mask, int minsize)
 {
     CBlobResult blobs;
     blobs = CBlobResult(i_mask,0,0,true);
@@ -250,7 +251,7 @@ void HaarClassifierLocator::clearBuffers()
 // --------------------------------------------------------------------
 
 HaarClassifierLocator::HaarClassifierLocator()
-    : Locator(), d(new HaarClassifierLocatorPriv)
+    : Locator(), d(new Private)
 {
     setObjectName("HaarClassifierLocator");
     d->settingsWidget = new HaarSettingsWidget;

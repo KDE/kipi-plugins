@@ -35,9 +35,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct BlobSettingsBox::BlobSettingsBoxPriv
+struct BlobSettingsBox::Private
 {
-    BlobSettingsBoxPriv()
+    Private()
     {
         minBlobSizeNumInput  = 0;
         minRoundnessNumInput = 0;
@@ -48,7 +48,7 @@ struct BlobSettingsBox::BlobSettingsBoxPriv
 };
 
 BlobSettingsBox::BlobSettingsBox(QWidget* parent)
-    : QGroupBox(parent), d(new BlobSettingsBoxPriv)
+    : QGroupBox(parent), d(new Private)
 {
     setTitle(i18n("Blob Extraction Settings"));
 
@@ -63,7 +63,7 @@ BlobSettingsBox::BlobSettingsBox(QWidget* parent)
     d->minRoundnessNumInput->setSliderEnabled(true);
     d->minRoundnessNumInput->setSuffix("%");
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addWidget(d->minBlobSizeNumInput,  0, 0, 1, 2);
     mainLayout->addWidget(d->minRoundnessNumInput, 1, 0, 1, 2);
     mainLayout->setRowStretch(2, 10);
