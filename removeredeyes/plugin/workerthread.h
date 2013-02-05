@@ -114,6 +114,7 @@ public:
         updateFileTimeStamp = false;
         saveMethod          = 0;
         locator             = 0;
+        progress            = 0;
     }
 
     bool           updateFileTimeStamp;

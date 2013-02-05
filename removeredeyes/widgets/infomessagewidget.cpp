@@ -38,9 +38,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct InfoMessageWidget::InfoMessageWidgetPriv
+struct InfoMessageWidget::Private
 {
-    InfoMessageWidgetPriv()
+    Private()
     {
         timer  = 0;
         hidden = false;
@@ -53,13 +53,12 @@ struct InfoMessageWidget::InfoMessageWidgetPriv
 };
 
 InfoMessageWidget::InfoMessageWidget(QWidget* const parent)
-    : QWidget(parent), d(new InfoMessageWidgetPriv)
+    : QWidget(parent), d(new Private)
 {
     setFocusPolicy(Qt::NoFocus);
 
     QPalette pal = palette();
-    pal.setColor(QPalette::Active, QPalette::Window,
-                 KApplication::palette().color(QPalette::Active, QPalette::Window));
+    pal.setColor(QPalette::Active, QPalette::Window, KApplication::palette().color(QPalette::Active, QPalette::Window));
     setPalette(pal);
 
     move(10, 10);
@@ -75,17 +74,17 @@ InfoMessageWidget::~InfoMessageWidget()
 void InfoMessageWidget::display(const QString& message, Icon icon, int durationMs)
 {
     // set text
-    d->message = message;
+    d->message     = message;
 
     // determine text rectangle
     QRect textRect = fontMetrics().boundingRect(d->message);
     textRect.translate(-textRect.left(), -textRect.top());
     textRect.adjust(0, 0, 2, 2);
 
-    int width = textRect.width(), height = textRect.height();
+    int width      = textRect.width(), height = textRect.height();
 
     // load icon (if set) and update geometry
-    d->symbol = QPixmap();
+    d->symbol      = QPixmap();
 
     if (icon != None)
     {
@@ -129,6 +128,7 @@ void InfoMessageWidget::display(const QString& message, Icon icon, int durationM
         {
             d->timer = new QTimer(this);
             d->timer->setSingleShot(true);
+
             connect(d->timer, SIGNAL(timeout()),
                     SLOT(hide()));
         }

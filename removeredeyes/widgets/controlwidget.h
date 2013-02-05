@@ -91,8 +91,8 @@ private:
 
 private:
 
-    struct ControlWidgetPriv;
-    ControlWidgetPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

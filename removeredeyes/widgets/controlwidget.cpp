@@ -39,9 +39,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct ControlWidget::ControlWidgetPriv
+struct ControlWidget::Private
 {
-    ControlWidgetPriv() :
+    Private() :
         mode(0),
         renderer(0),
         timerFadeIn(0),
@@ -64,7 +64,7 @@ struct ControlWidget::ControlWidgetPriv
 };
 
 ControlWidget::ControlWidget(QWidget* const parent, int w, int h)
-    : QWidget(parent), d(new ControlWidgetPriv)
+    : QWidget(parent), d(new Private)
 {
     setMinimumSize(w, h);
     setMaximumSize(w, h);
@@ -86,7 +86,7 @@ ControlWidget::ControlWidget(QWidget* const parent, int w, int h)
 
     // ------------------------------------------
 
-    d->timerFadeIn = new QTimer(this);
+    d->timerFadeIn  = new QTimer(this);
     d->timerFadeIn->setSingleShot(true);
 
     d->timerFadeOut = new QTimer(this);
@@ -115,7 +115,6 @@ void ControlWidget::paintEvent(QPaintEvent*)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
-
     d->renderer->render(&p, QString("normal"));
 
     switch (d->mode)
@@ -164,8 +163,7 @@ void ControlWidget::paintEvent(QPaintEvent*)
 
 void ControlWidget::mouseMoveEvent(QMouseEvent* e)
 {
-    QRectF mousePos(e->pos(), QSize(1,1));
-
+    QRectF mousePos(e->pos(), QSize(1, 1));
     d->mode = Normal;
 
     if (mousePos.intersects(d->zoomOut))
@@ -192,8 +190,7 @@ void ControlWidget::mouseMoveEvent(QMouseEvent* e)
 
 void ControlWidget::mousePressEvent(QMouseEvent* e)
 {
-    QRectF mousePos(e->pos(), QSize(1,1));
-
+    QRectF mousePos(e->pos(), QSize(1, 1));
     d->mode = Normal;
 
     if (mousePos.intersects(d->zoomOut))

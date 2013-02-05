@@ -70,9 +70,9 @@ void MyImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        if (item->url() == url)
+        if (item && item->url() == url)
         {
             item->setText(KPImagesListView::User1, QString::number(eyes));
             break;
@@ -90,9 +90,13 @@ void MyImagesList::resetEyeCounterColumn()
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
-        item->setText(KPImagesListView::User1, QString(""));
-        ++it;
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
+
+        if (item)
+        {
+            item->setText(KPImagesListView::User1, QString(""));
+            ++it;
+        }
     }
 
     emit signalImageListChanged();
@@ -106,9 +110,9 @@ bool MyImagesList::hasUnprocessedImages()
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        if (item->text(KPImagesListView::User1).toInt() <= 0)
+        if (item && item->text(KPImagesListView::User1).toInt() <= 0)
         {
             hasNone = true;
             break;
@@ -126,15 +130,18 @@ void MyImagesList::removeUnprocessedImages()
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
-        // first, deselect item if selected
-        item->setSelected(false);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        // select the item if no corrections were made
-        if (item->text(KPImagesListView::User1).toInt() <= 0 &&
-            !item->text(KPImagesListView::User1).isEmpty())
+        if (item)
         {
-            item->setSelected(true);
+            // first, deselect item if selected
+            item->setSelected(false);
+
+            // select the item if no corrections were made
+            if (item->text(KPImagesListView::User1).toInt() <= 0 && !item->text(KPImagesListView::User1).isEmpty())
+            {
+                item->setSelected(true);
+            }
         }
 
         ++it;

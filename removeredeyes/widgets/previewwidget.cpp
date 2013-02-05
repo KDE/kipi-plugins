@@ -42,9 +42,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct PreviewWidget::PreviewWidgetPriv
+struct PreviewWidget::Private
 {
-    PreviewWidgetPriv() :
+    Private() :
         locked(false),
         busyLabel(0),
         noSelectionLabel(0),
@@ -75,7 +75,7 @@ struct PreviewWidget::PreviewWidgetPriv
 };
 
 PreviewWidget::PreviewWidget(QWidget* const parent)
-    : QGraphicsView(parent), d(new PreviewWidgetPriv)
+    : QGraphicsView(parent), d(new Private)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
                              "preview for the currently selected image.</p>"
@@ -98,7 +98,6 @@ PreviewWidget::PreviewWidget(QWidget* const parent)
     // --------------------------------------------------------
 
     d->locked               = true;
-
     d->busyLabel            = new QLabel;
     d->correctedLabel       = new QLabel;
     d->maskLabel            = new QLabel;
@@ -117,22 +116,22 @@ PreviewWidget::PreviewWidget(QWidget* const parent)
     // --------------------------------------------------------
 
     d->stack = new QStackedWidget;
-    d->stack->insertWidget(BusyMode,          d->busyLabel);
-    d->stack->insertWidget(LockedMode,        d->noSelectionLabel);
-    d->stack->insertWidget(OriginalMode,      d->originalLabel);
-    d->stack->insertWidget(CorrectedMode,     d->correctedLabel);
-    d->stack->insertWidget(MaskMode,          d->maskLabel);
+    d->stack->insertWidget(BusyMode,      d->busyLabel);
+    d->stack->insertWidget(LockedMode,    d->noSelectionLabel);
+    d->stack->insertWidget(OriginalMode,  d->originalLabel);
+    d->stack->insertWidget(CorrectedMode, d->correctedLabel);
+    d->stack->insertWidget(MaskMode,      d->maskLabel);
 
     // --------------------------------------------------------
 
-    QGraphicsScene* scene = new QGraphicsScene;
+    QGraphicsScene* const scene = new QGraphicsScene;
     scene->addWidget(d->stack);
     setScene(scene);
 
     // --------------------------------------------------------
 
     // floating widgets
-    d->modeInfo = new InfoMessageWidget(this);
+    d->modeInfo   = new InfoMessageWidget(this);
     d->controller = new ControlWidget(this);
 
     // --------------------------------------------------------
@@ -263,7 +262,7 @@ void PreviewWidget::resizeEvent(QResizeEvent* e)
 {
     QWidget::resizeEvent(e);
 
-    d->controller->move((width()/2) - (d->controller->width()/2),
+    d->controller->move((width()/2) -  (d->controller->width()/2),
                         (height()/2) - (d->controller->width()/2));
 }
 
@@ -324,9 +323,7 @@ void PreviewWidget::resetPreviews()
 
 bool PreviewWidget::previewsComplete() const
 {
-    if (d->originalLabel->pixmap()->isNull()  ||
-        d->correctedLabel->pixmap()->isNull() ||
-        d->maskLabel->pixmap()->isNull())
+    if (d->originalLabel->pixmap()->isNull()  || d->correctedLabel->pixmap()->isNull() || d->maskLabel->pixmap()->isNull())
     {
         return false;
     }

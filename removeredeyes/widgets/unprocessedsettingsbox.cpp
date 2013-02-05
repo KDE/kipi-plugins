@@ -40,9 +40,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct UnprocessedSettingsBox::UnprocessedSettingsBoxPriv
+struct UnprocessedSettingsBox::Private
 {
-    UnprocessedSettingsBoxPriv()
+    Private()
     {
         unprocessedGroup = 0;
     }
@@ -51,7 +51,7 @@ struct UnprocessedSettingsBox::UnprocessedSettingsBoxPriv
 };
 
 UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* const parent)
-    : QGroupBox(parent), d(new UnprocessedSettingsBoxPriv)
+    : QGroupBox(parent), d(new Private)
 {
     setTitle(i18n("Unprocessed Image Handling"));
 
@@ -73,17 +73,17 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* const parent)
 
     // ----------------------------------------------------------------
 
-    QRadioButton* askMode = new QRadioButton(i18n("&Ask the user"));
+    QRadioButton* const askMode = new QRadioButton(i18n("&Ask the user"));
     askMode->setToolTip(i18n("If checked, the user will be asked to keep or "
                              "remove unprocessed images."));
     d->unprocessedGroup->addButton(askMode, Ask);
 
-    QRadioButton* keepMode = new QRadioButton(i18n("&Keep in file list"));
+    QRadioButton* const keepMode = new QRadioButton(i18n("&Keep in file list"));
     keepMode->setToolTip(i18n("If checked, unprocessed images will be kept in the "
                               "file list after the test-run."));
     d->unprocessedGroup->addButton(keepMode, Keep);
 
-    QRadioButton* removeMode = new QRadioButton(i18n("&Remove from file list"));
+    QRadioButton* const removeMode = new QRadioButton(i18n("&Remove from file list"));
     removeMode->setToolTip(i18n("If checked, unprocessed images will be removed from "
                                 "the file list after the test-run."));
     d->unprocessedGroup->addButton(removeMode, Remove);

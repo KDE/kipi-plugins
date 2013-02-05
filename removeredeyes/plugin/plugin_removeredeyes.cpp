@@ -98,7 +98,7 @@ void Plugin_RemoveRedEyes::setupActions()
 
 void Plugin_RemoveRedEyes::activate()
 {
-    RemoveRedEyesWindow* window = new RemoveRedEyesWindow();
+    RemoveRedEyesWindow* const window = new RemoveRedEyesWindow();
     window->show();
 }
 

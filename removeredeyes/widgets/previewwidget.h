@@ -94,15 +94,14 @@ private:
 
     bool previewsComplete() const;
     void resetPreviews();
-
     void setMode(DisplayMode mode);
 
     QPixmap openFile(const QString& filename);
 
 private:
 
-    struct PreviewWidgetPriv;
-    PreviewWidgetPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin
