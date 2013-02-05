@@ -38,12 +38,13 @@ class RajceLoginDialog : public QDialog
 
 public:
 
-    explicit RajceLoginDialog(QWidget* parent, const QString& _name=QString(),
+    explicit RajceLoginDialog(QWidget* const parent, const QString& _name=QString(),
                      const QString& _passwd=QString());
     ~RajceLoginDialog();
 
     QString password() const;
     QString username() const;
+
     void setUsername(const QString&);
     void setPassword(const QString&);
 

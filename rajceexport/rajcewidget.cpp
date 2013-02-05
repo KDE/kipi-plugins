@@ -77,8 +77,8 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Rajce.net account."));
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget* const settingsBox           = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Rajce.net home page in a web browser."));
@@ -87,9 +87,9 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
+    QGroupBox* const accountBox         = new QGroupBox(i18n("Account"), settingsBox);
     accountBox->setWhatsThis(i18n("This is the Rajce.net account that will be used to authenticate."));
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
+    QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
     m_anonymousRBtn = new QRadioButton(i18nc("Rajce.net account login", "Anonymous"), accountBox);
     m_anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Rajce.net web service."));
@@ -100,7 +100,7 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     m_userNameLbl   = new QLabel(i18nc("Rajce.net account settings", "Name:"), accountBox);
     m_userName      = new QLabel(accountBox);
     m_changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                     i18n("Change Rajce.net Account used to authenticate")), accountBox);
+                                      i18n("Change Rajce.net Account used to authenticate")), accountBox);
 
     accountBoxLayout->addWidget(m_anonymousRBtn, 0, 0, 1, 2);
     accountBoxLayout->addWidget(m_accountRBtn,   1, 0, 1, 2);
@@ -112,17 +112,17 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
+    QGroupBox* const albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
     albumsBox->setWhatsThis(i18n("This is the Rajce.net album that will be used for transfer."));
-    QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
+    QGridLayout* const albumsBoxLayout = new QGridLayout(albumsBox);
 
     m_albumsCoB       = new KComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                       i18n("Create new Rajce.net album")), accountBox);
+                                        i18n("Create new Rajce.net album")), accountBox);
     m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
-                                       i18n("Reload album list")), accountBox);
+                                        i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(m_albumsCoB,       0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
@@ -130,33 +130,33 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where Rajce.net images will be downloaded."));
-    QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
+    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = interface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
 
-    m_dimensionSpB        = new QSpinBox(optionsBox);
+    m_dimensionSpB             = new QSpinBox(optionsBox);
     m_dimensionSpB->setMinimum(0);
     m_dimensionSpB->setMaximum(5000);
     m_dimensionSpB->setSingleStep(10);
     m_dimensionSpB->setValue(1024);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
-    m_imageQualitySpB        = new QSpinBox(optionsBox);
+    m_imageQualitySpB             = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
     m_imageQualitySpB->setMaximum(100);
     m_imageQualitySpB->setSingleStep(1);
     m_imageQualitySpB->setValue(85);
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
+    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     optionsBoxLayout->addWidget(imageQualityLbl,   0, 1, 1, 1);
     optionsBoxLayout->addWidget(m_imageQualitySpB, 0, 2, 1, 1);
@@ -293,6 +293,7 @@ void RajceWidget::update()
 
     KColorScheme scheme(palette().currentColorGroup(), KColorScheme::Window);
     QColor backgroundColor = scheme.background().color();
+
     if (m_session->state().lastErrorCode() != 0)
     {
         m_progressBar->setVisible(true);
@@ -340,10 +341,10 @@ void RajceWidget::progressChange(unsigned /*commandType*/, unsigned int percent)
 {
     if (m_uploadingPhotos)
     {
-        unsigned idx = m_currentUploadImage - m_uploadQueue.begin();
-        float perc   = (float) idx / m_uploadQueue.size();
+        unsigned idx  = m_currentUploadImage - m_uploadQueue.begin();
+        float perc    = (float) idx / m_uploadQueue.size();
         perc         += percent / 100.0 / m_uploadQueue.size();
-        percent      = perc * 100;
+        percent       = perc * 100;
     }
 
     m_progressBar->setValue(percent);
@@ -406,13 +407,15 @@ void RajceWidget::progressStarted(unsigned commandType)
 
 void RajceWidget::changeUserClicked()
 {
-    RajceLoginDialog* dlg = new RajceLoginDialog(this, m_session->state().username());
+    RajceLoginDialog* const dlg = new RajceLoginDialog(this, m_session->state().username());
 
     if (dlg->exec() == QDialog::Accepted)
     {
         m_session->clearLastError();
+
         connect(m_session, SIGNAL(busyFinished(uint)),
                 this, SLOT(loadAlbums()));
+
         m_session->login(dlg->username(), dlg->password());
     }
 
@@ -429,13 +432,15 @@ void RajceWidget::loadAlbums()
 
 void RajceWidget::createAlbum()
 {
-    NewAlbumDialog* dlg = new NewAlbumDialog(this);
+    NewAlbumDialog* const dlg = new NewAlbumDialog(this);
 
     if (dlg->exec() == QDialog::Accepted)
     {
         m_session->clearLastError();
+
         connect(m_session, SIGNAL(busyFinished(uint)),
                 this, SLOT(loadAlbums()));
+
         m_session->createAlbum(dlg->albumName(), dlg->albumDescription(), dlg->albumVisible());
     }
 
@@ -448,6 +453,7 @@ void RajceWidget::startUpload()
     _setEnabled(false);
 
     m_uploadQueue.clear();
+
     foreach(KUrl image, m_imgList->imageUrls(true))
     {
         QString imagePath = image.toLocalFile();
@@ -459,6 +465,7 @@ void RajceWidget::startUpload()
 
     QString albumName = m_albumsCoB->currentText();
     Album album;
+
     foreach(Album a, m_session->state().albums())
     {
         if (a.name == albumName)
@@ -571,7 +578,7 @@ void RajceWidget::readSettings()
     state.sessionToken() = grp.readEntry("token");
     state.username()     = grp.readEntry("username");
     state.nickname()     = grp.readEntry("nickname");
-    m_currentAlbumName    = grp.readEntry("album");
+    m_currentAlbumName   = grp.readEntry("album");
     state.maxHeight()    = grp.readEntry("maxHeight",    1200);
     state.maxWidth()     = grp.readEntry("maxWidth",     1200);
     state.imageQuality() = grp.readEntry("imageQuality", 85);

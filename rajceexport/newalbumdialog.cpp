@@ -36,7 +36,7 @@
 namespace KIPIRajceExportPlugin
 {
 
-NewAlbumDialog::NewAlbumDialog(QWidget* parent)
+NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
     : KDialog(parent)
 {
     setCaption(i18n("New Album"));
@@ -44,7 +44,7 @@ NewAlbumDialog::NewAlbumDialog(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget* mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
 
     m_albumName         = new KLineEdit;
@@ -53,12 +53,12 @@ NewAlbumDialog::NewAlbumDialog(QWidget* parent)
 
     m_albumVisible->setChecked(true);
 
-    QFormLayout* layout = new QFormLayout();
+    QFormLayout* const layout = new QFormLayout();
     layout->setMargin(10);
     layout->setRowWrapPolicy(QFormLayout::WrapLongRows);
-    layout->addRow(i18n("Name"), m_albumName);
+    layout->addRow(i18n("Name"),        m_albumName);
     layout->addRow(i18n("Description"), m_albumDescription);
-    layout->addRow(i18n("Public"), m_albumVisible);
+    layout->addRow(i18n("Public"),      m_albumVisible);
 
     mainWidget->setLayout(layout);
 }

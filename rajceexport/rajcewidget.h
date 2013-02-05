@@ -61,7 +61,7 @@ class RajceWidget : public QWidget
 
 public:
 
-    explicit RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    explicit RajceWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent);
 
 Q_SIGNALS:
 

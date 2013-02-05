@@ -40,6 +40,7 @@ QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::SessionState& s)
     str << ", albums=[";
 
     KIPIRajceExportPlugin::Album a;
+
     foreach(a, s.albums())
     {
         str << a << ", ";

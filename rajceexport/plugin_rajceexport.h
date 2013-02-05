@@ -64,7 +64,6 @@ private:
 private:
 
     KAction*     m_actionExport;
-
     RajceWindow* m_dlgExport;
 };
 

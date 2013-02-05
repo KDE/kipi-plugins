@@ -39,11 +39,11 @@ class NewAlbumDialog : public KDialog
 {
 public:
 
-    explicit NewAlbumDialog(QWidget* parent = 0);
+    explicit NewAlbumDialog(QWidget* const parent = 0);
 
-    QString albumName() const;
+    QString albumName()        const;
     QString albumDescription() const;
-    bool    albumVisible() const;
+    bool    albumVisible()     const;
 
 private:
 

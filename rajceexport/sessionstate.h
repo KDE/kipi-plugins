@@ -102,8 +102,10 @@ public:
         : m_maxWidth(0),
           m_maxHeight(0),
           m_imageQuality(0),
-          m_lastErrorCode(0)
-    {}
+          m_lastErrorCode(0),
+          m_lastCommand(Logout)
+    {
+    }
 
     inline QString& sessionToken()
     {

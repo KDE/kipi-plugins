@@ -57,7 +57,7 @@ class RajceSession : public QObject
 
 public:
 
-    explicit RajceSession(QWidget* jobParent, const QString& tmpDir);
+    explicit RajceSession(QWidget* const jobParent, const QString& tmpDir);
 
     void  init(const SessionState& initialState);
     const SessionState& state() const;
