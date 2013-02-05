@@ -37,11 +37,11 @@
 namespace KIPIPrintImagesPlugin
 {
 
-class AtkinsPageLayout::AtkinsPageLayoutPriv
+class AtkinsPageLayout::Private
 {
 
 public:
-    AtkinsPageLayoutPriv()
+    Private()
     {
         tree = 0;
     }
@@ -52,7 +52,7 @@ public:
 };
 
 AtkinsPageLayout::AtkinsPageLayout(const QRectF& pageRect)
-                : d(new AtkinsPageLayoutPriv)
+                : d(new Private)
 {
     d->pageRect = pageRect;
     d->tree     = new LayoutTree(aspectRatio(d->pageRect.size()), absoluteArea(d->pageRect.size()));
@@ -82,13 +82,14 @@ void AtkinsPageLayout::addLayoutItem(int key, const QSizeF& size)
 
 void AtkinsPageLayout::addLayoutItem(int key, double aspectRatio, double relativeArea)
 {
-    int index = d->tree->addImage(aspectRatio, relativeArea);
+    int index        = d->tree->addImage(aspectRatio, relativeArea);
     d->indexMap[key] = index;
 }
 
 QRectF AtkinsPageLayout::itemRect(int key)
 {
     QMap<int,int>::iterator it = d->indexMap.find(key);
+
     if (it != d->indexMap.end())
     {
         // get rect relative to 0,0
@@ -97,6 +98,7 @@ QRectF AtkinsPageLayout::itemRect(int key)
         rect.translate(d->pageRect.topLeft());
         return rect;
     }
+
     return QRectF();
 }
 

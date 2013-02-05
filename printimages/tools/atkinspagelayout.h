@@ -78,8 +78,8 @@ private:
 
 private:
 
-    class AtkinsPageLayoutPriv;
-    AtkinsPageLayoutPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // NameSpace KIPIPrintImagesPlugin

@@ -43,7 +43,8 @@ namespace KIPIPrintImagesPlugin
 {
 
 TPhoto::TPhoto(int thumbnailSize)
-      : pAddInfo(NULL), pCaptionInfo(NULL)
+    : pAddInfo(NULL),
+      pCaptionInfo(NULL)
 {
     m_size                = 0;
     cropRegion            = QRect(-1, -1, -1, -1);
@@ -62,7 +63,8 @@ TPhoto::TPhoto(int thumbnailSize)
 
 //to get old photo info
 TPhoto::TPhoto (const TPhoto& photo)
-    : pAddInfo(NULL), pCaptionInfo(NULL)
+    : pAddInfo(NULL),
+      pCaptionInfo(NULL)
 {
     m_thumbnailSize = photo.m_thumbnailSize;
     cropRegion      = photo.cropRegion;
@@ -75,6 +77,7 @@ TPhoto::TPhoto (const TPhoto& photo)
     {
         pAddInfo = new AdditionalInfo(*photo.pAddInfo);
     }
+
     if (photo.pCaptionInfo)
     {
         pCaptionInfo = new CaptionInfo(*photo.pCaptionInfo);
@@ -101,8 +104,7 @@ void TPhoto::loadCache()
 
     QImage photo = loadPhoto();
     QImage image = photo.scaled(m_thumbnailSize, m_thumbnailSize, Qt::KeepAspectRatio);
-
-    m_thumbnail = new QPixmap(image.width(), image.height());
+    m_thumbnail  = new QPixmap(image.width(), image.height());
     QPainter painter(m_thumbnail);
     painter.drawImage(0, 0, image );
     painter.end();
@@ -136,6 +138,7 @@ QSize& TPhoto::size()  // private
 {
     if (m_size == 0)
         loadCache();
+
     return *m_size;
 }
 
@@ -162,19 +165,23 @@ int TPhoto::height()
 double TPhoto::scaleWidth(double unitToInches)
 {
     Q_ASSERT(pAddInfo != NULL);
+
     cropRegion = QRect(0, 0,
                        (int)(pAddInfo->mPrintWidth * unitToInches),
                        (int)(pAddInfo->mPrintHeight * unitToInches));
+
     return pAddInfo->mPrintWidth * unitToInches;
 }
 
 double TPhoto::scaleHeight(double unitToInches)
 {
     Q_ASSERT(pAddInfo != NULL);
+
     cropRegion = QRect(0,
                        0,
                        (int)(pAddInfo->mPrintWidth * unitToInches),
                        (int)(pAddInfo->mPrintHeight * unitToInches));
+
     return pAddInfo->mPrintHeight * unitToInches;
 }
 

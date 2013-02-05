@@ -42,9 +42,16 @@ namespace KIPIPrintImagesPlugin
 {
 
 CropFrame::CropFrame(QWidget* const parent)
-    : QWidget(parent), m_photo(0), m_mouseDown(false), m_pixmap(0), 
-      m_pixmapX(0), m_pixmapY(0), m_color(), m_cropRegion(), m_drawRec(true)
-{   
+    : QWidget(parent),
+      m_photo(0),
+      m_mouseDown(false),
+      m_pixmap(0),
+      m_pixmapX(0),
+      m_pixmapY(0),
+      m_color(),
+      m_cropRegion(),
+      m_drawRec(true)
+{
 }
 
 CropFrame::~CropFrame()
@@ -56,22 +63,21 @@ CropFrame::~CropFrame()
 // should be a TPhoto method, and should not require the scaling of
 // pixmaps to get the desired effect, which are too slow.
 
-void CropFrame::init(TPhoto* photo, int width, int height, bool autoRotate, bool paint)
+void CropFrame::init(TPhoto* const photo, int width, int height, bool autoRotate, bool paint)
 {
-    m_photo          = photo;
-    QImage scaledImg = m_photo->loadPhoto();//thumbnail().toImage();
+    m_photo              = photo;
+    QImage scaledImg     = m_photo->loadPhoto();//thumbnail().toImage();
 
     // has the cropRegion been set yet?
     bool resetCropRegion = (m_photo->cropRegion == QRect(-1, -1, -1, -1));
+
     if (resetCropRegion)
     {
         // first, let's see if we should rotate
         if (autoRotate)
         {
-            if (m_photo->rotation == 0 && ((width > height &&
-                m_photo->thumbnail().height() > m_photo->thumbnail().width()) ||
-                (height > width &&
-                m_photo->thumbnail().width() > m_photo->thumbnail().height())) )
+            if (m_photo->rotation == 0 && ((width > height && m_photo->thumbnail().height() > m_photo->thumbnail().width()) ||
+                (height > width && m_photo->thumbnail().width() > m_photo->thumbnail().height())) )
             {
                 // rotate
                 m_photo->rotation = 90;
@@ -90,23 +96,28 @@ void CropFrame::init(TPhoto* photo, int width, int height, bool autoRotate, bool
     scaledImg = scaledImg.transformed(matrix);
 
     scaledImg = scaledImg.scaled(this->width(), this->height(), Qt::KeepAspectRatio);
+
     //TODO check for cropping Qt::KeepAspectRatioByExpanding);
     //m_pixmap = new QPixmap();
     //   QPixmap pix(scaledImg.width(), scaledImg.height());
     QPixmap pix(this->width(), this->height());
-    m_pixmap = new QPixmap(pix.fromImage(scaledImg));
+    m_pixmap  = new QPixmap(pix.fromImage(scaledImg));
+
     //   m_pixmap = new QPixmap(scaledImg.width(), scaledImg.height());
     //   m_pixmap->fromImage(scaledImg);
+
     m_pixmapX = (this->width() / 2) - (m_pixmap->width() / 2);
     m_pixmapY = (this->height() / 2) - (m_pixmap->height() / 2);
 
     m_color = Qt::red;
     // size the rectangle based on the minimum image dimension
     int w = m_pixmap->width();
-    int h = m_pixmap->height();;
+    int h = m_pixmap->height();
+
     if (w < h)
     {
         h = NINT((double)w * ((double)height / (double)width));
+
         if (h > m_pixmap->height())
         {
             h = m_pixmap->height();
@@ -116,6 +127,7 @@ void CropFrame::init(TPhoto* photo, int width, int height, bool autoRotate, bool
     else
     {
         w = NINT((double)h * ((double)width / (double)height));
+
         if (w > m_pixmap->width())
         {
             w = m_pixmap->width();
@@ -135,6 +147,7 @@ void CropFrame::init(TPhoto* photo, int width, int height, bool autoRotate, bool
 
     if (paint)
       update();
+
     //repaint(m_cropRegion);
  }
 
@@ -159,6 +172,7 @@ QRect CropFrame::_screenToPhotoRect(const QRect& r) const
         photoW = m_photo->height();
         photoH = m_photo->width();
     }
+
     if (m_pixmap->width() > 0)
         xRatio = (double) photoW / (double) m_pixmap->width();
 
@@ -269,12 +283,12 @@ void CropFrame::mouseMoveEvent(QMouseEvent* e)
         int newH = m_cropRegion.height();
 
         int newX = e->x() - (newW / 2);
-        newX = qMax(m_pixmapX, newX);
-        newX = qMin(m_pixmapX + m_pixmap->width() - newW, newX);
+        newX     = qMax(m_pixmapX, newX);
+        newX     = qMin(m_pixmapX + m_pixmap->width() - newW, newX);
 
         int newY = e->y() - (newH / 2);
-        newY = qMax(m_pixmapY, newY);
-        newY = qMin(m_pixmapY + m_pixmap->height() - newH, newY);
+        newY     = qMax(m_pixmapY, newY);
+        newY     = qMin(m_pixmapY + m_pixmap->height() - newH, newY);
 
         m_cropRegion.setRect(newX, newY, newW, newH);
         m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);
@@ -304,11 +318,11 @@ void CropFrame::keyPressEvent(QKeyEvent* e)
     int w = m_cropRegion.width();
     int h = m_cropRegion.height();
 
-    newX = qMax(m_pixmapX, newX);
-    newX = qMin(m_pixmapX + m_pixmap->width() - w, newX);
+    newX  = qMax(m_pixmapX, newX);
+    newX  = qMin(m_pixmapX + m_pixmap->width() - w, newX);
 
-    newY = qMax(m_pixmapY, newY);
-    newY = qMin(m_pixmapY + m_pixmap->height() - h, newY);
+    newY  = qMax(m_pixmapY, newY);
+    newY  = qMin(m_pixmapY + m_pixmap->height() - h, newY);
 
     m_cropRegion.setRect(newX, newY, w, h);
     m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);

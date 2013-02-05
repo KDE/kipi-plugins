@@ -56,12 +56,14 @@ class PrintHelperDialog : public QPrintDialog
 {
 public:
 
-    PrintHelperDialog ( QPrinter* printer, PrintOptionsPage* optionsPage, QWidget* parent = 0 );
-    ~PrintHelperDialog() {};
+    PrintHelperDialog(QPrinter* const printer, PrintOptionsPage* const optionsPage, QWidget* const parent = 0);
+    ~PrintHelperDialog()
+    {
+    };
 
 public Q_SLOTS:
 
-    void manageQPrintDialogChanges ( QPrinter* printer );
+    void manageQPrintDialogChanges(QPrinter* printer);
 
 private:
 
@@ -70,19 +72,22 @@ private:
 
 // -----------------------------------------------------------------
 
-PrintHelperDialog::PrintHelperDialog ( QPrinter* printer, PrintOptionsPage* optionsPage, QWidget* parent )
-    : QPrintDialog ( printer, parent ), pOptionsPage ( optionsPage )
+PrintHelperDialog::PrintHelperDialog(QPrinter* const printer, PrintOptionsPage* const optionsPage, QWidget*const  parent)
+    : QPrintDialog(printer, parent),
+      pOptionsPage(optionsPage)
 {
     connect ( this, SIGNAL (accepted(QPrinter*)),/* this,*/
               pOptionsPage, SLOT (manageQPrintDialogChanges(QPrinter*)) );
 }
 
-void PrintHelperDialog::manageQPrintDialogChanges ( QPrinter* /*printer*/ )
+void PrintHelperDialog::manageQPrintDialogChanges(QPrinter* /*printer*/)
 {
     kDebug() << "It has been called!";
 }
 
-class PrintHelper::PrintHelperPrivate
+// -----------------------------------------------------------------
+
+class PrintHelper::Private
 {
 public:
 
@@ -91,7 +96,7 @@ public:
 
 public:
 
-    QSize adjustSize ( TPhoto& doc, int printerResolution, const QSize& viewportSize )
+    QSize adjustSize(TPhoto& doc, int printerResolution, const QSize& viewportSize)
     {
         // can't be null here!
         Q_ASSERT ( doc.pAddInfo != NULL );
@@ -107,10 +112,10 @@ public:
         QSize size = doc.size();
 
         PrintOptionsPage::ScaleMode scaleMode = PrintOptionsPage::ScaleMode ( doc.pAddInfo->mScaleMode );
+
         if ( scaleMode == PrintOptionsPage::ScaleToPage )
         {
-            bool imageBiggerThanPaper = size.width() > viewportSize.width() ||
-                                        size.height() > viewportSize.height();
+            bool imageBiggerThanPaper = size.width() > viewportSize.width() || size.height() > viewportSize.height();
 
             if ( imageBiggerThanPaper || doc.pAddInfo->mEnlargeSmallerImages )
             {
@@ -144,10 +149,11 @@ public:
         return size;
     }
 
-    QPoint adjustPosition ( TPhoto &doc, const QSize& imageSize, const QSize & viewportSize )
+    QPoint adjustPosition(TPhoto &doc, const QSize& imageSize, const QSize & viewportSize)
     {
         // can't be null here!
         Q_ASSERT ( doc.pAddInfo != NULL );
+
         Qt::Alignment alignment = Qt::Alignment ( doc.pAddInfo->mPrintPosition );
         int posX, posY;
 
@@ -185,8 +191,8 @@ public:
 
 // ----------------------------------------------------------------------------
 
-PrintHelper::PrintHelper(QWidget* parent)
-    : d ( new PrintHelperPrivate )
+PrintHelper::PrintHelper(QWidget* const parent)
+    : d ( new Private )
 {
     d->mParent = parent;
 }
@@ -196,14 +202,16 @@ PrintHelper::~PrintHelper()
     delete d;
 }
 
-void PrintHelper::print ( const KUrl::List& fileList )
+void PrintHelper::print(const KUrl::List& fileList)
 {
     QPrinter printer;
+
     for (int i = 0; i < d->m_photos.count(); ++i)
     {
         delete d->m_photos.at(i);
         KApplication::kApplication()->processEvents();
     }
+
     d->m_photos.clear();
 
     for (int i = 0; i < fileList.count(); ++i)
@@ -215,7 +223,7 @@ void PrintHelper::print ( const KUrl::List& fileList )
         KApplication::kApplication()->processEvents();
     }
 
-    PrintOptionsPage* optionsPage = new PrintOptionsPage(d->mParent, &d->m_photos);
+    PrintOptionsPage* const optionsPage = new PrintOptionsPage(d->mParent, &d->m_photos);
     optionsPage->loadConfig();
 
     std::auto_ptr<PrintHelperDialog> dialog(new PrintHelperDialog(&printer, optionsPage, d->mParent));
@@ -241,6 +249,7 @@ void PrintHelper::print ( const KUrl::List& fileList )
     {
         return;
     }
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     QPainter painter;
@@ -249,25 +258,28 @@ void PrintHelper::print ( const KUrl::List& fileList )
     QPrinter::Orientation oldOrientation = printer.orientation();
     QProgressDialog pbar(d->mParent);
     pbar.setRange(0, fileList.count());
+
     for (int i = 0; i < fileList.count();)
     {
         if (i == 0) // first photo
         {
             //read ahead to fix setOrientation before new page
-            TPhoto *pPhoto = d->m_photos.at(i);
-            if (!optionsPage->printUsingAtkinsLayout() &&
-                optionsPage->mp_horPages() <= 0)
+            TPhoto* const pPhoto = d->m_photos.at(i);
+
+            if (!optionsPage->printUsingAtkinsLayout() && optionsPage->mp_horPages() <= 0)
             {
                 if (pPhoto->pAddInfo->mAutoRotate)
                 {
-                kDebug() << "image size " << pPhoto->size() ;
-                printer.setOrientation(pPhoto->width() <= pPhoto->height() ? QPrinter::Portrait
-                                        : QPrinter::Landscape);
+                    kDebug() << "image size " << pPhoto->size() ;
+                    printer.setOrientation(pPhoto->width() <= pPhoto->height() ? QPrinter::Portrait
+                                                                               : QPrinter::Landscape);
                 }
             }
+
             painter.begin(&printer);
             rect = painter.viewport();
         }
+
         KApplication::kApplication()->processEvents();
 
         if (optionsPage->printUsingAtkinsLayout())
@@ -276,25 +288,29 @@ void PrintHelper::print ( const KUrl::List& fileList )
             int j     = 0;
             // create AtkinsPageLayout
             AtkinsPageLayout layout(rect);
+
             // add all items
             for (j = 0; i + j < fileList.count() && j < pages; ++j)
             {
                 layout.addLayoutItem(j, d->m_photos.at(i + j)->size());
             }
+
             // retrieve rectangles for all items
             for (j = 0; i + j < fileList.count() && j < pages; ++j)
             {
                 QImage image = d->m_photos.at(i + j)->loadPhoto();
                 painter.drawImage(layout.itemRect(j) , image);
             }
+
             i += pages;
+
             if (i < fileList.count())
                 printer.newPage();
         }
         else
         {
-            TPhoto* pPhoto = d->m_photos.at(i);
-            QImage image   =  pPhoto->loadPhoto();
+            TPhoto* pPhoto         = d->m_photos.at(i);
+            QImage image           =  pPhoto->loadPhoto();
         //       kDebug() << "Img size " << image.size() << " viewportSize " << rect.size();
 
             // if horPages is > 0 vertPages is as well
@@ -302,8 +318,8 @@ void PrintHelper::print ( const KUrl::List& fileList )
 
             if (multipagePrinting)
             {
-                int horPages = optionsPage->mp_horPages();
-                int vertPages = optionsPage->mp_verPages();
+                int horPages   = optionsPage->mp_horPages();
+                int vertPages  = optionsPage->mp_verPages();
 
                 QRect imageRec = image.rect();
                 int x1;
@@ -324,7 +340,7 @@ void PrintHelper::print ( const KUrl::List& fileList )
                         int ey = (py * y2 / vertPages);
             //             kDebug() << "Img part coords (" << sx << ", " << sy << ", " << ex << ", " << ey << ")";
                         QImage destImage = image.copy(QRect(QPoint(sx, sy), QPoint(ex, ey)));
-                        QSize destSize = destImage.size();
+                        QSize destSize   = destImage.size();
                         destSize.scale(rect.size(), Qt::KeepAspectRatio);
                         painter.setViewport(rect.x(), rect.y(), destSize.width(), destSize.height());
                         //                 painter.setViewport (destRec);
@@ -352,19 +368,22 @@ void PrintHelper::print ( const KUrl::List& fileList )
                 painter.setWindow(image.rect());
                 painter.drawImage(0, 0, image);
             }
+
             if ((++i) < fileList.count())
             {
                 //read ahead to fix setOrientation before new page
                 pPhoto = d->m_photos.at(i);
+
                 if (pPhoto->pAddInfo->mAutoRotate)
                 {
                     printer.setOrientation(pPhoto->width() <= pPhoto->height() ? QPrinter::Portrait
-                                            : QPrinter::Landscape);
+                                                                               : QPrinter::Landscape);
                 }
                 else
                 {
                     printer.setOrientation(oldOrientation);
                 }
+
                 printer.newPage();
                 rect = printer.pageRect();
             }
@@ -376,6 +395,7 @@ void PrintHelper::print ( const KUrl::List& fileList )
             KApplication::kApplication()->processEvents();
             break;
         }
+
         pbar.setValue(i);
     }
 

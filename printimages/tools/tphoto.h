@@ -58,10 +58,17 @@ public:
 
 public:
 
-    AdditionalInfo() : mUnit(0), mPrintPosition(0), mScaleMode(0), mKeepRatio(true),
-                       mAutoRotate(true), mPrintWidth(0.0), mPrintHeight(0.0),
-                       mEnlargeSmallerImages(false)
-                       {}
+    AdditionalInfo()
+        : mUnit(0),
+          mPrintPosition(0),
+          mScaleMode(0),
+          mKeepRatio(true),
+          mAutoRotate(true),
+          mPrintWidth(0.0),
+          mPrintHeight(0.0),
+          mEnlargeSmallerImages(false)
+    {
+    }
 
     AdditionalInfo(const AdditionalInfo& ai)
     {
@@ -101,20 +108,27 @@ public:
 
 public:
 
-    CaptionInfo() : m_caption_type(NoCaptions), m_caption_font("Sans Serif"), m_caption_color(Qt::yellow),
-                    m_caption_size(2),m_caption_text()
-    {}
+    CaptionInfo()
+        : m_caption_type(NoCaptions),
+          m_caption_font("Sans Serif"),
+          m_caption_color(Qt::yellow),
+          m_caption_size(2),
+          m_caption_text()
+    {
+    }
 
     CaptionInfo(const CaptionInfo& ci)
     {
-        m_caption_type   = ci.m_caption_type;
-        m_caption_font   = ci.m_caption_font;
-        m_caption_color  = ci.m_caption_color;
-        m_caption_size   = ci.m_caption_size;
-        m_caption_text   = ci.m_caption_text;
+        m_caption_type  = ci.m_caption_type;
+        m_caption_font  = ci.m_caption_font;
+        m_caption_color = ci.m_caption_color;
+        m_caption_size  = ci.m_caption_size;
+        m_caption_text  = ci.m_caption_text;
     }
 
-    virtual ~CaptionInfo() {}
+    virtual ~CaptionInfo()
+    {
+    }
 };
 
 // -----------------------------------------------------------
