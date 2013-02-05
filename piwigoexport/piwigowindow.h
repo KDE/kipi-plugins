@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
 *

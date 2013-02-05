@@ -72,8 +72,8 @@ private Q_SLOTS:
 
 private:
 
-    struct StorageSettingsBoxPriv;
-    StorageSettingsBoxPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

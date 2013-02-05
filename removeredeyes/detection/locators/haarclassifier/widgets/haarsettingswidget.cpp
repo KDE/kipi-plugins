@@ -44,9 +44,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct HaarSettingsWidget::SettingsTabPriv
+struct HaarSettingsWidget::Private
 {
-    SettingsTabPriv() :
+    Private() :
         simpleCorrectionMode(true),
         settingsSwitcherBtn(0),
         settingsStack(0),
@@ -65,8 +65,8 @@ struct HaarSettingsWidget::SettingsTabPriv
     SimpleSettings*   simpleSettings;
 };
 
-HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
-    : QWidget(parent), d(new SettingsTabPriv)
+HaarSettingsWidget::HaarSettingsWidget(QWidget* const parent)
+    : QWidget(parent), d(new Private)
 {
     d->simpleCorrectionMode = true;
     d->settingsSwitcherBtn  = new QPushButton;
@@ -83,7 +83,7 @@ HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
 
     // Set layouts --------------------------------------------------------------
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addWidget(d->settingsStack,       0, 0, 1, 1);
     mainLayout->addWidget(d->settingsSwitcherBtn, 2, 0, 1, 1);
     mainLayout->setRowStretch(1, 10);

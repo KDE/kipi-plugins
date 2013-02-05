@@ -59,8 +59,8 @@ protected:
 
 private:
 
-    struct InfoMessageWidgetPriv;
-    InfoMessageWidgetPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

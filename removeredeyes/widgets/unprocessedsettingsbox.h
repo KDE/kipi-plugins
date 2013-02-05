@@ -58,8 +58,8 @@ Q_SIGNALS:
 
 private:
 
-    struct UnprocessedSettingsBoxPriv;
-    UnprocessedSettingsBoxPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

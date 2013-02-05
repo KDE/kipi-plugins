@@ -7,10 +7,10 @@
  * Description : a plugin to export to a remote Piwigo server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,6 +28,7 @@
 
 // Qt includes
 
+#include <QLabel>
 #include <QFrame>
 #include <QGridLayout>
 #include <QPushButton>
@@ -49,15 +50,15 @@
 namespace KIPIPiwigoExportPlugin
 {
 
-PiwigoEdit::PiwigoEdit(QWidget* pParent, Piwigo* pPiwigo, const QString& title)
+PiwigoEdit::PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QString& title)
         : KDialog(pParent, Qt::Dialog)
 {
     mpPiwigo = pPiwigo;
 
     setCaption(title);
 
-    QFrame* page              = new QFrame(this);
-    QGridLayout* centerLayout = new QGridLayout();
+    QFrame* const  page              = new QFrame(this);
+    QGridLayout* const centerLayout = new QGridLayout();
     page->setMinimumSize(500, 128);
     setMainWidget(page);
 
@@ -71,15 +72,15 @@ PiwigoEdit::PiwigoEdit(QWidget* pParent, Piwigo* pPiwigo, const QString& title)
     mpPasswordEdit->setEchoMode(KLineEdit::Password);
     centerLayout->addWidget(mpPasswordEdit, 3, 1);
 
-    QLabel* urlLabel = new QLabel(this);
+    QLabel* const urlLabel = new QLabel(this);
     urlLabel->setText(i18nc("piwigo login settings", "URL:"));
     centerLayout->addWidget(urlLabel, 1, 0);
 
-    QLabel* usernameLabel = new QLabel(this);
+    QLabel* const usernameLabel = new QLabel(this);
     usernameLabel->setText(i18nc("piwigo login settings", "Username:"));
     centerLayout->addWidget(usernameLabel, 2, 0);
 
-    QLabel* passwdLabel = new QLabel(this);
+    QLabel* const passwdLabel = new QLabel(this);
     passwdLabel->setText(i18nc("piwigo login settings", "Password:"));
     centerLayout->addWidget(passwdLabel, 3, 0);
 

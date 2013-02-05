@@ -60,16 +60,16 @@ private:
 
     int  findPossibleEyes(double csf, int ngf, const char* classifierFile);
     void removeRedEyes();
-    void findBlobs(IplImage* i_mask, int minsize);
-    void generateMask(int i_v, CvSeq* i_eyes);
+    void findBlobs(IplImage* const i_mask, int minsize);
+    void generateMask(int i_v, CvSeq* const i_eyes);
     void allocateBuffers();
     void clearBuffers();
     void saveImage(const QString& path, SaveResult type);
 
 private:
 
-    struct HaarClassifierLocatorPriv;
-    HaarClassifierLocatorPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

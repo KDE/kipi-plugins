@@ -6,7 +6,7 @@
  * Date        : 2003-31-01
  * Description : a kipi plugin to print images
  *
- * Copyright 2003 by Todd Shoemaker <todd@theshoemakers.net>
+ * Copyright 2003      by Todd Shoemaker <todd@theshoemakers.net>
  * Copyright 2007-2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
@@ -36,7 +36,7 @@ namespace KIPIPrintImagesPlugin
 
 int  NINT(double n);
 bool launchExternalApp(const QString& program, const QStringList& args);
-bool checkTempPath(QWidget* parent, const QString& tempPath);
+bool checkTempPath(QWidget* const parent, const QString& tempPath);
 
 }  // NameSpace KIPIPrintImagesPlugin
 

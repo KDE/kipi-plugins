@@ -39,7 +39,7 @@ class ClassifierSettingsBox : public QGroupBox
 
 public:
 
-    ClassifierSettingsBox(QWidget* parent = 0);
+    ClassifierSettingsBox(QWidget* const parent = 0);
     ~ClassifierSettingsBox();
 
     bool useStandardClassifier() const;
@@ -64,8 +64,8 @@ public Q_SLOTS:
 
 private:
 
-    struct ClassifierSettingsBoxPriv;
-    ClassifierSettingsBoxPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

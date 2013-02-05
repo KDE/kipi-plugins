@@ -57,28 +57,28 @@ public:
 
 public:
 
-    PrintOptionsPage (QWidget* parent, QList<TPhoto*>* photoList );
+    PrintOptionsPage(QWidget* const parent, QList<TPhoto*>* const photoList );
     ~PrintOptionsPage();
 
-    int photoXPage() const;
-    int mp_horPages() const;
-    int mp_verPages() const;
+    int photoXPage()              const;
+    int mp_horPages()             const;
+    int mp_verPages()             const;
     bool printUsingAtkinsLayout() const;
 
     void loadConfig();
 
-    static double unitToInches ( PrintOptionsPage::Unit unit );
+    static double unitToInches(PrintOptionsPage::Unit unit);
 
 private Q_SLOTS:
 
     void adjustWidthToRatio();
     void adjustHeightToRatio();
-    void manageQPrintDialogChanges ( QPrinter * printer );
+    void manageQPrintDialogChanges(QPrinter* printer);
     void selectNext();
     void selectPrev();
-    void photoXpageChanged ( int i );
-    void horizontalPagesChanged ( int i );
-    void verticalPagesChanged ( int i );
+    void photoXpageChanged(int i);
+    void horizontalPagesChanged(int i);
+    void verticalPagesChanged(int i);
     void saveConfig();
     void scaleOption();
     void autoRotate(bool);
@@ -94,14 +94,14 @@ private:
 
     // TODO fix remove what is not needed
     Qt::Alignment alignment() const;
-    Unit scaleUnit() const;
-    double scaleWidth() const;
-    double scaleHeight() const;
+    Unit scaleUnit()          const;
+    double scaleWidth()       const;
+    double scaleHeight()      const;
 
 private:
 
-    class PrintOptionsPagePrivate;
-    PrintOptionsPagePrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPrintImagesPlugin

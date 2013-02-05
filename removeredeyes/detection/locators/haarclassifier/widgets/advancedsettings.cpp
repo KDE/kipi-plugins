@@ -36,9 +36,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct AdvancedSettings::AdvancedSettingsPriv
+struct AdvancedSettings::Private
 {
-    AdvancedSettingsPriv()
+    Private()
     {
         blobSettingsBox       = 0;
         classifierSettingsBox = 0;
@@ -50,14 +50,14 @@ struct AdvancedSettings::AdvancedSettingsPriv
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
-    : QWidget(parent), d(new AdvancedSettingsPriv)
+    : QWidget(parent), d(new Private)
 {
     d->blobSettingsBox       = new BlobSettingsBox;
     d->classifierSettingsBox = new ClassifierSettingsBox;
 
     // -----------------------------------------------------
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addWidget(d->classifierSettingsBox, 0, 0, 1, 1);
     mainLayout->addWidget(d->blobSettingsBox,       1, 0, 1, 1);
     mainLayout->setRowStretch(2, 10);
@@ -79,8 +79,8 @@ AdvancedSettings::~AdvancedSettings()
 
 void AdvancedSettings::prepareSettings()
 {
-    d->settings.useStandardClassifier  = d->classifierSettingsBox->useStandardClassifier();
-    d->settings.useSimpleMode          = false;
+    d->settings.useStandardClassifier = d->classifierSettingsBox->useStandardClassifier();
+    d->settings.useSimpleMode         = false;
 
     if (d->classifierSettingsBox->useStandardClassifier())
     {
@@ -93,7 +93,6 @@ void AdvancedSettings::prepareSettings()
 
     d->settings.neighborGroups = d->classifierSettingsBox->neighborGroups();
     d->settings.scaleFactor    = d->classifierSettingsBox->scalingFactor();
-
     d->settings.minBlobsize    = d->blobSettingsBox->minBlobSize();
     d->settings.minRoundness   = d->blobSettingsBox->minRoundness();
 }

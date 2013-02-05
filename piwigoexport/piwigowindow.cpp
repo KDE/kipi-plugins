@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
@@ -104,12 +104,17 @@ public:
     unsigned int           uploadCount;
     unsigned int           uploadTotal;
     QStringList*           pUploadList;
-
 };
 
 PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 {
-    widget = new QWidget(parent);
+    talker      = 0;
+    pPiwigo     = 0;
+    progressDlg = 0;
+    uploadCount = 0;
+    uploadTotal = 0;
+    pUploadList = 0;
+    widget      = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
 
@@ -132,35 +137,35 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    QFrame* optionFrame = new QFrame;
-    QVBoxLayout* vlay   = new QVBoxLayout();
+    QFrame* const optionFrame = new QFrame;
+    QVBoxLayout* const vlay   = new QVBoxLayout();
 
     confButton = new QPushButton;
     confButton->setText(i18n("Change Account"));
     confButton->setIcon(KIcon("system-switch-user"));
     confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Options"));
-    QVBoxLayout* vlay2    = new QVBoxLayout();
+    QGroupBox* const optionsBox = new QGroupBox(i18n("Options"));
+    QVBoxLayout* const vlay2    = new QVBoxLayout();
 
     resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
-    QGridLayout* glay     = new QGridLayout;
-    QLabel* widthLabel    = new QLabel(i18n("Maximum width:"));
+    QGridLayout* const glay     = new QGridLayout;
+    QLabel* const widthLabel    = new QLabel(i18n("Maximum width:"));
 
     widthSpinBox          = new QSpinBox;
     widthSpinBox->setRange(1,1600);
     widthSpinBox->setValue(800);
 
-    QLabel *heightLabel   = new QLabel(i18n("Maximum height:"));
+    QLabel* const heightLabel   = new QLabel(i18n("Maximum height:"));
 
     heightSpinBox         = new QSpinBox;
     heightSpinBox->setRange(1,1600);
     heightSpinBox->setValue(600);
 
-    QHBoxLayout* hlay2    = new QHBoxLayout;
-    QLabel* resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
+    QHBoxLayout* const hlay2    = new QHBoxLayout;
+    QLabel* const resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
 
     thumbDimensionSpinBox = new QSpinBox;
     thumbDimensionSpinBox->setRange(32,800);
@@ -222,7 +227,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
-    : KPToolDialog(parent), 
+    : KPToolDialog(parent),
       d(new Private(this))
 {
     d->pPiwigo = pPiwigo;
@@ -238,7 +243,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
                                          ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
                                          ki18n("(c) 2003-2005, Renchi Raju\n"
                                                "(c) 2006-2007, Colin Guthrie\n"
-                                               "(c) 2006-2012, Gilles Caulier\n"
+                                               "(c) 2006-2013, Gilles Caulier\n"
                                                "(c) 2008, Andrea Diamantini\n"
                                                "(c) 2012, Frédéric Coiffier\n"));
 
@@ -261,23 +266,22 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
     setAboutData(about);
 
     // User1 Button : to upload selected photos
-    KPushButton* addPhotoBtn = button( User1 );
+    KPushButton* const addPhotoBtn = button( User1 );
     addPhotoBtn->setText( i18n("Start Upload") );
     addPhotoBtn->setIcon( KIcon("network-workgroup") );
     addPhotoBtn->setEnabled(false);
+
     connect(addPhotoBtn, SIGNAL(clicked()),
             this, SLOT(slotAddPhoto()));
 
     // we need to let d->talker work..
-    d->talker = new PiwigoTalker(d->widget);
+    d->talker      = new PiwigoTalker(d->widget);
 
     // setting progressDlg and its numeric hints
     d->progressDlg = new QProgressDialog(this);
     d->progressDlg->setModal(true);
     d->progressDlg->setAutoReset(true);
     d->progressDlg->setAutoClose(true);
-    d->uploadCount = 0;
-    d->uploadTotal = 0;
     d->pUploadList = new QStringList;
 
     // connect functions
@@ -377,6 +381,7 @@ void PiwigoWindow::readSettings()
 void PiwigoWindow::slotDoLogin()
 {
     KUrl url(d->pPiwigo->url());
+
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
@@ -406,11 +411,13 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
     }
 
     QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
+
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
         return;
     }
+
     slotDoLogin();
     delete configDlg;
 }
@@ -454,9 +461,9 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
     while ( !workList.isEmpty() )
     {
         // the album to work on
-        GAlbum album = workList.takeFirst();
-
+        GAlbum album     = workList.takeFirst();
         int parentRefNum = album.parent_ref_num;
+
         if ( parentRefNum == -1 )
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
@@ -494,6 +501,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
                     parentItemList << item;
                     found = true;
                 }
+
                 i++;
             }
         }
@@ -502,14 +510,10 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
 
 void PiwigoWindow::slotAlbumSelected()
 {
-    QTreeWidgetItem* item = d->albumView->currentItem();
-    if (!item)
-    {
-        return;
-    }
+    QTreeWidgetItem* const item = d->albumView->currentItem();
 
     // stop loading if user clicked an image
-    if ( item->text(2) == i18n("Image") )
+    if (item && item->text(2) == i18n("Image") )
         return;
 
     if (!item)
@@ -522,6 +526,7 @@ void PiwigoWindow::slotAlbumSelected()
 
         int albumId = item->data(1, Qt::UserRole).toInt();
         kDebug() << albumId << "\n";
+
         if (d->talker->loggedIn() && albumId )
         {
             button( User1 )->setEnabled(true);
@@ -564,16 +569,16 @@ void PiwigoWindow::slotAddPhotoNext()
         return;
     }
 
-    QTreeWidgetItem* item = d->albumView->currentItem();
-    int column            = d->albumView->currentColumn();
-    QString albumTitle    = item->text(column);
-    const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = d->pUploadList->takeFirst();
-    bool res              = d->talker->addPhoto(album.ref_num, photoPath,
-                            d->resizeCheckBox->isChecked(),
-                            d->widthSpinBox->value(),
-                            d->heightSpinBox->value(),
-                            d->thumbDimensionSpinBox->value() );
+    QTreeWidgetItem* const item = d->albumView->currentItem();
+    int column                  = d->albumView->currentColumn();
+    QString albumTitle          = item->text(column);
+    const GAlbum& album         = d->albumDict.value(albumTitle);
+    QString photoPath           = d->pUploadList->takeFirst();
+    bool res                    = d->talker->addPhoto(album.ref_num, photoPath,
+                                                      d->resizeCheckBox->isChecked(),
+                                                      d->widthSpinBox->value(),
+                                                      d->heightSpinBox->value(),
+                                                      d->thumbDimensionSpinBox->value() );
 
     if (!res)
     {
@@ -624,6 +629,7 @@ void PiwigoWindow::slotAddPhotoCancel()
 void PiwigoWindow::slotEnableSpinBox(int n)
 {
     bool b;
+
     switch (n)
     {
         case 0:
@@ -637,6 +643,7 @@ void PiwigoWindow::slotEnableSpinBox(int n)
             b = false;
             break;
     }
+
     d->widthSpinBox->setEnabled(b);
     d->heightSpinBox->setEnabled(b);
 }
@@ -645,10 +652,12 @@ void PiwigoWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
     QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
+
     if ( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
     }
+
     delete dlg;
 }
 

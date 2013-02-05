@@ -167,13 +167,12 @@ void WorkerThread::loadSettings(const CommonSettings& newSettings)
 
 void WorkerThread::setImagesList(const KUrl::List& list)
 {
-    pd->urls                  = list;
-    JobCollection* collection = new JobCollection(this);
+    pd->urls                        = list;
+    JobCollection* const collection = new JobCollection(this);
 
-    for (KUrl::List::const_iterator it = pd->urls.constBegin();
-         it != pd->urls.constEnd(); ++it)
+    for (KUrl::List::const_iterator it = pd->urls.constBegin(); it != pd->urls.constEnd(); ++it)
     {
-        Task *t       = new Task((KUrl&)(*it), this, pd);
+        Task* const t = new Task((KUrl&)(*it), this, pd);
 
         connect(t, SIGNAL(calculationFinished(WorkerThreadData*)),
                 this, SIGNAL(calculationFinished(WorkerThreadData*)));

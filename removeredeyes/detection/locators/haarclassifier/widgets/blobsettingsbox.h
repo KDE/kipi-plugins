@@ -39,7 +39,7 @@ class BlobSettingsBox : public QGroupBox
 
 public:
 
-    BlobSettingsBox(QWidget* parent = 0);
+    BlobSettingsBox(QWidget* const parent = 0);
     ~BlobSettingsBox();
 
     int minBlobSize() const;
@@ -54,8 +54,8 @@ Q_SIGNALS:
 
 private:
 
-    struct BlobSettingsBoxPriv;
-    BlobSettingsBoxPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

@@ -84,6 +84,7 @@ void Plugin_PrintImages::setup(QWidget* const widget)
     setupActions();
 
     m_interface = interface();
+
     if ( !m_interface )
     {
         kError() << "Kipi interface is null!";
@@ -142,7 +143,7 @@ void Plugin_PrintImages::slotPrintImagesActivate()
         return;
     }
 
-    QWidget* parent = QApplication::activeWindow();
+    QWidget* const parent = QApplication::activeWindow();
     PrintHelper printPlugin(parent);
     printPlugin.print(fileList);
 }
@@ -163,13 +164,14 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
         return;
     }
 
-    QWidget* parent = QApplication::activeWindow();
+    QWidget* const parent = QApplication::activeWindow();
     Wizard printAssistant(parent);
     KStandardDirs dir;
     QString tempPath = dir.saveLocation("tmp", "kipi-printassistantdplugin-" + QString::number(getpid()) + '/');
     printAssistant.print(fileList, tempPath);
 
-    if (printAssistant.exec() == QDialog::Rejected) return;
+    if (printAssistant.exec() == QDialog::Rejected)
+        return;
 }
 
 } // namespace KIPIPrintImagesPlugin

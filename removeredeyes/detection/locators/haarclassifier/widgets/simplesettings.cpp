@@ -42,9 +42,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SimpleSettings::SimpleSettingsPriv
+struct SimpleSettings::Private
 {
-    SimpleSettingsPriv()
+    Private()
     {
         settingsSlider = 0;
     }
@@ -53,8 +53,8 @@ struct SimpleSettings::SimpleSettingsPriv
     HaarSettings settings;
 };
 
-SimpleSettings::SimpleSettings(QWidget* parent)
-    : QWidget(parent), d(new SimpleSettingsPriv)
+SimpleSettings::SimpleSettings(QWidget* const parent)
+    : QWidget(parent), d(new Private)
 {
     d->settingsSlider = new QSlider(Qt::Vertical);
     d->settingsSlider->setRange(0, 2);
@@ -84,16 +84,16 @@ SimpleSettings::SimpleSettings(QWidget* parent)
                        );
     d->settingsSlider->setStyleSheet(sliderStyle);
 
-    QLabel* lSlow = new QLabel(i18n("<p><b>Slower<br/>(low-res / slightly blurred images)</b></p>"
+    QLabel* const lSlow = new QLabel(i18n("<p><b>Slower<br/>(low-res / slightly blurred images)</b></p>"
                                     "<p>In this mode the automatic detection and correction of "
                                     "red-eye is the most reliable. The drawback "
                                     "of the higher detection rate is a much slower computation.</p>"));
 
-    QLabel* lStd = new QLabel(i18n("<p><b>Standard</b></p>"
+    QLabel* const lStd = new QLabel(i18n("<p><b>Standard</b></p>"
                                    "<p>This mode is adequate for most image resolutions. Always try "
                                    "this mode first.</p>"));
 
-    QLabel* lFast = new QLabel(i18n("<p><b>Faster<br/>(high-res images)</b></p>"
+    QLabel* const lFast = new QLabel(i18n("<p><b>Faster<br/>(high-res images)</b></p>"
                                     "<p>In this mode the automatic detection will be faster, but more "
                                     "false positives may occur. Use this mode only for very high-resolution "
                                     "and sharp images.</p>"));
@@ -107,17 +107,17 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     const QString colorStyle("background: #999999;");
     const unsigned int maxColorLabelHeight = 1;
 
-    QLabel* coloredSpacer = new QLabel;
+    QLabel* const coloredSpacer = new QLabel;
     coloredSpacer->setStyleSheet(colorStyle);
     coloredSpacer->setMaximumHeight(maxColorLabelHeight);
 
-    QLabel* coloredSpacer2 = new QLabel;
+    QLabel* const coloredSpacer2 = new QLabel;
     coloredSpacer2->setStyleSheet(colorStyle);
     coloredSpacer2->setMaximumHeight(maxColorLabelHeight);
 
     // --------------------------------------------------------
 
-    QGridLayout* sliderLayout = new QGridLayout;
+    QGridLayout* const sliderLayout = new QGridLayout;
     sliderLayout->addWidget(d->settingsSlider,  0, 0, 5, 1);
     sliderLayout->addWidget(lSlow,              0, 1, 1, 1);
     sliderLayout->addWidget(coloredSpacer,      1, 0, 1, 2);
@@ -128,7 +128,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     sliderLayout->setColumnStretch(1, 10);
     sliderLayout->setRowStretch(6, 10);
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addLayout(sliderLayout,     0, 0, 1, 1);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);

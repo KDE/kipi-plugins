@@ -37,9 +37,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct ClassifierSettingsBox::ClassifierSettingsBoxPriv
+struct ClassifierSettingsBox::Private
 {
-    ClassifierSettingsBoxPriv()
+    Private()
     {
         standardClassifierCheckBox  = 0;
         neighborGroupsNumInput      = 0;
@@ -54,8 +54,8 @@ struct ClassifierSettingsBox::ClassifierSettingsBoxPriv
     KUrlRequester*   classifierUrlRequester;
 };
 
-ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
-    : QGroupBox(parent), d(new ClassifierSettingsBoxPriv)
+ClassifierSettingsBox::ClassifierSettingsBox(QWidget* const parent)
+    : QGroupBox(parent), d(new Private)
 {
     setTitle(i18n("Classifier Settings"));
 
@@ -63,7 +63,7 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
     d->classifierUrlRequester        = new KUrlRequester;
     d->classifierUrlRequester->setFilter("*.xml");
     d->standardClassifierCheckBox->setToolTip(i18n("If checked, the standard classifier "
-            "shipped with this KIPI plugin is used."));
+                                                   "shipped with this KIPI plugin is used."));
     d->classifierUrlRequester->setToolTip(i18n("Enter the location of the classifier here."));
 
     d->neighborGroupsNumInput    = new KIntNumInput;
@@ -75,7 +75,7 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
     d->scalingFactorNumInput->setLabel(i18n("&Scaling factor:"));
     d->scalingFactorNumInput->setRange(1.05, 10.0, 0.01);
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addWidget(d->standardClassifierCheckBox, 0, 0, 1, 1);
     mainLayout->addWidget(d->classifierUrlRequester,     1, 0, 1, 1);
     mainLayout->addWidget(d->neighborGroupsNumInput,     2, 0, 1,-1);

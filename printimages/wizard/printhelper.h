@@ -33,20 +33,20 @@ class QWidget;
 namespace KIPIPrintImagesPlugin
 {
 
-class PrintHelper 
+class PrintHelper
 {
 
 public:
 
-    PrintHelper(QWidget* parent);
+    PrintHelper(QWidget* const parent);
     ~PrintHelper();
 
     void print(const KUrl::List& fileList);
 
 private:
 
-    class PrintHelperPrivate;
-    PrintHelperPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace

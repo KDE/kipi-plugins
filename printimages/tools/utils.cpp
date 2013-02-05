@@ -6,7 +6,7 @@
  * Date        : 2003-31-01
  * Description : a kipi plugin to print images
  *
- * Copyright 2003 by Todd Shoemaker <todd@theshoemakers.net>
+ * Copyright 2003      by Todd Shoemaker <todd@theshoemakers.net>
  * Copyright 2007-2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
@@ -60,20 +60,22 @@ bool launchExternalApp(const QString& program, const QStringList& args)
     return process.startDetached(program, args);
 }
 
-bool checkTempPath(QWidget* parent, const QString& tempPath)
+bool checkTempPath(QWidget* const parent, const QString& tempPath)
 {
     // does the temp path exist?
     QDir tempDir(tempPath);
+
     if (!tempDir.exists())
     {
         if (!tempDir.mkdir(tempDir.path()))
         {
             KMessageBox::sorry(parent,
                               i18n("Unable to create a temporary folder. "
-                                  "Please make sure you have proper permissions to this folder and try again."));
+                                   "Please make sure you have proper permissions to this folder and try again."));
             return false;
         }
     }
+
     return true;
 }
 

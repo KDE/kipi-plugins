@@ -114,15 +114,15 @@ private:
     // fn filename, pageSize in mm 
     void parseTemplateFile( const QString& fn, const QSizeF& pageSize );
 
-    void updateCaption(TPhoto*);
-    void updateCropFrame(TPhoto*, int);
+    void updateCaption(TPhoto* const);
+    void updateCropFrame(TPhoto* const, int);
     void setBtnCropEnabled();
     void removeGimpFiles();
     void printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, QPrinter& printer);
     QStringList printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* const layouts);
 
-    int     getPageCount() const;
-    QRect*  getLayout(int photoIndex) const;
+    int     getPageCount()                        const;
+    QRect*  getLayout(int photoIndex)             const;
     QString captionFormatter(TPhoto* const photo) const;
     void    printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH, const QString& caption);
 

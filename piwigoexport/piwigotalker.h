@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
@@ -56,7 +56,8 @@ public:
 
     enum State
     {
-        GE_LOGIN = 0,
+        GE_LOGOUT = -1,
+        GE_LOGIN  = 0,
         GE_GETVERSION,
         GE_LISTALBUMS,
         GE_CHECKPHOTOEXIST,
@@ -129,7 +130,7 @@ private:
     void parseResponseAddPhotoChunk(const QByteArray& data);
     void addPhotoSummary();
     void parseResponseAddPhotoSummary(const QByteArray& data);
-    
+
     // Support for Web API < 2.4
     void parseResponseOldAddPhoto(const QByteArray& data);
     void parseResponseOldAddThumbnail(const QByteArray& data);

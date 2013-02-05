@@ -68,11 +68,11 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class RemoveRedEyesWindow::RemoveRedEyesWindowPriv
+class RemoveRedEyesWindow::Private
 {
 public:
 
-    RemoveRedEyesWindowPriv() :
+    Private() :
         total(0),
         processed(0),
         failed(0),
@@ -93,7 +93,8 @@ public:
         storageSettingsBox(0),
         locator(0),
         saveMethod(0)
-    {}
+    {
+    }
 
     static const QString      configGroupName;
     static const QString      configStorageModeEntry;
@@ -138,19 +139,20 @@ public:
     Locator*                  locator;
     SaveMethod*               saveMethod;
 };
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configGroupName("RemoveRedEyes Settings");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configStorageModeEntry("Storage Mode");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configExtraNameEntry("Extra Name");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configAddkeywordEntry("Add keyword");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configKeywordNameEntry("Keyword Name");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configUnprocessedModeEntry("Unprocessed Mode");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configLocatorTypeEntry("Locator Type");
-const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configLocatorDefaultType("HaarClassifierLocator");
+
+const QString RemoveRedEyesWindow::Private::configGroupName("RemoveRedEyes Settings");
+const QString RemoveRedEyesWindow::Private::configStorageModeEntry("Storage Mode");
+const QString RemoveRedEyesWindow::Private::configExtraNameEntry("Extra Name");
+const QString RemoveRedEyesWindow::Private::configAddkeywordEntry("Add keyword");
+const QString RemoveRedEyesWindow::Private::configKeywordNameEntry("Keyword Name");
+const QString RemoveRedEyesWindow::Private::configUnprocessedModeEntry("Unprocessed Mode");
+const QString RemoveRedEyesWindow::Private::configLocatorTypeEntry("Locator Type");
+const QString RemoveRedEyesWindow::Private::configLocatorDefaultType("HaarClassifierLocator");
 
 // --------------------------------------------------------
 
 RemoveRedEyesWindow::RemoveRedEyesWindow()
-    : KPToolDialog(0), d(new RemoveRedEyesWindowPriv)
+    : KPToolDialog(0), d(new Private)
 {
     setWindowTitle(i18n("Automatic Red-Eye Removal"));
     setButtons(Help|User1|User2|Close);
@@ -177,12 +179,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
 
     // ----------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Remove Red-Eye"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A plugin to automatically "
-                                   "detect and remove red-eye effect."),
-                             ki18n("(c) 2008-2009, Andi Clemens"));
+    KPAboutData* const about = new KPAboutData(ki18n("Remove Red-Eye"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A plugin to automatically "
+                                         "detect and remove red-eye effect."),
+                                   ki18n("(c) 2008-2013, Andi Clemens"));
 
     about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                      "andi dot clemens at googlemail dot com");
@@ -207,14 +209,14 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
     d->settingsTab           = new QWidget;
     d->locatorSettingsWidget = new QWidget;
 
-    QVBoxLayout* mainSettingsLayout = new QVBoxLayout;
-    d->unprocessedSettingsBox       = new UnprocessedSettingsBox;
-    d->storageSettingsBox           = new StorageSettingsBox;
+    QVBoxLayout* const mainSettingsLayout = new QVBoxLayout;
+    d->unprocessedSettingsBox             = new UnprocessedSettingsBox;
+    d->storageSettingsBox                 = new StorageSettingsBox;
     mainSettingsLayout->addWidget(d->storageSettingsBox);
     mainSettingsLayout->addWidget(d->unprocessedSettingsBox);
     mainSettingsLayout->addStretch(10);
 
-    QGridLayout* settingsTabLayout = new QGridLayout;
+    QGridLayout* const settingsTabLayout = new QGridLayout;
     settingsTabLayout->addWidget(d->locatorSettingsWidget, 0, 0, 1, 1);
     settingsTabLayout->addLayout(mainSettingsLayout,       0, 1, 1, 1);
     d->settingsTab->setLayout(settingsTabLayout);
@@ -229,15 +231,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
     d->processedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
     d->failedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
 
-    QLabel* l1 = new QLabel(i18nc("The total number of images in the list",
-                                  "Total:"));
-    QLabel* l2 = new QLabel(i18nc("number of images successfully processed",
-                                  "Success:"));
-    QLabel* l3 = new QLabel(i18nc("number of images failed to process",
-                                  "Failed:"));
+    QLabel* const l1 = new QLabel(i18nc("The total number of images in the list",  "Total:"));
+    QLabel* const l2 = new QLabel(i18nc("number of images successfully processed", "Success:"));
+    QLabel* const l3 = new QLabel(i18nc("number of images failed to process",      "Failed:"));
 
-    QWidget* summaryBox           = new QWidget;
-    QHBoxLayout* summaryBoxLayout = new QHBoxLayout;
+    QWidget* const summaryBox           = new QWidget;
+    QHBoxLayout* const summaryBoxLayout = new QHBoxLayout;
     summaryBoxLayout->addWidget(l1);
     summaryBoxLayout->addWidget(d->totalLabel);
     summaryBoxLayout->addStretch(10);
@@ -249,8 +248,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
 
     // --------------------------------------------------------
 
-    QWidget* imagesTab           = new QWidget;
-    QGridLayout* imagesTabLayout = new QGridLayout();
+    QWidget* const imagesTab           = new QWidget;
+    QGridLayout* const imagesTabLayout = new QGridLayout();
     imagesTabLayout->addWidget(d->imageList, 0, 0, 1, 1);
     imagesTabLayout->addWidget(summaryBox,   1, 0, 1, 1);
     imagesTabLayout->setRowStretch(0, 10);
@@ -260,8 +259,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
 
     // ----------------------------------------------------------
 
-    QWidget* previewTab           = new QWidget;
-    QVBoxLayout* previewTabLayout = new QVBoxLayout;
+    QWidget* const previewTab           = new QWidget;
+    QVBoxLayout* const previewTabLayout = new QVBoxLayout;
     previewTabLayout->addWidget(d->previewWidget);
     previewTab->setLayout(previewTabLayout);
 
@@ -271,8 +270,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
     d->tabWidget->insertTab(Settings, d->settingsTab, i18n("Settings"));
     //    d->tabWidget->insertTab(Preview,  previewTab,     i18n("Preview"));
 
-    QWidget* mainWidget     = new QWidget;
-    QVBoxLayout* mainLayout = new QVBoxLayout;
+    QWidget* const mainWidget     = new QWidget;
+    QVBoxLayout* const mainLayout = new QVBoxLayout;
     mainLayout->addWidget(d->tabWidget, 5);
     mainLayout->addWidget(d->progress);
     mainWidget->setLayout(mainLayout);
@@ -337,19 +336,18 @@ void RemoveRedEyesWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(d->configGroupName);
 
-    int storageMode = group.readEntry(d->configStorageModeEntry, (int)StorageSettingsBox::Subfolder);
+    int storageMode = group.readEntry(d->configStorageModeEntry,                            (int)StorageSettingsBox::Subfolder);
     d->storageSettingsBox->setStorageMode(storageMode);
-    d->storageSettingsBox->setExtra(group.readEntry(d->configExtraNameEntry,        "corrected"));
-    d->storageSettingsBox->setAddKeyword(group.readEntry(d->configAddkeywordEntry,  false));
-    d->storageSettingsBox->setKeyword(group.readEntry(d->configKeywordNameEntry,    "removed_redeyes"));
-    d->unprocessedSettingsBox->setHandleMode(group.readEntry(d->configUnprocessedModeEntry,
-            (int)UnprocessedSettingsBox::Ask));
+    d->storageSettingsBox->setExtra(group.readEntry(d->configExtraNameEntry,                "corrected"));
+    d->storageSettingsBox->setAddKeyword(group.readEntry(d->configAddkeywordEntry,          false));
+    d->storageSettingsBox->setKeyword(group.readEntry(d->configKeywordNameEntry,            "removed_redeyes"));
+    d->unprocessedSettingsBox->setHandleMode(group.readEntry(d->configUnprocessedModeEntry, (int)UnprocessedSettingsBox::Ask));
 
     // set save method
     d->saveMethod = SaveMethodFactory::create(storageMode);
 
     // load locator
-    QString locatorType = group.readEntry(d->configLocatorTypeEntry, d->configLocatorDefaultType);
+    QString locatorType = group.readEntry(d->configLocatorTypeEntry,                        d->configLocatorDefaultType);
 
     // If config file somehow has been messed up and readEntry() only delivers an empty string,
     // force loading of the default locator in here (I had trouble with my kipirc once and wondered why the plugin
@@ -403,8 +401,7 @@ bool RemoveRedEyesWindow::acceptStorageSettings()
         QString message = i18n("<p>You chose the <b>'overwrite' correction mode</b>.<br/>"
                                "Are you sure you want to lose your original image files?</p>");
 
-        if (KMessageBox::questionYesNo(this, message, i18n("Overwrite mode"))
-            == KMessageBox::No)
+        if (KMessageBox::questionYesNo(this, message, i18n("Overwrite mode")) == KMessageBox::No)
         {
             return false;
         }
@@ -445,8 +442,7 @@ void RemoveRedEyesWindow::startTestrun()
 
 void RemoveRedEyesWindow::startPreview()
 {
-    KPImagesListViewItem* item = dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(
-                                            d->imageList->listView()->currentItem());
+    KPImagesListViewItem* const item = dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(d->imageList->listView()->currentItem());
 
     if (!item)
     {
@@ -529,12 +525,9 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
     d->thread->setSaveMethod(d->saveMethod);
     d->thread->setLocator(d->locator);
 
-    d->thread->setTempFile(d->originalImageTempFile.fileName(),
-                           WorkerThread::OriginalImage);
-    d->thread->setTempFile(d->correctedImageTempFile.fileName(),
-                           WorkerThread::CorrectedImage);
-    d->thread->setTempFile(d->maskImageTempFile.fileName(),
-                           WorkerThread::MaskImage);
+    d->thread->setTempFile(d->originalImageTempFile.fileName(),  WorkerThread::OriginalImage);
+    d->thread->setTempFile(d->correctedImageTempFile.fileName(), WorkerThread::CorrectedImage);
+    d->thread->setTempFile(d->maskImageTempFile.fileName(),      WorkerThread::MaskImage);
 
     // --------------------------------------------------------
 
@@ -722,12 +715,9 @@ void RemoveRedEyesWindow::threadFinished()
 
         case WorkerThread::Preview:
             // load generated preview images
-            d->previewWidget->setPreviewImage(PreviewWidget::OriginalImage,
-                                              d->originalImageTempFile.fileName());
-            d->previewWidget->setPreviewImage(PreviewWidget::CorrectedImage,
-                                              d->correctedImageTempFile.fileName());
-            d->previewWidget->setPreviewImage(PreviewWidget::MaskImage,
-                                              d->maskImageTempFile.fileName());
+            d->previewWidget->setPreviewImage(PreviewWidget::OriginalImage,  d->originalImageTempFile.fileName());
+            d->previewWidget->setPreviewImage(PreviewWidget::CorrectedImage, d->correctedImageTempFile.fileName());
+            d->previewWidget->setPreviewImage(PreviewWidget::MaskImage,      d->maskImageTempFile.fileName());
             break;
     }
 
@@ -769,8 +759,8 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
 
     unloadLocator();
 
-    d->locator                     = LocatorFactory::create(locator);
-    QGridLayout* settingsTabLayout = qobject_cast<QGridLayout*>(d->settingsTab->layout());
+    d->locator                           = LocatorFactory::create(locator);
+    QGridLayout* const settingsTabLayout = qobject_cast<QGridLayout*>(d->settingsTab->layout());
 
     if (d->locator)
     {
@@ -794,11 +784,12 @@ void RemoveRedEyesWindow::unloadLocator()
 {
     delete d->locator;
     d->locator = 0;
+
     if (d->locatorSettingsWidget)
     {
         d->settingsTab->layout()->removeWidget(d->locatorSettingsWidget);
         delete d->locatorSettingsWidget;
-	d->locatorSettingsWidget = 0;
+        d->locatorSettingsWidget = 0;
     }
 
     d->hasLocator = false;
@@ -849,9 +840,9 @@ void RemoveRedEyesWindow::updateSummary()
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        if (!item->text(KPImagesListView::User1).isEmpty())
+        if (item && !item->text(KPImagesListView::User1).isEmpty())
         {
             if (item->text(KPImagesListView::User1).toInt() > 0)
             {

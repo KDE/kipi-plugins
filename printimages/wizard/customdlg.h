@@ -40,14 +40,13 @@ class CustomLayoutDlg : public QDialog , public Ui::CustomLayout
 
 public:
 
-    CustomLayoutDlg ( QWidget* parent = 0 );
+    CustomLayoutDlg(QWidget* const parent = 0);
     ~CustomLayoutDlg();
 
-    // retrieve last used data  
+    // retrieve last used data
     void readSettings();
     // save used data
     void saveSettings();
-
 };
 
 } // namespace KIPIPrintImagesPlugin

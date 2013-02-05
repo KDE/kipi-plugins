@@ -45,10 +45,11 @@ public:
 
     CropFrame(QWidget* const parent);
     ~CropFrame();
-    void init(TPhoto* photo, int width, int height, bool autoRotate, bool paint = true);
-    void setColor(const QColor&);
+
+    void   init(TPhoto* const photo, int width, int height, bool autoRotate, bool paint = true);
+    void   setColor(const QColor&);
     QColor color() const;
-    void drawCropRectangle(bool draw=true) { m_drawRec=draw; };
+    void   drawCropRectangle(bool draw=true) { m_drawRec=draw; };
 
 protected:
 

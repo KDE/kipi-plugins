@@ -105,8 +105,8 @@ private:
 
 private:
 
-    class RemoveRedEyesWindowPriv;
-    RemoveRedEyesWindowPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

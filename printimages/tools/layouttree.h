@@ -64,19 +64,21 @@ public:
         VerticalDivision    // images side by side
     };
 
+public:
+
     LayoutNode(double aspectRatio, double relativeArea, int index);
-    LayoutNode(LayoutNode* subtree, LayoutNode* terminalChild, bool horizontal, int index);
+    LayoutNode(LayoutNode* const subtree, LayoutNode* const terminalChild, bool horizontal, int index);
     LayoutNode(const LayoutNode&);
     ~LayoutNode();
 
-    double aspectRatio()  const { return m_a; }
-    double relativeArea() const { return m_e; }
+    double aspectRatio()  const { return m_a;        }
+    double relativeArea() const { return m_e;        }
     double division()     const { return m_division; }
 
-    Type type() const { return m_type; }
+    Type type() const { return m_type;  }
     int index() const { return m_index; }
 
-    LayoutNode* leftChild()  const { return m_leftChild; }
+    LayoutNode* leftChild()  const { return m_leftChild;  }
     LayoutNode* rightChild() const { return m_rightChild; }
 
     void takeAndSetChild(LayoutNode* oldChild, LayoutNode* newChild);

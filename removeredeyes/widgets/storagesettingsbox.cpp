@@ -41,9 +41,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct StorageSettingsBox::StorageSettingsBoxPriv
+struct StorageSettingsBox::Private
 {
-    StorageSettingsBoxPriv() :
+    Private() :
         keywordCB(0),
         saveMethodCB(0),
         keywordLineEdit(0),
@@ -60,7 +60,7 @@ struct StorageSettingsBox::StorageSettingsBoxPriv
 };
 
 StorageSettingsBox::StorageSettingsBox(QWidget* const parent)
-    : QGroupBox(parent), d(new StorageSettingsBoxPriv)
+    : QGroupBox(parent), d(new Private)
 {
     setTitle(i18n("Storage Settings"));
 
@@ -97,7 +97,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* const parent)
 
     // ----------------------------------------------------------------
 
-    QGridLayout* correctionGroupLayout = new QGridLayout;
+    QGridLayout* const correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(d->saveMethodCB,       0, 0, 1, 1);
     correctionGroupLayout->addWidget(d->saveMethodLineEdit, 0, 2, 1, 1);
     correctionGroupLayout->addWidget(d->keywordCB,          1, 0, 1, 1);

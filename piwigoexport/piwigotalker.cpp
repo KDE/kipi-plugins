@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
@@ -62,7 +62,14 @@ namespace KIPIPiwigoExportPlugin
 QString PiwigoTalker::s_authToken = "";
 
 PiwigoTalker::PiwigoTalker(QWidget* const parent)
-    : m_parent(parent),  m_job(0),  m_loggedIn(false), m_version(-1)
+    : m_parent(parent),
+      m_state(GE_LOGOUT),
+      m_job(0),
+      m_loggedIn(false),
+      m_chunkId(0),
+      m_version(-1),
+      m_albumId(0),
+      m_photoId(0)
 {
 }
 
@@ -102,7 +109,7 @@ void PiwigoTalker::login(const KUrl& url, const QString& name, const QString& pa
     }
 
     QString auth = name + QString(":") + passwd;
-    s_authToken = "Basic " + auth.toUtf8().toBase64();
+    s_authToken  = "Basic " + auth.toUtf8().toBase64();
 
     QStringList qsl;
     qsl.append("password=" + passwd);
@@ -216,14 +223,19 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
         // Look in the Digikam database
         KPImageInfo info(photoUrl);
+
         if (info.hasTitle() && !info.title().isEmpty())
             m_title = info.title();
+
         if (info.hasDescription() && !info.description().isEmpty())
             m_comment = info.description();
+
         if (info.hasCreators() && !info.creators().isEmpty())
             m_author = info.creators().join(" / ");
+
         if (info.hasDate())
             m_date = info.date();
+
         kDebug() << "Title: " << m_title;
         kDebug() << "Comment: " << m_comment;
         kDebug() << "Author: " << m_author;
@@ -294,9 +306,9 @@ void PiwigoTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
 
 void PiwigoTalker::slotResult(KJob* job)
 {
-    KIO::Job* tempjob = static_cast<KIO::Job*>(job);
-    State state = m_state; // Can change in the treatment itself
-                           // so we cache it
+    KIO::Job* const tempjob = static_cast<KIO::Job*>(job);
+    State state             = m_state; // Can change in the treatment itself
+                                       // so we cache it
 
     if (tempjob->error())
     {
@@ -305,16 +317,17 @@ void PiwigoTalker::slotResult(KJob* job)
             emit signalLoginFailed(tempjob->errorString());
             kDebug() << tempjob->errorString();
         }
-        else if (state == GE_GETVERSION) {
+        else if (state == GE_GETVERSION)
+        {
             kDebug() << tempjob->errorString();
             // Version isn't mandatory and errors can be ignored
             // As login succeeded, albums can be listed
             listAlbums();
         }
-        else if (state == GE_CHECKPHOTOEXIST || state == GE_GETINFO ||
-                 state == GE_SETINFO         || state == GE_ADDPHOTOCHUNK ||
+        else if (state == GE_CHECKPHOTOEXIST || state == GE_GETINFO           ||
+                 state == GE_SETINFO         || state == GE_ADDPHOTOCHUNK     ||
                  state == GE_ADDPHOTOSUMMARY || state == GE_OLD_ADDPHOTOCHUNK ||
-                 state == GE_OLD_ADDTHUMB    || state == GE_OLD_ADDHQ ||
+                 state == GE_OLD_ADDTHUMB    || state == GE_OLD_ADDHQ         ||
                  state == GE_OLD_ADDPHOTOSUMMARY)
         {
             emit signalAddPhotoFailed(tempjob->errorString());
@@ -324,6 +337,7 @@ void PiwigoTalker::slotResult(KJob* job)
             tempjob->ui()->setWindow(m_parent);
             tempjob->ui()->showErrorMessage();
         }
+
         emit signalBusy(false);
         return;
     }
@@ -348,15 +362,15 @@ void PiwigoTalker::slotResult(KJob* job)
         case(GE_SETINFO):
             parseResponseSetInfo(m_talker_buffer);
             break;
-        // Support for Web API >= 2.4
         case(GE_ADDPHOTOCHUNK):
+            // Support for Web API >= 2.4
             parseResponseAddPhotoChunk(m_talker_buffer);
             break;
         case(GE_ADDPHOTOSUMMARY):
             parseResponseAddPhotoSummary(m_talker_buffer);
             break;
-        // Support for Web API < 2.4
         case(GE_OLD_ADDPHOTOCHUNK):
+            // Support for Web API < 2.4
             parseResponseOldAddPhoto(m_talker_buffer);
             break;
         case(GE_OLD_ADDTHUMB):
@@ -368,6 +382,8 @@ void PiwigoTalker::slotResult(KJob* job)
         case(GE_OLD_ADDPHOTOSUMMARY):
             parseResponseOldAddPhotoSummary(m_talker_buffer);
             break;
+        default:   // GE_LOGOUT
+            break;
     }
 
     tempjob->kill();
@@ -377,6 +393,7 @@ void PiwigoTalker::slotResult(KJob* job)
     {
         listAlbums();
     }
+
     emit signalBusy(false);
 }
 
@@ -396,17 +413,18 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
         if (ts.isStartElement())
         {
             foundResponse = true;
+
             if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok")
             {
                 m_loggedIn = true;
 
                 /** Request Version */
-                m_state = GE_GETVERSION;
+                m_state   = GE_GETVERSION;
                 m_talker_buffer.resize(0);
                 m_version = -1;
 
                 QByteArray buffer = "method=pwg.getVersion";
-                m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
+                m_job             = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
                 m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
                 m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
@@ -452,19 +470,22 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
         if (ts.isStartElement())
         {
             foundResponse = true;
+
             if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok")
             {
                 QString v = ts.readElementText();
 
-                if (verrx.exactMatch(v)) {
+                if (verrx.exactMatch(v))
+                {
                     QStringList qsl = verrx.capturedTexts();
-                    m_version = qsl[1].toInt() * 10 + qsl[2].toInt();
+                    m_version       = qsl[1].toInt() * 10 + qsl[2].toInt();
                     kDebug() << "Version: " << m_version;
                     break;
                 }
             }
         }
     }
+
     kDebug() << "foundResponse : " << foundResponse;
 }
 
@@ -495,10 +516,12 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
             {
                 foundResponse = true;
             }
+
             if (ts.name() == "categories")
             {
                 success = true;
             }
+
             if (ts.name() == "category")
             {
                 GAlbum album;
@@ -509,11 +532,13 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
                 iter = albumList.insert(iter, album);
             }
+
             if (ts.name() == "name")
             {
                 (*iter).name = ts.readElementText();
                 kDebug() << (*iter).name << "\n";
             }
+
             if (ts.name() == "uppercats")
             {
                 QString uppercats   = ts.readElementText();
@@ -564,6 +589,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
         if (ts.name() == "rsp")
         {
             foundResponse = true;
+
             if (ts.attributes().value("stat") == "ok")
                 success = true;
 
@@ -573,9 +599,12 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
             ts.readNext();
 
-            if (md5rx.exactMatch(data.mid(ts.characterOffset()))) {
+            if (md5rx.exactMatch(data.mid(ts.characterOffset())))
+            {
                 QStringList qsl = md5rx.capturedTexts();
-                if (qsl[1] == QString(m_md5sum.toHex())) {
+
+                if (qsl[1] == QString(m_md5sum.toHex()))
+                {
                     m_photoId = qsl[2].toInt();
                     kDebug() << "m_photoId: " << m_photoId;
 
@@ -682,9 +711,11 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
                 foundResponse = true;
                 if (ts.attributes().value("stat") == "ok") success = true;
             }
+
             if (ts.name() == "category")
             {
-                if (ts.attributes().hasAttribute("id")) {
+                if (ts.attributes().hasAttribute("id"))
+                {
                     QString id(ts.attributes().value("id").toString());
                     categories.append(id.toInt());
                 }
@@ -714,6 +745,7 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     m_talker_buffer.resize(0);
 
     QStringList qsl_cat;
+
     for (int i = 0; i < categories.size(); ++i)
     {
         qsl_cat.append(QString::number(categories.at(i)));
@@ -742,7 +774,7 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
 
 void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -825,7 +857,6 @@ void PiwigoTalker::addNextChunk()
             this, SLOT(slotResult(KJob*)));
 }
 
-
 void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
 {
     QString str        = QString::fromUtf8(data);
@@ -858,6 +889,7 @@ void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
 
     // If the photo wasn't completely sent, send the next chunk
     QFileInfo fi(!m_hqpath.isEmpty() ? m_hqpath : m_path);
+
     if (m_chunkId * CHUNK_MAX_SIZE < fi.size())
     {
         addNextChunk();
@@ -907,7 +939,7 @@ void PiwigoTalker::addPhotoSummary()
 
 void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data.mid(data.indexOf("<?xml")));
     QString line;
     bool foundResponse = false;
@@ -960,7 +992,7 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
 void PiwigoTalker::parseResponseOldAddPhoto(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -1104,7 +1136,7 @@ void PiwigoTalker::parseResponseOldAddThumbnail(const QByteArray& data)
     }
     else
     {
-        m_state = GE_OLD_ADDHQ;
+        m_state   = GE_OLD_ADDHQ;
         m_talker_buffer.resize(0);
         m_chunkId = 0;
 
@@ -1144,6 +1176,7 @@ void PiwigoTalker::parseResponseOldAddHQPhoto(const QByteArray& data)
 
     // If the HQ photo wasn't completely sent, send the next chunk
     QFileInfo fi(m_hqpath);
+
     if (m_chunkId * CHUNK_MAX_SIZE < fi.size())
     {
         addHQNextChunk();
@@ -1171,13 +1204,15 @@ void PiwigoTalker::addOldPhotoSummary()
     if (!m_comment.isEmpty()) qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
     qsl.append("thumbnail_sum=" + computeMD5Sum(m_thumbpath).toHex());
+
     if (!m_hqpath.isNull() && !m_hqpath.isEmpty())
     {
         qsl.append("high_sum=" + m_md5sum.toHex());
     }
+
     qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
     //qsl.append("tag_ids="); // TODO Implement this function
-    
+
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
@@ -1199,7 +1234,7 @@ void PiwigoTalker::addOldPhotoSummary()
 
 void PiwigoTalker::parseResponseOldAddPhotoSummary(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data.mid(data.indexOf("<?xml")));
     QString line;
     bool foundResponse = false;

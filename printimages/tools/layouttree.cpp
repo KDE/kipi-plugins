@@ -38,16 +38,24 @@ namespace KIPIPrintImagesPlugin
 */
 
 LayoutNode::LayoutNode(double aspectRatio, double relativeArea, int index)
-          : m_a(aspectRatio), m_e(relativeArea), m_division(0),
-            m_type(TerminalNode), m_index(index),
-            m_leftChild(0), m_rightChild(0)
+          : m_a(aspectRatio),
+            m_e(relativeArea),
+            m_division(0),
+            m_type(TerminalNode),
+            m_index(index),
+            m_leftChild(0),
+            m_rightChild(0)
 {
 }
 
-LayoutNode::LayoutNode(LayoutNode *subtree, LayoutNode *terminalChild, bool horizontal, int index)
-          : m_a(0), m_e(0), m_division(0),
-            m_type(horizontal ? HorizontalDivision : VerticalDivision), m_index(index),
-            m_leftChild(subtree), m_rightChild(terminalChild)
+LayoutNode::LayoutNode(LayoutNode* const subtree, LayoutNode* const terminalChild, bool horizontal, int index)
+          : m_a(0),
+            m_e(0),
+            m_division(0),
+            m_type(horizontal ? HorizontalDivision : VerticalDivision),
+            m_index(index),
+            m_leftChild(subtree),
+            m_rightChild(terminalChild)
 {
 }
 
@@ -93,7 +101,8 @@ LayoutNode* LayoutNode::nodeForIndex(int index)
     if (m_type == TerminalNode)
         return 0;
 
-    LayoutNode* fromLeft = m_leftChild->nodeForIndex(index);
+    LayoutNode* const fromLeft = m_leftChild->nodeForIndex(index);
+
     if (fromLeft)
         return fromLeft;
 
@@ -109,7 +118,8 @@ LayoutNode* LayoutNode::parentOf(LayoutNode* child)
     if (m_leftChild == child || m_rightChild == child)
         return this;
 
-    LayoutNode* fromLeft = m_leftChild->parentOf(child);
+    LayoutNode* const fromLeft = m_leftChild->parentOf(child);
+
     if (fromLeft)
         return fromLeft;
 
@@ -126,13 +136,13 @@ void LayoutNode::computeRelativeSizes()
     m_leftChild->computeRelativeSizes();
     m_rightChild->computeRelativeSizes();
 
-    double leftProductRoot = std::sqrt(m_leftChild->m_a * m_leftChild->m_e);
+    double leftProductRoot  = std::sqrt(m_leftChild->m_a * m_leftChild->m_e);
     double rightProductRoot = std::sqrt(m_rightChild->m_a * m_rightChild->m_e);
-    double maxProductRoot = leftProductRoot > rightProductRoot ? leftProductRoot : rightProductRoot;
+    double maxProductRoot   = leftProductRoot > rightProductRoot ? leftProductRoot : rightProductRoot;
 
-    double leftDivisionRoot = std::sqrt(m_leftChild->m_e / m_leftChild->m_a);
+    double leftDivisionRoot  = std::sqrt(m_leftChild->m_e / m_leftChild->m_a);
     double rightDivisionRoot = std::sqrt(m_rightChild->m_e / m_rightChild->m_a);
-    double maxDivisionRoot = leftDivisionRoot > rightDivisionRoot ? leftDivisionRoot : rightDivisionRoot;
+    double maxDivisionRoot   = leftDivisionRoot > rightDivisionRoot ? leftDivisionRoot : rightDivisionRoot;
 
     if (m_type == VerticalDivision) // side by side
     {
@@ -160,7 +170,7 @@ void LayoutNode::computeDivisions()
         double leftDivisionRoot  = std::sqrt(m_leftChild->m_e / m_leftChild->m_a);
         double rightDivisionRoot = std::sqrt(m_rightChild->m_e / m_rightChild->m_a);
 
-        m_division = leftDivisionRoot / (leftDivisionRoot + rightDivisionRoot);
+        m_division               = leftDivisionRoot / (leftDivisionRoot + rightDivisionRoot);
     }
     else if (m_type == HorizontalDivision) // one on top of the other
     {
@@ -169,14 +179,16 @@ void LayoutNode::computeDivisions()
         double rightProductRoot = std::sqrt(m_rightChild->m_a * m_rightChild->m_e);
 
         // the term in the paper takes 0 = bottom, we use 0 = top
-        m_division = 1 - (rightProductRoot / (rightProductRoot + leftProductRoot));
+        m_division              = 1 - (rightProductRoot / (rightProductRoot + leftProductRoot));
     }
 }
 
 // --------------------------------------------- //
 
 LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
-          : m_root(0), m_count(0), m_aspectRatioPage(aspectRatioPage), 
+          : m_root(0),
+            m_count(0),
+            m_aspectRatioPage(aspectRatioPage),
             m_absoluteAreaPage(absoluteAreaPage)
 {
 }
@@ -222,19 +234,19 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
         for (int horizontal=0; horizontal<2; ++horizontal)
         {
             // create temporary tree
-            LayoutNode *candidateTree = new LayoutNode(*m_root);
+            LayoutNode* candidateTree          = new LayoutNode(*m_root);
 
             // select the subtree which will be replace by a new internal node
-            LayoutNode *candidateSubtree = candidateTree->nodeForIndex(i);
+            LayoutNode* const candidateSubtree = candidateTree->nodeForIndex(i);
 
             // find parent node
-            LayoutNode *parentNode = candidateTree->parentOf(candidateSubtree);
+            LayoutNode* const parentNode       = candidateTree->parentOf(candidateSubtree);
 
             // create new terminal node
-            LayoutNode *newTerminalNode = new LayoutNode(aspectRatio, relativeArea, index);
+            LayoutNode* const newTerminalNode  = new LayoutNode(aspectRatio, relativeArea, index);
 
             // create new internal node
-            LayoutNode *newInternalNode = new LayoutNode(candidateSubtree, newTerminalNode, horizontal, index+1);
+            LayoutNode* const newInternalNode  = new LayoutNode(candidateSubtree, newTerminalNode, horizontal, index+1);
 
             // replace in tree
             if (parentNode)
@@ -246,6 +258,7 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
             candidateTree->computeRelativeSizes();
 
             double candidateScore = score(candidateTree, m_count+2);
+
             if (candidateScore > highScore)
             {
                 highScore = candidateScore;
@@ -261,6 +274,7 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
 
     delete m_root;
     m_root = bestTree;
+
     if (m_root)
         m_root->computeDivisions();
 
@@ -275,9 +289,11 @@ double LayoutTree::score(LayoutNode* root, int nodeCount)
         return 0;
 
     double areaSum = 0;
+
     for (int i = 0; i<nodeCount; ++i)
     {
         LayoutNode* node = root->nodeForIndex(i);
+
         if (node->type() == LayoutNode::TerminalNode)
             areaSum += node->relativeArea();
     }
@@ -298,8 +314,8 @@ double LayoutTree::G() const
 double LayoutTree::absoluteArea(LayoutNode* node)
 {
     // min(a_pbb, a_page), max(a_pbb, a_page)
-    double minRatioPage = m_root->aspectRatio() < m_aspectRatioPage ? m_root->aspectRatio() : m_aspectRatioPage;
-    double maxRatioPage = m_root->aspectRatio() > m_aspectRatioPage ? m_root->aspectRatio() : m_aspectRatioPage;
+    double minRatioPage     = m_root->aspectRatio() < m_aspectRatioPage ? m_root->aspectRatio() : m_aspectRatioPage;
+    double maxRatioPage     = m_root->aspectRatio() > m_aspectRatioPage ? m_root->aspectRatio() : m_aspectRatioPage;
 
     // A_pbb
     double absoluteAreaRoot = m_absoluteAreaPage * minRatioPage / maxRatioPage;
@@ -313,13 +329,15 @@ double LayoutTree::absoluteArea(LayoutNode* node)
 
 QRectF LayoutTree::drawingArea(int index, const QRectF& absoluteRectPage)
 {
-    LayoutNode *node = m_root->nodeForIndex(index);
+    LayoutNode* const node = m_root->nodeForIndex(index);
+
     if (!node)
         return QRectF();
 
     // find out the "line of ancestry" of the node
     QList<LayoutNode*> treePath;
-    LayoutNode *parent = node;
+    LayoutNode* parent = node;
+
     while (parent)
     {
         treePath.prepend(parent);
@@ -333,12 +351,13 @@ QRectF LayoutTree::drawingArea(int index, const QRectF& absoluteRectPage)
     // as described in section 2.2.2
     for (int i=0; i<treePath.count() - 1; ++i)
     {
-        LayoutNode *parent = treePath[i];
-        LayoutNode *child  = treePath[i+1]; // only iterating to count-1
+        LayoutNode* const parent = treePath[i];
+        LayoutNode* const child  = treePath[i+1]; // only iterating to count-1
 
         if (parent->type() == LayoutNode::VerticalDivision) // side by side
         {
             double leftWidth = absoluteRect.width() * parent->division();
+
             if (child == parent->leftChild())
             {
                 absoluteRect.setWidth(leftWidth);
@@ -354,6 +373,7 @@ QRectF LayoutTree::drawingArea(int index, const QRectF& absoluteRectPage)
         {
             // left child is topmost
             double upperHeight = absoluteRect.height() * parent->division();
+
             if (child == parent->leftChild())
             {
                 absoluteRect.setHeight(upperHeight);

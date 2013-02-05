@@ -7,10 +7,10 @@
  * Description : a plugin to export to a remote Piwigo server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,8 +29,7 @@
 
 // Qt includes
 
-#include <QLabel>
-#include <QCheckBox>
+#include <QString>
 
 // KDE includes
 
@@ -48,7 +47,7 @@ class PiwigoEdit : public KDialog
 
 public:
 
-    PiwigoEdit(QWidget* pParent, Piwigo* pPiwigo, const QString& title);
+    PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QString& title);
     ~PiwigoEdit();
 
 private Q_SLOTS:
@@ -56,8 +55,6 @@ private Q_SLOTS:
     void slotOk();
 
 private:
-
-    QLabel*    mpHeaderLabel;
 
     KLineEdit* mpUrlEdit;
     KLineEdit* mpUsernameEdit;

@@ -85,7 +85,7 @@ class WizardPage : public QWidget, public Ui_Class
 public:
 
     WizardPage(KAssistantDialog* const dialog, const QString& title)
-            : QWidget(dialog), mAssistant(dialog)
+        : QWidget(dialog), mAssistant(dialog)
     {
         this->setupUi(this);
         layout()->setMargin(0);
@@ -97,7 +97,7 @@ public:
         return mPage;
     }
 
-    KAssistantDialog* parent()
+    KAssistantDialog* parent() const
     {
         return mAssistant;
     }
@@ -162,7 +162,7 @@ Wizard::Wizard(QWidget* const parent)
                              KAboutData::License_GPL,
                              ki18n("A KIPI plugin to print images"),
                              ki18n("(c) 2003-2004, Todd Shoemaker\n"
-                                   "(c) 2007-2012, Angelo Naselli"));
+                                   "(c) 2007-2013, Angelo Naselli"));
 
     about->addAuthor(ki18n("Todd Shoemaker"), ki18n("Author"),
                      "todd@theshoemakers.net");
@@ -181,15 +181,14 @@ Wizard::Wizard(QWidget* const parent)
     d->m_cropPage       = new CropPage(this, i18n(cropPageName)) ;
 
     //TODO
-    d->m_pageSize = QSizeF(-1, -1); // select a different page to force a refresh in initPhotoSizes.
+    d->m_pageSize       = QSizeF(-1, -1); // select a different page to force a refresh in initPhotoSizes.
 
     QList<QPrinterInfo>::iterator it;
-    d->m_printerList = QPrinterInfo::availablePrinters();
+    d->m_printerList    = QPrinterInfo::availablePrinters();
     kDebug() << " printers: " << d->m_printerList.count();
     //d->m_photoPage->m_printer_choice->setInsertPolicy(QComboBox::InsertAtTop/*QComboBox::InsertAlphabetically*/);
 
-    for (it = d->m_printerList.begin();
-         it != d->m_printerList.end(); ++it)
+    for (it = d->m_printerList.begin(); it != d->m_printerList.end(); ++it)
     {
         kDebug() << " printer: " << it->printerName();
         d->m_photoPage->m_printer_choice->addItem(it->printerName());
@@ -272,12 +271,12 @@ Wizard::Wizard(QWidget* const parent)
 
     d->m_imagesFilesListBox = new KPImagesList(d->m_photoPage->mPrintList, KIconLoader::SizeMedium);
     d->m_imagesFilesListBox->setAllowDuplicate(true);
-    d->m_imagesFilesListBox->setControlButtons(KPImagesList::Add |
-                                               KPImagesList::Remove |
-                                               KPImagesList::MoveUp |
+    d->m_imagesFilesListBox->setControlButtons(KPImagesList::Add      |
+                                               KPImagesList::Remove   |
+                                               KPImagesList::MoveUp   |
                                                KPImagesList::MoveDown |
-                                               KPImagesList::Clear |
-                                               KPImagesList::Save |
+                                               KPImagesList::Clear    |
+                                               KPImagesList::Save     |
                                                KPImagesList::Load);
     d->m_imagesFilesListBox->setControlButtonsPlacement(KPImagesList::ControlButtonsAbove);
     d->m_imagesFilesListBox->enableDragAndDrop(false);
@@ -351,17 +350,19 @@ void createPhotoGrid(TPhotoSize* p, int pageWidth, int pageHeight, int rows, int
     int GAP         = MARGIN / 4;
     int photoWidth  = (pageWidth - (MARGIN * 2) - ((columns - 1) * GAP)) / columns;
     int photoHeight = (pageHeight - (MARGIN * 2) - ((rows - 1) * GAP)) / rows;
+    int row         = 0;
 
-    int row = 0;
     for (int y = MARGIN; row < rows && y < pageHeight - MARGIN; y += photoHeight + GAP)
     {
         int col = 0;
+
         for (int x = MARGIN; col < columns && x < pageWidth - MARGIN; x += photoWidth + GAP)
         {
             p->layouts.append(new QRect(x, y, photoWidth, photoHeight));
             iconpreview->fillRect(x, y, photoWidth, photoHeight, Qt::color1);
             col++;
         }
+
         row++;
     }
 }
@@ -373,11 +374,12 @@ void Wizard::print(const KUrl::List& fileList, const QString& tempPath)
 
     d->m_photos.clear();
     //d->m_photoPage->m_PictureInfo->setRowCount(fileList.count());
+
     for (int i = 0; i < fileList.count(); ++i)
     {
-        TPhoto* photo   = new TPhoto(150);
-        photo->filename = fileList[i];
-        photo->first    = true;
+        TPhoto* const photo = new TPhoto(150);
+        photo->filename     = fileList[i];
+        photo->first        = true;
         d->m_photos.append(photo);
     }
 
@@ -403,6 +405,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
     }
 
     QFile file(fn);
+
     if (!file.open(QIODevice::ReadOnly))
         return;
 
@@ -411,6 +414,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
         file.close();
         return;
     }
+
     file.close();
 
     TPhotoSize* p = 0;
@@ -424,11 +428,13 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
     QString unit;
     int scaleValue;
     QDomNode n = docElem.firstChild();
+
     while (!n.isNull())
     {
-        size = QSizeF(0, 0);
-        scaleValue = 10; // 0.1 mm
+        size          = QSizeF(0, 0);
+        scaleValue    = 10; // 0.1 mm
         QDomElement e = n.toElement(); // try to convert the node to an element.
+
         if (!e.isNull())
         {
             if (e.tagName() == "paper")
@@ -469,6 +475,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                 }
 
                 static const float round_value = 0.01F;
+
                 if (size == QSizeF(0, 0))
                 {
                     size = pageSize;
@@ -486,18 +493,19 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
                 // Next templates are good
                 kDebug() << "layout size " << size << " page size " << pageSize;
-
                 QDomNode np = e.firstChild();
+
                 while (!np.isNull())
                 {
                     QDomElement ep = np.toElement(); // try to convert the node to an element.
+
                     if (!ep.isNull())
                     {
                         if (ep.tagName() == "template")
                         {
                             p = new TPhotoSize;
-
                             QSizeF sizeManaged;
+
                             // set page size
                             if (pageSize == QSizeF(0, 0))
                             {
@@ -523,8 +531,10 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
                             kDebug() <<  "template desktop file name" << desktopFileName;
 
-                            const QStringList list = KGlobal::dirs()->findAllResources("data", desktopFileName);
-                            QStringList::ConstIterator it = list.constBegin(), end = list.constEnd();
+                            const QStringList list         = KGlobal::dirs()->findAllResources("data", desktopFileName);
+                            QStringList::ConstIterator it  = list.constBegin();
+                            QStringList::ConstIterator end = list.constEnd();
+
                             if (it != end)
                             {
                                 p->label = KDesktopFile(*it).readName();
@@ -534,13 +544,15 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                                 p->label = ep.attribute("name", "XXX");
                                 kWarning() << "missed template translation " << desktopFileName;
                             }
-                            p->dpi = ep.attribute("dpi", "0").toInt();
-                            p->autoRotate = (ep.attribute("autorotate", "false") == "true") ? true : false;
 
-                            QDomNode nt = ep.firstChild();
+                            p->dpi        = ep.attribute("dpi", "0").toInt();
+                            p->autoRotate = (ep.attribute("autorotate", "false") == "true") ? true : false;
+                            QDomNode nt   = ep.firstChild();
+
                             while (!nt.isNull())
                             {
                                 QDomElement et = nt.toElement(); // try to convert the node to an element.
+
                                 if (!et.isNull())
                                 {
                                     if (et.tagName() == "photo")
@@ -551,9 +563,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                                         int height  = (int)((value == 0 ? size.height() : value) * scaleValue);
                                         int photoX  = (int)((et.attribute("x", "0").toFloat() * scaleValue));
                                         int photoY  = (int)((et.attribute("y", "0").toFloat() * scaleValue));
-                                        p->layouts.append(new QRect(photoX,
-                                                                    photoY,
-                                                                    width, height));
+                                        p->layouts.append(new QRect(photoX, photoY, width, height));
                                         iconpreview.fillRect(photoX, photoY, width, height, Qt::color1);
                                     }
                                     else if (et.tagName() == "photogrid")
@@ -566,11 +576,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                                         int columns    = et.attribute("columns", "0").toInt();
                                         if (rows > 0 && columns > 0)
                                         {
-                                            createPhotoGrid(p, pageWidth,
-                                                            pageHeight,
-                                                            rows,
-                                                            columns,
-                                                            &iconpreview);
+                                            createPhotoGrid(p, pageWidth, pageHeight, rows, columns, &iconpreview);
                                         }
                                         else
                                         {
@@ -582,11 +588,12 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                                         kDebug() << "    " <<  et.tagName();
                                     }
                                 }
+
                                 nt = nt.nextSibling();
                             }
+
                             iconpreview.end();
                             p->icon = iconpreview.getIcon();
-
                             d->m_photoSizes.append(p);
                         }
                         else
@@ -594,6 +601,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             kDebug() << "? " <<  ep.tagName() << " attr=" << ep.attribute("name", "??");
                         }
                     }
+
                     np = np.nextSibling();
                 }
             }
@@ -602,6 +610,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                 kDebug() << "??" << e.tagName() << " name=" << e.attribute("name", "??");
             }
         }
+
         n = n.nextSibling();
     }
 }
@@ -620,11 +629,11 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     // cleaning m_pageSize memory before invoking clear()
     for (int i = 0; i < d->m_photoSizes.count(); ++i)
         delete d->m_photoSizes.at(i);
+
     d->m_photoSizes.clear();
 
     // get template-files and parse them
-    const QStringList list = KGlobal::dirs()->findAllResources("data",
-                                                               "kipiplugin_printimages/templates/*.xml");
+    const QStringList list = KGlobal::dirs()->findAllResources("data", "kipiplugin_printimages/templates/*.xml");
 
     foreach(const QString& fn, list)
     {
@@ -639,11 +648,10 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     {
         kDebug() << "Empty photoSize-list, create default size\n";
         // There is no valid page size yet.  Create a default page (B10) to prevent crashes.
-        TPhotoSize* p;
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = false;
-        p->label = i18n("Unsupported Paper Size");
+        TPhotoSize* const p = new TPhotoSize;
+        p->dpi              = 0;
+        p->autoRotate       = false;
+        p->label            = i18n("Unsupported Paper Size");
         // page size: B10 (32 x 45 mm)
         p->layouts.append(new QRect(0, 0, 3200, 4500));
         p->layouts.append(new QRect(0, 0, 3200, 4500));
@@ -655,18 +663,20 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     d->m_photoPage->ListPhotoSizes->blockSignals(true);
     d->m_photoPage->ListPhotoSizes->clear();
     QList<TPhotoSize*>::iterator it;
+
     for (it = d->m_photoSizes.begin(); it != d->m_photoSizes.end(); ++it)
     {
-        TPhotoSize* s = static_cast<TPhotoSize*>(*it);
+        TPhotoSize* const s = static_cast<TPhotoSize*>(*it);
+
         if (s)
         {
-            QListWidgetItem* pWItem = new QListWidgetItem(s->label);
+            QListWidgetItem* const pWItem = new QListWidgetItem(s->label);
             pWItem->setIcon(s->icon);
             d->m_photoPage->ListPhotoSizes->addItem(pWItem);
         }
     }
     // Adding custom choice
-    QListWidgetItem* pWItem = new QListWidgetItem(i18n(customPageLayoutName));
+    QListWidgetItem* const pWItem = new QListWidgetItem(i18n(customPageLayoutName));
 
     //TODO FREE STYLE ICON
     TemplateIcon ti(80, pageSize.toSize());
@@ -678,9 +688,7 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
 
     pWItem->setIcon(ti.getIcon());
     d->m_photoPage->ListPhotoSizes->addItem(pWItem);
-    //
     d->m_photoPage->ListPhotoSizes->blockSignals(false);
-
     d->m_photoPage->ListPhotoSizes->setCurrentRow(0, QItemSelectionModel::Select);
 }
 
@@ -689,38 +697,43 @@ double getMaxDPI(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, /*u
     Q_ASSERT(layouts.count() > 1);
 
     QList<QRect*>::const_iterator it = layouts.begin();
-    QRect* layout = static_cast<QRect*>(*it);
-
-    double maxDPI = 0.0;
+    QRect* layout                    = static_cast<QRect*>(*it);
+    double maxDPI                    = 0.0;
 
     for (; current < photos.count(); ++current)
     {
-        TPhoto* photo = photos.at(current);
-        double dpi    = ((double) photo->cropRegion.width() + (double) photo->cropRegion.height()) /
-                        (((double) layout->width() / 1000.0) + ((double) layout->height() / 1000.0));
+        TPhoto* const photo = photos.at(current);
+        double dpi          = ((double) photo->cropRegion.width() + (double) photo->cropRegion.height()) /
+                              (((double) layout->width() / 1000.0) + ((double) layout->height() / 1000.0));
+
         if (dpi > maxDPI)
             maxDPI = dpi;
+
         // iterate to the next position
         ++it;
         layout = (it == layouts.end()) ? 0 : static_cast<QRect*>(*it);
+
         if (layout == 0)
         {
             break;
         }
     }
+
     return maxDPI;
 }
 
 QRect* Wizard::getLayout(int photoIndex) const
 {
-    TPhotoSize* s   = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
-    // how many photos would actually be printed, including copies?
-    int photoCount    = (photoIndex + 1);
-    // how many pages?  Recall that the first layout item is the paper size
-    int photosPerPage = s->layouts.count() - 1;
-    int remainder     = photoCount % photosPerPage;
+    TPhotoSize* const s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
 
-    int retVal = remainder;
+    // how many photos would actually be printed, including copies?
+    int photoCount      = (photoIndex + 1);
+
+    // how many pages?  Recall that the first layout item is the paper size
+    int photosPerPage   = s->layouts.count() - 1;
+    int remainder       = photoCount % photosPerPage;
+    int retVal          = remainder;
+
     if (remainder == 0)
         retVal = photosPerPage;
 
@@ -735,16 +748,18 @@ int Wizard::getPageCount() const
     if (photoCount > 0)
     {
         // get the selected layout
-        TPhotoSize* s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
+        TPhotoSize* const s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
 
         // how many pages?  Recall that the first layout item is the paper size
-        int photosPerPage = s->layouts.count() - 1;
-        int remainder = photoCount % photosPerPage;
-        int emptySlots = 0;
+        int photosPerPage   = s->layouts.count() - 1;
+        int remainder       = photoCount % photosPerPage;
+        int emptySlots      = 0;
+
         if (remainder > 0)
             emptySlots = photosPerPage - remainder;
 
         pageCount = photoCount / photosPerPage;
+
         if (emptySlots > 0)
             pageCount++;
     }
@@ -754,7 +769,7 @@ int Wizard::getPageCount() const
 
 const float FONT_HEIGHT_RATIO = 0.8F;
 
-void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH, const QString& caption)
+void Wizard::printCaption(QPainter& p, TPhoto* const photo, int captionW, int captionH, const QString& caption)
 {
     // PENDING anaselli TPhoto*photo will be needed to add a per photo caption management
     QStringList captionByLines;
@@ -764,16 +779,18 @@ void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH
     while (captionIndex < caption.length())
     {
         QString newLine;
-        bool breakLine = false; // End Of Line found
-        int currIndex; //  Caption QString current index
+        bool breakLine            = false; // End Of Line found
+        int currIndex;                     //  Caption QString current index
 
         // Check minimal lines dimension
         //TODO fix length, maybe useless
         int captionLineLocalLength = 40;
 
         for (currIndex = captionIndex; currIndex < caption.length() && !breakLine; ++currIndex)
+        {
             if (caption[currIndex] == QChar('\n') || caption[currIndex].isSpace())
                 breakLine = true;
+        }
 
         if (captionLineLocalLength <= (currIndex - captionIndex))
             captionLineLocalLength = (currIndex - captionIndex);
@@ -781,8 +798,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH
         breakLine = false;
 
         for (currIndex = captionIndex;
-             currIndex <= captionIndex + captionLineLocalLength &&
-             currIndex < caption.length() && !breakLine;
+             (currIndex <= captionIndex + captionLineLocalLength) && (currIndex < caption.length()) && !breakLine;
              ++currIndex)
         {
             breakLine = (caption[currIndex] == QChar('\n')) ? true : false;
@@ -796,11 +812,13 @@ void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH
         captionIndex = currIndex; // The line is ended
 
         if (captionIndex != caption.length())
+        {
             while (!newLine.endsWith(' '))
             {
                 newLine.truncate(newLine.length() - 1);
                 captionIndex--;
             }
+        }
 
         captionByLines.prepend(newLine.trimmed());
     }
@@ -823,6 +841,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH
     {
         if (lineNumber > 0)
             p.translate(0, - (int)(pixelsHigh));
+
         QRect r(0, 0, captionW, captionH);
         //TODO anaselli check if ok
         p.drawText(r, Qt::AlignLeft, captionByLines[lineNumber], &r);
@@ -835,6 +854,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
         return QString();
 
     QString format;
+
     switch (photo->pCaptionInfo->m_caption_type)
     {
         case CaptionInfo::FileNames:
@@ -857,10 +877,12 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     QFileInfo fi(photo->filename.path());
     QString resolution;
     QSize imageSize =  photo->metaIface()->getImageDimensions();
+
     if (imageSize.isValid())
     {
         resolution = QString("%1x%2").arg(imageSize.width()).arg(imageSize.height());
     }
+
     format.replace("\\n", "\n");
 
     // %f filename
@@ -892,20 +914,21 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
 	    return true;   // no photos => last photo
 
     QList<QRect*>::const_iterator it = layouts.begin();
-    QRect* srcPage = static_cast<QRect*>(*it);
+    QRect* const srcPage             = static_cast<QRect*>(*it);
     ++it;
-    QRect* layout = static_cast<QRect*>(*it);
+    QRect* layout                    = static_cast<QRect*>(*it);
 
     // scale the page size to best fit the painter
     // size the rectangle based on the minimum image dimension
     int destW = p.window().width();
     int destH = p.window().height();
-
     int srcW  = srcPage->width();
     int srcH  = srcPage->height();
+
     if (destW < destH)
     {
         destH = NINT((double) destW * ((double) srcH / (double) srcW));
+
         if (destH > p.window().height())
         {
             destH = p.window().height();
@@ -915,6 +938,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
     else
     {
         destW = NINT((double) destH * ((double) srcW / (double) srcH));
+
         if (destW > p.window().width())
         {
             destW = p.window().width();
@@ -924,20 +948,20 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
 
     double xRatio = (double) destW / (double) srcPage->width();
     double yRatio = (double) destH / (double) srcPage->height();
-
     int left      = (p.window().width()  - destW) / 2;
     int top       = (p.window().height() - destH) / 2;
 
     // FIXME: may not want to erase the background page
     p.eraseRect(left, top,
-                NINT((double) srcPage->width() * xRatio),
+                NINT((double) srcPage->width()  * xRatio),
                 NINT((double) srcPage->height() * yRatio));
 
     for (; current < photos.count(); ++current)
     {
-        TPhoto* photo = photos.at(current);
+        TPhoto* const photo = photos.at(current);
         // crop
         QImage img;
+
         if (useThumbnails)
             img = photo->thumbnail().toImage();
         else
@@ -960,16 +984,15 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
 
             if (photo->thumbnail().width() != 0)
                 xRatio = (double) photo->thumbnail().width() / (double) photo->width();
+
             if (photo->thumbnail().height() != 0)
                 yRatio = (double) photo->thumbnail().height() / (double) photo->height();
 
             int x1 = NINT((double) photo->cropRegion.left() * xRatio);
             int y1 = NINT((double) photo->cropRegion.top()  * yRatio);
-
-            int w = NINT((double) photo->cropRegion.width()  * xRatio);
-            int h = NINT((double) photo->cropRegion.height() * yRatio);
-
-            img = img.copy(QRect(x1, y1, w, h));
+            int w  = NINT((double) photo->cropRegion.width()  * xRatio);
+            int h  = NINT((double) photo->cropRegion.height() * yRatio);
+            img    = img.copy(QRect(x1, y1, w, h));
         }
         else if (!cropDisabled)       //d->m_cropPage->m_disableCrop->isChecked() )
         {
@@ -981,27 +1004,29 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
         int w  = NINT((double) layout->width() * xRatio);
         int h  = NINT((double) layout->height() * yRatio);
 
-        QRect rectViewPort = p.viewport();
+        QRect rectViewPort    = p.viewport();
         QRect newRectViewPort = QRect(x1 + left, y1 + top, w, h);
-        QSize imageSize = img.size();
+        QSize imageSize       = img.size();
 
         //     kDebug() << "Image         " << photo->filename << " size " << imageSize;
         //     kDebug() << "viewport size " << newRectViewPort.size();
 
         QPoint point;
+
         if (cropDisabled)  //->m_cropPage->m_disableCrop->isChecked() )
         {
             imageSize.scale(newRectViewPort.size(), Qt::KeepAspectRatio);
             int spaceLeft = (newRectViewPort.width() - imageSize.width()) / 2;
-            int spaceTop = (newRectViewPort.height() - imageSize.height()) / 2;
+            int spaceTop  = (newRectViewPort.height() - imageSize.height()) / 2;
             p.setViewport(spaceLeft + newRectViewPort.x(), spaceTop + newRectViewPort.y(), imageSize.width(), imageSize.height());
-            point = QPoint(newRectViewPort.x() + spaceLeft + imageSize.width(), newRectViewPort.y() + spaceTop + imageSize.height());
+            point         = QPoint(newRectViewPort.x() + spaceLeft + imageSize.width(), newRectViewPort.y() + spaceTop + imageSize.height());
         }
         else
         {
             p.setViewport(newRectViewPort);
             point = QPoint(x1 + left + w, y1 + top + w);
         }
+
         QRect rectWindow = p.window();
         p.setWindow(img.rect());
         p.drawImage(0, 0, img);
@@ -1019,12 +1044,11 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             // draw the text at (0,0), but we will translate and rotate the world
             // before drawing so the text will be in the correct location
             // next, do we rotate?
-            int captionW = w - 2;
-            double ratio =   photo->pCaptionInfo->m_caption_size * 0.01;
-            int captionH = (int)(qMin(w, h) * ratio);
-
+            int captionW        = w - 2;
+            double ratio        = photo->pCaptionInfo->m_caption_size * 0.01;
+            int captionH        = (int)(qMin(w, h) * ratio);
             int exifOrientation = photo->metaIface()->getImageOrientation();
-            int orientatation = photo->rotation;
+            int orientatation   = photo->rotation;
 
             //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
             if (exifOrientation == KPMetadata::ORIENTATION_ROT_90_HFLIP ||
@@ -1039,6 +1063,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             {
                 captionW = h;
             }
+
             p.rotate(orientatation);
             kDebug() << "rotation " << photo->rotation << " orientation " << orientatation ;
             int tx = left;
@@ -1079,19 +1104,21 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
         // iterate to the next position
         ++it;
         layout = it == layouts.end() ? 0 : static_cast<QRect*>(*it);
+
         if (layout == 0)
         {
             current++;
             break;
         }
     }
+
     // did we print the last photo?
     return (current < photos.count());
 }
 
-void Wizard::updateCropFrame(TPhoto* photo, int photoIndex)
+void Wizard::updateCropFrame(TPhoto* const photo, int photoIndex)
 {
-    TPhotoSize* s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
+    TPhotoSize* const s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
     d->m_cropPage->cropFrame->init(photo, getLayout(photoIndex)->width(), getLayout(photoIndex)->height(), s->autoRotate);
     d->m_cropPage->LblCropPhoto->setText(i18n("Photo %1 of %2", photoIndex + 1, QString::number(d->m_photos.count())));
 }
@@ -1103,24 +1130,28 @@ void Wizard::previewPhotos()
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     // get the selected layout
-    int curr = d->m_photoPage->ListPhotoSizes->currentRow();
-    TPhotoSize* s = d->m_photoSizes.at(curr);
+    int curr            = d->m_photoPage->ListPhotoSizes->currentRow();
+    TPhotoSize* const s = d->m_photoSizes.at(curr);
+    int photoCount      =  d->m_photos.count();
+    int emptySlots      = 0;
+    int pageCount       = 0;
+    int photosPerPage   = 0;
 
-    int photoCount    =  d->m_photos.count();
-    int emptySlots    = 0;
-    int pageCount     =  0;
-    int photosPerPage = 0;
     if (photoCount > 0)
     {
         // how many pages?  Recall that the first layout item is the paper size
         photosPerPage = s->layouts.count() - 1;
         int remainder = photoCount % photosPerPage;
+
         if (remainder > 0)
             emptySlots = photosPerPage - remainder;
-        pageCount = photoCount / photosPerPage;
+
+        pageCount     = photoCount / photosPerPage;
+
         if (emptySlots > 0)
             pageCount++;
     }
+
     d->m_photoPage->LblPhotoCount->setText(QString::number(photoCount));
     d->m_photoPage->LblSheetsPrinted->setText(QString::number(pageCount));
     d->m_photoPage->LblEmptySlots->setText(QString::number(emptySlots));
@@ -1131,11 +1162,11 @@ void Wizard::previewPhotos()
     int count   = 0;
     int page    = 0;
     int current = 0;
-
     QList<TPhoto*>::iterator it;
+
     for (it = d->m_photos.begin(); it != d->m_photos.end(); ++it)
     {
-        TPhoto* photo = static_cast<TPhoto*>(*it);
+        TPhoto* const photo = static_cast<TPhoto*>(*it);
 
         if (page == d->m_currentPreviewPage)
         {
@@ -1145,14 +1176,17 @@ void Wizard::previewPhotos()
             int h = s->layouts.at(count + 1)->height();
             d->m_cropPage->cropFrame->init(photo, w, h, s->autoRotate, false);
         }
+
         count++;
+
         if (count >= photosPerPage)
         {
             if (page == d->m_currentPreviewPage)
                 break;
+
             page++;
             current += photosPerPage;
-            count = 0;
+            count    = 0;
         }
     }
 
@@ -1179,6 +1213,7 @@ void Wizard::previewPhotos()
 //       d->m_photoPage->BmpFirstPagePreview->setPixmap ( QPixmap() );
         d->m_photoPage->LblPreview->setText(i18n("Page %1 of %2", 0, 0));
     }
+
     manageBtnPreviewPage();
     d->m_photoPage->update();
     QApplication::restoreOverrideCursor();
@@ -1195,6 +1230,7 @@ void Wizard::manageBtnPreviewPage()
     {
         d->m_photoPage->BtnPreviewPageDown->setEnabled(true);
         d->m_photoPage->BtnPreviewPageUp->setEnabled(true);
+
         if (d->m_currentPreviewPage == 0)
         {
             d->m_photoPage->BtnPreviewPageDown->setEnabled(false);
@@ -1211,10 +1247,12 @@ void Wizard::infopage_setCaptionButtons()
 {
     if (d->m_photos.size())
     {
-        TPhoto* pPhoto = d->m_photos.at(d->m_infopageCurrentPhoto);
+        TPhoto* const pPhoto = d->m_photos.at(d->m_infopageCurrentPhoto);
+
         if (pPhoto && !d->m_photoPage->m_sameCaption->isChecked())
         {
             infopage_blockCaptionButtons();
+
             if (pPhoto->pCaptionInfo)
             {
                 d->m_photoPage->m_font_color->setColor(pPhoto->pCaptionInfo->m_caption_color);
@@ -1229,6 +1267,7 @@ void Wizard::infopage_setCaptionButtons()
                 infopage_readCaptionSettings();
                 captionChanged(d->m_photoPage->m_captions->currentText());
             }
+
             infopage_blockCaptionButtons(false);
         }
     }
@@ -1248,12 +1287,12 @@ void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::KPImagesL
 {
     if (d->m_photos.size())
     {
-        int itemIndex  = d->m_imagesFilesListBox->listView()->indexFromItem(item).row();
-        TPhoto* pPhoto = d->m_photos[itemIndex];
+        int itemIndex        = d->m_imagesFilesListBox->listView()->indexFromItem(item).row();
+        TPhoto* const pPhoto = d->m_photos[itemIndex];
         // TODO anaselli: first and copies could be removed since they are not useful any more
         xmlWriter.writeAttribute("first", QString("%1").arg(pPhoto->first));
         xmlWriter.writeAttribute("copies", QString("%1").arg(pPhoto->first ? pPhoto->copies : 0));
-        
+
         // additional info (caption... etc)
         if (pPhoto->pCaptionInfo)
         {
@@ -1271,6 +1310,7 @@ void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::KPImagesL
 void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 {
     kDebug() << " invoked " << xmlReader.name();
+
     while (!xmlReader.atEnd())
     {
         if (xmlReader.isStartElement() && xmlReader.name() == "pa_layout")
@@ -1279,18 +1319,22 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
             QXmlStreamAttributes attrs = xmlReader.attributes();
             // get value of each attribute from QXmlStreamAttributes
             QStringRef attr = attrs.value("Printer");
+
             if (!attr.isEmpty())
             {
                 kDebug() <<  " found " << attr.toString();
                 int index = d->m_photoPage->m_printer_choice->findText(attr.toString());
+
                 if (index != -1)
                 {
                     d->m_photoPage->m_printer_choice->setCurrentIndex(index);
                 }
+
                 outputChanged(d->m_photoPage->m_printer_choice->currentText());
             }
-            
+
             attr = attrs.value("PageSize");
+
             if (!attr.isEmpty())
             {
                 kDebug() <<  " found " << attr.toString();
@@ -1299,19 +1343,22 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
             }
 
             attr = attrs.value("PhotoSize");
+
             if (!attr.isEmpty())
             {
                 kDebug() <<  " found " << attr.toString();
                 d->m_savedPhotoSize = attr.toString();
-            }            
+            }
         }
+
         xmlReader.readNext();
     }
-    
+
     // reset preview page number
-    d->m_currentPreviewPage = 0;
+    d->m_currentPreviewPage      = 0;
     initPhotoSizes(d->m_printer->paperSize(QPrinter::Millimeter));   
-    QList<QListWidgetItem* > list = d->m_photoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+    QList<QListWidgetItem*> list = d->m_photoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+
     if (list.count())
     {
         kDebug() << " PhotoSize " << list[0]->text();
@@ -1321,6 +1368,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
     {
         d->m_photoPage->ListPhotoSizes->setCurrentRow(0);
     }
+
     previewPhotos();
 }
 
@@ -1329,54 +1377,68 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
     if (d->m_photos.size())
     {
         // read image is the last.
-        TPhoto* pPhoto = d->m_photos[d->m_photos.size()-1];
+        TPhoto* const pPhoto = d->m_photos[d->m_photos.size()-1];
         kDebug() << " invoked " << xmlReader.name();
 
         while (xmlReader.readNextStartElement())
         {
             kDebug() << pPhoto->filename << " " << xmlReader.name();
+
             if (xmlReader.name() == "pa_caption")
             {
                 d->m_photoPage->m_sameCaption->blockSignals(true);
                 d->m_photoPage->m_sameCaption->setCheckState( Qt::Unchecked );
                 d->m_photoPage->m_sameCaption->blockSignals(false);
+
                 //useless this item has been added now
-                if (pPhoto->pCaptionInfo) delete pPhoto->pCaptionInfo;
+                if (pPhoto->pCaptionInfo)
+                    delete pPhoto->pCaptionInfo;
+
                 pPhoto->pCaptionInfo = new CaptionInfo();
                 // get all attributes and its value of a tag in attrs variable.
                 QXmlStreamAttributes attrs = xmlReader.attributes();
                 // get value of each attribute from QXmlStreamAttributes
                 QStringRef attr = attrs.value("type");
                 bool ok;
+
                 if (!attr.isEmpty())
                 {
                     kDebug() <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_type = (CaptionInfo::AvailableCaptions)attr.toString().toInt(&ok);
                 }
+
                 attr = attrs.value("font");
+
                 if (!attr.isEmpty())
                 {
                     kDebug() <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_font.fromString(attr.toString());
                 }
+
                 attr = attrs.value("color");
+
                 if (!attr.isEmpty())
                 {
                     kDebug() <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_color.setNamedColor(attr.toString());
                 }
+
                 attr = attrs.value("size");
+
                 if (!attr.isEmpty())
                 {
                     kDebug() <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_size = attr.toString().toInt(&ok);
                 }
+
                 attr = attrs.value("text");
+
                 if (!attr.isEmpty())
                 {
                     kDebug() <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_text = attr.toString();
                 }
+
                 infopage_setCaptionButtons();
             }
         }
@@ -1387,34 +1449,38 @@ void Wizard::slotContextMenuRequested()
 {
     if (d->m_photos.size())
     {
-        int itemIndex = d->m_imagesFilesListBox->listView()->currentIndex().row();
-
+        int itemIndex         = d->m_imagesFilesListBox->listView()->currentIndex().row();
         d->m_imagesFilesListBox->listView()->blockSignals(true);
         QMenu menu(d->m_imagesFilesListBox->listView());
-        QAction* action = menu.addAction(i18n("Add again"));
+        QAction* const action = menu.addAction(i18n("Add again"));
 
         connect(action, SIGNAL(triggered()),
                 this , SLOT(increaseCopies()));
 
-        TPhoto* pPhoto = d->m_photos[itemIndex];
+        TPhoto* const pPhoto  = d->m_photos[itemIndex];
         kDebug() << " copies " << pPhoto->copies << " first " << pPhoto->first;
+
         if (pPhoto->copies > 1 || !pPhoto->first)
         {
-            QAction* actionr = menu.addAction(i18n("Remove"));
+            QAction* const actionr = menu.addAction(i18n("Remove"));
 
             connect(actionr, SIGNAL(triggered()),
                     this, SLOT(decreaseCopies()));
         }
+
         menu.exec(QCursor::pos());
         d->m_imagesFilesListBox->listView()->blockSignals(false);
     }
 }
 
-
 void Wizard::imageSelected(QTreeWidgetItem* item)
 {
-    KPImagesListViewItem* l_item = dynamic_cast<KPImagesListViewItem*>(item);
-    int itemIndex = d->m_imagesFilesListBox->listView()->indexFromItem(l_item).row();
+    KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(item);
+
+    if (!l_item)
+        return;
+
+    int itemIndex                      = d->m_imagesFilesListBox->listView()->indexFromItem(l_item).row();
 
     kDebug() << " current row now is " << itemIndex;
     d->m_infopageCurrentPhoto = itemIndex;
@@ -1426,7 +1492,11 @@ void Wizard::decreaseCopies()
 {
     if (d->m_photos.size())
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
+
+        if (!item)
+            return;
+
         kDebug() << " Removing a copy of " << item->url();
         d->m_imagesFilesListBox->slotRemoveItems();
     }
@@ -1437,6 +1507,7 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
     if (item)
     {
         int itemIndex = d->m_imagesFilesListBox->listView()->indexFromItem(item).row();
+
         if (d->m_photos.size() && itemIndex >= 0)
         {
             /// Debug data: found and copies
@@ -1444,7 +1515,8 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
             int copies = 0;
 
             d->m_imagesFilesListBox->blockSignals(true);
-            TPhoto* pPhotoToRemove = d->m_photos.at(itemIndex);
+            TPhoto* const pPhotoToRemove = d->m_photos.at(itemIndex);
+
             // photo to be removed could be:
             // 1) unique => just remove it
             // 2) first of n, =>
@@ -1457,13 +1529,14 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
                 {
                     for (int i = 0; i < d->m_photos.count() && !found; ++i)
                     {
-                        TPhoto* pCurrentPhoto = d->m_photos.at(i);
+                        TPhoto* const pCurrentPhoto = d->m_photos.at(i);
+
                         if (pCurrentPhoto && pCurrentPhoto->filename == pPhotoToRemove->filename)
                         {
                             pCurrentPhoto->copies = pPhotoToRemove->copies - 1;
-                            copies = pCurrentPhoto->copies;
-                            pCurrentPhoto->first = true;
-                            found = true;
+                            copies                = pCurrentPhoto->copies;
+                            pCurrentPhoto->first  = true;
+                            found                 = true;
                         }
                     }
                 }
@@ -1473,12 +1546,13 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
             {
                 for (int i = 0; i < d->m_photos.count() && !found; ++i)
                 {
-                    TPhoto* pCurrentPhoto = d->m_photos.at(i);
+                    TPhoto* const pCurrentPhoto = d->m_photos.at(i);
+
                     if (pCurrentPhoto && pCurrentPhoto->filename == pPhotoToRemove->filename && pCurrentPhoto->first)
                     {
                         pCurrentPhoto->copies--;
                         copies = pCurrentPhoto->copies;
-                        found = true;
+                        found  = true;
                     }
                 }
             }
@@ -1511,8 +1585,8 @@ void Wizard::slotAddItems(const KUrl::List& list)
     }
 
     KUrl::List urls;
-
     d->m_imagesFilesListBox->blockSignals(true);
+
     for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
         KUrl imageUrl = *it;
@@ -1522,13 +1596,14 @@ void Wizard::slotAddItems(const KUrl::List& list)
 
         for (int i = 0; i < d->m_photos.count() && !found; ++i)
         {
-            TPhoto* pCurrentPhoto = d->m_photos.at(i);
+            TPhoto* const pCurrentPhoto = d->m_photos.at(i);
+
             if (pCurrentPhoto && pCurrentPhoto->filename == imageUrl && pCurrentPhoto->first)
             {
                 pCurrentPhoto->copies++;
-                found = true;
-                TPhoto* pPhoto = new TPhoto(*pCurrentPhoto);
-                pPhoto->first = false;
+                found                = true;
+                TPhoto* const pPhoto = new TPhoto(*pCurrentPhoto);
+                pPhoto->first        = false;
                 d->m_photos.append(pPhoto);
                 kDebug() << "Added fileName: " << pPhoto->filename.fileName() << " copy number " << pCurrentPhoto->copies;
             }
@@ -1536,13 +1611,14 @@ void Wizard::slotAddItems(const KUrl::List& list)
 
         if (!found)
         {
-            TPhoto* pPhoto   = new TPhoto(150);
-            pPhoto->filename = *it;
-            pPhoto->first    = true;
+            TPhoto* const pPhoto = new TPhoto(150);
+            pPhoto->filename     = *it;
+            pPhoto->first        = true;
             d->m_photos.append(pPhoto);
             kDebug() << "Added new fileName: " << pPhoto->filename.fileName();
         }
     }
+
     d->m_imagesFilesListBox->blockSignals(false);
     infopage_updateCaptions();
     //previewPhotos();
@@ -1558,7 +1634,11 @@ void Wizard::increaseCopies()
     if (d->m_photos.size())
     {
         KUrl::List list;
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
+
+        if (!item)
+            return;
+
         list.append(item->url());
         kDebug() << " Adding a copy of " << item->url();
         d->m_imagesFilesListBox->slotAddImages(list);
@@ -1577,11 +1657,13 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
     }
 
     kDebug() << " current " << current->name();
+
     if (current->name() == i18n(photoPageName))
     {
         // readSettings only the first time
         if (!before)
             readSettings(current->name());
+
         // set to first photo
         d->m_infopageCurrentPhoto = 0;
         d->m_imagesFilesListBox->listView()->clear();
@@ -1589,29 +1671,32 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
 
         for (int i = 0; i < d->m_photos.count();++i)
         {
-            TPhoto* pCurrentPhoto = d->m_photos.at(i);
+            TPhoto* const pCurrentPhoto = d->m_photos.at(i);
+
             if (pCurrentPhoto)
             {
                 list.push_back(pCurrentPhoto->filename);
             }
         }
+
         d->m_imagesFilesListBox->blockSignals(true);
         d->m_imagesFilesListBox->slotAddImages(list);
         d->m_imagesFilesListBox->listView()->setCurrentItem(d->m_imagesFilesListBox->listView()->itemAt(0, 0));
         d->m_imagesFilesListBox->blockSignals(false);
-
         d->m_photoPage->LblPhotoCount->setText(QString::number(d->m_photos.count()));
 
         // PhotoPage
         initPhotoSizes(d->m_printer->paperSize(QPrinter::Millimeter));
         // restore photoSize
+
         if (before && d->m_savedPhotoSize == i18n(customPageLayoutName))
         {
             d->m_photoPage->ListPhotoSizes->setCurrentRow(0);
         }
         else
         {
-            QList<QListWidgetItem* > list = d->m_photoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+            QList<QListWidgetItem*> list = d->m_photoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+
             if (list.count())
                 d->m_photoPage->ListPhotoSizes->setCurrentItem(list[0]);
             else
@@ -1632,9 +1717,10 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
     {
         readSettings(current->name());
         d->m_currentCropPhoto = 0;
+
         if (d->m_photos.size())
         {
-            TPhoto* photo = d->m_photos[d->m_currentCropPhoto];
+            TPhoto* const photo = d->m_photos[d->m_currentCropPhoto];
             setBtnCropEnabled();
             this->update();
             updateCropFrame(photo, d->m_currentCropPhoto);
@@ -1645,6 +1731,7 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
             kDebug() << "Not any photos selected cropping is disabled";
         }
     }
+
     QApplication::restoreOverrideCursor();
 }
 
@@ -1670,8 +1757,7 @@ void Wizard::outputChanged(const QString& text)
         QList<QPrinterInfo>::iterator it;
         //m_printerList = QPrinterInfo::availablePrinters ();
 
-        for (it = d->m_printerList.begin();
-             it != d->m_printerList.end(); ++it)
+        for (it = d->m_printerList.begin(); it != d->m_printerList.end(); ++it)
         {
             if (it->printerName() == text)
             {
@@ -1684,6 +1770,7 @@ void Wizard::outputChanged(const QString& text)
         //d->m_printer->setPrinterName(text);
         d->m_printer->setOutputFormat(QPrinter::NativeFormat);
     }
+
     //default no margins
     d->m_printer->setFullPage(true);
     d->m_printer->setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
@@ -1693,13 +1780,11 @@ void Wizard::updateCaption(TPhoto* pPhoto)
 {
     if (pPhoto)
     {
-        if (!pPhoto->pCaptionInfo &&
-            d->m_photoPage->m_captions->currentIndex() != CaptionInfo::NoCaptions)
+        if (!pPhoto->pCaptionInfo && d->m_photoPage->m_captions->currentIndex() != CaptionInfo::NoCaptions)
         {
             pPhoto->pCaptionInfo = new CaptionInfo();
         }
-        else if (pPhoto->pCaptionInfo &&
-                 d->m_photoPage->m_captions->currentIndex() == CaptionInfo::NoCaptions)
+        else if (pPhoto->pCaptionInfo && d->m_photoPage->m_captions->currentIndex() == CaptionInfo::NoCaptions)
         {
             delete pPhoto->pCaptionInfo;
             pPhoto->pCaptionInfo = NULL;
@@ -1723,25 +1808,31 @@ void Wizard::infopage_updateCaptions()
         if (d->m_photoPage->m_sameCaption->isChecked())
         {
             QList<TPhoto*>::iterator it;
+
             for (it = d->m_photos.begin(); it != d->m_photos.end(); ++it)
             {
-                TPhoto* pPhoto = static_cast<TPhoto*>(*it);
+                TPhoto* const pPhoto = static_cast<TPhoto*>(*it);
                 updateCaption(pPhoto);
             }
         }
         else
         {
-            QList <QTreeWidgetItem* > list =  d->m_imagesFilesListBox->listView()->selectedItems();
-            
-            foreach(QTreeWidgetItem *item, list)
+            QList <QTreeWidgetItem*> list =  d->m_imagesFilesListBox->listView()->selectedItems();
+
+            foreach(QTreeWidgetItem* const item, list)
             {
-                KPImagesListViewItem* lvItem = dynamic_cast<KPImagesListViewItem*>(item);
-                int itemIndex = d->m_imagesFilesListBox->listView()->indexFromItem(lvItem).row();
-                TPhoto* pPhoto = d->m_photos.at(itemIndex);
-                updateCaption(pPhoto);
+                KPImagesListViewItem* const lvItem = dynamic_cast<KPImagesListViewItem*>(item);
+
+                if (item)
+                {
+                    int itemIndex        = d->m_imagesFilesListBox->listView()->indexFromItem(lvItem).row();
+                    TPhoto* const pPhoto = d->m_photos.at(itemIndex);
+                    updateCaption(pPhoto);
+                }
             }
         }
     }
+
     // create our photo sizes list
     previewPhotos();
 }
@@ -1787,9 +1878,9 @@ void Wizard::BtnCropRotateLeft_clicked()
     // so we will initialize it to -2 in an awful hack (this
     // tells the cropFrame to reset the crop region, but don't
     // automagically rotate the image to fit.
-    TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
-    photo->cropRegion = QRect(-2, -2, -2, -2);
-    photo->rotation = (photo->rotation - 90) % 360;
+    TPhoto* const photo = d->m_photos[d->m_currentCropPhoto];
+    photo->cropRegion   = QRect(-2, -2, -2, -2);
+    photo->rotation     = (photo->rotation - 90) % 360;
 
     updateCropFrame(photo, d->m_currentCropPhoto);
 }
@@ -1801,9 +1892,9 @@ void Wizard::BtnCropRotateRight_clicked()
     // so we will initialize it to -2 in an awful hack (this
     // tells the cropFrame to reset the crop region, but don't
     // automagically rotate the image to fit.
-    TPhoto* photo = d->m_photos[d->m_currentCropPhoto];
-    photo->cropRegion = QRect(-2, -2, -2, -2);
-    photo->rotation = (photo->rotation + 90) % 360;
+    TPhoto* const photo = d->m_photos[d->m_currentCropPhoto];
+    photo->cropRegion   = QRect(-2, -2, -2, -2);
+    photo->rotation     = (photo->rotation + 90) % 360;
 
     updateCropFrame(photo, d->m_currentCropPhoto);
 }
@@ -1823,29 +1914,30 @@ void Wizard::setBtnCropEnabled()
 
 void Wizard::BtnCropNext_clicked()
 {
-    TPhoto* photo = 0;
-    photo = d->m_photos[++d->m_currentCropPhoto];
+    TPhoto* const photo = d->m_photos[++d->m_currentCropPhoto];
     setBtnCropEnabled();
-    if (photo == 0)
+
+    if (!photo)
     {
         d->m_currentCropPhoto = d->m_photos.count() - 1;
         return;
     }
+
     updateCropFrame(photo, d->m_currentCropPhoto);
 }
 
 void Wizard::BtnCropPrev_clicked()
 {
-    TPhoto* photo = 0;
-    photo = d->m_photos[--d->m_currentCropPhoto];
+    TPhoto* const photo = d->m_photos[--d->m_currentCropPhoto];
 
     setBtnCropEnabled();
 
-    if (photo == 0)
+    if (!photo)
     {
         d->m_currentCropPhoto = 0;
         return;
     }
+
     updateCropFrame(photo, d->m_currentCropPhoto);
 }
 
@@ -1872,6 +1964,7 @@ void Wizard::ListPhotoSizes_selected()
     // get the selected layout
     int curr = d->m_photoPage->ListPhotoSizes->currentRow();
     QListWidgetItem* item = d->m_photoPage->ListPhotoSizes->item(curr);
+
     // if custom page layout we launch a dialog to choose what kind
     if (item->text() == i18n(customPageLayoutName))
     {
@@ -1883,31 +1976,34 @@ void Wizard::ListPhotoSizes_selected()
             delete s;
             s = NULL;
         }
+
         CustomLayoutDlg custDlg(this);
         custDlg.readSettings();
         custDlg.exec();
         custDlg.saveSettings();
 
         // get parameters from dialog
-        size = d->m_pageSize;
+        size       = d->m_pageSize;
         scaleValue = 10; // 0.1 mm
 
         // convert to mm
         if (custDlg.m_photoUnits->currentText() == i18n("inches"))
         {
-            size /= 25.4;
-            scaleValue = 1000;
+            size       /= 25.4;
+            scaleValue  = 1000;
         }
         else if (custDlg.m_photoUnits->currentText() == i18n("cm"))
         {
-            size /= 10;
-            scaleValue = 100;
+            size       /= 10;
+            scaleValue  = 100;
         }
+
         sizeManaged = size * scaleValue;
 
         s = new TPhotoSize;
         TemplateIcon iconpreview(80, sizeManaged.toSize());
         iconpreview.begin();
+
         if (custDlg.m_photoGridCheck->isChecked())
         {
             // custom photo grid
@@ -1921,21 +2017,17 @@ void Wizard::ListPhotoSizes_selected()
 
             int pageWidth  = (int)(size.width()) * scaleValue;
             int pageHeight = (int)(size.height()) * scaleValue;
-            createPhotoGrid(s, pageWidth,
-                            pageHeight,
-                            rows,
-                            columns,
-                            &iconpreview);
+            createPhotoGrid(s, pageWidth, pageHeight, rows, columns, &iconpreview);
         }
         else if (custDlg.m_fitAsManyCheck->isChecked())
         {
-            int width       = custDlg.m_photoWidth->value();
-            int height      = custDlg.m_photoHeight->value();
+            int width                      = custDlg.m_photoWidth->value();
+            int height                     = custDlg.m_photoHeight->value();
 
             //photo size must be less than page size
             static const float round_value = 0.01F;
-            if ((height > (size.height() + round_value) ||
-                 width  > (size.width() + round_value)))
+
+            if ((height > (size.height() + round_value) || width  > (size.width() + round_value)))
             {
                 kDebug() << "photo size " << QSize(width, height) << "> page size " << size;
                 delete s;
@@ -1945,20 +2037,20 @@ void Wizard::ListPhotoSizes_selected()
             {
                 // fit as many photos of given size as possible
                 s->layouts.append(new QRect(0, 0, (int)sizeManaged.width(), (int)sizeManaged.height()));
-                s->autoRotate = custDlg.m_autorotate->isChecked();
-                s->label      = item->text();
-                s->dpi        = 0;
+                s->autoRotate  = custDlg.m_autorotate->isChecked();
+                s->label       = item->text();
+                s->dpi         = 0;
+                int nColumns   = int(size.width()  / width);
+                int nRows      = int(size.height() / height);
+                int spareWidth = int(size.width())  % width;
 
-
-                int nColumns    = int(size.width()  / width);
-                int nRows       = int(size.height() / height);
-                int spareWidth  = int(size.width())  % width;
                 // check if there's no room left to separate photos
                 if (nColumns > 1 &&  spareWidth == 0)
                 {
                     nColumns -= 1;
                     spareWidth = width;
                 }
+
                 int spareHeight = int(size.height()) % height;
 
                 // check if there's no room left to separate photos
@@ -1967,18 +2059,21 @@ void Wizard::ListPhotoSizes_selected()
                     nRows -= 1;
                     spareHeight = height;
                 }
+
                 if (nRows > 0 && nColumns > 0)
                 {
                     // n photos => dx1, photo1, dx2, photo2,... photoN, dxN+1
-                    int dx = spareWidth * scaleValue / (nColumns + 1);
-                    int dy = spareHeight * scaleValue / (nRows + 1);
-                    int photoX = 0;
-                    int photoY = 0;
-                    width  *= scaleValue;
-                    height *= scaleValue;
+                    int dx      = spareWidth  * scaleValue / (nColumns + 1);
+                    int dy      = spareHeight * scaleValue / (nRows + 1);
+                    int photoX  = 0;
+                    int photoY  = 0;
+                    width      *= scaleValue;
+                    height     *= scaleValue;
+
                     for (int row = 0; row < nRows; ++row)
                     {
                         photoY = dy * (row + 1) + (row * height);
+
                         for (int col = 0; col < nColumns; ++col)
                         {
                             photoX = dx * (col + 1) + (col * width);
@@ -2002,8 +2097,10 @@ void Wizard::ListPhotoSizes_selected()
         {
             // Atckin's layout
         }
+
         // TODO not for Atckin's layout
         iconpreview.end();
+
         if (s)
         {
             s->icon = iconpreview.getIcon();
@@ -2033,7 +2130,6 @@ void Wizard::BtnPrintOrderDown_clicked()
     d->m_imagesFilesListBox->blockSignals(true);
     int currentIndex = d->m_imagesFilesListBox->listView()->currentIndex().row();
 
-
     kDebug() << "Moved photo " << currentIndex - 1 << " to  " << currentIndex;
 
     d->m_photos.swap(currentIndex, currentIndex - 1);
@@ -2045,6 +2141,7 @@ void Wizard::BtnPreviewPageDown_clicked()
 {
     if (d->m_currentPreviewPage == 0)
         return;
+
     d->m_currentPreviewPage--;
     previewPhotos();
 }
@@ -2053,6 +2150,7 @@ void Wizard::BtnPreviewPageUp_clicked()
 {
     if (d->m_currentPreviewPage == getPageCount() - 1)
         return;
+
     d->m_currentPreviewPage++;
     previewPhotos();
 }
@@ -2067,7 +2165,7 @@ void Wizard::saveSettings(const QString& pageName)
 
     if (pageName == i18n(photoPageName))
     {
-        group.writeEntry("Printer", d->m_photoPage->m_printer_choice->currentText());
+        group.writeEntry("Printer",   d->m_photoPage->m_printer_choice->currentText());
         // PhotoPage
         // photo size
         d->m_savedPhotoSize = d->m_photoPage->ListPhotoSizes->currentItem()->text();
@@ -2120,11 +2218,13 @@ void Wizard::readSettings(const QString& pageName)
     {
         // InfoPage
         QString printerName = group.readEntry("Printer", i18n("Print to PDF"));
-        int index = d->m_photoPage->m_printer_choice->findText(printerName);
+        int index           = d->m_photoPage->m_printer_choice->findText(printerName);
+
         if (index != -1)
         {
             d->m_photoPage->m_printer_choice->setCurrentIndex(index);
         }
+
         // init QPrinter
         outputChanged(d->m_photoPage->m_printer_choice->currentText());
 
@@ -2153,8 +2253,7 @@ void Wizard::readSettings(const QString& pageName)
             d->m_cropPage->m_outputPath->setUrl(outputPath);
             d->m_cropPage->m_outputPath->setVisible(true);
             d->m_cropPage->m_outputPath->setEnabled(true);
-            KFile::Modes mode = KFile::Directory |
-                                KFile::ExistingOnly;
+            KFile::Modes mode = KFile::Directory | KFile::ExistingOnly;
             d->m_cropPage->m_outputPath->setMode(mode);
         }
         else
@@ -2180,12 +2279,13 @@ void Wizard::printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layo
     while (printing)
     {
         printing = paintOnePage(p, photos, layouts, current, d->m_cropPage->m_disableCrop->isChecked());
+
         if (printing)
             printer.newPage();
 
         pbar.setValue(current);
-
         KApplication::kApplication()->processEvents();
+
         if (d->m_cancelPrinting)
         {
             printer.abort();
@@ -2210,13 +2310,14 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& bas
     bool printing = true;
     QStringList files;
 
-    QRect* srcPage = layouts->layouts.at(0);
+    QRect* const srcPage = layouts->layouts.at(0);
 
     while (printing)
     {
         // make a pixmap to save to file.  Make it just big enough to show the
         // highest-dpi image on the page without losing data.
         double dpi = layouts->dpi;
+
         if (dpi == 0.0)
             dpi = getMaxDPI(photos, layouts->layouts, current) * 1.1;
 
@@ -2228,7 +2329,8 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& bas
 
         // save this page out to file
         QString filename = baseFilename + QString::number(pageCount) + ".jpeg";
-        bool saveFile = true;
+        bool saveFile    = true;
+
         if (QFile::exists(filename))
         {
             int result = KMessageBox::warningYesNoCancel(this,
@@ -2245,24 +2347,23 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& bas
         }
 
         printing = paintOnePage(painter, photos, layouts->layouts, current, d->m_cropPage->m_disableCrop->isChecked());
-
         painter.end();
 
         if (saveFile)
         {
             files.append(filename);
+
             if (!pixmap.save(filename))
             {
-                KMessageBox::sorry(this,
-                                   i18n("Could not save file, please check your output entry."));
+                KMessageBox::sorry(this, i18n("Could not save file, please check your output entry."));
                 break;
             }
         }
+
         pageCount++;
-
         pbar.setValue(current);
-
         KApplication::kApplication()->processEvents();
+
         if (d->m_cancelPrinting)
             break;
     }
@@ -2301,8 +2402,10 @@ void Wizard::crop_selection(int)
 void Wizard::reject()
 {
     d->m_cancelPrinting = true;
+
     if (d->m_gimpFiles.count() > 0)
         removeGimpFiles();
+
     QDialog::reject();
 }
 
@@ -2313,16 +2416,19 @@ void Wizard::accept()
         KAssistantDialog::reject();
         return;
     }
+
     // set the default crop regions if not already set
-    TPhotoSize* s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
+    TPhotoSize* const s = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
     QList<TPhoto*>::iterator it;
-    int i = 0;
+    int i               = 0;
+
     for (it = d->m_photos.begin(); it != d->m_photos.end(); ++it)
     {
-        TPhoto* photo = static_cast<TPhoto* >(*it);
+        TPhoto* const photo = static_cast<TPhoto* >(*it);
+
         if (photo && photo->cropRegion == QRect(-1, -1, -1, -1))
-            d->m_cropPage->cropFrame->init(photo, getLayout(i)->width(),
-                                          getLayout(i)->height(), s->autoRotate);
+            d->m_cropPage->cropFrame->init(photo, getLayout(i)->width(), getLayout(i)->height(), s->autoRotate);
+
         i++;
     }
 
@@ -2346,7 +2452,8 @@ void Wizard::accept()
 
         kDebug() << "(2) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
 
-        bool wantToPrint = dialog->exec() == QDialog::Accepted;
+        bool wantToPrint = (dialog->exec() == QDialog::Accepted);
+
         if (!wantToPrint)
         {
             KAssistantDialog::accept();
@@ -2357,7 +2464,7 @@ void Wizard::accept()
 
         // Why paperSize changes if printer properties is not pressed?
         if (paperSize !=  d->m_printer->paperSize())
-          d->m_printer->setPaperSize(paperSize);
+            d->m_printer->setPaperSize(paperSize);
 
         kDebug() << "(4) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
 
@@ -2374,17 +2481,22 @@ void Wizard::accept()
     {
         // now output the items
         QString path = d->m_tempPath;
+
         if (!checkTempPath(this, path))
             return;
+
         path = path + "kipi_tmp_";
+
         if (d->m_gimpFiles.count() > 0)
             removeGimpFiles();
 
         d->m_gimpFiles = printPhotosToFile(d->m_photos, path, s);
         QStringList args;
         QString prog = "gimp-remote";
+
         for (QStringList::ConstIterator it = d->m_gimpFiles.constBegin(); it != d->m_gimpFiles.constEnd(); ++it)
             args << (*it);
+
         if (!launchExternalApp(prog, args))
         {
             KMessageBox::sorry(this,
@@ -2398,14 +2510,17 @@ void Wizard::accept()
         // now output the items
         //TODO manage URL
         QString path = d->m_cropPage->m_outputPath->url().path() ;
+
         if (path.isEmpty())
         {
             KMessageBox::sorry(this,
                                i18n("Empty output path."));
             return;
         }
+
         if (path.right(1) != "/")
             path = path + '/';
+
         path = path + "kipi_printassistant_";
         kDebug() << path;
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -2414,20 +2529,22 @@ void Wizard::accept()
     }
 
     saveSettings(currentPage()->name());
-
     KAssistantDialog::accept();
 }
 
 void Wizard::pagesetupdialogexit()
 {
-    QPrinter* printer = d->m_pDlg->printer();
+    QPrinter* const printer = d->m_pDlg->printer();
 
     kDebug() << "Dialog exit, new size " << printer->paperSize(QPrinter::Millimeter)
              << " internal size " << d->m_printer->paperSize(QPrinter::Millimeter);
+
     qreal left, top, right, bottom;
     d->m_printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
+
     kDebug() << "Dialog exit, new margins: left " << left
              << " right " << right << " top " << top << " bottom " << bottom;
+
     // next should be useless invoke once changing wizard page
     //initPhotoSizes ( d->m_printer.paperSize(QPrinter::Millimeter));
 
@@ -2447,14 +2564,16 @@ void Wizard::pagesetupclicked()
     d->m_pDlg = new QPageSetupDialog(d->m_printer, this);
     // TODO next line should work but it doesn't because of a QT bug
     //d->m_pDlg->open(this, SLOT(pagesetupdialogexit()));
-    int ret = d->m_pDlg->exec();
+    int ret   = d->m_pDlg->exec();
+
     if (ret == QDialog::Accepted)
     {
         pagesetupdialogexit();
     }
-    // FIX page size dialog and preview
-    // PhotoPage
+
+    // FIX page size dialog and preview PhotoPage
     initPhotoSizes(d->m_printer->paperSize(QPrinter::Millimeter));
+
     // restore photoSize
     if (d->m_savedPhotoSize == i18n(customPageLayoutName))
     {
@@ -2462,12 +2581,14 @@ void Wizard::pagesetupclicked()
     }
     else
     {
-        QList<QListWidgetItem* > list = d->m_photoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+        QList<QListWidgetItem*> list = d->m_photoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+
         if (list.count())
             d->m_photoPage->ListPhotoSizes->setCurrentItem(list[0]);
         else
             d->m_photoPage->ListPhotoSizes->setCurrentRow(0);
     }
+
     // create our photo sizes list
     previewPhotos();
 }
@@ -2488,15 +2609,15 @@ void Wizard::saveCaptionSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("PrintAssistant"));
     // image captions
-    group.writeEntry("Captions", d->m_photoPage->m_captions->currentIndex());
+    group.writeEntry("Captions",         d->m_photoPage->m_captions->currentIndex());
     // caption color
-    group.writeEntry("CaptionColor", d->m_photoPage->m_font_color->color());
+    group.writeEntry("CaptionColor",     d->m_photoPage->m_font_color->color());
     // caption font
-    group.writeEntry("CaptionFont", QFont(d->m_photoPage->m_font_name->currentFont()));
+    group.writeEntry("CaptionFont",      QFont(d->m_photoPage->m_font_name->currentFont()));
     // caption size
-    group.writeEntry("CaptionSize", d->m_photoPage->m_font_size->value());
+    group.writeEntry("CaptionSize",      d->m_photoPage->m_font_size->value());
     // free caption
-    group.writeEntry("FreeCaption", d->m_photoPage->m_FreeCaptionFormat->text());
+    group.writeEntry("FreeCaption",      d->m_photoPage->m_FreeCaptionFormat->text());
     // same to all
     group.writeEntry("SameCaptionToAll", (d->m_photoPage->m_sameCaption->isChecked() ? 1 : 0));
 }
