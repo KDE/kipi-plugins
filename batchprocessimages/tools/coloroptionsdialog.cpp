@@ -57,6 +57,11 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
     setMainWidget(box);
     QString whatsThis;
 
+    m_depthValue = NULL;
+    m_fuzzDistance = NULL;
+    m_segmentCluster = NULL;
+    m_segmentSmooth = NULL;
+
     if (ColorType == 1)
     { // Depth
         QLabel *m_label_depthValue = new QLabel(i18n("Depth value:"), box);

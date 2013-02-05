@@ -271,8 +271,6 @@ void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
     }
 
     BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(item);
-    if (!pitem)
-        return;
 
     m_ui->m_imageLabel->clear();
 

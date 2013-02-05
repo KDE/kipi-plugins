@@ -55,6 +55,10 @@ ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget* parent,
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
 
+    m_resizeFilterLabel    = NULL;
+    m_resizeFilterComboBox = NULL;
+    m_qualityInput         = NULL;
+
     // setup main widget for the dialog
     setMainWidget(m_mainWidget);
     m_mainWidgetLayout = new QVBoxLayout(m_mainWidget);
@@ -174,6 +178,7 @@ OneDimResizeOptionsDialog::OneDimResizeOptionsDialog(QWidget *parent,
                          : ResizeOptionsBaseDialog(parent, commandBuilder, "OneDim"),
                            m_commandBuilder(commandBuilder)
 {
+    m_sizeInput = NULL;
 }
 
 OneDimResizeOptionsDialog::~OneDimResizeOptionsDialog()
@@ -251,6 +256,11 @@ TwoDimResizeOptionsDialog::TwoDimResizeOptionsDialog(QWidget *parent,
                          : ResizeOptionsBaseDialog(parent, commandBuilder, "TwoDim"),
                            m_commandBuilder(commandBuilder)
 {
+    m_widthInput      = NULL;
+    m_heightInput     = NULL;
+    m_fillCheckBox    = NULL;
+    m_fillColorLabel  = NULL;
+    m_fillColorButton = NULL;
 }
 
 TwoDimResizeOptionsDialog::~TwoDimResizeOptionsDialog()
@@ -357,6 +367,8 @@ NonProportionalResizeOptionsDialog::NonProportionalResizeOptionsDialog(QWidget *
                                   : ResizeOptionsBaseDialog(parent, commandBuilder, "NonProp"),
                                     m_commandBuilder(commandBuilder)
 {
+    m_widthInput = NULL;
+    m_heightInput = NULL;
 }
 
 NonProportionalResizeOptionsDialog::~NonProportionalResizeOptionsDialog()
@@ -444,6 +456,18 @@ PrintPrepareResizeOptionsDialog::PrintPrepareResizeOptionsDialog(QWidget *parent
                                : ResizeOptionsBaseDialog(parent, commandBuilder, "Print"),
                                  m_commandBuilder(commandBuilder)
 {
+    m_paperSizeLabel         = NULL;
+    m_dpiLabel               = NULL;
+    m_customPaperWidthLabel  = NULL;
+    m_customPaperHeightLabel = NULL;
+    m_customDpiLabel         = NULL;
+    m_customPaperWidthInput  = NULL;
+    m_customPaperHeightInput = NULL;
+    m_customDpiInput         = NULL;
+    m_paperSizeComboBox      = NULL;
+    m_dpiComboBox            = NULL;
+    m_customSettingsCheckBox = NULL;
+    m_stretchCheckBox        = NULL;
 }
 
 PrintPrepareResizeOptionsDialog::~PrintPrepareResizeOptionsDialog()

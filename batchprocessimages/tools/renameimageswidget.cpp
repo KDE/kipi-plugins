@@ -81,6 +81,10 @@ RenameImagesWidget::RenameImagesWidget(QWidget* parent, KIPI::Interface* interfa
     ui->setupUi(this);
     readSettings();
 
+    m_progress      = NULL;
+    m_overwriteAll  = false;
+    m_autoSkip      = false;
+
     QMenu* sortMenu = new QMenu(this);
     m_byNameAction  = sortMenu->addAction(i18n("Sort by Name"));
     m_bySizeAction  = sortMenu->addAction(i18n("Sort by Size"));

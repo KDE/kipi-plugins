@@ -71,7 +71,7 @@ protected:
     int  m_spreadRadius;
     int  m_swirlDegrees;
     int  m_waveAmplitude;
-    int  m_waveLenght;
+    int  m_waveLength;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

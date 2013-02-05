@@ -86,6 +86,12 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_latOffset->setBuddy(m_latOffset);
         dvlay->addWidget(m_latOffset);
     }
+    else
+    {
+        m_latWidth = NULL;
+        m_latHeight = NULL;
+        m_latOffset = NULL;
+    }
 
     if (EffectType == 1)
     { // Charcoal
@@ -109,6 +115,11 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_charcoalDeviation->setBuddy(m_charcoalDeviation);
         dvlay->addWidget(m_charcoalDeviation);
     }
+    else
+    {
+        m_charcoalRadius = NULL;
+        m_charcoalDeviation = NULL;
+    }
 
     if (EffectType == 2)
     { // Detect edges
@@ -123,6 +134,10 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                         "a suitable radius."));
         m_label_edgeRadius->setBuddy(m_edgeRadius);
         dvlay->addWidget(m_edgeRadius);
+    }
+    else
+    {
+        m_edgeRadius = NULL;
     }
 
     if (EffectType == 3)
@@ -149,6 +164,11 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_embossDeviation->setBuddy(m_embossDeviation);
         dvlay->addWidget(m_embossDeviation);
     }
+    else
+    {
+        m_embossRadius = NULL;
+        m_embossDeviation = NULL;
+    }
 
     if (EffectType == 4)
     { // Implode
@@ -161,6 +181,10 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                            "the implosion."));
         m_label_implodeFactor->setBuddy(m_implodeFactor);
         dvlay->addWidget(m_implodeFactor);
+    }
+    else
+    {
+        m_implodeFactor = NULL;
     }
 
     if (EffectType == 5)
@@ -176,6 +200,10 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                          "by the radius."));
         m_label_paintRadius->setBuddy(m_paintRadius);
         dvlay->addWidget(m_paintRadius);
+    }
+    else
+    {
+        m_paintRadius = NULL;
     }
 
     if (EffectType == 6)
@@ -202,6 +230,11 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_shadeElevation->setBuddy(m_shadeElevation);
         dvlay->addWidget(m_shadeElevation);
     }
+    else
+    {
+        m_shadeAzimuth = NULL;
+        m_shadeElevation = NULL;
+    }
 
     if (EffectType == 7)
     { // Solarize
@@ -215,6 +248,10 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_solarizeFactor->setBuddy(m_solarizeFactor);
         dvlay->addWidget(m_solarizeFactor);
     }
+    else
+    {
+        m_solarizeFactor = NULL;
+    }
 
     if (EffectType == 8)
     { // Spread
@@ -227,6 +264,10 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                           "pixel in a neighborhood of this extent."));
         m_label_spreadRadius->setBuddy(m_spreadRadius);
         dvlay->addWidget(m_spreadRadius);
+    }
+    else
+    {
+        m_spreadRadius = NULL;
     }
 
     if (EffectType == 9)
@@ -242,6 +283,10 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_swirlDegrees->setBuddy(m_swirlDegrees);
         dvlay->addWidget(m_swirlDegrees);
     }
+    else
+    {
+        m_swirlDegrees = NULL;
+    }
 
     if (EffectType == 10)
     { // Wave
@@ -255,15 +300,20 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_waveAmplitude->setBuddy(m_waveAmplitude);
         dvlay->addWidget(m_waveAmplitude);
 
-        QLabel *m_label_waveLenght = new QLabel(i18n("Length:"), box);
-        dvlay->addWidget(m_label_waveLenght);
-        m_waveLenght = new KIntNumInput(100, box);
-        m_waveLenght->setRange(0, 200);
-        m_waveLenght->setSliderEnabled(true);
-        m_waveLenght->setWhatsThis(i18n("Select here the value which represents the wave length "
+        QLabel *m_label_waveLength = new QLabel(i18n("Length:"), box);
+        dvlay->addWidget(m_label_waveLength);
+        m_waveLength = new KIntNumInput(100, box);
+        m_waveLength->setRange(0, 200);
+        m_waveLength->setSliderEnabled(true);
+        m_waveLength->setWhatsThis(i18n("Select here the value which represents the wave length "
                                         "of the sine wave."));
-        m_label_waveLenght->setBuddy(m_waveLenght);
-        dvlay->addWidget(m_waveLenght);
+        m_label_waveLength->setBuddy(m_waveLength);
+        dvlay->addWidget(m_waveLength);
+    }
+    else
+    {
+        m_waveAmplitude = NULL;
+        m_waveLength = NULL;
     }
 }
 

@@ -55,6 +55,8 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
     setMainWidget(box);
     QString whatsThis;
 
+    m_compressLossLess = NULL;
+
     if (ImageFormatType == 0 || ImageFormatType == 1)
     { // JPEG || PNG
         m_label_imageCompression = new QLabel(i18n("Image compression level:"), box);
@@ -86,6 +88,11 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
                     this, SLOT(slotCompressLossLessEnabled(bool)));
         }
     }
+    else
+    {
+        m_JPEGPNGCompression     = NULL;
+        m_label_imageCompression = NULL;
+    }
 
     if (ImageFormatType == 2)
     { // TIFF
@@ -99,6 +106,10 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
         m_label_imageCompression->setBuddy(m_TIFFCompressionAlgo);
         dvlay->addWidget(m_TIFFCompressionAlgo);
     }
+    else
+    {
+        m_TIFFCompressionAlgo = NULL;
+    }
 
     if (ImageFormatType == 5)
       { // TGA
@@ -110,6 +121,10 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
         m_TGACompressionAlgo->setWhatsThis(i18n("Select here the compression algorithm."));
         m_label_imageCompression->setBuddy(m_TGACompressionAlgo);
         dvlay->addWidget(m_TGACompressionAlgo);
+    }
+    else
+    {
+        m_TGACompressionAlgo = NULL;
     }
 }
 

@@ -71,7 +71,7 @@ public:
     KIntNumInput    *m_swirlDegrees;
 
     KIntNumInput    *m_waveAmplitude;
-    KIntNumInput    *m_waveLenght;
+    KIntNumInput    *m_waveLength;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

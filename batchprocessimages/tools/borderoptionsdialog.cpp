@@ -56,6 +56,17 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
     setMainWidget(box);
     QString whatsThis;
 
+    m_solidBorderWidth              = NULL;
+    m_button_solidBorderColor       = NULL;
+    m_lineNiepceBorderWidth         = NULL;
+    m_button_lineNiepceBorderColor  = NULL;
+    m_NiepceBorderWidth             = NULL;
+    m_button_NiepceBorderColor      = NULL;
+    m_raiseBorderWidth              = NULL;
+    m_frameBorderWidth              = NULL;
+    m_frameBevelBorderWidth         = NULL;
+    m_button_frameBorderColor       = NULL;
+
     if (BorderType == 0)
     { // Solid
         QLabel *m_label_solidBorderWidth = new QLabel(i18n("Border width:"), box);

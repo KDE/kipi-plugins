@@ -66,6 +66,18 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
     layout->setMargin(0);
     setMainWidget(box);
 
+    m_noiseType          = NULL;
+    m_blurRadius         = NULL;
+    m_blurDeviation      = NULL;
+    m_medianRadius       = NULL;
+    m_noiseRadius        = NULL;
+    m_sharpenRadius      = NULL;
+    m_sharpenDeviation   = NULL;
+    m_unsharpenRadius    = NULL;
+    m_unsharpenDeviation = NULL;
+    m_unsharpenPercent   = NULL;
+    m_unsharpenThreshold = NULL;
+
     if (FilterType == 0)
     { // Add noise
         m_noiseType = new KComboBox(false, box);

@@ -163,7 +163,7 @@ void EffectImagesDialog::slotOptionsClicked(void)
     else if (Type == 10)
     { // Wave
         optionsDialog->m_waveAmplitude->setValue(m_waveAmplitude);
-        optionsDialog->m_waveLenght->setValue(m_waveLenght);
+        optionsDialog->m_waveLength->setValue(m_waveLength);
     }
 
     if (optionsDialog->exec() == KMessageBox::Ok)
@@ -214,7 +214,7 @@ void EffectImagesDialog::slotOptionsClicked(void)
 	else if (Type == 10)
         { // Wave
             m_waveAmplitude = optionsDialog->m_waveAmplitude->value();
-            m_waveLenght = optionsDialog->m_waveLenght->value();
+            m_waveLength = optionsDialog->m_waveLength->value();
         }
     }
 
@@ -243,7 +243,7 @@ void EffectImagesDialog::readSettings(void)
     m_spreadRadius      = group.readEntry("SpreadRadius", 3);
     m_swirlDegrees      = group.readEntry("SwirlDegrees", 45);
     m_waveAmplitude     = group.readEntry("WaveAmplitude", 50);
-    m_waveLenght        = group.readEntry("WaveLenght", 100);
+    m_waveLength        = group.readEntry("WaveLength", 100);
 
     readCommonSettings(group);
 }
@@ -272,7 +272,7 @@ void EffectImagesDialog::saveSettings(void)
     group.writeEntry("SpreadRadius", m_spreadRadius);
     group.writeEntry("SwirlDegrees", m_swirlDegrees);
     group.writeEntry("WaveAmplitude", m_waveAmplitude);
-    group.writeEntry("WaveLenght", m_waveLenght);
+    group.writeEntry("WaveLength", m_waveLength);
 
     saveCommonSettings(group);
 }
@@ -369,7 +369,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << "-wave";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_waveAmplitude) + 'x';
-        Temp2.append(Temp.setNum(m_waveLenght));
+        Temp2.append(Temp.setNum(m_waveLength));
         *proc << Temp2;
     }
 
