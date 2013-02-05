@@ -374,6 +374,8 @@ void GalleryTalker::slotResult(KJob *job)
         case(GE_ADDPHOTO):
             parseResponseAddPhoto(d->talker_buffer);
             break;
+        default:   // GE_LOGOUT
+            break;
     }
 
     if (d->state == GE_LOGIN && d->loggedIn)

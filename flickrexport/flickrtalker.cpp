@@ -864,6 +864,9 @@ void FlickrTalker::slotResult(KJob* kjob)
         case (FE_CREATEPHOTOSET):
             parseResponseCreatePhotoSet(m_buffer);
             break;
+
+        default:  // FR_LOGOUT
+            break;
     }
 }
 
