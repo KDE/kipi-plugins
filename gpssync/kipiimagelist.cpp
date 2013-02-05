@@ -48,7 +48,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 KipiImageListDragDropHandler::KipiImageListDragDropHandler(QObject* const parent)
-: QObject(parent)
+    : QObject(parent)
 {
 }
 
@@ -56,10 +56,13 @@ KipiImageListDragDropHandler::~KipiImageListDragDropHandler()
 {
 }
 
-class KipiImageListPrivate
+// ------------------------------------------------------------------------------------------------
+
+class KipiImageList::Private
 {
 public:
-    KipiImageListPrivate()
+
+    Private()
     : editEnabled(true),
       dragEnabled(false),
       model(0),
@@ -71,44 +74,18 @@ public:
     {
     }
 
-    bool editEnabled;
-    bool dragEnabled;
-    KipiImageModel* model;
-    QItemSelectionModel* selectionModel;
-    KipiImageItemDelegate* itemDelegate;
-    KIPI::Interface* interface;
-    KipiImageSortProxyModel *imageSortProxyModel;
+    bool                          editEnabled;
+    bool                          dragEnabled;
+    KipiImageModel*               model;
+    QItemSelectionModel*          selectionModel;
+    KipiImageItemDelegate*        itemDelegate;
+    KIPI::Interface*              interface;
+    KipiImageSortProxyModel*      imageSortProxyModel;
     KipiImageListDragDropHandler* dragDropHandler;
 };
 
-void KipiImageList::startDrag(Qt::DropActions supportedActions)
-{
-    if (!d->dragDropHandler)
-    {
-        QTreeView::startDrag(supportedActions);
-        return;
-    }
-
-    // NOTE: read the selected indices from the source selection model, not our selection model,
-    // which is for the sorted model!
-    const QList<QModelIndex> selectedIndicesFromModel = d->selectionModel->selectedIndexes();
-    QList<QPersistentModelIndex> selectedIndices;
-    for (int i=0; i<selectedIndicesFromModel.count(); ++i)
-    {
-        selectedIndices << selectedIndicesFromModel.at(i);
-    }
-    QMimeData* const dragMimeData = d->dragDropHandler->createMimeData(selectedIndices);
-
-    if (!dragMimeData)
-        return;
-
-    QDrag* const drag = new QDrag(this);
-    drag->setMimeData(dragMimeData);
-    drag->start(Qt::CopyAction);
-}
-
 KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const parent)
-: QTreeView(parent), d(new KipiImageListPrivate())
+    : QTreeView(parent), d(new Private())
 {
     d->interface = interface;
 
@@ -130,10 +107,38 @@ KipiImageList::~KipiImageList()
     delete d;
 }
 
+void KipiImageList::startDrag(Qt::DropActions supportedActions)
+{
+    if (!d->dragDropHandler)
+    {
+        QTreeView::startDrag(supportedActions);
+        return;
+    }
+
+    // NOTE: read the selected indices from the source selection model, not our selection model,
+    // which is for the sorted model!
+    const QList<QModelIndex> selectedIndicesFromModel = d->selectionModel->selectedIndexes();
+    QList<QPersistentModelIndex> selectedIndices;
+
+    for (int i=0; i<selectedIndicesFromModel.count(); ++i)
+    {
+        selectedIndices << selectedIndicesFromModel.at(i);
+    }
+
+    QMimeData* const dragMimeData = d->dragDropHandler->createMimeData(selectedIndices);
+
+    if (!dragMimeData)
+        return;
+
+    QDrag* const drag = new QDrag(this);
+    drag->setMimeData(dragMimeData);
+    drag->start(Qt::CopyAction);
+}
+
 void KipiImageList::setModelAndSelectionModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel)
 {
-    d->model = model;
-    d->selectionModel = selectionModel;
+    d->model               = model;
+    d->selectionModel      = selectionModel;
     d->imageSortProxyModel = new KipiImageSortProxyModel(d->model, d->selectionModel);
     setModel(d->imageSortProxyModel);
 
@@ -152,21 +157,24 @@ void KipiImageList::setDragDropHandler(KipiImageListDragDropHandler* const dragD
     d->dragDropHandler = dragDropHandler;
 }
 
-class KipiImageItemDelegatePrivate
+// ------------------------------------------------------------------------------------------------
+
+class KipiImageItemDelegate::Private
 {
 public:
-    KipiImageItemDelegatePrivate()
+
+    Private()
     : imageList(0),
       thumbnailSize(60)
     {
     }
 
     KipiImageList* imageList;
-    int thumbnailSize;
+    int            thumbnailSize;
 };
 
 KipiImageItemDelegate::KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent)
-: QItemDelegate(parent), d(new KipiImageItemDelegatePrivate())
+    : QItemDelegate(parent), d(new Private())
 {
     d->imageList = imageList;
 }
@@ -190,8 +198,10 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
     {
         painter->fillRect(option.rect, option.palette.highlight());
     }
+
     // TODO: clipping, selected state, disabled state, etc.
     QPixmap itemPixmap = d->imageList->getModel()->getPixmapForIndex(sourceModelIndex, d->thumbnailSize);
+
     if (itemPixmap.isNull())
     {
         // TODO: paint some default logo
@@ -200,7 +210,7 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
     }
 
     const QSize availableSize = option.rect.size();
-    const QSize pixmapSize = itemPixmap.size().boundedTo(availableSize);
+    const QSize pixmapSize    = itemPixmap.size().boundedTo(availableSize);
     QPoint startPoint((availableSize.width()-pixmapSize.width())/2,
                       (availableSize.height()-pixmapSize.height())/2);
     startPoint+=option.rect.topLeft();
@@ -209,7 +219,7 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
 
 QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& sortMappedindex) const
 {
-    if (sortMappedindex.column()==KipiImageItem::ColumnThumbnail)
+    if (sortMappedindex.column() == KipiImageItem::ColumnThumbnail)
     {
         return QSize(d->thumbnailSize, d->thumbnailSize);
     }
@@ -221,9 +231,9 @@ QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const 
 
 void KipiImageItemDelegate::setThumbnailSize(const int size)
 {
-    d->thumbnailSize = size;
-
+    d->thumbnailSize                 = size;
     KipiImageModel* const imageModel = d->imageList->getModel();
+
     if (!imageModel)
         return;
 
@@ -255,6 +265,7 @@ void KipiImageList::slotIncreaseThumbnailSize()
 {
     // TODO: pick reasonable limits and make sure we stay on multiples of 5
     const int currentThumbnailSize = d->itemDelegate->getThumbnailSize();
+
     if (currentThumbnailSize<200)
         setThumbnailSize(currentThumbnailSize+5);
 }
@@ -262,6 +273,7 @@ void KipiImageList::slotIncreaseThumbnailSize()
 void KipiImageList::slotDecreaseThumbnailSize()
 {
     const int currentThumbnailSize = d->itemDelegate->getThumbnailSize();
+
     if (currentThumbnailSize>30)
         setThumbnailSize(currentThumbnailSize-5);
 }
@@ -275,6 +287,7 @@ void KipiImageList::wheelEvent(QWheelEvent* we)
     }
 
     we->accept();
+
     if (we->delta()>0)
     {
         slotIncreaseThumbnailSize();
@@ -294,7 +307,7 @@ void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, c
 void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
 {
     group->writeEntry("Image List Thumbnail Size", d->itemDelegate->getThumbnailSize());
-    group->writeEntry("Header State", header()->saveState());
+    group->writeEntry("Header State",              header()->saveState());
 }
 
 void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
@@ -302,6 +315,7 @@ void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
     setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
 
     const QByteArray headerState = group->readEntry("Header State", QByteArray());
+
     if (!headerState.isEmpty())
     {
         header()->restoreState(headerState);
@@ -346,6 +360,7 @@ void KipiImageList::setDragEnabled(const bool state)
 void KipiImageList::slotUpdateActionsEnabled()
 {
     QTreeView::setDragEnabled(d->dragEnabled&&d->editEnabled);
+
     if (d->dragEnabled&&d->editEnabled)
     {
         QTreeView::setDragDropMode(QAbstractItemView::DragOnly);
@@ -355,16 +370,17 @@ void KipiImageList::slotUpdateActionsEnabled()
 bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
 {
     QHeaderView* const headerView = header();
+
     if ( (watched!=headerView) || (event->type()!=QEvent::ContextMenu) || (!d->model) )
         return QWidget::eventFilter(watched, event);
 
-    QMenu* const menu = new KMenu(this);
+    QMenu* const menu             = new KMenu(this);
 
     // add action for all the columns
     for (int i=0; i<d->model->columnCount(); ++i)
     {
-        const QString columnName = d->model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-        const bool isVisible = !headerView->isSectionHidden(i);
+        const QString columnName    = d->model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+        const bool isVisible        = !headerView->isSectionHidden(i);
 
         KAction* const columnAction = new KAction(columnName, menu);
         columnAction->setCheckable(true);
@@ -377,7 +393,7 @@ bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
     connect(menu, SIGNAL(triggered(QAction*)),
             this, SLOT(slotColumnVisibilityActionTriggered(QAction*)));
 
-    QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+    QContextMenuEvent* const e = static_cast<QContextMenuEvent*>(event);
     menu->exec(e->globalPos());
 
     return true;
@@ -385,7 +401,7 @@ bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
 
 void KipiImageList::slotColumnVisibilityActionTriggered(QAction* action)
 {
-    const int columnNumber = action->data().toInt();
+    const int columnNumber     = action->data().toInt();
     const bool columnIsVisible = action->isChecked();
 
     header()->setSectionHidden(columnNumber, !columnIsVisible);

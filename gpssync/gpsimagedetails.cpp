@@ -56,11 +56,11 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSImageDetails::GPSImageDetailsPrivate
+class GPSImageDetails::Private
 {
 public:
 
-    GPSImageDetailsPrivate()
+    Private()
         : imageModel(0),
           previewManager(0),
           cbCoordinates(0),
@@ -104,7 +104,7 @@ public:
 
 GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel,
                                  const int /*marginHint*/, const int /*spacingHint*/)
-               : QWidget(parent), d(new GPSImageDetailsPrivate())
+    : QWidget(parent), d(new Private())
 {
     d->imageModel = imageModel;
 
@@ -112,7 +112,7 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
 
     QVBoxLayout* const layout1 = new QVBoxLayout(this);
 
-    /* *** *** *** */
+    // ----------------------------------
 
     QFormLayout* const formLayout = new QFormLayout();
     layout1->addLayout(formLayout);
@@ -162,17 +162,15 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     d->pbApply = new QPushButton(i18n("Apply"), this);
     formLayout->setWidget(formLayout->rowCount(), QFormLayout::SpanningRole, d->pbApply);
 
-    /* *** *** *** */
-
     layout1->addWidget(new KSeparator(Qt::Horizontal, this));
 
-    /* *** *** *** */
+    // ----------------------------------
 
     d->previewManager = new KPPreviewManager(this);
     d->previewManager->setMinimumSize(QSize(200, 200));
     layout1->addWidget(d->previewManager);
 
-    /* *** *** *** */
+    // ----------------------------------
 
     connect(d->cbCoordinates, SIGNAL(stateChanged(int)),
             this, SLOT(updateUIState()));
@@ -265,8 +263,8 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
     d->leSpeed->clear();
     d->leNSatellites->clear();
     d->leDop->clear();
-
     d->cbCoordinates->setChecked(gpsData->hasCoordinates());
+
     if (gpsData->hasCoordinates())
     {
         d->leLatitude->setText(KGlobal::locale()->formatNumber(gpsData->getCoordinates().lat(), 12));
@@ -274,6 +272,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         const bool haveAltitude = gpsData->hasAltitude();
         d->cbAltitude->setChecked(haveAltitude);
+
         if (haveAltitude)
         {
             d->leAltitude->setText(KGlobal::locale()->formatNumber(gpsData->getCoordinates().alt(), 12));
@@ -281,6 +280,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         const bool haveSpeed = gpsData->hasSpeed();
         d->cbSpeed->setChecked(haveSpeed);
+
         if (haveSpeed)
         {
             d->leSpeed->setText(KGlobal::locale()->formatNumber(gpsData->getSpeed(), 12));
@@ -288,6 +288,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         const bool haveNSatellites = gpsData->hasNSatellites();
         d->cbNSatellites->setChecked(haveNSatellites);
+
         if (haveNSatellites)
         {
             /// @todo Is this enough for simple integers or do we have to use KLocale?
@@ -296,9 +297,10 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         const int haveFixType = gpsData->hasFixType();
         d->cbFixType->setChecked(haveFixType);
+
         if (haveFixType)
         {
-            const int fixType = gpsData->getFixType();
+            const int fixType      = gpsData->getFixType();
             const int fixTypeIndex = d->comboFixType->findData(QVariant(fixType));
 
             if (fixTypeIndex<0)
@@ -313,6 +315,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         const bool haveDop = gpsData->hasDop();
         d->cbDop->setChecked(haveDop);
+
         if (haveDop)
         {
             d->leDop->setText(KGlobal::locale()->formatNumber(gpsData->getDop(), 2));
@@ -327,13 +330,14 @@ void GPSImageDetails::slotSetCurrentImage(const QModelIndex& index)
     // TODO: slotSetActive may call this function with d->imageIndex as a parameter
     // since we get the index as a reference, we overwrite index when changing d->imageIndex
     QModelIndex indexCopy = index;
-    d->imageIndex = indexCopy;
+    d->imageIndex         = indexCopy;
 
     if (!d->activeState)
     {
         d->haveDelayedState = true;
         return;
     }
+
     d->haveDelayedState = false;
 
     GPSDataContainer gpsData;
@@ -350,8 +354,6 @@ void GPSImageDetails::slotSetCurrentImage(const QModelIndex& index)
         }
     }
 
-    /* *** *** *** */
-
     d->infoOld = gpsData;
     displayGPSDataContainer(&gpsData);
 }
@@ -361,8 +363,8 @@ void GPSImageDetails::slotModelDataChanged(const QModelIndex& topLeft, const QMo
     if (!d->imageIndex.isValid())
         return;
 
-    if ( (topLeft.row()<=d->imageIndex.row()&&bottomRight.row()>=d->imageIndex.row()) &&
-        (topLeft.column()<=d->imageIndex.column()&&bottomRight.column()>=d->imageIndex.column()) )
+    if ((topLeft.row()<=d->imageIndex.row()&&bottomRight.row()>=d->imageIndex.row()) &&
+        (topLeft.column()<=d->imageIndex.column()&&bottomRight.column()>=d->imageIndex.column()))
     {
         if (!d->activeState)
         {
@@ -372,6 +374,7 @@ void GPSImageDetails::slotModelDataChanged(const QModelIndex& topLeft, const QMo
 
         GPSDataContainer gpsData;
         KipiImageItem* const item = d->imageModel->itemFromIndex(d->imageIndex);
+
         if (item)
         {
             d->previewManager->load(item->url().toLocalFile(), true);
@@ -424,8 +427,7 @@ void GPSImageDetails::slotApply()
         }
     }
 
-    KipiImageItem* const gpsItem = d->imageModel->itemFromIndex(d->imageIndex);
-
+    KipiImageItem* const gpsItem      = d->imageModel->itemFromIndex(d->imageIndex);
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
 
     GPSUndoCommand::UndoInfo undoInfo(d->imageIndex);

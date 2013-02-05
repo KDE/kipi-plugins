@@ -44,25 +44,28 @@ class KConfigGroup;
 namespace KIPIGPSSyncPlugin
 {
 
-class KipiImageListPrivate;
 class KipiImageSortProxyModel;
 
 class KipiImageListDragDropHandler : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     KipiImageListDragDropHandler(QObject* const parent = 0);
     virtual ~KipiImageListDragDropHandler();
 
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices) = 0;
 };
 
+// -------------------------------------------------------------------------------------------------
+
 class KipiImageList : public QTreeView
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     explicit KipiImageList(KIPI::Interface* const interface, QWidget* const parent = 0);
     ~KipiImageList();
 
@@ -79,44 +82,54 @@ public:
     void setDragEnabled(const bool state);
 
 Q_SIGNALS:
+
     void signalImageActivated(const QModelIndex& index);
 
 public Q_SLOTS:
+
     void slotIncreaseThumbnailSize();
     void slotDecreaseThumbnailSize();
     void slotUpdateActionsEnabled();
 
 private Q_SLOTS:
+
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
     void slotInternalTreeViewImageActivated(const QModelIndex& index);
     void slotColumnVisibilityActionTriggered(QAction* action);
 
 protected:
-    virtual bool eventFilter(QObject *watched, QEvent *event);
+
+    virtual bool eventFilter(QObject* watched, QEvent* event);
     virtual void startDrag(Qt::DropActions supportedActions);
     virtual void wheelEvent(QWheelEvent* we);
 
 private:
-    KipiImageListPrivate* const d;
+
+    class Private;
+    Private* const d;
 };
 
-class KipiImageItemDelegatePrivate;
+// -------------------------------------------------------------------------------------------------
 
 class KipiImageItemDelegate : public QItemDelegate
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
+
     explicit KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent = 0);
     virtual ~KipiImageItemDelegate();
 
     void setThumbnailSize(const int size);
-    int getThumbnailSize() const;
+    int  getThumbnailSize() const;
+
     virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& sortMappedindex) const;
     virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& sortMappedindex) const;
 
 private:
-    KipiImageItemDelegatePrivate* const d;
-    
+
+    class Private;
+    Private* const d;
 };
 
 } /* KIPIGPSSyncPlugin */

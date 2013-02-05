@@ -82,7 +82,7 @@
 
 namespace KIPIGPSSyncPlugin
 {
-  
+
 /**
  * @class GPSReverseGeocodingWidget
  *
@@ -200,7 +200,7 @@ public:
  * Constructor
  * @param interface The main KIPI interface
  * @param imageModel KIPI image model
- * @param selectionModel KIPI image selection model 
+ * @param selectionModel KIPI image selection model
  * @param parent The parent object
  */
 GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const interface, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent)
@@ -219,6 +219,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     d->tagTreeView = new QTreeView(this);
     d->tagTreeView->setHeaderHidden(true);
     vBoxLayout->addWidget(d->tagTreeView);
+
     Q_ASSERT(d->tagTreeView!=0);
 
     // TODO: workaround until the new libkipi hits the streets
@@ -288,50 +289,50 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     d->languageEdit  = new KComboBox(d->UGridContainer);
 
     /// @todo Is there a ready-made widget for this?
-    d->languageEdit->addItem(i18n("English"),"en");
-    d->languageEdit->addItem(i18n("Arabic"), "ar");
-    d->languageEdit->addItem(i18n("Assamese"), "as");
-    d->languageEdit->addItem(i18n("Byelorussian"), "be");
-    d->languageEdit->addItem(i18n("Bulgarian"), "bg");
-    d->languageEdit->addItem(i18n("Bengali"), "bn");
-    d->languageEdit->addItem(i18n("Chinese"), "zh");
-    d->languageEdit->addItem(i18n("Czech"), "cs");
-    d->languageEdit->addItem(i18n("Croatian"), "hr");
-    d->languageEdit->addItem(i18n("Dutch"), "nl");
-    d->languageEdit->addItem(i18n("German"), "de");
-    d->languageEdit->addItem(i18n("Greek"), "el");
-    d->languageEdit->addItem(i18n("Estonian"), "et");
-    d->languageEdit->addItem(i18n("Finnish"), "fi");
-    d->languageEdit->addItem(i18n("French"), "fr");
-    d->languageEdit->addItem(i18n("Georgian"), "ka");
-    d->languageEdit->addItem(i18n("Hebrew"), "iw");
-    d->languageEdit->addItem(i18n("Hindi"), "hi");
-    d->languageEdit->addItem(i18n("Hungarian"), "hu");
-    d->languageEdit->addItem(i18n("Indonesian"), "in");
-    d->languageEdit->addItem(i18n("Icelandic"), "is");
-    d->languageEdit->addItem(i18n("Italian"), "it");
-    d->languageEdit->addItem(i18n("Japanese"), "ja");
-    d->languageEdit->addItem(i18n("Korean"), "ko");
-    d->languageEdit->addItem(i18n("Lithuanian"), "lt");
-    d->languageEdit->addItem(i18n("Macedonian"), "mk");
-    d->languageEdit->addItem(i18n("Mongolian"), "mn");
-    d->languageEdit->addItem(i18n("Moldavian"), "mo");
-    d->languageEdit->addItem(i18n("Nepali"), "ne");
-    d->languageEdit->addItem(i18n("Polish"), "pl");
-    d->languageEdit->addItem(i18n("Portuguese"), "pt");
-    d->languageEdit->addItem(i18n("Romanian"), "ro");
-    d->languageEdit->addItem(i18n("Russian"), "ru");
-    d->languageEdit->addItem(i18n("Slovak"), "sk");
-    d->languageEdit->addItem(i18n("Slovenian"), "sl");
-    d->languageEdit->addItem(i18n("Samoan"), "sm");
-    d->languageEdit->addItem(i18n("Serbian"), "sr");
-    d->languageEdit->addItem(i18n("Sudanese"), "su");
-    d->languageEdit->addItem(i18n("Spanish"), "es");
-    d->languageEdit->addItem(i18n("Swedish"), "sv");
-    d->languageEdit->addItem(i18n("Thai"), "th");
-    d->languageEdit->addItem(i18n("Turkish"), "tr");
-    d->languageEdit->addItem(i18n("Ukrainian"), "uk");
-    d->languageEdit->addItem(i18n("Vietnamese"), "vi");
+    d->languageEdit->addItem(i18n("English"),       "en");
+    d->languageEdit->addItem(i18n("Arabic"),        "ar");
+    d->languageEdit->addItem(i18n("Assamese"),      "as");
+    d->languageEdit->addItem(i18n("Byelorussian"),  "be");
+    d->languageEdit->addItem(i18n("Bulgarian"),     "bg");
+    d->languageEdit->addItem(i18n("Bengali"),       "bn");
+    d->languageEdit->addItem(i18n("Chinese"),       "zh");
+    d->languageEdit->addItem(i18n("Czech"),         "cs");
+    d->languageEdit->addItem(i18n("Croatian"),      "hr");
+    d->languageEdit->addItem(i18n("Dutch"),         "nl");
+    d->languageEdit->addItem(i18n("German"),        "de");
+    d->languageEdit->addItem(i18n("Greek"),         "el");
+    d->languageEdit->addItem(i18n("Estonian"),      "et");
+    d->languageEdit->addItem(i18n("Finnish"),       "fi");
+    d->languageEdit->addItem(i18n("French"),        "fr");
+    d->languageEdit->addItem(i18n("Georgian"),      "ka");
+    d->languageEdit->addItem(i18n("Hebrew"),        "iw");
+    d->languageEdit->addItem(i18n("Hindi"),         "hi");
+    d->languageEdit->addItem(i18n("Hungarian"),     "hu");
+    d->languageEdit->addItem(i18n("Indonesian"),    "in");
+    d->languageEdit->addItem(i18n("Icelandic"),     "is");
+    d->languageEdit->addItem(i18n("Italian"),       "it");
+    d->languageEdit->addItem(i18n("Japanese"),      "ja");
+    d->languageEdit->addItem(i18n("Korean"),        "ko");
+    d->languageEdit->addItem(i18n("Lithuanian"),    "lt");
+    d->languageEdit->addItem(i18n("Macedonian"),    "mk");
+    d->languageEdit->addItem(i18n("Mongolian"),     "mn");
+    d->languageEdit->addItem(i18n("Moldavian"),     "mo");
+    d->languageEdit->addItem(i18n("Nepali"),        "ne");
+    d->languageEdit->addItem(i18n("Polish"),        "pl");
+    d->languageEdit->addItem(i18n("Portuguese"),    "pt");
+    d->languageEdit->addItem(i18n("Romanian"),      "ro");
+    d->languageEdit->addItem(i18n("Russian"),       "ru");
+    d->languageEdit->addItem(i18n("Slovak"),        "sk");
+    d->languageEdit->addItem(i18n("Slovenian"),     "sl");
+    d->languageEdit->addItem(i18n("Samoan"),        "sm");
+    d->languageEdit->addItem(i18n("Serbian"),       "sr");
+    d->languageEdit->addItem(i18n("Sudanese"),      "su");
+    d->languageEdit->addItem(i18n("Spanish"),       "es");
+    d->languageEdit->addItem(i18n("Swedish"),       "sv");
+    d->languageEdit->addItem(i18n("Thai"),          "th");
+    d->languageEdit->addItem(i18n("Turkish"),       "tr");
+    d->languageEdit->addItem(i18n("Ukrainian"),     "uk");
+    d->languageEdit->addItem(i18n("Vietnamese"),    "vi");
 
     d->serviceLabel    = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
@@ -350,15 +351,15 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
 
     d->UGridContainer->setLayout(gridLayout);
 
-    d->separator = new KSeparator(Qt::Horizontal, this);
+    d->separator         = new KSeparator(Qt::Horizontal, this);
     vBoxLayout->addWidget(d->separator);
 
     d->buttonHideOptions = new QPushButton(i18n("Less options"), this);
     vBoxLayout->addWidget(d->buttonHideOptions);
 
-    d->LGridContainer        = new QWidget(this);
+    d->LGridContainer              = new QWidget(this);
     vBoxLayout->addWidget(d->LGridContainer);
-    QGridLayout* LGridLayout = new QGridLayout(d->LGridContainer);
+    QGridLayout* const LGridLayout = new QGridLayout(d->LGridContainer);
 
     d->xmpLoc = new QCheckBox( i18n("Write tags to XMP"), d->LGridContainer);
     row       = 0;
@@ -482,36 +483,35 @@ void GPSReverseGeocodingWidget::updateUIState()
 
 /**
  * This slot triggeres when the button that start the reverse geocoding process is pressed.
- */ 
+ */
 void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected images:
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
-    int currentServiceIndex = d->serviceComboBox->currentIndex(); 
-    d->currentBackend = d->backendRGList[currentServiceIndex];
-    d->undoCommand = new GPSUndoCommand();
+    int currentServiceIndex             = d->serviceComboBox->currentIndex(); 
+    d->currentBackend                   = d->backendRGList[currentServiceIndex];
+    d->undoCommand                      = new GPSUndoCommand();
     d->undoCommand->setText(i18n("Image tags are changed."));
-    
+
     QList<RGInfo> photoList;
-    QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
+    QString wantedLanguage                 = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString();
     QList<QList<TagData> > returnedSpacers = d->tagModel->getSpacers();
 
     for ( int i = 0; i < selectedItems.count(); ++i)
     {
-
         const QPersistentModelIndex itemIndex = selectedItems.at(i);
-        KipiImageItem* const selectedItem = d->imageModel->itemFromIndex(itemIndex);
+        KipiImageItem* const selectedItem     = d->imageModel->itemFromIndex(itemIndex);
+        const GPSDataContainer gpsData        = selectedItem->gpsData();
 
-        const GPSDataContainer gpsData = selectedItem->gpsData();
          if (!gpsData.hasCoordinates())
             continue;
 
-        const qreal latitude = gpsData.getCoordinates().lat();
+        const qreal latitude  = gpsData.getCoordinates().lat();
         const qreal longitude = gpsData.getCoordinates().lon();
 
         RGInfo photoObj;
-        photoObj.id = itemIndex;
-        photoObj.coordinates = KGeoMap::GeoCoordinates(latitude, longitude);
+        photoObj.id           = itemIndex;
+        photoObj.coordinates  = KGeoMap::GeoCoordinates(latitude, longitude);
 
         photoList << photoObj;
 
@@ -520,8 +520,9 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
     if (!photoList.isEmpty())
     {
-        d->receivedRGCount = 0;
+        d->receivedRGCount  = 0;
         d->requestedRGCount = photoList.count();
+
         emit(signalSetUIEnabled(false, this, SLOT(slotRGCanceled())));
         emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
 
@@ -531,7 +532,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
 /**
  * Hide or shows the extra options.
- */ 
+ */
 void GPSReverseGeocodingWidget::slotHideOptions()
 {
     if (d->hideOptions)
@@ -654,7 +655,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 /**
  * Sets whether the containing widgets are enabled or disabled.
  * @param state If true, the controls are enabled.
- */ 
+ */
 void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
     d->UIEnabled = state;
@@ -663,7 +664,7 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 
 /**
  * Here are filtered the events.
- */ 
+ */
 bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 {
     if (watched == d->tagTreeView)
@@ -723,13 +724,14 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             delete menu;
         }
     }
+
     return QObject::eventFilter(watched, event);
 }
 
 /**
  * Saves the settings of widgets contained in reverse geocoding widget.
  * @param group Here are stored the settings.
- */ 
+ */
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 {
     group->writeEntry("RG Backend",   d->serviceComboBox->currentIndex());
@@ -744,7 +746,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     for (int i=0; i<currentSpacerList.count(); ++i)
     {
         QString spacerName;
-        spacerName.append(QString("Spacerlistname %1").arg(i));  
+        spacerName.append(QString("Spacerlistname %1").arg(i));
         QString spacerType;
         spacerType.append(QString("Spacerlisttype %1").arg(i));
 
@@ -823,7 +825,7 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
 
 /**
  * Adds a tag to tag tree.
- */ 
+ */
 void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 {
     //    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
@@ -904,10 +906,10 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 
 /**
  * Re-adds all deleted tags based on Undo/Redo widget.
- */ 
+ */
 void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
-    for ( int row=0; row<d->imageModel->rowCount(); ++row)
+    for (int row=0; row<d->imageModel->rowCount(); ++row)
     {
         KipiImageItem* const currentItem    = d->imageModel->itemFromIndex(d->imageModel->index(row,0));
         QList<QList<TagData> > tagAddresses = currentItem->getTagList();
@@ -1011,7 +1013,7 @@ void GPSReverseGeocodingWidget::slotRGCanceled()
 
         d->currentlyAskingCancelQuestion = false;
 
-        if (result==KMessageBox::Cancel)
+        if (result == KMessageBox::Cancel)
         {
             // continue
 
@@ -1032,13 +1034,13 @@ void GPSReverseGeocodingWidget::slotRGCanceled()
             return;
         }
 
-        if (result==KMessageBox::No)
+        if (result == KMessageBox::No)
         {
             // discard the tags
             d->undoCommand->undo();
         }
 
-        if (result==KMessageBox::Yes)
+        if (result == KMessageBox::Yes)
         {
             if (d->undoCommand)
             {

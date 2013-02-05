@@ -176,7 +176,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                 auxReturnedFormat.replace(indexFormatFBracket-1,indexFormatLBracket-indexFormatFBracket+2,"");
                 dataAdded               = true;
             }
-
         }
 
         else if (backendName == QString("GeonamesUS"))
@@ -244,7 +243,7 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                 }
             }
             else
-            {  
+            {
                 returnedAddress.replace(indexFBracket-1, indexLBracket-indexFBracket+2, ""); 
 
                 int indexFormatFBracket = auxReturnedFormat.indexOf("{");

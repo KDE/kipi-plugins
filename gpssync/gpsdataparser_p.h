@@ -7,7 +7,7 @@
  * @date   2006-09-19
  * @brief  GPS data file parser (GPX format http://www.topografix.com/gpx.asp).
  *
- * @author Copyright (C) 2006-2010 by Gilles Caulier
+ * @author Copyright (C) 2006-2013 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -40,6 +40,7 @@ namespace KIPIGPSSyncPlugin
 class GPXFileReader : public QXmlDefaultHandler
 {
 public:
+
     GPXFileReader(GPSDataParser::GPXFileData* const dataTarget);
 
     virtual bool characters(const QString& ch);
@@ -49,17 +50,20 @@ public:
     static GPSDataParser::GPXFileData loadGPXFile(const KUrl& url);
 
 private:
+
     void rebuildElementPath();
+
     static QString myQName(const QString& namespaceURI, const QString& localName);
     static QDateTime ParseTime(QString timeString);
 
 private:
+
     GPSDataParser::GPXFileData* const fileData;
-    QString currentElementPath;
-    QStringList currentElements;
-    QString currentText;
-    GPSDataParser::GPXDataPoint currentDataPoint;
-    bool verifyFoundGPXElement;
+    QString                           currentElementPath;
+    QStringList                       currentElements;
+    QString                           currentText;
+    GPSDataParser::GPXDataPoint       currentDataPoint;
+    bool                              verifyFoundGPXElement;
 
     friend class ::TestGPXParsing;
 };

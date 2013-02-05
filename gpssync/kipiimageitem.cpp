@@ -75,10 +75,13 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
             {
                 long num = 0, den = 1;
                 QList<QVariant> list = value.toList();
+
                 if (list.size() >= 1)
                     num = list[0].toInt();
+
                 if (list.size() >= 2)
                     den = list[1].toInt();
+
                 success = meta->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
                 break;
             }
@@ -87,6 +90,7 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
             case QVariant::DateTime:
             {
                 QDateTime dateTime = value.toDateTime();
+
                 if(!dateTime.isValid())
                 {
                     success = false;
@@ -191,6 +195,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         if (info.hasLatitude() && info.hasLongitude())
         {
             m_gpsData.setLatLon(info.latitude(), info.longitude());
+
             if (info.hasAltitude())
             {
                 m_gpsData.setAltitude(info.altitude());
@@ -221,14 +226,17 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
             double lat, lng;
             bool haveCoordinates = meta->getGPSLatitudeNumber(&lat) && meta->getGPSLongitudeNumber(&lng);
+
             if (haveCoordinates)
             {
                 GeoCoordinates coordinates(lat, lng);
                 double alt;
+
                 if (meta->getGPSAltitude(&alt))
                 {
                     coordinates.setAlt(alt);
                 }
+
                 m_gpsData.setCoordinates(coordinates);
             }
         }
@@ -237,10 +245,10 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
          *  therefore no need to read XMP as well?
          */
         // read the remaining GPS information from the file:
-        const QByteArray speedRef = meta->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
-        bool success              = !speedRef.isEmpty();
+        const QByteArray speedRef  = meta->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
+        bool success               = !speedRef.isEmpty();
         long num, den;
-        success &= meta->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
+        success                   &= meta->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
 
         if (success)
         {
@@ -249,8 +257,8 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
                 den = 1.0;
 
             const qreal speedInRef = qreal(num)/qreal(den);
-
             qreal FactorToMetersPerSecond;
+
             if (speedRef.startsWith('K'))
             {
                 // km/h = 1000 * 3600
@@ -283,6 +291,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         // number of satellites
         const QString gpsSatellitesString = meta->getExifTagString("Exif.GPSInfo.GPSSatellites");
         bool satellitesOkay               = !gpsSatellitesString.isEmpty();
+
         if (satellitesOkay)
         {
             /**
@@ -290,6 +299,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
              *       but not detailed information about all satellites.
              */
             const int nSatellites = gpsSatellitesString.toInt(&satellitesOkay);
+
             if (satellitesOkay)
             {
                 m_gpsData.setNSatellites(nSatellites);
@@ -299,9 +309,11 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         // fix type / measure mode
         const QByteArray gpsMeasureModeByteArray = meta->getExifTagData("Exif.GPSInfo.GPSMeasureMode");
         bool measureModeOkay                     = !gpsMeasureModeByteArray.isEmpty();
+
         if (measureModeOkay)
         {
             const int measureMode = gpsMeasureModeByteArray.toInt(&measureModeOkay);
+
             if (measureModeOkay)
             {
                 if ((measureMode==2)||(measureMode==3))
@@ -313,6 +325,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
         // read the DOP value:
         success= meta->getExifTagRational("Exif.GPSInfo.GPSDOP", num, den);
+
         if (success)
         {
             // be relaxed about 0/0
@@ -346,6 +359,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
         {
             return (KGlobal::locale()->formatDateTime(m_dateTime, KLocale::ShortDate, true));
         }
+
         return i18n("Not available");
     }
     else if (role==RoleCoordinates)
@@ -395,19 +409,20 @@ QVariant KipiImageItem::data(const int column, const int role) const
         else if (role==Qt::BackgroundRole)
         {
             const int warningLevel = getWarningLevelFromGPSDataContainer(m_gpsData);
+
             switch (warningLevel)
             {
-            case 1:
-                return QBrush(Qt::green);
-            case 2:
-                return QBrush(Qt::yellow);
-            case 3:
-                // orange
-                return QBrush(QColor(0xff, 0x80, 0x00));
-            case 4:
-                return QBrush(Qt::red);
-            default:
-                break;
+                case 1:
+                    return QBrush(Qt::green);
+                case 2:
+                    return QBrush(Qt::yellow);
+                case 3:
+                    // orange
+                    return QBrush(QColor(0xff, 0x80, 0x00));
+                case 4:
+                    return QBrush(Qt::red);
+                default:
+                    break;
             }
         }
     }
@@ -454,12 +469,15 @@ QVariant KipiImageItem::data(const int column, const int role) const
         {
 
             QString myTagsList;
+
             for (int i = 0; i < m_tagList.count(); ++i)
             {
                 QString myTag;
+
                 for (int j = 0; j < m_tagList[i].count(); ++j)
                 {
                     myTag.append(QString("/") + m_tagList[i].at(j).tagName);
+
                     if (j == 0)
                         myTag.remove(0,1);
                 }
@@ -502,159 +520,162 @@ void KipiImageItem::emitDataChanged()
 void KipiImageItem::setHeaderData(KipiImageModel* const model)
 {
     model->setColumnCount(ColumnGPSImageItemCount);
-    model->setHeaderData(ColumnThumbnail, Qt::Horizontal, i18n("Thumbnail"), Qt::DisplayRole);
-    model->setHeaderData(ColumnFilename, Qt::Horizontal, i18n("Filename"), Qt::DisplayRole);
-    model->setHeaderData(ColumnDateTime, Qt::Horizontal, i18n("Date and time"), Qt::DisplayRole);
-    model->setHeaderData(ColumnLatitude, Qt::Horizontal, i18n("Latitude"), Qt::DisplayRole);
-    model->setHeaderData(ColumnLongitude, Qt::Horizontal, i18n("Longitude"), Qt::DisplayRole);
-    model->setHeaderData(ColumnAltitude, Qt::Horizontal, i18n("Altitude"), Qt::DisplayRole);
-    model->setHeaderData(ColumnAccuracy, Qt::Horizontal, i18n("Accuracy"), Qt::DisplayRole);
-    model->setHeaderData(ColumnDOP, Qt::Horizontal, i18n("DOP"), Qt::DisplayRole);
-    model->setHeaderData(ColumnFixType, Qt::Horizontal, i18n("Fix type"), Qt::DisplayRole);
-    model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"), Qt::DisplayRole);
-    model->setHeaderData(ColumnSpeed, Qt::Horizontal, i18n("Speed"), Qt::DisplayRole);
-    model->setHeaderData(ColumnStatus, Qt::Horizontal, i18n("Status"), Qt::DisplayRole);
-    model->setHeaderData(ColumnTags, Qt::Horizontal, i18n("Tags"), Qt::DisplayRole);
+    model->setHeaderData(ColumnThumbnail,   Qt::Horizontal, i18n("Thumbnail"),      Qt::DisplayRole);
+    model->setHeaderData(ColumnFilename,    Qt::Horizontal, i18n("Filename"),       Qt::DisplayRole);
+    model->setHeaderData(ColumnDateTime,    Qt::Horizontal, i18n("Date and time"),  Qt::DisplayRole);
+    model->setHeaderData(ColumnLatitude,    Qt::Horizontal, i18n("Latitude"),       Qt::DisplayRole);
+    model->setHeaderData(ColumnLongitude,   Qt::Horizontal, i18n("Longitude"),      Qt::DisplayRole);
+    model->setHeaderData(ColumnAltitude,    Qt::Horizontal, i18n("Altitude"),       Qt::DisplayRole);
+    model->setHeaderData(ColumnAccuracy,    Qt::Horizontal, i18n("Accuracy"),       Qt::DisplayRole);
+    model->setHeaderData(ColumnDOP,         Qt::Horizontal, i18n("DOP"),            Qt::DisplayRole);
+    model->setHeaderData(ColumnFixType,     Qt::Horizontal, i18n("Fix type"),       Qt::DisplayRole);
+    model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"),   Qt::DisplayRole);
+    model->setHeaderData(ColumnSpeed,       Qt::Horizontal, i18n("Speed"),          Qt::DisplayRole);
+    model->setHeaderData(ColumnStatus,      Qt::Horizontal, i18n("Status"),         Qt::DisplayRole);
+    model->setHeaderData(ColumnTags,        Qt::Horizontal, i18n("Tags"),           Qt::DisplayRole);
 }
 
 bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int column) const
 {
     switch (column)
     {
-    case ColumnThumbnail:
-        return false;
+        case ColumnThumbnail:
+            return false;
 
-    case ColumnFilename:
-        return m_url < otherItem->m_url;
+        case ColumnFilename:
+            return m_url < otherItem->m_url;
 
-    case ColumnDateTime:
-        return m_dateTime < otherItem->m_dateTime;
+        case ColumnDateTime:
+            return m_dateTime < otherItem->m_dateTime;
 
         case ColumnAltitude:
-    {
-        if (!m_gpsData.hasAltitude())
-            return false;
-
-        if (!otherItem->m_gpsData.hasAltitude())
-            return true;
-
-        return m_gpsData.getCoordinates().alt() < otherItem->m_gpsData.getCoordinates().alt();
-    }
-
-    case ColumnNSatellites:
-    {
-        if (!m_gpsData.hasNSatellites())
-            return false;
-
-        if (!otherItem->m_gpsData.hasNSatellites())
-            return true;
-
-        return m_gpsData.getNSatellites() < otherItem->m_gpsData.getNSatellites();
-    }
-
-    case ColumnAccuracy:
-    {
-        const int myWarning = getWarningLevelFromGPSDataContainer(m_gpsData);
-        const int otherWarning = getWarningLevelFromGPSDataContainer(otherItem->m_gpsData);
-
-        if (myWarning<0)
-            return false;
-
-        if (otherWarning<0)
-            return true;
-
-        if (myWarning!=otherWarning)
-            return myWarning < otherWarning;
-
-        // TODO: this may not be the best way to sort images with equal warning levels
-        //       but it works for now
-
-        if (m_gpsData.hasDop()!=otherItem->m_gpsData.hasDop())
-            return !m_gpsData.hasDop();
-        if (m_gpsData.hasDop()&&otherItem->m_gpsData.hasDop())
         {
-            return m_gpsData.getDop()<otherItem->m_gpsData.getDop();
+            if (!m_gpsData.hasAltitude())
+                return false;
+
+            if (!otherItem->m_gpsData.hasAltitude())
+                return true;
+
+            return m_gpsData.getCoordinates().alt() < otherItem->m_gpsData.getCoordinates().alt();
         }
 
-        if (m_gpsData.hasFixType()!=otherItem->m_gpsData.hasFixType())
-            return m_gpsData.hasFixType();
-        if (m_gpsData.hasFixType()&&otherItem->m_gpsData.hasFixType())
+        case ColumnNSatellites:
         {
-            return m_gpsData.getFixType()>otherItem->m_gpsData.getFixType();
+            if (!m_gpsData.hasNSatellites())
+                return false;
+
+            if (!otherItem->m_gpsData.hasNSatellites())
+                return true;
+
+            return m_gpsData.getNSatellites() < otherItem->m_gpsData.getNSatellites();
         }
 
-        if (m_gpsData.hasNSatellites()!=otherItem->m_gpsData.hasNSatellites())
-            return m_gpsData.hasNSatellites();
-        if (m_gpsData.hasNSatellites()&&otherItem->m_gpsData.hasNSatellites())
+        case ColumnAccuracy:
         {
-            return m_gpsData.getNSatellites()>otherItem->m_gpsData.getNSatellites();
+            const int myWarning    = getWarningLevelFromGPSDataContainer(m_gpsData);
+            const int otherWarning = getWarningLevelFromGPSDataContainer(otherItem->m_gpsData);
+
+            if (myWarning<0)
+                return false;
+
+            if (otherWarning<0)
+                return true;
+
+            if (myWarning!=otherWarning)
+                return myWarning < otherWarning;
+
+            // TODO: this may not be the best way to sort images with equal warning levels
+            //       but it works for now
+
+            if (m_gpsData.hasDop()!=otherItem->m_gpsData.hasDop())
+                return !m_gpsData.hasDop();
+
+            if (m_gpsData.hasDop()&&otherItem->m_gpsData.hasDop())
+            {
+                return m_gpsData.getDop()<otherItem->m_gpsData.getDop();
+            }
+
+            if (m_gpsData.hasFixType()!=otherItem->m_gpsData.hasFixType())
+                return m_gpsData.hasFixType();
+
+            if (m_gpsData.hasFixType()&&otherItem->m_gpsData.hasFixType())
+            {
+                return m_gpsData.getFixType()>otherItem->m_gpsData.getFixType();
+            }
+
+            if (m_gpsData.hasNSatellites()!=otherItem->m_gpsData.hasNSatellites())
+                return m_gpsData.hasNSatellites();
+
+            if (m_gpsData.hasNSatellites()&&otherItem->m_gpsData.hasNSatellites())
+            {
+                return m_gpsData.getNSatellites()>otherItem->m_gpsData.getNSatellites();
+            }
+
+            return false;
         }
 
-        return false;
-    }
+        case ColumnDOP:
+        {
+            if (!m_gpsData.hasDop())
+                return false;
 
-    case ColumnDOP:
-    {
-        if (!m_gpsData.hasDop())
+            if (!otherItem->m_gpsData.hasDop())
+                return true;
+
+            return m_gpsData.getDop() < otherItem->m_gpsData.getDop();
+        }
+
+        case ColumnFixType:
+        {
+            if (!m_gpsData.hasFixType())
+                return false;
+
+            if (!otherItem->m_gpsData.hasFixType())
+                return true;
+
+            return m_gpsData.getFixType() < otherItem->m_gpsData.getFixType();
+        }
+
+        case ColumnSpeed:
+        {
+            if (!m_gpsData.hasSpeed())
+                return false;
+
+            if (!otherItem->m_gpsData.hasSpeed())
+                return true;
+
+            return m_gpsData.getSpeed() < otherItem->m_gpsData.getSpeed();
+        }
+
+        case ColumnLatitude:
+        {
+            if (!m_gpsData.hasCoordinates())
+                return false;
+
+            if (!otherItem->m_gpsData.hasCoordinates())
+                return true;
+
+            return m_gpsData.getCoordinates().lat() < otherItem->m_gpsData.getCoordinates().lat();
+        }
+
+        case ColumnLongitude:
+        {
+            if (!m_gpsData.hasCoordinates())
+                return false;
+
+            if (!otherItem->m_gpsData.hasCoordinates())
+                return true;
+
+            return m_gpsData.getCoordinates().lon() < otherItem->m_gpsData.getCoordinates().lon();
+        }
+
+        case ColumnStatus:
+        {
+            return m_dirty && !otherItem->m_dirty;
+        }
+
+        default:
             return false;
-
-        if (!otherItem->m_gpsData.hasDop())
-            return true;
-
-        return m_gpsData.getDop() < otherItem->m_gpsData.getDop();
-    }
-
-    case ColumnFixType:
-    {
-        if (!m_gpsData.hasFixType())
-            return false;
-
-        if (!otherItem->m_gpsData.hasFixType())
-            return true;
-
-        return m_gpsData.getFixType() < otherItem->m_gpsData.getFixType();
-    }
-
-    case ColumnSpeed:
-    {
-        if (!m_gpsData.hasSpeed())
-            return false;
-
-        if (!otherItem->m_gpsData.hasSpeed())
-            return true;
-
-        return m_gpsData.getSpeed() < otherItem->m_gpsData.getSpeed();
-    }
-
-    case ColumnLatitude:
-    {
-        if (!m_gpsData.hasCoordinates())
-            return false;
-
-        if (!otherItem->m_gpsData.hasCoordinates())
-            return true;
-
-        return m_gpsData.getCoordinates().lat() < otherItem->m_gpsData.getCoordinates().lat();
-    }
-
-    case ColumnLongitude:
-    {
-        if (!m_gpsData.hasCoordinates())
-            return false;
-
-        if (!otherItem->m_gpsData.hasCoordinates())
-            return true;
-
-        return m_gpsData.getCoordinates().lon() < otherItem->m_gpsData.getCoordinates().lon();
-    }
-
-    case ColumnStatus:
-    {
-        return m_dirty && !otherItem->m_dirty;
-    }
-
-    default:
-        return false;
     }
 }
 
@@ -667,21 +688,21 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     bool shouldRemoveCoordinates = false;
     bool shouldWriteCoordinates  = false;
     bool shouldWriteAltitude     = false;
-    qreal altitude  = 0;
-    qreal latitude  = 0;
-    qreal longitude = 0;
+    qreal altitude               = 0;
+    qreal latitude               = 0;
+    qreal longitude              = 0;
 
     // do we have gps information?
     if (m_gpsData.hasCoordinates())
     {
         shouldWriteCoordinates = true;
-        latitude = m_gpsData.getCoordinates().lat();
-        longitude = m_gpsData.getCoordinates().lon();
+        latitude               = m_gpsData.getCoordinates().lat();
+        longitude              = m_gpsData.getCoordinates().lon();
 
         if (m_gpsData.hasAltitude())
         {
             shouldWriteAltitude = true;
-            altitude = m_gpsData.getCoordinates().alt();
+            altitude            = m_gpsData.getCoordinates().alt();
         }
     }
     else
@@ -694,6 +715,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     // first try to write the information to the image file
     bool success = false;
     QScopedPointer<KPMetadata> meta(getMetadataForFile());
+
     if (!meta)
     {
         // TODO: more verbosity!
@@ -719,11 +741,11 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
                 if (success)
                 {
-                    const qreal speedInMetersPerSecond = m_gpsData.getSpeed();
+                    const qreal speedInMetersPerSecond   = m_gpsData.getSpeed();
 
                     // km/h = 0.001 * m / ( s * 1/(60*60) ) = 3.6 * m/s
                     const qreal speedInKilometersPerHour = 3.6 * speedInMetersPerSecond;
-                    success = setExifXmpTagDataVariant(meta.data(), "Exif.GPSInfo.GPSSpeed", "Xmp.exif.GPSSpeed", QVariant(speedInKilometersPerHour));
+                    success                              = setExifXmpTagDataVariant(meta.data(), "Exif.GPSInfo.GPSSpeed", "Xmp.exif.GPSSpeed", QVariant(speedInKilometersPerHour));
                 }
             }
 
@@ -735,26 +757,24 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                  * the number of satellites. Are we using the correct format for the number of satellites here?
                  */
                 success = setExifXmpTagDataVariant(meta.data(),
-                                                         "Exif.GPSInfo.GPSSatellites", "Xmp.exif.GPSSatellites",
-                                                         QVariant(QString::number(m_gpsData.getNSatellites())));
+                                                   "Exif.GPSInfo.GPSSatellites", "Xmp.exif.GPSSatellites",
+                                                   QVariant(QString::number(m_gpsData.getNSatellites())));
             }
 
             if (success && m_gpsData.hasFixType())
             {
                 success = setExifXmpTagDataVariant(meta.data(),
-                                                         "Exif.GPSInfo.GPSMeasureMode", "Xmp.exif.GPSMeasureMode",
-                                                         QVariant(QString::number(m_gpsData.getFixType())));
+                                                   "Exif.GPSInfo.GPSMeasureMode", "Xmp.exif.GPSMeasureMode",
+                                                   QVariant(QString::number(m_gpsData.getFixType())));
             }
 
             // write DOP
             if (success && m_gpsData.hasDop())
             {
-                success = setExifXmpTagDataVariant(
-                        meta.data(),
-                        "Exif.GPSInfo.GPSDOP",
-                        "Xmp.exif.GPSDOP",
-                        QVariant(m_gpsData.getDop())
-                    );
+                success = setExifXmpTagDataVariant(meta.data(),
+                                                   "Exif.GPSInfo.GPSDOP",
+                                                   "Xmp.exif.GPSDOP",
+                                                   QVariant(m_gpsData.getDop()));
             }
 
 
@@ -767,6 +787,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
         {
             // TODO: remove only the altitude if requested
             success = meta->removeGPSInfo();
+
             if (!success)
             {
                 returnString = i18n("Failed to remove GPS info from image");
@@ -787,17 +808,20 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                 {
                     tag.append(QString("/") + currentTagList[j].tagName);
                 }
-                tag.remove(0,1);
 
+                tag.remove(0,1);
                 tagSeq.append(tag);
             }
 
             bool success = meta->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+
             if (!success)
             {
                 returnString = i18n("Failed to save tags to file.");
             }
+
             success = meta->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
+
             if (!success)
             {
                 returnString = i18n("Failed to save tags to file.");
@@ -808,14 +832,15 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     if (success)
     {
         success = meta->save(m_url.path());
+
         if (!success)
         {
             returnString = i18n("Unable to save changes to file");
         }
         else
         {
-            m_dirty = false;
-            m_savedState = m_gpsData;
+            m_dirty        = false;
+            m_savedState   = m_gpsData;
             m_tagListDirty = false;
             m_savedTagList = m_tagList;
         }
@@ -831,6 +856,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
         {
             info.setLatitude(latitude);
             info.setLongitude(longitude);
+
             if (shouldWriteAltitude)
             {
                 info.setAltitude(altitude);
@@ -852,9 +878,11 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
                 QString singleTagPath;
                 QList<TagData> currentTagPath = m_tagList[i];
+
                 for (int j=0; j<currentTagPath.count(); ++j)
                 {
                     singleTagPath.append(QString("%1").arg("/") + currentTagPath[j].tagName);
+
                     if (j == 0)
                     {
                         singleTagPath.remove(0,1);
@@ -882,7 +910,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
  */
 void KipiImageItem::restoreGPSData(const GPSDataContainer& container)
 {
-    m_dirty = !(container == m_savedState);
+    m_dirty   = !(container == m_savedState);
     m_gpsData = container;
     emitDataChanged();
 }
