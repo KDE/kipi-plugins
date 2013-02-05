@@ -65,11 +65,11 @@ PiwigoTalker::PiwigoTalker(QWidget* const parent)
     : m_parent(parent),
       m_state(GE_LOGOUT),
       m_job(0),
-      m_chunkId(0),
-      m_albumId(0),
-      m_photoId(0),
       m_loggedIn(false),
-      m_version(-1)
+      m_chunkId(0),
+      m_version(-1),
+      m_albumId(0),
+      m_photoId(0)
 {
 }
 
@@ -362,15 +362,15 @@ void PiwigoTalker::slotResult(KJob* job)
         case(GE_SETINFO):
             parseResponseSetInfo(m_talker_buffer);
             break;
-        // Support for Web API >= 2.4
         case(GE_ADDPHOTOCHUNK):
+            // Support for Web API >= 2.4
             parseResponseAddPhotoChunk(m_talker_buffer);
             break;
         case(GE_ADDPHOTOSUMMARY):
             parseResponseAddPhotoSummary(m_talker_buffer);
             break;
-        // Support for Web API < 2.4
         case(GE_OLD_ADDPHOTOCHUNK):
+            // Support for Web API < 2.4
             parseResponseOldAddPhoto(m_talker_buffer);
             break;
         case(GE_OLD_ADDTHUMB):
@@ -381,6 +381,8 @@ void PiwigoTalker::slotResult(KJob* job)
             break;
         case(GE_OLD_ADDPHOTOSUMMARY):
             parseResponseOldAddPhotoSummary(m_talker_buffer);
+            break;
+        default:   // GE_LOGOUT
             break;
     }
 
