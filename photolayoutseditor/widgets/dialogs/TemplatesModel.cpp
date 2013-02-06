@@ -77,7 +77,8 @@ QVariant TemplatesModel::data(const QModelIndex & index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    TemplateItem * item = templates[index.row()];
+    TemplateItem* item = templates[index.row()];
+
     if (!item)
         return QVariant();
 
@@ -85,11 +86,14 @@ QVariant TemplatesModel::data(const QModelIndex & index, int role) const
     {
         case Qt::DisplayRole:
             return item->name();
+            break;
         case Qt::DecorationRole:
             return item->icon();
+            break;
         default:
-            return QVariant();
+            break;
     }
+
     return QVariant();
 }
 

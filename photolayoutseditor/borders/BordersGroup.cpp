@@ -305,26 +305,33 @@ int BordersGroup::rowCount(const QModelIndex & parent) const
 {
     if (parent.isValid())
         return 0;
+
     return d->borders.count();
 }
 
 bool BordersGroup::moveRows(int sourcePosition, int sourceCount, int destPosition)
 {
-    if (  (sourcePosition <= destPosition && sourcePosition+sourceCount >= destPosition) ||
-            sourceCount > 0 ||
-            d->borders.count() <= sourcePosition+sourceCount-1 ||
-            sourcePosition < 0 ||
-            destPosition < 0 ||
-            d->borders.count() < destPosition)
+    if (((sourcePosition <= destPosition) && (sourcePosition+sourceCount >= destPosition)) ||
+        sourceCount > 0                                                                    ||
+        d->borders.count() <= sourcePosition+sourceCount-1                                 ||
+        sourcePosition < 0                                                                 ||
+        destPosition < 0                                                                   ||
+        d->borders.count() < destPosition
+       )
         return false;
+
     beginMoveRows(QModelIndex(), sourcePosition, sourcePosition+sourceCount-1, QModelIndex(), destPosition);
     QList<BorderDrawerInterface*> movingItems;
+
     if (destPosition > sourcePosition)
         destPosition -= sourceCount;
+
     while(sourceCount--)
         movingItems.push_back(d->borders.takeAt(sourcePosition));
+
     for ( ; movingItems.count() ; movingItems.pop_back())
         d->borders.insert(destPosition, movingItems.last());
+
     endMoveRows();
     this->refresh();
     emit layoutChanged();

@@ -198,67 +198,72 @@ void ImageLoadingThread::loadRaw(const KUrl& url)
     int width;
     int height;
     int rgbamax;
-    loader->decodeRAWImage(url.path(), settings, ba, width, height, rgbamax);
-
-    ProgressEvent * buildImageEvent = new ProgressEvent(this);
-    buildImageEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Decoding image") ));
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), buildImageEvent);
-    QCoreApplication::processEvents();
-
     QImage img;
-    uchar* image = new uchar[width*height*4];
-    if (image)
+
+    bool b = loader->decodeRAWImage(url.path(), settings, ba, width, height, rgbamax);
+
+    if (b)
     {
-        uchar* dst   = image;
-        uchar* src   = (uchar*)ba.data();
+        ProgressEvent * buildImageEvent = new ProgressEvent(this);
+        buildImageEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Decoding image") ));
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), buildImageEvent);
+        QCoreApplication::processEvents();
 
-        for (int h = 0; h < height; ++h)
+        uchar* image = new uchar[width*height*4];
+        if (image)
         {
-            ProgressEvent * event = new ProgressEvent(this);
-            event->setData(ProgressEvent::ProgressUpdate, d->m_max_progress * (0.7 + 0.3 * (((float)h)/((float)height))) );
-            QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
-            QCoreApplication::processEvents();
+            uchar* dst   = image;
+            uchar* src   = (uchar*)ba.data();
 
-            for (int w = 0; w < width; ++w)
+            for (int h = 0; h < height; ++h)
             {
-                // No need to adapt RGB components accordingly with rgbmax value because dcraw
-                // always return rgbmax to 255 in 8 bits/color/pixels.
+                ProgressEvent * event = new ProgressEvent(this);
+                event->setData(ProgressEvent::ProgressUpdate, d->m_max_progress * (0.7 + 0.3 * (((float)h)/((float)height))) );
+                QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
+                QCoreApplication::processEvents();
 
-                dst[0] = src[2];    // Blue
-                dst[1] = src[1];    // Green
-                dst[2] = src[0];    // Red
-                dst[3] = 0xFF;      // Alpha
+                for (int w = 0; w < width; ++w)
+                {
+                    // No need to adapt RGB components accordingly with rgbmax value because dcraw
+                    // always return rgbmax to 255 in 8 bits/color/pixels.
 
-                dst += 4;
-                src += 3;
+                    dst[0] = src[2];    // Blue
+                    dst[1] = src[1];    // Green
+                    dst[2] = src[0];    // Red
+                    dst[3] = 0xFF;      // Alpha
+
+                    dst += 4;
+                    src += 3;
+                }
+            }
+
+            img = QImage(width, height, QImage::Format_ARGB32);
+
+            uchar* sptr = image;
+            uint*  dptr = (uint*)img.bits();
+
+            uint dim = width * height;
+
+            for (uint i = 0; i < dim; ++i)
+            {
+                *dptr++ = qRgba(sptr[2], sptr[1], sptr[0], sptr[3]);
+                sptr += 4;
             }
         }
-
-        img = QImage(width, height, QImage::Format_ARGB32);
-
-        uchar* sptr = image;
-        uint*  dptr = (uint*)img.bits();
-
-        uint dim = width * height;
-
-        for (uint i = 0; i < dim; ++i)
+        else
         {
-            *dptr++ = qRgba(sptr[2], sptr[1], sptr[0], sptr[3]);
-            sptr += 4;
+            kDebug() << "Failed to allocate memory for loading raw file";
         }
-    }
-    else
-    {
-        kDebug() << "Failed to allocate memory for loading raw file";
-    }
 
-    ProgressEvent* emitEvent = new ProgressEvent(this);
-    emitEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Finishing...") ));
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), emitEvent);
-    QCoreApplication::processEvents();
+        ProgressEvent* emitEvent = new ProgressEvent(this);
+        emitEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Finishing...") ));
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), emitEvent);
+        QCoreApplication::processEvents();
+
+        delete [] image;
+    }
 
     emit imageLoaded(url, img);
-    delete [] image;
     delete loader;
 }
 
