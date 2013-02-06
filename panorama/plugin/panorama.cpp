@@ -7,8 +7,8 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2013 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,7 +46,7 @@ using namespace KIPIPlugins;
 
 int main(int argc, char* argv[])
 {
-    PanoramaAboutData* aboutData = new PanoramaAboutData;
+    PanoramaAboutData* const aboutData = new PanoramaAboutData;
     aboutData->setAppName("panorama");
     aboutData->setCatalogName("kipiplugin_panorama");
 
@@ -59,14 +59,16 @@ int main(int argc, char* argv[])
     KPMetadata::initializeExiv2();
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("layer-visible-on"));
+    aboutData->setProgramLogo(KIcon("panorama"));
 
     KUrl::List urlList;
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
+
     for(int i = 0; i < args->count(); ++i)
     {
         urlList.append(args->url(i));
     }
+
     args->clear();
 
     Manager mngr;

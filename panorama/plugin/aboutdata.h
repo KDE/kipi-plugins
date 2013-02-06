@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2013 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,7 +41,7 @@ public:
         : KPAboutData(ki18n("Panorama Stitching"), 0,
                       KAboutData::License_GPL,
                       ki18n("A tool to automatically stitch images into panorama"),
-                      ki18n("(c) 2011-2012, Benjamin Girault"))
+                      ki18n("(c) 2011-2013, Benjamin Girault"))
     {
          addAuthor(ki18n("Benjamin Girault"),
                    ki18n("Author"),
