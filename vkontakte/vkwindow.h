@@ -122,7 +122,7 @@ protected:
 
     void reset();
 
-    void handleVkError(KJob *kjob);
+    void handleVkError(KJob* kjob);
 
 protected:
 

@@ -1,22 +1,24 @@
-/*
- * A KIPI plugin to export images to VKontakte web service
- * Copyright (C) 2011, 2012
- * Alexander Potashev <aspotashev at gmail dot com>
+/* ============================================================
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This file is a part of kipi-plugins project
+ * http://www.digikam.org
+ *
+ * Date        : 2011-02-19
+ * Description : A KIPI plugin to export images to VKontakte web service.
+ *
+ * Copyright (C) 2011-2012 by Alexander Potashev <aspotashev at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+ * ============================================================ */
 
 #include "vkapi.moc"
 
@@ -24,7 +26,7 @@
 
 #include <QPointer>
 
-// Local includes
+// LibKvkontakte includes
 
 #include <libkvkontakte/authenticationdialog.h>
 #include <libkvkontakte/getapplicationpermissionsjob.h>
@@ -32,9 +34,9 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkAPI::VkAPI(QWidget *parent)
-    : m_parent(parent)
-    , m_authenticated(false)
+VkAPI::VkAPI(QWidget* const parent)
+    : m_parent(parent),
+      m_authenticated(false)
 {
 }
 
@@ -47,7 +49,7 @@ void VkAPI::setAppId(const QString &appId)
     m_appId = appId;
 }
 
-void VkAPI::setInitialAccessToken(const QString &accessToken)
+void VkAPI::setInitialAccessToken(const QString& accessToken)
 {
     // Does nothing if m_accessToken is already set, because this funtion
     // is only for parameter initialization from a configuration file.
@@ -69,7 +71,7 @@ void VkAPI::startAuthentication(bool forceLogout)
 
     if (!m_accessToken.isEmpty())
     {
-        Vkontakte::GetApplicationPermissionsJob* job = new Vkontakte::GetApplicationPermissionsJob(m_accessToken);
+        Vkontakte::GetApplicationPermissionsJob* const job = new Vkontakte::GetApplicationPermissionsJob(m_accessToken);
 
         connect(job, SIGNAL(result(KJob*)),
                 this, SLOT(slotApplicationPermissionCheckDone(KJob*)));
@@ -94,12 +96,15 @@ void VkAPI::startAuthentication(bool forceLogout)
     }
 }
 
-void VkAPI::slotApplicationPermissionCheckDone(KJob *kjob)
+void VkAPI::slotApplicationPermissionCheckDone(KJob* kjob)
 {
-    Vkontakte::GetApplicationPermissionsJob *job = dynamic_cast<Vkontakte::GetApplicationPermissionsJob *>(kjob);
+    Vkontakte::GetApplicationPermissionsJob* const job = dynamic_cast<Vkontakte::GetApplicationPermissionsJob *>(kjob);
     Q_ASSERT(job);
-    if (job->error() || (job->permissions() & 4) != 4) // TODO: rm hardcoded constant
+
+    if (job && (job->error() || (job->permissions() & 4) != 4)) // TODO: rm hardcoded constant
+    {
         startAuthentication(true);
+    }
     else
     {
         m_authenticated = true;
@@ -111,9 +116,9 @@ void VkAPI::slotAuthenticationDialogCanceled()
 {
 }
 
-void VkAPI::slotAuthenticationDialogDone(const QString &accessToken)
+void VkAPI::slotAuthenticationDialogDone(const QString& accessToken)
 {
-    m_accessToken = accessToken;
+    m_accessToken   = accessToken;
     m_authenticated = true;
     emit authenticated();
 }

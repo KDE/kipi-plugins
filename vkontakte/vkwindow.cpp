@@ -84,20 +84,19 @@
 #include "kpversion.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
-
 #include "vkapi.h"
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
 
 #undef SLOT_JOB_DONE_INIT
-#define SLOT_JOB_DONE_INIT(JobClass) \
-    JobClass *job = dynamic_cast<JobClass *>(kjob); \
-    Q_ASSERT(job);          \
-    m_jobs.removeAll(job);  \
-    if (job->error())       \
-    {                       \
-        handleVkError(job); \
-        return;             \
+#define SLOT_JOB_DONE_INIT(JobClass)                     \
+    JobClass* const job = dynamic_cast<JobClass*>(kjob); \
+    Q_ASSERT(job);                                       \
+    m_jobs.removeAll(job);                               \
+    if (job && job->error())                             \
+    {                                                    \
+        handleVkError(job);                              \
+        return;                                          \
     }
 
 namespace KIPIVkontaktePlugin
@@ -107,8 +106,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_albumsBox = NULL;
-
-    m_vkapi = new VkAPI(this);
+    m_vkapi     = new VkAPI(this);
 
     // read settings from file
     readSettings();
@@ -116,18 +114,17 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     connect(this, SIGNAL(finished()),
             this, SLOT(slotFinished()));
 
-    m_import                = import;
-    m_mainWidget            = new QWidget(this);
-    QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
-    m_imgList               = new KPImagesList(this);
+    m_import                      = import;
+    m_mainWidget                  = new QWidget(this);
+    QHBoxLayout* const mainLayout = new QHBoxLayout(m_mainWidget);
+    m_imgList                     = new KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false); // TODO: implement conversion
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload to your VKontakte album."));
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your VKontakte album."));
 
-    m_settingsBox = new QWidget(this);
-    QVBoxLayout *settingsBoxLayout = new QVBoxLayout(m_settingsBox);
+    m_settingsBox                        = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(m_settingsBox);
 
     m_headerLabel = new QLabel(m_settingsBox);
     m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the "
@@ -148,23 +145,22 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), m_settingsBox);
+    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), m_settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where VKontakte images will be downloaded."));
-    QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget               = iface()->uploadWidget(uploadBox);
+    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
+    m_uploadWidget                     = iface()->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
 #if 0
-    QGroupBox *optionsBox = new QGroupBox(i18n("Options"), m_settingsBox);
-    optionsBox->setWhatsThis(
-        i18n("These are options that will be applied to images before upload."));
+    QGroupBox* const optionsBox = new QGroupBox(i18n("Options"), m_settingsBox);
+    optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
 #endif
 
 //     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), m_settingsBox); // store state in kipirc
 
-//     QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
+//     QVBoxLayout* const optionsBoxLayout = new QVBoxLayout(optionsBox);
 //     optionsBoxLayout->addWidget(m_checkKeepOriginal);
 
     m_progressBar = new KPProgressWidget(m_settingsBox);
@@ -211,19 +207,18 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //         optionsBox->hide();
     }
 
-    KPAboutData* about = new KPAboutData(ki18n("VKontakte Plugin"),
-                                         0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A Kipi plugin to export image collections to "
-                                               "VKontakte web service."),
-                                         ki18n("(c) 2007-2009, Vardhman Jain\n"
-                                               "(c) 2008-2010, Gilles Caulier\n"
-                                               "(c) 2009, Luka Renko\n"
-                                               "(c) 2010, Roman Tsisyk\n"
-                                               "(c) 2011, Alexander Potashev"));
+    KPAboutData* const about = new KPAboutData(ki18n("VKontakte Plugin"),
+                                               0,
+                                               KAboutData::License_GPL,
+                                               ki18n("A Kipi plugin to export image collections to "
+                                                     "VKontakte web service."),
+                                               ki18n("(c) 2007-2009, Vardhman Jain\n"
+                                                     "(c) 2008-2013, Gilles Caulier\n"
+                                                     "(c) 2009, Luka Renko\n"
+                                                     "(c) 2010-2013, Roman Tsisyk\n"
+                                                     "(c) 2011-2013, Alexander Potashev"));
 
     about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
-
     about->setHandbookEntry("VKontakte");
     setAboutData(about);
 
@@ -242,6 +237,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
      */
     connect(this, SIGNAL(signalUpdateBusyStatus(bool)),
             this, SLOT(updateBusyStatus(bool)));
+
     connect(m_vkapi, SIGNAL(authenticated()), // TBD: busy status handling needs improvement
             this, SLOT(updateBusyStatusReady()));
 
@@ -364,8 +360,10 @@ void VkontakteWindow::slotButtonClicked(int button)
         case KDialog::Close:
             // TODO: grab better code from picasawebexport/picasawebwindow.cpp:219
             reset();
+            break;
         default:
             KDialog::slotButtonClicked(button);
+            break;
     }
 }
 
@@ -386,14 +384,13 @@ void VkontakteWindow::authCleared()
 
 void VkontakteWindow::updateHeaderLabel()
 {
-    m_headerLabel->setText(
-        QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
-            .arg(m_accountBox->albumsURL()).arg(i18n("VKontakte")));
+    m_headerLabel->setText(QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
+                           .arg(m_accountBox->albumsURL()).arg(i18n("VKontakte")));
 }
 
 //---------------------------------------------------------------------------
 
-void VkontakteWindow::handleVkError(KJob *kjob)
+void VkontakteWindow::handleVkError(KJob* kjob)
 {
     KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
 }
@@ -403,6 +400,7 @@ void VkontakteWindow::handleVkError(KJob *kjob)
 void VkontakteWindow::slotStartTransfer()
 {
     Vkontakte::AlbumInfoPtr album = m_albumsBox->currentAlbum();
+
     if (album.isNull())
     {
         // TODO: offer the user to create an album if there are no albums yet
@@ -416,11 +414,14 @@ void VkontakteWindow::slotStartTransfer()
         emit signalUpdateBusyStatus(true);
 
         QStringList files;
+
         foreach(const KUrl& url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
-        Vkontakte::UploadPhotosJob* job = new Vkontakte::UploadPhotosJob(
-            m_vkapi->accessToken(), files, false /*m_checkKeepOriginal->isChecked()*/, album->aid());
+        Vkontakte::UploadPhotosJob* const job = new Vkontakte::UploadPhotosJob(m_vkapi->accessToken(),
+                                                                               files, 
+                                                                               false /*m_checkKeepOriginal->isChecked()*/,
+                                                                               album->aid());
 
         connect(job, SIGNAL(result(KJob*)),
                 this, SLOT(slotPhotoUploadDone(KJob*)));
