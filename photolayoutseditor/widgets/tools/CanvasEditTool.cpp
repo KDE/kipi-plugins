@@ -77,10 +77,29 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
 
     CanvasEditToolPrivate(CanvasEditTool * parent) :
         m_parent(parent),
-        background_color_widget(0),
 //        background_gradient_widget(0),
+        background_type_widget(0),
+        background_widgets(0),
+        background_color_widget(0),
+        background_color(0),
         background_image_widget(0),
-        background_pattern_widget(0)
+        backgroundImageFormLayout(0),
+        background_image_file(0),
+        background_image_label(0),
+        background_image_scalling(0),
+        background_image_tiled(0),
+        background_alignBox(0),
+        background_image_HAlign(0),
+        background_image_VAlign(0),
+        background_sizeBox(0),
+        background_image_width(0),
+        background_image_height(0),
+        background_image_color(0),
+        border_image_label(0),
+        background_pattern_widget(0),
+        background_pattern_color1(0),
+        background_pattern_color2(0),
+        background_pattern_type(0)
     {
         background_types.insert("Color",    ColorFill);
         background_types.insert("Image",    ImageFill);

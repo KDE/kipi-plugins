@@ -54,17 +54,22 @@ UndoMoveRowsCommand::UndoMoveRowsCommand(int startingRow, int rowsCount, const Q
         m_rows_count = rowsCount;
         m_destination_row = destinationRow;
     }
-#ifdef QT_DEBUG
     else
     {
+        m_src_parent_row = 0;
+        m_dest_parent_row = 0;
+        m_starting_row = 0;
+        m_rows_count = 0;
+        m_destination_row = 0;
+#ifdef QT_DEBUG
         qDebug() << "Can't create UndoMoveRowsCommand [NO MODEL!]:";
         qDebug() << "\tStarting Row =" << startingRow;
         qDebug() << "\tRows count =" << rowsCount;
         qDebug() << "\tDestination Row =" << destinationRow;
         qDebug() << "\tSource Parent =" << sourceParent;
         qDebug() << "\tDestination Parent =" << destinationParent;
-    }
 #endif
+    }
 }
 
 void UndoMoveRowsCommand::redo()

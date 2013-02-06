@@ -52,7 +52,14 @@ using namespace KIPIPhotoLayoutsEditor;
 
 class NewCanvasDialog::Private
 {
-    Private()
+    Private() :
+        stack(0),
+        paperSize(0),
+        templatesList(0),
+        canvasSize(0),
+        horizontalButton(0),
+        verticalButton(0),
+        orientationGroup(0)
     {
         QListWidgetItem* temp = new QListWidgetItem("Custom");
         temp->setData(PAPER_SIZE_ROLE, -1);

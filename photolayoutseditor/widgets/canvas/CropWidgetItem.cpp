@@ -40,7 +40,11 @@ using namespace KIPIPhotoLayoutsEditor;
 
 class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
 {
-    CropWidgetItemPrivate (CropWidgetItem * item) : m_item(item) {}
+    CropWidgetItemPrivate (CropWidgetItem * item) :
+        m_item(item),
+        pressedVHandler(-1),
+        pressedHHandler(-1)
+        {}
     enum
     {
         Top,
@@ -56,6 +60,7 @@ class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
     };
 
     CropWidgetItemPrivate() :
+        m_item(0),
         currentViewTransform(1, 0, 0,    0, 1, 0,   0, 0, 1),
         pressedVHandler(-1),
         pressedHHandler(-1)
