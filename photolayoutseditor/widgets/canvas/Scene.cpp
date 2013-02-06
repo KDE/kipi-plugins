@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Łukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -1381,15 +1381,22 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
     }
 
     QList<QGraphicsItem*> itemsList = this->items(Qt::AscendingOrder);
-    observer->progresChanged(0);
+
+    if (observer)
+        observer->progresChanged(0);
+
     //--------------------------------------------------------
 
-    if (observer) observer->progresName( i18n("Saving background...") );
+    if (observer)
+        observer->progresName( i18n("Saving background...") );
+
     QDomElement background = document.createElement("g");
     background.setAttribute("class", "background");
     background.appendChild(d->m_background->toSvg(document));
     sceneElement.appendChild(background);
-    if (observer) observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
+
+    if (observer)
+        observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
 
     //--------------------------------------------------------
 
@@ -1397,23 +1404,32 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
     foreach(QGraphicsItem* item, itemsList)
     {
         AbstractPhoto * photo = dynamic_cast<AbstractPhoto*>(item);
+
         if (photo)
         {
-            if (observer) observer->progresName( i18n("Saving %1...", photo->name()) );
+            if (observer) 
+                observer->progresName( i18n("Saving %1...", photo->name()) );
+
             QDomDocument photoItemDocument = asTemplate ? photo->toTemplateSvg() : photo->toSvg();
             sceneElement.appendChild( photoItemDocument.documentElement() );
         }
-        if (observer) observer->progresChanged((double)i++ / (double)(itemsList.count()+1.0));
+
+        if (observer)
+            observer->progresChanged((double)i++ / (double)(itemsList.count()+1.0));
     }
 
     //--------------------------------------------------------
 
-    if (observer) observer->progresName( i18n("Saving border...") );
+    if (observer)
+        observer->progresName( i18n("Saving border...") );
+
     QDomElement border = document.createElement("g");
     border.setAttribute("class", "border");
     border.appendChild(d->m_border->toSvg(document));
     sceneElement.appendChild(border);
-    if (observer) observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
+
+    if (observer)
+        observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
 
     return document;
 }
