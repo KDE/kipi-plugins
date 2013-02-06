@@ -49,15 +49,20 @@ class ToolsDockWidget::ToolsDockWidgetPrivate
         canvas_tool(0),
         effects_tool(0),
         text_tool(0),
-        border_tool(0)
-    {}
-    ZoomTool * zoom_tool;
-    CanvasEditTool * canvas_tool;
-    EffectsEditorTool * effects_tool;
-    TextEditorTool * text_tool;
-    BorderEditTool * border_tool;
-    QGridLayout * formLayout;
-    QScrollArea * toolArea;
+        border_tool(0),
+        formLayout(0),
+        toolArea(0)
+    {
+    }
+
+    ZoomTool*          zoom_tool;
+    CanvasEditTool*    canvas_tool;
+    EffectsEditorTool* effects_tool;
+    TextEditorTool*    text_tool;
+    BorderEditTool*    border_tool;
+    QGridLayout*       formLayout;
+    QScrollArea*       toolArea;
+
     friend class ToolsDockWidget;
 };
 

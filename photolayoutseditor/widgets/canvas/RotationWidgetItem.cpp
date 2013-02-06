@@ -106,15 +106,17 @@ public:
 class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
 {
     RotationWidgetItemPrivate(RotationWidgetItem * item) :
-        item(item)
+        item(item),
+        rotation_angle(0.0),
+        elipse_pressed(false)
     {
         m_elipse.addEllipse(-10,-10,20,20);
     }
-    RotationWidgetItem * item;
 
     QPointF viewportToItemPosition(const QPoint & pos, QWidget * widget)
     {
         QGraphicsView *view = 0;
+
         if (widget)
             view = qobject_cast<QGraphicsView *>(widget->parentWidget());
 
@@ -130,6 +132,7 @@ class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
     QRectF itemToViewportRect(const QRectF & rect, QWidget * widget)
     {
         QGraphicsView *view = 0;
+
         if (widget)
             view = qobject_cast<QGraphicsView *>(widget->parentWidget());
 
@@ -157,17 +160,17 @@ class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
                             -20 / currentViewTransform.m22());
     }
 
-    QList<AbstractPhoto*> m_items;
-    QPainterPath rotated_shape;
-    QPointF rotation_point;
-    QPointF rotation_point_offset;
-    QPainterPath m_elipse;
-    QPointF initial_position;
-    QPointF handler_pos;
-    qreal rotation_angle;
-    QTransform currentViewTransform;
-    bool elipse_pressed;
-
+    RotationWidgetItem*                     item;
+    QList<AbstractPhoto*>                   m_items;
+    QPainterPath                            rotated_shape;
+    QPointF                                 rotation_point;
+    QPointF                                 rotation_point_offset;
+    QPainterPath                            m_elipse;
+    QPointF                                 initial_position;
+    QPointF                                 handler_pos;
+    qreal                                   rotation_angle;
+    QTransform                              currentViewTransform;
+    bool                                    elipse_pressed;
     QMap<AbstractPhoto*,RotateItemCommand*> rotate_commands;
 
     friend class RotationWidgetItem;

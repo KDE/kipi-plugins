@@ -30,7 +30,9 @@ using namespace KIPIPhotoLayoutsEditor;
 
 AbstractPhotoPrivate::AbstractPhotoPrivate(AbstractPhoto* item) :
     m_item(item),
-    m_visible(true)
+    m_visible(true),
+    m_effects_group(0),
+    m_borders_group(0)
 {
 }
 

@@ -128,7 +128,8 @@ public:
     PhotoItemImagePathChangeCommand(PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Shape Change"), parent),
         m_item(item),
-        m_image_path(m_item->m_image_path)
+        m_image_path(m_item->m_image_path),
+        command(0)
     {}
     virtual void redo()
     {

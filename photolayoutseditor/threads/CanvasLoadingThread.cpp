@@ -45,11 +45,17 @@ using namespace KIPIPhotoLayoutsEditor;
 
 class CanvasLoadingThread::CanvasLoadingThreadPrivate
 {
-    int i;
-    int count;
-    QMap<AbstractPhoto*,QDomElement> data;
-    QPair<SceneBackground*,QDomElement> background;
-    QPair<SceneBorder*,QDomElement> border;
+    CanvasLoadingThreadPrivate()
+    {
+        i     = 0;
+        count = 0;
+    }
+
+    int                                  i;
+    int                                  count;
+    QMap<AbstractPhoto*, QDomElement>    data;
+    QPair<SceneBackground*, QDomElement> background;
+    QPair<SceneBorder*, QDomElement>     border;
 
     friend class CanvasLoadingThread;
 };

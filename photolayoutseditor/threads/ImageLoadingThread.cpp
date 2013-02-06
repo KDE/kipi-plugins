@@ -62,6 +62,7 @@ class ImageLoadingThread::ImageLoadingThreadPrivate
     ImageLoadingThreadPrivate() :
         m_sem(1),
         m_size(0),
+        m_loaded_bytes(0),
         m_max_progress(1)
     {
     }

@@ -93,6 +93,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         m_rot_item(0),
         m_scale_item(0),
         m_crop_item(0),
+        m_blend_active(false),
         m_readSceneMousePress_listener(0),
         m_readSceneMousePress_enabled(false),
         m_hovered_photo(0)
@@ -114,11 +115,13 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         const QTransform viewTransform = view->viewportTransform();
         return m_scene->items(pointRect, Qt::IntersectsItemShape, Qt::DescendingOrder, viewTransform);
     }
+
     AbstractItemInterface * itemAt(const QPointF & scenePos, QWidget * widget)
     {
         QList<QGraphicsItem*> items = itemsAtPosition(scenePos, widget);
         return items.count() ? dynamic_cast<AbstractItemInterface*>(items.first()) : 0;
     }
+
     QList<AbstractItemInterface*> itemsAt(const QPointF & scenePos, QWidget * widget)
     {
         QList<QGraphicsItem*> items = itemsAtPosition(scenePos, widget);
@@ -131,6 +134,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         }
         return r;
     }
+
     void sendPressEventToItem(AbstractItemInterface * item, QGraphicsSceneMouseEvent * event)
     {
         if (!item)
@@ -143,6 +147,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         event->setLastPos(item->mapFromScene(event->lastScenePos()));
         item->mousePressEvent(event);
     }
+
     void sendMoveEventToItem(AbstractItemInterface * item, QGraphicsSceneMouseEvent * event)
     {
         if (!item)
@@ -155,6 +160,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         event->setLastPos(item->mapFromScene(event->lastScenePos()));
         item->mouseMoveEvent(event);
     }
+
     void sendReleaseEventToItem(AbstractItemInterface * item, QGraphicsSceneMouseEvent * event)
     {
         if (!item)
@@ -167,6 +173,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         event->setLastPos(item->mapFromScene(event->lastScenePos()));
         item->mouseReleaseEvent(event);
     }
+
     void sendDoubleClickEventToItem(AbstractItemInterface * item, QGraphicsSceneMouseEvent * event)
     {
         if (!item)
@@ -179,16 +186,6 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         event->setLastPos(item->mapFromScene(event->lastScenePos()));
         item->mouseDoubleClickEvent(event);
     }
-
-    // Parent scene
-    QGraphicsScene * m_scene;
-    // Scene's model
-    LayersModel * model;
-    LayersSelectionModel * selection_model;
-    // Background item
-    SceneBackground * m_background;
-    // Border item
-    SceneBorder * m_border;
 
     // Used for selecting items
     void deselectSelected()
@@ -203,6 +200,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         m_selected_items.clear();
         m_selected_items_path = QPainterPath();
     }
+
     bool selectPressed()
     {
         if (m_pressed_item)
@@ -220,6 +218,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         }
         return false;
     }
+
     void focusPressed()
     {
         if (!m_pressed_item)
@@ -228,6 +227,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         if (m_pressed_item->flags() & QGraphicsItem::ItemIsFocusable)
             m_pressed_item->setFocus(Qt::MouseFocusReason);
     }
+
     void setSelectionInitialPosition()
     {
         QMap<AbstractPhoto*,QPointF>::iterator it = m_selected_items.begin();
@@ -238,6 +238,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         }
         m_selected_items_path_initial_pos = m_selected_items_path.boundingRect().topLeft();
     }
+
     bool wasMoved()
     {
         QMap<AbstractPhoto*,QPointF>::iterator it = m_selected_items.begin();
@@ -249,32 +250,43 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         }
         return false;
     }
+
+    // Parent scene
+    QGraphicsScene*              m_scene;
+    // Scene's model
+    LayersModel*                 model;
+    LayersSelectionModel*        selection_model;
+    // Background item
+    SceneBackground*             m_background;
+    // Border item
+    SceneBorder*                 m_border;
+
     QMap<AbstractPhoto*,QPointF> m_selected_items;
-    AbstractItemInterface * m_pressed_object;
-    AbstractPhoto * m_pressed_item;
-    QPainterPath m_selected_items_path;
-    QPointF m_selected_items_path_initial_pos;
-    bool m_selected_items_all_movable;
-    bool m_selection_visible;
-    QList<const char *> m_selection_filters;
-    QPointF paste_scene_pos;
+    AbstractItemInterface*       m_pressed_object;
+    AbstractPhoto*               m_pressed_item;
+    QPainterPath                 m_selected_items_path;
+    QPointF                      m_selected_items_path_initial_pos;
+    bool                         m_selected_items_all_movable;
+    bool                         m_selection_visible;
+    QList<const char*>           m_selection_filters;
+    QPointF                      paste_scene_pos;
 
     // Used for rotating items
-    RotationWidgetItem * m_rot_item;
+    RotationWidgetItem*          m_rot_item;
 
     // Used for scaling item
-    ScalingWidgetItem * m_scale_item;
+    ScalingWidgetItem*           m_scale_item;
 
     // Used for cropping items
-    CropWidgetItem * m_crop_item;
-    bool m_blend_active;
+    CropWidgetItem*              m_crop_item;
+    bool                         m_blend_active;
 
     // For reading mouse press
-    MousePressListener * m_readSceneMousePress_listener;
-    bool m_readSceneMousePress_enabled;
+    MousePressListener*          m_readSceneMousePress_listener;
+    bool                         m_readSceneMousePress_enabled;
 
     // Used for drag&drop images
-    PhotoItem * m_hovered_photo;
+    PhotoItem*                   m_hovered_photo;
 
     friend class Scene;
 };
@@ -378,20 +390,24 @@ class KIPIPhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
 };
 class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
 {
-        AbstractPhoto * item;
-        int item_row;
-        AbstractPhoto * item_parent;
-        Scene * m_scene;
-        bool done;
+        AbstractPhoto* item;
+        int            item_row;
+        AbstractPhoto* item_parent;
+        Scene*         m_scene;
+        bool           done;
+
     public:
+
         RemoveItemsCommand(AbstractPhoto * item, Scene * scene, QUndoCommand * parent = 0) :
             QUndoCommand(QString("Remove item"), parent),
             item(item),
+            item_row(0),
             m_scene(scene),
             done(false)
         {
             item_parent = dynamic_cast<AbstractPhoto*>(item->parentItem());
         }
+
         ~RemoveItemsCommand()
         {
             if (done)
@@ -400,6 +416,7 @@ class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
                     delete item;
             }
         }
+
         virtual void redo()
         {
             QPersistentModelIndex parentIndex = QPersistentModelIndex(m_scene->model()->findIndex( item_parent ));
@@ -417,6 +434,7 @@ class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
                 m_scene->QGraphicsScene::removeItem(item);
             done = true;
         }
+
         virtual void undo()
         {
             if (!done)
@@ -441,13 +459,16 @@ class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
             }
             done = false;
         }
+
     private:
+
         static bool compareGraphicsItems(QGraphicsItem * i1, QGraphicsItem * i2)
         {
             if ((i1 && i2) && (i1->zValue() < i2->zValue()))
                 return true;
             return false;
         }
+
         void appendChild(AbstractPhoto * item, const QModelIndex & parent)
         {
             QList<QGraphicsItem*> items = item->childItems();
