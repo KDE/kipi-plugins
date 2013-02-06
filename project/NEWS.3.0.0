@@ -1,0 +1,44 @@
+Kipi-plugins 3.0.0 - Release date: 2013/01/27
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+General  : New tool to export Collection to DLNA device.
+General  : New tool to make video slideshow.
+General  : Port all plugins to KDE XML-GUI framework.
+Panorama : New parser using GNU Flex and GNU Bison instead of Boost::spirit
+Panorama : Manual cropping of the final result
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 305224 - Configure Shortcuts does not provide the option of config.
+002 ==> 306193 - Desktop-file-validate fails on kipiplugins.desktop.
+003 ==> 300723 - Crash when "Next" button clicked from "Set panorama images" window.
+004 ==> 303173 - Gallery export busyloop [patch].
+005 ==> 249066 - digiKam crashes when attempting to upload photo using gallery remote 2 protocol.
+006 ==> 147268 - Problem with unicode export.
+007 ==> 155980 - Cannot connect to remote galleries where apache has mod_security enabled.
+008 ==> 307291 - Improve usability and fix bugs [patch].
+009 ==> 307709 - photivo.png in 48x48 icon folder has a size of 64x64.
+010 ==> 306511 - digiKam crash during start.
+011 ==> 269929 - DLNA interface : Materialize searches using "virtual albums" containing images by links.
+012 ==> 304246 - Adjusting Date & Time adjusts wrong images.
+013 ==> 189998 - EXIF date information incorrect use of AM/PM.
+014 ==> 269869 - Option to import date from file name in annotate dialog.
+015 ==> 299191 - digiKam Advanced slideshow crash.
+016 ==> 308442 - Images are not associated to album if album name contains &amp;.
+017 ==> 308465 - Cannot change file modification timestamp with files having non ASCII characters.
+018 ==> 308834 - Display "Date and time" with seconds in geolocation.
+019 ==> 309997 - kipi-plugins-3.0.0beta3 installs several static libraries.
+020 ==> 311310 - kipi-plugins don't build against libkdcraw 2.0.1.
+021 ==> 303980 - Batch DNG Conversion of files produces multiple files of last file in the queue.
+022 ==> 290652 - Gwenview segfaults when opening the OpenGL image viewer [patch].
+023 ==> 312453 - Panorama tool seems to always attempt 360 degree stitching.
+024 ==> 300206 - Bugzilla crash.
+025 ==> 309339 - Panorama stitching - minor quality of resolution 150.
+026 ==> 313672 - Object::connect: No such slot KIPIPicasawebExportPlugin::PicasawebWidget::slotAnonymousToggled(bool).
+027 ==> 221202 - Export html exif IPTC name data.
+028 ==> 314117 - Segmentation fault on launching import from scanner.
+029 ==> 314244 - Crash while doing a panorama
+030 ==> 305807 - digiKam crash while scanning.
+031 ==> 
