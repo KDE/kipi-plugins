@@ -1,24 +1,28 @@
-/*
- * A KIPI plugin to export images to VKontakte web service
- * Copyright (C) 2011, 2012
- * Alexander Potashev <aspotashev at gmail dot com>
+/* ============================================================
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This file is a part of kipi-plugins project
+ * http://www.digikam.org
+ *
+ * Date        : 2011-03-11
+ * Description : A KIPI plugin to export images to VKontakte web service.
+ *
+ * Copyright (C) 2011-2012 by Alexander Potashev <aspotashev at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+ * ============================================================ */
 
 #include "albumchooserwidget.moc"
+
+// Qt includes
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -29,10 +33,14 @@
 #include <QToolButton>
 #include <KMessageBox>
 
+// LibKvkontakte includes
+
 #include <libkvkontakte/albumlistjob.h>
 #include <libkvkontakte/createalbumjob.h>
 #include <libkvkontakte/editalbumjob.h>
 #include <libkvkontakte/deletealbumjob.h>
+
+// Local includes
 
 #include "vkalbumdialog.h"
 #include "vkapi.h"
@@ -40,43 +48,41 @@
 namespace KIPIVkontaktePlugin
 {
 
-AlbumChooserWidget::AlbumChooserWidget(QWidget *parent, VkAPI *vkapi)
+AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent, VkAPI* const vkapi)
     : QGroupBox(i18nc("@title:group Header above controls for managing albums", "Album"), parent)
 {
-    m_vkapi = vkapi;
+    m_vkapi         = vkapi;
+    m_albumToSelect = -1;
 
     setWhatsThis(i18n("This is the VKontakte album that will be used for the transfer."));
-    QVBoxLayout *albumsBoxLayout = new QVBoxLayout(this);
+    QVBoxLayout* const albumsBoxLayout = new QVBoxLayout(this);
 
-    m_albumsCombo = new KComboBox(this);
+    m_albumsCombo        = new KComboBox(this);
     m_albumsCombo->setEditable(false);
 
-    m_newAlbumButton = new KPushButton(
-        KGuiItem(i18n("New Album"), "list-add",
-                 i18n("Create new VKontakte album")), this);
-    m_reloadAlbumsButton = new KPushButton(
-        KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
-                 i18n("Reload albums list")), this);
+    m_newAlbumButton     = new KPushButton(KGuiItem(i18n("New Album"), "list-add", i18n("Create new VKontakte album")), this);
+    m_reloadAlbumsButton = new KPushButton(KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
+                                           i18n("Reload albums list")), this);
 
-    m_editAlbumButton = new QToolButton(this);
+    m_editAlbumButton    = new QToolButton(this);
     m_editAlbumButton->setToolTip(i18n("Edit selected album"));
     m_editAlbumButton->setEnabled(false);
     m_editAlbumButton->setIcon(KIcon("document-edit"));
 
-    m_deleteAlbumButton = new QToolButton(this);
+    m_deleteAlbumButton  = new QToolButton(this);
     m_deleteAlbumButton->setToolTip(i18n("Delete selected album"));
     m_deleteAlbumButton->setEnabled(false);
     m_deleteAlbumButton->setIcon(KIcon("edit-delete"));
 
-    QWidget *currentAlbumWidget = new QWidget(this);
-    QHBoxLayout *currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
+    QWidget* const currentAlbumWidget           = new QWidget(this);
+    QHBoxLayout* const currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
     currentAlbumWidgetLayout->setContentsMargins(0, 0, 0, 0);
     currentAlbumWidgetLayout->addWidget(m_albumsCombo);
     currentAlbumWidgetLayout->addWidget(m_editAlbumButton);
     currentAlbumWidgetLayout->addWidget(m_deleteAlbumButton);
 
-    QWidget *albumButtons = new QWidget(this);
-    QHBoxLayout *albumButtonsLayout = new QHBoxLayout(albumButtons);
+    QWidget* const albumButtons           = new QWidget(this);
+    QHBoxLayout* const albumButtonsLayout = new QHBoxLayout(albumButtons);
     albumButtonsLayout->setContentsMargins(0, 0, 0, 0);
     albumButtonsLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
     albumButtonsLayout->addWidget(m_newAlbumButton);
@@ -85,11 +91,20 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget *parent, VkAPI *vkapi)
     albumsBoxLayout->addWidget(currentAlbumWidget);
     albumsBoxLayout->addWidget(albumButtons);
 
-    connect(m_newAlbumButton, SIGNAL(clicked()), this, SLOT(slotNewAlbumRequest()));
-    connect(m_editAlbumButton, SIGNAL(clicked()), this, SLOT(slotEditAlbumRequest()));
-    connect(m_deleteAlbumButton, SIGNAL(clicked()), this, SLOT(slotDeleteAlbumRequest()));
-    connect(m_reloadAlbumsButton, SIGNAL(clicked()), this, SLOT(slotReloadAlbumsRequest()));
-    connect(m_vkapi, SIGNAL(authenticated()), this, SLOT(slotReloadAlbumsRequest()));
+    connect(m_newAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()));
+
+    connect(m_editAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotEditAlbumRequest()));
+
+    connect(m_deleteAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotDeleteAlbumRequest()));
+
+    connect(m_reloadAlbumsButton, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()));
+
+    connect(m_vkapi, SIGNAL(authenticated()),
+            this, SLOT(slotReloadAlbumsRequest()));
 }
 
 AlbumChooserWidget::~AlbumChooserWidget()
@@ -107,6 +122,7 @@ void AlbumChooserWidget::clearList()
 Vkontakte::AlbumInfoPtr AlbumChooserWidget::currentAlbum()
 {
     int index = m_albumsCombo->currentIndex();
+
     if (index >= 0)
         return m_albums.at(index);
     else
@@ -121,11 +137,13 @@ void AlbumChooserWidget::selectAlbum(int aid)
     m_albumToSelect = aid;
 
     for (int i = 0; i < m_albums.size(); i ++)
+    {
         if (m_albums.at(i)->aid() == aid)
         {
             m_albumsCombo->setCurrentIndex(i);
             break;
         }
+    }
 }
 
 //------------------------------
@@ -134,6 +152,7 @@ void AlbumChooserWidget::slotNewAlbumRequest()
 {
     Vkontakte::AlbumInfoPtr album(new Vkontakte::AlbumInfo());
     QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album);
+
     if (dlg->exec() == QDialog::Accepted)
     {
         updateBusyStatus(true);
@@ -145,15 +164,17 @@ void AlbumChooserWidget::slotNewAlbumRequest()
 
 void AlbumChooserWidget::startAlbumCreation(Vkontakte::AlbumInfoPtr album)
 {
-    Vkontakte::CreateAlbumJob *job = new Vkontakte::CreateAlbumJob(
-        m_vkapi->accessToken(),
-        album->title(), album->description(),
-        album->privacy(), album->commentPrivacy());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumCreationDone(KJob*)));
+    Vkontakte::CreateAlbumJob* const job = new Vkontakte::CreateAlbumJob(m_vkapi->accessToken(),
+                                                                         album->title(), album->description(),
+                                                                         album->privacy(), album->commentPrivacy());
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumCreationDone(KJob*)));
+
     job->start();
 }
 
-void AlbumChooserWidget::slotAlbumCreationDone(KJob *kjob)
+void AlbumChooserWidget::slotAlbumCreationDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::CreateAlbumJob)
 
@@ -170,10 +191,12 @@ void AlbumChooserWidget::slotAlbumCreationDone(KJob *kjob)
 void AlbumChooserWidget::slotEditAlbumRequest()
 {
     Vkontakte::AlbumInfoPtr album = currentAlbum();
+
     if (album.isNull())
         return;
 
     QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album, true);
+
     if (dlg->exec() == QDialog::Accepted)
     {
         updateBusyStatus(true);
@@ -188,15 +211,17 @@ void AlbumChooserWidget::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
     // Select the same album again in the combobox later (in "slotAlbumsReloadDone()")
     m_albumToSelect = album->aid();
 
-    Vkontakte::EditAlbumJob *job = new Vkontakte::EditAlbumJob(
-        m_vkapi->accessToken(),
-        album->aid(), album->title(), album->description(),
-        album->privacy(), album->commentPrivacy());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumEditingDone(KJob*)));
+    Vkontakte::EditAlbumJob* const job = new Vkontakte::EditAlbumJob(m_vkapi->accessToken(),
+                                                                     album->aid(), album->title(), album->description(),
+                                                                     album->privacy(), album->commentPrivacy());
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumEditingDone(KJob*)));
+
     job->start();
 }
 
-void AlbumChooserWidget::slotAlbumEditingDone(KJob *kjob)
+void AlbumChooserWidget::slotAlbumEditingDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::EditAlbumJob)
 
@@ -210,6 +235,7 @@ void AlbumChooserWidget::slotAlbumEditingDone(KJob *kjob)
 void AlbumChooserWidget::slotDeleteAlbumRequest()
 {
     Vkontakte::AlbumInfoPtr album = currentAlbum();
+
     if (album.isNull())
         return;
 
@@ -229,13 +255,15 @@ void AlbumChooserWidget::slotDeleteAlbumRequest()
 
 void AlbumChooserWidget::startAlbumDeletion(Vkontakte::AlbumInfoPtr album)
 {
-    Vkontakte::DeleteAlbumJob *job = new Vkontakte::DeleteAlbumJob(
-        m_vkapi->accessToken(), album->aid());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumDeletionDone(KJob*)));
+    Vkontakte::DeleteAlbumJob* const job = new Vkontakte::DeleteAlbumJob(m_vkapi->accessToken(), album->aid());
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumDeletionDone(KJob*)));
+
     job->start();
 }
 
-void AlbumChooserWidget::slotAlbumDeletionDone(KJob *kjob)
+void AlbumChooserWidget::slotAlbumDeletionDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::DeleteAlbumJob)
 
@@ -251,6 +279,7 @@ void AlbumChooserWidget::slotReloadAlbumsRequest()
     updateBusyStatus(true);
 
     Vkontakte::AlbumInfoPtr album = currentAlbum();
+
     if (!album.isNull())
         m_albumToSelect = album->aid();
 
@@ -261,18 +290,22 @@ void AlbumChooserWidget::startAlbumsReload()
 {
     updateBusyStatus(true);
 
-    Vkontakte::AlbumListJob *job = new Vkontakte::AlbumListJob(m_vkapi->accessToken());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumsReloadDone(KJob*)));
+    Vkontakte::AlbumListJob* const job = new Vkontakte::AlbumListJob(m_vkapi->accessToken());
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumsReloadDone(KJob*)));
+
     job->start();
 }
 
-void AlbumChooserWidget::slotAlbumsReloadDone(KJob *kjob)
+void AlbumChooserWidget::slotAlbumsReloadDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::AlbumListJob)
 
     m_albumsCombo->clear();
     m_albums = job->list();
-    foreach (const Vkontakte::AlbumInfoPtr &album, m_albums)
+
+    foreach (const Vkontakte::AlbumInfoPtr& album, m_albums)
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
 
     if (m_albumToSelect != -1)
@@ -280,8 +313,8 @@ void AlbumChooserWidget::slotAlbumsReloadDone(KJob *kjob)
         selectAlbum(m_albumToSelect);
         m_albumToSelect = -1;
     }
-    m_albumsCombo->setEnabled(true);
 
+    m_albumsCombo->setEnabled(true);
 
     if (!m_albums.empty())
     {
@@ -300,7 +333,7 @@ void AlbumChooserWidget::updateBusyStatus(bool busy)
 }
 
 // TODO: share this code with `vkwindow.cpp`
-void AlbumChooserWidget::handleVkError(KJob *kjob)
+void AlbumChooserWidget::handleVkError(KJob* kjob)
 {
     KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
 }
