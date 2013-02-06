@@ -57,13 +57,12 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
 
-    QWidget* mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 300);
 
-    QGroupBox* albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), mainWidget);
-    albumBox->setWhatsThis(
-        i18n("These are basic settings for the new VKontakte album."));
+    QGroupBox* const albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), mainWidget);
+    albumBox->setWhatsThis(i18n("These are basic settings for the new VKontakte album."));
 
     m_titleEdit = new KLineEdit(album->title());
     m_titleEdit->setWhatsThis(i18n("Title of the album that will be created (required)."));
@@ -72,13 +71,13 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
     m_summaryEdit->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
 
-    QFormLayout* albumBoxLayout  = new QFormLayout;
+    QFormLayout* const albumBoxLayout  = new QFormLayout;
     albumBoxLayout->addRow(i18n("Title:"),   m_titleEdit);
     albumBoxLayout->addRow(i18n("Summary:"), m_summaryEdit);
     albumBox->setLayout(albumBoxLayout);
 
-    QGroupBox* privacyBox         = new QGroupBox(i18n("Privacy Settings"), mainWidget);
-    QGridLayout* privacyBoxLayout = new QGridLayout;
+    QGroupBox* const privacyBox         = new QGroupBox(i18n("Privacy Settings"), mainWidget);
+    QGridLayout* const privacyBoxLayout = new QGridLayout;
 
     m_albumPrivacyCombo = new KComboBox(privacyBox);
     m_albumPrivacyCombo->addItem(i18n("Only me"),               QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
@@ -98,7 +97,7 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
 
     privacyBox->setLayout(privacyBoxLayout);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(privacyBox);
     mainLayout->setSpacing(spacingHint());

@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2011-03-11
+ * Date        : 2011-02-19
  * Description : A KIPI plugin to export images to VKontakte web service.
  *
  * Copyright (C) 2011-2012 by Alexander Potashev <aspotashev at gmail dot com>
@@ -209,7 +209,7 @@ void AlbumChooserWidget::slotEditAlbumRequest()
 void AlbumChooserWidget::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 {
     // Select the same album again in the combobox later (in "slotAlbumsReloadDone()")
-    m_albumToSelect = album->aid();
+    m_albumToSelect                    = album->aid();
 
     Vkontakte::EditAlbumJob* const job = new Vkontakte::EditAlbumJob(m_vkapi->accessToken(),
                                                                      album->aid(), album->title(), album->description(),
