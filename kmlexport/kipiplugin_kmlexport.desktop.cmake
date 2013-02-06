@@ -6,6 +6,7 @@ Comment[ca]=Un connector per crear fitxers KML per presentar imatges amb coorden
 Comment[ca@valencia]=Un connector per crear fitxers KML per presentar imatges amb coordenades.
 Comment[cs]=Modul pro vytváření KML souborů k zobrazování snímků se souřadnicemi.
 Comment[da]=Et plugin til at oprette KML-filer til at præsentere billeder med koordinater.
+Comment[de]=Ein Modul zum Erstellen von KML-Dateien, um Bilder mit Koordinaten zu versehen.
 Comment[el]=Ένα πρόσθετο δημιουργίας αρχείων KML για την παρουσίαση εικόνων με συντεταγμένες.
 Comment[en_GB]=A plugin to create KML files to present images with coordinates.
 Comment[es]=Un complemento para crear archivos KML para presentar imágenes con coordenadas.
