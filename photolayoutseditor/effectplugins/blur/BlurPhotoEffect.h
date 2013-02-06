@@ -109,16 +109,16 @@ namespace KIPIPhotoLayoutsEditor
 
             static QImage blurred(const QImage & image, const QRect& rect, unsigned int radius)
             {
-                int tab[] = { 14, 10, 8, 6, 5, 5, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 };
-                int alpha = (radius < 1)  ? 16 : (radius > sizeof(tab)) ? 1 : tab[radius-1];
+                int tab[]     = { 14, 10, 8, 6, 5, 5, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 };
+                int alpha     = (radius < 1)  ? 16 : (radius > (sizeof(tab) / sizeof(int))) ? 1 : tab[radius-1];
 
                 QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-                int r1 = rect.top();
-                int r2 = rect.bottom();
-                int c1 = rect.left();
-                int c2 = rect.right();
+                int r1        = rect.top();
+                int r2        = rect.bottom();
+                int c1        = rect.left();
+                int c2        = rect.right();
 
-                int bpl = result.bytesPerLine();
+                int bpl       = result.bytesPerLine();
                 int rgba[4];
                 unsigned char * p;
 
