@@ -28,7 +28,6 @@ namespace KIPIImgurExportPlugin
 void ImgurUploadInformation::ImgurUploadInformation(QWidget* const parent = 0)
     : QDialog(parent)
 {
-
 }
 
 void ImgurUploadInformation::~ImgurUploadInformation()
@@ -36,34 +35,34 @@ void ImgurUploadInformation::~ImgurUploadInformation()
 
 }
 
-void ImgurUploadInformation::setTitle (QString &text)
+void ImgurUploadInformation::setTitle(const QString& text)
 {
     d.title = text;
 }
 
-QString ImgurUploadInformation::title (void)
+QString ImgurUploadInformation::title()
 {
     return d.title;
 }
 
-void ImgurUploadInformation::setCaption (QString &text)
+void ImgurUploadInformation::setCaption(const QString& text)
 {
     d.caption = text;
 }
 
-QString ImgurUploadInformation::Caption (void)
+QString ImgurUploadInformation::Caption ()
 {
     return d.caption;
 }
 
-void ImgurUploadInformation::setFileUrl (KUrl filePath)
+void ImgurUploadInformation::setFileUrl(const KUrl& filePath)
 {
     d.fileUrl = filePath;
 }
 
-KUrl ImgurUploadInformation::fileUrl (void)
+KUrl ImgurUploadInformation::fileUrl()
 {
     return d.fileUrl;
 }
 
-}
+} // namespace KIPIImgurExportPlugin

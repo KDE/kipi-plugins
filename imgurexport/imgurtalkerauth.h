@@ -65,31 +65,35 @@ class ImgurTalkerAuth : public ImgurTalker
     Q_OBJECT
 
 public:
+
     ImgurTalkerAuth(Interface* const iface, QWidget* const parent = 0);
     ~ImgurTalkerAuth();
-    void        imageUpload(const KUrl& filePath);
-    void        cancel();
+
+    void imageUpload(const KUrl& filePath);
+    void cancel();
 
 Q_SIGNALS:
-    void        signalAuthenticated (bool authenticated, const QString& message = "");
+
+    void signalAuthenticated(bool authenticated, const QString& message = "");
 
 private:
-    bool            parseLoginResponse (const QByteArray& data);
-    const QString   getAuthError (KQOAuthManager::KQOAuthError error);
+    bool            parseLoginResponse(const QByteArray& data);
+    const QString   getAuthError(KQOAuthManager::KQOAuthError error);
 
 private Q_SLOTS:
+
     void slotOAuthLogin();
-    void slotTemporaryTokenReceived(QString temporaryToken, QString temporaryTokenSecret);
-    void slotAuthorizationReceived(QString token, QString verifier);
-    void slotAccessTokenReceived(QString token, QString tokenSecret);
+    void slotTemporaryTokenReceived(const QString& temporaryToken, const QString& temporaryTokenSecret);
+    void slotAuthorizationReceived(const QString& token, const QString& verifier);
+    void slotAccessTokenReceived(const QString& token, const QString& tokenSecret);
     void slotAuthorizedRequestDone();
-    void slotRequestReady(QByteArray);
+    void slotRequestReady(const QByteArray&);
     void slotContinueUpload(bool yes);
 
 private:
-    class ImgurTalkerAuthPriv;
-    ImgurTalkerAuthPriv* const d;
 
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

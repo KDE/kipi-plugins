@@ -63,8 +63,8 @@ private:
 
 private:
 
-    class Plugin_ImgurExportPriv;
-    Plugin_ImgurExportPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

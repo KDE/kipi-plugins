@@ -89,7 +89,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
                                    0,
                                    KAboutData::License_GPL,
                                    ki18n("A tool to export images to Imgur web service"),
-                                   ki18n("(c) 2012, Marius Orcsik"));
+                                   ki18n("(c) 2012-2013, Marius Orcsik"));
 
     about->addAuthor(ki18n("Marius Orcsik"), ki18n("Author and Maintainer"),
                      "marius at habarnam dot ro");
@@ -198,7 +198,7 @@ void ImgurWindow::slotImageQueueChanged()
     enableButton(User1, !d->webService->imageQueue()->isEmpty());
 }
 
-void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, ImgurError error)
+void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, const ImgurError& error)
 {
     if (!d->webService->imageQueue()->isEmpty())
     {
@@ -208,7 +208,8 @@ void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, ImgurError err
             == KMessageBox::Continue)
         {
             emit signalContinueUpload(true);
-        } else
+        }
+        else
         {
             emit signalContinueUpload(false);
         }
@@ -222,7 +223,7 @@ void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, ImgurError err
     return;
 }
 
-void ImgurWindow::slotAddPhotoSuccess(const KUrl& /*currentImage*/, ImgurSuccess /*success*/)
+void ImgurWindow::slotAddPhotoSuccess(const KUrl& /*currentImage*/, const ImgurSuccess& /*success*/)
 {
    emit signalContinueUpload(true);
 }

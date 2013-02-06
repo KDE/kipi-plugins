@@ -7,7 +7,7 @@
  * Description : a tool to export images to imgur.com
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008      by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
@@ -99,6 +99,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
     m_buffer.append(str);
     m_buffer.append("\r\n");
+
     return true;
 }
 

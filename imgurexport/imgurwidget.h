@@ -63,8 +63,8 @@ Q_SIGNALS:
 
     void signalEnableAuthentication(bool yes);
     void signalClickedChangeUser();
-    void signalImageUploadSuccess(const KUrl& imgPath, ImgurSuccess success);
-    void signalImageUploadError(const KUrl& imgPath, ImgurError error);
+    void signalImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess& success);
+    void signalImageUploadError(const KUrl& imgPath, const ImgurError& error);
 //    void signalLoggedUserChanged(QString loggedUser);
 //    void signalCredentialsChanged(QString loggedUser, QString passwd);
 
@@ -73,8 +73,8 @@ public Q_SLOTS:
     void slotAddItems(const KUrl::List& list);
     void slotRemoveItems(const KUrl::List& list);
     void slotImageUploadStart(const KUrl& imgPath);
-    void slotImageUploadSuccess(const KUrl& imgPath, ImgurSuccess success);
-    void slotImageUploadError(const KUrl& imgPath, ImgurError error);
+    void slotImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess& success);
+    void slotImageUploadError(const KUrl& imgPath, const ImgurError& error);
     void slotImageListChanged();
 
 
@@ -83,12 +83,12 @@ public Q_SLOTS:
 //    void slotChangeUserDialog();
 //    void slotSetLoggedUser(bool ok);
 //    void slotCredentialsSet();
-//    void slotLoadedNamePass(QString name, QString pass);
+//    void slotLoadedNamePass(const QString& name, const QString& pass);
 
 private:
 
-    class ImgurWidgetPriv;
-    ImgurWidgetPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

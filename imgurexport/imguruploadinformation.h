@@ -43,23 +43,25 @@ class ImgurUploadInformation : public QDialog
 {
     Q_OBJECT
 
-private:
-    ImgurUpload d;
-
 public:
+
     ImgurUploadInformation(QWidget* const parent = 0);
     ~ImgurUploadInformation();
 
-    void setTitle (QString &text);
-    QString title (void);
+    void setTitle(const QString& text);
+    QString title();
 
-    void setCaption (QString &text);
-    QString Caption (void);
+    void setCaption(const QString& text);
+    QString Caption();
 
-    void setFileUrl (KUrl filePath);
-    KUrl fileUrl (void);
+    void setFileUrl(const KUrl& filePath);
+    KUrl fileUrl();
 
+private:
+
+    ImgurUpload d;
 };
+
 } // namespace KIPIImgurExportPlugin
 
 #endif /* IMGURUPLOADINFORMATION_H */

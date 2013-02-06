@@ -49,11 +49,11 @@ namespace KIPIImgurExportPlugin
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
 
-class Plugin_ImgurExport::Plugin_ImgurExportPriv
+class Plugin_ImgurExport::Private
 {
 public:
 
-    Plugin_ImgurExportPriv()
+    Private()
     {
         actionExport = 0;
         winExport    = 0;
@@ -65,7 +65,7 @@ public:
 
 Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList& args)
     : Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport"),
-      d(new Plugin_ImgurExportPriv)
+      d(new Private)
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
