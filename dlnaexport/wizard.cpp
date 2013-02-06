@@ -95,15 +95,15 @@ Wizard::Wizard(QWidget* const parent)
 
     //--------------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("DLNA Export"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to export image collections via DLNA\n"
-                                   "Using LibHUpnp %1\n"
-                                   "Using LibHUpnpAv %2\n")
-                                   .subs(Upnp::hupnpCoreVersion())
-                                   .subs(Upnp::Av::hupnpAvVersion()),
-                             ki18n("(c) 2012, Smit Mehta"));
+    KPAboutData* const about = new KPAboutData(ki18n("DLNA Export"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin to export image collections via DLNA\n"
+                                         "Using LibHUpnp %1\n"
+                                         "Using LibHUpnpAv %2\n")
+                                         .subs(Upnp::hupnpCoreVersion())
+                                         .subs(Upnp::Av::hupnpAvVersion()),
+                                   ki18n("(c) 2012-2013, Smit Mehta"));
 
     about->addAuthor(ki18n( "Smit Mehta" ),
                      ki18n("Author and maintainer"),

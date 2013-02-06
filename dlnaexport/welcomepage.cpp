@@ -77,9 +77,9 @@ public:
 WelcomePage::WelcomePage(QWidget* const parent)
     : QWidget(parent), d(new Private)
 {
-    QGridLayout* mainLayout        = new QGridLayout(this);
-    QWidget* settingsBox           = new QWidget(this);
-    QGridLayout* settingsBoxLayout = new QGridLayout(settingsBox);
+    QGridLayout* const mainLayout        = new QGridLayout(this);
+    QWidget* const settingsBox           = new QWidget(this);
+    QGridLayout* const settingsBoxLayout = new QGridLayout(settingsBox);
 
     d->iconLbl  = new QLabel(this);
     d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
@@ -91,7 +91,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
                                  "<font color=\"#9ACD32\">DLNA Export</font>"
                                  "</a></h2></b>"));
 
-    d->binariesLbl = new QLabel("<b>DLNAExport Binaries' requirement (Optional)</b>", settingsBox);
+    d->binariesLbl    = new QLabel("<b>DLNAExport Binaries' requirement (Optional)</b>", settingsBox);
     d->binariesWidget = new KPBinarySearch(settingsBox);
     d->binariesWidget->addBinary(d->minidlnaBinary);
 
@@ -144,7 +144,7 @@ void WelcomePage::slotChangeOptions(bool flag)
     }
     else
     {
-        d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
+        d->implementationGetOption->insertItem(WelcomePage::HUPNP,    "HUPnP API");
         d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
     }
 }

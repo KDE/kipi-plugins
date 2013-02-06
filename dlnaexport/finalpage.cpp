@@ -93,7 +93,7 @@ public:
 FinalPage::FinalPage(QWidget* const parent)
     : QWidget(parent), d(new Private)
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
 
     // -------------------------------------------------------------------
 

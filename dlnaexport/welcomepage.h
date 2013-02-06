@@ -48,7 +48,7 @@ public:
     ~WelcomePage();
 
     WelcomePage::ImplementationGetOption getImplementationOptionSelected() const;
-    QString getMinidlnaBinaryPath() const;
+    QString getMinidlnaBinaryPath()                                        const;
 
 public Q_SLOTS:
 
