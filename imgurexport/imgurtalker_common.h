@@ -46,16 +46,18 @@ namespace KIPIImgurExportPlugin
 class ImgurConnection
 {
 public:
-    static QString APIuploadURL() {return QString ("https://api.imgur.com/2/upload.json");}
-    static QString APIdeleteURL() {return QString ("https://api.imgur.com/2/delete.json");}
-    static QString OAuthTokenEndPoint() {return QString ("https://api.imgur.com/oauth/request_token");}
-    static QString OAuthAccessEndPoint() {return QString ("https://api.imgur.com/oauth/access_token");}
+
+    static QString APIuploadURL()               {return QString ("https://api.imgur.com/2/upload.json");}
+    static QString APIdeleteURL()               {return QString ("https://api.imgur.com/2/delete.json");}
+    static QString OAuthTokenEndPoint()         {return QString ("https://api.imgur.com/oauth/request_token");}
+    static QString OAuthAccessEndPoint()        {return QString ("https://api.imgur.com/oauth/access_token");}
     static QString OAuthAuthorizationEndPoint() {return QString ("https://api.imgur.com/oauth/authorize");}
 
-    static KUrl originalURL(QString imageHash) { return KUrl ("http://i.imgur.com/" + imageHash + ".jpg"); } // this is wrong
-    static KUrl pageURL(QString imageHash) { return KUrl ("http://imgur.com/" + imageHash);}
-    static KUrl deleteURL(QString deleteHash) { return KUrl ("http://imgur.com/delete/" + deleteHash);}
+    static KUrl originalURL(QString imageHash)  { return KUrl ("http://i.imgur.com/" + imageHash + ".jpg"); } // this is wrong
+    static KUrl pageURL(QString imageHash)      { return KUrl ("http://imgur.com/" + imageHash);}
+    static KUrl deleteURL(QString deleteHash)   { return KUrl ("http://imgur.com/delete/" + deleteHash);}
 };
+
 /*
 QString ImgurConnection::uploadURL = QString ("https://api.imgur.com/2/upload.json");
 QString ImgurConnection::deleteURL = QString ("https://api.imgur.com/2/delete.json");
@@ -71,17 +73,25 @@ struct ImgurError
         POST = 0,
         GET,
         HEAD
-    } method;
+    };
 
     enum ImgurFormat
     {
         XML = 0,
         JSON
-    } format;
+    };
 
-    QString  message;
-    QString  request;
-    QVariant parameters;
+    ImgurError()
+    {
+        method = POST;
+        format = XML;
+    }
+
+    ImgurMethod method;
+    ImgurFormat format;
+    QString     message;
+    QString     request;
+    QVariant    parameters;
 };
 
 // -----------------------------------------------------------------------------

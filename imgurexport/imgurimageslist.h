@@ -43,6 +43,7 @@ class ImgurImagesList : public KPImagesList
     Q_OBJECT
 
 public:
+
     /* The different columns in a list. */
     enum FieldType
     {
@@ -64,8 +65,8 @@ public:
 public Q_SLOTS:
 
     void slotAddImages(const KUrl::List& list);
-    void slotUploadSuccess(const KUrl& imageUrl, ImgurSuccess success);
-    void slotUploadError(const KUrl& imageUrl, ImgurError error);
+    void slotUploadSuccess(const KUrl& imageUrl, const ImgurSuccess& success);
+    void slotUploadError(const KUrl& imageUrl, const ImgurError& error);
     void slotDoubleClick(QTreeWidgetItem* element, int i);
 };
 

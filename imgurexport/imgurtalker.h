@@ -58,54 +58,61 @@ class ImgurTalker : public QWidget
     Q_OBJECT
 
 public:
+
     enum State
     {
         IE_ADDPHOTO = 1,
         IE_REMOVEPHOTO,
-        IE_LOGIN
+        IE_LOGIN,
+        IR_LOGOUT
     };
+
+public:
 
     ImgurTalker(Interface* const iface, QWidget* const parent = 0);
     ~ImgurTalker();
 
     KUrl        currentUrl() const;
-    void        setCurrentUrl(const KUrl u);
+    void        setCurrentUrl(const KUrl& u);
     void        cancel();
     bool        imageRemove(const QString& hash);
     KUrl::List* imageQueue() const;
     void        imageUpload(const KUrl& filePath);
-    void        parseResponse(QByteArray result);
+    void        parseResponse(const QByteArray& result);
 
 Q_SIGNALS:
     void signalUploadProgress(int);
     void signalBusy(bool busy);
-    void signalUploadStart(KUrl currentFile);
-    void signalUploadDone(KUrl currentFile);
-    void signalError(KUrl currentFile, ImgurError err);
-    void signalSuccess(KUrl currentFile, ImgurSuccess success);
+    void signalUploadStart(const KUrl& currentFile);
+    void signalUploadDone(const KUrl& currentFile);
+    void signalError(const KUrl& currentFile, const ImgurError& err);
+    void signalSuccess(const KUrl& currentFile, const ImgurSuccess& success);
     void signalQueueChanged();
 
 private:
+
     bool parseResponseImageUpload(const QByteArray& data);
     bool parseResponseImageRemove(const QByteArray& data);
 
 protected Q_SLOTS:
+
     void slotResult(KJob* job);
     void slotData(KIO::Job* job, const QByteArray& data);
     void slotAddItems(const KUrl::List& list);
     void slotRemoveItems(const KUrl::List& list);
-    void slotUploadDone(KUrl currentFile);
+    void slotUploadDone(const KUrl& currentFile);
     void slotContinueUpload(bool yes);
 
 protected:
+
     KUrl::List* m_queue;
     KUrl        m_currentUrl;
-    State       state;
+    State       m_state;
 
 private:
-    class ImgurTalkerPriv;
-    ImgurTalkerPriv* const d;
 
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

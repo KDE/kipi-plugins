@@ -97,10 +97,12 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
         {
-            ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+            ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+
             if (currItem && currItem->url() == imageUrl)
             {
                 found = true;
+
                 if (!sUrl.isEmpty())
                 {
                     currItem->setUrl(sUrl);
@@ -110,6 +112,7 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
                 {
                     currItem->setDeleteUrl(sDeleteUrl);
                 }
+
                 break;
             }
         }
@@ -126,16 +129,16 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     emit signalAddItems(list);
 }
 
-void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, ImgurError /*error*/)
+void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, const ImgurError& /*error*/)
 {
     // TODO
 }
 
-void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess success)
+void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, const ImgurSuccess& success)
 {
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
-        ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+        ImgurImageListViewItem* const currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
 
         if (currItem && currItem->url() == localFile)
         {
@@ -150,6 +153,7 @@ void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, ImgurSuccess succ
                 const QString sDeleteUrl = success.links.delete_page.toEncoded();
                 currItem->setDeleteUrl(sDeleteUrl);
             }
+
             break;
         }
     }

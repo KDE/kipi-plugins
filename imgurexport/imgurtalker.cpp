@@ -49,44 +49,41 @@ namespace KIPIImgurExportPlugin
 {
 typedef QMultiMap<QString, QString> KQOAuthParameters;
 
-class ImgurTalker::ImgurTalkerPriv
+class ImgurTalker::Private
 {
 public:
 
-    ImgurTalkerPriv()
+    Private()
     {
-        parent    = 0;
-        interface = 0;
-        job       = 0;
-        continueUpload       = true;
-
-        userAgent = QString("KIPI-Plugins-" + Plugin_ImgurExport::name() + "/" + kipipluginsVersion());
-
+        parent                    = 0;
+        interface                 = 0;
+        job                       = 0;
+        continueUpload            = true;
+        userAgent                 = QString("KIPI-Plugins-" + Plugin_ImgurExport::name() + "/" + kipipluginsVersion());
         const char _imgurApiKey[] = _IMGUR_API_ANONYMOUS_KEY;
-        anonymousKey = QByteArray( _imgurApiKey );
+        anonymousKey              = QByteArray( _imgurApiKey );
     }
 
-    bool           continueUpload;
-    QString        userAgent;
+    bool       continueUpload;
+    QString    userAgent;
 
-    QByteArray     anonymousKey;
+    QByteArray anonymousKey;
 
-    QWidget*    parent;
-    Interface*  interface;
-    QByteArray  buffer;
+    QWidget*   parent;
+    Interface* interface;
+    QByteArray buffer;
 
-    KIO::Job*   job;
+    KIO::Job*  job;
 };
 
 ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
-    : d(new ImgurTalkerPriv)
+    : d(new Private)
 {
-    d->parent              = parent;
-    d->interface           = interface;
-
-    d->job                 = 0;
-
-    m_queue               = new KUrl::List();
+    d->parent    = parent;
+    d->interface = interface;
+    d->job       = 0;
+    m_queue      = new KUrl::List();
+    m_state      = IR_LOGOUT;
 
     connect(this, SIGNAL(signalUploadDone(KUrl)),
             this, SLOT(slotUploadDone(KUrl)));
@@ -94,6 +91,7 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
     // -------------------------------------------------------------------------
 /**/
     ImageCollection images = interface->currentSelection();
+
     if (images.isValid())
     {
         slotAddItems(images.images());
@@ -107,6 +105,7 @@ ImgurTalker::~ImgurTalker()
     {
         d->job->kill();
     }
+
     delete d;
 }
 
@@ -126,17 +125,16 @@ void ImgurTalker::slotData(KIO::Job* j, const QByteArray& data)
     emit signalUploadProgress(j->percent());
 }
 
-void ImgurTalker::parseResponse(QByteArray buffer)
+void ImgurTalker::parseResponse(const QByteArray& buffer)
 {
     bool parseOk = false;
     emit signalUploadDone(m_currentUrl);
 
-    switch(state)
+    switch(m_state)
     {
         case IE_REMOVEPHOTO:
             parseOk = parseResponseImageRemove(buffer);
             break;
-
         case IE_ADDPHOTO:
             parseOk = parseResponseImageUpload(buffer);
             break;
@@ -155,7 +153,7 @@ void ImgurTalker::parseResponse(QByteArray buffer)
 
 void ImgurTalker::slotResult(KJob* kjob)
 {
-    KIO::Job* job = static_cast<KIO::Job*>(kjob);
+    KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
     if ( job->error() )
     {
@@ -172,7 +170,7 @@ void ImgurTalker::slotResult(KJob* kjob)
     return;
 }
 
-void ImgurTalker::slotUploadDone(KUrl currentFile)
+void ImgurTalker::slotUploadDone(const KUrl& currentFile)
 {
     // removing the top of the queue
     if (!m_queue->isEmpty())
@@ -180,16 +178,20 @@ void ImgurTalker::slotUploadDone(KUrl currentFile)
         m_queue->removeFirst();
         emit signalQueueChanged();
     }
+
     kDebug () << "Upload done for" << currentFile << "Queue has" << m_queue->length() << "items";
 }
 
 void ImgurTalker::slotContinueUpload(bool yes)
 {
     d->continueUpload = yes;
-    if (yes && !m_queue->isEmpty()) {
+
+    if (yes && !m_queue->isEmpty())
+    {
         // the top of the queue was already removed - first() is a new image
         imageUpload(m_queue->first());
     }
+
     return;
 }
 
@@ -199,6 +201,7 @@ bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
     {
         // TODO
     }
+
     return false;
 }
 
@@ -209,8 +212,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     if (data.isEmpty())
         return false;
 
-    QJson::Parser* p = new QJson::Parser();
-    QVariant       r = p->parse(data, &ok);
+    QJson::Parser* const p = new QJson::Parser();
+    QVariant             r = p->parse(data, &ok);
 
 //    kDebug() << data;
     if (ok)
@@ -221,7 +224,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         if (responseType == "error")
         {
             ImgurError error;
-            QMap<QString,QVariant> errData = m.begin().value().toMap();
+            QMap<QString, QVariant> errData = m.begin().value().toMap();
 
             for (QMap<QString,QVariant>::iterator it = errData.begin(); it != errData.end(); ++it)
             {
@@ -231,6 +234,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                 {
                     error.message = v;
                 }
+
                 if (it.key() == "request")
                 {
                     error.request = v;
@@ -242,6 +246,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                     {
                         error.method = ImgurError::GET;
                     }
+
                     if ( v == "post")
                     {
                         error.method = ImgurError::POST;
@@ -254,6 +259,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                     {
                         error.format = ImgurError::JSON;
                     }
+
                     if ( v == "xml")
                     {
                         error.format = ImgurError::XML;
@@ -284,54 +290,67 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                     for (QMap<QString,QVariant>::iterator it = v.begin(); it != v.end(); ++it)
                     {
                         QString value = it.value().toString();
+
                         if (it.key() == "name")
                         {
                             success.image.name = value;
                         }
+
                         if (it.key() == "title")
                         {
                             success.image.title = value;
                         }
+
                         if (it.key() == "caption")
                         {
                             success.image.caption = value;
                         }
+
                         if (it.key() == "hash")
                         {
                             success.image.hash = value;
                         }
+
                         if (it.key() == "deletehash")
                         {
                             success.image.deletehash = value;
                         }
+
                         if (it.key() == "datetime")
                         {
 //                            success.image.datetime = QDateTime(value);
                         }
+
                         if (it.key() == "type")
                         {
                             success.image.type = value;
                         }
+
                         if (it.key() == "animated")
                         {
                             success.image.animated = (value == "true");
                         }
+
                         if (it.key() == "width")
                         {
                             success.image.width = value.toInt();
                         }
+
                         if (it.key() == "height")
                         {
                             success.image.height = value.toInt();
                         }
+
                         if (it.key() == "size")
                         {
                             success.image.size = value.toInt();
                         }
+
                         if (it.key() == "views")
                         {
                             success.image.views = value.toInt();
                         }
+
                         if (it.key() == "bandwidth")
                         {
                             success.image.bandwidth = value.toLongLong();
@@ -350,18 +369,22 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                         {
                             success.links.original = value;
                         }
+
                         if (it.key() == "imgur_page")
                         {
                             success.links.imgur_page = value;
                         }
+
                         if (it.key() == "delete_page")
                         {
                             success.links.delete_page = value;
                         }
+
                         if (it.key() == "small_square")
                         {
                             success.links.small_square = value;
                         }
+
                         if (it.key() == "largeThumbnail")
                         {
                             success.links.large_thumbnail = value;
@@ -387,7 +410,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 
 void ImgurTalker::imageUpload (const KUrl& filePath)
 {
-    state = IE_ADDPHOTO;
+    m_state = IE_ADDPHOTO;
 
     setCurrentUrl(filePath);
 
@@ -400,8 +423,8 @@ void ImgurTalker::imageUpload (const KUrl& filePath)
 
     KUrl exportUrl = KUrl(ImgurConnection::APIuploadURL());
 
-    exportUrl.addQueryItem("key", d->anonymousKey.data());
-    exportUrl.addQueryItem("name", filePath.fileName());
+    exportUrl.addQueryItem("key",   d->anonymousKey.data());
+    exportUrl.addQueryItem("name",  filePath.fileName());
     exportUrl.addQueryItem("title", filePath.fileName()); // this should be replaced with something the user submits
 //    exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
 
@@ -410,7 +433,7 @@ void ImgurTalker::imageUpload (const KUrl& filePath)
     form.addFile("image", filePath.path());
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(exportUrl, form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(exportUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
     job->addMetaData("UserAgent", d->userAgent);
@@ -432,11 +455,11 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
 
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(removeUrl, form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(removeUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("UserAgent", d->userAgent);
 
-    state = IE_REMOVEPHOTO;
+    m_state = IE_REMOVEPHOTO;
 
     emit signalBusy(true);
     emit signalQueueChanged();
@@ -488,7 +511,7 @@ void ImgurTalker::slotRemoveItems(const KUrl::List &list)
     emit signalQueueChanged();
 }
 
-void ImgurTalker::setCurrentUrl(const KUrl url)
+void ImgurTalker::setCurrentUrl(const KUrl& url)
 {
     m_currentUrl = url;
 }
