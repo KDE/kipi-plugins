@@ -927,7 +927,7 @@ void CBlobResult::PrintBlobs( char* nom_fitxer ) const
     double_stl_vector area, /*perimetre,*/ exterior, mitjana, compacitat, longitud,
                       externPerimeter, perimetreConvex, perimetre;
     int i;
-    FILE* fitxer_sortida;
+    FILE* fitxer_sortida = 0;
 
     area            = GetSTLResult(CBlobGetArea());
     perimetre       = GetSTLResult(CBlobGetPerimeter());
@@ -940,13 +940,25 @@ void CBlobResult::PrintBlobs( char* nom_fitxer ) const
 
     fitxer_sortida = fopen( nom_fitxer, "w" );
 
-    for (i=0; i<GetNumBlobs(); ++i)
+    if (fitxer_sortida)
     {
-        fprintf( fitxer_sortida, "blob %d ->\t a=%7.0f\t p=%8.2f (%8.2f extern)\t pconvex=%8.2f\t ext=%.0f\t m=%7.2f\t c=%3.2f\t l=%8.2f\n",
-                 i, area[i], perimetre[i], externPerimeter[i], perimetreConvex[i], exterior[i], mitjana[i], compacitat[i], longitud[i] );
-    }
+        for (i=0; i<GetNumBlobs(); ++i)
+        {
+            fprintf(fitxer_sortida,
+                    "blob %d ->\t a=%7.0f\t p=%8.2f (%8.2f extern)\t pconvex=%8.2f\t ext=%.0f\t m=%7.2f\t c=%3.2f\t l=%8.2f\n",
+                    i,
+                    area[i],
+                    perimetre[i],
+                    externPerimeter[i],
+                    perimetreConvex[i],
+                    exterior[i],
+                    mitjana[i],
+                    compacitat[i],
+                    longitud[i]);
+        }
 
-    fclose( fitxer_sortida );
+        fclose( fitxer_sortida );
+    }
 }
 
 } // namespace KIPIRemoveRedEyesPlugin
