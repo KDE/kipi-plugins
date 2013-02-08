@@ -53,7 +53,18 @@ static void initInput(KIntNumInput* widget, int min, int max, const QString& suf
 }
 
 FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
-                   : KDialog(parent)
+                   : KDialog(parent),
+                     m_noiseType(0),
+                     m_blurRadius(0),
+                     m_blurDeviation(0),
+                     m_medianRadius(0),
+                     m_noiseRadius(0),
+                     m_sharpenRadius(0),
+                     m_sharpenDeviation(0),
+                     m_unsharpenRadius(0),
+                     m_unsharpenDeviation(0),
+                     m_unsharpenPercent(0),
+                     m_unsharpenThreshold(0)
 {
     setCaption(i18n("Filter Options"));
     setModal(true);
@@ -65,18 +76,6 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
     layout->setSpacing(spacingHint());
     layout->setMargin(0);
     setMainWidget(box);
-
-    m_noiseType          = NULL;
-    m_blurRadius         = NULL;
-    m_blurDeviation      = NULL;
-    m_medianRadius       = NULL;
-    m_noiseRadius        = NULL;
-    m_sharpenRadius      = NULL;
-    m_sharpenDeviation   = NULL;
-    m_unsharpenRadius    = NULL;
-    m_unsharpenDeviation = NULL;
-    m_unsharpenPercent   = NULL;
-    m_unsharpenThreshold = NULL;
 
     if (FilterType == 0)
     { // Add noise

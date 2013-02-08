@@ -43,7 +43,17 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
-                   : KDialog(parent)
+                   : KDialog(parent),
+                   m_solidBorderWidth(0),
+                   m_button_solidBorderColor(0),
+                   m_lineNiepceBorderWidth(0),
+                   m_button_lineNiepceBorderColor(0),
+                   m_NiepceBorderWidth(0),
+                   m_button_NiepceBorderColor(0),
+                   m_raiseBorderWidth(0),
+                   m_frameBorderWidth(0),
+                   m_frameBevelBorderWidth(0),
+                   m_button_frameBorderColor(0)
 {
     setCaption(i18n("Border Options"));
     setModal(true);
@@ -55,17 +65,6 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
     dvlay->setMargin(spacingHint());
     setMainWidget(box);
     QString whatsThis;
-
-    m_solidBorderWidth              = NULL;
-    m_button_solidBorderColor       = NULL;
-    m_lineNiepceBorderWidth         = NULL;
-    m_button_lineNiepceBorderColor  = NULL;
-    m_NiepceBorderWidth             = NULL;
-    m_button_NiepceBorderColor      = NULL;
-    m_raiseBorderWidth              = NULL;
-    m_frameBorderWidth              = NULL;
-    m_frameBevelBorderWidth         = NULL;
-    m_button_frameBorderColor       = NULL;
 
     if (BorderType == 0)
     { // Solid

@@ -47,17 +47,14 @@ ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget* parent,
                                                  const QString& settingsPrefix)
                        : KDialog(parent),
                          m_settingsPrefix(settingsPrefix), m_commandBuilder(commandBuilder),
-                         m_mainWidget(new QWidget(this))
+                         m_mainWidget(new QWidget(this)), m_resizeFilterLabel(0),
+                         m_resizeFilterComboBox(0), m_qualityInput(0)
 {
     // general dialog settings
     setCaption(i18n("Image-Resize Options"));
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-
-    m_resizeFilterLabel    = NULL;
-    m_resizeFilterComboBox = NULL;
-    m_qualityInput         = NULL;
 
     // setup main widget for the dialog
     setMainWidget(m_mainWidget);
@@ -176,9 +173,8 @@ const QString OneDimResizeOptionsDialog::OPTION_SIZE_NAME = "OneDimSize";
 OneDimResizeOptionsDialog::OneDimResizeOptionsDialog(QWidget *parent,
                            OneDimResizeCommandBuilder *commandBuilder)
                          : ResizeOptionsBaseDialog(parent, commandBuilder, "OneDim"),
-                           m_commandBuilder(commandBuilder)
+                           m_commandBuilder(commandBuilder), m_sizeInput(0)
 {
-    m_sizeInput = NULL;
 }
 
 OneDimResizeOptionsDialog::~OneDimResizeOptionsDialog()
@@ -254,13 +250,10 @@ const QString TwoDimResizeOptionsDialog::OPTION_FILL_COLOR_NAME = "TwoDimFillCol
 TwoDimResizeOptionsDialog::TwoDimResizeOptionsDialog(QWidget *parent,
                            TwoDimResizeCommandBuilder *commandBuilder)
                          : ResizeOptionsBaseDialog(parent, commandBuilder, "TwoDim"),
-                           m_commandBuilder(commandBuilder)
+                           m_commandBuilder(commandBuilder), m_widthInput(0),
+                           m_heightInput(0), m_fillCheckBox(0), m_fillColorLabel(0),
+                           m_fillColorButton(0)
 {
-    m_widthInput      = NULL;
-    m_heightInput     = NULL;
-    m_fillCheckBox    = NULL;
-    m_fillColorLabel  = NULL;
-    m_fillColorButton = NULL;
 }
 
 TwoDimResizeOptionsDialog::~TwoDimResizeOptionsDialog()
@@ -365,10 +358,9 @@ const QString NonProportionalResizeOptionsDialog::OPTION_HEIGHT_NAME = "NonPropH
 NonProportionalResizeOptionsDialog::NonProportionalResizeOptionsDialog(QWidget *parent,
                                     NonProportionalResizeCommandBuilder *commandBuilder)
                                   : ResizeOptionsBaseDialog(parent, commandBuilder, "NonProp"),
-                                    m_commandBuilder(commandBuilder)
+                                    m_commandBuilder(commandBuilder), m_widthInput(0),
+                                    m_heightInput(0)
 {
-    m_widthInput = NULL;
-    m_heightInput = NULL;
 }
 
 NonProportionalResizeOptionsDialog::~NonProportionalResizeOptionsDialog()
@@ -454,20 +446,14 @@ const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_SETTINGS_NAME = "Cu
 PrintPrepareResizeOptionsDialog::PrintPrepareResizeOptionsDialog(QWidget *parent,
                                  PrintPrepareResizeCommandBuilder *commandBuilder)
                                : ResizeOptionsBaseDialog(parent, commandBuilder, "Print"),
-                                 m_commandBuilder(commandBuilder)
+                                 m_commandBuilder(commandBuilder), m_paperSizeLabel(0),
+                                 m_dpiLabel(0), m_customPaperWidthLabel(0),
+                                 m_customPaperHeightLabel(0), m_customDpiLabel(0),
+                                 m_customPaperWidthInput(0), m_customPaperHeightInput(0),
+                                 m_customDpiInput(0), m_paperSizeComboBox(0),
+                                 m_dpiComboBox(0), m_customSettingsCheckBox(0),
+                                 m_stretchCheckBox(0)
 {
-    m_paperSizeLabel         = NULL;
-    m_dpiLabel               = NULL;
-    m_customPaperWidthLabel  = NULL;
-    m_customPaperHeightLabel = NULL;
-    m_customDpiLabel         = NULL;
-    m_customPaperWidthInput  = NULL;
-    m_customPaperHeightInput = NULL;
-    m_customDpiInput         = NULL;
-    m_paperSizeComboBox      = NULL;
-    m_dpiComboBox            = NULL;
-    m_customSettingsCheckBox = NULL;
-    m_stretchCheckBox        = NULL;
 }
 
 PrintPrepareResizeOptionsDialog::~PrintPrepareResizeOptionsDialog()

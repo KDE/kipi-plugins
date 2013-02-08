@@ -76,14 +76,13 @@ RenameImagesWidget::RenameImagesWidget(QWidget* parent, KIPI::Interface* interfa
     : QWidget(parent),
       m_interface(interface),
       m_urlList(urlList),
+      m_progress(0),
+      m_overwriteAll(false),
+      m_autoSkip(false),
       ui(new Ui::RenameImagesBase)
 {
     ui->setupUi(this);
     readSettings();
-
-    m_progress      = NULL;
-    m_overwriteAll  = false;
-    m_autoSkip      = false;
 
     QMenu* sortMenu = new QMenu(this);
     m_byNameAction  = sortMenu->addAction(i18n("Sort by Name"));

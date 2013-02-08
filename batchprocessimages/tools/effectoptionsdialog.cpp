@@ -42,7 +42,24 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
-        : KDialog(parent)
+        : KDialog(parent),
+        m_latWidth(0),
+        m_latHeight(0),
+        m_latOffset(0),
+        m_charcoalRadius(0),
+        m_charcoalDeviation(0),
+        m_edgeRadius(0),
+        m_embossRadius(0),
+        m_embossDeviation(0),
+        m_implodeFactor(0),
+        m_paintRadius(0),
+        m_shadeAzimuth(0),
+        m_shadeElevation(0),
+        m_solarizeFactor(0),
+        m_spreadRadius(0),
+        m_swirlDegrees(0),
+        m_waveAmplitude(0),
+        m_waveLength(0)
 {
     setCaption(i18n("Effect Options"));
     setModal(true);
@@ -86,12 +103,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_latOffset->setBuddy(m_latOffset);
         dvlay->addWidget(m_latOffset);
     }
-    else
-    {
-        m_latWidth = NULL;
-        m_latHeight = NULL;
-        m_latOffset = NULL;
-    }
 
     if (EffectType == 1)
     { // Charcoal
@@ -115,11 +126,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_charcoalDeviation->setBuddy(m_charcoalDeviation);
         dvlay->addWidget(m_charcoalDeviation);
     }
-    else
-    {
-        m_charcoalRadius = NULL;
-        m_charcoalDeviation = NULL;
-    }
 
     if (EffectType == 2)
     { // Detect edges
@@ -134,10 +140,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                         "a suitable radius."));
         m_label_edgeRadius->setBuddy(m_edgeRadius);
         dvlay->addWidget(m_edgeRadius);
-    }
-    else
-    {
-        m_edgeRadius = NULL;
     }
 
     if (EffectType == 3)
@@ -164,11 +166,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_embossDeviation->setBuddy(m_embossDeviation);
         dvlay->addWidget(m_embossDeviation);
     }
-    else
-    {
-        m_embossRadius = NULL;
-        m_embossDeviation = NULL;
-    }
 
     if (EffectType == 4)
     { // Implode
@@ -181,10 +178,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                            "the implosion."));
         m_label_implodeFactor->setBuddy(m_implodeFactor);
         dvlay->addWidget(m_implodeFactor);
-    }
-    else
-    {
-        m_implodeFactor = NULL;
     }
 
     if (EffectType == 5)
@@ -200,10 +193,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                          "by the radius."));
         m_label_paintRadius->setBuddy(m_paintRadius);
         dvlay->addWidget(m_paintRadius);
-    }
-    else
-    {
-        m_paintRadius = NULL;
     }
 
     if (EffectType == 6)
@@ -230,11 +219,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_shadeElevation->setBuddy(m_shadeElevation);
         dvlay->addWidget(m_shadeElevation);
     }
-    else
-    {
-        m_shadeAzimuth = NULL;
-        m_shadeElevation = NULL;
-    }
 
     if (EffectType == 7)
     { // Solarize
@@ -247,10 +231,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                             "threshold of the solarize intensity."));
         m_label_solarizeFactor->setBuddy(m_solarizeFactor);
         dvlay->addWidget(m_solarizeFactor);
-    }
-    else
-    {
-        m_solarizeFactor = NULL;
     }
 
     if (EffectType == 8)
@@ -265,10 +245,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         m_label_spreadRadius->setBuddy(m_spreadRadius);
         dvlay->addWidget(m_spreadRadius);
     }
-    else
-    {
-        m_spreadRadius = NULL;
-    }
 
     if (EffectType == 9)
     { // Swirl
@@ -282,10 +258,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                           "degrees move from 1 to 360."));
         m_label_swirlDegrees->setBuddy(m_swirlDegrees);
         dvlay->addWidget(m_swirlDegrees);
-    }
-    else
-    {
-        m_swirlDegrees = NULL;
     }
 
     if (EffectType == 10)
@@ -309,11 +281,6 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
                                         "of the sine wave."));
         m_label_waveLength->setBuddy(m_waveLength);
         dvlay->addWidget(m_waveLength);
-    }
-    else
-    {
-        m_waveAmplitude = NULL;
-        m_waveLength = NULL;
     }
 }
 

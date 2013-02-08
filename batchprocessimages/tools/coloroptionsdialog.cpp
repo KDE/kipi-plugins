@@ -44,7 +44,11 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
-                  : KDialog(parent)
+                  : KDialog(parent),
+                    m_depthValue(0),
+                    m_fuzzDistance(0),
+                    m_segmentCluster(0),
+                    m_segmentSmooth(0)
 {
     setCaption(i18n("Color Options"));
     setModal(true);
@@ -56,11 +60,6 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
     dvlay->setMargin(spacingHint());
     setMainWidget(box);
     QString whatsThis;
-
-    m_depthValue = NULL;
-    m_fuzzDistance = NULL;
-    m_segmentCluster = NULL;
-    m_segmentSmooth = NULL;
 
     if (ColorType == 1)
     { // Depth

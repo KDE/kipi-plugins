@@ -42,7 +42,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
-                    : KDialog(parent)
+                    : KDialog(parent),
+                    m_label_imageCompression(0),
+                    m_JPEGPNGCompression(0),
+                    m_compressLossLess(0),
+                    m_TIFFCompressionAlgo(0),
+                    m_TGACompressionAlgo(0)
 {
     setCaption(i18n("Image File Format Options"));
     setModal(true);
@@ -54,8 +59,6 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
     dvlay->setMargin(spacingHint());
     setMainWidget(box);
     QString whatsThis;
-
-    m_compressLossLess = NULL;
 
     if (ImageFormatType == 0 || ImageFormatType == 1)
     { // JPEG || PNG
@@ -88,11 +91,6 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
                     this, SLOT(slotCompressLossLessEnabled(bool)));
         }
     }
-    else
-    {
-        m_JPEGPNGCompression     = NULL;
-        m_label_imageCompression = NULL;
-    }
 
     if (ImageFormatType == 2)
     { // TIFF
@@ -106,10 +104,6 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
         m_label_imageCompression->setBuddy(m_TIFFCompressionAlgo);
         dvlay->addWidget(m_TIFFCompressionAlgo);
     }
-    else
-    {
-        m_TIFFCompressionAlgo = NULL;
-    }
 
     if (ImageFormatType == 5)
       { // TGA
@@ -121,10 +115,6 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
         m_TGACompressionAlgo->setWhatsThis(i18n("Select here the compression algorithm."));
         m_label_imageCompression->setBuddy(m_TGACompressionAlgo);
         dvlay->addWidget(m_TGACompressionAlgo);
-    }
-    else
-    {
-        m_TGACompressionAlgo = NULL;
     }
 }
 
