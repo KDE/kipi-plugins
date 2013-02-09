@@ -89,7 +89,7 @@ INSTALL(FILES   plugin/kipiplugin_panoramaui.rc                                D
 
 SET(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
 
-KDE4_ADD_APP_ICON(panoramagui_SRCS "./icons/*panorama.png")
+KDE4_ADD_APP_ICON(panorama_SRCS "./icons/*panorama.png")
 
 KDE4_ADD_EXECUTABLE(panoramagui ${panorama_SRCS})
 
