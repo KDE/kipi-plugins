@@ -7,6 +7,7 @@ Name[ca]=Fusió d'exposició
 Name[ca@valencia]=Fusió d'exposició
 Name[cs]=Smísení expozice
 Name[da]=Ekspo.-blanding
+Name[de]=Belichtungsvermischung
 Name[el]=Ανάμειξη έκθεσης
 Name[en_GB]=Expo Blending
 Name[es]=Mezcla de la exposición

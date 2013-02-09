@@ -46,6 +46,7 @@ Comment[ca]=Una eina per exportar imatges o importar imatges des d'un directori 
 Comment[ca@valencia]=Una eina per exportar imatges o importar imatges des d'un directori remot que siga accessible via KIO.
 Comment[cs]=Nástroj pro export nebo import obrázků ze vzdálené složky dostupné pomocí KIO.
 Comment[da]=Et værktøj til at eksportere billeder til, eller importere fra, en ekstern mappe som er tilgængelig via KIO.
+Comment[de]=Ein Werkzeug, um Bilder in einen entfernten Ordner, der mit Ein-/Ausgabemodul zu erreichen ist, zu exportieren oder von dort zu importieren..
 Comment[el]=Εργαλείο εικόνων για εξαγωγή σε ή εισαγωγή από έναν απομακρυσμένο κατάλογο με πρόσβαση από το KIO.
 Comment[en_GB]=A tool to export pictures to or import from a remote directory that is accessible via KIO.
 Comment[es]=Una herramienta para importar o exportar las imágenes desde/a un directorio remoto accesible vía KIO.
