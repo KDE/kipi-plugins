@@ -6,4 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> 314784 : imgurtalkerauth.cpp with digikam 3.0 breaks during build.
+002 ==> 
