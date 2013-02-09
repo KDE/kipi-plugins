@@ -133,7 +133,7 @@ void ImgurTalkerAuth::imageUpload (const KUrl& filePath)
 
     kDebug() << "Authenticated upload of" << currentUrl();
 
-    state = IE_ADDPHOTO;
+    m_state = IE_ADDPHOTO;
 
     emit signalUploadStart(filePath);
     emit signalBusy(true);
@@ -176,7 +176,7 @@ void ImgurTalkerAuth::imageUpload (const KUrl& filePath)
 
 void ImgurTalkerAuth::slotOAuthLogin()
 {
-    state = IE_LOGIN;
+    m_state = IE_LOGIN;
 
     d->OAuthRequest->initRequest(KQOAuthRequest::TemporaryCredentials, KUrl(ImgurConnection::OAuthTokenEndPoint()));
     d->OAuthRequest->setConsumerKey(d->consumerKey.data());
@@ -279,17 +279,17 @@ void ImgurTalkerAuth::slotContinueUpload(bool yes)
 {
     d->continueUpload = yes;
 
-    if (yes && !queue->isEmpty())
+    if (yes && !m_queue->isEmpty())
     {
         if (!d->OAuthService->isAuthorized())
         {
             // not authenticated, we upload anonymously
-            ImgurTalker::imageUpload (queue->first());
+            ImgurTalker::imageUpload (m_queue->first());
         }
         else
         {
             // the top of the queue was already removed - first() is a new image
-            imageUpload (queue->first());
+            imageUpload (m_queue->first());
         }
     }
 
