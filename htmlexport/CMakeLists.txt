@@ -30,7 +30,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_htmlexport
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
-                      ${LIBEXSLT_LIBRARIES}
+                      ${LIBXSLT_EXSLT_LIBRARIES}
                       ${LIBXSLT_LIBRARIES}
                       ${LIBXML2_LIBRARIES}
                       ${KDE4_KDECORE_LIBS}
