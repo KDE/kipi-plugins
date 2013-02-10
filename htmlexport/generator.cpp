@@ -135,7 +135,7 @@ QByteArray makeXsltParam(const QString& txt)
 struct Generator::Private
 {
     Generator*             that;
-    Interface*       mInterface;
+    Interface*             mInterface;
     GalleryInfo*           mInfo;
     KPBatchProgressDialog* mProgressDialog;
     Theme::Ptr             mTheme;

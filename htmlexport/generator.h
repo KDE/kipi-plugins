@@ -57,7 +57,7 @@ public:
 
     Generator(Interface* const, GalleryInfo* const, KPBatchProgressDialog* const);
     ~Generator();
-    
+
     bool run();
     bool warnings() const;
 
@@ -72,15 +72,15 @@ Q_SIGNALS:
     void logWarningRequested(const QString& text);
 
 private:
-    
+
     struct Private;
-    friend struct Private;
     Private* d;
 
+    friend struct Private;
     friend class ImageGenerationFunctor;
 
 private Q_SLOTS:
-    
+
     void logWarning(const QString& text);
 };
 
