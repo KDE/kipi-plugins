@@ -144,8 +144,12 @@ void ImgurTalker::parseResponse(const QByteArray& buffer)
 
     if (!parseOk)
     {
+        ImgurError error;
+        error.message = "Unexpected response from the web-service";
+        emit signalError(m_currentUrl, error);
+
         // received something unexpected
-        kDebug() <<  "Unexpected response from the web-service";
+        kDebug() << error.message;
     }
 
     emit signalBusy(false);
