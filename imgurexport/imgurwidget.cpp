@@ -54,7 +54,7 @@ public:
         imagesList     = 0;
         progressBar    = 0;
         processedCount = 0;
-#ifdef OAUTH_ENABLED1
+#ifdef OAUTH_ENABLED
         changeUserBtn  = 0;
 #endif //OAUTH_ENABLED
     }
