@@ -425,9 +425,6 @@ void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KU
             this, SLOT(slotDone(ThreadWeaver::Job*)));
 
     jc->addJob(compileMKTask);
-
-    connect(jc, SIGNAL(done(ThreadWeaver::Job*)),
-            this, SLOT(deleteMkUrl()));
 }
 
 }  // namespace KIPIPanoramaPlugin
