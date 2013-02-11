@@ -203,6 +203,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
             GPSDataContainer position;
             getCurrentItemPositionAndUrl(&position, 0);
+            /// @todo Use the filename as a suggestion for the title.
             d->bookmarkOwner->setPositionAndTitle(position.getCoordinates(), QString());
         }
 
