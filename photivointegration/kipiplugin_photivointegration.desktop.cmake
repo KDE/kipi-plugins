@@ -4,6 +4,7 @@ UntranslatedGenericName=Photivo Integration
 Name=Photivo Integration
 Name[ca]=Integració de Photivo
 Name[ca@valencia]=Integració de Photivo
+Name[cs]=Integrace Photivo
 Name[da]=Photivo-integration
 Name[de]=Photivo-Einbindung
 Name[el]=Ενσωμάτωση Photivo
