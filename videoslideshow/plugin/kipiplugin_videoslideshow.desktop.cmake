@@ -4,6 +4,7 @@ UntranslatedGenericName=VideoSlideShow
 Name=VideoSlideShow
 Name[ca]=Passi de diapositives
 Name[ca@valencia]=Passe de diapositives
+Name[cs]=VideoSlideShow
 Name[da]=Video-diasshow
 Name[de]=Video-Diaschau
 Name[el]=VideoSlideShow

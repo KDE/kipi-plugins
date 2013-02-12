@@ -17,7 +17,6 @@ SET(kipiplugin_gpssync_PART_SRCS
     gpsimagedetails.cpp
     gpsundocommand.cpp
     gpsreversegeocodingwidget.cpp
-    inputboxnocancel.cpp
     gpsbookmarkowner.cpp
     backend-rg.cpp
     backend-geonames-rg.cpp

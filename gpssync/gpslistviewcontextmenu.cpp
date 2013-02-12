@@ -202,8 +202,10 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
             GPSDataContainer position;
-            getCurrentItemPositionAndUrl(&position, 0);
-            d->bookmarkOwner->setPositionAndTitle(position.getCoordinates(), QString());
+            KUrl             itemUrl;
+            getCurrentItemPositionAndUrl(&position, &itemUrl);
+            const QString itemFileName = itemUrl.fileName();
+            d->bookmarkOwner->setPositionAndTitle(position.getCoordinates(), itemFileName);
         }
 
         // "paste" is only available if there is geo data in the clipboard

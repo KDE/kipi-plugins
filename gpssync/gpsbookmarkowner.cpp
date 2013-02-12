@@ -37,7 +37,6 @@
 
 // local includes
 
-#include "inputboxnocancel.h"
 #include "gpsundocommand.h"
 #include "kipiimagemodel.h"
 
@@ -102,16 +101,12 @@ bool GPSBookmarkOwner::supportsTabs() const
 
 QString GPSBookmarkOwner::currentTitle() const
 {
-    // TODO: how do we tell the bookmark manager to abort if the user aborts?
-    // use a dialog that the user can't cancel, this way at least we don't end up
-    // with an empty title
-    const QString title = InputBoxNoCancel::AskForString(
-                    i18n("Bookmark location"),
-                    i18nc("Title of the new gps location bookmark", "Title:"),
-                    d->lastTitle.isEmpty() ? currentUrl() : d->lastTitle,
-                    d->parent);
+    if (d->lastTitle.isEmpty())
+    {
+        return currentUrl();
+    }
 
-    return title;
+    return d->lastTitle;
 }
 
 QString GPSBookmarkOwner::currentUrl() const
