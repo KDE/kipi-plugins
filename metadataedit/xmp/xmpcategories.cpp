@@ -7,6 +7,7 @@
  * Description : XMP categories settings page.
  *
  * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2013      by Victor Dodon <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -127,42 +128,12 @@ XMPCategories::XMPCategories(QWidget* const parent)
     // --------------------------------------------------------
 
     connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->categoryEdit, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->subCategoriesBox, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->subCategoriesCheck, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->subCategoryEdit, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->addSubCategoryButton, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->delSubCategoryButton, SLOT(setEnabled(bool)));
-
-    connect(d->categoryCheck, SIGNAL(toggled(bool)),
-            d->repSubCategoryButton, SLOT(setEnabled(bool)));
-
-    // --------------------------------------------------------
+            this, SLOT(slotCheckCategoryToggled(bool)));
 
     connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
-            d->subCategoryEdit, SLOT(setEnabled(bool)));
+            this, SLOT(slotCheckSubCategoryToggled(bool)));
 
-    connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
-            d->subCategoriesBox, SLOT(setEnabled(bool)));
-
-    connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
-            d->addSubCategoryButton, SLOT(setEnabled(bool)));
-
-    connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
-            d->delSubCategoryButton, SLOT(setEnabled(bool)));
-
-    connect(d->subCategoriesCheck, SIGNAL(toggled(bool)),
-            d->repSubCategoryButton, SLOT(setEnabled(bool)));
+    enableWidgets(d->categoryCheck->isChecked(), d->subCategoriesCheck->isChecked());
 
     // --------------------------------------------------------
 
@@ -202,6 +173,30 @@ XMPCategories::XMPCategories(QWidget* const parent)
 XMPCategories::~XMPCategories()
 {
     delete d;
+}
+
+void XMPCategories::slotCheckCategoryToggled(bool checked)
+{
+    enableWidgets(checked, d->subCategoriesCheck->isChecked());
+}
+
+void XMPCategories::slotCheckSubCategoryToggled(bool checked)
+{
+    enableWidgets(d->categoryCheck->isChecked(), checked);
+}
+
+void XMPCategories::enableWidgets(bool checked1, bool checked2)
+{
+    d->categoryEdit->setEnabled(checked1);
+    d->subCategoriesCheck->setEnabled(checked1);
+
+    // --------------------------------------------------------
+
+    d->subCategoryEdit->setEnabled(checked1 && checked2);
+    d->subCategoriesBox->setEnabled(checked1 && checked2);
+    d->addSubCategoryButton->setEnabled(checked1 && checked2);
+    d->delSubCategoryButton->setEnabled(checked1 && checked2);
+    d->repSubCategoryButton->setEnabled(checked1 && checked2);
 }
 
 void XMPCategories::slotDelCategory()

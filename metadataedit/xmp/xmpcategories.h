@@ -7,6 +7,7 @@
  * Description : XMP categories settings page.
  *
  * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2013      by Victor Dodon <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,6 +55,13 @@ private Q_SLOTS:
     void slotDelCategory();
     void slotRepCategory();
 
+    void slotCheckCategoryToggled(bool checked);
+    void slotCheckSubCategoryToggled(bool checked);
+
+private:
+
+    void enableWidgets(bool checked1, bool checked2);
+
 private:
 
     class XMPCategoriesPriv;
@@ -62,4 +70,4 @@ private:
 
 }  // namespace KIPIMetadataEditPlugin
 
-#endif // XMP_CATEGORIES_H 
+#endif // XMP_CATEGORIES_H
