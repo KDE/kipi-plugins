@@ -186,53 +186,60 @@ void FlickrList::singlePermissionChanged(QTreeWidgetItem* item, int column)
     {
         // Call the toggled() method of the item on which the selection
         // occurred.
-        FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>(item);
-        lvItem->toggled();
+        FlickrListViewItem* const lvItem = dynamic_cast<FlickrListViewItem*>(item);
 
-        // Count the number of set checkboxes for the selected column.
-        int numChecked = 0;
-
-        for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+        if (lvItem)
         {
-            FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>(listView()->topLevelItem(i));
+            lvItem->toggled();
 
-            if (((column == PUBLIC)  && (lvItem->isPublic())) ||
-                ((column == FAMILY)  && (lvItem->isFamily())) ||
-                ((column == FRIENDS) && (lvItem->isFriends())))
+            // Count the number of set checkboxes for the selected column.
+            int numChecked = 0;
+
+            for (int i = 0; i < listView()->topLevelItemCount(); ++i)
             {
-                numChecked += 1;
+                FlickrListViewItem* const titem = dynamic_cast<FlickrListViewItem*>(listView()->topLevelItem(i));
+
+                if (titem)
+                {
+                    if (((column == PUBLIC)  && (titem->isPublic())) ||
+                        ((column == FAMILY)  && (titem->isFamily())) ||
+                        ((column == FRIENDS) && (titem->isFriends())))
+                    {
+                        numChecked += 1;
+                    }
+                }
             }
-        }
 
-        // Determine the new state.
-        Qt::CheckState state = Qt::PartiallyChecked;
+            // Determine the new state.
+            Qt::CheckState state = Qt::PartiallyChecked;
 
-        if (numChecked == 0)
-        {
-            state = Qt::Unchecked;
-        }
-        else if (numChecked == listView()->topLevelItemCount())
-        {
-            state = Qt::Checked;
-        }
+            if (numChecked == 0)
+            {
+                state = Qt::Unchecked;
+            }
+            else if (numChecked == listView()->topLevelItemCount())
+            {
+                state = Qt::Checked;
+            }
 
-        // If needed, signal the change.
-        if ((column == PUBLIC) && (state != m_public))
-        {
-            setPublic(state);
-            emit signalPermissionChanged(PUBLIC, state);
-        }
+            // If needed, signal the change.
+            if ((column == PUBLIC) && (state != m_public))
+            {
+                setPublic(state);
+                emit signalPermissionChanged(PUBLIC, state);
+            }
 
-        if ((column == FAMILY) && (state != m_family))
-        {
-            setFamily(state);
-            emit signalPermissionChanged(FAMILY, state);
-        }
+            if ((column == FAMILY) && (state != m_family))
+            {
+                setFamily(state);
+                emit signalPermissionChanged(FAMILY, state);
+            }
 
-        if ((column == FRIENDS) && (state != m_friends))
-        {
-            setFriends(state);
-            emit signalPermissionChanged(FRIENDS, state);
+            if ((column == FRIENDS) && (state != m_friends))
+            {
+                setFriends(state);
+                emit signalPermissionChanged(FRIENDS, state);
+            }
         }
     }
 }
@@ -273,15 +280,18 @@ void FlickrList::singleComboBoxChanged(QTreeWidgetItem* item, int column)
 
             for (int i = 0; i < listView()->topLevelItemCount(); ++i)
             {
-                FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>(listView()->topLevelItem(i));
+                FlickrListViewItem* const titem = dynamic_cast<FlickrListViewItem*>(listView()->topLevelItem(i));
 
-                if (column == SAFETYLEVEL)
+                if (titem)
                 {
-                    nums[lvItem->safetyLevel()]++;
-                }
-                else if (column == CONTENTTYPE)
-                {
-                    nums[lvItem->contentType()]++;
+                    if (column == SAFETYLEVEL)
+                    {
+                        nums[lvItem->safetyLevel()]++;
+                    }
+                    else if (column == CONTENTTYPE)
+                    {
+                        nums[lvItem->contentType()]++;
+                    }
                 }
             }
 
@@ -351,7 +361,7 @@ void FlickrList::slotAddImages(const KUrl::List& list)
     for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
         KUrl imageUrl = *it;
-        found = false;
+        found         = false;
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
         {
