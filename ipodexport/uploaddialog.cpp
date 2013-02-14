@@ -456,11 +456,11 @@ void UploadDialog::ipodItemSelected(QTreeWidgetItem* item)
     // Need a singleshot, else the selected items don't get updated.
     QTimer::singleShot(0, this, SLOT(enableButtons()));
 
-#define item dynamic_cast<IpodPhotoItem*>(item)
-    if( !item )
+    IpodPhotoItem* const ipoi = dynamic_cast<IpodPhotoItem*>(item);
+    if( !ipoi )
         return;
 
-    Itdb_Artwork* const artwork = item->artwork();
+    Itdb_Artwork* const artwork = ipoi->artwork();
 
     if (!artwork)
         return;
@@ -476,11 +476,10 @@ void UploadDialog::ipodItemSelected(QTreeWidgetItem* item)
         kDebug() << "no thumb was found" ;
         return;
     }
-#undef item
 
-//     GdkPixbuf *buf = itdb_thumb_get_gdk_pixbuf( m_itdb->device, thumb );
-//     int size = 0;
-//     QImage *image = buf->convertToImage();
+//     GdkPixbuf* buf = itdb_thumb_get_gdk_pixbuf( m_itdb->device, thumb );
+//     int size       = 0;
+//     QImage *image  = buf->convertToImage();
 //     kDebug() << "image size: " << image->size() ;
 //
 //     QPixmap pix;
