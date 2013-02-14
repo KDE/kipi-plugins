@@ -209,14 +209,14 @@ GalleryWindow::GalleryWindow(QWidget* const parent, Gallery* const pGallery)
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
     setModal(false);
 
-    KPAboutData* about = new KPAboutData(ki18n("Gallery Export"),
-                                         0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
-                                         ki18n("(c) 2003-2005, Renchi Raju\n"
-                                               "(c) 2006-2007, Colin Guthrie\n"
-                                               "(c) 2006-2013, Gilles Caulier\n"
-                                               "(c) 2008, Andrea Diamantini\n"));
+    KPAboutData* const about = new KPAboutData(ki18n("Gallery Export"),
+                                               0,
+                                               KAboutData::License_GPL,
+                                               ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
+                                               ki18n("(c) 2003-2005, Renchi Raju\n"
+                                                     "(c) 2006-2007, Colin Guthrie\n"
+                                                     "(c) 2006-2013, Gilles Caulier\n"
+                                                     "(c) 2008, Andrea Diamantini\n"));
 
     about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                      "renchi dot raju at gmail dot com");
@@ -505,6 +505,7 @@ void GalleryWindow::slotAlbumSelected()
 
     if (!item)
     {
+        d->addPhotoBtn->setEnabled(false);
         return;
     }
 
@@ -516,22 +517,14 @@ void GalleryWindow::slotAlbumSelected()
 
     QString albumName = item->text(1);
 
-    // FIXME: This check is not needed? We check for item above already, so this condition here is never reached.
-    if (!item)
+    if (d->talker->loggedIn() && !albumName.isEmpty() )
     {
-        d->addPhotoBtn->setEnabled(false);
+        d->addPhotoBtn->setEnabled(true);
+        d->talker->listPhotos(albumName);
     }
     else
     {
-        if (d->talker->loggedIn() && !albumName.isEmpty() )
-        {
-            d->addPhotoBtn->setEnabled(true);
-            d->talker->listPhotos(albumName);
-        }
-        else
-        {
-            d->addPhotoBtn->setEnabled(false);
-        }
+        d->addPhotoBtn->setEnabled(false);
     }
 }
 
@@ -636,13 +629,13 @@ void GalleryWindow::slotNewAlbum()
             clean = false;
             break;
         }
-        /*
+/*
         else if (ch == ' ')
         {
             clean = false;
             break;
         }
-        */
+*/
     }
 
     if (!clean)
@@ -655,6 +648,7 @@ void GalleryWindow::slotNewAlbum()
 
     QTreeWidgetItem* const item = d->albumView->currentItem();
     int column                  = d->albumView->currentColumn();
+
     if (item)
     {
         const GAlbum& album = d->albumDict.value( item->text(column) );
@@ -783,6 +777,7 @@ void GalleryWindow::slotEnableSpinBox(int n)
             b = false;
             break;
     }
+
     d->dimensionSpinBox->setEnabled(b);
 }
 
