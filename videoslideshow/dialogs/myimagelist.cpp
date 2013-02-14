@@ -98,7 +98,7 @@ void MyImageList::slotRemoveItems()
         {
             MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(*it);
 
-            if (item->isSelected())
+            if (item && item->isSelected())
             {
                 delete item;
                 find = true;
