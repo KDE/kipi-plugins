@@ -178,6 +178,8 @@ void AlbumChooserWidget::slotAlbumCreationDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::CreateAlbumJob)
 
+    if (!job) return;
+
     // Select the newly created album in the combobox later (in "slotAlbumsReloadDone()")
     m_albumToSelect = job->album()->aid();
 
@@ -301,6 +303,8 @@ void AlbumChooserWidget::startAlbumsReload()
 void AlbumChooserWidget::slotAlbumsReloadDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::AlbumListJob)
+
+    if (!job) return;
 
     m_albumsCombo->clear();
     m_albums = job->list();

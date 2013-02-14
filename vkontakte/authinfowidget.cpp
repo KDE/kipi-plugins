@@ -130,6 +130,8 @@ void AuthInfoWidget::slotGetUserIdDone(KJob* kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
+    if (!job) return;
+
     m_userId = job->variable().toInt();
     emit signalUpdateAuthInfo();
 }
@@ -149,6 +151,8 @@ void AuthInfoWidget::startGetFullName()
 void AuthInfoWidget::slotGetFullNameDone(KJob *kjob)
 {
     SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
+
+    if (!job) return;
 
     m_userFullName = job->variable().toString();
     emit signalUpdateAuthInfo();
