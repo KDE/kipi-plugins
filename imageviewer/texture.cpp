@@ -65,6 +65,7 @@ public:
         vright         = 0.0;
         display_x      = 0;
         display_y      = 0;
+        texnr          = 0;
         rotate_idx     = 0;
         rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
         rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
