@@ -46,6 +46,8 @@ public:
 
     Private()
     {
+        mVersion   = 0;
+        mGalleryId = 0;
     };
 
     unsigned int     mVersion;
