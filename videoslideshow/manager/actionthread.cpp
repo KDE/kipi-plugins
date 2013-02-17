@@ -50,11 +50,19 @@ public:
 
     Private()
     {
-        api        = 0;
-        processImg = 0;
-        framerate  = 25;
-        number     = 0;
-        encoder    = 0;
+        running          = false;
+        api              = 0;
+        processImg       = 0;
+        framerate        = 25;
+        number           = 0;
+        encoder          = 0;
+        item             = 0;
+        frameWidth       = 0;
+        frameHeight      = 0;
+        aspectcorrection = ASPECTCORRECTION_TYPE_AUTO;
+        aspectRatio      = ASPECT_RATIO_DEFAULT;
+        videoType        = VIDEO_VCD;
+        videoFormat      = VIDEO_FORMAT_PAL;
     }
 
     MagickApi*            api;
