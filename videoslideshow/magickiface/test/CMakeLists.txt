@@ -17,4 +17,5 @@ TARGET_LINK_LIBRARIES(testmagickiface
                       ${ImageMagick_LIBRARIES}
                      )
 
-ADD_TEST(NAME testmagickiface COMMAND testmagickiface)
+# interactive test, not usable as test suite
+# ADD_TEST(NAME testmagickiface COMMAND testmagickiface)
