@@ -47,6 +47,8 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedCo
 
     m_sharedData  = sharedData;
     m_currIndex   = 0;
+    m_mediaObject = 0;
+    m_audioOutput = 0;
     m_urlList     = urls;
     m_stopCalled  = false;
     m_canHide     = true;
