@@ -89,6 +89,9 @@ int panoScriptParse(char* filename, pt_script* scriptOut)
 
     if (!panoScriptParserInit(filename))
     {
+        /* panoScriptParserInit should have displayed the error at this point */
+        setlocale(LC_NUMERIC, old_locale);
+        free(old_locale);
         return FALSE;
     }
 
