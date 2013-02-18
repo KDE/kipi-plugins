@@ -66,11 +66,18 @@ namespace KIPIAdvancedSlideshowPlugin
 
 ViewTrans::ViewTrans(bool zoomIn, float relAspect)
 {
-    int i;
+    m_deltaX     = 0.0;
+    m_deltaY     = 0.0;
+    m_deltaScale = 0.0;
+    m_baseScale  = 0.0;
+    m_baseX      = 0.0;
+    m_baseY      = 0.0;
+    m_xScale     = 0.0;
+    m_yScale     = 0.0;
+    int i        = 0;
 
     // randomly select sizes of start end end viewport
     double s[2];
-    i = 0;
 
     do
     {
