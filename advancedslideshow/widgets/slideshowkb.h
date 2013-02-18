@@ -63,6 +63,7 @@ class ViewTrans
 
 public:
 
+    ViewTrans(bool m_zoomIn, float relAspect);
     ViewTrans()
     {
         m_deltaX     = 0.0;
@@ -78,8 +79,6 @@ public:
     ~ViewTrans()
     {
     }
-
-    ViewTrans(bool m_zoomIn, float relAspect);
 
     float transX(float pos) const
     {
