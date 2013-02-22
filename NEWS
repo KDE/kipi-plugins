@@ -10,5 +10,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 295265 - Provide hicolor panoramagui icon.
 003 ==> 311005 - "Edit all Metadata" allows to edit unchecked fields - results in data loss.
 004 ==> 247108 - digiKam: setting file date/time stamp refused, with umlauts or prior file movements.
-005 ==> 315323 - Create a digiKam Time Lapse plugin.
+005 ==> 315302 - TimeAdjust is not shown in Gwenview [patch].
 006 ==> 
