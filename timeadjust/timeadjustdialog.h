@@ -53,6 +53,7 @@ public:
     ~TimeAdjustDialog();
 
     void addItems(const KUrl::List& images);
+    void disableApplTimestamp();
 
 Q_SIGNALS:
 

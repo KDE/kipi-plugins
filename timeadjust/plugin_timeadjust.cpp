@@ -133,6 +133,7 @@ void Plugin_TimeAdjust::slotActivate()
     }
 
     d->dialog->show();
+    if (!interface()->hasFeature(KIPI::ImagesHasTime)) d->dialog->disableApplTimestamp();
     d->dialog->addItems(images.images());
 }
 

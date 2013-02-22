@@ -56,6 +56,7 @@ public:
 
     TimeAdjustSettings settings() const;
 
+    void disableApplTimestamp();
     QDateTime customDate() const;
     QDateTime calculateAdjustedDate(const QDateTime& time) const;
 

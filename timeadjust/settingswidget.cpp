@@ -89,6 +89,7 @@ public:
         useFileDateTypeChooser = 0;
         useMetaDateTypeChooser = 0;
         adjTypeChooser         = 0;
+        useApplDateLbl         = 0;
         adjDaysLabel           = 0;
         adjDaysInput           = 0;
         adjDetByClockPhotoBtn  = 0;
@@ -123,6 +124,7 @@ public:
     QComboBox*    useMetaDateTypeChooser;
     QComboBox*    adjTypeChooser;
 
+    QLabel*       useApplDateLbl;
     QLabel*       adjDaysLabel;
 
     QSpinBox*     adjDaysInput;
@@ -161,8 +163,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
     d->useApplDateBtn           = new QRadioButton(QString(), d->useSettingsBox);
-    QLabel* useApplDateLbl      = new QLabel(applDateLabelString);
-    useApplDateLbl->setIndent(5);
+    d->useApplDateLbl           = new QLabel(applDateLabelString);
+    d->useApplDateLbl->setIndent(5);
 
     d->useFileDateBtn           = new QRadioButton(d->useSettingsBox);
     d->useFileDateTypeChooser   = new QComboBox(d->useSettingsBox);
@@ -195,7 +197,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     useGBLayout->setColumnStretch(1, 1);
     useGBLayout->setColumnStretch(2, 1);
     useGBLayout->addWidget(d->useApplDateBtn,         0, 0, 1, 1);
-    useGBLayout->addWidget(useApplDateLbl,            0, 1, 1, 1);
+    useGBLayout->addWidget(d->useApplDateLbl,         0, 1, 1, 1);
     useGBLayout->addWidget(d->useFileDateBtn,         1, 0, 1, 1);
     useGBLayout->addWidget(d->useFileDateTypeChooser, 1, 1, 1, 1);
     useGBLayout->addWidget(d->useMetaDateBtn,         2, 0, 1, 1);
@@ -320,6 +322,13 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 SettingsWidget::~SettingsWidget()
 {
     delete d;
+}
+
+void SettingsWidget::disableApplTimestamp()
+{
+    d->useApplDateBtn->setVisible(false);
+    d->useApplDateLbl->setVisible(false);
+    d->updAppDateCheck->setVisible(false);
 }
 
 void SettingsWidget::readSettings(KConfigGroup& group)

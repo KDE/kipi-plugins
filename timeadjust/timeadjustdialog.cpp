@@ -220,6 +220,11 @@ void TimeAdjustDialog::saveSettings()
     config.sync();
 }
 
+void TimeAdjustDialog::disableApplTimestamp()
+{
+    d->settingsView->disableApplTimestamp();
+}
+
 void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 {
     d->itemsStatusMap.clear();
