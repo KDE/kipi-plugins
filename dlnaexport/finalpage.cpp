@@ -102,8 +102,8 @@ FinalPage::FinalPage(QWidget* const parent)
     d->imgList->setAllowRAW(true);
     d->imgList->listView()->setWhatsThis(i18n("This is the list of images to upload via your DLNA server"));
 
-    d->startButton = new KPushButton("Start", this);
-    d->stopButton  = new KPushButton("Stop", this);
+    d->startButton = new KPushButton(i18n("Start"), this);
+    d->stopButton  = new KPushButton(i18n("Stop"), this);
     d->stopButton->setEnabled(false);
 
     connect(d->stopButton, SIGNAL(clicked()),

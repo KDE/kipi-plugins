@@ -139,7 +139,7 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(getDirectoriesFromCollection()));
 
     d->finalPage     = new FinalPage(this);
-    d->finalPageItem = addPage(d->finalPage, "Images to be exported");
+    d->finalPageItem = addPage(d->finalPage, i18n("Images to be exported"));
 }
 
 Wizard::~Wizard()

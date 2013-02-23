@@ -87,11 +87,11 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->titleLbl = new QLabel(this);
     d->titleLbl->setOpenExternalLinks(true);
     d->titleLbl->setFocusPolicy(Qt::NoFocus);
-    d->titleLbl->setText(QString("<b><h2><a href='http://www.dlna.org'>"
-                                 "<font color=\"#9ACD32\">DLNA Export</font>"
-                                 "</a></h2></b>"));
+    d->titleLbl->setText(i18n("<b><h2><a href=\"http://www.dlna.org\">"
+                              "<font color=\"#9ACD32\">DLNA Export</font>"
+                              "</a></h2></b>"));
 
-    d->binariesLbl    = new QLabel("<b>DLNAExport Binaries' requirement (Optional)</b>", settingsBox);
+    d->binariesLbl    = new QLabel(i18n("<b>DLNAExport Binaries' requirement (Optional)</b>"), settingsBox);
     d->binariesWidget = new KPBinarySearch(settingsBox);
     d->binariesWidget->addBinary(d->minidlnaBinary);
 
