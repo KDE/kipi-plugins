@@ -303,7 +303,7 @@ void ImageshackWindow::authenticate()
     m_widget->progressBar()->show();
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setMaximum(4);
-    m_widget->progressBar()->setFormat("Authenticating..");
+    m_widget->progressBar()->setFormat(i18n("Authenticating..."));
 
     if (m_imageshack->registrationCode().isEmpty())
     {

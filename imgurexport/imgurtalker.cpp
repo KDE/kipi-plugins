@@ -30,6 +30,7 @@
 
 #include <kdebug.h>
 #include <kio/job.h>
+#include <klocale.h>
 
 // LibKIPI includes
 
@@ -145,7 +146,7 @@ void ImgurTalker::parseResponse(const QByteArray& buffer)
     if (!parseOk)
     {
         ImgurError error;
-        error.message = "Unexpected response from the web-service";
+        error.message = i18n("Unexpected response from the web service");
         emit signalError(m_currentUrl, error);
 
         // received something unexpected
@@ -162,7 +163,7 @@ void ImgurTalker::slotResult(KJob* kjob)
     if ( job->error() )
     {
         ImgurError err;
-        err.message = tr("Upload failed");
+        err.message = i18n("Upload failed");
         emit signalError(m_currentUrl, err); //job->errorString()
         kDebug() << "Error :" << job->errorString();
     }

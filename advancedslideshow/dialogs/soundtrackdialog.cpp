@@ -445,7 +445,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
     QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
     dlg->setOperationMode(KFileDialog::Opening);
     dlg->setMode(KFile::File);
-    dlg->setFilter(QString("*.m3u|Playlist (*.m3u)"));
+    dlg->setFilter(i18n("*.m3u|Playlist (*.m3u)"));
     dlg->setWindowTitle(i18n("Load playlist"));
 
     if (dlg->exec() != KFileDialog::Accepted)
@@ -501,7 +501,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
     QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
     dlg->setOperationMode(KFileDialog::Saving);
     dlg->setMode(KFile::File);
-    dlg->setFilter(QString("*.m3u|Playlist (*.m3u)"));
+    dlg->setFilter(i18n("*.m3u|Playlist (*.m3u)"));
     dlg->setWindowTitle(i18n("Save playlist"));
 
     if (dlg->exec() != KFileDialog::Accepted)

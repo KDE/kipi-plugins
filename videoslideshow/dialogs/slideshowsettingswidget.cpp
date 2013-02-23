@@ -288,10 +288,10 @@ void SlideShowSettingsWidget::videoFormatChanged(int index)
 void SlideShowSettingsWidget::setUpPPMSettings()
 {
     QGridLayout* const mainLayout = new QGridLayout(d->PPMSettingsWidget);
-    QLabel* const timeLabel       = new QLabel("Image Display Time");
-    QLabel* const effectLabel     = new QLabel("Special Effect");
-    QLabel* const transitionLabel = new QLabel("Transition");
-    QLabel* const transSpeedLabel = new QLabel("Transition Speed");
+    QLabel* const timeLabel       = new QLabel(i18n("Image Display Time"));
+    QLabel* const effectLabel     = new QLabel(i18n("Special Effect"));
+    QLabel* const transitionLabel = new QLabel(i18n("Transition"));
+    QLabel* const transSpeedLabel = new QLabel(i18n("Transition Speed"));
 
     d->timeVal      = new QSpinBox();
     d->timeVal->setRange(1,60);
@@ -341,11 +341,11 @@ void SlideShowSettingsWidget::setUpPPMSettings()
     mainLayout->addWidget(new KSeparator(Qt::Horizontal), 4, 0, 1, 2);
 
     d->tempDirLabel                 = new QLabel(i18n("Temporary Directory"));
-    QLabel* const asptRatioCorLabel = new QLabel("Aspect Ratio Correction");
-    QLabel* const heightLabel       = new QLabel("Frame Height");
-    QLabel* const widthLabel        = new QLabel("Frame Width");
-    QLabel* const aspectLabel       = new QLabel("Aspect Ratio");
-    d->selectBtn                    = new KPushButton("Browse");
+    QLabel* const asptRatioCorLabel = new QLabel(i18n("Aspect Ratio Correction"));
+    QLabel* const heightLabel       = new QLabel(i18n("Frame Height"));
+    QLabel* const widthLabel        = new QLabel(i18n("Frame Width"));
+    QLabel* const aspectLabel       = new QLabel(i18n("Aspect Ratio"));
+    d->selectBtn                    = new KPushButton(i18n("Browse"));
 
     connect(d->selectBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectTempDirectory()));
@@ -397,8 +397,8 @@ void SlideShowSettingsWidget::resetToDefault()
 void SlideShowSettingsWidget::setUpVideoSettings()
 {
     QGridLayout* const mainLayout = new QGridLayout(d->VideoSettingsWidget);
-    QLabel* const typeLabel       = new QLabel("VideoType");
-    QLabel* const formatLabel     = new QLabel("Video Format");
+    QLabel* const typeLabel       = new QLabel(i18n("Video Type"));
+    QLabel* const formatLabel     = new QLabel(i18n("Video Format"));
 
     d->videoType    = new QComboBox();
     d->videoType->setEditable(false);
@@ -422,12 +422,12 @@ void SlideShowSettingsWidget::setUpVideoSettings()
     mainLayout->addWidget(new KSeparator(Qt::Horizontal), 2, 0, 1, 2);
 
     d->audioFile    = new QLabel(i18n("Audio Disabled"));
-    d->audioBtn     = new KPushButton("Browse");
-    d->checkbox     = new QCheckBox("Add Audio");
+    d->audioBtn     = new KPushButton(i18n("Browse"));
+    d->checkbox     = new QCheckBox(i18n("Add Audio"));
     d->audioBtn->setEnabled(false);
 
     d->saveFileLabel = new QLabel(i18n("Save video"));
-    d->saveBtn       = new KPushButton("Browse");
+    d->saveBtn       = new KPushButton(i18n("Browse"));
 
     connect(d->saveBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotSelectSaveFileName()));
@@ -471,7 +471,7 @@ void SlideShowSettingsWidget::slotAudioChecked()
     if(!d->checkbox->isChecked())
     {
         d->audioPath = "";
-        d->audioFile->setText("audio Disabled");
+        d->audioFile->setText(i18n("Audio Disabled"));
         d->audioBtn->setEnabled(false);
     }
     else

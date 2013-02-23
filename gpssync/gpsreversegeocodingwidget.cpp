@@ -861,8 +861,8 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
     bool ok;
     QString textString;
 
-    textString = KInputDialog::getText(QString("%1").arg("Add new tag:") /* caption */,
-                                       QString("%1").arg("Select a name for the new tag:") /* label */,
+    textString = KInputDialog::getText(i18n("Add new tag:") /* caption */,
+                                       i18n("Select a name for the new tag:") /* label */,
                                        QString() /* value */,
                                        &ok /* ok */,
                                        this /* parent */

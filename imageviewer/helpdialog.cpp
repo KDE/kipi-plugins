@@ -63,7 +63,7 @@ HelpDialog::HelpDialog()
     QTextBrowser* brw = new QTextBrowser(this);
     setMainWidget(brw);
 
-    brw->setHtml(tr2i18n(
+    brw->setHtml(i18n(
         "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\""
         "\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -133,7 +133,7 @@ HelpDialog::HelpDialog()
         "<ul style=\"-qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">move mouse while pressing the left button</li></ul></body></html>",
     0));
 
-    brw->setProperty("text", QVariant(tr2i18n(
+    brw->setProperty("text", QVariant(i18n(
         "<b><font color=\"#5500ff\">"
         "<font size=\"+2\">Image Access</font></font></b><br>\n"
         "<TABLE> \n"

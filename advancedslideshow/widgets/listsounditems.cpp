@@ -98,7 +98,7 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
                                   );
         m_artist = m_url.fileName();
         m_title  = i18n("This file is damaged and may not be playable.");
-        setText(artist().append(" - ").append(title()));
+        setText(i18nc("artist - title", "%1 - %2", artist(), title()));
         setBackground(QBrush(Qt::red));
         setForeground(QBrush(Qt::white));
         QFont errorFont = font();
@@ -122,7 +122,7 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     if ( m_artist.isEmpty() && m_title.isEmpty() )
         setText(m_url.fileName());
     else
-        setText(artist().append(" - ").append(title()));
+        setText(i18nc("artist - title", "%1 - %2", artist(), title()));
 
     emit signalTotalTimeReady(m_url, m_totalTime);
 }

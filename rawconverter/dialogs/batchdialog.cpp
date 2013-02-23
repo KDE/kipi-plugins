@@ -145,7 +145,7 @@ BatchDialog::BatchDialog()
                                                               DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->decodingSettingsBox->setObjectName("RawSettingsBox Expander");
     d->saveSettingsBox     = new KPSaveSettingsWidget(d->page);
-    d->saveSettingsBox->setPromptButtonText("Store it under different name");
+    d->saveSettingsBox->setPromptButtonText(i18n("Store it under different name"));
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));

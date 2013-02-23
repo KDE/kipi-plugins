@@ -131,7 +131,7 @@ void Plugin_viewer::slotActivate()
         case oglNoContext:
             kError() << "no OpenGL context found";
             delete d->widget;
-            KMessageBox::error(0, i18n("OpenGL error"), i18n("no OpenGL context found"));
+            KMessageBox::error(0, i18n("OpenGL error"), i18n("No OpenGL context found"));
             break;
     }
 }

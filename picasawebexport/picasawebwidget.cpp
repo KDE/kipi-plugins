@@ -120,12 +120,12 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
     QVBoxLayout* const sizeBoxLayout = new QVBoxLayout(sizeBox);
     m_dlDimensionCoB                 = new KComboBox(sizeBox);
-    m_dlDimensionCoB->addItem("Original Size", "d");
-    m_dlDimensionCoB->addItem("1600 px", "1600");
-    m_dlDimensionCoB->addItem("1440 px", "1440");
-    m_dlDimensionCoB->addItem("1280 px", "1280");
-    m_dlDimensionCoB->addItem("1152 px", "1152");
-    m_dlDimensionCoB->addItem("1024 px", "1024");
+    m_dlDimensionCoB->addItem(i18n("Original Size"), "d");
+    m_dlDimensionCoB->addItem(i18n("1600 px"), "1600");
+    m_dlDimensionCoB->addItem(i18n("1440 px"), "1440");
+    m_dlDimensionCoB->addItem(i18n("1280 px"), "1280");
+    m_dlDimensionCoB->addItem(i18n("1152 px"), "1152");
+    m_dlDimensionCoB->addItem(i18n("1024 px"), "1024");
     m_dlDimensionCoB->setCurrentIndex(0);
     sizeBoxLayout->addWidget(m_dlDimensionCoB);
 
