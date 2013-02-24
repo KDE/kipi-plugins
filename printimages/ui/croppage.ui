@@ -7,26 +7,10 @@
     <x>0</x>
     <y>0</y>
     <width>704</width>
-    <height>300</height>
+    <height>325</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="KIPIPrintImagesPlugin::CropFrame" name="cropFrame" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>201</height>
-      </size>
-     </property>
-     <property name="whatsThis">
-      <string>Move the box in order to crop photos so that they fit inside the photo sizes you have given.  
-You can crop each image differently, or just click the 'Next' button to use the default crop 
-setting for each photo.
-Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -154,26 +138,53 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <widget class="KUrlRequester" name="m_outputPath">
-     <property name="enabled">
-      <bool>false</bool>
+      <item row="0" column="0">
+    <widget class="KIPIPrintImagesPlugin::CropFrame" name="cropFrame" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>201</height>
+      </size>
+      
      </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+     
+     <property name="whatsThis">
+      <string>Move the box in order to crop photos so that they fit inside the photo sizes you have given.  
+You can crop each image differently, or just click the 'Next' button to use the default crop 
+setting for each photo.
+Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
      </property>
     </widget>
    </item>
+  <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="KLineEdit" name="m_fileName"/>
+     </item>
+     <item>
+      <widget class="KPushButton" name="BtnSaveAs">
+       <property name="text">
+        <string>Save As</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+S</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item> 
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QFrame</extends>
-   <header>kurlrequester.h</header>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+   </customwidget>
+   <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KIPIPrintImagesPlugin::CropFrame</class>

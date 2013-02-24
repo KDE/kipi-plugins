@@ -80,6 +80,7 @@ protected Q_SLOTS:
     virtual void BtnCropRotateRight_clicked();
     virtual void BtnCropNext_clicked();
     virtual void BtnCropPrev_clicked();
+    virtual void BtnSaveAs_clicked();
     virtual void ListPhotoSizes_selected();
 
     virtual void reject();
@@ -119,7 +120,7 @@ private:
     void setBtnCropEnabled();
     void removeGimpFiles();
     void printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, QPrinter& printer);
-    QStringList printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* const layouts);
+    QStringList printPhotosToFile(const QList<TPhoto*>& photos, const QString& baseFilename, TPhotoSize* const layouts);
 
     int     getPageCount()                        const;
     QRect*  getLayout(int photoIndex)             const;

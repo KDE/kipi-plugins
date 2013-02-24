@@ -259,6 +259,11 @@ Wizard::Wizard(QWidget* const parent)
 
     connect(d->m_photoPage->m_pagesetup, SIGNAL(clicked()),
             this, SLOT(pagesetupclicked()));
+    
+    // save JPG as
+    connect ( d->m_cropPage->BtnSaveAs, SIGNAL ( clicked() ),
+            this, SLOT ( BtnSaveAs_clicked() ) );
+
 
     if (d->m_photoPage->mPrintList->layout())
     {
@@ -911,7 +916,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
     Q_ASSERT(layouts.count() > 1);
 
     if (photos.count() == 0) 
-	    return true;   // no photos => last photo
+        return true;   // no photos => last photo
 
     QList<QRect*>::const_iterator it = layouts.begin();
     QRect* const srcPage             = static_cast<QRect*>(*it);
@@ -2154,7 +2159,16 @@ void Wizard::BtnPreviewPageUp_clicked()
     d->m_currentPreviewPage++;
     previewPhotos();
 }
-
+void Wizard::BtnSaveAs_clicked()
+{
+    kDebug() << "Save As Clicked";
+    KConfig config ( "kipirc" );
+    KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
+    KUrl outputPath; // force to get current directory as default
+    outputPath = group.readPathEntry ( "OutputPath", outputPath.url() );
+    QString filename=KFileDialog::getSaveFileName ( outputPath,QString ( ".jpeg" ) );
+    d->m_cropPage->m_fileName->setText(filename);
+}
 void Wizard::saveSettings(const QString& pageName)
 {
     kDebug() << pageName;
@@ -2178,7 +2192,7 @@ void Wizard::saveSettings(const QString& pageName)
         if (d->m_photoPage->m_printer_choice->currentText() == i18n("Print to JPG"))
         {
             // output path
-            QString outputPath = d->m_cropPage->m_outputPath->url().url();
+            QString outputPath = d->m_cropPage->m_fileName->originalText();
             group.writePathEntry("OutputPath", outputPath);
         }
     }
@@ -2250,15 +2264,19 @@ void Wizard::readSettings(const QString& pageName)
             // set the last output path
             KUrl outputPath; // force to get current directory as default
             outputPath = group.readPathEntry("OutputPath", outputPath.url());
-            d->m_cropPage->m_outputPath->setUrl(outputPath);
-            d->m_cropPage->m_outputPath->setVisible(true);
-            d->m_cropPage->m_outputPath->setEnabled(true);
-            KFile::Modes mode = KFile::Directory | KFile::ExistingOnly;
-            d->m_cropPage->m_outputPath->setMode(mode);
+            
+            d->m_cropPage->m_fileName->setVisible(true);
+            d->m_cropPage->m_fileName->setEnabled(true);
+            d->m_cropPage->m_fileName->setText(outputPath.path());
+            d->m_cropPage->BtnSaveAs->setVisible(true);
+
         }
         else
         {
-            d->m_cropPage->m_outputPath->setVisible(false);
+            
+            d->m_cropPage->m_fileName->setVisible(false);
+            d->m_cropPage->BtnSaveAs->setVisible(false);
+
         }
     }
 }
@@ -2295,7 +2313,7 @@ void Wizard::printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layo
     p.end();
 }
 
-QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* const layouts)
+QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QString& baseFilename, TPhotoSize* const layouts)
 {
     Q_ASSERT(layouts->layouts.count() > 1);
 
@@ -2321,14 +2339,23 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& bas
         if (dpi == 0.0)
             dpi = getMaxDPI(photos, layouts->layouts, current) * 1.1;
 
-        int w = NINT(srcPage->width() / 1000.0 * dpi);
-        int h = NINT(srcPage->height()  / 1000.0 * dpi);
+        //int w = NINT(srcPage->width() / 1000.0 * dpi);
+        //int h = NINT(srcPage->height()  / 1000.0 * dpi);
+        int w = NINT(srcPage->width());
+        int h = NINT(srcPage->height());
+        
         QPixmap pixmap(w, h);
         QPainter painter;
         painter.begin(&pixmap);
 
         // save this page out to file
-        QString filename = baseFilename + QString::number(pageCount) + ".jpeg";
+        QFileInfo fi(baseFilename);
+        QString ext  = fi.completeSuffix();  // ext = ".jpeg"
+        if (ext.isEmpty()) ext = ".jpeg";       
+        QString name = fi.baseName();
+        QString path = fi.absolutePath();
+        
+        QString filename = path + "/" + name + "_" + QString::number(pageCount) + "." + ext;
         bool saveFile    = true;
 
         if (QFile::exists(filename))
@@ -2353,7 +2380,7 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, QString& bas
         {
             files.append(filename);
 
-            if (!pixmap.save(filename))
+            if (!pixmap.save(filename,0,100))
             {
                 KMessageBox::sorry(this, i18n("Could not save file, please check your output entry."));
                 break;
@@ -2509,7 +2536,7 @@ void Wizard::accept()
     {
         // now output the items
         //TODO manage URL
-        QString path = d->m_cropPage->m_outputPath->url().path() ;
+        QString path = d->m_cropPage->m_fileName->originalText();
 
         if (path.isEmpty())
         {
@@ -2517,11 +2544,7 @@ void Wizard::accept()
                                i18n("Empty output path."));
             return;
         }
-
-        if (path.right(1) != "/")
-            path = path + '/';
-
-        path = path + "kipi_printassistant_";
+        
         kDebug() << path;
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         printPhotosToFile(d->m_photos, path, s);
