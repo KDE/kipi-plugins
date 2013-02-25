@@ -63,7 +63,10 @@ public:
         PPMSettingsWidget   = 0;
         VideoSettingsWidget = 0;
         selectBtn           = 0;
+        audioBtn            = 0;
+        saveBtn             = 0;
         tempDirLabel        = 0;
+        audioFile           = 0;
         timeVal             = 0;
         effects             = 0;
         transitions         = 0;
@@ -73,8 +76,8 @@ public:
         videoType           = 0;
         frameHeight         = 0;
         frameWidth          = 0;
-        saveBtn             = 0;
         saveFileLabel       = 0;
+        checkbox            = 0;
     }
 
     QWidget*     PPMSettingsWidget;
@@ -87,8 +90,6 @@ public:
     QString      path;
     QString      audioPath;
     QString      savePath;
-
-    bool         useDeafaultSize;
 
     QLabel*      tempDirLabel;
     QLabel*      audioFile;
@@ -487,7 +488,6 @@ void SlideShowSettingsWidget::slotSelectSaveFileName()
     d->saveFileLabel->setText(path);
     d->savePath  = path;
 }
-
 
 QString SlideShowSettingsWidget::getTempDirPath() const
 {
