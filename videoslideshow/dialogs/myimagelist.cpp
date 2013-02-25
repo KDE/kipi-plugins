@@ -89,6 +89,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
 void MyImageList::slotRemoveItems()
 {
     bool find = false;
+
     do
     {
         find = false;
@@ -119,8 +120,12 @@ public:
 
     Private()
     {
-        prev = 0;
-        next = 0;
+        time       = 2;
+        effect     = EFFECT_NONE;
+        transition = TRANSITION_TYPE_RANDOM;
+        transSpeed = TRANSITION_MEDIUM;
+        prev       = 0;
+        next       = 0;
     }
 
     int                  time;
