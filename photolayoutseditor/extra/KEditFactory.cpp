@@ -7,8 +7,8 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,8 +30,8 @@
 #include <QSlider>
 #include <QDebug>
 
-KSpinBoxFactory::KSpinBoxFactory(QObject * parent) :
-    QtSpinBoxFactory(parent)
+KSpinBoxFactory::KSpinBoxFactory(QObject* parent) 
+    : QtSpinBoxFactory(parent)
 {
 }
 
@@ -235,21 +235,25 @@ void KSliderEditFactory::connectPropertyManager(QtIntPropertyManager * manager)
 
 QWidget * KSliderEditFactory::createEditor(QtIntPropertyManager * manager, QtProperty * property, QWidget * parent)
 {
-    QtAbstractEditorFactoryBase * base = originalFactory;
-    QWidget * w = base->createPropertyEditor(property,parent);
+    QtAbstractEditorFactoryBase* const base = originalFactory;
+
+    QWidget* w = base->createPropertyEditor(property,parent);
+
     if (!w)
         return 0;
-    QSlider * slider = qobject_cast<QSlider*>(w);
-    if (!w)
+
+    QSlider* slider = qobject_cast<QSlider*>(w);
+
+    if (!slider)
         return 0;
 
     w = new QWidget(parent);
     slider->setParent(w);
-    QSpinBox * spinbox = new QSpinBox(w);
+    QSpinBox* spinbox = new QSpinBox(w);
     spinbox->setMaximum(manager->maximum(property));
     spinbox->setMinimum(manager->minimum(property));
     spinbox->setValue(manager->value(property));
-    QHBoxLayout * layout = new QHBoxLayout();
+    QHBoxLayout* layout = new QHBoxLayout();
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(slider,1);
