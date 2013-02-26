@@ -233,8 +233,11 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
     if (twoPass)
     {
         KTemporaryFile tempFile;
+
+        if (!tempFile.open())
+            return false;
+
         tempFile.setAutoRemove(false);
-        tempFile.open();
         dest = tempFile.fileName();
     }
 
