@@ -341,7 +341,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
         return;
     }
 
-    KPImagesListViewItem* const pitem = static_cast<KPImagesListViewItem*>(item);
+    KPImagesListViewItem* const pitem = dynamic_cast<KPImagesListViewItem*>(item);
 
     if (!pitem)
         return;
