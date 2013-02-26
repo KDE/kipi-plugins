@@ -225,7 +225,9 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
 
     if (m_cancel)
     {
-        ::remove(QFile::encodeName(destPath));
+        if (::remove(QFile::encodeName(destPath)) != 0)
+            kDebug() << "Cannot remove " << destPath;
+
         return false;
     }
 
