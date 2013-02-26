@@ -626,7 +626,9 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         if (sendOriginal)
         {
             QFile imgFile(photoPath);
-            imgFile.copy(path);
+
+            if (!imgFile.copy(path))
+                return false;
         }
         else
         {
