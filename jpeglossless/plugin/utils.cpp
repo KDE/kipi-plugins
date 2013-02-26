@@ -128,7 +128,6 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     KTemporaryFile iptcTemp;
     iptcTemp.setSuffix(QString("kipipluginsiptc.8bim"));
     iptcTemp.setAutoRemove(true);
-    iptcTemp.open();
 
     if ( !iptcTemp.open() )
     {
