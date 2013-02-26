@@ -60,7 +60,8 @@ void DNGWriter::Private::reset()
 
 void DNGWriter::Private::cleanup()
 {
-    ::remove(QFile::encodeName(outputFile));
+    if (::remove(QFile::encodeName(outputFile)) != 0)
+        kDebug() << "Cannot remove " << outputFile;
 }
 
 dng_date_time DNGWriter::Private::dngDateTime(const QDateTime& qDT) const
