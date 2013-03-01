@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF light settings page.
  *
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ class FlashMode
 {
 public:
 
-    FlashMode() {}
+    FlashMode() : m_id(0) {}
     FlashMode(int id, const QString& desc) : m_id(id), m_desc(desc) {}
 
     int     id()   const { return m_id;   }
@@ -66,11 +66,11 @@ private:
 
 // --------------------------------------------------------------------------
 
-class EXIFLight::EXIFLightPriv
+class EXIFLight::Private
 {
 public:
 
-    EXIFLightPriv()
+    Private()
     {
         lightSourceCheck     = 0;
         flashModeCheck       = 0;
@@ -125,9 +125,9 @@ public:
 // --------------------------------------------------------------------------
 
 EXIFLight::EXIFLight(QWidget* const parent)
-    : QWidget(parent), d(new EXIFLightPriv)
+    : QWidget(parent), d(new Private)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
@@ -162,8 +162,7 @@ EXIFLight::EXIFLight(QWidget* const parent)
     d->flashModeCheck = new MetadataCheckBox(i18n("Flash mode:"), this);
     d->flashModeCB    = new KComboBox(this);
 
-    for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
-        it != d->flashModeMap.end(); ++it )
+    for (Private::FlashModeMap::Iterator it = d->flashModeMap.begin(); it != d->flashModeMap.end(); ++it )
        d->flashModeCB->addItem(it.value().desc());
 
     d->flashModeCB->setWhatsThis(i18n("Select here the flash program mode used by the camera "
@@ -280,7 +279,9 @@ void EXIFLight::readMetadata(QByteArray& exifData)
             d->lightSourceCheck->setChecked(true);
         }
         else
+        {
             d->lightSourceCheck->setValid(false);
+        }
     }
     d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
 
@@ -289,7 +290,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     if (meta.getExifTagLong("Exif.Photo.Flash", val))
     {
         int item = -1;
-        for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
+        for (Private::FlashModeMap::Iterator it = d->flashModeMap.begin();
             it != d->flashModeMap.end(); ++it )
         {
             if (it.value().id() == val)
@@ -302,7 +303,9 @@ void EXIFLight::readMetadata(QByteArray& exifData)
             d->flashModeCheck->setChecked(true);
         }
         else
+        {
             d->flashModeCheck->setValid(false);
+        }
     }
     d->flashModeCB->setEnabled(d->flashModeCheck->isChecked());
 
@@ -325,7 +328,9 @@ void EXIFLight::readMetadata(QByteArray& exifData)
             d->whiteBalanceCheck->setChecked(true);
         }
         else
+        {
             d->whiteBalanceCheck->setValid(false);
+        }
     }
     d->whiteBalanceCB->setEnabled(d->whiteBalanceCheck->isChecked());
 
@@ -351,7 +356,9 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
         meta.setExifTagLong("Exif.Photo.LightSource", val);
     }
     else if (d->lightSourceCheck->isValid())
+    {
         meta.removeExifTag("Exif.Photo.LightSource");
+    }
 
     if (d->flashModeCheck->isChecked())
     {
@@ -359,7 +366,9 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
         meta.setExifTagLong("Exif.Photo.Flash", d->flashModeMap[val].id());
     }
     else if (d->flashModeCheck->isValid())
+    {
         meta.removeExifTag("Exif.Photo.Flash");
+    }
 
     if (d->flashEnergyCheck->isChecked())
     {
@@ -367,7 +376,9 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
         meta.setExifTagRational("Exif.Photo.FlashEnergy", num, den);
     }
     else
+    {
         meta.removeExifTag("Exif.Photo.FlashEnergy");
+    }
 
     if (d->whiteBalanceCheck->isChecked())
         meta.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentIndex());
