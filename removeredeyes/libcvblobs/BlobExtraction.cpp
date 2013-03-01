@@ -634,7 +634,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                     //afegim la cantonada a ThisRegion
                     actualedge.x = ThisStart - 1;
                     actualedge.y = ThisRow - 1;
-                    cvSeqPush(regionDataThisRegion->edges,&actualedge);
+
+                    if (regionDataThisRegion)
+                        cvSeqPush(regionDataThisRegion->edges,&actualedge);
 
                     break;
 
