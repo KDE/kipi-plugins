@@ -833,13 +833,14 @@ bool UploadDialog::openDevice()
         {
 
             m_itdb = itdb_photodb_create( QFile::encodeName( m_mountPoint ) );
-            itdb_device_set_mountpoint( m_itdb->device, QFile::encodeName( m_mountPoint ) );
 
             if( !m_itdb )
             {
                 kDebug() << "Could not initialise photodb..." ;
                 return false;
             }
+
+            itdb_device_set_mountpoint( m_itdb->device, QFile::encodeName( m_mountPoint ) );
 
             GError* err = 0;
             itdb_photodb_write( m_itdb, &err );
