@@ -63,7 +63,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     setObjectName("ImageshackWidget");
 
 
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
     // --------------------------------------------
 
@@ -74,8 +74,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     removeVideosFromList();
     m_imgList->setWhatsThis("Images to upload to Imageshack web service");
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget* const settingsBox           = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imageshack home page in a web browser"));
@@ -85,17 +85,16 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     // --------------------------------------------
 
-    QGroupBox* accountBox = new QGroupBox(i18n("Account"), settingsBox);
+    QGroupBox* const accountBox = new QGroupBox(i18n("Account"), settingsBox);
     accountBox->setWhatsThis(i18n("Imageshack account info"));
-    QGridLayout *accountBoxLayout = new QGridLayout(accountBox);
+    QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel* accountName  = new QLabel(i18nc("Account info", "Name:"),  accountBox);
-    QLabel* accountEmail = new QLabel(i18nc("Account info", "Email:"), accountBox);
+    QLabel* const accountName  = new QLabel(i18nc("Account info", "Name:"),  accountBox);
+    QLabel* const accountEmail = new QLabel(i18nc("Account info", "Email:"), accountBox);
 
     m_accountNameLbl  = new QLabel(accountBox);
     m_accountEmailLbl = new QLabel(accountBox);
-    m_chgRegCodeBtn   = new KPushButton(KGuiItem(i18n("Change account"),
-                                                 "system-switch-user",
+    m_chgRegCodeBtn   = new KPushButton(KGuiItem(i18n("Change account"), "system-switch-user",
                                                  i18n("Change the registration code for the Imageshack account used to upload images")),
                                         accountBox);
 
@@ -116,27 +115,26 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_galleriesBox->setTitle(i18n("Destination"));
     m_galleriesBox->setWhatsThis(i18n("This is the ImageShack gallery to which selected items will be uploaded"));
 
-    QGridLayout* galleriesBoxLayout = new QGridLayout(m_galleriesBox);
+    QGridLayout* const galleriesBoxLayout = new QGridLayout(m_galleriesBox);
 
     m_useGalleriesChb = new QCheckBox(m_galleriesBox);
     m_useGalleriesChb->setText("Upload to galleries");
 //    useGalleries->setEnabled(false);
 
-    m_galleriesWidget = new QWidget(m_galleriesBox);
-    QGridLayout* gwLayout = new QGridLayout(m_galleriesWidget);
+    m_galleriesWidget           = new QWidget(m_galleriesBox);
+    QGridLayout* const gwLayout = new QGridLayout(m_galleriesWidget);
 
-    QLabel* galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
-    m_galleriesCob = new KComboBox(m_galleriesWidget);
+    QLabel* const galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
+    m_galleriesCob       = new KComboBox(m_galleriesWidget);
     m_galleriesCob->addItem("Create new gallery.", "--new-gallery--");
     m_galleriesCob->setEditable(false);
 
-    QLabel* gallNameLbl = new QLabel(m_galleriesWidget);
+    QLabel* const gallNameLbl = new QLabel(m_galleriesWidget);
     gallNameLbl->setText("Name:");
 
-    m_newGalleryName = new QLineEdit(m_galleriesWidget);
-
-    m_reloadGalleriesBtn = new KPushButton(KGuiItem(i18nc("ImageShack galleries list", "Reload"),
-                                                    "view-refresh", i18n("Reload ImageShack galleries list")), m_galleriesWidget);
+    m_newGalleryName          = new QLineEdit(m_galleriesWidget);
+    m_reloadGalleriesBtn      = new KPushButton(KGuiItem(i18nc("ImageShack galleries list", "Reload"),
+                                                         "view-refresh", i18n("Reload ImageShack galleries list")), m_galleriesWidget);
 
     galleriesBoxLayout->addWidget(m_useGalleriesChb,    0, 0, 1, 5);
     galleriesBoxLayout->addWidget(m_galleriesWidget,    1, 0, 5, 5);
@@ -161,22 +159,23 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     // ----------------------------------------------
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis("These are the options that will be applied to photos");
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_privateImagesChb = new QCheckBox(optionsBox);
     m_privateImagesChb->setText(i18n("Make private"));
     m_privateImagesChb->setChecked(false);
 
-    QGroupBox* resizeOptions = new QGroupBox(i18n("Resize options"), optionsBox);
-    QGridLayout* resizeOptionsLayout = new QGridLayout(resizeOptions);
+    QGroupBox* const resizeOptions = new QGroupBox(i18n("Resize options"), optionsBox);
+    QGridLayout* const resizeOptionsLayout = new QGridLayout(resizeOptions);
 
     m_noResizeRdb = new QRadioButton(optionsBox);
     m_noResizeRdb->setText(i18n("Do not resize photos"));
 
     m_predefSizeRdb = new QRadioButton(optionsBox);
     m_predefSizeRdb->setText(i18n("Predefined templates"));
+
     connect(m_predefSizeRdb, SIGNAL(toggled(bool)),
             this, SLOT(slotEnablePredefComboBox(bool)));
 
@@ -190,7 +189,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_widthSpb->setValue(1000);
     m_widthSpb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_widthSpb->setEnabled(false);
-    QLabel*  widthLbl = new QLabel(i18n("Width:"), optionsBox);
+    QLabel* const widthLbl = new QLabel(i18n("Width:"), optionsBox);
 
     m_heightSpb = new QSpinBox(optionsBox);
     m_heightSpb->setMinimum(1);
@@ -203,7 +202,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     connect(m_customSizeRdb, SIGNAL(toggled(bool)),
             this, SLOT(slotEnableCustomSize(bool)));
 
-    QLabel* heightLbl = new QLabel(i18n("Height"), optionsBox);
+    QLabel* const heightLbl = new QLabel(i18n("Height"), optionsBox);
 
     m_resizeOptsCob = new KComboBox(optionsBox);
     updateResizeOpts();
@@ -223,10 +222,10 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     resizeOptionsLayout->setSpacing(KDialog::spacingHint());
     resizeOptionsLayout->setMargin(KDialog::spacingHint());
 
-    m_tagsFld = new QLineEdit(settingsBox);
-    QLabel* tagsLbl = new QLabel(i18n("Tags (optional):"), settingsBox);
+    m_tagsFld             = new QLineEdit(settingsBox);
+    QLabel* const tagsLbl = new QLabel(i18n("Tags (optional):"), settingsBox);
 
-    m_remBarChb = new QCheckBox(i18n("Remove information bar on thumbnails"));
+    m_remBarChb           = new QCheckBox(i18n("Remove information bar on thumbnails"));
     m_remBarChb->setChecked(false);
 
     optionsBoxLayout->addWidget(m_privateImagesChb, 0, 0, 1, 2);
@@ -238,7 +237,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
+    m_progressBar         = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
     m_progressBar->setVisible(false);
 
@@ -273,6 +272,7 @@ void ImageshackWidget::removeVideosFromList()
     for (int i = 0; i < urls.size(); ++i)
     {
         KMimeType::Ptr mimePtr = KMimeType::findByUrl(urls[i]);
+
         if (mimePtr->name().startsWith("video/"))
             m_imgList->removeItemByUrl(urls[i]);
     }
@@ -349,6 +349,7 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
     // TODO check if the lists have the same size
     for (int i = 0; i < gTexts.size(); ++i)
         m_galleriesCob->addItem(gTexts[i], gNames[i]);
+
     slotEnableNewGalleryLE(m_galleriesCob->currentIndex());
 }
 

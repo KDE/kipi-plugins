@@ -81,37 +81,36 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::KPImagesList* m_imgList;
+    KIPIPlugins::KPImagesList*     m_imgList;
 
-    Imageshack*                m_imageshack;
+    Imageshack*                    m_imageshack;
 
-    QLabel*                    m_headerLbl;
-    QLabel*                    m_accountNameLbl;
-    QLabel*                    m_accountEmailLbl;
+    QLabel*                        m_headerLbl;
+    QLabel*                        m_accountNameLbl;
+    QLabel*                        m_accountEmailLbl;
 
-    QLineEdit*                 m_tagsFld;
-    QLineEdit*                 m_newGalleryName;
+    QLineEdit*                     m_tagsFld;
+    QLineEdit*                     m_newGalleryName;
 
-    QRadioButton*              m_noResizeRdb;
-    QRadioButton*              m_predefSizeRdb;
-    QRadioButton*              m_customSizeRdb;
+    QRadioButton*                  m_noResizeRdb;
+    QRadioButton*                  m_predefSizeRdb;
+    QRadioButton*                  m_customSizeRdb;
 
-    QCheckBox*                 m_privateImagesChb;
-    QCheckBox*                 m_remBarChb;
-    QCheckBox*                 m_useGalleriesChb;
+    QCheckBox*                     m_privateImagesChb;
+    QCheckBox*                     m_remBarChb;
+    QCheckBox*                     m_useGalleriesChb;
 
-    KPushButton*               m_chgRegCodeBtn;
-    KPushButton*               m_newGalleryBtn;
-    KPushButton*               m_reloadGalleriesBtn;
+    KPushButton*                   m_chgRegCodeBtn;
+    KPushButton*                   m_reloadGalleriesBtn;
 
-    KComboBox*                 m_resizeOptsCob;
-    KComboBox*                 m_galleriesCob;
+    KComboBox*                     m_resizeOptsCob;
+    KComboBox*                     m_galleriesCob;
 
-    QSpinBox*                  m_widthSpb;
-    QSpinBox*                  m_heightSpb;
+    QSpinBox*                      m_widthSpb;
+    QSpinBox*                      m_heightSpb;
 
-    QGroupBox*                 m_galleriesBox;
-    QWidget*                   m_galleriesWidget;
+    QGroupBox*                     m_galleriesBox;
+    QWidget*                       m_galleriesWidget;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
