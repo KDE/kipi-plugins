@@ -55,12 +55,13 @@ public:
 
     Private()
     {
-        iconLbl              = 0;
-        titleLbl             = 0;
-        headerLbl            = 0;
-        getImplementationLbl = 0;
-        binariesWidget       = 0;
-        binariesLbl          = 0;
+        iconLbl                 = 0;
+        titleLbl                = 0;
+        headerLbl               = 0;
+        getImplementationLbl    = 0;
+        binariesWidget          = 0;
+        binariesLbl             = 0;
+        implementationGetOption = 0;
     }
 
     QLabel*         iconLbl;
