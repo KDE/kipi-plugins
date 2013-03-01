@@ -35,6 +35,14 @@ namespace KIPIRajceExportPlugin
 
 struct Album
 {
+    Album()
+    {
+        isHidden   = false;
+        isSecure   = false;
+        photoCount = 0;
+        id         = 0;
+    }
+
     bool      isHidden;
     bool      isSecure;
 
