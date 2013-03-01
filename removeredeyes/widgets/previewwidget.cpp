@@ -263,7 +263,7 @@ void PreviewWidget::resizeEvent(QResizeEvent* e)
     QWidget::resizeEvent(e);
 
     d->controller->move((width()/2) -  (d->controller->width()/2),
-                        (height()/2) - (d->controller->width()/2));
+                        (height()/2) - (d->controller->height()/2));
 }
 
 void PreviewWidget::setMode(DisplayMode mode)
