@@ -6,8 +6,8 @@
  * Date        : 2008-02-21
  * Description : simple viewer export settings container.
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici@gmail.com>
+ * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -71,57 +71,58 @@ public:
     SimpleViewerSettingsContainer()
     {
         /** All items must be initialized in constructor to avoid warinings **/
-        plugType = SIMPLE;
-        imgGetOption = COLLECTION;
-        exportUrl = KUrl();
+        plugType             = SIMPLE;
+        imgGetOption         = COLLECTION;
+        exportUrl            = KUrl();
 
         enableRightClickOpen = false;
-        resizeExportImages = false;
-        showComments = false;
-        fixOrientation = false;
-        openInKonqueror = false;
-        showKeywords = false;
+        resizeExportImages   = false;
+        showComments         = false;
+        fixOrientation       = false;
+        openInKonqueror      = false;
+        showKeywords         = false;
 
-        title = QString();
+        title                = QString();
 
+        backgroundColor      = QColor();
+        frameColor           = QColor();
 
-        backgroundColor = QColor();
-        frameColor = QColor();
+        thumbnailColumns     = 0; // columns
+        thumbnailRows        = 0;    // rows
 
-        thumbnailColumns = 0; // columns
-        //thumbnailRows = 0;    // rows
-
-        imagesExportSize = 0;
-        frameWidth = 0;
+        imagesExportSize     = 0;
+        frameWidth           = 0;
 
         //simpleViewer settings
-        textColor = QColor();
-        stagePadding = 0;
-        maxImageDimension =0;
+        textColor            = QColor();
+        stagePadding         = 0;
+        maxImageDimension    = 0;
 
-        thumbnailPosition = RIGHT;
+        thumbnailPosition    = RIGHT;
 
         // Autoviewer settings
-        imagePadding = 0;
-        displayTime = 0 ;
+        imagePadding         = 0;
+        displayTime          = 0 ;
 
         // Tiltviewer options
-        showFlipButton = false;
-        useReloadButton = false;
-        backColor = QColor();
-        bkgndInnerColor = QColor();
-        bkgndOuterColor = QColor();
+        showFlipButton       = false;
+        useReloadButton      = false;
+        backColor            = QColor();
+        bkgndInnerColor      = QColor();
+        bkgndOuterColor      = QColor();
 
         // postcard options
-        cellDimension = 0;
-        zoomOutPerc = 0;
-        zoomInPerc = 0;
+        cellDimension        = 0;
+        zoomOutPerc          = 0;
+        zoomInPerc           = 0;
 
-        collections = QList<KIPI::ImageCollection>();
-        imageDialogList = KUrl::List();
+        collections          = QList<KIPI::ImageCollection>();
+        imageDialogList      = KUrl::List();
     };
 
-    ~SimpleViewerSettingsContainer(){};
+    ~SimpleViewerSettingsContainer()
+    {
+    };
 
     QString imageGetOptions() const
     {
@@ -134,6 +135,7 @@ public:
                 return QString("Image Dialog");
         }
     };
+
     QString pluginType() const
     {
         switch(plugType)
