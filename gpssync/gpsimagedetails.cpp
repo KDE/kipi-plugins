@@ -70,6 +70,13 @@ public:
           leAltitude(0),
           cbSpeed(0),
           leSpeed(0),
+          cbNSatellites(0),
+          leNSatellites(0),
+          cbFixType(0),
+          comboFixType(0),
+          cbDop(0),
+          leDop(0),
+          pbApply(0),
           externalEnabledState(true),
           activeState(false),
           haveDelayedState(false)
