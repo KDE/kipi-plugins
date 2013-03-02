@@ -7,7 +7,7 @@
  * @date   2009-05-07
  * @brief  Context menu for GPS list view.
  *
- * @author Copyright (C) 2009,2010,2011 by Michael G. Hansen
+ * @author Copyright (C) 2009-2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -54,18 +54,20 @@ class GPSListViewContextMenu : public QObject
 
 public:
 
-    explicit GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
+    explicit GPSListViewContextMenu(KipiImageList* const imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
     ~GPSListViewContextMenu();
 
     void setEnabled(const bool state);
 
 protected:
 
-    virtual bool eventFilter(QObject *watched, QEvent *event);
     void setGPSDataForSelectedItems(const GPSDataContainer& gpsData, const QString& undoDescription);
-    static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
     bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl);
     void removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription);
+
+    virtual bool eventFilter(QObject* watched, QEvent* event);
+
+    static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
 
 private Q_SLOTS:
 

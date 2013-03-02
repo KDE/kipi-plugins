@@ -7,7 +7,7 @@
  * @date   2009-05-07
  * @brief  Context menu for GPS list view.
  *
- * @author Copyright (C) 2009,2010,2011 by Michael G. Hansen
+ * @author Copyright (C) 2009-2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -76,6 +76,7 @@ public:
         bookmarkOwner                = 0;
         imagesList                   = 0;
         altitudeUndoCommand          = 0;
+        altitudeReceivedCount        = 0;
     }
 
     bool                              enabled;
@@ -100,19 +101,19 @@ public:
     int                               altitudeReceivedCount;
 };
 
-GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner)
+GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList* const imagesList, GPSBookmarkOwner* const bookmarkOwner)
     : QObject(imagesList), d(new Private)
 {
-    d->imagesList  = imagesList;
+    d->imagesList                   = imagesList;
 
-    d->actionCopy  = new KAction(i18n("Copy coordinates"), this);
+    d->actionCopy                   = new KAction(i18n("Copy coordinates"),                this);
     d->actionCopy->setIcon(SmallIcon("edit-copy"));
-    d->actionPaste = new KAction(i18n("Paste coordinates"), this);
+    d->actionPaste                  = new KAction(i18n("Paste coordinates"),               this);
     d->actionPaste->setIcon(SmallIcon("edit-paste"));
-    d->actionRemoveCoordinates = new KAction(i18n("Remove coordinates"), this);
-    d->actionRemoveAltitude    = new KAction(i18n("Remove altitude"), this);
-    d->actionRemoveUncertainty = new KAction(i18n("Remove uncertainty"), this);
-    d->actionRemoveSpeed       = new KAction(i18n("Remove speed"), this);
+    d->actionRemoveCoordinates      = new KAction(i18n("Remove coordinates"),              this);
+    d->actionRemoveAltitude         = new KAction(i18n("Remove altitude"),                 this);
+    d->actionRemoveUncertainty      = new KAction(i18n("Remove uncertainty"),              this);
+    d->actionRemoveSpeed            = new KAction(i18n("Remove speed"),                    this);
     d->actionLookupMissingAltitudes = new KAction(i18n("Look up missing altitude values"), this);
 
     connect(d->actionCopy, SIGNAL(triggered()),
