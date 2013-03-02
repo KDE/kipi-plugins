@@ -12,5 +12,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 247108 - digiKam: setting file date/time stamp refused, with umlauts or prior file movements.
 005 ==> 315302 - TimeAdjust is not shown in Gwenview [patch].
 006 ==> 306482 - Wrong rotation for images after Piwigo Export.
-007 ==> 
+007 ==> 314836 - Panorama plugin segfault with non-ascii characters in file paths.
+008 ==> 
 
