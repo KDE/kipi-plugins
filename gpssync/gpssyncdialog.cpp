@@ -207,6 +207,7 @@ public:
         sortActionOldestFirst    = 0;
         sortActionYoungestFirst  = 0;
         sortMenu                 = 0;
+        mapLayout                = MapLayoutOne;
     }
 
     // General things
