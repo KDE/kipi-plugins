@@ -247,9 +247,10 @@ void ImageshackTalker::checkRegistrationCodeDone(int errCode, const QString& err
 void ImageshackTalker::parseGetGalleries(const QByteArray &data)
 {
     QDomDocument document;
-    document.setContent(data);
+    if (!document.setContent(data))
+        return;
 
-    QDomElement rootElem = document.documentElement();
+    QDomElement rootElem  = document.documentElement();
     QDomNodeList children = rootElem.childNodes();
 
     QStringList gTexts;
@@ -260,13 +261,14 @@ void ImageshackTalker::parseGetGalleries(const QByteArray &data)
         QDomElement e = children.at(i).toElement();
         if (e.tagName() == "gallery")
         {
-            QDomElement nameElem = e.firstChildElement("name");
-            QDomElement titleElem = e.firstChildElement("title");
+            QDomElement nameElem   = e.firstChildElement("name");
+            QDomElement titleElem  = e.firstChildElement("title");
             QDomElement serverElem = e.firstChildElement("server");
+
             if (!nameElem.isNull())
             {
                 QString fmt;
-                fmt = nameElem.firstChild().toText().data();
+                fmt          = nameElem.firstChild().toText().data();
                 // this is a very ugly hack
                 QString name = "http://img" + serverElem.firstChild().toText().data() + ".imageshack.us/gallery_api.php?g=" + fmt;
                 gNames << name;
@@ -384,10 +386,11 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
 
     emit signalBusy(true);
     QMap<QString, QString> args;
-    args["key"] = m_appKey;
+    args["key"]        = m_appKey;
     args["fileupload"] = KUrl(path).fileName();
 
     MPForm form;
+
     for (QMap<QString, QString>::const_iterator it = opts.constBegin();
          it != opts.constEnd();
          ++it)
@@ -415,6 +418,7 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
 
     // TODO support for video uploads
     KUrl uploadUrl;
+
     if (mime.startsWith("video/"))
     {
         uploadUrl = KUrl(m_videoApiUrl);
@@ -424,10 +428,10 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
     {
         // image file
         uploadUrl = KUrl(m_photoApiUrl);
-        m_state = IMGHCK_ADDPHOTO;
+        m_state   = IMGHCK_ADDPHOTO;
     }
 
-    KIO::Job *job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
+    KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type", form.contentType());
 
@@ -466,8 +470,11 @@ int ImageshackTalker::parseErrorResponse(QDomElement elem, QString& errMsg)
     {
         if (!node.isElement())
             continue;
+
         QDomElement e = node.toElement();
-        if (e.tagName() == "error") {
+
+        if (e.tagName() == "error")
+        {
             err_code = e.attributeNode("id").value();
             errMsg = e.text();
         }
@@ -571,7 +578,8 @@ void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
 
     kDebug() << data;
 
-    domDoc.setContent(data);
+    if (!domDoc.setContent(data))
+        return;
 
     QDomElement rootElem = domDoc.documentElement();
 
