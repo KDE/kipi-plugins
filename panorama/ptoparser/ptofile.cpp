@@ -72,7 +72,6 @@ PTOFile::~PTOFile()
 bool PTOFile::openFile(const QString& path)
 {
 //     mtrace();
-    char* tmp = path.toUtf8().data();
 
     if (d->script != NULL)
     {
@@ -82,7 +81,7 @@ bool PTOFile::openFile(const QString& path)
     }
 
     d->script = new pt_script();
-    if (!panoScriptParse(tmp, d->script))
+    if (!panoScriptParse(QFile::encodeName(path), d->script))
     {
         return false;
     }
@@ -330,7 +329,7 @@ PTOType* PTOFile::getPTO()
         } else {
             image.stackNumber.referenceId = tmpRef;
         }
-        image.fileName = panoScriptGetImageName(d->script, i);
+        image.fileName = QString::fromLocal8Bit(panoScriptGetImageName(d->script, i));
     }
 
     // Masks

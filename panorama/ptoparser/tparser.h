@@ -223,7 +223,7 @@ typedef struct
 
 
 void    panoScriptParserSetDefaults(pt_script* ptr);
-int     panoScriptParse(char* filename, pt_script* scriptOut);
+int     panoScriptParse(const char* const filename, pt_script* scriptOut);
 void    panoScriptFree(pt_script* ptr);
 
 #endif

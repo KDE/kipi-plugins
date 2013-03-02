@@ -68,7 +68,7 @@ void panoScriptParserSetDefaults(pt_script* ptr)
     script.pano.projection = -1;
 }
 
-int panoScriptParse(char* filename, pt_script* scriptOut)
+int panoScriptParse(const char* const filename, pt_script* scriptOut)
 {
     /* First, set the locale to C */
     char* old_locale = setlocale(LC_NUMERIC, NULL);

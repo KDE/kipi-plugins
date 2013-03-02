@@ -88,7 +88,7 @@ int panoScriptDataReset(void)
     return TRUE;
 }
 
-int panoScriptParserInit(char* filename)
+int panoScriptParserInit(const char* const filename)
 {
     if (g_file != NULL)
     {

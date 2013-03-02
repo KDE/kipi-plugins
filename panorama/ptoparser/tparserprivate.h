@@ -32,7 +32,7 @@
 /* void TokenBegin(char *t); */
 
 int panoScriptDataReset(void);
-int panoScriptParserInit(char* filename);
+int panoScriptParserInit(const char* const filename);
 void panoScriptParserClose(void);
 
 int  panoScriptScannerGetNextChar(char* b, int maxBuffer);
