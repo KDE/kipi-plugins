@@ -128,6 +128,9 @@ void FinalPage::setOptions(WelcomePage::ImplementationGetOption implementation)
 
 void FinalPage::turnOff()
 {
+    // Image sharing stopped.
+    emit sharing(false);
+
     if (d->implementation == WelcomePage::HUPNP)
         delete d->Hdlna;
     else
@@ -139,6 +142,9 @@ void FinalPage::turnOff()
 
 void FinalPage::turnOn()
 {
+    // Image sharing started.
+    emit sharing(true);
+
     if (d->implementation == WelcomePage::HUPNP)
         startHupnpMediaServer();
     else

@@ -49,6 +49,7 @@ private Q_SLOTS:
     void updateCollectionSelectorPageValidity();
     void getImagesFromCollection();
     void getDirectoriesFromCollection();
+    void changeBackButtonState(bool state);
 
 private:
 

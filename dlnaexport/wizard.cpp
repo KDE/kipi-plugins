@@ -39,6 +39,8 @@
 
 #include <HUpnpCore/HUpnpInfo>
 #include <HUpnpAv/HUpnpAvInfo>
+#include <kassistantdialog.h>
+#include <kdialog.h>
 
 // libkipi includes
 
@@ -140,11 +142,21 @@ Wizard::Wizard(QWidget* const parent)
 
     d->finalPage     = new FinalPage(this);
     d->finalPageItem = addPage(d->finalPage, i18n("Images to be exported"));
+
+    // To activate / deactivate back button once the sharing stops / starts.
+
+    connect(d->finalPage, SIGNAL(sharing(bool)),
+            this, SLOT(changeBackButtonState(bool)));
 }
 
 Wizard::~Wizard()
 {
     delete d;
+}
+
+void Wizard::changeBackButtonState(bool state)
+{
+    enableButton(KAssistantDialog::User3, !state);
 }
 
 void Wizard::next()
