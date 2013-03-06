@@ -95,12 +95,15 @@ WelcomePage::WelcomePage(QWidget* const parent)
     d->binariesLbl    = new QLabel(i18n("<b>DLNAExport Binaries' requirement (Optional)</b>"), settingsBox);
     d->binariesWidget = new KPBinarySearch(settingsBox);
     d->binariesWidget->addBinary(d->minidlnaBinary);
+    d->minidlnaBinary.setup();
 
     // ComboBox for implementation selection method
     d->getImplementationLbl    = new QLabel(i18n("&Choose the implementation:"),settingsBox);
     d->implementationGetOption = new KComboBox(settingsBox);
     d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
     d->getImplementationLbl->setBuddy(d->implementationGetOption);
+
+    slotChangeOptions(d->binariesWidget->allBinariesFound());
 
     settingsBoxLayout->addWidget(d->binariesLbl,             1, 0, 1, 1);
     settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 1, 2);
@@ -145,8 +148,8 @@ void WelcomePage::slotChangeOptions(bool flag)
     }
     else
     {
-        d->implementationGetOption->insertItem(WelcomePage::HUPNP,    "HUPnP API");
         d->implementationGetOption->insertItem(WelcomePage::MINIDLNA, "miniDLNA");
+        d->implementationGetOption->insertItem(WelcomePage::HUPNP,    "HUPnP API");
     }
 }
 

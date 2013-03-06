@@ -48,7 +48,6 @@ public:
                         QStringList("-V")
                        )
         {
-            setup();
         }
 
     ~MinidlnaBinary()
