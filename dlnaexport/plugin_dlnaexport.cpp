@@ -122,9 +122,13 @@ void Plugin_DLNAExport::slotExport()
         if (d->dlgExport->isMinimized())
         {
             KWindowSystem::unminimizeWindow(d->dlgExport->winId());
+            KWindowSystem::activateWindow(d->dlgExport->winId());
         }
-
-        KWindowSystem::activateWindow(d->dlgExport->winId());
+        else
+        {
+            delete d->dlgExport;
+            d->dlgExport = new Wizard(kapp->activeWindow());
+        }
     }
 
     d->dlgExport->show();
