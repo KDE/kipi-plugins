@@ -61,7 +61,7 @@ Q_SIGNALS:
 
     void sharing(bool state);
 
-private Q_SLOTS:
+public Q_SLOTS:
 
     void turnOff();
     void turnOn();

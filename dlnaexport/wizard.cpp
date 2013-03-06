@@ -159,7 +159,7 @@ Wizard::~Wizard()
 
 void Wizard::deleteDlnaObjects()
 {
-    delete d->finalPage;
+    d->finalPage->turnOff();
 }
 
 void Wizard::changeBackButtonState(bool state)

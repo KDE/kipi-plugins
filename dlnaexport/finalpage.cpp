@@ -131,9 +131,9 @@ void FinalPage::turnOff()
     // Image sharing stopped.
     emit sharing(false);
 
-    if (d->implementation == WelcomePage::HUPNP)
+    if (d->implementation == WelcomePage::HUPNP && d->Hdlna)
         delete d->Hdlna;
-    else
+    if (d->implementation == WelcomePage::MINIDLNA && d->Mdlna)
         delete d->Mdlna;
 
     d->startButton->setEnabled(true);
@@ -161,8 +161,6 @@ void FinalPage::setCollectionMap(const QMap<QString, KUrl::List>& collectionMap)
 
 FinalPage::~FinalPage()
 {
-    delete d->Mdlna;
-    delete d->Hdlna;
     delete d;
 }
 
