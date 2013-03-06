@@ -50,6 +50,7 @@ private Q_SLOTS:
     void getImagesFromCollection();
     void getDirectoriesFromCollection();
     void changeBackButtonState(bool state);
+    void deleteDlnaObjects();
 
 private:
 

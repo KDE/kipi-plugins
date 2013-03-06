@@ -161,6 +161,8 @@ void FinalPage::setCollectionMap(const QMap<QString, KUrl::List>& collectionMap)
 
 FinalPage::~FinalPage()
 {
+    delete d->Mdlna;
+    delete d->Hdlna;
     delete d;
 }
 

@@ -147,6 +147,9 @@ Wizard::Wizard(QWidget* const parent)
 
     connect(d->finalPage, SIGNAL(sharing(bool)),
             this, SLOT(changeBackButtonState(bool)));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(deleteDlnaObjects()));
 }
 
 Wizard::~Wizard()
@@ -154,9 +157,15 @@ Wizard::~Wizard()
     delete d;
 }
 
+void Wizard::deleteDlnaObjects()
+{
+    delete d->finalPage;
+}
+
 void Wizard::changeBackButtonState(bool state)
 {
     enableButton(KAssistantDialog::User3, !state);
+    enableButton(KAssistantDialog::User1, !state);
 }
 
 void Wizard::next()
