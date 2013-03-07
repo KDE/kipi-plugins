@@ -29,6 +29,7 @@ Name[ja]=カレンダー
 Name[km]=ប្រតិទិន
 Name[lv]=Kalendārs
 Name[mai]=कैलेंडर
+Name[mr]=दिनदर्शिका
 Name[nb]=Kalender
 Name[nds]=Kalenner
 Name[nl]=Kalender

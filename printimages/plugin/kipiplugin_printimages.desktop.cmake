@@ -25,6 +25,7 @@ Name[ja]=画像の印刷
 Name[km]=បោះពុម្ព​រូបភាព
 Name[lv]=Drukāt attēlus
 Name[mai]=छवि छापू
+Name[mr]=प्रतिमा छापा
 Name[nb]=Bildeutskrift
 Name[nds]=Biller drucken
 Name[nl]=Afbeeldingen afdrukken

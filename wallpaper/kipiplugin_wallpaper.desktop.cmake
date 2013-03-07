@@ -29,6 +29,7 @@ Name[ja]=WallPaper
 Name[km]=ផ្ទាំង​រូបភាព
 Name[ko]=WallPaper
 Name[lv]=Ekrāntapete
+Name[mr]=वॉलपेपर
 Name[nb]=Bakgrunnsbilde
 Name[nds]=Achtergrundbild
 Name[nl]=Bureaubladachtergrond
