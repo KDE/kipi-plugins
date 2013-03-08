@@ -52,9 +52,7 @@ PhotoLayoutEditor  : A tool to assemble images together.
 ImageShackExport   : A tool to export images to ImageShack web service (http://imageshack.us)
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
 DLNAExport         : A tool to export collection on DLNA network service (http://www.dlna.org).
-
-Not yet ported under Qt4/KDE4:
-
+Panorama           : A tool to assemble panoramic photo automatically.
 WallPaper          : A tool to set image as background on your desktop.
 
 -- DEPENDENCIES -------------------------------------------------------
@@ -92,6 +90,8 @@ libmediawiki    >= 1.0.0                        https://projects.kde.org/project
 libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
 kqoauth         >= 0.97                         http://gitorious.org/kqoauth
+flex            >= 2.5.x                        http://flex.sourceforge.net
+bison           >= 2.5.x                        http://www.gnu.org/software/bison/bison.html
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -109,12 +109,13 @@ Shwup              : libqca.
 YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 FaceBook           : libqjson.
-ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
+ExpoBlending       : Hugin command line tools (runtime dependency), libgomp.
 GPSSync            : libkmap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 DLNAExport         : libhupnp.
 ImgurExport        : kqoauth for Imgur.com's authenticated API
+Panorama           : Hugin command line tools, flex, bison (runtime dependency)
 
 -- CONTACT ------------------------------------------------------------
 
