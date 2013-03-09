@@ -46,6 +46,7 @@ public:
     Private()
     {
         port               = "8200";
+        networkInterfaces  = "eth0,eth1";
         name               = "KIPI Plugin - DLNAExport";
         serial             = "123456789";
         albumArt           = "Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg";
@@ -57,6 +58,7 @@ public:
     }
 
     QString port;
+    QString networkInterfaces;
     QString name;
     QString serial;
     QString albumArt;
@@ -87,6 +89,7 @@ void MinidlnaServer::generateConfigFile()
 
     QTextStream out(&file);
     out << "port=" << d->port << "\n";
+    out << "network_interface=" << d->networkInterfaces << "\n";
 
     foreach (QString directory, d->directories)
     {
@@ -96,7 +99,7 @@ void MinidlnaServer::generateConfigFile()
     out << "friendly_name=" << d->name << "\n";
     out << "album_art_names=" << d->albumArt << "\n";
     out << "strict_dlna=" << d->strictDLNA << "\n";
-    out << "serial=" << d->port << "\n";
+    out << "serial=" << d->serial << "\n";
     out << "model_number=" << d->modelNo << "\n";
     out << "root_container=" << d->rootContainer << "\n";
 
