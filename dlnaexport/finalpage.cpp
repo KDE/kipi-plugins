@@ -130,11 +130,17 @@ void FinalPage::turnOff()
 {
     // Image sharing stopped.
     emit sharing(false);
-
+    
     if (d->implementation == WelcomePage::HUPNP && d->Hdlna)
+    {
         delete d->Hdlna;
+        d->Hdlna = 0;
+    }
     if (d->implementation == WelcomePage::MINIDLNA && d->Mdlna)
+    {
         delete d->Mdlna;
+        d->Mdlna = 0;
+    }
 
     d->startButton->setEnabled(true);
     d->stopButton->setEnabled(false);
