@@ -1,0 +1,17 @@
+Kipi-plugins 3.1.0 - Release date: 2013/03/10
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 314784 - imgurtalkerauth.cpp with digikam 3.0 breaks during build.
+002 ==> 295265 - Provide hicolor panoramagui icon.
+003 ==> 311005 - "Edit all Metadata" allows to edit unchecked fields - results in data loss.
+004 ==> 247108 - digiKam: setting file date/time stamp refused, with umlauts or prior file movements.
+005 ==> 315302 - TimeAdjust is not shown in Gwenview [patch].
+006 ==> 306482 - Wrong rotation for images after Piwigo Export.
+007 ==> 314836 - Panorama plugin segfault with non-ascii characters in file paths.
+008 ==> 
+
