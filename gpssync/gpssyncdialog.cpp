@@ -992,7 +992,7 @@ void GPSSyncKGeoMapModelHelper::slotThumbnailFromModel(const QPersistentModelInd
     emit(signalThumbnailAvailableForIndex(index, pixmap));
 }
 
-void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, 
+void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers,
                                                const GeoCoordinates& targetCoordinates,
                                                const QPersistentModelIndex& targetSnapIndex)
 {

@@ -36,7 +36,7 @@ namespace KIPIGPSSyncPlugin
 class KipiImageModel::Private
 {
 public:
-    
+
     Private()
       : items(),
         columnCount(0),
@@ -79,9 +79,9 @@ QVariant KipiImageModel::data(const QModelIndex& index, int role) const
     {
         Q_ASSERT(index.model()==this);
     }
-    
+
     const int rowNumber = index.row();
-    
+
     if ((rowNumber<0)||(rowNumber>=d->items.count()))
     {
         return QVariant();
@@ -96,7 +96,7 @@ QModelIndex KipiImageModel::index(int row, int column, const QModelIndex& parent
     {
         Q_ASSERT(parent.model()==this);
     }
-    
+
 //     kDebug()<<row<<column<<parent;
 
     if (parent.isValid())
@@ -151,7 +151,7 @@ KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
     {
         Q_ASSERT(index.model()==this);
     }
-    
+
     if (!index.isValid())
         return 0;
 
@@ -169,7 +169,7 @@ int KipiImageModel::rowCount(const QModelIndex& parent) const
     {
         Q_ASSERT(parent.model()==this);
     }
-    
+
     if (parent.isValid())
         return 0;
 
@@ -264,7 +264,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     QPixmap thumbnailPixmap;
     const bool havePixmapInCache = d->pixmapCache->find(itemKeyString, thumbnailPixmap);
 //     kDebug()<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
-    
+
     if (havePixmapInCache)
         return thumbnailPixmap;
 
@@ -366,7 +366,7 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
 
             emit(signalThumbnailForIndexAvailable(imageIndex, scaledPixmap));
         }
-        
+
     }
 }
 
@@ -383,7 +383,7 @@ void KipiImageModel::setKipiInterface(KIPI::Interface* const interface)
 class KipiImageSortProxyModel::Private
 {
 public:
-    
+
     Private()
     {
         imageModel             = 0;
