@@ -13,5 +13,4 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 315302 - TimeAdjust is not shown in Gwenview [patch].
 006 ==> 306482 - Wrong rotation for images after Piwigo Export.
 007 ==> 314836 - Panorama plugin segfault with non-ascii characters in file paths.
-008 ==> 
 
