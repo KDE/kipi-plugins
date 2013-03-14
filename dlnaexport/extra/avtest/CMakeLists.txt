@@ -49,7 +49,7 @@ TARGET_LINK_LIBRARIES(avtest
                       ${QT_QTXMLPATTERNS_LIBRARY}
                      )
 
-INSTALL(TARGETS avtest ${INSTALL_TARGETS_DEFAULT_ARGS})
+#INSTALL(TARGETS avtest ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 SET(avtest_xml_files
     descriptions/herqq_avtransport_scpd.xml
@@ -61,5 +61,5 @@ SET(avtest_xml_files
     descriptions/herqq_mediaserver_description.xml
    )
 
-INSTALL(FILES       ${avtest_xml_files}
-        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_dlnaexport/xml)
+#INSTALL(FILES       ${avtest_xml_files}
+#        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_dlnaexport/xml)
