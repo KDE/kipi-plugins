@@ -25,6 +25,7 @@ Name[pt]=Exportação para as Imagens da Debian
 Name[pt_BR]=Exportar para o Debian Screenshots
 Name[ro]=Export către capturile de ecran Debian
 Name[ru]=Экспорт в снимки экрана Debian
+Name[sk]=Export Debian Screenshots
 Name[sl]=Izvoz v Debian Screenshots
 Name[sv]=Exportera skärmbilder för Debian
 Name[uk]=Експортування до знімків Debian
