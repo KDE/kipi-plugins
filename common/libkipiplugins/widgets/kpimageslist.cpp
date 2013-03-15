@@ -849,18 +849,21 @@ void KPImagesList::slotRemoveItems()
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it != selectedItemsList.constEnd(); ++it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        emit signalRemovingItem(item);
-        urls.append(item->url());
-
-        if (item && d->processItems.contains(item->url()))
+        if (item)
         {
-            d->processItems.removeAll(item->url());
-        }
+            emit signalRemovingItem(item);
+            urls.append(item->url());
 
-        d->listView->removeItemWidget(*it, 0);
-        delete *it;
+            if (d->processItems.contains(item->url()))
+            {
+                d->processItems.removeAll(item->url());
+            }
+
+            d->listView->removeItemWidget(*it, 0);
+            delete *it;
+        }
     }
 
     emit signalRemovedItems(urls);
