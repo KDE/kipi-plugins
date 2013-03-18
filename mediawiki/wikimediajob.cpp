@@ -107,8 +107,8 @@ void WikiMediaJob::uploadHandle(KJob* j)
         disconnect(j, SIGNAL(result(KJob*)), 
                    this, SLOT(uploadHandle(KJob*)));
 
-        disconnect(j, SIGNAL(percent(KJob*, ulong)),
-                   this, SLOT(slotUploadProgress(KJob*, ulong)));
+        disconnect(j, SIGNAL(percent(KJob*,ulong)),
+                   this, SLOT(slotUploadProgress(KJob*,ulong)));
 
         //error from previous upload
         if((int)j->error() != 0)
@@ -150,8 +150,8 @@ void WikiMediaJob::uploadHandle(KJob* j)
         connect(e1, SIGNAL(result(KJob*)),
                 this, SLOT(uploadHandle(KJob*)));
 
-        connect(e1, SIGNAL(percent(KJob*, ulong)),
-                this, SLOT(slotUploadProgress(KJob*, ulong)));
+        connect(e1, SIGNAL(percent(KJob*,ulong)),
+                this, SLOT(slotUploadProgress(KJob*,ulong)));
 
         emit uploadProgress(0);
         e1->start();

@@ -44,7 +44,7 @@ TestMagickIface::TestMagickIface()
 {
     api  = new MagickApi(QDir::tempPath());
     file = new QFile(QFileDialog::getOpenFileName(NULL, tr("SelectImage"), "/home", tr("Image Files (*.png *.jpg)")));
-    spy  = new QSignalSpy(api, SIGNAL(signalsAPIError(const QString&)));
+    spy  = new QSignalSpy(api, SIGNAL(signalsAPIError(QString)));
     QVERIFY(spy->isValid());
 }
 

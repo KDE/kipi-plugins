@@ -131,14 +131,14 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
 
     d->thread = new ActionThread(this);
 
-    connect( d->thread, SIGNAL(starting(KUrl, int)),
-             this, SLOT(slotStarting(KUrl, int)));
+    connect( d->thread, SIGNAL(starting(KUrl,int)),
+             this, SLOT(slotStarting(KUrl,int)));
 
-    connect( d->thread, SIGNAL(finished(KUrl, int)),
-             this, SLOT(slotFinished(KUrl, int)));
+    connect( d->thread, SIGNAL(finished(KUrl,int)),
+             this, SLOT(slotFinished(KUrl,int)));
 
-    connect( d->thread, SIGNAL(failed(KUrl, int, QString)),
-             this, SLOT(slotFailed(KUrl, int, QString)));
+    connect( d->thread, SIGNAL(failed(KUrl,int,QString)),
+             this, SLOT(slotFailed(KUrl,int,QString)));
 
     bool hasSelection = iface->currentSelection().isValid();
 

@@ -95,23 +95,23 @@ HConnection::HConnection(
 {
     bool ok = connect(
         cm,
-        SIGNAL(currentConnectionIdsChanged(Herqq::Upnp::Av::HConnectionManagerAdapter*, QList<quint32>)),
+        SIGNAL(currentConnectionIdsChanged(Herqq::Upnp::Av::HConnectionManagerAdapter*,QList<quint32>)),
         this,
-        SLOT(currentConnectionIdsChanged(Herqq::Upnp::Av::HConnectionManagerAdapter*, QList<quint32>)));
+        SLOT(currentConnectionIdsChanged(Herqq::Upnp::Av::HConnectionManagerAdapter*,QList<quint32>)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     ok = connect(
         rcs,
-        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HRenderingControlAdapter*, QString)),
+        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HRenderingControlAdapter*,QString)),
         this,
-        SLOT(lastChangeReceived(Herqq::Upnp::Av::HRenderingControlAdapter*, QString)));
+        SLOT(lastChangeReceived(Herqq::Upnp::Av::HRenderingControlAdapter*,QString)));
     Q_ASSERT(ok);
 
     ok = connect(
         avt,
-        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HAvTransportAdapter*, QString)),
+        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HAvTransportAdapter*,QString)),
         this,
-        SLOT(lastChangeReceived(Herqq::Upnp::Av::HAvTransportAdapter*, QString)));
+        SLOT(lastChangeReceived(Herqq::Upnp::Av::HAvTransportAdapter*,QString)));
     Q_ASSERT(ok);
 }
 

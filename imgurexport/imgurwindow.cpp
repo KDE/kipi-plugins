@@ -114,18 +114,18 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     connect(d->webService, SIGNAL(signalUploadStart(KUrl)),
             d->widget, SLOT(slotImageUploadStart(KUrl)));
 
-    connect(d->webService, SIGNAL(signalError(KUrl, ImgurError)),
-            d->widget, SLOT(slotImageUploadError(KUrl, ImgurError)));
+    connect(d->webService, SIGNAL(signalError(KUrl,ImgurError)),
+            d->widget, SLOT(slotImageUploadError(KUrl,ImgurError)));
 
-    connect(d->webService, SIGNAL(signalSuccess(KUrl, ImgurSuccess)),
-            d->widget, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
+    connect(d->webService, SIGNAL(signalSuccess(KUrl,ImgurSuccess)),
+            d->widget, SLOT(slotImageUploadSuccess(KUrl,ImgurSuccess)));
 
     // this signal/slot controls if the webservice should continue upload or not
-    connect(d->webService, SIGNAL(signalError(KUrl, ImgurError)),
-            this, SLOT(slotAddPhotoError(KUrl, ImgurError)));
+    connect(d->webService, SIGNAL(signalError(KUrl,ImgurError)),
+            this, SLOT(slotAddPhotoError(KUrl,ImgurError)));
 
-    connect(d->webService, SIGNAL(signalSuccess(KUrl, ImgurSuccess)),
-            this, SLOT(slotAddPhotoSuccess(KUrl, ImgurSuccess)));
+    connect(d->webService, SIGNAL(signalSuccess(KUrl,ImgurSuccess)),
+            this, SLOT(slotAddPhotoSuccess(KUrl,ImgurSuccess)));
 
     connect(this, SIGNAL(signalContinueUpload(bool)),
             d->webService, SLOT(slotContinueUpload(bool)));
@@ -145,11 +145,11 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 //    connect(d->webService, SIGNAL(signalAuthenticated(bool)),
 //            d->widget, SLOT(slotAuthenticated(bool)));
 
-    connect(d->webService, SIGNAL(signalAuthenticated(bool, QString)),
-            d->widget, SLOT(slotAuthenticated(bool, QString)));
+    connect(d->webService, SIGNAL(signalAuthenticated(bool,QString)),
+            d->widget, SLOT(slotAuthenticated(bool,QString)));
 
-    connect(d->webService, SIGNAL(signalAuthenticated(bool, QString)),
-            this, SLOT(slotAuthenticated(bool, QString)));
+    connect(d->webService, SIGNAL(signalAuthenticated(bool,QString)),
+            this, SLOT(slotAuthenticated(bool,QString)));
 #endif //OAUTH_ENABLED
     readSettings();
 }

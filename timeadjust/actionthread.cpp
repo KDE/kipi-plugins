@@ -81,8 +81,8 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
         connect(t, SIGNAL(signalProcessStarted(KUrl)),
                 this, SIGNAL(signalProcessStarted(KUrl)));
 
-        connect(t, SIGNAL(signalProcessEnded(KUrl, int)),
-                this, SIGNAL(signalProcessEnded(KUrl, int)));
+        connect(t, SIGNAL(signalProcessEnded(KUrl,int)),
+                this, SIGNAL(signalProcessEnded(KUrl,int)));
 
         connect(this, SIGNAL(signalCancelTask()),
                 t, SLOT(slotCancel()), Qt::QueuedConnection);

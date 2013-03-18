@@ -68,9 +68,9 @@ void HAbstractCdsDataSourcePrivate::add(HObject* obj)
 {
     bool ok = QObject::connect(
         obj,
-        SIGNAL(objectModified(Herqq::Upnp::Av::HObject*, Herqq::Upnp::Av::HObjectEventInfo)),
+        SIGNAL(objectModified(Herqq::Upnp::Av::HObject*,Herqq::Upnp::Av::HObjectEventInfo)),
         q_ptr,
-        SLOT(objectModified_(Herqq::Upnp::Av::HObject*, Herqq::Upnp::Av::HObjectEventInfo)));
+        SLOT(objectModified_(Herqq::Upnp::Av::HObject*,Herqq::Upnp::Av::HObjectEventInfo)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     m_objectsById.insert(obj->id(), obj);
@@ -79,9 +79,9 @@ void HAbstractCdsDataSourcePrivate::add(HObject* obj)
     {
         ok = QObject::connect(
             obj,
-            SIGNAL(containerModified(Herqq::Upnp::Av::HContainer*, Herqq::Upnp::Av::HContainerEventInfo)),
+            SIGNAL(containerModified(Herqq::Upnp::Av::HContainer*,Herqq::Upnp::Av::HContainerEventInfo)),
             q_ptr,
-            SLOT(containerModified_(Herqq::Upnp::Av::HContainer*, Herqq::Upnp::Av::HContainerEventInfo)));
+            SLOT(containerModified_(Herqq::Upnp::Av::HContainer*,Herqq::Upnp::Av::HContainerEventInfo)));
         Q_ASSERT(ok);
     }
 }

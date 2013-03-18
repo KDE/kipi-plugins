@@ -197,13 +197,13 @@ bool HConnectionManagerSourceService::finalizeInit(QString* /*errDescription*/)
     createDefaultConnection(sourceProtocolInfo().at(0));
 
     bool ok = connect(
-        m_dataSource, SIGNAL(objectModified(Herqq::Upnp::Av::HObject*, Herqq::Upnp::Av::HObjectEventInfo)),
-        this, SLOT(objectModified(Herqq::Upnp::Av::HObject*, Herqq::Upnp::Av::HObjectEventInfo)));
+        m_dataSource, SIGNAL(objectModified(Herqq::Upnp::Av::HObject*,Herqq::Upnp::Av::HObjectEventInfo)),
+        this, SLOT(objectModified(Herqq::Upnp::Av::HObject*,Herqq::Upnp::Av::HObjectEventInfo)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     ok = connect(
-        m_dataSource, SIGNAL(containerModified(Herqq::Upnp::Av::HContainer*, Herqq::Upnp::Av::HContainerEventInfo)),
-        this, SLOT(containerModified(Herqq::Upnp::Av::HContainer*, Herqq::Upnp::Av::HContainerEventInfo)));
+        m_dataSource, SIGNAL(containerModified(Herqq::Upnp::Av::HContainer*,Herqq::Upnp::Av::HContainerEventInfo)),
+        this, SLOT(containerModified(Herqq::Upnp::Av::HContainer*,Herqq::Upnp::Av::HContainerEventInfo)));
     Q_ASSERT(ok);
 
     return true;

@@ -145,8 +145,8 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     connect(d->widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
 
-    connect(d->widget, SIGNAL(signalLoginRequest(QString, QString, QUrl)),
-            this, SLOT(slotDoLogin(QString, QString, QUrl)));
+    connect(d->widget, SIGNAL(signalLoginRequest(QString,QString,QUrl)),
+            this, SLOT(slotDoLogin(QString,QString,QUrl)));
 
     connect(d->widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotClose()));

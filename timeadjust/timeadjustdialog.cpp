@@ -162,8 +162,8 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
             this, SLOT(slotProcessStarted(KUrl)));
 
-    connect(d->thread, SIGNAL(signalProcessEnded(KUrl, int)),
-            this, SLOT(slotProcessEnded(KUrl, int)));
+    connect(d->thread, SIGNAL(signalProcessEnded(KUrl,int)),
+            this, SLOT(slotProcessEnded(KUrl,int)));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancelThread()));

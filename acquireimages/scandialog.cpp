@@ -98,11 +98,11 @@ ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/,
 
     // ------------------------------------------------------------------------
 
-    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
-            this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
+    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&,int,int,int,int)),
+            this, SLOT(slotSaveImage(QByteArray&,int,int,int,int)));
 
-    connect(d->saveThread, SIGNAL(signalComplete(KUrl, bool)),
-            this, SLOT(slotThreadDone(KUrl, bool)));
+    connect(d->saveThread, SIGNAL(signalComplete(KUrl,bool)),
+            this, SLOT(slotThreadDone(KUrl,bool)));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotCloseClicked()));

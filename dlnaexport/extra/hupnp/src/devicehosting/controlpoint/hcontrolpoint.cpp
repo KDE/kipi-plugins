@@ -523,9 +523,9 @@ HControlPoint::HControlPoint(QObject* parent) :
 
     bool ok = connect(
         h_ptr->m_nam,
-        SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
+        SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
         this,
-        SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)));
+        SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)));
 
     Q_ASSERT(ok); Q_UNUSED(ok)
 }

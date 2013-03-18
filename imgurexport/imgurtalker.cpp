@@ -443,8 +443,8 @@ void ImgurTalker::imageUpload (const KUrl& filePath)
     job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
     job->addMetaData("UserAgent", d->userAgent);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));

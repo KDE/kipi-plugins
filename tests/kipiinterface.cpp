@@ -61,8 +61,8 @@ KipiInterface::KipiInterface(QObject* const parent, const char* name)
 {
     m_loadRawThumb = new KPRawThumbThread(this);
 
-    connect(m_loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
-            this, SLOT(slotRawThumb(KUrl, QImage)));
+    connect(m_loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
+            this, SLOT(slotRawThumb(KUrl,QImage)));
 }
 
 KipiInterface::~KipiInterface()
@@ -227,8 +227,8 @@ void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)
         KIO::PreviewJob *job = KIO::filePreview(KUrl::List() << url, 256);
 #endif
 
-        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
-                this, SLOT(slotGotKDEPreview(KFileItem, QPixmap)));
+        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+                this, SLOT(slotGotKDEPreview(KFileItem,QPixmap)));
 
         connect(job, SIGNAL(failed(KFileItem)),
                 this, SLOT(slotFailedKDEPreview(KFileItem)));

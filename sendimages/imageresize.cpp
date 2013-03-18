@@ -243,11 +243,11 @@ void ImageResize::resize(const EmailSettings& settings)
         connect(t, SIGNAL(startingResize(KUrl)),
                 this, SIGNAL(startingResize(KUrl)));
 
-        connect(t, SIGNAL(finishedResize(KUrl, KUrl, int)),
-                this, SIGNAL(finishedResize(KUrl, KUrl, int)));
+        connect(t, SIGNAL(finishedResize(KUrl,KUrl,int)),
+                this, SIGNAL(finishedResize(KUrl,KUrl,int)));
 
-        connect(t, SIGNAL(failedResize(KUrl, QString, int)),
-                this, SIGNAL(failedResize(KUrl, QString, int)));
+        connect(t, SIGNAL(failedResize(KUrl,QString,int)),
+                this, SIGNAL(failedResize(KUrl,QString,int)));
 
         collection->addJob(t);
         i++;

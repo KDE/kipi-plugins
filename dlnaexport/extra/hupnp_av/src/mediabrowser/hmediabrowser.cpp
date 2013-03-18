@@ -504,9 +504,9 @@ bool HMediaBrowser::reset(HClientService* cds)
 
     ok = connect(
         h_ptr->m_contentDirectory,
-        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*, QString)),
+        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*,QString)),
         h_ptr,
-        SLOT(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*, QString)));
+        SLOT(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*,QString)));
     Q_ASSERT(ok);
 
     return true;
@@ -531,9 +531,9 @@ bool HMediaBrowser::reset(HContentDirectoryAdapter* cds, bool takeOwnership)
 
     ok = connect(
         h_ptr->m_contentDirectory,
-        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*, QString)),
+        SIGNAL(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*,QString)),
         h_ptr,
-        SLOT(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*, QString)));
+        SLOT(lastChangeReceived(Herqq::Upnp::Av::HContentDirectoryAdapter*,QString)));
     Q_ASSERT(ok);
 
     return true;

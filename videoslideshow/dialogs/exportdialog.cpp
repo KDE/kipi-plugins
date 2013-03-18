@@ -150,14 +150,14 @@ ExportDialog::ExportDialog(const ImageCollection& images)
     connect(d->settingsBox, SIGNAL(timeDataChanged(int)),
             this, SLOT(updateImageTime(int)));
 
-    connect(d->settingsBox, SIGNAL(effectDataChanged(QString, EFFECT)),
-            this, SLOT(updateImageEffect(QString, EFFECT)));
+    connect(d->settingsBox, SIGNAL(effectDataChanged(QString,EFFECT)),
+            this, SLOT(updateImageEffect(QString,EFFECT)));
 
-    connect(d->settingsBox, SIGNAL(transDataChanged(QString, TRANSITION_TYPE)),
-            this, SLOT(updateImageTransition(QString, TRANSITION_TYPE)));
+    connect(d->settingsBox, SIGNAL(transDataChanged(QString,TRANSITION_TYPE)),
+            this, SLOT(updateImageTransition(QString,TRANSITION_TYPE)));
 
-    connect(d->settingsBox, SIGNAL(transSpeedDataChanged(QString, TRANSITION_SPEED)),
-            this, SLOT(updateImageTransSpeed(QString, TRANSITION_SPEED)));
+    connect(d->settingsBox, SIGNAL(transSpeedDataChanged(QString,TRANSITION_SPEED)),
+            this, SLOT(updateImageTransSpeed(QString,TRANSITION_SPEED)));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));

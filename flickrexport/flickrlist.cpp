@@ -52,12 +52,12 @@ FlickrList::FlickrList(QWidget* const parent, bool is_23)
       m_is23(is_23)
 {
     // Catch a click on the items.
-    connect(listView(), SIGNAL(itemClicked(QTreeWidgetItem*, int)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
+    connect(listView(), SIGNAL(itemClicked(QTreeWidgetItem*,int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*,int)));
 
     // Catch it if the items change.
-    connect(listView(), SIGNAL(itemChanged(QTreeWidgetItem*, int)),
-            this, SLOT(slotItemChanged(QTreeWidgetItem*, int)));
+    connect(listView(), SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+            this, SLOT(slotItemChanged(QTreeWidgetItem*,int)));
 }
 
 void FlickrList::setPublic(Qt::CheckState isPublic)

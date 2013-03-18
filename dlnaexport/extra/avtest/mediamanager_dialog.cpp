@@ -244,23 +244,23 @@ void MediaManagerDialog::connectionReady(HMediaRendererAdapter* source, qint32 c
 
     bool ok = connect(
         m_connection->transport(),
-        SIGNAL(setAVTransportURICompleted(Herqq::Upnp::Av::HAvTransportAdapter*, Herqq::Upnp::HClientAdapterOpNull)),
+        SIGNAL(setAVTransportURICompleted(Herqq::Upnp::Av::HAvTransportAdapter*,Herqq::Upnp::HClientAdapterOpNull)),
         this,
-        SLOT(setAVTransportURICompleted(Herqq::Upnp::Av::HAvTransportAdapter*, Herqq::Upnp::HClientAdapterOpNull)));
+        SLOT(setAVTransportURICompleted(Herqq::Upnp::Av::HAvTransportAdapter*,Herqq::Upnp::HClientAdapterOpNull)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     ok = connect(
         m_connection->transport(),
-        SIGNAL(playCompleted(Herqq::Upnp::Av::HAvTransportAdapter*, Herqq::Upnp::HClientAdapterOpNull)),
+        SIGNAL(playCompleted(Herqq::Upnp::Av::HAvTransportAdapter*,Herqq::Upnp::HClientAdapterOpNull)),
         this,
-        SLOT(playCompleted(Herqq::Upnp::Av::HAvTransportAdapter*, Herqq::Upnp::HClientAdapterOpNull)));
+        SLOT(playCompleted(Herqq::Upnp::Av::HAvTransportAdapter*,Herqq::Upnp::HClientAdapterOpNull)));
     Q_ASSERT(ok);
 
     ok = connect(
         m_connection->transport(),
-        SIGNAL(stopCompleted(Herqq::Upnp::Av::HAvTransportAdapter*, Herqq::Upnp::HClientAdapterOpNull)),
+        SIGNAL(stopCompleted(Herqq::Upnp::Av::HAvTransportAdapter*,Herqq::Upnp::HClientAdapterOpNull)),
         this,
-        SLOT(stopCompleted(Herqq::Upnp::Av::HAvTransportAdapter*, Herqq::Upnp::HClientAdapterOpNull)));
+        SLOT(stopCompleted(Herqq::Upnp::Av::HAvTransportAdapter*,Herqq::Upnp::HClientAdapterOpNull)));
     Q_ASSERT(ok);
 
     ok = connect(
@@ -383,9 +383,9 @@ void MediaManagerDialog::on_playButton_clicked()
 
             bool ok = connect(
                 m_renderer,
-                SIGNAL(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*, qint32)),
+                SIGNAL(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*,qint32)),
                 this,
-                SLOT(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*, qint32)));
+                SLOT(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*,qint32)));
             Q_ASSERT(ok); Q_UNUSED(ok)
 
             getConnection();

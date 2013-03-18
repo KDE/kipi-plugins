@@ -310,8 +310,8 @@ void KPImagesListView::setup(int iconSize)
     header()->setResizeMode(User5, QHeaderView::Interactive);
     header()->setResizeMode(User6, QHeaderView::Stretch);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*,int)));
 }
 
 void KPImagesListView::enableDragAndDrop(const bool enable)
@@ -575,14 +575,14 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl, QPixmap)),
-                this, SLOT(slotThumbnail(KUrl, QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
-            this, SLOT(slotRawThumb(KUrl, QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
+            this, SLOT(slotRawThumb(KUrl,QImage)));
 
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
@@ -1220,8 +1220,8 @@ void KPImagesList::updateThumbnail(const KUrl& url)
         KIO::PreviewJob* job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
 #endif
 
-        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
-                this, SLOT(slotKDEPreview(KFileItem, QPixmap)));
+        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+                this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
 
         connect(job, SIGNAL(failed(KFileItem)),
                 this, SLOT(slotKDEPreviewFailed(KFileItem)));

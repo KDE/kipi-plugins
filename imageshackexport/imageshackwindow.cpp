@@ -120,8 +120,8 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     connect(m_talker, SIGNAL(signalNeedRegistrationCode()),
             this, SLOT(slotNeedRegistrationCode()));
 
-    connect(m_talker, SIGNAL(signalJobInProgress(int, int, QString)),
-            this, SLOT(slotJobInProgress(int, int, QString)));
+    connect(m_talker, SIGNAL(signalJobInProgress(int,int,QString)),
+            this, SLOT(slotJobInProgress(int,int,QString)));
 
     connect(m_talker, SIGNAL(signalLoginDone(int,QString)),
             this, SLOT(slotLoginDone(int,QString)));
@@ -129,8 +129,8 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     connect(m_talker, SIGNAL(signalGetGalleriesDone(int,QString)),
             this, SLOT(slotGetGalleriesDone(int,QString)));
 
-    connect(m_talker, SIGNAL(signalUpdateGalleries(QStringList, QStringList)),
-            m_widget, SLOT(slotGetGalleries(QStringList, QStringList)));
+    connect(m_talker, SIGNAL(signalUpdateGalleries(QStringList,QStringList)),
+            m_widget, SLOT(slotGetGalleries(QStringList,QStringList)));
 
     connect(m_talker, SIGNAL(signalAddPhotoDone(int,QString)),
             this, SLOT(slotAddPhotoDone(int,QString)));

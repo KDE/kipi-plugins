@@ -168,11 +168,11 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
-            d->imagesList, SLOT(slotUploadSuccess(KUrl, ImgurSuccess)));
+    connect(this, SIGNAL(signalImageUploadSuccess(KUrl,ImgurSuccess)),
+            d->imagesList, SLOT(slotUploadSuccess(KUrl,ImgurSuccess)));
 
-    connect(this, SIGNAL(signalImageUploadError(KUrl, ImgurError)),
-            d->imagesList, SLOT(slotUploadError(KUrl, ImgurError)));
+    connect(this, SIGNAL(signalImageUploadError(KUrl,ImgurError)),
+            d->imagesList, SLOT(slotUploadError(KUrl,ImgurError)));
 
 //    connect(this, SIGNAL(signalImageUploadStart(KUrl)),
 //            d->imagesList, SLOT(processing(KUrl)));
@@ -185,8 +185,8 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 //            d->changeUserBtn , SLOT(setEnabled(bool)));
 //    connect(d->dlg, SIGNAL(accepted()),
 //            this, SLOT(slotCredentialsSet()));
-//    connect(d->dlg, SIGNAL(signalLoadedNamePass(QString, QString)),
-//            this, SLOT(slotLoadedNamePass(QString, QString)));
+//    connect(d->dlg, SIGNAL(signalLoadedNamePass(QString,QString)),
+//            this, SLOT(slotLoadedNamePass(QString,QString)));
 #endif //OAUTH_ENABLED
 
 }

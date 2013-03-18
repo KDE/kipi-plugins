@@ -357,9 +357,9 @@ HRendererConnection* HMediaRendererDevice::createMediaConnection(
 
     bool ok = connect(
         connection->info(),
-        SIGNAL(propertyChanged(Herqq::Upnp::Av::HRendererConnectionInfo*, Herqq::Upnp::Av::HRendererConnectionEventInfo)),
+        SIGNAL(propertyChanged(Herqq::Upnp::Av::HRendererConnectionInfo*,Herqq::Upnp::Av::HRendererConnectionEventInfo)),
         this,
-        SLOT(propertyChanged(Herqq::Upnp::Av::HRendererConnectionInfo*, Herqq::Upnp::Av::HRendererConnectionEventInfo)));
+        SLOT(propertyChanged(Herqq::Upnp::Av::HRendererConnectionInfo*,Herqq::Upnp::Av::HRendererConnectionEventInfo)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     return connection;

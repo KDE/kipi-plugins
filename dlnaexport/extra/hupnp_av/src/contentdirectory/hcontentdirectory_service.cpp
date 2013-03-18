@@ -302,13 +302,13 @@ void HContentDirectoryServicePrivate::enableChangeTracking()
     H_Q(HContentDirectoryService);
 
     bool ok = QObject::connect(
-        m_dataSource, SIGNAL(objectModified(Herqq::Upnp::Av::HObject*, Herqq::Upnp::Av::HObjectEventInfo)),
-        q, SLOT(objectModified(Herqq::Upnp::Av::HObject*, Herqq::Upnp::Av::HObjectEventInfo)));
+        m_dataSource, SIGNAL(objectModified(Herqq::Upnp::Av::HObject*,Herqq::Upnp::Av::HObjectEventInfo)),
+        q, SLOT(objectModified(Herqq::Upnp::Av::HObject*,Herqq::Upnp::Av::HObjectEventInfo)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     ok = QObject::connect(
-        m_dataSource, SIGNAL(containerModified(Herqq::Upnp::Av::HContainer*, Herqq::Upnp::Av::HContainerEventInfo)),
-        q, SLOT(containerModified(Herqq::Upnp::Av::HContainer*, Herqq::Upnp::Av::HContainerEventInfo)));
+        m_dataSource, SIGNAL(containerModified(Herqq::Upnp::Av::HContainer*,Herqq::Upnp::Av::HContainerEventInfo)),
+        q, SLOT(containerModified(Herqq::Upnp::Av::HContainer*,Herqq::Upnp::Av::HContainerEventInfo)));
     Q_ASSERT(ok);
 
     ok = QObject::connect(

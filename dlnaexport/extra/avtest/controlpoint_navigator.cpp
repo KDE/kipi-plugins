@@ -66,9 +66,9 @@ void ControlPointNavigator::mediaRendererOnline(HMediaRendererAdapter* mediaRend
 
     bool ok = connect(
         mediaRenderer,
-        SIGNAL(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*, qint32)),
+        SIGNAL(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*,qint32)),
         this,
-        SLOT(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*, qint32)));
+        SLOT(connectionReady(Herqq::Upnp::Av::HMediaRendererAdapter*,qint32)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     ok = connect(

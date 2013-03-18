@@ -195,8 +195,8 @@ Wizard::Wizard(QWidget* const parent)
     }
 
     // selected page
-    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
-            this, SLOT(pageChanged(KPageWidgetItem*, KPageWidgetItem*)));
+    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
+            this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)));
 
     // cancel button
     connect(this, SIGNAL(cancelClicked()),
@@ -261,8 +261,8 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(pagesetupclicked()));
     
     // save JPG as
-    connect ( d->m_cropPage->BtnSaveAs, SIGNAL ( clicked() ),
-            this, SLOT ( BtnSaveAs_clicked() ) );
+    connect ( d->m_cropPage->BtnSaveAs, SIGNAL (clicked()),
+            this, SLOT (BtnSaveAs_clicked()) );
 
 
     if (d->m_photoPage->mPrintList->layout())
@@ -300,8 +300,8 @@ Wizard::Wizard(QWidget* const parent)
     connect(d->m_imagesFilesListBox, SIGNAL(signalMoveUpItem()),
             this, SLOT(BtnPrintOrderUp_clicked()));
 
-    connect(d->m_imagesFilesListBox, SIGNAL(signalAddItems(const KUrl::List&)),
-            this, SLOT(slotAddItems(const KUrl::List&)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->m_imagesFilesListBox, SIGNAL(signalRemovingItem(KIPIPlugins::KPImagesListViewItem*)),
             this, SLOT(slotRemovingItem(KIPIPlugins::KPImagesListViewItem*)));
@@ -313,8 +313,8 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(slotContextMenuRequested()));
 
     // Save item list => we catch the signal to add our PA attributes and elements Image children
-    connect(d->m_imagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*)),
-            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&,KIPIPlugins::KPImagesListViewItem*)),
+            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&,KIPIPlugins::KPImagesListViewItem*)));
 
     // Save item list => we catch the signal to add our PA elements (not per image)
     connect(d->m_imagesFilesListBox, SIGNAL(signalXMLCustomElements(QXmlStreamWriter&)),

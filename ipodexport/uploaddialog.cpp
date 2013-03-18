@@ -252,10 +252,10 @@ UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
     connect(m_uploadList, SIGNAL(signalAddedDropItems(QStringList)),
             this, SLOT(addDropItems(QStringList)) );
 
-    connect(m_uploadList, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
+    connect(m_uploadList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this, SLOT(imageSelected(QTreeWidgetItem*)));
 
-    connect(m_ipodAlbumList, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
+    connect(m_ipodAlbumList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this, SLOT(ipodItemSelected(QTreeWidgetItem*)));
 }
 

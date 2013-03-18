@@ -546,10 +546,10 @@ WmWidget::WmWidget(QWidget* const parent)
     connect(d->titleEdit, SIGNAL(editingFinished()),
             this, SLOT(slotRestoreExtension()));
 
-    connect(d->titleEdit, SIGNAL(textEdited(const QString&)),
+    connect(d->titleEdit, SIGNAL(textEdited(QString)),
             this, SLOT(slotApplyTitle()));
 
-    connect(d->dateEdit, SIGNAL(textEdited(const QString&)),
+    connect(d->dateEdit, SIGNAL(textEdited(QString)),
             this, SLOT(slotApplyDate()));
 
     // Problem: textChanged() is also called when the text is changed by setText()
@@ -564,10 +564,10 @@ WmWidget::WmWidget(QWidget* const parent)
     connect(d->descEdit, SIGNAL(textChanged()),
             this, SLOT(slotApplyDescription()));
 
-    connect(d->latitudeEdit, SIGNAL(textEdited(const QString&)),
+    connect(d->latitudeEdit, SIGNAL(textEdited(QString)),
             this, SLOT(slotApplyLatitude()));
 
-    connect(d->longitudeEdit, SIGNAL(textEdited(const QString&)),
+    connect(d->longitudeEdit, SIGNAL(textEdited(QString)),
             this, SLOT(slotApplyLongitude()));
 
     connect(d->imgList, SIGNAL(signalItemClicked(QTreeWidgetItem*)),

@@ -185,10 +185,10 @@ void ImgurTalkerAuth::slotOAuthLogin()
     d->OAuthRequest->setEnableDebugOutput(true);
 
     connect(d->OAuthService, SIGNAL(temporaryTokenReceived(QString,QString)),
-            this, SLOT(slotTemporaryTokenReceived(QString, QString)));
+            this, SLOT(slotTemporaryTokenReceived(QString,QString)));
 
     connect(d->OAuthService, SIGNAL(authorizationReceived(QString,QString)),
-            this, SLOT(slotAuthorizationReceived(QString, QString)));
+            this, SLOT(slotAuthorizationReceived(QString,QString)));
 
     connect(d->OAuthService, SIGNAL(accessTokenReceived(QString,QString)),
             this, SLOT(slotAccessTokenReceived(QString,QString)));

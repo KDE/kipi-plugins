@@ -3115,8 +3115,8 @@ QString QtSoapTypeFactory::errorString() const
 QtSoapHttpTransport::QtSoapHttpTransport(QObject *parent)
     : QObject(parent), networkMgr(this)
 {
-    connect(&networkMgr, SIGNAL(finished(QNetworkReply *)),
-            SLOT(readResponse(QNetworkReply *)));
+    connect(&networkMgr, SIGNAL(finished(QNetworkReply*)),
+            SLOT(readResponse(QNetworkReply*)));
 }
 
 /*!

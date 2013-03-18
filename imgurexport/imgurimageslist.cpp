@@ -63,8 +63,8 @@ ImgurImagesList::ImgurImagesList(QWidget* const parent)
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
                           i18n("Imgur Delete URL"), true);
 
-    connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
-            this, SLOT(slotDoubleClick(QTreeWidgetItem*, int)));
+    connect(listView(), SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+            this, SLOT(slotDoubleClick(QTreeWidgetItem*,int)));
 }
 
 ImgurImagesList::~ImgurImagesList()

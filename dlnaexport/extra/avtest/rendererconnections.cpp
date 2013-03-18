@@ -223,9 +223,9 @@ DefaultRendererConnection::DefaultRendererConnection(ContentType ct, QWidget* pa
 {
     bool ok = connect(
         &m_mediaObject,
-        SIGNAL(stateChanged(Phonon::State, Phonon::State)),
+        SIGNAL(stateChanged(Phonon::State,Phonon::State)),
         this,
-        SLOT(stateChanged(Phonon::State, Phonon::State)));
+        SLOT(stateChanged(Phonon::State,Phonon::State)));
 
     Q_ASSERT(ok); Q_UNUSED(ok)
 

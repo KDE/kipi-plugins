@@ -451,8 +451,8 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
     // TODO implement upload to galleries
     m_buffer.resize(0);
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));

@@ -92,14 +92,14 @@ ImageSelector::ImageSelector(KPAboutData* const about)
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStart()));
 
-    connect(d->thread, SIGNAL(starting(KUrl, int)),
-            this, SLOT(slotStarting(KUrl, int)));
+    connect(d->thread, SIGNAL(starting(KUrl,int)),
+            this, SLOT(slotStarting(KUrl,int)));
 
-    connect(d->thread, SIGNAL(finished(KUrl, int)),
-            this, SLOT(slotFinished(KUrl, int)));
+    connect(d->thread, SIGNAL(finished(KUrl,int)),
+            this, SLOT(slotFinished(KUrl,int)));
 
-    connect(d->thread, SIGNAL(failed(KUrl, int, QString)),
-            this, SLOT(slotFailed(KUrl, int, QString)));
+    connect(d->thread, SIGNAL(failed(KUrl,int,QString)),
+            this, SLOT(slotFailed(KUrl,int,QString)));
 }
 
 ImageSelector::~ImageSelector()

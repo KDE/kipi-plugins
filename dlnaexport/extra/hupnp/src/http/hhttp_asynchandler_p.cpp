@@ -708,7 +708,7 @@ HHttpAsyncOperation* HHttpAsyncHandler::msgIo(
         new HHttpAsyncOperation(
             m_loggingIdentifier, ++m_lastIdUsed, mi, req, false, this);
 
-    bool ok = connect(ao, SIGNAL(done(unsigned int)), this, SLOT(done(unsigned int)));
+    bool ok = connect(ao, SIGNAL(done(uint)), this, SLOT(done(uint)));
 
     Q_ASSERT(ok); Q_UNUSED(ok)
 
@@ -744,7 +744,7 @@ HHttpAsyncOperation* HHttpAsyncHandler::send(
         new HHttpAsyncOperation(
             m_loggingIdentifier, ++m_lastIdUsed, mi, data, true, this);
 
-    bool ok = connect(ao, SIGNAL(done(unsigned int)), this, SLOT(done(unsigned int)));
+    bool ok = connect(ao, SIGNAL(done(uint)), this, SLOT(done(uint)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     m_operations.insert(ao->id(), ao);
@@ -768,7 +768,7 @@ HHttpAsyncOperation* HHttpAsyncHandler::receive(
         new HHttpAsyncOperation(
             m_loggingIdentifier, ++m_lastIdUsed, mi, waitingRequest, this);
 
-    bool ok = connect(ao, SIGNAL(done(unsigned int)), this, SLOT(done(unsigned int)));
+    bool ok = connect(ao, SIGNAL(done(uint)), this, SLOT(done(uint)));
     Q_ASSERT(ok); Q_UNUSED(ok)
 
     m_operations.insert(ao->id(), ao);
