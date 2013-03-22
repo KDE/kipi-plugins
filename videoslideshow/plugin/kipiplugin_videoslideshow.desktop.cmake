@@ -29,6 +29,7 @@ Name[zh_TW]=VideoSlideShow
 Comment=A tool to export images as Video Slide Show
 Comment[ca]=Una eina per exportar imatges com un passi de diapositives
 Comment[ca@valencia]=Una eina per exportar imatges com un passe de diapositives
+Comment[cs]=Nástroj pro export obrázků jako video prezentace
 Comment[da]=Et værktøj til at eksportere billeder som et video-diasshow
 Comment[de]=Ein Werkzeug, um Bilder als Video-Diaschau zu exportieren.
 Comment[el]=Εργαλείο εξαγωγής εικόνων ως παρουσίαση διαφανειών βίντεο
