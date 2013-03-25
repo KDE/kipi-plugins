@@ -1,2 +1,3 @@
-SKIP /dngconverter/dngwriter/\|/jpeglossless/libjpeg/\|/common/libkipiplugins/tools/iccjpeg\.
+IGNORESUBS dlnaexport/extra/hupnp,dngconverter/dngwriter,jpeglossless/libjpeg,common/libkipiplugins/tools/iccjpeg
+
 
