@@ -127,7 +127,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
 
     m_tool_pointer = new KPushButton(KGuiItem("",":/pointer.png",
                                               i18n("Allows to select and move images on canvas"),
-                                              i18n("Tool which allows to select and move images on canvas. Any other operations are disabled.")), widget);
+                                              i18n("Tool which allows one to select and move images on canvas. Any other operations are disabled.")), widget);
     m_tool_pointer->setIconSize(QSize(24,24));
     m_tool_pointer->setFixedSize(32,32);
     m_tool_pointer->setCheckable(true);
@@ -138,7 +138,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     // View tool
     m_tool_hand = new KPushButton(KGuiItem("",":/hand.png",
                                            i18n("Viewing tool"),
-                                           i18n("This tool allows to view whole canvas in read-only mode. Only scrolling and zooming are available.")), widget);
+                                           i18n("This tool allows one to view whole canvas in read-only mode. Only scrolling and zooming are available.")), widget);
     m_tool_hand->setIconSize(QSize(24,24));
     m_tool_hand->setFixedSize(32,32);
     m_tool_hand->setCheckable(true);
@@ -149,7 +149,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     // Zoom tool
     m_tool_zoom = new KPushButton(KGuiItem("",":/zoom.png",
                                            i18n("Zooming tool"),
-                                           i18n("This tool allows to zoom canvas to fit it to the application window or users preferences.")), widget);
+                                           i18n("This tool allows one to zoom canvas to fit it to the application window or users preferences.")), widget);
     m_tool_zoom->setIconSize(QSize(24,24));
     m_tool_zoom->setFixedSize(32,32);
     m_tool_zoom->setCheckable(true);
