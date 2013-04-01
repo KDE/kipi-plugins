@@ -3,8 +3,11 @@ Kipi-plugins 3.2.0 - Release date: 2013/04/07
 
 NEW FEATURES:
 
+FacebookExport : add new option to create private album.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 316620 - HtmlExport doesn't build.
-002 ==> 
+002 ==> 304771 - Can't create private albums w/ digiKam [patch].
+003 ==> 
+

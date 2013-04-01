@@ -154,19 +154,22 @@ QString FbTalker::getApiSig(const QMap<QString, QString>& args)
 QString FbTalker::getCallString(const QMap<QString, QString>& args)
 {
     QString concat;
+    QUrl url;
 
     // NOTE: QMap iterator will sort alphabetically
     for (QMap<QString, QString>::const_iterator it = args.constBegin();
          it != args.constEnd();
          ++it)
     {
-        if (!concat.isEmpty())
-            concat.append("&");
+        /*if (!concat.isEmpty())
+            concat.append("&");*/
 
-        concat.append(it.key());
+        /*concat.append(it.key());
         concat.append("=");
-        concat.append(it.value());
+        concat.append(it.value());*/
+        url.addQueryItem(it.key(), it.value());
     }
+    concat.append(url.encodedQuery());
 
     kDebug() << "CALL: " << concat;
 
@@ -635,6 +638,9 @@ void FbTalker::createAlbum(const FbAlbum& album)
     // TODO (Dirk): Wasn't that a requested feature in Bugzilla?
     switch (album.privacy)
     {
+        case FB_ME:
+            args["privacy"] = "{'value':'SELF'}";
+            break;
         case FB_FRIENDS:
             args["visible"] = "friends";
             break;
@@ -646,6 +652,10 @@ void FbTalker::createAlbum(const FbAlbum& album)
             break;
         case FB_EVERYONE:
             args["visible"] = "everyone";
+            break;
+        case FB_CUSTOM:
+            //TODO
+            args["privacy"] = "{'value':'CUSTOM'}";
             break;
     }
 
@@ -1427,6 +1437,8 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                             album.privacy = FB_NETWORKS;
                         else if (nodeA.toElement().text() == "everyone")
                             album.privacy = FB_EVERYONE;
+                        else if (nodeA.toElement().text() == "everyone")
+                            album.privacy = FB_CUSTOM;
                     }
                 }
 

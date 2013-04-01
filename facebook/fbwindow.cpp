@@ -444,6 +444,10 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
 
         switch (albumsList.at(i).privacy)
         {
+            case FB_ME:
+                albumIcon = "secure-card";
+                break;
+
             case FB_FRIENDS:
                 albumIcon = "user-identity";
                 break;
@@ -458,6 +462,10 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
 
             case FB_EVERYONE:
                 albumIcon = "applications-internet";
+                break;
+
+            case FB_CUSTOM:
+                albumIcon = "configure";
                 break;
         }
 

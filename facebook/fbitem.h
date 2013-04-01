@@ -58,10 +58,12 @@ public:
 
 enum FbPrivacy
 {
-    FB_FRIENDS = 0,
+    FB_ME = 0,
+    FB_FRIENDS = 1,
     FB_FRIENDS_OF_FRIENDS,
     FB_NETWORKS,
-    FB_EVERYONE
+    FB_EVERYONE,
+    FB_CUSTOM
 };
 
 // ---------------------------------------------------------------
