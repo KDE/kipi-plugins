@@ -9,5 +9,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 316620 - HtmlExport doesn't build.
 002 ==> 304771 - Can't create private albums w/ digiKam [patch].
-003 ==> 
+003 ==> 255722 - Flickr exports digikam tags even if option is not enabled.
+004 ==> 
 
