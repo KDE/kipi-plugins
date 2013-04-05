@@ -147,7 +147,7 @@ void CalTemplate::monthChanged(int m)
 
 void CalTemplate::yearChanged(int year)
 {
-    int i, months;
+    int months;
     QDate d, oldD;
     const KCalendarSystem* const cal = KGlobal::locale()->calendar();
     cal->setDate(d, year, 1, 1);
@@ -156,6 +156,8 @@ void CalTemplate::yearChanged(int year)
 
     if ((cal->monthsInYear(oldD) != months) && !m_wVector.isEmpty())
     {
+        int i;
+
         // hide the last months that are not present on the current year
         for (i = months; (i < cal->monthsInYear(oldD)) && (i < m_wVector.count()); ++i)
         {
