@@ -682,13 +682,14 @@ int DNGWriter::convert()
         exif->fModel.Set_ASCII(identify.model.toAscii());
         exif->fMake.Set_ASCII(identify.make.toAscii());
 
-        long int   num, den;
-        long       val;
         QString    str;
         KPMetadata meta;
 
         if (meta.load(inputFile()))
         {
+            long int   num, den;
+            long       val;
+
             // Time from original shot
             dng_date_time_info dti;
             dti.SetDateTime(d->dngDateTime(meta.getImageDateTime()));
