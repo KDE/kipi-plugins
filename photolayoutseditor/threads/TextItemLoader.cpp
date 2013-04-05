@@ -38,9 +38,9 @@ TextItemLoader::TextItemLoader(TextItem * item, QDomElement & element, QObject *
 
 void TextItemLoader::run()
 {
-    QDomElement e = this->element();
-    TextItem * item = (TextItem*) this->item();
-    ProgressObserver * observer = this->observer();
+    QDomElement e                    = this->element();
+    TextItem* const item             = static_cast<TextItem*>(this->item());
+    ProgressObserver* const observer = this->observer();
     AbstractPhotoItemLoader::run();
 
     QDomElement defs = e.firstChildElement("defs");

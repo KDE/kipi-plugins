@@ -59,7 +59,7 @@ class TemplateItemDelegate : public QAbstractItemDelegate
             else
                 painter->fillRect( rf, QApplication::palette().base() );
 
-            TemplateItem * item = (TemplateItem*) index.internalPointer();
+            TemplateItem* const item = static_cast<TemplateItem*>(index.internalPointer());
             QImage i = item->icon();
             QRect ir;
             if (!i.isNull())
