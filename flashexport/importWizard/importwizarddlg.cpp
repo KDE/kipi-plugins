@@ -226,23 +226,21 @@ bool ImportWizardDlg::checkIfFolderExist()
                                        "Please choose another export folder.",
                                        d->settings->exportUrl.path()));
                     return false;
-                    break;
                 }
+
                 return true;
-                break;
 
             case KMessageBox::No:
                 return false;
-                break;
-                
+
             case KMessageBox::Cancel:
                 return false;
-                break;
 
             default:
                 return false;
         }
     }
+
     return true;
 }
 
