@@ -517,6 +517,7 @@ bool BatchProcessImagesDialog::startProcess()
                     endProcess();
                     return true;
                 }
+
                 break;
             }
 
@@ -528,7 +529,6 @@ bool BatchProcessImagesDialog::startProcess()
             {
                 endProcess();
                 return true;
-                break;
             }
         }
     }
