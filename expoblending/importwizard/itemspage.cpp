@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -150,36 +150,17 @@ void ItemsPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
 
     if (!ad.starting)           // Something is complete...
     {
-        if (!ad.success)        // Something is failed...
+        switch (ad.action)
         {
-            switch (ad.action)
+            case(IDENTIFY):
             {
-                case(IDENTIFY):
-                {
-                    setIdentity(ad.inUrls[0], ad.message);
-                    break;
-                }
-                default:
-                {
-                    kWarning() << "Unknown action";
-                    break;
-                }
+                setIdentity(ad.inUrls[0], ad.message);
+                break;
             }
-        }
-        else                    // Something is done...
-        {
-            switch (ad.action)
+            default:
             {
-                case(IDENTIFY):
-                {
-                    setIdentity(ad.inUrls[0], ad.message);
-                    break;
-                }
-                default:
-                {
-                    kWarning() << "Unknown action";
-                    break;
-                }
+                kWarning() << "Unknown action";
+                break;
             }
         }
     }
