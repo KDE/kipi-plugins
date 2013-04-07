@@ -190,6 +190,9 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     m_newAlbumBtn                = new QPushButton(accountBox);
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
+    m_reloadphotoset             = new QPushButton(accountBox);
+    m_reloadphotoset->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_reloadphotoset->setText(i18n("&Reload"));
     m_albumsListComboBox         = new KComboBox(settingsBox);
 
     accountLayout->addWidget(userNameLabel,          0, 0);
@@ -197,7 +200,8 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     accountLayout->addWidget(m_changeUserButton,     0, 2);
     accountLayout->addWidget(albumLabel,             1, 0);
     accountLayout->addWidget(m_albumsListComboBox,   1, 1);
-    accountLayout->addWidget(m_newAlbumBtn,          1, 2);
+    accountLayout->addWidget(m_newAlbumBtn,          1, 2,Qt::AlignLeft);
+    accountLayout->addWidget(m_reloadphotoset,       1, 2,Qt::AlignRight);
     accountLayout->setColumnStretch(1, 10);
     accountLayout->setSpacing(KDialog::spacingHint());
     accountLayout->setMargin(KDialog::spacingHint());
@@ -389,6 +393,8 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
         m_albumsListComboBox->hide();
         m_newAlbumBtn->setEnabled(false);
         m_newAlbumBtn->hide();
+        m_reloadphotoset->setEnabled(false);
+        m_reloadphotoset->hide();
     }
 
     // 23HQ doesn't support the Family and Friends concept.

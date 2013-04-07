@@ -125,6 +125,7 @@ private Q_SLOTS:
     void slotClose();
     void slotUser1();
     void slotImageListChanged();
+    void slotReloadPhotoSetRequest();
 
 private:
 

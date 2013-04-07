@@ -109,6 +109,7 @@ private: // Data
 
     QPushButton*                        m_changeUserButton;
     QPushButton*                        m_newAlbumBtn;
+    QPushButton*                        m_reloadphotoset;
     QPushButton*                        m_extendedTagsButton;
     QPushButton*                        m_extendedPublicationButton;
 

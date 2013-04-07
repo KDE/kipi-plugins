@@ -184,6 +184,9 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotAddPhotoCancelAndClose()));
 
+    connect(m_widget->m_reloadphotoset, SIGNAL(clicked()),
+            this, SLOT(slotReloadPhotoSetRequest()));
+
     //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),
     //         SLOT(slotAlbums(QValueList<GAlbum>)) );
 
@@ -768,4 +771,10 @@ void FlickrWindow::slotImageListChanged()
     enableButton(User1, !(m_widget->m_imglst->imageUrls().isEmpty()));
 }
 
+void FlickrWindow::slotReloadPhotoSetRequest()
+{
+    m_talker->listPhotoSets();
+}
+
 } // namespace KIPIFlickrExportPlugin
+
