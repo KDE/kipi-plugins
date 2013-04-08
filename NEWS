@@ -12,5 +12,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 255722 - Flickr exports digikam tags even if option is not enabled.
 004 ==> 313981 - After uploading two images, the first appears twice in flickr photo stream.
 005 ==> 305407 - FlickrExport only updates list of sets on restart.
-006 ==> 
+006 ==> 316597 - Buggy track in kml file [patch].
+007 ==> 
 
