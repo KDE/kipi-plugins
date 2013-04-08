@@ -49,7 +49,7 @@ QString KMLGPSDataParser::lineString()
 
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin(); it != end; ++it )
     {
-        line += QString("%1,%2,%3").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
+        line += QString("%1,%2,%3 ").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
     }
 
     return line;
@@ -114,12 +114,12 @@ void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root
         if (it.value().latitude())
         {
             addKmlTextElement(kmlGeometry, "coordinates",
-                              QString("%1,%2,%3")
+                              QString("%1,%2,%3 ")
                               .arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude()));
         }
         else
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(it.value().longitude()).arg(it.value().latitude()));
+            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2 ").arg(it.value().longitude()).arg(it.value().latitude()));
         }
         if (altitudeMode == 2 )
         {
