@@ -79,6 +79,11 @@ class PicasawebLogin;
 namespace KIPIPicasawebExportPlugin
 {
 
+static bool picasaLessThan(PicasaWebAlbum& p1, PicasaWebAlbum& p2)
+{
+    return (p1.title.toLower() < p2.title.toLower());
+}
+
 PicasawebTalker::PicasawebTalker(QWidget* const parent)
     : m_parent(parent),  m_job(0), m_state(FE_LOGOUT)
     {
@@ -795,13 +800,9 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
         }
         node = node.nextSibling();
     }
-    qSort(albumList.begin(),albumList.end(),lessThan);
-    emit signalListAlbumsDone(0, "", albumList);
-}
 
-bool PicasawebTalker::lessThan(PicasaWebAlbum& p1,PicasaWebAlbum& p2)
-{
-    return (p1.title.toLower() < p2.title.toLower());
+    qSort(albumList.begin(), albumList.end(), picasaLessThan);
+    emit signalListAlbumsDone(0, "", albumList);
 }
 
 void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
