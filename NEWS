@@ -13,5 +13,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 313981 - After uploading two images, the first appears twice in flickr photo stream.
 005 ==> 305407 - FlickrExport only updates list of sets on restart.
 006 ==> 316597 - Buggy track in kml file [patch].
-007 ==> 272521 - Pcasaweb, alphabetical order for album list [patch].
+007 ==> 272521 - Picasaweb, alphabetical order for album list [patch].
 008 ==> 
