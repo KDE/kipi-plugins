@@ -101,10 +101,10 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
         background_pattern_color2(0),
         background_pattern_type(0)
     {
-        background_types.insert("Color",    ColorFill);
-        background_types.insert("Image",    ImageFill);
-        background_types.insert("Pattern",  PatternFill);
-//        background_types.insert("Gradient", GradientFill);
+        background_types.insert(i18n("Color"),    ColorFill);
+        background_types.insert(i18n("Image"),    ImageFill);
+        background_types.insert(i18n("Pattern"),  PatternFill);
+//        background_types.insert(i18n("Gradient"), GradientFill);
 
         background_image_scalling_map.insert(Expanded, i18n("Expanded"));
         background_image_scalling_map.insert(Scaled, i18n("Scaled"));

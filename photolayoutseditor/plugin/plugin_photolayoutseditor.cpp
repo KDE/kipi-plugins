@@ -48,7 +48,7 @@ namespace KIPIPhotoLayoutsEditor
 {
 
 K_PLUGIN_FACTORY ( PhotoFrmesEditorFactory, registerPlugin<Plugin_PhotoLayoutsEditor>(); )
-K_EXPORT_PLUGIN( PhotoFrmesEditorFactory( PLEAboutData() ))
+K_EXPORT_PLUGIN( PhotoFrmesEditorFactory( "kipiplugin_photolayouteditor" ))
 
 Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject* const parent, const QVariantList&)
     : Plugin( PhotoFrmesEditorFactory::componentData(), parent, "photolayoutseditor" )

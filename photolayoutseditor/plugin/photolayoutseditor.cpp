@@ -136,7 +136,7 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
 
     initIconsResource();
     setXMLFile("photolayoutseditorui.rc");
-    setCaption("Photo Layouts Editor");
+    setCaption(i18n("Photo Layouts Editor"));
 
     loadEffects();
     loadBorders();
@@ -503,7 +503,7 @@ void PhotoLayoutsEditor::open()
 void PhotoLayoutsEditor::openDialog()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
+        d->fileDialog = new KFileDialog(KUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
     d->fileDialog->setOperationMode(KFileDialog::Opening);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
@@ -539,7 +539,7 @@ void PhotoLayoutsEditor::save()
 void PhotoLayoutsEditor::saveAs()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
+        d->fileDialog = new KFileDialog(KUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
     d->fileDialog->setOperationMode(KFileDialog::Saving);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
@@ -554,7 +554,7 @@ void PhotoLayoutsEditor::saveAs()
 void PhotoLayoutsEditor::saveAsTemplate()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
+        d->fileDialog = new KFileDialog(KUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
     d->fileDialog->setOperationMode(KFileDialog::Saving);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);

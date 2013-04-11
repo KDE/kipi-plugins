@@ -25,17 +25,18 @@
 
 #include "LayersTreeMenu.h"
 #include "LayersTree.h"
+#include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
 LayersTreeMenu::LayersTreeMenu(LayersTree * parent) :
     KMenu(parent)
 {
-    moveUpItems = this->addAction("Move up");
+    moveUpItems = this->addAction(i18n("Move up"));
     connect(moveUpItems, SIGNAL(triggered()), parent, SLOT(moveSelectedRowsUp()));
-    moveDownItems = this->addAction("Move down");
+    moveDownItems = this->addAction(i18n("Move down"));
     connect(moveDownItems, SIGNAL(triggered()), parent, SLOT(moveSelectedRowsDown()));
     this->addSeparator();
-    deleteItems = this->addAction("Delete selected");
+    deleteItems = this->addAction(i18n("Delete selected"));
     connect(deleteItems, SIGNAL(triggered()), parent, SLOT(removeSelectedRows()));
 }

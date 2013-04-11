@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 {
     PLEAboutData aboutData;
     aboutData.setAppName("photolayoutseditor");
-    aboutData.setCatalogName("kipiplugin_photolayoutseditor");
+    aboutData.setCatalogName("kipiplugin_photolayouteditor");
 
     KCmdLineArgs::init(argc,argv,&aboutData);
     KCmdLineOptions options;
