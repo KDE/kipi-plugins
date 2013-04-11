@@ -37,7 +37,7 @@ class XMPStatus : public QWidget
 
 public:
 
-    XMPStatus(QWidget* const parent);
+    explicit XMPStatus(QWidget* const parent);
     ~XMPStatus();
 
     void applyMetadata(QByteArray& xmpData);

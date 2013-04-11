@@ -37,7 +37,7 @@ class XMPProperties : public QWidget
 
 public:
 
-    XMPProperties(QWidget* const parent);
+    explicit XMPProperties(QWidget* const parent);
     ~XMPProperties();
 
     void applyMetadata(QByteArray& xmpData);

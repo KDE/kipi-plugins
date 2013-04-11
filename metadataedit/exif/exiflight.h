@@ -37,7 +37,7 @@ class EXIFLight : public QWidget
 
 public:
 
-    EXIFLight(QWidget* const parent);
+    explicit EXIFLight(QWidget* const parent);
     ~EXIFLight();
 
     void applyMetadata(QByteArray& exifData);

@@ -37,7 +37,7 @@ class XMPCredits : public QWidget
 
 public:
 
-    XMPCredits(QWidget* const parent);
+    explicit XMPCredits(QWidget* const parent);
     ~XMPCredits();
 
     void applyMetadata(QByteArray& xmpData);

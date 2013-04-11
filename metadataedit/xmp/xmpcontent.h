@@ -37,7 +37,7 @@ class XMPContent : public QWidget
 
 public:
 
-    XMPContent(QWidget* const parent);
+    explicit XMPContent(QWidget* const parent);
     ~XMPContent();
 
     void applyMetadata(QByteArray& exifData, QByteArray& xmpData);

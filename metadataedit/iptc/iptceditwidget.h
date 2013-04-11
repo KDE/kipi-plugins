@@ -39,7 +39,7 @@ class IPTCEditWidget : public KPageWidget
 
 public:
 
-    IPTCEditWidget(MetadataEditDialog* const parent);
+    explicit IPTCEditWidget(MetadataEditDialog* const parent);
     ~IPTCEditWidget();
 
     bool isModified() const;

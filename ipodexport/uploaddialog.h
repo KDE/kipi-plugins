@@ -77,7 +77,7 @@ class UploadDialog : public KPToolDialog
 
 public:
 
-    UploadDialog(const QString& caption, QWidget* const parent=0);
+    explicit UploadDialog(const QString& caption, QWidget* const parent=0);
     ~UploadDialog();
 
     QString ipodModel()  const;

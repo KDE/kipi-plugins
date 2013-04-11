@@ -37,7 +37,7 @@ class EXIFLens : public QWidget
 
 public:
 
-    EXIFLens(QWidget* const parent);
+    explicit EXIFLens(QWidget* const parent);
     ~EXIFLens();
 
     void applyMetadata(QByteArray& exifData);
