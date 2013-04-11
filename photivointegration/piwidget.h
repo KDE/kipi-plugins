@@ -48,7 +48,7 @@ class PIWidget : public QWidget
 
 public:
 
-    PIWidget(QWidget* const parent = 0);
+    explicit PIWidget(QWidget* const parent = 0);
     ~PIWidget();
 
     PIImgList* imagesList() const;

@@ -49,7 +49,7 @@ using namespace KIPIPlugins;
 namespace KIPIExpoBlendingPlugin
 {
 
-BracketStackItem::BracketStackItem(QTreeWidget* parent)
+BracketStackItem::BracketStackItem(QTreeWidget* const parent)
                 : QTreeWidgetItem(parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);

@@ -63,7 +63,7 @@ class Manager : public QObject
 
 public:
 
-    Manager(QObject* const parent=0);
+    explicit Manager(QObject* const parent = 0);
     ~Manager();
 
     bool checkBinaries();

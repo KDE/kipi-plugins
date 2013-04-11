@@ -42,7 +42,7 @@ class MediaServer : public QObject
 
 public:
 
-    MediaServer(QObject* const parent=0);
+    explicit MediaServer(QObject* const parent = 0);
     virtual ~MediaServer();
 
     void addImagesOnServer(const KUrl::List&);

@@ -51,7 +51,7 @@ class BracketStackItem : public QTreeWidgetItem
 
 public:
 
-    BracketStackItem(QTreeWidget* parent);
+    explicit BracketStackItem(QTreeWidget* const parent);
     virtual ~BracketStackItem();
 
     void setUrl(const KUrl& url);

@@ -51,7 +51,7 @@ public:
         Description     = KPImagesListView::User1
     };
 
-    PIImgList(QWidget* const parent = 0);
+    explicit PIImgList(QWidget* const parent = 0);
     ~PIImgList();
 
 //     // implement this, if you have special item widgets, e.g. an edit line

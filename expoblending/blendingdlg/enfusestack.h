@@ -57,7 +57,7 @@ class EnfuseStackItem : public QTreeWidgetItem
 
 public:
 
-    EnfuseStackItem(QTreeWidget* const parent);
+    explicit EnfuseStackItem(QTreeWidget* const parent);
     virtual ~EnfuseStackItem();
 
     /** Return the preview image url assigned to item.

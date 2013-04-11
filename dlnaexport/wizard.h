@@ -39,7 +39,7 @@ class Wizard : public KPWizardDialog
 
 public:
 
-    Wizard(QWidget* const);
+    explicit Wizard(QWidget* const parent);
     ~Wizard();
 
     void next();

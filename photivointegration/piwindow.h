@@ -61,7 +61,7 @@ class PIWindow : public KPToolDialog
 
 public:
 
-    PIWindow(QWidget* const parent = 0);
+    explicit PIWindow(QWidget* const parent = 0);
     ~PIWindow();
 
     void reactivate();
