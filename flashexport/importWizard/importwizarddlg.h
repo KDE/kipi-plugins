@@ -78,7 +78,7 @@ private Q_SLOTS:
     //will activate the next button if a url was selected.
     void slotActivate();
 
-    //Allow acces to Finish only after processing is done
+    //Allow access to Finish only after processing is done
     void slotFinishEnable();
 
 private:

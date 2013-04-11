@@ -54,7 +54,7 @@ public:
     ~SelectionPage();
 
     /**
-     * Set a collection selector or a image dialog acording to user choice on the intropage
+     * Set a collection selector or a image dialog according to user choice on the intropage
      * @param choice - 0 -collection, 1 - image dialog
      */
     void setPageContent(int choice);

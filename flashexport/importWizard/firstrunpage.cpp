@@ -65,7 +65,7 @@ public:
     KUrlRequester* urlRequester;
 };
 
-// link this page to SimpleViewer to gain acess to settings container.
+// link this page to SimpleViewer to gain access to settings container.
 FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("First Run")),
       d(new FirstRunPagePriv)
