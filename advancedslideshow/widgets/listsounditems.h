@@ -87,7 +87,7 @@ class ListSoundItems : public QListWidget
 
 public:
 
-    ListSoundItems(QWidget* const parent = 0);
+    explicit ListSoundItems(QWidget* const parent = 0);
 
 public:
 

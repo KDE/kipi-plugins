@@ -43,7 +43,7 @@ class SlidePlaybackWidget : public QWidget, public Ui::SlidePlaybackWidget
 
 public:
 
-    SlidePlaybackWidget(QWidget* const parent);
+    explicit SlidePlaybackWidget(QWidget* const parent);
     ~SlidePlaybackWidget();
 
     bool canHide()  const;

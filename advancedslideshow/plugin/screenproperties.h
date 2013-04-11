@@ -36,7 +36,7 @@ class ScreenProperties
 
 public:
 
-    ScreenProperties(QWidget* const mainWidget);
+    explicit ScreenProperties(QWidget* const mainWidget);
     virtual ~ScreenProperties()
     {
     };

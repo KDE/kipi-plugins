@@ -38,7 +38,7 @@ class RecompressImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    RecompressImagesDialog(const KUrl::List& images, QWidget* parent = 0);
+    explicit RecompressImagesDialog(const KUrl::List& images, QWidget* parent = 0);
     ~RecompressImagesDialog();
 
 private Q_SLOTS:

@@ -130,7 +130,7 @@ class VolumeSlider : public Phonon::VolumeSlider
 
 public:
 
-    VolumeSlider(QWidget* const parent);
+    explicit VolumeSlider(QWidget* const parent);
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

@@ -59,7 +59,7 @@ QStringList ResizeCommandBuilder::getAllowedFilters()
     return filters;
 }
 
-ResizeCommandBuilder::ResizeCommandBuilder(QObject *parent)
+ResizeCommandBuilder::ResizeCommandBuilder(QObject* const parent)
 					: QObject(parent), m_quality(75)
 {
 }

@@ -38,7 +38,7 @@ class FilterImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    FilterImagesDialog(const KUrl::List& images, QWidget* parent = 0);
+    explicit FilterImagesDialog(const KUrl::List& images, QWidget* parent = 0);
     ~FilterImagesDialog();
 
 private Q_SLOTS:

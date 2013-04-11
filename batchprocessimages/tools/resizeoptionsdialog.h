@@ -66,8 +66,8 @@ public:
      *                       this base class. This is used to have e.g. separate
      *                       quality settings per tool
      */
-    ResizeOptionsBaseDialog(QWidget* parent,
-                            ResizeCommandBuilder* commandBuilder,
+    ResizeOptionsBaseDialog(QWidget* const parent,
+                            ResizeCommandBuilder* const commandBuilder,
                             const QString& settingsPrefix);
     virtual ~ResizeOptionsBaseDialog();
 

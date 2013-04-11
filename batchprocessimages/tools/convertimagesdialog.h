@@ -38,7 +38,7 @@ class ConvertImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    ConvertImagesDialog(const KUrl::List& images, QWidget* parent = 0);
+    explicit ConvertImagesDialog(const KUrl::List& images, QWidget* parent = 0);
     ~ConvertImagesDialog();
 
 private Q_SLOTS:

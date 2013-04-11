@@ -42,8 +42,8 @@ namespace KIPIBatchProcessImagesPlugin
 const QString ResizeOptionsBaseDialog::OPTION_QUALITY_NAME = "Quality";
 const QString ResizeOptionsBaseDialog::OPTION_FILTER_NAME  = "ResizeFilter";
 
-ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget* parent,
-                                                 ResizeCommandBuilder* commandBuilder,
+ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget* const parent,
+                                                 ResizeCommandBuilder* const commandBuilder,
                                                  const QString& settingsPrefix)
                        : KDialog(parent),
                          m_settingsPrefix(settingsPrefix), m_commandBuilder(commandBuilder),

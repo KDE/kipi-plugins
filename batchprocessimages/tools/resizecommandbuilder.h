@@ -65,7 +65,7 @@ public:
      */
     static QStringList getAllowedFilters();
 
-    ResizeCommandBuilder(QObject *parent);
+    explicit ResizeCommandBuilder(QObject* const parent);
     virtual ~ResizeCommandBuilder();
 
     /**

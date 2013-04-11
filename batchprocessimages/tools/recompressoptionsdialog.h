@@ -46,7 +46,7 @@ class RecompressOptionsDialog : public KDialog
 
 public:
 
-    RecompressOptionsDialog(QWidget *parent = 0);
+    explicit RecompressOptionsDialog(QWidget *parent = 0);
     ~RecompressOptionsDialog();
 
     QLabel          *m_label_JPEGimageCompression;
