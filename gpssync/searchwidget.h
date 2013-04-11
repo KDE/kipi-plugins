@@ -69,7 +69,7 @@ public:
 
 public:
 
-    SearchResultModel(QObject* const parent = 0);
+    explicit SearchResultModel(QObject* const parent = 0);
     ~SearchResultModel();
 
     void addResults(const SearchBackend::SearchResult::List& results);

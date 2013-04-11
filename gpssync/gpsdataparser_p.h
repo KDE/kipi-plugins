@@ -41,7 +41,7 @@ class GPXFileReader : public QXmlDefaultHandler
 {
 public:
 
-    GPXFileReader(GPSDataParser::GPXFileData* const dataTarget);
+    explicit GPXFileReader(GPSDataParser::GPXFileData* const dataTarget);
 
     virtual bool characters(const QString& ch);
     virtual bool endElement(const QString& namespaceURI, const QString& localName, const QString& qName);

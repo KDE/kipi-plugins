@@ -167,7 +167,7 @@ public:
 
 public:
 
-    GPSDataParser(QObject* const parent = 0);
+    explicit GPSDataParser(QObject* const parent = 0);
     ~GPSDataParser();
 
     void loadGPXFiles(const KUrl::List& urls);

@@ -70,7 +70,7 @@ public:
         QString                       internalId;
     };
 
-    SearchBackend(QObject* const parent = 0);
+    explicit SearchBackend(QObject* const parent = 0);
     ~SearchBackend();
 
     bool search(const QString& backendName, const QString& searchTerm);

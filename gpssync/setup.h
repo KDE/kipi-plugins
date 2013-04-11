@@ -72,7 +72,7 @@ class SetupTemplate : public QWidget
 
 public:
 
-    SetupTemplate(QWidget* const parent=0);
+    explicit SetupTemplate(QWidget* const parent = 0);
     ~SetupTemplate();
 
 public Q_SLOTS:
@@ -89,7 +89,7 @@ class Setup : public KPageDialog
 
 public:
 
-    Setup(QWidget* const parent = 0);
+    explicit Setup(QWidget* const parent = 0);
     ~Setup();
 
 Q_SIGNALS:

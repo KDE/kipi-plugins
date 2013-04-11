@@ -52,7 +52,7 @@ class KipiImageListDragDropHandler : public QObject
 
 public:
 
-    KipiImageListDragDropHandler(QObject* const parent = 0);
+    explicit KipiImageListDragDropHandler(QObject* const parent = 0);
     virtual ~KipiImageListDragDropHandler();
 
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices) = 0;

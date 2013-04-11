@@ -53,7 +53,7 @@ class BackendOsmRG : public RGBackend
 
 public:
 
-    BackendOsmRG(QObject* const parent);
+    explicit BackendOsmRG(QObject* const parent);
     virtual ~BackendOsmRG();
 
     QMap<QString,QString> makeQMapFromXML(const QString& xmlData);

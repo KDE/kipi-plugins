@@ -43,7 +43,7 @@ class GPSImageListDragDropHandler : public KipiImageListDragDropHandler
 
 public:
 
-    GPSImageListDragDropHandler(QObject* const parent = 0);
+    explicit GPSImageListDragDropHandler(QObject* const parent = 0);
     ~GPSImageListDragDropHandler();
 
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices);

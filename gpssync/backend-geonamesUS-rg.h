@@ -57,7 +57,7 @@ class BackendGeonamesUSRG : public RGBackend
 
 public:
 
-    BackendGeonamesUSRG(QObject* const parent);
+    explicit BackendGeonamesUSRG(QObject* const parent);
     virtual ~BackendGeonamesUSRG();
 
     QMap<QString, QString> makeQMapFromXML(const QString& xmlData);

@@ -38,7 +38,7 @@ class SetupGeneral : public SetupTemplate
 
 public:
 
-    SetupGeneral(QWidget* const parent = 0);
+    explicit SetupGeneral(QWidget* const parent = 0);
     ~SetupGeneral();
 
 public Q_SLOTS:

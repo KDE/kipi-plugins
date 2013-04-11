@@ -40,7 +40,7 @@ class RGBackend : public QObject
 
 public:
 
-    RGBackend(QObject* const parent);
+    explicit RGBackend(QObject* const parent);
     RGBackend();
     virtual ~RGBackend();
 
