@@ -209,3 +209,4 @@ void Task::slotCancel()
 }
 
 }  // namespace KIPIDNGConverterPlugin
+

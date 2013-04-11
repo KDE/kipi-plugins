@@ -77,17 +77,16 @@ extern "C"
 // Local includes
 
 #include "aboutdata.h"
-#include "manager.h"
+#include "actionthread.h"
+#include "bracketstack.h"
 #include "enfusebinary.h"
 #include "enfusesettings.h"
 #include "enfusestack.h"
-#include "aboutdata.h"
-#include "actionthread.h"
-#include "bracketstack.h"
 #include "kpoutputdialog.h"
-#include "kpversion.h"
 #include "kppreviewmanager.h"
 #include "kpsavesettingswidget.h"
+#include "kpversion.h"
+#include "manager.h"
 
 using namespace KDcrawIface;
 

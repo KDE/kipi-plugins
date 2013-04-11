@@ -31,7 +31,6 @@
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
-#include <kmessagebox.h>
 
 // LibKIPI includes
 

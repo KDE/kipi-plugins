@@ -36,3 +36,4 @@
 #include "copyfilestask.h"
 
 #endif /* TASKS_H */
+

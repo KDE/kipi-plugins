@@ -20,6 +20,9 @@
 *
 * ============================================================ */
 
+#ifndef IMAGESHACKITEM_H
+#define IMAGESHACKITEM_H
+
 namespace KIPIImageshackExportPlugin
 {
 
@@ -56,3 +59,6 @@ public:
 };
 
 } // namespace KIPIImageshackExportPlugin
+
+#endif // IMAGESHACKITEM_H
+

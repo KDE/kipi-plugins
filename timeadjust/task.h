@@ -77,3 +77,4 @@ private:
 }  // namespace KIPITimeAdjustPlugin
 
 #endif /* TASK_H */
+

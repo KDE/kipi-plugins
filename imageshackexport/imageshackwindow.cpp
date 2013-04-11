@@ -24,21 +24,20 @@
 
 // Qt includes
 
+#include <QButtonGroup>
 #include <QCheckBox>
+#include <QCloseEvent>
 #include <QDialog>
 #include <QFileInfo>
-#include <QPushButton>
-#include <QPointer>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QSpinBox>
-#include <QButtonGroup>
 #include <QGridLayout>
-#include <QCloseEvent>
+#include <QHBoxLayout>
+#include <QLineEdit>
 #include <QPlainTextEdit>
+#include <QPointer>
+#include <QPushButton>
 #include <QRadioButton>
+#include <QSpinBox>
+#include <QVBoxLayout>
 
 // KDE includes
 

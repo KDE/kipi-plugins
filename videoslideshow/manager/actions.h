@@ -69,3 +69,4 @@ public:
 Q_DECLARE_METATYPE(KIPIVideoSlideShowPlugin::ActionData)
 
 #endif /* ACTIONS_H */
+

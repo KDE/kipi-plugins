@@ -96,3 +96,4 @@ private:
 } // namespace KIPIPhotivoIntegrationPlugin
 
 #endif // XMPIDMAP_H
+

@@ -29,37 +29,33 @@
 
 // Qt includes
 
-#include <QLabel>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QGroupBox>
-#include <QRadioButton>
 #include <QButtonGroup>
-#include <QProgressBar>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QGridLayout>
+#include <QGroupBox>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QTabWidget>
-#include <QComboBox>
-#include <QScrollArea>
+#include <QLabel>
 #include <QMap>
-#include <QTabWidget>
+#include <QProgressBar>
+#include <QRadioButton>
 #include <QScrollArea>
-#include <QComboBox>
+#include <QSpinBox>
+#include <QTabWidget>
+#include <QVBoxLayout>
 
 // KDE includes
 
-#include <kdebug.h>
-#include <kvbox.h>
-#include <klocale.h>
-#include <kdialog.h>
 #include <kcombobox.h>
-#include <kpushbutton.h>
 #include <kconfiggroup.h>
-#include <kcombobox.h>
-#include <kmessagebox.h>
+#include <kdebug.h>
+#include <kdialog.h>
 #include <klineedit.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
 #include <ktextedit.h>
+#include <kvbox.h>
 
 // LibKIPI includes
 

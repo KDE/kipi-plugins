@@ -129,7 +129,7 @@ void KPBinaryIface::slotNavigateAndCheck()
 {
     KUrl start;
 
-    if (isValid() && m_pathDir != "")
+    if (isValid() && !m_pathDir.isEmpty())
     {
         start = KUrl(m_pathDir);
     }
@@ -206,7 +206,7 @@ void KPBinaryIface::setup()
     m_searchPaths << previous_dir;
     checkDir(previous_dir);
 
-    if (previous_dir != "" && !isValid())
+    if ((!previous_dir.isEmpty()) && !isValid())
     {
         m_searchPaths << "";
         checkDir("");

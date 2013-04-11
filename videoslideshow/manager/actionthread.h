@@ -107,3 +107,4 @@ private:
 } // namespace KIPIVideoSlideShowPlugin
 
 #endif // ACTIONTHREAD_H
+

@@ -79,3 +79,4 @@ private:
 }  // namespace KIPIDNGConverterPlugin
 
 #endif /* TASK_H */
+

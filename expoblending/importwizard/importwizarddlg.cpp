@@ -41,13 +41,12 @@
 // Locale incudes
 
 #include "aboutdata.h"
-#include "manager.h"
-#include "actionthread.h"
 #include "aboutdata.h"
 #include "intropage.h"
 #include "itemspage.h"
-#include "preprocessingpage.h"
 #include "lastpage.h"
+#include "manager.h"
+#include "preprocessingpage.h"
 
 namespace KIPIExpoBlendingPlugin
 {

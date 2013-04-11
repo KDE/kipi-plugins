@@ -243,3 +243,4 @@ void Task::run()
     emit signalProcessEnded(d->url, status);
 }
 } // namespace KIPITimeAdjustPlugin
+
