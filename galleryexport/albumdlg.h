@@ -39,7 +39,7 @@ class AlbumDlg : public QDialog , public Ui::GalleryAlbumWidget
 
 public:
 
-    AlbumDlg(QWidget* const parent = 0);
+    explicit AlbumDlg(QWidget* const parent = 0);
     ~AlbumDlg();
 };
 

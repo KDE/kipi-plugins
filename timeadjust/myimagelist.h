@@ -68,7 +68,7 @@ public:
 
 public:
 
-    MyImageList(QWidget* const parent);
+    explicit MyImageList(QWidget* const parent);
     ~MyImageList();
 
     void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);

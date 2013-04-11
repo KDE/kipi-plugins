@@ -40,7 +40,7 @@ class CalWidget : public QWidget
 
 public:
 
-    CalWidget(QWidget* const parent);
+    explicit CalWidget(QWidget* const parent);
     ~CalWidget();
 
     void setCurrent(int curr) {_current = curr;}

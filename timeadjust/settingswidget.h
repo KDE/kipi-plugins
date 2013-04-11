@@ -48,7 +48,7 @@ class SettingsWidget : public QScrollArea
 
 public:
 
-    SettingsWidget(QWidget* const parent=0);
+    explicit SettingsWidget(QWidget* const parent = 0);
     ~SettingsWidget();
 
     void readSettings(KConfigGroup& group);

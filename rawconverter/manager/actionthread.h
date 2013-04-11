@@ -56,7 +56,7 @@ class ActionThread : public RActionThreadBase
 
 public:
 
-    ActionThread(QObject* const parent);
+    explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
     void setSettings(const RawDecodingSettings& rawDecodingSettings,

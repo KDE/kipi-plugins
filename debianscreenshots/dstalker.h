@@ -36,7 +36,7 @@ class DsTalker : public QObject
 
 public:
 
-    DsTalker(QWidget* const parent);
+    explicit DsTalker(QWidget* const parent);
     ~DsTalker();
 
     bool addScreenshot(const QString& imgPath, const QString& packageName,

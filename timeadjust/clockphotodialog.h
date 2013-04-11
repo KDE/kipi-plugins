@@ -40,7 +40,7 @@ class ClockPhotoDialog : public KDialog
 
 public:
 
-    ClockPhotoDialog(QWidget* const parent);
+    explicit ClockPhotoDialog(QWidget* const parent);
     ~ClockPhotoDialog();
 
     /** Try to load the photo specified by the KUrl, and set the datetime widget

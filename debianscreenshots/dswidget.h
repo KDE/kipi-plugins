@@ -60,7 +60,7 @@ class DsWidget : public QWidget
 
 public:
 
-    DsWidget(QWidget* const parent);
+    explicit DsWidget(QWidget* const parent);
     ~DsWidget();
 
     QString getDestinationPath()                 const;

@@ -41,7 +41,7 @@ class LookPage : public KPWizardPage
 
 public:
 
-    LookPage(KAssistantDialog* const dlg);
+    explicit LookPage(KAssistantDialog* const dlg);
     ~LookPage();
 
     void setSettings(const SimpleViewerSettingsContainer* const settings);

@@ -43,7 +43,7 @@ class IntroPage : public KPWizardPage
 {
 public:
 
-    IntroPage(KAssistantDialog* const dlg);
+    explicit IntroPage(KAssistantDialog* const dlg);
     ~IntroPage();
 
     void settings(SimpleViewerSettingsContainer* const settings);

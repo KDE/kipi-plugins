@@ -52,7 +52,7 @@ class CalPainter : public QObject, public QPainter
 
 public:
 
-    CalPainter(QPaintDevice* const pd);
+    explicit CalPainter(QPaintDevice* const pd);
     virtual ~CalPainter();
 
     void setImage(const KUrl& imagePath, KPMetadata::ImageOrientation orientation);

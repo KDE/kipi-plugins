@@ -53,7 +53,7 @@ class SingleDialog : public KPToolDialog
 
 public:
 
-    SingleDialog(const QString& file);
+    explicit SingleDialog(const QString& file);
     ~SingleDialog();
 
     void setFile(const QString& file);

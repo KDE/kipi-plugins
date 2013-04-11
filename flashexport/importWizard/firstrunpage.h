@@ -53,7 +53,7 @@ class FirstRunPage : public KPWizardPage
 
 public:
 
-    FirstRunPage(KAssistantDialog* const dlg);
+    explicit FirstRunPage(KAssistantDialog* const dlg);
     ~FirstRunPage();
 
     /**

@@ -41,7 +41,7 @@ class GeneralPage: public KPWizardPage
 
 public:
 
-    GeneralPage(KAssistantDialog* const dlg);
+    explicit GeneralPage(KAssistantDialog* const dlg);
     ~GeneralPage();
 
     void setSettings(const SimpleViewerSettingsContainer* const settings);
