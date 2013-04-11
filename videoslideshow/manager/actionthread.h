@@ -49,7 +49,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread(QObject* const parent);
+    explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
     void doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO ratio, int frameWidth, int frameHeight,

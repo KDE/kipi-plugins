@@ -46,7 +46,7 @@ public:
 
 public:
 
-    UnprocessedSettingsBox(QWidget* const parent = 0);
+    explicit UnprocessedSettingsBox(QWidget* const parent = 0);
     ~UnprocessedSettingsBox();
 
     int handleMode() const;

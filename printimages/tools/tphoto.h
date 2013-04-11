@@ -138,7 +138,7 @@ class TPhoto
 
 public:
 
-    TPhoto(int thumbnailSize);
+    explicit TPhoto(int thumbnailSize);
     TPhoto(const TPhoto&);
     ~TPhoto();
 

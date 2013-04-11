@@ -43,7 +43,7 @@ class SlideShowSettingsWidget: public KTabWidget
 
 public:
 
-    SlideShowSettingsWidget(QWidget* const parent = 0, Qt::WFlags flags = 0);
+    explicit SlideShowSettingsWidget(QWidget* const parent = 0, Qt::WFlags flags = 0);
     ~SlideShowSettingsWidget();
 
     QString getTempDirPath() const;

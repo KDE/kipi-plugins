@@ -59,7 +59,7 @@ public:
 
 public:
 
-    PreviewWidget(QWidget* const parent = 0);
+    explicit PreviewWidget(QWidget* const parent = 0);
     ~PreviewWidget();
 
     QString& currentImage() const;

@@ -53,7 +53,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent = 0, int* count = 0);
+    explicit Task(QObject* const parent = 0, int* count = 0);
     ~Task();
 
 public:
@@ -88,7 +88,7 @@ class ImageResize : public RActionThreadBase
 
 public:
 
-    ImageResize(QObject* const parent);
+    explicit ImageResize(QObject* const parent);
     ~ImageResize();
 
     void resize(const EmailSettings& settings);

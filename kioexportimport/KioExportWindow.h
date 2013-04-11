@@ -61,7 +61,7 @@ public:
      *
      * @param parent parent QWidget
      */
-    KioExportWindow(QWidget* const parent);
+    explicit KioExportWindow(QWidget* const parent);
 
     /**
      * Destructor.

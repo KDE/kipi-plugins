@@ -56,7 +56,7 @@ class ExportDialog : public KPToolDialog
 
 public:
 
-    ExportDialog(const ImageCollection& images);
+    explicit ExportDialog(const ImageCollection& images);
     ~ExportDialog();
 
     void setImages(const ImageCollection& images);

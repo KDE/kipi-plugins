@@ -52,7 +52,7 @@ public:
     /**
         Create a page layout object which lays out in the given page rectangle
     */
-    AtkinsPageLayout(const QRectF& pageRect);
+    explicit AtkinsPageLayout(const QRectF& pageRect);
     ~AtkinsPageLayout();
 
     /**

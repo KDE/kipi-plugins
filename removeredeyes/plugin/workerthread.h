@@ -142,7 +142,7 @@ class Task : public Job
 
 public:
 
-    Task(const KUrl& url, QObject* const parent = 0, WorkerThread::Private* const d = 0);
+    explicit Task(const KUrl& url, QObject* const parent = 0, WorkerThread::Private* const d = 0);
 
     const KUrl& url;
 

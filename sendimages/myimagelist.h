@@ -39,7 +39,7 @@ class MyImageList : public KPImagesList
 
 public:
 
-    MyImageList(QWidget* const parent);
+    explicit MyImageList(QWidget* const parent);
     ~MyImageList();
 
     QList<EmailItem> imagesList() const;

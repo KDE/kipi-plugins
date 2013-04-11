@@ -39,7 +39,7 @@ class FlickrNewPhotoSetDialog : public QDialog, public Ui::FlickrAlbumDialog
 {
 public:
 
-    FlickrNewPhotoSetDialog(QWidget* const parent)
+    explicit FlickrNewPhotoSetDialog(QWidget* const parent)
         : QDialog(parent)
     {
         setupUi(this);

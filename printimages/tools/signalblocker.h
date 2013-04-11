@@ -37,7 +37,7 @@ class SignalBlocker
 {
 public:
 
-    SignalBlocker(QObject* const object)
+    explicit SignalBlocker(QObject* const object)
     {
         mObject     = object;
         mWasBlocked = object->blockSignals (true);

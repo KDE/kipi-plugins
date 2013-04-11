@@ -47,7 +47,7 @@ public:
 
 public:
 
-    StorageSettingsBox(QWidget* const parent = 0);
+    explicit StorageSettingsBox(QWidget* const parent = 0);
     ~StorageSettingsBox();
 
     int storageMode() const;

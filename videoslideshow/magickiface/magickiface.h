@@ -81,7 +81,7 @@ class MagickApi : public QObject
 
 public:
 
-    MagickApi(const QString& path);
+    explicit MagickApi(const QString& path);
     ~MagickApi();
 
     MagickImage* loadImage(const QString& file);

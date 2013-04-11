@@ -102,7 +102,7 @@ class ProcessImage : public QObject
 
 public:
 
-    ProcessImage(MagickApi* const api);
+    explicit ProcessImage(MagickApi* const api);
 
     /// corrects the aspect ratio of images - not complete
     MagickImage* aspectRatioCorrection(MagickImage& image, double aspectratio, ASPECTCORRECTION_TYPE aspectcorrection);
