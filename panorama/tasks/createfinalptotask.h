@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef CREATEPFINALTOTASK_H
-#define CREATEPFINALTOTASK_H
+#ifndef CREATEPFINALPTOTASK_H
+#define CREATEPFINALPTOTASK_H
 
 // KDE includes
 
@@ -60,4 +60,4 @@ protected:
 
 }  // namespace KIPIPanoramaPlugin
 
-#endif /* CREATEPFINALTOTASK_H */
+#endif /* CREATEPFINALPTOTASK_H */

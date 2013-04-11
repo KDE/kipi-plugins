@@ -42,39 +42,38 @@ extern "C"
 
 // Qt includes
 
-#include <QFileInfo>
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
-#include <QButtonGroup>
-#include <QLabel>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QGroupBox>
-#include <QRadioButton>
-#include <QProgressBar>
+#include <QFileInfo>
 #include <QGridLayout>
+#include <QGroupBox>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QProgressBar>
+#include <QRadioButton>
+#include <QSpinBox>
 #include <QVBoxLayout>
 
 // KDE includes
 
-#include <kdeversion.h>
-#include <kde_file.h>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kdialog.h>
-#include <klineedit.h>
 #include <kcombobox.h>
-#include <kpushbutton.h>
-#include <kmenu.h>
+#include <kconfig.h>
+#include <kdebug.h>
+#include <kde_file.h>
+#include <kdeversion.h>
+#include <kdialog.h>
 #include <khelpmenu.h>
+#include <kio/renamedialog.h>
+#include <klineedit.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kprogressdialog.h>
+#include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <kio/renamedialog.h>
 
 // LibKDcraw includes
 
