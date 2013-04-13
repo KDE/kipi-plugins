@@ -23,6 +23,7 @@ Name[is]=Prenta myndir
 Name[it]=Stampa immagini
 Name[ja]=画像の印刷
 Name[km]=បោះពុម្ព​រូបភាព
+Name[lt]=Spausdinti paveikslėlius
 Name[lv]=Drukāt attēlus
 Name[mai]=छवि छापू
 Name[mr]=प्रतिमा छापा

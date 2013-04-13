@@ -28,6 +28,7 @@ Name[it]=Sfondo
 Name[ja]=WallPaper
 Name[km]=ផ្ទាំង​រូបភាព
 Name[ko]=WallPaper
+Name[lt]=Darbalaukio fonas
 Name[lv]=Ekrāntapete
 Name[mr]=वॉलपेपर
 Name[nb]=Bakgrunnsbilde

@@ -73,6 +73,7 @@ Comment[is]=Verkfæri til að skanna myndir með flatskanna
 Comment[it]=Uno strumento per acquisire immagini usando uno scanner piatto
 Comment[ja]=フラットスキャナを使って画像を取り込むツール
 Comment[km]=ឧបករណ៍​សម្រាប់​ទទួល​យក​រូបភាព​ ដោយ​ប្រើ​ម៉ាស៊ីន​ស្កេន​​រាប​ស្មើ
+Comment[lt]=Įrankis gauti paveikslėlius naudojant plokščią skenerį
 Comment[lv]=Rīks attēlu iegūšanai no skenera
 Comment[nb]=Et verktøy for å hente bilder ved hjelp av skanner
 Comment[nds]=En Warktüüch för't Rankriegen vun Biller över en Inleser

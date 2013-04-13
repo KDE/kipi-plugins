@@ -50,6 +50,7 @@ Comment[gl]=Unha ferramenta para mesturar as imaxes tomadas en "bracketing"
 Comment[is]=Verkfæri til að setja saman mislýstar myndraðir (bracketed)
 Comment[it]=Uno strumento per fondere immagini sovrapposte
 Comment[km]=ឧបករណ៍​ត្រូវ​លៃតម្រូវ​កាលបរិច្ឆេទ និង​ពេលវេលា
+Comment[lt]=Įrankis sulieti nuotraukų pluoštą
 Comment[lv]=Rīks atsevišķu attēlu sapludināšanai
 Comment[nb]=Et verktøy for å flette sammen bilder med eksponeringsområde
 Comment[nl]=Een hulpmiddel voor het mengen van afbeeldingen tussen haakjes

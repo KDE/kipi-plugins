@@ -27,6 +27,7 @@ Name[is]=Dagatal
 Name[it]=Calendario
 Name[ja]=カレンダー
 Name[km]=ប្រតិទិន
+Name[lt]=Kalendorius
 Name[lv]=Kalendārs
 Name[mai]=कैलेंडर
 Name[mr]=दिनदर्शिका

@@ -23,6 +23,7 @@ Name[is]=Facebook inn/útflutningur
 Name[it]=Importazione ed esportazione a Facebook
 Name[ja]=Facebook Import/Export
 Name[km]=នាំចេញ/នាំចូល Facebook
+Name[lt]=Facebook Importas/Eksportas
 Name[lv]=Importēt no/Eksportēt uz Facebook
 Name[nb]=Facebook-inport/eksport
 Name[nds]=Facebook im- un exporteren
