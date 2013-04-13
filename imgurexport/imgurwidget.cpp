@@ -117,7 +117,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 
 //    QLabel* userNameDisplayLbl    = new QLabel(d->loggedUser, accountBox);
 
-    d->changeUserBtn = new KPushButton(KGuiItem(i18n("Request authorization "), "system-switch-user",
+    d->changeUserBtn = new KPushButton(KGuiItem(i18n("Request authorization"), "system-switch-user",
                                        i18n("Set permissions for the current application to upload images to Imgur.")),
                                        accountBox);
 
