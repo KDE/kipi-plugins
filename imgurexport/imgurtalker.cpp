@@ -404,7 +404,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     else
     {
         ImgurError error;
-        error.message = "Parse error";
+        error.message = i18n("Parse error");
 
         emit signalError (m_currentUrl, error);
         kDebug() << "Parse Error:" << p.errorString();
