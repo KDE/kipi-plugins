@@ -78,7 +78,7 @@ Q_SIGNALS:
 
 private:
     bool            parseLoginResponse(const QByteArray& data);
-    const QString   getAuthError(KQOAuthManager::KQOAuthError error);
+    static const char* getAuthError(KQOAuthManager::KQOAuthError error);
 
 private Q_SLOTS:
 

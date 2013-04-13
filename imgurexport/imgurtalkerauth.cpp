@@ -85,32 +85,32 @@ ImgurTalkerAuth::~ImgurTalkerAuth()
     delete d;
 }
 
-const QString ImgurTalkerAuth::getAuthError(KQOAuthManager::KQOAuthError error)
+const char* ImgurTalkerAuth::getAuthError(KQOAuthManager::KQOAuthError error)
 {
     /**/
     switch (error)
     {
         case KQOAuthManager::NetworkError:               // Network error: timeout, cannot connect.
-            return QString ("Network error: timeout, cannot connect.");
+            return I18N_NOOP("Network error: timeout, cannot connect.");
             break;
         case KQOAuthManager::RequestEndpointError:       // Request endpoint is not valid.
-            return QString ("Request endpoint is not valid.");
+            return I18N_NOOP("Request endpoint is not valid.");
             break;
         case KQOAuthManager::RequestValidationError:     // Request is not valid: some parameter missing?
-            return QString ("Request is not valid: some parameter missing?");
+            return I18N_NOOP("Request is not valid: some parameter missing?");
             break;
         case KQOAuthManager::RequestUnauthorized:        // Authorization error: trying to access a resource without tokens.
-            return QString ("Authorization error: trying to access a resource without tokens.");
+            return I18N_NOOP("Authorization error: trying to access a resource without tokens.");
             break;
         case KQOAuthManager::RequestError:               // The given request to KQOAuthManager is invalid: NULL?,
-            return QString ("The given request is invalid.");
+            return I18N_NOOP("The given request is invalid.");
             break;
         case KQOAuthManager::ManagerError:                // Manager error, cannot use for sending requests.
-            return QString ("Manager error, cannot use for sending requests.");
+            return I18N_NOOP("Manager error, cannot use for sending requests.");
             break;
         case KQOAuthManager::NoError:                    // No error
         default:
-            return QString ("No error");
+            return I18N_NOOP("No error");
             break;
     }
     /**/
@@ -231,7 +231,7 @@ void ImgurTalkerAuth::slotAuthorizationReceived(const QString& token, const QStr
 
     if( d->OAuthService->lastError() != KQOAuthManager::NoError)
     {
-        emit signalAuthenticated(false, getAuthError(d->OAuthService->lastError()));
+        emit signalAuthenticated(false, i18n(getAuthError(d->OAuthService->lastError())));
         emit signalBusy(false);
 
         d->OAuthRequest->clearRequest();
@@ -246,7 +246,7 @@ void ImgurTalkerAuth::slotAccessTokenReceived(const QString& token, const QStrin
     d->oauthToken       = token.toAscii();
     d->oauthTokenSecret = tokenSecret.toAscii();
 
-    emit signalAuthenticated(true, "OK");
+    emit signalAuthenticated(true, i18n("OK"));
     emit signalBusy(false);
 
     kDebug() << "Access tokens now stored";
