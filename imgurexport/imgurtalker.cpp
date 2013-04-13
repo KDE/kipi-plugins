@@ -217,8 +217,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     if (data.isEmpty())
         return false;
 
-    QJson::Parser* const p = new QJson::Parser();
-    QVariant             r = p->parse(data, &ok);
+    QJson::Parser p;
+    QVariant      r = p.parse(data, &ok);
 
 //    kDebug() << data;
     if (ok)
@@ -277,8 +277,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                 }
             }
 
-            emit signalError(m_currentUrl, error); // p->errorString()
-            kDebug() << "Imgur Error:" << p->errorString();
+            emit signalError(m_currentUrl, error); // p.errorString()
+            kDebug() << "Imgur Error:" << p.errorString();
         }
 
         if (responseType == "upload" )
@@ -407,7 +407,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         error.message = "Parse error";
 
         emit signalError (m_currentUrl, error);
-        kDebug() << "Parse Error:" << p->errorString();
+        kDebug() << "Parse Error:" << p.errorString();
     }
 
     return ok;
