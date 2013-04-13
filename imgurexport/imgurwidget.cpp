@@ -272,7 +272,7 @@ void ImgurWidget::slotAuthenticated(bool authenticated, const QString& message)
 //    kDebug () << "Disable the button.";
     if (authenticated)
     {
-        d->changeUserBtn->setText(tr("Authenticated!"));
+        d->changeUserBtn->setText(i18n("Authenticated"));
     }
 
     d->changeUserBtn->setEnabled(!authenticated);
