@@ -234,15 +234,20 @@ void ImgurWindow::slotAuthenticated(bool yes, const QString& message)
 
     if (!message.isEmpty())
     {
-        err = "\n" + message;
+        err = i18nc("%1 is the error string",
+                    "Failed to authenticate to Imgur.\n%1\nDo you want to continue?",
+                    message);
+    }
+    else
+    {
+        err = i18n("Failed to authenticate to Imgur.\nDo you want to continue?");
     }
 
     if (yes)
     {
         enableButton(User1, yes);
     }
-    else if (KMessageBox::warningContinueCancel(this, i18n("Failed to authenticate to Imgur.%1\n"
-                                                           "Do you want to continue?", err))
+    else if (KMessageBox::warningContinueCancel(this, err)
                == KMessageBox::Continue)
     {
         enableButton(User1, true);
