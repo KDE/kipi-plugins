@@ -14,4 +14,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 305407 - FlickrExport only updates list of sets on restart.
 006 ==> 316597 - Buggy track in kml file [patch].
 007 ==> 272521 - Picasaweb, alphabetical order for album list [patch].
-008 ==> 
+008 ==> 165852 - Picasa video uploader.
+009 ==> 
