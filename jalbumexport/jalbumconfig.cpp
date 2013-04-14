@@ -97,12 +97,12 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
 
     d->albumsInput->comboBox()->setEditable(true);
 
-    label->setText(i18n("jAlbum albums location: "));
+    label->setText(i18n("jAlbum albums location:"));
     d->albumsInput->setWhatsThis(i18n(
                     "Sets the path where the jAlbum albums are stored."));
     d->albumsInput->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    d->albumsSearchButton = new KPushButton(i18n("Select albums location..."), this);
+    d->albumsSearchButton = new KPushButton(i18n("Select Albums Location"), this);
     d->albumsSearchButton->setIcon(KIcon("folder-pictures"));
     d->albumsSearchButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -121,12 +121,12 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
 
     d->jarInput->comboBox()->setEditable(true);
 
-    label2->setText(i18n("jAlbum jar file: "));
+    label2->setText(i18n("jAlbum jar file:"));
     d->jarInput->setWhatsThis(i18n(
                     "Sets the path of the jAlbum jar file."));
     d->jarInput->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    d->jarSearchButton = new KPushButton(i18n("Select jAlbum jar file location..."), this);
+    d->jarSearchButton = new KPushButton(i18n("Select jAlbum jar File Location"), this);
     d->jarSearchButton->setIcon(KIcon("folder-pictures"));
     d->jarSearchButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -172,7 +172,7 @@ void JAlbumEdit::slotShowAlbumDialogClicked(bool checked)
 
     d->albumsDialog = new KFileDialog(KUrl(), "*", this);
     d->albumsDialog->setMode(KFile::Directory);
-    d->albumsDialog->setWindowTitle(i18n("Select albums location..."));
+    d->albumsDialog->setWindowTitle(i18n("Select Albums Location"));
     d->albumsDialog->setOperationMode(KFileDialog::Opening);
     d->albumsDialog->setUrl(d->albumsPath);
 
@@ -194,7 +194,7 @@ void JAlbumEdit::slotShowJarDialogClicked(bool checked)
 
     d->jarDialog = new KFileDialog(KUrl(), "*", this);
     d->jarDialog->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-    d->jarDialog->setWindowTitle(i18n("Select jar file location..."));
+    d->jarDialog->setWindowTitle(i18n("Select jar File Location"));
     d->jarDialog->setOperationMode(KFileDialog::Other);
     d->jarDialog->setUrl(d->jarPath.directory());
     d->jarDialog->setSelection(d->jarPath.fileName());
@@ -271,7 +271,7 @@ void JAlbumEdit::slotOk()
     {
         if (!S_ISDIR(stbuf.st_mode))
         {
-            KMessageBox::information(this, "Chosen path is not a directory");
+            KMessageBox::information(this, i18n("Chosen path is not a directory"));
             return;
         }
     }
