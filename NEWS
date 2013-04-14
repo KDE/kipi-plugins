@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 316597 - Buggy track in kml file [patch].
 007 ==> 272521 - Picasaweb, alphabetical order for album list [patch].
 008 ==> 165852 - Picasa video uploader.
-009 ==> 
+009 ==> 316719 - Add kipi-plugin to export to jAlbum
+010 ==> 

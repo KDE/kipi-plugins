@@ -432,6 +432,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(imageshackexport)
     ADD_SUBDIRECTORY(photolayoutseditor)
     ADD_SUBDIRECTORY(dlnaexport)
+    ADD_SUBDIRECTORY(jalbumexport)
 
     # Plugin not yet ready for production
     #ADD_SUBDIRECTORY(photivointegration)
