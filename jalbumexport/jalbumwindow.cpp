@@ -95,14 +95,14 @@ JAlbumWindow::Private::Private(JAlbumWindow* const parent)
 //    QFrame* const optionFrame = new QFrame;
     QVBoxLayout* const vlay   = new QVBoxLayout();
 
-    QLabel* const albumLabel   = new QLabel(i18n("Album name:"));
+    QLabel* const albumLabel   = new QLabel(i18n("jAlbum Album name to export to:"));
     vlay->addWidget(albumLabel);
 
     albumName = new KLineEdit();
     vlay->addWidget(albumName);
 
     newAlbumBtn = new QPushButton;
-    newAlbumBtn->setText(i18n("&New Album"));
+    newAlbumBtn->setText(i18n("&Export"));
     newAlbumBtn->setIcon(KIcon("folder-new"));
     newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     newAlbumBtn->setEnabled(true);
