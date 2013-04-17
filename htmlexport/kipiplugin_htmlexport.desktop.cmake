@@ -25,6 +25,7 @@ Name[is]=HTML Safn
 Name[it]=Galleria HTML
 Name[ja]=HTML ギャラリー
 Name[km]=វិចិត្រសាល​ HTML
+Name[lt]=HTML galerija
 Name[lv]=HTML galerija
 Name[nb]=HTML-galleri
 Name[nds]=HTML-Sammeln

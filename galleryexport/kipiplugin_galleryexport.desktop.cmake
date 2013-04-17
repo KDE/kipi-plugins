@@ -25,6 +25,7 @@ Name[is]=Samstilling við fjarlæg myndasöfn
 Name[it]=Esportazione a gallerie remote
 Name[ja]=Remote Gallery Export
 Name[km]=នាំចេញ​វិចិត្រសាល​ពី​ចម្ងាយ
+Name[lt]=Nuotolinės galerijos eksportas
 Name[lv]=Eksportēt uz attālinātu galeriju
 Name[nb]=Fjerngallerieksport
 Name[nds]=Feern Sammeln exporteren

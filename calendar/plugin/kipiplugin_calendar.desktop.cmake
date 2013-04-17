@@ -75,6 +75,7 @@ Comment[is]=Verkfæri til að búa til dagatöl
 Comment[it]=Uno strumento per creare calendari
 Comment[ja]=カレンダーを作成するツール
 Comment[km]=ឧបករណ៍​ត្រូវ​បង្កើត​ប្រតិទិន
+Comment[lt]=Įrankis kurti kalendoriams
 Comment[lv]=Rīks kalendāru izveidošanai
 Comment[nb]=Et verktøy for å lage kalendere
 Comment[nds]=En Warktüüch, mit dat sik Kalenners opstellen laat
