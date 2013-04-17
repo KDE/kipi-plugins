@@ -34,6 +34,7 @@
 #include <QXmlStreamReader>
 #include <QFileInfo>
 #include <QCryptographicHash>
+#include <QUuid>
 
 // KDE includes
 
@@ -108,13 +109,12 @@ void PiwigoTalker::login(const KUrl& url, const QString& name, const QString& pa
         m_url.addPath("/ws.php");
     }
 
-    QString auth = name + QString(":") + passwd;
-    s_authToken  = "Basic " + auth.toUtf8().toBase64();
+    s_authToken  = QUuid::createUuid().toByteArray().toBase64();
 
     QStringList qsl;
-    qsl.append("password=" + passwd);
+    qsl.append("password=" + passwd.toUtf8().toPercentEncoding());
     qsl.append("method=pwg.session.login");
-    qsl.append("username=" + name);
+    qsl.append("username=" + name.toUtf8().toPercentEncoding());
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
@@ -754,7 +754,7 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     QStringList qsl;
     qsl.append("method=pwg.images.setInfo");
     qsl.append("image_id=" + QString::number(m_photoId));
-    qsl.append("categories=" + qsl_cat.join(";"));
+    qsl.append("categories=" + qsl_cat.join(";").toUtf8().toPercentEncoding());
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
@@ -905,9 +905,6 @@ void PiwigoTalker::addPhotoSummary()
     m_state = GE_OLD_ADDPHOTOSUMMARY;
     m_talker_buffer.resize(0);
 
-    QFile imagefile(m_thumbpath);
-    imagefile.open(QIODevice::ReadOnly);
-
     QStringList qsl;
     qsl.append("method=pwg.images.add");
     qsl.append("original_sum=" + m_md5sum.toHex());
@@ -921,8 +918,6 @@ void PiwigoTalker::addPhotoSummary()
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
-
-    imagefile.close();
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -1192,9 +1187,6 @@ void PiwigoTalker::addOldPhotoSummary()
     m_state = GE_OLD_ADDPHOTOSUMMARY;
     m_talker_buffer.resize(0);
 
-    QFile imagefile(m_thumbpath);
-    imagefile.open(QIODevice::ReadOnly);
-
     QStringList qsl;
     qsl.append("method=pwg.images.add");
     qsl.append("original_sum=" + m_md5sum.toHex());
@@ -1216,8 +1208,6 @@ void PiwigoTalker::addOldPhotoSummary()
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
-
-    imagefile.close();
 
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
