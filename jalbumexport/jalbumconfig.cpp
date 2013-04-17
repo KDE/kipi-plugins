@@ -59,7 +59,12 @@ public:
 
     Private()
     {
-        jalbum     = 0;
+        jalbum             = 0;
+        albumsInput        = 0;
+        jarInput           = 0;
+        albumsDialog       = 0;
+        jarDialog          = 0;
+        albumsSearchButton = 0;
     }
 
     JAlbum*             jalbum;
