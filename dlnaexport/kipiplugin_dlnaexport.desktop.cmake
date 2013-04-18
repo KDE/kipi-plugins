@@ -2,7 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=DLNAExport
 Name=DLNAExport
-Name[ca]=DLNAExport
+Name[ca]=Exportador via DLNA
 Name[ca@valencia]=DLNAExport
 Name[cs]=DLNAExport
 Name[da]=DLNAExport

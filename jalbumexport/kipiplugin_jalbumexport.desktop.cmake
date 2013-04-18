@@ -2,6 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=jAlbumExport
 Name=jAlbumExport
+Name[ca]=Exportador a jAlbum
 Name[cs]=jAlbumExport
 Name[de]=jAlbum-Export
 Name[nl]=jAlbum-export
@@ -12,6 +13,7 @@ Name[sv]=Export till jAlbum
 Name[uk]=Експорт до jAlbum
 Name[x-test]=xxjAlbumExportxx
 Comment=A tool to pass selected photos to jAlbum
+Comment[ca]=Una eina per passar les fotografies seleccionades a jAlbum
 Comment[nl]=Een hulpmiddel om geselecteerde foto's aan jAlbum te overhandigen
 Comment[pt]=Uma ferramenta para passar as fotografias seleccionadas para o jAlbum
 Comment[pt_BR]=Ferramenta de envio das fotos selecionadas para o jAlbum
