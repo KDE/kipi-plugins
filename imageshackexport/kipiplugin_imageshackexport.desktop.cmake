@@ -9,6 +9,7 @@ Name[de]=Imageshack-Export
 Name[el]=Εξαγωγή Imageshack
 Name[es]=Exportar a Imageshack
 Name[et]=Imageshacki eksport
+Name[fi]=Imageshack-vienti
 Name[fr]=Module externe pour l'export vers Imageshack
 Name[ga]=Easpórtáil Imageshack
 Name[gl]=Exportación a Imageshack

@@ -9,6 +9,7 @@ Name[de]=MediaWiki-Export
 Name[el]=Εξαγωγή στο MediaWiki
 Name[es]=Exportar a MediaWiki
 Name[et]=MediaWiki eksport
+Name[fi]=MediaWiki-vienti
 Name[fr]=Export MediaWiki
 Name[ga]=Easpórtáil MediaWiki
 Name[gl]=Exportación a MediaWiki
