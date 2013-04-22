@@ -60,10 +60,10 @@ public:
 
     QString authorName() const;
     QString authorUrl() const;
-    
+
     QString previewName() const;
     QString previewUrl() const;
-        QBool allowNonsquareThumbnails() const;
+    QBool allowNonsquareThumbnails() const;
 
     /**
      * Theme directory on hard disk
