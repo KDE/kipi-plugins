@@ -258,9 +258,9 @@ QString Theme::previewUrl() const
         return d->mDesktopFile->group(PREVIEW_GROUP).readEntry("Url");
 }
 
-QBool Theme::allowNonsquareThumbnails() const
+bool Theme::allowNonsquareThumbnails() const
 {
-    return QBool(d->mDesktopFile->group(OPTIONS_GROUP).readEntry("Allow non-square thumbnails", false));
+    return d->mDesktopFile->group(OPTIONS_GROUP).readEntry("Allow non-square thumbnails", false);
 }
 
 Theme::ParameterList Theme::parameterList() const

@@ -63,7 +63,7 @@ public:
 
     QString previewName() const;
     QString previewUrl() const;
-    QBool allowNonsquareThumbnails() const;
+    bool allowNonsquareThumbnails() const;
 
     /**
      * Theme directory on hard disk
