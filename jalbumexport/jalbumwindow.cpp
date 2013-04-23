@@ -86,8 +86,8 @@ public:
 
 JAlbumWindow::Private::Private(JAlbumWindow* const parent)
 {
-    jalbum     = 0;
-    widget      = new QWidget(parent);
+    jalbum = 0;
+    widget = new QWidget(parent);
 
     parent->setMainWidget(widget);
     parent->setModal(false);
@@ -112,7 +112,6 @@ JAlbumWindow::Private::Private(JAlbumWindow* const parent)
     vlay->addWidget(newAlbumBtn);
 //    optionFrame->setLayout(vlay);
     widget->setLayout(vlay);
-
 }
 
 // --------------------------------------------------------------------------------------------------------------
@@ -221,9 +220,9 @@ void JAlbumWindow::slotNewAlbum()
         return;
     }
 
-    destFile = newAlbumPath + QDir::separator() + "albumfiles.txt";
+    destFile   = newAlbumPath + QDir::separator() + "albumfiles.txt";
+    FILE* file = fopen(destFile.toLocal8Bit().data(), "w");
 
-    FILE* file=fopen(destFile.toLocal8Bit().data(), "w");
     if (!file)
     {
         KMessageBox::information(this,
@@ -240,8 +239,8 @@ void JAlbumWindow::slotNewAlbum()
     fclose(file);
 
     destFile = newAlbumPath + QDir::separator() + "jalbum-settings.jap";
+    file     = fopen(destFile.toLocal8Bit().data(), "w");
 
-    file=fopen(destFile.toLocal8Bit().data(), "w");
     if (!file)
     {
         KMessageBox::information(this,
@@ -268,7 +267,7 @@ void JAlbumWindow::slotSettings()
 
     if( dlg->exec() == QDialog::Accepted )
     {
-// should do something to validate something here       slotDoLogin();
+        // should do something to validate something here       slotDoLogin();
     }
 
     delete dlg;

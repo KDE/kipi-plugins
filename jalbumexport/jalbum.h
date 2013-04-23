@@ -27,7 +27,9 @@
 
 #include <QString>
 
-#include <KUrl>
+// KDE includes
+
+#include <kurl.h>
 
 namespace KIPIJAlbumExportPlugin
 {
@@ -40,18 +42,21 @@ public:
     JAlbum();
     ~JAlbum();
 
-    KUrl         albumPath()      const;
-    KUrl         jarPath()        const;
+    KUrl albumPath() const;
+    KUrl jarPath()   const;
 
     void setPath(const QString& albumPath);
     void setJar(const QString& jar);
 
     void save();
+
     static bool createDir(const QString& dirName);
 
 private:
 
     void load();
+
+private:
 
     class Private;
     Private* const d;

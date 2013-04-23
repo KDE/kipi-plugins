@@ -46,7 +46,7 @@ public:
 
     Private()
     {
-    };
+    }
 
     KUrl             mAlbumPath;
     KUrl             mJarPath;
@@ -93,7 +93,7 @@ void JAlbum::load()
 {
     // FIXME: sure we need this?? (perhaps YES..)
     static bool bln_loaded = false;
-    QString dfltJarPath = JALBUM_JAR_PATH;
+    QString dfltJarPath    = JALBUM_JAR_PATH;
     QString dfltAlbumPath, tmpString;
 
     if (bln_loaded)
@@ -150,7 +150,8 @@ void JAlbum::save()
 bool JAlbum::createDir(const QString& dirName)
 {
     QStringList parts = dirName.split(QDir::separator(), QString::SkipEmptyParts);
-    QDir dir = QDir::root();
+    QDir dir          = QDir::root();
+
     Q_FOREACH(const QString& part, parts)
     {
         if (!dir.exists(part))
@@ -161,8 +162,10 @@ bool JAlbum::createDir(const QString& dirName)
                 return false;
             }
         }
+
         dir.cd(part);
     }
+
     return true;
 }
 

@@ -51,8 +51,8 @@ private Q_SLOTS:
 
     void slotShowAlbumDialogClicked(bool);
     void slotShowJarDialogClicked(bool);
-    void slotAlbumsPathChanged(QString);
-    void slotJarPathChanged(QString);
+    void slotAlbumsPathChanged(const QString&);
+    void slotJarPathChanged(const QString&);
     void slotOk();
 
 Q_SIGNALS:
@@ -63,6 +63,8 @@ private:
 
     void updateAlbumsPath();
     void updateJarPath();
+
+private:
 
     class Private;
     Private* const d;

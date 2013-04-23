@@ -65,7 +65,7 @@ public:
         jalbum       = 0;
     }
 
-    JAlbum* jalbum;
+    JAlbum*  jalbum;
     KAction* actionExport;
 };
 

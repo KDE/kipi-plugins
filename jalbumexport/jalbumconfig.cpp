@@ -85,8 +85,8 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
 
     setCaption(title);
 
-    QFrame *page = new QFrame(this);
-    QGridLayout* centerLayout = new QGridLayout();
+    QFrame* const page              = new QFrame(this);
+    QGridLayout* const centerLayout = new QGridLayout();
     page->setMinimumSize(500, 100);
     setMainWidget(page);
 
@@ -94,8 +94,8 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
 
     KHBox* const hbox   = new KHBox();
     QLabel* const label = new QLabel(hbox);
-    d->albumsInput         = new KUrlComboRequester(hbox);
-    d->albumsDialog        = 0;
+    d->albumsInput      = new KUrlComboRequester(hbox);
+    d->albumsDialog     = 0;
 
     if(d->albumsInput->button())
         d->albumsInput->button()->hide();
@@ -219,6 +219,7 @@ void JAlbumEdit::slotShowJarDialogClicked(bool checked)
 void JAlbumEdit::updateAlbumsPath()
 {
     QString urlstring;
+
     if (d->albumsPath.isValid())
     {
         urlstring = d->albumsPath.prettyUrl();
@@ -229,6 +230,7 @@ void JAlbumEdit::updateAlbumsPath()
 void JAlbumEdit::updateJarPath()
 {
     QString urlstring;
+
     if (d->jarPath.isValid())
     {
         urlstring = d->jarPath.prettyUrl();
@@ -236,7 +238,7 @@ void JAlbumEdit::updateJarPath()
     }
 }
 
-void JAlbumEdit::slotAlbumsPathChanged(QString path)
+void JAlbumEdit::slotAlbumsPathChanged(const QString& path)
 {
     d->albumsPath.setUrl("file:///" + QDir::toNativeSeparators(path));
 #ifndef WIN32
@@ -244,7 +246,7 @@ void JAlbumEdit::slotAlbumsPathChanged(QString path)
 #endif
 }
 
-void JAlbumEdit::slotJarPathChanged(QString path)
+void JAlbumEdit::slotJarPathChanged(const QString& path)
 {
     d->jarPath.setUrl("file:///" + QDir::toNativeSeparators(path));
 #ifndef WIN32
