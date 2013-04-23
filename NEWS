@@ -4,6 +4,7 @@ Kipi-plugins 3.2.0-beta2 - Release date: 2013/04/24
 NEW FEATURES:
 
 FacebookExport : add new option to create private album.
+JAlbumExport   : New too to export items to JAblum (http://www.jalbum.net)
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
