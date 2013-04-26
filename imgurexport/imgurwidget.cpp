@@ -90,7 +90,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 
 /*
     d->textLbl = new QLabel(settingsBox);
-    d->textLbl->setText(i18n("You can retreive the\nimage URLs from the Xmp tags:\n"
+    d->textLbl->setText(i18n("You can retrieve the\nimage URLs from the Xmp tags:\n"
                              "\"Imgur URL\" and \"Imgur Delete URL\". \n"));
     d->textLbl->setFocusPolicy(Qt::NoFocus);
     d->textLbl->setWordWrap(true);

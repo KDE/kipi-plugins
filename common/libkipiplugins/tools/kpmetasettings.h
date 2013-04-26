@@ -63,7 +63,7 @@ public:
      */
     bool                            useXMPSidecar4Reading;
 
-    /** Metadata writting mode between file and XMP sidecar. See libkexiv2 library for details.
+    /** Metadata writing mode between file and XMP sidecar. See libkexiv2 library for details.
      */
     KPMetadata::MetadataWritingMode metadataWritingMode;
 };

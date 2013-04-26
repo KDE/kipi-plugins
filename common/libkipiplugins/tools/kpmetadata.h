@@ -73,7 +73,7 @@ namespace KIPIPlugins
 class KPMetaSettings;
 
 /** This class must be used in plugins instead KExiv2 metadata interface to handle file lock mechanism
- *  with KIPI host application to prevent concurent operations on file during load and save operations.
+ *  with KIPI host application to prevent concurrent operations on file during load and save operations.
  */
 class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 {
@@ -135,7 +135,7 @@ public:
 
     /** Move XMP sidecar file of source file src to destination dest.
      *  If src do not has an XMP sidecar, nothing is done and true is returned.
-     *  If src has an XMP sidecar file, if moving is done succesfully, true is returned, else false.
+     *  If src has an XMP sidecar file, if moving is done successfully, true is returned, else false.
      */
     static bool moveSidecar(const KUrl& src, const KUrl& dest);
 

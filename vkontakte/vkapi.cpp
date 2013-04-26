@@ -51,7 +51,7 @@ void VkAPI::setAppId(const QString &appId)
 
 void VkAPI::setInitialAccessToken(const QString& accessToken)
 {
-    // Does nothing if m_accessToken is already set, because this funtion
+    // Does nothing if m_accessToken is already set, because this function
     // is only for parameter initialization from a configuration file.
     if (m_accessToken.isEmpty())
         m_accessToken = accessToken;
