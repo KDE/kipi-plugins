@@ -121,7 +121,7 @@ INCLUDE(MacroLibrary)
 # Put local modules first
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
-# Depencies detection required by all plugins
+# Dependencies detection required by all plugins
 FIND_PACKAGE(Kipi 2.0.0 REQUIRED)
 FIND_PACKAGE(Kexiv2     REQUIRED)
 FIND_PACKAGE(JPEG       REQUIRED)
@@ -147,7 +147,7 @@ ELSE (KDCRAW_VERSION)
 
 ENDIF (KDCRAW_VERSION)
 
-# Optional depencies detection required by some plugins
+# Optional dependencies detection required by some plugins
 MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
 MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
@@ -437,7 +437,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     # Plugin not yet ready for production
     #ADD_SUBDIRECTORY(photivointegration)
 
-    # Plugins which are optional depencies.
+    # Plugins which are optional dependencies.
 
     IF(KDEPIMLIBS_FOUND)
        ADD_SUBDIRECTORY(calendar)
