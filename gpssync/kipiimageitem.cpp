@@ -837,11 +837,18 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
     if (success)
     {
-        success = meta->save(m_url.path());
+        #if KIPI_VERSION >= 0x020100
+        EditHintScope editHintScope(m_interface, m_url.toLocalFile(), HintMetadataOnlyChange);
+        #endif
+
+        success = meta->save(m_url.toLocalFile());
 
         if (!success)
         {
             returnString = i18n("Unable to save changes to file");
+            #if KIPI_VERSION >= 0x020100
+            editHintScope.changeAborted();
+            #endif
         }
         else
         {
