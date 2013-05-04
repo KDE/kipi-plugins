@@ -73,7 +73,7 @@ public:
     KPPreviewManager* imagePreview;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
+ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const KUrl& defaultUrl)
     : KDialog(parent), d(new Private)
 {
     // This dialog should be modal with three buttons: Ok, Cancel, and load
@@ -135,9 +135,17 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     loadSettings();
     show();
 
-    // Upon initialization, present the user with a photo loading dialog. This
-    // is done before the main dialog is drawn.
-    slotLoadPhoto();
+    if (defaultUrl.isValid())
+    {
+        setImage(defaultUrl);
+    }
+    else
+    {
+        // No default url was given.
+        // Upon initialization, present the user with a photo loading dialog. This
+        // is done before the main dialog is drawn.
+        slotLoadPhoto();
+    }
 }
 
 ClockPhotoDialog::~ClockPhotoDialog()

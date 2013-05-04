@@ -56,6 +56,7 @@
 
 #include "clockphotodialog.h"
 #include "kpmetadata.h"
+#include "myimagelist.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -98,6 +99,7 @@ public:
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
         settingsExpander       = 0;
+        imageList              = 0;
     }
 
     QWidget*      useSettingsBox;
@@ -139,6 +141,7 @@ public:
     QToolButton*  useCustomDateTodayBtn;
 
     RExpanderBox* settingsExpander;
+    MyImageList*  imageList;
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
@@ -499,11 +502,18 @@ QDateTime SettingsWidget::calculateAdjustedDate(const QDateTime& originalTime) c
 
 void SettingsWidget::slotDetAdjustmentByClockPhoto()
 {
+    // Determine the currently selected item and preselect it as clock photo
+    KUrl defaultUrl;
+    if (d->imageList)
+    {
+        defaultUrl = d->imageList->getCurrentUrl();
+    }
+
     /* When user press the clock photo button, a dialog is displayed and set the
      * results to the proper widgets.
      */
-    QPointer<ClockPhotoDialog> dlg = new ClockPhotoDialog(this);
-    int result                     = dlg->exec();
+    QPointer<ClockPhotoDialog> dlg = new ClockPhotoDialog(this, defaultUrl);
+    const int result = dlg->exec();
 
     if (result == QDialog::Accepted)
     {
@@ -528,6 +538,11 @@ void SettingsWidget::slotDetAdjustmentByClockPhoto()
     }
 
     delete dlg;
+}
+
+void KIPITimeAdjustPlugin::SettingsWidget::setImageList(MyImageList*const myImageList)
+{
+    d->imageList = myImageList;
 }
 
 }  // namespace KIPITimeAdjustPlugin

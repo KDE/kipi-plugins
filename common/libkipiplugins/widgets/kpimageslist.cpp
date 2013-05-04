@@ -1270,4 +1270,26 @@ void KPImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
     }
 }
 
+KIPIPlugins::KPImagesListViewItem* KIPIPlugins::KPImagesListView::getCurrentItem() const
+{
+    QTreeWidgetItem* const currentTreeItem = currentItem();
+    if (!currentTreeItem)
+    {
+        return 0;
+    }
+
+    return dynamic_cast<KPImagesListViewItem*>(currentTreeItem);
+}
+
+KUrl KIPIPlugins::KPImagesList::getCurrentUrl() const
+{
+    KPImagesListViewItem* const currentItem = d->listView->getCurrentItem();
+    if (!currentItem)
+    {
+        return KUrl();
+    }
+
+    return currentItem->url();
+}
+
 }  // namespace KIPIPlugins

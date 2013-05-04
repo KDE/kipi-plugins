@@ -146,6 +146,7 @@ public:
 
     KPImagesListViewItem* findItem(const KUrl& url);
     QModelIndex indexFromItem(KPImagesListViewItem* item, int column = 0) const;
+    KPImagesListViewItem* getCurrentItem() const;
 
     Interface* iface() const;
 
@@ -249,6 +250,7 @@ public:
 
     virtual KUrl::List  imageUrls(bool onlyUnprocessed = false) const;
     virtual void        removeItemByUrl(const KUrl& url);
+    KUrl                getCurrentUrl() const;
 
 Q_SIGNALS:
 

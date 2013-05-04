@@ -42,6 +42,8 @@ class KConfigGroup;
 namespace KIPITimeAdjustPlugin
 {
 
+class MyImageList;
+
 class SettingsWidget : public QScrollArea
 {
     Q_OBJECT
@@ -59,6 +61,7 @@ public:
     void disableApplTimestamp();
     QDateTime customDate() const;
     QDateTime calculateAdjustedDate(const QDateTime& time) const;
+    void setImageList(MyImageList* const myImageList);
 
 Q_SIGNALS:
 

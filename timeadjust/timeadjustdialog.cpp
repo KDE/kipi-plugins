@@ -67,6 +67,7 @@
 #include "clockphotodialog.h"
 #include "actionthread.h"
 #include "settingswidget.h"
+#include "timeadjustdialog.h"
 
 namespace KIPITimeAdjustPlugin
 {
@@ -109,6 +110,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     QGridLayout* mainLayout = new QGridLayout(mainWidget());
     d->listView             = new MyImageList(mainWidget());
     d->settingsView         = new SettingsWidget(mainWidget());
+    d->settingsView->setImageList(d->listView);
     d->progressBar          = new KPProgressWidget(mainWidget());
     d->progressBar->reset();
     d->progressBar->hide();
@@ -156,7 +158,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     d->thread = new ActionThread(this);
 
-   connect(d->thread, SIGNAL(finished()),
+    connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
     connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
