@@ -63,20 +63,23 @@ class GPSListViewContextMenu::Private
 public:
 
     Private()
+      : enabled(true),
+        actionCopy(0),
+        actionPaste(0),
+        actionBookmark(0),
+        actionRemoveCoordinates(0),
+        actionRemoveAltitude(0),
+        actionRemoveUncertainty(0),
+        actionRemoveSpeed(0),
+        actionLookupMissingAltitudes(0),
+        bookmarkOwner(0),
+        imagesList(0),
+        altitudeLookup(),
+        altitudeUndoCommand(0),
+        altitudeRequestedCount(0),
+        altitudeReceivedCount(0)
     {
-        enabled                      = true;
-        actionCopy                   = 0;
-        actionPaste                  = 0;
-        actionBookmark               = 0;
-        actionRemoveCoordinates      = 0;
-        actionRemoveAltitude         = 0;
-        actionRemoveUncertainty      = 0;
-        actionRemoveSpeed            = 0;
-        actionLookupMissingAltitudes = 0;
-        bookmarkOwner                = 0;
-        imagesList                   = 0;
-        altitudeUndoCommand          = 0;
-        altitudeReceivedCount        = 0;
+
     }
 
     bool                              enabled;
