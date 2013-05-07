@@ -913,7 +913,7 @@ void PiwigoTalker::addPhotoSummary()
     if (!m_comment.isEmpty()) qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
     qsl.append("categories=" + QString::number(m_albumId));
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
-    qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
+    qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd hh:mm:ss").toUtf8().toPercentEncoding());
     //qsl.append("tag_ids="); // TODO Implement this function
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
@@ -1202,7 +1202,7 @@ void PiwigoTalker::addOldPhotoSummary()
         qsl.append("high_sum=" + m_md5sum.toHex());
     }
 
-    qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
+    qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd hh:mm:ss").toUtf8().toPercentEncoding());
     //qsl.append("tag_ids="); // TODO Implement this function
 
     QString dataParameters = qsl.join("&");
