@@ -23,6 +23,7 @@ else (QTKOAUTH_INCLUDE_DIR AND QTKOAUTH_LIBRARIES)
 
   find_path(QTKOAUTH_INCLUDE_DIR kqoauthmanager.h
     HINTS ${PC_QTKOAUTH_INCLUDEDIR} ${PC_QTKOAUTH_INCLUDE_DIRS}
+    PATH_SUFFIXES QtKOAuth
   )
 
   include(FindPackageHandleStandardArgs)
