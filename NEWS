@@ -1,21 +1,9 @@
-Kipi-plugins 3.2.0 - Release date: 2013/05/12
+Kipi-plugins 3.3.0-beta1 - Release date: 2013/05/19
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-FacebookExport : add new option to create private album.
-JAlbumExport   : New too to export items to JAblum (http://www.jalbum.net)
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 316620 - HtmlExport doesn't build.
-002 ==> 304771 - Can't create private albums w/ digiKam [patch].
-003 ==> 255722 - Flickr exports digikam tags even if option is not enabled.
-004 ==> 313981 - After uploading two images, the first appears twice in flickr photo stream.
-005 ==> 305407 - FlickrExport only updates list of sets on restart.
-006 ==> 316597 - Buggy track in kml file [patch].
-007 ==> 272521 - Picasaweb, alphabetical order for album list [patch].
-008 ==> 165852 - Picasa video uploader.
-009 ==> 316719 - Add kipi-plugin to export to jAlbum
-010 ==> 129902 - HTML gallery : resize pictures in constant area instead of size max [patch].
-011 ==> 
+001 ==> 
