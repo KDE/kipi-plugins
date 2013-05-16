@@ -18,4 +18,3 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> 165852 - Picasa video uploader.
 009 ==> 316719 - Add kipi-plugin to export to jAlbum
 010 ==> 129902 - HTML gallery : resize pictures in constant area instead of size max [patch].
-011 ==> 
