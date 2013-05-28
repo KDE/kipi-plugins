@@ -1,14 +1,18 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../plugin
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../libcvblobs
-                    ${OpenCV_INCLUDE_DIR}
-                   )
+IF (NOT WIN32)
 
-SET(testipp_SRCS testForIPP.cpp)
+    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../plugin
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../libcvblobs
+                        ${OpenCV_INCLUDE_DIR}
+                    )
 
-KDE4_ADD_EXECUTABLE(testipp NOGUI
-                    ${testipp_SRCS}
-                   )
+    SET(testipp_SRCS testForIPP.cpp)
 
-TARGET_LINK_LIBRARIES(testipp
-                      ${OpenCV_LIBRARIES}
-                     )
+    KDE4_ADD_EXECUTABLE(testipp NOGUI
+                        ${testipp_SRCS}
+                    )
+
+    TARGET_LINK_LIBRARIES(testipp
+                        ${OpenCV_LIBRARIES}
+                        )
+
+ENDIF (NOT WIN32)
