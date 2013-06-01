@@ -526,7 +526,11 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             }
         }
 
+#ifndef Q_OS_WIN
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
+#else
+        if (::MoveFileEx(tmpFile.utf16(), destFile.utf16(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH) == 0)
+#endif
         {
             item->setStatus(QString("Failed to save image."));
             d->listView->processed(url, false);
