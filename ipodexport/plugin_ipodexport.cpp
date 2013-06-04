@@ -61,7 +61,9 @@ Plugin_iPodExport::Plugin_iPodExport(QObject* const parent, const QVariantList&)
 
     kDebug(AREA_CODE_LOADING) << "Plugin_iPodExport plugin loaded" ;
 
-    g_type_init();
+#if !defined(GLIB_VERSION_2_36) 
+    g_type_init(); 
+#endif 
 
     setUiBaseName("kipiplugin_ipodexportui.rc");
     setupXML();
