@@ -92,7 +92,7 @@ void Plugin_FlashExport::setupActions()
 
     m_action = new KAction(this);
     m_action->setText(i18n("Export to F&lash..."));
-    m_action->setIcon(KIcon("flash"));
+    m_action->setIcon(KIcon("kipi-flash"));
     m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));
 
     connect(m_action, SIGNAL(triggered(bool)),

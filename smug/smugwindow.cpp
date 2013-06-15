@@ -84,7 +84,7 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
     m_widget      = new SmugWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("smugmug"));
+    setWindowIcon(KIcon("kipi-smugmug"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

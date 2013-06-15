@@ -164,7 +164,7 @@ void FacebookJob::addPhoto(int code, const QString& message)
 
 KIcon FacebookJob::icon() const
 {
-    return KIcon("facebook");
+    return KIcon("kipi-facebook");
 }
 
 KUrl::List FacebookJob::urls() const

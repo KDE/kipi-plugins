@@ -102,7 +102,7 @@ void Plugin_Panorama::setupActions()
 
     m_action = new KAction(this);
     m_action->setText(i18n("Stitch images into a panorama..."));
-    m_action->setIcon(KIcon("panorama"));
+    m_action->setIcon(KIcon("kipi-panorama"));
     m_action->setEnabled(false);
 
     connect(m_action, SIGNAL(triggered(bool)),

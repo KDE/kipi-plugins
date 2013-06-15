@@ -196,7 +196,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     // ------------------------------------------------------------------------
 
     setPageWidget(vbox);
-    setLeftBottomPix(DesktopIcon("flash", 128));
+    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
 }
 
 GeneralPage::~GeneralPage()

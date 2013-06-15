@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     KPMetadata::initializeExiv2();
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("panorama"));
+    aboutData->setProgramLogo(KIcon("kipi-panorama"));
 
     KUrl::List urlList;
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();

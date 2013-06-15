@@ -80,7 +80,7 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
     m_widget      = new SwWidget(this, iface());
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("shwup"));
+    setWindowIcon(KIcon("kipi-shwup"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

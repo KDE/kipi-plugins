@@ -85,15 +85,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     if (serviceName == QString("23"))
     {
-        setWindowIcon(KIcon("hq"));
+        setWindowIcon(KIcon("kipi-hq"));
     }
     else if (serviceName == QString("Zooomr"))
     {
-        setWindowIcon(KIcon("zooomr"));
+        setWindowIcon(KIcon("kipi-zooomr"));
     }
     else
     {
-        setWindowIcon(KIcon("flickr"));
+        setWindowIcon(KIcon("kipi-flickr"));
     }
 
     m_tmp                       = tmpFolder;

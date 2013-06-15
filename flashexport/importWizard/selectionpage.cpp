@@ -92,7 +92,7 @@ void SelectionPage::setPageContent(int choice)
     }
 
     setPageWidget(d->vbox);
-    setLeftBottomPix(DesktopIcon("flash", 128));
+    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
 }
 
 SelectionPage::~SelectionPage()

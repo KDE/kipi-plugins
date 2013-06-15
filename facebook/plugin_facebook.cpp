@@ -99,7 +99,7 @@ void Plugin_Facebook::setupActions()
 
     m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &Facebook..."));
-    m_actionExport->setIcon(KIcon("facebook"));
+    m_actionExport->setIcon(KIcon("kipi-facebook"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F));
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
@@ -109,7 +109,7 @@ void Plugin_Facebook::setupActions()
 
     m_actionImport = new KAction(this);
     m_actionImport->setText(i18n("Import from &Facebook..."));
-    m_actionImport->setIcon(KIcon("facebook"));
+    m_actionImport->setIcon(KIcon("kipi-facebook"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));
 
     connect(m_actionImport, SIGNAL(triggered(bool)),

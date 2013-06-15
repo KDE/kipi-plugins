@@ -88,7 +88,7 @@ PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget*
     m_widget      = new PicasawebWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("picasa"));
+    setWindowIcon(KIcon("kipi-picasa"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

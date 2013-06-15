@@ -101,7 +101,7 @@ void Plugin_FlickrExport::setupActions()
 
     m_actionFlickr = new KAction(this);
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
-    m_actionFlickr->setIcon(KIcon("flickr"));
+    m_actionFlickr->setIcon(KIcon("kipi-flickr"));
     m_actionFlickr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_R));
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
@@ -111,7 +111,7 @@ void Plugin_FlickrExport::setupActions()
 
     m_action23 = new KAction(this);
     m_action23->setText(i18n("Export to &23..."));
-    m_action23->setIcon(KIcon("hq"));
+    m_action23->setIcon(KIcon("kipi-hq"));
     m_action23->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_2));
 
     connect(m_action23, SIGNAL(triggered(bool)),
@@ -121,7 +121,7 @@ void Plugin_FlickrExport::setupActions()
 
     m_actionZooomr = new KAction(this);
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
-    m_actionZooomr->setIcon(KIcon("zooomr"));
+    m_actionZooomr->setIcon(KIcon("kipi-zooomr"));
     m_actionZooomr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
 
     connect(m_actionZooomr, SIGNAL(triggered(bool)),

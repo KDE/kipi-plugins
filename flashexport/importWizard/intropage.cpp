@@ -107,7 +107,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
 
 
     setPageWidget(vbox);
-    setLeftBottomPix(DesktopIcon("flash", 128));
+    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
 }
 
 IntroPage::~IntroPage()

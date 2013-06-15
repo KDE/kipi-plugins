@@ -490,7 +490,7 @@ void LookPage::setPageContent(int plugType)
     // ------------------------------------------------------------------------
 
     setPageWidget(d->vbox);
-    setLeftBottomPix(DesktopIcon("flash", 128));
+    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
 }
 
 void LookPage::setSettings(const SimpleViewerSettingsContainer* const settings)

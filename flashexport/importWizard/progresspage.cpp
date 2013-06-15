@@ -53,7 +53,7 @@ ProgressPage::ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg
     progresswdg->show();
 
     setPageWidget(progresswdg);
-    setLeftBottomPix(DesktopIcon("flash", 128));
+    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
 }
 
 ProgressPage::~ProgressPage()

@@ -128,7 +128,7 @@ void Plugin_MetadataEdit::setupActions()
 
     d->actionMetadataEdit = actionCollection()->addAction("metadataedit");
     d->actionMetadataEdit->setText(i18n("&Metadata"));
-    d->actionMetadataEdit->setIcon(KIcon("metadataedit"));
+    d->actionMetadataEdit->setIcon(KIcon("kipi-metadataedit"));
     d->actionMetadataEdit->setEnabled(false);
 
     KMenu* metadataEditMenu = new KMenu(d->parentWidget);

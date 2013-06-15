@@ -77,7 +77,7 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
     m_widget      = new FbWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("facebook"));
+    setWindowIcon(KIcon("kipi-facebook"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);

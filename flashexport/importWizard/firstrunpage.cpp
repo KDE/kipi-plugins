@@ -100,7 +100,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
             this, SLOT(slotUrlSelected(KUrl)));
 
     setPageWidget(vbox);
-    setLeftBottomPix(DesktopIcon("flash", 128));
+    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
 }
 
 FirstRunPage::~FirstRunPage()
