@@ -75,7 +75,7 @@ DsWindow::DsWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_widget = new DsWidget(this);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("debianscreenshots"));
+    setWindowIcon(KIcon("kipi-debianscreenshots"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

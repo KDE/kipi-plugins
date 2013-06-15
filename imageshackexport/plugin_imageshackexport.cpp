@@ -107,7 +107,7 @@ void Plugin_ImageshackExport::setupActions()
 
     d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export to &Imageshack..."));
-    d->actionExport->setIcon(KIcon("imageshack"));
+    d->actionExport->setIcon(KIcon("kipi-imageshack"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));
     d->actionExport->setEnabled(false);
 

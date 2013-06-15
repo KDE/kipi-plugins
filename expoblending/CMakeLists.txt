@@ -78,7 +78,7 @@ INSTALL(FILES   plugin/kipiplugin_expoblendingui.rc                             
 
 SET(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
 
-KDE4_ADD_APP_ICON(expoblending_SRCS "./icons/*expoblending.png")
+KDE4_ADD_APP_ICON(expoblending_SRCS "./icons/*kipi-expoblending.png")
 
 KDE4_ADD_EXECUTABLE(expoblending ${expoblending_SRCS})
 

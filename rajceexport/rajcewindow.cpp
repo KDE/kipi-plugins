@@ -47,7 +47,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
     m_widget->readSettings();
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("rajce"));
+    setWindowIcon(KIcon("kipi-rajce"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

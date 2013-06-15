@@ -103,7 +103,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->pass      = QString();
 
     setMainWidget(d->widget);
-    setWindowIcon(KIcon("wikimedia"));
+    setWindowIcon(KIcon("kipi-wikimedia"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

@@ -72,7 +72,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 #endif //OAUTH_ENABLED
 
     setMainWidget(d->widget);
-    setWindowIcon(KIcon("imgur"));
+    setWindowIcon(KIcon("kipi-imgur"));
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
 

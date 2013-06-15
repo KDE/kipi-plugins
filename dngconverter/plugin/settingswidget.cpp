@@ -113,7 +113,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     KUrlLabel* const dngLogoLabel        = new KUrlLabel(this);
     dngLogoLabel->setText(QString());
     dngLogoLabel->setUrl("http://en.wikipedia.org/wiki/Digital_Negative_(file_format)");
-    dngLogoLabel->setPixmap(KIconLoader::global()->loadIcon("dngconverter", KIconLoader::NoGroup, 96));
+    dngLogoLabel->setPixmap(KIconLoader::global()->loadIcon("kipi-dngconverter", KIconLoader::NoGroup, 96));
     dngLogoLabel->setAlignment(Qt::AlignRight);
 
     // ------------------------------------------------------------------------

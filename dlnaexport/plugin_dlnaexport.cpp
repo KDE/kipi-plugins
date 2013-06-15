@@ -102,7 +102,7 @@ void Plugin_DLNAExport::setupActions()
 
     d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export via &DLNA"));
-    d->actionExport->setIcon(KIcon("dlna"));
+    d->actionExport->setIcon(KIcon("kipi-dlna"));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));

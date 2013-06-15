@@ -83,7 +83,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
     QGridLayout* const settingsBoxLayout = new QGridLayout(settingsBox);
 
     d->iconLbl  = new QLabel(this);
-    d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("dlna", KIconLoader::NoGroup, 64));
+    d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("kipi-dlna", KIconLoader::NoGroup, 64));
 
     d->titleLbl = new QLabel(this);
     d->titleLbl->setOpenExternalLinks(true);

@@ -116,7 +116,7 @@ void Plugin_AdvancedSlideshow::setupActions()
 
     m_actionSlideShow = new KAction(this);
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
-    m_actionSlideShow->setIcon(KIcon("slideshow"));
+    m_actionSlideShow->setIcon(KIcon("kipi-slideshow"));
     m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
     m_actionSlideShow->setEnabled(false);
 

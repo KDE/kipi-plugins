@@ -117,7 +117,7 @@ void Plugin_PhotivoIntegration::setupActions()
      */
     m_action = new KAction(this);
     m_action->setText(i18n("Photivo Integration"));
-    m_action->setIcon(KIcon("photivo"));
+    m_action->setIcon(KIcon("kipi-photivo"));
     m_action->setEnabled(false);
 
     /** Connect action signal to dedicated slot.

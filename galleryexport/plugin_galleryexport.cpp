@@ -109,7 +109,7 @@ void Plugin_GalleryExport::setupActions()
 
     d->action = new KAction(this);
     d->action->setText(i18n("Export to &Gallery..."));
-    d->action->setIcon(KIcon("gallery"));
+    d->action->setIcon(KIcon("kipi-gallery"));
     d->action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));
 
     connect(d->action, SIGNAL(triggered(bool)),

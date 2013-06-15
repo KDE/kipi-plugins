@@ -102,7 +102,7 @@ void Plugin_ImgurExport::setupActions()
 
     d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("Export to &Imgur..."));
-    d->actionExport->setIcon(KIcon("imgur"));
+    d->actionExport->setIcon(KIcon("kipi-imgur"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),

@@ -103,7 +103,7 @@ public:
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     : KPToolDialog(0), d(new Private)
 {
-    setWindowIcon(KIcon("dngconverter"));
+    setWindowIcon(KIcon("kipi-dngconverter"));
     setButtons(Help | Default | Apply | Close);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
@@ -272,7 +272,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->setValue(0);
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("DNG Converter"), true, true);
-        d->progressBar->progressThumbnailChanged(KIcon("dngconverter").pixmap(22));
+        d->progressBar->progressThumbnailChanged(KIcon("kipi-dngconverter").pixmap(22));
 
         processAll();
     }
