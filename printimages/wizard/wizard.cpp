@@ -1961,7 +1961,6 @@ void Wizard::BtnPrintOrderUp_clicked()
 void Wizard::ListPhotoSizes_selected()
 {
     TPhotoSize* s = NULL;
-    int scaleValue;
     QSizeF size, sizeManaged;
 
     // TODO FREE STYLE
@@ -1988,8 +1987,8 @@ void Wizard::ListPhotoSizes_selected()
         custDlg.saveSettings();
 
         // get parameters from dialog
-        size       = d->m_pageSize;
-        scaleValue = 10; // 0.1 mm
+        size           = d->m_pageSize;
+        int scaleValue = 10; // 0.1 mm
 
         // convert to mm
         if (custDlg.m_photoUnits->currentText() == i18n("inches"))

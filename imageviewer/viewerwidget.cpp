@@ -624,8 +624,6 @@ void ViewerWidget::mousePressEvent(QMouseEvent* e)
 
 void ViewerWidget::mouseMoveEvent(QMouseEvent* e)
 {
-    int mdelta;
-
     if ( e->buttons() == Qt::LeftButton )
     {
         //panning
@@ -637,6 +635,8 @@ void ViewerWidget::mouseMoveEvent(QMouseEvent* e)
     }
     else if ( e->buttons() == Qt::RightButton )
     {
+        int mdelta = 0;
+
         //zooming
         //
         //if mouse pointer reached upper or lower boder, special treatment in order

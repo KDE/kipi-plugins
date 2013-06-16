@@ -410,7 +410,6 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
         }
         else
         {
-            int i        = 0;
             QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + ext;
             QFileInfo a(dest);
 
@@ -423,6 +422,7 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
 
             else
             {
+                int i = 0;
                 while(fileNotFound)
                 {
                     a = QFileInfo(dest);
@@ -444,7 +444,9 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
             MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
 
             if (item)
+            {
                 item->setDestFileName(dest);
+            }
         }
     }
 
