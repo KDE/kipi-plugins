@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef YANDEXFOTKI_TALKER_H
-#define YANDEXFOTKI_TALKER_H
+#ifndef YF_TALKER_H
+#define YF_TALKER_H
 
 // Qt includes
 
@@ -295,4 +295,4 @@ protected:
 
 } // namespace KIPIYandexFotkiPlugin
 
-#endif /* YANDEXFOTKI_TALKER_H */
+#endif /* YF_TALKER_H */

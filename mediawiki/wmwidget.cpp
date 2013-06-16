@@ -73,8 +73,6 @@
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
-#include "kpimageinfo.h"
-#include "wmwidget.h"
 
 using namespace KIPI;
 using namespace KDcrawIface;

@@ -20,13 +20,11 @@
  *
  * ============================================================ */
 
+#include "xmpmm.h"
+
 // KDE includes
 
 #include <kdebug.h>
-
-// local includes
-
-#include "xmpmm.h"
 
 namespace KIPIPhotivoIntegrationPlugin
 {

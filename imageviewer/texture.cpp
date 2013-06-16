@@ -21,6 +21,8 @@
  *
  * ============================================================ */
 
+#include "texture.h"
+
 // Qt includes
 
 #include <QMatrix>
@@ -37,7 +39,6 @@
 
 // Local includes
 
-#include "texture.h"
 #include "kpimageinfo.h"
 #include "timer.h"
 

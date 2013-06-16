@@ -25,8 +25,8 @@
  *
  * ============================================================ */
 
-#ifndef YANDEXFOTKI_WINDOW_H
-#define YANDEXFOTKI_WINDOW_H
+#ifndef YF_WINDOW_H
+#define YF_WINDOW_H
 
 // Qt includes
 
@@ -186,4 +186,4 @@ protected:
 
 } // namespace KIPIYandexFotkiPlugin
 
-#endif /* YANDEXFOTKI_WINDOW_H */
+#endif /* YF_WINDOW_H */

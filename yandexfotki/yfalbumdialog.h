@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef YANDEXFOTKI_ALBUMDIALOG_H
-#define YANDEXFOTKI_ALBUMDIALOG_H
+#ifndef YF_ALBUMDIALOG_H
+#define YF_ALBUMDIALOG_H
 
 // KDE includes
 
@@ -65,4 +65,4 @@ protected:
 
 } // namespace KIPIYandexFotkiPlugin
 
-#endif // YANDEXFOTKI_ALBUMDIALOG_H
+#endif // YF_ALBUMDIALOG_H

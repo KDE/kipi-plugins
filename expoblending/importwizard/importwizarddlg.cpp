@@ -41,7 +41,6 @@
 // Locale incudes
 
 #include "aboutdata.h"
-#include "aboutdata.h"
 #include "intropage.h"
 #include "itemspage.h"
 #include "lastpage.h"

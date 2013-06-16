@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef YANDEXFOTKI_PHOTO_H
-#define YANDEXFOTKI_PHOTO_H
+#ifndef YF_PHOTO_H
+#define YF_PHOTO_H
 
 // Qt includes
 
@@ -241,4 +241,4 @@ QDebug operator<<(QDebug d, const YandexFotkiPhoto& p);
 
 } // namespace KIPIYandexFotkiPlugin
 
-#endif // YANDEXFOTKI_PHOTO_H
+#endif // YF_PHOTO_H

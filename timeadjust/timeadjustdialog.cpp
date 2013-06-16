@@ -29,45 +29,44 @@
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QComboBox>
+#include <QCursor>
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
+#include <QMap>
+#include <QPointer>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSpinBox>
+#include <QTimeEdit>
 #include <QToolButton>
 #include <QVBoxLayout>
-#include <QTimeEdit>
-#include <QComboBox>
-#include <QPointer>
-#include <QMap>
-#include <QCursor>
 
 // KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
+#include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
 
 // Local includes
 
-#include "kpaboutdata.h"
-#include "kpmetadata.h"
-#include "kpimageinfo.h"
-#include "kpversion.h"
-#include "kpprogresswidget.h"
-#include "myimagelist.h"
-#include "clockphotodialog.h"
 #include "actionthread.h"
+#include "clockphotodialog.h"
+#include "kpaboutdata.h"
+#include "kpimageinfo.h"
+#include "kpmetadata.h"
+#include "kpprogresswidget.h"
+#include "kpversion.h"
+#include "myimagelist.h"
 #include "settingswidget.h"
-#include "timeadjustdialog.h"
 
 namespace KIPITimeAdjustPlugin
 {

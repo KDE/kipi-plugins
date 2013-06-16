@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef YANDEXFOTKI_ALBUM_H
-#define YANDEXFOTKI_ALBUM_H
+#ifndef YF_ALBUM_H
+#define YF_ALBUM_H
 
 // Qt includes
 
@@ -150,4 +150,4 @@ QDebug operator<<(QDebug d, const YandexFotkiAlbum& p);
 
 } // namespace KIPIYandexFotkiPlugin
 
-#endif // YANDEXFOTKI_ALBUM_H
+#endif // YF_ALBUM_H

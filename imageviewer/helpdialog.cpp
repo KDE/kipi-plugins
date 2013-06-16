@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "helpdialog.h"
+
 // Qt includes
 
 #include <QTextBrowser>
@@ -30,7 +32,6 @@
 
 // Local includes
 
-#include "helpdialog.h"
 #include "kpaboutdata.h"
 
 namespace KIPIViewerPlugin

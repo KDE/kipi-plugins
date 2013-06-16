@@ -20,13 +20,14 @@
  *
  * ============================================================ */
 
+#include "xmpinfo.h"
+
 // KDE includes
 
 #include <kdebug.h>
 
 // KIPI includes
 
-#include "xmpinfo.h"
 #include "xmpmm.h"
 
 namespace KIPIPhotivoIntegrationPlugin
