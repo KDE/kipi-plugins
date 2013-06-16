@@ -42,7 +42,7 @@ bool CPFindBinary::parseHeader(const QString& output)
         {
             m_version = headerRegExp.cap(2);
 
-            if (headerRegExp.cap(1) != QString())
+            if (!headerRegExp.cap(1).isEmpty())
             {
                 m_developmentVersion = true;
             }

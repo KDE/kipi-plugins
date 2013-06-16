@@ -310,7 +310,7 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
           * So for:
           * - a DSC: the right time is the DateTimeDigitized which is also DateTimeOriginal
           *          if the picture has been modified the (standard)DateTime should change.
-          * - a scanned picture, the right time is the DateTimeOriginal which should also be the the DateTime
+          * - a scanned picture, the right time is the DateTimeOriginal which should also be the DateTime
           *          the (standard)DateTime should be the same except if the picture is modified
           * - a panorama created from several pictures, the right time is the DateTimeOriginal (average of DateTimeOriginal actually)
           *          The (standard)DateTime is the creation date of the panorama.
