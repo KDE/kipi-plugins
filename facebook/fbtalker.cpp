@@ -1022,8 +1022,6 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
 
 void FbTalker::parseExchangeSession(const QByteArray& data)
 {
-    int errCode = -1;
-    QString errMsg;
     bool ok;
     QJson::Parser parser;
 
@@ -1055,6 +1053,9 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
     }
     else
     {
+        /// @todo Error code is not filled with a useful value anywhere
+        int errCode = -1;
+        QString errMsg;
         authenticationDone(errCode, errorToText(errCode, errMsg));
     }
 }

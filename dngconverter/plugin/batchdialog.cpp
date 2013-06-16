@@ -319,8 +319,7 @@ void BatchDialog::slotIdentify()
 
         else
         {
-            int i             = 0;
-            QString dest      = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
+            QString dest = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".dng");
             QFileInfo a(dest);
             bool fileNotFound = (a.exists());
 
@@ -331,6 +330,7 @@ void BatchDialog::slotIdentify()
 
             else
             {
+                int i = 0;
                 while(fileNotFound)
                 {
                     a = QFileInfo(dest);
@@ -352,7 +352,9 @@ void BatchDialog::slotIdentify()
             MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
 
             if (item)
+            {
                 item->setDestFileName(dest);
+            }
         }
     }
 
