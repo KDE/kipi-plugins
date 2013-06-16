@@ -776,8 +776,6 @@ int SlideShow::effectMeltdown( bool aInit )
 
 int SlideShow::effectSweep( bool aInit )
 {
-    int w, h, x, y, i;
-
     if ( aInit )
     {
         // subtype: 0=sweep right to left, 1=sweep left to right
@@ -800,6 +798,9 @@ int SlideShow::effectSweep( bool aInit )
             return -1;
         }
 
+        int w;
+        int x;
+        int i;
         for ( w = 2, i = 4, x = m_x; i > 0; i--, w <<= 1, x -= m_dx )
         {
             m_px  = x;
@@ -825,6 +826,9 @@ int SlideShow::effectSweep( bool aInit )
             return -1;
         }
 
+        int h;
+        int y;
+        int i;
         for ( h = 2, i = 4, y = m_y; i > 0; i--, h <<= 1, y -= m_dy )
         {
             m_px  = 0;
