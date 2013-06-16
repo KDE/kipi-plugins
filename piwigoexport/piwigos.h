@@ -24,8 +24,8 @@
  *
  * ============================================================ */
 
-#ifndef GALLERIES_H
-#define GALLERIES_H
+#ifndef PIWIGOS_H
+#define PIWIGOS_H
 
 // Qt includes
 

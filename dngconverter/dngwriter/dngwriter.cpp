@@ -42,6 +42,8 @@
     MOVIE2DNG:           https://elphel.svn.sourceforge.net/svnroot/elphel/tools/Movie2DNG
 */
 
+#include "dngwriter_p.h"
+
 // C ansi includes
 
 extern "C"
@@ -70,7 +72,6 @@ extern "C"
 
 // Local includes
 
-#include "dngwriter_p.h"
 #include "dngwriterhost.h"
 #include "kpmetadata.h"
 

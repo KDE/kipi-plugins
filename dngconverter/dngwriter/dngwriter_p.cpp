@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "dngwriter_p.h"
+
 // C++ includes
 
 #include <cstdio>
@@ -35,7 +37,6 @@
 // Local includes
 
 #include "dngwriter.h"
-#include "dngwriter_p.h"
 
 namespace DNGIface
 {

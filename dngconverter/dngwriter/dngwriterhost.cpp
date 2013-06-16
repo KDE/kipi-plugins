@@ -20,13 +20,11 @@
  *
  * ============================================================ */
 
+#include "dngwriterhost.h"
+
 // KDE includes
 
 #include <kdebug.h>
-
-// Local includes
-
-#include "dngwriterhost.h"
 
 namespace DNGIface
 {

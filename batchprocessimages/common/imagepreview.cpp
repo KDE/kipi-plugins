@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "imagepreview.h"
+
 // Qt includes
 
 #include <QImage>
@@ -30,7 +32,6 @@
 
 // Local includes
 
-#include "imagepreview.h"
 #include "kpaboutdata.h"
 #include "kppreviewmanager.h"
 

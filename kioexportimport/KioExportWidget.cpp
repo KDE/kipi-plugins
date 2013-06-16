@@ -41,7 +41,6 @@
 // Local includes
 
 #include "kpimageslist.h"
-#include "KioExportWidget.h"
 
 namespace KIPIKioExportPlugin
 {

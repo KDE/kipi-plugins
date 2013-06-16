@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef MAGICK_API_H
-#define MAGICK_API_H
+#ifndef MAGICKIFACE_H
+#define MAGICKIFACE_H
 
 // Qt includes
 
@@ -123,4 +123,4 @@ private:
 
 } // namespace KIPIPlugins
 
-#endif // MAGICK_API_H
+#endif // MAGICKIFACE_H

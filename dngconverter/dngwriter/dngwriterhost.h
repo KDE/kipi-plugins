@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef DNGWRITTERHOST_H
-#define DNGWRITTERHOST_H
+#ifndef DNGWRITERHOST_H
+#define DNGWRITERHOST_H
 
 // Local includes
 
@@ -49,4 +49,4 @@ private:
 
 }  // namespace DNGIface
 
-#endif /* DNGWRITTERHOST_H */
+#endif /* DNGWRITERHOST_H */

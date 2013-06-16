@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef DNGWRITTER_H
-#define DNGWRITTER_H
+#ifndef DNGWRITER_H
+#define DNGWRITER_H
 
 // Qt includes
 
@@ -97,4 +97,4 @@ private:
 
 }  // namespace DNGIface
 
-#endif /* DNGWRITTER_H */
+#endif /* DNGWRITER_H */

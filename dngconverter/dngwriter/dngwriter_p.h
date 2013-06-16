@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KDCRAWPRIVATE_H
-#define KDCRAWPRIVATE_H
+#ifndef DNGWRITER_P_H
+#define DNGWRITER_P_H
 
 // Qt includes
 
@@ -106,4 +106,4 @@ public:
 
 }  // namespace DNGIface
 
-#endif /* KDCRAWPRIVATE_H */
+#endif /* DNGWRITER_P_H */

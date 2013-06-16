@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef IPOD_EXPORTDIALOG_H
-#define IPOD_EXPORTDIALOG_H
+#ifndef UPLOADDIALOG_H
+#define UPLOADDIALOG_H
 
 #define KIPI_PLUGIN 1
 
@@ -164,4 +164,4 @@ private:
 
 } // namespace KIPIIpodExportPlugin
 
-#endif // IPOD_EXPORTDIALOG_H
+#endif // UPLOADDIALOG_H
