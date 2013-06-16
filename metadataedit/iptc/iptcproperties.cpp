@@ -407,7 +407,6 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     KPMetadata meta;
     meta.setIptc(iptcData);
 
-    int         val;
     QString     data;
     QStringList list;
     QDate       date;
@@ -508,7 +507,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     if (!data.isNull())
     {
-        val = data.toInt();
+        const int val = data.toInt();
         if (val >= 0 && val <= 8)
         {
             d->priorityCB->setCurrentIndex(val);

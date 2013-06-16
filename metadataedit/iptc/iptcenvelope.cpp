@@ -410,7 +410,6 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     KPMetadata meta;
     meta.setIptc(iptcData);
 
-    int         val;
     QString     data, format, version;
     QStringList list;
     QDate       date;
@@ -472,7 +471,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     data = meta.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);
     if (!data.isNull())
     {
-        val = data.toInt();
+        const int val = data.toInt();
         if (val >= 0 && val <= 8)
         {
             d->priorityCB->setCurrentIndex(val);
