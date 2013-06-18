@@ -27,13 +27,11 @@
 
 #include <QtCore/QString>
 #include <QtCore/QVariant>
+#include <QtCore/QVector>
 #include <QtCore/QExplicitlySharedDataPointer>
 
 template<typename T, typename U>
 class QHash;
-
-template<typename T>
-class QVector;
 
 namespace Herqq
 {
@@ -339,8 +337,8 @@ private:
 
 public:
 
-    typedef HActionArgument* iterator;
-    typedef const HActionArgument* const_iterator;
+    typedef QVector<HActionArgument>::iterator iterator;
+    typedef QVector<HActionArgument>::const_iterator const_iterator;
 
     /*!
      * Swaps the contents of the two containers.

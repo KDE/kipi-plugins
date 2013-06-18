@@ -120,7 +120,7 @@ QList<QUrl> HClientDevice::locations(LocationUrlType urlType) const
 
     QList<QUrl> retVal;
     QList<QUrl>::const_iterator ci;
-    for(ci = h_ptr->m_locations.begin(); ci != h_ptr->m_locations.end(); ++ci)
+    for(ci = h_ptr->m_locations.constBegin(); ci != h_ptr->m_locations.constEnd(); ++ci)
     {
         retVal.push_back(urlType == AbsoluteUrl ? *ci : extractBaseUrl(*ci));
     }

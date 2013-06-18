@@ -1596,7 +1596,7 @@ bool HSysInfo::localNetwork(const QHostAddress& ha, quint32* retVal) const
     QList<QPair<quint32, quint32> > localNetworks = createLocalNetworks();
 
     QList<QPair<quint32, quint32> >::const_iterator ci;
-    for(ci = localNetworks.begin(); ci != localNetworks.end(); ++ci)
+    for(ci = localNetworks.constBegin(); ci != localNetworks.constEnd(); ++ci)
     {
         if ((ha.toIPv4Address() & ci->second) == ci->first)
         {

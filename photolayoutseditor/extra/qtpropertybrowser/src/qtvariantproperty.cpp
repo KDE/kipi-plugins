@@ -1439,12 +1439,12 @@ QVariant QtVariantPropertyManager::attributeValue(const QtProperty *property, co
         return QVariant();
 
     QMap<int, QMap<QString, int> >::ConstIterator it =
-            d_ptr->m_typeToAttributeToAttributeType.find(propType);
+            d_ptr->m_typeToAttributeToAttributeType.constFind(propType);
     if (it == d_ptr->m_typeToAttributeToAttributeType.constEnd())
         return QVariant();
 
     QMap<QString, int> attributes = it.value();
-    QMap<QString, int>::ConstIterator itAttr = attributes.find(attribute);
+    QMap<QString, int>::ConstIterator itAttr = attributes.constFind(attribute);
     if (itAttr == attributes.constEnd())
         return QVariant();
 
@@ -1536,7 +1536,7 @@ QVariant QtVariantPropertyManager::attributeValue(const QtProperty *property, co
 QStringList QtVariantPropertyManager::attributes(int propertyType) const
 {
     QMap<int, QMap<QString, int> >::ConstIterator it =
-            d_ptr->m_typeToAttributeToAttributeType.find(propertyType);
+            d_ptr->m_typeToAttributeToAttributeType.constFind(propertyType);
     if (it == d_ptr->m_typeToAttributeToAttributeType.constEnd())
         return QStringList();
     return it.value().keys();
@@ -1555,12 +1555,12 @@ QStringList QtVariantPropertyManager::attributes(int propertyType) const
 int QtVariantPropertyManager::attributeType(int propertyType, const QString &attribute) const
 {
     QMap<int, QMap<QString, int> >::ConstIterator it =
-            d_ptr->m_typeToAttributeToAttributeType.find(propertyType);
+            d_ptr->m_typeToAttributeToAttributeType.constFind(propertyType);
     if (it == d_ptr->m_typeToAttributeToAttributeType.constEnd())
         return 0;
 
     QMap<QString, int> attributes = it.value();
-    QMap<QString, int>::ConstIterator itAttr = attributes.find(attribute);
+    QMap<QString, int>::ConstIterator itAttr = attributes.constFind(attribute);
     if (itAttr == attributes.constEnd())
         return 0;
     return itAttr.value();
@@ -1807,7 +1807,7 @@ void QtVariantPropertyManager::initializeProperty(QtProperty *property)
         return;
 
     QMap<int, QtAbstractPropertyManager *>::ConstIterator it =
-            d_ptr->m_typeToPropertyManager.find(d_ptr->m_propertyType);
+            d_ptr->m_typeToPropertyManager.constFind(d_ptr->m_propertyType);
     if (it != d_ptr->m_typeToPropertyManager.constEnd()) {
         QtProperty *internProp = 0;
         if (!d_ptr->m_creatingSubProperties) {

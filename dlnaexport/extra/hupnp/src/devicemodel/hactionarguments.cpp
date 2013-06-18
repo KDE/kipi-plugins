@@ -268,12 +268,12 @@ HActionArguments::iterator HActionArguments::end()
 
 HActionArguments::const_iterator HActionArguments::begin() const
 {
-    return h_ptr->m_argumentsOrdered.begin();
+    return h_ptr->m_argumentsOrdered.constBegin();
 }
 
 HActionArguments::const_iterator HActionArguments::end() const
 {
-    return h_ptr->m_argumentsOrdered.end();
+    return h_ptr->m_argumentsOrdered.constEnd();
 }
 
 qint32 HActionArguments::size() const

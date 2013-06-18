@@ -119,7 +119,7 @@ void CopyFilesTask::run()
         }
 
         kDebug() << "Copying converted RAW files...";
-        for (ItemUrlsMap::iterator i = (ItemUrlsMap::iterator) urlList->begin(); i != urlList->end(); ++i)
+        for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
         {
             if (KPMetadata::isRawFile(i.key()))
             {

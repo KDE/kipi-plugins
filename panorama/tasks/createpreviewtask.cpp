@@ -98,10 +98,10 @@ void CreatePreviewTask::run()
     {
         PTOType::Image& image = data->images[imageId];
         KUrl imgUrl(KUrl(tmpDir), image.fileName);
-        ItemUrlsMap::iterator it;
+        ItemUrlsMap::const_iterator it;
         const ItemUrlsMap *ppum = &preProcessedUrlsMap;
-        for (it = (ItemUrlsMap::iterator) ppum->begin(); it != ppum->end() && it.value().preprocessedUrl != imgUrl; ++it);
-        if (it == ppum->end())
+        for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl != imgUrl; ++it);
+        if (it == ppum->constEnd())
         {
             delete data;
             errString = i18n("Unknown input file in the project file: %1", image.fileName);

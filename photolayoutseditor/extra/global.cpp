@@ -107,10 +107,10 @@ QPainterPath KIPIPhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
         return result;
     QString d = element.attribute("d");
     QStringList list = d.split(' ', QString::SkipEmptyParts);
-    QStringList::const_iterator it = list.begin();
+    QStringList::const_iterator it = list.constBegin();
     QQueue<qreal> coordinates;
     QQueue<char> operations;
-    while (it != list.end())
+    while (it != list.constEnd())
     {
         if (*it == "M")
             operations.enqueue('M');
