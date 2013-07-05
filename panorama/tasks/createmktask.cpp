@@ -79,6 +79,9 @@ void CreateMKTask::run()
         case TIFF:
             panoUrl->setFileName(fi.completeBaseName() + QString(".tif"));
             break;
+        case HDR:
+            panoUrl->setFileName(fi.completeBaseName() + QString(".hdr"));
+            break;
     }
 
     process = new KProcess();

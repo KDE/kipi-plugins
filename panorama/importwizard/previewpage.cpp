@@ -178,7 +178,7 @@ void PreviewPage::computePreview()
     d->mngr->resetPreviewPto();
     d->mngr->resetPreviewUrl();
     d->mngr->resetPreviewMkUrl();
-    d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimisePtoUrl(),
+    d->mngr->thread()->generatePanoramaPreview(d->mngr->viewAndCropOptimisePtoUrl(),
                                                d->mngr->previewPtoUrl(),
                                                d->mngr->previewMkUrl(),
                                                d->mngr->previewUrl(),
@@ -209,7 +209,7 @@ void PreviewPage::startStitching()
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
 
-    QSize panoSize = d->mngr->autoOptimisePtoData().project.size;
+    QSize panoSize = d->mngr->viewAndCropOptimisePtoData().project.size;
     QRect panoSelection(0,
                         0,
                         panoSize.width(),
@@ -243,7 +243,7 @@ void PreviewPage::startStitching()
     d->mngr->resetPanoPto();
     d->mngr->resetMkUrl();
     d->mngr->resetPanoUrl();
-    d->mngr->thread()->compileProject(d->mngr->autoOptimisePtoData(),
+    d->mngr->thread()->compileProject(d->mngr->viewAndCropOptimisePtoData(),
                                       d->mngr->panoPtoUrl(),
                                       d->mngr->mkUrl(),
                                       d->mngr->panoUrl(),
@@ -369,8 +369,17 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                            "<p>Pressing the <i>Next</i> button will then launch the final "
                                            "stitching process.</p>"
                                            "</qt>"));
-                    d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
                     d->previewWidget->setSelectionAreaPossible(true);
+                    d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
+                    QSize panoSize = d->mngr->autoOptimisePtoData().project.size;
+                    QRect panoCrop = d->mngr->autoOptimisePtoData().project.crop;
+                    QSize previewSize = d->mngr->previewPtoData().project.size;
+                    d->previewWidget->setSelectionArea(QRectF(
+                        ((double) panoCrop.x()) / panoSize.width() * previewSize.width(),
+                        ((double) panoCrop.y()) / panoSize.height() * previewSize.height(),
+                        previewSize.width(),
+                        previewSize.height()
+                    ));
                     kDebug() << "Preview URL: " << d->mngr->previewUrl();
 
                     emit signalPreviewStitchingFinished(true);

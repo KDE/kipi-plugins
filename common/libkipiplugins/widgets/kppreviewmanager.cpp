@@ -205,6 +205,11 @@ QRectF KPPreviewManager::getSelectionArea()
     return d->preview->getSelectionArea();
 }
 
+void KPPreviewManager::setSelectionArea(QRectF rectangle)
+{
+    d->preview->setSelectionArea(rectangle);
+}
+
 void KPPreviewManager::setText(const QString& text, const QColor& color)
 {
     d->textLabel->setText(QString("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));

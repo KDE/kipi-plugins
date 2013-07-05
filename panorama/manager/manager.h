@@ -62,6 +62,7 @@ class CPFindBinary;
 class EnblendBinary;
 class MakeBinary;
 class NonaBinary;
+class PanoModifyBinary;
 class Pto2MkBinary;
 
 class Manager : public QObject
@@ -75,11 +76,14 @@ public:
 
     bool checkBinaries();
 
-    void setHDR(bool hdr);
-    bool hdr() const;
+    void setGPano(bool gPano);
+    bool gPano() const;
+//     void setHDR(bool hdr);
+//     bool hdr() const;
 
     void setFileFormatJPEG();
     void setFileFormatTIFF();
+    void setFileFormatHDR();
     PanoramaFileType format() const;
 
     void setIface(Interface* const iface);
@@ -100,6 +104,9 @@ public:
     KUrl&           autoOptimisePtoUrl() const;
     const PTOType&  autoOptimisePtoData();
     void            resetAutoOptimisePto();
+    KUrl&           viewAndCropOptimisePtoUrl() const;
+    const PTOType&  viewAndCropOptimisePtoData();
+    void            resetViewAndCropOptimisePto();
     KUrl&           previewPtoUrl() const;
     const PTOType&  previewPtoData();
     void            resetPreviewPto();
@@ -128,6 +135,7 @@ public:
     EnblendBinary&          enblendBinary() const;
     MakeBinary&             makeBinary() const;
     NonaBinary&             nonaBinary() const;
+    PanoModifyBinary&       panoModifyBinary() const;
     Pto2MkBinary&           pto2MkBinary() const;
 
     void run();

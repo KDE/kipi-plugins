@@ -56,6 +56,7 @@ struct LastPage::LastPagePriv
           saveSettingsGroupBox(0),
           fileTemplateKLineEdit(0),
           savePtoCheckBox(0),
+          addGPlusMetadataCheckBox(0),
           warningLabel(0),
           mngr(0)
     {
@@ -66,6 +67,7 @@ struct LastPage::LastPagePriv
     QGroupBox* saveSettingsGroupBox;
     KLineEdit* fileTemplateKLineEdit;
     QCheckBox* savePtoCheckBox;
+    QCheckBox* addGPlusMetadataCheckBox;
     QLabel*    warningLabel;
 
     Manager*   mngr;
@@ -158,7 +160,8 @@ void LastPage::copyFiles()
                                  d->mngr->panoUrl(),
                                  panoUrl.toLocalFile(),
                                  d->mngr->preProcessedMap(),
-                                 d->savePtoCheckBox->isChecked()
+                                 d->savePtoCheckBox->isChecked(),
+                                 d->addGPlusMetadataCheckBox->isChecked()
                                 );
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();

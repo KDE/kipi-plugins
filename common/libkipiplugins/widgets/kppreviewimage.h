@@ -110,6 +110,12 @@ public:
     bool setImage(const QImage& img) const;
     void enableSelectionArea(bool b);
     QRectF getSelectionArea();
+    /**
+     * Sets a selection area and show it
+     * 
+     * @param rectangle This rectangle should have height and width of 1.0
+     */
+    void setSelectionArea(QRectF rectangle);
 
 public Q_SLOTS:
 

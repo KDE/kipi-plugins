@@ -41,16 +41,18 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePtoTask::CreatePtoTask(QObject* parent, const KUrl& workDir, PanoramaFileType fileType, bool hdr,
-                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap)
+CreatePtoTask::CreatePtoTask(QObject* parent, const KUrl& workDir, PanoramaFileType fileType,
+                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
+                             bool addGPlusMetadata)
     : Task(parent, CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
-      fileType(fileType), hdr(hdr), inputFiles(&inputFiles)
+      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles), addGPlusMetadata(addGPlusMetadata)
 {}
 
-CreatePtoTask::CreatePtoTask(const KUrl& workDir, PanoramaFileType fileType, bool hdr,
-                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap)
+CreatePtoTask::CreatePtoTask(const KUrl& workDir, PanoramaFileType fileType,
+                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
+                             bool addGPlusMetadata)
     : Task(0, CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
-      fileType(fileType), hdr(hdr), inputFiles(&inputFiles)
+      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles), addGPlusMetadata(addGPlusMetadata)
 {}
 
 CreatePtoTask::~CreatePtoTask()
@@ -77,13 +79,33 @@ void CreatePtoTask::run()
 
     // 1. Project parameters
     PTOType panoBase;
-    panoBase.project.projection = PTOType::Project::CYLINDRICAL;
+    if (addGPlusMetadata)
+    {
+        panoBase.project.projection = PTOType::Project::EQUIRECTANGULAR;
+    }
+    else
+    {
+        panoBase.project.projection = PTOType::Project::CYLINDRICAL;
+    }
     panoBase.project.fieldOfView = 0;
-    panoBase.project.fileFormat.fileType = PTOType::Project::FileFormat::TIFF_m;
-    panoBase.project.fileFormat.compressionMethod = PTOType::Project::FileFormat::LZW;
-    panoBase.project.fileFormat.savePositions = false;
-    panoBase.project.fileFormat.cropped = false;
-    panoBase.project.hdr = hdr;
+    panoBase.project.hdr = false;
+    switch (fileType)
+    {
+        case JPEG:
+            panoBase.project.fileFormat.fileType = PTOType::Project::FileFormat::JPEG;
+            panoBase.project.fileFormat.quality = 90;
+            break;
+        case TIFF:
+            panoBase.project.fileFormat.fileType = PTOType::Project::FileFormat::TIFF_m;
+            panoBase.project.fileFormat.compressionMethod = PTOType::Project::FileFormat::LZW;
+            panoBase.project.fileFormat.savePositions = false;
+            panoBase.project.fileFormat.cropped = false;
+            break;
+        case HDR:
+            panoBase.project.hdr = true;
+            // TODO HDR
+            break;
+    }
 //     panoBase.project.bitDepth = PTOType::Project::FLOAT;
 //     panoBase.project.crop.setLeft(X_left);
 //     panoBase.project.crop.setRight(X_right);
@@ -182,7 +204,10 @@ void CreatePtoTask::run()
             break;
         case JPEG:
             panoBase.lastComments << "#hugin_outputImageType jpg";
-            panoBase.lastComments << "#hugin_outputJPEGQuality 95";
+            panoBase.lastComments << "#hugin_outputJPEGQuality 90";
+            break;
+        case HDR:
+            // TODO: HDR
             break;
     }
     panoBase.createFile(ptoUrl->toLocalFile());

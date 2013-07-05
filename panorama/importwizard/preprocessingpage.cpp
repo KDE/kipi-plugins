@@ -197,8 +197,9 @@ void PreProcessingPage::process()
                                        d->mngr->cpFindPtoUrl(),
                                        d->mngr->cpCleanPtoUrl(),
                                        d->celesteCheckBox->isChecked(),
-                                       d->mngr->hdr(),
+//                                        d->mngr->hdr(),
                                        d->mngr->format(),
+                                       d->mngr->gPano(),
                                        d->mngr->rawDecodingSettings(),
                                        d->mngr->cpCleanBinary().path(),
                                        d->mngr->cpFindBinary().path());
@@ -236,9 +237,7 @@ void PreProcessingPage::slotProgressTimerDone()
 {
     d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
 
-    d->progressCount++;
-    if (d->progressCount == 8)
-        d->progressCount = 0;
+    d->progressCount = (d->progressCount + 1) % d->progressPix.frameCount();
 
     d->progressTimer->start(300);
 }

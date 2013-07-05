@@ -25,6 +25,8 @@
 #ifndef TPARSERDEBUG_H
 #define TPARSERDEBUG_H
 
+/* #define YYDEBUG 1 */
+
 #ifdef YYDEBUG
 #define DEBUG_1(a) fprintf(stderr, #a "\n");
 #define DEBUG_2(a,b) fprintf(stderr, #a "\n", b);

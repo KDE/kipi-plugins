@@ -49,6 +49,7 @@
 #include "enblendbinary.h"
 #include "makebinary.h"
 #include "nonabinary.h"
+#include "panomodifybinary.h"
 #include "pto2mkbinary.h"
 
 namespace KIPIPanoramaPlugin
@@ -57,23 +58,27 @@ namespace KIPIPanoramaPlugin
 struct IntroPage::IntroPagePriv
 {
     IntroPagePriv(Manager* const m)
-        : mngr(m), 
-          hdrCheckBox(0), 
-          formatGroupBox(0), 
+        : mngr(m),
+          addGPlusMetadataCheckBox(0),
+//           hdrCheckBox(0),
+          formatGroupBox(0),
           settingsGroupBox(0),
-          jpegRadioButton(0), 
-          tiffRadioButton(0), 
+          jpegRadioButton(0),
+          tiffRadioButton(0),
+          hdrRadioButton(0),
           binariesWidget(0)
     {
     }
 
     Manager*                      mngr;
 
-    QCheckBox*                    hdrCheckBox;
+    QCheckBox*                    addGPlusMetadataCheckBox;
+//     QCheckBox*                    hdrCheckBox;
     QGroupBox*                    formatGroupBox;
     QGroupBox*                    settingsGroupBox;
     QRadioButton*                 jpegRadioButton;
     QRadioButton*                 tiffRadioButton;
+    QRadioButton*                 hdrRadioButton;
     KIPIPlugins::KPBinarySearch*  binariesWidget;
 };
 
@@ -107,6 +112,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->enblendBinary());
     d->binariesWidget->addBinary(d->mngr->makeBinary());
     d->binariesWidget->addBinary(d->mngr->nonaBinary());
+    d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
     d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
 #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
@@ -120,21 +126,21 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);
     d->settingsGroupBox->setLayout(settingsVBox);
 
-    d->hdrCheckBox  = new QCheckBox(i18n("HDR output"), d->settingsGroupBox);
-    d->hdrCheckBox->setToolTip(i18n("When checked, the panorama will be stitched into an High Dynamic Range (HDR) "
-                                    "image, that can be processed further with a dedicated software."));
-    d->hdrCheckBox->setWhatsThis(i18n("<b>HDR output</b>: Output in High Dynamic Range, meaning that every piece of "
-                                      "information contained in the original photos are preserved. Note that you "
-                                      "need another software to process the resulting panorama, like "
-                                      "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
-    settingsVBox->addWidget(d->hdrCheckBox);
+    d->addGPlusMetadataCheckBox = new QCheckBox(i18n("Add Google+ Metadata"), d->settingsGroupBox);
+    d->addGPlusMetadataCheckBox->setToolTip(i18n("Add Exif metadata to the output panorama image for Google+ 3D viewer"));
+    d->addGPlusMetadataCheckBox->setWhatsThis(i18n("<b>Add Google+ Metadata</b>: Enabling this allows the program to add "
+                                                   "metadata to the output image such that when uploaded to Google+, the "
+                                                   "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
+                                                   "that this feature is most insteresting for large panoramas."));
+    settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
 
-    QVBoxLayout* formatVBox = new QVBoxLayout();
-    d->formatGroupBox       = new QGroupBox(i18n("File Format"), vbox);
+    QVBoxLayout* formatVBox     = new QVBoxLayout();
+    d->formatGroupBox           = new QGroupBox(i18n("File Format"), vbox);
     d->formatGroupBox->setLayout(formatVBox);
-    QButtonGroup* group     = new QButtonGroup();
+    QButtonGroup* group         = new QButtonGroup();
 
-    d->jpegRadioButton      = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
+    d->jpegRadioButton          = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
+    // The following comment is to get the next string extracted for translation
     // xgettext: no-c-format
     d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
                                         "(lossy compression, smaller size)."));
@@ -143,13 +149,27 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                                           "way to share the result, or print it online or in a shop."));
     formatVBox->addWidget(d->jpegRadioButton);
     group->addButton(d->jpegRadioButton);
-    d->tiffRadioButton      = new QRadioButton(i18n("TIFF output"), d->formatGroupBox);
+
+    d->tiffRadioButton          = new QRadioButton(i18n("TIFF output"), d->formatGroupBox);
     d->tiffRadioButton->setToolTip(i18n("Selects a TIFF output compressed using the LZW algorithm "
                                         "(lossless compression, bigger size)."));
-    d->jpegRadioButton->setWhatsThis(i18n("<b>TIFF output</b>: Using TIFF output, you get the same color depth than "
+    d->tiffRadioButton->setWhatsThis(i18n("<b>TIFF output</b>: Using TIFF output, you get the same color depth than "
                                           "your original photos using RAW images at the cost of a bigger panorama file."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);
+
+    // TODO HDR
+    /*
+    d->hdrRadioButton           = new QRadioButton(i18n("HDR output"), d->formatGroupBox);
+    d->hdrRadioButton->setToolTip(i18n("Selects an High Dynamic Range (HDR) image, that can be processed further "
+                                       "with a dedicated software."));
+    d->hdrRadioButton->setWhatsThis(i18n("<b>HDR output</b>: Output in High Dynamic Range, meaning that every piece of "
+                                         "information contained in the original photos are preserved. Note that you "
+                                         "need another software to process the resulting panorama, like "
+                                         "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
+    formatVBox->addWidget(d->hdrRadioButton);
+    group->addButton(d->hdrRadioButton);
+    */
 
     switch (d->mngr->format())
     {
@@ -158,6 +178,10 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
             break;
         case TIFF:
             d->tiffRadioButton->setChecked(true);
+            break; 
+        case HDR:
+            // TODO HDR
+//             d->hdrRadioButton->setChecked(true);
             break;
     }
 
@@ -166,8 +190,8 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->hdrCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(slotShowFileFormat(int)));
+    connect(d->addGPlusMetadataCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(slotToggleGPano(int)));
 
     connect(group, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(slotChangeFileFormat(QAbstractButton*)));
@@ -177,7 +201,8 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
 
-    d->hdrCheckBox->setChecked(d->mngr->hdr());
+    d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
+//     d->hdrCheckBox->setChecked(d->mngr->hdr());
 }
 
 IntroPage::~IntroPage()
@@ -190,6 +215,20 @@ bool IntroPage::binariesFound()
     return d->binariesWidget->allBinariesFound();
 }
 
+void IntroPage::slotToggleGPano(int state)
+{
+    d->mngr->setGPano(state);
+    if (state)
+    {
+        d->formatGroupBox->setEnabled(false);
+    }
+    else
+    {
+        d->formatGroupBox->setEnabled(true);
+    }
+}
+
+/*
 void IntroPage::slotShowFileFormat(int state)
 {
     d->mngr->setHDR(state);
@@ -202,6 +241,7 @@ void IntroPage::slotShowFileFormat(int state)
         d->formatGroupBox->setEnabled(true);
     }
 }
+*/
 
 void IntroPage::slotChangeFileFormat(QAbstractButton* button)
 {
@@ -209,6 +249,8 @@ void IntroPage::slotChangeFileFormat(QAbstractButton* button)
         d->mngr->setFileFormatJPEG();
     else if (button == d->tiffRadioButton)
         d->mngr->setFileFormatTIFF();
+    else if (button == d->hdrRadioButton)
+        d->mngr->setFileFormatHDR();
 }
 
 }   // namespace KIPIPanoramaPlugin

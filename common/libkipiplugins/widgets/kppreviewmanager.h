@@ -69,6 +69,12 @@ public:
     void setButtonVisible(bool b);
     void setSelectionAreaPossible(bool b);
     QRectF getSelectionArea();
+    /**
+     * Sets a selection area and show it
+     * 
+     * @param rectangle This rectangle should have height and width of 1.0
+     */
+    void setSelectionArea(QRectF rectangle);
 
 Q_SIGNALS:
 

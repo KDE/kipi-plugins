@@ -62,12 +62,14 @@ public:
     explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
-                         KUrl& baseUrl, KUrl& cpFindUrl, KUrl& cpCleanPtoUrl,
-                         bool celeste, bool hdr, PanoramaFileType fileType, const RawDecodingSettings& settings,
+    void preProcessFiles(const KUrl::List& urlList, KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
+                         KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
+                         bool celeste, KIPIPanoramaPlugin::PanoramaFileType fileType, bool gPano,
+                         const RawDecodingSettings& rawSettings,
                          const QString& cpCleanPath, const QString& cpFindPath);
-    void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool levelHorizon,
-                         bool optimizeProjectionAndSize, const QString& autooptimiserPath);
+    void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
+                         bool levelHorizon, bool buildGPano,
+                         const QString& autooptimiserPath, const QString& panoModifyPath);
     void generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
@@ -78,7 +80,7 @@ public:
                         const QString& makePath, const QString& pto2mkPath,
                         const QString& enblendPath, const QString& nonaPath);
     void copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                   const ItemUrlsMap& preProcessedUrlsMap, bool savePTO);
+                   const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata);
 
 Q_SIGNALS:
 

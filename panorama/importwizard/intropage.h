@@ -54,7 +54,8 @@ public:
 
 private Q_SLOTS:
 
-    void slotShowFileFormat(int state);
+    void slotToggleGPano(int state);
+//     void slotShowFileFormat(int state);
     void slotChangeFileFormat(QAbstractButton* button);
 
 Q_SIGNALS:

@@ -42,21 +42,25 @@ class OptimisationTask : public Task
 private:
 
     KUrl* const                         autoOptimiserPtoUrl;
+    KUrl* const                         viewCropPtoUrl;
     const KUrl* const                   ptoUrl;
     const bool                          levelHorizon;
-    const bool                          optimizeProjectionAndSize;
+    const bool                          buildGPano;
     const QString                       autooptimiserPath;
+    const QString                       panoModifyPath;
 
     KProcess*                           process;
 
 public:
 
     OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input, 
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                     bool optimizeProjectionAndSize, const QString& autooptimiserPath);
+                     KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                     bool levelHorizon, bool buildGPano,
+                     const QString& autooptimiserPath, const QString& panoModifyPath);
     OptimisationTask(const KUrl& workDir, const KUrl& input,
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                     bool optimizeProjectionAndSize, const QString& autooptimiserPath);
+                     KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                     bool levelHorizon, bool buildGPano,
+                     const QString& autooptimiserPath, const QString& panoModifyPath);
     ~OptimisationTask();
 
     void requestAbort();

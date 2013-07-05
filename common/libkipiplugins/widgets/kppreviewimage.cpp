@@ -46,6 +46,7 @@
 #include <kiconloader.h>
 #include <kicon.h>
 #include <kvbox.h>
+#include <kdebug.h>
 
 // libKdcraw includes
 
@@ -581,6 +582,13 @@ QRectF KPPreviewImage::getSelectionArea()
     return d->selection->rect();
 }
 
+void KPPreviewImage::setSelectionArea(QRectF rectangle)
+{
+    d->selection->setRect(rectangle);
+    if (!d->selection->isVisible())
+        d->selection->setVisible(true);
+}
+
 bool KPPreviewImage::load(const QString& file) const
 {
     QImage image;
@@ -598,6 +606,7 @@ bool KPPreviewImage::load(const QString& file) const
 
     if (ret && d->enableSelection)
     {
+        kDebug() << d->scene->height() << " " << d->scene->width();
         d->selection->setMaxRight(d->scene->width());
         d->selection->setMaxBottom(d->scene->height());
         d->selection->setRect(d->scene->sceneRect());

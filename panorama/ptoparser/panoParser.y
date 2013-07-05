@@ -41,7 +41,7 @@ int currentLine = -1;
 pt_script script;
 
 /* defining it gives better error messages. It might be an overkill */
-#define YYERROR_VERBOSE 1 
+/* #define YYERROR_VERBOSE 1  */
 
 static pt_script_image *image = NULL;
 static pt_script_ctrl_point *ctrlPoint = NULL;
@@ -451,6 +451,7 @@ maskpoint: int PT_TOKEN_COMMA int
 /* Rule for [CS]<x>,<x>,<x>,<x> */
 varcropping: PT_TOKEN_KEYWORD_CROPPING int PT_TOKEN_COMMA int PT_TOKEN_COMMA int PT_TOKEN_COMMA int
     {
+    printf("Cropping...\n");
         int* cropArea = NULL;
 
         if (currentLine != PT_TOKEN_PANO_LINE && currentLine != PT_TOKEN_INPUT_LINE) {

@@ -65,7 +65,8 @@ enum Action
 typedef enum
 {
     JPEG,
-    TIFF
+    TIFF,
+    HDR
 }
 PanoramaFileType;
 

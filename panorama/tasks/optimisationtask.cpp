@@ -31,17 +31,23 @@ namespace KIPIPanoramaPlugin
 {
 
 OptimisationTask::OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                                   bool optimizeProjectionAndSize, const QString& autooptimiserPath)
-    : Task(parent, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl), ptoUrl(&input), levelHorizon(levelHorizon),
-      optimizeProjectionAndSize(optimizeProjectionAndSize), autooptimiserPath(autooptimiserPath), process(0)
+                                   KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                                   bool levelHorizon, bool buildGPano,
+                                   const QString& autooptimiserPath, const QString& panoModifyPath)
+    : Task(parent, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
+      viewCropPtoUrl(&viewCropPtoUrl), ptoUrl(&input),
+      levelHorizon(levelHorizon), buildGPano(buildGPano),
+      autooptimiserPath(autooptimiserPath), panoModifyPath(panoModifyPath), process(0)
 {}
 
 OptimisationTask::OptimisationTask(const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                                   bool optimizeProjectionAndSize, const QString& autooptimiserPath)
-    : Task(0, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl), ptoUrl(&input), levelHorizon(levelHorizon),
-      optimizeProjectionAndSize(optimizeProjectionAndSize), autooptimiserPath(autooptimiserPath), process(0)
+                                   KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                                   bool levelHorizon, bool buildGPano,
+                                   const QString& autooptimiserPath, const QString& panoModifyPath)
+    : Task(0, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
+      viewCropPtoUrl(&viewCropPtoUrl), ptoUrl(&input),
+      levelHorizon(levelHorizon), buildGPano(buildGPano),
+      autooptimiserPath(autooptimiserPath), panoModifyPath(panoModifyPath), process(0)
 {}
 
 OptimisationTask::~OptimisationTask()
@@ -62,6 +68,11 @@ void OptimisationTask::run()
 {
     (*autoOptimiserPtoUrl) = tmpDir;
     autoOptimiserPtoUrl->setFileName(QString("auto_op_pano.pto"));
+    (*viewCropPtoUrl) = tmpDir;
+    viewCropPtoUrl->setFileName(QString("view_crop_pano.pto"));
+
+    KUrl tmpUrl = tmpDir;
+    tmpUrl.setFileName(QString("optimized_view_crop.pto"));
 
     process = new KProcess();
     process->clearProgram();
@@ -76,17 +87,47 @@ void OptimisationTask::run()
     {
         args << "-l";
     }
-    if (optimizeProjectionAndSize)
-    {
+//     if (!buildGPano)
+//     {
         args << "-s";
-    }
+//     }
     args << "-o";
-    args << autoOptimiserPtoUrl->toLocalFile();
+    args << viewCropPtoUrl->toLocalFile();
     args << ptoUrl->toLocalFile();
 
     process->setProgram(args);
 
     kDebug() << "autooptimiser command line: " << process->program();
+
+    process->start();
+
+    if (!process->waitForFinished(-1) || process->exitCode() != 0)
+    {
+        errString = getProcessError(*process);
+        successFlag = false;
+        return;
+    }
+
+    delete process;
+    process = new KProcess();
+    process->clearProgram();
+    process->setWorkingDirectory(tmpDir.toLocalFile());
+    process->setOutputChannelMode(KProcess::MergedChannels);
+    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+
+    args.clear();
+    args << panoModifyPath;
+    args << "-c";               // Center the panorama
+    args << "-s";               // Straighten the panorama
+    args << "--canvas=AUTO";    // Automatic size
+    args << "--crop=AUTO";      // Automatic crop
+    args << "-o";
+    args << autoOptimiserPtoUrl->toLocalFile();
+    args << viewCropPtoUrl->toLocalFile();
+
+    process->setProgram(args);
+
+    kDebug() << "pano_modify command line: " << process->program();
 
     process->start();
 

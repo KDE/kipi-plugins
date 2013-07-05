@@ -49,6 +49,7 @@
 #include "aboutdata.h"
 #include "kpoutputdialog.h"
 #include "autooptimiserbinary.h"
+#include "panomodifybinary.h"
 #include "manager.h"
 #include "actionthread.h"
 
@@ -65,7 +66,7 @@ struct OptimizePage::OptimizePagePriv
           title(0),
           preprocessResults(0),
           horizonCheckbox(0),
-          projectionAndSizeCheckbox(0),
+//           projectionAndSizeCheckbox(0),
           detailsBtn(0),
           mngr(0)
     {
@@ -82,7 +83,7 @@ struct OptimizePage::OptimizePagePriv
     QLabel*         preprocessResults;
 
     QCheckBox*      horizonCheckbox;
-    QCheckBox*      projectionAndSizeCheckbox;
+//     QCheckBox*      projectionAndSizeCheckboxs;
 
     QString         output;
 
@@ -112,12 +113,26 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     d->horizonCheckbox->setToolTip(i18n("Detect the horizon and adapt the project to make it horizontal."));
     d->horizonCheckbox->setWhatsThis(i18n("<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
                                           "the detected horizon is an horizontal line in the final panorama"));
-    d->projectionAndSizeCheckbox    = new QCheckBox(i18n("Automatic projection"), vbox);
-    d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
-    d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the projection of the panorama and the area rendered on the resulting "
-                                                  "projection so that every photo fits in the resulting panorama."));
-    d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic projection</b>: Automatically adapt the projection "
-                                                    "and the area rendered of the panorama to get every photos into the panorama."));
+    /*if (!d->mngr->gPano())
+    {
+        d->projectionAndSizeCheckbox = new QCheckBox(i18n("Automatic projection and output aspect"), vbox);
+        d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
+        d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the projection of the panorama and the area rendered on the "
+                                                      "resulting projection so that every photo fits in the resulting "
+                                                      "panorama."));
+        d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic projection and output aspect</b>: Automatically "
+                                                        "adapt the projection and the area rendered of the panorama to "
+                                                        "get every photos into the panorama."));
+    }
+    else
+    {
+        d->projectionAndSizeCheckbox = new QCheckBox(i18n("Automatic output aspect"), vbox);
+        d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
+        d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the area rendered on the resulting projection so that "
+                                                      "every photo fits in the resulting panorama."));
+        d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic output aspect</b>: Automatically adapt the area "
+                                                        "rendered of the panorama to get every photos into the panorama."));
+    }*/
 
     d->preprocessResults            = new QLabel(vbox);
 
@@ -166,7 +181,7 @@ OptimizePage::~OptimizePage()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Panorama Settings"));
     group.writeEntry("Horizon", d->horizonCheckbox->isChecked());
-    group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
+//     group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
     config.sync();
 
     delete d;
@@ -181,7 +196,7 @@ void OptimizePage::process()
                            "<p>This can take a while...</p>"
                            "</qt>"));
     d->horizonCheckbox->hide();
-    d->projectionAndSizeCheckbox->hide();
+//     d->projectionAndSizeCheckbox->hide();
     d->progressTimer->start(300);
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
@@ -190,9 +205,11 @@ void OptimizePage::process()
     d->mngr->resetAutoOptimisePto();
     d->mngr->thread()->optimizeProject(d->mngr->cpCleanPtoUrl(),
                                        d->mngr->autoOptimisePtoUrl(),
+                                       d->mngr->viewAndCropOptimisePtoUrl(),
                                        d->horizonCheckbox->isChecked(),
-                                       d->projectionAndSizeCheckbox->isChecked(),
-                                       d->mngr->autoOptimiserBinary().path());
+                                       d->mngr->gPano(),
+                                       d->mngr->autoOptimiserBinary().path(),
+                                       d->mngr->panoModifyBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
@@ -261,7 +278,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                            "</qt>"));
                     d->progressTimer->stop();
                     d->horizonCheckbox->hide();
-                    d->projectionAndSizeCheckbox->hide();
+//                     d->projectionAndSizeCheckbox->hide();
                     d->detailsBtn->show();
                     d->progressLabel->clear();
                     d->output = ad.message;
@@ -327,7 +344,7 @@ void OptimizePage::resetTitle()
 //     d->preprocessResults->setText(i18n("Alignment error: %1px", result.first / ((double) result.second)));
     d->detailsBtn->hide();
     d->horizonCheckbox->show();
-    d->projectionAndSizeCheckbox->show();
+//     d->projectionAndSizeCheckbox->show();
 }
 
 }   // namespace KIPIPanoramaPlugin

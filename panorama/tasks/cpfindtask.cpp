@@ -82,7 +82,7 @@ void CpFindTask::run()
 
     process->start();
 
-    if (!process->waitForFinished(-1) || process->exitCode() != 0)
+    if (!process->waitForFinished(-1) || process->exitStatus() != QProcess::NormalExit)
     {
         errString = getProcessError(*process);
 
@@ -92,6 +92,7 @@ void CpFindTask::run()
     {
         successFlag = true;
     }
+    kDebug() << getProcessError(*process);
 
     delete process;
     process = 0;

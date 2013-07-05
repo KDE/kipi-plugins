@@ -86,7 +86,7 @@ ActionThread::~ActionThread()
 
 void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
                                    KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
-                                   bool celeste, bool hdr, PanoramaFileType fileType,
+                                   bool celeste, PanoramaFileType fileType, bool gPano,
                                    const RawDecodingSettings& rawSettings,
                                    const QString& cpCleanPath, const QString& cpFindPath)
 {
@@ -123,10 +123,10 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
 
     CreatePtoTask *pto = new CreatePtoTask(d->preprocessingTmpDir->name(),
                                            fileType,
-                                           hdr,
                                            baseUrl,
                                            urlList,
-                                           preProcessedMap);
+                                           preProcessedMap,
+                                           gPano);
 
     connect(pto, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));
@@ -169,17 +169,20 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
     appendJob(jobs);
 }
 
-void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool levelHorizon,
-                                   bool optimizeProjectionAndSize, const QString& autooptimiserPath)
+void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
+                                   bool levelHorizon, bool buildGPano,
+                                   const QString& autooptimiserPath, const QString& panoModifyPath)
 {
     JobCollection       *jobs                       = new JobCollection();
 
     OptimisationTask *t = new OptimisationTask(d->preprocessingTmpDir->name(),
                                                ptoUrl,
                                                optimizePtoUrl,
+                                               viewCropPtoUrl,
                                                levelHorizon,
-                                               optimizeProjectionAndSize,
-                                               autooptimiserPath);
+                                               buildGPano,
+                                               autooptimiserPath,
+                                               panoModifyPath);
 
     connect(t, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));
@@ -263,7 +266,7 @@ void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, 
 }
 
 void ActionThread::copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                             const ItemUrlsMap& preProcessedUrlsMap, bool savePTO)
+                             const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata)
 {
     JobCollection   *jobs           = new JobCollection();
 
@@ -272,7 +275,8 @@ void ActionThread::copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl
                                          finalPanoUrl,
                                          ptoUrl,
                                          preProcessedUrlsMap,
-                                         savePTO);
+                                         savePTO,
+                                         addGPlusMetadata);
 
     connect(t, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));

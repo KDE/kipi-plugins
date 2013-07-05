@@ -26,6 +26,7 @@
 %option noyywrap
 %option nounput
 %option noinput
+%option stack
 
 %{
 
@@ -53,6 +54,7 @@ int first_eof;
 DIGIT    [0-9]
 LINETYPE [a-zA-Z]
 ID       [a-zA-Z]
+COMMA    [,]
 
 %x str
 %x parm
@@ -74,30 +76,36 @@ ID       [a-zA-Z]
 
 
 <INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+"."{DIGIT}*(e-?{DIGIT}+)? { /* float point with period */
-    BEGIN(INITIAL);
+    DEBUG_4("A  float: %s (%lg) (state: %d)", yytext, yylval.fVal, YYSTATE);
+    if (YYSTATE != INITIAL)
+        yy_pop_state();
+    DEBUG_2("\t\tNew state: %d", YYSTATE);
     panoScriptScannerTokenBegin(yytext);
     yylval.fVal = strtod(yytext, NULL);
-    DEBUG_3("A  float: %s (%lg)", yytext, yylval.fVal);
     return PT_TOKEN_NUMBER_FLOAT;
 }
 
 <INITIAL,parm,maskcoordinate,projparms>[-+]?{DIGIT}+ { /* Simple integer */
-    BEGIN(INITIAL);
+    DEBUG_4("An integer: %s (%d) (state: %d)", yytext, yylval.iVal, YYSTATE);
+    if (YYSTATE != INITIAL)
+        yy_pop_state();
+    DEBUG_2("\t\tNew state: %d", YYSTATE);
     panoScriptScannerTokenBegin(yytext);
     yylval.iVal = atoi(yytext);
-    DEBUG_3("An integer: %s (%d)", yytext, yylval.iVal);
     return PT_TOKEN_NUMBER_INT;
 }
 
 [ \t]*\r?\n { /* END OF LINE is an important marker when processing a rule */
-    DEBUG_1("End of line");
+    DEBUG_2("End of line (state: %d)", YYSTATE);
+    if (YYSTATE == mask)
+        yy_pop_state();
     panoScriptScannerTokenBegin(yytext);
     first_eof = 0;
     return PT_TOKEN_EOL;
 }
 
 <*><<EOF>> { /* We are done */
-    DEBUG_1("End of file");
+    DEBUG_2("End of file (state: %d)", YYSTATE);
     panoScriptScannerTokenBegin(yytext);
     if (first_eof) {
         first_eof = 0;
@@ -149,7 +157,7 @@ ID       [a-zA-Z]
 ^k {    /* Mask line */
     panoScriptScannerTokenBegin(yytext);
     first_eof = 1;
-    BEGIN(mask);
+    yy_push_state(mask);
     return PT_TOKEN_MASK_PT_LINE;
 }
 
@@ -174,7 +182,6 @@ ID       [a-zA-Z]
     /******************************************/
 <parm>"," {
     panoScriptScannerTokenBegin(yytext);
-    BEGIN(parm);
     return PT_TOKEN_COMMA;
 }
 
@@ -187,7 +194,7 @@ ID       [a-zA-Z]
 <parm>a-zA-Z[0-9a-zA-Z]+ {
     /* Read the rest of the parameter as a string by default */
     /* move back to default mode */
-    BEGIN(INITIAL);
+    yy_pop_state();
     panoScriptScannerTokenBegin(yytext);
     strncat(strBuffer, yytext, PT_TOKEN_MAX_LEN - 1);
     strncpy(yylval.strVal, strBuffer, PT_TOKEN_MAX_LEN);
@@ -198,6 +205,7 @@ ID       [a-zA-Z]
 <mask>[it] {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
+    yy_push_state(mask);
     BEGIN(parm);
     panoScriptScannerTokenBegin(yytext);
     yylval.cVal = yytext[0];
@@ -207,6 +215,7 @@ ID       [a-zA-Z]
 <mask>p\" {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
+    yy_push_state(mask);
     BEGIN(maskcoordinate);
     panoScriptScannerTokenBegin(yytext);
     yylval.cVal = yytext[0];
@@ -215,7 +224,7 @@ ID       [a-zA-Z]
 
 <maskcoordinate>\" {
     panoScriptScannerTokenBegin(yytext);
-    BEGIN(mask);
+    yy_pop_state();
 }
 
 Tr[XYZ]|Eev|E[rb]|V[mfabcdxy]|R[abcde] {
@@ -223,12 +232,19 @@ Tr[XYZ]|Eev|E[rb]|V[mfabcdxy]|R[abcde] {
     panoScriptScannerTokenBegin(yytext);
     strncpy(yylval.strVal, yytext, PT_TOKEN_MAX_LEN);
     yylval.strVal[PT_TOKEN_MAX_LEN] = 0;
+    yy_push_state(INITIAL);
     BEGIN(parm);
     return PT_TOKEN_KEYWORD_MULTICHAR;
 }
 
 [CS] {  /* These are the C and S parameters that contain multiple values */
-    DEBUG_2("An identifier for a variable: %s", yytext);
+    DEBUG_2("An identifier for a crop variable: %s", yytext);
+    yy_push_state(INITIAL);
+    /* TODO: comment one of those to test & debug error recovery */
+    yy_push_state(parm);
+    yy_push_state(parm);
+    yy_push_state(parm);
+    yy_push_state(parm);
     BEGIN(parm);
     yylval.cVal = yytext[0];
     return PT_TOKEN_KEYWORD_CROPPING;
@@ -237,6 +253,7 @@ Tr[XYZ]|Eev|E[rb]|V[mfabcdxy]|R[abcde] {
 P\" {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
+    yy_push_state(INITIAL);
     BEGIN(projparms);
     panoScriptScannerTokenBegin(yytext);
     yylval.cVal = yytext[0];
@@ -246,6 +263,7 @@ P\" {
 {ID} {
     DEBUG_2("An identifier for a variable: %s", yytext);
     /* move into parameter mode */
+    yy_push_state(INITIAL);
     BEGIN(parm);
     panoScriptScannerTokenBegin(yytext);
     yylval.cVal = yytext[0];
@@ -257,7 +275,7 @@ P\" {
   /*********************************/
 
 <projparms>\" {
-    BEGIN(INITIAL);
+    yy_pop_state();
 }
 
 <parm>\" { /* Begin of string */
@@ -267,7 +285,7 @@ P\" {
 }
 
 <str>\" { /* saw closing quote - all done */
-    BEGIN(INITIAL);
+    yy_pop_state();
     *strBuffer_ptr = '\0';
     /* return string constant token type and value to parser */
     strncpy(yylval.strVal, strBuffer, PT_TOKEN_MAX_LEN);
@@ -304,7 +322,8 @@ P\" {
   /********************************/
   /* Catch errors */
 . {
-    panoScriptParserError("Unrecognized character: [%s]", yytext);
+    
+    panoScriptParserError("Unrecognized character: [%s] (state: %d)", yytext, YYSTATE);
     return PT_TOKEN_ERROR;
 }
 
