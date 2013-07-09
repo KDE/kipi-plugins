@@ -109,7 +109,8 @@ XMPCredits::XMPCredits(QWidget* const parent)
     // --------------------------------------------------------
 
     d->bylineEdit = new MultiStringsEdit(this, i18n("Byline:"),
-                                         i18n("Set here the name of content creator."));
+                                         i18n("Set here the name of content creator."),
+                                         false);
 
     // --------------------------------------------------------
 

@@ -95,7 +95,8 @@ XMPStatus::XMPStatus(QWidget* const parent)
     // --------------------------------------------------------
 
     d->identifiersEdit = new MultiStringsEdit(this, i18n("Identifiers:"),
-                             i18n("Set here the strings that identify content that recurs."));
+                             i18n("Set here the strings that identify content that recurs."),
+                             false);
 
     // --------------------------------------------------------
 
