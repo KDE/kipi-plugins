@@ -179,7 +179,7 @@ TARGET_LINK_LIBRARIES(libphotolayoutseditor
                       kipiplugins
                      )
 
-INSTALL( FILES ./settings/PLEConfigSkeleton.kcfgc DESTINATION ${KCFG_INSTALL_DIR} )
+INSTALL( FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
 
 # =======================================================
 # PhotoLayoutsEditor plugin
