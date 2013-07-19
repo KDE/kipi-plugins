@@ -114,7 +114,7 @@ bool PTOType::createFile(const QString& filepath)
                 out << " r:CROP";
             break;
         default:
-            kError() << "Unkown file format for pto file generation!";
+            kError() << "Unknown file format for pto file generation!";
             file.close();
             return false;
     }
