@@ -195,7 +195,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
     d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);
-    d->settingsExpander->setItemIcon(0, SmallIcon("expoblending"));
+    d->settingsExpander->setItemIcon(0, SmallIcon("kipi-expoblending"));
     d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
 
     // ---------------------------------------------------------------
