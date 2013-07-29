@@ -80,7 +80,6 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
                          "<li>Do not mix images with different color depth.</li>"
                          "<li>All images must have the same dimensions.</li></ul>"
                          "</qt>"));
-    
 
     d->list = new KPImagesList(vbox);
     d->list->listView()->setColumn(KPImagesListView::User1, i18n("Exposure (EV)"), true);

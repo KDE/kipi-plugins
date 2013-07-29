@@ -4,8 +4,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
-                    ${CMAKE_CURRENT_SOURCE_DIR}/tasks
-                    
                    )
 
 # NOTE: OpenMP under MacOSX do not support multithreading.
@@ -39,9 +37,6 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusesettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/bracketstack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/task.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/preprocesstask.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/generictask.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
@@ -55,7 +50,6 @@ KDE4_ADD_LIBRARY(libexpoblending STATIC ${expoblending_common_SRCS})
 
 TARGET_LINK_LIBRARIES(libexpoblending
                       ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}

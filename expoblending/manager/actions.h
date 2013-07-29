@@ -45,7 +45,6 @@ enum Action
 {
     NONE = 0,
     IDENTIFY,
-    PREPROCESS_INPUT,
     PREPROCESSING,
     ENFUSEPREVIEW,
     ENFUSEFINAL,

@@ -105,11 +105,9 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
     d->alignCheckBox = new QCheckBox(i18n("Align bracketed images"), vbox);
-
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
-
 
     QLabel* space1   = new QLabel(vbox);
     KHBox* hbox      = new KHBox(vbox);
@@ -152,8 +150,6 @@ PreProcessingPage::~PreProcessingPage()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
     group.writeEntry("Auto Alignment", d->alignCheckBox->isChecked());
-
-
     config.sync();
 
     delete d;
@@ -167,7 +163,8 @@ void PreProcessingPage::resetTitle()
                            "<a href='%2'>%3</a> project will be used. "
                            "Alignment must be performed if you have not used a tripod to take bracketed images. "
                            "Alignment operations can take a while.</p>"
-                           "<p>Raw Demosaicing must be performed if the input images are in RAW format.</p>"
+                           "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
+                           "to 16-bit sRGB images with auto-gamma.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
                            QDir::toNativeSeparators(d->mngr->alignBinary().path()),

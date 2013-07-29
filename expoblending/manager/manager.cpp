@@ -167,7 +167,7 @@ void Manager::run()
 
 void Manager::cleanUp()
 {
-    //d->thread->cleanUpResultFiles();
+    d->thread->cleanUpResultFiles();
 }
 
 void Manager::startWizard()
