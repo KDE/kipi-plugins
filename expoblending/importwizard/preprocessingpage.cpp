@@ -105,12 +105,12 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
     d->alignCheckBox = new QCheckBox(i18n("Align bracketed images"), vbox);
-    
+
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
-    
-    
+
+
     QLabel* space1   = new QLabel(vbox);
     KHBox* hbox      = new KHBox(vbox);
     d->detailsBtn    = new QPushButton(hbox);
@@ -152,7 +152,7 @@ PreProcessingPage::~PreProcessingPage()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
     group.writeEntry("Auto Alignment", d->alignCheckBox->isChecked());
-   
+
 
     config.sync();
 
@@ -167,7 +167,7 @@ void PreProcessingPage::resetTitle()
                            "<a href='%2'>%3</a> project will be used. "
                            "Alignment must be performed if you have not used a tripod to take bracketed images. "
                            "Alignment operations can take a while.</p>"
-                           "<p>Raw Demosiacking must be performed if the input images are in RAW format/./p>"
+                           "<p>Raw Demosaicing must be performed if the input images are in RAW format.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
                            QDir::toNativeSeparators(d->mngr->alignBinary().path()),
@@ -190,8 +190,8 @@ void PreProcessingPage::process()
     connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    d->mngr->thread()->setPreProcessingSettings(d->alignCheckBox->isChecked(), d->mngr->rawDecodingSettings()); 
-    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->alignBinary().path()); 
+    d->mngr->thread()->setPreProcessingSettings(d->alignCheckBox->isChecked(), d->mngr->rawDecodingSettings());
+    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->alignBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
