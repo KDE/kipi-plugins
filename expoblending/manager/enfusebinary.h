@@ -47,7 +47,8 @@ public:
                     QString("Enblend"), 
                     QString("http://enblend.sourceforge.net"),
                     QString("ExpoBlending"), 
-                    QStringList("-V"))
+                    QStringList("-V")),
+      versionDouble(0)
         {
             setup();
         }
@@ -55,6 +56,8 @@ public:
     ~EnfuseBinary()
     {
     }
+    
+    double getVersion() const;
 
 Q_SIGNALS:
 
@@ -63,6 +66,10 @@ Q_SIGNALS:
 protected:
 
     bool parseHeader(const QString& output);
+    
+private:
+    
+    double versionDouble;
 };
 
 } // namespace KIPIExpoBlendingPlugin

@@ -35,6 +35,11 @@
 namespace KIPIExpoBlendingPlugin
 {
 
+double EnfuseBinary::getVersion() const
+{
+    return versionDouble;
+}
+
 bool EnfuseBinary::parseHeader(const QString& output)
 {
     // Work around Enfuse <= 3.2
@@ -46,7 +51,10 @@ bool EnfuseBinary::parseHeader(const QString& output)
     {
         kDebug() << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, m_headerStarts.length()));
-        emit signalEnfuseVersion(version().toDouble());
+        QStringList versionList = version().split('.');
+        versionList.pop_back();
+        versionDouble = versionList.join(QString(".")).toDouble();
+        emit signalEnfuseVersion(versionDouble);
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }
@@ -54,7 +62,10 @@ bool EnfuseBinary::parseHeader(const QString& output)
     {
         kDebug() << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, headerStartsOld.length()));
-        emit signalEnfuseVersion(version().toDouble());
+        QStringList versionList = version().split('.');
+        versionList.pop_back();
+        versionDouble = versionList.join(QString(".")).toDouble();
+        emit signalEnfuseVersion(versionDouble);
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }

@@ -82,7 +82,7 @@ Manager::Manager(QObject* const parent)
 
     if (d->enfuseBinary.isValid())
     {
-        slotSetEnfuseVersion(d->enfuseBinary.version().toDouble());
+        slotSetEnfuseVersion(d->enfuseBinary.getVersion());
     }
 }
 
