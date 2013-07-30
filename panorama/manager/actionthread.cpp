@@ -373,8 +373,6 @@ void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KU
                                                   outputUrl,
                                                   fileType,
                                                   pto2mkPath,
-                                                  nonaPath,
-                                                  enblendPath,
                                                   preview);
 
     connect(createMKTask, SIGNAL(started(ThreadWeaver::Job*)),
@@ -394,6 +392,8 @@ void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KU
         CompileMKStepTask *t = new CompileMKStepTask(d->preprocessingTmpDir->name(),
                                                      i,
                                                      mkUrl,
+                                                     nonaPath,
+                                                     enblendPath,
                                                      makePath,
                                                      preview);
 
@@ -411,6 +411,8 @@ void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KU
     CompileMKTask *compileMKTask = new CompileMKTask(d->preprocessingTmpDir->name(),
                                                      mkUrl,
                                                      outputUrl,
+                                                     nonaPath,
+                                                     enblendPath,
                                                      makePath,
                                                      preview);
 

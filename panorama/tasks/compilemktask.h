@@ -43,16 +43,22 @@ private:
 
     const KUrl* const                   panoUrl;
     const KUrl* const                   mkUrl;
+    const QString                       nonaPath;
+    const QString                       enblendPath;
     const QString                       makePath;
 
     KProcess*                           process;
 
 public:
 
-    CompileMKTask(QObject* parent, const KUrl& workDir, const KUrl& mkUrl,
-                  const KUrl& panoUrl, const QString& makePath, bool preview);
-    CompileMKTask(const KUrl& workDir, const KUrl& mkUrl,
-                  const KUrl& panoUrl, const QString& makePath, bool preview);
+    CompileMKTask(QObject* parent, const KUrl& workDir,
+                  const KUrl& mkUrl, const KUrl& panoUrl,
+                  const QString& nonaPath, const QString& enblendPath,
+                  const QString& makePath, bool preview);
+    CompileMKTask(const KUrl& workDir,
+                  const KUrl& mkUrl, const KUrl& panoUrl,
+                  const QString& nonaPath, const QString& enblendPath,
+                  const QString& makePath, bool preview);
     ~CompileMKTask();
 
     void requestAbort();

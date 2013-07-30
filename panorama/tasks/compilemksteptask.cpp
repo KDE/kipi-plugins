@@ -34,16 +34,20 @@
 namespace KIPIPanoramaPlugin
 {
 
-    CompileMKStepTask::CompileMKStepTask(QObject* parent, const KUrl& workDir, int id, const KUrl& mkUrl,
-                                         const QString& makePath, bool preview)
+CompileMKStepTask::CompileMKStepTask(QObject* parent, const KUrl& workDir, int id, const KUrl& mkUrl,
+                                     const QString& nonaPath, const QString& enblendPath,
+                                     const QString& makePath, bool preview)
     : Task(parent, preview ? NONAFILEPREVIEW : NONAFILE, workDir),
-      id(id), mkUrl(&mkUrl), makePath(makePath), process(0)
+      id(id), mkUrl(&mkUrl), nonaPath(nonaPath),
+      enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
 CompileMKStepTask::CompileMKStepTask(const KUrl& workDir, int id, const KUrl& mkUrl,
+                                     const QString& nonaPath, const QString& enblendPath,
                                      const QString& makePath, bool preview)
-    : Task(0, preview ? NONAFILEPREVIEW : NONAFILE, workDir), id(id),
-      mkUrl(&mkUrl), makePath(makePath), process(0)
+    : Task(0, preview ? NONAFILEPREVIEW : NONAFILE, workDir),
+      id(id), mkUrl(&mkUrl), nonaPath(nonaPath),
+      enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
 CompileMKStepTask::~CompileMKStepTask()
@@ -75,6 +79,8 @@ void CompileMKStepTask::run()
     args << makePath;
     args << "-f";
     args << mkUrl->toLocalFile();
+    args << QString("ENBLEND='%1'").arg(enblendPath);
+    args << QString("NONA='%1'").arg(nonaPath);
     args << mkFile;
 
     process->setProgram(args);

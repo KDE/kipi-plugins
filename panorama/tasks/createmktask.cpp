@@ -35,19 +35,19 @@ namespace KIPIPanoramaPlugin
 {
 
 CreateMKTask::CreateMKTask(QObject* parent, const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
-                           KUrl& panoUrl, PanoramaFileType fileType, const QString& pto2mkPath,
-                           const QString& nonaPath, const QString& enblendPath, bool preview)
+                           KUrl& panoUrl, PanoramaFileType fileType,
+                           const QString& pto2mkPath, bool preview)
     : Task(parent, preview ? CREATEMKPREVIEW : CREATEMK, workDir), ptoUrl(&input), mkUrl(&mkUrl),
-      panoUrl(&panoUrl), fileType(fileType), pto2mkPath(pto2mkPath),
-      nonaPath(nonaPath), enblendPath(enblendPath), process(0)
+      panoUrl(&panoUrl), fileType(fileType),
+      pto2mkPath(pto2mkPath), process(0)
 {}
 
 CreateMKTask::CreateMKTask(const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
-                           KUrl& panoUrl, PanoramaFileType fileType, const QString& pto2mkPath,
-                           const QString& nonaPath, const QString& enblendPath, bool preview)
+                           KUrl& panoUrl, PanoramaFileType fileType,
+                           const QString& pto2mkPath, bool preview)
     : Task(0, preview ? CREATEMKPREVIEW : CREATEMK, workDir), ptoUrl(&input), mkUrl(&mkUrl),
-      panoUrl(&panoUrl), fileType(fileType), pto2mkPath(pto2mkPath),
-      nonaPath(nonaPath), enblendPath(enblendPath), process(0)
+      panoUrl(&panoUrl), fileType(fileType),
+      pto2mkPath(pto2mkPath), process(0)
 {}
 
 CreateMKTask::~CreateMKTask()
@@ -112,22 +112,6 @@ void CreateMKTask::run()
 
     delete process;
     process = 0;
-
-    /* Just replacing strings in the generated makefile to reflect the
-        * location of the binaries of nona and enblend. This ensures that
-        * the make process will be able to execute those binaries without
-        * worring that any binary is not in the system path.
-        */
-    QFile mkUrlFile(mkUrl->toLocalFile());
-    mkUrlFile.open(QIODevice::ReadWrite);
-
-    QString fileData = mkUrlFile.readAll();
-    fileData.replace("NONA=\"nona\"", QString("NONA=\"%1\"").arg(nonaPath));
-    fileData.replace("ENBLEND=\"enblend\"", QString("ENBLEND=\"%1\"").arg(enblendPath));
-
-    mkUrlFile.seek(0L);
-    mkUrlFile.write(fileData.toAscii());
-    mkUrlFile.close();
 
     successFlag = true;
     return;

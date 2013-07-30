@@ -46,19 +46,17 @@ private:
     KUrl* const                         panoUrl;
     const PanoramaFileType              fileType;
     const QString                       pto2mkPath;
-    const QString                       nonaPath;
-    const QString                       enblendPath;
 
     KProcess*                           process;
 
 public:
 
     CreateMKTask(QObject* parent, const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
-                 KUrl& panoUrl, PanoramaFileType fileType, const QString& pto2mkPath,
-                 const QString& nonaPath, const QString& enblendPath, bool preview);
+                 KUrl& panoUrl, PanoramaFileType fileType,
+                 const QString& pto2mkPath, bool preview);
     CreateMKTask(const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
-                 KUrl& panoUrl, PanoramaFileType fileType, const QString& pto2mkPath,
-                 const QString& nonaPath, const QString& enblendPath, bool preview);
+                 KUrl& panoUrl, PanoramaFileType fileType,
+                 const QString& pto2mkPath, bool preview);
     ~CreateMKTask();
 
     void requestAbort();

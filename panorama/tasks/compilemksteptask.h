@@ -46,6 +46,8 @@ public:
 private:
 
     const KUrl* const                   mkUrl;
+    const QString                       nonaPath;
+    const QString                       enblendPath;
     const QString                       makePath;
 
     KProcess*                           process;
@@ -53,8 +55,10 @@ private:
 public:
 
     CompileMKStepTask(QObject* parent, const KUrl& workDir, int id, const KUrl& mkUrl,
+                      const QString& nonaPath, const QString& enblendPath,
                       const QString& makePath, bool preview);
     CompileMKStepTask(const KUrl& workDir, int id, const KUrl& mkUrl,
+                      const QString& nonaPath, const QString& enblendPath,
                       const QString& makePath, bool preview);
     ~CompileMKStepTask();
 
