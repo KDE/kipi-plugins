@@ -22,6 +22,7 @@ Name[pt]=Editor de Formatos de Fotografias
 Name[pt_BR]=Editor de formatos de fotos
 Name[sl]=Urejevalnik razporedov slik
 Name[sv]=Fotolayouteditor
+Name[ug]=Photo Layouts Editor
 Name[uk]=Редактор компонування фотографій
 Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器

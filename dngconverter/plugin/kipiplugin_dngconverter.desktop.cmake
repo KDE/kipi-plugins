@@ -41,6 +41,7 @@ Name[sq]=DNGConverter
 Name[sv]=DNG-konvertering
 Name[th]=แปลงภาพแบบ DNG
 Name[tr]=DNG Dönüştürücü
+Name[ug]=DNGConverter
 Name[uk]=DNGConverter
 Name[x-test]=xxDNGConverterxx
 Name[zh_CN]=DNG 转换器
