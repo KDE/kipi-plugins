@@ -1,0 +1,14 @@
+Kipi-plugins 3.3.0-beta3 - Release date: 2013/06/30
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 321274 - geolocation edit bookmarks.....NOTHING happens
+002 ==> 230360 - Not possible to add non-ascii characters in kipi-plugins Byline-field
+003 ==> 322071 - Installs wrong file into share/config.kcfg.
+004 ==> 322636 - GeoTag for MOV files canot be saved in the file.
+005 ==> 318307 - Detects enfuse and enblend versions wrong
+006 ==> 
