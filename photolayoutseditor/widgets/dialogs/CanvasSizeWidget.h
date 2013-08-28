@@ -43,6 +43,7 @@ namespace KIPIPhotoLayoutsEditor
             };
 
             explicit CanvasSizeWidget(QWidget* parent = 0);
+            ~CanvasSizeWidget();
             Orientation orientation() const;
             CanvasSize canvasSize() const;
 
