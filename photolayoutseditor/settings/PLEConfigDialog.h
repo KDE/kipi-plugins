@@ -41,6 +41,7 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             explicit PLEConfigDialog(QWidget * parent = 0);
+            ~PLEConfigDialog();
 
             virtual void updateSettings();
             virtual void updateWidgets();
