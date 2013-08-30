@@ -371,7 +371,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     if (!data.isNull())
     {
         val = data.toInt();
-        if (val >= 0 && val <= 8)
+        if (val >= 0 && val <= 9)
         {
             d->priorityCB->setCurrentIndex(val);
             d->priorityCheck->setChecked(true);

@@ -219,15 +219,16 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
     d->priorityCB    = new KComboBox(this);
-    d->priorityCB->insertItem(0, i18nc("priority for the envelope", "0: None"));
-    d->priorityCB->insertItem(1, i18nc("priority for the envelope", "1: High"));
+    d->priorityCB->insertItem(0, i18nc("priority for the envelope",    "0: None"));
+    d->priorityCB->insertItem(1, i18nc("priority for the envelope",    "1: High"));
     d->priorityCB->insertItem(2, "2");
     d->priorityCB->insertItem(3, "3");
     d->priorityCB->insertItem(4, "4");
-    d->priorityCB->insertItem(5, i18nc("priority for the envelope", "5: Normal"));
+    d->priorityCB->insertItem(5, i18nc("priority for the envelope",    "5: Normal"));
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
-    d->priorityCB->insertItem(8, i18nc("priority for the envelope", "8: Low"));
+    d->priorityCB->insertItem(8, i18nc("priority for the envelope",    "8: Low"));
+    d->priorityCB->insertItem(9, i18nc("editorial urgency of content", "9: User-defined"));
     d->priorityCB->setWhatsThis(i18n("Select here the envelope priority."));
 
     // --------------------------------------------------------
@@ -472,7 +473,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     if (!data.isNull())
     {
         const int val = data.toInt();
-        if (val >= 0 && val <= 8)
+        if (val >= 0 && val <= 9)
         {
             d->priorityCB->setCurrentIndex(val);
             d->priorityCheck->setChecked(true);
