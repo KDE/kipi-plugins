@@ -191,6 +191,7 @@ XMPProperties::XMPProperties(QWidget* const parent)
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
     d->priorityCB->insertItem(8, i18nc("editorial urgency of content", "8: Low"));
+    d->priorityCB->insertItem(9, i18nc("editorial urgency of content", "9: User-defined"));
     d->priorityCB->setWhatsThis(i18n("Select here the editorial urgency of content."));
 
     // --------------------------------------------------------
