@@ -564,7 +564,7 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    setControlButtons(Add | Remove | MoveUp | MoveDown | Clear); // add all buttons       (default)
+    setControlButtons(Add | Remove | MoveUp | MoveDown | Clear | Save | Load ); // add all buttons       (default)
     setControlButtonsPlacement(ControlButtonsRight);             // buttons on the right  (default)
     enableDragAndDrop(true);                                     // enable drag and drop  (default)
 
