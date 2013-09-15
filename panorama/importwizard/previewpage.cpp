@@ -371,14 +371,14 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                            "</qt>"));
                     d->previewWidget->setSelectionAreaPossible(true);
                     d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
-                    QSize panoSize = d->mngr->autoOptimisePtoData().project.size;
-                    QRect panoCrop = d->mngr->autoOptimisePtoData().project.crop;
+                    QSize panoSize = d->mngr->viewAndCropOptimisePtoData().project.size;
+                    QRect panoCrop = d->mngr->viewAndCropOptimisePtoData().project.crop;
                     QSize previewSize = d->mngr->previewPtoData().project.size;
                     d->previewWidget->setSelectionArea(QRectF(
-                        ((double) panoCrop.x()) / panoSize.width() * previewSize.width(),
-                        ((double) panoCrop.y()) / panoSize.height() * previewSize.height(),
-                        previewSize.width(),
-                        previewSize.height()
+                        ((double) panoCrop.left()) / panoSize.width() * previewSize.width(),
+                        ((double) panoCrop.top()) / panoSize.height() * previewSize.height(),
+                        ((double) panoCrop.width()) / panoSize.width() * previewSize.width(),
+                        ((double) panoCrop.height()) / panoSize.height() * previewSize.height()
                     ));
                     kDebug() << "Preview URL: " << d->mngr->previewUrl();
 

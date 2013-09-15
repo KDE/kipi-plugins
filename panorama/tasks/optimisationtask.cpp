@@ -92,7 +92,7 @@ void OptimisationTask::run()
         args << "-s";
 //     }
     args << "-o";
-    args << viewCropPtoUrl->toLocalFile();
+    args << autoOptimiserPtoUrl->toLocalFile();
     args << ptoUrl->toLocalFile();
 
     process->setProgram(args);
@@ -122,8 +122,8 @@ void OptimisationTask::run()
     args << "--canvas=AUTO";    // Automatic size
     args << "--crop=AUTO";      // Automatic crop
     args << "-o";
-    args << autoOptimiserPtoUrl->toLocalFile();
     args << viewCropPtoUrl->toLocalFile();
+    args << autoOptimiserPtoUrl->toLocalFile();
 
     process->setProgram(args);
 

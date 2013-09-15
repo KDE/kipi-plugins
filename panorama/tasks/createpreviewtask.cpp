@@ -94,6 +94,7 @@ void CreatePreviewTask::run()
     data->project.fileFormat.quality = 90;
     data->project.size.setHeight(data->project.size.height() * scalingFactor);
     data->project.size.setWidth(data->project.size.width() * scalingFactor);
+    data->project.crop = QRect();
     for (int imageId = 0; imageId < data->images.size(); imageId++)
     {
         PTOType::Image& image = data->images[imageId];
