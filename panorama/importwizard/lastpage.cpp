@@ -56,7 +56,6 @@ struct LastPage::LastPagePriv
           saveSettingsGroupBox(0),
           fileTemplateKLineEdit(0),
           savePtoCheckBox(0),
-          addGPlusMetadataCheckBox(0),
           warningLabel(0),
           mngr(0)
     {
@@ -67,7 +66,6 @@ struct LastPage::LastPagePriv
     QGroupBox* saveSettingsGroupBox;
     KLineEdit* fileTemplateKLineEdit;
     QCheckBox* savePtoCheckBox;
-    QCheckBox* addGPlusMetadataCheckBox;
     QLabel*    warningLabel;
 
     Manager*   mngr;
@@ -93,8 +91,11 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     QLabel *fileTemplateLabel = new QLabel(i18n("File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
-    // TODO: change the default name to something similar to what is done within hugin
-    d->fileTemplateKLineEdit  = new KLineEdit("panorama", d->saveSettingsGroupBox);
+    QString first = d->mngr->itemsList().front().fileName();
+    QString last = d->mngr->itemsList().back().fileName();
+//     QString file = "panorama";
+    QString file = QString("%1-%2").arg(first.left(first.lastIndexOf('.'))).arg(last.left(last.lastIndexOf('.')));
+    d->fileTemplateKLineEdit  = new KLineEdit(file, d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
@@ -161,7 +162,7 @@ void LastPage::copyFiles()
                                  panoUrl.toLocalFile(),
                                  d->mngr->preProcessedMap(),
                                  d->savePtoCheckBox->isChecked(),
-                                 d->addGPlusMetadataCheckBox->isChecked()
+                                 d->mngr->gPano()
                                 );
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
