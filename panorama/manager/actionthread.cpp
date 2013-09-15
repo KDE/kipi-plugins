@@ -38,6 +38,7 @@
 #include <ktempdir.h>
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/JobCollection.h>
+#include <threadweaver/JobSequence.h>
 #include <threadweaver/DependencyPolicy.h>
 
 // Local includes
@@ -173,23 +174,34 @@ void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& vie
                                    bool levelHorizon, bool buildGPano,
                                    const QString& autooptimiserPath, const QString& panoModifyPath)
 {
-    JobCollection       *jobs                       = new JobCollection();
+    JobSequence       *jobs                       = new JobSequence();
 
-    OptimisationTask *t = new OptimisationTask(d->preprocessingTmpDir->name(),
+    OptimisationTask *ot = new OptimisationTask(d->preprocessingTmpDir->name(),
                                                ptoUrl,
                                                optimizePtoUrl,
-                                               viewCropPtoUrl,
                                                levelHorizon,
-                                               buildGPano,
-                                               autooptimiserPath,
-                                               panoModifyPath);
+//                                                buildGPano,
+                                               autooptimiserPath);
 
-    connect(t, SIGNAL(started(ThreadWeaver::Job*)),
+    connect(ot, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));
-    connect(t, SIGNAL(done(ThreadWeaver::Job*)),
+    connect(ot, SIGNAL(done(ThreadWeaver::Job*)),
+            this, SLOT(slotStepDone(ThreadWeaver::Job*)));
+
+    jobs->addJob(ot);
+
+    AutoCropTask *act = new AutoCropTask(d->preprocessingTmpDir->name(),
+                                         optimizePtoUrl,
+                                         viewCropPtoUrl,
+                                         buildGPano,
+                                         panoModifyPath);
+
+    connect(act, SIGNAL(started(ThreadWeaver::Job*)),
+            this, SLOT(slotStarting(ThreadWeaver::Job*)));
+    connect(act, SIGNAL(done(ThreadWeaver::Job*)),
             this, SLOT(slotDone(ThreadWeaver::Job*)));
 
-    jobs->addJob(t);
+    jobs->addJob(act);
 
     appendJob(jobs);
 }

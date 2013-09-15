@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef OPTIMISATIONTASK_H
-#define OPTIMISATIONTASK_H
+#ifndef AUTOCROPTASK_H
+#define AUTOCROPTASK_H
 
 // KDE includes
 
@@ -36,28 +36,27 @@ using namespace KDcrawIface;
 namespace KIPIPanoramaPlugin
 {
 
-class OptimisationTask : public Task
+class AutoCropTask : public Task
 {
 
 private:
 
-    KUrl* const                         autoOptimiserPtoUrl;
-    const KUrl* const                   ptoUrl;
-    const bool                          levelHorizon;
-//     const bool                          buildGPano;
-    const QString                       autooptimiserPath;
+    const KUrl* const                   autoOptimiserPtoUrl;
+    KUrl* const                         viewCropPtoUrl;
+    const bool                          buildGPano;
+    const QString                       panoModifyPath;
 
     KProcess*                           process;
 
 public:
 
-    OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input, 
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                     const QString& autooptimiserPath);
-    OptimisationTask(const KUrl& workDir, const KUrl& input,
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                     const QString& autooptimiserPath);
-    ~OptimisationTask();
+    AutoCropTask(QObject* parent, const KUrl& workDir,
+                 const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                 bool buildGPano, const QString& panoModifyPath);
+    AutoCropTask(const KUrl& workDir,
+                 const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                 bool buildGPano, const QString& panoModifyPath);
+    ~AutoCropTask();
 
     void requestAbort();
 
@@ -69,4 +68,4 @@ protected:
 
 }  // namespace KIPIPanoramaPlugin
 
-#endif /* OPTIMISATIONTASK_H */
+#endif /* AUTOCROPTASK_H */

@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "optimisationtask.h"
+#include "autocroptask.h"
 
 // KDE includes
 
@@ -30,23 +30,23 @@
 namespace KIPIPanoramaPlugin
 {
 
-OptimisationTask::OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                                   const QString& autooptimiserPath)
-    : Task(parent, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
-      ptoUrl(&input), levelHorizon(levelHorizon),
-      autooptimiserPath(autooptimiserPath), process(0)
+AutoCropTask::AutoCropTask(QObject* parent, const KUrl& workDir,
+                           const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                           bool buildGPano, const QString& panoModifyPath)
+    : Task(parent, AUTOCROP, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
+      viewCropPtoUrl(&viewCropPtoUrl), buildGPano(buildGPano),
+      panoModifyPath(panoModifyPath), process(0)
 {}
 
-OptimisationTask::OptimisationTask(const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
-                                   const QString& autooptimiserPath)
-    : Task(0, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
-      ptoUrl(&input), levelHorizon(levelHorizon),
-      autooptimiserPath(autooptimiserPath), process(0)
+AutoCropTask::AutoCropTask(const KUrl& workDir,
+                           const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
+                           bool buildGPano, const QString& panoModifyPath)
+    : Task(0, AUTOCROP, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
+      viewCropPtoUrl(&viewCropPtoUrl), buildGPano(buildGPano),
+      panoModifyPath(panoModifyPath), process(0)
 {}
 
-OptimisationTask::~OptimisationTask()
+AutoCropTask::~AutoCropTask()
 {
     if (process)
     {
@@ -55,40 +55,40 @@ OptimisationTask::~OptimisationTask()
     }
 }
 
-void OptimisationTask::requestAbort()
+void AutoCropTask::requestAbort()
 {
     process->kill();
 }
 
-void OptimisationTask::run()
+void AutoCropTask::run()
 {
-    (*autoOptimiserPtoUrl) = tmpDir;
-    autoOptimiserPtoUrl->setFileName(QString("auto_op_pano.pto"));
+    kDebug() << "autocrop start";
+    (*viewCropPtoUrl) = tmpDir;
+    viewCropPtoUrl->setFileName(QString("view_crop_pano.pto"));
+
+    kDebug() << "autocrop 1";
 
     process = new KProcess();
     process->clearProgram();
     process->setWorkingDirectory(tmpDir.toLocalFile());
     process->setOutputChannelMode(KProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+    kDebug() << "autocrop 2";
 
     QStringList args;
-    args << autooptimiserPath;
-    args << "-am";
-    if (levelHorizon)
-    {
-        args << "-l";
-    }
-//     if (!buildGPano)
-//     {
-        args << "-s";
-//     }
+    args << panoModifyPath;
+    args << "-c";               // Center the panorama
+    args << "-s";               // Straighten the panorama
+    args << "--canvas=AUTO";    // Automatic size
+    args << "--crop=AUTO";      // Automatic crop
     args << "-o";
+    args << viewCropPtoUrl->toLocalFile();
     args << autoOptimiserPtoUrl->toLocalFile();
-    args << ptoUrl->toLocalFile();
+    kDebug() << "autocrop 3";
 
     process->setProgram(args);
 
-    kDebug() << "autooptimiser command line: " << process->program();
+    kDebug() << "pano_modify command line: " << process->program();
 
     process->start();
 

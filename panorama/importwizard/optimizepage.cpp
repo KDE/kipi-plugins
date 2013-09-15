@@ -268,6 +268,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             switch (ad.action)
             {
                 case OPTIMIZE:
+                case AUTOCROP:
                 {
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -296,7 +297,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
-                case OPTIMIZE:
+                case AUTOCROP:
                 {
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));

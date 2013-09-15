@@ -28,6 +28,7 @@
 #include "cpfindtask.h"
 #include "cpcleantask.h"
 #include "optimisationtask.h"
+#include "autocroptask.h"
 #include "createpreviewtask.h"
 #include "createfinalptotask.h"
 #include "createmktask.h"
