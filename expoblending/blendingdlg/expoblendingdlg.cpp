@@ -46,7 +46,6 @@ extern "C"
 #include <QGridLayout>
 #include <QPushButton>
 #include <QScrollArea>
-#include <QString>
 
 // KDE includes
 
@@ -65,7 +64,6 @@ extern "C"
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
 #include <kde_file.h>
-#include <kurl.h>
 
 // LibKIPI includes
 
@@ -131,7 +129,6 @@ public:
     Manager*              mngr;
 
     bool                  firstImageDisplayed;
-    
 };
 
 ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
@@ -198,7 +195,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
     d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);
-    d->settingsExpander->setItemIcon(0, SmallIcon("expoblending"));
+    d->settingsExpander->setItemIcon(0, SmallIcon("kipi-expoblending"));
     d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
 
     // ---------------------------------------------------------------
@@ -301,7 +298,7 @@ void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
 {
     if (!urls.empty())
     {
-        d->mngr->thread()->identifyFiles(urls, d->mngr->exposureValuesMap());
+        d->mngr->thread()->identifyFiles(urls);
         if (!d->mngr->thread()->isRunning())
             d->mngr->thread()->start();
     }

@@ -38,8 +38,6 @@
 #include "actionthread.h"
 #include "alignbinary.h"
 #include "enfusebinary.h"
-#include "pfsbinary.h"
-#include "pfshdrgenbinary.h"
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -59,8 +57,6 @@ public:
     KUrl::List             inputUrls;
 
     ItemUrlsMap            preProcessedUrlsMap;
-    
-    EvUrlsMap              exposureValuesUrlsMap;
 
     RawDecodingSettings    rawDecodingSettings;
 
@@ -70,9 +66,7 @@ public:
 
     AlignBinary            alignBinary;
     EnfuseBinary           enfuseBinary;
-    PfsCalibrateBinary     pfscalibrateBinary;
-    PfsHdrGenBinary        hdrgenBinary;
-    
+
     ImportWizardDlg*       wizard;
     ExpoBlendingDlg*       dlg;
 };
@@ -108,12 +102,6 @@ bool Manager::checkBinaries()
     if (!d->enfuseBinary.recheckDirectories())
         return false;
 
-    if (!d->pfscalibrateBinary.recheckDirectories())
-        return false;
-    
-    if (!d->hdrgenBinary.recheckDirectories())
-        return false;
-    
     return true;
 }
 
@@ -125,16 +113,6 @@ AlignBinary& Manager::alignBinary() const
 EnfuseBinary& Manager::enfuseBinary() const
 {
     return d->enfuseBinary;
-}
-
-PfsCalibrateBinary& Manager::pfscalibrateBinary() const
-{
-    return d->pfscalibrateBinary;
-}
-
-PfsHdrGenBinary& Manager::pfshdrgenBinary() const
-{
-    return d->hdrgenBinary;
 }
 
 void Manager::setIface(Interface* const iface)
@@ -172,19 +150,9 @@ void Manager::setPreProcessedMap(const ItemUrlsMap& urls)
     d->preProcessedUrlsMap = urls;
 }
 
-void Manager::setExposureValuesMap(const EvUrlsMap& urls)
-{
-    d->exposureValuesUrlsMap = urls;
-}
-
 ItemUrlsMap Manager::preProcessedMap() const
 {
     return d->preProcessedUrlsMap;
-}
-
-EvUrlsMap& Manager::exposureValuesMap() const
-{
-    return d->exposureValuesUrlsMap;
 }
 
 ActionThread* Manager::thread() const

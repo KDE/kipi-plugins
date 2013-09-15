@@ -28,7 +28,6 @@
 #include <QDir>
 #include <QLabel>
 #include <QPixmap>
-#include <QCheckBox>
 
 // KDE includes
 
@@ -51,14 +50,9 @@ public:
     LastPagePriv()
     {
         mngr = 0;
-	pseudoHDRCheckBox = 0;
-	HDRCheckBox = 0;
     }
 
     Manager* mngr;
-    
-    QCheckBox*      pseudoHDRCheckBox;
-    QCheckBox*      HDRCheckBox;
 };
 
 LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
@@ -68,9 +62,6 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->mngr       = mngr;
     KVBox* vbox   = new KVBox(this);
     QLabel* title = new QLabel(vbox);
-    d->pseudoHDRCheckBox = new QCheckBox(i18n("Create Pseudo HDR images"), vbox);
-    d->HDRCheckBox = new QCheckBox(i18n("Create Real HDR images"), vbox);
-
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
@@ -83,7 +74,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
                         "</qt>",
                         QDir::toNativeSeparators(d->mngr->enfuseBinary().path()),
                         d->mngr->enfuseBinary().url().url()));
-   
+
     setPageWidget(vbox);
 
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-enfuse.png");

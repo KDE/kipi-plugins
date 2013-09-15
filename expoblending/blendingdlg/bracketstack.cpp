@@ -236,10 +236,10 @@ void BracketStackList::addItems(const KUrl::List& list)
     {
 #if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
-        for (KUrl::List::ConstIterator it = urls.begin() ; it != urls.end() ; ++it)
+        foreach (const KUrl& url, urls)
         {
-            if ((*it).isValid())
-                items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
+            if (url.isValid())
+                items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
         }
         KIO::PreviewJob* job = KIO::filePreview(items, iconSize());
 #else

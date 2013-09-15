@@ -9,7 +9,6 @@
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2013 by Soumajyoti Sarkar <ergy dot ergy at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,17 +34,9 @@
 #include <kurl.h>
 #include <kprocess.h>
 
-#include <threadweaver/ThreadWeaver.h>
-
-#include <threadweaver/JobCollection.h>
-#include <threadweaver/DependencyPolicy.h>
-
-
-
 // LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
-#include <libkdcraw/ractionthreadbase.h>
 
 // Local includes
 
@@ -61,7 +52,7 @@ namespace KIPIExpoBlendingPlugin
 
 class ActionData;
 
-class ActionThread : public RActionThreadBase
+class ActionThread : public QThread
 {
     Q_OBJECT
 
@@ -69,25 +60,20 @@ public:
 
     explicit ActionThread(QObject* const parent);
     ~ActionThread();
-    
-    void setPreProcessingSettings(bool align, const RawDecodingSettings& settings);
+
     void setEnfuseVersion(const double version);
+    void setPreProcessingSettings(bool align, const RawDecodingSettings& settings);
     void loadProcessed(const KUrl& url);
-    void identifyFiles(const KUrl::List& urlList, EvUrlsMap& exposureValuesMap);
-    void preProcessFiles(const KUrl::List& urlList, const QString& alignPath); 
+    void identifyFiles(const KUrl::List& urlList);
+    void convertRawFiles(const KUrl::List& urlList);
+    void preProcessFiles(const KUrl::List& urlList, const QString& alignPath);
     void enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl,
                        const EnfuseSettings& settings, const QString& enfusePath);
     void enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl,
                      const EnfuseSettings& settings, const QString& enfusePath);
-    
-    void hdrGen(const KUrl::List& urlList, QString& name, const PfsHdrSettings& settings, int option);
-    void hdrCalibrate(const KUrl::List& urlList, const QString& name, const PfsHdrSettings& settings, int option);
-    void hdrOutExrPreview(const KUrl::List& urlList,const QString& name, const KUrl& outputUrl, 
-			const PfsHdrSettings& settings);
-    void hdrOutExrFinal(const KUrl::List& urlList,const QString& name, const KUrl& outputUrl, 
-	                const PfsHdrSettings& settings);
+
     void cancel();
-    
+
     /**
      * Clean up all temporary results produced so far.
      */
@@ -96,15 +82,27 @@ public:
 Q_SIGNALS:
 
     void starting(const KIPIExpoBlendingPlugin::ActionData& ad);
-    void stepFinished(const KIPIExpoBlendingPlugin::ActionData& ad);
     void finished(const KIPIExpoBlendingPlugin::ActionData& ad);
-    
-private Q_SLOTS:
 
-    void slotDone(ThreadWeaver::Job* j);
-    void slotStepDone(ThreadWeaver::Job* j);
-    void slotStarting(ThreadWeaver::Job* j);
-  
+private:
+
+    void    run();
+
+    bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
+                               bool  align, const RawDecodingSettings& settings,
+                               const QString& alignPath, QString& errors);
+    bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
+    bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
+
+    bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
+                        const EnfuseSettings& settings,
+                        const QString& enfusePath, QString& errors);
+
+    QString getProcessError(KProcess* const proc) const;
+
+    float   getAverageSceneLuminance(const KUrl& url);
+    bool    getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta);
+
 private:
 
     class ActionThreadPriv;

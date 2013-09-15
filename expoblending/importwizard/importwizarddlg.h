@@ -72,7 +72,7 @@ private Q_SLOTS:
     void back();
 
     void slotIntroPageIsValid(bool);
-    void slotItemsPageIsValid(bool, const EvUrlsMap&);
+    void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);
 
 private:

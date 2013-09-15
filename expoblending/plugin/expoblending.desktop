@@ -1,4 +1,3 @@
-#!/usr/bin/env xdg-open
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to blend bracketed images
@@ -14,7 +13,7 @@ Comment[en_GB]=A tool to blend bracketed images
 Comment[es]=Una herramienta para mostrar imágenes delimitadas
 Comment[et]=Tööriist kahveldatud piltide liitmiseks
 Comment[eu]=Urkilatutako irudiak nahasteko tresna
-Comment[fr]=Outil pour fusionner des images prisent avec différentes expositions
+Comment[fr]=Outil pour fusionner des images prises avec différentes expositions
 Comment[gl]=Unha ferramenta para mesturar as imaxes tomadas en "bracketing"
 Comment[is]=Verkfæri til að setja saman mislýstar myndraðir (bracketed)
 Comment[it]=Uno strumento per fondere immagini sovrapposte
@@ -82,7 +81,7 @@ Name[en_GB]=ExpoBlending
 Name[es]=ExpoBlending
 Name[et]=Pildiliitmine
 Name[eu]=Esposizio-nahasketa
-Name[fr]=FusionExposition
+Name[fr]=Fusion d'exposition
 Name[gl]=Mistura da exposición
 Name[is]=Lýsingarblöndun
 Name[it]=Doppia esposizione
@@ -97,12 +96,13 @@ Name[ro]=Fuziune expunere
 Name[ru]=Смешивание экспозиции
 Name[sl]=ExpoBlending
 Name[sv]=Exponeringsblandning
+Name[ug]=ExpoBlending
 Name[uk]=Злиття експозиції
 Name[x-test]=xxExpoBlendingxx
 Name[zh_CN]=曝光混合
 Name[zh_TW]=曝光混合
 StartupNotify=true
-Icon=expoblending
+Icon=kipi-expoblending
 Terminal=false
 Type=Application
 X-DBUS-ServiceName=

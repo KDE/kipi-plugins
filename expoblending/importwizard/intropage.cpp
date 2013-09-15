@@ -40,8 +40,6 @@
 #include "kpbinarysearch.h"
 #include "alignbinary.h"
 #include "enfusebinary.h"
-#include "pfsbinary.h"
-#include "pfshdrgenbinary.h"
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -61,7 +59,7 @@ public:
 };
 
 IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("Welcome to Exposure Blending/HDR Image Creation Tool")),
+    : KPWizardPage(dlg, i18n("Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {
     KVBox *vbox   = new KVBox(this);
@@ -89,8 +87,6 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
-    d->binariesWidget->addBinary(d->mngr->pfscalibrateBinary());
-    d->binariesWidget->addBinary(d->mngr->pfshdrgenBinary());
 #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
 #endif
