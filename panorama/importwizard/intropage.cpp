@@ -122,17 +122,17 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
 
-    QVBoxLayout* settingsVBox   = new QVBoxLayout();
-    d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);
-    d->settingsGroupBox->setLayout(settingsVBox);
+//     QVBoxLayout* settingsVBox   = new QVBoxLayout();
+//     d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);
+//     d->settingsGroupBox->setLayout(settingsVBox);
 
-    d->addGPlusMetadataCheckBox = new QCheckBox(i18n("Add Google+ Metadata"), d->settingsGroupBox);
-    d->addGPlusMetadataCheckBox->setToolTip(i18n("Add Exif metadata to the output panorama image for Google+ 3D viewer"));
-    d->addGPlusMetadataCheckBox->setWhatsThis(i18n("<b>Add Google+ Metadata</b>: Enabling this allows the program to add "
-                                                   "metadata to the output image such that when uploaded to Google+, the "
-                                                   "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
-                                                   "that this feature is most insteresting for large panoramas."));
-    settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
+//     d->addGPlusMetadataCheckBox = new QCheckBox(i18n("Add Google+ Metadata"), d->settingsGroupBox);
+//     d->addGPlusMetadataCheckBox->setToolTip(i18n("Add Exif metadata to the output panorama image for Google+ 3D viewer"));
+//     d->addGPlusMetadataCheckBox->setWhatsThis(i18n("<b>Add Google+ Metadata</b>: Enabling this allows the program to add "
+//                                                    "metadata to the output image such that when uploaded to Google+, the "
+//                                                    "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
+//                                                    "that this feature is most insteresting for large panoramas."));
+//     settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
 
     QVBoxLayout* formatVBox     = new QVBoxLayout();
     d->formatGroupBox           = new QGroupBox(i18n("File Format"), vbox);
@@ -190,8 +190,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->addGPlusMetadataCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(slotToggleGPano(int)));
+//     connect(d->addGPlusMetadataCheckBox, SIGNAL(stateChanged(int)),
+//             this, SLOT(slotToggleGPano(int)));
+    slotToggleGPano(0);
 
     connect(group, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(slotChangeFileFormat(QAbstractButton*)));
@@ -201,7 +202,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
 
-    d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
+//     d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
 //     d->hdrCheckBox->setChecked(d->mngr->hdr());
 }
 
