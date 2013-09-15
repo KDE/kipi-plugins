@@ -37,6 +37,7 @@
 // Local includes
 
 #include "enfusesettings.h"
+#include "pfshdrsettings.h"
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -48,7 +49,11 @@ enum Action
     PREPROCESSING,
     ENFUSEPREVIEW,
     ENFUSEFINAL,
-    LOAD
+    LOAD,
+    HDRGEN,
+    CAMERARESPONSE,
+    HDRCALIBRATEPREVIEW,
+    HDRCALIBRATEFINAL
 };
 
 class ItemPreprocessedUrls
@@ -69,7 +74,24 @@ public:
     KUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
 };
 
+struct EvValueUrls
+{
+  EvValueUrls() {};
+  EvValueUrls(const KUrl& outUrl, const QString& message)
+  {
+      outputUrl = outUrl;
+      exposure_value = message;
+  };
+  
+  virtual ~EvValueUrls() {};
+  
+  KUrl        outputUrl;
+  QString     exposure_value;
+  
+};  
+  
 typedef QMap<KUrl, ItemPreprocessedUrls> ItemUrlsMap;   // Map between original Url and processed temp Urls.
+typedef QMap<KUrl, EvValueUrls> EvUrlsMap;   // Map between original Url and EV processed Urls.
 
 class ActionData
 {
@@ -81,6 +103,7 @@ public:
         starting = false;
         success  = false;
         action = NONE;
+	id = 0;
     }
 
     bool           starting;
@@ -90,12 +113,17 @@ public:
 
     QImage         image;
 
+    QString        dirName;
     KUrl::List     inUrls;
     KUrl::List     outUrls;
 
     EnfuseSettings enfuseSettings;
+    PfsHdrSettings pfshdrSettings;
 
     ItemUrlsMap    preProcessedUrlsMap;
+    
+    int            id;
+    int            option;
 
     Action         action;
 };
@@ -104,5 +132,6 @@ public:
 
 Q_DECLARE_METATYPE(KIPIExpoBlendingPlugin::ActionData)
 Q_DECLARE_METATYPE(KIPIExpoBlendingPlugin::ItemPreprocessedUrls)
+Q_DECLARE_METATYPE(KIPIExpoBlendingPlugin::EvValueUrls)
 
 #endif /* ACTIONS_H */

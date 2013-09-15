@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     KPMetadata::initializeExiv2();
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("kipi-expoblending"));
+    aboutData->setProgramLogo(KIcon("expoblending"));
 
     KUrl::List urlList;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();

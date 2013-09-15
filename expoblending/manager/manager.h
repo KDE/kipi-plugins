@@ -55,6 +55,8 @@ class ActionThread;
 class ExpoBlendingAboutData;
 class AlignBinary;
 class EnfuseBinary;
+class PfsCalibrateBinary;
+class PfsHdrGenBinary;
 class ManagerPriv;
 
 class Manager : public QObject
@@ -78,11 +80,15 @@ public:
     RawDecodingSettings rawDecodingSettings() const;
 
     void setPreProcessedMap(const ItemUrlsMap& urls);
+    void setExposureValuesMap(const EvUrlsMap& urls);
     ItemUrlsMap preProcessedMap() const;
+    EvUrlsMap& exposureValuesMap() const;
 
     ActionThread* thread() const;
     AlignBinary&  alignBinary() const;
     EnfuseBinary& enfuseBinary() const;
+    PfsCalibrateBinary& pfscalibrateBinary() const;
+    PfsHdrGenBinary& pfshdrgenBinary() const;
 
     void run();
 

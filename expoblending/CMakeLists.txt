@@ -4,6 +4,9 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${CMAKE_CURRENT_SOURCE_DIR}/tasks
+                    ${CMAKE_CURRENT_SOURCE_DIR}/hdrdlg
+                    
                    )
 
 # NOTE: OpenMP under MacOSX do not support multithreading.
@@ -37,6 +40,16 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusesettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/bracketstack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/hdrdlg/pfshdrstack.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/task.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/preprocesstask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/generictask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/enfusepreviewtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/enfusefinaltask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/hdrgentask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/cameraresponsetask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/hdrcalibratepreviewtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/hdrcalibratefinaltask.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
@@ -50,6 +63,7 @@ KDE4_ADD_LIBRARY(libexpoblending STATIC ${expoblending_common_SRCS})
 
 TARGET_LINK_LIBRARIES(libexpoblending
                       ${KDE4_KPARTS_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -78,7 +92,7 @@ INSTALL(FILES   plugin/kipiplugin_expoblendingui.rc                             
 
 SET(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
 
-KDE4_ADD_APP_ICON(expoblending_SRCS "./icons/*kipi-expoblending.png")
+KDE4_ADD_APP_ICON(expoblending_SRCS "./icons/*expoblending.png")
 
 KDE4_ADD_EXECUTABLE(expoblending ${expoblending_SRCS})
 

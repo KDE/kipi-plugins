@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2009-12-13
- * Description : a tool to blend bracketed images.
+ * Date        : 2013-09-04
+ * Description : a tool to blend bracketed images/create HDR images.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2013 by Soumajyoti Sarkar <ergy dot ergy at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "expoblendingdlg.moc"
+#include "hdrimagedlg.moc"
 
 // C ANSI includes
 
@@ -81,8 +81,10 @@ extern "C"
 #include "aboutdata.h"
 #include "actionthread.h"
 #include "bracketstack.h"
-#include "enfusebinary.h"
-#include "enfusesettings.h"
+#include "pfsbinary.h"
+#include "pfshdrgenbinary.h"
+#include "pfshdrstack.h"
+#include "pfshdrsettings.h"
 #include "enfusestack.h"
 #include "kpoutputdialog.h"
 #include "kppreviewmanager.h"
@@ -95,17 +97,16 @@ using namespace KDcrawIface;
 namespace KIPIExpoBlendingPlugin
 {
 
-class ExpoBlendingDlg::ExpoBlendingDlgPriv
+class HdrImageDlg::HdrImageDlgPriv
 {
 public:
 
-    ExpoBlendingDlgPriv()
+    HdrImageDlgPriv()
     {
         previewWidget       = 0;
         saveSettingsBox     = 0;
         bracketStack        = 0;
-        enfuseStack         = 0;
-        enfuseSettingsBox   = 0;
+        pfshdrStack         = 0;
         settingsExpander    = 0;
         mngr                = 0;
         firstImageDisplayed = false;
@@ -114,6 +115,9 @@ public:
 
     QString               inputFileName;
     QString               output;
+    QString               dirName;
+    
+    KUrl::List            inputList;
 
     KLineEdit*            templateFileName;
 
@@ -121,12 +125,10 @@ public:
 
     RExpanderBox*         settingsExpander;
 
-    EnfuseSettingsWidget* enfuseSettingsBox;
-
     KPSaveSettingsWidget* saveSettingsBox;
 
     BracketStackList*     bracketStack;
-    EnfuseStackList*      enfuseStack;
+    PfsHdrStackList*      pfshdrStack;
 
     Manager*              mngr;
 
@@ -134,22 +136,22 @@ public:
     
 };
 
-ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
-    : KPToolDialog(parent), d(new ExpoBlendingDlgPriv)
+HdrImageDlg::HdrImageDlg(Manager* const mngr, QWidget* const parent)
+    : KPToolDialog(parent), d(new HdrImageDlgPriv)
 {
     d->mngr = mngr;
 
     setModal(false);
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(Close);
-    setCaption(i18n("Exposure Blending"));
+    setCaption(i18n("HDR Image Creation"));
 
     setButtonText(   User1, i18n("&Save"));
-    setButtonToolTip(User1, i18n("Process and save selected processed items."));
+    setButtonToolTip(User1, i18n("Save the selected HDR images"));
     setButtonIcon(   User1, KIcon("document-save"));
 
     setButtonText(   User2, i18n("&Preview"));
-    setButtonToolTip(User2, i18n("Process a preview of bracketed images stack with current settings."));
+    setButtonToolTip(User2, i18n("Create an HDR image with current bracket stack."));
     setButtonIcon(   User2, KIcon("system-run"));
 
     setButtonText(   User3, i18n("&Abort"));
@@ -158,7 +160,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     setButtonToolTip(Close, i18n("Exit this tool"));
     setModal(false);
-    setAboutData(new ExpoBlendingAboutData());
+    setAboutData(new HdrImageAboutData());
 
     // ---------------------------------------------------------------
 
@@ -182,9 +184,8 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     d->bracketStack      = new BracketStackList(d->mngr->iface(), panel);
 
     d->settingsExpander  = new RExpanderBox(panel);
-    d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
+    d->settingsExpander->setObjectName("HDR Image Settings Expander");
 
-    d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
     d->saveSettingsBox   = new KPSaveSettingsWidget(d->settingsExpander);
 
     KHBox* hbox          = new KHBox(d->saveSettingsBox);
@@ -194,11 +195,10 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     customLabel->setText(i18n("File Name Template: "));
     d->saveSettingsBox->setCustomSettingsWidget(hbox);
 
-    d->enfuseStack       = new EnfuseStackList(panel);
+    d->pfshdrStack       = new PfsHdrStackList(panel);
 
-    d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
     d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);
-    d->settingsExpander->setItemIcon(0, SmallIcon("expoblending"));
+    d->settingsExpander->setItemIcon(0, SmallIcon("Hdr Image"));
     d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
 
     // ---------------------------------------------------------------
@@ -239,7 +239,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     connect(d->previewWidget, SIGNAL(signalButtonClicked()),
             this, SLOT(slotPreviewButtonClicked()));
 
-    connect(d->enfuseStack, SIGNAL(signalItemClicked(KUrl)),
+    connect(d->pfshdrStack, SIGNAL(signalItemClicked(KUrl)),
             this, SLOT(slotLoadProcessed(KUrl)));
 
     connect(d->templateFileName, SIGNAL(textChanged(QString)),
@@ -255,7 +255,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     loadItems(d->mngr->itemsList());
 }
 
-ExpoBlendingDlg::~ExpoBlendingDlg()
+HdrImageDlg::~HdrImageDlg()
 {
     delete d;
 }
@@ -278,17 +278,16 @@ void ExpoBlendingDlg::slotClose()
 
 void ExpoBlendingDlg::slotFileFormatChanged()
 {
-    d->enfuseStack->setTemplateFileName(d->saveSettingsBox->fileFormat(), d->templateFileName->text());
+    d->pfshdrStack->setTemplateFileName(d->saveSettingsBox->fileFormat(), d->templateFileName->text());
 }
 
 void ExpoBlendingDlg::slotPreviewButtonClicked()
 {
     KPOutputDialog dlg(kapp->activeWindow(),
-                       i18n("Enfuse Processing Messages"),
+                       i18n("Hdr Image Creation Messages"),
                        d->output);
 
     dlg.setAboutData(new ExpoBlendingAboutData());
-    dlg.exec();
 }
 
 void ExpoBlendingDlg::loadItems(const KUrl::List& urls)
@@ -323,10 +322,9 @@ void ExpoBlendingDlg::setIdentity(const KUrl& url, const QString& identity)
 
 void ExpoBlendingDlg::busy(bool val)
 {
-    d->enfuseSettingsBox->setEnabled(!val);
     d->saveSettingsBox->setEnabled(!val);
     d->bracketStack->setEnabled(!val);
-    enableButton(User1, !val ? !d->enfuseStack->settingsList().isEmpty() : false);
+    enableButton(User1, !val ? !d->pfshdrStack->settingsList().isEmpty() : false);
     enableButton(User2, !val);
     enableButton(User3, val);
     enableButton(Close, !val);
@@ -336,17 +334,15 @@ void ExpoBlendingDlg::busy(bool val)
 
 void ExpoBlendingDlg::slotDefault()
 {
-    d->enfuseSettingsBox->resetToDefault();
     d->saveSettingsBox->resetToDefault();
-    d->templateFileName->setText("enfuse");
+    d->templateFileName->setText("PfsHdr");
 }
 
 void ExpoBlendingDlg::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    KConfigGroup group = config.group(QString("Hdr Image Settings"));
 
-    d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
 
 #if KDCRAW_VERSION >= 0x020000
@@ -355,18 +351,17 @@ void ExpoBlendingDlg::readSettings()
     d->settingsExpander->readSettings();
 #endif
 
-    d->templateFileName->setText(group.readEntry("Template File Name", QString("enfuse")));
+    d->templateFileName->setText(group.readEntry("Template File Name", QString("PfsHdr")));
 
-    KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
+    KConfigGroup group2 = config.group(QString("Hdr Image Creation Dialog"));
     restoreDialogSize(group2);
 }
 
 void ExpoBlendingDlg::saveSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    KConfigGroup group = config.group(QString("Hdr Image Settings"));
 
-    d->enfuseSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
 
 #if KDCRAW_VERSION >= 0x020000
@@ -377,7 +372,7 @@ void ExpoBlendingDlg::saveSettings()
 
     group.writeEntry("Template File Name", d->templateFileName->text());
 
-    KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
+    KConfigGroup group2 = config.group(QString("Hdr Image Creation Dialog"));
     saveDialogSize(group2);
     config.sync();
 }
@@ -386,7 +381,7 @@ void ExpoBlendingDlg::slotPreview()
 {
     KUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
-
+    
     ItemUrlsMap map = d->mngr->preProcessedMap();
     KUrl::List preprocessedList;
 
@@ -396,23 +391,24 @@ void ExpoBlendingDlg::slotPreview()
         preprocessedList.append(preprocessedUrls.previewUrl);
     }
 
-    EnfuseSettings settings = d->enfuseSettingsBox->settings();
+    d->inputList = preprocessedList;
+    PfsHdrSettings settings = new PfsHdrSettings();
     settings.inputUrls      = d->bracketStack->urls();
     settings.outputFormat   = d->saveSettingsBox->fileFormat();
-    d->mngr->thread()->enfusePreview(preprocessedList, d->mngr->itemsList()[0], settings, d->mngr->enfuseBinary().path());
+    d->mngr->thread()->hdrGen(preprocessedList, d->dirName, settings, 0);
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
 
 void ExpoBlendingDlg::slotProcess()
 {
-    QList<EnfuseSettings> list = d->enfuseStack->settingsList();
+    QList<PfsHdrSettings> list = d->pfshdrStack->settingsList();
     if (list.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
     KUrl::List preprocessedList;
 
-    foreach(const EnfuseSettings& settings, list)
+    foreach(const PfsHdrSettings& settings, list)
     {
         preprocessedList.clear();
         
@@ -422,13 +418,13 @@ void ExpoBlendingDlg::slotProcess()
             preprocessedList.append(preprocessedUrls.preprocessedUrl);
         }
 
-        d->mngr->thread()->enfuseFinal(preprocessedList, d->mngr->itemsList()[0], settings, d->mngr->enfuseBinary().path());
+        d->mngr->thread()->hdrGen(preprocessedList, d->dirName, settings, 1);
         if (!d->mngr->thread()->isRunning())
             d->mngr->thread()->start();
     }
 }
 
-void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
+void ExpoBlendingDlg::saveItem(const KUrl& temp, const PfsHdrSettings& settings)
 {
     KUrl newUrl = temp;
     newUrl.setFileName(settings.targetFileName);
@@ -451,8 +447,8 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
                 case KIO::R_SKIP:
                 {
                     newUrl.clear();
-                    d->enfuseStack->setOnItem(settings.previewUrl, false);
-                    d->enfuseStack->processedItem(settings.previewUrl, false);
+                    d->pfshdrStack->setOnItem(settings.previewUrl, false);
+                    d->pfshdrStack->processedItem(settings.previewUrl, false);
 
                     break;
                 }
@@ -474,17 +470,17 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
         if (KDE::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
-            d->enfuseStack->setOnItem(settings.previewUrl, false);
-            d->enfuseStack->processedItem(settings.previewUrl, false);
+            d->pfshdrStack->setOnItem(settings.previewUrl, false);
+            d->pfshdrStack->processedItem(settings.previewUrl, false);
             return;
         }
         else
         {
-            d->enfuseStack->removeItem(settings.previewUrl);
+            d->pfshdrStack->removeItem(settings.previewUrl);
         }
     }
 
-    if (d->enfuseStack->settingsList().isEmpty())
+    if (d->pfshdrStack->settingsList().isEmpty())
     {
         enableButton(User1, false);
         busy(false);
@@ -514,17 +510,17 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 busy(true);
                 break;
             }
-            case(ENFUSEPREVIEW):
+            case(HDRCALIBRATEPREVIEW):
             {
                 busy(true);
                 d->previewWidget->setBusy(true, i18n("Processing preview of bracketed images..."));
                 break;
             }
-            case(ENFUSEFINAL):
+            case(HDRCALIBRATEFINAL):
             {
                 busy(true);
                 d->previewWidget->setBusy(true, i18n("Processing targets of bracketed images..."));
-                d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, true);
+                d->pfshdrStack->processingItem(ad.pfshdrSettings.previewUrl, true);
                 break;
             }
             default:
@@ -552,7 +548,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     busy(false);
                     break;
                 }
-                case(ENFUSEPREVIEW):
+                case(HDRCALIBRATEPREVIEW):
                 {
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
@@ -561,15 +557,15 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     busy(false);
                     break;
                 }
-                case(ENFUSEFINAL):
+                case(HDRCALIBRATEFINAL):
                 {
                     slotAbort();
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewWidget->setButtonVisible(true);
                     d->previewWidget->setText(i18n("Failed to process targets of bracketed images"), Qt::red);
-                    d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, false);
-                    d->enfuseStack->setOnItem(ad.enfuseSettings.previewUrl, false);
+                    d->pfshdrStack->processingItem(ad.pfshdr.previewUrl, false);
+                    d->pfshdrStack->setOnItem(ad.pfshdrSettings.previewUrl, false);
                     busy(false);
                     break;
                 }
@@ -598,18 +594,38 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     busy(false);
                     break;
                 }
-                case(ENFUSEPREVIEW):
+                case(HDRGEN):
                 {
-                    d->enfuseStack->addItem(ad.outUrls[0], ad.enfuseSettings);
-                    busy(false);
-                    break;
-                }
-                case(ENFUSEFINAL):
-                {
-                    d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, false);
-                    saveItem(ad.outUrls[0], ad.enfuseSettings);
-                    break;
-                }
+	            d->mngr->thread()->hdrCalibrate(d->listUrls, d->dirName, ad.pfshdrSettings, ad.option);
+	            break;
+	        }
+	        case(CAMERARESPONSE):
+	        { 
+                    loadItems(d->mngr->itemsList());
+	            if(ad.option == 0)
+		    {
+	                d->mngr->thread()->hdrOutExrPreview(d->listUrls, d->dirName, d->mngr->itemsList()[0], ad.pfshdrSettings);
+		    }
+		    if(ad.option == 1)
+		    {
+	                d->mngr->thread()->hdrOutExrFinal(d->listUrls, d->dirName, d->mngr->itemsList()[0], ad.pfshdrSettings);
+		    }
+	            break;
+	        }
+	        case(HDRCALIBRATEPREVIEW):
+	        {
+		    kDebug() << "Preview Done";
+		    d->pfshdrStack->addItem(ad.outUrls[0], ad.pfshdrSettings);
+		    busy(false);
+		    break;
+	        }
+	        case(HDRCALIBRATEFINAL):
+	        {
+		    kDebug() << "Final Done";
+		    d->pfshdrStack->processingItem(ad.pfshdrSettings.previewUrl, false);
+		    saveItem(ad.outUrls[0], ad.pfshdrSettings);
+		    break;
+	        }
                 default:
                 {
                     kWarning() << "Unknown action";
