@@ -210,10 +210,7 @@ void PreviewPage::startStitching()
     d->previewWidget->hide();
 
     QSize panoSize = d->mngr->viewAndCropOptimisePtoData().project.size;
-    QRect panoSelection(0,
-                        0,
-                        panoSize.width(),
-                        panoSize.height());
+    QRect panoSelection = d->mngr->viewAndCropOptimisePtoData().project.crop;
 
     if (previewReady) {
         QSize previewSize = d->mngr->previewPtoData().project.size;
