@@ -61,9 +61,6 @@ private:
 
     class Private;
     Private* const d;
-
-    KAction*    m_action;
-    Imageshack* m_pImageshack;
 };
 
 } // namespace KIPIImageshackExportPlugin

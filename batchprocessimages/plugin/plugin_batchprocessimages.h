@@ -86,7 +86,6 @@ private:
     ConvertImagesDialog*    m_ConvertImagesDialog;
     EffectImagesDialog*     m_EffectImagesDialog;
     FilterImagesDialog*     m_FilterImagesDialog;
-    RenameImagesDialog*     m_RenameImagesDialog;
     RecompressImagesDialog* m_RecompressImagesDialog;
     ResizeImagesDialog*     m_ResizeImagesDialog;
 
