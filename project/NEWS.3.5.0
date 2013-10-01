@@ -1,0 +1,10 @@
+Kipi-plugins 3.5.0 - Release date: 2013/09/29
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+Panorama: Autocrop. Cropping area defaults to the maximum inner rectangle of the panorama.
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 324239 - Panorama creation: give first and last (used) file name automatically
