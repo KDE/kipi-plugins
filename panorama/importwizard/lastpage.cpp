@@ -91,11 +91,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     QLabel *fileTemplateLabel = new QLabel(i18n("File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
-    QString first = d->mngr->itemsList().front().fileName();
-    QString last = d->mngr->itemsList().back().fileName();
-//     QString file = "panorama";
-    QString file = QString("%1-%2").arg(first.left(first.lastIndexOf('.'))).arg(last.left(last.lastIndexOf('.')));
-    d->fileTemplateKLineEdit  = new KLineEdit(file, d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit  = new KLineEdit("panorama", d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
@@ -146,6 +142,11 @@ LastPage::~LastPage()
 
 void LastPage::resetTitle()
 {
+    QString first = d->mngr->itemsList().front().fileName();
+    QString last = d->mngr->itemsList().back().fileName();
+    QString file = QString("%1-%2").arg(first.left(first.lastIndexOf('.'))).arg(last.left(last.lastIndexOf('.')));
+    d->fileTemplateKLineEdit->setText(file);
+
     slotTemplateChanged(d->fileTemplateKLineEdit->text());
     checkFiles();
 }
