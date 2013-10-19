@@ -26,6 +26,7 @@ Name[zh_TW]=jAlbum 匯出
 Comment=A tool to pass selected photos to jAlbum
 Comment[ca]=Una eina per passar les fotografies seleccionades a jAlbum
 Comment[ca@valencia]=Una eina per passar les fotografies seleccionades a jAlbum
+Comment[cs]=Nástroj pro poslání vybraných fotografií do jAlbum
 Comment[da]=Et værktøj til at sende udvalgte fotos til jAlbum
 Comment[el]=Εργαλείο για να περαστούν επιλεγμένες φωτογραφίες στο jAlbum
 Comment[es]=Una herramienta para transferir las fotos seleccionados a jAlbum
