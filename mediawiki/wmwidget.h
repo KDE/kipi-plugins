@@ -9,6 +9,7 @@
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
+ * Copyright (C) 2013      by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -64,15 +65,17 @@ public:
     WmWidget(QWidget* const parent);
     ~WmWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString());
+    void updateLabels(const QString& userName = QString(), const QString& wikiName = QString(), const QString& url = QString());
     void invertAccountLoginBox();
 
     KPImagesList*     imagesList()  const;
     KPProgressWidget* progressBar() const;
 
-    int  dimension() const;
-    int  quality()   const;
-    bool resize()    const;
+    int  dimension()  const;
+    int  quality()    const;
+    bool resize()     const;
+    bool removeMeta() const;
+    bool removeGeo()  const;
 
     QString author()        const;
     QString source()        const;
@@ -97,11 +100,12 @@ public:
 Q_SIGNALS:
 
     void signalChangeUserRequest();
-    void signalLoginRequest(const QString& login, const QString& pass, const QUrl& wiki);
+    void signalLoginRequest(const QString& login, const QString& pass, const QString& wikiName, const QUrl& wikiUrl);
 
 private Q_SLOTS:
 
     void slotResizeChecked();
+    void slotRemoveMetaChecked();
     void slotChangeUserClicked();
     void slotLoginClicked();
     void slotNewWikiClicked();

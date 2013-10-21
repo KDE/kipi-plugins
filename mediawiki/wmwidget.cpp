@@ -11,7 +11,7 @@
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  * Copyright (C) 2012      by Nathan Damie <nathan dot damie at gmail dot com>
  * Copyright (C) 2012      by Iliya Ivanov <ilko2002 at abv dot bg>
- * Copyright (C) 2012      by Peter Potrowl <peter dot potrowl at gmail dot com>
+ * Copyright (C) 2012-2013 by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -86,7 +86,6 @@ public:
 
     Private()
     {
-        uploadBox          = 0;
         fileBox            = 0;
         titleEdit          = 0;
         descEdit           = 0;
@@ -110,12 +109,15 @@ public:
         genTxtEdit         = 0;
         accountBox         = 0;
         headerLbl          = 0;
+        wikiNameDisplayLbl = 0;
         userNameDisplayLbl = 0;
         changeUserBtn      = 0;
         optionsBox         = 0;
         resizeChB          = 0;
         dimensionSpB       = 0;
         imageQualitySpB    = 0;
+        removeMetaChB      = 0;
+        removeGeoChB       = 0;
         licenseComboBox    = 0;
         progressBar        = 0;
         settingsExpander   = 0;
@@ -124,7 +126,6 @@ public:
         defaultMessage     = i18n("Select an image");
     }
 
-    KHBox*                                   uploadBox;
     QWidget*                                 fileBox;
     KLineEdit*                               titleEdit;
     KTextEdit*                               descEdit;
@@ -151,8 +152,9 @@ public:
     KTextEdit*                               genCatEdit;
     KTextEdit*                               genTxtEdit;
 
-    KHBox*                                   accountBox;
+    QWidget*                                 accountBox;
     QLabel*                                  headerLbl;
+    QLabel*                                  wikiNameDisplayLbl;
     QLabel*                                  userNameDisplayLbl;
     KPushButton*                             changeUserBtn;
 
@@ -160,6 +162,8 @@ public:
     QCheckBox*                               resizeChB;
     QSpinBox*                                dimensionSpB;
     QSpinBox*                                imageQualitySpB;
+    QCheckBox*                               removeMetaChB;
+    QCheckBox*                               removeGeoChB;
     SqueezedComboBox*                        licenseComboBox;
 
     KPProgressWidget*                        progressBar;
@@ -331,11 +335,11 @@ WmWidget::WmWidget(QWidget* const parent)
     QGridLayout* newWikiLayout  = new QGridLayout(newWikiBox);
 
     QLabel*  newWikiNameLabel   = new QLabel(newWikiPanel);
-    newWikiNameLabel->setText(i18n("Wiki:"));
+    newWikiNameLabel->setText(i18n("Name:"));
 
 
     QLabel*  newWikiUrlLabel    = new QLabel(newWikiPanel);
-    newWikiUrlLabel->setText(i18n("Url:"));
+    newWikiUrlLabel->setText(i18n("API URL:"));
 
     d->newWikiNameEdit          = new KLineEdit(newWikiPanel);
     d->newWikiUrlEdit           = new KLineEdit(newWikiPanel);
@@ -365,22 +369,31 @@ WmWidget::WmWidget(QWidget* const parent)
     loginBoxLayout->addWidget(d->newWikiSv,  1, 1, 3, 3);
     loginBoxLayout->addWidget(nameLabel,     4, 0, 1, 1);
     loginBoxLayout->addWidget(d->nameEdit,   4, 1, 1, 1);
-    loginBoxLayout->addWidget(d->passwdEdit, 5, 1, 1, 1);
     loginBoxLayout->addWidget(passwdLabel,   5, 0, 1, 1);
+    loginBoxLayout->addWidget(d->passwdEdit, 5, 1, 1, 1);
     loginBoxLayout->addWidget(loginBtn,      6, 0, 1, 1);
     loginBoxLayout->setObjectName("d->loginBoxLayout");
 
-    d->accountBox         = new KHBox(d->userBox);
-    d->accountBox->setWhatsThis(i18n("This is the account that is currently logged in."));
+    d->accountBox = new QWidget(d->userBox);
+    QGridLayout* accountBoxLayout = new QGridLayout(d->accountBox);
+
+    QLabel* wikiNameLbl   = new QLabel(d->accountBox);
+    wikiNameLbl->setText(i18nc("Name of the wiki the user is currently logged on", "Logged on: "));
+    d->wikiNameDisplayLbl = new QLabel(d->accountBox);
 
     QLabel* userNameLbl   = new QLabel(d->accountBox);
     userNameLbl->setText(i18nc("Username which is used to connect to the wiki", "Logged as: "));
     d->userNameDisplayLbl = new QLabel(d->accountBox);
-    QLabel* space         = new QLabel(d->accountBox);
+
     d->changeUserBtn      = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
                                i18n("Logout and change the account used for transfer")),
                                d->accountBox);
-    d->accountBox->setStretchFactor(space, 10);
+
+    accountBoxLayout->addWidget(wikiNameLbl,           0, 0, 1, 1);
+    accountBoxLayout->addWidget(d->wikiNameDisplayLbl, 0, 1, 1, 1);
+    accountBoxLayout->addWidget(userNameLbl,           1, 0, 1, 1);
+    accountBoxLayout->addWidget(d->userNameDisplayLbl, 1, 1, 1, 1);
+    accountBoxLayout->addWidget(d->changeUserBtn,      2, 0, 1, 2);
     d->accountBox->hide();
 
     d->settingsExpander->addItem(d->userBox, i18n("Account"), QString("account"), true);
@@ -464,9 +477,9 @@ WmWidget::WmWidget(QWidget* const parent)
 
     d->dimensionSpB = new QSpinBox(d->optionsBox);
     d->dimensionSpB->setMinimum(0);
-    d->dimensionSpB->setMaximum(5000);
+    d->dimensionSpB->setMaximum(10000);
     d->dimensionSpB->setSingleStep(10);
-    d->dimensionSpB->setValue(600);
+    d->dimensionSpB->setValue(1600);
     d->dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     d->dimensionSpB->setEnabled(false);
     QLabel* dimensionLbl = new QLabel(i18n("Maximum size:"), d->optionsBox);
@@ -479,11 +492,21 @@ WmWidget::WmWidget(QWidget* const parent)
     d->imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), d->optionsBox);
 
+    d->removeMetaChB = new QCheckBox(d->optionsBox);
+    d->removeMetaChB->setText(i18n("Remove metadata from file"));
+    d->removeMetaChB->setChecked(false);
+
+    d->removeGeoChB = new QCheckBox(d->optionsBox);
+    d->removeGeoChB->setText(i18n("Remove coordinates from file"));
+    d->removeGeoChB->setChecked(false);
+
     optionsBoxLayout->addWidget(d->resizeChB,       0, 0, 1, 2);
     optionsBoxLayout->addWidget(dimensionLbl,       1, 0, 1, 1);
     optionsBoxLayout->addWidget(imageQualityLbl,    2, 0, 1, 1);
     optionsBoxLayout->addWidget(d->dimensionSpB,    1, 1, 1, 1);
     optionsBoxLayout->addWidget(d->imageQualitySpB, 2, 1, 1, 1);
+    optionsBoxLayout->addWidget(d->removeMetaChB,   3, 0, 1, 2);
+    optionsBoxLayout->addWidget(d->removeGeoChB,    4, 0, 1, 2);
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
@@ -524,6 +547,9 @@ WmWidget::WmWidget(QWidget* const parent)
 
     connect(d->resizeChB, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
+
+    connect(d->removeMetaChB, SIGNAL(clicked()),
+            this, SLOT(slotRemoveMetaChecked()));
 
     connect(d->changeUserBtn, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
@@ -592,10 +618,13 @@ void WmWidget::readSettings(KConfigGroup& group)
     d->genCatEdit->setText(group.readEntry("genCategories", "Uploaded with KIPI uploader"));
     d->genTxtEdit->setText(group.readEntry("genText",       ""));
 
-    d->resizeChB->setChecked(group.readEntry("Resize",      false));
-    d->dimensionSpB->setValue(group.readEntry("Dimension",  600));
-    d->imageQualitySpB->setValue(group.readEntry("Quality", 85));
+    d->resizeChB->setChecked(group.readEntry("Resize",         false));
+    d->dimensionSpB->setValue(group.readEntry("Dimension",     1600));
+    d->imageQualitySpB->setValue(group.readEntry("Quality",    85));
+    d->removeMetaChB->setChecked(group.readEntry("RemoveMeta", false));
+    d->removeGeoChB->setChecked(group.readEntry("RemoveGeo",   false));
     slotResizeChecked();
+    slotRemoveMetaChecked();
 
     d->WikisHistory = group.readEntry("Wikis history",      QStringList());
     d->UrlsHistory  = group.readEntry("Urls history",       QStringList());
@@ -604,7 +633,7 @@ void WmWidget::readSettings(KConfigGroup& group)
 
     for(int i = 0 ; i < d->UrlsHistory.size() && i < d->WikisHistory.size() ; i++)
     {
-        d->wikiSelect->addItem(d->WikisHistory.at(i),d->UrlsHistory.at(i));
+        d->wikiSelect->addItem(d->WikisHistory.at(i), d->UrlsHistory.at(i));
     }
 }
 
@@ -627,6 +656,9 @@ void WmWidget::saveSettings(KConfigGroup& group)
     group.writeEntry("Resize",        d->resizeChB->isChecked());
     group.writeEntry("Dimension",     d->dimensionSpB->value());
     group.writeEntry("Quality",       d->imageQualitySpB->value());
+
+    group.writeEntry("RemoveMeta",    d->removeMetaChB->isChecked());
+    group.writeEntry("RemoveGeo",     d->removeGeoChB->isChecked());
 }
 
 KPImagesList* WmWidget::imagesList() const
@@ -639,21 +671,28 @@ KPProgressWidget* WmWidget::progressBar() const
     return d->progressBar;
 }
 
-void WmWidget::updateLabels(const QString& name, const QString& url)
+void WmWidget::updateLabels(const QString& userName, const QString& wikiName, const QString& url)
 {
     QString web("http://www.mediawiki.org");
 
-    if (!url.isEmpty())
+    if (url.isEmpty())
+    {
+        d->wikiNameDisplayLbl->clear();
+    }
+    else
+    {
         web = url;
+        d->wikiNameDisplayLbl->setText(QString::fromLatin1("<b>%1</b>").arg(wikiName));
+    }
 
-    d->headerLbl->setText(QString("<b><h2><a href='%1'><font color=\"#3B5998\">%2</font></a></h2></b>").arg(web).arg("MediaWiki"));
-    if (name.isEmpty())
+    d->headerLbl->setText(QString("<h2><b><a href='%1'><font color=\"#3B5998\">%2</font></a></b></h2>").arg(web).arg(wikiName));
+    if (userName.isEmpty())
     {
         d->userNameDisplayLbl->clear();
     }
     else
     {
-        d->userNameDisplayLbl->setText(QString::fromLatin1("<b>%1</b>").arg(name));
+        d->userNameDisplayLbl->setText(QString::fromLatin1("<b>%1</b>").arg(userName));
     }
 }
 
@@ -677,6 +716,12 @@ void WmWidget::slotResizeChecked()
     d->imageQualitySpB->setEnabled(d->resizeChB->isChecked());
 }
 
+void WmWidget::slotRemoveMetaChecked()
+{
+    d->removeGeoChB->setEnabled(!d->removeMetaChB->isChecked());
+    d->removeGeoChB->setChecked(d->removeMetaChB->isChecked());
+}
+
 void WmWidget::slotChangeUserClicked()
 {
     emit signalChangeUserRequest();
@@ -684,7 +729,8 @@ void WmWidget::slotChangeUserClicked()
 
 void WmWidget::slotLoginClicked()
 {
-     emit signalLoginRequest(d->nameEdit->text(), d->passwdEdit->text(), 
+     emit signalLoginRequest(d->nameEdit->text(), d->passwdEdit->text(),
+                             d->wikiSelect->itemText(d->wikiSelect->currentIndex()),
                              d->wikiSelect->itemData(d->wikiSelect->currentIndex()).toUrl());
 }
 
@@ -728,6 +774,8 @@ void WmWidget::loadImageInfoFirstLoad()
     QString latitude;
     QString longitude;
 
+    d->imagesDescInfo.clear();
+
     for(int j = 0; j < urls.size(); j++)
     {
         KPImageInfo info(urls.at(j).path());
@@ -752,12 +800,12 @@ void WmWidget::loadImageInfoFirstLoad()
 
         if(info.hasLatitude())
         {
-            latitude = QString::number(info.latitude());
+            latitude = QString::number(info.latitude(), 'f', 9);
         }
 
         if(info.hasLongitude())
         {
-            longitude = QString::number(info.longitude());
+            longitude = QString::number(info.longitude(), 'f', 9);
         }
 
         QMap<QString, QString> imageMetaData;
@@ -993,11 +1041,6 @@ void WmWidget::slotApplyLongitude()
     }
 }
 
-void WmWidget::clearImagesDesc()
-{
-    d->imagesDescInfo.clear();
-}
-
 QMap <QString,QMap <QString,QString> > WmWidget::allImagesDesc()
 {
     KUrl::List urls = d->imgList->imageUrls(false);
@@ -1056,6 +1099,18 @@ bool WmWidget::resize() const
 {
     kDebug() << "WmWidget::resize()";
     return d->resizeChB->isChecked();
+}
+
+bool WmWidget::removeMeta() const
+{
+    kDebug() << "WmWidget::removeMeta()";
+    return d->removeMetaChB->isChecked();
+}
+
+bool WmWidget::removeGeo() const
+{
+    kDebug() << "WmWidget::removeGeo()";
+    return d->removeGeoChB->isChecked();
 }
 
 QString WmWidget::license() const

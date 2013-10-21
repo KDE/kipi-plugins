@@ -9,7 +9,7 @@
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
- * Copyright (C) 2012      by Peter Potrowl <peter dot potrowl at gmail dot com>
+ * Copyright (C) 2012-2013 by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,6 +30,7 @@
 #include <QLayout>
 #include <QCloseEvent>
 #include <QFileInfo>
+#include <QFile>
 
 // KDE includes
 
@@ -84,7 +85,8 @@ public:
     QString       tmpPath;
     QString       login;
     QString       pass;
-    QUrl          wiki;
+    QString       wikiName;
+    QUrl          wikiUrl;
 
     WmWidget*     widget;
     MediaWiki*    mediawiki;
@@ -145,8 +147,8 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     connect(d->widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
 
-    connect(d->widget, SIGNAL(signalLoginRequest(QString,QString,QUrl)),
-            this, SLOT(slotDoLogin(QString,QString,QUrl)));
+    connect(d->widget, SIGNAL(signalLoginRequest(QString, QString, QString, QUrl)),
+            this, SLOT(slotDoLogin(QString, QString, QString, QUrl)));
 
     connect(d->widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotClose()));
@@ -173,6 +175,9 @@ void WMWindow::reactivate()
     d->widget->imagesList()->loadImagesFromCurrentSelection();
     d->widget->loadImageInfoFirstLoad();
     d->widget->clearEditFields();
+    kDebug() << "imagesList items count:" << d->widget->imagesList()->listView()->topLevelItemCount();
+    kDebug() << "imagesList url length:" << d->widget->imagesList()->imageUrls(false).size();
+    kDebug() << "allImagesDesc length:" << d->widget->allImagesDesc().size();
     show();
 }
 
@@ -201,58 +206,68 @@ void WMWindow::saveSettings()
 
 void WMWindow::slotClose()
 {
-    d->widget->clearImagesDesc();
     d->widget->progressBar()->progressCompleted();
     saveSettings();
     done(Close);
 }
 
-QString WMWindow::getImageCaption(const QString& fileName)
+bool WMWindow::prepareImageForUpload(const QString& imgPath)
 {
-    KPImageInfo info(fileName);
-    QStringList descriptions = QStringList() << info.title() << info.description();
-    descriptions.removeAll("");
-    return descriptions.join("\n\n");
-}
-
-bool WMWindow::prepareImageForUpload(const QString& imgPath, QString& caption)
-{
-    QImage image;
-    image.load(imgPath);
-
-    if (image.isNull())
-    {
-        return false;
-    }
 
     // get temporary file name
     d->tmpPath = d->tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
 
-    // rescale image if requested
-    int maxDim = d->widget->dimension();
-
-    if (image.width() > maxDim || image.height() > maxDim)
+    QImage image;
+    // rescale image if requested: metadata is lost
+    if (d->widget->resize())
     {
-        kDebug() << "Resizing to " << maxDim;
-        image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
-                             Qt::SmoothTransformation);
+        image.load(imgPath);
+
+        if (image.isNull())
+        {
+            return false;
+        }
+
+        int maxDim = d->widget->dimension();
+
+        if (d->widget->resize() && (image.width() > maxDim || image.height() > maxDim))
+        {
+            kDebug() << "Resizing to " << maxDim;
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
+
+        kDebug() << "Saving to temp file: " << d->tmpPath;
+        image.save(d->tmpPath, "JPEG", d->widget->quality());
+    }
+    else
+    {
+        // file is copied with its embedded metadata
+        QFile::copy(imgPath, d->tmpPath);
     }
 
-    kDebug() << "Saving to temp file: " << d->tmpPath;
-    image.save(d->tmpPath, "JPEG", d->widget->quality());
-
-    // copy meta data to temporary image
     KPMetadata meta;
 
-    if (meta.load(imgPath))
+    if (d->widget->removeMeta())
     {
-        caption = getImageCaption(imgPath);
-        meta.setImageDimensions(image.size());
+        // save empty metadata to erase them
         meta.save(d->tmpPath);
     }
     else
     {
-        caption.clear();
+        // copy meta data from initial to temporary image
+        meta.load(imgPath);
+
+        if (d->widget->resize())
+        {
+            meta.setImageDimensions(image.size());
+        }
+
+        if (d->widget->removeGeo())
+        {
+            meta.removeGPSInfo();
+        }
+
+        meta.save(d->tmpPath);
     }
 
     return true;
@@ -266,11 +281,10 @@ void WMWindow::slotStartTransfer()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        QString caption;
         QString url;
-        if(d->widget->resize())
+        if(d->widget->resize() || d->widget->removeMeta() || d->widget->removeGeo())
         {
-            prepareImageForUpload(urls.at(i).path(), caption);
+            prepareImageForUpload(urls.at(i).path());
             imagesDesc.insert(d->tmpPath, imagesDesc.take(urls.at(i).path()));
         }
     }
@@ -298,12 +312,13 @@ void WMWindow::slotChangeUserClicked()
     d->widget->invertAccountLoginBox();
 }
 
-void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QUrl& wiki)
+void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QString& wikiName, const QUrl& wikiUrl)
 {
     d->login        = login;
     d->pass         = pass;
-    d->wiki         = wiki;
-    d->mediawiki    = new MediaWiki(wiki);
+    d->wikiName     = wikiName;
+    d->wikiUrl      = wikiUrl;
+    d->mediawiki    = new MediaWiki(wikiUrl);
     Login* loginJob = new Login(*d->mediawiki, login, pass);
 
     connect(loginJob, SIGNAL(result(KJob*)), 
@@ -329,7 +344,7 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
         d->uploadJob = new WikiMediaJob(iface(), d->mediawiki, this);
         enableButton(User1, true);
         d->widget->invertAccountLoginBox();
-        d->widget->updateLabels(d->login, d->wiki.toString());
+        d->widget->updateLabels(d->login, d->wikiName, d->wikiUrl.toString());
     }
 
     return loginJob->error();
