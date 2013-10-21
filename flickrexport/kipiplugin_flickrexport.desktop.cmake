@@ -76,6 +76,7 @@ Comment[sk]=Nástroj na export obrázkov do Flickr, 23 a Zoomr webových služie
 Comment[sl]=Orodje za izvoz slik v oddaljene spletne storitve Flickr, 23 in Zooomr.
 Comment[sv]=Ett verktyg för att exportera bilder till Flickr, 23 eller Zoomr webbtjänster.
 Comment[th]=เครื่องมือส่งออกภาพต่าง ๆ ไปยังเว็บบริการ Flickr, 23 และ Zooomr ทางไกล
+Comment[tr]=Resimleri uzak bir Flickr, 23 ve Zooomr web servisine aktarmak için bir araç
 Comment[uk]=Інструмент для експорту зображень до віддаленої служби Flickr, 23 або Zooomr.
 Comment[x-test]=xxA tool to export images to remote Flickr, 23 and Zooomr web services.xx
 Comment[zh_CN]=一个将图像导出到 Flickr、23 或 Zooomr 网络服务的工具。
