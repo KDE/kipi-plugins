@@ -22,6 +22,7 @@ Name[pl]=Eksport Imgur
 Name[pt]=Exportação para o Imgur
 Name[pt_BR]=Exportar para o Imgur
 Name[ru]=Экспорт в Imgur
+Name[sk]=Imgur Export
 Name[sl]=Izvoz Imgur
 Name[sv]=Export till Imgur
 Name[tr]=Imgur Aktarımı

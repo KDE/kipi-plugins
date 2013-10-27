@@ -20,6 +20,7 @@ Name[nl]=Photivo-integratie
 Name[pl]=Integracja Photivo
 Name[pt]=Integração com o Photivo
 Name[pt_BR]=Integração com o Photivo
+Name[sk]=Integrácia Photivo
 Name[sl]=Podpora za Photivo
 Name[sv]=Integrering av Photivo
 Name[tr]=Photivo Bütünleştirmesi
