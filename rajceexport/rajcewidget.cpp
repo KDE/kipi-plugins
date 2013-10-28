@@ -64,9 +64,9 @@ namespace KIPIRajceExportPlugin
 RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
     : QWidget(parent)
 {
-    m_lastLoggedInState     = false;
-    m_session               = new RajceSession(this, tmpFolder);
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    m_lastLoggedInState           = false;
+    m_session                     = new RajceSession(this, tmpFolder);
+    QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
 
@@ -535,7 +535,8 @@ void RajceWidget::uploadNext()
 
 void RajceWidget::cancelUpload()
 {
-    if (m_currentUploadImage != m_uploadQueue.begin() && m_currentUploadImage != m_uploadQueue.end())
+    if (m_uploadingPhotos && m_currentUploadImage != m_uploadQueue.begin() &&
+        m_currentUploadImage != m_uploadQueue.end())
     {
         m_imgList->processed(KUrl::fromLocalFile(*m_currentUploadImage), false);
     }
