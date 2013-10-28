@@ -57,6 +57,7 @@ Name[pt]=KMLExport
 Name[pt_BR]=Exportar para KML
 Name[ro]=KMLExport
 Name[ru]=Экспорт в KML
+Name[sk]=KMLExport
 Name[sl]=KMLExport
 Name[sv]=Export till KML
 Name[tr]=KMLExport

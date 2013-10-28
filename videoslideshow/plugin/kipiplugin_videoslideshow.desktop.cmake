@@ -21,6 +21,7 @@ Name[nl]=Diavoorstelling met video
 Name[pl]=Pokaz slajdów filmów
 Name[pt]=Apresentação de Vídeo
 Name[pt_BR]=Apresentação de vídeo
+Name[sk]=VideoSlideShow
 Name[sl]=VideoSlideShow
 Name[sv]=Videobildspel
 Name[tr]=Video Slayt Gösterisi

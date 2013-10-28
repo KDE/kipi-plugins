@@ -18,6 +18,7 @@ Name[nl]=jAlbum-export
 Name[pl]=jAlbumExport
 Name[pt]=jAlbumExport
 Name[pt_BR]=jAlbumExport
+Name[sk]=jAlbumExport
 Name[sl]=jAlbumExport
 Name[sv]=Export till jAlbum
 Name[tr]=jAlbumExport

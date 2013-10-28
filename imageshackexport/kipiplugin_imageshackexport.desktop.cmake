@@ -21,6 +21,7 @@ Name[nl]=Imageshack-export
 Name[pl]=Eksportuj do Imageshack
 Name[pt]=Exportação para o Imageshack
 Name[pt_BR]=Exportar para o Imageshack
+Name[sk]=Imageshack Export
 Name[sl]=Izvoz v Imageshack
 Name[sv]=Export till Imageshack
 Name[tr]=Imageshack Aktarımı

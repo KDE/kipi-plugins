@@ -22,6 +22,7 @@ Name[nl]=Panorama
 Name[pl]=Panorama
 Name[pt]=Panorama
 Name[pt_BR]=Panorama
+Name[sk]=Panoráma
 Name[sl]=Panorama
 Name[sv]=Panorama
 Name[tr]=Panorama

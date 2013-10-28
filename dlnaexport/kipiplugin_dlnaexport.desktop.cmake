@@ -21,6 +21,7 @@ Name[nl]=DLNA-export
 Name[pl]=EksportDoDLNA
 Name[pt]=DLNAExport
 Name[pt_BR]=Exportar para DLNA
+Name[sk]=DLNAExport
 Name[sl]=DLNAExport
 Name[sv]=Export till DLNA
 Name[tr]=DLNAExport
