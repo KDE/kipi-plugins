@@ -9,3 +9,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 319664 - kipi-plugins 3.2.0-beta2 (and 3.1.0) installs a static archive /usr/lib64/libPropertyBrowser.a.
 002 ==> 324044 - MediaWiki: Fix bug, add feature, improve usability
+003 ==> 307689 - Digikam crashes during Export to Rajce service [patch].
+004 ==> 
