@@ -54,8 +54,8 @@ SmugTalker::SmugTalker(QWidget* const parent)
     m_job        = 0;
     m_state      = SMUG_LOGOUT;
     m_userAgent  = QString("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
-    m_apiVersion = "1.2.0";
-    m_apiURL     = QString("https://api.smugmug.com/hack/rest/%1/").arg(m_apiVersion);
+    m_apiVersion = "1.2.2";
+    m_apiURL     = QString("https://api.smugmug.com/services/api/rest/%1/").arg(m_apiVersion);
     m_apiKey     = "R83lTcD4TvMsIiXqpdrA9OdIJ22uA4Wi";
 }
 
@@ -115,8 +115,7 @@ void SmugTalker::login(const QString& email, const QString& password)
         url.addQueryItem("Password", password);
     }
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -148,8 +147,7 @@ void SmugTalker::logout()
     url.addQueryItem("method", "smugmug.logout");
     url.addQueryItem("SessionID", m_sessionID);
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -183,8 +181,7 @@ void SmugTalker::listAlbums(const QString& nickName)
     if (!nickName.isEmpty())
         url.addQueryItem("NickName", nickName);
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -224,8 +221,7 @@ void SmugTalker::listPhotos(int albumID,
     if (!sitePassword.isEmpty())
         url.addQueryItem("SitePassword", sitePassword);
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -255,8 +251,7 @@ void SmugTalker::listAlbumTmpl()
     url.addQueryItem("method", "smugmug.albumtemplates.get");
     url.addQueryItem("SessionID", m_sessionID);
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -286,8 +281,7 @@ void SmugTalker::listCategories()
     url.addQueryItem("method", "smugmug.categories.get");
     url.addQueryItem("SessionID", m_sessionID);
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -318,8 +312,7 @@ void SmugTalker::listSubCategories(int categoryID)
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("CategoryID", QString::number(categoryID));
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -374,8 +367,7 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
             url.addQueryItem("Public", "0");
     }
 
-    QByteArray tmp;
-    KIO::TransferJob* const job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -871,6 +863,8 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     if (errCode == 15)  // 15: empty list
         errCode = 0;
 
+    qSort(albumsList.begin(), albumsList.end(), SmugAlbum::lessThan);
+
     emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg), albumsList);
 }
@@ -1052,7 +1046,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
                 {
                     SmugCategory category;
                     category.id   = e.attribute("id").toInt();
-                    category.name = htmlToText(e.attribute("Title")); // Name in 1.2.1
+                    category.name = htmlToText(e.attribute("Name"));
                     categoriesList.append(category);
                 }
             }
@@ -1108,7 +1102,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
                 {
                     SmugCategory category;
                     category.id   = e.attribute("id").toInt();
-                    category.name = htmlToText(e.attribute("Title")); // Name in 1.2.1
+                    category.name = htmlToText(e.attribute("Name"));
                     categoriesList.append(category);
                 }
             }

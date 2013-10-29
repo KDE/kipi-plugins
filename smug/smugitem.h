@@ -96,6 +96,11 @@ public:
     // below fields only used by createAlbum (and not by listAlbums)
     int     tmplID;
     QString tmpl;
+
+    static bool lessThan(SmugAlbum& a, SmugAlbum& b)
+    {
+        return a.title.toLower() < b.title.toLower();
+    }
 };
 
 // ---------------------------------------------------------------------------------
