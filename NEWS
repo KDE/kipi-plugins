@@ -13,4 +13,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 307689 - digiKam crashes during Export to Rajce service [patch].
 004 ==> 323118 - SmugMug API access fails after SmugMug relaunch [patch].
 005 ==> 324646 - digiKam hangs when producting "Video Slide Show" [patch].
-006 ==> 
+006 ==> 319611 - Invalid placement of TimeStamp element in kml export [patch].
+007 ==> 
