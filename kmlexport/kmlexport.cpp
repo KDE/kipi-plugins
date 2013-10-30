@@ -327,7 +327,7 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
         }
         else if (m_interface->hasFeature(ImagesHasTime))
         {
-            QDomElement kmlTimeStamp = addKmlElement(kmlGeometry, "TimeStamp");
+            QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
             addKmlTextElement(kmlTimeStamp, "when", (info.date()).toString("yyyy-MM-ddThh:mm:ssZ"));
         }
 
