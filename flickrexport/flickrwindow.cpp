@@ -440,6 +440,52 @@ void FlickrWindow::slotUserChangeRequest()
     //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
+/**
+ * Try to guess a sensible set name from the urls given.
+ * Currently, it extracs the last path name component, and returns the most
+ * frequently seen. The function could be expanded to, for example, only
+ * accept the path if it occurs at least 50% of the time. It could also look
+ * further up in the path name.
+ */
+QString FlickrWindow::guessSensibleSetName(const KUrl::List& urlList)
+{
+    QMap<QString,int> nrFolderOccurences;
+
+    // Extract last component of directory
+    foreach(const KUrl& url, urlList)
+    {
+        QString dir      = url.directory();
+        QStringList list = dir.split('/');
+
+        if (list.isEmpty())
+            continue;
+
+        nrFolderOccurences[list.last()]++;
+    }
+
+    int maxCount   = 0;
+    int totalCount = 0;
+    QString name;
+
+    for(QMap<QString,int>::const_iterator it=nrFolderOccurences.constBegin();
+        it!=nrFolderOccurences.constEnd(); ++it)
+    {
+        totalCount += it.value();
+
+        if (it.value() > maxCount)
+        {
+            maxCount = it.value();
+            name     = it.key();
+        }
+    }
+
+    // If there is only one entry or one name appears at least twice, return the suggestion
+    if (totalCount == 1 || maxCount > 1)
+        return name;
+
+    return QString();
+}
+
 void FlickrWindow::slotCreateNewPhotoSet()
 {
     /* This method is called when the photo set creation button is pressed. It
@@ -450,6 +496,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
     // Call the dialog
     QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
+    dlg->titleEdit->setText(guessSensibleSetName(m_imglst->imageUrls()));
     int resp                              = dlg->exec();
 
     if ((resp == QDialog::Accepted) && (!dlg->titleEdit->text().isEmpty()))
@@ -777,4 +824,3 @@ void FlickrWindow::slotReloadPhotoSetRequest()
 }
 
 } // namespace KIPIFlickrExportPlugin
-

@@ -129,6 +129,8 @@ private Q_SLOTS:
 
 private:
 
+    QString guessSensibleSetName(const KUrl::List& urlList);
+
     void closeEvent(QCloseEvent*);
     void readSettings();
     void writeSettings();
