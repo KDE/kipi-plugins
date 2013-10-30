@@ -16,4 +16,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 319611 - Invalid placement of TimeStamp element in kml export [patch].
 007 ==> 319612 - Update kml export to use KML 2.2 schema [patch].
 008 ==> 199978 - Can not email images on Windows [patch].
-009 ==> 
+009 ==> 320782 - Try to automatically guess new flickr set name from image folders [patch].
+010 ==> 
+
