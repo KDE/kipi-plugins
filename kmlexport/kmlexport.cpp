@@ -459,7 +459,7 @@ void KmlExport::generate()
     QDomImplementation impl;
     QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
     m_kmlDocument->appendChild(instr);
-    QDomElement kmlRoot             = m_kmlDocument->createElementNS("http://earth.google.com/kml/2.1","kml");
+    QDomElement kmlRoot             = m_kmlDocument->createElementNS("http://earth.google.com/kml/2.2","kml");
     m_kmlDocument->appendChild( kmlRoot );
 
     QDomElement kmlAlbum            = addKmlElement(kmlRoot, "Document");
