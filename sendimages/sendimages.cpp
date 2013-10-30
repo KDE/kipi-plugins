@@ -405,7 +405,7 @@ bool SendImages::invokeMailAgent()
         {
             QStringList stringFileList;
 
-            foreach( const KUrl& file, fileList)
+            foreach(const KUrl& file, fileList)
             {
                 stringFileList << file.path();
             }
@@ -421,7 +421,7 @@ bool SendImages::invokeMailAgent()
                         QString(),                     // Message Subject.
                         QString(),                     // Message Body.
                         QString(),                     // Message Body File.
-                        stringFileList);          // Images attachments (+ image properties file).
+                        stringFileList);               // Images attachments (+ image properties file).
 
                     d->progressDlg->progressWidget()->addedAction(i18n("Starting default KDE email program..."), StartingMessage);
 
@@ -433,8 +433,17 @@ bool SendImages::invokeMailAgent()
                 {
                     QString prog("balsa");
                     QStringList args;
+
+#ifdef _WIN32
+                    args.append("/c");
+                    args.append("start");
+                    args.append(prog);
+                    prog = QString("cmd");
+#endif
+
                     args.append("-m");
                     args.append("mailto:");
+
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("-a");
@@ -442,7 +451,9 @@ bool SendImages::invokeMailAgent()
                     }
 
                     if (!QProcess::startDetached(prog, args))
+                    {
                         invokeMailAgentError(prog, args);
+                    }
                     else
                     {
                         invokeMailAgentDone(prog, args);
@@ -457,23 +468,41 @@ bool SendImages::invokeMailAgent()
                 case EmailSettings::SYLPHEEDCLAWS:
                 {
                     QStringList args;
+
+#ifdef _WIN32
+                    args.append("/c");
+                    args.append("start");
+                    args.append(prog);
+                    prog = QString("cmd");
+#endif
+
                     args.append("--compose");
                     args.append("--attach");
+
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append((*it).path());
                     }
 
                     QString prog;
+
                     if (d->settings.emailProgram == EmailSettings::CLAWSMAIL)
+                    {
                         prog = QString("claws-mail");
+                    }
                     else if (d->settings.emailProgram == EmailSettings::SYLPHEED)
+                    {
                         prog = QString("sylpheed");
+                    }
                     else
+                    {
                         prog = QString("sylpheed-claws");
+                    }
 
                     if (!QProcess::startDetached(prog, args))
+                    {
                         invokeMailAgentError(prog, args);
+                    }
                     else
                     {
                         invokeMailAgentDone(prog, args);
@@ -487,16 +516,28 @@ bool SendImages::invokeMailAgent()
                 {
                     QString prog("evolution");
                     QStringList args;
+
+#ifdef _WIN32
+                    args.append("/c");
+                    args.append("start");
+                    args.append(prog);
+                    prog = QString("cmd");
+#endif
+
                     QString tmp = "mailto:?subject=";
+
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append("&attach=");
                         tmp.append( (*it).path() );
                     }
+
                     args.append(tmp);
 
                     if (!QProcess::startDetached(prog, args))
+                    {
                         invokeMailAgentError(prog, args);
+                    }
                     else
                     {
                         invokeMailAgentDone(prog, args);
@@ -510,6 +551,14 @@ bool SendImages::invokeMailAgent()
                 {
                     QString prog("kmail");
                     QStringList args;
+
+#ifdef _WIN32
+                    args.append("/c");
+                    args.append("start");
+                    args.append(prog);
+                    prog = QString("cmd");
+#endif
+
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("--attach");
@@ -517,7 +566,9 @@ bool SendImages::invokeMailAgent()
                     }
 
                     if (!QProcess::startDetached(prog, args))
+                    {
                         invokeMailAgentError(prog, args);
+                    }
                     else
                     {
                         invokeMailAgentDone(prog, args);
@@ -535,29 +586,47 @@ bool SendImages::invokeMailAgent()
                 case EmailSettings::GMAILAGENT:
                 {
                     QString prog;
+
                     if (d->settings.emailProgram == EmailSettings::NETSCAPE)
+                    {
                         prog = QString("netscape");
+                    }
                     else if (d->settings.emailProgram == EmailSettings::THUNDERBIRD)
+                    {
                         prog = QString("thunderbird");
+                    }
                     else
+                    {
                         prog = QString("gmailagent");
+                    }
 
                     QStringList args;
+
+#ifdef _WIN32
+                    args.append("/c");
+                    args.append("start");
+                    args.append(prog);
+                    prog = QString("cmd");
+#endif
                     args.append("-compose");
                     QString tmp = "attachment='";
+
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append( "file://" );
                         tmp.append((*it).path());
                         tmp.append( "," );
                     }
+
                     tmp.remove(tmp.length()-1, 1);
                     tmp.append("'");
 
                     args.append(tmp);
 
                     if (!QProcess::startDetached(prog, args))
+                    {
                         invokeMailAgentError(prog, args);
+                    }
                     else
                     {
                         invokeMailAgentDone(prog, args);
