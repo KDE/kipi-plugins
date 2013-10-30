@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 324646 - digiKam hangs when producting "Video Slide Show" [patch].
 006 ==> 319611 - Invalid placement of TimeStamp element in kml export [patch].
 007 ==> 319612 - Update kml export to use KML 2.2 schema [patch].
-008 ==> 
+008 ==> 199978 - Can not email images on Windows [patch].
+009 ==> 
