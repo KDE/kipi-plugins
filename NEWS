@@ -12,5 +12,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 324044 - MediaWiki: Fix bug, add feature, improve usability
 003 ==> 307689 - digiKam crashes during Export to Rajce service [patch].
 004 ==> 323118 - SmugMug API access fails after SmugMug relaunch [patch].
-005 ==> 
-
+005 ==> 324646 - digiKam hangs when producting "Video Slide Show" [patch].
+006 ==> 
