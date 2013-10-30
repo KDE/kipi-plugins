@@ -109,22 +109,24 @@ void ActionThread::run()
     while(d->item->getNextImageItem() && d->running)
     {
         if(img)
+        {
             d->api->freeImage(*img);
+        }
 
-        img        = imgnext;
-        d->item    = d->item->getNextImageItem();
-        imgnext    = loadImage(d->item);
-        upperBound = d->item->getTime() * d->framerate;
+        img             = imgnext;
+        d->item         = d->item->getNextImageItem();
+        imgnext         = loadImage(d->item);
+        upperBound      = d->item->getTime() * d->framerate;
 
         processItem(upperBound, img, imgnext, TYPE_IMAGE);
 
         ActionData ad;
-        ad.action      = TYPE_IMAGE;
-        ad.fileUrl     = d->item->getPrevImageItem()->url();
-        ad.totalFrames = upperBound;
+        ad.action       = TYPE_IMAGE;
+        ad.fileUrl      = d->item->getPrevImageItem()->url();
+        ad.totalFrames  = upperBound;
         Q_EMIT frameCompleted(ad);
 
-        upperBound = getTransitionFrames(d->item);
+        upperBound      = getTransitionFrames(d->item);
         processItem(upperBound, img, imgnext, TYPE_TRANSITION); 
 
         ActionData tad;
@@ -135,10 +137,12 @@ void ActionThread::run()
     }
 
     if(img)
+    {
         d->api->freeImage(*img);
+    }
 
-    img        = imgnext;
-    upperBound = d->item->getTime() * d->framerate;
+    img            = imgnext;
+    upperBound     = d->item->getTime() * d->framerate;
     processItem(upperBound, img, imgnext, TYPE_IMAGE);
 
     ActionData ad;
@@ -148,14 +152,18 @@ void ActionThread::run()
     Q_EMIT frameCompleted(ad);
 
     if(img)
+    {
         d->api->freeImage(*img);
+    }
 
-    d->encoder->encodeVideo(d->savePath, d->audioPath, d->videoFormat, d->videoType, d->path, d->aspectRatio);
+    if (!d->savePath.isNull())
+    {
+        d->encoder->encodeVideo(d->savePath, d->audioPath, d->videoFormat, d->videoType, d->path, d->aspectRatio);
+        connect(d->encoder, SIGNAL(finished()),
+                this, SLOT(quit()));
+        exec();
+    }
 
-    connect(d->encoder, SIGNAL(finished()),
-            this, SLOT(quit()));
-
-    exec();
     Q_EMIT finished();
 }
 
@@ -179,14 +187,13 @@ void ActionThread::cleanTempDir()
 
 void ActionThread::processItem(int upperBound, MagickImage* const img, MagickImage* const imgNext, Action action)
 {
-    /**
-     * need to reimplement using appsrc plugin of gstreamer
-     if(action == TYPE_IMAGE)
+/* need to reimplement using appsrc plugin of gstreamer
+    if(action == TYPE_IMAGE)
     {
         if(d->item->EffectName() == EFFECT_NONE)
             upperBound = 1;
     }
-    */
+*/
 
     for(int n = 0; n < upperBound && d->running; n++)
     {
@@ -289,10 +296,14 @@ MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
     };
 
     if(!(img = d->processImg->aspectRatioCorrection(*img, ratio, d->aspectcorrection)))
+    {
         return 0;
+    }
 
     if(d->api->scaleImage(*img, d->frameWidth, d->frameHeight) != 1)
+    {
         return 0;
+    }
 
     return img;
 }
@@ -300,12 +311,12 @@ MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
 ActionThread::Frame* ActionThread::getFrame(MyImageListViewItem* const item, MagickImage* const img, MagickImage* const imgNext,
                                             int number, Action action) const
 {
-    Frame* frame   = new Frame();
-    frame->item    = item;
-    frame->img     = img;
-    frame->imgnext = imgNext;
-    frame->action  = action;
-    frame->number  = number;
+    Frame* const frame = new Frame();
+    frame->item        = item;
+    frame->img         = img;
+    frame->imgnext     = imgNext;
+    frame->action      = action;
+    frame->number      = number;
 
     return frame;
 }
@@ -342,7 +353,9 @@ MagickImage* ActionThread::getDynamicImage(MyImageListViewItem* const imgItem, M
 int ActionThread::getTransitionFrames(MyImageListViewItem* const item) const
 {
     if(item == 0 || item->getTransition() == TRANSITION_TYPE_NONE)
+    {
         return 0;
+    }
 
     int noOfFrames = 0;
 
@@ -383,10 +396,14 @@ void ActionThread::ProcessFrame(Frame* const frm)
                                                    frm->item->getTransition(), frm->number, getTransitionFrames(frm->item));
 
             if(imgout)
+            {
                 d->api->freeImage(*imgout);
+            }
 
             if(imgnextout)
+            {
                 d->api->freeImage(*imgnextout);
+            }
 
             frm->imgout = transImg;
             break;
