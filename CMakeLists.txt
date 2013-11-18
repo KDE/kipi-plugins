@@ -163,7 +163,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For C
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)                                      # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, and Imgur.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
@@ -330,6 +330,8 @@ PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Facebook"           QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Imgur"              QJSON_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("VKontakte"          LIBKVKONTAKTE_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
@@ -460,6 +462,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(debianscreenshots)
         ADD_SUBDIRECTORY(facebook)
         ADD_SUBDIRECTORY(imgurexport)
+        ADD_SUBDIRECTORY(googledrive)
+        ADD_SUBDIRECTORY(dropbox)
     ENDIF(QJSON_FOUND)
 
     IF(LIBKVKONTAKTE_FOUND)
