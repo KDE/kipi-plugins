@@ -1,9 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=Dropbox Export
 Name=Dropbox Export
-Name[x-test]=xxDropbox Exportxx
 Comment=A tool to export images to a remote Dropbox web service
-Comment[x-test]=xxA tool to export images to a remote Dropbox web servicexx
 Type=Service
 Icon=dropbox
 ServiceTypes=KIPI/Plugin

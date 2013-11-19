@@ -1,9 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=GoogleDrive Export
 Name=GoogleDrive Export
-Name[x-test]=xxGoogleDrive Exportxx
 Comment=A tool to export images to a remote GoogleDrive web service
-Comment[x-test]=xxA tool to export images to a remote GoogleDrive web servicexx
 Type=Service
 Icon=googledrive
 ServiceTypes=KIPI/Plugin
