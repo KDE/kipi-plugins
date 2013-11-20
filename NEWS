@@ -3,6 +3,9 @@ Kipi-plugins 4.0.0 - Release date: 2013/10/20
 
 NEW FEATURES:
 
+General  : New tool to export collection to Google Drive cloud service.
+General  : New tool to export collection to DropBox cloud service.
+
 MediaWiki: allow removal of metadata/GPS coordinates before uploading.
 MediaWiki: graphical interface improvements.
 
@@ -18,5 +21,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> 199978 - Can not email images on Windows [patch].
 009 ==> 320782 - Try to automatically guess new flickr set name from image folders [patch].
 010 ==> 326728 - Panorama Stitching crashes upon start.
-011 ==> 
+011 ==> 300445 - Kipi integration with cloud storage (as Dropbox or GDrive) for quick sharing.
+012 ==> 
 
