@@ -23,52 +23,58 @@
 #ifndef GDWINDOW_H
 #define GDWINDOW_H
 
-//Qt includes
+// Qt includes
+
 #include <QList>
 #include <QPair>
 
-//Libkipi includes
+// Libkipi includes
 
 #include <libkipi/interface.h>
 
-//Local includes
+// Local includes
 
 #include "kptooldialog.h"
-
 
 class QCloseEvent;
 
 class KProgressDialog;
 class KUrl;
 
-namespace KIPI{
+namespace KIPI
+{
     class Interface;
 }
 
-namespace KIPIPlugins{
+namespace KIPIPlugins
+{
     class KPAboutData;
 }
 
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 class GoogleDriveWidget;
 class GDTalker;
 class GDPhoto;
 class GDFolder;
 class GDNewAlbum;
 
-class GDWindow : public KPToolDialog{
+class GDWindow : public KPToolDialog
+{
     Q_OBJECT
 
 public:
-    GDWindow(const QString& tmpFolder,QWidget* const parent);
+
+    GDWindow(const QString& tmpFolder, QWidget* const parent);
     ~GDWindow();
 
     void reactivate();
 
 private:
+
     void readSettings();
     void writeSettings();
 
@@ -78,12 +84,13 @@ private:
     void    closeEvent(QCloseEvent*);
 
 private Q_SLOTS:
+
     void slotImageListChanged();
     void slotUserChangeRequest();
     void slotNewAlbumRequest();
     void slotReloadAlbumsRequest();
     void slotStartTransfer();
-//    void slotChangeProgressBar();
+    //void slotChangeProgressBar();
 
     void slotBusy(bool);
     void slotTextBoxEmpty();
@@ -101,23 +108,23 @@ private Q_SLOTS:
 
 private:
 
-    unsigned int         m_imagesCount;
-    unsigned int         m_imagesTotal;
+    unsigned int                  m_imagesCount;
+    unsigned int                  m_imagesTotal;
 
-    QString              m_tmp;
-    QString              refresh_token;
+    QString                       m_tmp;
+    QString                       refresh_token;
 
-    GoogleDriveWidget*   m_widget;
-    GDNewAlbum*          m_albumDlg;
-    GDTalker*            m_talker;
+    GoogleDriveWidget*            m_widget;
+    GDNewAlbum*                   m_albumDlg;
+    GDTalker*                     m_talker;
 
-    KProgressDialog*     m_progressDlg;
+    KProgressDialog*              m_progressDlg;
 
-    QString              m_currentAlbumId;
+    QString                       m_currentAlbumId;
 
-    QList< QPair<KUrl, GDPhoto> >       m_transferQueue;
+    QList< QPair<KUrl, GDPhoto> > m_transferQueue;
 };
 
-}//namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleDrivePlugin
 
-#endif /*GDWINDOW_H*/
+#endif /* GDWINDOW_H */

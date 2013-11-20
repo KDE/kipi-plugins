@@ -19,34 +19,41 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef GDITEM_H
 #define GDITEM_H
 
-//Qt includes
+// Qt includes
+
 #include <QString>
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
-class GDPhoto{
+class GDPhoto
+{
 
 public:
-    GDPhoto(){
-        //
+
+    GDPhoto()
+    {
     }
 
     QString title;
     QString description;
 };
 
-class GDFolder{
+class GDFolder
+{
 
 public:
-    GDFolder(){
-        //
+    GDFolder()
+    {
     }
+
     QString title;
-
 };
-}//namespace KIPIGoogleDrivePlugin
 
-#endif // GDITEM_H
+} // namespace KIPIGoogleDrivePlugin
+
+#endif /* GDITEM_H */

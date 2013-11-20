@@ -22,37 +22,41 @@
 
 #include "mpform.h"
 
-//c++ includes
+// C++ includes
 
 #include <cstring>
 #include <cstdio>
 
-//Qt includes
+// Qt includes
 
 #include <QFile>
 
-//KDE includes
+// KDE includes
 
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <krandom.h>
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
-MPForm::MPForm(){
+MPForm::MPForm()
+{
     m_boundary = KRandom::randomString(42+13).toAscii();
     reset();
 }
 
-MPForm::~MPForm(){
-
+MPForm::~MPForm()
+{
 }
 
-void MPForm::reset(){
+void MPForm::reset()
+{
     m_buffer.resize(0);
 }
 
-void MPForm::finish(){
+void MPForm::finish()
+{
     kDebug() << "in finish";
     QString str;
     str += "--";
@@ -62,9 +66,10 @@ void MPForm::finish(){
     kDebug() << "finish:" << m_buffer;
 }
 
-void MPForm::addPair(const QString &name,const QString &description,const QString &path,const QString &id){
+void MPForm::addPair(const QString& name, const QString& description, const QString& path,const QString& id)
+{
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
-    QString mime = ptr->name();
+    QString mime       = ptr->name();
     kDebug() << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
     QString str;
 
@@ -76,10 +81,10 @@ void MPForm::addPair(const QString &name,const QString &description,const QStrin
     str += name.toAscii();
     str += "\",\r\n";
     str += "\"description\":\"";
-    str += description.toAscii();                            //add description
+    str += description.toAscii();                   //add description
     str += "\",\r\n";
     str += "\"mimeType\":\"";
-    str += mime.toAscii();                            //add mimetype
+    str += mime.toAscii();                          //add mimetype
     str += "\",\r\n";
     str += "\"parents\":";
     str += "[{";
@@ -90,7 +95,8 @@ void MPForm::addPair(const QString &name,const QString &description,const QStrin
     m_buffer.append(str.toAscii());
 }
 
-bool MPForm::addFile(const QString &path){
+bool MPForm::addFile(const QString &path)
+{
     QString str;
     kDebug() << "in addfile" << path;
 
@@ -105,12 +111,13 @@ bool MPForm::addFile(const QString &path){
 
     QFile imageFile(path);
 
-    if(!imageFile.open(QIODevice::ReadOnly)){
+    if(!imageFile.open(QIODevice::ReadOnly))
+    {
         return false;
     }
 
     QByteArray imageData = imageFile.readAll();
-    m_file_size = QString("%1").arg(imageFile.size());
+    m_file_size          = QString("%1").arg(imageFile.size());
 
     imageFile.close();
 
@@ -121,20 +128,24 @@ bool MPForm::addFile(const QString &path){
     return true;
 }
 
-QByteArray MPForm::formData() const{
+QByteArray MPForm::formData() const
+{
     return m_buffer;
 }
 
-QString MPForm::boundary() const{
+QString MPForm::boundary() const
+{
     return m_boundary;
 }
 
-QString MPForm::contentType() const{
+QString MPForm::contentType() const
+{
     return QString("Content-Type: multipart/related;boundary="+m_boundary);
 }
 
-QString MPForm::getFileSize() const{
+QString MPForm::getFileSize() const
+{
     return m_file_size;
 }
 
-}//namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleDrivePlugin

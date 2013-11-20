@@ -19,10 +19,11 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef MPFORM_H
 #define MPFORM_H
 
-//Qt includes
+// Qt includes
 
 #include <QByteArray>
 #include <QString>
@@ -30,8 +31,10 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-class MPForm{
+class MPForm
+{
 public:
+
     MPForm();
     ~MPForm();
 
@@ -43,7 +46,7 @@ public:
 
     QString contentType() const;
     QByteArray formData() const;
-    QString boundary() const;
+    QString boundary()    const;
     QString getFileSize() const;
 
 private:
@@ -53,6 +56,6 @@ private:
     QString m_file_size;
 };
 
-}//namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleDrivePlugin
 
-#endif /*MPFORM_H*/
+#endif /* MPFORM_H */

@@ -23,17 +23,18 @@
 #ifndef PLUGIN_GOOGLEDRIVE_H
 #define PLUGIN_GOOGLEDRIVE_H
 
-//Qt includes
+// Qt includes
 
 #include <QVariant>
 
-//Libkipi includes
+// Libkipi includes
 
 #include <libkipi/plugin.h>
 
 class KAction;
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
     class GDWindow;
 }
 
@@ -49,6 +50,7 @@ class Plugin_GoogleDrive:public Plugin
     Q_OBJECT
 
 public:
+
     Plugin_GoogleDrive(QObject* const parent, const QVariantList& args);
     ~Plugin_GoogleDrive();
 
@@ -56,17 +58,19 @@ public:
     //virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
+
     void slotExport();
 
 private:
+
     void setupActions();
 
 private:
-    KAction* m_actionExport;
-    GDWindow* m_dlgExport;
 
+    KAction*  m_actionExport;
+    GDWindow* m_dlgExport;
 };
 
-}//namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleDrivePlugin
 
-#endif //PLUGIN_GOOGLEDRIVE_H
+#endif /* PLUGIN_GOOGLEDRIVE_H */

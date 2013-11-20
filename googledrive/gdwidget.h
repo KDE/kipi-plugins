@@ -47,47 +47,54 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
-class GoogleDriveWidget : public QWidget{
+class GoogleDriveWidget : public QWidget
+{
     Q_OBJECT
 
 public:
+
     GoogleDriveWidget(QWidget* const parent);
     ~GoogleDriveWidget();
 
-    void updateLabels(const QString& name = "", const QString& url = "");
-    KIPIPlugins::KPImagesList* imagesList() const;
+    void updateLabels(const QString& name = QString(), const QString& url = QString());
+
+    KIPIPlugins::KPImagesList*     imagesList()  const;
     KIPIPlugins::KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
+
     //void imageListChanged();
 
 private Q_SLOTS:
+
     void slotResizeChecked();
     //void slotImageListChanged();
 
 private:
-    KIPIPlugins::KPImagesList* m_imgList;
-    //KIPI::UploadWidget*        m_uploadWidget;
 
-    QLabel*                     m_headerLbl;
-    QLabel*                     m_userNameDisplayLbl;
-    KPushButton*                m_changeUserBtn;
+    KIPIPlugins::KPImagesList*     m_imgList;
+    //KIPI::UploadWidget*          m_uploadWidget;
 
-    KComboBox*                  m_albumsCoB;
-    KPushButton*                m_newAlbumBtn;
-    KPushButton*                m_reloadAlbumsBtn;
+    QLabel*                        m_headerLbl;
+    QLabel*                        m_userNameDisplayLbl;
+    KPushButton*                   m_changeUserBtn;
 
-    QCheckBox*                  m_resizeChB;
-    QSpinBox*                   m_dimensionSpB;
-    QSpinBox*                   m_imageQualitySpB;
+    KComboBox*                     m_albumsCoB;
+    KPushButton*                   m_newAlbumBtn;
+    KPushButton*                   m_reloadAlbumsBtn;
+
+    QCheckBox*                     m_resizeChB;
+    QSpinBox*                      m_dimensionSpB;
+    QSpinBox*                      m_imageQualitySpB;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
-friend class GDWindow;
+    friend class GDWindow;
 };
 
-}//namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleDrivePlugin
 
-#endif /*GDWIDGET_H*/
+#endif /* GDWIDGET_H */

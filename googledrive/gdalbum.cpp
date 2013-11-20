@@ -22,22 +22,25 @@
 
 #include "gdalbum.moc"
 
-//Qt includes
+// Qt includes
 
 #include <QFormLayout>
 
-//KDE includes
+// KDE includes
 
-#include "klocale.h"
-#include "klineedit.h"
-#include "kdialog.h"
+#include <klocale.h>
+#include <klineedit.h>
+#include <kdialog.h>
 
-//local includes
+// Local includes
+
 #include "gditem.h"
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
-GDNewAlbum::GDNewAlbum(QWidget* const parent):KDialog(parent){
+GDNewAlbum::GDNewAlbum(QWidget* const parent):KDialog(parent)
+{
     QString header(i18n("Google Drive New Album"));
     setWindowTitle(header);
     setButtons(Ok|Cancel);
@@ -61,12 +64,13 @@ GDNewAlbum::GDNewAlbum(QWidget* const parent):KDialog(parent){
     mainWidget->setLayout(albumBoxLayout);
 }
 
-GDNewAlbum::~GDNewAlbum(){
-
+GDNewAlbum::~GDNewAlbum()
+{
 }
 
-void GDNewAlbum::getAlbumTitle(GDFolder& album){
+void GDNewAlbum::getAlbumTitle(GDFolder& album)
+{
     album.title = m_titleEdt->text();
 }
 
-}
+} // namespace KIPIGoogleDrivePlugin

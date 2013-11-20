@@ -70,10 +70,13 @@
 #include "gdalbum.h"
 #include "gdwidget.h"
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
-GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/) : KPToolDialog(0){
-    m_tmp = tmpFolder;
+GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/)
+    : KPToolDialog(0)
+{
+    m_tmp         = tmpFolder;
     m_imagesCount = 0;
     m_imagesTotal = 0;
 
@@ -159,15 +162,19 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/) : KPToolD
 
     readSettings();
     buttonStateChange(false);
-    if(refresh_token.isEmpty()){
+
+    if(refresh_token.isEmpty())
+    {
         m_talker->doOAuth();
     }
-    else{
+    else
+    {
         m_talker->getAccessTokenFromRefreshToken(refresh_token);
     }
 }
 
-GDWindow::~GDWindow(){
+GDWindow::~GDWindow()
+{
     delete m_widget;
     delete m_albumDlg;
     delete m_talker;
@@ -181,12 +188,14 @@ void GDWindow::reactivate()
     show();
 }
 
-void GDWindow::readSettings(){
+void GDWindow::readSettings()
+{
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Google Drive Settings");
 
     m_currentAlbumId = grp.readEntry("Current Album",QString());
     refresh_token = grp.readEntry("refresh_token");
+
     if (grp.readEntry("Resize", false))
     {
         m_widget->m_resizeChB->setChecked(true);
@@ -205,10 +214,10 @@ void GDWindow::readSettings(){
 
     KConfigGroup dialogGroup = config.group("Google Drive Export Dialog");
     restoreDialogSize(dialogGroup);
-
 }
 
-void GDWindow::writeSettings(){
+void GDWindow::writeSettings()
+{
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Google Drive Settings");
     grp.writeEntry("refresh_token",refresh_token);
@@ -221,17 +230,20 @@ void GDWindow::writeSettings(){
     saveDialogSize(dialogGroup);
 
     config.sync();
-
 }
 
-void GDWindow::slotSetUserName(const QString& msg){
+void GDWindow::slotSetUserName(const QString& msg)
+{
     m_widget->updateLabels(msg,"");
 }
 
-void GDWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list){
+void GDWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
+{
     m_widget->m_albumsCoB->clear();
     kDebug() << "slotListAlbumsDone1:" << list.size();
-    for(int i=0;i<list.size();i++){
+
+    for(int i=0;i<list.size();i++)
+    {
         m_widget->m_albumsCoB->addItem(KIcon("system-users"),list.value(i).second,
                                        list.value(i).first);
 
@@ -240,9 +252,9 @@ void GDWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list){
             m_widget->m_albumsCoB->setCurrentIndex(i);
         }
     }
+
     buttonStateChange(true);
     m_talker->getUserName();
-
 }
 
 void GDWindow::slotBusy(bool val)
@@ -261,40 +273,46 @@ void GDWindow::slotBusy(bool val)
     }
 }
 
-void GDWindow::slotTextBoxEmpty(){
+void GDWindow::slotTextBoxEmpty()
+{
     kDebug() << "in slotTextBoxEmpty";
     KMessageBox::error(this, i18n("Text Box is Empty, Please Enter code from browser to textbox. To complete authentication press"
                                   " Change Account or start-upload button to authenticate again"));
-        return;
 }
 
-void GDWindow::slotStartTransfer(){
+void GDWindow::slotStartTransfer()
+{
     m_widget->m_imgList->clearProcessedStatus();
 
-
-    if(m_widget->m_imgList->imageUrls().isEmpty()){
+    if(m_widget->m_imgList->imageUrls().isEmpty())
+    {
         if (KMessageBox::warningContinueCancel(this, i18n("No Image Selected. Cannot upload.Continue by selecting image "))
-            == KMessageBox::Continue){
+            == KMessageBox::Continue)
+        {
              return;
         }
-        return;
 
+        return;
     }
 
-    if(!(m_talker->authenticated())){
+    if(!(m_talker->authenticated()))
+    {
         if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Press Continue to authenticate"))
-            == KMessageBox::Continue){
+            == KMessageBox::Continue)
+        {
             m_talker->doOAuth();
             return;
         }
-        else{
+        else
+        {
             return;
         }
     }
 
     typedef QPair<KUrl, GDPhoto> Pair;
 
-    for(int i=0 ;i < (m_widget->m_imgList->imageUrls().size()) ; i++){
+    for(int i=0 ;i < (m_widget->m_imgList->imageUrls().size()) ; i++)
+    {
         KPImageInfo info(m_widget->m_imgList->imageUrls().value(i));
         GDPhoto temp;
         kDebug() << "in start transfer info " <<info.title() << info.description();
@@ -303,10 +321,10 @@ void GDWindow::slotStartTransfer(){
 
         m_transferQueue.append(Pair(m_widget->m_imgList->imageUrls().value(i),temp));
     }
-    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
 
-    m_imagesTotal = m_transferQueue.count();
-    m_imagesCount = 0;
+    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_imagesTotal    = m_transferQueue.count();
+    m_imagesCount    = 0;
 
     m_widget->progressBar()->setFormat(i18n("%v / %m"));
     m_widget->progressBar()->setMaximum(m_imagesTotal);
@@ -318,14 +336,16 @@ void GDWindow::slotStartTransfer(){
     uploadNextPhoto();
 }
 
-void GDWindow::uploadNextPhoto(){
+void GDWindow::uploadNextPhoto()
+{
     kDebug() << "in upload nextphoto " << m_transferQueue.count();
-    if(m_transferQueue.isEmpty()){
+
+    if(m_transferQueue.isEmpty())
+    {
         //m_widget->progressBar()->hide();
         m_widget->progressBar()->progressCompleted();
         return;
     }
-
 
     typedef QPair<KUrl,GDPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
@@ -336,7 +356,8 @@ void GDWindow::uploadNextPhoto(){
                                   m_widget->m_dimensionSpB->value(),
                                   m_widget->m_imageQualitySpB->value());
 
-    if (!res){
+    if (!res)
+    {
         slotAddPhotoFailed("");
         return;
     }
@@ -360,7 +381,8 @@ void GDWindow::slotAddPhotoFailed(const QString& msg)
     }
 }
 
-void GDWindow::slotAddPhotoSucceeded(){
+void GDWindow::slotAddPhotoSucceeded()
+{
     // Remove photo uploaded from the list
     m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
     m_transferQueue.pop_front();
@@ -371,11 +393,13 @@ void GDWindow::slotAddPhotoSucceeded(){
     uploadNextPhoto();
 }
 
-void GDWindow::slotImageListChanged(){
+void GDWindow::slotImageListChanged()
+{
     enableButton(User1, !(m_widget->m_imgList->imageUrls().isEmpty()));
 }
 
-void GDWindow::slotNewAlbumRequest(){
+void GDWindow::slotNewAlbumRequest()
+{
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
         GDFolder newFolder;
@@ -385,34 +409,41 @@ void GDWindow::slotNewAlbumRequest(){
     }
 }
 
-void GDWindow::slotReloadAlbumsRequest(){
+void GDWindow::slotReloadAlbumsRequest()
+{
     m_talker->listFolders();
 }
 
-void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg){
+void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
+{
     KMessageBox::error(this, i18n("There seems to be %1 error: %2",errCode,errMsg));
     return;
 }
 
-void GDWindow::slotAccessTokenObtained(){
+void GDWindow::slotAccessTokenObtained()
+{
     m_talker->listFolders();
 }
 
-void GDWindow::slotRefreshTokenObtained(const QString& msg){
+void GDWindow::slotRefreshTokenObtained(const QString& msg)
+{
     refresh_token = msg;
     m_talker->listFolders();
 }
 
-void GDWindow::slotListAlbumsFailed(const QString& msg){
+void GDWindow::slotListAlbumsFailed(const QString& msg)
+{
     KMessageBox::error(this, i18n("GoogleDrive Call Failed: %1\n", msg));
     return;
 }
 
-void GDWindow::slotCreateFolderFailed(const QString& msg){
+void GDWindow::slotCreateFolderFailed(const QString& msg)
+{
     KMessageBox::error(this, i18n("GoogleDrive Call Failed: %1\n", msg));
 }
 
-void GDWindow::slotCreateFolderSucceeded(){
+void GDWindow::slotCreateFolderSucceeded()
+{
     m_talker->listFolders();
 }
 
@@ -423,17 +454,18 @@ void GDWindow::slotTransferCancel()
     m_talker->cancel();
 }
 
-void GDWindow::slotUserChangeRequest(){
+void GDWindow::slotUserChangeRequest()
+{
     KUrl url("https://accounts.google.com/logout");
     KToolInvocation::invokeBrowser(url.url());
 
     if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser,Press 'Continue' to authenticate "
                                                       " for other account"))
-        == KMessageBox::Continue){
+        == KMessageBox::Continue)
+    {
         refresh_token = "";
         m_talker->doOAuth();
     }
-
 }
 
 void GDWindow::buttonStateChange(bool state)
@@ -443,13 +475,14 @@ void GDWindow::buttonStateChange(bool state)
     enableButton(User1, state);
 }
 
-void GDWindow::closeEvent(QCloseEvent *e)
+void GDWindow::closeEvent(QCloseEvent* e)
 {
-    if (!e) return;
+    if (!e)
+        return;
 
     writeSettings();
     m_widget->imagesList()->listView()->clear();
     e->accept();
 }
 
-}
+} // namespace KIPIGoogleDrivePlugin

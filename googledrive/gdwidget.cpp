@@ -52,10 +52,11 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 
+namespace KIPIGoogleDrivePlugin
+{
 
-namespace KIPIGoogleDrivePlugin{
-
-GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
+GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent)
+{
     setObjectName("Google Drive Widget");
 
     QHBoxLayout* const mainLayout =new QHBoxLayout(this);
@@ -68,7 +69,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is list to images to upload to your Google Drive Account"));
 
-    QWidget* const settingsBox = new QWidget(this);
+    QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(this);
@@ -78,15 +79,15 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
 
     //------------------------------------------------------------
 
-    QGroupBox* const accountBox = new QGroupBox(i18n("Account"),settingsBox);
+    QGroupBox* const accountBox   = new QGroupBox(i18n("Account"),settingsBox);
     accountBox->setWhatsThis(i18n("This is Google Drive account that is currently logged in"));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
-    m_userNameDisplayLbl = new QLabel(accountBox);
+    m_userNameDisplayLbl      = new QLabel(accountBox);
 
-    m_changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"),"switch-system-user",i18n("Change Google Drive "
-                                                                                                "account for tranfer")),accountBox);
+    m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
+                                                         i18n("Change Google Drive account for tranfer")), accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
@@ -96,12 +97,12 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
 
     //-------------------------------------------------------------
 
-    QGroupBox* const albBox = new QGroupBox(i18n("Destination"),settingsBox);
+    QGroupBox* const albBox            = new QGroupBox(i18n("Destination"),settingsBox);
     albBox->setWhatsThis(i18n("This is Google Drive folder to which selected photos will be uploaded"));
-    QGridLayout* albumsBoxLayout = new QGridLayout(albBox);
+    QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Album:"),albBox);
-    m_albumsCoB = new KComboBox(albBox);
+    m_albumsCoB          = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
@@ -116,7 +117,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
 
     //-----------------------------------------------------------
 
-    QGroupBox* const optionsBox = new QGroupBox(i18n("Options"),settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"),settingsBox);
     optionsBox->setWhatsThis(i18n("These are options that would be applied to photos before upload"));
     QGridLayout *const optionsBoxLayout = new QGridLayout(optionsBox);
 
@@ -134,7 +135,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
 
     QLabel* const dimensionLbl = new QLabel(i18n("Maximum Dimension:"),optionsBox);
 
-    m_imageQualitySpB = new QSpinBox(optionsBox);
+    m_imageQualitySpB          = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
     m_imageQualitySpB->setMaximum(100);
     m_imageQualitySpB->setSingleStep(1);
@@ -178,14 +179,14 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent){
     //-------------------------------------------------------
 
     connect(m_resizeChB,SIGNAL(clicked()),
-        this,SLOT(slotResizeChecked()));
+            this,SLOT(slotResizeChecked()));
 
     connect(m_imgList,SIGNAL(signalImageListChanged()),
             this,SLOT(slotImageListChanged()));
 }
 
-GoogleDriveWidget::~GoogleDriveWidget(){
-
+GoogleDriveWidget::~GoogleDriveWidget()
+{
 }
 
 void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
@@ -210,11 +211,13 @@ void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
     }
 }
 
-KIPIPlugins::KPImagesList* GoogleDriveWidget::imagesList() const{
+KIPIPlugins::KPImagesList* GoogleDriveWidget::imagesList() const
+{
     return m_imgList;
 }
 
-void GoogleDriveWidget::slotResizeChecked(){
+void GoogleDriveWidget::slotResizeChecked()
+{
     m_dimensionSpB->setEnabled(m_resizeChB->isChecked());
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
@@ -223,4 +226,5 @@ KIPIPlugins::KPProgressWidget* GoogleDriveWidget::progressBar() const
 {
     return m_progressBar;
 }
-}
+
+} // namespace KIPIGoogleDrivePlugin

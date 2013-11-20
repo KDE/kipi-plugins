@@ -38,13 +38,15 @@
 
 #include "gditem.h"
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
-
-class GDTalker : public QObject{
+class GDTalker : public QObject
+{
     Q_OBJECT
 
 public:
+
     GDTalker(QWidget* const parent);
     ~GDTalker();
 
@@ -69,6 +71,7 @@ private Q_SLOTS:
     void slotResult(KJob* job);
 
 public:
+
     void doOAuth();
     void getAccessToken();
     void getAccessTokenFromRefreshToken(const QString& msg);
@@ -94,7 +97,9 @@ private:
     void parseResponseRefreshToken(const QByteArray& data);
 
 private:
-    enum State{
+
+    enum State
+    {
         GD_LISTFOLDERS=0,
         GD_CREATEFOLDER,
         GD_ADDPHOTO,
@@ -104,33 +109,34 @@ private:
     };
 
 private:
-    QWidget*   m_parent;
 
-    QString m_scope;
-    QString m_redirect_uri;
-    QString m_response_type;
-    QString m_client_id;
-    QString m_client_secret;
-    QString m_access_token;
-    QString m_refresh_token;
-    QString m_code;
+    QWidget*     m_parent;
 
-    QString m_token_uri;
+    QString      m_scope;
+    QString      m_redirect_uri;
+    QString      m_response_type;
+    QString      m_client_id;
+    QString      m_client_secret;
+    QString      m_access_token;
+    QString      m_refresh_token;
+    QString      m_code;
 
-    QString m_bearer_access_token;
+    QString      m_token_uri;
+
+    QString      m_bearer_access_token;
     QByteArray   m_buffer;
 
     KIO::Job*    m_job;
 
     State        m_state;
-    int continuePos;
+    int          continuePos;
 
     QString      m_rootid;
     QString      m_rootfoldername;
 
     QString      m_username;
-
 };
 
-}//namespace KIPIGoogleDrivePlugin
-#endif /*GD_TALKER_H*/
+} // namespace KIPIGoogleDrivePlugin
+
+#endif /* GD_TALKER_H */

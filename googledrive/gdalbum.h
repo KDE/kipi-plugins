@@ -19,35 +19,39 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef GDALBUM_H
 #define GDALBUM_H
 
-//KDE includes
+// KDE includes
 
 #include <kdialog.h>
 
 class KLineEdit;
 
-namespace KIPIGoogleDrivePlugin{
+namespace KIPIGoogleDrivePlugin
+{
 
 class GDFolder;
 
-class GDNewAlbum : public KDialog{
+class GDNewAlbum : public KDialog
+{
     Q_OBJECT
 
 public:
+
     GDNewAlbum(QWidget* const parent);
     ~GDNewAlbum();
 
     void getAlbumTitle(GDFolder& album);
 
 private:
+
     KLineEdit* m_titleEdt;
 
-friend class GDWindow;
-
+    friend class GDWindow;
 };
 
-}//namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleDrivePlugin
 
-#endif //GDALBUM_H
+#endif /* GDALBUM_H */
