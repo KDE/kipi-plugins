@@ -22,13 +22,18 @@
 #ifndef MPFORM_H
 #define MPFORM_H
 
+// Qt includes
+
 #include <QByteArray>
 
-namespace KIPIDropboxPlugin{
+namespace KIPIDropboxPlugin
+{
 
-class MPForm{
+class MPForm
+{
 
 public:
+
     MPForm();
     ~MPForm();
 
@@ -36,9 +41,10 @@ public:
     QByteArray formData();
 
 private:
+
     QByteArray m_buffer;
 };
 
-}//namespace KIPIDropboxPlugin
+} // namespace KIPIDropboxPlugin
 
 #endif /*MPFORM_H*/

@@ -23,7 +23,7 @@
 #ifndef DBWIDGET_H
 #define DBWIDGET_H
 
-//Qt includes
+// Qt includes
 
 #include <QWidget>
 
@@ -47,42 +47,48 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
-namespace KIPIDropboxPlugin{
+namespace KIPIDropboxPlugin
+{
 
-class DropboxWidget : public QWidget{
+class DropboxWidget : public QWidget
+{
     Q_OBJECT
 
 public:
+
     DropboxWidget(QWidget* const parent);
     ~DropboxWidget();
 
-    void updateLabels(const QString& name = "", const QString& url = "");
-    KIPIPlugins::KPImagesList* imagesList() const;
+    void updateLabels(const QString& name = QString(), const QString& url = QString());
+
+    KIPIPlugins::KPImagesList*     imagesList()  const;
     KIPIPlugins::KPProgressWidget* progressBar() const;
 
 private Q_SLOTS:
+
     void slotResizeChecked();
 
 private:
-    KIPIPlugins::KPImagesList* m_imgList;
 
-    QLabel*                     m_headerLbl;
-    QLabel*                     m_userNameDisplayLbl;
-    KPushButton*                m_changeUserBtn;
+    KIPIPlugins::KPImagesList*     m_imgList;
 
-    KComboBox*                  m_albumsCoB;
-    KPushButton*                m_newAlbumBtn;
-    KPushButton*                m_reloadAlbumsBtn;
+    QLabel*                        m_headerLbl;
+    QLabel*                        m_userNameDisplayLbl;
+    KPushButton*                   m_changeUserBtn;
 
-    QCheckBox*                  m_resizeChB;
-    QSpinBox*                   m_dimensionSpB;
-    QSpinBox*                   m_imageQualitySpB;
+    KComboBox*                     m_albumsCoB;
+    KPushButton*                   m_newAlbumBtn;
+    KPushButton*                   m_reloadAlbumsBtn;
+
+    QCheckBox*                     m_resizeChB;
+    QSpinBox*                      m_dimensionSpB;
+    QSpinBox*                      m_imageQualitySpB;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
-friend class DBWindow;
+    friend class DBWindow;
 };
 
-}//namespace KIPIDropboxPlugin
+} // namespace KIPIDropboxPlugin
 
 #endif /*DBWIDGET_H*/

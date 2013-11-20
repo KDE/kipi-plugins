@@ -19,32 +19,36 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef DBALBUM_H
 #define DBALBUM_H
 
-//kde includes
+// KDE includes
+
 #include <kdialog.h>
 
 class KLineEdit;
 
-namespace KIPIDropboxPlugin{
-
+namespace KIPIDropboxPlugin
+{
 class DBFolder;
 
-class DBNewAlbum : public KDialog{
+class DBNewAlbum : public KDialog
+{
     Q_OBJECT
 
 public:
+
     DBNewAlbum(QWidget* const parent);
     ~DBNewAlbum();
 
     void getFolderTitle(DBFolder& folder);
 
 private:
-    KLineEdit* m_titleEdt;
 
+    KLineEdit* m_titleEdt;
 };
 
-}//namespace KIPIDropboxPlugin
+} //namespace KIPIDropboxPlugin
 
 #endif /*DBALBUM_H*/

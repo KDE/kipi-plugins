@@ -33,7 +33,8 @@
 
 class KAction;
 
-namespace KIPIDropboxPlugin{
+namespace KIPIDropboxPlugin
+{
     class DBWindow;
 }
 
@@ -49,6 +50,7 @@ class Plugin_Dropbox:public Plugin
     Q_OBJECT
 
 public:
+
     Plugin_Dropbox(QObject* const parent, const QVariantList& args);
     ~Plugin_Dropbox();
 
@@ -56,17 +58,20 @@ public:
     //virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
+
     void slotExport();
 
 private:
+
     void setupActions();
 
 private:
-    KAction* m_actionExport;
+
+    KAction*  m_actionExport;
     DBWindow* m_dlgExport;
 
 };
 
-}//namespace KIPIDropboxPlugin
+} // namespace KIPIDropboxPlugin
 
-#endif //PLUGIN_DROPBOX_H
+#endif /* PLUGIN_DROPBOX_H */

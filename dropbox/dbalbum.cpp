@@ -22,21 +22,27 @@
 
 #include "dbalbum.moc"
 
-//Qt includes
+// Qt includes
+
 #include <QFormLayout>
 
-//kde includes
-#include "klocale.h"
-#include "kdialog.h"
-#include "klineedit.h"
-#include "kdebug.h"
+// KDE includes
 
-//local includes
+#include <klocale.h>
+#include <kdialog.h>
+#include <klineedit.h>
+#include <kdebug.h>
+
+// Local includes
+
 #include "dbitem.h"
 
-namespace KIPIDropboxPlugin{
+namespace KIPIDropboxPlugin
+{
 
-DBNewAlbum::DBNewAlbum(QWidget* const parent) : KDialog(parent){
+DBNewAlbum::DBNewAlbum(QWidget* const parent)
+    : KDialog(parent)
+{
     QString header(i18n("Dropbox New Folder"));
     setWindowTitle(header);
     setButtons(Ok|Cancel);
@@ -52,7 +58,7 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent) : KDialog(parent){
     m_titleEdt = new KLineEdit;
     m_titleEdt->setWhatsThis("Name of folder that will be created");
 
-    QFormLayout* albumBoxLayout = new QFormLayout;
+    QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("album edit","Title:"),m_titleEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
@@ -60,12 +66,14 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent) : KDialog(parent){
     mainWidget->setLayout(albumBoxLayout);
 }
 
-DBNewAlbum::~DBNewAlbum(){
-
+DBNewAlbum::~DBNewAlbum()
+{
 }
 
-void DBNewAlbum::getFolderTitle(DBFolder& folder){
+void DBNewAlbum::getFolderTitle(DBFolder& folder)
+{
     folder.title = QString("/") + m_titleEdt->text();
     kDebug() << "getFolderTitle " << folder.title;
 }
-}
+
+} // namespace KIPIDropboxPlugin

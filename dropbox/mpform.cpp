@@ -20,29 +20,35 @@
  *
  * ============================================================ */
 
-//local includes
+// local includes
+
 #include "mpform.h"
 
-//Qt includes
+// Qt includes
+
 #include <QFile>
 
-//KDE includes
-#include "kdebug.h"
+// KDE includes
 
-namespace KIPIDropboxPlugin{
+#include <kdebug.h>
 
-MPForm::MPForm(){
+namespace KIPIDropboxPlugin
+{
 
+MPForm::MPForm()
+{
 }
 
-MPForm::~MPForm(){
-
+MPForm::~MPForm()
+{
 }
 
-bool MPForm::addFile(const QString &imgPath){
+bool MPForm::addFile(const QString &imgPath)
+{
     QFile file(imgPath);
 
-    if(!file.open(QIODevice::ReadOnly)){
+    if(!file.open(QIODevice::ReadOnly))
+    {
         return false;
     }
 
@@ -51,8 +57,9 @@ bool MPForm::addFile(const QString &imgPath){
     return true;
 }
 
-QByteArray MPForm::formData(){
+QByteArray MPForm::formData()
+{
     return m_buffer;
 }
 
-}
+} // namespace KIPIDropboxPlugin

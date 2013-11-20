@@ -23,52 +23,58 @@
 #ifndef DBWINDOW_H
 #define DBWINDOW_H
 
-//Qt includes
+// Qt includes
+
 #include <QList>
 #include <QPair>
 
-//Libkipi includes
+// Libkipi includes
 
 #include <libkipi/interface.h>
 
-//Local includes
+// Local includes
 
 #include "kptooldialog.h"
-
 
 class QCloseEvent;
 
 class KProgressDialog;
 class KUrl;
 
-namespace KIPI{
+namespace KIPI
+{
     class Interface;
 }
 
-namespace KIPIPlugins{
+namespace KIPIPlugins
+{
     class KPAboutData;
 }
 
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIDropboxPlugin{
+namespace KIPIDropboxPlugin
+{
 class DropboxWidget;
 class DBTalker;
 class DBPhoto;
 class DBFolder;
 class DBNewAlbum;
 
-class DBWindow : public KPToolDialog{
+class DBWindow : public KPToolDialog
+{
     Q_OBJECT
 
 public:
-    DBWindow(const QString& tmpFolder,QWidget* const parent);
+
+    DBWindow(const QString& tmpFolder, QWidget* const parent);
     ~DBWindow();
 
     void reactivate();
 
 private:
+
     void readSettings();
     void writeSettings();
 
@@ -78,6 +84,7 @@ private:
     void    closeEvent(QCloseEvent*);
 
 private Q_SLOTS:
+
     void slotImageListChanged();
     void slotUserChangeRequest();
     void slotNewAlbumRequest();
@@ -85,12 +92,12 @@ private Q_SLOTS:
     void slotStartTransfer();
 
     void slotBusy(bool);
-    //void slotAccessTokenFailed(int errCode,const QString& errMsg);
+    //void slotAccessTokenFailed(int errCode, const QString& errMsg);
     void slotAccessTokenFailed();
-    void slotAccessTokenObtained(const QString& msg1,const QString& msg2,const QString& msg3);
+    void slotAccessTokenObtained(const QString& msg1, const QString& msg2, const QString& msg3);
     void slotSetUserName(const QString& msg);
     void slotListAlbumsFailed(const QString& msg);
-    void slotListAlbumsDone(const QList<QPair<QString,QString> >& list);
+    void slotListAlbumsDone(const QList<QPair<QString, QString> >& list);
     void slotCreateFolderFailed(const QString& msg);
     void slotCreateFolderSucceeded();
     void slotAddPhotoFailed(const QString& msg);
@@ -105,7 +112,7 @@ private:
 
     QString              m_tmp;
 
-    DropboxWidget*   m_widget;
+    DropboxWidget*       m_widget;
     DBNewAlbum*          m_albumDlg;
     DBTalker*            m_talker;
 
@@ -113,13 +120,13 @@ private:
 
     QString              m_currentAlbumName;
 
-    KUrl::List       m_transferQueue;
+    KUrl::List           m_transferQueue;
 
-    QString m_accToken;
-    QString m_accTokenSecret;
-    QString m_accoauthToken;
+    QString              m_accToken;
+    QString              m_accTokenSecret;
+    QString              m_accoauthToken;
 };
 
-}//namespace KIPIDropboxPlugin
+} // namespace KIPIDropboxPlugin
 
-#endif /*GDWINDOW_H*/
+#endif /* GDWINDOW_H */

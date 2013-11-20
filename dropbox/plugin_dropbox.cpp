@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-
 // To disable warnings under MSVC2008 about POSIX methods().
 #ifdef _MSC_VER
 #pragma warning(disable : 4996)
@@ -71,16 +70,18 @@ Plugin_Dropbox::Plugin_Dropbox(QObject* const parent,const QVariantList& /*args*
     setupXML();
 }
 
-Plugin_Dropbox::~Plugin_Dropbox(){
-
+Plugin_Dropbox::~Plugin_Dropbox()
+{
 }
 
-void Plugin_Dropbox::setup(QWidget* const widget){
+void Plugin_Dropbox::setup(QWidget* const widget)
+{
     m_dlgExport = 0;
 
     Plugin::setup(widget);
 
-    if(!interface()){
+    if(!interface())
+    {
         kDebug() << "kipi interface is null";
         return;
     }
@@ -88,7 +89,8 @@ void Plugin_Dropbox::setup(QWidget* const widget){
     setupActions();
 }
 
-void Plugin_Dropbox::setupActions(){
+void Plugin_Dropbox::setupActions()
+{
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionExport = new KAction(this);
     m_actionExport->setText("Export to &Dropbox");
@@ -101,21 +103,26 @@ void Plugin_Dropbox::setupActions(){
     addAction("dropboxexport",m_actionExport);
 }
 
-void Plugin_Dropbox::slotExport(){
+void Plugin_Dropbox::slotExport()
+{
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp",QString("kipi-db-") + QString::number(getpid()) + QString("/"));
 
-    if(!m_dlgExport){
+    if(!m_dlgExport)
+    {
         m_dlgExport = new DBWindow(tmp,kapp->activeWindow());
     }
-    else{
-        if(m_dlgExport->isMinimized()){
+    else
+    {
+        if(m_dlgExport->isMinimized())
+        {
             KWindowSystem::unminimizeWindow(m_dlgExport->winId());
         }
+
         KWindowSystem::activateWindow(m_dlgExport->winId());
     }
 
     m_dlgExport->reactivate();
 }
 
-}//namespace KIPIDropboxPlugin
+} // namespace KIPIDropboxPlugin

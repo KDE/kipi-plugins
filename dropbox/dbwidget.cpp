@@ -53,10 +53,11 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 
+namespace KIPIDropboxPlugin
+{
 
-namespace KIPIDropboxPlugin{
-
-DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent){
+DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
+{
     setObjectName("Dropbox Widget");
 
     QHBoxLayout* const mainLayout =new QHBoxLayout(this);
@@ -69,7 +70,7 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent){
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is list to images to upload to your Dropbox Account"));
 
-    QWidget* const settingsBox = new QWidget(this);
+    QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(this);
@@ -79,12 +80,12 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent){
 
     //------------------------------------------------------------
 
-    QGroupBox* const accountBox = new QGroupBox(i18n("Account"),settingsBox);
+    QGroupBox* const accountBox   = new QGroupBox(i18n("Account"),settingsBox);
     accountBox->setWhatsThis(i18n("This is Dropbox account that is currently logged in"));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
-    m_userNameDisplayLbl = new QLabel(accountBox);
+    m_userNameDisplayLbl      = new QLabel(accountBox);
 
     m_changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"),"switch-system-user",i18n("Change Dropbox "
                                                                                                 "account for tranfer")),accountBox);
@@ -97,16 +98,16 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent){
 
     //-------------------------------------------------------------
 
-    QGroupBox* const albBox = new QGroupBox(i18n("Destination"),settingsBox);
+    QGroupBox* const albBox            = new QGroupBox(i18n("Destination"),settingsBox);
     albBox->setWhatsThis(i18n("This is Dropbox folder to which selected photos will be uploaded"));
-    QGridLayout* albumsBoxLayout = new QGridLayout(albBox);
+    QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Folder:"),albBox);
-    m_albumsCoB = new KComboBox(albBox);
+    m_albumsCoB          = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
-    m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Folder"),"list-add",
-                                             i18n("Create new Dropbox Folder")),accountBox);
+    m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Folder"),"list-add",
+                                                 i18n("Create new Dropbox Folder")),accountBox);
     m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("album list","reload"),"view-refresh",
                                                  i18n("Reload album list")),accountBox);
 
@@ -117,7 +118,7 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent){
 
     //-----------------------------------------------------------
 
-    QGroupBox* const optionsBox = new QGroupBox(i18n("Options"),settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"),settingsBox);
     optionsBox->setWhatsThis(i18n("These are options that would be applied to photos before upload"));
     QGridLayout *const optionsBoxLayout = new QGridLayout(optionsBox);
 
@@ -179,12 +180,11 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent){
     //-------------------------------------------------------
 
    connect(m_resizeChB,SIGNAL(clicked()),
-          this,SLOT(slotResizeChecked()));
-
+           this,SLOT(slotResizeChecked()));
 }
 
-DropboxWidget::~DropboxWidget(){
-
+DropboxWidget::~DropboxWidget()
+{
 }
 
 void DropboxWidget::updateLabels(const QString& name, const QString& url)
@@ -208,7 +208,8 @@ void DropboxWidget::updateLabels(const QString& name, const QString& url)
     }
 }
 
-KIPIPlugins::KPImagesList* DropboxWidget::imagesList() const{
+KIPIPlugins::KPImagesList* DropboxWidget::imagesList() const
+{
     return m_imgList;
 }
 
@@ -223,4 +224,4 @@ KIPIPlugins::KPProgressWidget* DropboxWidget::progressBar() const
     return m_progressBar;
 }
 
-}
+} // namespace KIPIDropboxPlugin

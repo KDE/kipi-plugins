@@ -19,34 +19,41 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef DBITEM_H
 #define DBITEM_H
 
-//qt includes
+// Qt includes
+
 #include <QString>
 
-namespace KIPIDropboxPlugin{
+namespace KIPIDropboxPlugin
+{
 
-class DBPhoto{
+class DBPhoto
+{
 
 public:
-    DBPhoto(){
-        //
+
+    DBPhoto()
+    {
     }
 
     QString title;
 };
 
-class DBFolder{
+class DBFolder
+{
 
 public:
-    DBFolder(){
-        //
+
+    DBFolder()
+    {
     }
 
     QString title;
 };
 
-}
+} // namespace KIPIDropboxPlugin
 
-#endif //DBITEM_H
+#endif /* DBITEM_H */
