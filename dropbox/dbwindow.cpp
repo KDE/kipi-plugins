@@ -82,7 +82,7 @@ DBWindow::DBWindow(const QString& tmpFolder,QWidget* const /*parent*/)
 
     m_widget      = new DropboxWidget(this);
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("dropbox"));
+    setWindowIcon(KIcon("kipi-dropbox"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);

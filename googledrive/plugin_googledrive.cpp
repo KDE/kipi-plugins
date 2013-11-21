@@ -94,7 +94,7 @@ void Plugin_GoogleDrive::setupActions()
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionExport = new KAction(this);
     m_actionExport->setText("Export to &GoogleDrive");
-    m_actionExport->setIcon(KIcon("googledrive"));
+    m_actionExport->setIcon(KIcon("kipi-googledrive"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_G));
 
     connect(m_actionExport,SIGNAL(triggered(bool)),

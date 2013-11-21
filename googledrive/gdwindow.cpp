@@ -82,7 +82,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/)
 
     m_widget      = new GoogleDriveWidget(this);
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("googledrive"));
+    setWindowIcon(KIcon("kipi-googledrive"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
