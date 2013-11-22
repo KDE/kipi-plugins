@@ -82,6 +82,7 @@ Plugin_JAlbumExport::Plugin_JAlbumExport(QObject* const parent, const QVariantLi
 
 Plugin_JAlbumExport::~Plugin_JAlbumExport()
 {
+    delete d->jalbum;
     delete d;
 }
 
