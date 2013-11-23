@@ -165,7 +165,7 @@ void HaarClassifierLocator::removeRedEyes()
 void HaarClassifierLocator::generateMask(int i_v, CvSeq* const i_eyes)
 {
     // get ROI
-    CvRect* const r = (CvRect*)cvGetSeqElem(i_eyes, i_v);
+    CvRect* const r = reinterpret_cast<CvRect*>(cvGetSeqElem(i_eyes, i_v));
     cvSetImageROI(d->aChannel, *r);
     cvSetImageROI(d->redMask, *r);
 

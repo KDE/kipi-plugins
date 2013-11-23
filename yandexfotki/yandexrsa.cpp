@@ -970,13 +970,13 @@ void CCryptoProviderRSA::EncryptPortion(const char* pt, size_t pt_size, char* ct
     // ensure big-endianness
     _rmemcpy(tmp, pt, pt_size);
     memset(tmp + pt_size, 0, padding);
-    plain.load((unsigned int*)tmp, (int)(pt_size+padding) / bytes_per_unit);
+    plain.load(reinterpret_cast<unsigned int*>(tmp), (int)(pt_size+padding) / bytes_per_unit);
 
     cipher = prkface.encrypt(plain);
     ct_size = cipher.get_nunits() * bytes_per_unit;
 
     // ensure big-endianness
-    cipher.store((unsigned int*)tmp, (int)ct_size / bytes_per_unit);
+    cipher.store(reinterpret_cast<unsigned int*>(tmp), (int)ct_size / bytes_per_unit);
     _rmemcpy(ct, tmp, ct_size);
 }
 
