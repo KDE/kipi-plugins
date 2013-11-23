@@ -223,7 +223,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     }
     else                    // 16 bits image
     {
-        unsigned short* srcPtr = (unsigned short*)d->data.data();
+        unsigned short* srcPtr = reinterpret_cast<unsigned short*>(d->data.data());
 
         for (uint j=0; j < d->height; ++j)
         {
@@ -308,7 +308,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     }
     else                    // 16 bits image
     {
-        unsigned short* srcPtr = (unsigned short*)d->data.data();
+        unsigned short* srcPtr = reinterpret_cast<unsigned short*>(d->data.data());
 
         for (uint j=0; j < d->height; ++j)
         {
