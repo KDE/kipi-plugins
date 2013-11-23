@@ -54,7 +54,7 @@ GDNewAlbum::GDNewAlbum(QWidget* const parent):KDialog(parent)
     //--------------------------------------------------
 
     m_titleEdt = new KLineEdit;
-    m_titleEdt->setWhatsThis("This is title of folder that will be created");
+    m_titleEdt->setWhatsThis(i18n("This is the title of the folder that will be created."));
 
     QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("folder edit","Title:"),m_titleEdt);

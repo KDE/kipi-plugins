@@ -172,15 +172,15 @@ void DBTalker::doOAuth()
 
     KDialog* const dialog = new KDialog(kapp->activeWindow(),0);
     dialog->setModal(true);
-    dialog->setWindowTitle(i18n("Authorize dropbox"));
+    dialog->setWindowTitle(i18n("Authorize Dropbox"));
     dialog->setButtons(KDialog::Ok | KDialog::Cancel);
     //dialog->setButtonText(0x00000004,"Authorize");
 
     QWidget* const mainWidget = new QWidget(dialog,0);
 
     QPlainTextEdit* const infobox = new QPlainTextEdit( i18n(
-          "Please follow instructions in the browser."
-           "After logging in and authorizing app, press OK"
+          "Please follow the instructions in the browser. "
+           "After logging in and authorizing the appplication, press OK."
                                                            ));
 
     infobox->setReadOnly(true);
@@ -496,7 +496,7 @@ void DBTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if(!success)
     {
-        emit signalAddPhotoFailed(i18n("Failed to Upload Photo"));
+        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
     }
     else
     {
@@ -570,7 +570,7 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
     if(!ok)
     {
         emit signalBusy(false);
-        emit signalListAlbumsFailed(i18n("Failed to list Folders"));
+        emit signalListAlbumsFailed(i18n("Failed to list folders"));
         return;
     }
 

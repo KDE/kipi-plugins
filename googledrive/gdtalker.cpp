@@ -126,8 +126,10 @@ void GDTalker::doOAuth()
     window->setButtons(KDialog::Ok | KDialog::Cancel);
     QWidget* const main           = new QWidget(window,0);
     QLineEdit* const textbox      = new QLineEdit();
-    QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow instructions in the browser."
-                                                            "After logging in and authorizing app copy code from browser and paste below in textbox and press OK"));
+    QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser. "
+                                                            "After logging in and authorizing the application, "
+                                                            "copy the code from the browser, paste it in the "
+                                                            "textbox below, and click OK."));
     infobox->setReadOnly(true);
     QVBoxLayout* const layout = new QVBoxLayout;
     layout->addWidget(infobox);
@@ -522,7 +524,7 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     if(!ok)
     {
         emit signalBusy(false);
-        emit signalListAlbumsFailed(i18n("Failed to list Folders"));
+        emit signalListAlbumsFailed(i18n("Failed to list folders"));
         return;
     }
 
@@ -583,7 +585,7 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 
     if(!success)
     {
-        emit signalCreateFolderFailed(i18n("Failed to Create Folder"));
+        emit signalCreateFolderFailed(i18n("Failed to create folder"));
     }
     else
     {
@@ -615,7 +617,7 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if(!success)
     {
-        emit signalAddPhotoFailed(i18n("Failed to Upload Photo"));
+        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
     }
     else
     {

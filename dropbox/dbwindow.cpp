@@ -87,7 +87,7 @@ DBWindow::DBWindow(const QString& tmpFolder,QWidget* const /*parent*/)
     setDefaultButton(Close);
     setModal(false);
     setWindowTitle(i18n("Export to Dropbox"));
-    setButtonGuiItem(User1,KGuiItem(i18n("Start-Upload"),"network-workgroup",i18n("Start upload to Dropbox")));
+    setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Dropbox")));
     m_widget->setMinimumSize(700,500);
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
@@ -280,8 +280,9 @@ void DBWindow::slotBusy(bool val)
 
 void DBWindow::slotTextBoxEmpty()
 {
-    KMessageBox::error(this, i18n("Text Box is Empty, Please Enter code from browser to textbox. To complete authentication press"
-                                  " Change Account or start-upload button to authenticate again"));
+    KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
+                                  "To complete the authentication click \"Change Account\", "
+                                  "or \"Start Upload\" to authenticate again."));
 
 }
 
@@ -291,7 +292,7 @@ void DBWindow::slotStartTransfer()
 
     if(m_widget->m_imgList->imageUrls().isEmpty())
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("No Image Selected. Cannot upload.Continue by selecting image "))
+        if (KMessageBox::warningContinueCancel(this, i18n("No image selected. Please select which images should be uploaded."))
             == KMessageBox::Continue)
         {
              return;
@@ -301,7 +302,7 @@ void DBWindow::slotStartTransfer()
 
     if(!(m_talker->authenticated()))
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Press Continue to authenticate"))
+        if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
             == KMessageBox::Continue)
         {
             m_talker->obtain_req_token();
@@ -361,7 +362,7 @@ void DBWindow::uploadNextPhoto()
 
 void DBWindow::slotAddPhotoFailed(const QString& msg)
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Dropbox. %1\nDo you want to continue?",msg))
+    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Dropbox.\n%1\nDo you want to continue?",msg))
         != KMessageBox::Continue)
     {
         m_transferQueue.clear();
@@ -416,7 +417,7 @@ void DBWindow::slotReloadAlbumsRequest()
 
 void DBWindow::slotAccessTokenFailed()
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Press Continue to authenticate"))
+    if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
         == KMessageBox::Continue)
     {
         m_talker->obtain_req_token();
@@ -440,13 +441,13 @@ void DBWindow::slotAccessTokenObtained(const QString& msg1,const QString& msg2,c
 
 void DBWindow::slotListAlbumsFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("Dropbox Call Failed: %1\n", msg));
+    KMessageBox::error(this, i18n("Dropbox call failed:\n%1", msg));
     return;
 }
 
 void DBWindow::slotCreateFolderFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("Dropbox Call Failed: %1\n", msg));
+    KMessageBox::error(this, i18n("Dropbox call failed:\n%1", msg));
     //return;
 }
 

@@ -14,6 +14,7 @@ Name[en_GB]=BatchProcessImages
 Name[es]=Procesamiento en lote de imágenes
 Name[et]=Piltide pakktöötlus
 Name[eu]=Irudien batch prozesua
+Name[fi]=BatchProcessImages
 Name[fr]=Envoi d'images par courrier électronique
 Name[ga]=BatchProcessImages
 Name[gl]=BatchProcessImages
