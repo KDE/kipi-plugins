@@ -60,7 +60,7 @@ class MapDragDropHandler : public KGeoMap::DragDropHandler
 
 public:
 
-    MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKGeoMapModelHelper* const parent);
+    MapDragDropHandler(QAbstractItemModel* const /*pModel*/, GPSSyncKGeoMapModelHelper* const parent);
     virtual ~MapDragDropHandler();
 
     virtual Qt::DropAction accepts(const QDropEvent* e);
@@ -69,7 +69,6 @@ public:
 
 private:
 
-    QAbstractItemModel* const        model;
     GPSSyncKGeoMapModelHelper* const gpsSyncKGeoMapModelHelper;
 };
 

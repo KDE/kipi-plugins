@@ -35,8 +35,8 @@
 namespace KIPIGPSSyncPlugin
 {
 
-MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKGeoMapModelHelper* const parent)
-    : DragDropHandler(parent), model(pModel), gpsSyncKGeoMapModelHelper(parent)
+MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const /*pModel*/, GPSSyncKGeoMapModelHelper* const parent)
+    : DragDropHandler(parent), gpsSyncKGeoMapModelHelper(parent)
 {
 }
 
