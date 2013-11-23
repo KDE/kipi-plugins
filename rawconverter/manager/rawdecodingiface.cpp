@@ -133,9 +133,9 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
     // and adapt color component order to KPWriteImage data format (RGB ==> BGR)
 
     QImage img(width, height, QImage::Format_ARGB32);
-    uint*  dptr            = reinterpret_cast<uint*>(img.bits());
-    uchar* sptr8           = reinterpret_cast<uchar*>(imageData.data());
-    unsigned short* sptr16 = reinterpret_cast<unsigned short*>(imageData.data());
+    uint*  dptr            = (uint*)img.bits();
+    uchar* sptr8           = (uchar*)imageData.data();
+    unsigned short* sptr16 = (unsigned short*)imageData.data();
 
     for (int i = 0 ; i < (width * height) ; ++i)
     {
