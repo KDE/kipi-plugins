@@ -56,7 +56,7 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent)
     //---------------------------------------------------------
 
     m_titleEdt = new KLineEdit;
-    m_titleEdt->setWhatsThis("Name of folder that will be created");
+    m_titleEdt->setWhatsThis(i18n("The name of the folder that will be created"));
 
     QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("album edit","Title:"),m_titleEdt);

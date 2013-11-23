@@ -68,20 +68,20 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(i18n("This is list to images to upload to your Dropbox Account"));
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Dropbox account."));
 
     QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(this);
-    m_headerLbl->setWhatsThis(i18n("This is clickable link to open Dropbox in a browser"));
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Dropbox in a browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     //------------------------------------------------------------
 
     QGroupBox* const accountBox   = new QGroupBox(i18n("Account"),settingsBox);
-    accountBox->setWhatsThis(i18n("This is Dropbox account that is currently logged in"));
+    accountBox->setWhatsThis(i18n("This is the Dropbox account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
@@ -99,7 +99,7 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     //-------------------------------------------------------------
 
     QGroupBox* const albBox            = new QGroupBox(i18n("Destination"),settingsBox);
-    albBox->setWhatsThis(i18n("This is Dropbox folder to which selected photos will be uploaded"));
+    albBox->setWhatsThis(i18n("This is the Dropbox folder to which selected photos will be uploaded."));
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Folder:"),albBox);
@@ -107,8 +107,8 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Folder"),"list-add",
-                                                 i18n("Create new Dropbox Folder")),accountBox);
-    m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("album list","reload"),"view-refresh",
+                                                 i18n("Create new Dropbox folder")),accountBox);
+    m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("album list","Reload"),"view-refresh",
                                                  i18n("Reload album list")),accountBox);
 
     albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
@@ -119,7 +119,7 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     //-----------------------------------------------------------
 
     QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"),settingsBox);
-    optionsBox->setWhatsThis(i18n("These are options that would be applied to photos before upload"));
+    optionsBox->setWhatsThis(i18n("These are the options that would be applied to photos before upload."));
     QGridLayout *const optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_resizeChB = new QCheckBox(optionsBox);

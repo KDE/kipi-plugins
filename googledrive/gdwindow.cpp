@@ -87,7 +87,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/)
     setDefaultButton(Close);
     setModal(false);
     setWindowTitle(i18n("Export to Google Drive"));
-    setButtonGuiItem(User1,KGuiItem(i18n("Start-Upload"),"network-workgroup",i18n("Start upload to Google Drive")));
+    setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Drive")));
     m_widget->setMinimumSize(700,500);
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
@@ -276,8 +276,9 @@ void GDWindow::slotBusy(bool val)
 void GDWindow::slotTextBoxEmpty()
 {
     kDebug() << "in slotTextBoxEmpty";
-    KMessageBox::error(this, i18n("Text Box is Empty, Please Enter code from browser to textbox. To complete authentication press"
-                                  " Change Account or start-upload button to authenticate again"));
+    KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
+                                  "To complete the authentication click \"Change Account\", "
+                                  "or \"Start Upload\" to authenticate again."));
 }
 
 void GDWindow::slotStartTransfer()
@@ -286,7 +287,7 @@ void GDWindow::slotStartTransfer()
 
     if(m_widget->m_imgList->imageUrls().isEmpty())
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("No Image Selected. Cannot upload.Continue by selecting image "))
+        if (KMessageBox::warningContinueCancel(this, i18n("No image selected. Please select which images should be uploaded."))
             == KMessageBox::Continue)
         {
              return;
@@ -297,7 +298,7 @@ void GDWindow::slotStartTransfer()
 
     if(!(m_talker->authenticated()))
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Press Continue to authenticate"))
+        if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
             == KMessageBox::Continue)
         {
             m_talker->doOAuth();
@@ -330,7 +331,7 @@ void GDWindow::slotStartTransfer()
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
-    m_widget->progressBar()->progressScheduled(i18n("GoogleDrive export"), true, true);
+    m_widget->progressBar()->progressScheduled(i18n("Google Drive export"), true, true);
     m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
     uploadNextPhoto();
@@ -365,7 +366,7 @@ void GDWindow::uploadNextPhoto()
 
 void GDWindow::slotAddPhotoFailed(const QString& msg)
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive. %1\nDo you want to continue?",msg))
+    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
         != KMessageBox::Continue)
     {
         m_transferQueue.clear();
@@ -416,7 +417,8 @@ void GDWindow::slotReloadAlbumsRequest()
 
 void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
 {
-    KMessageBox::error(this, i18n("There seems to be %1 error: %2",errCode,errMsg));
+    KMessageBox::error(this, i18nc("%1 is the error string, %2 is the error code",
+                                   "An authentication error occurred: %1 (%2)",errMsg,errCode));
     return;
 }
 
@@ -433,13 +435,13 @@ void GDWindow::slotRefreshTokenObtained(const QString& msg)
 
 void GDWindow::slotListAlbumsFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("GoogleDrive Call Failed: %1\n", msg));
+    KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
     return;
 }
 
 void GDWindow::slotCreateFolderFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("GoogleDrive Call Failed: %1\n", msg));
+    KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
 }
 
 void GDWindow::slotCreateFolderSucceeded()
@@ -459,8 +461,8 @@ void GDWindow::slotUserChangeRequest()
     KUrl url("https://accounts.google.com/logout");
     KToolInvocation::invokeBrowser(url.url());
 
-    if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser,Press 'Continue' to authenticate "
-                                                      " for other account"))
+    if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser, "
+                                                      "click \"Continue\" to authenticate for another account"))
         == KMessageBox::Continue)
     {
         refresh_token = "";
