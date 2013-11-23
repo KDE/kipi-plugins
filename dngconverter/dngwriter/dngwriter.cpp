@@ -1364,8 +1364,8 @@ bool DNGWriter::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer&
     QByteArray tmpData(rawData);
     int height             = identify.outputSize.height();
     int width              = identify.outputSize.width();
-    unsigned short* tmp    = (unsigned short*)tmpData.data();
-    unsigned short* output = (unsigned short*)rawData.data();
+    unsigned short* tmp    = reinterpret_cast<unsigned short*>(tmpData.data());
+    unsigned short* output = reinterpret_cast<unsigned short*>(rawData.data());
 
     for (int row=0; row < height; ++row)
     {
