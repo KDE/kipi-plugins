@@ -60,7 +60,6 @@
 // Local includes
 
 #include "kpimageslist.h"
-#include "kprogressdialog.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
@@ -73,7 +72,7 @@
 namespace KIPIDropboxPlugin
 {
 
-DBWindow::DBWindow(const QString& tmpFolder,QWidget* const /*parent*/)
+DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     : KPToolDialog(0)
 {
     m_tmp         = tmpFolder;

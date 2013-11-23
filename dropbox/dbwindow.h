@@ -38,7 +38,6 @@
 
 class QCloseEvent;
 
-class KProgressDialog;
 class KUrl;
 
 namespace KIPI
@@ -115,8 +114,6 @@ private:
     DropboxWidget*       m_widget;
     DBNewAlbum*          m_albumDlg;
     DBTalker*            m_talker;
-
-    KProgressDialog*     m_progressDlg;
 
     QString              m_currentAlbumName;
 
