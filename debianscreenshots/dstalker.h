@@ -55,8 +55,6 @@ private Q_SLOTS:
 
 private:
 
-    QWidget*        m_parent;
-
     QByteArray      m_buffer;
 
     QString         m_userAgent;

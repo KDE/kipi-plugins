@@ -54,7 +54,6 @@ namespace KIPIDebianScreenshotsPlugin
 
 DsTalker::DsTalker(QWidget* const parent)
     : QObject(parent),
-      m_parent(parent),
       m_job(0)
 {
     m_userAgent = QString("KIPI-Plugin-DebianScreenshots/%1 (pgquiles@elpauer.org)").arg(kipiplugins_version);
