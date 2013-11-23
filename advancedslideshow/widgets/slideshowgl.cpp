@@ -549,12 +549,12 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
     int sh = bh / 2 - th / 2;
     int eh = bh / 2 + th / 2;
 
-    unsigned int* tdata = (unsigned int*) top.scanLine(0);
+    unsigned int* tdata = reinterpret_cast<unsigned int*>(top.scanLine(0));
     unsigned int* bdata = 0;
 
     for (int y = sh; y < eh; ++y)
     {
-        bdata = (unsigned int*) bot.scanLine(y) + sw;
+        bdata = reinterpret_cast<unsigned int*>(bot.scanLine(y)) + sw;
 
         for (int x = 0; x < tw; ++x)
         {
