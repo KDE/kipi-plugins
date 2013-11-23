@@ -50,7 +50,7 @@ namespace KIPICalendarPlugin
 {
 
 CalTemplate::CalTemplate(KIPI::Interface* const interface, QWidget* const parent)
-    : QWidget(parent), m_interface(interface)
+    : QWidget(parent)
 {
     m_ui.setupUi(this);
 

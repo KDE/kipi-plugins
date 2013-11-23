@@ -58,9 +58,8 @@ private Q_SLOTS:
 
 private:
 
-    KIPI::Interface*       m_interface;
-    Ui::CalTemplate        m_ui;
-    QVector<MonthWidget*>  m_wVector;
+    Ui::CalTemplate       m_ui;
+    QVector<MonthWidget*> m_wVector;
 };
 
 }  // NameSpace KIPICalendarPlugin
