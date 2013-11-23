@@ -148,8 +148,6 @@ private:
     bool                        m_effectRunning;
     QString                     m_effectName;
 
-    int                         m_commentsLinesLength;
-
     // values for state of various effects:
     int                         m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
     int                         m_x0, m_y0, m_x1, m_y1, m_wait;
