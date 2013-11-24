@@ -103,7 +103,7 @@ public:
     //! Paints the blob in an image
     void FillBlob( IplImage* imatge, CvScalar color, int offsetX = 0, int offsetY = 0 ) const;
 
-    //! Funcions GET sobre els valors dels blobs
+    //! Functions GET sobre els valors dels blobs
     //! Get functions
 
     inline int    Label() const

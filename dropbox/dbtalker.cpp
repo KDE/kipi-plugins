@@ -34,7 +34,6 @@
 #include <QLineEdit>
 #include <QPlainTextEdit>
 #include <QList>
-#include <qjson/parser.h>
 #include <QVariant>
 #include <QVariantList>
 #include <QVariantMap>
@@ -180,7 +179,7 @@ void DBTalker::doOAuth()
 
     QPlainTextEdit* const infobox = new QPlainTextEdit( i18n(
           "Please follow the instructions in the browser. "
-           "After logging in and authorizing the appplication, press OK."
+           "After logging in and authorizing the application, press OK."
                                                            ));
 
     infobox->setReadOnly(true);

@@ -335,7 +335,7 @@ public:
     void setServiceProvider(const QString& arg);
 
     /*!
-     * \brief Specifies the the user-friendly name of the associated broadcast channel.
+     * \brief Specifies the user-friendly name of the associated broadcast channel.
      *
      * \param arg specifies the user-friendly name of the associated broadcast channel.
      *

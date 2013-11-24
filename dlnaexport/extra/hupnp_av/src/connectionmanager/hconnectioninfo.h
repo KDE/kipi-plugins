@@ -216,7 +216,7 @@ public:
     HConnectionManagerInfo::ConnectionStatus status() const;
 
     /*!
-     * \brief Specifies the the ID of the virtual RenderingControl instance
+     * \brief Specifies the ID of the virtual RenderingControl instance
      * associated with this connection.
      *
      * \param arg specifies the ID of the virtual RenderingControl instance

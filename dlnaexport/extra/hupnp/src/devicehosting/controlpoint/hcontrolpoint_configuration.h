@@ -130,7 +130,7 @@ public:
      * \brief Indicates whether the control point should perform discovery upon
      * initialization.
      *
-     * \return \e true in case the the control point should perform discovery upon
+     * \return \e true in case the control point should perform discovery upon
      * initialization. This is the default value.
      *
      * \remarks if the discovery is not performed the control point will be

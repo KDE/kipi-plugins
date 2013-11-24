@@ -419,7 +419,7 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
     // TODO support for video uploads
     KUrl uploadUrl;
 
-    if (mime.startsWith("video/"))
+    if (mime.startsWith(QLatin1String("video/")))
     {
         uploadUrl = KUrl(m_videoApiUrl);
         m_state = IMGHCK_ADDVIDEO;

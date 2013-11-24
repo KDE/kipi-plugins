@@ -593,7 +593,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
             if (ts.attributes().value("stat") == "ok")
                 success = true;
 
-            // Originaly, first versions of Piwigo 2.4.x returned an invalid XML as the element started with a digit
+            // Originally, first versions of Piwigo 2.4.x returned an invalid XML as the element started with a digit
             // New versions are corrected (starting with _) : This code works with both versions
             QRegExp md5rx("_?([a-f0-9]+)>([0-9]+)</.+");
 

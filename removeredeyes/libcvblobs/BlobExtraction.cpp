@@ -1647,7 +1647,7 @@ void Subsume(blob_vector& RegionData,
 
 /**
 - FUNCI�: GetExternPerimeter
-- FUNCIONALITAT: Retorna el perimetre extern d'una run lenght
+- FUNCIONALITAT: Retorna el perimetre extern d'una run length
 - PAR�METRES:
     - start: columna d'inici del run
     - end: columna final del run

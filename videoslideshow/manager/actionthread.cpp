@@ -178,7 +178,7 @@ void ActionThread::cleanTempDir()
     {
         tempFile = tempFiles.at(i);
 
-        if(tempFile.endsWith(".ppm"))
+        if(tempFile.endsWith(QLatin1String(".ppm")))
             d->dir.remove(tempFile);
     }
 

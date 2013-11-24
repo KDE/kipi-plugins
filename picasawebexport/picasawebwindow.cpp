@@ -622,7 +622,7 @@ void PicasawebWindow::uploadNextPhoto()
     KMimeType::Ptr ptr = KMimeType::findByUrl(imgPath);
 
     if(((ptr->is("image/bmp") || ptr->is("image/gif") || ptr->is("image/jpeg") || ptr->is("image/png")) &&
-        !m_widget->m_resizeChB->isChecked()) || ptr->name().startsWith("video"))
+        !m_widget->m_resizeChB->isChecked()) || ptr->name().startsWith(QLatin1String("video")))
     {
         m_tmpPath.clear();
     }

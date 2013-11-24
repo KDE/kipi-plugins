@@ -273,7 +273,7 @@ void ImageshackWidget::removeVideosFromList()
     {
         KMimeType::Ptr mimePtr = KMimeType::findByUrl(urls[i]);
 
-        if (mimePtr->name().startsWith("video/"))
+        if (mimePtr->name().startsWith(QLatin1String("video/")))
             m_imgList->removeItemByUrl(urls[i]);
     }
 }

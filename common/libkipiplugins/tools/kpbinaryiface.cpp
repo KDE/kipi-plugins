@@ -105,7 +105,7 @@ bool KPBinaryIface::parseHeader(const QString& output)
     {
         QString version = firstLine.remove(0, m_headerStarts.length());
 
-        if (version.startsWith("Pre-Release "))
+        if (version.startsWith(QLatin1String("Pre-Release ")))
         {
             version.remove("Pre-Release ");            // Special case with Hugin beta.
             m_developmentVersion = true;

@@ -34,7 +34,6 @@
 #include <QLineEdit>
 #include <QPlainTextEdit>
 #include <QList>
-#include <qjson/parser.h>
 #include <QVariant>
 #include <QVariantList>
 #include <QVariantMap>
