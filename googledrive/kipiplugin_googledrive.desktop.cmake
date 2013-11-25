@@ -1,7 +1,21 @@
 [Desktop Entry]
 UntranslatedGenericName=GoogleDrive Export
 Name=Google Drive Export
+Name[da]=Eksport til Google Drev
+Name[de]=„Google Drive“-Export
+Name[nl]=Exporteren naar Google Drive
+Name[pt_BR]=Exportar para o Google Drive
+Name[sv]=Export till Google Drive
+Name[uk]=Експорт до Google Drive
+Name[x-test]=xxGoogle Drive Exportxx
 Comment=A tool to export images to a remote Google Drive web service
+Comment[da]=Et værktøj til at eksportere billeder til en ekstern Google Drive-webtjeneste
+Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten „Google Drive“-Webdienst zu exportieren.
+Comment[nl]=Een hulpmiddel om afbeeldingen naar een Google Drive-webservice te exporteren
+Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço da Internet Google Drive
+Comment[sv]=Ett verktyg för att exportera bilder till en Google Drive fjärrwebbtjänst
+Comment[uk]=Інструмент для експорту зображень до віддаленої служби Google Drive
+Comment[x-test]=xxA tool to export images to a remote Google Drive web servicexx
 Type=Service
 Icon=kipi-googledrive
 ServiceTypes=KIPI/Plugin

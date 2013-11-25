@@ -1,17 +1,21 @@
 [Desktop Entry]
 UntranslatedGenericName=Dropbox Export
 Name=Dropbox Export
+Name[da]=Eksport til Dropbox
 Name[de]=Dropbox-Export
 Name[gl]=Exportación a Dropbox
 Name[nl]=Exporteren naar Dropbox
+Name[pt]=Exportação para o Dropbox
 Name[pt_BR]=Exportar para o Dropbox
 Name[sv]=Export till Dropbox
 Name[uk]=Експорт до Dropbox
 Name[x-test]=xxDropbox Exportxx
 Comment=A tool to export images to a remote Dropbox web service
+Comment[da]=Et værktøj til at eksportere billeder til en ekstern Dropbox-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten Dropbox-Webdienst zu exportieren.
 Comment[gl]=Unha ferramenta para exportar imaxes a un servizo web Dropbox remoto
 Comment[nl]=Een hulpmiddel om afbeeldingen naar een Dropbox-webservice te exporteren
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto Dropbox
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço remoto da Internet Dropbox
 Comment[sv]=Ett verktyg för att exportera bilder till en Dropbox fjärrwebbtjänst
 Comment[uk]=Інструмент для експорту зображень до віддаленої служби Dropbox
