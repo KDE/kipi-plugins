@@ -493,7 +493,7 @@ HServerDevice* HServerModelCreator::parseDevice(
             QString("Failed to initialize device [%1]").arg(
                 deviceInfo.udn().toString());
 
-        return false;
+        return 0;
     }
 
     device->h_ptr->m_deviceDescription =
@@ -560,7 +560,7 @@ HServerDevice* HServerModelCreator::parseDevice(
                     "[%2]").arg(device->info().deviceType().toString(),
                                 dt.toString());
 
-                return false;
+                return 0;
             }
         }
     }
