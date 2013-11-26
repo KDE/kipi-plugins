@@ -57,6 +57,7 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent)
 
     m_titleEdt = new KLineEdit;
     m_titleEdt->setWhatsThis(i18n("The name of the folder that will be created"));
+    enableButtonOk(false);
 
     QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("album edit","Title:"),m_titleEdt);
@@ -64,10 +65,16 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent)
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
     mainWidget->setLayout(albumBoxLayout);
+    connect(m_titleEdt, SIGNAL(textChanged(QString)), this, SLOT(slotTextChanged(QString)));
 }
 
 DBNewAlbum::~DBNewAlbum()
 {
+}
+
+void DBNewAlbum::slotTextChanged(const QString &text)
+{
+    enableButtonOk(!text.isEmpty());
 }
 
 void DBNewAlbum::getFolderTitle(DBFolder& folder)

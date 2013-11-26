@@ -44,6 +44,9 @@ public:
 
     void getFolderTitle(DBFolder& folder);
 
+private Q_SLOTS:
+    void slotTextChanged(const QString &text);
+
 private:
 
     KLineEdit* m_titleEdt;
