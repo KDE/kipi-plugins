@@ -129,9 +129,6 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     connect(m_talker,SIGNAL(signalTextBoxEmpty()),
             this,SLOT(slotTextBoxEmpty()));
 
-    connect(m_talker,SIGNAL(signalAccessTokenFailed(int,QString)),
-            this,SLOT(slotAccessTokenFailed(int,QString)));
-
     connect(m_talker,SIGNAL(signalAccessTokenFailed()),
             this,SLOT(slotAccessTokenFailed()));
 
@@ -245,7 +242,7 @@ void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
 {
     m_widget->m_albumsCoB->clear();
     kDebug() << "slotListAlbumsDone1:" << list.size();
-
+    
     for(int i=0;i<list.size();i++)
     {
         m_widget->m_albumsCoB->addItem(KIcon("system-users"),list.value(i).second,
