@@ -32,6 +32,7 @@ Comment[ca]=Integració del processador RAW Photivo
 Comment[ca@valencia]=Integració del processador RAW Photivo
 Comment[cs]=Integrace nástroje pro zpracování RAW Photivo
 Comment[da]=Integration af RAW-behandleren Photivo
+Comment[de]=Integration des Photivo-RAW-Prozessors
 Comment[el]=Ενσωμάτωση του RAW-επεξεργαστή Photivo
 Comment[es]=Integración con el procesador RAW de Photivo
 Comment[et]=Lõimimine Photivo toorpiltide töötlejaga
