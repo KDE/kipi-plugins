@@ -353,16 +353,16 @@ void ExportDialog::slotProcessedFrame(const ActionData& ad)
     switch(ad.action)
     {
         case TYPE_TRANSITION:
-            d->progressBar->progressStatusChanged(QString("Processing transition:%1, totalFrames: %2")  
+            d->progressBar->progressStatusChanged(i18n("Processing transition:%1, totalFrames: %2")
                .arg(ad.fileUrl.path()).arg(ad.totalFrames));
             break;
         case TYPE_IMAGE:
-            d->progressBar->progressStatusChanged(QString("Processing Image:%1, totalFrames: %2")  
+            d->progressBar->progressStatusChanged(i18n("Processing Image:%1, totalFrames: %2")
                .arg(ad.fileUrl.path()).arg(ad.totalFrames));
             d->listView->processed(ad.fileUrl, true);
             break;
         default:
-            slotShowError("Undefined action");
+            slotShowError(i18n("Undefined action"));
             break;
     }
 

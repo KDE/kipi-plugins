@@ -112,8 +112,8 @@ SlideShowSettingsWidget::SlideShowSettingsWidget(QWidget* const parent, Qt::WFla
 {
     d->PPMSettingsWidget   = new QWidget();
     d->VideoSettingsWidget = new QWidget();
-    addTab(d->PPMSettingsWidget,   QString("SlideShow Settings"));
-    addTab(d->VideoSettingsWidget, QString("Video Settings"));
+    addTab(d->PPMSettingsWidget,   i18n("SlideShow Settings"));
+    addTab(d->VideoSettingsWidget, i18n("Video Settings"));
 
     setCloseButtonEnabled(false);
     setHoverCloseButton(false);
@@ -477,7 +477,7 @@ void SlideShowSettingsWidget::slotAudioChecked()
     }
     else
     {
-       d->audioFile->setText("select Audio");
+       d->audioFile->setText(i18n("select Audio"));
        d->audioBtn->setEnabled(true);
     }
 }
