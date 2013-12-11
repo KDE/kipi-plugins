@@ -477,7 +477,7 @@ void SlideShowSettingsWidget::slotAudioChecked()
     }
     else
     {
-       d->audioFile->setText(i18n("select Audio"));
+       d->audioFile->setText(i18n("Select Audio"));
        d->audioBtn->setEnabled(true);
     }
 }

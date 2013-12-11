@@ -353,12 +353,12 @@ void ExportDialog::slotProcessedFrame(const ActionData& ad)
     switch(ad.action)
     {
         case TYPE_TRANSITION:
-            d->progressBar->progressStatusChanged(i18n("Processing transition:%1, totalFrames: %2")
-               .arg(ad.fileUrl.path()).arg(ad.totalFrames));
+            d->progressBar->progressStatusChanged(i18n("Processing transition: %1, total frames: %2",
+               ad.fileUrl.path(), ad.totalFrames));
             break;
         case TYPE_IMAGE:
-            d->progressBar->progressStatusChanged(i18n("Processing Image:%1, totalFrames: %2")
-               .arg(ad.fileUrl.path()).arg(ad.totalFrames));
+            d->progressBar->progressStatusChanged(i18n("Processing image: %1, total frames: %2",
+               ad.fileUrl.path(), ad.totalFrames));
             d->listView->processed(ad.fileUrl, true);
             break;
         default:
