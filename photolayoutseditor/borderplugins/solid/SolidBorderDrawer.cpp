@@ -51,9 +51,9 @@ SolidBorderDrawer::SolidBorderDrawer(StandardBordersFactory * factory, QObject *
 {
     if (m_corners_style_names.isEmpty())
     {
-        SolidBorderDrawer::m_corners_style_names.insert(Qt::MiterJoin, "Miter");
-        SolidBorderDrawer::m_corners_style_names.insert(Qt::BevelJoin, "Bevel");
-        SolidBorderDrawer::m_corners_style_names.insert(Qt::RoundJoin, "Round");
+        SolidBorderDrawer::m_corners_style_names.insert(Qt::MiterJoin, i18n("Miter"));
+        SolidBorderDrawer::m_corners_style_names.insert(Qt::BevelJoin, i18n("Bevel"));
+        SolidBorderDrawer::m_corners_style_names.insert(Qt::RoundJoin, i18n("Round"));
     }
 
     if (m_properties.isEmpty())
