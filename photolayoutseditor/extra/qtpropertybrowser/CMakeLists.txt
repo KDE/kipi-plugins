@@ -13,7 +13,6 @@ SET(qtpropertyeditor_SRCS
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
-                    ${CMAKE_CURRENT_BINARY_DIR}/src
                     src
                     ${QT_INCLUDE_DIR}
                    )
