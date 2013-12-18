@@ -23,5 +23,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 326728 - Panorama Stitching crashes upon start.
 011 ==> 300445 - Kipi integration with cloud storage (as Dropbox or GDrive) for quick sharing.
 012 ==> 328679 - Untranslated strings due to missing i18n().
-013 ==> 
-
+013 ==> 328981 - Cannot select between multiple scanner devices.
+014 ==> 
