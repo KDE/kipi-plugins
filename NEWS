@@ -26,4 +26,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> 328981 - Cannot select between multiple scanner devices.
 014 ==> 296650 - digiKam crash while uploading to PicasaWeb.
 015 ==> 304809 - Crash when attempting to download Facebook photoes using KIPI plug-in.
-016 ==> 
+016 ==> 299038 - Crashes when Starting Geo-Tagging.
+017 ==> 
