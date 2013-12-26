@@ -135,9 +135,9 @@ void KPBinaryIface::slotNavigateAndCheck()
     }
     else
     {
-#if defined Q_WS_MAC
+#if defined Q_OS_MAC
         start = KUrl(QString("/Applications/"));
-#elif defined Q_WS_WIN
+#elif defined Q_OS_WIN
         start = KUrl(QString("C:/Program Files/"));
 #else
         start = KUrl(QString("/usr/bin/"));
