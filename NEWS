@@ -27,4 +27,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> 296650 - digiKam crash while uploading to PicasaWeb.
 015 ==> 304809 - Crash when attempting to download Facebook photoes using KIPI plug-in.
 016 ==> 299038 - Crashes when Starting Geo-Tagging.
-017 ==> 
+017 ==> 290797 - crash when exporting images to flickr.
+018 ==> 
