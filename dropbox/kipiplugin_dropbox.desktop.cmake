@@ -11,6 +11,7 @@ Name[nb]=Dropbox eksport
 Name[nl]=Exporteren naar Dropbox
 Name[pt]=Exportação para o Dropbox
 Name[pt_BR]=Exportar para o Dropbox
+Name[sk]=Dropbox Export
 Name[sl]=Izvoz v Dropbox
 Name[sv]=Export till Dropbox
 Name[tr]=Dropbox Aktarımı

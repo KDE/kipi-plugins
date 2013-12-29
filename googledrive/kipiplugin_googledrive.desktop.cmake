@@ -10,6 +10,7 @@ Name[it]=Esportazione a Google Drive
 Name[nl]=Exporteren naar Google Drive
 Name[pt]=Exportação para o Google Drive
 Name[pt_BR]=Exportar para o Google Drive
+Name[sk]=Google Drive Export
 Name[sl]=Izvoz v Google Drive
 Name[sv]=Export till Google Drive
 Name[tr]=Google Drive Aktarımı
