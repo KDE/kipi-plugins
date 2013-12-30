@@ -25,6 +25,7 @@ Name[pt]=Exportação para Mensagens Instantâneas
 Name[pt_BR]=Exportar mensagens instantâneas
 Name[ro]=Export către mesagerie instantanee
 Name[ru]=Экспорт в сеть обмена мгновенными сообщениями
+Name[sk]=Export instant messagingu
 Name[sl]=Izvoz hipnih sporočil
 Name[sv]=Export som direktmeddelande
 Name[tr]=Anında Mesajlaşma Aktarımı

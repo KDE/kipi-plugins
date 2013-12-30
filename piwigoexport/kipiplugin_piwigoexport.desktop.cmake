@@ -27,6 +27,7 @@ Name[pt]=Exportação para um Piwigo Remoto
 Name[pt_BR]=Exportar para Piwigo remoto
 Name[ro]=Export către Piwigo
 Name[ru]=Экспорт в Piwigo
+Name[sk]=Vzdialený Piwigo export
 Name[sl]=Izvoz v oddaljeno storitev Piwigo
 Name[sv]=Fjärrexport till Piwigo
 Name[th]=ส่งออกไปยังบริการ Piwigo ทางไกล

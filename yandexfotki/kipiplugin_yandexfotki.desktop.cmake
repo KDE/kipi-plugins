@@ -26,6 +26,7 @@ Name[pt]=Exportação para o Yandex.Fotki
 Name[pt_BR]=Exportação para o Yandex.Fotki
 Name[ro]=Exportator Yandex.Fotki
 Name[ru]=Экспорт в Яндекс.Фотки
+Name[sk]=Yandex.Fotki exportovač
 Name[sl]=Izvoz v Yandex.Fotki
 Name[sv]=Export till Yandex.Fotki
 Name[tr]=Yandex.Fotki Aktarıcı

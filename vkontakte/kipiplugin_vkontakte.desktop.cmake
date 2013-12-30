@@ -22,6 +22,7 @@ Name[pl]=Eksporter VKontakte.ru
 Name[pt]=Exportação para o VKontakte.ru
 Name[pt_BR]=Exportação para o VKontakte.ru
 Name[ru]=Экспорт в VKontakte.ru
+Name[sk]=VKontakte.ru exportovač
 Name[sl]=Izvoz v VKontakte.ru
 Name[sv]=Export till VKontakte.ru
 Name[tr]=VKontakte.ru Aktarıcı

@@ -27,6 +27,7 @@ Name[pt]=Exportação para o Rajce.net
 Name[pt_BR]=Exportação para o Rajce.net
 Name[ro]=Exportator Rajce.net
 Name[ru]=Экспорт в Rajce.net
+Name[sk]=Rajce.net exportovač
 Name[sl]=Izvoz v Rajce.net
 Name[sv]=Export till Rajce.net
 Name[tr]=Rajce.net Aktarıcısı

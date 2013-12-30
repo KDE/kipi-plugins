@@ -21,6 +21,7 @@ Name[nl]=Naar MediaWiki exporteren
 Name[pl]=Eksport do MediaWiki
 Name[pt]=Exportação para o MediaWiki
 Name[pt_BR]=Exportar para o MediaWiki
+Name[sk]=MediaWiki Export
 Name[sl]=Izvoz MediaWiki
 Name[sv]=Export till Wikimedia
 Name[tr]=MediaWiki Aktarımı
