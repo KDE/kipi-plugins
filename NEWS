@@ -28,4 +28,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> 304809 - Crash when attempting to download Facebook photoes using KIPI plug-in.
 016 ==> 299038 - Crashes when Starting Geo-Tagging.
 017 ==> 290797 - crash when exporting images to flickr.
-018 ==> 
+018 ==> 183014 - Png converter compressor unconsistent.
+019 ==> 
