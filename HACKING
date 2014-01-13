@@ -51,7 +51,7 @@ For vim users, add this to your .vimrc
 -------------------------------------------------------------------------
 
 Line length should never exceed 80 chars (unless really necessary - these 
-cases are rare). Having long lines greatly reduces readability of code
+cases are rare). Having long lines greatly reduces readability of code.
 
 -------------------------------------------------------------------------
 * Bracketing
