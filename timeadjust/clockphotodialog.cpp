@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2009      by Pieter Edelman <p dot edelman at gmx dot net>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2014      by Michael G. Hansen <mike at mghansen dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -203,6 +204,9 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
     // Disable all the GUI elements if loading failed.
     d->calendar->setEnabled(success);
 
+    // enable the ok button if loading succeeded
+    button(Ok)->setEnabled(success);
+    
     return success;
 }
 
@@ -227,16 +231,8 @@ void ClockPhotoDialog::slotLoadPhoto()
 
     if (!dlg.url().isEmpty())
     {
-        // If the user selected a proper photo, try to load it. If this
-        // succeeds, enable the Ok button, otherwise disable it.
-        if (setImage(dlg.url()))
-        {
-            button(Ok)->setEnabled(true);
-        }
-        else
-        {
-            button(Ok)->setEnabled(false);
-        }
+        // If the user selected a proper photo, try to load it.
+        setImage(dlg.url());
     }
 }
 
