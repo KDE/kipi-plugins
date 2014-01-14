@@ -7,7 +7,7 @@
  * @date   2009-05-07
  * @brief  Context menu for GPS list view.
  *
- * @author Copyright (C) 2009-2011 by Michael G. Hansen
+ * @author Copyright (C) 2009-2011,2014 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -316,12 +316,11 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
     GPSDataContainer gpsData;
     bool foundData       = false;
-    bool foundDoubleData = false;
-
     if (mimedata->hasFormat("application/gpx+xml"))
     {
         const QByteArray data = mimedata->data("application/gpx+xml");
         bool xmlOkay          = true;
+        bool foundDoubleData = false;
 
         // code adapted from gpsdataparser.cpp
         QDomDocument gpxDoc("gpx");
@@ -439,13 +438,12 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
             if ((parts.size()==3)||(parts.size()==2))
             {
-                bool okay             = true;
-                double    ptLongitude = 0.0;
-                double    ptLatitude  = 0.0;
-                double    ptAltitude  = 0.0;
-                bool haveAltitude     = false;
-                ptLongitude           = parts[0].toDouble(&okay);
+                bool okay            = true;
+                double    ptLatitude = 0.0;
+                double    ptAltitude = 0.0;
+                bool haveAltitude    = false;
 
+                const double ptLongitude = parts[0].toDouble(&okay);
                 if (okay)
                 {
                     ptLatitude = parts[1].toDouble(&okay);
