@@ -46,6 +46,7 @@ Comment[nl]=Integratie van de Photivo RAW-processor
 Comment[pl]=Integracja programu przetwarzającego RAW Photivo
 Comment[pt]=Integração com o Processador RAW Photivo
 Comment[pt_BR]=Integração com o Processador RAW Photivo
+Comment[sk]=Integrácia Photivo RAW-Processora
 Comment[sl]=Podpora za obdelovalnik RAW Photivo
 Comment[sv]=Integrering av Photivo bearbetning av obehandlade bilder
 Comment[tr]=Photivo HAM-İşleyici bütünleştirmesi

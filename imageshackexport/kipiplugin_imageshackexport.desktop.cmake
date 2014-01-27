@@ -48,6 +48,7 @@ Comment[nl]=Een hulpmiddel om afbeeldingen naar de Imageshack-webservice te expo
 Comment[pl]=Narzędzie do eksportowania obrazów do usługi sieciowej Imageshack
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web Imageshack
 Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço da Internet Imageshack
+Comment[sk]=Nástroj na export obrázkov na službu Imageshack
 Comment[sl]=Orodje za izvoz slik v oddaljeno spletno storitev Imageshack
 Comment[sv]=Ett verktyg för att exportera bilder till en Imageshack webbtjänst
 Comment[tr]=Resimleri Imageshack web hizmetine aktarmak için bir araç

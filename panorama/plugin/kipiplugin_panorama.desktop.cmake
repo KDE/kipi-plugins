@@ -53,6 +53,7 @@ Comment[nl]=Een hulpmiddel om afbeeldingen samen te voegen tot een panorama
 Comment[pl]=Narzędzie do składania obrazów jako panoramy
 Comment[pt]=Uma ferramenta para juntar imagens como um panorama
 Comment[pt_BR]=Uma ferramenta para montar imagens panorâmicas
+Comment[sk]=Nástroj na zloženie obrázkov ako panoráma
 Comment[sl]=Orodje za zlivanje slik v panoramsko sliko
 Comment[sv]=Ett verktyg för att sammanfoga bilder till ett panorama
 Comment[tr]=Resimleri bir panorama olarak birleştirmek için bir araç

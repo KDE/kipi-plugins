@@ -34,6 +34,7 @@ Comment[nb]=Et verktøy for å eksportere bilder til en fjern Dropbox-nettjenest
 Comment[nl]=Een hulpmiddel om afbeeldingen naar een Dropbox-webservice te exporteren
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto Dropbox
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço remoto da Internet Dropbox
+Comment[sk]=Nástroj na export obrázkov na vzdialenú službu Dropbox
 Comment[sl]=Orodje za izvoz slik v oddaljeno spletno storitev Dropbox
 Comment[sv]=Ett verktyg för att exportera bilder till en Dropbox fjärrwebbtjänst
 Comment[tr]=Resimleri uzak bir Dropbox web hizmetine aktarmak için bir araç

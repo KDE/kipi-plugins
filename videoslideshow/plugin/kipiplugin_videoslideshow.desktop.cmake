@@ -47,6 +47,7 @@ Comment[nl]=Een hulpmiddel voor het exporteren van afbeeldingen als diavoorstell
 Comment[pl]=Narzędzie do eksporty obrazów jako pokaz slajdów filmów
 Comment[pt]=Uma ferramenta para exportar imagens como uma apresentação de vídeo
 Comment[pt_BR]=Uma ferramenta para exportar imagens como uma apresentação de vídeo
+Comment[sk]=Nástroj na export obrázkov ako video slide show
 Comment[sl]=Orodje za izvoz slik v video predstavitev
 Comment[sv]=Ett verktyg för att exportera bilder som ett videobildspel
 Comment[tr]=Resimleri Video Slayt Gösterisi olarak aktarmak için bir araç

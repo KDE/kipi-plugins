@@ -51,6 +51,7 @@ Comment[pl]=Narzędzie do eksportowania obrazów do sieci społecznej VKontakte.
 Comment[pt]=Uma ferramenta para exportar imagens para a rede social VKontakte.ru
 Comment[pt_BR]=Uma ferramenta para exportar imagens para a rede social VKontakte.ru
 Comment[ru]=Инструмент для экспорта изображений в социальную сеть VKontakte.ru
+Comment[sk]=Nástroj na export obrázkov na sociálnu sieť VKontakte.ru
 Comment[sl]=Orodje za izvoz slik v družabno omrežje VKontakte.ru
 Comment[sv]=Ett verktyg för att exportera bilder till sociala nätverket VKontakte.ru
 Comment[tr]=Resimleri VKontakte.ru sosyal ağına aktarmak için bir araç

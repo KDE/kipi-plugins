@@ -58,6 +58,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para um contacto de mensagens i
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um contato de mensagens instantâneas
 Comment[ro]=O unealtă de exportat imagini unui contact din mesageria instantanee
 Comment[ru]=Инструмент для экспорта изображений в сеть обмена мгновенными сообщениями
+Comment[sk]=Nástroj na export obrázkov pre kontakt instant messagingu
 Comment[sl]=Orodje za izvoz slik do stika v hipnem sporočanju
 Comment[sv]=Ett verktyg för att exportera bilder till en direktmeddelandekontakt
 Comment[tr]=Resimleri bir anlış mesajlaşma kişisine aktarmak için bir araç

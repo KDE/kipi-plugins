@@ -59,6 +59,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para a página de Imagens da De
 Comment[pt_BR]=Uma ferramenta para exportar imagens para o site Debian Screenshots
 Comment[ro]=O unealtă de exportat imagini pe situl de capturi de ecran Debian
 Comment[ru]=Инструмент для экспорта изображений на сайт снимков экрана Debian
+Comment[sk]=Nástroj na export obrázkov na sieť Debian Screenshots
 Comment[sl]=Orodje za izvoz slik na spletno stran Debian Screenshots
 Comment[sv]=Ett verktyg för att exportera bilder till Debian Skärmbilder
 Comment[tr]=Resimleri Debian Ekran Görüntüleri sitesine aktarmak için bir araç

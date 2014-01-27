@@ -52,6 +52,7 @@ Comment[pl]=Narzędzie do eksportowania obrazów do zdalnej usługi sieciowej im
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do imgur.com
 Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço de armazenamento de imagens imgur.com
 Comment[ru]=Инструмент для экспорта изображений в веб-службу imgur.com
+Comment[sk]=Nástroj na export obrázkov na hostovaciu službu imgur.com
 Comment[sl]=Orodje za izvoz slik v storitev gostovanja slik imgur.com
 Comment[sv]=Ett verktyg för att exportera bilder till en imgur.com bildlagringstjänst
 Comment[tr]=Resimleri imgur.com resim barındırma hizmetine aktarmak için bir araç

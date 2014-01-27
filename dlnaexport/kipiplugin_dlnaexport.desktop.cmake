@@ -48,6 +48,7 @@ Comment[nl]=Een hulpmiddel om een verzameling naar een DLNA-netwerk te exportere
 Comment[pl]=Narzędzie do eksportowania zbioru do usługi sieciowej DLNA
 Comment[pt]=Uma ferramenta para exportar a colecção num serviço de rede DLNA
 Comment[pt_BR]=Uma ferramenta para exportar a coleção para um serviço de rede DLNA
+Comment[sk]=Nástroj na export kolekcie na sieťovú službu DLNA
 Comment[sl]=Orodje za izvoz zbirk na omrežno storitev DLNA
 Comment[sv]=Ett verktyg för att exportera bilder till en DLNA nätverkstjänst
 Comment[tr]=Resimleri DLNA ağ hizmetine aktarmak için bir araç

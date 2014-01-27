@@ -60,6 +60,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do R
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço remoto rajce.net
 Comment[ro]=O unealtă de exportat imagini pe serviciul web rajce.net
 Comment[ru]=Инструмент для экспорта изображений в веб-службу Rajce.net
+Comment[sk]=Nástroj na export obrázkov na vzdialenú službu rajce.net
 Comment[sl]=Orodje za izvoz slik v oddaljeno spletno storitev rajce.net
 Comment[sv]=Ett verktyg för att exportera bilder till en rajce.net fjärrwebbtjänst
 Comment[tr]=Resimleri uzak bir rajce.net hizmetine aktarmak için bir araç

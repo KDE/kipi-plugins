@@ -59,6 +59,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto Yand
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço da Internet Yandex.Fotki
 Comment[ro]=O unealtă de exportat imagini pe serviciul web Yandex.Fotki
 Comment[ru]=Инструмент для экспорта изображений в веб-службу Яндекс.Фотки
+Comment[sk]=Nástroj na export obrázkov na vzdialenú službu Yandex.Fotki
 Comment[sl]=Orodje za izvoz slik v oddaljeno spletno storitev Yandex.Fotki
 Comment[sv]=Ett verktyg för att exportera bilder till en Yandex.Fotki fjärrwebbtjänst
 Comment[tr]=Resimleri uzak bir Yandex.Fotki web hizmetine aktarmak için bir araç

@@ -62,6 +62,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para um Piwigo remoto
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um Piwigo remoto
 Comment[ro]=O unealtă de exportat imagini către Piwigo
 Comment[ru]=Инструмент для экспорта изображений в Piwigo
+Comment[sk]=Nástroj na export obrázkov na vzdialenú Piwigo
 Comment[sl]=Orodje za izvoz slik v oddaljeno storitev Piwigo
 Comment[sv]=Ett verktyg för att fjärrexportera bilder till Piwigo
 Comment[th]=เครื่องมือส่งออกภาพต่าง ๆ ไปยังบริการ Piwigo ทางไกล

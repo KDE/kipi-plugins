@@ -48,6 +48,7 @@ Comment[nl]=Een hulpmiddel om afbeeldingen naar een MediaWiki-webservice te expo
 Comment[pl]=Narzędzie do eksportowania obrazów do zdalnej usługi sieciowej MediaWiki
 Comment[pt]=Uma ferramenta de exportação de imagens para um serviço Web remoto do MediaWiki
 Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço remoto da Internet MediaWiki
+Comment[sk]=Nástroj na export obrázkov na vzdialenú službu MediaWiki
 Comment[sl]=Orodje za izvoz slik v oddaljeno spletno storitev MediaWiki
 Comment[sv]=Ett verktyg för att exportera bilder till en Mediawiki webbtjänst
 Comment[tr]=Resimleri uzak bir MediaWiki web hizmetine aktarmak için bir araç
