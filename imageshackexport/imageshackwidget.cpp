@@ -72,14 +72,14 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_imgList->setAllowRAW(false);
     m_imgList->loadImagesFromCurrentSelection();
     removeVideosFromList();
-    m_imgList->setWhatsThis("Images to upload to Imageshack web service");
+    m_imgList->setWhatsThis(i18n("Images to upload to Imageshack web service"));
 
     QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imageshack home page in a web browser"));
-    m_headerLbl->setText(QString("<b><h2><a href='http://imageshack.us'>ImageShack</a></h2></b>"));
+    m_headerLbl->setText(QString("<b><h2><a href='http://imageshack.us'>%1</a></h2></b>").arg(i18n("ImageShack")));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -118,7 +118,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     QGridLayout* const galleriesBoxLayout = new QGridLayout(m_galleriesBox);
 
     m_useGalleriesChb = new QCheckBox(m_galleriesBox);
-    m_useGalleriesChb->setText("Upload to galleries");
+    m_useGalleriesChb->setText(i18n("Upload to galleries"));
 //    useGalleries->setEnabled(false);
 
     m_galleriesWidget           = new QWidget(m_galleriesBox);
@@ -126,11 +126,11 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     QLabel* const galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
     m_galleriesCob       = new KComboBox(m_galleriesWidget);
-    m_galleriesCob->addItem("Create new gallery.", "--new-gallery--");
+    m_galleriesCob->addItem(i18n("Create new gallery"), "--new-gallery--");
     m_galleriesCob->setEditable(false);
 
     QLabel* const gallNameLbl = new QLabel(m_galleriesWidget);
-    gallNameLbl->setText("Name:");
+    gallNameLbl->setText(i18n("Name:"));
 
     m_newGalleryName          = new QLineEdit(m_galleriesWidget);
     m_reloadGalleriesBtn      = new KPushButton(KGuiItem(i18nc("ImageShack galleries list", "Reload"),
@@ -160,7 +160,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     // ----------------------------------------------
 
     QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
-    optionsBox->setWhatsThis("These are the options that will be applied to photos");
+    optionsBox->setWhatsThis(i18n("These are the options that will be applied to photos"));
     QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_privateImagesChb = new QCheckBox(optionsBox);
@@ -180,7 +180,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
             this, SLOT(slotEnablePredefComboBox(bool)));
 
     m_customSizeRdb = new QRadioButton(optionsBox);
-    m_customSizeRdb->setText("Custom resize dimensions");
+    m_customSizeRdb->setText(i18n("Custom resize dimensions"));
 
     m_widthSpb = new QSpinBox(optionsBox);
     m_widthSpb->setMinimum(1);
@@ -308,15 +308,15 @@ void ImageshackWidget::updateResizeOpts()
     QStringList valueList;
     valueList << "100x75"<< "150x122"<< "320x240"<< "640x480"<< "800x600";
     valueList << "1024x768"<< "1280x1024"<< "1600x1200"<< "resample";
-    titleList << "100x75 (avatar)";
-    titleList << "150x122 (thumbnail)";
-    titleList << "320x240 (for websites and email)";
-    titleList << "640x480 (for message boards)";
-    titleList << "800x600 (15-inch monitor)";
-    titleList << "1024x768 (17-inch monitor)";
-    titleList << "1280x1024 (19-inch monitor)";
-    titleList << "1600x1200 (21-inch monitor)";
-    titleList << "optimize without resizing";
+    titleList << i18n("100x75 (avatar)");
+    titleList << i18n("150x122 (thumbnail)");
+    titleList << i18n("320x240 (for websites and email)");
+    titleList << i18n("640x480 (for message boards)");
+    titleList << i18n("800x600 (15-inch monitor)");
+    titleList << i18n("1024x768 (17-inch monitor)");
+    titleList << i18n("1280x1024 (19-inch monitor)");
+    titleList << i18n("1600x1200 (21-inch monitor)");
+    titleList << i18n("optimize without resizing");
 
     for (int i = 0; i < titleList.size(); i++)
     {
@@ -344,7 +344,7 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
 {
     m_galleriesCob->clear();
 
-    m_galleriesCob->addItem("Create new gallery.", "--new-gallery--");
+    m_galleriesCob->addItem(i18n("Create new gallery."), "--new-gallery--");
 
     // TODO check if the lists have the same size
     for (int i = 0; i < gTexts.size(); ++i)
