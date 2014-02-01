@@ -2,6 +2,7 @@
 UntranslatedGenericName=Panorama
 Name=Panorama
 Name[bg]=Панорама
+Name[bs]=Panorama
 Name[ca]=Panorama
 Name[ca@valencia]=Panorama
 Name[cs]=Panorama
@@ -33,6 +34,7 @@ Name[zh_CN]=Panorama
 Name[zh_TW]=Panorama
 Comment=A tool to assemble images as a panorama
 Comment[bg]=Инструмент за свързване на снимки в панорама
+Comment[bs]=Alat za sklapanje slika kao panorama
 Comment[ca]=Una eina per muntar imatges en un panorama
 Comment[ca@valencia]=Una eina per muntar imatges en un panorama
 Comment[cs]=Nástroj pro sestavování obrázku do panorama

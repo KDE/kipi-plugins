@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=Dropbox Export
 Name=Dropbox Export
+Name[bs]=Dropbox Izvoz
 Name[ca]=Exportador a Dropbox
 Name[cs]=Export do Dropboxu
 Name[da]=Eksport til Dropbox
@@ -21,6 +22,7 @@ Name[tr]=Dropbox Aktarımı
 Name[uk]=Експорт до Dropbox
 Name[x-test]=xxDropbox Exportxx
 Comment=A tool to export images to a remote Dropbox web service
+Comment[bs]=Alat za izvoz slika na udaljeni Dropbox web servis
 Comment[ca]=Una eina per exportar imatges al servei web remot Dropbox
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Dropbox
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern Dropbox-webtjeneste

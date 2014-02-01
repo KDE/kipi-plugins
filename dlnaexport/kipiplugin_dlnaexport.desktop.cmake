@@ -2,6 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=DLNAExport
 Name=DLNAExport
+Name[bs]=DLNAExport
 Name[ca]=Exportador via DLNA
 Name[ca@valencia]=Exportador via DLNA
 Name[cs]=DLNAExport
@@ -29,6 +30,7 @@ Name[uk]=Експорт до DLNA
 Name[x-test]=xxDLNAExportxx
 Name[zh_TW]=DLNA匯出
 Comment=A tool to export collection on DLNA network service
+Comment[bs]=Alat za izvoz kolekcije na DLNA mrežnom servisu
 Comment[ca]=Una eina per exportar col·leccions sobre el servei de xarxa DLNA
 Comment[ca@valencia]=Una eina per exportar col·leccions sobre el servei de xarxa DLNA
 Comment[cs]=Nástroj pro export sbírky do síťové služby DLNA

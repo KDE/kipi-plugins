@@ -2,6 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=jAlbumExport
 Name=jAlbumExport
+Name[bs]=jAlbumExport
 Name[ca]=Exportador a jAlbum
 Name[ca@valencia]=Exportador a jAlbum
 Name[cs]=jAlbumExport
@@ -27,6 +28,7 @@ Name[uk]=Експорт до jAlbum
 Name[x-test]=xxjAlbumExportxx
 Name[zh_TW]=jAlbum 匯出
 Comment=A tool to pass selected photos to jAlbum
+Comment[bs]=Alat za proslijeđivanje odabranih fotografija JAlbum-u
 Comment[ca]=Una eina per passar les fotografies seleccionades a jAlbum
 Comment[ca@valencia]=Una eina per passar les fotografies seleccionades a jAlbum
 Comment[cs]=Nástroj pro poslání vybraných fotografií do jAlbum

@@ -2,6 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=Photivo Integration
 Name=Photivo Integration
+Name[bs]=Photivo integracija
 Name[ca]=Integració de Photivo
 Name[ca@valencia]=Integració de Photivo
 Name[cs]=Integrace Photivo
@@ -28,6 +29,7 @@ Name[uk]=Інтеграція Photivo
 Name[x-test]=xxPhotivo Integrationxx
 Name[zh_TW]=Photivo 整合
 Comment=Integration of the Photivo RAW-Processor
+Comment[bs]=Integracija  Photivo RAW-Processor
 Comment[ca]=Integració del processador RAW Photivo
 Comment[ca@valencia]=Integració del processador RAW Photivo
 Comment[cs]=Integrace nástroje pro zpracování RAW Photivo

@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=Photo Layouts Editor
 Name=Photo Layouts Editor
+Name[bs]=Uređivač foto rasporeda
 Name[ca]=Editor de presentacions de foto
 Name[ca@valencia]=Editor de presentacions de foto
 Name[cs]=Editor rozvržení snímků
@@ -29,6 +30,7 @@ Name[uk]=Редактор компонування фотографій
 Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器
 Comment=Photo layouts management tool
+Comment[bs]=Alat za upravljanje foto rasporeda
 Comment[ca]=Eina de gestió de presentacions de foto
 Comment[ca@valencia]=Eina de gestió de presentacions de foto
 Comment[cs]=Nástroj pro správu rozvržení snímků

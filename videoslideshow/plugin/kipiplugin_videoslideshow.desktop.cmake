@@ -2,6 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=VideoSlideShow
 Name=VideoSlideShow
+Name[bs]=Video prezentacija
 Name[ca]=Passi de diapositives
 Name[ca@valencia]=Passe de diapositives
 Name[cs]=VideoSlideShow
@@ -29,6 +30,7 @@ Name[uk]=Відеопоказ слайдів
 Name[x-test]=xxVideoSlideShowxx
 Name[zh_TW]=VideoSlideShow
 Comment=A tool to export images as Video Slide Show
+Comment[bs]=Alat za izvoz slika kao video prezentacija
 Comment[ca]=Una eina per exportar imatges com un passi de diapositives
 Comment[ca@valencia]=Una eina per exportar imatges com un passe de diapositives
 Comment[cs]=Nástroj pro export obrázků jako video prezentace

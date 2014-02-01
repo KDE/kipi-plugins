@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=GoogleDrive Export
 Name=Google Drive Export
+Name[bs]=Google Drive izvoz
 Name[ca]=Exportador a Google Drive
 Name[cs]=Export do Google Drive
 Name[da]=Eksport til Google Drev
@@ -20,6 +21,7 @@ Name[tr]=Google Drive Aktarımı
 Name[uk]=Експорт до Google Drive
 Name[x-test]=xxGoogle Drive Exportxx
 Comment=A tool to export images to a remote Google Drive web service
+Comment[bs]=Alat za izvoz slika na udaljeni Google Drive web servis
 Comment[ca]=Una eina per exportar imatges al servei web remot Google Drive
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Google Drive
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern Google Drive-webtjeneste

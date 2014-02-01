@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=MediaWiki Export
 Name=MediaWiki Export
+Name[bs]=MediaWiki Izvoz
 Name[ca]=Exportador a MediaWiki
 Name[ca@valencia]=Exportador a MediaWiki
 Name[cs]=Export MediaWiki
@@ -29,6 +30,7 @@ Name[uk]=Експорт до MediaWiki
 Name[x-test]=xxMediaWiki Exportxx
 Name[zh_TW]=MediaWiki 匯出
 Comment=A tool to export images to a remote MediaWiki web service
+Comment[bs]=Alat za izvoz slike kontrolnom  MediaWiki web servisu
 Comment[ca]=Una eina per exportar imatges a un servei web remot de MediaWiki
 Comment[ca@valencia]=Una eina per exportar imatges a un servei web remot de MediaWiki
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby MediaWiki

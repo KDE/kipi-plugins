@@ -1,6 +1,7 @@
 [Desktop Entry]
 UntranslatedGenericName=VKontakte.ru Exporter
 Name=VKontakte.ru Exporter
+Name[bs]=VKontakte.ru Izvoznik
 Name[ca]=Exportador a VKontakte.ru
 Name[ca@valencia]=Exportador a VKontakte.ru
 Name[cs]=Exportér VKontakte.ru
@@ -30,6 +31,7 @@ Name[uk]=Експорт до VKontakte.ru
 Name[x-test]=xxVKontakte.ru Exporterxx
 Name[zh_TW]=Vkontakte.ru 匯出器
 Comment=A tool to export images to the VKontakte.ru social network
+Comment[bs]=Alat za izvoz slike u VKontakte.ru društvenoj mreži
 Comment[ca]=Una eina per exportar imatges a la xarxa social VKontakte.ru
 Comment[ca@valencia]=Una eina per exportar imatges a la xarxa social VKontakte.ru
 Comment[cs]=Nástroj pro export obrázků do sociální sítě VKontakte.ru
