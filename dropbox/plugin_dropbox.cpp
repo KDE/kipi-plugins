@@ -93,7 +93,7 @@ void Plugin_Dropbox::setupActions()
 {
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionExport = new KAction(this);
-    m_actionExport->setText("Export to &Dropbox");
+    m_actionExport->setText(i18n("Export to &Dropbox..."));
     m_actionExport->setIcon(KIcon("kipi-dropbox"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));
 
