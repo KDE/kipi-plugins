@@ -6,7 +6,7 @@
  * Date        : 2009-12-23
  * Description : Autodetect binary program and version
  *
- * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -222,9 +222,9 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
     process.start(possiblePath, m_binaryArguments);
-    process.waitForFinished();
+    bool val = process.waitForFinished();
 
-    if (process.error() != QProcess::FailedToStart)
+    if (val && (process.error() != QProcess::FailedToStart))
     {
         m_isFound = true;
 
