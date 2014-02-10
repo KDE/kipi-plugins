@@ -7,7 +7,7 @@
  * @date   2010-03-21
  * @brief  An item to hold information about an image.
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010,2014 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -217,7 +217,13 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             m_dateTime = meta->getImageDateTime();
         }
 
-        m_gpsData.clear();
+        // The way we read the coordinates here is problematic
+        // if the coordinates were in the file initially, but
+        // the user deleted them in the database. Then we still load
+        // them from the file. On the other hand, we can not clear
+        // the coordinates, because then we would loose them if
+        // they are only stored in the database.
+//         m_gpsData.clear();
 
         if (!m_gpsData.hasCoordinates())
         {
