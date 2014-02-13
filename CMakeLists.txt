@@ -29,6 +29,11 @@ SET(KIPIPLUGINS_SUFFIX_VERSION "-beta4")
 SET(KIPIPLUGINS_VERSION_STRING
     "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}${KIPIPLUGINS_SUFFIX_VERSION}"
    )
+   
+# NOTE: This string is used to set libkipiplugins SO version ID
+SET(KIPIPLUGINS_LIB_SO_VERSION_STRING
+    "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}"
+   )
 
 # =======================================================
 # some useful macros for printing status information
