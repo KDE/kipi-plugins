@@ -50,6 +50,7 @@ Comment[nl]=Foto-indelingenbeheerder
 Comment[pl]=Narzędzie zarządzania układami zdjęć
 Comment[pt]=Ferramenta de gestão de formatos de fotografias
 Comment[pt_BR]=Ferramenta de gerenciamento de formatos de fotos
+Comment[sk]=Nástroj na správu rozloženia fotiek
 Comment[sl]=Orodje za upravljanje z razporeditvami fotografij
 Comment[sv]=Hanteringsverktyg för fotolayout
 Comment[tr]=Fotoğraf yerleşim yönetim aracı

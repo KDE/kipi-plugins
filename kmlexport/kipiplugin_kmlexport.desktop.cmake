@@ -23,6 +23,7 @@ Comment[pl]=Wtyczka do tworzenia plików KML do prezentacji obrazów ze współr
 Comment[pt]=Um 'plugin' para criar ficheiros KML que apresentem imagens com coordenadas.
 Comment[pt_BR]=Um plugin para criar arquivos KML que apresentem imagens com coordenadas.
 Comment[ro]=O extensie de creat fișiere KML pentru prezentarea imaginilor cu coordonate.
+Comment[sk]=Plugin na vytvorenie KML súborov na prezentáciu obrázkov so súradnicami.
 Comment[sl]=Vstavek za ustvarjanje datotek KML, ki predstavijo sliko s koordinatami.
 Comment[sv]=Ett insticksprogram för att skapa KML-filer som visar bilder med koordinater.
 Comment[tr]=Resimleri koordinatlarla sunmak üzere KML dosyaları oluşturmak için bir eklenti

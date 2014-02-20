@@ -46,6 +46,7 @@ Comment[nl]=Een hulpmiddel om geselecteerde foto's aan jAlbum te overhandigen
 Comment[pl]=Narzędzie do przesyłania wybranych zdjęć do jAlbum
 Comment[pt]=Uma ferramenta para passar as fotografias seleccionadas para o jAlbum
 Comment[pt_BR]=Ferramenta de envio das fotos selecionadas para o jAlbum
+Comment[sk]=Nástroj na predanie vybraných fotiek do jAlbumu
 Comment[sl]=Orodje za premestitev izbranih fotografij v jAlbum
 Comment[sv]=Ett verktyg för att skicka markerade foton till jAlbum
 Comment[tr]=Seçili fotoğrafları jAlbum'e göndermek için bir araç
