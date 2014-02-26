@@ -6,7 +6,7 @@
  * Date        : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2006      by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006      by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
@@ -468,6 +468,7 @@ bool SendImages::invokeMailAgent()
                 case EmailSettings::SYLPHEEDCLAWS:
                 {
                     QStringList args;
+                    QString     prog;
 
 #ifdef _WIN32
                     args.append("/c");
@@ -483,8 +484,6 @@ bool SendImages::invokeMailAgent()
                     {
                         args.append((*it).path());
                     }
-
-                    QString prog;
 
                     if (d->settings.emailProgram == EmailSettings::CLAWSMAIL)
                     {
