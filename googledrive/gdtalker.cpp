@@ -495,7 +495,7 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 
     kDebug() << "in parseResponseUserName";
     QVariantMap rlist = result.toMap();
-    qDebug() << "size " << rlist.size();
+    kDebug() << "size " << rlist.size();
     QList<QString> keys = rlist.uniqueKeys();
 
     QString temp;

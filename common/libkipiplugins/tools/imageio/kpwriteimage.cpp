@@ -748,7 +748,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         if (!bufThumb)
         {
-            qDebug("Cannot allocate memory buffer for TIFF thumbnail.");
+            kDebug() << "Cannot allocate memory buffer for TIFF thumbnail.";
             TIFFClose(tif);
             return false;
         }

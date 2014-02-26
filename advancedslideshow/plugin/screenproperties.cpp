@@ -72,7 +72,7 @@ unsigned ScreenProperties::suggestFrameRate()
 
     XRRFreeScreenConfigInfo(config);
 
-    //qDebug("monitor refresh rate %d Hz", screenRate);
+    //kDebug() << "monitor refresh rate " << screenRate << " Hz";
 
     // Find the frame rate, that matches the monitor's refresh rate best.
     // We will choose between 25, 28 and 30 Hz, to get smooth animations.
@@ -105,7 +105,7 @@ unsigned ScreenProperties::suggestFrameRate()
     }
     while (++i < 3);
 
-    //qDebug("using %d Hz as framerate for effects", bestRate);
+    //kDebug() << "using " << bestRate << " Hz as framerate for effects";
     return bestRate;
 
 #endif // Q_WS_X11
