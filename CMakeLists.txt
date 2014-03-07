@@ -127,12 +127,15 @@ INCLUDE(MacroLibrary)
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 # Dependencies detection required by all plugins
-FIND_PACKAGE(Kipi 2.0.0 REQUIRED)
-FIND_PACKAGE(Kexiv2     REQUIRED)
-FIND_PACKAGE(JPEG       REQUIRED)
-FIND_PACKAGE(PNG        REQUIRED)
-FIND_PACKAGE(TIFF       REQUIRED)
-FIND_PACKAGE(Kdcraw     REQUIRED)
+
+SET(KIPI_MIN_VERSION "2.0.0")
+
+FIND_PACKAGE(Kipi ${KIPI_MIN_VERSION} REQUIRED)
+FIND_PACKAGE(Kexiv2                   REQUIRED)
+FIND_PACKAGE(JPEG                     REQUIRED)
+FIND_PACKAGE(PNG                      REQUIRED)
+FIND_PACKAGE(TIFF                     REQUIRED)
+FIND_PACKAGE(Kdcraw                   REQUIRED)
 
 # Check the libkdcraw version
 
@@ -175,7 +178,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For V
 MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
 MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
 MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
-MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                     # For Imgur Auhtenticated API
+MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
