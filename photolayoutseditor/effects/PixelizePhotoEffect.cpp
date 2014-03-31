@@ -7,7 +7,7 @@
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011      by Łukasz Spas <lukasz dot spas at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -23,31 +23,44 @@
  *
  * ============================================================ */
 
-#include "PixelizePhotoEffect.h"
-#include "KEditFactory.h"
+#include "PixelizePhotoEffect.moc"
+
+// Qt includes
 
 #include <QImage>
 #include <QPainter>
 #include <QtTreePropertyBrowser>
 #include <QtIntPropertyManager>
 
+// KDE includes
+
 #include <klocalizedstring.h>
+
+// Local includes
+
+#include "KEditFactory.h"
 
 using namespace KIPIPhotoFramesEditor;
 
 class PixelizePhotoEffect::PixelizeUndoCommand : public QUndoCommand
 {
-        PixelizePhotoEffect * m_effect;
-        int m_pixelSize;
+        PixelizePhotoEffect* m_effect;
+        int                  m_pixelSize;
+
     public:
-        PixelizeUndoCommand(PixelizePhotoEffect * effect, int pixelSize);
+
+        PixelizeUndoCommand(PixelizePhotoEffect* effect, int pixelSize);
+        void setPixelSize(int pixelSize);
+
         virtual void redo();
         virtual void undo();
-        void setPixelSize(int pixelSize);
+
     private:
+
         void runCommand()
         {
             int temp = m_effect->pixelSize();
+
             if (temp != m_pixelSize)
             {
                 m_effect->setPixelSize(m_pixelSize);
@@ -56,10 +69,12 @@ class PixelizePhotoEffect::PixelizeUndoCommand : public QUndoCommand
         }
 };
 
-PixelizePhotoEffect::PixelizeUndoCommand::PixelizeUndoCommand(PixelizePhotoEffect * effect, int pixelSize) :
-    m_effect(effect),
-    m_pixelSize(pixelSize)
-{}
+// --------------------------------------------------------------------------------------------------------------
+
+PixelizePhotoEffect::PixelizeUndoCommand::PixelizeUndoCommand(PixelizePhotoEffect* effect, int pixelSize)
+    : m_effect(effect), m_pixelSize(pixelSize)
+{
+}
 
 void PixelizePhotoEffect::PixelizeUndoCommand::redo()
 {
@@ -78,8 +93,8 @@ void PixelizePhotoEffect::PixelizeUndoCommand::setPixelSize(int pixelSize)
 
 const QString PixelizePhotoEffect::PIXEL_SIZE_STRING = i18n("Pixel size");
 
-PixelizePhotoEffect::PixelizePhotoEffect(int pixelSize, QObject * parent) :
-    PhotoEffectsLoader(parent),
+PixelizePhotoEffect::PixelizePhotoEffect(int pixelSize, QObject* parent)
+    : PhotoEffectsLoader(parent),
     m_pixelSize(pixelSize)
 {
 }
@@ -98,38 +113,44 @@ QImage PixelizePhotoEffect::apply(const QImage & image)
     return result;
 }
 
-QtAbstractPropertyBrowser * PixelizePhotoEffect::propertyBrowser() const
+QtAbstractPropertyBrowser* PixelizePhotoEffect::propertyBrowser() const
 {
-    QtAbstractPropertyBrowser * browser = PhotoEffectsLoader::propertyBrowser();
-    QtIntPropertyManager * intManager = new QtIntPropertyManager(browser);
-    KSliderEditFactory * sliderFactory = new KSliderEditFactory(browser);
+    QtAbstractPropertyBrowser* browser = PhotoEffectsLoader::propertyBrowser();
+    QtIntPropertyManager* intManager   = new QtIntPropertyManager(browser);
+    KSliderEditFactory* sliderFactory  = new KSliderEditFactory(browser);
     browser->setFactoryForManager(intManager, sliderFactory);
 
     // Radius property
-    QtProperty * pixelSize = intManager->addProperty(PIXEL_SIZE_STRING);
+    QtProperty* pixelSize = intManager->addProperty(PIXEL_SIZE_STRING);
     intManager->setMaximum(pixelSize,200);
     intManager->setMinimum(pixelSize,1);
     browser->addProperty(pixelSize);
 
     intManager->setValue(pixelSize,m_pixelSize);
-    connect(intManager,SIGNAL(propertyChanged(QtProperty*)),this,SLOT(propertyChanged(QtProperty*)));
-    connect(sliderFactory,SIGNAL(editingFinished()),this,SLOT(postEffectChangedEvent()));
+
+    connect(intManager, SIGNAL(propertyChanged(QtProperty*)),
+            this, SLOT(propertyChanged(QtProperty*)));
+
+    connect(sliderFactory, SIGNAL(editingFinished()),
+            this, SLOT(postEffectChangedEvent()));
 
     return browser;
 }
 
 QString PixelizePhotoEffect::toString() const
 {
-    return i18n("Pixelize [") + PIXEL_SIZE_STRING + '=' + QString::number(m_pixelSize) + ']';
+    return (i18n("Pixelize [%1 = %2]", PIXEL_SIZE_STRING, QString::number(m_pixelSize)));
 }
 
-void PixelizePhotoEffect::propertyChanged(QtProperty * property)
+void PixelizePhotoEffect::propertyChanged(QtProperty* property)
 {
-    QtIntPropertyManager * manager = qobject_cast<QtIntPropertyManager*>(property->propertyManager());
-    int pixelSize = m_pixelSize;
+    QtIntPropertyManager* const manager = qobject_cast<QtIntPropertyManager*>(property->propertyManager());
+    int pixelSize                       = m_pixelSize;
 
     if (property->propertyName() == PIXEL_SIZE_STRING)
+    {
         pixelSize = manager->value(property);
+    }
     else
     {
         PhotoEffectsLoader::propertyChanged(property);
@@ -137,12 +158,16 @@ void PixelizePhotoEffect::propertyChanged(QtProperty * property)
     }
 
     beginUndoCommandChange();
+
     if (m_undo_command)
     {
-        PixelizeUndoCommand * undo = dynamic_cast<PixelizeUndoCommand*>(m_undo_command);
+        PixelizeUndoCommand const *undo = dynamic_cast<PixelizeUndoCommand*>(m_undo_command);
         undo->setPixelSize(pixelSize);
     }
     else
+    {
         m_undo_command = new PixelizeUndoCommand(this,pixelSize);
+    }
+
     endUndoCommandChange();
 }
