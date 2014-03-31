@@ -1521,8 +1521,7 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
     // Show error message
     if (errorsCount)
     {
-        KMessageBox::error(0,
-                           i18np("Unable to create one element!", "Unable to create %1 elements!", errorsCount));
+        KMessageBox::error(0, i18np("Unable to create one element", "Unable to create %1 elements", errorsCount));
     }
 
     return result;
