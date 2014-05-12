@@ -1,33 +1,8 @@
-Kipi-plugins 4.0.0 - Release date: 2014/05/11
+Kipi-plugins 4.1.0 - Release date: 2014/06/22
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-General  : New tool to export collection to Google Drive cloud service.
-General  : New tool to export collection to DropBox cloud service.
-
-MediaWiki: allow removal of metadata/GPS coordinates before uploading.
-MediaWiki: graphical interface improvements.
-
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 319664 - kipi-plugins 3.2.0-beta2 (and 3.1.0) installs a static archive /usr/lib64/libPropertyBrowser.a.
-002 ==> 324044 - MediaWiki: Fix bug, add feature, improve usability
-003 ==> 307689 - digiKam crashes during Export to Rajce service [patch].
-004 ==> 323118 - SmugMug API access fails after SmugMug relaunch [patch].
-005 ==> 324646 - digiKam hangs when producting "Video Slide Show" [patch].
-006 ==> 319611 - Invalid placement of TimeStamp element in kml export [patch].
-007 ==> 319612 - Update kml export to use KML 2.2 schema [patch].
-008 ==> 199978 - Can not email images on Windows [patch].
-009 ==> 320782 - Try to automatically guess new flickr set name from image folders [patch].
-010 ==> 326728 - Panorama Stitching crashes upon start.
-011 ==> 300445 - Kipi integration with cloud storage (as Dropbox or GDrive) for quick sharing.
-012 ==> 328679 - Untranslated strings due to missing i18n().
-013 ==> 328981 - Cannot select between multiple scanner devices.
-014 ==> 296650 - digiKam crash while uploading to PicasaWeb.
-015 ==> 304809 - Crash when attempting to download Facebook photoes using KIPI plug-in.
-016 ==> 299038 - Crashes when Starting Geo-Tagging.
-017 ==> 290797 - crash when exporting images to flickr.
-018 ==> 183014 - Png converter compressor unconsistent.
-019 ==> 305137 - Wish for integrated(?) clip-generator.
-020 ==> 332838 - String problems: word puzzle, exclamation marks.
+001 ==> 
