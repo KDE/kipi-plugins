@@ -5,4 +5,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> 323378 - digikam crash when try to export to facebook.
+002 ==> 
