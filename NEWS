@@ -5,6 +5,7 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 323378 - digikam crash when try to export to facebook.
+001 ==> 323378 - digiKam crash when try to export to facebook.
 002 ==> 330684 - Advanced Slideshow in Gwenview.
-003 ==> 
+003 ==> 327415 - Crash after I interrupted the «create photo layout» tas.
+004 ==> 
