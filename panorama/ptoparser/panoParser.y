@@ -161,6 +161,9 @@ realline: inputline eoln
                                                        sizeof(char**),
                                                        &prevNbImages);
         if (curImageComments == NULL) {
+            /* In that case, script.iImage_prevCommentsCount and script.image_prevComments are not coherent */
+            /* Resizing to remove the element just introduced */
+            script.iImage_prevCommentsCount = realloc(script.iImage_prevCommentsCount, prevNbImages * sizeof(char**));
             yyerror("Not enough memory");
             return -1;
         }
@@ -185,12 +188,23 @@ realline: inputline eoln
         curVarCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iVarsToOptimize_prevCommentsCount),
                                                        sizeof(int),
                                                        &prevNbVars);
+        if (curVarCommentsCount == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curVarCommentsCount = nbCommentLine;
 
         prevNbVars--;
         curVarComments = (char***) panoScriptReAlloc((void**) &(script.varsToOptimize_prevComments),
                                                      sizeof(char**),
                                                      &prevNbVars);
+        if (curVarComments == NULL) {
+            /* In that case, script.iVarsToOptimize_prevCommentsCount and script.varsToOptimize_prevComments are not coherent */
+            /* Resizing to remove the element just introduced */
+            script.iVarsToOptimize_prevCommentsCount = realloc(script.iVarsToOptimize_prevCommentsCount, prevNbVars * sizeof(char**));
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curVarComments = commentLines;
     }
     | optimizeVarslineEmpty eoln /* Prev comments go to the next line entry */
@@ -203,12 +217,23 @@ realline: inputline eoln
         curCPCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iCtrlPoints_prevCommentsCount),
                                                       sizeof(int),
                                                       &prevNbCP);
+        if (curCPCommentsCount == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curCPCommentsCount = nbCommentLine;
 
         prevNbCP--;
         curCPComments = (char***) panoScriptReAlloc((void**) &(script.ctrlPoints_prevComments),
                                                     sizeof(char**),
                                                     &prevNbCP);
+        if (curCPComments == NULL) {
+            /* In that case, script.iCtrlPoints_prevCommentsCount and script.ctrlPoints_prevComments are not coherent */
+            /* Resizing to remove the element just introduced */
+            script.iCtrlPoints_prevCommentsCount = realloc(script.iCtrlPoints_prevCommentsCount, prevNbCP * sizeof(char**));
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curCPComments = commentLines;
     }
     | maskPtsLine eoln
@@ -220,12 +245,23 @@ realline: inputline eoln
         curMaskCommentsCount = (int*) panoScriptReAlloc((void**) &(script.iMasks_prevCommentsCount),
                                                         sizeof(int),
                                                         &prevNbMasks);
+        if (curMaskCommentsCount == NULL) {
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curMaskCommentsCount = nbCommentLine;
 
         prevNbMasks--;
         curMaskComments = (char***) panoScriptReAlloc((void**) &(script.masks_prevComments),
                                                       sizeof(char**),
                                                       &prevNbMasks);
+        if (curMaskComments == NULL) {
+            /* In that case, script.iMasks_prevCommentsCount and script.masks_prevComments are not coherent */
+            /* Resizing to remove the element just introduced */
+            script.iMasks_prevCommentsCount = realloc(script.iMasks_prevCommentsCount, prevNbMasks * sizeof(char**));
+            yyerror("Not enough memory");
+            return -1;
+        }
         *curMaskComments = commentLines;
     }
 
@@ -451,8 +487,8 @@ maskpoint: int PT_TOKEN_COMMA int
 /* Rule for [CS]<x>,<x>,<x>,<x> */
 varcropping: PT_TOKEN_KEYWORD_CROPPING int PT_TOKEN_COMMA int PT_TOKEN_COMMA int PT_TOKEN_COMMA int
     {
-    printf("Cropping...\n");
         int* cropArea = NULL;
+        printf("Cropping...\n");
 
         if (currentLine != PT_TOKEN_PANO_LINE && currentLine != PT_TOKEN_INPUT_LINE) {
             panoScriptParserError("Error: There shouldn't be any cropping parameter here!\n");

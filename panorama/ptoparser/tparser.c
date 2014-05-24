@@ -123,7 +123,7 @@ void panoScriptFree(pt_script* ptr)
     int i;
     /* free all the data structures it uses */
 
-#define FREE(a) if ((a) != NULL) free(a);
+#define FREE(a) if ((a) != NULL) {free(a); a = NULL;}
 
     /* ptr->pano */
     FREE(ptr->pano.outputFormat);
@@ -158,47 +158,59 @@ void panoScriptFree(pt_script* ptr)
     }
     FREE(ptr->pano_prevComments);
 
-    for (i = 0; i < ptr->iInputImagesCount; i++) {
-        int j;
-        for (j = 0; j < ptr->iImage_prevCommentsCount[i]; j++) {
-            free(ptr->image_prevComments[i][j]);
+    /* If the parsing fails on the first input line, the comments would not be set yet */
+    if (ptr->iImage_prevCommentsCount != NULL) {
+        for (i = 0; i < ptr->iInputImagesCount; i++) {
+            int j;
+            for (j = 0; j < ptr->iImage_prevCommentsCount[i]; j++) {
+                free(ptr->image_prevComments[i][j]);
+            }
+            FREE(ptr->image_prevComments[i]);
         }
-        FREE(ptr->image_prevComments[i]);
     }
-    free(ptr->iImage_prevCommentsCount);
-    free(ptr->image_prevComments);
+    FREE(ptr->iImage_prevCommentsCount);
+    FREE(ptr->image_prevComments);
 
     for (i = 0; i < ptr->iOptimize_prevCommentsCount; i++) {
         free(ptr->optimize_prevComments[i]);
     }
     FREE(ptr->optimize_prevComments);
 
-    for (i = 0; i < ptr->iVarsToOptimizeCount; i++) {
-        int j;
-        for (j = 0; j < ptr->iVarsToOptimize_prevCommentsCount[i]; j++) {
-            free(ptr->varsToOptimize_prevComments[i][j]);
+    /* If the parsing fails on the first optimize line, the comments would not be set yet */
+    if (ptr->iVarsToOptimize_prevCommentsCount != NULL) {
+        for (i = 0; i < ptr->iVarsToOptimizeCount; i++) {
+            int j;
+            for (j = 0; j < ptr->iVarsToOptimize_prevCommentsCount[i]; j++) {
+                free(ptr->varsToOptimize_prevComments[i][j]);
+            }
+            FREE(ptr->varsToOptimize_prevComments[i]);
         }
-        FREE(ptr->varsToOptimize_prevComments[i]);
     }
     FREE(ptr->iVarsToOptimize_prevCommentsCount);
     FREE(ptr->varsToOptimize_prevComments);
 
-    for (i = 0; i < ptr->iCtrlPointsCount; i++) {
-        int j;
-        for (j = 0; j < ptr->iCtrlPoints_prevCommentsCount[i]; j++) {
-            free(ptr->ctrlPoints_prevComments[i][j]);
+    /* If the parsing fails on the first control point line, the comments would not be set yet */
+    if (ptr->iCtrlPoints_prevCommentsCount != NULL) {
+        for (i = 0; i < ptr->iCtrlPointsCount; i++) {
+            int j;
+            for (j = 0; j < ptr->iCtrlPoints_prevCommentsCount[i]; j++) {
+                free(ptr->ctrlPoints_prevComments[i][j]);
+            }
+            FREE(ptr->ctrlPoints_prevComments[i]);
         }
-        FREE(ptr->ctrlPoints_prevComments[i]);
     }
     FREE(ptr->iCtrlPoints_prevCommentsCount);
     FREE(ptr->ctrlPoints_prevComments);
 
-    for (i = 0; i < ptr->iMasksCount; i++) {
-        int j;
-        for (j = 0; j < ptr->iMasks_prevCommentsCount[i]; j++) {
-            free(ptr->masks_prevComments[i][j]);
+    /* If the parsing fails on the first mask line, the comments would not be set yet */
+    if (ptr->iMasks_prevCommentsCount != NULL) {
+        for (i = 0; i < ptr->iMasksCount; i++) {
+            int j;
+            for (j = 0; j < ptr->iMasks_prevCommentsCount[i]; j++) {
+                free(ptr->masks_prevComments[i][j]);
+            }
+            FREE(ptr->masks_prevComments[i]);
         }
-        FREE(ptr->masks_prevComments[i]);
     }
     FREE(ptr->iMasks_prevCommentsCount);
     FREE(ptr->masks_prevComments);
