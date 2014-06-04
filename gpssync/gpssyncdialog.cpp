@@ -504,6 +504,10 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
                      ki18n("Developer"),
                            "caulier dot gilles at gmail dot com");
 
+    about->addCredit(ki18n("Justus Schwartz"),
+                     ki18n("Patch for displaying tracks on the map."),
+                           "justus at gmx dot li");
+
     about->setHandbookEntry("gpssync");
     setAboutData(about, help);
 
