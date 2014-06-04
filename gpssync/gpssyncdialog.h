@@ -9,10 +9,12 @@
  *
  * @author Copyright (C) 2006-2013 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2014 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  * @author Copyright (C) 2010 by Gabriel Voicu
  *         <a href="mailto:ping dot gabi at gmail dot com">ping dot gabi at gmail dot com</a>
+ * @author Copyright (C) 2014 by Justus Schwartz
+ *         <a href="mailto:justus at gmx dot li">justus at gmx dot li</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,6 +44,7 @@
 
 #include <libkgeomap/kgeomap_primitives.h>
 #include <libkgeomap/modelhelper.h>
+#include <libkgeomap/trackmodelhelper.h>
 
 // LibKIPI includes
 
@@ -65,6 +68,7 @@ namespace KIPIGPSSyncPlugin
 
 class KipiImageModel;
 class GPSUndoCommand;
+class GPSCorrelatorWidget;
 
 class GPSSyncKGeoMapModelHelper : public ModelHelper
 {
@@ -100,6 +104,28 @@ private:
 
     class Private;
     Private* const d;
+};
+
+class MyTrackModelHelper : public KGeoMap::TrackModelHelper
+{
+    Q_OBJECT
+
+    QList<KGeoMap::GeoCoordinates::List> m_tracks;
+    KIPIGPSSyncPlugin::GPSCorrelatorWidget* m_correlatorWidget;
+    bool m_showTracksOnMap;
+
+public:
+    MyTrackModelHelper(QObject* parent);
+    ~MyTrackModelHelper();
+
+    void setCorrelator(KIPIGPSSyncPlugin::GPSCorrelatorWidget* gpsCorrelatorWidget);
+
+    virtual QList<KGeoMap::GeoCoordinates::List> getTracks() const;
+
+private Q_SLOTS:
+    void slotTracksChanged();
+    void slotShowTracksStateChanged(bool showTracksOnMap);
+
 };
 
 // ------------------------------------------------------------------------------------------------

@@ -7,8 +7,10 @@
  * @date   2010-03-26
  * @brief  A widget to configure the GPS correlation
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2014 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2014 by Justus Schwartz
+ *         <a href="mailto:justus at gmx dot li">justus at gmx dot li</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -89,6 +91,7 @@ public:
         offsetMin(0),
         offsetSec(0),
         interpolateBox(0),
+        showTracksOnMap(0),
         maxGapInput(0),
         maxTimeInput(0),
         correlateButton(0),
@@ -121,6 +124,7 @@ public:
     KIntSpinBox*            offsetSec;
 
     QCheckBox*              interpolateBox;
+    QCheckBox*              showTracksOnMap;
 
     KIntSpinBox*            maxGapInput;
     KIntSpinBox*            maxTimeInput;
@@ -284,6 +288,12 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     connect(d->interpolateBox, SIGNAL(stateChanged(int)),
             this, SLOT(updateUIState()));
 
+    d->showTracksOnMap = new QCheckBox(i18n("Show tracks on Map"), this);
+    d->showTracksOnMap->setWhatsThis(i18n("Set this option to show tracks on the Map"));
+
+    connect(d->showTracksOnMap, SIGNAL(stateChanged(int)),
+            this, SLOT(slotShowTracksStateChanged(int)));
+    
     d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), this);
     d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, this);
     d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
@@ -313,6 +323,8 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     settingsLayout->addWidget(offsetWidget,          row, 1, 1, 1);
     row++;
     settingsLayout->addWidget(d->interpolateBox,     row, 0, 1, 2);
+    row++;
+    settingsLayout->addWidget(d->showTracksOnMap,    row, 0, 1, 2);
     row++;
     settingsLayout->addWidget(d->maxTimeLabel,       row, 0, 1, 1);
     settingsLayout->addWidget(d->maxTimeInput,       row, 1, 1, 1);
@@ -407,6 +419,8 @@ void GPSCorrelatorWidget::slotAllGPXFilesReady()
         KMessageBox::errorList(this, errorString, invalidFiles, errorTitleString);
     }
 
+    emit(signalAllGPXFilesReady());
+    
     setUIEnabledInternal(true);
 }
 
@@ -626,6 +640,7 @@ void GPSCorrelatorWidget::saveSettingsToGroup(KConfigGroup* const group)
     group->writeEntry("Time Zone Mode", d->timeZoneGroup->checkedId() );
     group->writeEntry("Time Zone", d->timeZoneCB->currentIndex() );
     group->writeEntry("Interpolate", d->interpolateBox->isChecked() );
+    group->writeEntry("ShowTracksOnMap", d->showTracksOnMap->isChecked() );
     group->writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
     group->writeEntry("Offset Enabled", d->offsetEnabled->isChecked());
     group->writeEntry("Offset Sign", d->offsetSign->currentIndex());
@@ -641,6 +656,7 @@ void GPSCorrelatorWidget::readSettingsFromGroup(const KConfigGroup* const group)
     d->timeZoneGroup->button(timeZoneGroupIndex)->setChecked(true);
     d->timeZoneCB->setCurrentIndex(group->readEntry("Time Zone", 16));  // GMT+00:00
     d->interpolateBox->setChecked(group->readEntry("Interpolate", false));
+    d->showTracksOnMap->setChecked(group->readEntry("ShowTracksOnMap", true));
     d->maxTimeInput->setValue(group->readEntry("Max Inter Dist Time", 15));
     d->offsetEnabled->setChecked(group->readEntry("Offset Enabled", false));
     d->offsetSign->setCurrentIndex(group->readEntry("Offset Sign", 0));
@@ -667,4 +683,41 @@ void GPSCorrelatorWidget::slotCorrelationCanceled()
     emit(signalSetUIEnabled(true));
 }
 
+QList<KGeoMap::GeoCoordinates::List> GPSCorrelatorWidget::getTrackCoordinates() const
+{
+    QList<KGeoMap::GeoCoordinates::List> trackList;
+  
+    for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
+    {
+        const GPSDataParser::GPXFileData& gpxData = d->gpsDataParser->fileData(i);
+
+        if (!gpxData.isValid)
+        {
+            continue;
+        }
+
+        KGeoMap::GeoCoordinates::List track;
+        for (int coordIdx = 0; coordIdx < gpxData.gpxDataPoints.count(); ++coordIdx)
+        {
+            GPSDataParser::GPXDataPoint const& point = gpxData.gpxDataPoints.at(coordIdx);
+            track << point.coordinates;
+        }
+
+        trackList << track;
+    }
+
+    return trackList;
+}
+  
+void GPSCorrelatorWidget::slotShowTracksStateChanged(int state)
+{
+    const bool doShowTracks = state == Qt::Checked;
+    emit(signalShowTracksStateChanged(doShowTracks));
+}
+
+bool GPSCorrelatorWidget::getShowTracksOnMap() const
+{
+    return d->showTracksOnMap->isChecked();
+}
+  
 } /* namespace KIPIGPSSyncPlugin */

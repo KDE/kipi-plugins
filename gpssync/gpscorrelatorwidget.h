@@ -7,8 +7,10 @@
  * @date   2010-03-26
  * @brief  A widget to configure the GPS correlation
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2014 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2014 by Justus Schwartz
+ *         <a href="mailto:justus at gmx dot li">justus at gmx dot li</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -57,6 +59,8 @@ public:
     void setUIEnabledExternal(const bool state);
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(const KConfigGroup* const group);
+    QList<KGeoMap::GeoCoordinates::List> getTrackCoordinates() const;
+    bool getShowTracksOnMap() const;
 
 protected:
 
@@ -69,6 +73,8 @@ Q_SIGNALS:
     void signalProgressSetup(const int maxProgress, const QString& progressText);
     void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
+    void signalAllGPXFilesReady();
+    void signalShowTracksStateChanged(bool showTracks);
 
 public Q_SLOTS:
 
@@ -84,6 +90,7 @@ private Q_SLOTS:
     void slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
     void slotAllItemsCorrelated();
     void slotCorrelationCanceled();
+    void slotShowTracksStateChanged(int state);
 
 private:
 
