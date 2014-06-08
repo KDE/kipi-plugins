@@ -379,9 +379,6 @@ void GPSCorrelatorWidget::slotTrackFilesReadyAt(int beginIndex, int endIndex)
     {
         const KGeoMap::TrackManager::Track& gpxData = d->trackManager->getTrack(i);
 
-        if (!gpxData.isValid)
-            continue;
-
         QTreeWidgetItem* const treeItem = new QTreeWidgetItem(d->gpxFileList);
         treeItem->setText(0, gpxData.url.fileName());
         // TODO: use KDE number formatting
@@ -454,16 +451,7 @@ void GPSCorrelatorWidget::updateUIState()
     d->interpolateBox->setEnabled(state);
     d->maxTimeInput->setEnabled(state && d->interpolateBox->isChecked());
 
-    bool haveValidGpxFiles = false;
-
-    for (int i=0; i<d->trackManager->trackCount(); ++i)
-    {
-        haveValidGpxFiles = d->trackManager->getTrack(i).isValid;
-
-        if (haveValidGpxFiles)
-            break;
-    }
-
+    const bool haveValidGpxFiles = d->trackManager->trackCount()>0;
     d->correlateButton->setEnabled(state && haveValidGpxFiles);
 }
 
@@ -691,11 +679,6 @@ QList<KGeoMap::GeoCoordinates::List> GPSCorrelatorWidget::getTrackCoordinates() 
     for (int i=0; i<d->trackManager->trackCount(); ++i)
     {
         const KGeoMap::TrackManager::Track& gpxData = d->trackManager->getTrack(i);
-
-        if (!gpxData.isValid)
-        {
-            continue;
-        }
 
         KGeoMap::GeoCoordinates::List track;
         for (int coordIdx = 0; coordIdx < gpxData.points.count(); ++coordIdx)

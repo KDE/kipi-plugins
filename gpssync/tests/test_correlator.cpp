@@ -7,7 +7,7 @@
  * @date   2010-01-17
  * @brief  Test parsing gpx data.
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2014 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -93,7 +93,7 @@ void TestGPXParsing::testCorrelator1()
     QCOMPARE(spyTrackFiles.count(), 1);
 
     const KGeoMap::TrackManager::Track& file1 = myParser.getTrack(0);
-    QVERIFY(file1.isValid);
+    QVERIFY(!file1.points.isEmpty());
 
     // items to correlate:
     TrackCorrelator::Correlation::List itemsToCorrelate;
@@ -155,7 +155,7 @@ void TestGPXParsing::testInterpolation()
     QCOMPARE(spyTrackFiles.count(), 1);
 
     const KGeoMap::TrackManager::Track& file1 = myParser.getTrack(0);
-    QVERIFY(file1.isValid);
+    QVERIFY(!file1.points.isEmpty());
 
     // items to correlate:
     TrackCorrelator::Correlation::List itemsToCorrelate;
