@@ -160,7 +160,7 @@ void MyTrackModelHelper::setCorrelator(KIPIGPSSyncPlugin::GPSCorrelatorWidget* g
 {
     m_correlatorWidget = gpsCorrelatorWidget;
 
-    connect(m_correlatorWidget, SIGNAL(signalAllGPXFilesReady()),
+    connect(m_correlatorWidget, SIGNAL(signalAllTrackFilesReady()),
             this, SLOT(slotTracksChanged()));
 
     connect (m_correlatorWidget, SIGNAL(signalShowTracksStateChanged(bool)),

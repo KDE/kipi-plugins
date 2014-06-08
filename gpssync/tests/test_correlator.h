@@ -40,14 +40,10 @@ class TestGPXParsing : public QObject
 private Q_SLOTS:
 
     void testNoOp();
-    void testQDateTimeParsing();
-    void testCustomDateTimeParsing();
-    void testSaxLoader();
-    void testSaxLoaderError();
-    void testFileLoading();
+    void testCorrelator1();
     void testInterpolation();
 
-    
+
 };
 
 #endif /* TEST_GPXPARSING_H */

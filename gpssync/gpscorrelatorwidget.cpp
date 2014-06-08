@@ -26,7 +26,6 @@
 
 #include "gpscorrelatorwidget.moc"
 
-
 // Qt includes
 
 #include <QButtonGroup>
@@ -64,7 +63,6 @@
 
 // local includes
 
-#include "gpsdataparser.h"
 #include "kipiimagemodel.h"
 #include "kipiimageitem.h"
 #include "gpsundocommand.h"
@@ -95,7 +93,8 @@ public:
         maxGapInput(0),
         maxTimeInput(0),
         correlateButton(0),
-        gpsDataParser(0),
+        trackManager(0),
+        trackCorrelator(0),
         uiEnabledInternal(true),
         uiEnabledExternal(true),
         imageModel(0),
@@ -131,7 +130,8 @@ public:
 
     QPushButton*            correlateButton;
 
-    GPSDataParser*          gpsDataParser;
+    KGeoMap::TrackManager*  trackManager;
+    TrackCorrelator*        trackCorrelator;
     bool                    uiEnabledInternal;
     bool                    uiEnabledExternal;
     KipiImageModel*         imageModel;
@@ -145,22 +145,23 @@ public:
 GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
     : QWidget(parent), d(new Private(marginHint, spacingHint))
 {
-    d->imageModel    = imageModel;
-    d->gpsDataParser = new GPSDataParser(this);
+    d->imageModel = imageModel;
+    d->trackManager = new KGeoMap::TrackManager(this);
+    d->trackCorrelator = new TrackCorrelator(d->trackManager, this);
 
-    connect(d->gpsDataParser, SIGNAL(signalGPXFilesReadyAt(int,int)),
-            this, SLOT(slotGPXFilesReadyAt(int,int)));
+    connect(d->trackManager, SIGNAL(signalTrackFilesReadyAt(int,int)),
+            this, SLOT(slotTrackFilesReadyAt(int,int)));
 
-    connect(d->gpsDataParser, SIGNAL(signalAllGPXFilesReady()),
-            this, SLOT(slotAllGPXFilesReady()));
+    connect(d->trackManager, SIGNAL(signalAllTrackFilesReady()),
+            this, SLOT(slotAllTrackFilesReady()));
 
-    connect(d->gpsDataParser, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)),
-            this, SLOT(slotItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)));
+    connect(d->trackCorrelator, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::TrackCorrelator::Correlation::List)),
+            this, SLOT(slotItemsCorrelated(KIPIGPSSyncPlugin::TrackCorrelator::Correlation::List)));
 
-    connect(d->gpsDataParser, SIGNAL(signalAllItemsCorrelated()),
+    connect(d->trackCorrelator, SIGNAL(signalAllItemsCorrelated()),
             this, SLOT(slotAllItemsCorrelated()));
 
-    connect(d->gpsDataParser, SIGNAL(signalCorrelationCanceled()),
+    connect(d->trackCorrelator, SIGNAL(signalCorrelationCanceled()),
             this, SLOT(slotCorrelationCanceled()));
 
     QVBoxLayout* const vboxlayout = new QVBoxLayout(this);
@@ -336,7 +337,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     settingsLayout->setRowStretch(row, 100);
 
     connect(d->gpxLoadFilesButton, SIGNAL(clicked()),
-            this, SLOT(slotLoadGPXFiles()));
+            this, SLOT(slotLoadTrackFiles()));
 
     connect(d->correlateButton, SIGNAL(clicked()),
             this, SLOT(slotCorrelate()));
@@ -352,10 +353,10 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
 
 GPSCorrelatorWidget::~GPSCorrelatorWidget()
 {
-    delete d;
+
 }
 
-void GPSCorrelatorWidget::slotLoadGPXFiles()
+void GPSCorrelatorWidget::slotLoadTrackFiles()
 {
     const KUrl::List gpxFiles = KFileDialog::getOpenUrls(d->gpxFileOpenLastDirectory,
                                                         i18n("%1|GPS Exchange Format", QString("*.gpx")), this,
@@ -368,15 +369,15 @@ void GPSCorrelatorWidget::slotLoadGPXFiles()
 
     setUIEnabledInternal(false);
 
-    d->gpsDataParser->loadGPXFiles(gpxFiles);
+    d->trackManager->loadTrackFiles(gpxFiles);
 }
 
-void GPSCorrelatorWidget::slotGPXFilesReadyAt(int beginIndex, int endIndex)
+void GPSCorrelatorWidget::slotTrackFilesReadyAt(int beginIndex, int endIndex)
 {
     // note that endIndex is exclusive!
     for (int i=beginIndex; i<endIndex; ++i)
     {
-        const GPSDataParser::GPXFileData& gpxData = d->gpsDataParser->fileData(i);
+        const KGeoMap::TrackManager::Track& gpxData = d->trackManager->getTrack(i);
 
         if (!gpxData.isValid)
             continue;
@@ -384,15 +385,15 @@ void GPSCorrelatorWidget::slotGPXFilesReadyAt(int beginIndex, int endIndex)
         QTreeWidgetItem* const treeItem = new QTreeWidgetItem(d->gpxFileList);
         treeItem->setText(0, gpxData.url.fileName());
         // TODO: use KDE number formatting
-        treeItem->setText(1, QString::number(gpxData.gpxDataPoints.count()));
+        treeItem->setText(1, QString::number(gpxData.points.count()));
     }
 }
 
-void GPSCorrelatorWidget::slotAllGPXFilesReady()
+void GPSCorrelatorWidget::slotAllTrackFilesReady()
 {
     // are there any invalid files?
     QStringList invalidFiles;
-    const QList<QPair<KUrl, QString> > loadErrorFiles = d->gpsDataParser->readLoadErrors();
+    const QList<QPair<KUrl, QString> > loadErrorFiles = d->trackManager->readLoadErrors();
 
     for (int i=0; i<loadErrorFiles.count(); ++i)
     {
@@ -419,7 +420,7 @@ void GPSCorrelatorWidget::slotAllGPXFilesReady()
         KMessageBox::errorList(this, errorString, invalidFiles, errorTitleString);
     }
 
-    emit(signalAllGPXFilesReady());
+    emit(signalAllTrackFilesReady());
     
     setUIEnabledInternal(true);
 }
@@ -455,9 +456,9 @@ void GPSCorrelatorWidget::updateUIState()
 
     bool haveValidGpxFiles = false;
 
-    for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
+    for (int i=0; i<d->trackManager->trackCount(); ++i)
     {
-        haveValidGpxFiles = d->gpsDataParser->fileData(i).isValid;
+        haveValidGpxFiles = d->trackManager->getTrack(i).isValid;
 
         if (haveValidGpxFiles)
             break;
@@ -472,7 +473,7 @@ void GPSCorrelatorWidget::slotCorrelate()
     emit(signalSetUIEnabled(false, this, SLOT(slotCancelCorrelation())));
 
     // store the options:
-    GPSDataParser::GPXCorrelationOptions options;
+    TrackCorrelator::CorrelationOptions options;
     options.maxGapTime               = d->maxGapInput->value();
     options.photosHaveSystemTimeZone = (d->timeZoneGroup->checkedId() == 1);
 
@@ -507,7 +508,7 @@ void GPSCorrelatorWidget::slotCorrelate()
     options.interpolationDstTime = d->maxTimeInput->value()*60;
 
     // create a list of items to be correlated
-    GPSDataParser::GPXCorrelation::List itemList;
+    TrackCorrelator::Correlation::List itemList;
 
     const int imageCount = d->imageModel->rowCount();
 
@@ -519,7 +520,7 @@ void GPSCorrelatorWidget::slotCorrelate()
         if (!imageItem)
             continue;
 
-        GPSDataParser::GPXCorrelation correlationItem;
+        TrackCorrelator::Correlation correlationItem;
         correlationItem.userData = QVariant::fromValue(imageIndex);
         correlationItem.dateTime = imageItem->dateTime();
 
@@ -533,19 +534,19 @@ void GPSCorrelatorWidget::slotCorrelate()
 
     emit(signalProgressSetup(imageCount, i18n("Correlating images - %p%")));
 
-    d->gpsDataParser->correlate(itemList, options);
+    d->trackCorrelator->correlate(itemList, options);
 
     // results will be sent to slotItemsCorrelated and slotAllItemsCorrelated
 }
 
-void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems)
+void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::TrackCorrelator::Correlation::List& correlatedItems)
 {
     kDebug()<<correlatedItems.count();
     d->correlationTriedCount+=correlatedItems.count();
 
     for (int i=0; i<correlatedItems.count(); ++i)
     {
-        const GPSDataParser::GPXCorrelation& itemCorrelation = correlatedItems.at(i);
+        const TrackCorrelator::Correlation& itemCorrelation = correlatedItems.at(i);
         const QPersistentModelIndex itemIndex                = itemCorrelation.userData.value<QPersistentModelIndex>();
 
         if (!itemIndex.isValid())
@@ -556,7 +557,7 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
         if (!imageItem)
             continue;
 
-        if (itemCorrelation.flags&GPSDataParser::GPXFlagCoordinates)
+        if (itemCorrelation.flags&TrackCorrelator::CorrelationFlagCoordinates)
         {
             d->correlationCorrelatedCount++;
 
@@ -671,7 +672,7 @@ void GPSCorrelatorWidget::readSettingsFromGroup(const KConfigGroup* const group)
 
 void GPSCorrelatorWidget::slotCancelCorrelation()
 {
-    d->gpsDataParser->cancelCorrelation();
+    d->trackCorrelator->cancelCorrelation();
 }
 
 void GPSCorrelatorWidget::slotCorrelationCanceled()
@@ -687,9 +688,9 @@ QList<KGeoMap::GeoCoordinates::List> GPSCorrelatorWidget::getTrackCoordinates() 
 {
     QList<KGeoMap::GeoCoordinates::List> trackList;
   
-    for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
+    for (int i=0; i<d->trackManager->trackCount(); ++i)
     {
-        const GPSDataParser::GPXFileData& gpxData = d->gpsDataParser->fileData(i);
+        const KGeoMap::TrackManager::Track& gpxData = d->trackManager->getTrack(i);
 
         if (!gpxData.isValid)
         {
@@ -697,9 +698,9 @@ QList<KGeoMap::GeoCoordinates::List> GPSCorrelatorWidget::getTrackCoordinates() 
         }
 
         KGeoMap::GeoCoordinates::List track;
-        for (int coordIdx = 0; coordIdx < gpxData.gpxDataPoints.count(); ++coordIdx)
+        for (int coordIdx = 0; coordIdx < gpxData.points.count(); ++coordIdx)
         {
-            GPSDataParser::GPXDataPoint const& point = gpxData.gpxDataPoints.at(coordIdx);
+            KGeoMap::TrackManager::TrackPoint const& point = gpxData.points.at(coordIdx);
             track << point.coordinates;
         }
 

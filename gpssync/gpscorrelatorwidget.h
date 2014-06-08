@@ -37,7 +37,7 @@
 
 // local includes
 
-#include "gpsdataparser.h"
+#include "track_correlator.h"
 
 class KConfigGroup;
 
@@ -73,7 +73,7 @@ Q_SIGNALS:
     void signalProgressSetup(const int maxProgress, const QString& progressText);
     void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
-    void signalAllGPXFilesReady();
+    void signalAllTrackFilesReady();
     void signalShowTracksStateChanged(bool showTracks);
 
 public Q_SLOTS:
@@ -83,11 +83,11 @@ public Q_SLOTS:
 private Q_SLOTS:
 
     void updateUIState();
-    void slotLoadGPXFiles();
-    void slotGPXFilesReadyAt(int beginIndex, int endIndex);
-    void slotAllGPXFilesReady();
+    void slotLoadTrackFiles();
+    void slotTrackFilesReadyAt(int beginIndex, int endIndex);
+    void slotAllTrackFilesReady();
     void slotCorrelate();
-    void slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
+    void slotItemsCorrelated(const KIPIGPSSyncPlugin::TrackCorrelator::Correlation::List& correlatedItems);
     void slotAllItemsCorrelated();
     void slotCorrelationCanceled();
     void slotShowTracksStateChanged(int state);
@@ -95,7 +95,7 @@ private Q_SLOTS:
 private:
 
     class Private;
-    Private* const d;
+    const QScopedPointer<Private> d;
 };
 
 } /* namespace KIPIGPSSyncPlugin */

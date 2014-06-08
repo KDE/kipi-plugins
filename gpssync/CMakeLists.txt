@@ -13,7 +13,6 @@ SET(kipiplugin_gpssync_PART_SRCS
     gpsimagelistdragdrophandler.cpp
     gpslistviewcontextmenu.cpp
     gpscorrelatorwidget.cpp
-    gpsdataparser.cpp
     gpsimagedetails.cpp
     gpsundocommand.cpp
     gpsreversegeocodingwidget.cpp
@@ -27,6 +26,8 @@ SET(kipiplugin_gpssync_PART_SRCS
     setup_general.cpp
     backend-geonamesUS-rg.cpp
     rgtagmodel.cpp
+    track_correlator.cpp
+    track_correlator_thread.cpp
     tests/simpletreemodel/simpletreemodel.cpp
    )
 

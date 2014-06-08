@@ -1,9 +1,10 @@
-KDE4_ADD_EXECUTABLE(gpssync_test_gpxparsing
-                    test_gpxparsing.cpp
-                    ../gpsdataparser.cpp
+KDE4_ADD_EXECUTABLE(gpssync_test_correlator
+                    test_correlator.cpp
+                    ../track_correlator.cpp
+                    ../track_correlator_thread.cpp
                    )
 
-TARGET_LINK_LIBRARIES(gpssync_test_gpxparsing
+TARGET_LINK_LIBRARIES(gpssync_test_correlator
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
@@ -59,7 +60,7 @@ TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
                       kipiplugins
                      )
 
-ADD_TEST(gpssync_test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_gpxparsing)
+ADD_TEST(gpssync_test_correlator ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
 ADD_TEST(gpssync_test_gpsrgparsing ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)
 ADD_TEST(gpssync_test_gpsrgtagmodel ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgtagmodel)
 ADD_TEST(gpssync_test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_kipiimageitem)
