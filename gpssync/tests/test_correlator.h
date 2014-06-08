@@ -22,16 +22,12 @@
  *
  * ============================================================ */
 
-#ifndef TEST_GPXPARSING_H
-#define TEST_GPXPARSING_H
+#ifndef TEST_CORRELATOR_H
+#define TEST_CORRELATOR_H
 
 // Qt includes
 
 #include <QtTest/QtTest>
-
-// KDE includes
-
-// local includes
 
 class TestGPXParsing : public QObject
 {
@@ -43,8 +39,6 @@ private Q_SLOTS:
     void testCorrelator1();
     void testInterpolation();
 
-
 };
 
-#endif /* TEST_GPXPARSING_H */
-
+#endif /* TEST_CORRELATOR_H */
