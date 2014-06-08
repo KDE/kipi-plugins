@@ -61,6 +61,7 @@ public:
     void readSettingsFromGroup(const KConfigGroup* const group);
     QList<KGeoMap::GeoCoordinates::List> getTrackCoordinates() const;
     bool getShowTracksOnMap() const;
+    KGeoMap::TrackManager* getTrackManager() const;
 
 protected:
 

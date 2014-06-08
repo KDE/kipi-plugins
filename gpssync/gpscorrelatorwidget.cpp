@@ -703,5 +703,10 @@ bool GPSCorrelatorWidget::getShowTracksOnMap() const
 {
     return d->showTracksOnMap->isChecked();
 }
-  
+
+KGeoMap::TrackManager* GPSCorrelatorWidget::getTrackManager() const
+{
+    return d->trackManager;
+}
+
 } /* namespace KIPIGPSSyncPlugin */

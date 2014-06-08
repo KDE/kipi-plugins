@@ -146,7 +146,6 @@ MyTrackModelHelper::MyTrackModelHelper(QObject* parent)
 
 void MyTrackModelHelper::slotTracksChanged()
 {
-    m_tracks = m_correlatorWidget->getTrackCoordinates();
     emit(signalModelChanged());
 }
 
@@ -174,14 +173,14 @@ MyTrackModelHelper::~MyTrackModelHelper()
 
 }
 
-QList<KGeoMap::GeoCoordinates::List> MyTrackModelHelper::getTracks() const
+TrackManager::Track::List MyTrackModelHelper::getTracks() const
 {
-    if (m_showTracksOnMap)
+    if (m_correlatorWidget && m_showTracksOnMap)
     {
-        return m_tracks;
+        return m_correlatorWidget->getTrackManager()->getTrackList();
     }
 
-    return QList<KGeoMap::GeoCoordinates::List>();
+    return TrackManager::Track::List();
 }
 
 // ---------------------------------------------------------------------------------

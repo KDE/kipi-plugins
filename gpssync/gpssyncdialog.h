@@ -110,7 +110,6 @@ class MyTrackModelHelper : public KGeoMap::TrackModelHelper
 {
     Q_OBJECT
 
-    QList<KGeoMap::GeoCoordinates::List> m_tracks;
     KIPIGPSSyncPlugin::GPSCorrelatorWidget* m_correlatorWidget;
     bool m_showTracksOnMap;
 
@@ -120,7 +119,7 @@ public:
 
     void setCorrelator(KIPIGPSSyncPlugin::GPSCorrelatorWidget* gpsCorrelatorWidget);
 
-    virtual QList<KGeoMap::GeoCoordinates::List> getTracks() const;
+    virtual TrackManager::Track::List getTracks() const;
 
 private Q_SLOTS:
     void slotTracksChanged();
