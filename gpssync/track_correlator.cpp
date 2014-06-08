@@ -26,15 +26,6 @@
 
 #include "track_correlator.moc"
 
-// Qt includes
-
-#include <qtconcurrentmap.h>
-#include <QDomDocument>
-#include <QFile>
-#include <QFuture>
-#include <QFutureWatcher>
-#include <QString>
-
 // KDE includes
 
 #include <kdebug.h>

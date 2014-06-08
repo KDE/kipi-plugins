@@ -27,11 +27,6 @@
 #ifndef TRACK_CORRELATOR_H
 #define TRACK_CORRELATOR_H
 
-// Qt includes
-
-#include <QDateTime>
-#include <QThread>
-
 // libkgeomap includes
 
 #include <libkgeomap/tracks.h>
