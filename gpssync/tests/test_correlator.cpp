@@ -41,7 +41,6 @@
 // local includes
 
 #include "../track_correlator.h"
-// #include "../track_correlator_thread.h"
 
 using namespace KIPIGPSSyncPlugin;
 
