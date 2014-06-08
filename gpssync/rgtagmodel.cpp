@@ -382,11 +382,9 @@ QList<TagData> RGTagModel::getTagAddress()
  */ 
 void RGTagModel::addDataInTree(TreeBranch* currentBranch, int currentRow,const QStringList& addressElements,const QStringList& elementsData)
 {
-    bool newDataAdded;
-
     for (int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
-        newDataAdded = false;
+        bool newDataAdded = false;
 
         //this spacer is not an address element
         if (currentBranch->spacerChildren[i]->data.indexOf("{") != 0)
