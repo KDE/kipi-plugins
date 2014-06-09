@@ -139,7 +139,8 @@ public:
 
 MyTrackModelHelper::MyTrackModelHelper(QObject* parent)
   : KGeoMap::TrackModelHelper (parent),
-    m_correlatorWidget (0)
+    m_correlatorWidget (0),
+    m_showTracksOnMap(true)
 {
 
 }
