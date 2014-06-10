@@ -73,11 +73,17 @@ TrackListModel::~TrackListModel()
 
 int TrackListModel::columnCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent);
+
     return ColumnCount;
 }
 
 bool TrackListModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
+    Q_UNUSED(index);
+    Q_UNUSED(value);
+    Q_UNUSED(role);
+
     return false;
 }
 
@@ -176,6 +182,11 @@ int TrackListModel::rowCount(const QModelIndex& parent) const
 
 bool TrackListModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant& value, int role)
 {
+    Q_UNUSED(section);
+    Q_UNUSED(orientation);
+    Q_UNUSED(value);
+    Q_UNUSED(role);
+
     return false;
 }
 
