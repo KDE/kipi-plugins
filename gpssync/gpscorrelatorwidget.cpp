@@ -37,7 +37,7 @@
 #include <QGridLayout>
 #include <QPointer>
 #include <QRadioButton>
-#include <QTreeWidget>
+#include <QTreeView>
 #include <QVBoxLayout>
 
 // KDE includes
@@ -66,6 +66,7 @@
 #include "kipiimagemodel.h"
 #include "kipiimageitem.h"
 #include "gpsundocommand.h"
+#include "track_listmodel.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -95,6 +96,7 @@ public:
         correlateButton(0),
         trackManager(0),
         trackCorrelator(0),
+        trackListModel(0),
         uiEnabledInternal(true),
         uiEnabledExternal(true),
         imageModel(0),
@@ -110,7 +112,7 @@ public:
 
     KUrl                    gpxFileOpenLastDirectory;
     QPushButton*            gpxLoadFilesButton;
-    QTreeWidget*            gpxFileList;
+    QTreeView*              gpxFileList;
     QLabel*                 maxTimeLabel;
 
     QButtonGroup*           timeZoneGroup;
@@ -132,6 +134,7 @@ public:
 
     KGeoMap::TrackManager*  trackManager;
     TrackCorrelator*        trackCorrelator;
+    TrackListModel*         trackListModel;
     bool                    uiEnabledInternal;
     bool                    uiEnabledExternal;
     KipiImageModel*         imageModel;
@@ -148,6 +151,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     d->imageModel = imageModel;
     d->trackManager = new KGeoMap::TrackManager(this);
     d->trackCorrelator = new TrackCorrelator(d->trackManager, this);
+    d->trackListModel = new TrackListModel(d->trackManager, this);
 
     connect(d->trackManager, SIGNAL(signalTrackFilesReadyAt(int,int)),
             this, SLOT(slotTrackFilesReadyAt(int,int)));
@@ -173,11 +177,10 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
 
     d->gpxLoadFilesButton = new QPushButton(i18n("Load GPX files..."), this);
 
-    d->gpxFileList = new QTreeWidget(this);
-    d->gpxFileList->setColumnCount(2);
-    QStringList gpxHeaderLabels;
-    gpxHeaderLabels << i18n("Filename") << i18n("#points");
-    d->gpxFileList->setHeaderLabels(gpxHeaderLabels);
+    d->gpxFileList = new QTreeView(this);
+    d->gpxFileList->setModel(d->trackListModel);
+    d->gpxFileList->setHeaderHidden(false);
+    d->gpxFileList->setRootIsDecorated(false);
 
     KSeparator* const line    = new KSeparator(Qt::Horizontal, this);
     QLabel* const maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), this);
@@ -375,15 +378,7 @@ void GPSCorrelatorWidget::slotLoadTrackFiles()
 void GPSCorrelatorWidget::slotTrackFilesReadyAt(int beginIndex, int endIndex)
 {
     // note that endIndex is exclusive!
-    for (int i=beginIndex; i<endIndex; ++i)
-    {
-        const KGeoMap::TrackManager::Track& gpxData = d->trackManager->getTrack(i);
-
-        QTreeWidgetItem* const treeItem = new QTreeWidgetItem(d->gpxFileList);
-        treeItem->setText(0, gpxData.url.fileName());
-        // TODO: use KDE number formatting
-        treeItem->setText(1, QString::number(gpxData.points.count()));
-    }
+    /// @TODO tell the TrackListModel about this.
 }
 
 void GPSCorrelatorWidget::slotAllTrackFilesReady()

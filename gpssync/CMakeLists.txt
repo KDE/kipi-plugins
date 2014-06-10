@@ -28,6 +28,7 @@ SET(kipiplugin_gpssync_PART_SRCS
     rgtagmodel.cpp
     track_correlator.cpp
     track_correlator_thread.cpp
+    track_listmodel.cpp
     tests/simpletreemodel/simpletreemodel.cpp
    )
 
