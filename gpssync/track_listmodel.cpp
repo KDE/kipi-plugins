@@ -110,7 +110,6 @@ QVariant TrackListModel::data(const QModelIndex& index, int role) const
             switch (columnNumber)
             {
                 case ColumnFilename:
-                    kDebug()<<track.url.fileName();
                     return track.url.fileName();
 
                 case ColumnNPoints:
@@ -182,7 +181,6 @@ bool TrackListModel::setHeaderData(int section, Qt::Orientation orientation, con
 
 QVariant TrackListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    kDebug()<<section<<orientation<<role;
     if ((section >= ColumnCount) || (orientation!=Qt::Horizontal) )
     {
         return false;
