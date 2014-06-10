@@ -167,7 +167,7 @@ int TrackListModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
     {
-        Q_ASSERT(index.model()==this);
+        Q_ASSERT(parent.model()==this);
 
         return 0;
     }
