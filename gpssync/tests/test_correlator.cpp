@@ -77,7 +77,7 @@ void TestGPXParsing::testCorrelator1()
 
     KGeoMap::TrackManager myParser;
 
-    QSignalSpy spyTrackFiles(&myParser, SIGNAL(signalTrackFilesReadyAt(int,int)));
+    QSignalSpy spyTrackFiles(&myParser, SIGNAL(signalTracksChanged(const QList<TrackManager::TrackChanges>)));
     QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllTrackFilesReady()));
     
     myParser.loadTrackFiles(fileList);
@@ -139,7 +139,7 @@ void TestGPXParsing::testInterpolation()
 
     KGeoMap::TrackManager myParser;
 
-    QSignalSpy spyTrackFiles(&myParser, SIGNAL(signalTrackFilesReadyAt(int,int)));
+    QSignalSpy spyTrackFiles(&myParser, SIGNAL(signalTracksChanged(const QList<TrackManager::TrackChanges>)));
     QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllTrackFilesReady()));
 
     myParser.loadTrackFiles(fileList);

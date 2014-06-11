@@ -53,7 +53,7 @@ class GPSCorrelatorWidget : public QWidget
 
 public:
 
-    GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint);
+    GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, KGeoMap::TrackManager* const trackManager, const int marginHint, const int spacingHint);
     ~GPSCorrelatorWidget();
 
     void setUIEnabledExternal(const bool state);
@@ -61,7 +61,6 @@ public:
     void readSettingsFromGroup(const KConfigGroup* const group);
     QList<KGeoMap::GeoCoordinates::List> getTrackCoordinates() const;
     bool getShowTracksOnMap() const;
-    KGeoMap::TrackManager* getTrackManager() const;
 
 protected:
 
@@ -85,7 +84,6 @@ private Q_SLOTS:
 
     void updateUIState();
     void slotLoadTrackFiles();
-    void slotTrackFilesReadyAt(int beginIndex, int endIndex);
     void slotAllTrackFilesReady();
     void slotCorrelate();
     void slotItemsCorrelated(const KIPIGPSSyncPlugin::TrackCorrelator::Correlation::List& correlatedItems);

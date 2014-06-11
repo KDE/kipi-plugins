@@ -44,7 +44,7 @@
 
 #include <libkgeomap/kgeomap_primitives.h>
 #include <libkgeomap/modelhelper.h>
-#include <libkgeomap/trackmodelhelper.h>
+#include <libkgeomap/tracks.h>
 
 // LibKIPI includes
 
@@ -104,27 +104,6 @@ private:
 
     class Private;
     Private* const d;
-};
-
-class MyTrackModelHelper : public KGeoMap::TrackModelHelper
-{
-    Q_OBJECT
-
-    KIPIGPSSyncPlugin::GPSCorrelatorWidget* m_correlatorWidget;
-    bool m_showTracksOnMap;
-
-public:
-    MyTrackModelHelper(QObject* parent);
-    ~MyTrackModelHelper();
-
-    void setCorrelator(KIPIGPSSyncPlugin::GPSCorrelatorWidget* gpsCorrelatorWidget);
-
-    virtual TrackManager::Track::List getTracks() const;
-
-private Q_SLOTS:
-    void slotTracksChanged();
-    void slotShowTracksStateChanged(bool showTracksOnMap);
-
 };
 
 // ------------------------------------------------------------------------------------------------

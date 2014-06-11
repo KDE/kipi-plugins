@@ -145,16 +145,13 @@ public:
     GPSUndoCommand*         correlationUndoCommand;
 };
 
-GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
+GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, KGeoMap::TrackManager* const trackManager, const int marginHint, const int spacingHint)
     : QWidget(parent), d(new Private(marginHint, spacingHint))
 {
     d->imageModel = imageModel;
-    d->trackManager = new KGeoMap::TrackManager(this);
+    d->trackManager = trackManager;
     d->trackCorrelator = new TrackCorrelator(d->trackManager, this);
     d->trackListModel = new TrackListModel(d->trackManager, this);
-
-    connect(d->trackManager, SIGNAL(signalTrackFilesReadyAt(int,int)),
-            this, SLOT(slotTrackFilesReadyAt(int,int)));
 
     connect(d->trackManager, SIGNAL(signalAllTrackFilesReady()),
             this, SLOT(slotAllTrackFilesReady()));
@@ -373,12 +370,6 @@ void GPSCorrelatorWidget::slotLoadTrackFiles()
     setUIEnabledInternal(false);
 
     d->trackManager->loadTrackFiles(gpxFiles);
-}
-
-void GPSCorrelatorWidget::slotTrackFilesReadyAt(int beginIndex, int endIndex)
-{
-    // note that endIndex is exclusive!
-    /// @TODO tell the TrackListModel about this.
 }
 
 void GPSCorrelatorWidget::slotAllTrackFilesReady()
@@ -697,11 +688,6 @@ void GPSCorrelatorWidget::slotShowTracksStateChanged(int state)
 bool GPSCorrelatorWidget::getShowTracksOnMap() const
 {
     return d->showTracksOnMap->isChecked();
-}
-
-KGeoMap::TrackManager* GPSCorrelatorWidget::getTrackManager() const
-{
-    return d->trackManager;
 }
 
 } /* namespace KIPIGPSSyncPlugin */

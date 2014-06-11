@@ -85,6 +85,7 @@
 
 #include <libkgeomap/kgeomap_widget.h>
 #include <libkgeomap/itemmarkertiler.h>
+#include <libkgeomap/tracks.h>
 
 // Local includes
 
@@ -137,53 +138,6 @@ public:
     KipiImageModel* const        imageModel;
 };
 
-MyTrackModelHelper::MyTrackModelHelper(QObject* parent)
-  : KGeoMap::TrackModelHelper (parent),
-    m_correlatorWidget (0),
-    m_showTracksOnMap(true)
-{
-
-}
-
-void MyTrackModelHelper::slotTracksChanged()
-{
-    emit(signalModelChanged());
-}
-
-void MyTrackModelHelper::slotShowTracksStateChanged(bool showTracksOnMap)
-{
-    m_showTracksOnMap = showTracksOnMap;
-    emit(signalModelChanged());
-}
-
-void MyTrackModelHelper::setCorrelator(KIPIGPSSyncPlugin::GPSCorrelatorWidget* gpsCorrelatorWidget)
-{
-    m_correlatorWidget = gpsCorrelatorWidget;
-
-    connect(m_correlatorWidget, SIGNAL(signalAllTrackFilesReady()),
-            this, SLOT(slotTracksChanged()));
-
-    connect (m_correlatorWidget, SIGNAL(signalShowTracksStateChanged(bool)),
-             this, SLOT(slotShowTracksStateChanged(bool)));
-
-    m_showTracksOnMap = m_correlatorWidget->getShowTracksOnMap();
-}
-
-MyTrackModelHelper::~MyTrackModelHelper()
-{
-
-}
-
-TrackManager::Track::List MyTrackModelHelper::getTracks() const
-{
-    if (m_correlatorWidget && m_showTracksOnMap)
-    {
-        return m_correlatorWidget->getTrackManager()->getTrackList();
-    }
-
-    return TrackManager::Track::List();
-}
-
 // ---------------------------------------------------------------------------------
 
 struct LoadFileMetadataHelper
@@ -219,6 +173,7 @@ public:
 
     Private()
     {
+        /// @TODO initialize in the initializer list of the constructor
         imageModel               = 0;
         selectionModel           = 0;
         uiEnabled                = true;
@@ -226,6 +181,7 @@ public:
         bookmarkOwner            = 0;
         actionBookmarkVisibility = 0;
         listViewContextMenu      = 0;
+        trackManager             = 0;
         fileIOFutureWatcher      = 0;
         fileIOCountDone          = 0;
         fileIOCountTotal         = 0;
@@ -247,7 +203,6 @@ public:
         correlatorWidget         = 0;
         rgWidget                 = 0;
         searchWidget             = 0;
-        trackModelHelper         = 0;
         mapSplitter              = 0;
         mapWidget                = 0;
         mapWidget2               = 0;
@@ -268,6 +223,7 @@ public:
     GPSBookmarkOwner*                        bookmarkOwner;
     KAction*                                 actionBookmarkVisibility;
     GPSListViewContextMenu*                  listViewContextMenu;
+    KGeoMap::TrackManager*                   trackManager;
 
     // Loading and saving
     QFuture<QPair<KUrl,QString> >            fileIOFuture;
@@ -299,7 +255,6 @@ public:
     GPSCorrelatorWidget*                     correlatorWidget;
     GPSReverseGeocodingWidget*               rgWidget;
     SearchWidget*                            searchWidget;
-    MyTrackModelHelper*                      trackModelHelper;
 
     // map: UI
     MapLayout                                mapLayout;
@@ -329,6 +284,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 
     d->imageModel     = new KipiImageModel(this);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
+    d->trackManager   = new KGeoMap::TrackManager(this);
 
 #ifdef GPSSYNC_MODELTEST
     new ModelTest(d->imageModel, this);
@@ -347,7 +303,6 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
     d->kgeomapMarkerModel = new ItemMarkerTiler(d->mapModelHelper, this);
-    d->trackModelHelper = new MyTrackModelHelper(this);
 
     d->actionBookmarkVisibility = new KAction(this);
     d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
@@ -472,9 +427,8 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->detailsWidget = new GPSImageDetails(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
     d->stackedWidget->addWidget(d->detailsWidget);
 
-    d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
+    d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, d->trackManager, marginHint(), spacingHint());
     d->stackedWidget->addWidget(d->correlatorWidget);
-    d->trackModelHelper->setCorrelator(d->correlatorWidget);
 
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
     d->stackedWidget->addWidget(d->undoView);
@@ -1268,7 +1222,7 @@ KGeoMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
     mapWidget->setDragDropHandler(d->mapDragDropHandler);
     mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
     mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
-    mapWidget->setTrackModel(d->trackModelHelper);
+    mapWidget->setTrackManager(d->trackManager);
     mapWidget->setSortOptionsMenu(d->sortMenu);
 
     vbox->addWidget(mapWidget);
