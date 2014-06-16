@@ -59,7 +59,7 @@ LayoutNode::LayoutNode(LayoutNode* const subtree, LayoutNode* const terminalChil
 {
 }
 
-LayoutNode::LayoutNode(const LayoutNode &other)
+LayoutNode::LayoutNode(const LayoutNode& other)
 {
     (*this) = other;
 }
@@ -70,7 +70,7 @@ LayoutNode::~LayoutNode()
     delete m_rightChild;
 }
 
-LayoutNode &LayoutNode::operator=(const LayoutNode &other)
+LayoutNode &LayoutNode::operator=(const LayoutNode& other)
 {
     m_a          = other.m_a;
     m_e          = other.m_e;
@@ -136,9 +136,9 @@ void LayoutNode::computeRelativeSizes()
     m_leftChild->computeRelativeSizes();
     m_rightChild->computeRelativeSizes();
 
-    double leftProductRoot  = std::sqrt(m_leftChild->m_a * m_leftChild->m_e);
-    double rightProductRoot = std::sqrt(m_rightChild->m_a * m_rightChild->m_e);
-    double maxProductRoot   = leftProductRoot > rightProductRoot ? leftProductRoot : rightProductRoot;
+    double leftProductRoot   = std::sqrt(m_leftChild->m_a * m_leftChild->m_e);
+    double rightProductRoot  = std::sqrt(m_rightChild->m_a * m_rightChild->m_e);
+    double maxProductRoot    = leftProductRoot > rightProductRoot ? leftProductRoot : rightProductRoot;
 
     double leftDivisionRoot  = std::sqrt(m_leftChild->m_e / m_leftChild->m_a);
     double rightDivisionRoot = std::sqrt(m_rightChild->m_e / m_rightChild->m_a);
@@ -195,7 +195,7 @@ LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
 
 LayoutTree::LayoutTree(const LayoutTree& other)
 {
-    *this = other;
+    (*this) = other;
 }
 
 LayoutTree &LayoutTree::operator=(const LayoutTree& other)
