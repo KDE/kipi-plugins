@@ -682,7 +682,7 @@ QList<KGeoMap::GeoCoordinates::List> GPSCorrelatorWidget::getTrackCoordinates() 
 void GPSCorrelatorWidget::slotShowTracksStateChanged(int state)
 {
     const bool doShowTracks = state == Qt::Checked;
-    emit(signalShowTracksStateChanged(doShowTracks));
+    d->trackManager->setVisibility(doShowTracks);
 }
 
 bool GPSCorrelatorWidget::getShowTracksOnMap() const

@@ -74,7 +74,6 @@ Q_SIGNALS:
     void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
     void signalAllTrackFilesReady();
-    void signalShowTracksStateChanged(bool showTracks);
 
 public Q_SLOTS:
 
