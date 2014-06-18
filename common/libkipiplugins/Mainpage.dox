@@ -1,0 +1,7 @@
+/** @mainpage libkipiplugins
+
+Libkipiplugins is an internal library to prevent binary compatibility between libkipi API and KIPI tools implementation. Plugins must use libkipiplugins wrappers instead to call libkipi API directly.
+
+This library include many common dialogs, utils, and widgets usable by plugins.
+
+ */
