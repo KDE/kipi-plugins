@@ -1,0 +1,16 @@
+Kipi-plugins 4.1.0 - Release date: 2014/06/22
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 323378 - digiKam crash when try to export to facebook.
+002 ==> 330684 - Advanced Slideshow in Gwenview.
+003 ==> 327415 - Crash after I interrupted the «create photo layout» task.
+004 ==> 333622 - Please add an option to display the GPS track loaded in the geolocation dialog [patch].
+005 ==> 336249 - Conflict between plugins keyboard shortcuts.
+006 ==> 334284 - digiKam crashes when attempting to stitch panorama.
+007 ==> 
+
+
