@@ -5,5 +5,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
-
+001 ==> 313203 - kipi metadata editor doesn't recognize contact info written with digikam 2.6 and higher [patch].
+002 ==> 
