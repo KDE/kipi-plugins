@@ -5,6 +5,7 @@
  *
  * Date        : 2007-10-24
  * Description : XMP credits settings page.
+ * Modified    : 2014-04-22 Alan Pater
  *
  * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -334,9 +335,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->bylineTitleEdit->setEnabled(d->bylineTitleCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->emailEdit->clear();
     d->emailCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiEmailWork", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiEmailWork", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiEmailWork", false);
 
     if (!data.isNull())
     {
@@ -346,9 +352,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->emailEdit->setEnabled(d->emailCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->urlEdit->clear();
     d->urlCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiUrlWork", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiUrlWork", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiUrlWork", false);
 
     if (!data.isNull())
     {
@@ -358,9 +369,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->urlEdit->setEnabled(d->urlCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->phoneEdit->clear();
     d->phoneCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiTelWork", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiTelWork", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiTelWork", false);
 
     if (!data.isNull())
     {
@@ -370,9 +386,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->phoneEdit->setEnabled(d->phoneCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->addressEdit->clear();
     d->addressCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);
 
     if (!data.isNull())
     {
@@ -382,9 +403,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->addressEdit->setEnabled(d->addressCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->postalCodeEdit->clear();
     d->postalCodeCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiAdrPcode", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrPcode", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiAdrPcode", false);
 
     if (!data.isNull())
     {
@@ -394,9 +420,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->postalCodeEdit->setEnabled(d->postalCodeCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiAdrCity", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrCity", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiAdrCity", false);
 
     if (!data.isNull())
     {
@@ -406,9 +437,14 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->cityEdit->setEnabled(d->cityCheck->isChecked());
 
+    // --------------------------------------------------------
+
     d->countryEdit->clear();
     d->countryCheck->setChecked(false);
-    data = meta.getXmpTagString("Xmp.iptc.CiAdrCtry", false);
+    data = meta.getXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrCtry", false);
+
+    if (data.isNull())
+        data = meta.getXmpTagString("Xmp.iptc.CiAdrCtry", false);
 
     if (!data.isNull())
     {
@@ -417,6 +453,8 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
     }
 
     d->countryEdit->setEnabled(d->countryCheck->isChecked());
+
+    // --------------------------------------------------------
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
@@ -429,6 +467,8 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
     }
 
     d->creditEdit->setEnabled(d->creditCheck->isChecked());
+
+    // --------------------------------------------------------
 
     d->sourceEdit->clear();
     d->sourceCheck->setChecked(false);
@@ -464,40 +504,86 @@ void XMPCredits::applyMetadata(QByteArray& xmpData)
     else
         meta.removeXmpTag("Xmp.photoshop.AuthorsPosition");
 
+    // --------------------------------------------------------
+
     if (d->emailCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiEmailWork", d->emailEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiEmailWork", d->emailEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiEmailWork");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiEmailWork");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiEmailWork");
+        }
 
     if (d->urlCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiUrlWork", d->urlEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiUrlWork", d->urlEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiUrlWork");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiUrlWork");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiUrlWork");
+        }
 
     if (d->phoneCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiTelWork", d->phoneEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiTelWork", d->phoneEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiTelWork");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiTelWork");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiTelWork");
+        }
 
     if (d->addressCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiAdrExtadr", d->addressEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr", d->addressEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiAdrExtadr");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiAdrExtadr");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr");
+        }
 
     if (d->postalCodeCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiAdrPcode", d->postalCodeEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrPcode", d->postalCodeEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiAdrPcode");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiAdrPcode");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrPcode");
+        }
 
     if (d->cityCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiAdrCity", d->cityEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrCity", d->cityEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiAdrCity");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiAdrCity");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrCity");
+        }
 
     if (d->countryCheck->isChecked())
-        meta.setXmpTagString("Xmp.iptc.CiAdrCtry", d->countryEdit->text());
-    else
+    {
+        meta.setXmpTagString("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrCtry", d->countryEdit->text());
         meta.removeXmpTag("Xmp.iptc.CiAdrCtry");
+    }
+    else
+        {
+        meta.removeXmpTag("Xmp.iptc.CiAdrCtry");
+        meta.removeXmpTag("Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrCtry");
+        }
+
+    // --------------------------------------------------------
 
     if (d->creditCheck->isChecked())
         meta.setXmpTagString("Xmp.photoshop.Credit", d->creditEdit->text());
@@ -519,3 +605,4 @@ void XMPCredits::applyMetadata(QByteArray& xmpData)
 }
 
 }  // namespace KIPIMetadataEditPlugin
+
