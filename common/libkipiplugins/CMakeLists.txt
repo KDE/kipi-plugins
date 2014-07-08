@@ -48,7 +48,3 @@ TARGET_LINK_LIBRARIES(kipiplugins
 SET_TARGET_PROPERTIES(kipiplugins PROPERTIES VERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING} SOVERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING})
 
 INSTALL(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
-
-# desktop file used to setup kipi-plugins handbook link and to share kipi-plugins version string.
-CONFIGURE_FILE(kipiplugins.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugins.desktop)
-INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kipiplugins.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
