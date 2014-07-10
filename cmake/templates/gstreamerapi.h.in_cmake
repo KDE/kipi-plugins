@@ -1,0 +1,6 @@
+#ifndef GSTREAMERAPI_H
+#define GSTREAMERAPI_H
+
+#cmakedefine01 GSTREAMER_API_1
+
+#endif

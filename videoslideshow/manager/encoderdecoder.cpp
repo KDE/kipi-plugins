@@ -23,6 +23,7 @@
  * ============================================================ */
 
 #include "encoderdecoder.moc"
+#include "../../gstreamerapi.h"
 
 // Qt includes
 
@@ -50,6 +51,27 @@ EncoderDecoder::EncoderDecoder()
 {
     QGst::init();
 
+#if GSTREAMER_API_1
+    m_audioPipelines.append("filesrc location=\"%1\" ! decodebin ! audioconvert ! audioresample !"
+                          "audio/x-raw, rate=%2 ! avenc_mp2 bitrate=%3 ! queue");
+
+    m_audioPipelines.append("filesrc location=\"%1\" ! decodebin ! audioconvert ! audioresample !"
+                          "audio/x-raw, rate=%2 ! lamemp3enc bitrate=%3 ! id3v2mux ! queue");
+
+    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert !"
+                          " y4menc ! y4mdec ! videoscale ! mpeg2enc format=%3 norm=%4 bitrate=%5 aspect=%6 ! "
+                          " filesink location=\"%7\"");
+
+    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert !"
+                          " avenc_mpeg4 ! avimux ! filesink location=\"%3\"");
+
+    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert !"
+                          " theoraenc ! oggmux ! filesink location=\"%3\"");
+
+    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert ! "
+                          " avenc_mpeg4 ! queue ! mux. filesrc location =\"%3\" ! decodebin ! audioconvert !"
+                          " audio/x-raw, rate=44100 ! lamemp3enc ! queue ! mux. avimux name=mux ! filesink location=\"%4\"");
+#else
     m_audioPipelines.append("filesrc location=\"%1\" ! decodebin ! audioconvert ! audioresample !"
                           "audio/x-raw-int, rate=%2 ! ffenc_mp2 bitrate=%3 ! queue");
 
@@ -69,6 +91,8 @@ EncoderDecoder::EncoderDecoder()
     m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace ! "
                           " xvidenc ! queue ! mux. filesrc location =\"%3\" ! decodebin ! audioconvert !"
                           " audio/x-raw-int, rate=44100 ! lamemp3enc ! queue ! mux. avimux name=mux ! filesink location=\"%4\"");
+#endif
+
 }
 
 EncoderDecoder::~EncoderDecoder()
@@ -293,7 +317,7 @@ void EncoderDecoder::encodeVideo(const QString& destination, const QString& audi
 }
 
 /*
- * 
+ *
 QGst::BinPtr EncoderDecoder::createAudioSrcBin(QString file, AUDIO_TYPE type, int sampleRate, int bitRate)
 {
     QGst::BinPtr audioBin;
