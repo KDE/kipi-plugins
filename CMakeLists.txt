@@ -350,26 +350,31 @@ PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAM
 PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 
 
-# set QtGStreamer API version
-MESSAGE(STATUS "----------------------------------------------------------------------------------")
-MESSAGE(STATUS "")
-IF((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
-    OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1))
-    SET(GSTREAMER_API_1 TRUE)
-ELSE((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
-    OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1))
-    SET(GSTREAMER_API_1 FALSE)
-ENDIF((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
-    OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1))
-CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.in_cmake" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
+# Set QtGStreamer API version --------------------------------------------------------------------------
 
-MESSAGE(STATUS "Found QtGstreamer version : ${QtGStreamer_VERSION}")
-MESSAGE(STATUS "Using GStreamer API 1: ${GSTREAMER_API_1}")
+IF (QTGSTREAMER_FOUND)
+
+    MESSAGE(STATUS "----------------------------------------------------------------------------------")
+    MESSAGE(STATUS "")
+
+    IF( (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
+        OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1) )
+        SET(GSTREAMER_API_1 TRUE)
+    ELSE()
+        SET(GSTREAMER_API_1 FALSE)
+    ENDIF()
+
+    CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.in_cmake" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
+
+    MESSAGE(STATUS "Found QtGstreamer version : ${QtGStreamer_VERSION}")
+    MESSAGE(STATUS "Using GStreamer API 1: ${GSTREAMER_API_1}")
 
 
-MESSAGE(STATUS "----------------------------------------------------------------------------------")
-MESSAGE(STATUS "")
+    MESSAGE(STATUS "----------------------------------------------------------------------------------")
+    MESSAGE(STATUS "")
 
+ENDIF()
+    
 # ==================================================================================================
 
 IF(KIPIPLUGINS_CAN_BE_COMPILED)
