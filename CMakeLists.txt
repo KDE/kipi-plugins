@@ -364,7 +364,7 @@ IF (QTGSTREAMER_FOUND)
         SET(GSTREAMER_API_1 FALSE)
     ENDIF()
 
-    CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.in_cmake" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
+    CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
 
     MESSAGE(STATUS "Found QtGstreamer version : ${QtGStreamer_VERSION}")
     MESSAGE(STATUS "Using GStreamer API 1: ${GSTREAMER_API_1}")
@@ -391,7 +391,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     # Add a custom command to drive the git script whenever the git entries
     # file changes.
-    CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gitscript.cmake.in_cmake"
+    CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gitscript.cmake.in"
                    "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake"
                    @ONLY)
 
@@ -543,7 +543,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ENDIF(BUILD_WALLPAPER)
 
     IF(NOT WIN32)
-        CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.in_cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
+        CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
     ENDIF(NOT WIN32)
 
 ENDIF(KIPIPLUGINS_CAN_BE_COMPILED)
