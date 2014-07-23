@@ -170,7 +170,6 @@ MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For P
 MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)                                      # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
@@ -180,7 +179,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For V
 MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
 MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
 
-# check the libkgeomap version
+# Check the libkgeomap version
 # note that old versions don't specify version information, so for now
 # just inform the user if version information was found
 IF (KGEOMAP_VERSION)
@@ -190,10 +189,14 @@ ENDIF (KGEOMAP_VERSION)
 
 # X11 check, LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
-    MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For AdvancedSlideshow and ImageViewer.
+    MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-# SPECIAL OPENCV HANDLING
+# BEGIN SPECIAL OPENCV HANDLING
+
+# reset to avoid picking up extra libraries
+SET(OpenCV_LIBS)
+FIND_PACKAGE(OpenCV COMPONENTS core highgui objdetect contrib)           # For RemoveRedEyes.
 
 # there are two versions of FindOpenCV.cmake in the wild, one defining
 # OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
@@ -210,6 +213,8 @@ ENDIF (NOT OpenCV_INCLUDE_DIRS)
 IF (OpenCV_LIBRARIES AND OpenCV_INCLUDE_DIRS)
     SET (OpenCV_FOUND TRUE)
 ENDIF (OpenCV_LIBRARIES AND OpenCV_INCLUDE_DIRS)
+
+# END SPECIAL OPENCV HANDLING
 
 # OpenMP detection requires CMake >= 2.6.3
 

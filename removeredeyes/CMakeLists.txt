@@ -78,4 +78,3 @@ INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desk
 INSTALL(TARGETS kipiplugin_removeredeyes                                                DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES   plugin/kipiplugin_removeredeyesui.rc                                    DESTINATION ${DATA_INSTALL_DIR}/kipi)
 INSTALL(FILES   widgets/controlwidget.svg plugin/removeredeyes_classifier_eye_20_20.xml DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
-
