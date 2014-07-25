@@ -192,29 +192,8 @@ IF(NOT WIN32 AND NOT APPLE)
     MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-# BEGIN SPECIAL OPENCV HANDLING
-
-# reset to avoid picking up extra libraries
-SET(OpenCV_LIBS)
-FIND_PACKAGE(OpenCV COMPONENTS core highgui objdetect contrib)           # For RemoveRedEyes.
-
-# there are two versions of FindOpenCV.cmake in the wild, one defining
-# OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
-# both cases.
-IF (NOT OpenCV_LIBRARIES)
-    SET(OpenCV_LIBRARIES ${OpenCV_LIBS})
-ENDIF (NOT OpenCV_LIBRARIES)
-
-# same story with OpenCV_INCLUDE_DIRS and OpenCV_INCLUDE_DIR:
-IF (NOT OpenCV_INCLUDE_DIRS)
-    SET(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIR})
-ENDIF (NOT OpenCV_INCLUDE_DIRS)
-
-IF (OpenCV_LIBRARIES AND OpenCV_INCLUDE_DIRS)
-    SET (OpenCV_FOUND TRUE)
-ENDIF (OpenCV_LIBRARIES AND OpenCV_INCLUDE_DIRS)
-
-# END SPECIAL OPENCV HANDLING
+INCLUDE(MacroOpenCV)
+DETECT_OPENCV(2.4.9 core highgui objdetect contrib)
 
 # OpenMP detection requires CMake >= 2.6.3
 
