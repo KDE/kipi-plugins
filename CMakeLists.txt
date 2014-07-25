@@ -193,7 +193,7 @@ IF(NOT WIN32 AND NOT APPLE)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 INCLUDE(MacroOpenCV)
-DETECT_OPENCV(2.4.9 core highgui objdetect contrib)
+DETECT_OPENCV(2.4.6 core highgui objdetect contrib)
 
 # OpenMP detection requires CMake >= 2.6.3
 
