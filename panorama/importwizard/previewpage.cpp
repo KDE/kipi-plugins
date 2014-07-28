@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -83,7 +83,6 @@ struct PreviewPage::Private
     Manager*               mngr;
 
     KAssistantDialog*      dlg;
-
 };
 
 PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
@@ -195,6 +194,7 @@ void PreviewPage::startStitching()
 {
     // Cancel any preview being processed
     bool previewReady = true;
+
     if (d->previewBusy)
     {
         previewReady = false;
@@ -209,22 +209,23 @@ void PreviewPage::startStitching()
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
 
-    QSize panoSize = d->mngr->viewAndCropOptimisePtoData().project.size;
+    QSize panoSize      = d->mngr->viewAndCropOptimisePtoData().project.size;
     QRect panoSelection = d->mngr->viewAndCropOptimisePtoData().project.crop;
 
-    if (previewReady) {
+    if (previewReady)
+    {
         QSize previewSize = d->mngr->previewPtoData().project.size;
-        QRectF selection = d->previewWidget->getSelectionArea();
-        QRectF proportionSelection(selection.x() / previewSize.width(),
-                                   selection.y() / previewSize.height(),
-                                   selection.width() / previewSize.width(),
+        QRectF selection  = d->previewWidget->getSelectionArea();
+        QRectF proportionSelection(selection.x()      / previewSize.width(),
+                                   selection.y()      / previewSize.height(),
+                                   selection.width()  / previewSize.width(),
                                    selection.height() / previewSize.height());
 
         // At this point, if no selection area was created, proportionSelection is null,
         // hence panoSelection becomes a null rectangle
-        panoSelection = QRect(proportionSelection.x() * panoSize.width(),
-                              proportionSelection.y() * panoSize.height(),
-                              proportionSelection.width() * panoSize.width(),
+        panoSelection = QRect(proportionSelection.x()      * panoSize.width(),
+                              proportionSelection.y()      * panoSize.height(),
+                              proportionSelection.width()  * panoSize.width(),
                               proportionSelection.height() * panoSize.height());
     }
 
@@ -234,7 +235,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("layer-visible-on").pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("kipi-panorama").pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();
@@ -368,13 +369,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                            "</qt>"));
                     d->previewWidget->setSelectionAreaPossible(true);
                     d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
-                    QSize panoSize = d->mngr->viewAndCropOptimisePtoData().project.size;
-                    QRect panoCrop = d->mngr->viewAndCropOptimisePtoData().project.crop;
+                    QSize panoSize    = d->mngr->viewAndCropOptimisePtoData().project.size;
+                    QRect panoCrop    = d->mngr->viewAndCropOptimisePtoData().project.crop;
                     QSize previewSize = d->mngr->previewPtoData().project.size;
                     d->previewWidget->setSelectionArea(QRectF(
-                        ((double) panoCrop.left()) / panoSize.width() * previewSize.width(),
-                        ((double) panoCrop.top()) / panoSize.height() * previewSize.height(),
-                        ((double) panoCrop.width()) / panoSize.width() * previewSize.width(),
+                        ((double) panoCrop.left())   / panoSize.width()  * previewSize.width(),
+                        ((double) panoCrop.top())    / panoSize.height() * previewSize.height(),
+                        ((double) panoCrop.width())  / panoSize.width()  * previewSize.width(),
                         ((double) panoCrop.height()) / panoSize.height() * previewSize.height()
                     ));
                     kDebug() << "Preview URL: " << d->mngr->previewUrl();
