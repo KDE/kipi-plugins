@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,6 +24,10 @@
 
 #ifndef LAST_PAGE_H
 #define LAST_PAGE_H
+
+// KDE includes
+
+#include <kurl.h>
 
 // Local includes
 
@@ -68,8 +72,8 @@ private:
 
 private:
 
-    struct LastPagePriv;
-    LastPagePriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin

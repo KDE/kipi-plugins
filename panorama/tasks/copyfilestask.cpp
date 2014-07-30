@@ -66,6 +66,28 @@ void CopyFilesTask::run()
     QFile ptoFile(ptoUrl.toLocalFile());
     QFile finalPTOFile(finalPTOUrl.toLocalFile());
 
+    kDebug() << "Copying GPS info...";
+      
+    // Find first src image which contain geolocation and save it to target pano file. 
+    
+    double lat, lng, alt;
+    
+    for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
+    {
+        kDebug() << i.key();
+
+        KPMetadata metaSrc(i.key().toLocalFile());
+
+        if(metaSrc.getGPSInfo(alt, lat, lng))
+        {
+            kDebug() << "GPS info found and saved in " << panoUrl;
+            KPMetadata metaDst(panoUrl.toLocalFile());
+            metaDst.setGPSInfo(alt, lat, lng);
+            metaDst.applyChanges();
+            break;
+        }        
+    }
+    
     if (!panoFile.exists())
     {
         errString = i18n("Temporary panorama file does not exists.");
@@ -94,7 +116,7 @@ void CopyFilesTask::run()
         successFlag = false;
         return;
     }
-
+    
     kDebug() << "Copying panorama file...";
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
     {
@@ -115,7 +137,7 @@ void CopyFilesTask::run()
         metaOut.setXmpTagString("GPano:UsePanoramaViewer", "True");
         metaOut.setXmpTagString("GPano:StitchingSoftware", "Panorama Kipi Plugin, with Hugin");
         metaOut.setXmpTagString("GPano:ProjectionType", "equirectangular");
-
+        metaOut.applyChanges();
     }
 
     if (savePTO)

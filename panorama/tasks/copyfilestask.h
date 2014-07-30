@@ -59,7 +59,6 @@ public:
 protected:
 
     void run();
-
 };
 
 }  // namespace KIPIPanoramaPlugin

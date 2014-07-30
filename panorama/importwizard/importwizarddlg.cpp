@@ -41,7 +41,7 @@
 
 #include <libkipi/interface.h>
 
-// Locale incudes.
+// Local includes.
 
 #include "manager.h"
 #include "actionthread.h"
@@ -320,8 +320,8 @@ void ImportWizardDlg::slotStitchingFinished(bool success)
 void ImportWizardDlg::slotCopyFinished(bool success)
 {
     if (success)
-    {
-        QDialog::accept();
+    {   
+        KAssistantDialog::accept();
     }
     else
     {
