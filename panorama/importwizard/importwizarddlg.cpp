@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,6 +31,7 @@
 
 // KDE includes
 
+#include <kconfig.h>
 #include <kmenu.h>
 #include <klocale.h>
 #include <kpushbutton.h>
@@ -56,9 +57,9 @@
 namespace KIPIPanoramaPlugin
 {
 
-struct ImportWizardDlg::ImportWizardDlgPriv
+struct ImportWizardDlg::Private
 {
-    ImportWizardDlgPriv()
+    Private()
       : mngr(0),
         introPage(0),
         itemsPage(0),
@@ -70,7 +71,6 @@ struct ImportWizardDlg::ImportWizardDlgPriv
     }
 
     Manager*           mngr;
-
     IntroPage*         introPage;
     ItemsPage*         itemsPage;
     PreProcessingPage* preProcessingPage;
@@ -80,7 +80,7 @@ struct ImportWizardDlg::ImportWizardDlgPriv
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
-    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
+    : KPWizardDialog(parent), d(new Private)
 {
     setModal(false);
     setWindowTitle(i18n("Panorama Creator Wizard"));
@@ -97,11 +97,21 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 
     // ---------------------------------------------------------------
 
-    QDesktopWidget* desktop = QApplication::desktop();
-    int screen              = desktop->screenNumber();
-    QRect srect             = desktop->availableGeometry(screen);
-    resize(800 <= srect.width()  ? 800 : srect.width(),
-           750 <= srect.height() ? 750 : srect.height());
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("Panorama Dialog"));
+    
+    if(group.exists())
+    {
+        restoreDialogSize(group);
+    }
+    else
+    {
+        QDesktopWidget* const desktop = QApplication::desktop();
+        int screen                    = desktop->screenNumber();
+        QRect srect                   = desktop->availableGeometry(screen);
+        resize(800 <= srect.width()  ? 800 : srect.width(),
+               750 <= srect.height() ? 750 : srect.height());
+    }  
 
     // ---------------------------------------------------------------
 
@@ -134,6 +144,11 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 
 ImportWizardDlg::~ImportWizardDlg()
 {
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("Panorama Dialog"));
+    saveDialogSize(group);
+    config.sync();
+    
     delete d;
 }
 
