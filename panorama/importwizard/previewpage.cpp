@@ -137,6 +137,7 @@ bool PreviewPage::cancel()
 {
     d->canceled = true;
     d->mngr->thread()->cancel();
+    d->postProcessing->progressCompleted();
 
     QMutexLocker lock(&d->actionMutex);
 
