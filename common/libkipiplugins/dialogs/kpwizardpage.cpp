@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a template to create wizzard page.
  *
- * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,27 +62,27 @@ public:
 KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     : QScrollArea(dlg), d(new Private)
 {
-    QWidget* panel = new QWidget(viewport());
+    QWidget* const panel = new QWidget(viewport());
     panel->setAutoFillBackground(false);
     setWidget(panel);
     setWidgetResizable(true);
     viewport()->setAutoFillBackground(false);
 
-    d->hlay     = new QHBoxLayout(panel);
-    KVBox* vbox = new KVBox(panel);
-    d->logo     = new QLabel(vbox);
+    d->hlay           = new QHBoxLayout(panel);
+    KVBox* const vbox = new KVBox(panel);
+    d->logo           = new QLabel(vbox);
     d->logo->setAlignment(Qt::AlignTop);
     d->logo->setPixmap(QPixmap(KStandardDirs::locate("data", "kipi/data/kipi-logo.svg"))
                                .scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    QLabel* space    = new QLabel(vbox);
-    d->leftBottomPix = new QLabel(vbox);
+    QLabel* const space = new QLabel(vbox);
+    d->leftBottomPix    = new QLabel(vbox);
     d->leftBottomPix->setAlignment(Qt::AlignBottom);
     vbox->setStretchFactor(space, 10);
     vbox->setMargin(KDialog::spacingHint());
     vbox->setSpacing(KDialog::spacingHint());
 
-    KSeparator* line = new KSeparator(Qt::Vertical, panel);
+    KSeparator* const line = new KSeparator(Qt::Vertical, panel);
 
     d->hlay->addWidget(vbox);
     d->hlay->addWidget(line);

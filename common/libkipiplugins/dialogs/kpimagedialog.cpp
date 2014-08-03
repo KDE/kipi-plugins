@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -97,12 +97,12 @@ public:
 KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
     : KPreviewWidgetBase(parent), d(new Private)
 {
-    QVBoxLayout* vlay = new QVBoxLayout(this);
-    d->imageLabel     = new QLabel(this);
+    QVBoxLayout* const vlay = new QVBoxLayout(this);
+    d->imageLabel           = new QLabel(this);
     d->imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-    d->infoLabel      = new QLabel(this);
+    d->infoLabel            = new QLabel(this);
     d->infoLabel->setAlignment(Qt::AlignCenter);
 
     vlay->setMargin(0);
@@ -175,9 +175,9 @@ void KPImageDialogPreview::showPreview(const KUrl& url)
 #if KDE_IS_VERSION(4,7,0)
             KFileItemList items;
             items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, d->currentUrl, true));
-            KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
+            KIO::PreviewJob* const job = KIO::filePreview(items, QSize(256, 256));
 #else
-            KIO::PreviewJob* job = KIO::filePreview(d->currentUrl, 256);
+            KIO::PreviewJob* const job = KIO::filePreview(d->currentUrl, 256);
 #endif
 
             connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
@@ -419,7 +419,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
     QPointer<KFileDialog> dlg     = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
                                                              : alternatePath,
                                                     d->fileFormats, parent);
-    KPImageDialogPreview* preview = new KPImageDialogPreview(dlg);
+    KPImageDialogPreview* const preview = new KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 
@@ -488,6 +488,7 @@ KUrl KPImageDialog::getImageUrl(QWidget* const parent, bool onlyRaw)
 KUrl::List KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
 {
     KPImageDialog dlg(parent, false, onlyRaw);
+
     if (!dlg.urls().isEmpty())
     {
         return dlg.urls();

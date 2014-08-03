@@ -6,7 +6,7 @@
  * Date        : 2004-05-04
  * Description : Batch progress dialog
  *
- * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,40 +51,39 @@ class KPBatchProgressItem : public QListWidgetItem
 {
 public:
 
-KPBatchProgressItem(QListWidget* const parent, const QString& message, int messageType)
-    : QListWidgetItem(message, parent)
-{
-    // Set the icon.
-
-    switch(messageType)
+    KPBatchProgressItem(QListWidget* const parent, const QString& message, int messageType)
+        : QListWidgetItem(message, parent)
     {
-        case StartingMessage:
-            setIcon(SmallIcon("system-run"));
-            break;
-        case SuccessMessage:
-            setIcon(SmallIcon("dialog-ok"));
-            break;
-        case WarningMessage:
-            setIcon(SmallIcon("dialog-warning"));
-            setForeground(QBrush(Qt::darkYellow));
-            break;
-        case ErrorMessage:
-            setIcon(SmallIcon("dialog-error"));
-            setForeground(QBrush(Qt::red));
-            break;
-        case ProgressMessage:
-            setIcon(SmallIcon("dialog-information"));
-            break;
-        default:
-            setIcon(SmallIcon("dialog-information"));
-            break;
+        // Set the icon.
+
+        switch(messageType)
+        {
+            case StartingMessage:
+                setIcon(SmallIcon("system-run"));
+                break;
+            case SuccessMessage:
+                setIcon(SmallIcon("dialog-ok"));
+                break;
+            case WarningMessage:
+                setIcon(SmallIcon("dialog-warning"));
+                setForeground(QBrush(Qt::darkYellow));
+                break;
+            case ErrorMessage:
+                setIcon(SmallIcon("dialog-error"));
+                setForeground(QBrush(Qt::red));
+                break;
+            case ProgressMessage:
+                setIcon(SmallIcon("dialog-information"));
+                break;
+            default:
+                setIcon(SmallIcon("dialog-information"));
+                break;
+        }
+
+        // Set the message text.
+
+        setText(message);
     }
-
-    // Set the message text.
-
-    setText(message);
-}
-
 };
 
 // ----------------------------------------------------------------------
@@ -147,7 +146,7 @@ void KPBatchProgressWidget::progressCompleted()
 
 void KPBatchProgressWidget::addedAction(const QString& text, int type)
 {
-    KPBatchProgressItem* item = new KPBatchProgressItem(d->actionsList, text, type);
+    KPBatchProgressItem* const item = new KPBatchProgressItem(d->actionsList, text, type);
     d->actionsList->setCurrentItem(item);
     d->progress->progressStatusChanged(text);
 }
@@ -187,7 +186,7 @@ void KPBatchProgressWidget::setProgress(int current)
 void KPBatchProgressWidget::slotContextMenu()
 {
     KMenu popmenu(this);
-    KAction* action = new KAction(KIcon("edit-copy"), i18n("Copy to Clipboard"), this);
+    KAction* const action = new KAction(KIcon("edit-copy"), i18n("Copy to Clipboard"), this);
 
     connect(action, SIGNAL(triggered(bool)),
             this, SLOT(slotCopy2ClipBoard()));
@@ -206,7 +205,7 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
         textInfo.append("\n");
     }
 
-    QMimeData* mimeData = new QMimeData();
+    QMimeData* const mimeData = new QMimeData();
     mimeData->setText(textInfo);
     QApplication::clipboard()->setMimeData(mimeData, QClipboard::Clipboard);
 }

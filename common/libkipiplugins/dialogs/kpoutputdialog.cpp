@@ -6,7 +6,7 @@
  * Date        : 2009-12-24
  * Description : a dialog to display processed messages in background
  *
- * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -70,9 +70,9 @@ KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
 
     //---------------------------------------------
 
-    KVBox* vbox     = new KVBox(this);
-    QLabel* lHeader = new QLabel(vbox);
-    d->debugView    = new KTextBrowser(vbox);
+    KVBox* const vbox     = new KVBox(this);
+    QLabel* const lHeader = new QLabel(vbox);
+    d->debugView          = new KTextBrowser(vbox);
     d->debugView->append(Messages);
     lHeader->setText(Header);
     vbox->setSpacing(spacingHint());
