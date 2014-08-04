@@ -83,7 +83,6 @@ libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.ht
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
-libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
 libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
 libkgeomap      >= 2.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
 libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
@@ -109,7 +108,7 @@ Shwup              : libqca.
 YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 FaceBook           : libqjson.
-ExpoBlending       : Hugin command line tools (runtime dependency), libgomp.
+ExpoBlending       : Hugin command line tools (runtime dependency).
 GPSSync            : libkmap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.

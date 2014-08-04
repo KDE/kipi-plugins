@@ -3,6 +3,8 @@ Kipi-plugins 4.3.0 - Release date: 2014/09/07
 
 NEW FEATURES:
 
+ExpoBlending : remove OPenMP dependency. Ported to QtConcurrentRun.
+
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 

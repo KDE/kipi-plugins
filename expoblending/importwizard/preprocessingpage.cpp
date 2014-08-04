@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,11 +61,11 @@ using namespace KIPIPlugins;
 namespace KIPIExpoBlendingPlugin
 {
 
-class PreProcessingPage::PreProcessingPagePriv
+class PreProcessingPage::Private
 {
 public:
 
-    PreProcessingPagePriv()
+    Private()
     {
         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
@@ -96,31 +96,31 @@ public:
 
 PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
-      d(new PreProcessingPagePriv)
+      d(new Private)
 {
-    d->mngr          = mngr;
-    d->progressTimer = new QTimer(this);
-    KVBox *vbox      = new KVBox(this);
-    d->title         = new QLabel(vbox);
+    d->mngr           = mngr;
+    d->progressTimer  = new QTimer(this);
+    KVBox* const vbox = new KVBox(this);
+    d->title          = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
-    d->alignCheckBox = new QCheckBox(i18n("Align bracketed images"), vbox);
+    d->alignCheckBox  = new QCheckBox(i18n("Align bracketed images"), vbox);
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
 
-    QLabel* space1   = new QLabel(vbox);
-    KHBox* hbox      = new KHBox(vbox);
-    d->detailsBtn    = new QPushButton(hbox);
+    QLabel* const space1 = new QLabel(vbox);
+    KHBox* const hbox    = new KHBox(vbox);
+    d->detailsBtn        = new QPushButton(hbox);
     d->detailsBtn->setText(i18n("Details..."));
     d->detailsBtn->hide();
-    QLabel* space2   = new QLabel(hbox);
+    QLabel* const space2 = new QLabel(hbox);
     hbox->setStretchFactor(space2, 10);
 
-    QLabel* space3   = new QLabel(vbox);
-    d->progressLabel = new QLabel(vbox);
+    QLabel* const space3   = new QLabel(vbox);
+    d->progressLabel       = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignCenter);
-    QLabel* space4   = new QLabel(vbox);
+    QLabel* const space4   = new QLabel(vbox);
 
     vbox->setStretchFactor(space1, 2);
     vbox->setStretchFactor(space3, 2);
@@ -189,6 +189,7 @@ void PreProcessingPage::process()
 
     d->mngr->thread()->setPreProcessingSettings(d->alignCheckBox->isChecked(), d->mngr->rawDecodingSettings());
     d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->alignBinary().path());
+
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
@@ -209,6 +210,7 @@ void PreProcessingPage::slotProgressTimerDone()
     d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
 
     d->progressCount++;
+
     if (d->progressCount == 8)
         d->progressCount = 0;
 
