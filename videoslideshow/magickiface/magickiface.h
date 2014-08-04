@@ -8,7 +8,7 @@
  * @brief  c++ wrapper on ImageMagick Api
  *
  * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
- *         Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *         Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,8 +34,10 @@
 
 // ImageMagick includes
 
-// To prevent compilation warnings about undefined QuantumDepth
-#define QuantumDepth      MAGICKCORE_QUANTUM_DEPTH
+// To prevent compilation warnings about undefined values
+#define MAGICKCORE_HDRI_ENABLE   0
+#define MAGICKCORE_QUANTUM_DEPTH 16
+#define QuantumDepth             MAGICKCORE_QUANTUM_DEPTH
 
 #include <magick/api.h>
 

@@ -8,7 +8,7 @@
  * @brief  c++ wrapper on ImageMagick Api
  *
  * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
- *         Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *         Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -199,7 +199,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
 {
     MagickImage* img      = 0;
     PixelPacket* img_data = 0;
-    Image*       image;
+    Image*       image    = 0;
     int x, y;
 
     img = d->allocImage();
@@ -219,8 +219,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     img->setWidth(img->getImage()->columns);
     img->setHeight(img->getImage()->rows);
 
-    if (!(img_data = GetAuthenticPixels(img->getImage(), 0, 0, img->getWidth(), img->getHeight(), 
-          &img->getImage()->exception)))
+    if (!(img_data = GetAuthenticPixels(img->getImage(), 0, 0, img->getWidth(), img->getHeight(), &img->getImage()->exception)))
     {
         Q_EMIT signalsAPIError("GetImagePixels() failed\n");
         return 0;
@@ -230,7 +229,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     {
         for (x = 0 ; x < img->getWidth() ; x++)
         {
-            QColor rgb = qimage.pixel(x, y);
+            QColor rgb      = qimage.pixel(x, y);
             img_data->red   = rgb.red() * USHRT_MAX / UCHAR_MAX;
             img_data->green = rgb.green() * USHRT_MAX / UCHAR_MAX ;
             img_data->blue  = rgb.blue() * USHRT_MAX / UCHAR_MAX ;
