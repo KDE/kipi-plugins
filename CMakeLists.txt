@@ -119,7 +119,7 @@ ENDIF(NOT WIN32 AND NOT APPLE)
 
 INCLUDE(MacroUtils)
 INCLUDE(MacroOpenCV)
-DETECT_OPENCV(2.4.6 core highgui objdetect contrib)
+DETECT_OPENCV(2.4.9 core highgui objdetect contrib legacy imgproc)
 
 INCLUDE(MacroOptionalDependPackage)
 
