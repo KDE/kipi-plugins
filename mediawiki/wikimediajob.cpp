@@ -7,7 +7,7 @@
  * Description : A kipi plugin to export images to a MediaWiki wiki
  *
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Nathan Damie <nathan dot damie at gmail dot com>
  * Copyright (C) 2012      by Iliya Ivanov <ilko2002 at abv dot bg>
  * Copyright (C) 2012      by Peter Potrowl <peter dot potrowl at gmail dot com>
@@ -110,10 +110,12 @@ void WikiMediaJob::uploadHandle(KJob* j)
         disconnect(j, SIGNAL(percent(KJob*,ulong)),
                    this, SLOT(slotUploadProgress(KJob*,ulong)));
 
-        //error from previous upload
+        // Error from previous upload
+        
         if((int)j->error() != 0)
         {
             const QString errorText = j->errorText();
+
             if(errorText.isEmpty())
             {
                 d->error.append(i18n("Error on file '%1'\n", d->currentFile));
@@ -125,16 +127,17 @@ void WikiMediaJob::uploadHandle(KJob* j)
         }
     }
 
-    // upload next image
+    // Upload next image
+    
     if(!d->imageDesc.isEmpty())
     {
         QList<QString> keys        = d->imageDesc.keys();
         QMap<QString,QString> info = d->imageDesc.take(keys.first());
-        Upload* e1                 = new Upload(*d->mediawiki, this);
+        Upload* const e1           = new Upload(*d->mediawiki, this);
 
         kDebug() << "Path:" << keys.first();
 
-        QFile* file = new QFile(keys.first(),this);
+        QFile* const file = new QFile(keys.first(),this);
         file->open(QIODevice::ReadOnly);
         //emit fileUploadProgress(done = 0, total file.size());
 
@@ -143,7 +146,16 @@ void WikiMediaJob::uploadHandle(KJob* j)
         kDebug() << "Name:" << file->fileName();
         e1->setFilename(info["title"].replace(" ", "_"));
         kDebug() << "Title:" << info["title"];
-        e1->setComment("Upload via KIPI uploader");
+
+        if(!info["comments"].isEmpty())
+        {
+            e1->setComment(info["comments"]);
+        }
+        else
+        {
+            e1->setComment("Uploaded via KIPI uploader");
+        }
+
         e1->setText(buildWikiText(info));
         keys.removeFirst();
 
@@ -158,7 +170,8 @@ void WikiMediaJob::uploadHandle(KJob* j)
     }
     else
     {
-        //finish upload
+        // Finish upload
+
         if(d->error.size() > 0)
         {
             KMessageBox::error(0,d->error);
@@ -167,6 +180,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
         {
             emit endUpload();
         }
+
         d->error.clear();
     }
 }
@@ -201,7 +215,7 @@ QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
     if(!latitude.isEmpty() && !longitude.isEmpty())
     {
         kDebug() << "Latitude:" << latitude << "; longitude:" << longitude;
-        text.append("{{Location dec").append("|").append(latitude).append("|").append(longitude).append("}}\n");
+        text.append("{{Coord").append("|").append(latitude).append("|").append(longitude).append("}}\n");
     }
 
     if(!info["genText"].isEmpty())
@@ -209,8 +223,11 @@ QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
         text.append(info["genText"].toUtf8()).append("\n");
     }
 
-    text.append("\n=={{int:license-header}}==\n");
-    text.append(info["license"].toUtf8()).append("\n\n");
+    if(!info["license"].isEmpty())
+    {
+        text.append("\n=={{int:license-header}}==\n");
+        text.append(info["license"].toUtf8()).append("\n\n");
+    }
 
     QStringList categories;
 

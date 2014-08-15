@@ -7,7 +7,7 @@
  * Description : A kipi plugin to export images to a MediaWiki wiki
  *
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  * Copyright (C) 2012-2013 by Peter Potrowl <peter dot potrowl at gmail dot com>
  *
@@ -116,12 +116,12 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->widget->setMinimumSize(700, 500);
     d->widget->installEventFilter(this);
 
-    KPAboutData* about = new KPAboutData(ki18n("MediaWiki export"), 0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A Kipi plugin to export image collection "
-                                               "to a MediaWiki installation.\n"
-                                               "Using libmediawiki version %1").subs(QString(mediawiki_version)),
-                                         ki18n("(c) 2011, Alexandre Mendes"));
+    KPAboutData* const about = new KPAboutData(ki18n("MediaWiki export"), 0,
+                                               KAboutData::License_GPL,
+                                               ki18n("A Kipi plugin to export image collection "
+                                                     "to a MediaWiki installation.\n"
+                                                     "Using libmediawiki version %1").subs(QString(mediawiki_version)),
+                                               ki18n("(c) 2011, Alexandre Mendes"));
 
     about->addAuthor(ki18n("Alexandre Mendes"), ki18n("Author"),
                      "alex dot mendes1988 at gmail dot com");
@@ -176,8 +176,8 @@ void WMWindow::reactivate()
     d->widget->loadImageInfoFirstLoad();
     d->widget->clearEditFields();
     kDebug() << "imagesList items count:" << d->widget->imagesList()->listView()->topLevelItemCount();
-    kDebug() << "imagesList url length:" << d->widget->imagesList()->imageUrls(false).size();
-    kDebug() << "allImagesDesc length:" << d->widget->allImagesDesc().size();
+    kDebug() << "imagesList url length:"  << d->widget->imagesList()->imageUrls(false).size();
+    kDebug() << "allImagesDesc length:"   << d->widget->allImagesDesc().size();
     show();
 }
 
@@ -247,6 +247,12 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 
     KPMetadata meta;
 
+    // In case of metadata are saved to tmp file, we will override KPMetadata settings
+    // to write metadata to image file rather than sidecar file, to be effective with remote web service.
+
+    meta.setMetadataWritingMode((KPMetadata::MetadataWritingMode)
+                                KPMetadata::WRITETOIMAGEONLY);
+
     if (d->widget->removeMeta())
     {
         // save empty metadata to erase them
@@ -282,6 +288,7 @@ void WMWindow::slotStartTransfer()
     for (int i = 0; i < urls.size(); ++i)
     {
         QString url;
+
         if(d->widget->resize() || d->widget->removeMeta() || d->widget->removeGeo())
         {
             prepareImageForUpload(urls.at(i).path());
@@ -314,12 +321,12 @@ void WMWindow::slotChangeUserClicked()
 
 void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QString& wikiName, const QUrl& wikiUrl)
 {
-    d->login        = login;
-    d->pass         = pass;
-    d->wikiName     = wikiName;
-    d->wikiUrl      = wikiUrl;
-    d->mediawiki    = new MediaWiki(wikiUrl);
-    Login* loginJob = new Login(*d->mediawiki, login, pass);
+    d->login              = login;
+    d->pass               = pass;
+    d->wikiName           = wikiName;
+    d->wikiUrl            = wikiUrl;
+    d->mediawiki          = new MediaWiki(wikiUrl);
+    Login* const loginJob = new Login(*d->mediawiki, login, pass);
 
     connect(loginJob, SIGNAL(result(KJob*)), 
             this, SLOT(slotLoginHandle(KJob*)));
@@ -367,7 +374,7 @@ bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
 {
     if(event->type() == QEvent::KeyRelease)
     {
-        QKeyEvent* c = dynamic_cast<QKeyEvent *>(event);
+        QKeyEvent* const c = dynamic_cast<QKeyEvent *>(event);
 
         if(c && c->key() == Qt::Key_Return)
         {

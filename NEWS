@@ -8,4 +8,5 @@ ExpoBlending : remove OPenMP dependency. Ported to QtConcurrentRun.
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 338037 - digiKam 4.2.0 compilation error: undefined reference to `cvFillImage'.
-002 ==> 
+002 ==> 335250 - Proposed minor fixes to MediaWiki plugin [patch].
+003 ==> 
