@@ -153,7 +153,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
         }
         else
         {
-            e1->setComment("Uploaded via KIPI uploader");
+            e1->setComment(i18n("Uploaded via KIPI uploader"));
         }
 
         e1->setText(buildWikiText(info));
