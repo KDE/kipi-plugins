@@ -33,6 +33,13 @@
 #define log2f(x) (logf(x)*1.4426950408889634f)
 #endif
 
+#ifdef __FreeBSD__
+#include <osreldate.h>
+#    if __FreeBSD_version < 802502
+#        define log2f(x) (logf(x)*1.4426950408889634f)
+#    endif
+#endif
+
 // Qt includes
 
 #include <QMutex>
