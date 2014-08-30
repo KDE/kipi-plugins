@@ -87,15 +87,11 @@ void CompileMKTask::run()
     {
         errString = getProcessError(*process);
         successFlag = false;
+        return;
     }
-    else
-    {
-        successFlag = true;
-    }
+    kDebug() << "make's output:" << endl << process->readAll();
 
-    delete process;
-    process = 0;
-
+    successFlag = true;
     return;
 }
 

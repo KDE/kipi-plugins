@@ -92,15 +92,11 @@ void CompileMKStepTask::run()
     {
         errString = getProcessError(*process);
         successFlag = false;
+        return;
     }
-    else
-    {
-        successFlag = true;
-    }
+    kDebug() << "make job's output (" << mkFile << "):" << endl << process->readAll();
 
-    delete process;
-    process = 0;
-
+    successFlag = true;
     return;
 }
 

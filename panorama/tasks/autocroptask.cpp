@@ -62,18 +62,14 @@ void AutoCropTask::requestAbort()
 
 void AutoCropTask::run()
 {
-    kDebug() << "autocrop start";
     (*viewCropPtoUrl) = tmpDir;
     viewCropPtoUrl->setFileName(QString("view_crop_pano.pto"));
-
-    kDebug() << "autocrop 1";
 
     process = new KProcess();
     process->clearProgram();
     process->setWorkingDirectory(tmpDir.toLocalFile());
     process->setOutputChannelMode(KProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-    kDebug() << "autocrop 2";
 
     QStringList args;
     args << panoModifyPath;
@@ -84,7 +80,6 @@ void AutoCropTask::run()
     args << "-o";
     args << viewCropPtoUrl->toLocalFile();
     args << autoOptimiserPtoUrl->toLocalFile();
-    kDebug() << "autocrop 3";
 
     process->setProgram(args);
 
@@ -98,6 +93,7 @@ void AutoCropTask::run()
         successFlag = false;
         return;
     }
+    kDebug() << "pano_modify's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

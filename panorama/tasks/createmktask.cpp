@@ -108,13 +108,9 @@ void CreateMKTask::run()
     {
         errString = getProcessError(*process);
         successFlag = false;
-        delete process;
-        process = 0;
         return;
     }
-
-    delete process;
-    process = 0;
+    kDebug() << "pto2mk's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

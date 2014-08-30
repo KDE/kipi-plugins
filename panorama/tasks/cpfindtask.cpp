@@ -85,18 +85,12 @@ void CpFindTask::run()
     if (!process->waitForFinished(-1) || process->exitStatus() != QProcess::NormalExit)
     {
         errString = getProcessError(*process);
-
         successFlag = false;
+        return;
     }
-    else
-    {
-        successFlag = true;
-    }
-    kDebug() << "CPFind's output:" << endl << process->readAll();
+    kDebug() << "cpfind's output:" << endl << process->readAll();
 
-    delete process;
-    process = 0;
-
+    successFlag = true;
     return;
 }
 

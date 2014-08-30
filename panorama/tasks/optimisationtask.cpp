@@ -98,6 +98,7 @@ void OptimisationTask::run()
         successFlag = false;
         return;
     }
+    kDebug() << "autooptimiser's output:" << endl << process->readAll();
 
     successFlag = true;
     return;
