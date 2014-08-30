@@ -89,11 +89,13 @@ INSTALL(FILES   plugin/kipiplugin_panoramaui.rc                                D
 # =======================================================
 # Test program
 
-SET(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
+IF(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
+    SET(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
 
-KDE4_ADD_EXECUTABLE(pto_parser_test ${pto_parser_test_SRCS})
+    KDE4_ADD_EXECUTABLE(pto_parser_test ${pto_parser_test_SRCS})
 
-TARGET_LINK_LIBRARIES(pto_parser_test libpanorama)
+    TARGET_LINK_LIBRARIES(pto_parser_test libpanorama)
+ENDIF(CMAKE_BUILD_TYPE MATCHES 'Debug')
 
 # =======================================================
 # Stand alone version of Panorama plugin
