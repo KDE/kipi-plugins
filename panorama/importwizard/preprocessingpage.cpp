@@ -201,6 +201,7 @@ void PreProcessingPage::process()
                                        d->mngr->format(),
                                        d->mngr->gPano(),
                                        d->mngr->rawDecodingSettings(),
+                                       d->mngr->cpFindBinary().version(),
                                        d->mngr->cpCleanBinary().path(),
                                        d->mngr->cpFindBinary().path());
     if (!d->mngr->thread()->isRunning())

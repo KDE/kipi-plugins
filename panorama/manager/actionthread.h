@@ -65,12 +65,12 @@ public:
     void preProcessFiles(const KUrl::List& urlList, KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
                          KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
                          bool celeste, KIPIPanoramaPlugin::PanoramaFileType fileType, bool gPano,
-                         const RawDecodingSettings& rawSettings,
+                         const RawDecodingSettings& rawSettings, const QString& huginVersion,
                          const QString& cpCleanPath, const QString& cpFindPath);
     void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
                          bool levelHorizon, bool buildGPano,
                          const QString& autooptimiserPath, const QString& panoModifyPath);
-    void generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
+    void generatePanoramaPreview(const PTOType& ptoData, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
                                  const QString& enblendPath, const QString& nonaPath);

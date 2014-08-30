@@ -210,9 +210,11 @@ struct PTOType
         LensParameter<double>           photometricEMoRC;
         LensParameter<double>           photometricEMoRD;
         LensParameter<double>           photometricEMoRE;
-        int                             mosaicModeOffsetX;
-        int                             mosaicModeOffsetY;
-        int                             mosaicModeOffsetZ;
+        double                          mosaicCameraPositionX;
+        double                          mosaicCameraPositionY;
+        double                          mosaicCameraPositionZ;
+        double                          mosaicProjectionPlaneYaw;
+        double                          mosaicProjectionPlanePitch;
         QRect                           crop;
         LensParameter<int>              stackNumber;
         QString                         fileName;
@@ -226,7 +228,7 @@ struct PTOType
           vignettingCorrectionI(0), vignettingCorrectionJ(0), vignettingCorrectionK(0), vignettingCorrectionL(0),
           vignettingOffsetX(0), vignettingOffsetY(0),
           photometricEMoRA(0), photometricEMoRB(0), photometricEMoRC(0), photometricEMoRD(0), photometricEMoRE(0),
-          mosaicModeOffsetX(0), mosaicModeOffsetY(0), mosaicModeOffsetZ(0),
+          mosaicCameraPositionX(0), mosaicCameraPositionY(0), mosaicCameraPositionZ(0), mosaicProjectionPlaneYaw(0), mosaicProjectionPlanePitch(0),
           crop(0, 0, 0, 0), stackNumber(0) {}
     };
 
@@ -243,7 +245,10 @@ struct PTOType
         QStringList                 unmatchedParameters;
     };
 
-    bool                createFile(const QString& filepath);
+            PTOType() : version(PRE_V2014) {}
+            PTOType(const QString& version)
+                : version(version.split('.')[0].toInt() >= 2014 ? V2014 : PRE_V2014) {}
+    bool    createFile(const QString& filepath);
 
     /* NOTE: Work in progress
     QPair<double, int>  standardDeviation(int image1Id, int image2Id);
@@ -256,6 +261,7 @@ struct PTOType
     QVector<Image>          images;
     QList<ControlPoint>     controlPoints;
     QStringList             lastComments;
+    enum {PRE_V2014, V2014} version;
 };
 
 } // namespace KIPIPanoramaPlugin

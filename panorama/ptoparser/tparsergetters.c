@@ -367,22 +367,34 @@ char* panoScriptGetImageVignettingFlatField(pt_script* script, int i)
     return script->inputImageSpec[i].vignettingFlatFieldFile;
 }
 
-double panoScriptGetImageTranslationX(pt_script* script, int i)
+double panoScriptGetImageCameraTranslationX(pt_script* script, int i)
 {
     assert(script != NULL && i >= 0 && i < script->iInputImagesCount);
-    return script->inputImageSpec[i].translationCoef[0];
+    return script->inputImageSpec[i].cameraPosition[0];
 }
 
-double panoScriptGetImageTranslationY(pt_script* script, int i)
+double panoScriptGetImageCameraTranslationY(pt_script* script, int i)
 {
     assert(script != NULL && i >= 0 && i < script->iInputImagesCount);
-    return script->inputImageSpec[i].translationCoef[1];
+    return script->inputImageSpec[i].cameraPosition[1];
 }
 
-double panoScriptGetImageTranslationZ(pt_script* script, int i)
+double panoScriptGetImageCameraTranslationZ(pt_script* script, int i)
 {
     assert(script != NULL && i >= 0 && i < script->iInputImagesCount);
-    return script->inputImageSpec[i].translationCoef[2];
+    return script->inputImageSpec[i].cameraPosition[2];
+}
+
+double panoScriptGetImageProjectionPlaneYaw(pt_script* script, int i)
+{
+    assert(script != NULL && i >= 0 && i < script->iInputImagesCount);
+    return script->inputImageSpec[i].projectionPlaneRotation[0];
+}
+
+double panoScriptGetImageProjectionPlanePitch(pt_script* script, int i)
+{
+    assert(script != NULL && i >= 0 && i < script->iInputImagesCount);
+    return script->inputImageSpec[i].projectionPlaneRotation[1];
 }
 
 char* panoScriptGetImageName(pt_script* script, int i)

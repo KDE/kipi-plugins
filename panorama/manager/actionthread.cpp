@@ -88,7 +88,7 @@ ActionThread::~ActionThread()
 void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
                                    KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
                                    bool celeste, PanoramaFileType fileType, bool gPano,
-                                   const RawDecodingSettings& rawSettings,
+                                   const RawDecodingSettings& rawSettings, const QString& huginVersion,
                                    const QString& cpCleanPath, const QString& cpFindPath)
 {
     d->cleanPreprocessingTmpDir();
@@ -127,7 +127,8 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
                                            baseUrl,
                                            urlList,
                                            preProcessedMap,
-                                           gPano);
+                                           gPano,
+                                           huginVersion);
 
     connect(pto, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));
@@ -206,7 +207,7 @@ void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& vie
     appendJob(jobs);
 }
 
-void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
+void ActionThread::generatePanoramaPreview(const PTOType& ptoData, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                            const ItemUrlsMap& preProcessedUrlsMap,
                                            const QString& makePath, const QString& pto2mkPath,
                                            const QString& enblendPath, const QString& nonaPath)
@@ -214,7 +215,7 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, KUrl& previewPtoU
     JobCollection   *jobs                                   = new JobCollection();
 
     CreatePreviewTask *ptoTask = new CreatePreviewTask(d->preprocessingTmpDir->name(),
-                                                       ptoUrl,
+                                                       ptoData,
                                                        previewPtoUrl,
                                                        preProcessedUrlsMap);
 

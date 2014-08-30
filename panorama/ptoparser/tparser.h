@@ -47,6 +47,7 @@
 #define PANO_PARSER_RESP_CURVE_COEF_COUNT 5
 #define PANO_PARSER_VIGN_COEF_COUNT 6
 #define PANO_TRANSLATION_COEF_COUNT 3
+#define PANO_PROJECTION_COEF_COUNT 2
 
 typedef struct
 {
@@ -143,7 +144,8 @@ typedef struct
     int vignettingCorrectionMode; /* Vm */
     double vignettingCorrectionCoef[PANO_PARSER_VIGN_COEF_COUNT]; /* V[abcdxy] */
     char* vignettingFlatFieldFile;
-    double translationCoef[PANO_TRANSLATION_COEF_COUNT]; /* TrX parms */
+    double cameraPosition[PANO_TRANSLATION_COEF_COUNT]; /* TrX and TpX params */
+    double projectionPlaneRotation[PANO_PROJECTION_COEF_COUNT]; /* TpX params */
 
 
     char* name;

@@ -21,7 +21,6 @@
  * ============================================================ */
 
 #include "createpreviewtask.h"
-#include <ptofile.h>
 
 // Qt includes
 
@@ -41,16 +40,16 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePreviewTask::CreatePreviewTask(QObject* parent, const KUrl& workDir, const KUrl& input,
+CreatePreviewTask::CreatePreviewTask(QObject* parent, const KUrl& workDir, const PTOType& inputPTO, 
                                      KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
     : Task(parent, CREATEMKPREVIEW, workDir), previewPtoUrl(&previewPtoUrl),
-      ptoUrl(input), preProcessedUrlsMap(preProcessedUrlsMap)
+      ptoData(inputPTO), preProcessedUrlsMap(preProcessedUrlsMap)
 {}
 
-CreatePreviewTask::CreatePreviewTask(const KUrl& workDir, const KUrl& input,
+CreatePreviewTask::CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO, 
                                      KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
     : Task(0, CREATEMKPREVIEW, workDir), previewPtoUrl(&previewPtoUrl),
-      ptoUrl(input), preProcessedUrlsMap(preProcessedUrlsMap)
+      ptoData(inputPTO), preProcessedUrlsMap(preProcessedUrlsMap)
 {}
 
 CreatePreviewTask::~CreatePreviewTask()
@@ -58,27 +57,9 @@ CreatePreviewTask::~CreatePreviewTask()
 
 void CreatePreviewTask::run()
 {
-    kDebug() << "Preview Generation (" << ptoUrl.toLocalFile() << ")";
-    QFile input(ptoUrl.toLocalFile());
-    if (!input.exists())
-    {
-        errString = i18n("Missing project file.");
-        kDebug() << "Missing PTO File!";
-        successFlag = false;
-        return;
-    }
 
-    PTOFile pto;
-    if (!pto.openFile(ptoUrl.toLocalFile()))
-    {
-        errString = i18n("Project file parsing failed.");
-        kDebug() << "Failed to parse PTO File!";
-        successFlag = false;
-        return;
-    }
-
-    PTOType *data = pto.getPTO();
-    if (data == NULL)
+    PTOType data(ptoData);
+    if (data.images.size() != preProcessedUrlsMap.size())
     {
         errString = i18n("Project file parsing failed.");
         kDebug() << "Missing parsing data!";
@@ -90,21 +71,20 @@ void CreatePreviewTask::run()
     KPMetadata metaOut(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
     double scalingFactor = ((double) metaOut.getPixelSize().width()) / ((double) metaIn.getPixelSize().width());
 
-    data->project.fileFormat.fileType = PTOType::Project::FileFormat::JPEG;
-    data->project.fileFormat.quality = 90;
-    data->project.size.setHeight(data->project.size.height() * scalingFactor);
-    data->project.size.setWidth(data->project.size.width() * scalingFactor);
-    data->project.crop = QRect();
-    for (int imageId = 0; imageId < data->images.size(); imageId++)
+    data.project.fileFormat.fileType = PTOType::Project::FileFormat::JPEG;
+    data.project.fileFormat.quality = 90;
+    data.project.size.setHeight(data.project.size.height() * scalingFactor);
+    data.project.size.setWidth(data.project.size.width() * scalingFactor);
+    data.project.crop = QRect();
+    for (int imageId = 0; imageId < data.images.size(); imageId++)
     {
-        PTOType::Image& image = data->images[imageId];
+        PTOType::Image& image = data.images[imageId];
         KUrl imgUrl(KUrl(tmpDir), image.fileName);
         ItemUrlsMap::const_iterator it;
         const ItemUrlsMap *ppum = &preProcessedUrlsMap;
         for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl != imgUrl; ++it);
         if (it == ppum->constEnd())
         {
-            delete data;
             errString = i18n("Unknown input file in the project file: %1", image.fileName);
             kDebug() << "Unknown input File in the PTO: " << image.fileName;
             kDebug() << "IMG: " << imgUrl.toLocalFile();
@@ -119,18 +99,16 @@ void CreatePreviewTask::run()
     }
 
     // Remove unncessary stuff
-    data->controlPoints.clear();
+    data.controlPoints.clear();
 
     // Add two commented line for a JPEG output
-    data->lastComments.clear();
-    data->lastComments << "#hugin_outputImageType jpg";
-    data->lastComments << "#hugin_outputJPEGQuality 90";
+    data.lastComments.clear();
+    data.lastComments << "#hugin_outputImageType jpg";
+    data.lastComments << "#hugin_outputJPEGQuality 90";
 
     (*previewPtoUrl) = tmpDir;
     previewPtoUrl->setFileName("preview.pto");
-    data->createFile(previewPtoUrl->toLocalFile());
-
-    delete data;
+    data.createFile(previewPtoUrl->toLocalFile());
 
     kDebug() << "Preview PTO File created: " << previewPtoUrl->fileName();
 

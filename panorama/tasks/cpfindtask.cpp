@@ -92,7 +92,7 @@ void CpFindTask::run()
     {
         successFlag = true;
     }
-    kDebug() << getProcessError(*process);
+    kDebug() << "CPFind's output:" << endl << process->readAll();
 
     delete process;
     process = 0;

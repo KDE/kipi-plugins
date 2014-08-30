@@ -69,7 +69,7 @@ KPBinaryIface::~KPBinaryIface()
 {
 }
 
-QString KPBinaryIface::version() const
+const QString& KPBinaryIface::version() const
 {
     return m_version;
 }

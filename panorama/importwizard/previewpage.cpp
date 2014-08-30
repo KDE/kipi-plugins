@@ -178,7 +178,7 @@ void PreviewPage::computePreview()
     d->mngr->resetPreviewPto();
     d->mngr->resetPreviewUrl();
     d->mngr->resetPreviewMkUrl();
-    d->mngr->thread()->generatePanoramaPreview(d->mngr->viewAndCropOptimisePtoUrl(),
+    d->mngr->thread()->generatePanoramaPreview(d->mngr->viewAndCropOptimisePtoData(),
                                                d->mngr->previewPtoUrl(),
                                                d->mngr->previewMkUrl(),
                                                d->mngr->previewUrl(),

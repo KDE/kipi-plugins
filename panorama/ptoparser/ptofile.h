@@ -41,7 +41,7 @@ class PTOFile
 {
 
 public:
-    PTOFile();
+    PTOFile(const QString& huginVersion);
     ~PTOFile();
 
     bool        openFile(const QString& path);

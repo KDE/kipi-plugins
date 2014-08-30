@@ -227,7 +227,7 @@ COMMA    [,]
     yy_pop_state();
 }
 
-Tr[XYZ]|Eev|E[rb]|V[mfabcdxy]|R[abcde] {
+Tr[XYZ]|Eev|E[rb]|V[mfabcdxy]|R[abcde]|Tp[yp] {
     DEBUG_2("An identifier for a variable: %s", yytext);
     panoScriptScannerTokenBegin(yytext);
     strncpy(yylval.strVal, yytext, PT_TOKEN_MAX_LEN);

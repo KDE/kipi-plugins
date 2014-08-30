@@ -66,7 +66,7 @@ public:
     virtual ~KPBinaryIface();
 
     bool                isFound()               const { return m_isFound;                       }
-    QString             version()               const;
+    const QString&      version()               const;
     bool                versionIsRight()        const;
     inline bool         isValid()               const { return (m_isFound && versionIsRight()); }
     inline bool         developmentVersion()    const { return m_developmentVersion;            }

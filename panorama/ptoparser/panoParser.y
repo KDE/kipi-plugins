@@ -163,7 +163,7 @@ realline: inputline eoln
         if (curImageComments == NULL) {
             /* In that case, script.iImage_prevCommentsCount and script.image_prevComments are not coherent */
             /* Resizing to remove the element just introduced */
-            script.iImage_prevCommentsCount = realloc(script.iImage_prevCommentsCount, prevNbImages * sizeof(char**));
+            script.iImage_prevCommentsCount = (int*) realloc((void*) script.iImage_prevCommentsCount, prevNbImages * sizeof(char**));
             yyerror("Not enough memory");
             return -1;
         }
@@ -201,7 +201,7 @@ realline: inputline eoln
         if (curVarComments == NULL) {
             /* In that case, script.iVarsToOptimize_prevCommentsCount and script.varsToOptimize_prevComments are not coherent */
             /* Resizing to remove the element just introduced */
-            script.iVarsToOptimize_prevCommentsCount = realloc(script.iVarsToOptimize_prevCommentsCount, prevNbVars * sizeof(char**));
+            script.iVarsToOptimize_prevCommentsCount = (int*) realloc((void*) script.iVarsToOptimize_prevCommentsCount, prevNbVars * sizeof(char**));
             yyerror("Not enough memory");
             return -1;
         }
@@ -230,7 +230,7 @@ realline: inputline eoln
         if (curCPComments == NULL) {
             /* In that case, script.iCtrlPoints_prevCommentsCount and script.ctrlPoints_prevComments are not coherent */
             /* Resizing to remove the element just introduced */
-            script.iCtrlPoints_prevCommentsCount = realloc(script.iCtrlPoints_prevCommentsCount, prevNbCP * sizeof(char**));
+            script.iCtrlPoints_prevCommentsCount = (int*) realloc((void*) script.iCtrlPoints_prevCommentsCount, prevNbCP * sizeof(char**));
             yyerror("Not enough memory");
             return -1;
         }
@@ -258,7 +258,7 @@ realline: inputline eoln
         if (curMaskComments == NULL) {
             /* In that case, script.iMasks_prevCommentsCount and script.masks_prevComments are not coherent */
             /* Resizing to remove the element just introduced */
-            script.iMasks_prevCommentsCount = realloc(script.iMasks_prevCommentsCount, prevNbMasks * sizeof(char**));
+            script.iMasks_prevCommentsCount = (int*) realloc((void*) script.iMasks_prevCommentsCount, prevNbMasks * sizeof(char**));
             yyerror("Not enough memory");
             return -1;
         }
@@ -1017,17 +1017,30 @@ varparameter: PT_TOKEN_KEYWORD PT_TOKEN_STRING
         }
         case 'T':
         {
-            if (*(keyword + 1) != 'r' || *(keyword + 3) != '\0') {
-                panoScriptParserError("Invalid variable name [%s]\n", keyword);
-                return -1;
-            }
-            switch (*(keyword + 2)) {
-            case 'X':
-            case 'Y':
-            case 'Z':
-                image->translationCoef[*(keyword + 2) - 'X'] = $2;
-                break;
-            default:
+            if (*(keyword + 1) == 'r' && *(keyword + 3) == '\0') {
+                switch (*(keyword + 2)) {
+                case 'X':
+                case 'Y':
+                case 'Z':
+                    image->cameraPosition[*(keyword + 2) - 'X'] = $2;
+                    break;
+                default:
+                    panoScriptParserError("Invalid variable name [%s]\n", keyword);
+                    return -1;
+                }
+            } else if (*(keyword + 1) == 'p' && *(keyword + 3) == '\0') {
+                switch (*(keyword + 2)) {
+                case 'y':
+                    image->projectionPlaneRotation[0] = $2;
+                    break;
+                case 'p':
+                    image->projectionPlaneRotation[1] = $2;
+                    break;
+                default:
+                    panoScriptParserError("Invalid variable name [%s]\n", keyword);
+                    return -1;
+                }
+            } else {
                 panoScriptParserError("Invalid variable name [%s]\n", keyword);
                 return -1;
             }

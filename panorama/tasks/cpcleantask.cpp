@@ -96,12 +96,6 @@ void CpCleanTask::run()
     delete process;
     process = 0;
 
-    PTOFile f;
-    if (successFlag && !f.openFile(cpCleanPtoUrl->toLocalFile()))
-    {
-        kDebug() << "Parse Failed!!";
-    }
-
     return;
 }
 

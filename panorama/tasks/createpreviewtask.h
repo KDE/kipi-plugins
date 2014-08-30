@@ -30,6 +30,7 @@
 // Local includes
 
 #include "task.h"
+#include "ptotype/ptotype.h"
 
 using namespace KDcrawIface;
 
@@ -42,14 +43,14 @@ class CreatePreviewTask : public Task
 private:
 
     KUrl* const                         previewPtoUrl;
-    const KUrl                          ptoUrl;
+    const PTOType&                      ptoData;
     const ItemUrlsMap                   preProcessedUrlsMap;
 
 public:
 
-    CreatePreviewTask(QObject* parent, const KUrl& workDir, const KUrl& input,
+    CreatePreviewTask(QObject* parent, const KUrl& workDir, const PTOType& inputPTO, 
                       KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap);
-    CreatePreviewTask(const KUrl& workDir, const KUrl& input,
+    CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO, 
                       KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap);
     ~CreatePreviewTask();
 

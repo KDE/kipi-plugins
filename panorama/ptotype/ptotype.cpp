@@ -160,9 +160,13 @@ bool PTOType::createFile(const QString& filepath)
         out << " r" << image.roll;
         out << " p" << image.pitch;
         out << " y" << image.yaw;
-        out << " TrX" << image.mosaicModeOffsetX;
-        out << " TrY" << image.mosaicModeOffsetY;
-        out << " TrZ" << image.mosaicModeOffsetZ;
+        out << " TrX" << image.mosaicCameraPositionX;
+        out << " TrY" << image.mosaicCameraPositionY;
+        out << " TrZ" << image.mosaicCameraPositionZ;
+        if (version == V2014) {
+            out << " Tpy" << image.mosaicProjectionPlaneYaw;
+            out << " Tpp" << image.mosaicProjectionPlanePitch;
+        }
         out << " j" << image.stackNumber;
         out << " a" << image.lensBarrelCoefficientA;
         out << " b" << image.lensBarrelCoefficientB;

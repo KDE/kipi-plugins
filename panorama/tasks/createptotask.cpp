@@ -43,16 +43,18 @@ namespace KIPIPanoramaPlugin
 
 CreatePtoTask::CreatePtoTask(QObject* parent, const KUrl& workDir, PanoramaFileType fileType,
                              KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
-                             bool addGPlusMetadata)
+                             bool addGPlusMetadata, const QString& huginVersion)
     : Task(parent, CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
-      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles), addGPlusMetadata(addGPlusMetadata)
+      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles),
+      addGPlusMetadata(addGPlusMetadata), huginVersion(huginVersion)
 {}
 
 CreatePtoTask::CreatePtoTask(const KUrl& workDir, PanoramaFileType fileType,
                              KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
-                             bool addGPlusMetadata)
+                             bool addGPlusMetadata, const QString& huginVersion)
     : Task(0, CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
-      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles), addGPlusMetadata(addGPlusMetadata)
+      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles),
+      addGPlusMetadata(addGPlusMetadata), huginVersion(huginVersion)
 {}
 
 CreatePtoTask::~CreatePtoTask()
@@ -78,7 +80,7 @@ void CreatePtoTask::run()
     }
 
     // 1. Project parameters
-    PTOType panoBase;
+    PTOType panoBase(huginVersion);
     if (addGPlusMetadata)
     {
         panoBase.project.projection = PTOType::Project::EQUIRECTANGULAR;

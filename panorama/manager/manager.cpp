@@ -263,12 +263,12 @@ const PTOType& Manager::basePtoData()
 {
     if (d->basePtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->basePtoUrl.toLocalFile());
         d->basePtoData = file.getPTO();
 
         if (d->basePtoData == 0)
-            d->basePtoData = new PTOType();
+            d->basePtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->basePtoData);
@@ -298,12 +298,12 @@ const PTOType& Manager::cpFindPtoData()
 {
     if (d->cpFindPtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->cpFindPtoUrl.toLocalFile());
         d->cpFindPtoData = file.getPTO();
 
         if (d->cpFindPtoData == 0)
-            d->cpFindPtoData = new PTOType();
+            d->cpFindPtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->cpFindPtoData);
@@ -333,12 +333,12 @@ const PTOType& Manager::cpCleanPtoData()
 {
     if (d->cpCleanPtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->cpCleanPtoUrl.toLocalFile());
         d->cpCleanPtoData = file.getPTO();
 
         if (d->cpCleanPtoData == 0)
-            d->cpCleanPtoData = new PTOType();
+            d->cpCleanPtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->cpCleanPtoData);
@@ -368,12 +368,12 @@ const PTOType& Manager::autoOptimisePtoData()
 {
     if (d->autoOptimisePtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->autoOptimisePtoUrl.toLocalFile());
         d->autoOptimisePtoData = file.getPTO();
 
         if (d->autoOptimisePtoData == 0)
-            d->autoOptimisePtoData = new PTOType();
+            d->autoOptimisePtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->autoOptimisePtoData);
@@ -402,12 +402,12 @@ const PTOType& Manager::viewAndCropOptimisePtoData()
 {
     if (d->viewAndCropOptimisePtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->viewAndCropOptimisePtoUrl.toLocalFile());
         d->viewAndCropOptimisePtoData = file.getPTO();
 
         if (d->viewAndCropOptimisePtoData == 0)
-            d->viewAndCropOptimisePtoData = new PTOType();
+            d->viewAndCropOptimisePtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->viewAndCropOptimisePtoData);
@@ -437,12 +437,12 @@ const PTOType& Manager::previewPtoData()
 {
     if (d->previewPtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->previewPtoUrl.toLocalFile());
         d->previewPtoData = file.getPTO();
 
         if (d->previewPtoData == 0)
-            d->previewPtoData = new PTOType();
+            d->previewPtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->previewPtoData);
@@ -471,12 +471,12 @@ const PTOType& Manager::panoPtoData()
 {
     if (d->panoPtoData == 0)
     {
-        PTOFile file;
+        PTOFile file(cpFindBinary().version());
         file.openFile(d->panoPtoUrl.toLocalFile());
         d->panoPtoData = file.getPTO();
 
         if (d->panoPtoData == 0)
-            d->panoPtoData = new PTOType();
+            d->panoPtoData = new PTOType(cpFindBinary().version());
     }
 
     return *(d->panoPtoData);

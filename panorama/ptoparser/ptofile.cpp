@@ -50,13 +50,16 @@ namespace KIPIPanoramaPlugin
 {
 
 struct PTOFile::PTOFilePriv {
-    pt_script* script;
+    pt_script*      script;
+    const QString&  huginVersion;
+
+    PTOFilePriv(const QString& huginVersion)
+        : script(NULL), huginVersion(huginVersion) {}
 };
 
-PTOFile::PTOFile()
+PTOFile::PTOFile(const QString& huginVersion)
 {
-    d = new PTOFilePriv();
-    d->script = NULL;
+    d = new PTOFilePriv(huginVersion);
 }
 
 PTOFile::~PTOFile()
@@ -98,7 +101,7 @@ PTOType* PTOFile::getPTO()
         return NULL;
     }
 
-    PTOType* out = new PTOType();
+    PTOType* out = new PTOType(d->huginVersion);
 
     // Project data conversion
     for (int c = 0; c < panoScriptGetPanoPrevCommentsCount(d->script); c++)
@@ -316,9 +319,11 @@ PTOType* PTOFile::getPTO()
         } else {
             image.photometricEMoRE.referenceId = tmpRef;
         }
-        image.mosaicModeOffsetX = panoScriptGetImageTranslationX(d->script, i);
-        image.mosaicModeOffsetY = panoScriptGetImageTranslationY(d->script, i);
-        image.mosaicModeOffsetZ = panoScriptGetImageTranslationZ(d->script, i);
+        image.mosaicCameraPositionX         = panoScriptGetImageCameraTranslationX(d->script, i);
+        image.mosaicCameraPositionY         = panoScriptGetImageCameraTranslationY(d->script, i);
+        image.mosaicCameraPositionZ         = panoScriptGetImageCameraTranslationZ(d->script, i);
+        image.mosaicProjectionPlaneYaw      = panoScriptGetImageProjectionPlaneYaw(d->script, i);
+        image.mosaicProjectionPlanePitch    = panoScriptGetImageProjectionPlanePitch(d->script, i);
         image.crop.setLeft(panoScriptGetImageCropLeft(d->script, i));
         image.crop.setRight(panoScriptGetImageCropRight(d->script, i));
         image.crop.setTop(panoScriptGetImageCropTop(d->script, i));

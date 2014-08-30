@@ -46,15 +46,16 @@ private:
     const PanoramaFileType              fileType;
     const KUrl::List* const             inputFiles;
     const bool                          addGPlusMetadata;
+    const QString&                      huginVersion;
 
 public:
 
     CreatePtoTask(QObject* parent, const KUrl& workDir, KIPIPanoramaPlugin::PanoramaFileType fileType,
                   KUrl& ptoUrl, const KUrl::List& inputFiles, const KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
-                  bool addGPlusMetadata);
+                  bool addGPlusMetadata, const QString& huginVersion);
     CreatePtoTask(const KUrl& workDir, KIPIPanoramaPlugin::PanoramaFileType fileType,
                   KUrl& ptoUrl, const KUrl::List& inputFiles, const KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
-                  bool addGPlusMetadata);
+                  bool addGPlusMetadata, const QString& huginVersion);
     ~CreatePtoTask();
 
 protected:
