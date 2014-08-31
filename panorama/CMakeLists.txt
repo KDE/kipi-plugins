@@ -95,7 +95,7 @@ IF(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
     KDE4_ADD_EXECUTABLE(pto_parser_test ${pto_parser_test_SRCS})
 
     TARGET_LINK_LIBRARIES(pto_parser_test libpanorama)
-ENDIF(CMAKE_BUILD_TYPE MATCHES 'Debug')
+ENDIF(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
 
 # =======================================================
 # Stand alone version of Panorama plugin
