@@ -61,7 +61,7 @@ K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleDrive>(); )
 K_EXPORT_PLUGIN(GoogleDriveFactory("kipiplugin_googledrive"))
 
 Plugin_GoogleDrive::Plugin_GoogleDrive(QObject* const parent,const QVariantList& /*args*/)
-    : Plugin(GoogleDriveFactory::componentData(),parent,"GoogleDrive Export")
+    : Plugin(GoogleDriveFactory::componentData(), parent, "Google Drive Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive Plugin Loaded";
 

@@ -1,5 +1,5 @@
 [Desktop Entry]
-UntranslatedGenericName=GoogleDrive Export
+UntranslatedGenericName=Google Drive Export
 Name=Google Drive Export
 Name[bs]=Google Drive izvoz
 Name[ca]=Exportador a Google Drive
@@ -58,4 +58,4 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_googledrive
 X-KIPI-PluginCategories=Export
 X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
-author=Saurabh Patel, saurabhpatel7717@gmail.com
+author=Saurabh Patel, saurabhpatel7717 at gmail dot com
