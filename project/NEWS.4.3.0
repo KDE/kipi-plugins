@@ -1,0 +1,14 @@
+Kipi-plugins 4.3.0 - Release date: 2014/09/07
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+ExpoBlending: remove OPenMP dependency. Ported to QtConcurrentRun.
+Panorama:     support next hugin version (2014.0).
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 338037 - digiKam 4.2.0 compilation error: undefined reference to `cvFillImage'.
+002 ==> 335250 - Proposed minor fixes to MediaWiki plugin [patch].
+003 ==> 338871 - Selection of KIPI plugins is set to default after each restart of digiKam.
+004 ==> 336667 - "Google Drive Export" ignoring digikamrc setting.
