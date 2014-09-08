@@ -96,4 +96,4 @@ X-KDE-Library=kipiplugin_printimages
 X-KIPI-MergeMenu=true
 X-KIPI-PluginCategories=Image
 X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
-author=Angelo Naselli, anaselli@linux.it
+author=Angelo Naselli, anaselli at linux dot it

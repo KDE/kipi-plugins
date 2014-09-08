@@ -1,5 +1,5 @@
 [Desktop Entry]
-Comment=A plugin to create KML files to present images with coordinates.
+Comment=A tool to create KML files with geolocated images
 Comment[bg]=Приставка за създаване на KML-файлове, представящи изображенията с координати.
 Comment[bs]=Dodatak za kreiranje KML za predstavljanje slika s koordinatama.
 Comment[ca]=Un connector per crear fitxers KML per presentar imatges amb coordenades.
@@ -28,7 +28,7 @@ Comment[sl]=Vstavek za ustvarjanje datotek KML, ki predstavijo sliko s koordinat
 Comment[sv]=Ett insticksprogram för att skapa KML-filer som visar bilder med koordinater.
 Comment[tr]=Resimleri koordinatlarla sunmak üzere KML dosyaları oluşturmak için bir eklenti
 Comment[uk]=Додаток для створення файлів KML для показу зображення з координатами.
-Comment[x-test]=xxA plugin to create KML files to present images with coordinates.xx
+Comment[x-test]=xxA tool to create KML files with geolocated imagesxx
 Comment[zh_TW]=建立 KML 檔來將影像展示在座標軸上的外掛程式。
 Icon=applications-development-web
 UntranslatedGenericName=KMLExport

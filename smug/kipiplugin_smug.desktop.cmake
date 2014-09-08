@@ -90,4 +90,4 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_smug
 X-KIPI-PluginCategories=Export,Import
 X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
-author=Luka Renko, lure@kubuntu.org
+author=Luka Renko, lure at kubuntu dot org

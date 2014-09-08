@@ -70,6 +70,6 @@ Type=Service
 Icon=document-export
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_yandexfotki
-author=Roman Tsisyk, roman@tsisyk.com
+author=Roman Tsisyk, roman at tsisyk dot com
 X-KIPI-PluginCategories=Export
 X-KIPI-BinaryVersion=${KIPI_SO_VERSION}

@@ -93,4 +93,4 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_picasawebexport
 X-KIPI-PluginCategories=Export,Import
 X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
-author=Vardhman Jain, vardhman@gmail.com
+author=Vardhman Jain, vardhman at gmail dot com
