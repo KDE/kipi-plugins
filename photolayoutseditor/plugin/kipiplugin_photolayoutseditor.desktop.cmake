@@ -32,6 +32,7 @@ Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器
 Comment=A tool to make photo layouts
 Comment[ca]=Una eina per crear presentacions de les fotos
+Comment[cs]=Nástroj pro vytváření rozvržení snímků
 Comment[nl]=Een hulpmiddel voor het maken van foto-indelingen
 Comment[pt]=Uma ferramenta para criar disposições de fotografias
 Comment[sv]=Ett verktyg för skapa fotolayouter
