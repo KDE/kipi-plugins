@@ -46,6 +46,7 @@ Name[zh_TW]=批次處理影像
 Comment=A tool to batch process images
 Comment[ca]=Una eina per a processar imatges per lots
 Comment[cs]=Nástroj pro dávkové zpracování obrázků
+Comment[en_GB]=A tool to batch process images
 Comment[nl]=Een hulpmiddel voor het bewerken van afbeeldingen in bulk
 Comment[pt]=Uma ferramenta para processar imagens em lote
 Comment[sv]=Ett verktyg för att behandla bilder i bakgrunden
