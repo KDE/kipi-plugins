@@ -225,7 +225,7 @@ To make a backtrace with GDB use following command:
 > _the backtrace is here_
 > quit
 
-Post this backtrace at the right place (B.K.O or devel ML) for investigations by developers.
+Post this backtrace at the right place (KDE Bugzilla or developement mailing list) for investigations by developers.
 
 For windows users take a look on this tutorial:
 

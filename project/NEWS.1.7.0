@@ -6,7 +6,7 @@ NEW FEATURES:
 General : New plugin to export images to Debian Screenshoots web service (http://screenshots.debian.net).
 General : New plugin to export images to an instant messaging contact.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 225174 : Facebook           : Support new permission API for applications.
 002 ==> 254110 : Facebook           : Unable to upload photos to a selected album.

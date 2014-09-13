@@ -8,7 +8,7 @@ HTMLExport      : Show screenshot alongside theme description.
 PiwigoExport    : New tool to export images to Piwigo server (aka PhpWebGallery).
 HTMLExport      : Get metadata from image files and new detailed theme.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 225001 : GPSSync         : Google map is empty.
 002 ==> 225162 : PicasaWebExport : Picasaweb export no progress bar.

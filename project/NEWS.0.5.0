@@ -8,7 +8,7 @@ DNGConverter : Update internal XMP sdk from Adobe to version 4.4.
 PrintImages  : Added multiple pages printing.
 PrintWizard  : Page layout into template.xml file, custom templates can be added now.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> PrintWizard  : 162085 : digiKam freezes while printing.
 002 ==> HtmlExport   : 196890 : "Next" button on first wizard page is initially disabled.

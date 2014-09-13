@@ -28,7 +28,7 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
    )
 
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 FOREACH(_currentfile ${expoblending_common_SRCS})
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")

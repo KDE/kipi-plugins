@@ -9,7 +9,7 @@ MediaWiki      : New tool to export collection to MediaWiki based web service (h
 RajceExport    : New tool to export collection to Rajce web service (http://www.rajce.idnes.cz).
 MetadataEdit   : Factoring Exif/Iptc/Xmp editor to a common dialog.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 150981 : Usage of ws.geonames.org to associate place names with coordinates.
 002 ==> 185143 : Track List Editor: Make images in the List selectable.

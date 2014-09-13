@@ -6,7 +6,7 @@ NEW FEATURES:
 New tool to export collection to VKontakte web service (http://www.vkontakte.ru).
 New tool to stitch photos as panorama.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 270419 : digiKam's plugin Kipi can't import my photo from facebook.
 002 ==> 279078 : kipi plugin Yandex.Fotki causes digikam crash.

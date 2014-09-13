@@ -3,7 +3,7 @@ Kipi-plugins 4.2.0 - Release date: 2014/08/03
 
 NEW FEATURES:
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 313203 - kipi metadata editor doesn't recognize contact info written with digikam 2.6 and higher [patch].
 002 ==> 334089 - VideoSlideshow plugin port to QtGStreamer 1 (1.0-proposed) needed [patch].

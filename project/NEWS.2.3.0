@@ -8,7 +8,7 @@ FlashExport    : New interface for plugin: now  a wizard will guide you through 
                : Posibility to always return and select a different plugin on first page(previous version requested restarting plugin)
                : Different options and exporting settings for every plugin
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 283509 : Crash on final step of stiching large panorama.
 002 ==> 283321 : Photolayoutseditor crashes on exit.

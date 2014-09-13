@@ -5,7 +5,7 @@ NEW FEATURES:
 
 General : Fix compilation under Mac OS-X through MacPorts project.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> RedEyesRemoval  : 236385 : digiKam and Gwenview crash on red eye removing.
 002 ==> PrintWizzard    : 254103 : "previous photo" and "next page" in the same context.

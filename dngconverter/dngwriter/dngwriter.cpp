@@ -1301,7 +1301,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
         // Metadata makernote cleanup using Exiv2 for some RAW file types
-        // See B.K.O #204437 and #210371, and write XMP Sidecar if necessary
+        // See bug #204437 and #210371, and write XMP Sidecar if necessary
 
         if (meta.load(dngFilePath))
         {

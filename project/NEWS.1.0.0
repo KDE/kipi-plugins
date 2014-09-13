@@ -1,7 +1,7 @@
 Kipi-plugins 1.0.0 - Release date: 21/12/2009
 ------------------------------------------------------------------------
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> GPSSync         : 199189 : GPS correlator does not allow offset in seconds.
 002 ==> GPSSync         : 165277 : Last gpx directory isn't remembered.

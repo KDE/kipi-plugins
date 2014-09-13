@@ -6,7 +6,7 @@ NEW FEATURES:
 FacebookExport : add new option to create private album.
 JAlbumExport   : New too to export items to JAblum (http://www.jalbum.net)
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 316620 - HtmlExport doesn't build.
 002 ==> 304771 - Can't create private albums w/ digiKam [patch].

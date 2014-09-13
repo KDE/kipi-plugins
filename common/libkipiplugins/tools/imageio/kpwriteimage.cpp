@@ -170,7 +170,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     cinfo.in_color_space   = JCS_RGB;
     jpeg_set_defaults(&cinfo);
 
-    // B.K.O #149578: set encoder horizontal and vertical chroma subsampling
+    // bug #149578: set encoder horizontal and vertical chroma subsampling
     // factor to 2x1, 1x1, 1x1 (4:2:2) : Medium subsampling.
     // See this page for details: http://en.wikipedia.org/wiki/Chroma_subsampling
     cinfo.comp_info[0].h_samp_factor = 2;
@@ -180,7 +180,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     cinfo.comp_info[2].h_samp_factor = 1;
     cinfo.comp_info[2].v_samp_factor = 1;
 
-    // B.K.O #154273: use 99 compression level instead 100 to reduce output JPEG file size.
+    // bug #154273: use 99 compression level instead 100 to reduce output JPEG file size.
     jpeg_set_quality(&cinfo, 99, true);
     jpeg_start_compress(&cinfo, true);
 

@@ -5,7 +5,7 @@ NEW FEATURES:
 
 General                 : Fix compilation under windows with TDM-GCC and MSVC compilers.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> FlickrExport    : 218169 : Less/More options buttons don't change label.
 002 ==> DngConverter    : 249785 : DNG Converter adds 1 hour to timestamp of Sony .arw files.

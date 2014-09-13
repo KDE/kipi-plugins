@@ -410,7 +410,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
 
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
-    // or unavailable(see file #121242 in B.K.O).
+    // or unavailable(see file #121242 in bug).
     patternList.append(i18n("\n%1|Camera RAW files", QString(KDcraw::rawFiles())));
 
     d->fileFormats = patternList.join("\n");

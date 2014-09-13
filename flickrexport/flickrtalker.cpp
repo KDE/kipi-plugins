@@ -646,7 +646,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         {
             meta.setImageDimensions(image.size());
 
-            // NOTE: see B.K.O #153207: Flickr use IPTC keywords to create Tags in web interface
+            // NOTE: see bug #153207: Flickr use IPTC keywords to create Tags in web interface
             //       As IPTC do not support UTF-8, we need to remove it.
             meta.removeIptcTag("Iptc.Application2.Keywords", false);
 

@@ -9,7 +9,7 @@ General  : Port all plugins to KDE XML-GUI framework.
 Panorama : New parser using GNU Flex and GNU Bison instead of Boost::spirit
 Panorama : Manual cropping of the final result
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 305224 - Configure Shortcuts does not provide the option of config.
 002 ==> 306193 - Desktop-file-validate fails on kipiplugins.desktop.

@@ -6,7 +6,7 @@ NEW FEATURES:
 GalleryExport : Raw images can be uploaded directly to remote server.
 DNGConverter  : Fix compilation under MacOS-X.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> DNGConverter       : 192289 : Using dots (.) as separators confuses the rename system.
 002 ==> FlashExport        : 192165 : digiKam flash export plugin does not auto-rotate portrait images.

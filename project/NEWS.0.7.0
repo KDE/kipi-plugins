@@ -7,7 +7,7 @@ FlickrExport : Plugin is now able to export to Zooomr web service (www.zooomr.co
 FlickrExport : User can set photo visibility one by one if necessary (public, friends, family).
 TimeAdjust   : A dedicated photo time-stamp can be used to adjust difference of camera clock.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> BatchProcessImages : 205603 : Crash on finishing Batch Unsharp mask.
 002 ==> HTMLExport         : 199533 : Enable dateframes theme in kipi-plugins [patch].

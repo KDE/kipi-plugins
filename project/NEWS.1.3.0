@@ -11,7 +11,7 @@ DNGConverter              : Update Adobe DNG sdk to 1.3.0.
                             Support Fuji-sensors (experimental).
 SmugExport                : Support export of Captions.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> PrintWizard       : 232382 : Setting custom page size is impossible.
 002 ==> Libkdcraw         : 221542 : Build fails due to ambiguities.

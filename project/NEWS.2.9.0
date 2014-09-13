@@ -3,7 +3,7 @@ Kipi-plugins 2.9.0 - Release date: 2012/09/02
 
 NEW FEATURES:
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 304644 : OpenGL Image Viewer displays no image with multiple monitor setup.
 002 ==> 183100 : Slideshow time: configure on toolbar button.

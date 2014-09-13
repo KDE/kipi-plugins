@@ -3,7 +3,7 @@ Kipi-plugins 4.1.0 - Release date: 2014/06/22
 
 NEW FEATURES:
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 323378 - digiKam crash when try to export to facebook.
 002 ==> 330684 - Advanced Slideshow in Gwenview.

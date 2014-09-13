@@ -22,7 +22,7 @@ IF(WIN32)
                     -DWIN_ENV=1
                    )
 ELSE(WIN32)
-#    NOTE: see B.K.O #195735: do not enable Mac flags provided by Adobe.
+#    NOTE: see bug #195735: do not enable Mac flags provided by Adobe.
 #          Sound like all compile fine like under Linux.
 #    IF(APPLE)
 #        ADD_DEFINITIONS(
@@ -39,7 +39,7 @@ ENDIF(WIN32)
 
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 FOREACH(_currentfile ${libmd5_SRCS})
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
@@ -68,7 +68,7 @@ SET(libxmp_SRCS
    )
 
 # Disable XMP SDK warnings: we will never touch this code.
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 FOREACH(_currentfile ${libxmp_SRCS})
     IF(MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
@@ -94,7 +94,7 @@ IF(WIN32)
                     -DqMacOS=0
                    )
 ELSE(WIN32)
-#    NOTE: see B.K.O #195735: do not enable Mac flags provided by Adobe.
+#    NOTE: see bug #195735: do not enable Mac flags provided by Adobe.
 #          Sound like all compile fine like under Linux.
 #    IF(APPLE)
 #        ADD_DEFINITIONS(
@@ -196,7 +196,7 @@ SET(libdng_SRCS
    )
 
 # Disable DNG SDK warnings: we will never touch this code.
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 FOREACH(_currentfile ${libdng_SRCS})
     IF(MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")

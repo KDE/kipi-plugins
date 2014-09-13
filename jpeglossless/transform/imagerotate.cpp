@@ -119,7 +119,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
     }
     else
     {
-        // B.K.O #123499 : we using Image Magick API here instead QT API 
+        // bug #123499 : we using Image Magick API here instead QT API 
         // else TIFF/PNG 16 bits image are broken!
         if (!rotateImageMagick(src, tmp, angle, err))
             return false;

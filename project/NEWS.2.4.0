@@ -4,7 +4,7 @@ Kipi-plugins 2.4.0 - Release date: 2011/12/04
 NEW FEATURES:
 
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 260649 : digiKam crashed rotate photo.
 002 ==> 285941 : digiKam crashes when launching batch proccessing tool.

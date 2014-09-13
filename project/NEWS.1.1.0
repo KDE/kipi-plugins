@@ -7,7 +7,7 @@ ExpoBlending              : New tool to make pseudo HDR image with a stack of br
 PrintAssistant            : New custom grid layout
 PrintAssistant            : Filling page with custom size images
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> ExpoBlending      : 144593 : New High Dynamic Range (HDR) plugin.
 002 ==> GalleyExport      : 219998 : Export to Gallery plugin crashes when adding files.

@@ -12,7 +12,7 @@ PrintAssistant  : Icon preview for photo size choice.
 PrintAssistant  : Caption per photo management.
 PrintAssistant  : Added new templates for passport photos (6 photos 3.5x4cm and 4 photos 4.5x5cm).
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> KioExport          : 187291 : FTP KIPI plugin for uploading a selection of images.
 002 ==> KioExport          : 098279 : Exporting photos organised in tags into external directories.

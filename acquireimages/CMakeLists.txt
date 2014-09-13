@@ -8,7 +8,7 @@ SET(acquireimages_common_SRCS
     saveimgthread.cpp
    )
 
-# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #270593)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #270593)
 FOREACH(_currentfile ${acquireimages_common_SRCS})
    IF(NOT MSVC)
        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")

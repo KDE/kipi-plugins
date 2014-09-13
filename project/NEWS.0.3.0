@@ -8,7 +8,7 @@ PicasaWebExport : Support protected albums (sign-in required to view).
 PrintImages     : Added per photo print management.
 PrintImages     : Added Atkins page layout printing.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 186981 : FlickrExport       : Flickr on plasma crashes on "next photo".
 002 ==> 187512 : PicasaWebExport    : Album list does not show proper titles.

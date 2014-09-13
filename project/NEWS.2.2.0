@@ -6,7 +6,7 @@ NEW FEATURES:
 Add image title support metadata provided by kipi host application.
 Add a new tool to assemble images together.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 199317 : Support title/description as Facebook Photo Caption [patch].
 002 ==> 221195 : Comment sets Title does not set photo title in gallery export.

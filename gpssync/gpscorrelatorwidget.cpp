@@ -229,7 +229,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     d->timeZoneCB->addItem("GMT+03:30");
     d->timeZoneCB->addItem("GMT+04:00");
     d->timeZoneCB->addItem("GMT+05:00");
-    d->timeZoneCB->addItem("GMT+05:30");    // See B.K.O # 149491
+    d->timeZoneCB->addItem("GMT+05:30");    // See bug # 149491
     d->timeZoneCB->addItem("GMT+05:45");
     d->timeZoneCB->addItem("GMT+06:00");
     d->timeZoneCB->addItem("GMT+06:30");

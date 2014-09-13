@@ -9,7 +9,7 @@ FlickrExport   : Add support for 23hq.com service which uses Flickr API
 PrintImages    : New plugin that allow to choose old print assistant
                  or to print all the selected photos directly
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 184312 : General            : Use SmoothTransform for scaling images for export, calendar and slideshow
 002 ==> 140438 : General            : 3 different viewers for diferents needs.
@@ -32,7 +32,7 @@ NEW FEATURES:
 General        : All import/export plugins now have keyboard shortcuts
 Facebook       : Facebook plugin now support also import (download) of photos
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 175928 : GalleryExport      : digiKam crashing when trying to export to gallery2 web service.
 002 ==> 181694 : MetadataEdit       : Edit caption should present current caption for easier modification.
@@ -50,7 +50,7 @@ NEW FEATURES:
 General        : Plugins now use metadata settings shared with kipi host application.
 Smug           : Import (download) of images from SmugMug web service.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 179439 : JPEGLossLess       : Rotation or flip do not update internal thumbnail.
 002 ==> 180245 : TimeAdjust         : Timeadjust is not building on mac os x leopard.
@@ -65,7 +65,7 @@ FbExport       : New plugin to export images to a remote Facebook web service (h
 FlickrExport   : Add support of Photosets.
 SmugExport     : Add support for Album Templates
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 177999 : General            : Kipi-plugins Shortcuts are not listed in the shortcuts editor from Kipi host application.
 002 ==> 160236 : JPEGLossLess       : Image Magick convert operations return with errors.
@@ -85,7 +85,7 @@ NEW FEATURES:
 RemoveRedEyes  : Added an option to preview the correction of the currently selected image.
 SmugExport     : New plugin to export images to a remote SmugMug web service (http://www.smugmug.com)
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 169637 : MetadataEdit       : EXIF Data Editing Error.
 002 ==> 174954 : HTMLExport         : Support for remote urls.
@@ -115,7 +115,7 @@ SlideShow      : New effect "Mosaic"
 PrintWizard    : Ported to QT4/KDE4
 PrintWizard    : Added a new option to skip cropping, the image is scaled automatically.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 172910 : GalleryExport      : Gallery crash (letting crash digiKam) with valid data and url.
 002 ==> 161855 : GalleryExport      : Remote Gallery Sync loses password.
@@ -130,7 +130,7 @@ NEW FEATURES:
 
 General        : all plugins can be compiled natively under Microsoft Windows.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 172283 : SlideShow          : SlideShow crashes host application 
 002 ==> 172337 : SlideShow          : Slideshow enhancements by ken-burns effects.
@@ -144,7 +144,7 @@ NEW FEATURES:
 DNGConverter   : New plugin to convert RAW camera image to Digital NeGative (DNG)
 SlideShow      : Now you can play your favourite music during slideshow.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 150076 : SlideShow          : Playing music during a slideshow  
 
@@ -168,7 +168,7 @@ SlideShow      : Now filenames, captions and progress indicators can have transp
                  backgrounds with OpenGL SlideShow as well.
 SlideShow      : Added thumbnails into image list.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 135451 : GPSSync            : Improve the gui of the gpssync plugin.
 002 ==> 135386 : GPSSync            : Show track on the google map.

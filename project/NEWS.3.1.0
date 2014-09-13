@@ -4,7 +4,7 @@ Kipi-plugins 3.1.0 - Release date: 2013/03/10
 NEW FEATURES:
 
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 314784 - imgurtalkerauth.cpp with digikam 3.0 breaks during build.
 002 ==> 295265 - Provide hicolor panoramagui icon.

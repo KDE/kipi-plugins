@@ -5,7 +5,7 @@ NEW FEATURES:
 
 AdvancedSlideshow : Soundtracks can be loaded / saved now.
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> AdvancedSlideshow  : 142676 : Recursive slideshow option.
 002 ==> AdvancedSlideshow  : 195772 : Allow to load playlists rather than having to re-add the songs one by one.

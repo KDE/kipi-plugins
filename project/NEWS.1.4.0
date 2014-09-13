@@ -4,7 +4,7 @@ Kipi-plugins 1.4.0 - Release date: 2010/08/22
 NEW FEATURES:
 
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> IpodExport      : 240469 : IpodExport fails to build with glib >= 2.25.
 002 ==> MetadataEdit    : 242624 : Wrong IPTC hyperlink.

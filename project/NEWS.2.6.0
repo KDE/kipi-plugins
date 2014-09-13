@@ -17,7 +17,7 @@ General           : New tool to export items to ImageShack web service (http://i
 General           : New tool to export items to MediaWiki web service (http://www.mediawiki.org).
 General           : New tool to export items to Imgur web service (http://imgur.com).
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 149269 : Thumbnails are square (HTML Export plugin) [patch].
 002 ==> 289283 : HTMLExport: add keyboard navigation and image preloading to floating_cards theme [patch].

@@ -4,7 +4,7 @@ Kipi-plugins 3.3.0 - Release date: 2013/08/04
 NEW FEATURES:
 
 
-BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 321274 - geolocation edit bookmarks.....NOTHING happens.
 002 ==> 230360 - Not possible to add non-ascii characters in kipi-plugins Byline-field.
