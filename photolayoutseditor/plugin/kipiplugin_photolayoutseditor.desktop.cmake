@@ -33,6 +33,7 @@ Name[zh_TW]=相片佈局編輯器
 Comment=A tool to make photo layouts
 Comment[ca]=Una eina per crear presentacions de les fotos
 Comment[cs]=Nástroj pro vytváření rozvržení snímků
+Comment[de]=Ein Werkzeug, um Fotolayouts zu erstellen
 Comment[en_GB]=A tool to make photo layouts
 Comment[nl]=Een hulpmiddel voor het maken van foto-indelingen
 Comment[pl]=Narzędzie do tworzenia układów zdjęć
