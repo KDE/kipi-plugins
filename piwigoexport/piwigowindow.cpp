@@ -155,13 +155,13 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     QLabel* const widthLabel    = new QLabel(i18n("Maximum width:"));
 
     widthSpinBox          = new QSpinBox;
-    widthSpinBox->setRange(1,1600);
+    widthSpinBox->setRange(1,8000);
     widthSpinBox->setValue(800);
 
     QLabel* const heightLabel   = new QLabel(i18n("Maximum height:"));
 
     heightSpinBox         = new QSpinBox;
-    heightSpinBox->setRange(1,1600);
+    heightSpinBox->setRange(1,8000);
     heightSpinBox->setValue(600);
 
     QHBoxLayout* const hlay2    = new QHBoxLayout;
