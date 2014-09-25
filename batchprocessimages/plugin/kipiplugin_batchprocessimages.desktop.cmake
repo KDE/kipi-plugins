@@ -52,6 +52,7 @@ Comment[en_GB]=A tool to batch process images
 Comment[nl]=Een hulpmiddel voor het bewerken van afbeeldingen in bulk
 Comment[pl]=Narzędzie do wsadowego przetwarzania obrazów
 Comment[pt]=Uma ferramenta para processar imagens em lote
+Comment[pt_BR]=Uma ferramenta para processar imagens em lote
 Comment[sv]=Ett verktyg för att behandla bilder i bakgrunden
 Comment[uk]=Інструмент для пакетної обробки зображень
 Comment[x-test]=xxA tool to batch process imagesxx
