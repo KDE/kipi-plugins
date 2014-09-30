@@ -91,7 +91,7 @@ public:
     QCheckBox*             resizeCheckBox;
     QSpinBox*              widthSpinBox;
     QSpinBox*              heightSpinBox;
-    QSpinBox*              thumbDimensionSpinBox;
+    QSpinBox*              qualitySpinBox;
 
     QHash<QString, GAlbum> albumDict;
 
@@ -156,26 +156,24 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     widthSpinBox          = new QSpinBox;
     widthSpinBox->setRange(1,8000);
-    widthSpinBox->setValue(800);
+    widthSpinBox->setValue(1600);
 
     QLabel* const heightLabel   = new QLabel(i18n("Maximum height:"));
 
     heightSpinBox         = new QSpinBox;
     heightSpinBox->setRange(1,8000);
-    heightSpinBox->setValue(600);
+    heightSpinBox->setValue(1600);
 
-    QHBoxLayout* const hlay2    = new QHBoxLayout;
-    QLabel* const resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
+    QLabel* const qualityLabel= new QLabel(i18n("Resized JPEG quality:"));
 
-    thumbDimensionSpinBox = new QSpinBox;
-    thumbDimensionSpinBox->setRange(32,800);
-    thumbDimensionSpinBox->setValue(128);
-    thumbDimensionSpinBox->setToolTip(i18n("Thumbnail size is ignored with Piwigo > 2.4"));
+    qualitySpinBox = new QSpinBox;
+    qualitySpinBox->setRange(1,100);
+    qualitySpinBox->setValue(95);
 
     resizeCheckBox->setChecked(false);
     widthSpinBox->setEnabled(false);
     heightSpinBox->setEnabled(false);
-    thumbDimensionSpinBox->setEnabled(true);
+    qualitySpinBox->setEnabled(false);
 
     // ---------------------------------------------------------------------------
 
@@ -183,21 +181,15 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     glay->addWidget(widthSpinBox, 0, 1);
     glay->addWidget(heightLabel, 1, 0);
     glay->addWidget(heightSpinBox, 1, 1);
+    glay->addWidget(qualityLabel, 2, 0);
+    glay->addWidget(qualitySpinBox, 2, 1);
     glay->setSpacing(spacingHint());
     glay->setMargin(spacingHint());
 
     // ---------------------------------------------------------------------------
 
-    hlay2->addWidget(resizeThumbLabel);
-    hlay2->addWidget(thumbDimensionSpinBox);
-    hlay2->setSpacing(spacingHint());
-    hlay2->setMargin(spacingHint());
-
-    // ---------------------------------------------------------------------------
-
     vlay2->addWidget(resizeCheckBox);
     vlay2->addLayout(glay);
-    vlay2->addLayout(hlay2);
     vlay2->addStretch(0);
     vlay2->setSpacing(spacingHint());
     vlay2->setMargin(spacingHint());
@@ -245,7 +237,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
                                                "(c) 2006-2007, Colin Guthrie\n"
                                                "(c) 2006-2013, Gilles Caulier\n"
                                                "(c) 2008, Andrea Diamantini\n"
-                                               "(c) 2012, Frédéric Coiffier\n"));
+                                               "(c) 2010-1014, Frédéric Coiffier\n"));
 
     about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                      "renchi dot raju at gmail dot com");
@@ -260,7 +252,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
                      "caulier dot gilles at gmail dot com");
 
     about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
-                     "fcoiffie at gmail dot com");
+                     "frederic dot coiffier at free dot com");
 
     about->setHandbookEntry("piwigoexport");
     setAboutData(about);
@@ -302,7 +294,8 @@ PiwigoWindow::~PiwigoWindow()
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->widthSpinBox->value());
     group.writeEntry("Maximum Height",  d->heightSpinBox->value());
-    group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
+    group.writeEntry("Quality",         d->qualitySpinBox->value());
+    group.deleteEntry("Thumbnail Width"); // Old config, no longer used
 
     delete d->talker;
     delete d->pUploadList;
@@ -372,10 +365,10 @@ void PiwigoWindow::readSettings()
         d->widthSpinBox->setEnabled(false);
     }
 
-    d->widthSpinBox->setValue(group.readEntry("Maximum Width", 800));
-    d->heightSpinBox->setValue(group.readEntry("Maximum Height", 600));
+    d->widthSpinBox->setValue(group.readEntry("Maximum Width", 1600));
+    d->heightSpinBox->setValue(group.readEntry("Maximum Height", 1600));
 
-    d->thumbDimensionSpinBox->setValue(group.readEntry("Thumbnail Width", 128));
+    d->qualitySpinBox->setValue(group.readEntry("Quality", 95));
 }
 
 void PiwigoWindow::slotDoLogin()
@@ -578,7 +571,7 @@ void PiwigoWindow::slotAddPhotoNext()
                                                       d->resizeCheckBox->isChecked(),
                                                       d->widthSpinBox->value(),
                                                       d->heightSpinBox->value(),
-                                                      d->thumbDimensionSpinBox->value() );
+                                                      d->qualitySpinBox->value() );
 
     if (!res)
     {
@@ -646,6 +639,7 @@ void PiwigoWindow::slotEnableSpinBox(int n)
 
     d->widthSpinBox->setEnabled(b);
     d->heightSpinBox->setEnabled(b);
+    d->qualitySpinBox->setEnabled(b);
 }
 
 void PiwigoWindow::slotSettings()
