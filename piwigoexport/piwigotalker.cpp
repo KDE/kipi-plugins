@@ -77,7 +77,10 @@ PiwigoTalker::PiwigoTalker(QWidget* const parent)
 PiwigoTalker::~PiwigoTalker()
 {
     if (m_job)
+    {
         m_job->kill();
+        m_job = 0;
+    }
 }
 
 QByteArray PiwigoTalker::computeMD5Sum(const QString& filepath)
@@ -339,6 +342,7 @@ void PiwigoTalker::slotResult(KJob* job)
         }
 
         emit signalBusy(false);
+        m_job = 0;
         return;
     }
 
@@ -399,6 +403,8 @@ void PiwigoTalker::slotResult(KJob* job)
 
 void PiwigoTalker::parseResponseLogin(const QByteArray& data)
 {
+    m_job   = 0;
+
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -573,6 +579,8 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
 void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 {
+    m_job   = 0;
+
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -691,6 +699,8 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
 void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
 {
+    m_job   = 0;
+
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -823,6 +833,8 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
 
 void PiwigoTalker::addNextChunk()
 {
+    m_job   = 0;
+
     QFile imagefile(!m_hqpath.isEmpty() ? m_hqpath : m_path);
 
     imagefile.open(QIODevice::ReadOnly);
@@ -902,6 +914,7 @@ void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
 
 void PiwigoTalker::addPhotoSummary()
 {
+    m_job   = 0;
     m_state = GE_OLD_ADDPHOTOSUMMARY;
     m_talker_buffer.resize(0);
 
@@ -987,6 +1000,8 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
 void PiwigoTalker::parseResponseOldAddPhoto(const QByteArray& data)
 {
+    m_job   = 0;
+
     QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
@@ -1055,6 +1070,7 @@ void PiwigoTalker::parseResponseOldAddPhoto(const QByteArray& data)
 
 void PiwigoTalker::addHQNextChunk()
 {
+    m_job   = 0;
     QFile imagefile(m_hqpath);
     imagefile.open(QIODevice::ReadOnly);
 
@@ -1184,6 +1200,7 @@ void PiwigoTalker::parseResponseOldAddHQPhoto(const QByteArray& data)
 
 void PiwigoTalker::addOldPhotoSummary()
 {
+    m_job   = 0;
     m_state = GE_OLD_ADDPHOTOSUMMARY;
     m_talker_buffer.resize(0);
 
