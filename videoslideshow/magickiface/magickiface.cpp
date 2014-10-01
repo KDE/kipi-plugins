@@ -211,6 +211,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
           1.0, &img->getImage()->exception)))
     {
         Q_EMIT signalsAPIError("ResizeImage() failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -222,6 +223,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     if (!(img_data = GetAuthenticPixels(img->getImage(), 0, 0, img->getWidth(), img->getHeight(), &img->getImage()->exception)))
     {
         Q_EMIT signalsAPIError("GetImagePixels() failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -238,6 +240,7 @@ MagickImage* MagickApi::loadQImage(const QImage& qimage)
     }
 
     SyncAuthenticPixels(img->getImage(), &img->getImage()->exception);
+
     return img;
 }
 
@@ -257,6 +260,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
         Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -271,6 +275,7 @@ MagickImage* MagickApi::loadImage(const QString& file)
     if (!(img->setImage(ReadImage(info, &exception))))
     {
         Q_EMIT signalsAPIError("ReadImage(%s) failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -303,6 +308,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
     if (!(info = CloneImageInfo((ImageInfo*) NULL)))
     {
         Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -315,6 +321,7 @@ MagickImage* MagickApi::loadStream(QFile& stream)
     if (!(img->setImage(ReadImage(info,&exception))))
     {
         Q_EMIT signalsAPIError("ReadImage(%s) failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -410,6 +417,7 @@ MagickImage* MagickApi::createImage(const QString& color, int width, int height)
     if (!(image = ResizeImage(img->getImage(), width, height, SCALE_FILTER_FAST, 1.0, &exception)))
     {
         Q_EMIT signalsAPIError("ResizeImage() failed\n");
+        freeImage(*img);
         return 0;
     }
 
@@ -447,6 +455,7 @@ MagickImage* MagickApi::duplicateImage(const MagickImage& src)
     if (!(dst->setImage(CloneImage(src.getImage(), 0, 0, (MagickBooleanType)1, &exception))))
     {
         Q_EMIT signalsAPIError("CloneImageInfo() failed\n");
+        freeImage(*dst);
         return 0;
     }
 
