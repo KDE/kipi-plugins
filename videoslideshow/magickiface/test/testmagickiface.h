@@ -8,7 +8,7 @@
  * @brief  UnitTests for ImageMagick API
  *
  * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
- *         Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *         Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -68,7 +68,7 @@ private:
 
     MagickApi*  api;
 
-    /// used to check the signlas emitted by a class
+    /// used to check the signals emitted by a class
     QSignalSpy* spy;
 
     QFile*      file;
