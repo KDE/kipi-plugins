@@ -24,19 +24,23 @@
 
 #include "actionthread.moc"
 
+// Qt includes
+
+#include <QDir>
+
+// KDE includes
+
+#include <kdebug.h>
+
+// libkdcraw
+
+#include <libkdcraw/kdcraw.h>
+
 // Local includes
 
 #include "processimage.h"
 #include "magickiface.h"
 #include "kpmetadata.h"
-
-// Qt includes
-
-#include <QDir>
-
-// libkdcraw
-
-#include <libkdcraw/kdcraw.h>
 
 using namespace KIPIPlugins;
 
@@ -106,9 +110,9 @@ void ActionThread::run()
     imgnext              = loadImage(d->item);
     int upperBound       = 0;
 
-    while(d->item->getNextImageItem() && d->running)
+    while (d->item->getNextImageItem() && d->running)
     {
-        if(img)
+        if (img)
         {
             d->api->freeImage(*img);
         }
@@ -136,7 +140,7 @@ void ActionThread::run()
         Q_EMIT frameCompleted(tad);
     }
 
-    if(img)
+    if (img)
     {
         d->api->freeImage(*img);
     }
@@ -151,7 +155,7 @@ void ActionThread::run()
     ad.totalFrames = upperBound;
     Q_EMIT frameCompleted(ad);
 
-    if(img)
+    if (img)
     {
         d->api->freeImage(*img);
     }
@@ -174,11 +178,11 @@ void ActionThread::cleanTempDir()
     QStringList tempFiles = d->dir.entryList(QDir::Files);
     QString     tempFile;
 
-    for(int i = 0; i < tempFiles.size(); i++)
+    for (int i = 0; i < tempFiles.size(); i++)
     {
         tempFile = tempFiles.at(i);
 
-        if(tempFile.endsWith(QLatin1String(".ppm")))
+        if (tempFile.endsWith(QLatin1String(".ppm")))
             d->dir.remove(tempFile);
     }
 
@@ -187,7 +191,8 @@ void ActionThread::cleanTempDir()
 
 void ActionThread::processItem(int upperBound, MagickImage* const img, MagickImage* const imgNext, Action action)
 {
-/* need to reimplement using appsrc plugin of gstreamer
+/*
+    // need to reimplement using appsrc plugin of gstreamer
     if(action == TYPE_IMAGE)
     {
         if(d->item->EffectName() == EFFECT_NONE)
@@ -195,7 +200,7 @@ void ActionThread::processItem(int upperBound, MagickImage* const img, MagickIma
     }
 */
 
-    for(int n = 0; n < upperBound && d->running; n++)
+    for (int n = 0; n < upperBound && d->running; n++)
     {
         Frame* const frm = getFrame(d->item, img, imgNext, n, action);
         ProcessFrame(frm);
@@ -225,7 +230,7 @@ void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspe
     d->videoFormat      = format;
     d->videoType        = videotype;
 
-    switch(d->videoFormat)
+    switch (d->videoFormat)
     {
         case VIDEO_FORMAT_NTSC:
             d->framerate = 30;
@@ -238,7 +243,7 @@ void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspe
             break;
     };
 
-    if(!d->api)
+    if (!d->api)
     {
         d->api        = new MagickApi(path);
         d->processImg = new ProcessImage(d->api);
@@ -250,7 +255,7 @@ void ActionThread::doPreProcessing(ASPECTCORRECTION_TYPE type, ASPECT_RATIO aspe
                 this, SIGNAL(signalProcessError(QString)));
     }
 
-    if(!d->encoder)
+    if (!d->encoder)
     {
         d->encoder = new EncoderDecoder();
 
@@ -268,22 +273,22 @@ MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
 {
     MagickImage* img = 0;
 
-    if(KPMetadata::isRawFile(imgItem->url()))
+    if (KPMetadata::isRawFile(imgItem->url()))
     {
         QImage image;
         KDcrawIface::KDcraw::loadEmbeddedPreview(image, imgItem->url().path());
 
-        if(!(img = d->api->loadQImage(image)))
+        if (!(img = d->api->loadQImage(image)))
            return 0;
     }
-    else if(!(img = d->api->loadImage(imgItem->url().path())))
+    else if (!(img = d->api->loadImage(imgItem->url().path())))
     {
         return 0;
     }
 
     double ratio = (double)d->frameWidth/d->frameHeight;
 
-    switch(d->aspectRatio)
+    switch (d->aspectRatio)
     {
         case ASPECT_RATIO_4_3:
             ratio = (double)4/3;
@@ -295,12 +300,12 @@ MagickImage* ActionThread::loadImage(MyImageListViewItem* const imgItem) const
             break;
     };
 
-    if(!(img = d->processImg->aspectRatioCorrection(*img, ratio, d->aspectcorrection)))
+    if (!(img = d->processImg->aspectRatioCorrection(*img, ratio, d->aspectcorrection)))
     {
         return 0;
     }
 
-    if(d->api->scaleImage(*img, d->frameWidth, d->frameHeight) != 1)
+    if (d->api->scaleImage(*img, d->frameWidth, d->frameHeight) != 1)
     {
         return 0;
     }
@@ -327,7 +332,7 @@ MagickImage* ActionThread::getDynamicImage(MyImageListViewItem* const imgItem, M
     int steps           = imgItem->getTime() * d->framerate + getTransitionFrames(imgItem->getPrevImageItem()) +
                                                               getTransitionFrames(imgItem->getNextImageItem());
 
-    switch(imgItem->EffectName())
+    switch (imgItem->EffectName())
     {
         case EFFECT_KENBURN:
         {
@@ -377,7 +382,13 @@ int ActionThread::getTransitionFrames(MyImageListViewItem* const item) const
 
 void ActionThread::ProcessFrame(Frame* const frm)
 {
-    switch(frm->action)
+    if (!frm)
+    {
+        kDebug() << "Frame to process is null";
+        return;
+    }
+
+    switch (frm->action)
     {
         case TYPE_TRANSITION:
         {
@@ -395,12 +406,12 @@ void ActionThread::ProcessFrame(Frame* const frm)
                                                    imgnextout ? *imgnextout : *frm->imgnext,
                                                    frm->item->getTransition(), frm->number, getTransitionFrames(frm->item));
 
-            if(imgout)
+            if (imgout)
             {
                 d->api->freeImage(*imgout);
             }
 
-            if(imgnextout)
+            if (imgnextout)
             {
                 d->api->freeImage(*imgnextout);
             }
@@ -433,7 +444,7 @@ int ActionThread::getTotalFrames(MyImageListViewItem* const item) const
     MyImageListViewItem* pi = item;
     int total_frames        = 0;
 
-    while(pi)
+    while (pi)
     {
         total_frames += getTransitionFrames(pi);
         total_frames += pi->getTime() * d->framerate;

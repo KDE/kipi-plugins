@@ -8,7 +8,7 @@
  * @brief  Transitions, AspectRatioCorrection and otherImageEffects
  *
  * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
- *         Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *         Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,7 +50,7 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
     double img_aspectratio = (double) img.getWidth() / (double) img.getHeight();
 
     // tolerate some error in double value
-    if(abs(img_aspectratio - aspectratio) <= 0.001)
+    if (abs(img_aspectratio - aspectratio) <= 0.001)
         return &img;
 
     if (aspectcorrection == ASPECTCORRECTION_TYPE_AUTO)
@@ -135,12 +135,14 @@ MagickImage* ProcessImage::aspectRatioCorrection(MagickImage& img, double aspect
 int ProcessImage::incValue(int v, int step, int steps) const
 {
     Q_ASSERT(steps != 0);
+
     return (v) * (step + 1) / steps;
 }
 
 int ProcessImage::decValue(int v, int step, int steps) const
 {
     Q_ASSERT(steps != 0);
+
     return (v) * (steps - step - 1) / steps;
 }
 
@@ -148,14 +150,19 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
 {
     int w, h;
 
-    if (step < 0 || step >= steps)
+    if (step <= 0 || step >= steps)
+    {
         Q_EMIT signalProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
+        return 0;
+    }
 
     // create a new target image and copy the from image onto
     MagickImage* const dst = m_api->createImage("black", w = from.getWidth(), h = from.getHeight());
 
     if (!dst)
+    {
         return 0;
+    }
 
     switch (type)
     {
