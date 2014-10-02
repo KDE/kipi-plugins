@@ -575,7 +575,7 @@ void PiwigoWindow::slotAddPhotoNext()
 
     if (!res)
     {
-        slotAddPhotoFailed( "" );
+        slotAddPhotoFailed( i18n("The file %1 is not a supported image or video format", KUrl(photoPath).fileName()) );
         return;
     }
 
@@ -598,7 +598,7 @@ void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
     d->progressDlg->hide();
 
     if (KMessageBox::warningContinueCancel(this,
-                                           i18n("Failed to upload photo into "
+                                           i18n("Failed to upload media into "
                                                 "remote piwigo. ")
                                            + msg
                                            + i18n("\nDo you want to continue?"))

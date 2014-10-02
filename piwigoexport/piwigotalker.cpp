@@ -77,6 +77,12 @@ PiwigoTalker::PiwigoTalker(QWidget* const parent)
 
 PiwigoTalker::~PiwigoTalker()
 {
+    cancel();
+}
+
+void PiwigoTalker::cancel()
+{
+    deleteTemporaryFile();
     if (m_job)
     {
         m_job->kill();
@@ -162,68 +168,89 @@ void PiwigoTalker::listAlbums()
 }
 
 bool PiwigoTalker::addPhoto(int   albumId,
-                            const QString& photoPath,
+                            const QString& mediaPath,
                             bool  rescale,
                             int   maxWidth,
                             int   maxHeight,
                             int   quality)
 {
-    KUrl photoUrl = KUrl(photoPath);
+    KUrl mediaUrl = KUrl(mediaPath);
 
     m_job     = 0;
     m_state   = GE_CHECKPHOTOEXIST;
     m_talker_buffer.resize(0);
 
-    m_path    = photoPath;
+    m_path    = mediaPath; // By default, m_path contains the original file
+    m_tmpPath = ""; // By default, no temporary file (except with rescaling)
     m_albumId = albumId;
-    m_md5sum  = computeMD5Sum(photoPath);
 
-    if (!rescale)
-    {
-        m_hqpath = photoPath;
-        kDebug() << "Download HQ version: " << m_hqpath;
+    m_md5sum  = computeMD5Sum(mediaPath);
+
+    kDebug() << mediaPath << " " << m_md5sum.toHex();
+
+    if (mediaPath.endsWith(".mp4") || mediaPath.endsWith(".MP4") ||
+        mediaPath.endsWith(".ogg") || mediaPath.endsWith(".OGG") ||
+        mediaPath.endsWith(".webm") || mediaPath.endsWith(".WEBM")) {
+        // Video management
+        // Nothing to do
+    } else {
+        // Image management
+        QImage image;
+
+        // Check if RAW file.
+        if (KPMetadata::isRawFile(mediaPath))
+            KDcrawIface::KDcraw::loadRawPreview(image, mediaPath);
+        else
+            image.load(mediaPath);
+
+        if (image.isNull())
+        {
+            // Invalid image
+            return false;
+        }
+
+        if (!rescale)
+        {
+            kDebug() << "Upload the original version: " << m_path;
+        } else {
+            // Rescale the image
+            if (image.width() > maxWidth || image.height() > maxHeight)
+            {
+                image = image.scaled(maxWidth, maxHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            }
+
+            m_path = m_tmpPath = KStandardDirs::locateLocal("tmp", KUrl(mediaPath).fileName());
+            image.save(m_path, "JPEG", quality);
+
+            kDebug() << "Upload a resized version: " << m_path ;
+
+            // Restore all metadata with EXIF
+            // in the resized version
+            KPMetadata meta;
+            if (meta.load(mediaPath))
+            {
+                meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+                meta.setImageDimensions(image.size());
+                meta.save(m_path);
+            }
+            else
+            {
+                kDebug() << "Image " << mediaPath << " has no exif data";
+            }
+        }
     }
-    else
-    {
-        m_hqpath = "";
-    }
 
-    kDebug() << photoPath << " " << m_md5sum.toHex();
-
-    QImage image;
-
-    // Check if RAW file.
-    if (KPMetadata::isRawFile(photoPath))
-        KDcrawIface::KDcraw::loadRawPreview(image, photoPath);
-    else
-        image.load(photoPath);
-
-    if (image.isNull())
-    {
-        // Invalid image
-        return false;
-    }
-
-    // image file - see if we need to rescale it
-    if (image.width() > maxWidth || image.height() > maxHeight)
-    {
-        image = image.scaled(maxWidth, maxHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    }
-
-    m_path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
-    image.save(m_path, "JPEG", quality);
-
-    kDebug() << "Resizing and saving to temp file: " << m_path ;
+    // Metadata management
 
     // Complete name and comment for summary sending
-    QFileInfo fi(photoPath);
+    QFileInfo fi(mediaPath);
     m_title   = fi.completeBaseName();
     m_comment = "";
     m_author  = "";
     m_date    = fi.created();
 
     // Look in the Digikam database
-    KPImageInfo info(photoUrl);
+    KPImageInfo info(mediaUrl);
 
     if (info.hasTitle() && !info.title().isEmpty())
         m_title = info.title();
@@ -242,20 +269,6 @@ bool PiwigoTalker::addPhoto(int   albumId,
     kDebug() << "Author: " << m_author;
     kDebug() << "Date: " << m_date;
 
-    // Restore all metadata with EXIF
-    // in the resized version
-    KPMetadata meta;
-    if (meta.load(photoPath))
-    {
-        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-        meta.setImageDimensions(image.size());
-        meta.save(m_path);
-    }
-    else
-    {
-        kDebug() << "Image " << photoPath << " has no exif data";
-    }
-
     QStringList qsl;
     qsl.append("method=pwg.images.exist");
     qsl.append("md5sum_list=" + m_md5sum.toHex());
@@ -267,7 +280,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
-    emit signalProgressInfo( i18n("Check if %1 already exists", KUrl(m_path).fileName()) );
+    emit signalProgressInfo( i18n("Check if %1 already exists", KUrl(mediaPath).fileName()) );
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -278,15 +291,6 @@ bool PiwigoTalker::addPhoto(int   albumId,
     emit signalBusy(true);
 
     return true;
-}
-
-void PiwigoTalker::cancel()
-{
-    if (m_job)
-    {
-        m_job->kill();
-        m_job = 0;
-    }
 }
 
 void PiwigoTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
@@ -321,6 +325,7 @@ void PiwigoTalker::slotResult(KJob* job)
                  state == GE_SETINFO         || state == GE_ADDPHOTOCHUNK     ||
                  state == GE_ADDPHOTOSUMMARY)
         {
+            deleteTemporaryFile();
             emit signalAddPhotoFailed(tempjob->errorString());
         }
         else
@@ -472,7 +477,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
     if (m_version < PIWIGO_VER_2_4)
     {
         m_loggedIn = false;
-        emit signalAddPhotoFailed(i18n("Upload to Piwigo version < 2.4 is no longer supported"));
+        emit signalLoginFailed(i18n("Upload to Piwigo version < 2.4 is no longer supported"));
         return;
     }
 
@@ -641,7 +646,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
     if (m_version >= PIWIGO_VER_2_4)
     {
-        QFileInfo fi(!m_hqpath.isEmpty() ? m_hqpath : m_path);
+        QFileInfo fi(m_path);
 
         m_state   = GE_ADDPHOTOCHUNK;
         m_talker_buffer.resize(0);
@@ -780,10 +785,7 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
         return;
     }
 
-    if (m_path.size())
-        QFile(m_path).remove();
-
-    m_path      = "";
+    deleteTemporaryFile();
 
     emit signalAddPhotoSucceeded();
 }
@@ -792,7 +794,7 @@ void PiwigoTalker::addNextChunk()
 {
     m_job   = 0;
 
-    QFile imagefile(!m_hqpath.isEmpty() ? m_hqpath : m_path);
+    QFile imagefile(m_path);
 
     imagefile.open(QIODevice::ReadOnly);
 
@@ -875,6 +877,7 @@ void PiwigoTalker::addPhotoSummary()
     QStringList qsl;
     qsl.append("method=pwg.images.add");
     qsl.append("original_sum=" + m_md5sum.toHex());
+    qsl.append("original_filename=" + KUrl(m_path).fileName().toUtf8().toPercentEncoding());
     qsl.append("name=" + m_title.toUtf8().toPercentEncoding());
     if (!m_author.isEmpty()) qsl.append("author=" + m_author.toUtf8().toPercentEncoding());
     if (!m_comment.isEmpty()) qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
@@ -926,7 +929,7 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
     if (!foundResponse)
     {
-        emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
+        emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo (%1)", QString(data)));
         return;
     }
 
@@ -936,12 +939,17 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
         return;
     }
 
-    if (m_path.size())
-        QFile(m_path).remove();
-
-    m_path      = "";
+    deleteTemporaryFile();
 
     emit signalAddPhotoSucceeded();
+}
+
+void PiwigoTalker::deleteTemporaryFile()
+{
+    if (m_tmpPath.size()) {
+        QFile(m_tmpPath).remove();
+        m_tmpPath      = "";
+    }
 }
 
 } // namespace KIPIPiwigoExportPlugin

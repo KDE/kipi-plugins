@@ -69,7 +69,7 @@ public:
 
     enum
     {
-        CHUNK_MAX_SIZE = 500000,
+        CHUNK_MAX_SIZE = 512*1024,
         PIWIGO_VER_2_4 = 24
     };
 
@@ -126,6 +126,7 @@ private:
     void parseResponseAddPhotoSummary(const QByteArray& data);
 
     QByteArray computeMD5Sum(const QString& filepath);
+    void deleteTemporaryFile();
 
 private Q_SLOTS:
 
@@ -147,9 +148,9 @@ private:
 
     QByteArray        m_md5sum;
     QString           m_path;
+    QString           m_tmpPath;    // If set, contains a temporary file which must be deleted
     int               m_albumId;
     int               m_photoId;    // Filled when the photo already exist
-    QString           m_hqpath;
     QString           m_comment;    // Synchronized with Piwigo comment
     QString           m_title;      // Synchronized with Piwigo name
     QString           m_author;     // Synchronized with Piwigo author
