@@ -237,7 +237,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
                                                "(c) 2006-2007, Colin Guthrie\n"
                                                "(c) 2006-2013, Gilles Caulier\n"
                                                "(c) 2008, Andrea Diamantini\n"
-                                               "(c) 2010-1014, Frédéric Coiffier\n"));
+                                               "(c) 2010-2014, Frédéric Coiffier\n"));
 
     about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                      "renchi dot raju at gmail dot com");
