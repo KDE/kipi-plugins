@@ -202,7 +202,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     connect(m_customSizeRdb, SIGNAL(toggled(bool)),
             this, SLOT(slotEnableCustomSize(bool)));
 
-    QLabel* const heightLbl = new QLabel(i18n("Height"), optionsBox);
+    QLabel* const heightLbl = new QLabel(i18n("Height:"), optionsBox);
 
     m_resizeOptsCob = new KComboBox(optionsBox);
     updateResizeOpts();
