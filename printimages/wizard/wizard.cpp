@@ -1567,13 +1567,18 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
                 return;
             }
 
-            kDebug() << "Removed fileName: " << pPhotoToRemove->filename.fileName() << " copy number " << copies;
+            if (pPhotoToRemove)
+            {
+                kDebug() << "Removed fileName: " << pPhotoToRemove->filename.fileName() << " copy number " << copies;
+            }
+
             d->m_photos.removeAt(itemIndex);
             delete pPhotoToRemove;
 
             d->m_imagesFilesListBox->blockSignals(false);
             previewPhotos();
         }
+
         if (d->m_photos.empty())
         {
             // No photos => disabling next button (e.g. crop page)
