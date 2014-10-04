@@ -102,8 +102,7 @@ public:
         // not be necessary anymore
         zoomsize   = QSize(1024, 768);
 
-        iface      = 0;
-
+        iface                  = 0;
         PluginLoader* const pl = PluginLoader::instance();
 
         if (pl)
@@ -116,6 +115,18 @@ public:
             cache[i].file_index = 0;
             cache[i].texture    = 0;
         }
+
+        ratio_view_x  = 0.0F;
+        ratio_view_y  = 0.0F;
+        delta         = 0.0F;
+        vertex_height = 0.0F;
+        vertex_width  = 0.0F;
+        vertex_left   = 0.0F;
+        vertex_top    = 0.0F;
+        vertex_right  = 0.0F;
+        vertex_bottom = 0.0F;
+        wheelAction   = zoomImage;
+        screen_width  = 0;
     }
 
     GLuint           tex[3];
