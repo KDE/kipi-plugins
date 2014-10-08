@@ -73,8 +73,6 @@ void TestMagickIface::testCreateImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete img;
 }
 
 void TestMagickIface::testDuplicateImage()
@@ -89,7 +87,7 @@ void TestMagickIface::testDuplicateImage()
     MagickImage* const img = api->loadImage(file->fileName());
     QVERIFY (img != 0 );
 
-    MagickImage* dupImg = api->duplicateImage(*img);
+    MagickImage* const dupImg = api->duplicateImage(*img);
     QVERIFY (dupImg != 0);
 
     bool done = api->displayImage(*dupImg);
@@ -102,8 +100,6 @@ void TestMagickIface::testDuplicateImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete img;
 }
 
 void TestMagickIface::testOverlayImage()
@@ -129,9 +125,6 @@ void TestMagickIface::testOverlayImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src;
-    delete dst;
 }
 
 void TestMagickIface::testBlendImage()
@@ -163,10 +156,6 @@ void TestMagickIface::testBlendImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src0;
-    delete src1;
-    delete dst;
 }
 
 void TestMagickIface::testBitblitImage()
@@ -192,9 +181,6 @@ void TestMagickIface::testBitblitImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src;
-    delete dst;
 }
 
 void TestMagickIface::testScaleImage()
@@ -214,8 +200,6 @@ void TestMagickIface::testScaleImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src;
 }
 
 void TestMagickIface::testScaleblitImage()
@@ -241,9 +225,6 @@ void TestMagickIface::testScaleblitImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src;
-    delete dst;
 }
 
 void TestMagickIface::testBorderImage()
@@ -268,9 +249,6 @@ void TestMagickIface::testBorderImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src;
-    delete bimg;
 }
 
 void TestMagickIface::testGeoScaleImage()
@@ -295,9 +273,6 @@ void TestMagickIface::testGeoScaleImage()
     QVERIFY (done);
 
     QCOMPARE (spy->count(), 0);
-
-    delete src;
-    delete gsimg;
 }
 
 void TestMagickIface::testLoadAndSaveFile()
@@ -315,9 +290,10 @@ void TestMagickIface::testLoadAndSaveFile()
     bool done = api->displayImage(*testImage);
     QVERIFY (done);
 
-    QCOMPARE (spy->count(), 0);
+    done = api->freeImage(*testImage);
+    QVERIFY (done);
 
-    delete testImage;
+    QCOMPARE (spy->count(), 0);
 }
 
 void TestMagickIface::testLoadAndSaveStream()
@@ -340,7 +316,8 @@ void TestMagickIface::testLoadAndSaveStream()
     if (file2.isOpen())
         file2.close();
 
-    QCOMPARE (spy->count(), 0);
+    done = api->freeImage(*testImage);
+    QVERIFY (done);
 
-    delete testImage;
+    QCOMPARE (spy->count(), 0);
 }
