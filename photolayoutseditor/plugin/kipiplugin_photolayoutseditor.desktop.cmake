@@ -41,6 +41,7 @@ Comment[nl]=Een hulpmiddel voor het maken van foto-indelingen
 Comment[pl]=Narzędzie do tworzenia układów zdjęć
 Comment[pt]=Uma ferramenta para criar disposições de fotografias
 Comment[pt_BR]=Uma ferramenta para criar leiautes de fotos
+Comment[sk]=Nástroj na tvorbu rozložení fotiek
 Comment[sl]=Orodje za urejanje razporedov slik
 Comment[sv]=Ett verktyg för skapa fotolayouter
 Comment[uk]=Інструмент для створення фотокомпозицій
