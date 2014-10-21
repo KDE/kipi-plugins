@@ -186,7 +186,7 @@ KipiImageItemDelegate::~KipiImageItemDelegate()
 
 void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& sortMappedindex) const
 {
-    if (sortMappedindex.column()!=KipiImageItem::ColumnThumbnail)
+    if (sortMappedindex.column() != KipiImageItem::ColumnThumbnail)
     {
         QItemDelegate::paint(painter, option, sortMappedindex);
         return;
@@ -211,9 +211,9 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
 
     const QSize availableSize = option.rect.size();
     const QSize pixmapSize    = itemPixmap.size().boundedTo(availableSize);
-    QPoint startPoint((availableSize.width()-pixmapSize.width())/2,
-                      (availableSize.height()-pixmapSize.height())/2);
-    startPoint+=option.rect.topLeft();
+    QPoint startPoint((availableSize.width()  - pixmapSize.width())  / 2,
+                      (availableSize.height() - pixmapSize.height()) / 2);
+    startPoint               += option.rect.topLeft();
     painter->drawPixmap(QRect(startPoint, pixmapSize), itemPixmap, QRect(QPoint(0, 0), pixmapSize));
 }
 
@@ -237,7 +237,7 @@ void KipiImageItemDelegate::setThumbnailSize(const int size)
     if (!imageModel)
         return;
 
-    if (imageModel->rowCount()>0)
+    if (imageModel->rowCount() > 0)
     {
         // TODO: is it enough to emit this signal for only 1 item?
         // seems to work in Qt4.5 with QTreeView::setUniformRowHeights(true)
@@ -266,21 +266,21 @@ void KipiImageList::slotIncreaseThumbnailSize()
     // TODO: pick reasonable limits and make sure we stay on multiples of 5
     const int currentThumbnailSize = d->itemDelegate->getThumbnailSize();
 
-    if (currentThumbnailSize<200)
-        setThumbnailSize(currentThumbnailSize+5);
+    if (currentThumbnailSize < 200)
+        setThumbnailSize(currentThumbnailSize + 5);
 }
 
 void KipiImageList::slotDecreaseThumbnailSize()
 {
     const int currentThumbnailSize = d->itemDelegate->getThumbnailSize();
 
-    if (currentThumbnailSize>30)
-        setThumbnailSize(currentThumbnailSize-5);
+    if (currentThumbnailSize > 30)
+        setThumbnailSize(currentThumbnailSize - 5);
 }
 
 void KipiImageList::wheelEvent(QWheelEvent* we)
 {
-    if ((we->modifiers()&Qt::ControlModifier) == 0)
+    if ((we->modifiers() & Qt::ControlModifier) == 0)
     {
         QTreeView::wheelEvent(we);
         return;
@@ -323,8 +323,8 @@ void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
     else
     {
         // by default, hide the advanced columns:
-        header()->setSectionHidden(KipiImageItem::ColumnDOP, true);
-        header()->setSectionHidden(KipiImageItem::ColumnFixType, true);
+        header()->setSectionHidden(KipiImageItem::ColumnDOP,         true);
+        header()->setSectionHidden(KipiImageItem::ColumnFixType,     true);
         header()->setSectionHidden(KipiImageItem::ColumnNSatellites, true);
     }
 }
