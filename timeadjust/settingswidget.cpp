@@ -269,10 +269,11 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     updateGBLayout->addWidget(d->updEXIFModDateCheck, 0, 1, 1, 1);
     updateGBLayout->addWidget(d->updEXIFOriDateCheck, 1, 0, 1, 1);
     updateGBLayout->addWidget(d->updEXIFDigDateCheck, 1, 1, 1, 1);
-    updateGBLayout->addWidget(d->updXMPDateCheck,     2, 0, 1, 1);
-    updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 1, 1, 1);
-    updateGBLayout->addWidget(d->updFileModDateCheck, 3, 0, 1, 1);
-    updateGBLayout->addWidget(d->updFileNameCheck,    3, 1, 1, 1);
+    updateGBLayout->addWidget(d->updEXIFThmDateCheck, 2, 0, 1, 1);
+    updateGBLayout->addWidget(d->updXMPDateCheck,     2, 1, 1, 1);
+    updateGBLayout->addWidget(d->updIPTCDateCheck,    3, 0, 1, 1);
+    updateGBLayout->addWidget(d->updFileModDateCheck, 3, 1, 1, 1);
+    updateGBLayout->addWidget(d->updFileNameCheck,    4, 0, 1, 1);
 
     if (!KPMetadata::supportXmp())
     {
