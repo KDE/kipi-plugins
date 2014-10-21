@@ -5,5 +5,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
-
+001 ==> 337422 - EXIF thumbnail date information not updated when writing metadata to image.
+002 ==> 
