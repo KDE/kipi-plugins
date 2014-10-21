@@ -7,6 +7,7 @@
  * Description : a class to manage plugin actions using threads
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2006-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -60,8 +61,8 @@ public:
         cancel    = false;
     }
 
-    bool    cancel;
-    KUrl    url;
+    bool                  cancel;
+    KUrl                  url;
     
     // Settings from GUI.
     TimeAdjustSettings    settings;
@@ -73,7 +74,7 @@ public:
 Task::Task(QObject* const parent, const KUrl& url)
     : Job(parent), d(new Private)
 {
-    d->url      = url;
+    d->url = url;
 }
 
 Task::~Task()
@@ -108,8 +109,8 @@ void Task::run()
     emit signalProcessStarted(d->url);
 
     bool metadataChanged = d->settings.updEXIFModDate || d->settings.updEXIFOriDate ||
-                           d->settings.updEXIFDigDate || d->settings.updIPTCDate    ||
-                           d->settings.updXMPDate;
+                           d->settings.updEXIFDigDate || d->settings.updEXIFThmDate ||
+                           d->settings.updIPTCDate    || d->settings.updXMPDate;
 
     int status = MyImageList::NOPROCESS_ERROR;
 
@@ -141,8 +142,15 @@ void Task::run()
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
                         dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
+                
+                if (d->settings.updEXIFThmDate)
+                {
+                    ret &= meta.setExifTagString("Exif.Image.PreviewDateTime",
+                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                }
             }
-            else if (d->settings.updEXIFModDate || d->settings.updEXIFOriDate || d->settings.updEXIFDigDate)
+            else if (d->settings.updEXIFModDate || d->settings.updEXIFOriDate || 
+                     d->settings.updEXIFDigDate || d->settings.updEXIFThmDate)
             {
                 ret = false;
             }
@@ -237,10 +245,11 @@ void Task::run()
     {
         KPImageInfo info(d->url);
         QDateTime dt = d->itemsMap.value(d->url);
+
         if (dt.isValid()) info.setDate(dt);
     }
 
     emit signalProcessEnded(d->url, status);
 }
+    
 } // namespace KIPITimeAdjustPlugin
-

@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -84,6 +84,7 @@ public:
         updEXIFModDateCheck    = 0;
         updEXIFOriDateCheck    = 0;
         updEXIFDigDateCheck    = 0;
+        updEXIFThmDateCheck    = 0;
         updIPTCDateCheck       = 0;
         updXMPDateCheck        = 0;
         updFileNameCheck       = 0;
@@ -118,6 +119,7 @@ public:
     QCheckBox*    updEXIFModDateCheck;
     QCheckBox*    updEXIFOriDateCheck;
     QCheckBox*    updEXIFDigDateCheck;
+    QCheckBox*    updEXIFThmDateCheck;
     QCheckBox*    updIPTCDateCheck;
     QCheckBox*    updXMPDateCheck;
     QCheckBox*    updFileNameCheck;
@@ -147,7 +149,7 @@ public:
 SettingsWidget::SettingsWidget(QWidget* const parent)
     : QScrollArea(parent), d(new Private)
 {
-    KVBox* panel         = new KVBox(viewport());
+    KVBox* const panel   = new KVBox(viewport());
     panel->setAutoFillBackground(false);
     setWidget(panel);
     setWidgetResizable(true);
@@ -159,9 +161,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // -- Settings View Used Timestamps ---------------------------------------------------------
 
-    d->useSettingsBox           = new QWidget(d->settingsExpander);
-    QGridLayout* useGBLayout    = new QGridLayout(d->useSettingsBox);
-    d->useButtonGroup           = new QButtonGroup(d->useSettingsBox);
+    d->useSettingsBox              = new QWidget(d->settingsExpander);
+    QGridLayout* const useGBLayout = new QGridLayout(d->useSettingsBox);
+    d->useButtonGroup              = new QButtonGroup(d->useSettingsBox);
     d->useButtonGroup->setExclusive(true);
 
     QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
@@ -218,8 +220,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // -- Settings View TimesStamp Adjustements ---------------------------------------------------
 
-    d->adjustSettingsBox        = new QWidget(d->settingsExpander);
-    QGridLayout* adjustGBLayout = new QGridLayout(d->adjustSettingsBox);
+    d->adjustSettingsBox              = new QWidget(d->settingsExpander);
+    QGridLayout* const adjustGBLayout = new QGridLayout(d->adjustSettingsBox);
 
     d->adjTypeChooser           = new QComboBox(d->adjustSettingsBox);
     d->adjTypeChooser->insertItem(TimeAdjustSettings::COPYVALUE, i18nc("copy timestamp as well",             "Copy value"));
@@ -246,14 +248,15 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // -- Settings View Updated Timestamps -------------------------------------------------------
 
-    d->updateSettingsBox        = new QWidget(d->settingsExpander);
-    QGridLayout* updateGBLayout = new QGridLayout(d->updateSettingsBox);
+    d->updateSettingsBox              = new QWidget(d->settingsExpander);
+    QGridLayout* const updateGBLayout = new QGridLayout(d->updateSettingsBox);
 
     d->updAppDateCheck          = new QCheckBox(applDateLabelString,        d->updateSettingsBox);
     d->updFileModDateCheck      = new QCheckBox(i18n("File last modified"), d->updateSettingsBox);
     d->updEXIFModDateCheck      = new QCheckBox(i18n("EXIF: created"),      d->updateSettingsBox);
     d->updEXIFOriDateCheck      = new QCheckBox(i18n("EXIF: original"),     d->updateSettingsBox);
     d->updEXIFDigDateCheck      = new QCheckBox(i18n("EXIF: digitized"),    d->updateSettingsBox);
+    d->updEXIFThmDateCheck      = new QCheckBox(i18n("EXIF: Thumbnail"),    d->updateSettingsBox);
     d->updIPTCDateCheck         = new QCheckBox(i18n("IPTC: created"),      d->updateSettingsBox);
     d->updXMPDateCheck          = new QCheckBox(i18n("XMP"),                d->updateSettingsBox);
     d->updFileNameCheck         = new QCheckBox(i18n("Filename"),           d->updateSettingsBox);
@@ -362,6 +365,7 @@ void SettingsWidget::readSettings(KConfigGroup& group)
     d->updEXIFModDateCheck->setChecked(group.readEntry("Update EXIF Modification Time", false));
     d->updEXIFOriDateCheck->setChecked(group.readEntry("Update EXIF Original Time",     false));
     d->updEXIFDigDateCheck->setChecked(group.readEntry("Update EXIF Digitization Time", false));
+    d->updEXIFThmDateCheck->setChecked(group.readEntry("Update EXIF Thumbnail Time",    false));
     d->updIPTCDateCheck->setChecked(group.readEntry("Update IPTC Time",                 false));
     d->updXMPDateCheck->setChecked(group.readEntry("Update XMP Creation Time",          false));
     d->updFileNameCheck->setChecked(group.readEntry("Update File Name",                 false));
@@ -392,6 +396,7 @@ void SettingsWidget::saveSettings(KConfigGroup& group)
     group.writeEntry("Update EXIF Modification Time", prm.updEXIFModDate);
     group.writeEntry("Update EXIF Original Time",     prm.updEXIFOriDate);
     group.writeEntry("Update EXIF Digitization Time", prm.updEXIFDigDate);
+    group.writeEntry("Update EXIF Thumbnail Time",    prm.updEXIFThmDate);
     group.writeEntry("Update IPTC Time",              prm.updIPTCDate);
     group.writeEntry("Update XMP Creation Time",      prm.updXMPDate);
     group.writeEntry("Update File Name",              prm.updFileName);
@@ -408,12 +413,13 @@ TimeAdjustSettings SettingsWidget::settings() const
     settings.updEXIFModDate = d->updEXIFModDateCheck->isChecked();
     settings.updEXIFOriDate = d->updEXIFOriDateCheck->isChecked();
     settings.updEXIFDigDate = d->updEXIFDigDateCheck->isChecked();
+    settings.updEXIFThmDate = d->updEXIFThmDateCheck->isChecked();
     settings.updIPTCDate    = d->updIPTCDateCheck->isChecked();
     settings.updXMPDate     = d->updXMPDateCheck->isChecked();
     settings.updFileName    = d->updFileNameCheck->isChecked();
     settings.updFileModDate = d->updFileModDateCheck->isChecked();
-
     settings.dateSource     = TimeAdjustSettings::APPDATE;
+
     if (d->useFileDateBtn->isChecked())   settings.dateSource = TimeAdjustSettings::FILEDATE;
     if (d->useMetaDateBtn->isChecked())   settings.dateSource = TimeAdjustSettings::METADATADATE;
     if (d->useCustomDateBtn->isChecked()) settings.dateSource = TimeAdjustSettings::CUSTOMDATE;
@@ -504,6 +510,7 @@ void SettingsWidget::slotDetAdjustmentByClockPhoto()
 {
     // Determine the currently selected item and preselect it as clock photo
     KUrl defaultUrl;
+
     if (d->imageList)
     {
         defaultUrl = d->imageList->getCurrentUrl();
@@ -513,11 +520,12 @@ void SettingsWidget::slotDetAdjustmentByClockPhoto()
      * results to the proper widgets.
      */
     QPointer<ClockPhotoDialog> dlg = new ClockPhotoDialog(this, defaultUrl);
-    const int result = dlg->exec();
+    const int result               = dlg->exec();
 
     if (result == QDialog::Accepted)
     {
         DeltaTime dvalues = dlg->deltaValues();
+
         if (dvalues.isNull())
         {
             d->adjTypeChooser->setCurrentIndex(TimeAdjustSettings::COPYVALUE);

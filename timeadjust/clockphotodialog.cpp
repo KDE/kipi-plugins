@@ -7,7 +7,7 @@
  * Description : Figure out camera clock delta from a clock picture.
  *
  * Copyright (C) 2009      by Pieter Edelman <p dot edelman at gmx dot net>
- * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2014      by Michael G. Hansen <mike at mghansen dot de>
  *
  * This program is free software; you can redistribute it
@@ -90,15 +90,15 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const KUrl& defaultUrl
 
     // Everything else is stacked in a vertical box.
     setMainWidget(new QWidget(this));
-    QVBoxLayout* vBox = new QVBoxLayout(mainWidget());
+    QVBoxLayout* const vBox        = new QVBoxLayout(mainWidget());
 
     // Some explanation.
-    QLabel* explanationLabel = new QLabel(i18n("If you have a photo in your set with a clock or "
-                                               "another external time source on it, you can load "
-                                               "it here and set the indicator to the (date and) "
-                                               "time displayed. The difference of your internal "
-                                               "camera clock will be determined from this "
-                                               "setting."));
+    QLabel* const explanationLabel = new QLabel(i18n("If you have a photo in your set with a clock or "
+                                                     "another external time source on it, you can load "
+                                                     "it here and set the indicator to the (date and) "
+                                                     "time displayed. The difference of your internal "
+                                                     "camera clock will be determined from this "
+                                                     "setting."));
     explanationLabel->setWordWrap(true);
     vBox->addWidget(explanationLabel);
 
@@ -111,12 +111,12 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const KUrl& defaultUrl
     // The date and time entry widget allows the user to enter the date and time
     // displayed in the image. The format is explicitly set, otherwise seconds
     // might not get displayed.
-    QLabel* dtLabel    = new QLabel(i18n("The clock date and time:"));
-    d->calendar        = new QDateTimeEdit();
+    QLabel* const dtLabel    = new QLabel(i18n("The clock date and time:"));
+    d->calendar              = new QDateTimeEdit();
     d->calendar->setDisplayFormat("d MMMM yyyy, hh:mm:ss");
     d->calendar->setCalendarPopup(true);
     d->calendar->setEnabled(false);
-    QHBoxLayout* hBox2 = new QHBoxLayout(mainWidget());
+    QHBoxLayout* const hBox2 = new QHBoxLayout(mainWidget());
     hBox2->addStretch();
     hBox2->addWidget(dtLabel);
     hBox2->addWidget(d->calendar);

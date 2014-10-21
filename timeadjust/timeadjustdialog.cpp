@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -106,11 +106,11 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     setMinimumSize(900, 500);
 
     setMainWidget(new QWidget(this));
-    QGridLayout* mainLayout = new QGridLayout(mainWidget());
-    d->listView             = new MyImageList(mainWidget());
-    d->settingsView         = new SettingsWidget(mainWidget());
+    QGridLayout* const mainLayout = new QGridLayout(mainWidget());
+    d->listView                   = new MyImageList(mainWidget());
+    d->settingsView               = new SettingsWidget(mainWidget());
     d->settingsView->setImageList(d->listView);
-    d->progressBar          = new KPProgressWidget(mainWidget());
+    d->progressBar                = new KPProgressWidget(mainWidget());
     d->progressBar->reset();
     d->progressBar->hide();
 
@@ -126,13 +126,13 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // -- About data and help button ----------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Time Adjust"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
-                             ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                                   "(c) 2006-2012, Gilles Caulier\n"
-                                   "(c) 2012, Smit Mehta"));
+    KPAboutData* const about = new KPAboutData(ki18n("Time Adjust"),
+                                   0,
+                                   KAboutData::License_GPL,
+                                   ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
+                                   ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
+                                         "(c) 2006-2014, Gilles Caulier\n"
+                                         "(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n("Jesper K. Pedersen"),
                      ki18n("Author"),
@@ -194,6 +194,7 @@ TimeAdjustDialog::~TimeAdjustDialog()
 void TimeAdjustDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
+
     saveSettings();
     e->accept();
 }
@@ -291,6 +292,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
     foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         KPImageInfo info(url);
+
         if (info.isExactDate())
         {
             d->itemsUsedMap.insert(url, info.date());
@@ -319,6 +321,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
     foreach (const KUrl& url, d->itemsUsedMap.keys())
     {
         KPMetadata meta;
+
         if (!meta.load(url.toLocalFile()))
         {
             d->itemsUsedMap.insert(url, QDateTime());

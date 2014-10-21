@@ -6,8 +6,8 @@
  * Date        : 2012-17-04
  * Description : time adjust images list.
  *
- * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,10 +56,12 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
 {
     foreach (const KUrl& url, map.keys())
     {
-        KPImagesListViewItem* item = listView()->findItem(url);
+        KPImagesListViewItem* const item = listView()->findItem(url);
+
         if (item)
         {
             QDateTime dt = map.value(url);
+
             if (dt.isValid())
             {
                 item->setText(type, KGlobal::locale()->formatDateTime(dt, KLocale::ShortDate, true));
@@ -84,7 +86,8 @@ void MyImageList::setStatus(const QMap<KUrl, int>& status)
 {
     foreach (const KUrl& url, status.keys())
     {
-        KPImagesListViewItem* item = listView()->findItem(url);
+        KPImagesListViewItem* const item = listView()->findItem(url);
+
         if (item)
         {
             QStringList errors;

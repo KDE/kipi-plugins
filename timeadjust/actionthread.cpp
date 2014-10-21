@@ -6,8 +6,8 @@
  * Date        : 2004-05-16
  * Description : a plugin to set time stamp of picture files.
  *
- * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -64,12 +64,11 @@ ActionThread::~ActionThread()
     wait();
 
     delete d;
-
 }
 
 void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
 {
-    d->itemsMap               = map;
+    d->itemsMap                     = map;
     JobCollection* const collection = new JobCollection();
 
     foreach (const KUrl& url, d->itemsMap.keys())
@@ -122,6 +121,7 @@ KUrl ActionThread::newUrl(const KUrl& url, const QDateTime& dt)
 
     KUrl newUrl = url;
     newUrl.setFileName(newFileName);
+
     return newUrl;
 }
 
