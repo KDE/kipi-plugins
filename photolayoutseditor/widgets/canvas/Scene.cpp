@@ -791,7 +791,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent * event)
 
             // If single selection mode, clear CTRL modifier
             if (selectionMode & SingleSelection)
-                event->setModifiers(QFlags<Qt::KeyboardModifier>(((int)event->modifiers()) & !Qt::ControlModifier));
+                event->setModifiers(QFlags<Qt::KeyboardModifier>(((int)event->modifiers()) & ~Qt::ControlModifier));
 
             // Get items under mouse
             d->m_pressed_object = d->m_pressed_item = 0;
