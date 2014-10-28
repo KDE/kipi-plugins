@@ -178,6 +178,8 @@ void SlideShowLoader::next()
 
     int newBorn = (m_currIndex + int(m_cacheSize / 2) + 1) % m_pathList.count();
 
+    m_currIndex = (m_currIndex + 1) % m_pathList.count();
+
     if (victim == newBorn)
         return;
 
@@ -208,8 +210,6 @@ void SlideShowLoader::next()
     newThread->start();
 
     m_threadLock->unlock();
-
-    m_currIndex = (m_currIndex + 1) % m_pathList.count();
 }
 
 void SlideShowLoader::prev()
@@ -218,6 +218,8 @@ void SlideShowLoader::prev()
     int newBorn = (m_currIndex - ((m_cacheSize & 2) == 0 ? (m_cacheSize / 2)
                                                          : int(m_cacheSize / 2) + 1)) % m_pathList.count();
 
+    m_currIndex = (m_currIndex - 1) % m_pathList.count();
+
     if (victim == newBorn)
         return;
 
@@ -249,8 +251,6 @@ void SlideShowLoader::prev()
     newThread->start();
 
     m_threadLock->unlock();
-
-    m_currIndex = (m_currIndex - 1) % m_pathList.count();
 }
 
 QImage SlideShowLoader::getCurrent()
