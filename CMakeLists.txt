@@ -58,13 +58,11 @@ FIND_PACKAGE(Kipi ${KIPI_MIN_VERSION})
 
 IF(KIPI_FOUND)
 
-
-
-    FIND_PACKAGE(Kexiv2                   REQUIRED)
-    FIND_PACKAGE(JPEG                     REQUIRED)
-    FIND_PACKAGE(PNG                      REQUIRED)
-    FIND_PACKAGE(TIFF                     REQUIRED)
-    FIND_PACKAGE(Kdcraw                   REQUIRED)
+    FIND_PACKAGE(Kexiv2 REQUIRED)
+    FIND_PACKAGE(JPEG   REQUIRED)
+    FIND_PACKAGE(PNG    REQUIRED)
+    FIND_PACKAGE(TIFF   REQUIRED)
+    FIND_PACKAGE(Kdcraw REQUIRED)
 
     # Check the libkdcraw version
 
@@ -107,14 +105,6 @@ IF(KIPI_FOUND)
     MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
-
-    # Check the libkgeomap version
-    # note that old versions don't specify version information, so for now
-    # just inform the user if version information was found
-    IF (KGEOMAP_VERSION)
-        MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION}")
-        # TODO: fail if the version is too low
-    ENDIF (KGEOMAP_VERSION)
 
     # X11 check, LINUX Only.
     IF(NOT WIN32 AND NOT APPLE)
@@ -293,7 +283,7 @@ IF(KIPI_FOUND)
 
         # Add a custom target to drive the custom command.
         ADD_CUSTOM_TARGET(kipiplugins-gitversion
-                        ALL COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake")
+                          ALL COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake")
 
         # ==================================================================================================
 
@@ -399,6 +389,7 @@ IF(KIPI_FOUND)
         IF (NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
             SET(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})
         ENDIF (NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
+
         IF(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
             ADD_SUBDIRECTORY(htmlexport)
         ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
