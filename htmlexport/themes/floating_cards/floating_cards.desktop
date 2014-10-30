@@ -162,7 +162,6 @@ Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
 Name=Keyboard navigation
-Name[de]=Tastaturnavigation
 Type=list
 Default=1
 Value_0=1
@@ -180,7 +179,6 @@ Caption_1[de]=Aus
 
 [X-HTMLExport Parameter preload]
 Name=Preload
-Name[de]=Vorausladen
 Type=list
 Default=1
 Value_0=1
