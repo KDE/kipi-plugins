@@ -162,6 +162,10 @@ Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
 Name=Keyboard navigation
+Name[nl]=Navigatie met het toetsenbord
+Name[sl]=Krmarjenje s tipkovnico
+Name[uk]=Навігація за допомогою клавіатури
+Name[x-test]=xxKeyboard navigationxx
 Type=list
 Default=1
 Value_0=1
@@ -179,6 +183,10 @@ Caption_1[de]=Aus
 
 [X-HTMLExport Parameter preload]
 Name=Preload
+Name[nl]=vooraf laden
+Name[sl]=Prednaloži
+Name[uk]=Попереднє завантаження
+Name[x-test]=xxPreloadxx
 Type=list
 Default=1
 Value_0=1
