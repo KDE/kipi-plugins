@@ -86,6 +86,7 @@
 #include <libkgeomap/kgeomap_widget.h>
 #include <libkgeomap/itemmarkertiler.h>
 #include <libkgeomap/tracks.h>
+#include <libkgeomap/version.h>
 
 // Local includes
 
@@ -1222,7 +1223,9 @@ KGeoMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
     mapWidget->setDragDropHandler(d->mapDragDropHandler);
     mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
     mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
+#if KGEOMAP_VERSION >= 0x030000
     mapWidget->setTrackManager(d->trackManager);
+#endif
     mapWidget->setSortOptionsMenu(d->sortMenu);
 
     vbox->addWidget(mapWidget);
