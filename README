@@ -58,8 +58,8 @@ WallPaper          : A tool to set image as background on your desktop.
 -- DEPENDENCIES -------------------------------------------------------
 
 CMake           >= 2.4.5                        http://www.cmake.org
-libqt           >= 4.3.x                        http://www.qtsoftware.com
-libkde          >= 4.0.x                        http://www.kde.org
+libqt           >= 4.3.0                        http://www.qtsoftware.com
+libkde          >= 4.3.0                        http://www.kde.org
 libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.x                        http://www.libpng.org/pub/png/libpng.html
@@ -72,13 +72,14 @@ Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
-libxslt         >= 1.1                          http://xmlsoft.org/XSLT
-libxml2         >= 2.7.x                        http://xmlsoft.org
+libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
+libxml2         >= 2.7.0                        http://xmlsoft.org
 libX11          >= 1.1.5                        http://www.x11.org
-libexpat        >= 2.0.1                        http://expat.sourceforge.net
-libqtopengl     >= 4.3.x                        http://www.trolltech.com
+libexpat        >= 2.0.0                        http://expat.sourceforge.net
+libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
 libopencv       >= 2.4.9                        http://opencv.willowgarage.com
+libkdepimlibs   >= 4.4.0                        http://pim.kde.org
 libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
@@ -87,34 +88,38 @@ libksane        >= 0.3.0                        https://projects.kde.org/project
 libkgeomap      >= 2.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
 libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
+libimagemagick  >= 5.5.4                        http://www.imagemagick.org
+libqtgstreamer  >= 0.9.0                        http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
-kqoauth         >= 0.97                         http://gitorious.org/kqoauth
-flex            >= 2.5.x                        http://flex.sourceforge.net
-bison           >= 2.5.x                        http://www.gnu.org/software/bison/bison.html
+libqtkoauth     >= 0.97                         http://gitorious.org/kqoauth
+flex            >= 2.5.0                        http://flex.sourceforge.net
+bison           >= 2.5.0                        http://www.gnu.org/software/bison/bison.html
 
 Plugin Specific Dependencies (for compiling and for running) :
 
 SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
-DngConverter       : libexpat and libkdcraw 0.4.0
-AcquireImages      : libksane
-HtmlZxport         : libxslt and libxml2
-JpegLossless       : imagemagick (runtime dependency)
-WallPaper          : kdebase (runtime dependency)
+DngConverter       : libexpat.
+AcquireImages      : libksane.
+HtmlExport         : libxslt and libxml2.
+JpegLossless       : imagemagick (runtime dependency).
+WallPaper          : kdebase (runtime dependency).
 RemoveRedEyes      : libopencv.
-IpodExport         : libgpod, libgdk.
-Calendar           : libkcal (kdepimlibs).
+IpodExport         : libgpod and libgdk.
+Calendar           : libkdepimlibs.
 Shwup              : libqca.
 YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 FaceBook           : libqjson.
 ExpoBlending       : Hugin command line tools (runtime dependency).
-GPSSync            : libkmap.
+GPSSync            : libkgeomap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 DLNAExport         : libhupnp.
-ImgurExport        : kqoauth for Imgur.com's authenticated API
-Panorama           : Hugin command line tools, flex, bison (runtime dependency)
+VideoSlideshow     : libimagemagick and libqtgstreamer
+Imgur              : libqtkoauth.
+ImgurExport        : kqoauth for Imgur.com's authenticated API.
+Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 
 -- CONTACT ------------------------------------------------------------
 
