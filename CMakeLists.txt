@@ -39,9 +39,10 @@ SET(KIPIPLUGINS_LIB_SO_VERSION_STRING
 
 CMAKE_POLICY(SET CMP0017 NEW)
 
-FIND_PACKAGE(KDE4 REQUIRED)
-
-ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+SET(QT_MIN_VERSION   "4.6.0")
+SET(KDE_MIN_VERSION  "4.4.0")
+FIND_PACKAGE(Qt4  ${QT_MIN_VERSION}  REQUIRED)
+FIND_PACKAGE(KDE4 ${KDE_MIN_VERSION} REQUIRED)
 
 INCLUDE(MacroOptionalFindPackage)
 INCLUDE(FindPackageHandleStandardArgs)
@@ -151,6 +152,8 @@ IF(KIPI_FOUND)
 
     # Require shared libraries results.
 
+    PRINT_LIBRARY_STATUS("libqt"     "http://www.qtsoftware.com"                                        "(version >= ${QT_MIN_VERSION})"     QT_FOUND)
+    PRINT_LIBRARY_STATUS("libkde"    "http://www.kde.org"                                               "(version >= ${KDE_MIN_VERSION})"    KDE4_FOUND)
     PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                                               "(version >= 6b)"                    JPEG_FOUND)
     PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"                             "(version >= 3.8.2)"                 TIFF_FOUND)
     PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html"                        "(version >= 1.2.7)"                 PNG_FOUND)
@@ -191,7 +194,7 @@ IF(KIPI_FOUND)
 
     MESSAGE(STATUS "")
 
-    IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
+    IF(QT_FOUND AND KDE4_FOUND AND KIPI_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND)
         SET(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
         FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
         MESSAGE(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
@@ -304,7 +307,7 @@ IF(KIPI_FOUND)
                           ALL COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake")
 
         # ==================================================================================================
-
+        
         INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                             ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/dialogs
@@ -317,6 +320,8 @@ IF(KIPI_FOUND)
                             ${KDE4_INCLUDES}
                             ${QT4_INCLUDES}
                         )
+
+        ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
         # To prevent warnings from M$ compiler
 
