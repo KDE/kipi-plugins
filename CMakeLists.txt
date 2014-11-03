@@ -82,24 +82,6 @@ IF(KIPI_FOUND)
 
     ENDIF()
 
-    # -- check the libkgeomap version -----------------------------------------------------------------
-
-    SET(KGEOMAP_MIN_VERSION "3.0.0")
-
-    IF(KGEOMAP_VERSION)
-
-        MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION} (required: ${KGEOMAP_MIN_VERSION})")
-        IF(${KGEOMAP_VERSION} VERSION_LESS ${KGEOMAP_MIN_VERSION})
-            SET(KGEOMAP_FOUND FALSE)
-        ENDIF()
-
-    ELSE()
-
-        MESSAGE(WARNING "libkgeomap: Version information not found, your version is probably too old.")
-        SET(KGEOMAP_FOUND FALSE)
-
-    ENDIF()
-
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
     MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
@@ -125,10 +107,32 @@ IF(KIPI_FOUND)
     MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
 
-    # X11 check, LINUX Only.
+    
+    # -- check the libkgeomap version -----------------------------------------------------------------
+
+    SET(KGEOMAP_MIN_VERSION "3.0.0")
+
+    IF(KGEOMAP_VERSION)
+
+        MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION} (required: ${KGEOMAP_MIN_VERSION})")
+        IF(${KGEOMAP_VERSION} VERSION_LESS ${KGEOMAP_MIN_VERSION})
+            SET(KGEOMAP_FOUND FALSE)
+        ENDIF()
+
+    ELSE()
+
+        MESSAGE(WARNING "libkgeomap: Version information not found, your version is probably too old.")
+        SET(KGEOMAP_FOUND FALSE)
+
+    ENDIF()
+
+    # -- X11 check, LINUX Only -------------------------------------------------------------------------
+
     IF(NOT WIN32 AND NOT APPLE)
         MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
     ENDIF()
+
+    # -- OpenCV ----------------------------------------------------------------------------------------
 
     INCLUDE(MacroUtils)
     INCLUDE(MacroOpenCV)
