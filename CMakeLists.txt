@@ -64,25 +64,44 @@ IF(KIPI_FOUND)
     FIND_PACKAGE(TIFF   REQUIRED)
     FIND_PACKAGE(Kdcraw REQUIRED)
 
-    # Check the libkdcraw version
+    # -- check the libkdcraw version -----------------------------------------------------------------
 
     SET(KDCRAW_MIN_VERSION "2.2.0")
 
-    IF (KDCRAW_VERSION)
+    IF(KDCRAW_VERSION)
 
         MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
         IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
             SET(KDCRAW_FOUND FALSE)
-        ENDIF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+        ENDIF()
 
-    ELSE (KDCRAW_VERSION)
+    ELSE()
 
         MESSAGE(WARNING "libkdcraw: Version information not found, your version is probably too old.")
         SET(KDCRAW_FOUND FALSE)
 
-    ENDIF (KDCRAW_VERSION)
+    ENDIF()
 
-    # Optional dependencies detection required by some plugins
+    # -- check the libkgeomap version -----------------------------------------------------------------
+
+    SET(KGEOMAP_MIN_VERSION "3.0.0")
+
+    IF(KGEOMAP_VERSION)
+
+        MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION} (required: ${KGEOMAP_MIN_VERSION})")
+        IF(${KGEOMAP_VERSION} VERSION_LESS ${KGEOMAP_MIN_VERSION})
+            SET(KGEOMAP_FOUND FALSE)
+        ENDIF()
+
+    ELSE()
+
+        MESSAGE(WARNING "libkgeomap: Version information not found, your version is probably too old.")
+        SET(KGEOMAP_FOUND FALSE)
+
+    ENDIF()
+
+    # -- Optional dependencies detection required by some plugins -------------------------------------
+
     MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
     MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
     MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
@@ -109,7 +128,7 @@ IF(KIPI_FOUND)
     # X11 check, LINUX Only.
     IF(NOT WIN32 AND NOT APPLE)
         MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
-    ENDIF(NOT WIN32 AND NOT APPLE)
+    ENDIF()
 
     INCLUDE(MacroUtils)
     INCLUDE(MacroOpenCV)
@@ -128,32 +147,32 @@ IF(KIPI_FOUND)
 
     # Require shared libraries results.
 
-    PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                        ""                                   JPEG_FOUND)
-    PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"      ""                                   TIFF_FOUND)
-    PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html" "(version >= 1.2.7)"                 PNG_FOUND)
-    PRINT_LIBRARY_STATUS("libkipi"   "http://www.digikam.org/sharedlibs"         "(version >= ${KIPI_MIN_VERSION})"   KIPI_FOUND)
-    PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs"         "(version >= 1.2.0)"                 KEXIV2_FOUND)
-    PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs"         "(version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
+    PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                                               "(version >= 6b)"                    JPEG_FOUND)
+    PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"                             "(version >= 3.8.2)"                 TIFF_FOUND)
+    PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html"                        "(version >= 1.2.7)"                 PNG_FOUND)
+    PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION})"   KIPI_FOUND)
+    PRINT_LIBRARY_STATUS("libkexiv2" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2" "(version >= 1.2.0)"                 KEXIV2_FOUND)
+    PRINT_LIBRARY_STATUS("libkdcraw" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw" "(version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
 
     # Optional shared libraries results.
 
-    PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                 "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                 "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                 "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})" "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.6.0)"                 "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"  "http://pim.kde.org"                                              "(version >= 4.3.0)"                 "Kipi-plugins will be compiled without libkdepimlibs support."  KDEPIMLIBS_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.0.0"                  "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "http://www.digikam.org/sharedlibs"                               "(version >= 2.0.0)"                 "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 1.0.0)"                 "Kipi-plugins will be compiled without libmediawiki support."   MEDIAWIKI_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 0.1.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  LIBKVKONTAKTE_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                 "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                 "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libgpod"        "http://www.gtkpod.org/libgpod.html"                              "(version >= 0.7.0)"                 "Kipi-plugins will be compiled without libgpod support."        IPOD_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libgdk"         "http://library.gnome.org/devel/gdk-pixbuf"                       "(version >= 2.0.0)"                 "Kipi-plugins will be compiled without libgdk support."         GDK_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                  "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 0.3.0)"                 "Kipi-plugins will be compiled without libksane support."       KSANE_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libhupnp"       "http://www.herqq.org"                                            "(version >= 2.0.0)"                 "Internal version used instead"                                 HUPNP_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.6.0)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"  "http://pim.kde.org"                                              "(version >= 4.3.0)"                  "Kipi-plugins will be compiled without libkdepimlibs support."  KDEPIMLIBS_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.0.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 1.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   MEDIAWIKI_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 0.1.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  LIBKVKONTAKTE_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libgpod"        "http://www.gtkpod.org/libgpod.html"                              "(version >= 0.7.0)"                  "Kipi-plugins will be compiled without libgpod support."        IPOD_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libgdk"         "http://library.gnome.org/devel/gdk-pixbuf"                       "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libgdk support."         GDK_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 0.3.0)"                  "Kipi-plugins will be compiled without libksane support."       KSANE_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libhupnp"       "http://www.herqq.org"                                            "(version >= 2.0.0)"                  "Internal version used instead"                                 HUPNP_FOUND)
 
     PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGl support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
@@ -162,7 +181,7 @@ IF(KIPI_FOUND)
     # LINUX Only.
     IF(NOT WIN32 AND NOT APPLE)
         PRINT_OPTIONAL_LIBRARY_STATUS("libX11" "http://www.x11.org" "(version >= 1.1.5)" "Kipi-plugins will be compiled without libX11 support." X11_FOUND AND X11_Xrandr_FOUND)
-    ENDIF(NOT WIN32 AND NOT APPLE)
+    ENDIF()
 
     # Optional plugins results ----------------------------------------------------------------------------
 
@@ -173,10 +192,10 @@ IF(KIPI_FOUND)
         FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
         MESSAGE(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
         SET(KIPIPLUGINS_CAN_BE_COMPILED true)
-    ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
+    ELSE()
         MESSAGE(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
         SET(KIPIPLUGINS_CAN_BE_COMPILED false)
-    ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
+    ENDIF()
 
     PRINT_COMPONENT_COMPILE_STATUS("Shwup"       QCA2_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
@@ -184,33 +203,33 @@ IF(KIPI_FOUND)
 
     # decide if AdvancedSlideshow and ImageViewer can be built
     IF(NOT WIN32 AND NOT APPLE)
-        IF (X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
+        IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
             SET(BUILD_VIEWERS TRUE)
-        ELSE (X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
+        ELSE()
             SET(BUILD_VIEWERS FALSE)
-        ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
-    ELSE(NOT WIN32 AND NOT APPLE)
-        IF (OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
+        ENDIF()
+    ELSE()
+        IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
             SET(BUILD_VIEWERS TRUE)
-        ELSEIF (OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
+        ELSEIF()
             SET(BUILD_VIEWERS FALSE)
-        ENDIF (OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
-    ENDIF(NOT WIN32 AND NOT APPLE)
+        ENDIF()
+    ENDIF()
 
     # decide if wallpaper plugin can be built
     # NOTE: See relevant patch which must be applied to KDE Plasma API :
     # https://git.reviewboard.kde.org/r/105319/
     # Relevant Bugzilla entry :
     # https://bugs.kde.org/show_bug.cgi?id=217950
-    SET (WALLPAPER_KDE_REQ_VER "5.0.0")
+    SET(WALLPAPER_KDE_REQ_VER "5.0.0")
 
-    IF (KDE_VERSION)
-        IF (${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
+    IF(KDE_VERSION)
+        IF(${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
             SET(BUILD_WALLPAPER FALSE)
-        ELSE (${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
+        ELSE()
             SET(BUILD_WALLPAPER TRUE)
-        ENDIF (${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
-    ENDIF (KDE_VERSION)
+        ENDIF()
+    ENDIF()
 
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
@@ -234,13 +253,13 @@ IF(KIPI_FOUND)
 
     # Set QtGStreamer API version --------------------------------------------------------------------------
 
-    IF (QTGSTREAMER_FOUND)
+    IF(QTGSTREAMER_FOUND)
 
         MESSAGE(STATUS "----------------------------------------------------------------------------------")
         MESSAGE(STATUS "")
 
-        IF( (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
-            OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1) )
+        IF((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
+           OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1) )
             SET(GSTREAMER_API_1 TRUE)
         ELSE()
             SET(GSTREAMER_API_1 FALSE)
@@ -268,7 +287,7 @@ IF(KIPI_FOUND)
 
         IF(NOT GIT_MARKER)
             SET (GIT_MARKER ${CMAKE_SOURCE_DIR}/CMakeLists.txt)  # Dummy file
-        ENDIF(NOT GIT_MARKER)
+        ENDIF()
 
         # Add a custom command to drive the git script whenever the git entries
         # file changes.
@@ -301,7 +320,7 @@ IF(KIPI_FOUND)
             ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
             ADD_DEFINITIONS(-D_ATL_SECURE_NO_WARNINGS)
             ADD_DEFINITIONS(-D_AFX_SECURE_NO_WARNINGS)
-        ENDIF(WIN32 AND MSVC)
+        ENDIF()
 
         # Debug settings
 
@@ -316,7 +335,7 @@ IF(KIPI_FOUND)
 
         IF(KDE4_BUILD_TESTS)
             ADD_SUBDIRECTORY(tests)
-        ENDIF(KDE4_BUILD_TESTS)
+        ENDIF()
 
         # Plugins which will be always compiled
 
@@ -351,20 +370,20 @@ IF(KIPI_FOUND)
 
         IF(KDEPIMLIBS_FOUND)
             ADD_SUBDIRECTORY(calendar)
-        ENDIF(KDEPIMLIBS_FOUND)
+        ENDIF()
 
         IF(QCA2_FOUND)
             ADD_SUBDIRECTORY(shwup)
             ADD_SUBDIRECTORY(yandexfotki)
-        ENDIF(QCA2_FOUND)
+        ENDIF()
 
         IF(IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
             ADD_SUBDIRECTORY(ipodexport)
-        ENDIF(IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
+        ENDIF()
 
         IF(OpenCV_FOUND)
             ADD_SUBDIRECTORY(removeredeyes)
-        ENDIF(OpenCV_FOUND)
+        ENDIF()
 
         IF(QJSON_FOUND)
             ADD_SUBDIRECTORY(debianscreenshots)
@@ -372,69 +391,69 @@ IF(KIPI_FOUND)
             ADD_SUBDIRECTORY(imgurexport)
             ADD_SUBDIRECTORY(googledrive)
             ADD_SUBDIRECTORY(dropbox)
-        ENDIF(QJSON_FOUND)
+        ENDIF()
 
         IF(LIBKVKONTAKTE_FOUND)
             ADD_SUBDIRECTORY(vkontakte)
-        ENDIF(LIBKVKONTAKTE_FOUND)
+        ENDIF()
 
         # Currently the cmake module distributed w/ cmake uses a different variable
         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
         # distributed w/ kdelibs LIBEXSLT_LIBRARIES.
-        IF (NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
+        IF(NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
             SET(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})
-        ENDIF (NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
+        ENDIF()
 
         IF(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
             ADD_SUBDIRECTORY(htmlexport)
-        ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
+        ENDIF()
 
         IF(KSANE_FOUND)
             ADD_SUBDIRECTORY(acquireimages)
-        ENDIF(KSANE_FOUND)
+        ENDIF()
 
         IF(BUILD_VIEWERS)
             ADD_SUBDIRECTORY(advancedslideshow)
             ADD_SUBDIRECTORY(imageviewer)
-        ENDIF(BUILD_VIEWERS)
+        ENDIF()
 
         IF(EXPAT_FOUND)
             IF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
                 ADD_SUBDIRECTORY(dngconverter)
-            ENDIF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-        ENDIF(EXPAT_FOUND)
+            ENDIF()
+        ENDIF()
 
         IF(KGEOMAP_FOUND)
             ADD_SUBDIRECTORY(gpssync)
-        ENDIF(KGEOMAP_FOUND)
+        ENDIF()
 
         IF(MEDIAWIKI_FOUND)
             ADD_SUBDIRECTORY(mediawiki)
-        ENDIF(MEDIAWIKI_FOUND)
+        ENDIF()
 
         IF(FLEX_FOUND AND BISON_FOUND)
             ADD_SUBDIRECTORY(panorama)
-        ENDIF(FLEX_FOUND AND BISON_FOUND)
+        ENDIF()
 
         IF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
             ADD_SUBDIRECTORY(videoslideshow)
-        ENDIF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+        ENDIF()
 
         IF(BUILD_WALLPAPER)
             ADD_SUBDIRECTORY(wallpaper)
-        ENDIF(BUILD_WALLPAPER)
+        ENDIF()
 
         IF(NOT WIN32)
             CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
-        ENDIF(NOT WIN32)
+        ENDIF()
 
-    ENDIF(KIPIPLUGINS_CAN_BE_COMPILED)
+    ENDIF()
 
-ELSE(KIPI_FOUND)
+ELSE()
 
     MESSAGE(STATUS "")
     MESSAGE(STATUS "----------------------------------------------------------------------------------")
     MESSAGE(STATUS " libkipi not found. kipi-plugins ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
     MESSAGE(STATUS "")
 
-ENDIF(KIPI_FOUND)
+ENDIF()

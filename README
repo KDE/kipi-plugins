@@ -60,9 +60,9 @@ WallPaper          : A tool to set image as background on your desktop.
 CMake           >= 2.4.5                        http://www.cmake.org
 libqt           >= 4.3.0                        http://www.qtsoftware.com
 libkde          >= 4.3.0                        http://www.kde.org
-libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
+libtiff         >= 3.8.2                        http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
-libpng          >= 1.2.x                        http://www.libpng.org/pub/png/libpng.html
+libpng          >= 1.2.0                        http://www.libpng.org/pub/png/libpng.html
 libkipi         >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
 libkexiv2       >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
 libkdcraw       >= 2.2.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
@@ -85,7 +85,7 @@ libgdk          >= 2.0.0                        http://library.gnome.org/devel/g
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
-libkgeomap      >= 2.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
+libkgeomap      >= 3.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
 libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
 libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libimagemagick  >= 5.5.4                        http://www.imagemagick.org
