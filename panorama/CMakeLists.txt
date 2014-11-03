@@ -56,7 +56,7 @@ SET(panorama_common_SRCS
 FOREACH(_currentfile ${panorama_common_SRCS})
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF(NOT MSVC)
+    ENDIF()
 ENDFOREACH(_currentfile ${panorama_common_SRCS})
 
 KDE4_ADD_LIBRARY(libpanorama STATIC ${panorama_common_SRCS})
@@ -95,7 +95,7 @@ IF(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
     KDE4_ADD_EXECUTABLE(pto_parser_test ${pto_parser_test_SRCS})
 
     TARGET_LINK_LIBRARIES(pto_parser_test libpanorama)
-ENDIF(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
+ENDIF()
 
 # =======================================================
 # Stand alone version of Panorama plugin

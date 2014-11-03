@@ -1,10 +1,12 @@
 
 # =======================================================
 # DNG SDK and XMP SDK use C++ exceptions
+
 ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 # =======================================================
 # XMP SDK source code.
+
 KDE4_NO_ENABLE_FINAL(kipiplugin_dngwriter)
 
 INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
@@ -16,12 +18,13 @@ INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
                    )
 
 # Set platteforms env.
+
 IF(WIN32)
     ADD_DEFINITIONS(
                     # Set Windows rules.
                     -DWIN_ENV=1
                    )
-ELSE(WIN32)
+ELSE()
 #    NOTE: see bug #195735: do not enable Mac flags provided by Adobe.
 #          Sound like all compile fine like under Linux.
 #    IF(APPLE)
@@ -29,21 +32,22 @@ ELSE(WIN32)
 #                        # Set MACOS-X rules.
 #                        -DMAC_ENV=1
 #                       )
-#    ELSE(APPLE)
+#    ELSE()
         ADD_DEFINITIONS(
                         # Set Linux & co rules.
                         -DUNIX_ENV=1
                        )
-#    ENDIF(APPLE)
-ENDIF(WIN32)
+#    ENDIF()
+ENDIF()
 
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
+
 FOREACH(_currentfile ${libmd5_SRCS})
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF(NOT MSVC)
+    ENDIF()
 ENDFOREACH(_currentfile ${libmd5_SRCS})
 
 KDE4_ADD_LIBRARY(libmd5 STATIC ${libmd5_SRCS})
@@ -69,12 +73,13 @@ SET(libxmp_SRCS
 
 # Disable XMP SDK warnings: we will never touch this code.
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
+
 FOREACH(_currentfile ${libxmp_SRCS})
     IF(MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
-    ELSE(MSVC)
+    ELSE()
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
-    ENDIF(MSVC)
+    ENDIF()
 ENDFOREACH(_currentfile ${libxmp_SRCS})
 
 KDE4_ADD_LIBRARY(libxmp STATIC ${libxmp_SRCS})
@@ -93,7 +98,7 @@ IF(WIN32)
                     -DqWinOS=1
                     -DqMacOS=0
                    )
-ELSE(WIN32)
+ELSE()
 #    NOTE: see bug #195735: do not enable Mac flags provided by Adobe.
 #          Sound like all compile fine like under Linux.
 #    IF(APPLE)
@@ -102,7 +107,7 @@ ELSE(WIN32)
 #                        -DqWinOS=0
 #                        -DqMacOS=1
 #                       )
-#    ELSE(APPLE)
+#    ELSE()
         ADD_DEFINITIONS(
                         # Set Linux & co rules.
                         -DqWinOS=0
@@ -111,22 +116,25 @@ ELSE(WIN32)
                         # Must be set to 1, else do not compile under Linux.
                         -DqDNGUseStdInt=1
                        )
-#    ENDIF(APPLE)
-ENDIF(WIN32)
+#    ENDIF()
+ENDIF()
 
 # Check processor endianness
 INCLUDE(TestBigEndian)
 TEST_BIG_ENDIAN(IS_BIG_ENDIAN)
+
 IF(NOT IS_BIG_ENDIAN)
     ADD_DEFINITIONS(-DqDNGLittleEndian=1)
-ENDIF(NOT IS_BIG_ENDIAN)
+ENDIF()
 
 # Thread safe support under Mac and Linux using pthread library
+
 IF(NOT WIN32)
     ADD_DEFINITIONS(-DqDNGThreadSafe=1)
-ENDIF(NOT WIN32)
+ENDIF()
 
 # Level of debug info in the console.
+
 ADD_DEFINITIONS(-DqDNGDebug=0)
 ADD_DEFINITIONS(-DqDNGValidateTarget=1)
 
@@ -200,18 +208,18 @@ SET(libdng_SRCS
 FOREACH(_currentfile ${libdng_SRCS})
     IF(MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
-    ELSE(MSVC)
+    ELSE()
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
-    ENDIF(MSVC)
+    ENDIF()
 ENDFOREACH(_currentfile ${libdng_SRCS})
 
 KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
 
 IF(WIN32)
-	TARGET_LINK_LIBRARIES(libdng libxmp)
-ELSE(WIN32)
-	TARGET_LINK_LIBRARIES(libdng libxmp pthread)
-ENDIF(WIN32)
+    TARGET_LINK_LIBRARIES(libdng libxmp)
+ELSE()
+    TARGET_LINK_LIBRARIES(libdng libxmp pthread)
+ENDIF()
 
 # =======================================================
 # DNGWritter interface

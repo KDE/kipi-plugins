@@ -5,7 +5,7 @@ SET(dngconverter_SRCS dngconverter.cpp ${dngconverter_common_SRCS})
 
 IF(WIN32)
     REMOVE_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
-ENDIF(WIN32)
+ENDIF()
 
 KDE4_ADD_APP_ICON(dngconverter_SRCS "../icons/*kipi-dngconverter.png")
 

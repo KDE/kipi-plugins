@@ -26,7 +26,7 @@ IF(NOT WIN32)
                  kipiplugins
                )
 
-ENDIF(NOT WIN32)
+ENDIF()
 
 KDE4_ADD_EXECUTABLE(gpssync_test_rgtagmodel
                     test_rgtagmodel.cpp
@@ -60,9 +60,9 @@ TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
                       kipiplugins
                      )
 
-ADD_TEST(gpssync_test_correlator ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
-ADD_TEST(gpssync_test_gpsrgparsing ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)
-ADD_TEST(gpssync_test_gpsrgtagmodel ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgtagmodel)
+ADD_TEST(gpssync_test_correlator       ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
+ADD_TEST(gpssync_test_gpsrgparsing     ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)
+ADD_TEST(gpssync_test_gpsrgtagmodel    ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgtagmodel)
 ADD_TEST(gpssync_test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_kipiimageitem)
 
 MACRO_OPTIONAL_ADD_SUBDIRECTORY(simpletreemodel)

@@ -22,7 +22,7 @@ IF(QTKOAUTH_FOUND)
         ${kipiplugin_imgurexport_PART_SRCS}
         imgurtalkerauth.cpp
     )
-ENDIF(QTKOAUTH_FOUND)
+ENDIF()
 
 KDE4_ADD_PLUGIN(kipiplugin_imgurexport ${kipiplugin_imgurexport_PART_SRCS})
 
@@ -38,7 +38,7 @@ IF(QTKOAUTH_FOUND)
     TARGET_LINK_LIBRARIES(kipiplugin_imgurexport
                           ${QTKOAUTH_LIBRARIES}
     )
-ENDIF(QTKOAUTH_FOUND)
+ENDIF()
 
 CONFIGURE_FILE(kipiplugin_imgurexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop)
 

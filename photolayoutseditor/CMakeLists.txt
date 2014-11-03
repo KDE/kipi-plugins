@@ -158,14 +158,14 @@ KDE4_ADD_KCFG_FILES( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSk
 FOREACH( _currentfile ${PhotoLayoutsEditor_SRCS} )
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES( ${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC" )
-    ENDIF(NOT MSVC)
+    ENDIF()
 ENDFOREACH( _currentfile ${PhotoLayoutsEditor_SRCS} )
 
 IF(NOT MSVC)
-	# Causes cmake error on openSUSE 12 (cmake 2.8.6)
-	#    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
-	#    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
-ENDIF(NOT MSVC)
+    # Causes cmake error on openSUSE 12 (cmake 2.8.6)
+    #    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
+    #    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
+ENDIF()
 
 KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
 

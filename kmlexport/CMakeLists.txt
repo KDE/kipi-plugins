@@ -23,4 +23,4 @@ INSTALL(FILES   kipiplugin_kmlexportui.rc                                DESTINA
 
 IF(KDE4_BUILD_TESTS)
     MACRO_OPTIONAL_ADD_SUBDIRECTORY(tests)
-ENDIF(KDE4_BUILD_TESTS)
+ENDIF()

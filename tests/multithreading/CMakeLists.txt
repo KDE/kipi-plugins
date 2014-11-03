@@ -60,4 +60,4 @@ IF(THREADWEAVER_FOUND)
                           kipiplugins
                          )
 
-ENDIF(THREADWEAVER_FOUND)
+ENDIF()

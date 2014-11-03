@@ -39,9 +39,9 @@ IF(KDE4_BUILD_TESTS)
         ${kipiplugin_gpssync_PART_SRCS}
         ${CMAKE_CURRENT_SOURCE_DIR}/borrowed/modeltest.cpp
        )
-ENDIF(KDE4_BUILD_TESTS)
+ENDIF()
 
-IF (NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
+IF(NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
     # these are borrowed from a new KDE trunk version
     # and are needed for sorting of the view
     INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future")
@@ -53,7 +53,7 @@ IF (NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
         ${kipiplugin_gpssync_PART_SRCS}
         ${borrowed_future_SRCS}
        )
-ENDIF (NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
+ENDIF()
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
 
@@ -73,7 +73,7 @@ IF(KDE4_BUILD_TESTS)
                           ${QT_QTTEST_LIBRARY}
                           kipiplugins
                          )
-ENDIF(KDE4_BUILD_TESTS)
+ENDIF()
 
 CONFIGURE_FILE(kipiplugin_gpssync.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop)
 
@@ -81,12 +81,11 @@ INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop DESTINATI
 INSTALL(TARGETS kipiplugin_gpssync                                     DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES   kipiplugin_gpssyncui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
-INSTALL(FILES
-    data/bookmarks-marker.png
-    data/searchmarker-normal.png
-    data/searchmarker-selected.png
-    DESTINATION ${DATA_INSTALL_DIR}/gpssync/)
+INSTALL(FILES   data/bookmarks-marker.png
+                data/searchmarker-normal.png
+                data/searchmarker-selected.png
+        DESTINATION ${DATA_INSTALL_DIR}/gpssync/)
 
 IF(KDE4_BUILD_TESTS)
     MACRO_OPTIONAL_ADD_SUBDIRECTORY(tests)
-ENDIF(KDE4_BUILD_TESTS)
+ENDIF()

@@ -25,7 +25,7 @@ KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
 
 IF(WIN32)
     SET_TARGET_PROPERTIES( kipiplugin_jpeglossless PROPERTIES COMPILE_FLAGS -DJPEG_STATIC )
-ENDIF(WIN32)
+ENDIF()
 
 TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                       ${KDE4_KPARTS_LIBS}

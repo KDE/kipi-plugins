@@ -33,7 +33,7 @@ SET(SRCS ${AvTest_SRCS} ${AvTest_FORMS})
 FOREACH(_currentfile ${SRCS})
     IF(NOT MSVC)
         SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF(NOT MSVC)
+    ENDIF()
 ENDFOREACH(_currentfile ${SRCS})
 
 KDE4_ADD_EXECUTABLE(avtest ${SRCS})

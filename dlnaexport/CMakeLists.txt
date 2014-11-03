@@ -5,7 +5,7 @@ IF(HUPNP_FOUND AND HUPNPAV_FOUND)
 
     INCLUDE_DIRECTORIES(${HUPNP_INCLUDE_DIR})
 
-ELSE(HUPNP_FOUND AND HUPNPAV_FOUND)
+ELSE()
 
     ADD_DEFINITIONS(-DH_BUILD_UPNP_CORE_LIB)
     ADD_DEFINITIONS(-DH_BUILD_UPNP_LIGHTING_LIB)
@@ -16,7 +16,7 @@ ELSE(HUPNP_FOUND AND HUPNPAV_FOUND)
     INCLUDE_DIRECTORIES(extra/hupnp/include)
     INCLUDE_DIRECTORIES(extra/hupnp_av/include)
 
-ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
+ENDIF()
 
 SET(kipiplugin_dlnaexport_PART_SRCS
     finalpage.cpp
@@ -46,14 +46,14 @@ IF(HUPNP_FOUND AND HUPNPAV_FOUND)
                           ${HUPNPAV_LIBS}
                          )
 
-ELSE(HUPNP_FOUND AND HUPNPAV_FOUND)
+ELSE()
 
     TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
                           HUpnp
                           HUpnpAv
                          )
 
-ENDIF(HUPNP_FOUND AND HUPNPAV_FOUND)
+ENDIF()
 
 CONFIGURE_FILE(kipiplugin_dlnaexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
 
