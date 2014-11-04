@@ -1,9 +1,15 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/wizard
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/wizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/tools
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
-SET(kipiplugin_printimages_PART_SRCS
+set(kipiplugin_printimages_PART_SRCS
     plugin/plugin_printimages.cpp
     tools/tphoto.cpp
     tools/utils.cpp
@@ -30,7 +36,7 @@ KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_printimages
+target_link_libraries(kipiplugin_printimages
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KIO_LIBS}
                       ${QT_QTCORE_LIBRARY}
@@ -41,10 +47,10 @@ TARGET_LINK_LIBRARIES(kipiplugin_printimages
                       kipiplugins
                      )
 
-CONFIGURE_FILE(plugin/kipiplugin_printimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
+configure_file(plugin/kipiplugin_printimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
 
-INSTALL(FILES     ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS   kipiplugin_printimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES     plugin/kipiplugin_printimagesui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
-INSTALL(FILES     TEMPLATE_HOWTO                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)
-INSTALL(DIRECTORY templates                                                         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)
+install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS   kipiplugin_printimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES     plugin/kipiplugin_printimagesui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES     TEMPLATE_HOWTO                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)
+install(DIRECTORY templates                                                         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)

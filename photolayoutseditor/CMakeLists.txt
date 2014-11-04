@@ -1,13 +1,19 @@
-ADD_SUBDIRECTORY( extra/qtpropertybrowser )
-ADD_SUBDIRECTORY( resources/app )
-ADD_SUBDIRECTORY( data )
-ADD_SUBDIRECTORY( effectplugins )
-ADD_SUBDIRECTORY( borderplugins )
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-SET( CMAKE_PACKAGE_QTGUI TRUE )
-SET( QT_USE_QTXML TRUE )
+add_subdirectory(extra/qtpropertybrowser)
+add_subdirectory(resources/app)
+add_subdirectory(data)
+add_subdirectory(effectplugins)
+add_subdirectory(borderplugins)
 
-SET(PLE_Common_SRCS
+set(CMAKE_PACKAGE_QTGUI TRUE)
+set(QT_USE_QTXML        TRUE)
+
+set(PLE_Common_SRCS
     plugin/photolayoutseditor.cpp
     settings/PLEConfigDialog.cpp
     settings/PLEConfigViewWidget.cpp
@@ -21,7 +27,7 @@ SET(PLE_Common_SRCS
     undo/UndoMoveRowsCommand.cpp
    )
 
-SET(PLE_Widgets_SRCS
+set(PLE_Widgets_SRCS
     widgets/canvas/Canvas.cpp
     widgets/canvas/CanvasSize.cpp
     widgets/canvas/CropWidgetItem.cpp
@@ -59,14 +65,14 @@ SET(PLE_Widgets_SRCS
     widgets/tools/ZoomTool.cpp
    )
 
-SET(PLE_Models_SRCS
+set(PLE_Models_SRCS
     models/AbstractMovableModel.cpp
     models/LayersModel.cpp
     models/LayersModelItem.cpp
     models/LayersSelectionModel.cpp
    )
 
-SET(PLE_Borders_SRCS
+set(PLE_Borders_SRCS
     borderplugins/StandardBordersFactory.cpp
     borderplugins/polaroid/PolaroidBorderDrawer.cpp
     borderplugins/solid/SolidBorderDrawer.cpp
@@ -76,7 +82,7 @@ SET(PLE_Borders_SRCS
     borders/BordersGroup.cpp
    )
 
-SET(PLE_Effects_SRCS
+set(PLE_Effects_SRCS
     effectplugins/StandardEffectsFactory.cpp
     effectplugins/blur/BlurPhotoEffect.cpp
     effectplugins/colorize/ColorizePhotoEffect.cpp
@@ -89,7 +95,7 @@ SET(PLE_Effects_SRCS
     effects/PhotoEffectsLoader.cpp
    )
 
-SET(PLE_Threads_SRCS
+set(PLE_Threads_SRCS
     threads/AbstractPhotoItemLoader.cpp
     threads/CanvasLoadingThread.cpp
     threads/CanvasSavingThread.cpp
@@ -100,7 +106,7 @@ SET(PLE_Threads_SRCS
     threads/TextItemLoader.cpp
    )
 
-SET(PhotoLayoutsEditor_SRCS
+set(PhotoLayoutsEditor_SRCS
     ${PLE_Common_SRCS}
     ${PLE_Widgets_SRCS}
     ${PLE_Models_SRCS}
@@ -109,13 +115,13 @@ SET(PhotoLayoutsEditor_SRCS
     ${PLE_Threads_SRCS}
    )
 
-SET(PhotoLayoutsEditor_RCS
+set(PhotoLayoutsEditor_RCS
     resources/icons.qrc
    )
 
-QT4_ADD_RESOURCES( PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS} )
+QT4_ADD_RESOURCES(PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS})
 
-SET(INCLUDE_DIRS
+set(INCLUDE_DIRS
     borders
     borderplugins
     borderplugins/polaroid
@@ -146,7 +152,7 @@ SET(INCLUDE_DIRS
     widgets/tools
    )
 
-INCLUDE_DIRECTORIES(${QT_INCLUDE}
+include_directories(${QT_INCLUDE}
                     ${KDE4_INCLUDES}
                     ${INCLUDE_DIRS}
                     ${KIPI_INCLUDE_DIR}
@@ -155,21 +161,21 @@ INCLUDE_DIRECTORIES(${QT_INCLUDE}
 KDE4_ADD_KCFG_FILES( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
-FOREACH( _currentfile ${PhotoLayoutsEditor_SRCS} )
-    IF(NOT MSVC)
-        SET_SOURCE_FILES_PROPERTIES( ${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC" )
-    ENDIF()
-ENDFOREACH( _currentfile ${PhotoLayoutsEditor_SRCS} )
+foreach(_currentfile ${PhotoLayoutsEditor_SRCS})
+    if(NOT MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
+endforeach(_currentfile ${PhotoLayoutsEditor_SRCS})
 
-IF(NOT MSVC)
+if(NOT MSVC)
     # Causes cmake error on openSUSE 12 (cmake 2.8.6)
-    #    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
-    #    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
-ENDIF()
+    #    set_target_properties( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
+    #    set_target_properties( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
+endif()
 
 KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
 
-TARGET_LINK_LIBRARIES(libphotolayoutseditor 
+target_link_libraries(libphotolayoutseditor 
                       PropertyBrowser
                       ${QT_LIBRARIES}
                       ${KDE4_KDEUI_LIBS}
@@ -179,36 +185,36 @@ TARGET_LINK_LIBRARIES(libphotolayoutseditor
                       kipiplugins
                      )
 
-INSTALL( FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
+install(FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 
 # =======================================================
 # PhotoLayoutsEditor plugin
 
-SET( kipiplugin_PhotoLayoutsEditor_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_photolayoutseditor.cpp )
+set(kipiplugin_PhotoLayoutsEditor_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_photolayoutseditor.cpp)
 
-KDE4_ADD_PLUGIN( kipiplugin_photolayoutseditor ${kipiplugin_PhotoLayoutsEditor_PART_SRCS} )
+KDE4_ADD_PLUGIN(kipiplugin_photolayoutseditor ${kipiplugin_PhotoLayoutsEditor_PART_SRCS})
 
-TARGET_LINK_LIBRARIES( kipiplugin_photolayoutseditor libphotolayoutseditor )
+target_link_libraries(kipiplugin_photolayoutseditor libphotolayoutseditor)
 
-CONFIGURE_FILE(plugin/kipiplugin_photolayoutseditor.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop)
+configure_file(plugin/kipiplugin_photolayoutseditor.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_photolayoutseditor                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_photolayoutseditorui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_photolayoutseditor                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_photolayoutseditorui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Stand-alone version of PhotoLayoutsEditor
 
-SET( PhotoLayoutsEditor_SRCS plugin/main.cpp )
+set(PhotoLayoutsEditor_SRCS plugin/main.cpp)
 
-KDE4_ADD_APP_ICON( PhotoLayoutsEditor_SRCS "./resources/app/*photolayoutseditor.png" )
+KDE4_ADD_APP_ICON(PhotoLayoutsEditor_SRCS "./resources/app/*photolayoutseditor.png")
 
-KDE4_ADD_EXECUTABLE( photolayoutseditor ${PhotoLayoutsEditor_SRCS} )
+KDE4_ADD_EXECUTABLE(photolayoutseditor ${PhotoLayoutsEditor_SRCS})
 
-TARGET_LINK_LIBRARIES( photolayoutseditor libphotolayoutseditor )
+target_link_libraries(photolayoutseditor libphotolayoutseditor)
 
-INSTALL( TARGETS photolayoutseditor ${INSTALL_TARGETS_DEFAULT_ARGS} )
-INSTALL( PROGRAMS plugin/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-INSTALL( FILES plugin/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor )
-INSTALL( FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
-INSTALL( FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
+install(TARGETS photolayoutseditor ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(PROGRAMS plugin/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES plugin/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor)
+install(FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})

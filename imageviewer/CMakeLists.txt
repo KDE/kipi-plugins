@@ -1,6 +1,12 @@
-SUBDIRS(icons cursors)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-SET(kipiplugin_imageviewer_PART_SRCS
+subdirs(icons cursors)
+
+set(kipiplugin_imageviewer_PART_SRCS
     texture.cpp
     timer.cpp
     plugin_viewer.cpp
@@ -10,7 +16,7 @@ SET(kipiplugin_imageviewer_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_imageviewer ${kipiplugin_imageviewer_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
+target_link_libraries(kipiplugin_imageviewer
                       ${KDE4_KPARTS_LIBS}
                       ${QT_AND_KDECORE_LIBS}
                       ${QT_QTOPENGL_LIBRARY}
@@ -26,8 +32,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
                       kipiplugins
                      )
 
-CONFIGURE_FILE(kipiplugin_imageviewer.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
+configure_file(kipiplugin_imageviewer.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_imageviewer                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_imageviewerui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_imageviewer                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_imageviewerui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -1,6 +1,12 @@
-ADD_SUBDIRECTORY(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
+add_subdirectory(icons)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser
@@ -8,18 +14,18 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                    )
 
 FLEX_TARGET(PTOScanner ptoparser/panoScanner.l ${CMAKE_CURRENT_BINARY_DIR}/panoScanner.c)
-BISON_TARGET(PTOParser ptoparser/panoParser.y ${CMAKE_CURRENT_BINARY_DIR}/panoParser.c)
+BISON_TARGET(PTOParser ptoparser/panoParser.y  ${CMAKE_CURRENT_BINARY_DIR}/panoParser.c)
 ADD_FLEX_BISON_DEPENDENCY(PTOScanner PTOParser)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-INSTALL(DIRECTORY pics
+install(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
 
 # =======================================================
 # Common source code
 
-SET(panorama_common_SRCS
+set(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/ptotype/ptotype.cpp
     ${FLEX_PTOScanner_OUTPUTS}
     ${BISON_PTOParser_OUTPUTS}
@@ -53,15 +59,15 @@ SET(panorama_common_SRCS
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
-FOREACH(_currentfile ${panorama_common_SRCS})
-    IF(NOT MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${panorama_common_SRCS})
+foreach(_currentfile ${panorama_common_SRCS})
+    if(NOT MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
+endforeach(_currentfile ${panorama_common_SRCS})
 
 KDE4_ADD_LIBRARY(libpanorama STATIC ${panorama_common_SRCS})
 
-TARGET_LINK_LIBRARIES(libpanorama
+target_link_libraries(libpanorama
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
@@ -74,39 +80,39 @@ TARGET_LINK_LIBRARIES(libpanorama
 # =======================================================
 # Panorama plugin
 
-SET(kipiplugin_panorama_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_panorama.cpp)
+set(kipiplugin_panorama_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_panorama.cpp)
 
 KDE4_ADD_PLUGIN(kipiplugin_panorama ${kipiplugin_panorama_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_panorama libpanorama)
+target_link_libraries(kipiplugin_panorama libpanorama)
 
-CONFIGURE_FILE(plugin/kipiplugin_panorama.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop)
+configure_file(plugin/kipiplugin_panorama.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_panorama                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_panoramaui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_panorama                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_panoramaui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Test program
 
-IF(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
-    SET(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
+if(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
+    set(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
 
     KDE4_ADD_EXECUTABLE(pto_parser_test ${pto_parser_test_SRCS})
 
-    TARGET_LINK_LIBRARIES(pto_parser_test libpanorama)
-ENDIF()
+    target_link_libraries(pto_parser_test libpanorama)
+endif()
 
 # =======================================================
 # Stand alone version of Panorama plugin
 
-SET(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
+set(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
 
 KDE4_ADD_APP_ICON(panorama_SRCS "./icons/*kipi-panorama.png")
 
 KDE4_ADD_EXECUTABLE(panoramagui ${panorama_SRCS})
 
-TARGET_LINK_LIBRARIES(panoramagui libpanorama)
+target_link_libraries(panoramagui libpanorama)
 
-INSTALL(TARGETS  panoramagui                            ${INSTALL_TARGETS_DEFAULT_ARGS})
-INSTALL(PROGRAMS plugin/panoramagui.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(TARGETS  panoramagui                            ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(PROGRAMS plugin/panoramagui.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})

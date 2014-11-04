@@ -1,6 +1,12 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(
+subdirs(icons)
+
+include_directories(
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
@@ -8,7 +14,7 @@ INCLUDE_DIRECTORIES(
                     ${PNG_PNG_INCLUDE_DIR}
                    )
 
-SET(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
+set(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
                                       manager/rawdecodingiface.cpp
                                       manager/actionthread.cpp
                                       manager/task.cpp
@@ -19,7 +25,7 @@ SET(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
 
 KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
+target_link_libraries(kipiplugin_rawconverter
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
@@ -29,8 +35,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
                       kipiplugins
                      )
 
-CONFIGURE_FILE(plugin/kipiplugin_rawconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop)
+configure_file(plugin/kipiplugin_rawconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_rawconverter                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_rawconverterui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_rawconverter                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_rawconverterui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

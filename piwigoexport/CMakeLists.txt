@@ -1,6 +1,12 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-SET(kipiplugin_piwigoexport_PART_SRCS
+subdirs(icons)
+
+set(kipiplugin_piwigoexport_PART_SRCS
     plugin_piwigoexport.cpp
     piwigos.cpp
     piwigoconfig.cpp
@@ -10,7 +16,7 @@ SET(kipiplugin_piwigoexport_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_piwigoexport ${kipiplugin_piwigoexport_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_piwigoexport
+target_link_libraries(kipiplugin_piwigoexport
                       ${KDCRAW_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -19,9 +25,9 @@ TARGET_LINK_LIBRARIES(kipiplugin_piwigoexport
                       kipiplugins
                      )
 
-CONFIGURE_FILE(kipiplugin_piwigoexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop)
+configure_file(kipiplugin_piwigoexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_piwigoexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_piwigoexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
-INSTALL(FILES   piwigo_logo.png                                             DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_piwigoexport/pics)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_piwigoexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_piwigoexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   piwigo_logo.png                                             DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_piwigoexport/pics)

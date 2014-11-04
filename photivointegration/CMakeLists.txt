@@ -1,40 +1,24 @@
-# ============================================================
 #
-# This file is a part of kipi-plugins project
-# http://www.digikam.org
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
-# Date        : 2012-06-11
-# Description : Integration of the Photivo RAW-Processor.
-#
-# Copyright (C) 2012 by Dominic Lyons <domlyons at googlemail dot com>
-#
-# This program is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General
-# Public License as published by the Free Software Foundation;
-# either version 2, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# ============================================================ */
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-ADD_SUBDIRECTORY(icons)
+add_subdirectory(icons)
 
-###REMOVE_DEFINITIONS(-DQT_NO_STL)
+###remove_definitions(-DQT_NO_STL)
 
-SET(kipiplugin_photivointegration_PART_SRCS xmpmm.cpp
+set(kipiplugin_photivointegration_PART_SRCS xmpmm.cpp
                                             xmpinfo.cpp
                                             piwindow.cpp
                                             piimglist.cpp
                                             piwidget.cpp
                                             plugin_photivointegration.cpp
-)
+   )
 
 KDE4_ADD_PLUGIN(kipiplugin_photivointegration ${kipiplugin_photivointegration_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_photivointegration
+target_link_libraries(kipiplugin_photivointegration
                       ${KDE4_KPARTS_LIBS}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
@@ -43,8 +27,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_photivointegration
                       kipiplugins
                      )
 
-CONFIGURE_FILE(kipiplugin_photivointegration.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop)
+configure_file(kipiplugin_photivointegration.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_photivointegration                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_photivointegrationui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_photivointegration                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_photivointegrationui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

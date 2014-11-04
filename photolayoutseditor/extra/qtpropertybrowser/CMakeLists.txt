@@ -1,7 +1,13 @@
-INCLUDE(${QT_USE_FILE})
-SET(CMAKE_PACKAGE_QTGUI TRUE)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-SET(qtpropertyeditor_SRCS
+include(${QT_USE_FILE})
+set(CMAKE_PACKAGE_QTGUI TRUE)
+
+set(qtpropertyeditor_SRCS
     src/qtpropertybrowser.cpp
     src/qtpropertymanager.cpp
     src/qteditorfactory.cpp
@@ -10,9 +16,9 @@ SET(qtpropertyeditor_SRCS
     src/qtbuttonpropertybrowser.cpp
     src/qtgroupboxpropertybrowser.cpp
     src/qtpropertybrowserutils.cpp
-)
+   )
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
+include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     src
                     ${QT_INCLUDE_DIR}
                    )
@@ -57,7 +63,7 @@ QT4_GENERATE_MOC(src/qttreepropertybrowser.cpp
                  ${CMAKE_CURRENT_BINARY_DIR}/qttreepropertybrowser.moc
                 )
 
-SET(qtpropertyeditor_HEADERS_ONLY_MOC
+set(qtpropertyeditor_HEADERS_ONLY_MOC
     ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowser.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertymanager.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/moc_qteditorfactory.cpp
@@ -70,7 +76,7 @@ SET(qtpropertyeditor_HEADERS_ONLY_MOC
     ${CMAKE_CURRENT_BINARY_DIR}/qttreepropertybrowser.moc
    )
 
-SET_SOURCE_FILES_PROPERTIES(${qtpropertyeditor_HEADERS_ONLY_MOC}
+set_source_files_properties(${qtpropertyeditor_HEADERS_ONLY_MOC}
                             PROPERTIES
                             HEADER_FILE_ONLY true
                            )
@@ -79,14 +85,14 @@ QT4_GENERATE_MOC(src/qtpropertybrowserutils_p.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowserutils_p.cpp
                 )
 
-SET(qtpropertyeditor_HEADERS_MOC
+set(qtpropertyeditor_HEADERS_MOC
     ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowserutils_p.cpp
    )
 
-SET(qtpropertyeditor_MOC
-  ${qtpropertyeditor_HEADERS_MOC}
-  ${qtpropertyeditor_HEADERS_ONLY_MOC}
-)
+set(qtpropertyeditor_MOC
+    ${qtpropertyeditor_HEADERS_MOC}
+    ${qtpropertyeditor_HEADERS_ONLY_MOC}
+   )
 
 QT4_ADD_RESOURCES(qtpropertyeditor_RESOURCES
                   src/qtpropertybrowser.qrc
@@ -94,29 +100,29 @@ QT4_ADD_RESOURCES(qtpropertyeditor_RESOURCES
 
 QT4_ADD_RESOURCES(RESOURCE_SRCS src/qtpropertybrowser.qrc)
 
-SET(SRCS ${extension_MOC}
+set(SRCS ${extension_MOC}
         ${qtpropertyeditor_MOC}
         ${qtpropertyeditor_SRCS}
         ${qtpropertyeditor_RESOURCES}
    )
 
-FOREACH(_currentfile ${SRCS})
-    IF(NOT MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${SRCS})
+foreach(_currentfile ${SRCS})
+    if(NOT MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
+endforeach(_currentfile ${SRCS})
 
-ADD_LIBRARY(PropertyBrowser STATIC ${SRCS})
+add_library(PropertyBrowser STATIC ${SRCS})
 
-IF(NOT MSVC)
-    SET_TARGET_PROPERTIES(PropertyBrowser PROPERTIES COMPILE_FLAGS "-fPIC")
-ENDIF()
+if(NOT MSVC)
+    set_target_properties(PropertyBrowser PROPERTIES COMPILE_FLAGS "-fPIC")
+endif()
 
-TARGET_LINK_LIBRARIES(PropertyBrowser ${QT_LIBRARIES})
+target_link_libraries(PropertyBrowser ${QT_LIBRARIES})
 
-ADD_DEFINITIONS(${QT_DEFINITIONS})
-ADD_DEFINITIONS(-DQT_DLL)
-ADD_DEFINITIONS(-DQT_PLUGIN)
+add_definitions(${QT_DEFINITIONS})
+add_definitions(-DQT_DLL)
+add_definitions(-DQT_PLUGIN)
 
 # Do not install (yet), see https://bugs.kde.org/show_bug.cgi?id=319664
-# INSTALL( TARGETS PropertyBrowser ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS} )
+# install(TARGETS PropertyBrowser ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})

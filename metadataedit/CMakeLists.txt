@@ -1,12 +1,18 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/exif
+subdirs(icons)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/exif
                     ${CMAKE_CURRENT_SOURCE_DIR}/iptc
                     ${CMAKE_CURRENT_SOURCE_DIR}/xmp
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
-SET(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
+set(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
                                       plugin/metadatacheckbox.cpp
                                       plugin/altlangstringedit.cpp
                                       plugin/multistringsedit.cpp
@@ -43,7 +49,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
 
 KDE4_ADD_PLUGIN(kipiplugin_metadataedit ${kipiplugin_metadataedit_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
+target_link_libraries(kipiplugin_metadataedit
                       ${KDE4_KPARTS_LIBS}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
@@ -52,8 +58,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       kipiplugins
                      )
 
-CONFIGURE_FILE(plugin/kipiplugin_metadataedit.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop)
+configure_file(plugin/kipiplugin_metadataedit.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_metadataedit                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_metadataeditui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_metadataedit                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_metadataeditui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

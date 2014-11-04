@@ -1,10 +1,16 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${MEDIAWIKI_INCLUDE_DIR})
+subdirs(icons)
+
+include_directories(${MEDIAWIKI_INCLUDE_DIR})
 
 KDE4_ADD_UI_FILES(ui_src wmwindow.ui)
 
-SET(kipiplugin_wikimedia_PART_SRCS
+set(kipiplugin_wikimedia_PART_SRCS
     plugin_wikimedia.cpp
     wmwindow.cpp
     wmwidget.cpp
@@ -14,7 +20,7 @@ SET(kipiplugin_wikimedia_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_wikimedia ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
 
-TARGET_LINK_LIBRARIES(kipiplugin_wikimedia
+target_link_libraries(kipiplugin_wikimedia
                       kipiplugins
                       mediawiki
                       ${MEDIAWIKI_LIBRARIES}
@@ -25,8 +31,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_wikimedia
                       ${KDE4_KDEUI_LIBS}
                      )
 
-CONFIGURE_FILE(kipiplugin_wikimedia.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)
+configure_file(kipiplugin_wikimedia.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_wikimedia                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_wikimediaui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_wikimedia                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_wikimediaui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -1,4 +1,10 @@
-SET(kipiplugin_htmlexport_SRCS
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
+set(kipiplugin_htmlexport_SRCS
     abstractthemeparameter.cpp
     colorthemeparameter.cpp
     galleryinfo.cpp
@@ -26,7 +32,7 @@ KDE4_ADD_KCFG_FILES(kipiplugin_htmlexport_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_htmlexport ${kipiplugin_htmlexport_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_htmlexport
+target_link_libraries(kipiplugin_htmlexport
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
@@ -40,18 +46,18 @@ TARGET_LINK_LIBRARIES(kipiplugin_htmlexport
                       kipiplugins
                      )
 
-INCLUDE_DIRECTORIES(${LIBXSLT_INCLUDE_DIR}
+include_directories(${LIBXSLT_INCLUDE_DIR}
                     ${LIBXML2_INCLUDE_DIR}
                    )
 
-ADD_DEFINITIONS(${LIBXSLT_DEFINITIONS}
+add_definitions(${LIBXSLT_DEFINITIONS}
                 ${LIBXML2_DEFINITIONS}
                )
 
-CONFIGURE_FILE(kipiplugin_htmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop)
+configure_file(kipiplugin_htmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop)
 
-INSTALL(FILES     ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS   kipiplugin_htmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES     kipiplugin_htmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
-INSTALL(FILES     THEME_HOWTO                                               DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)
-INSTALL(DIRECTORY themes                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)
+install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS   kipiplugin_htmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES     kipiplugin_htmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES     THEME_HOWTO                                               DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)
+install(DIRECTORY themes                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)
