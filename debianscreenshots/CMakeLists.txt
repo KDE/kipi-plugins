@@ -1,8 +1,14 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 subdirs(icons)
 
-INCLUDE_DIRECTORIES(${QJSON_INCLUDE_DIR})
+include_directories(${QJSON_INCLUDE_DIR})
 
-SET(kipiplugin_debianscreenshots_PART_SRCS
+set(kipiplugin_debianscreenshots_PART_SRCS
     plugin_debianscreenshots.cpp
     dswindow.cpp
     dswidget.cpp
@@ -18,7 +24,7 @@ QT4_ADD_RESOURCES(kipiplugin_debianscreenshots_QRC_SRCS plugin_debianscreenshots
 
 KDE4_ADD_PLUGIN(kipiplugin_debianscreenshots ${kipiplugin_debianscreenshots_PART_SRCS} ${kipiplugin_debianscreenshots_QRC_SRCS} )
 
-TARGET_LINK_LIBRARIES(kipiplugin_debianscreenshots
+target_link_libraries(kipiplugin_debianscreenshots
                       kipiplugins
                       ${KIPI_LIBRARIES}
                       ${QJSON_LIBRARIES}
@@ -28,8 +34,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_debianscreenshots
                       ${KDE4_KDEUI_LIBS}
                      )
 
-CONFIGURE_FILE(kipiplugin_debianscreenshots.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop)
+configure_file(kipiplugin_debianscreenshots.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_debianscreenshots                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_debianscreenshotsui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_debianscreenshots                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_debianscreenshotsui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

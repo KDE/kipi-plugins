@@ -1,12 +1,17 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 # =======================================================
 # DNGINFO command line tool
 
-SET(dnginfo_SRCS dnginfo.cpp)
+set(dnginfo_SRCS dnginfo.cpp)
 
 KDE4_ADD_EXECUTABLE(dnginfo NOGUI ${dnginfo_SRCS})
 
-TARGET_LINK_LIBRARIES(dnginfo
+target_link_libraries(dnginfo
                       libdng
                       ${KDE4_KDECORE_LIBS}
                       ${QT_AND_KDECORE_LIBS}
@@ -15,4 +20,4 @@ TARGET_LINK_LIBRARIES(dnginfo
                       ${CMAKE_THREAD_LIBS_INIT}
                      )
 
-INSTALL(TARGETS dnginfo ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS dnginfo ${INSTALL_TARGETS_DEFAULT_ARGS})

@@ -1,15 +1,20 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 # =======================================================
 # DNG SDK and XMP SDK use C++ exceptions
 
-ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
+add_definitions(${KDE4_ENABLE_EXCEPTIONS})
 
 # =======================================================
 # XMP SDK source code.
 
 KDE4_NO_ENABLE_FINAL(kipiplugin_dngwriter)
 
-INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
+include_directories(${EXPAT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common
@@ -19,40 +24,40 @@ INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
 
 # Set platteforms env.
 
-IF(WIN32)
-    ADD_DEFINITIONS(
+if(WIN32)
+    add_definitions(
                     # Set Windows rules.
                     -DWIN_ENV=1
                    )
-ELSE()
+else()
 #    NOTE: see bug #195735: do not enable Mac flags provided by Adobe.
 #          Sound like all compile fine like under Linux.
-#    IF(APPLE)
-#        ADD_DEFINITIONS(
+#    if(APPLE)
+#        add_definitions(
 #                        # Set MACOS-X rules.
 #                        -DMAC_ENV=1
 #                       )
-#    ELSE()
-        ADD_DEFINITIONS(
+#    else()
+        add_definitions(
                         # Set Linux & co rules.
                         -DUNIX_ENV=1
                        )
-#    ENDIF()
-ENDIF()
+#    endif()
+endif()
 
-SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
+set(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 
-FOREACH(_currentfile ${libmd5_SRCS})
-    IF(NOT MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${libmd5_SRCS})
+foreach(_currentfile ${libmd5_SRCS})
+    if(NOT MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
+endforeach(_currentfile ${libmd5_SRCS})
 
 KDE4_ADD_LIBRARY(libmd5 STATIC ${libmd5_SRCS})
 
-SET(libxmp_SRCS
+set(libxmp_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XML_Node.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.cpp
 
@@ -74,41 +79,41 @@ SET(libxmp_SRCS
 # Disable XMP SDK warnings: we will never touch this code.
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 
-FOREACH(_currentfile ${libxmp_SRCS})
-    IF(MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
-    ELSE()
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${libxmp_SRCS})
+foreach(_currentfile ${libxmp_SRCS})
+    if(MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
+    else()
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
+    endif()
+endforeach(_currentfile ${libxmp_SRCS})
 
 KDE4_ADD_LIBRARY(libxmp STATIC ${libxmp_SRCS})
 
-TARGET_LINK_LIBRARIES(libxmp libmd5 ${EXPAT_LIBRARY})
+target_link_libraries(libxmp libmd5 ${EXPAT_LIBRARY})
 
 # =======================================================
 # DNG SDK source code
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk )
 
 # Set platteforms env.
-IF(WIN32)
-    ADD_DEFINITIONS(
+if(WIN32)
+    add_definitions(
                     # Set Windows rules.
                     -DqWinOS=1
                     -DqMacOS=0
                    )
-ELSE()
+else()
 #    NOTE: see bug #195735: do not enable Mac flags provided by Adobe.
 #          Sound like all compile fine like under Linux.
-#    IF(APPLE)
-#        ADD_DEFINITIONS(
+#    if(APPLE)
+#        add_definitions(
 #                        # Set MACOS-X rules.
 #                        -DqWinOS=0
 #                        -DqMacOS=1
 #                       )
-#    ELSE()
-        ADD_DEFINITIONS(
+#    else()
+        add_definitions(
                         # Set Linux & co rules.
                         -DqWinOS=0
                         -DqMacOS=0
@@ -116,29 +121,29 @@ ELSE()
                         # Must be set to 1, else do not compile under Linux.
                         -DqDNGUseStdInt=1
                        )
-#    ENDIF()
-ENDIF()
+#    endif()
+endif()
 
 # Check processor endianness
-INCLUDE(TestBigEndian)
+include(TestBigEndian)
 TEST_BIG_ENDIAN(IS_BIG_ENDIAN)
 
-IF(NOT IS_BIG_ENDIAN)
-    ADD_DEFINITIONS(-DqDNGLittleEndian=1)
-ENDIF()
+if(NOT IS_BIG_ENDIAN)
+    add_definitions(-DqDNGLittleEndian=1)
+endif()
 
 # Thread safe support under Mac and Linux using pthread library
 
-IF(NOT WIN32)
-    ADD_DEFINITIONS(-DqDNGThreadSafe=1)
-ENDIF()
+if(NOT WIN32)
+    add_definitions(-DqDNGThreadSafe=1)
+endif()
 
 # Level of debug info in the console.
 
-ADD_DEFINITIONS(-DqDNGDebug=0)
-ADD_DEFINITIONS(-DqDNGValidateTarget=1)
+add_definitions(-DqDNGDebug=0)
+add_definitions(-DqDNGValidateTarget=1)
 
-SET(libdng_SRCS
+set(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_1d_function.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_date_time.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_ifd.cpp
@@ -205,28 +210,28 @@ SET(libdng_SRCS
 
 # Disable DNG SDK warnings: we will never touch this code.
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
-FOREACH(_currentfile ${libdng_SRCS})
-    IF(MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
-    ELSE()
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${libdng_SRCS})
+foreach(_currentfile ${libdng_SRCS})
+    if(MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
+    else()
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
+    endif()
+endforeach(_currentfile ${libdng_SRCS})
 
 KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
 
-IF(WIN32)
-    TARGET_LINK_LIBRARIES(libdng libxmp)
-ELSE()
-    TARGET_LINK_LIBRARIES(libdng libxmp pthread)
-ENDIF()
+if(WIN32)
+    target_link_libraries(libdng libxmp)
+else()
+    target_link_libraries(libdng libxmp pthread)
+endif()
 
 # =======================================================
 # DNGWritter interface
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter )
 
-SET(libdngwriter_SRCS
+set(libdngwriter_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriterhost.cpp
@@ -234,9 +239,9 @@ SET(libdngwriter_SRCS
 
 # =======================================================
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/plugin )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/plugin )
 
-SET(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
+set(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/task.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/batchdialog.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/settingswidget.cpp
@@ -244,7 +249,7 @@ SET(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
                              ${libdngwriter_SRCS}
    )
 
-ADD_SUBDIRECTORY(icons)
-ADD_SUBDIRECTORY(plugin)
-ADD_SUBDIRECTORY(test)
-ADD_SUBDIRECTORY(dnginfo)
+add_subdirectory(icons)
+add_subdirectory(plugin)
+add_subdirectory(test)
+add_subdirectory(dnginfo)

@@ -1,5 +1,10 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
+include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}/src
                     src
                     ${QT_INCLUDE_DIR}
@@ -9,9 +14,9 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}/include
                    )
 
-INCLUDE(${QT_USE_FILE})
+include(${QT_USE_FILE})
 
-SET(HUpnpAv_SRCS
+set(HUpnpAv_SRCS
 
     src/hav_devicemodel_creator.cpp
     src/hupnpavinfo.cpp
@@ -162,9 +167,9 @@ SET(HUpnpAv_SRCS
     src/mediarenderer/hmediarenderer_deviceconfiguration.cpp
     src/mediarenderer/hmediarenderer_device_p.cpp
     src/mediarenderer/hconnectionmanager_sinkservice_p.cpp
-)
+   )
 
-SET(HUpnpAv_MOC_HDRS
+set(HUpnpAv_MOC_HDRS
 
     src/cds_model/cds_objects/htextitem.h
     src/cds_model/cds_objects/hstoragefolder.h
@@ -246,20 +251,20 @@ SET(HUpnpAv_MOC_HDRS
 
 QT4_WRAP_CPP(HUpnpAv_MOC_SRCS ${HUpnpAv_MOC_HDRS})
 
-SET(SRCS ${HUpnpAv_SRCS} ${HUpnpAv_MOC_SRCS})
+set(SRCS ${HUpnpAv_SRCS} ${HUpnpAv_MOC_SRCS})
 
-FOREACH(_currentfile ${SRCS})
-    IF(NOT MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${SRCS})
+foreach(_currentfile ${SRCS})
+    if(NOT MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
+endforeach(_currentfile ${SRCS})
 
-ADD_LIBRARY(HUpnpAv STATIC ${SRCS})
+add_library(HUpnpAv STATIC ${SRCS})
 
-TARGET_LINK_LIBRARIES(HUpnpAv HUpnp ${QT_LIBRARIES})
+target_link_libraries(HUpnpAv HUpnp ${QT_LIBRARIES})
 
-IF(NOT MSVC)
-    SET_TARGET_PROPERTIES(HUpnpAv PROPERTIES COMPILE_FLAGS "-fPIC")
-ENDIF()
+if(NOT MSVC)
+    set_target_properties(HUpnpAv PROPERTIES COMPILE_FLAGS "-fPIC")
+endif()
 
-#INSTALL(TARGETS HUpnpAv ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})
+#install(TARGETS HUpnpAv ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})

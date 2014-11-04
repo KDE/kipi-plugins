@@ -1,10 +1,16 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../hupnp/include
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../hupnp/include
                     ${CMAKE_CURRENT_BINARY_DIR}/../hupnp/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/../hupnp_av/include
                     ${CMAKE_CURRENT_BINARY_DIR}/../hupnp_av/include
                    )
 
-SET(AvTest_SRCS
+set(AvTest_SRCS
     controlpoint_navigator.cpp
     dataitem_display.cpp
     mediamanager_dialog.cpp
@@ -16,7 +22,7 @@ SET(AvTest_SRCS
     controlpoint_window.cpp
     mainwindow.cpp
     mediarenderer_window.cpp
-    )
+   )
 
 QT4_WRAP_UI(AvTest_FORMS
             controlpoint.ui
@@ -28,17 +34,17 @@ QT4_WRAP_UI(AvTest_FORMS
             mediarenderer_window.ui
            )
 
-SET(SRCS ${AvTest_SRCS} ${AvTest_FORMS})
+set(SRCS ${AvTest_SRCS} ${AvTest_FORMS})
 
-FOREACH(_currentfile ${SRCS})
-    IF(NOT MSVC)
-        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
-    ENDIF()
-ENDFOREACH(_currentfile ${SRCS})
+foreach(_currentfile ${SRCS})
+    if(NOT MSVC)
+        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
+endforeach(_currentfile ${SRCS})
 
 KDE4_ADD_EXECUTABLE(avtest ${SRCS})
 
-TARGET_LINK_LIBRARIES(avtest
+target_link_libraries(avtest
                       HUpnp
                       HUpnpAv
                       ${KDE4_KDEUI_LIBS}
@@ -49,9 +55,9 @@ TARGET_LINK_LIBRARIES(avtest
                       ${QT_QTXMLPATTERNS_LIBRARY}
                      )
 
-#INSTALL(TARGETS avtest ${INSTALL_TARGETS_DEFAULT_ARGS})
+#install(TARGETS avtest ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-SET(avtest_xml_files
+set(avtest_xml_files
     descriptions/herqq_avtransport_scpd.xml
     descriptions/herqq_contentdirectory_scpd.xml
     descriptions/herqq_renderingcontrol_scpd.xml
@@ -61,5 +67,5 @@ SET(avtest_xml_files
     descriptions/herqq_mediaserver_description.xml
    )
 
-#INSTALL(FILES       ${avtest_xml_files}
+#install(FILES       ${avtest_xml_files}
 #        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_dlnaexport/xml)

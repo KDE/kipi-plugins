@@ -1,24 +1,30 @@
-ADD_SUBDIRECTORY(icons)
-ADD_SUBDIRECTORY(data)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-IF(HUPNP_FOUND AND HUPNPAV_FOUND)
+add_subdirectory(icons)
+add_subdirectory(data)
 
-    INCLUDE_DIRECTORIES(${HUPNP_INCLUDE_DIR})
+if(HUPNP_FOUND AND HUPNPAV_FOUND)
 
-ELSE()
+    include_directories(${HUPNP_INCLUDE_DIR})
 
-    ADD_DEFINITIONS(-DH_BUILD_UPNP_CORE_LIB)
-    ADD_DEFINITIONS(-DH_BUILD_UPNP_LIGHTING_LIB)
-    ADD_DEFINITIONS(-DH_BUILD_UPNP_AV_LIB)
+else()
 
-    ADD_SUBDIRECTORY(extra)
+    add_definitions(-DH_BUILD_UPNP_CORE_LIB)
+    add_definitions(-DH_BUILD_UPNP_LIGHTING_LIB)
+    add_definitions(-DH_BUILD_UPNP_AV_LIB)
 
-    INCLUDE_DIRECTORIES(extra/hupnp/include)
-    INCLUDE_DIRECTORIES(extra/hupnp_av/include)
+    add_subdirectory(extra)
 
-ENDIF()
+    include_directories(extra/hupnp/include)
+    include_directories(extra/hupnp_av/include)
 
-SET(kipiplugin_dlnaexport_PART_SRCS
+endif()
+
+set(kipiplugin_dlnaexport_PART_SRCS
     finalpage.cpp
     plugin_dlnaexport.cpp
     hupnpmediaserver.cpp
@@ -29,7 +35,7 @@ SET(kipiplugin_dlnaexport_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_dlnaexport ${kipiplugin_dlnaexport_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
+target_link_libraries(kipiplugin_dlnaexport
                       ${KDCRAW_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -40,23 +46,24 @@ TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
                       kipiplugins
                      )
 
-IF(HUPNP_FOUND AND HUPNPAV_FOUND)
-    TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
+if(HUPNP_FOUND AND HUPNPAV_FOUND)
+
+    target_link_libraries(kipiplugin_dlnaexport
                           ${HUPNP_LIBS}
                           ${HUPNPAV_LIBS}
                          )
 
-ELSE()
+else()
 
-    TARGET_LINK_LIBRARIES(kipiplugin_dlnaexport
+    target_link_libraries(kipiplugin_dlnaexport
                           HUpnp
                           HUpnpAv
                          )
 
-ENDIF()
+endif()
 
-CONFIGURE_FILE(kipiplugin_dlnaexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
+configure_file(kipiplugin_dlnaexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_dlnaexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_dlnaexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_dlnaexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_dlnaexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

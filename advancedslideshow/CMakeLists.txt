@@ -1,11 +1,17 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
+subdirs(icons)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
-SET(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
+set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            dialogs/soundtrackdialog.cpp
                                            dialogs/advanceddialog.cpp
                                            dialogs/maindialog.cpp
@@ -35,7 +41,7 @@ KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_advancedslideshow ${kipiplugin_advancedslideshow_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
+target_link_libraries(kipiplugin_advancedslideshow
                       ${KDE4_KPARTS_LIBS}
                       ${QT_AND_KDECORE_LIBS}
                       ${QT_QTOPENGL_LIBRARY}
@@ -52,8 +58,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
                       kipiplugins
                      )
 
-CONFIGURE_FILE(plugin/kipiplugin_advancedslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)
+configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_advancedslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_advancedslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_advancedslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_advancedslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

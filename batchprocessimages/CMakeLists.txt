@@ -1,6 +1,12 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common
+subdirs(icons)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/tools
                     ${KDE4_INCLUDES}
@@ -8,7 +14,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common
                     ${QT_INCLUDES}
                    )
 
-SET(kipiplugin_batchprocessimages_PART_SRCS
+set(kipiplugin_batchprocessimages_PART_SRCS
     plugin/plugin_batchprocessimages.cpp
     common/batchprocessimagesdialog.cpp
     common/batchprocessimagesitem.cpp
@@ -41,18 +47,17 @@ KDE4_ADD_UI_FILES(kipiplugin_batchprocessimages_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(
-    kipiplugin_batchprocessimages
-    kipiplugins
-    ${KIPI_LIBRARIES}
-    ${KEXIV2_LIBRARIES}
-    ${KDE4_KDECORE_LIBS}
-    ${KDE4_KIO_LIBS}
-    ${KDE4_KDEUI_LIBS}
-    )
+target_link_libraries(kipiplugin_batchprocessimages
+                      kipiplugins
+                      ${KIPI_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
+                      ${KDE4_KDECORE_LIBS}
+                      ${KDE4_KIO_LIBS}
+                      ${KDE4_KDEUI_LIBS}
+                     )
 
-CONFIGURE_FILE(plugin/kipiplugin_batchprocessimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop)
+configure_file(plugin/kipiplugin_batchprocessimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_batchprocessimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES plugin/kipiplugin_batchprocessimagesui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_batchprocessimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES plugin/kipiplugin_batchprocessimagesui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
