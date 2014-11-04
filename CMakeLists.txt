@@ -1,18 +1,24 @@
-PROJECT(kipi-plugins)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-MESSAGE(STATUS "----------------------------------------------------------------------------------")
-MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
+project(kipi-plugins)
+
+message(STATUS "----------------------------------------------------------------------------------")
+message(STATUS "Starting CMake configuration for: kipi-plugins")
 
 # =======================================================
 # Information to update before to release this package.
 
 # kipi-plugins version
-SET(KIPIPLUGINS_MAJOR_VERSION "4")
-SET(KIPIPLUGINS_MINOR_VERSION "5")
-SET(KIPIPLUGINS_PATCH_VERSION "0")
+set(KIPIPLUGINS_MAJOR_VERSION "4")
+set(KIPIPLUGINS_MINOR_VERSION "5")
+set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2014-11-09")
+set(KIPIPLUGINS_RELEASE_DATE "2014-11-09")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -21,67 +27,67 @@ SET (KIPIPLUGINS_RELEASE_DATE "2014-11-09")
 # "-beta3" : beta3 release.
 # "-rc"    : release candidate.
 # ""       : final relase. Can be used in production.
-SET(KIPIPLUGINS_SUFFIX_VERSION "")
+set(KIPIPLUGINS_SUFFIX_VERSION "")
 
 # =======================================================
 # Set env. variables accordinly.
 
-SET(KIPIPLUGINS_VERSION_STRING
+set(KIPIPLUGINS_VERSION_STRING
     "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}${KIPIPLUGINS_SUFFIX_VERSION}"
    )
 
 # NOTE: This string is used to set libkipiplugins SO version ID
-SET(KIPIPLUGINS_LIB_SO_VERSION_STRING
+set(KIPIPLUGINS_LIB_SO_VERSION_STRING
     "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR_VERSION}.${KIPIPLUGINS_PATCH_VERSION}"
    )
 
 # =======================================================
 
-CMAKE_POLICY(SET CMP0017 NEW)
+cmake_policy(SET CMP0017 NEW)
 
-SET(QT_MIN_VERSION   "4.6.0")
-SET(KDE_MIN_VERSION  "4.4.0")
-FIND_PACKAGE(Qt4  ${QT_MIN_VERSION}  REQUIRED)
-FIND_PACKAGE(KDE4 ${KDE_MIN_VERSION} REQUIRED)
+set(QT_MIN_VERSION   "4.6.0")
+set(KDE_MIN_VERSION  "4.4.0")
+find_package(Qt4  ${QT_MIN_VERSION}  REQUIRED)
+find_package(KDE4 ${KDE_MIN_VERSION} REQUIRED)
 
-INCLUDE(MacroOptionalFindPackage)
-INCLUDE(FindPackageHandleStandardArgs)
-INCLUDE(KDE4Defaults)
-INCLUDE(MacroLibrary)
+include(MacroOptionalFindPackage)
+include(FindPackageHandleStandardArgs)
+include(KDE4Defaults)
+include(MacroLibrary)
 
 # Put local modules first
-SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 # Dependencies detection required by all plugins
 
-SET(KIPI_MIN_VERSION "2.0.0")
-FIND_PACKAGE(Kipi ${KIPI_MIN_VERSION})
+set(KIPI_MIN_VERSION "2.0.0")
+find_package(Kipi ${KIPI_MIN_VERSION})
 
-IF(KIPI_FOUND)
+if(KIPI_FOUND)
 
-    FIND_PACKAGE(Kexiv2 REQUIRED)
-    FIND_PACKAGE(JPEG   REQUIRED)
-    FIND_PACKAGE(PNG    REQUIRED)
-    FIND_PACKAGE(TIFF   REQUIRED)
-    FIND_PACKAGE(Kdcraw REQUIRED)
+    find_package(Kexiv2 REQUIRED)
+    find_package(JPEG   REQUIRED)
+    find_package(PNG    REQUIRED)
+    find_package(TIFF   REQUIRED)
+    find_package(Kdcraw REQUIRED)
 
     # -- check the libkdcraw version -----------------------------------------------------------------
 
-    SET(KDCRAW_MIN_VERSION "2.2.0")
+    set(KDCRAW_MIN_VERSION "2.2.0")
 
-    IF(KDCRAW_VERSION)
+    if(KDCRAW_VERSION)
 
-        MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
-        IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
-            SET(KDCRAW_FOUND FALSE)
-        ENDIF()
+        message(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
+        if (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+            set(KDCRAW_FOUND FALSE)
+        endif()
 
-    ELSE()
+    else()
 
-        MESSAGE(WARNING "libkdcraw: Version information not found, your version is probably too old.")
-        SET(KDCRAW_FOUND FALSE)
+        message(WARNING "libkdcraw: Version information not found, your version is probably too old.")
+        set(KDCRAW_FOUND FALSE)
 
-    ENDIF()
+    endif()
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
@@ -107,48 +113,47 @@ IF(KIPI_FOUND)
     MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
-
     
     # -- check the libkgeomap version -----------------------------------------------------------------
 
-    SET(KGEOMAP_MIN_VERSION "3.0.0")
+    set(KGEOMAP_MIN_VERSION "3.0.0")
 
-    IF(KGEOMAP_VERSION)
+    if(KGEOMAP_VERSION)
 
-        MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION} (required: ${KGEOMAP_MIN_VERSION})")
-        IF(${KGEOMAP_VERSION} VERSION_LESS ${KGEOMAP_MIN_VERSION})
-            SET(KGEOMAP_FOUND FALSE)
-        ENDIF()
+        message(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION} (required: ${KGEOMAP_MIN_VERSION})")
+        if(${KGEOMAP_VERSION} VERSION_LESS ${KGEOMAP_MIN_VERSION})
+            set(KGEOMAP_FOUND FALSE)
+        endif()
 
-    ELSE()
+    else()
 
-        MESSAGE(WARNING "libkgeomap: Version information not found, your version is probably too old.")
-        SET(KGEOMAP_FOUND FALSE)
+        message(WARNING "libkgeomap: Version information not found, your version is probably too old.")
+        set(KGEOMAP_FOUND FALSE)
 
-    ENDIF()
+    endif()
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
 
-    IF(NOT WIN32 AND NOT APPLE)
+    if(NOT WIN32 AND NOT APPLE)
         MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
-    ENDIF()
+    endif()
 
     # -- OpenCV ----------------------------------------------------------------------------------------
 
-    INCLUDE(MacroUtils)
-    INCLUDE(MacroOpenCV)
-    SET(OPENCV_MIN_VERSION "2.4.9")
+    include(MacroUtils)
+    include(MacroOpenCV)
+    set(OPENCV_MIN_VERSION "2.4.9")
     DETECT_OPENCV(${OPENCV_MIN_VERSION} core highgui objdetect contrib legacy imgproc)
 
-    INCLUDE(MacroOptionalDependPackage)
+    include(MacroOptionalDependPackage)
 
     # ==================================================================================================
     # Log messages
 
-    MESSAGE(STATUS "")
-    MESSAGE(STATUS "----------------------------------------------------------------------------------")
-    MESSAGE(STATUS " kipi-plugins ${KIPIPLUGINS_VERSION_STRING} dependencies results   <http://www.digikam.org>")
-    MESSAGE(STATUS "")
+    message(STATUS "")
+    message(STATUS "----------------------------------------------------------------------------------")
+    message(STATUS " kipi-plugins ${KIPIPLUGINS_VERSION_STRING} dependencies results   <http://www.digikam.org>")
+    message(STATUS "")
 
     # Require shared libraries results.
 
@@ -186,57 +191,57 @@ IF(KIPI_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt4 OpenGL"            QT_QTOPENGL_FOUND)
 
     # LINUX Only.
-    IF(NOT WIN32 AND NOT APPLE)
+    if(NOT WIN32 AND NOT APPLE)
         PRINT_OPTIONAL_LIBRARY_STATUS("libX11" "http://www.x11.org" "(version >= 1.1.5)" "Kipi-plugins will be compiled without libX11 support." X11_FOUND AND X11_Xrandr_FOUND)
-    ENDIF()
+    endif()
 
     # Optional plugins results ----------------------------------------------------------------------------
 
-    MESSAGE(STATUS "")
+    message(STATUS "")
 
-    IF(QT_FOUND AND KDE4_FOUND AND KIPI_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND)
-        SET(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
+    if(QT_FOUND AND KDE4_FOUND AND KIPI_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND)
+        set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
         FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
-        MESSAGE(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
-        SET(KIPIPLUGINS_CAN_BE_COMPILED true)
-    ELSE()
-        MESSAGE(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
-        SET(KIPIPLUGINS_CAN_BE_COMPILED false)
-    ENDIF()
+        message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
+        set(KIPIPLUGINS_CAN_BE_COMPILED true)
+    else()
+        message(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
+        set(KIPIPLUGINS_CAN_BE_COMPILED false)
+    endif()
 
     PRINT_COMPONENT_COMPILE_STATUS("Shwup"       QCA2_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"  LIBXML2_FOUND AND LIBXSLT_FOUND)
 
     # decide if AdvancedSlideshow and ImageViewer can be built
-    IF(NOT WIN32 AND NOT APPLE)
-        IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
-            SET(BUILD_VIEWERS TRUE)
-        ELSE()
-            SET(BUILD_VIEWERS FALSE)
-        ENDIF()
-    ELSE()
-        IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
-            SET(BUILD_VIEWERS TRUE)
-        ELSEIF()
-            SET(BUILD_VIEWERS FALSE)
-        ENDIF()
-    ENDIF()
+    if(NOT WIN32 AND NOT APPLE)
+        if(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
+            set(BUILD_VIEWERS TRUE)
+        else()
+            set(BUILD_VIEWERS FALSE)
+        endif()
+    else()
+        if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
+            set(BUILD_VIEWERS TRUE)
+        elseif()
+            set(BUILD_VIEWERS FALSE)
+        endif()
+    endif()
 
-    # decide if wallpaper plugin can be built
+    # Decide if wallpaper plugin can be built
     # NOTE: See relevant patch which must be applied to KDE Plasma API :
     # https://git.reviewboard.kde.org/r/105319/
     # Relevant Bugzilla entry :
     # https://bugs.kde.org/show_bug.cgi?id=217950
-    SET(WALLPAPER_KDE_REQ_VER "5.0.0")
+    set(WALLPAPER_KDE_REQ_VER "5.0.0")
 
-    IF(KDE_VERSION)
-        IF(${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
-            SET(BUILD_WALLPAPER FALSE)
-        ELSE()
-            SET(BUILD_WALLPAPER TRUE)
-        ENDIF()
-    ENDIF()
+    if(KDE_VERSION)
+        if(${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
+            set(BUILD_WALLPAPER FALSE)
+        else()
+            set(BUILD_WALLPAPER TRUE)
+        endif()
+    endif()
 
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
@@ -260,55 +265,55 @@ IF(KIPI_FOUND)
 
     # Set QtGStreamer API version --------------------------------------------------------------------------
 
-    IF(QTGSTREAMER_FOUND)
+    if(QTGSTREAMER_FOUND)
 
-        MESSAGE(STATUS "----------------------------------------------------------------------------------")
-        MESSAGE(STATUS "")
+        message(STATUS "----------------------------------------------------------------------------------")
+        message(STATUS "")
 
-        IF((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
+        if((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
            OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1) )
-            SET(GSTREAMER_API_1 TRUE)
-        ELSE()
-            SET(GSTREAMER_API_1 FALSE)
-        ENDIF()
+            set(GSTREAMER_API_1 TRUE)
+        else()
+            set(GSTREAMER_API_1 FALSE)
+        endif()
 
-        CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
+        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
 
-        MESSAGE(STATUS "Found QtGstreamer version : ${QtGStreamer_VERSION}")
-        MESSAGE(STATUS "Using GStreamer API 1: ${GSTREAMER_API_1}")
+        message(STATUS "Found QtGstreamer version: ${QtGStreamer_VERSION}")
+        message(STATUS "Using GStreamer API 1:     ${GSTREAMER_API_1}")
 
-        MESSAGE(STATUS "----------------------------------------------------------------------------------")
-        MESSAGE(STATUS "")
+        message(STATUS "----------------------------------------------------------------------------------")
+        message(STATUS "")
 
-    ENDIF()
+    endif()
 
     # ==================================================================================================
 
-    IF(KIPIPLUGINS_CAN_BE_COMPILED)
+    if(KIPIPLUGINS_CAN_BE_COMPILED)
 
         # ==================================================================================================
         # Create git version header
 
         # We only do this IF we are in a .git dir
-        FIND_FILE(GIT_MARKER entries PATHS ${CMAKE_SOURCE_DIR}/.git)
+        find_file(GIT_MARKER entries PATHS ${CMAKE_SOURCE_DIR}/.git)
 
-        IF(NOT GIT_MARKER)
-            SET (GIT_MARKER ${CMAKE_SOURCE_DIR}/CMakeLists.txt)  # Dummy file
-        ENDIF()
+        if(NOT GIT_MARKER)
+            set (GIT_MARKER ${CMAKE_SOURCE_DIR}/CMakeLists.txt)  # Dummy file
+        endif()
 
         # Add a custom command to drive the git script whenever the git entries
         # file changes.
-        CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gitscript.cmake.in"
-                    "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake"
-                    @ONLY)
+        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gitscript.cmake.in"
+                       "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake"
+                       @ONLY)
 
         # Add a custom target to drive the custom command.
-        ADD_CUSTOM_TARGET(kipiplugins-gitversion
+        add_custom_target(kipiplugins-gitversion
                           ALL COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake")
 
         # ==================================================================================================
         
-        INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
+        include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                             ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/dialogs
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/widgets
@@ -321,148 +326,148 @@ IF(KIPI_FOUND)
                             ${QT4_INCLUDES}
                         )
 
-        ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+        add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
         # To prevent warnings from M$ compiler
 
-        IF(WIN32 AND MSVC)
-            ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
-            ADD_DEFINITIONS(-D_ATL_SECURE_NO_WARNINGS)
-            ADD_DEFINITIONS(-D_AFX_SECURE_NO_WARNINGS)
-        ENDIF()
+        if(WIN32 AND MSVC)
+            add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+            add_definitions(-D_ATL_SECURE_NO_WARNINGS)
+            add_definitions(-D_AFX_SECURE_NO_WARNINGS)
+        endif()
 
         # Debug settings
 
-        SET(AREA_CODE_GENERAL "51000")
-        SET(AREA_CODE_LOADING "51001")
-        ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL})
-        ADD_DEFINITIONS(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
-        ADD_DEFINITIONS(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
-        ADD_DEFINITIONS(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+        set(AREA_CODE_GENERAL "51000")
+        set(AREA_CODE_LOADING "51001")
+        add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL})
+        add_definitions(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
+        add_definitions(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
+        add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
         # kipi host test program to check plugins
 
-        IF(KDE4_BUILD_TESTS)
-            ADD_SUBDIRECTORY(tests)
-        ENDIF()
+        if(KDE4_BUILD_TESTS)
+            add_subdirectory(tests)
+        endif()
 
         # Plugins which will be always compiled
 
-        ADD_SUBDIRECTORY(common)
-        ADD_SUBDIRECTORY(timeadjust)
-        ADD_SUBDIRECTORY(jpeglossless)
-        ADD_SUBDIRECTORY(rawconverter)
-        ADD_SUBDIRECTORY(metadataedit)
-        ADD_SUBDIRECTORY(sendimages)
-        ADD_SUBDIRECTORY(flashexport)
-        ADD_SUBDIRECTORY(flickrexport)
-        ADD_SUBDIRECTORY(galleryexport)
-        ADD_SUBDIRECTORY(piwigoexport)
-        ADD_SUBDIRECTORY(kioexportimport)
-        ADD_SUBDIRECTORY(picasawebexport)
-        ADD_SUBDIRECTORY(smug)
-        ADD_SUBDIRECTORY(printimages)
-        ADD_SUBDIRECTORY(expoblending)
-        ADD_SUBDIRECTORY(kopete)
-        ADD_SUBDIRECTORY(batchprocessimages)
-        ADD_SUBDIRECTORY(rajceexport)
-        ADD_SUBDIRECTORY(kmlexport)
-        ADD_SUBDIRECTORY(imageshackexport)
-        ADD_SUBDIRECTORY(photolayoutseditor)
-        ADD_SUBDIRECTORY(dlnaexport)
-        ADD_SUBDIRECTORY(jalbumexport)
+        add_subdirectory(common)
+        add_subdirectory(timeadjust)
+        add_subdirectory(jpeglossless)
+        add_subdirectory(rawconverter)
+        add_subdirectory(metadataedit)
+        add_subdirectory(sendimages)
+        add_subdirectory(flashexport)
+        add_subdirectory(flickrexport)
+        add_subdirectory(galleryexport)
+        add_subdirectory(piwigoexport)
+        add_subdirectory(kioexportimport)
+        add_subdirectory(picasawebexport)
+        add_subdirectory(smug)
+        add_subdirectory(printimages)
+        add_subdirectory(expoblending)
+        add_subdirectory(kopete)
+        add_subdirectory(batchprocessimages)
+        add_subdirectory(rajceexport)
+        add_subdirectory(kmlexport)
+        add_subdirectory(imageshackexport)
+        add_subdirectory(photolayoutseditor)
+        add_subdirectory(dlnaexport)
+        add_subdirectory(jalbumexport)
 
         # Plugin not yet ready for production
-        #ADD_SUBDIRECTORY(photivointegration)
+        #add_subdirectory(photivointegration)
 
         # Plugins which are optional dependencies.
 
-        IF(KDEPIMLIBS_FOUND)
-            ADD_SUBDIRECTORY(calendar)
-        ENDIF()
+        if(KDEPIMLIBS_FOUND)
+            add_subdirectory(calendar)
+        endif()
 
-        IF(QCA2_FOUND)
-            ADD_SUBDIRECTORY(shwup)
-            ADD_SUBDIRECTORY(yandexfotki)
-        ENDIF()
+        if(QCA2_FOUND)
+            add_subdirectory(shwup)
+            add_subdirectory(yandexfotki)
+        endif()
 
-        IF(IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
-            ADD_SUBDIRECTORY(ipodexport)
-        ENDIF()
+        if(IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
+            add_subdirectory(ipodexport)
+        endif()
 
-        IF(OpenCV_FOUND)
-            ADD_SUBDIRECTORY(removeredeyes)
-        ENDIF()
+        if(OpenCV_FOUND)
+            add_subdirectory(removeredeyes)
+        endif()
 
-        IF(QJSON_FOUND)
-            ADD_SUBDIRECTORY(debianscreenshots)
-            ADD_SUBDIRECTORY(facebook)
-            ADD_SUBDIRECTORY(imgurexport)
-            ADD_SUBDIRECTORY(googledrive)
-            ADD_SUBDIRECTORY(dropbox)
-        ENDIF()
+        if(QJSON_FOUND)
+            add_subdirectory(debianscreenshots)
+            add_subdirectory(facebook)
+            add_subdirectory(imgurexport)
+            add_subdirectory(googledrive)
+            add_subdirectory(dropbox)
+        endif()
 
-        IF(LIBKVKONTAKTE_FOUND)
-            ADD_SUBDIRECTORY(vkontakte)
-        ENDIF()
+        if(LIBKVKONTAKTE_FOUND)
+            add_subdirectory(vkontakte)
+        endif()
 
         # Currently the cmake module distributed w/ cmake uses a different variable
         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
         # distributed w/ kdelibs LIBEXSLT_LIBRARIES.
-        IF(NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
-            SET(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})
-        ENDIF()
+        if(NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
+            set(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})
+        endif()
 
-        IF(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
-            ADD_SUBDIRECTORY(htmlexport)
-        ENDIF()
+        if(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
+            add_subdirectory(htmlexport)
+        endif()
 
-        IF(KSANE_FOUND)
-            ADD_SUBDIRECTORY(acquireimages)
-        ENDIF()
+        if(KSANE_FOUND)
+            add_subdirectory(acquireimages)
+        endif()
 
-        IF(BUILD_VIEWERS)
-            ADD_SUBDIRECTORY(advancedslideshow)
-            ADD_SUBDIRECTORY(imageviewer)
-        ENDIF()
+        if(BUILD_VIEWERS)
+            add_subdirectory(advancedslideshow)
+            add_subdirectory(imageviewer)
+        endif()
 
-        IF(EXPAT_FOUND)
-            IF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-                ADD_SUBDIRECTORY(dngconverter)
-            ENDIF()
-        ENDIF()
+        if(EXPAT_FOUND)
+            if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
+                add_subdirectory(dngconverter)
+            endif()
+        endif()
 
-        IF(KGEOMAP_FOUND)
-            ADD_SUBDIRECTORY(gpssync)
-        ENDIF()
+        if(KGEOMAP_FOUND)
+            add_subdirectory(gpssync)
+        endif()
 
-        IF(MEDIAWIKI_FOUND)
-            ADD_SUBDIRECTORY(mediawiki)
-        ENDIF()
+        if(MEDIAWIKI_FOUND)
+            add_subdirectory(mediawiki)
+        endif()
 
-        IF(FLEX_FOUND AND BISON_FOUND)
-            ADD_SUBDIRECTORY(panorama)
-        ENDIF()
+        if(FLEX_FOUND AND BISON_FOUND)
+            add_subdirectory(panorama)
+        endif()
 
-        IF(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-            ADD_SUBDIRECTORY(videoslideshow)
-        ENDIF()
+        if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+            add_subdirectory(videoslideshow)
+        endif()
 
-        IF(BUILD_WALLPAPER)
-            ADD_SUBDIRECTORY(wallpaper)
-        ENDIF()
+        if(BUILD_WALLPAPER)
+            add_subdirectory(wallpaper)
+        endif()
 
-        IF(NOT WIN32)
-            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
-        ENDIF()
+        if(NOT WIN32)
+            configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
+        endif()
 
-    ENDIF()
+    endif()
 
-ELSE()
+else()
 
-    MESSAGE(STATUS "")
-    MESSAGE(STATUS "----------------------------------------------------------------------------------")
-    MESSAGE(STATUS " libkipi not found. kipi-plugins ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
-    MESSAGE(STATUS "")
+    message(STATUS "")
+    message(STATUS "----------------------------------------------------------------------------------")
+    message(STATUS " libkipi not found. kipi-plugins ${KIPIPLUGINS_VERSION_STRING} will not be compiled")
+    message(STATUS "")
 
-ENDIF()
+endif()

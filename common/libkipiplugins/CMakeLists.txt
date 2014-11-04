@@ -1,9 +1,15 @@
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kpversion.h)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/templates/Doxyfile.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.h.cmake.in              ${CMAKE_CURRENT_BINARY_DIR}/kpversion.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/templates/Doxyfile.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
+include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
+
+set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
@@ -25,11 +31,11 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
-                         )
+  )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugins
+target_link_libraries(kipiplugins
                       ${QT_QTGUI_LIBRARY}
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
@@ -46,6 +52,6 @@ TARGET_LINK_LIBRARIES(kipiplugins
                       ${KIPI_LIBRARIES}
                      )
 
-SET_TARGET_PROPERTIES(kipiplugins PROPERTIES VERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING} SOVERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING})
+set_target_properties(kipiplugins PROPERTIES VERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING} SOVERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING})
 
-INSTALL(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
