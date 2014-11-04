@@ -1,10 +1,16 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${QCA2_INCLUDE_DIR})
+subdirs(icons)
 
-ADD_DEFINITIONS(${QCA2_DEFINITIONS})
+include_directories(${QCA2_INCLUDE_DIR})
 
-SET(kipiplugin_yandexfotki_PART_SRCS
+add_definitions(${QCA2_DEFINITIONS})
+
+set(kipiplugin_yandexfotki_PART_SRCS
     plugin_yandexfotki.cpp
     logindialog.cpp
     yfalbum.cpp
@@ -18,7 +24,7 @@ SET(kipiplugin_yandexfotki_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_yandexfotki ${kipiplugin_yandexfotki_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_yandexfotki
+target_link_libraries(kipiplugin_yandexfotki
                       ${KDCRAW_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -28,8 +34,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_yandexfotki
                       kipiplugins
                      )
 
-CONFIGURE_FILE(kipiplugin_yandexfotki.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop)
+configure_file(kipiplugin_yandexfotki.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_yandexfotki                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_yandexfotkiui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_yandexfotki                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES kipiplugin_yandexfotkiui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)

@@ -1,34 +1,16 @@
-# ===========================================================
 #
-# This file is a part of digiKam project
-# <a href="http://www.digikam.org">http://www.digikam.org</a>
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
-# @date   2010-06-29
-# @brief  kipi host test application
-#
-# @author Copyright (C) 2009-2010 by Michael G. Hansen
-#         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
-#
-# This program is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General
-# Public License as published by the Free Software Foundation;
-# either version 2, or (at your option)
-# any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# ============================================================
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-PROJECT(kipitest)
+project(kipitest)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-ADD_DEFINITIONS(${KEXIV2_DEFINITIONS})
+add_definitions(${KEXIV2_DEFINITIONS})
 
-SET(kipicmd_sources
+set(kipicmd_sources
     kipiinterface.cpp
     kipiimagecollectionshared.cpp
     kipiimageinfoshared.cpp
@@ -40,7 +22,7 @@ SET(kipicmd_sources
 
 KDE4_ADD_EXECUTABLE(kipicmd ${kipicmd_sources})
 
-TARGET_LINK_LIBRARIES(kipicmd 
+target_link_libraries(kipicmd
                       ${KDE4_UI_LIBS}
                       ${KDE4_KPARTS_LIBS}
                       ${KEXIV2_LIBRARIES}
@@ -48,4 +30,4 @@ TARGET_LINK_LIBRARIES(kipicmd
                       kipiplugins
                      )
 
-ADD_SUBDIRECTORY(multithreading)
+add_subdirectory(multithreading)

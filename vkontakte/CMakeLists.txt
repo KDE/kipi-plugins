@@ -1,8 +1,14 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${LIBKVKONTAKTE_INCLUDES})
+subdirs(icons)
 
-SET(kipiplugin_vkontakte_PART_SRCS
+include_directories(${LIBKVKONTAKTE_INCLUDES})
+
+set(kipiplugin_vkontakte_PART_SRCS
     plugin_vkontakte.cpp
     vkwindow.cpp
     vkalbumdialog.cpp
@@ -13,7 +19,7 @@ SET(kipiplugin_vkontakte_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_vkontakte ${kipiplugin_vkontakte_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_vkontakte
+target_link_libraries(kipiplugin_vkontakte
                       kipiplugins
                       ${KIPI_LIBRARIES}
 #                      ${KDCRAW_LIBRARIES}
@@ -23,8 +29,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_vkontakte
                       ${LIBKVKONTAKTE_LIBRARIES}
                      )
 
-CONFIGURE_FILE(kipiplugin_vkontakte.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)
+configure_file(kipiplugin_vkontakte.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_vkontakte                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_vkontakteui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_vkontakte                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_vkontakteui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

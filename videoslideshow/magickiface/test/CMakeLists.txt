@@ -1,15 +1,20 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
+include_directories(${ImageMagick_INCLUDE_DIRS}
                     ${QT_INCLUDES}
                     ${CMAKE_CURRENT_BINARY_DIR}/../
                     ${CMAKE_CURRENT_SOURCE_DIR}/../
                    )
 
-SET(testmagickiface_SRCS testmagickiface.cpp)
+set(testmagickiface_SRCS testmagickiface.cpp)
 
 KDE4_ADD_EXECUTABLE(testmagickiface ${testmagickiface_SRCS})
 
-TARGET_LINK_LIBRARIES(testmagickiface
+target_link_libraries(testmagickiface
                       magickiface
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
@@ -18,4 +23,4 @@ TARGET_LINK_LIBRARIES(testmagickiface
                      )
 
 # interactive test, not usable as test suite
-# ADD_TEST(NAME testmagickiface COMMAND testmagickiface)
+# add_test(NAME testmagickiface COMMAND testmagickiface)

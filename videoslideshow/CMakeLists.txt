@@ -1,8 +1,14 @@
-ADD_SUBDIRECTORY(magickiface)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-ADD_DEFINITIONS(${QTGSTREAMER_DEFINITIONS} ${KDE4_ENABLE_EXCEPTIONS})
+add_subdirectory(magickiface)
 
-INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
+add_definitions(${QTGSTREAMER_DEFINITIONS} ${KDE4_ENABLE_EXCEPTIONS})
+
+include_directories(${ImageMagick_INCLUDE_DIRS}
                     ${QTGSTREAMER_INCLUDES}
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
@@ -10,7 +16,7 @@ INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS}
                     ${CMAKE_CURRENT_SOURCE_DIR}/magickiface
                    )
 
-SET(kipiplugin_videoslideshow_PART_SRCS plugin/plugin_videoslideshow.cpp
+set(kipiplugin_videoslideshow_PART_SRCS plugin/plugin_videoslideshow.cpp
                                         manager/actionthread.cpp
                                         manager/encoderdecoder.cpp
                                         dialogs/exportdialog.cpp
@@ -18,11 +24,11 @@ SET(kipiplugin_videoslideshow_PART_SRCS plugin/plugin_videoslideshow.cpp
                                         dialogs/slideshowsettingswidget.cpp
    )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QTGSTREAMER_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QTGSTREAMER_FLAGS}")
 
 KDE4_ADD_PLUGIN(kipiplugin_videoslideshow ${kipiplugin_videoslideshow_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_videoslideshow
+target_link_libraries(kipiplugin_videoslideshow
                       magickiface
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_THREADWEAVER_LIBRARIES}
@@ -36,8 +42,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_videoslideshow
                       kipiplugins
                      )
 
-CONFIGURE_FILE(plugin/kipiplugin_videoslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop)
+configure_file(plugin/kipiplugin_videoslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_videoslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_videoslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_videoslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_videoslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
