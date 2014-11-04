@@ -1,11 +1,16 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-REMOVE_DEFINITIONS(-DQT_USE_FAST_CONCATENATION)
-REMOVE_DEFINITIONS(-DQT_USE_FAST_OPERATOR_PLUS)
+remove_definitions(-DQT_USE_FAST_CONCATENATION)
+remove_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 
-ADD_SUBDIRECTORY(qtsoap)
-ADD_SUBDIRECTORY(hupnp)
-ADD_SUBDIRECTORY(hupnp_av)
+add_subdirectory(qtsoap)
+add_subdirectory(hupnp)
+add_subdirectory(hupnp_av)
 
-IF(KDE4_BUILD_TESTS)
-    ADD_SUBDIRECTORY(avtest)
-ENDIF()
+if(KDE4_BUILD_TESTS)
+    add_subdirectory(avtest)
+endif()

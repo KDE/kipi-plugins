@@ -1,19 +1,25 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${QJSON_INCLUDE_DIR})
+subdirs(icons)
 
-SET(kipiplugin_dropbox_PART_SRCS
+include_directories(${QJSON_INCLUDE_DIR})
+
+set(kipiplugin_dropbox_PART_SRCS
     mpform.cpp
     plugin_dropbox.cpp
     dbwidget.cpp
     dbwindow.cpp
     dbalbum.cpp
     dbtalker.cpp
-    )
+   )
 
 KDE4_ADD_PLUGIN(kipiplugin_dropbox ${kipiplugin_dropbox_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_dropbox
+target_link_libraries(kipiplugin_dropbox
                       ${KDCRAW_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -23,8 +29,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_dropbox
                       kipiplugins
                      )
 
-CONFIGURE_FILE(kipiplugin_dropbox.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop)
+configure_file(kipiplugin_dropbox.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_dropbox                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_dropboxui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_dropbox                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_dropboxui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

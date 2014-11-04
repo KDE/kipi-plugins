@@ -1,10 +1,16 @@
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 KDE4_ADD_EXECUTABLE(gpssync_test_correlator
                     test_correlator.cpp
                     ../track_correlator.cpp
                     ../track_correlator_thread.cpp
                    )
 
-TARGET_LINK_LIBRARIES(gpssync_test_correlator
+target_link_libraries(gpssync_test_correlator
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
@@ -13,20 +19,20 @@ TARGET_LINK_LIBRARIES(gpssync_test_correlator
                         kipiplugins
                      )
 
-IF(NOT WIN32)
+if(NOT WIN32)
 
     KDE4_ADD_EXECUTABLE(gpssync_test_rgparsing
                test_rgparsing.cpp
                )
 
-    TARGET_LINK_LIBRARIES(gpssync_test_rgparsing
-                 ${KDE4_KDECORE_LIBS}
-                 ${QT_QTTEST_LIBRARY}
-                 ${QT_QTGUI_LIBRARY}
-                 kipiplugins
-               )
+    target_link_libraries(gpssync_test_rgparsing
+                          ${KDE4_KDECORE_LIBS}
+                          ${QT_QTTEST_LIBRARY}
+                          ${QT_QTGUI_LIBRARY}
+                          kipiplugins
+                         )
 
-ENDIF()
+endif()
 
 KDE4_ADD_EXECUTABLE(gpssync_test_rgtagmodel
                     test_rgtagmodel.cpp
@@ -35,7 +41,7 @@ KDE4_ADD_EXECUTABLE(gpssync_test_rgtagmodel
                     ../rgtagmodel.cpp
                     )
 
-TARGET_LINK_LIBRARIES(gpssync_test_rgtagmodel
+target_link_libraries(gpssync_test_rgtagmodel
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
@@ -49,7 +55,7 @@ KDE4_ADD_EXECUTABLE(gpssync_test_kipiimageitem
                     ${borrowed_future_SRCS}
                    )
 
-TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
+target_link_libraries(gpssync_test_kipiimageitem
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
                       ${QT_QTTEST_LIBRARY}
@@ -60,9 +66,9 @@ TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
                       kipiplugins
                      )
 
-ADD_TEST(gpssync_test_correlator       ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
-ADD_TEST(gpssync_test_gpsrgparsing     ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)
-ADD_TEST(gpssync_test_gpsrgtagmodel    ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgtagmodel)
-ADD_TEST(gpssync_test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_kipiimageitem)
+add_test(gpssync_test_correlator       ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
+add_test(gpssync_test_gpsrgparsing     ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)
+add_test(gpssync_test_gpsrgtagmodel    ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgtagmodel)
+add_test(gpssync_test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_kipiimageitem)
 
 MACRO_OPTIONAL_ADD_SUBDIRECTORY(simpletreemodel)

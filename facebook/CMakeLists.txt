@@ -1,8 +1,14 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${QJSON_INCLUDE_DIR})
+subdirs(icons)
 
-SET(kipiplugin_facebook_PART_SRCS
+include_directories(${QJSON_INCLUDE_DIR})
+
+set(kipiplugin_facebook_PART_SRCS
     plugin_facebook.cpp
     fbwindow.cpp
     fbwidget.cpp
@@ -14,7 +20,7 @@ SET(kipiplugin_facebook_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_facebook ${kipiplugin_facebook_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_facebook
+target_link_libraries(kipiplugin_facebook
                       kipiplugins
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -24,8 +30,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_facebook
                       ${QJSON_LIBRARIES}
                      )
 
-CONFIGURE_FILE(kipiplugin_facebook.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop)
+configure_file(kipiplugin_facebook.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_facebook                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_facebookui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_facebook                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_facebookui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)

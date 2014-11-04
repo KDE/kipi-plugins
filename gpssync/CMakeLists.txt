@@ -1,9 +1,15 @@
-SUBDIRS(icons)
+#
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
-INCLUDE_DIRECTORIES(${KGEOMAP_INCLUDE_DIR})
+subdirs(icons)
 
-SET(kipiplugin_gpssync_PART_SRCS
+include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
+include_directories(${KGEOMAP_INCLUDE_DIR})
+
+set(kipiplugin_gpssync_PART_SRCS
     gpssyncdialog.cpp
     plugin_gpssync.cpp
     kipiimagemodel.cpp
@@ -32,33 +38,33 @@ SET(kipiplugin_gpssync_PART_SRCS
     tests/simpletreemodel/simpletreemodel.cpp
    )
 
-IF(KDE4_BUILD_TESTS)
-    INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
-    #ADD_DEFINITIONS(-DGPSSYNC_MODELTEST)
-    SET(kipiplugin_gpssync_PART_SRCS
+if(KDE4_BUILD_TESTS)
+    include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
+    #add_definitions(-DGPSSYNC_MODELTEST)
+    set(kipiplugin_gpssync_PART_SRCS
         ${kipiplugin_gpssync_PART_SRCS}
         ${CMAKE_CURRENT_SOURCE_DIR}/borrowed/modeltest.cpp
        )
-ENDIF()
+endif()
 
-IF(NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
+if(NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
     # these are borrowed from a new KDE trunk version
     # and are needed for sorting of the view
-    INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future")
-    SET(borrowed_future_SRCS
+    include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future")
+    set(borrowed_future_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future/klinkitemselectionmodel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future/kmodelindexproxymapper.cpp
        )
-    SET(kipiplugin_gpssync_PART_SRCS
+    set(kipiplugin_gpssync_PART_SRCS
         ${kipiplugin_gpssync_PART_SRCS}
         ${borrowed_future_SRCS}
        )
-ENDIF()
+endif()
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
 
 # TODO: verify that the libkgeomap library is installed!
-TARGET_LINK_LIBRARIES(kipiplugin_gpssync
+target_link_libraries(kipiplugin_gpssync
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_KHTML_LIBS}
                       ${KIPI_LIBRARIES}
@@ -67,25 +73,25 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       kipiplugins
                      )
 
-IF(KDE4_BUILD_TESTS)
+if(KDE4_BUILD_TESTS)
     # needed by modeltest
-    TARGET_LINK_LIBRARIES(kipiplugin_gpssync
+    target_link_libraries(kipiplugin_gpssync
                           ${QT_QTTEST_LIBRARY}
                           kipiplugins
                          )
-ENDIF()
+endif()
 
-CONFIGURE_FILE(kipiplugin_gpssync.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop)
+configure_file(kipiplugin_gpssync.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop)
 
-INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(TARGETS kipiplugin_gpssync                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_gpssyncui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_gpssync                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_gpssyncui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
-INSTALL(FILES   data/bookmarks-marker.png
+install(FILES   data/bookmarks-marker.png
                 data/searchmarker-normal.png
                 data/searchmarker-selected.png
         DESTINATION ${DATA_INSTALL_DIR}/gpssync/)
 
-IF(KDE4_BUILD_TESTS)
+if(KDE4_BUILD_TESTS)
     MACRO_OPTIONAL_ADD_SUBDIRECTORY(tests)
-ENDIF()
+endif()
