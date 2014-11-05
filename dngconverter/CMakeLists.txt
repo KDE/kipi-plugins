@@ -53,7 +53,7 @@ foreach(_currentfile ${libmd5_SRCS})
     if(NOT MSVC)
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
-endforeach(_currentfile ${libmd5_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(libmd5 STATIC ${libmd5_SRCS})
 
@@ -85,7 +85,7 @@ foreach(_currentfile ${libxmp_SRCS})
     else()
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
     endif()
-endforeach(_currentfile ${libxmp_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(libxmp STATIC ${libxmp_SRCS})
 
@@ -216,7 +216,7 @@ foreach(_currentfile ${libdng_SRCS})
     else()
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
     endif()
-endforeach(_currentfile ${libdng_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
 

@@ -63,7 +63,7 @@ foreach(_currentfile ${panorama_common_SRCS})
     if(NOT MSVC)
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
-endforeach(_currentfile ${panorama_common_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(libpanorama STATIC ${panorama_common_SRCS})
 

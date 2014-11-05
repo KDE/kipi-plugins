@@ -19,7 +19,7 @@ foreach(_currentfile ${acquireimages_common_SRCS})
    if(NOT MSVC)
        set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
    endif()
-endforeach(_currentfile ${acquireimages_common_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(libacquireimages STATIC ${acquireimages_common_SRCS})
 

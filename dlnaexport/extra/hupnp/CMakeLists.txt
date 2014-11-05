@@ -152,7 +152,7 @@ foreach(_currentfile ${SRCS})
     if(NOT MSVC)
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
-endforeach(_currentfile ${SRCS})
+endforeach()
 
 add_library(HUpnp STATIC ${SRCS})
 

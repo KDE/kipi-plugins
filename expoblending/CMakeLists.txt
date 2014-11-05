@@ -39,7 +39,7 @@ foreach(_currentfile ${expoblending_common_SRCS})
     if(NOT MSVC)
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
-endforeach(_currentfile ${expoblending_common_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(libexpoblending STATIC ${expoblending_common_SRCS})
 

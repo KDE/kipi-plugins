@@ -21,7 +21,7 @@ foreach(_currentfile ${magickiface_SRCS})
     if(NOT MSVC)
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
-endforeach(_currentfile ${magickiface_SRCS})
+endforeach()
 
 KDE4_ADD_LIBRARY(magickiface STATIC ${magickiface_SRCS})
 

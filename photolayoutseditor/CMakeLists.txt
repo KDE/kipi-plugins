@@ -165,7 +165,7 @@ foreach(_currentfile ${PhotoLayoutsEditor_SRCS})
     if(NOT MSVC)
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
-endforeach(_currentfile ${PhotoLayoutsEditor_SRCS})
+endforeach()
 
 if(NOT MSVC)
     # Causes cmake error on openSUSE 12 (cmake 2.8.6)
