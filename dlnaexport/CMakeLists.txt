@@ -11,16 +11,16 @@ if(HUPNP_FOUND AND HUPNPAV_FOUND)
 
     include_directories(${HUPNP_INCLUDE_DIR})
 
-else()
+elseif(NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND)
+
+    include_directories(extra/hupnp/include)
+    include_directories(extra/hupnp_av/include)
 
     add_definitions(-DH_BUILD_UPNP_CORE_LIB)
     add_definitions(-DH_BUILD_UPNP_LIGHTING_LIB)
     add_definitions(-DH_BUILD_UPNP_AV_LIB)
 
     add_subdirectory(extra)
-
-    include_directories(extra/hupnp/include)
-    include_directories(extra/hupnp_av/include)
 
 endif()
 
@@ -53,7 +53,7 @@ if(HUPNP_FOUND AND HUPNPAV_FOUND)
                           ${HUPNPAV_LIBS}
                          )
 
-else()
+elseif(NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND)
 
     target_link_libraries(kipiplugin_dlnaexport
                           HUpnp

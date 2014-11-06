@@ -91,6 +91,7 @@ libkvkontakte   >= 0.1.0                        https://projects.kde.org/project
 libimagemagick  >= 5.5.4                        http://www.imagemagick.org
 libqtgstreamer  >= 0.9.0                        http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
+libqtsoap       >= 2.7.0                        https://github.com/commontk/QtSOAP
 libqtkoauth     >= 0.97                         http://gitorious.org/kqoauth
 flex            >= 2.5.0                        http://flex.sourceforge.net
 bison           >= 2.5.0                        http://www.gnu.org/software/bison/bison.html
@@ -115,7 +116,7 @@ ExpoBlending       : Hugin command line tools (runtime dependency).
 GPSSync            : libkgeomap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
-DLNAExport         : libhupnp.
+DLNAExport         : libhupnp and libqtsoap.
 VideoSlideshow     : libimagemagick and libqtgstreamer
 Imgur              : libqtkoauth.
 ImgurExport        : kqoauth for Imgur.com's authenticated API.

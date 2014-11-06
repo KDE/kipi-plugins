@@ -110,6 +110,7 @@ if(KIPI_FOUND)
     MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
     MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
     MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
+    MACRO_OPTIONAL_FIND_PACKAGE(QtSoap)                                      # For DlnaExport.
     MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
@@ -185,6 +186,7 @@ if(KIPI_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 0.3.0)"                  "Kipi-plugins will be compiled without libksane support."       KSANE_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libhupnp"       "http://www.herqq.org"                                            "(version >= 2.0.0)"                  "Internal version used instead"                                 HUPNP_FOUND AND HUPNPAV_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqtsoap"      "https://github.com/commontk/QtSOAP"                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libqtsoap support."      QTSOAP_FOUND)
 
     PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGl support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
@@ -247,6 +249,7 @@ if(KIPI_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KSANE_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("DNGConverter"       EXPAT_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("DLNAExport"         (HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
     PRINT_COMPONENT_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
@@ -374,13 +377,16 @@ if(KIPI_FOUND)
         add_subdirectory(kmlexport)
         add_subdirectory(imageshackexport)
         add_subdirectory(photolayoutseditor)
-        add_subdirectory(dlnaexport)
         add_subdirectory(jalbumexport)
 
         # Plugin not yet ready for production
         #add_subdirectory(photivointegration)
 
         # Plugins which are optional dependencies.
+
+        if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
+            add_subdirectory(dlnaexport)
+        endif()
 
         if(KDEPIMLIBS_FOUND)
             add_subdirectory(calendar)

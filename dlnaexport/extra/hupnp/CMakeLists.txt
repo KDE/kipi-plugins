@@ -8,10 +8,9 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}/src
                     src
                     ${QT_INCLUDE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../qtsoap/src
-                    ${CMAKE_CURRENT_BINARY_DIR}/../qtsoap/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/include
                     ${CMAKE_CURRENT_BINARY_DIR}/include
+                    ${QTSOAP_INCLUDE_DIRS}
                    )
 
 include(${QT_USE_FILE})
@@ -156,7 +155,7 @@ endforeach()
 
 add_library(HUpnp STATIC ${SRCS})
 
-target_link_libraries(HUpnp QtSoap ${QT_LIBRARIES})
+target_link_libraries(HUpnp ${QTSOAP_LIBRARIES} ${QT_LIBRARIES})
 
 if(NOT MSVC)
     set_target_properties(HUpnp PROPERTIES COMPILE_FLAGS "-fPIC")

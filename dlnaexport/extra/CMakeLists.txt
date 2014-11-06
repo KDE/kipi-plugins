@@ -7,7 +7,6 @@
 remove_definitions(-DQT_USE_FAST_CONCATENATION)
 remove_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 
-add_subdirectory(qtsoap)
 add_subdirectory(hupnp)
 add_subdirectory(hupnp_av)
 
