@@ -113,7 +113,7 @@ if(KIPI_FOUND)
     MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
-    
+
     # -- check the libkgeomap version -----------------------------------------------------------------
 
     set(KGEOMAP_MIN_VERSION "3.0.0")
@@ -312,7 +312,7 @@ if(KIPI_FOUND)
                           ALL COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/gitscript.cmake")
 
         # ==================================================================================================
-        
+
         include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                             ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/dialogs
