@@ -27,10 +27,8 @@ else (QTSOAP_LIBRARIES AND QTSOAP_INCLUDE_DIRS)
         /usr/local/include
         /opt/local/include
         /sw/include
-        /usr/include/QtSoap
-        /usr/local/include/QtSoap
-        /opt/local/include/QtSoap
-        /sw/include/QtSoap
+    PATH_SUFFIXES
+        QtSoap
   )
 
   # debian uses version suffixes
