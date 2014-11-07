@@ -38,6 +38,7 @@ else (QTSOAP_LIBRARIES AND QTSOAP_INCLUDE_DIRS)
   find_library(QTSOAP_LIBRARIES
     NAMES
         qtsoap
+        QtSolutions_SOAP-2.7
     PATHS
       /usr/lib64
       /usr/lib
