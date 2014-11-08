@@ -33,11 +33,16 @@
 // To avoid broken compilation with OpenCV >= 2.0
 #undef HAVE_CONFIG_H
 
-
-// GCC pragma directives to reduce warnings from OpenCV header files.
+// Pragma directives to reduce warnings from OpenCV header files.
 #ifdef Q_CC_GNU
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #pragma GCC diagnostic ignored "-Woverloaded-virtual"
+#endif
+
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wnon-virtual-dtor"
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#pragma clang diagnostic ignored "-Wcast-align"
 #endif
 
 // OpenCV includes
@@ -72,6 +77,12 @@ typedef std::vector<double> double_stl_vector;
 #ifdef Q_CC_GNU
 #pragma GCC diagnostic warning "-Wnon-virtual-dtor"
 #pragma GCC diagnostic warning "-Woverloaded-virtual"
+#endif
+
+#ifdef __clang__
+#pragma clang diagnostic warning "-Wnon-virtual-dtor"
+#pragma clang diagnostic warning "-Woverloaded-virtual"
+#pragma clang diagnostic warning "-Wcast-align"
 #endif
 
 #endif // LIB_OPEN_CV_H
