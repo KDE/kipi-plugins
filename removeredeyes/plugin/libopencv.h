@@ -34,12 +34,14 @@
 #undef HAVE_CONFIG_H
 
 // Pragma directives to reduce warnings from OpenCV header files.
-#ifdef Q_CC_GNU
+#if not defined(__APPLE__) && defined(__GNUC__)
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #pragma GCC diagnostic ignored "-Woverloaded-virtual"
 #endif
 
-#ifdef __clang__
+#if defined(__APPLE__) && defined(__clang__)
+#pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnon-virtual-dtor"
 #pragma clang diagnostic ignored "-Woverloaded-virtual"
 #pragma clang diagnostic ignored "-Wcast-align"
@@ -73,16 +75,13 @@
 typedef std::vector<double> double_stl_vector;
 #endif // MATRIXCV_ACTIU
 
-// Restore GCC warnings
-#ifdef Q_CC_GNU
-#pragma GCC diagnostic warning "-Wnon-virtual-dtor"
-#pragma GCC diagnostic warning "-Woverloaded-virtual"
+// Restore warnings
+#if not defined(__APPLE__) && defined(__GNUC__)
+#pragma GCC diagnostic pop
 #endif
 
-#ifdef __clang__
-#pragma clang diagnostic warning "-Wnon-virtual-dtor"
-#pragma clang diagnostic warning "-Woverloaded-virtual"
-#pragma clang diagnostic warning "-Wcast-align"
+#if defined(__APPLE__) && defined(__clang__)
+#pragma clang diagnostic pop
 #endif
 
 #endif // LIB_OPEN_CV_H
