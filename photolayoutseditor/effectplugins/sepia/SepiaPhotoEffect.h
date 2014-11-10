@@ -49,7 +49,7 @@ namespace KIPIPhotoLayoutsEditor
             {
                 QImage result = image;
                 unsigned int pixels = result.width() * result.height();
-                unsigned int * data = (unsigned int *) result.bits();
+                unsigned int * data = reinterpret_cast<unsigned int *>(result.bits());
                 for (unsigned int i = 0; i < pixels; ++i)
                 {
                     int gr = qGray(data[i]);

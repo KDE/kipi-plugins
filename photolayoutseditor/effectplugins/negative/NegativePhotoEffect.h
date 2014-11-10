@@ -52,7 +52,7 @@ namespace KIPIPhotoLayoutsEditor
             {
                 QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
                 unsigned int pixels = result.width() * result.height();
-                unsigned int * data = (unsigned int *) result.bits();
+                unsigned int * data = reinterpret_cast<unsigned int *>(result.bits());
                 for (unsigned int i = 0; i < pixels; ++i)
                     data[i] = qRgb(255-qRed(data[i]),255-qGreen(data[i]),255-qBlue(data[i]));
 

@@ -241,7 +241,7 @@ void ImageLoadingThread::loadRaw(const KUrl& url)
             img = QImage(width, height, QImage::Format_ARGB32);
 
             uchar* sptr = image;
-            uint*  dptr = (uint*)img.bits();
+            uint*  dptr = reinterpret_cast<uint*>(img.bits());
 
             uint dim = width * height;
 
