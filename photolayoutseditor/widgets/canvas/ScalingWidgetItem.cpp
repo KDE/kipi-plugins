@@ -141,7 +141,7 @@ class KIPIPhotoLayoutsEditor::ScalingWidgetItemPrivate
 
     ScalingWidgetItemPrivate() :
         currentViewTransform(1, 0, 0,    0, 1, 0,   0, 0, 1),
-        recalculate(true),
+//        recalculate(true),
         pressedVHandler(-1),
         pressedHHandler(-1)
     {
@@ -169,7 +169,7 @@ class KIPIPhotoLayoutsEditor::ScalingWidgetItemPrivate
     QRectF m_begin_rect;
     QRectF m_handlers[Bottom+1][Right+1];
     QPainterPath m_elipse;
-    bool recalculate;
+//    bool recalculate;
     int pressedVHandler;
     int pressedHHandler;
     QPointF handlerOffset;

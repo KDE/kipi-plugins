@@ -173,8 +173,8 @@ class KIPIPhotoLayoutsEditor::AbstractItemsListViewToolPrivate
         m_remove_button(0),
         m_down_button(0),
         m_up_button(0),
-        m_delegate(0),
-        m_editors_object(0)
+        m_delegate(0)
+//        , m_editors_object(0)
     {}
     AbstractListToolView * m_list_widget;
     KPushButton * m_add_button;
@@ -182,7 +182,7 @@ class KIPIPhotoLayoutsEditor::AbstractItemsListViewToolPrivate
     KPushButton * m_down_button;
     KPushButton * m_up_button;
     AbstractListToolViewDelegate * m_delegate;
-    QObject * m_editors_object;
+//    QObject * m_editors_object;
 
     void closeChooser()
     {

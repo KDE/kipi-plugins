@@ -55,16 +55,16 @@ namespace KIPIPhotoLayoutsEditor
             KPushButton * m_scale_button;
             KPushButton * m_crop_button;
             KPushButton * m_tool_border;
-            KPushButton * m_tool_colorize_button;
+//            KPushButton * m_tool_colorize_button;
 
-            bool m_has_selection;
+//            bool m_has_selection;
 
-            QStackedLayout * m_tool_widget_layout;
-            AbstractTool   * m_zoom_widget;
-            CanvasEditTool * m_canvas_widget;
-            AbstractItemsTool * m_effects_widget;
-            AbstractItemsTool * m_text_widget;
-            AbstractItemsTool * m_border_widget;
+//            QStackedLayout * m_tool_widget_layout;
+//            AbstractTool   * m_zoom_widget;
+//            CanvasEditTool * m_canvas_widget;
+//            AbstractItemsTool * m_effects_widget;
+//            AbstractItemsTool * m_text_widget;
+//            AbstractItemsTool * m_border_widget;
 
             AbstractPhoto * m_current_item;
 

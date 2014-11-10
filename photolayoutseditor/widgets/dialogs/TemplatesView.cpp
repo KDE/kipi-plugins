@@ -96,7 +96,7 @@ class TemplateItemDelegate : public QAbstractItemDelegate
 
 TemplatesView::TemplatesView(QWidget * parent) :
     QAbstractItemView(parent),
-    columns(0),
+//    columns(0),
     idealWidth(0),
     idealHeight(0),
     hashIsDirty(false)

@@ -33,7 +33,7 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
-            int columns;
+//            int columns;
             mutable int idealWidth;
             mutable int idealHeight;
             mutable bool hashIsDirty;

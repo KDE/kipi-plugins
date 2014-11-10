@@ -75,8 +75,8 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
         Manual = 4
     };
 
-    CanvasEditToolPrivate(CanvasEditTool * parent) :
-        m_parent(parent),
+    CanvasEditToolPrivate(CanvasEditTool * /*parent*/) :
+//        m_parent(parent),
 //        background_gradient_widget(0),
         background_type_widget(0),
         background_widgets(0),
@@ -84,7 +84,7 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
         background_color(0),
         background_image_widget(0),
         backgroundImageFormLayout(0),
-        background_image_file(0),
+//        background_image_file(0),
         background_image_label(0),
         background_image_scalling(0),
         background_image_tiled(0),
@@ -139,7 +139,7 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
         background_image_height->setEnabled(enabled);
     }
 
-    CanvasEditTool * m_parent;
+//    CanvasEditTool * m_parent;
 
     QMap<QString, BackgroundType> background_types;
     KComboBox * background_type_widget;
@@ -152,7 +152,7 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
 
     QWidget * background_image_widget;
     QFormLayout * backgroundImageFormLayout;
-    KUrlRequester * background_image_file;
+//    KUrlRequester * background_image_file;
     QPixmap background_image_empty_pixmap;
     QPushButton * background_image_label;
     KComboBox * background_image_scalling;
