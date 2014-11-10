@@ -41,7 +41,7 @@ class CompileMKTask : public Task
 
 private:
 
-    const KUrl* const                   panoUrl;
+//    const KUrl* const                   panoUrl;
     const KUrl* const                   mkUrl;
     const QString                       nonaPath;
     const QString                       enblendPath;

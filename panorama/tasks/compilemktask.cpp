@@ -31,20 +31,20 @@ namespace KIPIPanoramaPlugin
 {
 
 CompileMKTask::CompileMKTask(QObject* parent, const KUrl& workDir,
-                             const KUrl& mkUrl, const KUrl& panoUrl,
+                             const KUrl& mkUrl, const KUrl& /*panoUrl*/,
                              const QString& nonaPath, const QString& enblendPath,
                              const QString& makePath, bool preview)
     : Task(parent, preview ? STITCHPREVIEW : STITCH, workDir),
-      panoUrl(&panoUrl), mkUrl(&mkUrl), nonaPath(nonaPath),
+      /*panoUrl(&panoUrl),*/ mkUrl(&mkUrl), nonaPath(nonaPath),
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
 CompileMKTask::CompileMKTask(const KUrl& workDir,
-                             const KUrl& mkUrl, const KUrl& panoUrl,
+                             const KUrl& mkUrl, const KUrl& /*panoUrl*/,
                              const QString& nonaPath, const QString& enblendPath,
                              const QString& makePath, bool preview)
     : Task(0, preview ? STITCHPREVIEW : STITCH, workDir),
-      panoUrl(&panoUrl), mkUrl(&mkUrl), nonaPath(nonaPath),
+      /*panoUrl(&panoUrl),*/ mkUrl(&mkUrl), nonaPath(nonaPath),
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 

@@ -43,7 +43,7 @@ private:
 
     const KUrl* const                   autoOptimiserPtoUrl;
     KUrl* const                         viewCropPtoUrl;
-    const bool                          buildGPano;
+//    const bool                          buildGPano;
     const QString                       panoModifyPath;
 
     KProcess*                           process;

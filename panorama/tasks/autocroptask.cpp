@@ -32,17 +32,17 @@ namespace KIPIPanoramaPlugin
 
 AutoCropTask::AutoCropTask(QObject* parent, const KUrl& workDir,
                            const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
-                           bool buildGPano, const QString& panoModifyPath)
+                           bool /*buildGPano*/, const QString& panoModifyPath)
     : Task(parent, AUTOCROP, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
-      viewCropPtoUrl(&viewCropPtoUrl), buildGPano(buildGPano),
+      viewCropPtoUrl(&viewCropPtoUrl),/* buildGPano(buildGPano),*/
       panoModifyPath(panoModifyPath), process(0)
 {}
 
 AutoCropTask::AutoCropTask(const KUrl& workDir,
                            const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
-                           bool buildGPano, const QString& panoModifyPath)
+                           bool /*buildGPano*/, const QString& panoModifyPath)
     : Task(0, AUTOCROP, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
-      viewCropPtoUrl(&viewCropPtoUrl), buildGPano(buildGPano),
+      viewCropPtoUrl(&viewCropPtoUrl), /*buildGPano(buildGPano),*/
       panoModifyPath(panoModifyPath), process(0)
 {}
 
