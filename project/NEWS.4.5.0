@@ -1,0 +1,11 @@
+Kipi-plugins 4.5.0 - Release date: 2014/11/09
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 337422 - EXIF thumbnail date information not updated when writing metadata to image.
+002 ==> 340443 - Advanced slideshow shows not all pictures under certain conditions [patch].
+003 ==> 340476 - Floating Cards brings digiKam with non-English locales to crash and missing parameter text [patch].
+004 ==> 
