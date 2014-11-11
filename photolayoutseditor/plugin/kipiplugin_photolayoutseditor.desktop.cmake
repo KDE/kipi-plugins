@@ -37,6 +37,7 @@ Comment[da]=Et værktøj til at lave fotolayout
 Comment[de]=Ein Werkzeug, um Fotolayouts zu erstellen
 Comment[el]=Εργαλείο δημιουργίας διατάξεων φωτογραφιών
 Comment[en_GB]=A tool to make photo layouts
+Comment[es]=Una herramienta para hacer distribuciones de fotografías
 Comment[it]=Uno strumento impaginare le foto
 Comment[nl]=Een hulpmiddel voor het maken van foto-indelingen
 Comment[pl]=Narzędzie do tworzenia układów zdjęć

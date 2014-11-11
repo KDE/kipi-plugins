@@ -6,6 +6,7 @@ Comment[da]=Et værktøj til at oprette KML-filer med geolokaliserede billeder
 Comment[de]=Ein Werkzeug zum Erstellen von KML-Dateien mit Bilder, die geografische Informationen enthalten.
 Comment[el]=Ένα πρόσθετο δημιουργίας αρχείων KML με γεωχωρικές εικόνες
 Comment[en_GB]=A tool to create KML files with geolocated images
+Comment[es]=Una herramienta para crear archivos KML con imágenes geolocalizadas
 Comment[it]=Uno strumento per creare file KML con immagini geolocalizzate.
 Comment[nl]=Een hulpmiddel om KML-bestanden aan te maken met afbeeldingen met geo-locaties.
 Comment[pl]=Narzędzie do tworzenia plików KML z obrazów o ustalonym położeniu geograficznym
