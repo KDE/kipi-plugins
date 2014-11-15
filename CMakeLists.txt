@@ -14,11 +14,11 @@ message(STATUS "Starting CMake configuration for: kipi-plugins")
 
 # kipi-plugins version
 set(KIPIPLUGINS_MAJOR_VERSION "4")
-set(KIPIPLUGINS_MINOR_VERSION "5")
+set(KIPIPLUGINS_MINOR_VERSION "6")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2014-11-09")
+set(KIPIPLUGINS_RELEASE_DATE "2014-12-14")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
