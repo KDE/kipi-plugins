@@ -24,9 +24,12 @@
  *
  * ============================================================ */
 
+#include "test_rgparsing.moc"
+
 // Qt includes
 
 #include <QDateTime>
+
 // KDE includes
 
 #include <qtest_kde.h>
@@ -35,7 +38,6 @@
 
 // local includes
 
-#include "test_rgparsing.moc"
 #include "../backend-rg.h"
 #include "../parseTagString.h"
 

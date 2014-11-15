@@ -29,6 +29,7 @@ if(NOT WIN32)
                           ${KDE4_KDECORE_LIBS}
                           ${QT_QTTEST_LIBRARY}
                           ${QT_QTGUI_LIBRARY}
+                          ${KGEOMAP_LIBRARIES}
                           kipiplugins
                          )
 
@@ -45,6 +46,7 @@ target_link_libraries(gpssync_test_rgtagmodel
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
+                      ${KGEOMAP_LIBRARIES}
                       kipiplugins
                     )
 

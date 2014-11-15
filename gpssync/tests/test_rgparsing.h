@@ -31,10 +31,6 @@
 
 #include <QtTest/QtTest>
 
-// KDE includes
-
-// local includes
-
 class TestRGParsing : public QObject
 {
     Q_OBJECT
@@ -42,9 +38,7 @@ class TestRGParsing : public QObject
 private Q_SLOTS:
 
     void testNoOp();
-    void testVerifyRG();   
- 
+    void testVerifyRG();
 };
 
 #endif /* TEST_RGPARSING_H */
-
