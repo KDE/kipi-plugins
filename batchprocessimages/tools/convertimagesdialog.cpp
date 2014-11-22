@@ -98,10 +98,10 @@ ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, QWidget* par
                                  "choice for a simple bitmap format which supports a wide range of RGB image "
                                  "data.</p>");
     whatsThis = whatsThis + i18n("<p><b>TGA</b>: the TarGA image file format is one of the most widely used "
-                                 "bitmap file formats for storage of 24 and 32 bits truecolor images.  "
+                                 "bitmap file formats for storage of 24 and 32 bits truecolor images. "
                                  "TGA supports colormaps, alpha channel, gamma value, postage stamp image, "
                                  "textual information, and developer-definable data.</p>");
-    whatsThis = whatsThis + i18n("<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format "
+    whatsThis = whatsThis + i18n("<p><b>EPS</b>: the Adobe Encapsulated PostScript image file format "
                                  "is a PostScript language program describing the appearance of a single page. "
                                  "Usually, the purpose of the EPS file is to be embedded inside another PostScript "
                                  "language page description.</p>");

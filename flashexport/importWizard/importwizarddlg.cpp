@@ -214,7 +214,7 @@ bool ImportWizardDlg::checkIfFolderExist()
     {
         int ret = KMessageBox::warningYesNoCancel(this,
                                                   i18n("Target folder %1 already exists.\n"
-                                                       "Do you want to overwrite it?  All data in this folder will be lost.",
+                                                       "Do you want to overwrite it? All data in this folder will be lost.",
                                                        d->settings->exportUrl.path()));
 
         switch(ret)
