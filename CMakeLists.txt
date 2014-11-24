@@ -332,12 +332,6 @@ if(KF5Kipi_FOUND)
 #         add_definitions(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
 #         add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-        # kipi host test program to check plugins
-
-#         if(KDE4_BUILD_TESTS)
-#             add_subdirectory(tests)
-#         endif()
-
         # Plugins which will be always compiled
 
         add_subdirectory(common)
