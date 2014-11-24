@@ -184,18 +184,18 @@ if(KF5Kipi_FOUND)
 
     # Optional plugins results ----------------------------------------------------------------------------
 
-#     message(STATUS "")
-# 
-#     if(QT_FOUND AND KDE4_FOUND AND KIPI_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND)
-#         set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
-#         FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
-#         message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
-#         set(KIPIPLUGINS_CAN_BE_COMPILED true)
-#     else()
-#         message(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
-#         set(KIPIPLUGINS_CAN_BE_COMPILED false)
-#     endif()
-# 
+     message(STATUS "")
+
+     if(Qt5_FOUND AND KF5_FOUND AND JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KF5Kipi_FOUND AND KF5KDcraw_FOUND AND KF5KExiv2_FOUND)
+         set(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
+         FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
+         message(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
+         set(KIPIPLUGINS_CAN_BE_COMPILED true)
+     else()
+         message(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
+         set(KIPIPLUGINS_CAN_BE_COMPILED false)
+     endif()
+
 #     PRINT_COMPONENT_COMPILE_STATUS("Shwup"       QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"  LIBXML2_FOUND AND LIBXSLT_FOUND)
@@ -308,7 +308,7 @@ if(KF5Kipi_FOUND)
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
                             ${KF5KExiv2_INCLUDE_DIRS}
-                            ${KF5Kdcraw_INCLUDE_DIRS}
+                            ${KF5KDcraw_INCLUDE_DIRS}
                             ${KF5Kipi_INCLUDE_DIRS}
                         )
 
