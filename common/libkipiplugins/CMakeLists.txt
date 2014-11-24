@@ -10,27 +10,27 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/templates/Doxyfile.cmake.
 include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
 set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetasettings.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kprawthumbthread.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
-#                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetasettings.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kprawthumbthread.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
+#                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
+#                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
+#                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
+#                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
+#                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
 )
 
 add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})

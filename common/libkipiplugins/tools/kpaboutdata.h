@@ -31,6 +31,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
+#include <klocalizedstring.h>
 
 // Local includes
 
@@ -49,7 +50,7 @@ public:
 
     explicit KPAboutData(const KLocalizedString& pluginName,
                          const QByteArray& pluginVersion            = QByteArray(),
-                         enum  LicenseKey licenseType               = License_Unknown,
+                         enum  KAboutLicense::LicenseKey            = KAboutLicense::GPL,
                          const KLocalizedString& pluginDescription  = KLocalizedString(),
                          const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2014, kipi-plugins team"));
 

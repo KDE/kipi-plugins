@@ -33,6 +33,7 @@
 
 #include <kvbox.h>
 #include <klocale.h>
+#include <kiconloader.h>
 
 namespace KIPIPlugins
 {
@@ -90,16 +91,16 @@ void KPBinarySearch::addBinary(KPBinaryIface& binary)
 
     d->binaryIfaces.append(&binary);
     d->items.append(new QTreeWidgetItem());
-    QTreeWidgetItem* item   = d->items[d->items.size() - 1];
+    QTreeWidgetItem* const item = d->items[d->items.size() - 1];
     item->setIcon(Status, QIcon(SmallIcon("dialog-cancel")));
     item->setText(Binary, binary.baseName());
     item->setText(Version, binary.version());
     item->setToolTip(Status, i18n("Binary not found."));
     item->setToolTip(Version, i18n("Minimal version number required for this binary is %1", binary.minimalVersion()));
     insertTopLevelItem(d->binaryIfaces.size() - 1, item);
-    QPushButton* findButton = new QPushButton(i18n("Find"));
+    QPushButton* const findButton = new QPushButton(i18n("Find"));
     setItemWidget(item, Button, findButton);
-    QLabel* downloadLabel   = new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url()));
+    QLabel* const downloadLabel   = new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url()));
     downloadLabel->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     downloadLabel->setOpenExternalLinks(true);
     setItemWidget(item, Link, downloadLabel);
@@ -123,12 +124,12 @@ void KPBinarySearch::addBinary(KPBinaryIface& binary)
     connect(this, SIGNAL(signalAddDirectory(QString)),
             &binary, SLOT(slotAddSearchDirectory(QString)));
 
-    d->downloadLabel    = new QLabel(i18n(
+    d->downloadLabel = new QLabel(i18n(
         "<qt><p><font color=\"red\"><b>Warning:</b> Some necessary binaries have not been found on "
         "your system. If you have these binaries installed, please click the 'Find' button to locate them on your "
         "system, otherwise please download and install them to proceed.</font></p></qt>"), parentWidget());
 
-    QGridLayout* layout = qobject_cast<QGridLayout*>(parentWidget()->layout());
+    QGridLayout* const layout = qobject_cast<QGridLayout*>(parentWidget()->layout());
     layout->addWidget(d->downloadLabel, layout->rowCount(), 0);
     d->downloadLabel->setWordWrap(true);
     d->downloadLabel->setMargin(20);

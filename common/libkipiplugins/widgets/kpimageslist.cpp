@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -207,7 +207,7 @@ void KPImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 
     if (!d->view)
     {
-        kError() << "This item doesn't have a tree view. "
+        qCritical() << "This item doesn't have a tree view. "
                  << "This should never happen!";
         return;
     }
@@ -326,11 +326,11 @@ void KPImagesListView::enableDragAndDrop(const bool enable)
 
 void KPImagesListView::drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const
 {
-    KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(itemFromIndex(index));
+    KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(itemFromIndex(index));
 
     if (item && !item->hasValidThumbnail())
     {
-        KPImagesList* view = dynamic_cast<KPImagesList*>(parent());
+        KPImagesList* const view = dynamic_cast<KPImagesList*>(parent());
 
         if (view)
         {
@@ -382,7 +382,7 @@ KPImagesListViewItem* KPImagesListView::findItem(const KUrl& url)
 
     while (*it)
     {
-        KPImagesListViewItem* lvItem = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const lvItem = dynamic_cast<KPImagesListViewItem*>(*it);
 
         if (lvItem && lvItem->url() == url)
         {
@@ -450,11 +450,13 @@ void KPImagesListView::dropEvent(QDropEvent* e)
 
 Interface* KPImagesListView::iface() const
 {
-    KPImagesList* p = dynamic_cast<KPImagesList*>(parent());
+    KPImagesList* const p = dynamic_cast<KPImagesList*>(parent());
+
     if (p)
     {
         return p->iface();
     }
+
     return 0;
 }
 
@@ -500,7 +502,8 @@ public:
         loadRawThumb          = 0;
         progressPix           = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
 
-        PluginLoader* pl = PluginLoader::instance();
+        PluginLoader* const pl = PluginLoader::instance();
+
         if (pl)
         {
             iface = pl->interface();
@@ -646,7 +649,7 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 {
     delete layout();
 
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout* const mainLayout = new QGridLayout;
     mainLayout->addWidget(d->listView, 1, 1, 1, 1);
     mainLayout->setRowStretch(1, 10);
     mainLayout->setColumnStretch(1, 10);
@@ -655,7 +658,7 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 
     // --------------------------------------------------------
 
-    QHBoxLayout* hBtnLayout = new QHBoxLayout;
+    QHBoxLayout* const hBtnLayout = new QHBoxLayout;
     hBtnLayout->addStretch(10);
     hBtnLayout->addWidget(d->moveUpButton);
     hBtnLayout->addWidget(d->moveDownButton);
@@ -668,7 +671,7 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 
     // --------------------------------------------------------
 
-    QVBoxLayout* vBtnLayout = new QVBoxLayout;
+    QVBoxLayout* const vBtnLayout = new QVBoxLayout;
     vBtnLayout->addStretch(10);
     vBtnLayout->addWidget(d->moveUpButton);
     vBtnLayout->addWidget(d->moveDownButton);
@@ -888,7 +891,7 @@ void KPImagesList::slotMoveUpItems()
         return;
     }
 
-    QTreeWidgetItem* temp = listView()->takeTopLevelItem(aboveIndex.row());
+    QTreeWidgetItem* const temp = listView()->takeTopLevelItem(aboveIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
     // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
     dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(temp)->updateItemWidgets();
@@ -914,7 +917,7 @@ void KPImagesList::slotMoveDownItems()
         return;
     }
 
-    QTreeWidgetItem* temp = listView()->takeTopLevelItem(belowIndex.row());
+    QTreeWidgetItem* const temp = listView()->takeTopLevelItem(belowIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
     // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
     dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(temp)->updateItemWidgets();
@@ -942,6 +945,7 @@ void KPImagesList::slotLoadItems()
     {
         return;
     }
+
     QFile file(loadLevelsFile.path());
 
     qDebug() << "file path " <<loadLevelsFile.path();
@@ -953,36 +957,39 @@ void KPImagesList::slotLoadItems()
     {
         if (xmlReader.isStartElement() && xmlReader.name() == "Image")
         {
-          // get all attributes and its value of a tag in attrs variable.
-          QXmlStreamAttributes attrs = xmlReader.attributes();
-          // get value of each attribute from QXmlStreamAttributes
-          QStringRef url = attrs.value("url");
-          if (url.isEmpty())
-          {
-              xmlReader.readNext();
-              continue;
-          }
-          KUrl::List urls;
-          urls.append(url.toString());
+            // get all attributes and its value of a tag in attrs variable.
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            // get value of each attribute from QXmlStreamAttributes
+            QStringRef url = attrs.value("url");
 
-          if (!urls.isEmpty())
-          {
-              //allow plugins to append a new file
-              slotAddImages(urls);
-              // read plugin Image custom attributes and children element  
-              emit signalXMLLoadImageElement(xmlReader);
-          }
+            if (url.isEmpty())
+            {
+                xmlReader.readNext();
+                continue;
+            }
+
+            KUrl::List urls;
+            urls.append(url.toString());
+
+            if (!urls.isEmpty())
+            {
+                //allow plugins to append a new file
+                slotAddImages(urls);
+                // read plugin Image custom attributes and children element  
+                emit signalXMLLoadImageElement(xmlReader);
+            }
         }
         else if (xmlReader.isStartElement() && xmlReader.name() != "Images")
         {
-          // unmanaged start element (it should be plugins one)
-          emit signalXMLCustomElements(xmlReader);
+            // unmanaged start element (it should be plugins one)
+            emit signalXMLCustomElements(xmlReader);
         }
         else if(xmlReader.isEndElement() && xmlReader.name() == "Images")
         {
-          // if EndElement is Images return
-          return;
+            // if EndElement is Images return
+            return;
         }
+
         xmlReader.readNext();
     }
 }
@@ -1082,7 +1089,7 @@ KUrl::List KPImagesList::imageUrls(bool onlyUnprocessed) const
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
         if ((onlyUnprocessed == false) || (item->state() != KPImagesListViewItem::Success))
         {
@@ -1101,7 +1108,7 @@ void KPImagesList::slotProgressTimerDone()
     {
         foreach(const KUrl& url, d->processItems)
         {
-            KPImagesListViewItem* item = listView()->findItem(url);
+            KPImagesListViewItem* const item = listView()->findItem(url);
             if (item) item->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
         }
 
@@ -1131,7 +1138,7 @@ void KPImagesList::processing(const KUrl& url)
 
 void KPImagesList::processed(const KUrl& url, bool success)
 {
-    KPImagesListViewItem* item = listView()->findItem(url);
+    KPImagesListViewItem* const item = listView()->findItem(url);
 
     if (item)
     {
@@ -1158,7 +1165,7 @@ void KPImagesList::clearProcessedStatus()
 
     while (*it)
     {
-        KPImagesListViewItem* lvItem = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const lvItem = dynamic_cast<KPImagesListViewItem*>(*it);
 
         if (lvItem)
         {
@@ -1254,7 +1261,7 @@ void KPImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
         if (item && item->url() == url)
         {
@@ -1274,6 +1281,7 @@ void KPImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
 KIPIPlugins::KPImagesListViewItem* KIPIPlugins::KPImagesListView::getCurrentItem() const
 {
     QTreeWidgetItem* const currentTreeItem = currentItem();
+
     if (!currentTreeItem)
     {
         return 0;
@@ -1285,6 +1293,7 @@ KIPIPlugins::KPImagesListViewItem* KIPIPlugins::KPImagesListView::getCurrentItem
 KUrl KIPIPlugins::KPImagesList::getCurrentUrl() const
 {
     KPImagesListViewItem* const currentItem = d->listView->getCurrentItem();
+
     if (!currentItem)
     {
         return KUrl();

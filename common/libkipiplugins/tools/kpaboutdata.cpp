@@ -38,7 +38,7 @@
 #include <klocale.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
+#include <khelpclient.h>
 
 // Local includes
 
@@ -49,19 +49,18 @@ namespace KIPIPlugins
 
 KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          const QByteArray& /*pluginVersion*/,
-                         enum  LicenseKey licenseType,
+                         enum  KAboutLicense::LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
     : QObject(),
-      KAboutData(QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
-                 QByteArray(),
-                 pluginName,
+      KAboutData(QString("kipiplugins"),  // Name without minus separator for KDE bug report.
+                 pluginName.toString(),
                  kipipluginsVersion().toAscii(),
-                 KLocalizedString(),
+                 pluginDescription.toString(),
                  licenseType,
-                 copyrightStatement,
-                 pluginDescription,
-                 QByteArray("http://www.digikam.org"))
+                 copyrightStatement.toString(),
+                 QString(),
+                 QString("http://www.digikam.org"))
 {
     if (KGlobal::hasMainComponent())
     {
@@ -73,18 +72,18 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     }
 
     // set the plugin description into long text description
-    setOtherText(pluginDescription);
+    setOtherText(pluginDescription.toString());
 
     // put the plugin name and version with kipi-plugins and kipi-plugins version
     KLocalizedString shortDesc = additionalInformation();
 
     if (KGlobal::hasMainComponent())
     {
-        kDebug(AREA_CODE_LOADING) << shortDesc.toString().constData() ;
+        qDebug() << shortDesc.toString().constData() ;
     }
 
     // and set the string into the short description
-    setShortDescription(shortDesc);
+    setShortDescription(shortDesc.toString());
 }
 
 KPAboutData::KPAboutData(const KPAboutData& other)
@@ -106,7 +105,7 @@ void KPAboutData::setHelpButton(KPushButton* const help)
 {
     if (!help) return;
 
-    KHelpMenu* const helpMenu = new KHelpMenu(help, this, false);
+    KHelpMenu* const helpMenu = new KHelpMenu(help, *(this), false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     KAction* const handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), helpMenu);
 
@@ -119,7 +118,7 @@ void KPAboutData::setHelpButton(KPushButton* const help)
 
 void KPAboutData::slotHelp()
 {
-    KToolInvocation::invokeHelp(m_handbookEntry, "kipi-plugins");
+    KHelpClient::invokeHelp(m_handbookEntry, "kipi-plugins");
 }
 
 }   // namespace KIPIPlugins
