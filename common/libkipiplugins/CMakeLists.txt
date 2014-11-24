@@ -33,9 +33,9 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
 )
 
-KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
+add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 
-target_link_libraries(kipiplugins
+target_link_libraries(KF5kipiplugins
 
                       PRIVATE
                       ${JPEG_LIBRARIES}
@@ -50,6 +50,16 @@ target_link_libraries(kipiplugins
 #                      KF5::Kipi
 )
 
-set_target_properties(kipiplugins PROPERTIES VERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING} SOVERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING})
+set_target_properties(KF5kipiplugins PROPERTIES
+                      VERSION     ${KIPIPLUGINS_LIB_SO_VERSION_STRING}
+                      SOVERSION   ${KIPIPLUGINS_LIB_SO_VERSION_STRING}
+                      EXPORT_NAME KIPIPlugins
+)
 
-install(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
+#set_target_properties(KF5kipiplugins PROPERTIES VERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING} SOVERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING})
+
+install(TARGETS KF5kipiplugins
+        EXPORT  KF5kipipluginsTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
+)
+
+#install(TARGETS KF5kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
