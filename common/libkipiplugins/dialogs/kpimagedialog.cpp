@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpimagedialog.moc"
+#include "kpimagedialog.h"
 
 // Qt includes
 

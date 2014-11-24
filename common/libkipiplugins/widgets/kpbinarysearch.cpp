@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kpbinarysearch.moc"
+#include "kpbinarysearch.h"
 
 // Qt includes
 

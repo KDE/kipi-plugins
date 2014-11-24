@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpsavesettingswidget.moc"
+#include "kpsavesettingswidget.h"
 
 // Qt includes
 

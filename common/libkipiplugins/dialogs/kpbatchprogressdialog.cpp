@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpbatchprogressdialog.moc"
+#include "kpbatchprogressdialog.h"
 
 // Qt includes
 

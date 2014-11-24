@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kpaboutdata.moc"
+#include "kpaboutdata.h"
 
 // KDE includes
 

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "kppreviewimage.moc"
+#include "kppreviewimage.h"
 
 // Qt includes
 

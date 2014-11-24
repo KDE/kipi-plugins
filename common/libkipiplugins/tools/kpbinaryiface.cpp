@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kpbinaryiface.moc"
+#include "kpbinaryiface.h"
 
 // Qt includes
 

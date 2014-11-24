@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kpprogresswidget.moc"
+#include "kpprogresswidget.h"
 
 // Qt includes
 

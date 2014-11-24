@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kpoutputdialog.moc"
+#include "kpoutputdialog.h"
 
 // Qt includes
 

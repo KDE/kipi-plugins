@@ -4,5 +4,5 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-subdirs(data)
-subdirs(libkipiplugins)
+add_subdirectory(data)
+add_subdirectory(libkipiplugins)

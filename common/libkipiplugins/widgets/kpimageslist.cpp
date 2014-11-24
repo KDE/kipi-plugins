@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kpimageslist.moc"
+#include "kpimageslist.h"
 
 // Qt includes
 

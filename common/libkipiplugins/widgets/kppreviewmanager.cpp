@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kppreviewmanager.moc"
+#include "kppreviewmanager.h"
 
 // Qt includes
 

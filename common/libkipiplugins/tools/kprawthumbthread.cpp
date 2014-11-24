@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kprawthumbthread.moc"
+#include "kprawthumbthread.h"
 
 // Qt includes
 
