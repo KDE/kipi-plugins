@@ -48,6 +48,8 @@ set(ECM_MIN_VERSION     "1.1.0")
 set(KF5_VERSION         "5.1.0")
 set(REQUIRED_QT_VERSION "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
+set(KEXIV2_MIN_VERSION  "5.0.0")
+set(KDCRAW_MIN_VERSION  "5.0.0")
 
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
@@ -86,14 +88,14 @@ find_package(KF5 REQUIRED COMPONENTS
 # Dependencies detection required by all plugins
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
-    
+
 if(KF5Kipi_FOUND)
 
-    find_package(KF5KExiv2 REQUIRED)
-    find_package(KF5KDcraw REQUIRED)
-    find_package(JPEG      REQUIRED)
-    find_package(PNG       REQUIRED)
-    find_package(TIFF      REQUIRED)
+    DETECT_LIBKEXIV2(${KEXIV2_MIN_VERSION})
+    DETECT_LIBKDCRAW(${KDCRAW_MIN_VERSION})
+    find_package(JPEG REQUIRED)
+    find_package(PNG  REQUIRED)
+    find_package(TIFF REQUIRED)
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 

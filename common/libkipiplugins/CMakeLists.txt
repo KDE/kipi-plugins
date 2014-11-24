@@ -41,14 +41,14 @@ target_link_libraries(KF5kipiplugins
                       ${JPEG_LIBRARIES}
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
-                      
+
                       PUBLIC
                       Qt5::Gui
                       KF5::KDELibs4Support
-                      
+
                       ${KF5Kipi_LIBRARIES}
-#                      KF5::KExiv2
-#                      KF5::KDcraw
+                      ${KF5KExiv2_LIBRARIES}
+                      ${KF5KDcraw_LIBRARIES}
 )
 
 set_target_properties(KF5kipiplugins PROPERTIES
