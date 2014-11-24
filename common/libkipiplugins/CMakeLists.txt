@@ -17,20 +17,20 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
 #                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
+                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
 )
 
 add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})
@@ -57,10 +57,6 @@ set_target_properties(KF5kipiplugins PROPERTIES
                       EXPORT_NAME KIPIPlugins
 )
 
-#set_target_properties(KF5kipiplugins PROPERTIES VERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING} SOVERSION ${KIPIPLUGINS_LIB_SO_VERSION_STRING})
-
 install(TARGETS KF5kipiplugins
         EXPORT  KF5kipipluginsTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
 )
-
-#install(TARGETS KF5kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})

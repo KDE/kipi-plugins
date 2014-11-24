@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QMimeData>
 #include <QHeaderView>
 #include <QLabel>
 #include <QPainter>
@@ -56,13 +57,13 @@
 
 // LibKIPI includes
 
-#include <libkipi/imagecollection.h>
-#include <libkipi/interface.h>
-#include <libkipi/pluginloader.h>
+#include <imagecollection.h>
+#include <interface.h>
+#include <pluginloader.h>
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 // Local includes
 
