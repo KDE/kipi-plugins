@@ -45,9 +45,10 @@ target_link_libraries(KF5kipiplugins
                       PUBLIC
                       Qt5::Gui
                       KF5::KDELibs4Support
+                      
+                      ${KF5Kipi_LIBRARIES}
 #                      KF5::KExiv2
 #                      KF5::KDcraw
-#                      KF5::Kipi
 )
 
 set_target_properties(KF5kipiplugins PROPERTIES
