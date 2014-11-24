@@ -33,8 +33,8 @@
 
 // Libkipi includes
 
-#include <libkipi/interface.h>
-#include <libkipi/pluginloader.h>
+#include <interface.h>
+#include <pluginloader.h>
 
 using namespace KIPI;
 

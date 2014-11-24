@@ -34,10 +34,10 @@
 
 // Libkipi includes
 
-#include <libkipi/version.h>
-#include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
-#include <libkipi/pluginloader.h>
+#include <libkipi_version.h>
+#include <interface.h>
+#include <imageinfo.h>
+#include <pluginloader.h>
 
 using namespace KIPI;
 

@@ -34,7 +34,7 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 using namespace KDcrawIface;
 

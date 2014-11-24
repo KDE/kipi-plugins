@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
 
@@ -40,12 +41,12 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 // LibKipi includes
 
-#include <libkipi/interface.h>
-#include <libkipi/pluginloader.h>
+#include <interface.h>
+#include <pluginloader.h>
 
 using namespace KDcrawIface;
 
@@ -157,8 +158,9 @@ bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
 {
     if (hasSidecar(src.toLocalFile()))
     {
-        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()),
-                       QFile::encodeName(sidecarUrl(dst).toLocalFile())) != 0)
+#pragma message "PORT TO QT5"
+/*        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()),
+                       QFile::encodeName(sidecarUrl(dst).toLocalFile())) != 0)*/
             return false;
     }
     return true;
