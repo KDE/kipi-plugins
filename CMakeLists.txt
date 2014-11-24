@@ -68,6 +68,7 @@ include(KDEFrameworkCompilerSettings)
 include(ECMInstallIcons)
 
 include(MacroUtils)
+include(MacroLocalLibs)
 
 ############## Find Packages ###################
 
@@ -84,28 +85,8 @@ find_package(KF5 REQUIRED COMPONENTS
 
 # Dependencies detection required by all plugins
 
-if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
-
-    message(STATUS "libkipi : search system based library")
-    find_package(KF5Kipi ${KIPI_MIN_VERSION})
-    set(KF5Kipi_INCLUDE_LIBS KF5::Kipi)
-
-else()
-
-    message(STATUS "libkipi : use local library from ${CMAKE_SOURCE_DIR}/extra/libkipi/")
-    find_file(KF5Kipi_FOUND CMakeLists.txt PATHS ${CMAKE_SOURCE_DIR}/extra/libkipi/)
-
-    if(NOT KF5Kipi_FOUND)
-        message(ERROR "libkipi : local library not found")
-    endif()
-
-    set(KF5Kipi_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkipi/src ${CMAKE_BINARY_DIR}/extra/libkipi/src ${CMAKE_BINARY_DIR}/extra/libkipi)
-    set(KF5Kipi_LIBRARIES    KF5Kipi)
-    message(STATUS "libkipi include dir : ${KF5Kipi_INCLUDE_DIRS}")
-    message(STATUS "libkipi library     : ${KF5Kipi_LIBRARIES}")
+DETECT_LIBKIPI(${KIPI_MIN_VERSION})
     
-endif()
-
 if(KF5Kipi_FOUND)
 
     find_package(KF5KExiv2 REQUIRED)
