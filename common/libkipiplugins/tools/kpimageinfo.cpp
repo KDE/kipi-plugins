@@ -27,10 +27,7 @@
 
 #include <QMap>
 #include <QVariant>
-
-// KDE includes
-
-#include <kdebug.h>
+#include <QDebug>
 
 // Libkipi includes
 
@@ -375,7 +372,7 @@ void KPImageInfo::setLatitude(double lat)
 {
     if (lat < -90.0 || lat > 90)
     {
-        kDebug() << "Latitude value is out of range (" << lat << ")";
+        qDebug() << "Latitude value is out of range (" << lat << ")";
         return;
     }
 
@@ -396,7 +393,7 @@ void KPImageInfo::setLongitude(double lng)
 {
     if (lng < -180.0  || lng > 180)
     {
-        kDebug() << "Latitude value is out of range (" << lng << ")";
+        qDebug() << "Latitude value is out of range (" << lng << ")";
         return;
     }
 
@@ -442,7 +439,7 @@ void KPImageInfo::setRating(int r)
 {
     if (r < 0 || r > 5)
     {
-        kDebug() << "Rating value is out of range (" << r << ")";
+        qDebug() << "Rating value is out of range (" << r << ")";
         return;
     }
 
@@ -463,7 +460,7 @@ void KPImageInfo::setColorLabel(int cl)
 {
     if (cl < 0 || cl > 10)
     {
-        kDebug() << "Color label value is out of range (" << cl << ")";
+        qDebug() << "Color label value is out of range (" << cl << ")";
         return;
     }
 
@@ -484,7 +481,7 @@ void KPImageInfo::setPickLabel(int pl)
 {
     if (pl < 0 || pl > 10)
     {
-        kDebug() << "Pick label value is out of range (" << pl << ")";
+        qDebug() << "Pick label value is out of range (" << pl << ")";
         return;
     }
 

@@ -39,6 +39,7 @@
 #include <QWheelEvent>
 #include <QScrollBar>
 #include <QToolBar>
+#include <QDebug>
 
 // KDE includes
 
@@ -46,7 +47,6 @@
 #include <kiconloader.h>
 #include <kicon.h>
 #include <kvbox.h>
-#include <kdebug.h>
 
 // libKdcraw includes
 
@@ -606,7 +606,7 @@ bool KPPreviewImage::load(const QString& file) const
 
     if (ret && d->enableSelection)
     {
-        kDebug() << d->scene->height() << " " << d->scene->width();
+        qDebug() << d->scene->height() << " " << d->scene->width();
         d->selection->setMaxRight(d->scene->width());
         d->selection->setMaxBottom(d->scene->height());
         d->selection->setRect(d->scene->sceneRect());

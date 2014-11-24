@@ -19,7 +19,7 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
 #                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
                           ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
-#                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
 #                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp

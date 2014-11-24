@@ -27,13 +27,13 @@
 
 #include <QProcess>
 #include <QMessageBox>
+#include <QDebug>
 
 // KDE includes
 
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
-#include <kdebug.h>
 #include <klocale.h>
 #include <kvbox.h>
 
@@ -99,7 +99,7 @@ QString KPBinaryIface::findHeader(const QStringList& output, const QString& head
 bool KPBinaryIface::parseHeader(const QString& output)
 {
     QString firstLine = output.section('\n', m_headerLine, m_headerLine);
-    kDebug() << path() << " help header line: \n" << firstLine;
+    qDebug() << path() << " help header line: \n" << firstLine;
 
     if (firstLine.startsWith(m_headerStarts))
     {
@@ -218,7 +218,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
     bool ret             = false;
     QString possiblePath = path(possibleDir);
 
-    kDebug() << "Testing " << possiblePath << "...";
+    qDebug() << "Testing " << possiblePath << "...";
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
     process.start(possiblePath, m_binaryArguments);
@@ -235,7 +235,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
             m_pathDir = possibleDir;
             writeConfig();
 
-            kDebug() << "Found " << path() << " version: " << version();
+            qDebug() << "Found " << path() << " version: " << version();
             ret = true;
         }
         else

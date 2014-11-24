@@ -26,10 +26,7 @@
 // Qt includes
 
 #include <QVariant>
-
-// KDE includes
-
-#include <kdebug.h>
+#include <QDebug>
 
 // Libkipi includes
 
@@ -160,7 +157,7 @@ KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
         meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
     }
 
-    kDebug() << meta;
+    qDebug() << meta;
     return meta;
 }
 

@@ -28,11 +28,11 @@
 #include <QVBoxLayout>
 #include <QPointer>
 #include <QDesktopServices>
+#include <QDebug>
 
 // KDE includes
 
 #include <kdeversion.h>
-#include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>

@@ -45,10 +45,10 @@ extern "C"
 #include <QByteArray>
 #include <QFile>
 #include <QDataStream>
+#include <QDebug>
 
 // KDE includes
 
-#include <kdebug.h>
 #include <kstandarddirs.h>
 
 // Local includes
@@ -141,10 +141,7 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
     d->hasAlpha   = hasAlpha;
     d->iccProfile = iccProfile;
     d->metadata   = metadata;
-
-#if KEXIV2_VERSION < 0x020300
     d->metadata.setSettings(metadata.settings());
-#endif // KEXIV2_VERSION < 0x020300
 }
 
 bool KPWriteImage::write2JPEG(const QString& destPath)
@@ -153,7 +150,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
     if (!file.open(QIODevice::ReadWrite))
     {
-        kDebug() << "Failed to open JPEG file for writing" ;
+        qDebug() << "Failed to open JPEG file for writing" ;
         return false;
     }
 
@@ -264,11 +261,11 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
 bool KPWriteImage::write2PPM(const QString& destPath)
 {
-    FILE* const file = fopen(QFile::encodeName(destPath), "wb");
+    FILE* const file = fopen((const char*)(QFile::encodeName(destPath)).constData(), "wb");
 
     if (!file)
     {
-        kDebug() << "Failed to open ppm file for writing" ;
+        qDebug() << "Failed to open ppm file for writing" ;
         return false;
     }
 
@@ -353,7 +350,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
     if (!file.open(QIODevice::ReadWrite))
     {
-        kDebug() << "Failed to open PNG file for writing" ;
+        qDebug() << "Failed to open PNG file for writing" ;
         return false;
     }
 
@@ -430,11 +427,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
 
     // Store Exif data.
 
-#if KEXIV2_VERSION >= 0x010000
     QByteArray ba = d->metadata.getExifEncoded(true);
-#else
-    QByteArray ba = d->metadata.getExif(true);
-#endif
 
     writeRawProfile(png_ptr, info_ptr, (png_charp)"exif", ba.data(), (png_uint_32) ba.size());
 
@@ -541,11 +534,11 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Open target file
 
-    TIFF* const tif = TIFFOpen(QFile::encodeName(destPath), "w");
+    TIFF* const tif = TIFFOpen((const char*)(QFile::encodeName(destPath)).constData(), "w");
 
     if (!tif)
     {
-        kDebug() << "Failed to open TIFF file for writing" ;
+        qDebug() << "Failed to open TIFF file for writing" ;
         return false;
     }
 
@@ -633,7 +626,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     if (!buf)
     {
-        kDebug() << "Cannot allocate memory buffer for main TIFF image." ;
+        qDebug() << "Cannot allocate memory buffer for main TIFF image." ;
         TIFFClose(tif);
         return false;
     }
@@ -715,7 +708,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         if (!TIFFWriteScanline(tif, buf, y, 0))
         {
-            kDebug() << "Cannot write main TIFF image to target file." ;
+            qDebug() << "Cannot write main TIFF image to target file." ;
             _TIFFfree(buf);
             TIFFClose(tif);
             return false;
@@ -748,7 +741,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         if (!bufThumb)
         {
-            kDebug() << "Cannot allocate memory buffer for TIFF thumbnail.";
+            qDebug() << "Cannot allocate memory buffer for TIFF thumbnail.";
             TIFFClose(tif);
             return false;
         }
@@ -769,7 +762,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
             if (!TIFFWriteScanline(tif, bufThumb, y, 0))
             {
-                kDebug() << "Cannot write TIFF thumbnail to target file." ;
+                qDebug() << "Cannot write TIFF thumbnail to target file." ;
                 _TIFFfree(bufThumb);
                 TIFFClose(tif);
                 return false;
@@ -849,7 +842,7 @@ void KPWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
-    kDebug() << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
+    qDebug() << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
 
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);
@@ -1008,7 +1001,7 @@ void KPWriteImage::tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag,
     if (!tag.isEmpty())
     {
         QByteArray str(tag.data(), tag.size());
-        TIFFSetField(tif, tiffTag, (const char*)str);
+        TIFFSetField(tif, tiffTag, (const char*)(str.constData()));
     }
 }
 
@@ -1031,7 +1024,7 @@ void KPWriteImage::kipi_tiff_warning(const char* module, const char* format, va_
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, warnings);
-    kDebug() << module << "::" << message ;
+    qDebug() << module << "::" << message ;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);
@@ -1044,7 +1037,7 @@ void KPWriteImage::kipi_tiff_error(const char* module, const char* format, va_li
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, errors);
-    kDebug() << module << "::" << message ;
+    qDebug() << module << "::" << message ;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);

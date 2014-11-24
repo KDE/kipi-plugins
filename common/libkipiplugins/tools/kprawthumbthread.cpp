@@ -26,11 +26,11 @@
 
 #include <QMutex>
 #include <QWaitCondition>
+#include <QDebug>
 
 // KDE includes
 
 #include <kdeversion.h>
-#include <kdebug.h>
 
 // LibKDcraw includes
 
@@ -114,12 +114,12 @@ void KPRawThumbThread::run()
 
             if (ret)
             {
-                kDebug() << url << " :: processed as RAW file";
+                qDebug() << url << " :: processed as RAW file";
                 emit signalRawThumb(url, img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
             }
             else
             {
-                kDebug() << url << " :: not a RAW file";
+                qDebug() << url << " :: not a RAW file";
                 emit signalRawThumb(url, QImage());
             }
         }

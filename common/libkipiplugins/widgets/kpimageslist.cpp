@@ -41,11 +41,11 @@
 #include <QPointer>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
+#include <QDebug>
 
 // KDE includes
 
 #include <kdeversion.h>
-#include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -104,7 +104,7 @@ public:
 KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const KUrl& url)
     : QTreeWidgetItem(view), d(new Private)
 {
-    kDebug() << "Creating new ImageListViewItem with url " << url
+    qDebug() << "Creating new ImageListViewItem with url " << url
              << " for list view " << view;
     d->view      = view;
     int iconSize = d->view->iconSize().width();
@@ -202,7 +202,7 @@ void KPImagesListViewItem::setPixmap(const QPixmap& pix)
 
 void KPImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
-    kDebug() << "Received new thumbnail for url " << d->url
+    qDebug() << "Received new thumbnail for url " << d->url
              << ". My view is " << d->view;
 
     if (!d->view)
@@ -944,7 +944,7 @@ void KPImagesList::slotLoadItems()
     }
     QFile file(loadLevelsFile.path());
 
-    kDebug() << "file path " <<loadLevelsFile.path();
+    qDebug() << "file path " <<loadLevelsFile.path();
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader xmlReader;
     xmlReader.setDevice(&file);
@@ -993,11 +993,11 @@ void KPImagesList::slotSaveItems()
     saveLevelsFile = KFileDialog::getSaveUrl(KGlobalSettings::documentPath(),
                                              QString( "*" ), this,
                                              QString( i18n("Select the image file list to save")) );
-    kDebug() << "file url " <<saveLevelsFile.prettyUrl().toAscii();
+    qDebug() << "file url " <<saveLevelsFile.prettyUrl().toAscii();
 
     if ( saveLevelsFile.isEmpty() )
     {
-       kDebug() << "empty url ";
+       qDebug() << "empty url ";
         return;
     }
 

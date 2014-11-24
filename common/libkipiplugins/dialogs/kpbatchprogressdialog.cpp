@@ -31,6 +31,7 @@
 #include <QMimeData>
 #include <QClipboard>
 #include <QApplication>
+#include <QDebug>
 
 // KDE includes
 
@@ -39,7 +40,6 @@
 #include <klocale.h>
 #include <kicon.h>
 #include <kiconloader.h>
-#include <kdebug.h>
 
 // Local includes
 

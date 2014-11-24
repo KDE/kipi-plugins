@@ -23,12 +23,15 @@
 
 #include "kpaboutdata.h"
 
+// Qt includes
+
+#include <QDebug>
+
 // KDE includes
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kdebug.h>
 #include <kaction.h>
 #include <khelpmenu.h>
 #include <kicon.h>
