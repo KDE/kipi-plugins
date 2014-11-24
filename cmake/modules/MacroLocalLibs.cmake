@@ -1,4 +1,4 @@
-# Some useful macros to detect local libs
+# Some useful macros to detect local or system based libraries
 #
 # Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
@@ -11,7 +11,10 @@ macro(DETECT_LIBKIPI MIN_VERSION)
 
         message(STATUS "libkipi : search system based library")
         find_package(KF5Kipi ${MIN_VERSION})
-        set(KF5Kipi_LIBRARIES KF5::Kipi)
+
+        if(KF5Kipi_FOUND)
+            set(KF5Kipi_LIBRARIES KF5::Kipi)
+        endif()
 
     else()
 
@@ -38,7 +41,10 @@ macro(DETECT_LIBKDCRAW MIN_VERSION)
 
         message(STATUS "libkdcraw : search system based library")
         find_package(KF5KDcraw ${MIN_VERSION})
-        set(KF5KDcraw_LIBRARIES KF5::KDcraw)
+
+        if(KF5KDcraw_FOUND)
+            set(KF5KDcraw_LIBRARIES KF5::KDcraw)
+        endif()
 
     else()
 
@@ -65,7 +71,10 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
 
         message(STATUS "libkexiv2 : search system based library")
         find_package(KF5KExiv2 ${MIN_VERSION})
-        set(KF5KExiv2_LIBRARIES KF5::KExiv2)
+
+        if(KF5KExiv2_FOUND)
+            set(KF5KExiv2_LIBRARIES KF5::KExiv2)
+        endif()
 
     else()
 
@@ -83,5 +92,65 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
 
     message(STATUS "libkexiv2 include dir : ${KF5KExiv2_INCLUDE_DIRS}")
     message(STATUS "libkexiv2 library     : ${KF5KExiv2_LIBRARIES}")
+
+endmacro()
+
+macro(DETECT_LIBKFACE MIN_VERSION)
+
+    if (NOT DIGIKAMSC_COMPILE_LIBKFACE)
+
+        message(STATUS "libkface : search system based library")
+        find_package(KF5KFace ${MIN_VERSION})
+
+        if(KF5KFace_FOUND)
+            set(KF5KFace_LIBRARIES KF5::KFace)
+        endif()
+
+    else()
+
+        message(STATUS "libkface : use local library from ${CMAKE_SOURCE_DIR}/extra/libkface/")
+        find_file(KF5KFace_FOUND CMakeLists.txt PATHS ${CMAKE_SOURCE_DIR}/extra/libkface/)
+
+        if(NOT KF5KFace_FOUND)
+            message(ERROR "libkface : local library not found")
+        endif()
+
+        set(KF5KFace_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkface/src ${CMAKE_BINARY_DIR}/extra/libkface/src ${CMAKE_BINARY_DIR}/extra/libkface)
+        set(KF5KFace_LIBRARIES KF5KFace)
+
+    endif()
+
+    message(STATUS "libkface include dir : ${KF5KFace_INCLUDE_DIRS}")
+    message(STATUS "libkface library     : ${KF5KFace_LIBRARIES}")
+
+endmacro()
+
+macro(DETECT_LIBKGEOMAP MIN_VERSION)
+
+    if (NOT DIGIKAMSC_COMPILE_LIBKGEOMAP)
+
+        message(STATUS "libkgeomap : search system based library")
+        find_package(KF5KGeomap ${MIN_VERSION})
+
+        if(KF5KGeomap_FOUND)
+            set(KF5KGeomap_LIBRARIES KF5::KGeomap)
+        endif()
+
+    else()
+
+        message(STATUS "libkgeomap : use local library from ${CMAKE_SOURCE_DIR}/extra/libkgeomap/")
+        find_file(KF5KGeomap_FOUND CMakeLists.txt PATHS ${CMAKE_SOURCE_DIR}/extra/libkgeomap/)
+
+        if(NOT KF5KGeomap_FOUND)
+            message(ERROR "libkgeomap : local library not found")
+        endif()
+
+        set(KF5KGeomap_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkgeomap/src ${CMAKE_BINARY_DIR}/extra/libkgeomap/src ${CMAKE_BINARY_DIR}/extra/libkgeomap)
+        set(KF5KGeomap_LIBRARIES KF5KGeomap)
+
+    endif()
+
+    message(STATUS "libkgeomap include dir : ${KF5KGeomap_INCLUDE_DIRS}")
+    message(STATUS "libkgeomap library     : ${KF5KGeomap_LIBRARIES}")
 
 endmacro()
