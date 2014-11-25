@@ -26,18 +26,13 @@
 
 #include <QLabel>
 #include <QMenu>
+#include <QTextBrowser>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 // KDE includes
 
-#include <kapplication.h>
-#include <kiconloader.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
-#include <ktoolinvocation.h>
-#include <ktextbrowser.h>
-#include <khelpmenu.h>
-#include <kpushbutton.h>
-#include <kvbox.h>
 
 // Local includes
 
@@ -55,7 +50,7 @@ public:
         debugView = 0;
     }
 
-    KTextBrowser* debugView;
+    QTextBrowser* debugView;
 };
 
 KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
@@ -70,13 +65,17 @@ KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
 
     //---------------------------------------------
 
-    KVBox* const vbox     = new KVBox(this);
-    QLabel* const lHeader = new QLabel(vbox);
-    d->debugView          = new KTextBrowser(vbox);
+    QWidget* const vbox        = new QWidget(this);
+    QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
+    QLabel* const lHeader      = new QLabel(vbox);
+    d->debugView               = new QTextBrowser(vbox);
     d->debugView->append(Messages);
     lHeader->setText(Header);
-    vbox->setSpacing(spacingHint());
-    vbox->setMargin(spacingHint());
+
+    vboxLay->addWidget(lHeader);
+    vboxLay->addWidget(d->debugView);
+    vboxLay->setSpacing(spacingHint());
+    vboxLay->setMargin(spacingHint());
 
     setMainWidget(vbox);
 
