@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <kmenu.h>
+#include <QMenu>
 #include <QAction>
 #include <klocale.h>
 #include <QIcon>
@@ -186,7 +186,7 @@ void KPBatchProgressWidget::setProgress(int current)
 
 void KPBatchProgressWidget::slotContextMenu()
 {
-    KMenu popmenu(this);
+    QMenu popmenu(this);
     QAction * const action = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy to Clipboard"), this);
 
     connect(action, SIGNAL(triggered(bool)),

@@ -36,7 +36,7 @@
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kpushbutton.h>
 #include <khelpclient.h>
 
