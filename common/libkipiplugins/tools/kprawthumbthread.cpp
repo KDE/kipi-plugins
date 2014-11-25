@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : Raw thumbnail thread.
  *
- * Copyright (C) 2004-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,10 +26,6 @@
 
 #include <QMutex>
 #include <QWaitCondition>
-
-// KDE includes
-
-#include <kdeversion.h>
 
 // LibKDcraw includes
 

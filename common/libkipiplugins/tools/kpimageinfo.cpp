@@ -7,7 +7,7 @@
  * Description : help wrapper around libkipi ImageInfo to manage easily
  *               item properties with KIPI host application.
  *
- * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -73,7 +73,9 @@ public:
         {
             ImageInfo info = iface->info(url);
             map            = info.attributes();
-            if (!map.isEmpty()) return map.value(name, QVariant());
+
+            if (!map.isEmpty())
+                return map.value(name, QVariant());
         }
 
         return QVariant();
@@ -135,7 +137,8 @@ void KPImageInfo::cloneData(const KUrl& destination)
 
 qlonglong KPImageInfo::fileSize() const
 {
-    if (hasFileSize()) return d->attribute("filesize").toLongLong();
+    if (hasFileSize())
+        return d->attribute("filesize").toLongLong();
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -524,6 +527,7 @@ QStringList KPImageInfo::keywords() const
     if(d->iface)
     {
         keywords = d->attribute("keywords").toStringList();
+
         if (keywords.isEmpty())
             keywords = d->attribute("tags").toStringList();     // NOTE: For compatibility.
     }
@@ -532,11 +536,13 @@ QStringList KPImageInfo::keywords() const
         KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         keywords = meta.getIptcKeywords();
+
         if(!keywords.isEmpty())
             return keywords;
 
         // Trying to find Xmp keywords
         keywords = meta.getXmpKeywords();
+
         if(!keywords.isEmpty())
             return keywords;
     }
@@ -556,11 +562,13 @@ bool KPImageInfo::hasKeywords() const
         KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         QStringList keywords = meta.getIptcKeywords();
+
         if(!keywords.isEmpty())
             return true;
 
         // Trying to find Xmp keywords
         keywords = meta.getXmpKeywords();
+
         if(!keywords.isEmpty())
             return true;
     }

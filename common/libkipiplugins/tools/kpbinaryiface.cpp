@@ -262,6 +262,7 @@ bool KPBinaryIface::recheckDirectories()
     foreach(QString dir, m_searchPaths)
     {
         checkDir(dir);
+
         if (isValid())
         {
             return true;

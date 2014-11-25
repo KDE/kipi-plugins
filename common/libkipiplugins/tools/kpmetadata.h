@@ -6,7 +6,7 @@
  * Date        : 2012-02-20
  * Description : Metadata interface for kipi-plugins.
  *
- * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  *
  * This program is free software; you can redistribute it
@@ -117,19 +117,6 @@ public:
      *  Re-implemented from libKexiv2 to use lock mechanism with KIPI host application through KIPI::Interface.
      */
     bool applyChanges() const;
-
-public:
-
-    // These methods have been factored to libkexiv2 2.3.0. Remove it after KDE 4.8.2
-#if KEXIV2_VERSION < 0x020300
-    static QString sidecarPath(const QString& path);
-    /** Like KExiv2::sidecarFilePathForFile, but works for remote URLs */
-    static KUrl sidecarUrl(const KUrl& url);
-    /** Gives a file url for a local path */
-    static KUrl sidecarUrl(const QString& path);
-    /** Performs a QFileInfo based check if the given local file has a sidecar */
-    static bool hasSidecar(const QString& path);
-#endif // KEXIV2_VERSION < 0x020300
 
 public:
 
