@@ -64,6 +64,7 @@
 // LibKDcraw includes
 
 #include <kdcraw.h>
+#include <QStandardPaths>
 
 // Local includes
 
@@ -937,7 +938,7 @@ void KPImagesList::slotLoadItems()
 {
     KUrl loadLevelsFile;
 
-    loadLevelsFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+    loadLevelsFile = KFileDialog::getOpenUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                             QString( "*" ), this,
                                             QString( i18n("Select the image file list to load")) );
 
@@ -997,7 +998,7 @@ void KPImagesList::slotLoadItems()
 void KPImagesList::slotSaveItems()
 {
     KUrl saveLevelsFile;
-    saveLevelsFile = KFileDialog::getSaveUrl(KGlobalSettings::documentPath(),
+    saveLevelsFile = KFileDialog::getSaveUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                              QString( "*" ), this,
                                              QString( i18n("Select the image file list to save")) );
     qDebug() << "file url " <<saveLevelsFile.prettyUrl().toAscii();

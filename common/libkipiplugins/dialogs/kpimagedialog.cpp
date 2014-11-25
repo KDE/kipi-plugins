@@ -201,7 +201,7 @@ void KPImageDialogPreview::showPreview(const KUrl& url)
                 model = d->metaIface.getXmpTagString("Xmp.tiff.Model");
 
             if (d->metaIface.getImageDateTime().isValid())
-                dateTime = KGlobal::locale()->formatDateTime(d->metaIface.getImageDateTime(),
+                dateTime = KLocale::global()->formatDateTime(d->metaIface.getImageDateTime(),
                                                              KLocale::ShortDate, true);
 
             aperture = d->metaIface.getExifTagString("Exif.Photo.FNumber");
@@ -260,7 +260,7 @@ void KPImageDialogPreview::showPreview(const KUrl& url)
                     model = info.model;
 
                 if (info.dateTime.isValid())
-                    dateTime = KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
+                    dateTime = KLocale::global()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
 
                 if (info.aperture != -1.0)
                     aperture = QString::number(info.aperture);

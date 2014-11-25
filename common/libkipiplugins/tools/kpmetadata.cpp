@@ -137,7 +137,7 @@ KUrl KPMetadata::sidecarUrl(const KUrl& url)
 
 KUrl KPMetadata::sidecarUrl(const QString& path)
 {
-    return KUrl::fromPath(sidecarFilePathForFile(path));
+    return QUrl::fromLocalFile(sidecarFilePathForFile(path));
 }
 
 QString KPMetadata::sidecarPath(const QString& path)
