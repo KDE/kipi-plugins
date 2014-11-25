@@ -55,11 +55,11 @@ public:
 private Q_SLOTS:
 
     void showPreview();
-    void showPreview(const KUrl&);
-    void slotThumbnail(const KUrl&, const QPixmap&);
+    void showPreview(const QUrl&);
+    void slotThumbnail(const QUrl&, const QPixmap&);
     void slotKDEPreview(const KFileItem&, const QPixmap&);
     void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const KUrl&, const QImage&);
+    void slotRawThumb(const QUrl&, const QImage&);
     void clearPreview();
 
 private:

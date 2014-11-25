@@ -24,8 +24,8 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
-#                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
-#                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp

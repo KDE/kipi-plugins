@@ -86,7 +86,7 @@ public:
     QLabel*           imageLabel;
     QLabel*           infoLabel;
 
-    KUrl              currentUrl;
+    QUrl              currentUrl;
 
     KPMetadata        metaIface;
 
@@ -116,14 +116,14 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+                this, SLOT(slotThumbnail(QUrl,QPixmap)));
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
-            this, SLOT(slotRawThumb(KUrl,QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(QUrl,QImage)),
+            this, SLOT(slotRawThumb(QUrl,QImage)));
 }
 
 KPImageDialogPreview::~KPImageDialogPreview()
@@ -144,12 +144,12 @@ void KPImageDialogPreview::resizeEvent(QResizeEvent*)
 
 void KPImageDialogPreview::showPreview()
 {
-    KUrl url(d->currentUrl);
+    QUrl url(d->currentUrl);
     clearPreview();
     showPreview(url);
 }
 
-void KPImageDialogPreview::showPreview(const KUrl& url)
+void KPImageDialogPreview::showPreview(const QUrl& url)
 {
     if (!url.isValid())
     {
@@ -319,12 +319,12 @@ void KPImageDialogPreview::slotKDEPreviewFailed(const KFileItem& item)
     d->loadRawThumb->getRawThumb(item.url());
 }
 
-void KPImageDialogPreview::slotRawThumb(const KUrl& url, const QImage& img)
+void KPImageDialogPreview::slotRawThumb(const QUrl& url, const QImage& img)
 {
     slotThumbnail(url, QPixmap::fromImage(img));
 }
 
-void KPImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void KPImageDialogPreview::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     if (url == d->currentUrl)
     {
@@ -344,7 +344,7 @@ void KPImageDialogPreview::clearPreview()
 {
     d->imageLabel->clear();
     d->infoLabel->clear();
-    d->currentUrl = KUrl();
+    d->currentUrl = QUrl();
 }
 
 // ------------------------------------------------------------------------
@@ -413,8 +413,8 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
     d->fileFormats = patternList.join("\n");
 
     QString alternatePath         = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
-    QPointer<KFileDialog> dlg     = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
-                                                             : alternatePath,
+    QPointer<KFileDialog> dlg     = new KFileDialog(QUrl(d->iface ? d->iface->currentAlbum().path().path()
+                                                                  : alternatePath),
                                                     d->fileFormats, parent);
     KPImageDialogPreview* const preview = new KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);

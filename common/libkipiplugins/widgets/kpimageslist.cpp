@@ -938,9 +938,9 @@ void KPImagesList::slotLoadItems()
 {
     KUrl loadLevelsFile;
 
-    loadLevelsFile = KFileDialog::getOpenUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-                                            QString( "*" ), this,
-                                            QString( i18n("Select the image file list to load")) );
+    loadLevelsFile = KFileDialog::getOpenUrl(QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
+                                             QString( "*" ), this,
+                                             QString( i18n("Select the image file list to load")) );
 
     if ( loadLevelsFile.isEmpty() )
     {
@@ -998,14 +998,14 @@ void KPImagesList::slotLoadItems()
 void KPImagesList::slotSaveItems()
 {
     KUrl saveLevelsFile;
-    saveLevelsFile = KFileDialog::getSaveUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+    saveLevelsFile = KFileDialog::getSaveUrl(QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
                                              QString( "*" ), this,
                                              QString( i18n("Select the image file list to save")) );
     qDebug() << "file url " <<saveLevelsFile.prettyUrl().toAscii();
 
     if ( saveLevelsFile.isEmpty() )
     {
-       qDebug() << "empty url ";
+        qDebug() << "empty url ";
         return;
     }
 
@@ -1208,11 +1208,11 @@ void KPImagesList::slotImageListChanged()
     d->saveButton->setEnabled(d->controlButtonsEnabled);
 }
 
-void KPImagesList::updateThumbnail(const KUrl& url)
+void KPImagesList::updateThumbnail(const QUrl& url)
 {
     if (d->iface)
     {
-        d->iface->thumbnails(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
+        d->iface->thumbnails(QList<QUrl>() << url, DEFAULTSIZE);
     }
     else
     {
@@ -1221,13 +1221,9 @@ void KPImagesList::updateThumbnail(const KUrl& url)
             return;
         }
 
-#if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
-        items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url.toLocalFile(), true));
-        KIO::PreviewJob* job = KIO::filePreview(items, QSize(DEFAULTSIZE, DEFAULTSIZE));
-#else
-        KIO::PreviewJob* job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
-#endif
+        items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
+        KIO::PreviewJob* const job = KIO::filePreview(items, QSize(DEFAULTSIZE, DEFAULTSIZE));
 
         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
                 this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
@@ -1272,7 +1268,7 @@ void KPImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
             }
 
             if (!d->allowDuplicate)
-              return;
+                return;
         }
 
         ++it;

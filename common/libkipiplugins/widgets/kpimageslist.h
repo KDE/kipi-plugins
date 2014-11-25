@@ -246,7 +246,7 @@ public:
     void                enableControlButtons(bool enable = true);
     void                enableDragAndDrop(const bool enable = true);
 
-    void                updateThumbnail(const KUrl& url);
+    void                updateThumbnail(const QUrl& url);
 
     virtual KUrl::List  imageUrls(bool onlyUnprocessed = false) const;
     virtual void        removeItemByUrl(const KUrl& url);
