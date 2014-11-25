@@ -106,28 +106,28 @@ KPMetaSettings KPMetadata::settings() const
 
 bool KPMetadata::load(const QString& filePath) const
 {
-    KPFileReadLocker(m_iface, KUrl(filePath));
+    KPFileReadLocker(m_iface, QUrl(filePath));
 
     return KExiv2::load(filePath);
 }
 
 bool KPMetadata::save(const QString& filePath) const
 {
-    KPFileWriteLocker(m_iface, KUrl(filePath));
+    KPFileWriteLocker(m_iface, QUrl(filePath));
 
     return KExiv2::save(filePath);
 }
 
 bool KPMetadata::applyChanges() const
 {
-    KPFileWriteLocker(m_iface, KUrl(getFilePath()));
+    KPFileWriteLocker(m_iface, QUrl(getFilePath()));
 
     return KExiv2::applyChanges();
 }
 
 // -- Static Methods -------------------------------------------------------------------------
 
-bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
+bool KPMetadata::moveSidecar(const QUrl& src, const QUrl& dst)
 {
     if (hasSidecar(src.toLocalFile()))
     {
@@ -139,7 +139,7 @@ bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
     return true;
 }
 
-bool KPMetadata::isRawFile(const KUrl& url)
+bool KPMetadata::isRawFile(const QUrl& url)
 {
     QString rawFilesExt(KDcraw::rawFiles());
     QFileInfo fileInfo(url.toLocalFile());

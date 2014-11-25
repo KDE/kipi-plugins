@@ -30,7 +30,6 @@
 
 // KDE includes
 
-#include <kvbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
 

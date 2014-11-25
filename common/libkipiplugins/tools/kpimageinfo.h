@@ -30,10 +30,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDateTime>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -52,17 +49,17 @@ public:
      *  to fill item info from kipi host. If no interface is available, for ex when plugin is loaded as 
      *  stand-alone application, some info are filled with image file metadata.
      */
-    KPImageInfo(const KUrl& url);
+    KPImageInfo(const QUrl& url);
     ~KPImageInfo();
 
     /** return item url.
      */
-    KUrl url() const;
+    QUrl url() const;
 
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
      */
-    void cloneData(const KUrl& destination);
+    void cloneData(const QUrl& destination);
 
     /** Manage item file size in bytes.
      */

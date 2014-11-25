@@ -41,10 +41,10 @@
 #include <QPointer>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kdeversion.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -63,7 +63,6 @@
 // LibKDcraw includes
 
 #include <kdcraw.h>
-#include <QStandardPaths>
 
 // Local includes
 

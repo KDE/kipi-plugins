@@ -25,9 +25,9 @@
 #ifndef KPMETADATA_H
 #define KPMETADATA_H
 
-// KDE includes
+// Qt includes
 
-#include <kurl.h>
+#include <QUrl>
 
 // LibKExiv2 includes
 
@@ -47,17 +47,8 @@
 
 // Wrapper for KIPI file locker
 
-#if KIPI_VERSION >= 0x010500
-    #define KPFileReadLocker(iface, url) if (iface) FileReadLocker(iface, url);
-#else
-    #define KPFileReadLocker(iface, url)
-#endif
-
-#if KIPI_VERSION >= 0x010500
-    #define KPFileWriteLocker(iface, url) if (iface) FileWriteLocker(iface, url);
-#else
-    #define KPFileWriteLocker(iface, url)
-#endif
+#define KPFileReadLocker(iface, url) if (iface) FileReadLocker(iface, url);
+#define KPFileWriteLocker(iface, url) if (iface) FileWriteLocker(iface, url);
 
 namespace KIPI
 {
@@ -124,11 +115,11 @@ public:
      *  If src do not has an XMP sidecar, nothing is done and true is returned.
      *  If src has an XMP sidecar file, if moving is done successfully, true is returned, else false.
      */
-    static bool moveSidecar(const KUrl& src, const KUrl& dest);
+    static bool moveSidecar(const QUrl& src, const QUrl& dest);
 
     /** Return true if url is a RAW file. File-name extension is used to check type mime.
      */
-    static bool isRawFile(const KUrl& url);
+    static bool isRawFile(const QUrl& url);
 
 private:
 

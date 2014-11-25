@@ -21,8 +21,6 @@
  *
  * ============================================================ */
 
-// NOTE: this has nothing to do with a binary search, it is a widget to search for binaries...
-
 #ifndef KPBINARY_SEARCH_H
 #define KPBINARY_SEARCH_H
 
@@ -38,6 +36,9 @@
 namespace KIPIPlugins
 {
 
+/**
+ * This class has nothing to do with a binary search, it is a widget to search for binaries.
+ */
 class KIPIPLUGINS_EXPORT KPBinarySearch : public QTreeWidget
 {
     Q_OBJECT

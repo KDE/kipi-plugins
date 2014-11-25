@@ -105,11 +105,11 @@ public:
 
 public:
 
-    KUrl       url;
+    QUrl       url;
     Interface* iface;
 };
 
-KPImageInfo::KPImageInfo(const KUrl& url)
+KPImageInfo::KPImageInfo(const QUrl& url)
     : d(new Private)
 {
     d->url = url;
@@ -120,12 +120,12 @@ KPImageInfo::~KPImageInfo()
     delete d;
 }
 
-KUrl KPImageInfo::url() const
+QUrl KPImageInfo::url() const
 {
     return d->url;
 }
 
-void KPImageInfo::cloneData(const KUrl& destination)
+void KPImageInfo::cloneData(const QUrl& destination)
 {
     if (d->hasValidData())
     {
