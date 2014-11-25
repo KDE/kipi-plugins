@@ -804,7 +804,7 @@ void KPImagesList::slotAddImages(const KUrl::List& list)
 
         while (*iter)
         {
-            KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*iter);
+            KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*iter);
 
             if (item->url() == imageUrl)
             {
@@ -949,7 +949,7 @@ void KPImagesList::slotLoadItems()
 
     QFile file(loadLevelsFile.path());
 
-    qDebug() << "file path " <<loadLevelsFile.path();
+    qDebug() << "file path " << loadLevelsFile.path();
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader xmlReader;
     xmlReader.setDevice(&file);
@@ -1126,7 +1126,7 @@ void KPImagesList::slotProgressTimerDone()
 
 void KPImagesList::processing(const KUrl& url)
 {
-    KPImagesListViewItem* item = listView()->findItem(url);
+    KPImagesListViewItem* const item = listView()->findItem(url);
 
     if (item)
     {
