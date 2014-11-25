@@ -22,12 +22,16 @@
 
 #include "kptooldialog.h"
 
+// Qt includes
+
+#include <QIcon>
+#include <QAction>
+#include <QDialog>
+
 // KDE includes
 
 #include <kdialog.h>
-#include <QAction>
 #include <khelpmenu.h>
-#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
@@ -65,12 +69,13 @@ public:
 
     }
 
+    QDialog*     dialog;
+
     Interface*   iface;
     KPAboutData* about;
-    KDialog*     dialog;
 };
 
-KPDialogBase::KPDialogBase(KDialog* const dlg)
+KPDialogBase::KPDialogBase(QDialog* const dlg)
     : d(new Private)
 {
     d->dialog = dlg;
@@ -87,11 +92,29 @@ Interface* KPDialogBase::iface() const
     return d->iface;
 }
 
-void KPDialogBase::setAboutData(KPAboutData* const data, KPushButton* help)
+void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
 {
     if (!data || !d->dialog) return;
 
-    if (!help) help = d->dialog->button(KDialog::Help);
+    if (!help)
+    {
+        KDialog* const kdlg = dynamic_cast<KDialog*>(d->dialog);
+
+        if (kdlg)
+        {
+            help = kdlg->button(KDialog::Help);
+        }
+        else
+        {
+            KPageDialog* const kpdlg = dynamic_cast<KPageDialog*>(d->dialog);
+
+            if (kpdlg)
+            {
+                help = kpdlg->button(QDialogButtonBox::Help);
+            }
+        }
+    }
+
     if (!help) return;
 
     d->about = data;
@@ -103,7 +126,7 @@ void KPDialogBase::setAboutData(KPAboutData* const data, KPushButton* help)
 KPToolDialog::KPToolDialog(QWidget* const parent)
     : KDialog(parent), KPDialogBase(this)
 {
-    setButtons(Help | Ok);
+    setButtons(KDialog::Help | KDialog::Ok);
 }
 
 KPToolDialog::~KPToolDialog()
@@ -126,7 +149,7 @@ KPWizardDialog::~KPWizardDialog()
 KPPageDialog::KPPageDialog(QWidget* const parent)
     : KPageDialog(parent), KPDialogBase(this)
 {
-    setButtons(Help | Ok);
+    setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Ok);
 }
 
 KPPageDialog::~KPPageDialog()

@@ -37,7 +37,7 @@
 
 #include "kipiplugins_export.h"
 
-class KPushButton;
+class QPushButton;
 
 namespace KIPIPlugins
 {
@@ -58,7 +58,7 @@ public:
     virtual ~KPAboutData();
 
     void setHandbookEntry(const QString& entry);
-    void setHelpButton(KPushButton* const help);
+    void setHelpButton(QPushButton* const help);
 
 private Q_SLOTS:
 

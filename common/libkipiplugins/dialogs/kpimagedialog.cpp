@@ -34,6 +34,7 @@
 
 #include <kdeversion.h>
 #include <klocale.h>
+#include <kdialog.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kimageio.h>
@@ -41,15 +42,15 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/dcrawinfocontainer.h>
-#include <libkdcraw/version.h>
-#include <libkdcraw/kdcraw.h>
+#include <dcrawinfocontainer.h>
+#include <libkdcraw_version.h>
+#include <kdcraw.h>
 
 // Libkipi includes
 
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
-#include <libkipi/pluginloader.h>
+#include <interface.h>
+#include <imagecollection.h>
+#include <pluginloader.h>
 
 // Local includes
 
@@ -172,13 +173,9 @@ void KPImageDialogPreview::showPreview(const KUrl& url)
             if ( !d->currentUrl.isValid() )
                 return;
 
-#if KDE_IS_VERSION(4,7,0)
             KFileItemList items;
             items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, d->currentUrl, true));
             KIO::PreviewJob* const job = KIO::filePreview(items, QSize(256, 256));
-#else
-            KIO::PreviewJob* const job = KIO::filePreview(d->currentUrl, 256);
-#endif
 
             connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
                     this, SLOT(slotKDEPreview(KFileItem,QPixmap)));

@@ -30,6 +30,7 @@
 // KDE includes
 
 #include <kvbox.h>
+#include <kdialog.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>

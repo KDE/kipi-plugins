@@ -25,16 +25,16 @@
 
 // Qt includes
 
+#include <QIcon>
 #include <QDebug>
+#include <QAction>
 
 // KDE includes
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <QAction>
 #include <khelpmenu.h>
-#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
@@ -101,7 +101,7 @@ void KPAboutData::setHandbookEntry(const QString& entry)
     m_handbookEntry = entry;
 }
 
-void KPAboutData::setHelpButton(KPushButton* const help)
+void KPAboutData::setHelpButton(QPushButton* const help)
 {
     if (!help) return;
 

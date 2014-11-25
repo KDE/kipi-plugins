@@ -33,7 +33,8 @@
 
 #include "kipiplugins_export.h"
 
-class KPushButton;
+class QPushButton;
+class QDialog;
 
 namespace KIPI
 {
@@ -51,10 +52,10 @@ class KIPIPLUGINS_EXPORT KPDialogBase
 {
 public:
 
-    KPDialogBase(KDialog* const dlg);
+    KPDialogBase(QDialog* const dlg);
     virtual ~KPDialogBase();
 
-    void setAboutData(KPAboutData* const data, KPushButton* help=0);
+    void setAboutData(KPAboutData* const data, QPushButton* help=0);
 
     Interface* iface() const;
 
