@@ -27,15 +27,15 @@
 
 #include <QIcon>
 #include <QAction>
+#include <QMenu>
 
 // KDE includes
 
-#include <kglobal.h>
+#include <kcomponentdata.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
 #include <klocale.h>
-#include <QMenu>
 #include <kpushbutton.h>
 #include <khelpclient.h>
 
@@ -62,7 +62,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                  QString(),
                  QString("http://www.digikam.org"))
 {
-    if (KGlobal::hasMainComponent())
+    if (KComponentData::hasMainComponent())
     {
         // setProgramLogo is defined from kde 3.4.0 on
         QString directory = KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png");
@@ -77,7 +77,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     // put the plugin name and version with kipi-plugins and kipi-plugins version
     KLocalizedString shortDesc = additionalInformation();
 
-    if (KGlobal::hasMainComponent())
+    if (KComponentData::hasMainComponent())
     {
         qCDebug(KIPIPLUGINS_LOG) << shortDesc.toString().constData() ;
     }

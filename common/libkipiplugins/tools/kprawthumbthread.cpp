@@ -58,7 +58,7 @@ public:
 
     QWaitCondition condVar;
 
-    KUrl::List     todo;
+    QList<QUrl>    todo;
 };
 
 KPRawThumbThread::KPRawThumbThread(QObject* const parent, int size)
@@ -84,7 +84,7 @@ void KPRawThumbThread::cancel()
     d->condVar.wakeAll();
 }
 
-void KPRawThumbThread::getRawThumb(const KUrl& url)
+void KPRawThumbThread::getRawThumb(const QUrl& url)
 {
     QMutexLocker lock(&d->mutex);
     d->todo << url;
@@ -97,7 +97,7 @@ void KPRawThumbThread::run()
 
     while (d->running)
     {
-        KUrl url;
+        QUrl url;
 
         QMutexLocker lock(&d->mutex);
 

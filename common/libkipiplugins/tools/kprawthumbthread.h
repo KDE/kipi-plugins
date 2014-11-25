@@ -27,10 +27,7 @@
 
 #include <QThread>
 #include <QImage>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -48,14 +45,14 @@ public:
     explicit KPRawThumbThread(QObject* const parent, int size=256);
     ~KPRawThumbThread();
 
-    void getRawThumb(const KUrl& url);
+    void getRawThumb(const QUrl& url);
     void cancel();
 
 Q_SIGNALS:
 
     /** Emmited when Raw thumb is extracted. Send a null image if failed
      */
-    void signalRawThumb(const KUrl&, const QImage& img);
+    void signalRawThumb(const QUrl&, const QImage& img);
 
 private:
 
