@@ -31,10 +31,7 @@
 #include <QString>
 #include <QColor>
 #include <QImage>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -82,7 +79,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void slotLoad(const KUrl& url);
+    void slotLoad(const QUrl& url);
 
 private Q_SLOTS:
 

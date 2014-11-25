@@ -26,10 +26,10 @@
 
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QVBoxLayout>
 
 // KDE includes
 
-#include <kvbox.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <kseparator.h>
@@ -69,9 +69,10 @@ KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     setWidgetResizable(true);
     viewport()->setAutoFillBackground(false);
 
-    d->hlay           = new QHBoxLayout(panel);
-    KVBox* const vbox = new KVBox(panel);
-    d->logo           = new QLabel(vbox);
+    d->hlay                    = new QHBoxLayout(panel);
+    QWidget* const vbox        = new QWidget(panel);
+    QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
+    d->logo                    = new QLabel(vbox);
     d->logo->setAlignment(Qt::AlignTop);
     d->logo->setPixmap(QPixmap(KStandardDirs::locate("data", "kipi/data/kipi-logo.svg"))
                                .scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -79,9 +80,13 @@ KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     QLabel* const space = new QLabel(vbox);
     d->leftBottomPix    = new QLabel(vbox);
     d->leftBottomPix->setAlignment(Qt::AlignBottom);
-    vbox->setStretchFactor(space, 10);
-    vbox->setMargin(KDialog::spacingHint());
-    vbox->setSpacing(KDialog::spacingHint());
+
+    vboxLay->addWidget(d->logo);
+    vboxLay->addWidget(space);
+    vboxLay->addWidget(d->leftBottomPix);
+    vboxLay->setStretchFactor(space, 10);
+    vboxLay->setMargin(KDialog::spacingHint());
+    vboxLay->setSpacing(KDialog::spacingHint());
 
     KSeparator* const line = new KSeparator(Qt::Vertical, panel);
 

@@ -6,7 +6,7 @@
  * Date        : 2009-12-23
  * Description : a widget to manage preview.
  *
- * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -33,13 +33,14 @@
 #include <QPixmap>
 #include <QFrame>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QFrame>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kvbox.h>
-#include <khbox.h>
 #include <kpixmapsequence.h>
 
 // Local includes
@@ -88,7 +89,10 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
     setMinimumSize(QSize(400, 300));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    KVBox* vbox      = new KVBox(this);
+    QFrame* const vbox        = new QFrame(this);
+    QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
+    vbox->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
     QLabel* space1   = new QLabel(vbox);
     d->progressLabel = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -99,26 +103,39 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
     d->textLabel     = new QLabel(vbox);
     d->textLabel->setScaledContents(true);
     d->textLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    KHBox *hbox      = new KHBox(vbox);
+
+    QWidget* const hbox        = new QWidget(vbox);
+    QHBoxLayout* const hboxLay = new QHBoxLayout(hbox);
     QLabel* space4   = new QLabel(hbox);
     d->button        = new QPushButton(hbox);
     d->button->hide();
     QLabel* space5   = new QLabel(hbox);
-    hbox->setStretchFactor(space4, 10);
-    hbox->setStretchFactor(space5, 10);
+
+    hboxLay->addWidget(space4);
+    hboxLay->addWidget(d->button);
+    hboxLay->addWidget(space5);
+    hboxLay->setStretchFactor(space4, 10);
+    hboxLay->setStretchFactor(space5, 10);
+
     QLabel* space6   = new QLabel(vbox);
 
-    vbox->setStretchFactor(space1, 10);
-    vbox->setStretchFactor(d->progressLabel, 5);
-    vbox->setStretchFactor(space2, 1);
-    vbox->setStretchFactor(d->thumbLabel, 5);
-    vbox->setStretchFactor(space3, 1);
-    vbox->setStretchFactor(d->textLabel, 5);
-    vbox->setStretchFactor(space3, 1);
-    vbox->setStretchFactor(hbox, 5);
-    vbox->setStretchFactor(space6, 10);
-    vbox->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
-    vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
+    vboxLay->addWidget(space1);
+    vboxLay->addWidget(d->progressLabel);
+    vboxLay->addWidget(space2);
+    vboxLay->addWidget(d->thumbLabel);
+    vboxLay->addWidget(space3);
+    vboxLay->addWidget(d->textLabel);
+    vboxLay->addWidget(hbox);
+    vboxLay->addWidget(space6);
+    vboxLay->setStretchFactor(space1, 10);
+    vboxLay->setStretchFactor(d->progressLabel, 5);
+    vboxLay->setStretchFactor(space2, 1);
+    vboxLay->setStretchFactor(d->thumbLabel, 5);
+    vboxLay->setStretchFactor(space3, 1);
+    vboxLay->setStretchFactor(d->textLabel, 5);
+    vboxLay->setStretchFactor(space3, 1);
+    vboxLay->setStretchFactor(hbox, 5);
+    vboxLay->setStretchFactor(space6, 10);
 
     d->preview = new KPPreviewImage(this);
 
@@ -139,7 +156,7 @@ KPPreviewManager::~KPPreviewManager()
     delete d;
 }
 
-void KPPreviewManager::slotLoad(const KUrl& url)
+void KPPreviewManager::slotLoad(const QUrl& url)
 {
     load(url.toLocalFile());
 }
@@ -239,6 +256,7 @@ void KPPreviewManager::slotProgressTimerDone()
 {
     d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
     d->progressCount++;
+
     if (d->progressCount == 8)
         d->progressCount = 0;
 
