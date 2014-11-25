@@ -36,9 +36,9 @@
 // KDE includes
 
 #include <kmenu.h>
-#include <kaction.h>
+#include <QAction>
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 
 // Local includes
@@ -187,7 +187,7 @@ void KPBatchProgressWidget::setProgress(int current)
 void KPBatchProgressWidget::slotContextMenu()
 {
     KMenu popmenu(this);
-    KAction* const action = new KAction(KIcon("edit-copy"), i18n("Copy to Clipboard"), this);
+    QAction * const action = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy to Clipboard"), this);
 
     connect(action, SIGNAL(triggered(bool)),
             this, SLOT(slotCopy2ClipBoard()));
@@ -222,7 +222,7 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
     setModal(false);
 
     KPBatchProgressWidget* const w = new KPBatchProgressWidget(this);
-    w->progressScheduled(caption, KIcon("kipi").pixmap(22, 22));
+    w->progressScheduled(caption, QIcon::fromTheme("kipi").pixmap(22, 22));
     setMainWidget(w);
     resize(600, 400);
 

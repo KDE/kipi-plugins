@@ -32,9 +32,9 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kaction.h>
+#include <QAction>
 #include <khelpmenu.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
@@ -107,7 +107,7 @@ void KPAboutData::setHelpButton(KPushButton* const help)
 
     KHelpMenu* const helpMenu = new KHelpMenu(help, *(this), false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* const handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), helpMenu);
+    QAction * const handbook   = new QAction(QIcon::fromTheme("help-contents"), i18n("Handbook"), helpMenu);
 
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));

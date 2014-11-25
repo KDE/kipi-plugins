@@ -38,7 +38,7 @@
 
 #include <kfileitem.h>
 #include <kurl.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 
 // Local includes

@@ -25,9 +25,9 @@
 // KDE includes
 
 #include <kdialog.h>
-#include <kaction.h>
+#include <QAction>
 #include <khelpmenu.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
