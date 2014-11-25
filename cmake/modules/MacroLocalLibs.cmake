@@ -12,8 +12,10 @@ macro(DETECT_LIBKIPI MIN_VERSION)
         message(STATUS "libkipi : search system based library")
         find_package(KF5Kipi ${MIN_VERSION})
 
-        if(KF5Kipi_FOUND)
+        if(KF5Kipi_FOUND AND KF5Kipi_INCLUDE_DIRS)
             set(KF5Kipi_LIBRARIES KF5::Kipi)
+        else()
+            set(KF5Kipi_FOUND FALSE)
         endif()
 
     else()
@@ -30,6 +32,7 @@ macro(DETECT_LIBKIPI MIN_VERSION)
 
     endif()
 
+    message(STATUS "libkipi found       : ${KF5Kipi_FOUND}")
     message(STATUS "libkipi include dir : ${KF5Kipi_INCLUDE_DIRS}")
     message(STATUS "libkipi library     : ${KF5Kipi_LIBRARIES}")
 
@@ -42,8 +45,10 @@ macro(DETECT_LIBKDCRAW MIN_VERSION)
         message(STATUS "libkdcraw : search system based library")
         find_package(KF5KDcraw ${MIN_VERSION})
 
-        if(KF5KDcraw_FOUND)
+        if(KF5KDcraw_FOUND AND KF5KDcraw_INCLUDE_DIRS)
             set(KF5KDcraw_LIBRARIES KF5::KDcraw)
+        else()
+            set(KF5KDcraw_FOUND FALSE)
         endif()
 
     else()
@@ -60,6 +65,7 @@ macro(DETECT_LIBKDCRAW MIN_VERSION)
 
     endif()
 
+    message(STATUS "libkdcraw found       : ${KF5KDcraw_FOUND}")
     message(STATUS "libkdcraw include dir : ${KF5KDcraw_INCLUDE_DIRS}")
     message(STATUS "libkdcraw library     : ${KF5KDcraw_LIBRARIES}")
 
@@ -72,8 +78,10 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
         message(STATUS "libkexiv2 : search system based library")
         find_package(KF5KExiv2 ${MIN_VERSION})
 
-        if(KF5KExiv2_FOUND)
+        if(KF5KExiv2_FOUND AND KF5KExiv2_INCLUDE_DIRS)
             set(KF5KExiv2_LIBRARIES KF5::KExiv2)
+        else()
+            set(KF5KExiv2_FOUND FALSE)
         endif()
 
     else()
@@ -90,6 +98,7 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
 
     endif()
 
+    message(STATUS "libkexiv2 found       : ${KF5KExiv2_FOUND}")
     message(STATUS "libkexiv2 include dir : ${KF5KExiv2_INCLUDE_DIRS}")
     message(STATUS "libkexiv2 library     : ${KF5KExiv2_LIBRARIES}")
 
@@ -102,8 +111,10 @@ macro(DETECT_LIBKFACE MIN_VERSION)
         message(STATUS "libkface : search system based library")
         find_package(KF5KFace ${MIN_VERSION})
 
-        if(KF5KFace_FOUND)
+        if(KF5KFace_FOUND AND KF5KFace_INCLUDE_DIRS)
             set(KF5KFace_LIBRARIES KF5::KFace)
+        else()
+            set(KF5KFace_FOUND FALSE)
         endif()
 
     else()
@@ -120,6 +131,7 @@ macro(DETECT_LIBKFACE MIN_VERSION)
 
     endif()
 
+    message(STATUS "libkface found       : ${KF5KFace_FOUND}")    
     message(STATUS "libkface include dir : ${KF5KFace_INCLUDE_DIRS}")
     message(STATUS "libkface library     : ${KF5KFace_LIBRARIES}")
 
@@ -132,8 +144,10 @@ macro(DETECT_LIBKGEOMAP MIN_VERSION)
         message(STATUS "libkgeomap : search system based library")
         find_package(KF5KGeomap ${MIN_VERSION})
 
-        if(KF5KGeomap_FOUND)
+        if(KF5KGeomap_FOUND AND KF5KGeomap_INCLUDE_DIRS)
             set(KF5KGeomap_LIBRARIES KF5::KGeomap)
+        else()
+            set(KF5KGeomap_FOUND FALSE)
         endif()
 
     else()
@@ -150,6 +164,7 @@ macro(DETECT_LIBKGEOMAP MIN_VERSION)
 
     endif()
 
+    message(STATUS "libkgeomap found       : ${KF5KGeomap_FOUND}")
     message(STATUS "libkgeomap include dir : ${KF5KGeomap_INCLUDE_DIRS}")
     message(STATUS "libkgeomap library     : ${KF5KGeomap_LIBRARIES}")
 
