@@ -29,7 +29,6 @@
 // Qt includes
 
 #include <QIODevice>
-#include <QDebug>
 
 // LibJPEG includes
 
@@ -37,6 +36,10 @@ extern "C"
 {
 #include <jerror.h>
 }
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 /* choose an efficiently fwrite'able size */
 #define BUFFER_SIZE  4096
@@ -160,7 +163,7 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
         * in the libjpeg documentation.
         */
         static JOCTET fakeEOI[2] = { JOCTET(0xFF), JOCTET(JPEG_EOI)};
-        qWarning() << "Image is incomplete";
+        qCWarning(KIPIPLUGINS_LOG) << "Image is incomplete";
         src->pub.next_input_byte = fakeEOI;
         src->pub.bytes_in_buffer = 2;
     }

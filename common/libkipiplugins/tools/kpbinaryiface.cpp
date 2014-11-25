@@ -27,7 +27,6 @@
 
 #include <QProcess>
 #include <QMessageBox>
-#include <QDebug>
 
 // KDE includes
 
@@ -36,6 +35,10 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kvbox.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIPlugins
 {
@@ -99,7 +102,7 @@ QString KPBinaryIface::findHeader(const QStringList& output, const QString& head
 bool KPBinaryIface::parseHeader(const QString& output)
 {
     QString firstLine = output.section('\n', m_headerLine, m_headerLine);
-    qDebug() << path() << " help header line: \n" << firstLine;
+    qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
 
     if (firstLine.startsWith(m_headerStarts))
     {
@@ -218,7 +221,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
     bool ret             = false;
     QString possiblePath = path(possibleDir);
 
-    qDebug() << "Testing " << possiblePath << "...";
+    qCDebug(KIPIPLUGINS_LOG) << "Testing " << possiblePath << "...";
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
     process.start(possiblePath, m_binaryArguments);
@@ -235,7 +238,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
             m_pathDir = possibleDir;
             writeConfig();
 
-            qDebug() << "Found " << path() << " version: " << version();
+            qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
             ret = true;
         }
         else

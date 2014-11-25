@@ -27,13 +27,13 @@
 #include <QIcon>
 #include <QAction>
 #include <QDialog>
+#include <QMenu>
 
 // KDE includes
 
 #include <kdialog.h>
 #include <khelpmenu.h>
 #include <klocale.h>
-#include <QMenu>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 

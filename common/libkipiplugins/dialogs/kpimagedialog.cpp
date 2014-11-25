@@ -28,7 +28,6 @@
 #include <QVBoxLayout>
 #include <QPointer>
 #include <QDesktopServices>
-#include <QDebug>
 
 // KDE includes
 

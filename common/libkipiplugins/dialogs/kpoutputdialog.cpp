@@ -25,13 +25,13 @@
 // Qt includes
 
 #include <QLabel>
+#include <QMenu>
 
 // KDE includes
 
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <QMenu>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <ktextbrowser.h>

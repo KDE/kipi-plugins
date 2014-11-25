@@ -26,7 +26,6 @@
 // Qt includes
 
 #include <QIcon>
-#include <QDebug>
 #include <QAction>
 
 // KDE includes
@@ -42,6 +41,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
 
 namespace KIPIPlugins
@@ -79,7 +79,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
 
     if (KGlobal::hasMainComponent())
     {
-        qDebug() << shortDesc.toString().constData() ;
+        qCDebug(KIPIPLUGINS_LOG) << shortDesc.toString().constData() ;
     }
 
     // and set the string into the short description

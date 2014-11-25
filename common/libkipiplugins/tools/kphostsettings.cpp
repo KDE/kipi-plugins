@@ -26,12 +26,15 @@
 // Qt includes
 
 #include <QVariant>
-#include <QDebug>
 
 // Libkipi includes
 
 #include <interface.h>
 #include <pluginloader.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 using namespace KIPI;
 
@@ -157,7 +160,7 @@ KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
         meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
     }
 
-    qDebug() << meta;
+    qCDebug(KIPIPLUGINS_LOG) << meta;
     return meta;
 }
 

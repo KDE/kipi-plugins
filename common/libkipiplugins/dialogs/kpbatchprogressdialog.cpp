@@ -31,19 +31,18 @@
 #include <QMimeData>
 #include <QClipboard>
 #include <QApplication>
-#include <QDebug>
+#include <QMenu>
+#include <QAction>
+#include <QIcon>
 
 // KDE includes
 
-#include <QMenu>
-#include <QAction>
 #include <klocale.h>
-#include <QIcon>
 #include <kiconloader.h>
 
 // Local includes
 
-#include <kpprogresswidget.h>
+#include "kpprogresswidget.h"
 
 namespace KIPIPlugins
 {

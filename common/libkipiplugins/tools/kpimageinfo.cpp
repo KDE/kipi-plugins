@@ -36,6 +36,10 @@
 #include <imageinfo.h>
 #include <pluginloader.h>
 
+// Local includes
+
+#include "kipiplugins_debug.h"
+
 using namespace KIPI;
 
 namespace KIPIPlugins
@@ -372,7 +376,7 @@ void KPImageInfo::setLatitude(double lat)
 {
     if (lat < -90.0 || lat > 90)
     {
-        qDebug() << "Latitude value is out of range (" << lat << ")";
+        qCDebug(KIPIPLUGINS_LOG) << "Latitude value is out of range (" << lat << ")";
         return;
     }
 
@@ -393,7 +397,7 @@ void KPImageInfo::setLongitude(double lng)
 {
     if (lng < -180.0  || lng > 180)
     {
-        qDebug() << "Latitude value is out of range (" << lng << ")";
+        qCDebug(KIPIPLUGINS_LOG) << "Latitude value is out of range (" << lng << ")";
         return;
     }
 
@@ -439,7 +443,7 @@ void KPImageInfo::setRating(int r)
 {
     if (r < 0 || r > 5)
     {
-        qDebug() << "Rating value is out of range (" << r << ")";
+        qCDebug(KIPIPLUGINS_LOG) << "Rating value is out of range (" << r << ")";
         return;
     }
 
@@ -460,7 +464,7 @@ void KPImageInfo::setColorLabel(int cl)
 {
     if (cl < 0 || cl > 10)
     {
-        qDebug() << "Color label value is out of range (" << cl << ")";
+        qCDebug(KIPIPLUGINS_LOG) << "Color label value is out of range (" << cl << ")";
         return;
     }
 
@@ -481,7 +485,7 @@ void KPImageInfo::setPickLabel(int pl)
 {
     if (pl < 0 || pl > 10)
     {
-        qDebug() << "Pick label value is out of range (" << pl << ")";
+        qCDebug(KIPIPLUGINS_LOG) << "Pick label value is out of range (" << pl << ")";
         return;
     }
 

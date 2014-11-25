@@ -68,7 +68,7 @@ public:
     KPMetadata::MetadataWritingMode metadataWritingMode;
 };
 
-//! qDebug() stream operator. Writes property @a inf to the debug output in a nicely formatted way.
+//! qCDebug(KIPIPLUGINS_LOG) stream operator. Writes property @a inf to the debug output in a nicely formatted way.
 KIPIPLUGINS_EXPORT QDebug operator<<(QDebug dbg, const KPMetaSettings& inf);
 
 }  // namespace KIPIPlugins

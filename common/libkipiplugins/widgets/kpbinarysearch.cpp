@@ -27,13 +27,16 @@
 
 #include <QLabel>
 #include <QHeaderView>
-#include <QDebug>
 
 // KDE includes
 
 #include <kvbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIPlugins
 {
@@ -183,7 +186,7 @@ bool KPBinarySearch::allBinariesFound()
 
 void KPBinarySearch::slotAreBinariesFound()
 {
-    qDebug() << "new binary found!!";
+    qCDebug(KIPIPLUGINS_LOG) << "new binary found!!";
     bool allFound = allBinariesFound();
     emit signalBinariesFound(allFound);
 }

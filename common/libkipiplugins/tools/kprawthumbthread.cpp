@@ -26,7 +26,6 @@
 
 #include <QMutex>
 #include <QWaitCondition>
-#include <QDebug>
 
 // KDE includes
 
@@ -35,6 +34,10 @@
 // LibKDcraw includes
 
 #include <kdcraw.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 using namespace KDcrawIface;
 
@@ -114,12 +117,12 @@ void KPRawThumbThread::run()
 
             if (ret)
             {
-                qDebug() << url << " :: processed as RAW file";
+                qCDebug(KIPIPLUGINS_LOG) << url << " :: processed as RAW file";
                 emit signalRawThumb(url, img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
             }
             else
             {
-                qDebug() << url << " :: not a RAW file";
+                qCDebug(KIPIPLUGINS_LOG) << url << " :: not a RAW file";
                 emit signalRawThumb(url, QImage());
             }
         }

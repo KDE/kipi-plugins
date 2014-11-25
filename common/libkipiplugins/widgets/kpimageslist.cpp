@@ -41,7 +41,6 @@
 #include <QPointer>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
-#include <QDebug>
 
 // KDE includes
 
@@ -71,6 +70,7 @@
 #include "kprawthumbthread.h"
 #include "kpimageinfo.h"
 #include "kpimagedialog.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
 
