@@ -165,8 +165,6 @@ struct Wizard::Private
         QWidget* content              = new QWidget;
         mThemeParametersPage->content = content;
         mThemeParametersPage->scrollArea->setWidget(mThemeParametersPage->content);
-        mThemeParametersPage->scrollArea->viewport()->setAutoFillBackground(false);
-        content->setAutoFillBackground(false);
         mThemeParameterWidgetFromName.clear();
 
         // Create layout. We need to recreate it every time, to get rid of

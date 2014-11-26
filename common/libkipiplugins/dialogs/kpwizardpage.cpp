@@ -63,10 +63,8 @@ KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     : QScrollArea(dlg), d(new Private)
 {
     QWidget* const panel = new QWidget(viewport());
-    panel->setAutoFillBackground(false);
     setWidget(panel);
     setWidgetResizable(true);
-    viewport()->setAutoFillBackground(false);
 
     d->hlay           = new QHBoxLayout(panel);
     KVBox* const vbox = new KVBox(panel);
