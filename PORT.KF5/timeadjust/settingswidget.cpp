@@ -150,11 +150,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     : QScrollArea(parent), d(new Private)
 {
     KVBox* const panel   = new KVBox(viewport());
-    panel->setAutoFillBackground(false);
     setWidget(panel);
     setWidgetResizable(true);
-    setAutoFillBackground(false);
-    viewport()->setAutoFillBackground(false);
 
     d->settingsExpander  = new RExpanderBox(panel);
     d->settingsExpander->setObjectName("Time Adjust Settings Expander");

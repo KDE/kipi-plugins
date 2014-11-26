@@ -170,11 +170,8 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     QScrollArea* sv      = new QScrollArea(page);
     KVBox* panel         = new KVBox(sv->viewport());
-    panel->setAutoFillBackground(false);
     sv->setWidget(panel);
     sv->setWidgetResizable(true);
-    sv->setAutoFillBackground(false);
-    sv->viewport()->setAutoFillBackground(false);
 
     d->bracketStack      = new BracketStackList(d->mngr->iface(), panel);
 

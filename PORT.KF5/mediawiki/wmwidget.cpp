@@ -206,11 +206,8 @@ WmWidget::WmWidget(QWidget* const parent)
 
     QScrollArea* const wrapperScroll = new QScrollArea(this);
     KVBox* const wrapperPan          = new KVBox(wrapperScroll->viewport());
-    wrapperPan->setAutoFillBackground(false);
     wrapperScroll->setWidget(wrapperPan);
     wrapperScroll->setWidgetResizable(true);
-    wrapperScroll->setAutoFillBackground(false);
-    wrapperScroll->viewport()->setAutoFillBackground(false);
     wrapperScroll->setVisible(false);
 
     QWidget* const wrapper           = new QWidget(wrapperPan);
@@ -222,8 +219,6 @@ WmWidget::WmWidget(QWidget* const parent)
 
     upload->setWidget(pan);
     upload->setWidgetResizable(true);
-    upload->setAutoFillBackground(false);
-    upload->viewport()->setAutoFillBackground(false);
 
     KVBox* const uploadBox             = new KVBox(pan);
     QWidget* const uploadPanel         = new QWidget(uploadBox);
@@ -283,11 +278,8 @@ WmWidget::WmWidget(QWidget* const parent)
 
     QScrollArea* const config = new QScrollArea(wrapper);
     KVBox* const panel2       = new KVBox(config->viewport());
-    panel2->setAutoFillBackground(false);
     config->setWidget(panel2);
     config->setWidgetResizable(true);
-    config->setAutoFillBackground(false);
-    config->viewport()->setAutoFillBackground(false);
 
     d->settingsExpander = new RExpanderBox(panel2);
     d->settingsExpander->setObjectName("MediaWiki Settings Expander");
@@ -324,11 +316,8 @@ WmWidget::WmWidget(QWidget* const parent)
 
     d->newWikiSv              = new QScrollArea(this);
     KVBox* const newWikiPanel = new KVBox(d->newWikiSv->viewport());
-    newWikiPanel->setAutoFillBackground(false);
     d->newWikiSv->setWidget(newWikiPanel);
     d->newWikiSv->setWidgetResizable(true);
-    d->newWikiSv->setAutoFillBackground(false);
-    d->newWikiSv->viewport()->setAutoFillBackground(false);
     d->newWikiSv->setVisible(false);
 
     QWidget* const newWikiBox        = new QWidget(newWikiPanel);
