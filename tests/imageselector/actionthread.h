@@ -60,10 +60,6 @@ private Q_SLOTS:
     void slotJobDone();
     void slotJobProgress(int);
     void slotJobStarted();
-
-private:
-
-    class Task;
 };
 
 #endif /* ACTIONTHREAD_H */

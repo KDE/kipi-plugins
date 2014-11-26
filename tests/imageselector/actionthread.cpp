@@ -36,7 +36,7 @@
 
 #include "ractionjob.h"
 
-class ActionThread::Task : public RActionJob
+class Task : public RActionJob
 {
 public:
 
@@ -57,9 +57,9 @@ protected:
 
         QImage src;
         QImage dst;
-        
+
         emit signalProgress(20);
-        
+
         if (!src.load(fileUrl.path()))
         {
             errString = "Loading image failed. Aborted...";

@@ -32,7 +32,6 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kpushbutton.h>
 
 // Local includes
 
@@ -45,10 +44,10 @@ public:
 
     Private()
     {
-        page               = 0;
-        progressBar        = 0;
-        listView           = 0;
-        thread             = 0;
+        page        = 0;
+        progressBar = 0;
+        listView    = 0;
+        thread      = 0;
     }
 
     QWidget*      page;
@@ -69,14 +68,14 @@ ImageSelector::ImageSelector(KPAboutData* const about)
     setModal(false);
     setAboutData(about);
 
-    d->page                 = new QWidget(this);
+    d->page                       = new QWidget(this);
     setMainWidget(d->page);
-    QGridLayout* mainLayout = new QGridLayout(d->page);
+    QGridLayout* const mainLayout = new QGridLayout(d->page);
 
-    d->listView             = new KPImagesList(d->page);
+    d->listView                   = new KPImagesList(d->page);
     d->listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
 
-    d->progressBar          = new QProgressBar(d->page);
+    d->progressBar                = new QProgressBar(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
 
     mainLayout->addWidget(d->listView,    0, 0, 1, 1);
