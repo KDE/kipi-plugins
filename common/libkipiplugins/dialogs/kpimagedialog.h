@@ -83,15 +83,17 @@ public:
     KPImageDialog(QWidget* const parent, bool singleSelect=false, bool onlyRaw=false);
     ~KPImageDialog();
 
-    QUrl       url() const;
+    QUrl        url() const;
     QList<QUrl> urls() const;
 
-    bool       onlyRaw() const;
-    bool       singleSelect() const;
-    QString    fileFormats() const;
+    bool        onlyRaw() const;
+    bool        singleSelect() const;
+    QString     fileFormats() const;
 
-    static QUrl getImageUrl(QWidget* const parent, bool onlyRaw=false);
+    static QUrl        getImageUrl(QWidget* const parent, bool onlyRaw=false);
     static QList<QUrl> getImageUrls(QWidget* const parent, bool onlyRaw=false);
+
+    static QStringList supportedMimeTypes();
 
 private:
 

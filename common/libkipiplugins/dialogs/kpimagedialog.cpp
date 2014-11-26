@@ -28,15 +28,15 @@
 #include <QVBoxLayout>
 #include <QPointer>
 #include <QDesktopServices>
+#include <QImageReader>
 
 // KDE includes
 
-#include <kdeversion.h>
+#include <kimageio.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
-#include <kimageio.h>
 #include <kio/previewjob.h>
 
 // LibKDcraw includes
@@ -82,6 +82,8 @@ public:
         }
     }
 
+public:
+
     QLabel*           imageLabel;
     QLabel*           infoLabel;
 
@@ -111,7 +113,7 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
     vlay->addWidget(d->infoLabel);
     vlay->addStretch();
 
-    setSupportedMimeTypes(KImageIO::mimeTypes());
+    setSupportedMimeTypes(KPImageDialog::supportedMimeTypes());
 
     if (d->iface)
     {
@@ -173,7 +175,7 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
                 return;
 
             KFileItemList items;
-            items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, d->currentUrl, true));
+            items.append(KFileItem(d->currentUrl));
             KIO::PreviewJob* const job = KIO::filePreview(items, QSize(256, 256));
 
             connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
@@ -389,7 +391,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
 
     if (!d->onlyRaw)
     {
-        patternList = KImageIO::pattern(KImageIO::Reading).split('\n', QString::SkipEmptyParts);
+        patternList = KPImageDialog::supportedMimeTypes();
 
         // All Images from list must been always the first entry given by KDE API
         allPictures = patternList[0];
@@ -493,6 +495,17 @@ QList<QUrl> KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
     {
         return QList<QUrl>();
     }
+}
+
+QStringList KPImageDialog::supportedMimeTypes()
+{
+    QStringList       mimeTypes;
+    QList<QByteArray> supported = QImageReader::supportedMimeTypes();
+
+    Q_FOREACH(QByteArray mimeType, supported)
+        mimeTypes.append(QString(mimeType));
+
+    return mimeTypes;
 }
 
 } // namespace KIPIPlugins
