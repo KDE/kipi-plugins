@@ -30,11 +30,10 @@
 
 // KDE includes
 
-#include <kapplication.h>
-#include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <klocale.h>
-#include <kvbox.h>
+#include <kconfig.h>
+#include <kconfiggroup.h>
 
 // Local includes
 
@@ -53,7 +52,7 @@ KPBinaryIface::KPBinaryIface(const QString& binaryName, const QString& minimalVe
       m_binaryBaseName(goodBaseName(binaryName)),
       m_binaryArguments(args), 
       m_projectName(projectName), 
-      m_url(KUrl(url)),
+      m_url(QUrl(url)),
       m_isFound(false), 
       m_developmentVersion(false),
       m_version(""), 
@@ -130,20 +129,20 @@ void KPBinaryIface::setVersion(QString& version)
 
 void KPBinaryIface::slotNavigateAndCheck()
 {
-    KUrl start;
+    QUrl start;
 
     if (isValid() && !m_pathDir.isEmpty())
     {
-        start = KUrl(m_pathDir);
+        start = QUrl(m_pathDir);
     }
     else
     {
 #if defined Q_OS_MAC
-        start = KUrl(QString("/Applications/"));
+        start = QUrl(QString("/Applications/"));
 #elif defined Q_OS_WIN
-        start = KUrl(QString("C:/Program Files/"));
+        start = QUrl(QString("C:/Program Files/"));
 #else
-        start = KUrl(QString("/usr/bin/"));
+        start = QUrl(QString("/usr/bin/"));
 #endif
     }
 
@@ -151,7 +150,7 @@ void KPBinaryIface::slotNavigateAndCheck()
                                              QString(m_binaryBaseName),
                                              0,
                                              QString(i18n("Navigate to %1", m_binaryBaseName)));
-    QString dir = KUrl(f).directory();
+    QString dir = QUrl(f).adjusted(QUrl::RemoveFilename).path();
     m_searchPaths << dir;
 
     if (checkDir(dir))
@@ -259,7 +258,7 @@ bool KPBinaryIface::recheckDirectories()
         return true;
     }
 
-    foreach(QString dir, m_searchPaths)
+    foreach(const QString& dir, m_searchPaths)
     {
         checkDir(dir);
 

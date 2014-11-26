@@ -33,13 +33,7 @@
 #include <QLineEdit>
 #include <QSet>
 #include <QGridLayout>
-
-// KDE includes
-
-#include <kurl.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
+#include <QUrl>
 
 // Local includes
 
@@ -61,8 +55,7 @@ public:
                   const QString& projectName, 
                   const QString& url,
                   const QString& pluginName, 
-                  const QStringList& args = QStringList()
-                 );
+                  const QStringList& args = QStringList());
     virtual ~KPBinaryIface();
 
     bool                isFound()               const { return m_isFound;                       }
@@ -82,7 +75,7 @@ public:
     virtual QString     minimalVersion()        const { return m_minimalVersion;                }
 
 
-    virtual KUrl        url()                   const { return m_url;                           }
+    virtual QUrl        url()                   const { return m_url;                           }
     virtual QString     projectName()           const { return m_projectName;                   }
 
     static QString      goodBaseName(const QString& b)
@@ -123,7 +116,7 @@ protected:
     const QString       m_binaryBaseName;
     const QStringList   m_binaryArguments;
     const QString       m_projectName;
-    const KUrl          m_url;
+    const QUrl          m_url;
 
     bool                m_isFound;
     bool                m_developmentVersion;
