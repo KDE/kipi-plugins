@@ -414,7 +414,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
     d->fileFormats = patternList.join("\n");
 
     QString alternatePath         = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
-    QPointer<KFileDialog> dlg     = new KFileDialog(QUrl(d->iface ? d->iface->currentAlbum().path().path()
+    QPointer<KFileDialog> dlg     = new KFileDialog(QUrl(d->iface ? d->iface->currentAlbum().url().path()
                                                                   : alternatePath),
                                                     d->fileFormats, parent);
     KPImageDialogPreview* const preview = new KPImageDialogPreview(dlg);
