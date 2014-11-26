@@ -41,8 +41,8 @@
 
 // LibKDcraw includes
 
-#include <dcrawinfocontainer.h>
 #include <libkdcraw_version.h>
+#include <dcrawinfocontainer.h>
 #include <kdcraw.h>
 
 // Libkipi includes
@@ -372,8 +372,8 @@ public:
 
     QString          fileFormats;
 
-    KUrl             url;
-    KUrl::List       urls;
+    QUrl             url;
+    QList<QUrl>       urls;
 
     Interface*       iface;
 };
@@ -457,17 +457,17 @@ QString KPImageDialog::fileFormats() const
     return d->fileFormats;
 }
 
-KUrl KPImageDialog::url() const
+QUrl KPImageDialog::url() const
 {
     return d->url;
 }
 
-KUrl::List KPImageDialog::urls() const
+QList<QUrl> KPImageDialog::urls() const
 {
     return d->urls;
 }
 
-KUrl KPImageDialog::getImageUrl(QWidget* const parent, bool onlyRaw)
+QUrl KPImageDialog::getImageUrl(QWidget* const parent, bool onlyRaw)
 {
     KPImageDialog dlg(parent, true, onlyRaw);
 
@@ -477,11 +477,11 @@ KUrl KPImageDialog::getImageUrl(QWidget* const parent, bool onlyRaw)
     }
     else
     {
-        return KUrl();
+        return QUrl();
     }
 }
 
-KUrl::List KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
+QList<QUrl> KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
 {
     KPImageDialog dlg(parent, false, onlyRaw);
 
@@ -491,7 +491,7 @@ KUrl::List KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
     }
     else
     {
-        return KUrl::List();
+        return QList<QUrl>();
     }
 }
 

@@ -26,10 +26,11 @@
 // Qt includes
 
 #include <QImage>
+#include <QUrl>
+#include <QList>
 
 // KDE includes
 
-#include <kurl.h>
 #include <kpreviewwidgetbase.h>
 
 // Local includes
@@ -82,15 +83,15 @@ public:
     KPImageDialog(QWidget* const parent, bool singleSelect=false, bool onlyRaw=false);
     ~KPImageDialog();
 
-    KUrl       url() const;
-    KUrl::List urls() const;
+    QUrl       url() const;
+    QList<QUrl> urls() const;
 
     bool       onlyRaw() const;
     bool       singleSelect() const;
     QString    fileFormats() const;
 
-    static KUrl getImageUrl(QWidget* const parent, bool onlyRaw=false);
-    static KUrl::List getImageUrls(QWidget* const parent, bool onlyRaw=false);
+    static QUrl getImageUrl(QWidget* const parent, bool onlyRaw=false);
+    static QList<QUrl> getImageUrls(QWidget* const parent, bool onlyRaw=false);
 
 private:
 

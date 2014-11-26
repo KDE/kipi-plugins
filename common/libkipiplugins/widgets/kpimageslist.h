@@ -72,13 +72,13 @@ public:
 
 public:
 
-    explicit KPImagesListViewItem(KPImagesListView* const view, const KUrl& url);
+    explicit KPImagesListViewItem(KPImagesListView* const view, const QUrl& url);
     ~KPImagesListViewItem();
 
     bool hasValidThumbnail() const;
 
-    void setUrl(const KUrl& url);
-    KUrl url() const;
+    void setUrl(const QUrl& url);
+    QUrl url() const;
 
     void setComments(const QString& comments);
     QString comments() const;
@@ -144,7 +144,7 @@ public:
     void setColumnEnabled(ColumnType column, bool enable);
     void setColumn(ColumnType column, const QString& label, bool enable);
 
-    KPImagesListViewItem* findItem(const KUrl& url);
+    KPImagesListViewItem* findItem(const QUrl& url);
     QModelIndex indexFromItem(KPImagesListViewItem* item, int column = 0) const;
     KPImagesListViewItem* getCurrentItem() const;
 
@@ -152,7 +152,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalAddedDropedItems(const KUrl::List&);
+    void signalAddedDropedItems(const QList<QUrl>&);
     void signalItemClicked(QTreeWidgetItem*);
     void signalContextMenuRequested();
 
@@ -236,8 +236,8 @@ public:
     KPImagesListView*   listView()  const;
     Interface*          iface()     const;
 
-    void                processing(const KUrl& url);
-    void                processed(const KUrl& url, bool success);
+    void                processing(const QUrl& url);
+    void                processed(const QUrl& url, bool success);
     void                cancelProcess();
     void                clearProcessedStatus();
 
@@ -248,16 +248,16 @@ public:
 
     void                updateThumbnail(const QUrl& url);
 
-    virtual KUrl::List  imageUrls(bool onlyUnprocessed = false) const;
-    virtual void        removeItemByUrl(const KUrl& url);
-    KUrl                getCurrentUrl() const;
+    virtual QList<QUrl>  imageUrls(bool onlyUnprocessed = false) const;
+    virtual void        removeItemByUrl(const QUrl& url);
+    QUrl                getCurrentUrl() const;
 
 Q_SIGNALS:
 
-    void signalAddItems(const KUrl::List&);
+    void signalAddItems(const QList<QUrl>&);
     void signalMoveUpItem();
     void signalMoveDownItem();
-    void signalRemovedItems(const KUrl::List&);
+    void signalRemovedItems(const QList<QUrl>&);
     void signalRemovingItem(KIPIPlugins::KPImagesListViewItem*);
     void signalImageListChanged();
     void signalFoundRAWImages(bool);
@@ -270,7 +270,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    virtual void slotAddImages(const KUrl::List& list);
+    virtual void slotAddImages(const QList<QUrl>& list);
     virtual void slotRemoveItems();
 
 protected Q_SLOTS:
@@ -283,14 +283,14 @@ protected Q_SLOTS:
     virtual void slotClearItems();
     virtual void slotLoadItems();
     virtual void slotSaveItems();
-    virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    virtual void slotThumbnail(const QUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
 
 private Q_SLOTS:
 
     void slotKDEPreview(const KFileItem&, const QPixmap&);
     void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const KUrl&, const QImage&);
+    void slotRawThumb(const QUrl&, const QImage&);
 
 private:
 
