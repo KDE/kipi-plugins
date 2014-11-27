@@ -46,7 +46,7 @@ QPointer<CalSettings> CalSettings::s_instance;
 CalSettings::CalSettings(QObject* const parent)
     : QObject(parent)
 {
-    params.year = KGlobal::locale()->calendar()->earliestValidDate().year() + 1;
+    params.year = KLocale::global()->calendar()->earliestValidDate().year() + 1;
     setPaperSize("A4");
     setResolution("High");
     setImagePos(0);
@@ -226,8 +226,8 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
     else
     {
         QDate qFirst, qLast;
-        KGlobal::locale()->calendar()->setDate(qFirst, params.year, 1, 1);
-        KGlobal::locale()->calendar()->setDate(qLast, params.year + 1, 1, 1);
+        KLocale::global()->calendar()->setDate(qFirst, params.year, 1, 1);
+        KLocale::global()->calendar()->setDate(qLast, params.year + 1, 1, 1);
         qLast = qLast.addDays(-1);
         KDateTime dtFirst(qFirst);
         KDateTime dtLast(qLast);
@@ -266,7 +266,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 
 bool CalSettings::isPrayDay(const QDate& date) const
 {
-    return (date.dayOfWeek() == KGlobal::locale()->weekDayOfPray());
+    return (date.dayOfWeek() == KLocale::global()->weekDayOfPray());
 }
 
 /*!
@@ -275,7 +275,7 @@ bool CalSettings::isPrayDay(const QDate& date) const
 bool CalSettings::isSpecial(int month, int day) const
 {
     QDate dt;
-    KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
+    KLocale::global()->calendar()->setDate(dt, params.year, month, day);
 
     return (isPrayDay(dt) || m_special.contains(dt));
 }
@@ -286,7 +286,7 @@ bool CalSettings::isSpecial(int month, int day) const
 QColor CalSettings::getDayColor(int month, int day) const
 {
     QDate dt;
-    KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
+    KLocale::global()->calendar()->setDate(dt, params.year, month, day);
 
     if (isPrayDay(dt))
     {
@@ -308,7 +308,7 @@ QColor CalSettings::getDayColor(int month, int day) const
 QString CalSettings::getDayDescr(int month, int day) const
 {
     QDate dt;
-    KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
+    KLocale::global()->calendar()->setDate(dt, params.year, month, day);
 
     QString ret;
 

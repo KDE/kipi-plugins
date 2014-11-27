@@ -167,7 +167,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     d->languageCheck = new MetadataCheckBox(i18n("Language:"), this);
     d->languageBtn   = new KLanguageButton(this);
 
-    QStringList list = KGlobal::locale()->allLanguagesList();
+    QStringList list = KLocale::global()->allLanguagesList();
 
     for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
     {

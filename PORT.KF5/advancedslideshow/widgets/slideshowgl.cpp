@@ -75,7 +75,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    QRect deskRect = KGlobalSettings::desktopGeometry( kapp->activeWindow() );
+    QRect deskRect = QApplication::desktop()->screenGeometry( kapp->activeWindow() );
     m_deskX        = deskRect.x();
     m_deskY        = deskRect.y();
     m_deskWidth    = deskRect.width();

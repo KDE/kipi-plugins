@@ -98,7 +98,7 @@ void MonthWidget::paintEvent(QPaintEvent* event)
 
     QPushButton::paintEvent(event);
     QPainter painter(this);
-    QString name = KGlobal::locale()->calendar()->monthName(
+    QString name = KLocale::global()->calendar()->monthName(
                    month_, CalSettings::instance()->year(), KCalendarSystem::ShortName);
 
     cr = contentsRect();

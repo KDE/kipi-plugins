@@ -219,7 +219,7 @@ struct Generator::Private
                 return false;
             }
             const QString tempPath = KStandardDirs::locate("tmp", tempFile->fileName());
-            KIO::Job* job          = KIO::file_copy(url, KUrl::fromPath(tempPath), -1 /* permissions */, KIO::Overwrite);
+            KIO::Job* job          = KIO::file_copy(url, QUrl::fromLocalFile(tempPath), -1 /* permissions */, KIO::Overwrite);
             if (KIO::NetAccess::synchronousRun(job, mProgressDialog))
             {
                 hash->insert(url, tempFile->fileName());

@@ -363,7 +363,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
     {
         if (m_dateTime.isValid())
         {
-            return (KGlobal::locale()->formatDateTime(m_dateTime, KLocale::ShortDate, true));
+            return (KLocale::global()->formatDateTime(m_dateTime, KLocale::ShortDate, true));
         }
 
         return i18n("Not available");
@@ -377,21 +377,21 @@ QVariant KipiImageItem::data(const int column, const int role) const
         if (!m_gpsData.getCoordinates().hasLatitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().lat(), 7);
+        return KLocale::global()->formatNumber(m_gpsData.getCoordinates().lat(), 7);
     }
     else if ((column==ColumnLongitude)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.getCoordinates().hasLongitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().lon(), 7);
+        return KLocale::global()->formatNumber(m_gpsData.getCoordinates().lon(), 7);
     }
     else if ((column==ColumnAltitude)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.getCoordinates().hasAltitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().alt());
+        return KLocale::global()->formatNumber(m_gpsData.getCoordinates().alt());
     }
     else if (column==ColumnAccuracy)
     {
@@ -437,7 +437,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
         if (!m_gpsData.hasDop())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getDop());
+        return KLocale::global()->formatNumber(m_gpsData.getDop());
     }
     else if ((column==ColumnFixType)&&(role==Qt::DisplayRole))
     {
@@ -451,14 +451,14 @@ QVariant KipiImageItem::data(const int column, const int role) const
         if (!m_gpsData.hasNSatellites())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getNSatellites(), 0);
+        return KLocale::global()->formatNumber(m_gpsData.getNSatellites(), 0);
     }
     else if ((column==ColumnSpeed)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.hasSpeed())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getSpeed());
+        return KLocale::global()->formatNumber(m_gpsData.getSpeed());
     }
     else if ((column == ColumnStatus) && (role == Qt::DisplayRole))
     {

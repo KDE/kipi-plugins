@@ -60,6 +60,7 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kurl.h>
+#include <QStandardPaths>
 
 // local includes
 
@@ -637,7 +638,7 @@ void GPSCorrelatorWidget::readSettingsFromGroup(const KConfigGroup* const group)
     d->offsetSign->setCurrentIndex(group->readEntry("Offset Sign", 0));
     d->offsetMin->setValue(group->readEntry("Offset Min", 0));
     d->offsetSec->setValue(group->readEntry("Offset Sec", 0));
-    d->gpxFileOpenLastDirectory = group->readEntry("GPX File Open Last Directory", KGlobalSettings::documentPath());
+    d->gpxFileOpenLastDirectory = group->readEntry("GPX File Open Last Directory", QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
     d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
     d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
 

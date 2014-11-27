@@ -106,7 +106,7 @@ int GridSetupDialog::exec()
     {
         PLEConfigSkeleton::setHorizontalGrid( this->horizontalDistance() );
         PLEConfigSkeleton::setVerticalGrid( this->verticalDistance() );
-        PLEConfigSkeleton::self()->writeConfig();
+        PLEConfigSkeleton::self()->save();
     }
     return result;
 }

@@ -42,6 +42,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <QStandardPaths>
 
 // local includes
 
@@ -128,7 +129,7 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interfac
     QString fileFormats = patternList.join("\n");
 
     QPointer<KFileDialog> dlg = new KFileDialog(iface ? iface->currentAlbum().path().path()
-                                                      : KGlobalSettings::documentPath(),
+                                                      : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
                                                 fileFormats, parent);
     KIPIPlugins::KPImageDialogPreview* const preview = new KIPIPlugins::KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);

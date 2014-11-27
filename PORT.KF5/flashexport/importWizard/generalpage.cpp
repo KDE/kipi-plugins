@@ -39,6 +39,7 @@
 #include <kvbox.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
+#include <QStandardPaths>
 
 //Local includes
 
@@ -101,7 +102,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
 
     QGroupBox* box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
     QVBoxLayout* vlay2 = new QVBoxLayout(box2);
-    d->exportUrl       = new KUrlRequester(QString(KGlobalSettings::documentPath() + QLatin1String("/simpleviewer")), this);
+    d->exportUrl       = new KUrlRequester(QString(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")), this);
     d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
 
     vlay2->setMargin(KDialog::spacingHint());

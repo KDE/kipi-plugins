@@ -295,7 +295,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     kDebug() << "Preview compilation failed: " << ad.message;
-                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", Qt::escape(ad.message)));
+                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", ad.message.toHtmlEscaped()));
                     errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
@@ -330,7 +330,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     }
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(i18n("Panorama compilation: %1", Qt::escape(ad.message)), ErrorMessage);
+                    d->postProcessing->addedAction(i18n("Panorama compilation: %1", ad.message.toHtmlEscaped()), ErrorMessage);
                     kDebug() << "Enblend call failed";
                     emit signalStitchingFinished(false);
                     break;

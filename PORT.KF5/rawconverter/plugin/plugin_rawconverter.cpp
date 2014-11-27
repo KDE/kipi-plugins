@@ -79,7 +79,8 @@ void Plugin_RawConverter::setup(QWidget* const widget)
 
     Plugin::setup( widget );
 
-    KGlobal::locale()->insertCatalog("libkdcraw");
+    //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
+//KLocale::global()->insertCatalog("libkdcraw");
 
     setupActions();
 

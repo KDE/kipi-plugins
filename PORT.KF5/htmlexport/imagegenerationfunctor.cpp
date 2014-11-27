@@ -250,7 +250,7 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
 
         if (meta.getImageDateTime().isValid())
         {
-            element.mExifImageDateTime = KGlobal::locale()->formatDateTime(meta.getImageDateTime(),
+            element.mExifImageDateTime = KLocale::global()->formatDateTime(meta.getImageDateTime(),
                                                                             KLocale::ShortDate, true);
         }
 
@@ -336,7 +336,7 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
                 element.mExifImageModel = info.model;
 
             if (info.dateTime.isValid())
-                element.mExifImageDateTime = KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
+                element.mExifImageDateTime = KLocale::global()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
 
             if (info.aperture != -1.0)
                 element.mExifPhotoApertureValue = QString::number(info.aperture);

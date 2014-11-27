@@ -90,7 +90,7 @@ void CalPainter::paint(int month)
 
     // FIXME: magic number 42
     int days[42];
-    int startDayOffset = KGlobal::locale()->weekStartDay();
+    int startDayOffset = KLocale::global()->weekStartDay();
 
     for (int i = 0; i < 42; ++i)
     {
@@ -98,7 +98,7 @@ void CalPainter::paint(int month)
     }
 
     QDate d;
-    KGlobal::locale()->calendar()->setDate(d, params.year, month, 1);
+    KLocale::global()->calendar()->setDate(d, params.year, month, 1);
     int s = d.dayOfWeek();
 
     if (s + 7 - startDayOffset >= 7)
@@ -106,7 +106,7 @@ void CalPainter::paint(int month)
         s = s - 7;
     }
 
-    for (int i = s; i < (s + KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
+    for (int i = s; i < (s + KLocale::global()->calendar()->daysInMonth(d)); ++i)
     {
         days[i + (7 - startDayOffset)] = i - s + 1;
     }
@@ -207,7 +207,7 @@ void CalPainter::paint(int month)
     setFont(f);
     drawText(rCalHeader, Qt::AlignLeft | Qt::AlignVCenter, QString::number(params.year));
     drawText(rCalHeader, Qt::AlignRight | Qt::AlignVCenter,
-             KGlobal::locale()->calendar()->monthName(month, params.year));
+             KLocale::global()->calendar()->monthName(month, params.year));
     restore();
 
     // ---------------------------------------------------------------
@@ -240,7 +240,7 @@ void CalPainter::paint(int month)
         rsmall.setWidth(r.width() - 2);
         rsmall.setHeight(r.height() - 2);
         drawText(rsmall, Qt::AlignRight | Qt::AlignBottom,
-                 KGlobal::locale()->calendar()->weekDayName(dayname, KCalendarSystem::ShortDayName));
+                 KLocale::global()->calendar()->weekDayName(dayname, KCalendarSystem::ShortDayName));
     }
 
     restore();

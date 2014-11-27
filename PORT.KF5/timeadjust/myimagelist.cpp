@@ -64,7 +64,7 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
 
             if (dt.isValid())
             {
-                item->setText(type, KGlobal::locale()->formatDateTime(dt, KLocale::ShortDate, true));
+                item->setText(type, KLocale::global()->formatDateTime(dt, KLocale::ShortDate, true));
             }
             else
             {

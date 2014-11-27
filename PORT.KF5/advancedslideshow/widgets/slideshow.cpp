@@ -56,6 +56,8 @@
 // libkipi includes
 
 #include <libkipi/interface.h>
+#include <QApplication>
+#include <QDesktopWidget>
 
 // Local includes
 
@@ -74,7 +76,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_sharedData   = sharedData;
-    QRect deskRect = KGlobalSettings::desktopGeometry( kapp->activeWindow() );
+    QRect deskRect = QApplication::desktop()->screenGeometry( kapp->activeWindow() );
     m_deskX        = deskRect.x();
     m_deskY        = deskRect.y();
     m_deskWidth    = deskRect.width();

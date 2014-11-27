@@ -485,7 +485,7 @@ void PrintOptionsPage::saveConfig()
 
     d->mConfigDialogManager->updateSettings();
 
-    PrintImagesConfig::self()->writeConfig();
+    PrintImagesConfig::self()->save();
 }
 
 void PrintOptionsPage::photoXpageChanged ( int i )

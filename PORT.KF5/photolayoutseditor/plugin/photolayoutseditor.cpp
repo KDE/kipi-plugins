@@ -153,7 +153,7 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
 
 PhotoLayoutsEditor::~PhotoLayoutsEditor()
 {
-    PLEConfigSkeleton::self()->writeConfig();
+    PLEConfigSkeleton::self()->save();
 
     if (m_canvas)
         m_canvas->deleteLater();
@@ -349,7 +349,7 @@ void PhotoLayoutsEditor::addRecentFile(const KUrl & url)
         PLEConfigSkeleton::setRecentFiles(tempList);
         if ( !d->openRecentFilesMenu->urls().contains( url ) )
             d->openRecentFilesMenu->addUrl( url );
-        PLEConfigSkeleton::self()->writeConfig();
+        PLEConfigSkeleton::self()->save();
     }
 }
 
@@ -703,7 +703,7 @@ void PhotoLayoutsEditor::setGridVisible(bool isVisible)
 {
     d->showGridToggleAction->setChecked(isVisible);
     PLEConfigSkeleton::setShowGrid(isVisible);
-    PLEConfigSkeleton::self()->writeConfig();
+    PLEConfigSkeleton::self()->save();
     if (m_canvas && m_canvas->scene())
         m_canvas->scene()->setGridVisible(isVisible);
 }

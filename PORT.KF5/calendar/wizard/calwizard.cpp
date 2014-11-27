@@ -146,11 +146,11 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         QString month;
         QStringList printList;
         QDate d;
-        KGlobal::locale()->calendar()->setDate(d, cSettings_->year(), 1, 1);
+        KLocale::global()->calendar()->setDate(d, cSettings_->year(), 1, 1);
 
-        for (int i = 1; i <= KGlobal::locale()->calendar()->monthsInYear(d); ++i)
+        for (int i = 1; i <= KLocale::global()->calendar()->monthsInYear(d); ++i)
         {
-            month = KGlobal::locale()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
+            month = KLocale::global()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
             image = cSettings_->image(i);
 
             if (!image.isEmpty())
@@ -172,14 +172,14 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
             QString extra;
 
-            if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
-                 KGlobal::locale()->calendar()->year(QDate::currentDate()) == year) ||
-                 KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
+            if ((KLocale::global()->calendar()->month(QDate::currentDate()) >= 6 &&
+                 KLocale::global()->calendar()->year(QDate::currentDate()) == year) ||
+                 KLocale::global()->calendar()->year(QDate::currentDate()) > year)
                 extra = "<br/><br/><b>" + i18n("Please note that you are making a "
                                                "calendar for<br/>the current year or a year in the "
                                                "past.") + "</b>";
 
-            QString year_locale = KGlobal::locale()->calendar()->formatDate(d, KLocale::Year, KLocale::LongNumber);
+            QString year_locale = KLocale::global()->calendar()->formatDate(d, KLocale::Year, KLocale::LongNumber);
 
             wPrintLabel_->setText(i18n("Click Next to start Printing<br/><br/>"
                                        "Following months will be printed for year %1:<br/>", year_locale)
@@ -290,8 +290,8 @@ void CalWizard::updatePage(int page)
     int month = months_.keys().at(page);
 
     calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
-                                            KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
-                                            KGlobal::locale()->calendar()->formatDate(date, "%Y")));
+                                            KLocale::global()->calendar()->monthName(month, year, KCalendarSystem::LongName),
+                                            KLocale::global()->calendar()->formatDate(date, "%Y")));
 }
 
 void CalWizard::printComplete()

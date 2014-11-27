@@ -119,7 +119,7 @@ public:
         typeCodeMap.insert( "TopicSet",           i18n("Topic Set") );
 
         // Fill language code map. inspired from KLanguageButton::loadAllLanguages()
-        QStringList list = KGlobal::locale()->allLanguagesList();
+        QStringList list = KLocale::global()->allLanguagesList();
         list.sort();
         for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
         {
@@ -129,7 +129,7 @@ public:
             // http://xml.coverpages.org/iso639a.html
             if (code.size() == 2 )
             {
-                QString name = KGlobal::locale()->languageCodeToName(code);
+                QString name = KLocale::global()->languageCodeToName(code);
                 languageCodeMap.insert(code, name);
             }
         }

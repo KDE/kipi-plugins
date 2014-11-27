@@ -52,6 +52,7 @@
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
+#include <QDesktopWidget>
 
 // Local includes
 
@@ -174,7 +175,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::Popup);
 
-    QRect deskRect = KGlobalSettings::desktopGeometry( kapp->activeWindow() );
+    QRect deskRect = QApplication::desktop()->screenGeometry( kapp->activeWindow() );
     m_deskX        = deskRect.x();
     m_deskY        = deskRect.y();
     m_deskWidth    = deskRect.width();

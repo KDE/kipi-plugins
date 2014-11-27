@@ -40,6 +40,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <QStandardPaths>
 
 // Locale incudes.
 
@@ -277,7 +278,7 @@ void ImportWizardDlg::readSettings()
     d->settings->frameColor           = group.readEntry("FrameColor", QColor("#ffffff"));
     d->settings->frameWidth           = group.readEntry("FrameWidth", 1);
     d->settings->title                = group.readEntry("Title", QString());
-    d->settings->exportUrl            = group.readEntry("ExportUrl", KUrl(KGlobalSettings::documentPath() + "/simpleviewer"));
+    d->settings->exportUrl            = group.readEntry("ExportUrl", KUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/simpleviewer"));
     d->settings->resizeExportImages   = group.readEntry("ResizeExportImages", true);
     d->settings->imagesExportSize     = group.readEntry("ImagesExportSize", 640);
     d->settings->showComments         = group.readEntry("ShowComments", true);

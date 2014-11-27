@@ -137,7 +137,7 @@ void Task::run()
                     if (info.dateTime.isValid())
                     {
                         identify.append(i18n("Created: %1<br>",
-                        KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true)));
+                        KLocale::global()->formatDateTime(info.dateTime, KLocale::ShortDate, true)));
                     }
 
                     if (info.aperture != -1.0)

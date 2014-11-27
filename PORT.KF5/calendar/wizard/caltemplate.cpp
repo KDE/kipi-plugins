@@ -69,7 +69,7 @@ CalTemplate::CalTemplate(KIPI::Interface* const interface, QWidget* const parent
     connect(m_ui.yearSpin, SIGNAL(valueChanged(int)),
             this, SLOT(yearChanged(int)));
 
-    const KCalendarSystem* const cal = KGlobal::locale()->calendar();
+    const KCalendarSystem* const cal = KLocale::global()->calendar();
     int currentYear                  = cal->year(QDate::currentDate());
 
     KUrl::List urlList;
@@ -149,7 +149,7 @@ void CalTemplate::yearChanged(int year)
 {
     int months;
     QDate d, oldD;
-    const KCalendarSystem* const cal = KGlobal::locale()->calendar();
+    const KCalendarSystem* const cal = KLocale::global()->calendar();
     cal->setDate(d, year, 1, 1);
     cal->setDate(oldD, CalSettings::instance()->year(), 1, 1);
     months = cal->monthsInYear(d);

@@ -900,7 +900,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     // %l focal length
     format.replace("%f", fi.fileName());
     format.replace("%c", photo->metaIface()->getExifComment());
-    format.replace("%d", KGlobal::locale()->formatDateTime(photo->metaIface()->getImageDateTime()));
+    format.replace("%d", KLocale::global()->formatDateTime(photo->metaIface()->getImageDateTime()));
     format.replace("%t", photo->metaIface()->getExifTagString("Exif.Photo.ExposureTime"));
     format.replace("%i", photo->metaIface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
     format.replace("%r", resolution);

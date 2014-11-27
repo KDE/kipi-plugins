@@ -66,7 +66,7 @@ void PLEConfigViewWidget::updateSettings()
     PLEConfigSkeleton::setShowGrid(d->showGrid->isChecked());
     PLEConfigSkeleton::setHorizontalGrid(d->xGrid->value());
     PLEConfigSkeleton::setVerticalGrid(d->yGrid->value());
-    PLEConfigSkeleton::self()->writeConfig();
+    PLEConfigSkeleton::self()->save();
 }
 
 void PLEConfigViewWidget::updateWidgets()
