@@ -30,7 +30,7 @@
 using namespace KIPIPhotoLayoutsEditor;
 
 LayersTreeMenu::LayersTreeMenu(LayersTree * parent) :
-    KMenu(parent)
+    QMenu(parent)
 {
     moveUpItems = this->addAction(i18n("Move up"));
     connect(moveUpItems, SIGNAL(triggered()), parent, SLOT(moveSelectedRowsUp()));

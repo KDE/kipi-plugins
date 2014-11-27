@@ -45,7 +45,7 @@
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kmenu.h>
+#include <QMenu>
 
 // LibKIPI includes
 
@@ -93,7 +93,7 @@ void Plugin_Kopete::setup(QWidget* const widget)
     connect(m_signalMapper, SIGNAL(mapped(QString)),
             this, SLOT(slotTransferFiles(QString)));
 
-    KMenu* contactsMenu = new KMenu(widget);
+    QMenu* contactsMenu = new QMenu(widget);
     m_actionExport->setMenu(contactsMenu);
     connect(contactsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotAboutToShowMenu()));

@@ -33,7 +33,7 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <QAction>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -125,7 +125,7 @@ void Plugin_WallPaper::setupActions()
     d->actionBackground->setText(i18n("&Set as Background"));
     d->actionBackground->setEnabled(false);
 
-    KMenu* menu = new KMenu(d->widget);
+    QMenu* menu = new QMenu(d->widget);
     d->actionBackground->setMenu(menu);
 
     QAction * wallpaper = new QAction(this);

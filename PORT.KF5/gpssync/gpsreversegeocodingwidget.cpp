@@ -48,7 +48,7 @@
 #include <kconfiggroup.h>
 #include <kinputdialog.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
@@ -671,7 +671,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
     {
         if ((event->type()==QEvent::ContextMenu) && d->UIEnabled) 
         {
-            KMenu* const menu             = new KMenu(d->tagTreeView);
+            QMenu* const menu             = new QMenu(d->tagTreeView);
             const int currentServiceIndex = d->serviceComboBox->currentIndex(); 
             d->currentBackend             = d->backendRGList[currentServiceIndex];
             QString backendName           = d->currentBackend->backendName();

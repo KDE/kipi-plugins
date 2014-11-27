@@ -47,7 +47,7 @@
 
 #include <kapplication.h>
 #include <kconfigdialogmanager.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kpushbutton.h>
 #include <kfile.h>
 #include <kfiledialog.h>

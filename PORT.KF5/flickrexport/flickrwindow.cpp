@@ -38,7 +38,7 @@
 
 #include <kcombobox.h>
 #include <klineedit.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>

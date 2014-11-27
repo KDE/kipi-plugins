@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <kmenu.h>
+#include <QMenu>
 #include <QAction>
 #include <kdebug.h>
 #include <klocale.h>
@@ -204,7 +204,7 @@ EnfuseStackList::~EnfuseStackList()
 
 void EnfuseStackList::slotContextMenu(const QPoint& p)
 {
-    KMenu popmenu(this);
+    QMenu popmenu(this);
 
     EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
     if (item)

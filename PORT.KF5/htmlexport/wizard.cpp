@@ -38,7 +38,7 @@
 #include <kdialog.h>
 #include <klistwidget.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <ktextbrowser.h>
 #include <kurlrequester.h>
 #include <ktoolinvocation.h>

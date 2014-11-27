@@ -29,7 +29,7 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kpushbutton.h>
 
 // Local includes

@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <kmenu.h>
+#include <QMenu>
 #include <klocale.h>
 #include <kpushbutton.h>
 

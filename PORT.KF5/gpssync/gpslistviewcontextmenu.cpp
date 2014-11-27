@@ -36,7 +36,7 @@
 // KDE includes
 
 #include <QAction>
-#include <kmenu.h>
+#include <QMenu>
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -226,7 +226,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         d->actionPaste->setEnabled(pasteAvailable);
 
         // construct the context-menu:
-        KMenu * const menu = new KMenu(d->imagesList);
+        QMenu * const menu = new QMenu(d->imagesList);
         menu->addAction(d->actionCopy);
         menu->addAction(d->actionPaste);
         menu->addSeparator();

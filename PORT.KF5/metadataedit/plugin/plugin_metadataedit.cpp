@@ -40,7 +40,7 @@
 #include <kglobalsettings.h>
 #include <klibloader.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 
 // LibKIPI includes
@@ -131,7 +131,7 @@ void Plugin_MetadataEdit::setupActions()
     d->actionMetadataEdit->setIcon(QIcon::fromTheme("kipi-metadataedit"));
     d->actionMetadataEdit->setEnabled(false);
 
-    KMenu* metadataEditMenu = new KMenu(d->parentWidget);
+    QMenu* metadataEditMenu = new QMenu(d->parentWidget);
     d->actionMetadataEdit->setMenu(metadataEditMenu);
 
     QAction * metadataEdit = new QAction(this);

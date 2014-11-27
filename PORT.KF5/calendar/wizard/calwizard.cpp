@@ -41,7 +41,7 @@
 #include <kdeprintdialog.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 
 // LibKIPI includes
 

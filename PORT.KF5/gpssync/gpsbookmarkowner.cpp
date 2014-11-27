@@ -62,7 +62,7 @@ public:
     KActionCollection*      actionCollection;
     KBookmarkManager*       bookmarkManager;
     KBookmarkMenu*          bookmarkMenuController;
-    KMenu*                  bookmarkMenu;
+    QMenu*                  bookmarkMenu;
     bool                    addBookmarkEnabled;
     GPSBookmarkModelHelper* bookmarkModelHelper;
     KGeoMap::GeoCoordinates lastCoordinates;
@@ -79,7 +79,7 @@ GPSBookmarkOwner::GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget
     d->actionCollection             = new KActionCollection(this);
     d->bookmarkManager              = KBookmarkManager::managerForFile(bookmarksFileName, "kipigeobookmarks");
     d->bookmarkManager->setUpdate(true);
-    d->bookmarkMenu                 = new KMenu(parent);
+    d->bookmarkMenu                 = new QMenu(parent);
     d->bookmarkMenuController       = new KBookmarkMenu(d->bookmarkManager, this, d->bookmarkMenu, d->actionCollection);
     d->bookmarkModelHelper          = new GPSBookmarkModelHelper(d->bookmarkManager, kipiImageModel, this);
 }
@@ -89,7 +89,7 @@ GPSBookmarkOwner::~GPSBookmarkOwner()
     delete d;
 }
 
-KMenu* GPSBookmarkOwner::getMenu() const
+QMenu* GPSBookmarkOwner::getMenu() const
 {
     return d->bookmarkMenu;
 }

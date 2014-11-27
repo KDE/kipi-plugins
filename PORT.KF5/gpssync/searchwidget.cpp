@@ -43,7 +43,7 @@
 #include <khbox.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
@@ -694,7 +694,7 @@ bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
             slotUpdateActionAvailability();
 
             // construct the context-menu:
-            KMenu* const menu = new KMenu(d->treeView);
+            QMenu* const menu = new QMenu(d->treeView);
             menu->addAction(d->actionCopyCoordinates);
             menu->addAction(d->actionMoveImagesToThisResult);
             menu->addAction(d->actionRemovedSelectedSearchResultsFromList);

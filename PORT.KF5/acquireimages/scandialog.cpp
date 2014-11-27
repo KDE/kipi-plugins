@@ -39,7 +39,7 @@
 #include <kiconloader.h>
 #include <kimageio.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>

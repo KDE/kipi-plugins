@@ -42,7 +42,7 @@
 #include <kconfig.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <knuminput.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>

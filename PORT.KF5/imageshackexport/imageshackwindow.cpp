@@ -47,7 +47,7 @@
 #include <kdebug.h>
 #include <QIcon>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <krun.h>

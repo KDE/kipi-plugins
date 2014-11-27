@@ -34,7 +34,7 @@
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kmenu.h>
+#include <QMenu>
 
 // Local includes
 

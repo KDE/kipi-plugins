@@ -38,7 +38,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <khelpmenu.h>
 #include <ktoolinvocation.h>
 #include <kguiitem.h>

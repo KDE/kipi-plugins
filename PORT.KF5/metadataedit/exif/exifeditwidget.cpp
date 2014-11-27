@@ -38,7 +38,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>

@@ -36,7 +36,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -182,7 +182,7 @@ void Plugin_JPEGLossless::setupActions()
         d->action_RotateImage->setText(i18n("Rotate"));
         d->action_RotateImage->setIcon(QIcon::fromTheme("object-rotate-right"));
 
-        KMenu* const rotateMenu = new KMenu(d->parentWidget);
+        QMenu* const rotateMenu = new QMenu(d->parentWidget);
         d->action_RotateImage->setMenu(rotateMenu);
 
         QAction * const left = new QAction(this);
@@ -214,7 +214,7 @@ void Plugin_JPEGLossless::setupActions()
         d->action_FlipImage->setText(i18n("Flip"));
         d->action_FlipImage->setIcon(QIcon::fromTheme("flip-horizontal"));
 
-        KMenu* const flipMenu = new KMenu(d->parentWidget);
+        QMenu* const flipMenu = new QMenu(d->parentWidget);
         d->action_FlipImage->setMenu(flipMenu);
 
         QAction * const hori = new QAction(this);

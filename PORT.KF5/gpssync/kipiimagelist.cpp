@@ -38,7 +38,7 @@
 #include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kmenu.h>
+#include <QMenu>
 
 // libKIPI includes
 
@@ -374,7 +374,7 @@ bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
     if ( (watched!=headerView) || (event->type()!=QEvent::ContextMenu) || (!d->model) )
         return QWidget::eventFilter(watched, event);
 
-    QMenu* const menu             = new KMenu(this);
+    QMenu* const menu             = new QMenu(this);
 
     // add action for all the columns
     for (int i=0; i<d->model->columnCount(); ++i)

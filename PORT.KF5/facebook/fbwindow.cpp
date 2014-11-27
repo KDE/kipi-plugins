@@ -34,7 +34,7 @@
 // KDE includes
 
 #include <kcombobox.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>

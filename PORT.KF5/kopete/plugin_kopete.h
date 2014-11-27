@@ -34,7 +34,7 @@
 
 class QSignalMapper;
 class QAction;
-class KMenu;
+class QMenu;
 
 class KJob;
 

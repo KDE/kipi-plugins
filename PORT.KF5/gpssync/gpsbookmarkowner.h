@@ -96,7 +96,7 @@ public:
     GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget* const parent);
     virtual ~GPSBookmarkOwner();
 
-    KMenu* getMenu() const;
+    QMenu* getMenu() const;
 
     void changeAddBookmark(const bool state);
     void setPositionAndTitle(const KGeoMap::GeoCoordinates& coordinates, const QString& title);

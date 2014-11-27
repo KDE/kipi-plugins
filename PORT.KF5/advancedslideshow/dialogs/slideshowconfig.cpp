@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <QIcon>
 #include <kiconloader.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kpushbutton.h>
 
 // LibKIPI includes

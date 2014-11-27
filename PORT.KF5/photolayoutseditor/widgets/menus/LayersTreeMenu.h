@@ -26,13 +26,13 @@
 #ifndef LAYERSTREEMENU_H
 #define LAYERSTREEMENU_H
 
-#include <kmenu.h>
+#include <QMenu>
 
 namespace KIPIPhotoLayoutsEditor
 {
     class LayersTree;
 
-    class LayersTreeMenu : public KMenu
+    class LayersTreeMenu : public QMenu
     {
         public:
 
