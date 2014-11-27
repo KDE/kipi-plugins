@@ -40,10 +40,9 @@ class Task : public RActionJob
 {
 public:
 
-    Task(QObject* const parent = 0)
+    Task()
         : RActionJob()
     {
-        Q_UNUSED(parent);
     }
 
     QString errString;
@@ -58,6 +57,8 @@ protected:
         QImage src;
         QImage dst;
 
+        if (m_cancel) return;
+
         emit signalProgress(20);
 
         if (!src.load(fileUrl.path()))
@@ -66,14 +67,20 @@ protected:
             return;
         }
 
+        if (m_cancel) return;
+
         emit signalProgress(40);
 
         QTransform transform;
         transform.rotate(90);
 
+        if (m_cancel) return;
+
         emit signalProgress(60);
 
         dst = src.transformed(transform);
+
+        if (m_cancel) return;
 
         emit signalProgress(80);
 
@@ -104,7 +111,7 @@ void ActionThread::rotate(const QList<QUrl>& list)
 
     foreach (const QUrl& url, list)
     {
-        Task* const job = new Task(this);
+        Task* const job = new Task();
         job->fileUrl    = url;
 
         connect(job, SIGNAL(signalStarted()),
