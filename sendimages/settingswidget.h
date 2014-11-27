@@ -29,7 +29,7 @@
 
 // Local includes
 
-#include <emailsettings.h>
+#include "emailsettings.h"
 
 namespace KIPISendimagesPlugin
 {

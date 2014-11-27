@@ -30,50 +30,48 @@
 
 // KDE includes
 
-#include <kurl.h>
-#include <threadweaver/Job.h>
+#include <QUrl>
 
 // Libkdcraw includes
 
-#include <libkdcraw/ractionthreadbase.h>
+#include <ractionthreadbase.h>
 
 // Local includes
 
 #include "emailsettings.h"
 
 using namespace KDcrawIface;
-using namespace ThreadWeaver;
 
 namespace KIPISendimagesPlugin
 {
 
-class Task : public Job
+class Task : public RActionJob
 {
     Q_OBJECT
 
 public:
 
-    explicit Task(QObject* const parent = 0, int* count = 0);
+    explicit Task(int* count = 0);
     ~Task();
 
 public:
 
-    KUrl          m_orgUrl;
+    QUrl          m_orgUrl;
     QString       m_destName;
     EmailSettings m_settings;
     int*          m_count;
 
 Q_SIGNALS:
 
-    void startingResize(const KUrl& orgUrl);
-    void finishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent);
-    void failedResize(const KUrl& orgUrl, const QString& errString, int percent);
+    void startingResize(const QUrl& orgUrl);
+    void finishedResize(const QUrl& orgUrl, const QUrl& emailUrl, int percent);
+    void failedResize(const QUrl& orgUrl, const QString& errString, int percent);
 
 private:
 
     void run();
     bool imageResize(const EmailSettings& settings,
-                     const KUrl& orgUrl, const QString& destName, QString& err);
+                     const QUrl& orgUrl, const QString& destName, QString& err);
 
 private:
 
@@ -96,9 +94,9 @@ public:
 
 Q_SIGNALS:
 
-    void startingResize(const KUrl& orgUrl);
-    void finishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent);
-    void failedResize(const KUrl& orgUrl, const QString& errString, int percent);
+    void startingResize(const QUrl& orgUrl);
+    void finishedResize(const QUrl& orgUrl, const QUrl& emailUrl, int percent);
+    void failedResize(const QUrl& orgUrl, const QString& errString, int percent);
     void completeResize();
 
 private Q_SLOTS:

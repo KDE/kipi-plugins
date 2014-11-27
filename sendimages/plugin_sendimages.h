@@ -33,7 +33,6 @@
 
 class QWidget;
 class QObject;
-
 class QAction;
 
 using namespace KIPI;

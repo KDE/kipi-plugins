@@ -22,9 +22,12 @@
 
 #include "plugin_sendimages.h"
 
-// KDE includes
+// Qt includes
 
 #include <QAction>
+
+// KDE includes
+
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>

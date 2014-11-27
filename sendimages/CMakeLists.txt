@@ -4,25 +4,24 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-set(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp
-                                    sendimagesdialog.cpp
+set(kipiplugin_sendimages_PART_SRCS imageresize.cpp
                                     myimagelist.cpp
                                     settingswidget.cpp
-                                    imageresize.cpp
                                     sendimages.cpp
-   )
+                                    sendimagesdialog.cpp
+                                    plugin_sendimages.cpp
+)
 
 add_library(kipiplugin_sendimages MODULE ${kipiplugin_sendimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_sendimages
+                      kipiplugins
                       KF5::Parts
-                      KF5::ThreadWeaver
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
                       KF5::KDELibs4Support
-                     )
+)
 
 configure_file(kipiplugin_sendimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
 

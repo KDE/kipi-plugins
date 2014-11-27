@@ -6,7 +6,7 @@
  * Date        : 2007-11-09
  * Description : a class to resize image in a separate thread.
  *
- * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
@@ -21,10 +21,11 @@
  *
  * ============================================================ */
 
-#include "imageresize.moc"
+#include "imageresize.h"
 
 // Qt includes
 
+#include <QDebug>
 #include <QDir>
 #include <QImage>
 #include <QFile>
@@ -35,17 +36,14 @@
 
 // KDE includes
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
 
 // LibKDcraw includes
 
-#include <libkdcraw/version.h>
-#include <libkdcraw/kdcraw.h>
+#include <libkdcraw_version.h>
+#include <kdcraw.h>
 
 // Local includes
 
@@ -58,8 +56,8 @@ using namespace KIPIPlugins;
 namespace KIPISendimagesPlugin
 {
 
-Task::Task(QObject* const parent, int* count)
-    : Job(parent)
+Task::Task(int* count)
+    : RActionJob()
 {
     m_count = count;
 }
@@ -82,7 +80,7 @@ void Task::run()
 
     if (imageResize(m_settings, m_orgUrl, m_destName, errString))
     {
-        KUrl emailUrl(m_destName);
+        QUrl emailUrl(m_destName);
         emit finishedResize(m_orgUrl, emailUrl, percent);
     }
     else
@@ -98,7 +96,7 @@ void Task::run()
     }
 }
 
-bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
+bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                        const QString& destName, QString& err)
 {
     EmailSettings emailSettings = settings;
@@ -113,7 +111,7 @@ bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
     QFileInfo tmp(destName);
     QFileInfo tmpDir(tmp.dir().absolutePath());
 
-    kDebug() << "tmpDir: " << tmp.dir().absolutePath();
+    qCDebug(KIPIPLUGINS_LOG)() << "tmpDir: " << tmp.dir().absolutePath();
 
     if (!tmpDir.exists() || !tmpDir.isWritable())
     {
@@ -222,9 +220,9 @@ ImageResize::~ImageResize()
 
 void ImageResize::resize(const EmailSettings& settings)
 {
-    JobCollection* collection = new JobCollection(this);
-    *m_count                  = 0;
-    int i                     = 1;
+    RJobCollection* const collection = new RJobCollection(this);
+    *m_count                         = 0;
+    int i                            = 1;
 
     for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
          it != settings.itemsList.constEnd(); ++it)
@@ -240,14 +238,14 @@ void ImageResize::resize(const EmailSettings& settings)
         QFileInfo fi(t->m_orgUrl.fileName());
         t->m_destName = tmpDir.name() + QString("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
 
-        connect(t, SIGNAL(startingResize(KUrl)),
-                this, SIGNAL(startingResize(KUrl)));
+        connect(t, SIGNAL(startingResize(QUrl)),
+                this, SIGNAL(startingResize(QUrl)));
 
-        connect(t, SIGNAL(finishedResize(KUrl,KUrl,int)),
-                this, SIGNAL(finishedResize(KUrl,KUrl,int)));
+        connect(t, SIGNAL(finishedResize(QUrl,QUrl,int)),
+                this, SIGNAL(finishedResize(QUrl,QUrl,int)));
 
-        connect(t, SIGNAL(failedResize(KUrl,QString,int)),
-                this, SIGNAL(failedResize(KUrl,QString,int)));
+        connect(t, SIGNAL(failedResize(QUrl,QString,int)),
+                this, SIGNAL(failedResize(QUrl,QString,int)));
 
         collection->addJob(t);
         i++;

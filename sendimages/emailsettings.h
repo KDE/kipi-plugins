@@ -6,7 +6,7 @@
  * Date        : 2007-11-07
  * Description : e-mail settings container.
  *
- * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
@@ -26,13 +26,11 @@
 
 // Qt includes
 
+#include <QtGlobal>
 #include <QList>
 #include <QString>
 #include <QStringList>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPISendimagesPlugin
 {
@@ -48,8 +46,8 @@ public:
 
     QStringList tags;           // List of keywords from Kipi host.
 
-    KUrl        orgUrl;         // Url of original image.
-    KUrl        emailUrl;       // Url of attached image in e-mail (can be resized).
+    QUrl        orgUrl;         // Url of original image.
+    QUrl        emailUrl;       // Url of attached image in e-mail (can be resized).
 };
 
 // -----------------------------------------------------------------------------------
@@ -130,7 +128,7 @@ public:
         return QString("PNG");
     };
 
-    void setEmailUrl(const KUrl& orgUrl, const KUrl& emailUrl)
+    void setEmailUrl(const QUrl& orgUrl, const QUrl& emailUrl)
     {
         for (QList<EmailItem>::iterator it = itemsList.begin(); it != itemsList.end(); ++it)
         {
@@ -142,7 +140,7 @@ public:
         }
     };
 
-    KUrl emailUrl(const KUrl& orgUrl) const
+    QUrl emailUrl(const QUrl& orgUrl) const
     {
         for (QList<EmailItem>::const_iterator it = itemsList.begin(); it != itemsList.end(); ++it)
         {
@@ -151,14 +149,14 @@ public:
                 return (*it).emailUrl;
             }
         }
-        return KUrl();
+        return QUrl();
     };
 
     qint64 attachementLimitInBytes() const
     {
         qint64 val = attachmentLimitInMbytes * 1024 * 1024;
         return val;
-    }
+    };
 
 public:
 
