@@ -104,8 +104,8 @@ public:
 KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const QUrl& url)
     : QTreeWidgetItem(view), d(new Private)
 {
-    qDebug() << "Creating new ImageListViewItem with url " << url
-             << " for list view " << view;
+    qDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << url
+                            << " for list view " << view;
     d->view      = view;
     int iconSize = d->view->iconSize().width();
     setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState), false);
@@ -202,13 +202,13 @@ void KPImagesListViewItem::setPixmap(const QPixmap& pix)
 
 void KPImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
-    qDebug() << "Received new thumbnail for url " << d->url
-             << ". My view is " << d->view;
+    qDebug(KIPIPLUGINS_LOG) << "Received new thumbnail for url " << d->url
+                            << ". My view is " << d->view;
 
     if (!d->view)
     {
-        qCritical() << "This item doesn't have a tree view. "
-                 << "This should never happen!";
+        qCritical(KIPIPLUGINS_LOG) << "This item doesn't have a tree view. "
+                                   << "This should never happen!";
         return;
     }
 
@@ -948,7 +948,7 @@ void KPImagesList::slotLoadItems()
 
     QFile file(loadLevelsFile.path());
 
-    qDebug() << "file path " << loadLevelsFile.path();
+    qDebug(KIPIPLUGINS_LOG) << "file path " << loadLevelsFile.path();
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader xmlReader;
     xmlReader.setDevice(&file);
@@ -1001,11 +1001,11 @@ void KPImagesList::slotSaveItems()
                                              QString( "*" ), this,
                                              QString( i18n("Select the image file list to save")) );
 
-    qDebug() << "file url " << saveLevelsFile.toDisplayString();
+    qDebug(KIPIPLUGINS_LOG) << "file url " << saveLevelsFile.toDisplayString();
 
     if ( saveLevelsFile.isEmpty() )
     {
-        qDebug() << "empty url ";
+        qDebug(KIPIPLUGINS_LOG) << "empty url ";
         return;
     }
 
