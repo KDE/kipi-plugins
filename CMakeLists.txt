@@ -338,14 +338,14 @@ if(KF5Kipi_FOUND)
         if (BUILD_TESTING)
             add_subdirectory(tests)
         endif()
-        
+
         # Plugins which will be always compiled
 
 #         add_subdirectory(timeadjust)
 #         add_subdirectory(jpeglossless)
 #         add_subdirectory(rawconverter)
 #         add_subdirectory(metadataedit)
-          add_subdirectory(sendimages)
+#         add_subdirectory(sendimages)
 #         add_subdirectory(flashexport)
 #         add_subdirectory(flickrexport)
 #         add_subdirectory(galleryexport)

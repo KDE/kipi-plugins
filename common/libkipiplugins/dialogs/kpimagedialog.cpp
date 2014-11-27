@@ -113,7 +113,7 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
     vlay->addWidget(d->infoLabel);
     vlay->addStretch();
 
-    setSupportedMimeTypes(KPImageDialog::supportedMimeTypes());
+    setSupportedMimeTypes(d->iface->supportedImageMimeTypes());
 
     if (d->iface)
     {
@@ -375,7 +375,7 @@ public:
     QString          fileFormats;
 
     QUrl             url;
-    QList<QUrl>       urls;
+    QList<QUrl>      urls;
 
     Interface*       iface;
 };
@@ -391,7 +391,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
 
     if (!d->onlyRaw)
     {
-        patternList = KPImageDialog::supportedMimeTypes();
+        patternList = d->iface->supportedImageMimeTypes();
 
         // All Images from list must been always the first entry given by KDE API
         allPictures = patternList[0];
@@ -495,17 +495,6 @@ QList<QUrl> KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
     {
         return QList<QUrl>();
     }
-}
-
-QStringList KPImageDialog::supportedMimeTypes()
-{
-    QStringList       mimeTypes;
-    QList<QByteArray> supported = QImageReader::supportedMimeTypes();
-
-    Q_FOREACH(QByteArray mimeType, supported)
-        mimeTypes.append(QString(mimeType));
-
-    return mimeTypes;
 }
 
 } // namespace KIPIPlugins
