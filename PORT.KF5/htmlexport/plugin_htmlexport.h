@@ -33,7 +33,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 

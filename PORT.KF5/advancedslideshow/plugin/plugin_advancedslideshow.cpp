@@ -44,7 +44,7 @@ extern "C"
 // KDE includes
 
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <kactioncollection.h>
@@ -114,7 +114,7 @@ void Plugin_AdvancedSlideshow::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_actionSlideShow = new KAction(this);
+    m_actionSlideShow = new QAction(this);
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(KIcon("kipi-slideshow"));
     m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));

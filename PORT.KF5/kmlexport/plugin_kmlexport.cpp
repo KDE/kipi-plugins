@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -94,7 +94,7 @@ void Plugin_KMLExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionKMLExport = new KAction(this);
+    m_actionKMLExport = new QAction(this);
     m_actionKMLExport->setText(i18n("Export to KML..."));
     m_actionKMLExport->setIcon(KIcon("applications-development-web"));
     m_actionKMLExport->setEnabled(false);

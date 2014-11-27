@@ -40,7 +40,7 @@ extern "C"
 #include <kdebug.h>
 #include <KConfig>
 #include <KApplication>
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KGenericFactory>
 #include <KLibLoader>
@@ -71,7 +71,7 @@ public:
         dlgExport    = 0;
     }
 
-    KAction*  actionExport;
+    QAction *  actionExport;
     WMWindow* dlgExport;
 };
 
@@ -112,7 +112,7 @@ void Plugin_WikiMedia::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = new KAction(this);
+    d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to MediaWiki..."));
     d->actionExport->setIcon(KIcon("kipi-wikimedia"));
     d->actionExport->setEnabled(false);

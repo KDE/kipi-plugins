@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -64,7 +64,7 @@ public:
         exportDlg    = 0;
     }
 
-    KAction*      exportAction;
+    QAction *      exportAction;
     ExportDialog* exportDlg;
 };
 
@@ -110,7 +110,7 @@ void Plugin_VideoSlideShow::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    d->exportAction = new KAction(this);
+    d->exportAction = new QAction(this);
     d->exportAction->setText(i18n("Export to Video Slide Show..."));
     d->exportAction->setIcon(KIcon("media-record"));
 

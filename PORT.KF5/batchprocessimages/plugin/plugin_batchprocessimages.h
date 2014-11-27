@@ -32,7 +32,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -72,14 +72,14 @@ private:
 
 private:
 
-    KAction*                m_action_borderimages;
-    KAction*                m_action_colorimages;
-    KAction*                m_action_convertimages;
-    KAction*                m_action_effectimages;
-    KAction*                m_action_filterimages;
-    KAction*                m_action_renameimages;
-    KAction*                m_action_recompressimages;
-    KAction*                m_action_resizeimages;
+    QAction *                m_action_borderimages;
+    QAction *                m_action_colorimages;
+    QAction *                m_action_convertimages;
+    QAction *                m_action_effectimages;
+    QAction *                m_action_filterimages;
+    QAction *                m_action_renameimages;
+    QAction *                m_action_recompressimages;
+    QAction *                m_action_resizeimages;
 
     BorderImagesDialog*     m_BorderImagesDialog;
     ColorImagesDialog*      m_ColorImagesDialog;

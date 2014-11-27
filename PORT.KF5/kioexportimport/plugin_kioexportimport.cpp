@@ -28,7 +28,7 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kaction.h>
+#include <QAction>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -90,7 +90,7 @@ void Plugin_KioExportImport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to remote computer..."));
     m_actionExport->setIcon(KIcon("folder-remote"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K));
@@ -102,7 +102,7 @@ void Plugin_KioExportImport::setupActions()
     addAction("kioexport", m_actionExport);
 
     // import
-    m_actionImport = new KAction(this);
+    m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from remote computer..."));
     m_actionImport->setIcon(KIcon("folder-remote"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I));

@@ -37,7 +37,7 @@
 #include <libmediawiki/login.h>
 #include <libmediawiki/mediawiki.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 

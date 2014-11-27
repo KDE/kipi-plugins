@@ -255,11 +255,11 @@ void PhotoLayoutsEditor::setupActions()
     d->saveAsAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
     actionCollection()->addAction("save_as", d->saveAsAction);
     //------------------------------------------------------------------------
-    d->saveAsTemplateAction = new KAction(i18nc("Saves canvas as a template file...", "Save As Template..."), actionCollection());
+    d->saveAsTemplateAction = new QAction(i18nc("Saves canvas as a template file...", "Save As Template..."), actionCollection());
     connect(d->saveAsTemplateAction, SIGNAL(triggered()), this, SLOT(saveAsTemplate()));
     actionCollection()->addAction("save_as_template", d->saveAsTemplateAction);
     //------------------------------------------------------------------------
-    d->exportFileAction = new KAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
+    d->exportFileAction = new QAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
     d->exportFileAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_E));
     connect(d->exportFileAction, SIGNAL(triggered()), this, SLOT(exportFile()));
     actionCollection()->addAction("export", d->exportFileAction);
@@ -291,7 +291,7 @@ void PhotoLayoutsEditor::setupActions()
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
     actionCollection()->addAction("settings", d->settingsAction);
     //------------------------------------------------------------------------
-    d->addImageAction = new KAction(i18nc("Adds new image(s) from file...", "Add image(s)..."), actionCollection());
+    d->addImageAction = new QAction(i18nc("Adds new image(s) from file...", "Add image(s)..."), actionCollection());
     connect(d->addImageAction, SIGNAL(triggered()), this, SLOT(loadNewImage()));
     actionCollection()->addAction("new_image", d->addImageAction);
     //------------------------------------------------------------------------
@@ -301,11 +301,11 @@ void PhotoLayoutsEditor::setupActions()
     connect(d->showGridToggleAction, SIGNAL(triggered(bool)), this, SLOT(setGridVisible(bool)));
     actionCollection()->addAction("grid_toggle", d->showGridToggleAction);
     //------------------------------------------------------------------------
-    d->gridConfigAction = new KAction(i18nc("Configure grid lines visibility...", "Setup grid..."), actionCollection());
+    d->gridConfigAction = new QAction(i18nc("Configure grid lines visibility...", "Setup grid..."), actionCollection());
     connect(d->gridConfigAction, SIGNAL(triggered()), this, SLOT(setupGrid()));
     actionCollection()->addAction("grid_config", d->gridConfigAction);
     //------------------------------------------------------------------------
-    d->changeCanvasSizeAction = new KAction(i18nc("Configure canvas size...", "Change canvas size..."), actionCollection());
+    d->changeCanvasSizeAction = new QAction(i18nc("Configure canvas size...", "Change canvas size..."), actionCollection());
     connect(d->changeCanvasSizeAction, SIGNAL(triggered()), this, SLOT(changeCanvasSize()));
     actionCollection()->addAction("canvas_size", d->changeCanvasSizeAction);
 

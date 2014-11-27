@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -67,7 +67,7 @@ public:
         gallery = 0;
     }
 
-    KAction* action;
+    QAction * action;
     Gallery* gallery;
 };
 
@@ -107,7 +107,7 @@ void Plugin_GalleryExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->action = new KAction(this);
+    d->action = new QAction(this);
     d->action->setText(i18n("Export to &Gallery..."));
     d->action->setIcon(KIcon("kipi-gallery"));
     d->action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));

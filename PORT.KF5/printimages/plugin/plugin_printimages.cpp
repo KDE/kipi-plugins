@@ -40,7 +40,7 @@ extern "C"
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -106,7 +106,7 @@ void Plugin_PrintImages::setupActions()
 {
     setDefaultCategory(ImagesPlugin);
 
-    m_printImagesAction = new KAction(this);
+    m_printImagesAction = new QAction(this);
     m_printImagesAction->setText ( i18n ( "Print images" ) );
     m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
     m_printImagesAction->setEnabled(false);
@@ -116,7 +116,7 @@ void Plugin_PrintImages::setupActions()
 
     addAction("printimages", m_printImagesAction);
 
-    m_printAssistantAction = new KAction(this);
+    m_printAssistantAction = new QAction(this);
     m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
     m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
     m_printAssistantAction->setEnabled(false);

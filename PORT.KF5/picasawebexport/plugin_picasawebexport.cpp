@@ -38,7 +38,7 @@ extern "C"
 // KDE includes
 
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -100,7 +100,7 @@ void Plugin_PicasawebExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &PicasaWeb..."));
     m_actionExport->setIcon(KIcon("kipi-picasa"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
@@ -111,7 +111,7 @@ void Plugin_PicasawebExport::setupActions()
 
     addAction("picasawebexport", m_actionExport);
 
-    m_actionImport = new KAction(this);
+    m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &PicasaWeb..."));
     m_actionImport->setIcon(KIcon("kipi-picasa"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));

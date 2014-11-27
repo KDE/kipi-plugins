@@ -36,7 +36,7 @@ extern "C"
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <klibloader.h>
 #include <kdebug.h>
 #include <klocalizedstring.h>
@@ -92,7 +92,7 @@ void Plugin_RajceExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
     m_actionExport->setIcon(KIcon("kipi-rajce"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_J));

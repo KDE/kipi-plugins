@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
@@ -84,10 +84,10 @@ public:
     int                    total;
     int                    current;
 
-    KAction*               action_Convert2GrayScale;
-    KAction*               action_AutoExif;
-    KAction*               action_RotateImage;
-    KAction*               action_FlipImage;
+    QAction *               action_Convert2GrayScale;
+    QAction *               action_AutoExif;
+    QAction *               action_RotateImage;
+    QAction *               action_FlipImage;
 
     KUrl::List             images;
 
@@ -185,7 +185,7 @@ void Plugin_JPEGLossless::setupActions()
         KMenu* const rotateMenu = new KMenu(d->parentWidget);
         d->action_RotateImage->setMenu(rotateMenu);
 
-        KAction* const left = new KAction(this);
+        QAction * const left = new QAction(this);
         left->setText(i18nc("rotate image left", "Rotate Left"));
         left->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left));
         rotateMenu->addAction(left);
@@ -195,7 +195,7 @@ void Plugin_JPEGLossless::setupActions()
 
         addAction("rotate_ccw", left);
 
-        KAction* const right = new KAction(this);
+        QAction * const right = new QAction(this);
         right->setText(i18nc("rotate image right", "Rotate Right"));
         right->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right));
         rotateMenu->addAction(right);
@@ -217,7 +217,7 @@ void Plugin_JPEGLossless::setupActions()
         KMenu* const flipMenu = new KMenu(d->parentWidget);
         d->action_FlipImage->setMenu(flipMenu);
 
-        KAction* const hori = new KAction(this);
+        QAction * const hori = new QAction(this);
         hori->setText(i18n("Flip Horizontally"));
         hori->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Asterisk));
         flipMenu->addAction(hori);
@@ -227,7 +227,7 @@ void Plugin_JPEGLossless::setupActions()
 
         addAction("flip_horizontal", hori);
 
-        KAction* const verti = new KAction(this);
+        QAction * const verti = new QAction(this);
         verti->setText(i18n("Flip Vertically"));
         verti->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Slash));
         flipMenu->addAction(verti);
@@ -240,7 +240,7 @@ void Plugin_JPEGLossless::setupActions()
 
     // -----------------------------------------------------------------------------------
 
-    d->action_AutoExif = new KAction(this);
+    d->action_AutoExif = new QAction(this);
     d->action_AutoExif->setText(i18n("Auto Rotate/Flip Using Exif Information"));
 
     connect(d->action_AutoExif, SIGNAL(triggered(bool)),
@@ -250,7 +250,7 @@ void Plugin_JPEGLossless::setupActions()
 
     // -----------------------------------------------------------------------------------
 
-    d->action_Convert2GrayScale = new KAction(this);
+    d->action_Convert2GrayScale = new QAction(this);
     d->action_Convert2GrayScale->setText(i18n("Convert to Black && White"));
     d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
 

@@ -35,7 +35,7 @@
 
 #include <kdebug.h>
 #include <kapplication.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -92,7 +92,7 @@ void Plugin_DebianScreenshots::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Debian Screenshots..."));
     m_actionExport->setIcon(KIcon("kipi-debianscreenshots"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_D));

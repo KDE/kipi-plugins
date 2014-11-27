@@ -34,7 +34,7 @@
 class QWidget;
 class QObject;
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 

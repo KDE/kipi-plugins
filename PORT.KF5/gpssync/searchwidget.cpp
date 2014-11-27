@@ -37,7 +37,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kcombobox.h>
 #include <kconfiggroup.h>
 #include <khbox.h>
@@ -126,13 +126,13 @@ public:
     QTreeView*               treeView;
     QVBoxLayout*             mainVBox;
     KComboBox*               backendSelectionBox;
-    KAction*                 actionClearResultsList;
-    KAction*                 actionKeepOldResults;
-    KAction*                 actionToggleAllResultsVisibility;
-    KAction*                 actionCopyCoordinates;
-    KAction*                 actionBookmark;
-    KAction*                 actionMoveImagesToThisResult;
-    KAction*                 actionRemovedSelectedSearchResultsFromList;
+    QAction *                 actionClearResultsList;
+    QAction *                 actionKeepOldResults;
+    QAction *                 actionToggleAllResultsVisibility;
+    QAction *                 actionCopyCoordinates;
+    QAction *                 actionBookmark;
+    QAction *                 actionMoveImagesToThisResult;
+    QAction *                 actionRemovedSelectedSearchResultsFromList;
     bool                     searchInProgress;
     KIcon                    actionToggleAllResultsVisibilityIconUnchecked;
     KIcon                    actionToggleAllResultsVisibilityIconChecked;
@@ -168,13 +168,13 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     KHBox* const actionHBox = new KHBox(this);
     d->mainVBox->addWidget(actionHBox);
 
-    d->actionClearResultsList = new KAction(this);
+    d->actionClearResultsList = new QAction(this);
     d->actionClearResultsList->setIcon(SmallIcon("edit-clear-list"));
     d->actionClearResultsList->setToolTip(i18n("Clear the search results."));
     QToolButton* const tbClearResultsList = new QToolButton(actionHBox);
     tbClearResultsList->setDefaultAction(d->actionClearResultsList);
 
-    d->actionKeepOldResults = new KAction(this);
+    d->actionKeepOldResults = new QAction(this);
     d->actionKeepOldResults->setIcon(SmallIcon("flag"));
     d->actionKeepOldResults->setCheckable(true);
     d->actionKeepOldResults->setChecked(false);
@@ -182,19 +182,19 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     QToolButton* const tbKeepOldResults = new QToolButton(actionHBox);
     tbKeepOldResults->setDefaultAction(d->actionKeepOldResults);
 
-    d->actionToggleAllResultsVisibility = new KAction(this);
+    d->actionToggleAllResultsVisibility = new QAction(this);
     d->actionToggleAllResultsVisibility->setCheckable(true);
     d->actionToggleAllResultsVisibility->setChecked(true);
     d->actionToggleAllResultsVisibility->setToolTip(i18n("Toggle the visibility of the search results on the map."));
     QToolButton* const tbToggleAllVisibility = new QToolButton(actionHBox);
     tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
 
-    d->actionCopyCoordinates = new KAction(i18n("Copy coordinates"), this);
+    d->actionCopyCoordinates = new QAction(i18n("Copy coordinates"), this);
     d->actionCopyCoordinates->setIcon(SmallIcon("edit-copy"));
 
-    d->actionMoveImagesToThisResult = new KAction(i18n("Move selected images to this position"), this);
+    d->actionMoveImagesToThisResult = new QAction(i18n("Move selected images to this position"), this);
 
-    d->actionRemovedSelectedSearchResultsFromList = new KAction(i18n("Remove from results list"), this);
+    d->actionRemovedSelectedSearchResultsFromList = new QAction(i18n("Remove from results list"), this);
     d->actionRemovedSelectedSearchResultsFromList->setIcon(SmallIcon("list-remove"));
 
     d->backendSelectionBox                            = new KComboBox(actionHBox);
@@ -221,7 +221,7 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->treeView->setSelectionModel(d->searchResultsSelectionModel);
     d->treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    d->actionBookmark = new KAction(i18n("Bookmarks"), this);
+    d->actionBookmark = new QAction(i18n("Bookmarks"), this);
     d->actionBookmark->setMenu(d->gpsBookmarkOwner->getMenu());
 
     connect(d->actionMoveImagesToThisResult, SIGNAL(triggered(bool)),

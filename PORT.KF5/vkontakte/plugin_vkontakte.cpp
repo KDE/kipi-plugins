@@ -26,7 +26,7 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -86,7 +86,7 @@ void Plugin_Vkontakte::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("vkontakte"));

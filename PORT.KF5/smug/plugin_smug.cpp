@@ -42,7 +42,7 @@ extern "C"
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kapplication.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -103,7 +103,7 @@ void Plugin_Smug::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &SmugMug..."));
     m_actionExport->setIcon(KIcon("kipi-smugmug"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
@@ -114,7 +114,7 @@ void Plugin_Smug::setupActions()
 
     addAction("smugexport", m_actionExport);
 
-    m_actionImport = new KAction(this);
+    m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &SmugMug..."));
     m_actionImport->setIcon(KIcon("kipi-smugmug"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));

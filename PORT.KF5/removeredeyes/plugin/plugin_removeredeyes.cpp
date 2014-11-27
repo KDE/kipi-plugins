@@ -26,7 +26,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -86,7 +86,7 @@ void Plugin_RemoveRedEyes::setupActions()
 {
     setDefaultCategory(BatchPlugin);
 
-    m_action = new KAction(this);
+    m_action = new QAction(this);
     m_action->setText(i18n("&Red-Eye Removal..."));
     m_action->setIcon(KIcon("draw-eraser"));
 

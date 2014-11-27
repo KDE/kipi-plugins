@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -94,7 +94,7 @@ void Plugin_PiwigoExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_action = new KAction(this);
+    m_action = new QAction(this);
     m_action->setText(i18n("Export to &Piwigo..."));
     m_action->setIcon(KIcon("kipi-piwigo"));
     m_action->setEnabled(true);

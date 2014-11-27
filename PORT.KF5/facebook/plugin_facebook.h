@@ -33,7 +33,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPIFacebookPlugin
 {
@@ -70,8 +70,8 @@ private:
 
 private:
 
-    KAction*   m_actionImport;
-    KAction*   m_actionExport;
+    QAction *   m_actionImport;
+    QAction *   m_actionExport;
 
     FbWindow*  m_dlgImport;
     FbWindow*  m_dlgExport;

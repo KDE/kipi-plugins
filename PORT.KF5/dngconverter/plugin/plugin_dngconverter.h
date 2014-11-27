@@ -31,7 +31,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 
@@ -63,7 +63,7 @@ private Q_SLOTS:
 
 private:
 
-    KAction*     m_action;
+    QAction *     m_action;
     BatchDialog* m_batchDlg;
 };
 

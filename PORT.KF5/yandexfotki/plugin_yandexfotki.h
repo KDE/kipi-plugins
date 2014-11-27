@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 
 // Libkipi includes
 
@@ -62,10 +62,10 @@ private:
 
 private:
 
-    KAction*           m_actionExport;
+    QAction *           m_actionExport;
     YandexFotkiWindow* m_dlgExport;
 
-//    KAction*           m_actionImport;
+//    QAction *           m_actionImport;
 //    YandexFotkiWindow* m_dlgImport;
 };
 

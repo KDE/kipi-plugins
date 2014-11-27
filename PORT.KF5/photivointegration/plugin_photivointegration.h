@@ -80,7 +80,7 @@ private:
 
     /** This is the plugin action that KIPI host application will plug into menu.
      */
-    KAction*   m_action;
+    QAction *   m_action;
 
     /** this is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
      *  instance of KIPI::PluginLoader singleton which provide a method for that.

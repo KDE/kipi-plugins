@@ -42,7 +42,7 @@ extern "C"
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kapplication.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -100,7 +100,7 @@ void Plugin_Shwup::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to Shwup..."));
     m_actionExport->setIcon(KIcon("kipi-shwup"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));

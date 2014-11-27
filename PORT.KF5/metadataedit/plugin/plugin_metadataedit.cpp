@@ -29,7 +29,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
@@ -75,7 +75,7 @@ public:
 
     QWidget*   parentWidget;
 
-    KAction*   actionMetadataEdit;
+    QAction *   actionMetadataEdit;
 
     Interface* interface;
 
@@ -134,7 +134,7 @@ void Plugin_MetadataEdit::setupActions()
     KMenu* metadataEditMenu = new KMenu(d->parentWidget);
     d->actionMetadataEdit->setMenu(metadataEditMenu);
 
-    KAction* metadataEdit = new KAction(this);
+    QAction * metadataEdit = new QAction(this);
     metadataEdit->setText(i18n("Edit &All Metadata..."));
     connect(metadataEdit, SIGNAL(triggered(bool)),
             this,SLOT(slotEditAllMetadata()));
@@ -146,7 +146,7 @@ void Plugin_MetadataEdit::setupActions()
 
     d->actionMetadataEdit->menu()->addSeparator();
 
-    KAction* importEXIF = new KAction(this);
+    QAction * importEXIF = new QAction(this);
     importEXIF->setText(i18n("Import EXIF..."));
     connect(importEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotImportExif()));
@@ -154,7 +154,7 @@ void Plugin_MetadataEdit::setupActions()
 
     addAction("importexif", importEXIF);
 
-    KAction* importIPTC = new KAction(this);
+    QAction * importIPTC = new QAction(this);
     importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
@@ -162,7 +162,7 @@ void Plugin_MetadataEdit::setupActions()
 
     addAction("importiptc", importIPTC);
 
-    KAction* importXMP = new KAction(this);
+    QAction * importXMP = new QAction(this);
     importXMP->setText(i18n("Import XMP..."));
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));

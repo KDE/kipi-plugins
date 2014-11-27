@@ -29,7 +29,7 @@ extern "C"
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <klibloader.h>
 #include <kdebug.h>
 #include <klocalizedstring.h>
@@ -66,7 +66,7 @@ public:
     }
 
     JAlbum*  jalbum;
-    KAction* actionExport;
+    QAction * actionExport;
 };
 
 Plugin_JAlbumExport::Plugin_JAlbumExport(QObject* const parent, const QVariantList&)
@@ -104,7 +104,7 @@ void Plugin_JAlbumExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = new KAction(this);
+    d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export via &jAlbum"));
     d->actionExport->setIcon(KIcon("kipi-jalbum"));
 

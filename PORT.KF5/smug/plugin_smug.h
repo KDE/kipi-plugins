@@ -34,7 +34,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 
@@ -65,8 +65,8 @@ private:
 
 private:
 
-    KAction*    m_actionExport;
-    KAction*    m_actionImport;
+    QAction *    m_actionExport;
+    QAction *    m_actionImport;
 
     SmugWindow* m_dlgExport;
     SmugWindow* m_dlgImport;

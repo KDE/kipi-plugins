@@ -25,7 +25,7 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -85,7 +85,7 @@ void Plugin_YandexFotki::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("yandexfotki"));

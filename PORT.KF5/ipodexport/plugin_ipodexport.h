@@ -32,7 +32,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 
@@ -62,7 +62,7 @@ private:
 
 private:
 
-    KAction*      m_actionImageUpload;
+    QAction *      m_actionImageUpload;
     UploadDialog* m_dlgImageUpload;
 };
 

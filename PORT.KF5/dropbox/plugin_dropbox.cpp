@@ -39,7 +39,7 @@ extern "C"
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kapplication.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -92,7 +92,7 @@ void Plugin_Dropbox::setup(QWidget* const widget)
 void Plugin_Dropbox::setupActions()
 {
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Dropbox..."));
     m_actionExport->setIcon(KIcon("kipi-dropbox"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));

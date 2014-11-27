@@ -31,7 +31,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPIGoogleDrivePlugin
 {
@@ -67,7 +67,7 @@ private:
 
 private:
 
-    KAction*  m_actionExport;
+    QAction *  m_actionExport;
     GDWindow* m_dlgExport;
 };
 

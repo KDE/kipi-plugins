@@ -33,7 +33,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 
@@ -61,7 +61,7 @@ private:
 
 private:
 
-    KAction* m_action;
+    QAction * m_action;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

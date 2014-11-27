@@ -30,7 +30,7 @@
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kicon.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kaboutdata.h>
 
@@ -89,7 +89,7 @@ void Plugin_PhotoLayoutsEditor::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_action = new KAction(this);
+    m_action = new QAction(this);
     m_action->setText(i18n("Create photo layouts..."));
     m_action->setIcon(KIcon("photolayoutseditor"));
     m_action->setEnabled(false);

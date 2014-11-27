@@ -34,7 +34,7 @@
 // KDE includes
 
 #include <kmenu.h>
-#include <kaction.h>
+#include <QAction>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -209,14 +209,14 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
     EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
     if (item)
     {
-        KAction* rmItem = new KAction(KIcon("dialog-close"), i18n("Remove item"), this);
+        QAction * rmItem = new QAction(KIcon("dialog-close"), i18n("Remove item"), this);
         connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
-    KAction* rmAll = new KAction(KIcon("edit-delete-shred"), i18n("Clear all"), this);
+    QAction * rmAll = new QAction(KIcon("edit-delete-shred"), i18n("Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 

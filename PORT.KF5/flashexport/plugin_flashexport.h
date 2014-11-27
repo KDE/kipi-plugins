@@ -35,7 +35,7 @@
 
 class QWidget;
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -72,7 +72,7 @@ private:
 
     QWidget*      m_parentWidget;
 
-    KAction*      m_action;
+    QAction *      m_action;
 
     FlashManager* m_manager;
 

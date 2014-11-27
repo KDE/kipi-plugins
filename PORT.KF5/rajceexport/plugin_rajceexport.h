@@ -37,7 +37,7 @@
 
 using namespace KIPI;
 
-class KAction;
+class QAction;
 
 namespace KIPIRajceExportPlugin
 {
@@ -63,7 +63,7 @@ private:
 
 private:
 
-    KAction*     m_actionExport;
+    QAction *     m_actionExport;
     RajceWindow* m_dlgExport;
 };
 

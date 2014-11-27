@@ -33,7 +33,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -71,7 +71,7 @@ private:
 
 private:
 
-    KAction*         m_actionSlideShow;
+    QAction *         m_actionSlideShow;
     KIPI::Interface* m_interface;
     KUrl::List       m_urlList;
     SharedContainer* m_sharedData;

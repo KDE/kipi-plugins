@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -84,14 +84,14 @@ public:
 
     bool                              enabled;
 
-    KAction*                          actionCopy;
-    KAction*                          actionPaste;
-    KAction*                          actionBookmark;
-    KAction*                          actionRemoveCoordinates;
-    KAction*                          actionRemoveAltitude;
-    KAction*                          actionRemoveUncertainty;
-    KAction*                          actionRemoveSpeed;
-    KAction*                          actionLookupMissingAltitudes;
+    QAction *                          actionCopy;
+    QAction *                          actionPaste;
+    QAction *                          actionBookmark;
+    QAction *                          actionRemoveCoordinates;
+    QAction *                          actionRemoveAltitude;
+    QAction *                          actionRemoveUncertainty;
+    QAction *                          actionRemoveSpeed;
+    QAction *                          actionLookupMissingAltitudes;
 
     GPSBookmarkOwner*                 bookmarkOwner;
 
@@ -109,15 +109,15 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList* const imagesList, 
 {
     d->imagesList                   = imagesList;
 
-    d->actionCopy                   = new KAction(i18n("Copy coordinates"),                this);
+    d->actionCopy                   = new QAction(i18n("Copy coordinates"),                this);
     d->actionCopy->setIcon(SmallIcon("edit-copy"));
-    d->actionPaste                  = new KAction(i18n("Paste coordinates"),               this);
+    d->actionPaste                  = new QAction(i18n("Paste coordinates"),               this);
     d->actionPaste->setIcon(SmallIcon("edit-paste"));
-    d->actionRemoveCoordinates      = new KAction(i18n("Remove coordinates"),              this);
-    d->actionRemoveAltitude         = new KAction(i18n("Remove altitude"),                 this);
-    d->actionRemoveUncertainty      = new KAction(i18n("Remove uncertainty"),              this);
-    d->actionRemoveSpeed            = new KAction(i18n("Remove speed"),                    this);
-    d->actionLookupMissingAltitudes = new KAction(i18n("Look up missing altitude values"), this);
+    d->actionRemoveCoordinates      = new QAction(i18n("Remove coordinates"),              this);
+    d->actionRemoveAltitude         = new QAction(i18n("Remove altitude"),                 this);
+    d->actionRemoveUncertainty      = new QAction(i18n("Remove uncertainty"),              this);
+    d->actionRemoveSpeed            = new QAction(i18n("Remove speed"),                    this);
+    d->actionLookupMissingAltitudes = new QAction(i18n("Look up missing altitude values"), this);
 
     connect(d->actionCopy, SIGNAL(triggered()),
             this, SLOT(copyActionTriggered()));
@@ -143,7 +143,7 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList* const imagesList, 
     if (bookmarkOwner)
     {
         d->bookmarkOwner  = bookmarkOwner;
-        d->actionBookmark = new KAction(i18n("Bookmarks"), this);
+        d->actionBookmark = new QAction(i18n("Bookmarks"), this);
         d->actionBookmark->setMenu(d->bookmarkOwner->getMenu());
 
         connect(d->bookmarkOwner, SIGNAL(positionSelected(GPSDataContainer)),

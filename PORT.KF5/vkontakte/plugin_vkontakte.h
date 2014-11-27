@@ -26,7 +26,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 
 // Libkipi includes
 
@@ -63,7 +63,7 @@ private:
 
 private:
 
-    KAction*         m_actionExport;
+    QAction *         m_actionExport;
     VkontakteWindow* m_dlgExport;
 };
 

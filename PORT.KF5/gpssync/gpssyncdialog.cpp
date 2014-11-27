@@ -57,7 +57,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kapplication.h>
 #include <kcombobox.h>
 #include <kconfig.h>
@@ -221,7 +221,7 @@ public:
     bool                                     uiEnabled;
     SetupGlobalObject*                       setupGlobalObject;
     GPSBookmarkOwner*                        bookmarkOwner;
-    KAction*                                 actionBookmarkVisibility;
+    QAction *                                 actionBookmarkVisibility;
     GPSListViewContextMenu*                  listViewContextMenu;
     KGeoMap::TrackManager*                   trackManager;
 
@@ -304,7 +304,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
     d->kgeomapMarkerModel = new ItemMarkerTiler(d->mapModelHelper, this);
 
-    d->actionBookmarkVisibility = new KAction(this);
+    d->actionBookmarkVisibility = new QAction(this);
     d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
     d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
@@ -373,11 +373,11 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     connect(sortOrderExclusive, SIGNAL(triggered(QAction*)),
             this, SLOT(slotSortOptionTriggered(QAction*)));
 
-    d->sortActionOldestFirst = new KAction(i18n("Show oldest first"), sortOrderExclusive);
+    d->sortActionOldestFirst = new QAction(i18n("Show oldest first"), sortOrderExclusive);
     d->sortActionOldestFirst->setCheckable(true);
     d->sortMenu->addAction(d->sortActionOldestFirst);
 
-    d->sortActionYoungestFirst = new KAction(i18n("Show youngest first"), sortOrderExclusive);
+    d->sortActionYoungestFirst = new QAction(i18n("Show youngest first"), sortOrderExclusive);
     d->sortMenu->addAction(d->sortActionYoungestFirst);
     d->sortActionYoungestFirst->setCheckable(true);
 

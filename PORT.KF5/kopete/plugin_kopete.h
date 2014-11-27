@@ -33,7 +33,7 @@
 #include <libkipi/plugin.h>
 
 class QSignalMapper;
-class KAction;
+class QAction;
 class KMenu;
 
 class KJob;
@@ -67,7 +67,7 @@ private:
 
     QDBusInterface m_kopeteDBus;
     QDBusInterface m_kopeteDBusTest;
-    KAction*       m_actionExport;
+    QAction *       m_actionExport;
     QSignalMapper* m_signalMapper;
 };
 

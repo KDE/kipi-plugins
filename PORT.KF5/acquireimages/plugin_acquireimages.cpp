@@ -24,7 +24,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -92,7 +92,7 @@ void Plugin_AcquireImages::setupActions()
 {
     setDefaultCategory(ImportPlugin);
 
-    m_action_scanimages = new KAction(this);
+    m_action_scanimages = new QAction(this);
     m_action_scanimages->setText(i18n("Import from Scanner..."));
     m_action_scanimages->setIcon(KIcon("scanner"));
     m_action_scanimages->setEnabled(false);

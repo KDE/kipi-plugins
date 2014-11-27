@@ -31,7 +31,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -65,8 +65,8 @@ private:
 
 private:
 
-    KAction*   m_printImagesAction;
-    KAction*   m_printAssistantAction;
+    QAction *   m_printImagesAction;
+    QAction *   m_printAssistantAction;
     Interface* m_interface;
 };
 

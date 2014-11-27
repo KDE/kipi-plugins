@@ -42,7 +42,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -175,25 +175,25 @@ public:
     QTreeView*           tagTreeView;
 
     QItemSelectionModel* tagSelectionModel;
-    KAction*             actionAddCountry;
-    KAction*             actionAddState;
-    KAction*             actionAddStateDistrict;
-    KAction*             actionAddCounty;
-    KAction*             actionAddCity;
-    KAction*             actionAddCityDistrict;
-    KAction*             actionAddSuburb;
-    KAction*             actionAddTown;
-    KAction*             actionAddVillage;
-    KAction*             actionAddHamlet;
-    KAction*             actionAddStreet;
-    KAction*             actionAddHouseNumber;
-    KAction*             actionAddPlace;
-    KAction*             actionAddLAU2;
-    KAction*             actionAddLAU1;
-    KAction*             actionAddCustomizedSpacer;
-    KAction*             actionRemoveTag;
-    KAction*             actionRemoveAllSpacers;
-    KAction*             actionAddAllAddressElementsToTag;
+    QAction *             actionAddCountry;
+    QAction *             actionAddState;
+    QAction *             actionAddStateDistrict;
+    QAction *             actionAddCounty;
+    QAction *             actionAddCity;
+    QAction *             actionAddCityDistrict;
+    QAction *             actionAddSuburb;
+    QAction *             actionAddTown;
+    QAction *             actionAddVillage;
+    QAction *             actionAddHamlet;
+    QAction *             actionAddStreet;
+    QAction *             actionAddHouseNumber;
+    QAction *             actionAddPlace;
+    QAction *             actionAddLAU2;
+    QAction *             actionAddLAU1;
+    QAction *             actionAddCustomizedSpacer;
+    QAction *             actionRemoveTag;
+    QAction *             actionRemoveAllSpacers;
+    QAction *             actionAddAllAddressElementsToTag;
 };
 
 /**
@@ -247,41 +247,41 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     d->tagSelectionModel = new QItemSelectionModel(d->tagModel);
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
 
-    d->actionAddCountry          = new KAction(i18n("Add country tag"), this);
+    d->actionAddCountry          = new QAction(i18n("Add country tag"), this);
     d->actionAddCountry->setData("{Country}");
-    d->actionAddState            = new KAction(i18n("Add state tag"), this);
+    d->actionAddState            = new QAction(i18n("Add state tag"), this);
     d->actionAddState->setData("{State}");
-    d->actionAddStateDistrict    = new KAction(i18n("Add state district tag"), this);
+    d->actionAddStateDistrict    = new QAction(i18n("Add state district tag"), this);
     d->actionAddStateDistrict->setData("{State district}");
-    d->actionAddCounty           = new KAction(i18n("Add county tag"), this);
+    d->actionAddCounty           = new QAction(i18n("Add county tag"), this);
     d->actionAddCounty->setData("{County}");
-    d->actionAddCity             = new KAction(i18n("Add city tag"), this);
+    d->actionAddCity             = new QAction(i18n("Add city tag"), this);
     d->actionAddCity->setData("{City}");
-    d->actionAddCityDistrict     = new KAction(i18n("Add city district tag"), this);
+    d->actionAddCityDistrict     = new QAction(i18n("Add city district tag"), this);
     d->actionAddCityDistrict->setData("{City district}");
-    d->actionAddSuburb           = new KAction(i18n("Add suburb tag"), this);
+    d->actionAddSuburb           = new QAction(i18n("Add suburb tag"), this);
     d->actionAddSuburb->setData("{Suburb}");
-    d->actionAddTown             = new KAction(i18n("Add town tag"), this);
+    d->actionAddTown             = new QAction(i18n("Add town tag"), this);
     d->actionAddTown->setData("{Town}");
-    d->actionAddVillage          = new KAction(i18n("Add village tag"), this);
+    d->actionAddVillage          = new QAction(i18n("Add village tag"), this);
     d->actionAddVillage->setData("{Village}");
-    d->actionAddHamlet           = new KAction(i18n("Add hamlet tag"), this);
+    d->actionAddHamlet           = new QAction(i18n("Add hamlet tag"), this);
     d->actionAddHamlet->setData("{Hamlet}");
-    d->actionAddStreet           = new KAction(i18n("Add street"), this);
+    d->actionAddStreet           = new QAction(i18n("Add street"), this);
     d->actionAddStreet->setData("{Street}");
-    d->actionAddHouseNumber      = new KAction(i18n("Add house number tag"), this);
+    d->actionAddHouseNumber      = new QAction(i18n("Add house number tag"), this);
     d->actionAddHouseNumber->setData("{House number}");
-    d->actionAddPlace            = new KAction(i18n("Add place"), this);
+    d->actionAddPlace            = new QAction(i18n("Add place"), this);
     d->actionAddPlace->setData("{Place}");
-    d->actionAddLAU2             = new KAction(i18n("Add Local Administrative Area 2"), this);
+    d->actionAddLAU2             = new QAction(i18n("Add Local Administrative Area 2"), this);
     d->actionAddLAU2->setData("{LAU2}");
-    d->actionAddLAU1             = new KAction(i18n("Add Local Administrative Area 1"), this);
+    d->actionAddLAU1             = new QAction(i18n("Add Local Administrative Area 1"), this);
     d->actionAddLAU1->setData("{LAU1}");
-    d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
-    d->actionRemoveTag           = new KAction(i18n("Remove selected tag"), this);
-    d->actionRemoveAllSpacers    = new KAction(i18n("Remove all control tags below this tag"), this);
+    d->actionAddCustomizedSpacer = new QAction(i18n("Add new tag"), this);
+    d->actionRemoveTag           = new QAction(i18n("Remove selected tag"), this);
+    d->actionRemoveAllSpacers    = new QAction(i18n("Remove all control tags below this tag"), this);
     d->actionRemoveAllSpacers->setData("Remove all spacers");
-    d->actionAddAllAddressElementsToTag = new KAction(i18n("Add all address elements"), this);
+    d->actionAddAllAddressElementsToTag = new QAction(i18n("Add all address elements"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 

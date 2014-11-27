@@ -27,7 +27,7 @@
 #define PHOTOLAYOUTSEDITOR_P_H
 
 // KDE
-#include <kaction.h>
+#include <QAction>
 #include <kactionmenu.h>
 #include <krecentfilesaction.h>
 #include <kfiledialog.h>
@@ -129,28 +129,28 @@ namespace KIPIPhotoLayoutsEditor
             QWidget *   centralWidget;
 
             // File menu
-            KAction *   openNewFileAction;
-            KAction *   openFileAction;
+            QAction *   openNewFileAction;
+            QAction *   openFileAction;
             KRecentFilesAction *   openRecentFilesMenu;
-            KAction *   saveAction;
-            KAction *   saveAsAction;
-            KAction *   saveAsTemplateAction;
-            KAction *   exportFileAction;
-            KAction *   printPreviewAction;
-            KAction *   printAction;
-            KAction *   closeAction;
-            KAction *   quitAction;
+            QAction *   saveAction;
+            QAction *   saveAsAction;
+            QAction *   saveAsTemplateAction;
+            QAction *   exportFileAction;
+            QAction *   printPreviewAction;
+            QAction *   printAction;
+            QAction *   closeAction;
+            QAction *   quitAction;
 
             // Edit menu
-            KAction *   undoAction;
-            KAction *   redoAction;
-            KAction *   settingsAction;
+            QAction *   undoAction;
+            QAction *   redoAction;
+            QAction *   settingsAction;
 
             // Canvas menu
-            KAction *   addImageAction;
+            QAction *   addImageAction;
             KToggleAction * showGridToggleAction;
-            KAction *   gridConfigAction;
-            KAction *   changeCanvasSizeAction;
+            QAction *   gridConfigAction;
+            QAction *   changeCanvasSizeAction;
 
             // File dialog
             KFileDialog * fileDialog;

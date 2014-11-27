@@ -31,7 +31,7 @@ extern "C"
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kaction.h>
+#include <QAction>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -83,7 +83,7 @@ void Plugin_iPodExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionImageUpload = new KAction(this);
+    m_actionImageUpload = new QAction(this);
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
     m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
 

@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -108,7 +108,7 @@ void Plugin_RawConverter::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_singleAction = new KAction(this);
+    m_singleAction = new QAction(this);
     m_singleAction->setText(i18n("RAW Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconverter"));
     m_singleAction->setEnabled(false);
@@ -118,7 +118,7 @@ void Plugin_RawConverter::setupActions()
 
     addAction("raw_converter_single", m_singleAction);
 
-    m_batchAction = new KAction(this);
+    m_batchAction = new QAction(this);
     m_batchAction->setText(i18n("Batch RAW Converter..."));
     m_batchAction->setIcon(KIcon("rawconverter"));
     m_batchAction->setEnabled(false);

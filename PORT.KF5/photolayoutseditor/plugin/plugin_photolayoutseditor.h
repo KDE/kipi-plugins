@@ -66,7 +66,7 @@ private:
 
     QWidget*            m_parentWidget;
 
-    KAction*            m_action;
+    QAction *            m_action;
 
     PhotoLayoutsEditor* m_manager;
 

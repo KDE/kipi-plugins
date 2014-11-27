@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -64,7 +64,7 @@ struct Plugin_HTMLExport::Private
     {
     }
 
-    KAction* mAction;
+    QAction * mAction;
 };
 
 Plugin_HTMLExport::Plugin_HTMLExport(QObject* const parent, const QVariantList&)
@@ -100,7 +100,7 @@ void Plugin_HTMLExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->mAction = new KAction(this);
+    d->mAction = new QAction(this);
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
     d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));

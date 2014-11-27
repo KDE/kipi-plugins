@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -90,7 +90,7 @@ void Plugin_FlashExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_action = new KAction(this);
+    m_action = new QAction(this);
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(KIcon("kipi-flash"));
     m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));

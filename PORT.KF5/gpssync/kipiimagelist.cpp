@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -382,7 +382,7 @@ bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
         const QString columnName    = d->model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
         const bool isVisible        = !headerView->isSectionHidden(i);
 
-        KAction* const columnAction = new KAction(columnName, menu);
+        QAction * const columnAction = new QAction(columnName, menu);
         columnAction->setCheckable(true);
         columnAction->setChecked(isVisible);
         columnAction->setData(i);

@@ -40,7 +40,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
@@ -82,7 +82,7 @@ void Plugin_Kopete::setup(QWidget* const widget)
 
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("&Instant Messaging contact..."));
     m_actionExport->setIcon(KIcon("kopete"));
     m_actionExport->setEnabled(false);

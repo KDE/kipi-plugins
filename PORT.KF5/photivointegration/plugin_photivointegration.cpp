@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -115,7 +115,7 @@ void Plugin_PhotivoIntegration::setupActions()
 
     /** We define plugin action which will be plug in KIPI host application.
      */
-    m_action = new KAction(this);
+    m_action = new QAction(this);
     m_action->setText(i18n("Photivo Integration"));
     m_action->setIcon(KIcon("kipi-photivo"));
     m_action->setEnabled(false);

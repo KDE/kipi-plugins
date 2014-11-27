@@ -32,7 +32,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -66,7 +66,7 @@ private:
 
 private:
 
-    KAction*   m_actionKMLExport;
+    QAction *   m_actionKMLExport;
 
     Interface* m_interface;
 };

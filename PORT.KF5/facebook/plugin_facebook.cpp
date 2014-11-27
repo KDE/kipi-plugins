@@ -40,7 +40,7 @@ extern "C"
 
 #include <kdebug.h>
 #include <kapplication.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
@@ -97,7 +97,7 @@ void Plugin_Facebook::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new KAction(this);
+    m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("kipi-facebook"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F));
@@ -107,7 +107,7 @@ void Plugin_Facebook::setupActions()
 
     addAction("facebookexport", m_actionExport);
 
-    m_actionImport = new KAction(this);
+    m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("kipi-facebook"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));

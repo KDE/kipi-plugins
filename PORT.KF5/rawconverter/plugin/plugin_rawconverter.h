@@ -33,7 +33,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 using namespace KIPI;
 
@@ -65,8 +65,8 @@ private:
 
 private:
 
-    KAction*      m_singleAction;
-    KAction*      m_batchAction;
+    QAction *      m_singleAction;
+    QAction *      m_batchAction;
 
     SingleDialog* m_singleDlg;
     BatchDialog*  m_batchDlg;

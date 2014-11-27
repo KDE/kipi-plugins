@@ -37,7 +37,7 @@
 
 class QWidget;
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -73,7 +73,7 @@ private:
 private:
 
     QWidget*   m_parentWidget;
-    KAction*   m_action;
+    QAction *   m_action;
     Manager*   m_manager;
     Interface* m_interface;
 };

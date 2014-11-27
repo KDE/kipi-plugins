@@ -32,7 +32,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -65,7 +65,7 @@ private:
 
 private:
 
-    KAction* m_actionCalendar;
+    QAction * m_actionCalendar;
 };
 
 }  // NameSpace KIPICalendarPlugin

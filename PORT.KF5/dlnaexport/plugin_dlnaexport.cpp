@@ -29,7 +29,7 @@ extern "C"
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <klibloader.h>
 #include <kdebug.h>
 #include <klocalizedstring.h>
@@ -63,7 +63,7 @@ public:
         dlgExport    = 0;
     }
 
-    KAction* actionExport;
+    QAction * actionExport;
     Wizard*  dlgExport;
 };
 
@@ -100,7 +100,7 @@ void Plugin_DLNAExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = new KAction(this);
+    d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export via &DLNA"));
     d->actionExport->setIcon(KIcon("kipi-dlna"));
 

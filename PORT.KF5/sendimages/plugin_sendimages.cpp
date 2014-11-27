@@ -24,7 +24,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -61,7 +61,7 @@ public:
         sendImagesOperation = 0;
     }
 
-    KAction*          action_sendimages;
+    QAction *          action_sendimages;
 
     SendImagesDialog* dialog;
 
@@ -108,7 +108,7 @@ void Plugin_SendImages::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->action_sendimages = new KAction(this);
+    d->action_sendimages = new QAction(this);
     d->action_sendimages->setText(i18n("Email Images..."));
     d->action_sendimages->setIcon(KIcon("mail-send"));
 

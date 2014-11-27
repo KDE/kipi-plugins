@@ -35,7 +35,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPI
 {
@@ -69,7 +69,7 @@ private:
 
 private:
 
-    KAction*   m_action_geolocation;
+    QAction *   m_action_geolocation;
     Interface* m_interface;
 };
 

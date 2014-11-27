@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -61,7 +61,7 @@ public:
         dialog          = 0;
     }
 
-    KAction*          actionTimeAjust;
+    QAction *          actionTimeAjust;
     TimeAdjustDialog* dialog;
 };
 
@@ -102,7 +102,7 @@ void Plugin_TimeAdjust::setupActions()
 {
     setDefaultCategory(ImagesPlugin);
 
-    d->actionTimeAjust = new KAction(this);
+    d->actionTimeAjust = new QAction(this);
     d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
     d->actionTimeAjust->setIcon(KIcon("kipi-timeadjust"));
     d->actionTimeAjust->setEnabled(false);

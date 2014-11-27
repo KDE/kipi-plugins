@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -78,7 +78,7 @@ void Plugin_Calendar::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_actionCalendar = new KAction(this);
+    m_actionCalendar = new QAction(this);
     m_actionCalendar->setText(i18n("Create Calendar..."));
     m_actionCalendar->setIcon(KIcon("view-pim-calendar"));
     m_actionCalendar->setEnabled(false);

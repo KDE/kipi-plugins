@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
@@ -58,7 +58,7 @@ public:
     }
 
     ViewerWidget* widget;
-    KAction*      actionViewer;
+    QAction *      actionViewer;
 };
 
 Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
@@ -94,7 +94,7 @@ void Plugin_viewer::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    d->actionViewer = new KAction(this);
+    d->actionViewer = new QAction(this);
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
     d->actionViewer->setIcon(KIcon("kipi-ogl"));
     d->actionViewer->setEnabled(false);

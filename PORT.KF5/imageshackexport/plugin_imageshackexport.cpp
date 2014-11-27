@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -63,7 +63,7 @@ public:
     {
     }
 
-    KAction*    actionExport;
+    QAction *    actionExport;
     Imageshack* imageshack;
 };
 
@@ -105,7 +105,7 @@ void Plugin_ImageshackExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = new KAction(this);
+    d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to &Imageshack..."));
     d->actionExport->setIcon(KIcon("kipi-imageshack"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));

@@ -26,7 +26,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -91,7 +91,7 @@ void Plugin_ExpoBlending::setupActions()
 {
     setDefaultCategory(ToolsPlugin);
 
-    m_action = new KAction(this);
+    m_action = new QAction(this);
     m_action->setText(i18n("Blend Bracketed Images..."));
     m_action->setIcon(KIcon("kipi-expoblending"));
 

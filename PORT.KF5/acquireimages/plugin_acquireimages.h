@@ -34,7 +34,7 @@
 
 class QWidget;
 
-class KAction;
+class QAction;
 
 namespace KSaneIface
 {
@@ -71,7 +71,7 @@ private:
 
     QWidget*                 m_parentWidget;
 
-    KAction*                 m_action_scanimages;
+    QAction *                 m_action_scanimages;
 
     KSaneIface::KSaneWidget* m_saneWidget;
 

@@ -31,7 +31,7 @@
 #include <kdebug.h>
 #include <kapplication.h>
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -59,7 +59,7 @@ public:
         winExport    = 0;
     }
 
-    KAction*     actionExport;
+    QAction *     actionExport;
     ImgurWindow* winExport;
 };
 
@@ -100,7 +100,7 @@ void Plugin_ImgurExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    d->actionExport = new KAction(this);
+    d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to &Imgur..."));
     d->actionExport->setIcon(KIcon("kipi-imgur"));
 

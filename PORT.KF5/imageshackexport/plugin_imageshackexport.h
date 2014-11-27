@@ -31,7 +31,7 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
+class QAction;
 
 namespace KIPIImageshackExportPlugin
 {
