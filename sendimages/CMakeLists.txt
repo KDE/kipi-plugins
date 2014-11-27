@@ -21,6 +21,7 @@ target_link_libraries(kipiplugin_sendimages
                       KF5::KExiv2
                       KF5::KDcraw
                       kipiplugins
+                      KF5::KDELibs4Support
                      )
 
 configure_file(kipiplugin_sendimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)

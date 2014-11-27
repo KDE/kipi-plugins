@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "plugin_sendimages.moc"
+#include "plugin_sendimages.h"
 
 // KDE includes
 
@@ -36,8 +36,8 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
+#include <interface.h>
+#include <imagecollection.h>
 
 // Local includes
 
