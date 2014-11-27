@@ -75,7 +75,7 @@ DsWindow::DsWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_widget = new DsWidget(this);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-debianscreenshots"));
+    setWindowIcon(QIcon::fromTheme("kipi-debianscreenshots"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -200,7 +200,7 @@ void DsWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Debian Screenshots export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     uploadNextPhoto();
 }

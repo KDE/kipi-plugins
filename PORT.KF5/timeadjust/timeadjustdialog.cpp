@@ -378,7 +378,7 @@ void TimeAdjustDialog::slotApplyClicked()
     {
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
-        d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
         d->progressBar->setMaximum(d->itemsUsedMap.keys().size());
         d->thread->setSettings(prm);
         d->thread->setUpdatedDates(d->itemsUpdatedMap);

@@ -107,8 +107,8 @@ MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& 
     setButtons(urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close
                                 : Help|Ok|Apply|Close);
     setDefaultButton(Ok);
-    setButtonIcon(User1, KIcon("go-next"));
-    setButtonIcon(User2, KIcon("go-previous"));
+    setButtonIcon(User1, QIcon::fromTheme("go-next"));
+    setButtonIcon(User2, QIcon::fromTheme("go-previous"));
     setButtonText(User1, i18n("Next"));
     setButtonText(User2, i18n("Previous"));
     setModal(true);

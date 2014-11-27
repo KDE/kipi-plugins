@@ -26,7 +26,7 @@
 #include "LayersModel.moc"
 
 // KDE
-#include <kicon.h>
+#include <QIcon>
 
 // Qt
 #include <QDebug>

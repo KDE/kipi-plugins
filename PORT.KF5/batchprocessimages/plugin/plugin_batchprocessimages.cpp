@@ -150,7 +150,7 @@ void Plugin_BatchProcessImages::setupActions()
     setDefaultCategory(BatchPlugin);
 
     m_action_borderimages = new QAction(this);
-    m_action_borderimages->setIcon(KIcon("borderimages"));
+    m_action_borderimages->setIcon(QIcon::fromTheme("borderimages"));
     m_action_borderimages->setText(i18n("Border Images..."));
     m_action_borderimages->setEnabled(false);
 
@@ -160,7 +160,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_border_images", m_action_borderimages);
 
     m_action_colorimages = new QAction(this);
-    m_action_colorimages->setIcon(KIcon("colorimages"));
+    m_action_colorimages->setIcon(QIcon::fromTheme("colorimages"));
     m_action_colorimages->setText(i18n("Color Images..."));
     m_action_colorimages->setEnabled(false);
 
@@ -170,7 +170,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_color_images", m_action_colorimages);
 
     m_action_convertimages = new QAction(this);
-    m_action_convertimages->setIcon(KIcon("convertimages"));
+    m_action_convertimages->setIcon(QIcon::fromTheme("convertimages"));
     m_action_convertimages->setText(i18n("Convert Images..."));
     m_action_convertimages->setEnabled(false);
 
@@ -180,7 +180,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_convert_images", m_action_convertimages);
 
     m_action_effectimages = new QAction(this);
-    m_action_effectimages->setIcon(KIcon("effectimages"));
+    m_action_effectimages->setIcon(QIcon::fromTheme("effectimages"));
     m_action_effectimages->setText(i18n("Image Effects..."));
     m_action_effectimages->setEnabled(false);
 
@@ -190,7 +190,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_effect_images", m_action_effectimages);
 
     m_action_filterimages = new QAction(this);
-    m_action_filterimages->setIcon(KIcon("filterimages"));
+    m_action_filterimages->setIcon(QIcon::fromTheme("filterimages"));
     m_action_filterimages->setText(i18n("Filter Images..."));
 
     connect(m_action_filterimages, SIGNAL(triggered(bool)),
@@ -199,7 +199,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_filter_images", m_action_filterimages);
 
     m_action_renameimages = new QAction(this);
-    m_action_renameimages->setIcon(KIcon("renameimages"));
+    m_action_renameimages->setIcon(QIcon::fromTheme("renameimages"));
     m_action_renameimages->setText(i18n("Rename Images..."));
     m_action_renameimages->setEnabled(false);
 
@@ -209,7 +209,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_rename_images", m_action_renameimages);
 
     m_action_recompressimages = new QAction(this);
-    m_action_recompressimages->setIcon(KIcon("recompressimages"));
+    m_action_recompressimages->setIcon(QIcon::fromTheme("recompressimages"));
     m_action_recompressimages->setText(i18n("Recompress Images..."));
     m_action_recompressimages->setEnabled(false);
 
@@ -219,7 +219,7 @@ void Plugin_BatchProcessImages::setupActions()
     addAction("batch_recompress_images", m_action_recompressimages);
 
     m_action_resizeimages = new QAction(this);
-    m_action_resizeimages->setIcon(KIcon("resizeimages"));
+    m_action_resizeimages->setIcon(QIcon::fromTheme("resizeimages"));
     m_action_resizeimages->setText(i18n("Resize Images..."));
     m_action_resizeimages->setEnabled(false);
 

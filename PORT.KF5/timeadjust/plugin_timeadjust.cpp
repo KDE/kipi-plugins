@@ -104,7 +104,7 @@ void Plugin_TimeAdjust::setupActions()
 
     d->actionTimeAjust = new QAction(this);
     d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
-    d->actionTimeAjust->setIcon(KIcon("kipi-timeadjust"));
+    d->actionTimeAjust->setIcon(QIcon::fromTheme("kipi-timeadjust"));
     d->actionTimeAjust->setEnabled(false);
 
     connect(d->actionTimeAjust, SIGNAL(triggered(bool)),

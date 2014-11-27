@@ -27,7 +27,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kconfig.h>
 #include <kglobal.h>
 

@@ -98,7 +98,7 @@ void Plugin_GPSSync::setupActions()
 
     m_action_geolocation = new QAction(this);
     m_action_geolocation->setText(i18n("Geo-location"));
-    m_action_geolocation->setIcon(KIcon("applications-internet"));
+    m_action_geolocation->setIcon(QIcon::fromTheme("applications-internet"));
     m_action_geolocation->setEnabled(false);
 
     connect(m_action_geolocation, SIGNAL(triggered(bool)),

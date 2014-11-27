@@ -36,7 +36,7 @@
 #include <QPropertyAnimation>
 #include <QScrollArea>
 
-#include <kicon.h>
+#include <QIcon>
 #include <kguiitem.h>
 #include <klocalizedstring.h>
 
@@ -225,7 +225,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     connect(m_effects_button,SIGNAL(toggled(bool)),this,SLOT(setEffectsWidgetVisible(bool)));
 
     // Border edit tool
-    m_tool_border = new KPushButton(KIcon(":/tool_border.png"), "", widget);
+    m_tool_border = new KPushButton(QIcon::fromTheme(":/tool_border.png"), "", widget);
     m_tool_border->setIconSize(QSize(24,24));
     m_tool_border->setFixedSize(32,32);
     m_tool_border->setCheckable(true);

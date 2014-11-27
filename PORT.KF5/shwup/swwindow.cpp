@@ -80,7 +80,7 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
     m_widget      = new SwWidget(this, iface());
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-shwup"));
+    setWindowIcon(QIcon::fromTheme("kipi-shwup"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -307,7 +307,7 @@ void SwWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
 
     for (int i = 0; i < albumsList.size(); ++i)
     {
-        m_widget->m_albumsCoB->addItem(KIcon("system-users"), albumsList.at(i).title,
+        m_widget->m_albumsCoB->addItem(QIcon::fromTheme("system-users"), albumsList.at(i).title,
                                        albumsList.at(i).id);
        if (m_currentAlbumID == albumsList.at(i).id)
        {
@@ -615,7 +615,7 @@ void SwWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const SwA
     }
     else
     {
-        m_widget->m_albumsCoB->addItem(KIcon("system-users"), newAlbum.title, newAlbum.id);
+        m_widget->m_albumsCoB->addItem(QIcon::fromTheme("system-users"), newAlbum.title, newAlbum.id);
         m_widget->m_albumsCoB->setCurrentIndex( m_widget->m_albumsCoB->count() - 1 );
     }
 

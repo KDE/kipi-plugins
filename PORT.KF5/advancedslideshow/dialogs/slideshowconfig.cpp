@@ -33,7 +33,7 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
@@ -81,7 +81,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     setButtons(Help | Close | User1);
     setDefaultButton(User1);
-    setButtonIcon(User1, KIcon("system-run"));
+    setButtonIcon(User1, QIcon::fromTheme("system-run"));
     setButtonText(User1, i18n("Start Slideshow"));
     setFaceType(List);
     setModal(true);
@@ -91,22 +91,22 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
     d->sharedData->page_main = addPage(d->sharedData->mainPage, i18n("Main"));
     d->sharedData->page_main->setHeader(i18n("Main Settings"));
-    d->sharedData->page_main->setIcon(KIcon("view-presentation"));
+    d->sharedData->page_main->setIcon(QIcon::fromTheme("view-presentation"));
 
     d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
     d->sharedData->page_caption = addPage(d->sharedData->captionPage, i18nc("captions for the slideshow", "Caption"));
     d->sharedData->page_caption->setHeader(i18nc("captions for the slideshow", "Caption"));
-    d->sharedData->page_caption->setIcon(KIcon("draw-freehand"));
+    d->sharedData->page_caption->setIcon(QIcon::fromTheme("draw-freehand"));
 
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
     d->sharedData->page_soundtrack = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
     d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
-    d->sharedData->page_soundtrack->setIcon(KIcon("speaker"));
+    d->sharedData->page_soundtrack->setIcon(QIcon::fromTheme("speaker"));
 
     d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
     d->sharedData->page_advanced = addPage(d->sharedData->advancedPage, i18n("Advanced"));
     d->sharedData->page_advanced->setHeader(i18n("Advanced"));
-    d->sharedData->page_advanced->setIcon(KIcon("configure"));
+    d->sharedData->page_advanced->setIcon(QIcon::fromTheme("configure"));
 
     // --- About --
 

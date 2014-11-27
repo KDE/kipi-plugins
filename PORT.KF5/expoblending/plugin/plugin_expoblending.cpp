@@ -93,7 +93,7 @@ void Plugin_ExpoBlending::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Blend Bracketed Images..."));
-    m_action->setIcon(KIcon("kipi-expoblending"));
+    m_action->setIcon(QIcon::fromTheme("kipi-expoblending"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));

@@ -105,7 +105,7 @@ void Plugin_Smug::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &SmugMug..."));
-    m_actionExport->setIcon(KIcon("kipi-smugmug"));
+    m_actionExport->setIcon(QIcon::fromTheme("kipi-smugmug"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
     m_actionExport->setEnabled(false);
 
@@ -116,7 +116,7 @@ void Plugin_Smug::setupActions()
 
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &SmugMug..."));
-    m_actionImport->setIcon(KIcon("kipi-smugmug"));
+    m_actionImport->setIcon(QIcon::fromTheme("kipi-smugmug"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
     m_actionImport->setEnabled(false);
 

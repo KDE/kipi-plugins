@@ -39,7 +39,7 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kpushbutton.h>
 
@@ -85,7 +85,7 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const KUrl& defaultUrl
     setMinimumWidth(500);
     setMinimumHeight(500);
     button(User1)->setText(i18n("Load different photo"));
-    button(User1)->setIcon(KIcon("document-open"));
+    button(User1)->setIcon(QIcon::fromTheme("document-open"));
     button(Ok)->setEnabled(false);
 
     // Everything else is stacked in a vertical box.

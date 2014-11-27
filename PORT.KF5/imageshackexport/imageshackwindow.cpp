@@ -45,7 +45,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -252,7 +252,7 @@ void ImageshackWindow::slotStartTransfer()
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setVisible(true);
     m_widget->m_progressBar->progressScheduled(i18n("Image Shack Export"), false, true);
-    m_widget->m_progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_widget->m_progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     uploadNextItem();
 }

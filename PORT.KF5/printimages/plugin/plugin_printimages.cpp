@@ -108,7 +108,7 @@ void Plugin_PrintImages::setupActions()
 
     m_printImagesAction = new QAction(this);
     m_printImagesAction->setText ( i18n ( "Print images" ) );
-    m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
+    m_printImagesAction->setIcon ( QIcon::fromTheme( "document-print" ) );
     m_printImagesAction->setEnabled(false);
 
     connect ( m_printImagesAction, SIGNAL (triggered(bool)),
@@ -118,7 +118,7 @@ void Plugin_PrintImages::setupActions()
 
     m_printAssistantAction = new QAction(this);
     m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
-    m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
+    m_printAssistantAction->setIcon ( QIcon::fromTheme( "document-print" ) );
     m_printAssistantAction->setEnabled(false);
 
     connect ( m_printAssistantAction, SIGNAL (triggered(bool)),

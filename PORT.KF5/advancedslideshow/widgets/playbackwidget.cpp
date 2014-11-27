@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <kicon.h>
+#include <QIcon>
 
 // Local includes
 
@@ -54,17 +54,17 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedCo
     m_canHide     = true;
     m_isZeroTime  = false;
 
-    m_soundLabel->setPixmap(KIcon("speaker").pixmap(64, 64));
+    m_soundLabel->setPixmap(QIcon::fromTheme("speaker").pixmap(64, 64));
 
     m_prevButton->setText("");
     m_nextButton->setText("");
     m_playButton->setText("");
     m_stopButton->setText("");
 
-    m_prevButton->setIcon(KIcon("media-skip-backward"));
-    m_nextButton->setIcon(KIcon("media-skip-forward"));
-    m_playButton->setIcon(KIcon("media-playback-start"));
-    m_stopButton->setIcon(KIcon("media-playback-stop"));
+    m_prevButton->setIcon(QIcon::fromTheme("media-skip-backward"));
+    m_nextButton->setIcon(QIcon::fromTheme("media-skip-forward"));
+    m_playButton->setIcon(QIcon::fromTheme("media-playback-start"));
+    m_stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
 
     connect(m_prevButton, SIGNAL(clicked()),
             this, SLOT(slotPrev()));
@@ -148,7 +148,7 @@ void PlaybackWidget::checkSkip()
 
 void PlaybackWidget::setGUIPlay(bool isPlaying)
 {
-    m_playButton->setIcon(KIcon( isPlaying ? "media-playback-start" :
+    m_playButton->setIcon(QIcon::fromTheme( isPlaying ? "media-playback-start" :
                                              "media-playback-pause" ));
 }
 

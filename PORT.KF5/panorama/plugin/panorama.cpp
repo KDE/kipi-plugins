@@ -30,7 +30,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kurl.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kconfig.h>
 #include <kglobal.h>
 
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     KPMetadata::initializeExiv2();
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("kipi-panorama"));
+    aboutData->setProgramLogo(QIcon::fromTheme("kipi-panorama"));
 
     KUrl::List urlList;
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();

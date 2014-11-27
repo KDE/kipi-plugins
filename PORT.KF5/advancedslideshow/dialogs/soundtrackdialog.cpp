@@ -36,7 +36,7 @@
 #include <kdebug.h>
 #include <kfile.h>
 #include <kfiledialog.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kmessagebox.h>
 #include <kpagewidget.h>
 
@@ -92,13 +92,13 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
 
     // --------------------------------------------------------
 
-    m_SoundFilesButtonUp->setIcon(KIcon("arrow-up"));
-    m_SoundFilesButtonDown->setIcon(KIcon("arrow-down"));
-    m_SoundFilesButtonAdd->setIcon(KIcon("list-add"));
-    m_SoundFilesButtonDelete->setIcon(KIcon("list-remove"));
-    m_SoundFilesButtonLoad->setIcon(KIcon("document-open"));
-    m_SoundFilesButtonSave->setIcon(KIcon("document-save"));
-    m_SoundFilesButtonReset->setIcon(KIcon("edit-clear-list"));
+    m_SoundFilesButtonUp->setIcon(QIcon::fromTheme("arrow-up"));
+    m_SoundFilesButtonDown->setIcon(QIcon::fromTheme("arrow-down"));
+    m_SoundFilesButtonAdd->setIcon(QIcon::fromTheme("list-add"));
+    m_SoundFilesButtonDelete->setIcon(QIcon::fromTheme("list-remove"));
+    m_SoundFilesButtonLoad->setIcon(QIcon::fromTheme("document-open"));
+    m_SoundFilesButtonSave->setIcon(QIcon::fromTheme("document-save"));
+    m_SoundFilesButtonReset->setIcon(QIcon::fromTheme("edit-clear-list"));
 
     m_SoundFilesButtonUp->setText(QString());
     m_SoundFilesButtonDown->setText(QString());

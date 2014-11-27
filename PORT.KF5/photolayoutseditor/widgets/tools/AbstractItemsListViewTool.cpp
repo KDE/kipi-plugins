@@ -419,12 +419,12 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel 
     comboBox->setCurrentIndex(-1);
     connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(itemSelected(QString)));
     layout->addWidget(comboBox,1);
-    m_acceptButton = new KPushButton(KIcon(":action_check.png"), "", this);
+    m_acceptButton = new KPushButton(QIcon::fromTheme(":action_check.png"), "", this);
     m_acceptButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     m_acceptButton->setEnabled(false);
     connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editorAccepted()));
     layout->addWidget(m_acceptButton);
-    KPushButton * cancelButton = new KPushButton(KIcon(":action_delete.png"), "", this);
+    KPushButton * cancelButton = new KPushButton(QIcon::fromTheme(":action_delete.png"), "", this);
     cancelButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     connect(cancelButton,SIGNAL(clicked()),this,SLOT(editorCancelled()));
     layout->addWidget(cancelButton);

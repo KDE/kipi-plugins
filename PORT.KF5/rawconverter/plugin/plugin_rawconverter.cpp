@@ -110,7 +110,7 @@ void Plugin_RawConverter::setupActions()
 
     m_singleAction = new QAction(this);
     m_singleAction->setText(i18n("RAW Image Converter..."));
-    m_singleAction->setIcon(KIcon("rawconverter"));
+    m_singleAction->setIcon(QIcon::fromTheme("rawconverter"));
     m_singleAction->setEnabled(false);
 
     connect(m_singleAction, SIGNAL(triggered(bool)),
@@ -120,7 +120,7 @@ void Plugin_RawConverter::setupActions()
 
     m_batchAction = new QAction(this);
     m_batchAction->setText(i18n("Batch RAW Converter..."));
-    m_batchAction->setIcon(KIcon("rawconverter"));
+    m_batchAction->setIcon(QIcon::fromTheme("rawconverter"));
     m_batchAction->setEnabled(false);
 
     connect(m_batchAction, SIGNAL(triggered(bool)),

@@ -121,7 +121,7 @@ void Plugin_WallPaper::setupActions()
         return;
 
     d->actionBackground = actionCollection()->addAction("images2desktop");
-    d->actionBackground->setIcon(KIcon("image-jpeg"));
+    d->actionBackground->setIcon(QIcon::fromTheme("image-jpeg"));
     d->actionBackground->setText(i18n("&Set as Background"));
     d->actionBackground->setEnabled(false);
 

@@ -102,7 +102,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     d->progressBar->setValue(0);
     d->progressBar->setFormat(i18n("%v / %m"));
     d->progressBar->progressScheduled(i18n("Export to Imgur"), true, true);
-    d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     // ------------------------------------------------------------------------
 

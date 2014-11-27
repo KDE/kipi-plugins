@@ -305,7 +305,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->kgeomapMarkerModel = new ItemMarkerTiler(d->mapModelHelper, this);
 
     d->actionBookmarkVisibility = new QAction(this);
-    d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
+    d->actionBookmarkVisibility->setIcon(QIcon::fromTheme("user-trash"));
     d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
 
@@ -1157,7 +1157,7 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressBar->setValue(0);
     d->progressBar->setVisible(true);
     d->progressBar->progressScheduled(i18n("GPS sync"), true, true);
-    d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
     d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 

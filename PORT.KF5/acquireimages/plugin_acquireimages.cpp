@@ -94,7 +94,7 @@ void Plugin_AcquireImages::setupActions()
 
     m_action_scanimages = new QAction(this);
     m_action_scanimages->setText(i18n("Import from Scanner..."));
-    m_action_scanimages->setIcon(KIcon("scanner"));
+    m_action_scanimages->setIcon(QIcon::fromTheme("scanner"));
     m_action_scanimages->setEnabled(false);
 
     connect(m_action_scanimages, SIGNAL(triggered(bool)),

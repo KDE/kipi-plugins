@@ -67,7 +67,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
                     "e.g. ftp://my.server.org/sub/folder."));
 
     m_targetSearchButton = new KPushButton(i18n("Select target location..."), this);
-    m_targetSearchButton->setIcon(KIcon("folder-remote"));
+    m_targetSearchButton->setIcon(QIcon::fromTheme("folder-remote"));
 
     // setup image list
     m_imageList = new KPImagesList(this);

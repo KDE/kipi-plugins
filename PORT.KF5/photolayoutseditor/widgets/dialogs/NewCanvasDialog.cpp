@@ -39,7 +39,7 @@
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
 #include <kpushbutton.h>
-#include <kicon.h>
+#include <QIcon>
 
 #include "CanvasSizeWidget.h"
 #include "TemplatesView.h"
@@ -355,10 +355,10 @@ void NewCanvasDialog::setupUI()
     leftLayout->addWidget(d->paperSize);
 
     // Orientation buttons
-    d->horizontalButton = new KPushButton(KIcon(":horizontal_orientation.png"),"", main);
+    d->horizontalButton = new KPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"", main);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new KPushButton(KIcon(":vertical_orientation.png"),"", main);
+    d->verticalButton = new KPushButton(QIcon::fromTheme(":vertical_orientation.png"),"", main);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setIconSize(QSize(24,24));
     QHBoxLayout * hLayout = new QHBoxLayout();

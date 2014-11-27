@@ -293,13 +293,13 @@ void ExportDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply,    KIcon("process-stop"));
+        setButtonIcon(Apply,    QIcon::fromTheme("process-stop"));
         setButtonText(Apply,    i18n("&Abort"));
         setButtonToolTip(Apply, i18n("Abort the current conversion"));
     }
     else
     {
-        setButtonIcon(Apply,    KIcon("system-run"));
+        setButtonIcon(Apply,    QIcon::fromTheme("system-run"));
         setButtonText(Apply,    i18n("Con&vert"));
         setButtonToolTip(Apply, i18n("Start converting the images using current settings."));
     }

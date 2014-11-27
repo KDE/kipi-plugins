@@ -27,7 +27,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kconfig.h>
 #include <kglobal.h>
 
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     KPMetadata::initializeExiv2();
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("scanner"));
+    aboutData->setProgramLogo(QIcon::fromTheme("scanner"));
 
     KSaneWidget* const saneWidget = new KSaneWidget(0);
 

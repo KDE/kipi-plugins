@@ -347,7 +347,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->setValue(0);
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("RAW Converter"), true, true);
-        d->progressBar->progressThumbnailChanged(KIcon("rawconverter").pixmap(22));
+        d->progressBar->progressThumbnailChanged(QIcon::fromTheme("rawconverter").pixmap(22));
 
         d->thread->setSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
         processAll();
@@ -481,13 +481,13 @@ void BatchDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply,    KIcon("process-stop"));
+        setButtonIcon(Apply,    QIcon::fromTheme("process-stop"));
         setButtonText(Apply,    i18n("&Abort"));
         setButtonToolTip(Apply, i18n("Abort the current RAW file conversion"));
     }
     else
     {
-        setButtonIcon(Apply,    KIcon("system-run"));
+        setButtonIcon(Apply,    QIcon::fromTheme("system-run"));
         setButtonText(Apply,    i18n("Con&vert"));
         setButtonToolTip(Apply, i18n("Start converting the RAW images using current settings."));
     }

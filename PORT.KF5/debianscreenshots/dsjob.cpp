@@ -140,7 +140,7 @@ void DebianScreenshotsJob::addScreenshot(int code, const QString& message)
 
 KIcon DebianScreenshotsJob::icon() const
 {
-    return KIcon("debian");
+    return QIcon::fromTheme("debian");
 }
 
 QList<KUrl> DebianScreenshotsJob::urls() const

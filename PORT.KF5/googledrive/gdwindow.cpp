@@ -82,7 +82,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/)
 
     m_widget      = new GoogleDriveWidget(this);
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-googledrive"));
+    setWindowIcon(QIcon::fromTheme("kipi-googledrive"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
@@ -244,7 +244,7 @@ void GDWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
 
     for(int i=0;i<list.size();i++)
     {
-        m_widget->m_albumsCoB->addItem(KIcon("system-users"),list.value(i).second,
+        m_widget->m_albumsCoB->addItem(QIcon::fromTheme("system-users"),list.value(i).second,
                                        list.value(i).first);
 
         if (m_currentAlbumId == list.value(i).first)
@@ -332,7 +332,7 @@ void GDWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Google Drive export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     uploadNextPhoto();
 }

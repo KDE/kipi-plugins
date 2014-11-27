@@ -41,7 +41,7 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kurl.h>

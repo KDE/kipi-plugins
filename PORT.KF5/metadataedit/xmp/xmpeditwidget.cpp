@@ -132,49 +132,49 @@ XMPEditWidget::XMPEditWidget(MetadataEditDialog* const parent)
     d->page_content  = addPage(d->contentPage, i18n("Content"));
     d->page_content->setHeader(i18n("<qt>Content Information<br/>"
                      "<i>Use this panel to describe the visual content of the image</i></qt>"));
-    d->page_content->setIcon(KIcon("draw-text"));
+    d->page_content->setIcon(QIcon::fromTheme("draw-text"));
 
     d->originPage  = new XMPOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
     d->page_origin->setHeader(i18n("<qt>Origin Information<br/>"
                     "<i>Use this panel for formal descriptive information about the image</i></qt>"));
-    d->page_origin->setIcon(KIcon("document-properties"));
+    d->page_origin->setIcon(QIcon::fromTheme("document-properties"));
 
     d->creditsPage  = new XMPCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
     d->page_credits->setHeader(i18n("<qt>Credit Information<br/>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
-    d->page_credits->setIcon(KIcon("view-pim-contacts"));
+    d->page_credits->setIcon(QIcon::fromTheme("view-pim-contacts"));
 
     d->subjectsPage  = new XMPSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
     d->page_subjects->setHeader(i18n("<qt>Subject Information<br/>"
                       "<i>Use this panel to record subject information about the image</i></qt>"));
-    d->page_subjects->setIcon(KIcon("feed-subscribe"));
+    d->page_subjects->setIcon(QIcon::fromTheme("feed-subscribe"));
 
     d->keywordsPage  = new XMPKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
     d->page_keywords->setHeader(i18n("<qt>Keyword Information<br/>"
                       "<i>Use this panel to record keywords relevant to the image</i></qt>"));
-    d->page_keywords->setIcon(KIcon("bookmarks"));
+    d->page_keywords->setIcon(QIcon::fromTheme("bookmarks"));
 
     d->categoriesPage  = new XMPCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
     d->page_categories->setHeader(i18n("<qt>Category Information<br/>"
                         "<i>Use this panel to record categories relevant to the image</i></qt>"));
-    d->page_categories->setIcon(KIcon("folder"));
+    d->page_categories->setIcon(QIcon::fromTheme("folder"));
 
     d->statusPage  = new XMPStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br/>"
                     "<i>Use this panel to record workflow information</i></qt>"));
-    d->page_status->setIcon(KIcon("view-pim-tasks"));
+    d->page_status->setIcon(QIcon::fromTheme("view-pim-tasks"));
 
     d->propertiesPage  = new XMPProperties(this);
     d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
     d->page_properties->setHeader(i18n("<qt>Status Properties<br/>"
                       "<i>Use this panel to record workflow properties</i></qt>"));
-    d->page_properties->setIcon(KIcon("draw-freehand"));
+    d->page_properties->setIcon(QIcon::fromTheme("draw-freehand"));
 
     // ------------------------------------------------------------
 

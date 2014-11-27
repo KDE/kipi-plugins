@@ -27,7 +27,7 @@
 
 #include <kjob.h>
 #include <kurl.h>
-#include <kicon.h>
+#include <QIcon>
 
 namespace KIPIDebianScreenshotsPlugin
 {

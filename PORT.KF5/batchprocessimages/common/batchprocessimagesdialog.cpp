@@ -368,7 +368,7 @@ void BatchProcessImagesDialog::slotProcessStart()
     enableWidgets(false);
     m_ui->m_progress->setVisible(true);
     m_ui->m_progress->progressScheduled(i18n("Batch Image Effects"), true, true);
-    m_ui->m_progress->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_ui->m_progress->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     m_listFile2Process_iterator = new QTreeWidgetItemIterator(m_listFiles);
     startProcess();

@@ -24,7 +24,7 @@
 
 // KDE includes
 
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 
 namespace KIPIIpodExportPlugin
@@ -40,7 +40,7 @@ IpodAlbumItem::IpodAlbumItem(QTreeWidget* const parent, Itdb_PhotoAlbum* const p
         m_name = i18n( "Unnamed" );
 
     setText( 0, m_name );
-    setIcon( 0, KIcon("folder") );
+    setIcon( 0, QIcon::fromTheme("folder") );
 }
 
 void IpodAlbumItem::setPhotoAlbum(Itdb_PhotoAlbum* const pa)
@@ -65,7 +65,7 @@ void IpodAlbumItem::setName(const QString& name)
 IpodPhotoItem::IpodPhotoItem(IpodAlbumItem* const parent, IpodPhotoItem* const prev, Itdb_Artwork* const art)
     : QTreeWidgetItem(parent, prev), m_artwork(art)
 {
-    setIcon( 0, KIcon("image-jp2") );
+    setIcon( 0, QIcon::fromTheme("image-jp2") );
 }
 
 void IpodPhotoItem::setArtwork(Itdb_Artwork* const art)

@@ -102,7 +102,7 @@ void Plugin_Shwup::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to Shwup..."));
-    m_actionExport->setIcon(KIcon("kipi-shwup"));
+    m_actionExport->setIcon(QIcon::fromTheme("kipi-shwup"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
     m_actionExport->setEnabled(false);
 

@@ -77,7 +77,7 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
     m_widget      = new FbWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-facebook"));
+    setWindowIcon(QIcon::fromTheme("kipi-facebook"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
@@ -470,7 +470,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
         }
 
         m_widget->m_albumsCoB->addItem(
-            KIcon(albumIcon),
+            QIcon::fromTheme(albumIcon),
             albumsList.at(i).title,
             albumsList.at(i).id);
 
@@ -610,7 +610,7 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
         m_widget->progressBar()->progressScheduled(i18n("Facebook import"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
 
         m_talker->listPhotos(m_widget->getFriendID(), m_widget->getAlbumID());
@@ -635,7 +635,7 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
         m_widget->progressBar()->progressScheduled(i18n("Facebook export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
 
         uploadNextPhoto();

@@ -88,7 +88,7 @@ void Plugin_DNGConverter::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("DNG Converter..."));
-    m_action->setIcon(KIcon("kipi-dngconverter"));
+    m_action->setIcon(QIcon::fromTheme("kipi-dngconverter"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));

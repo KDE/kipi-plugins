@@ -84,7 +84,7 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
     m_widget      = new SmugWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-smugmug"));
+    setWindowIcon(QIcon::fromTheme("kipi-smugmug"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -423,7 +423,7 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
         else
             albumIcon = "folder";
 
-        m_widget->m_albumsCoB->addItem(KIcon(albumIcon), albumsList.at(i).title, albumsList.at(i).id);
+        m_widget->m_albumsCoB->addItem(QIcon::fromTheme(albumIcon), albumsList.at(i).title, albumsList.at(i).id);
 
         if (m_currentAlbumID == albumsList.at(i).id)
             m_widget->m_albumsCoB->setCurrentIndex(i);
@@ -481,7 +481,7 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
         else
             albumIcon = "folder";
 
-        m_albumDlg->m_templateCoB->addItem(KIcon(albumIcon), albumTList.at(i).name, albumTList.at(i).id);
+        m_albumDlg->m_templateCoB->addItem(QIcon::fromTheme(albumIcon), albumTList.at(i).name, albumTList.at(i).id);
 
         if (m_currentTmplID == albumTList.at(i).id)
             m_albumDlg->m_templateCoB->setCurrentIndex(i+1);
@@ -654,7 +654,7 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
         m_widget->progressBar()->progressScheduled(i18n("Smug Import"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
         // list photos of the album, then start download
         m_talker->listPhotos(m_widget->m_albumsCoB->itemData(
@@ -680,7 +680,7 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
         m_widget->progressBar()->progressScheduled(i18n("Smug Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
         kDebug() << "m_currentAlbumID" << m_currentAlbumID;
         uploadNextPhoto();

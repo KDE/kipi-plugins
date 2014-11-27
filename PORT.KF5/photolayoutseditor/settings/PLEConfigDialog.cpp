@@ -44,7 +44,7 @@ PLEConfigDialog::PLEConfigDialog(QWidget * parent) :
     d(new PLEConfigDialogPrivate)
 {
     d->confVWdg = new PLEConfigViewWidget( 0, i18n("View") );
-    this->addPage( d->confVWdg, i18n("View") )->setIcon(KIcon(QIcon(":/view.png")));
+    this->addPage( d->confVWdg, i18n("View") )->setIcon(QIcon::fromTheme(QIcon(":/view.png")));
 }
 
 PLEConfigDialog::~PLEConfigDialog()

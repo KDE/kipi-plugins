@@ -114,7 +114,7 @@ void Plugin_WikiMedia::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to MediaWiki..."));
-    d->actionExport->setIcon(KIcon("kipi-wikimedia"));
+    d->actionExport->setIcon(QIcon::fromTheme("kipi-wikimedia"));
     d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),

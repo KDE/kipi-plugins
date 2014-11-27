@@ -186,7 +186,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(KIcon("vkontakte"));
+    setWindowIcon(QIcon::fromTheme("vkontakte"));
     setButtons(KDialog::Help | KDialog::User1 | KDialog::Close);
     setDefaultButton(Close);
     setModal(false);
@@ -435,7 +435,7 @@ void VkontakteWindow::slotStartTransfer()
 
     m_progressBar->show();
     m_progressBar->progressScheduled(i18n("Vkontakte Export"), false, true);
-    m_progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)

@@ -180,7 +180,7 @@ void Plugin_JPEGLossless::setupActions()
     {
         d->action_RotateImage = actionCollection()->addAction("jpeglossless_rotate");
         d->action_RotateImage->setText(i18n("Rotate"));
-        d->action_RotateImage->setIcon(KIcon("object-rotate-right"));
+        d->action_RotateImage->setIcon(QIcon::fromTheme("object-rotate-right"));
 
         KMenu* const rotateMenu = new KMenu(d->parentWidget);
         d->action_RotateImage->setMenu(rotateMenu);
@@ -212,7 +212,7 @@ void Plugin_JPEGLossless::setupActions()
     {
         d->action_FlipImage = actionCollection()->addAction("jpeglossless_flip");
         d->action_FlipImage->setText(i18n("Flip"));
-        d->action_FlipImage->setIcon(KIcon("flip-horizontal"));
+        d->action_FlipImage->setIcon(QIcon::fromTheme("flip-horizontal"));
 
         KMenu* const flipMenu = new KMenu(d->parentWidget);
         d->action_FlipImage->setMenu(flipMenu);
@@ -252,7 +252,7 @@ void Plugin_JPEGLossless::setupActions()
 
     d->action_Convert2GrayScale = new QAction(this);
     d->action_Convert2GrayScale->setText(i18n("Convert to Black && White"));
-    d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
+    d->action_Convert2GrayScale->setIcon(QIcon::fromTheme("grayscaleconvert"));
 
     connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
             this, SLOT(slotConvert2GrayScale()));

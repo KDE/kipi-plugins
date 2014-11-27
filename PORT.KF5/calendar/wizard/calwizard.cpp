@@ -245,7 +245,7 @@ void CalWizard::print()
     calProgressUI.totalProgress->setMaximum(months_.count());
     calProgressUI.totalProgress->setValue(0);
     calProgressUI.totalProgress->progressScheduled(i18n("Making calendar"), false, true);
-    calProgressUI.totalProgress->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    calProgressUI.totalProgress->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     if (printThread_)
     {

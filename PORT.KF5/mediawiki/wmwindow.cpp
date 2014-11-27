@@ -105,7 +105,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->pass      = QString();
 
     setMainWidget(d->widget);
-    setWindowIcon(KIcon("kipi-wikimedia"));
+    setWindowIcon(QIcon::fromTheme("kipi-wikimedia"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -309,7 +309,7 @@ void WMWindow::slotStartTransfer()
 
     d->widget->progressBar()->show();
     d->widget->progressBar()->progressScheduled(i18n("MediaWiki export"), true, true);
-    d->widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
     d->uploadJob->begin();
 }
 

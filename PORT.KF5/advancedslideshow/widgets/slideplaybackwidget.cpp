@@ -34,7 +34,7 @@
 // KDE includes
 
 #include <kapplication.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kdebug.h>
 
@@ -45,17 +45,17 @@ SlidePlaybackWidget::SlidePlaybackWidget(QWidget* const parent)
 {
     setupUi(this);
     m_playButton->setCheckable(true);
-    m_slideLabel->setPixmap(KIcon("view-presentation").pixmap(64, 64));
+    m_slideLabel->setPixmap(QIcon::fromTheme("view-presentation").pixmap(64, 64));
 
     m_prevButton->setText("");
     m_nextButton->setText("");
     m_playButton->setText("");
     m_stopButton->setText("");
 
-    m_prevButton->setIcon(KIcon("media-skip-backward"));
-    m_nextButton->setIcon(KIcon("media-skip-forward"));
-    m_playButton->setIcon(KIcon("media-playback-start"));
-    m_stopButton->setIcon(KIcon("media-playback-stop"));
+    m_prevButton->setIcon(QIcon::fromTheme("media-skip-backward"));
+    m_nextButton->setIcon(QIcon::fromTheme("media-skip-forward"));
+    m_playButton->setIcon(QIcon::fromTheme("media-playback-start"));
+    m_stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
 
     m_canHide = true;
 

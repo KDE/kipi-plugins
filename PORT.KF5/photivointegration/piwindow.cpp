@@ -54,7 +54,7 @@ PIWindow::PIWindow(QWidget* const /*parent*/ /* = 0 */)
 {
     // window & widget settings
     setMainWidget(d->widget);
-    setWindowIcon(KIcon("kipi-photivo"));
+    setWindowIcon(QIcon::fromTheme("kipi-photivo"));
     setWindowTitle(i18n("Photivo Integration"));
     setModal(false);
     setMinimumSize(600, 450);

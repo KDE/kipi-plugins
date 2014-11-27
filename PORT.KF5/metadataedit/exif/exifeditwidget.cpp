@@ -124,32 +124,32 @@ EXIFEditWidget::EXIFEditWidget(MetadataEditDialog* const parent)
     d->captionPage   = new EXIFCaption(this);
     d->page_caption  = addPage(d->captionPage, i18nc("image caption", "Caption"));
     d->page_caption->setHeader(i18n("Caption Information"));
-    d->page_caption->setIcon(KIcon("edit-rename"));
+    d->page_caption->setIcon(QIcon::fromTheme("edit-rename"));
 
     d->datetimePage  = new EXIFDateTime(this);
     d->page_datetime = addPage(d->datetimePage, i18n("Date & Time"));
     d->page_datetime->setHeader(i18n("Date and Time Information"));
-    d->page_datetime->setIcon(KIcon("view-calendar-day"));
+    d->page_datetime->setIcon(QIcon::fromTheme("view-calendar-day"));
 
     d->lensPage      = new EXIFLens(this);
     d->page_lens     = addPage(d->lensPage, i18n("Lens"));
     d->page_lens->setHeader(i18n("Lens Settings"));
-    d->page_lens->setIcon(KIcon("camera-photo"));
+    d->page_lens->setIcon(QIcon::fromTheme("camera-photo"));
 
     d->devicePage    = new EXIFDevice(this);
     d->page_device   = addPage(d->devicePage, i18n("Device"));
     d->page_device->setHeader(i18n("Capture Device Settings"));
-    d->page_device->setIcon(KIcon("scanner"));
+    d->page_device->setIcon(QIcon::fromTheme("scanner"));
 
     d->lightPage     = new EXIFLight(this);
     d->page_light    = addPage(d->lightPage, i18n("Light"));
     d->page_light->setHeader(i18n("Light Source Information"));
-    d->page_light->setIcon(KIcon("image-x-generic"));
+    d->page_light->setIcon(QIcon::fromTheme("image-x-generic"));
 
     d->adjustPage    = new EXIFAdjust(this);
     d->page_adjust   = addPage(d->adjustPage, i18nc("Picture adjustments", "Adjustments"));
     d->page_adjust->setHeader(i18n("Pictures Adjustments"));
-    d->page_adjust->setIcon(KIcon("fill-color"));
+    d->page_adjust->setIcon(QIcon::fromTheme("fill-color"));
 
     // ------------------------------------------------------------
 

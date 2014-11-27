@@ -29,7 +29,7 @@
 
 #include <kdebug.h>
 #include <kgenericfactory.h>
-#include <kicon.h>
+#include <QIcon>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kaboutdata.h>
@@ -91,7 +91,7 @@ void Plugin_PhotoLayoutsEditor::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Create photo layouts..."));
-    m_action->setIcon(KIcon("photolayoutseditor"));
+    m_action->setIcon(QIcon::fromTheme("photolayoutseditor"));
     m_action->setEnabled(false);
 
     connect(m_action, SIGNAL(triggered(bool)),

@@ -96,7 +96,7 @@ void Plugin_KMLExport::setupActions()
 
     m_actionKMLExport = new QAction(this);
     m_actionKMLExport->setText(i18n("Export to KML..."));
-    m_actionKMLExport->setIcon(KIcon("applications-development-web"));
+    m_actionKMLExport->setIcon(QIcon::fromTheme("applications-development-web"));
     m_actionKMLExport->setEnabled(false);
 
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),

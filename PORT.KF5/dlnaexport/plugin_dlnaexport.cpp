@@ -102,7 +102,7 @@ void Plugin_DLNAExport::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export via &DLNA"));
-    d->actionExport->setIcon(KIcon("kipi-dlna"));
+    d->actionExport->setIcon(QIcon::fromTheme("kipi-dlna"));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));

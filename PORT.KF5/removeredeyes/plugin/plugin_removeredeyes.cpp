@@ -88,7 +88,7 @@ void Plugin_RemoveRedEyes::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("&Red-Eye Removal..."));
-    m_action->setIcon(KIcon("draw-eraser"));
+    m_action->setIcon(QIcon::fromTheme("draw-eraser"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(activate()));

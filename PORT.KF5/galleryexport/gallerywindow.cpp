@@ -45,7 +45,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <khelpmenu.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -134,13 +134,13 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
     newAlbumBtn = new QPushButton;
     newAlbumBtn->setText(i18n("&New Album"));
-    newAlbumBtn->setIcon(KIcon("folder-new"));
+    newAlbumBtn->setIcon(QIcon::fromTheme("folder-new"));
     newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     newAlbumBtn->setEnabled(false);
 
     addPhotoBtn = new QPushButton;
     addPhotoBtn->setText(i18n("&Add Selected Photos"));
-    addPhotoBtn->setIcon(KIcon("list-add"));
+    addPhotoBtn->setIcon(QIcon::fromTheme("list-add"));
     addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addPhotoBtn->setEnabled(false);
 
@@ -236,7 +236,7 @@ GalleryWindow::GalleryWindow(QWidget* const parent, Gallery* const pGallery)
     // User1 Button : to conf gallery settings
     KPushButton* const confButton = button( User1 );
     confButton->setText( i18n("Settings") );
-    confButton->setIcon( KIcon("configure") );
+    confButton->setIcon( QIcon::fromTheme("configure") );
 
     connect(confButton, SIGNAL(clicked()),
             this, SLOT(slotSettings()) );
@@ -437,7 +437,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         {
             QTreeWidgetItem* const item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.title) );
-            item->setIcon(0, KIcon("inode-directory") );
+            item->setIcon(0, QIcon::fromTheme("inode-directory") );
             item->setText(1, album.name );
             d->firstAlbumName = album.name;
             item->setText(2, i18n("Album") );
@@ -461,7 +461,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
                 {
                     QTreeWidgetItem* const item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.title) );
-                    item->setIcon(0, KIcon("inode-directory") );
+                    item->setIcon(0, QIcon::fromTheme("inode-directory") );
                     item->setText(1, album.name );
                     item->setText(2, i18n("Album") );
                     item->setText(3, QString::number(album.ref_num) );
@@ -493,7 +493,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
         QString plain               = (*iterator).caption;
         QTreeWidgetItem* const item = new QTreeWidgetItem(parentItem);
         item->setText(0, cleanName(plain) );
-        item->setIcon(0, KIcon("image-x-generic") );
+        item->setIcon(0, QIcon::fromTheme("image-x-generic") );
         item->setText(1, (*iterator).name);
         item->setText(2, i18n("Image") );
     }

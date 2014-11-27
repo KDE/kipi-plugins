@@ -92,7 +92,7 @@ void Plugin_KioExportImport::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to remote computer..."));
-    m_actionExport->setIcon(KIcon("folder-remote"));
+    m_actionExport->setIcon(QIcon::fromTheme("folder-remote"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K));
     m_actionExport->setEnabled(false);
 
@@ -104,7 +104,7 @@ void Plugin_KioExportImport::setupActions()
     // import
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from remote computer..."));
-    m_actionImport->setIcon(KIcon("folder-remote"));
+    m_actionImport->setIcon(QIcon::fromTheme("folder-remote"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I));
     m_actionImport->setEnabled(false);
 

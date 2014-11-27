@@ -106,7 +106,7 @@ void Plugin_JAlbumExport::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export via &jAlbum"));
-    d->actionExport->setIcon(KIcon("kipi-jalbum"));
+    d->actionExport->setIcon(QIcon::fromTheme("kipi-jalbum"));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));

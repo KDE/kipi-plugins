@@ -103,7 +103,7 @@ public:
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     : KPToolDialog(0), d(new Private)
 {
-    setWindowIcon(KIcon("kipi-dngconverter"));
+    setWindowIcon(QIcon::fromTheme("kipi-dngconverter"));
     setButtons(Help | Default | Apply | Close);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
@@ -272,7 +272,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->setValue(0);
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("DNG Converter"), true, true);
-        d->progressBar->progressThumbnailChanged(KIcon("kipi-dngconverter").pixmap(22));
+        d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi-dngconverter").pixmap(22));
 
         processAll();
     }
@@ -395,13 +395,13 @@ void BatchDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply,    KIcon("process-stop"));
+        setButtonIcon(Apply,    QIcon::fromTheme("process-stop"));
         setButtonText(Apply,    i18n("&Abort"));
         setButtonToolTip(Apply, i18n("Abort the conversion of Raw files."));
     }
     else
     {
-        setButtonIcon(Apply,    KIcon("system-run"));
+        setButtonIcon(Apply,    QIcon::fromTheme("system-run"));
         setButtonText(Apply,    i18n("Con&vert"));
         setButtonToolTip(Apply, i18n("Start converting the Raw images using the current settings."));
     }

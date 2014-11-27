@@ -49,7 +49,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -142,7 +142,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     confButton = new QPushButton;
     confButton->setText(i18n("Change Account"));
-    confButton->setIcon(KIcon("system-switch-user"));
+    confButton->setIcon(QIcon::fromTheme("system-switch-user"));
     confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QGroupBox* const optionsBox = new QGroupBox(i18n("Options"));
@@ -260,7 +260,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
     // User1 Button : to upload selected photos
     KPushButton* const addPhotoBtn = button( User1 );
     addPhotoBtn->setText( i18n("Start Upload") );
-    addPhotoBtn->setIcon( KIcon("network-workgroup") );
+    addPhotoBtn->setIcon( QIcon::fromTheme("network-workgroup") );
     addPhotoBtn->setEnabled(false);
 
     connect(addPhotoBtn, SIGNAL(clicked()),
@@ -461,7 +461,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.name) );
-            item->setIcon(0, KIcon("inode-directory") );
+            item->setIcon(0, QIcon::fromTheme("inode-directory") );
             item->setData(1, Qt::UserRole, QVariant(album.ref_num) );
             item->setText(2, i18n("Album") );
 
@@ -485,7 +485,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.name) );
-                    item->setIcon(0, KIcon("inode-directory") );
+                    item->setIcon(0, QIcon::fromTheme("inode-directory") );
                     item->setData(1, Qt::UserRole, album.ref_num );
                     item->setText(2, i18n("Album") );
 

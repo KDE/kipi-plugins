@@ -88,7 +88,7 @@ PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget*
     m_widget      = new PicasawebWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-picasa"));
+    setWindowIcon(QIcon::fromTheme("kipi-picasa"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -355,7 +355,7 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
         else
             albumIcon = "folder";
 
-        m_widget->m_albumsCoB->addItem(KIcon(albumIcon), albumsList.at(i).title, albumsList.at(i).id);
+        m_widget->m_albumsCoB->addItem(QIcon::fromTheme(albumIcon), albumsList.at(i).title, albumsList.at(i).id);
 
         if (m_currentAlbumID == albumsList.at(i).id)
             m_widget->m_albumsCoB->setCurrentIndex(i);
@@ -471,7 +471,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Picasa Export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     m_renamingOpt = 0;
 

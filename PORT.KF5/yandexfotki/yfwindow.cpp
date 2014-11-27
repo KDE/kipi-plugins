@@ -243,9 +243,9 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     QLabel* const accessLabel = new QLabel(i18n("Privacy settings:"), optionsBox);
     m_accessCombo             = new KComboBox(false, optionsBox);
-    m_accessCombo->addItem(KIcon("folder"), i18n("Public access"),         YandexFotkiPhoto::ACCESS_PUBLIC);
-    m_accessCombo->addItem(KIcon("folder-red"), i18n("Friends access"),    YandexFotkiPhoto::ACCESS_FRIENDS);
-    m_accessCombo->addItem(KIcon("folder-locked"), i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
+    m_accessCombo->addItem(QIcon::fromTheme("folder"), i18n("Public access"),         YandexFotkiPhoto::ACCESS_PUBLIC);
+    m_accessCombo->addItem(QIcon::fromTheme("folder-red"), i18n("Friends access"),    YandexFotkiPhoto::ACCESS_FRIENDS);
+    m_accessCombo->addItem(QIcon::fromTheme("folder-locked"), i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
 
     m_hideOriginalCheck = new QCheckBox(i18n("Hide original photo"), optionsBox);
     m_disableCommentsCheck = new QCheckBox(i18n("Disable comments"), optionsBox);
@@ -303,7 +303,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(KIcon("yandexfotki"));
+    setWindowIcon(QIcon::fromTheme("yandexfotki"));
     setButtons(KDialog::Help|KDialog::User1|KDialog::Close);
     setDefaultButton(Close);
     setModal(false);
@@ -984,7 +984,7 @@ void YandexFotkiWindow::slotListAlbumsDone(const QList<YandexFotkiAlbum>& albums
             albumIcon = "folder-image";
         }
 
-        m_albumsCombo->addItem(KIcon(albumIcon), album.toString());
+        m_albumsCombo->addItem(QIcon::fromTheme(albumIcon), album.toString());
     }
 
     m_albumsCombo->setEnabled(true);

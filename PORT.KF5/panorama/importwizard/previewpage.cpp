@@ -236,7 +236,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("kipi-panorama").pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), QIcon::fromTheme("kipi-panorama").pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();

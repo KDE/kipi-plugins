@@ -81,7 +81,7 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     m_widget      = new DropboxWidget(this);
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-dropbox"));
+    setWindowIcon(QIcon::fromTheme("kipi-dropbox"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
@@ -245,7 +245,7 @@ void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
     
     for(int i=0;i<list.size();i++)
     {
-        m_widget->m_albumsCoB->addItem(KIcon("system-users"),list.value(i).second,
+        m_widget->m_albumsCoB->addItem(QIcon::fromTheme("system-users"),list.value(i).second,
                                        list.value(i).first);
 
         if (m_currentAlbumName == list.value(i).first)
@@ -327,7 +327,7 @@ void DBWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Dropbox export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
     uploadNextPhoto();
 }

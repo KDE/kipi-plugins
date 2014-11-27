@@ -85,15 +85,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     if (serviceName == QString("23"))
     {
-        setWindowIcon(KIcon("kipi-hq"));
+        setWindowIcon(QIcon::fromTheme("kipi-hq"));
     }
     else if (serviceName == QString("Zooomr"))
     {
-        setWindowIcon(KIcon("kipi-zooomr"));
+        setWindowIcon(QIcon::fromTheme("kipi-zooomr"));
     }
     else
     {
-        setWindowIcon(KIcon("kipi-flickr"));
+        setWindowIcon(QIcon::fromTheme("kipi-flickr"));
     }
 
     m_tmp                       = tmpFolder;
@@ -123,7 +123,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_userNameDisplayLabel      = m_widget->m_userNameDisplayLabel;
     m_imglst                    = m_widget->m_imglst;
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), KIcon("network-workgroup")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), QIcon::fromTheme("network-workgroup")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
@@ -762,7 +762,7 @@ void FlickrWindow::slotAddPhotoNext()
     {
         m_widget->progressBar()->show();
         m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
     }
 }
 

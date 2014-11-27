@@ -104,8 +104,8 @@ public:
         actionMoveImagesToThisResult                  = 0;
         actionRemovedSelectedSearchResultsFromList    = 0;
         searchInProgress                              = false;
-        actionToggleAllResultsVisibilityIconUnchecked = KIcon(SmallIcon("layer-visible-off"));
-        actionToggleAllResultsVisibilityIconChecked   = KIcon(SmallIcon("layer-visible-on"));
+        actionToggleAllResultsVisibilityIconUnchecked = QIcon::fromTheme(SmallIcon("layer-visible-off"));
+        actionToggleAllResultsVisibilityIconChecked   = QIcon::fromTheme(SmallIcon("layer-visible-on"));
     }
 
     // Map

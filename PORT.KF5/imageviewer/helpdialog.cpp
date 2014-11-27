@@ -40,7 +40,7 @@ namespace KIPIViewerPlugin
 HelpDialog::HelpDialog()
     : KPToolDialog(0)
 {
-    setWindowIcon(KIcon("kipi-ogl"));
+    setWindowIcon(QIcon::fromTheme("kipi-ogl"));
     setButtons(Help | Ok);
     setDefaultButton(Ok);
     setCaption(i18n("Usage of OpenGL Image Viewer"));

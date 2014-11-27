@@ -96,7 +96,7 @@ void Plugin_PiwigoExport::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Export to &Piwigo..."));
-    m_action->setIcon(KIcon("kipi-piwigo"));
+    m_action->setIcon(QIcon::fromTheme("kipi-piwigo"));
     m_action->setEnabled(true);
 
     connect(m_action, SIGNAL(triggered(bool)),

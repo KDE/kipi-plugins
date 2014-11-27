@@ -384,11 +384,11 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     gridLayout->addWidget(d->sizeUnitsWidget,1,2);
 
     // Orientation buttons
-    d->horizontalButton = new KPushButton(KIcon(":horizontal_orientation.png"),"",d->sizeWidget);
+    d->horizontalButton = new KPushButton(QIcon::fromTheme(":horizontal_orientation.png"),"",d->sizeWidget);
     d->horizontalButton->setCheckable(true);
     d->horizontalButton->setFlat(true);
     d->horizontalButton->setIconSize(QSize(24,24));
-    d->verticalButton = new KPushButton(KIcon(":vertical_orientation.png"),"",d->sizeWidget);
+    d->verticalButton = new KPushButton(QIcon::fromTheme(":vertical_orientation.png"),"",d->sizeWidget);
     d->verticalButton->setCheckable(true);
     d->verticalButton->setFlat(true);
     d->verticalButton->setIconSize(QSize(24,24));

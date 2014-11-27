@@ -46,7 +46,7 @@
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <khelpmenu.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -103,7 +103,7 @@ JAlbumWindow::Private::Private(JAlbumWindow* const parent)
 
     newAlbumBtn = new QPushButton;
     newAlbumBtn->setText(i18n("&Export"));
-    newAlbumBtn->setIcon(KIcon("folder-new"));
+    newAlbumBtn->setIcon(QIcon::fromTheme("folder-new"));
     newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     newAlbumBtn->setEnabled(true);
 
@@ -141,7 +141,7 @@ JAlbumWindow::JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum)
     // User1 Button : to conf jalbum settings
     KPushButton* const confButton = button( User1 );
     confButton->setText( i18n("Settings") );
-    confButton->setIcon( KIcon("configure") );
+    confButton->setIcon( QIcon::fromTheme("configure") );
 
     connect(confButton, SIGNAL(clicked()),
             this, SLOT(slotSettings()) );

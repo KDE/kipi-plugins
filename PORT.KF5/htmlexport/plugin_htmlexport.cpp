@@ -102,7 +102,7 @@ void Plugin_HTMLExport::setupActions()
 
     d->mAction = new QAction(this);
     d->mAction->setText(i18n("Export to &HTML..."));
-    d->mAction->setIcon(KIcon("text-html"));
+    d->mAction->setIcon(QIcon::fromTheme("text-html"));
     d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
     d->mAction->setEnabled(false);
 

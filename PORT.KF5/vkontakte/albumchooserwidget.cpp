@@ -67,12 +67,12 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent, VkAPI* const vkapi
     m_editAlbumButton    = new QToolButton(this);
     m_editAlbumButton->setToolTip(i18n("Edit selected album"));
     m_editAlbumButton->setEnabled(false);
-    m_editAlbumButton->setIcon(KIcon("document-edit"));
+    m_editAlbumButton->setIcon(QIcon::fromTheme("document-edit"));
 
     m_deleteAlbumButton  = new QToolButton(this);
     m_deleteAlbumButton->setToolTip(i18n("Delete selected album"));
     m_deleteAlbumButton->setEnabled(false);
-    m_deleteAlbumButton->setIcon(KIcon("edit-delete"));
+    m_deleteAlbumButton->setIcon(QIcon::fromTheme("edit-delete"));
 
     QWidget* const currentAlbumWidget           = new QWidget(this);
     QHBoxLayout* const currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
@@ -310,7 +310,7 @@ void AlbumChooserWidget::slotAlbumsReloadDone(KJob* kjob)
     m_albums = job->list();
 
     foreach (const Vkontakte::AlbumInfoPtr& album, m_albums)
-        m_albumsCombo->addItem(KIcon("folder-image"), album->title());
+        m_albumsCombo->addItem(QIcon::fromTheme("folder-image"), album->title());
 
     if (m_albumToSelect != -1)
     {

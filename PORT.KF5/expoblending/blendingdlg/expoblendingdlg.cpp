@@ -143,15 +143,15 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     setButtonText(   User1, i18n("&Save"));
     setButtonToolTip(User1, i18n("Process and save selected processed items."));
-    setButtonIcon(   User1, KIcon("document-save"));
+    setButtonIcon(   User1, QIcon::fromTheme("document-save"));
 
     setButtonText(   User2, i18n("&Preview"));
     setButtonToolTip(User2, i18n("Process a preview of bracketed images stack with current settings."));
-    setButtonIcon(   User2, KIcon("system-run"));
+    setButtonIcon(   User2, QIcon::fromTheme("system-run"));
 
     setButtonText(   User3, i18n("&Abort"));
     setButtonToolTip(User3, i18n("Abort current process"));
-    setButtonIcon(   User3, KIcon("dialog-cancel"));
+    setButtonIcon(   User3, QIcon::fromTheme("dialog-cancel"));
 
     setButtonToolTip(Close, i18n("Exit this tool"));
     setModal(false);

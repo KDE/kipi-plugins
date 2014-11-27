@@ -96,7 +96,7 @@ void Plugin_viewer::setupActions()
 
     d->actionViewer = new QAction(this);
     d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
-    d->actionViewer->setIcon(KIcon("kipi-ogl"));
+    d->actionViewer->setIcon(QIcon::fromTheme("kipi-ogl"));
     d->actionViewer->setEnabled(false);
 
     connect(d->actionViewer, SIGNAL(triggered(bool)),

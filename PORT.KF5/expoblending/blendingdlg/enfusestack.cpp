@@ -209,14 +209,14 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
     EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
     if (item)
     {
-        QAction * rmItem = new QAction(KIcon("dialog-close"), i18n("Remove item"), this);
+        QAction * rmItem = new QAction(QIcon::fromTheme("dialog-close"), i18n("Remove item"), this);
         connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
-    QAction * rmAll = new QAction(KIcon("edit-delete-shred"), i18n("Clear all"), this);
+    QAction * rmAll = new QAction(QIcon::fromTheme("edit-delete-shred"), i18n("Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 

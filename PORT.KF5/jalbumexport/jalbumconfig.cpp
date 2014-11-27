@@ -108,7 +108,7 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
     d->albumsInput->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
     d->albumsSearchButton = new KPushButton(i18n("Select Albums Location"), this);
-    d->albumsSearchButton->setIcon(KIcon("folder-pictures"));
+    d->albumsSearchButton->setIcon(QIcon::fromTheme("folder-pictures"));
     d->albumsSearchButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     centerLayout->addWidget(hbox);
@@ -132,7 +132,7 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
     d->jarInput->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
     d->jarSearchButton = new KPushButton(i18n("Select jAlbum jar File Location"), this);
-    d->jarSearchButton->setIcon(KIcon("folder-pictures"));
+    d->jarSearchButton->setIcon(QIcon::fromTheme("folder-pictures"));
     d->jarSearchButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     centerLayout->addWidget(hbox2);

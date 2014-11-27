@@ -85,7 +85,7 @@ void Plugin_iPodExport::setupActions()
 
     m_actionImageUpload = new QAction(this);
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
-    m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
+    m_actionImageUpload->setIcon(QIcon::fromTheme("multimedia-player-apple-ipod"));
 
     connect(m_actionImageUpload, SIGNAL(triggered(bool)),
             this, SLOT(slotImageUpload()));

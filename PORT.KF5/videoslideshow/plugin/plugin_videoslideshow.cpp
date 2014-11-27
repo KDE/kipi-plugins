@@ -112,7 +112,7 @@ void Plugin_VideoSlideShow::setupActions()
 
     d->exportAction = new QAction(this);
     d->exportAction->setText(i18n("Export to Video Slide Show..."));
-    d->exportAction->setIcon(KIcon("media-record"));
+    d->exportAction->setIcon(QIcon::fromTheme("media-record"));
 
     connect(d->exportAction, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));

@@ -80,7 +80,7 @@ void Plugin_Calendar::setupActions()
 
     m_actionCalendar = new QAction(this);
     m_actionCalendar->setText(i18n("Create Calendar..."));
-    m_actionCalendar->setIcon(KIcon("view-pim-calendar"));
+    m_actionCalendar->setIcon(QIcon::fromTheme("view-pim-calendar"));
     m_actionCalendar->setEnabled(false);
 
     connect(m_actionCalendar, SIGNAL(triggered(bool)),

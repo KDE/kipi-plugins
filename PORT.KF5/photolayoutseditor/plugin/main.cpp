@@ -34,7 +34,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
-#include <kicon.h>
+#include <QIcon>
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     KCmdLineArgs::addCmdLineOptions(options);
 
     KApplication app;
-    aboutData.setProgramLogo(KIcon("photolayoutseditor"));
+    aboutData.setProgramLogo(QIcon::fromTheme("photolayoutseditor"));
 
     PhotoLayoutsEditor* w = PhotoLayoutsEditor::instance(0);
     w->setAttribute(Qt::WA_DeleteOnClose, true);
