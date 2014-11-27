@@ -33,14 +33,14 @@ set(kipiplugin_dlnaexport_PART_SRCS
     minidlnamediaserver.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_dlnaexport ${kipiplugin_dlnaexport_PART_SRCS})
+add_library(kipiplugin_dlnaexport MODULE ${kipiplugin_dlnaexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_dlnaexport
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      
+                      KF5::KIOCore
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
                       kipiplugins

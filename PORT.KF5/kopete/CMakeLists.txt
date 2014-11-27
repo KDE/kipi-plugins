@@ -9,13 +9,13 @@ set(kipiplugin_kopete_PART_SRCS
     plugin_kopete.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_kopete ${kipiplugin_kopete_PART_SRCS} )
+add_library(kipiplugin_kopete MODULE ${kipiplugin_kopete_PART_SRCS} )
 
 target_link_libraries(kipiplugin_kopete
                       kipiplugins
-                      ${KIPI_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::Kipi
+                      KF5::KIOCore
+                      
                      )
 
 configure_file(kipiplugin_kopete.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop)

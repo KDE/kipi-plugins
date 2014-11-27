@@ -15,14 +15,14 @@ set(kipiplugin_imageshackexport_PART_SRCS
     mpform.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_imageshackexport ${kipiplugin_imageshackexport_PART_SRCS})
+add_library(kipiplugin_imageshackexport MODULE ${kipiplugin_imageshackexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_imageshackexport
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KIOCore
+                      
                       kipiplugins
                      )
 

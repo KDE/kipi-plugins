@@ -15,14 +15,14 @@ set(kipiplugin_smug_PART_SRCS
     mpform.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_smug ${kipiplugin_smug_PART_SRCS})
+add_library(kipiplugin_smug MODULE ${kipiplugin_smug_PART_SRCS})
 
 target_link_libraries(kipiplugin_smug
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
+                      KF5::KIOCore
+                      
                       kipiplugins
                      )
 

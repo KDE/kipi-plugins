@@ -17,14 +17,14 @@ set(kipiplugin_dropbox_PART_SRCS
     dbtalker.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_dropbox ${kipiplugin_dropbox_PART_SRCS})
+add_library(kipiplugin_dropbox MODULE ${kipiplugin_dropbox_PART_SRCS})
 
 target_link_libraries(kipiplugin_dropbox
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      
+                      KF5::KIOCore
                       ${QJSON_LIBRARIES}
                       kipiplugins
                      )

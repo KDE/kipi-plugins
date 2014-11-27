@@ -14,12 +14,12 @@ set(${PLUGIN_NAME}_PART_SRCS
     KioImportWidget.cpp
    )
 
-KDE4_ADD_PLUGIN(${PLUGIN_NAME} ${${PLUGIN_NAME}_PART_SRCS})
+add_library(${PLUGIN_NAME} MODULE ${${PLUGIN_NAME}_PART_SRCS})
 
 target_link_libraries(${PLUGIN_NAME}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KDE4_KIO_LIBRARY}
+                      
+                      KF5::Kipi
+                      KF5::KIOCore
                       kipiplugins
                      )
 

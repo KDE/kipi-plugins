@@ -20,19 +20,19 @@ set(kipiplugin_flashexport_PART_SRCS plugin_flashexport.cpp
                                      importWizard/progresspage.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_flashexport ${kipiplugin_flashexport_PART_SRCS})
+add_library(kipiplugin_flashexport MODULE ${kipiplugin_flashexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_flashexport
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_KIO_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::KIOCore
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       kipiplugins
                      )
 
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
+ecm_install_icons(${ICON_INSTALL_DIR})
 
 configure_file(kipiplugin_flashexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)
 

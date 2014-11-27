@@ -14,16 +14,16 @@ set(kipiplugin_imageviewer_PART_SRCS
     helpdialog.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_imageviewer ${kipiplugin_imageviewer_PART_SRCS})
+add_library(kipiplugin_imageviewer MODULE ${kipiplugin_imageviewer_PART_SRCS})
 
 target_link_libraries(kipiplugin_imageviewer
-                      ${KDE4_KPARTS_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
+                      KF5::Parts
+                      
                       ${QT_QTOPENGL_LIBRARY}
                       ${OPENGL_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
 
                       # For Linux Only.
                       ${X11_LIBRARIES}

@@ -18,17 +18,17 @@ set(kipiplugin_flickrexport_PART_SRCS
     mpform.cpp
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)
+ki18n_wrap_ui(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)
 
-KDE4_ADD_PLUGIN(kipiplugin_flickrexport ${kipiplugin_flickrexport_PART_SRCS})
+add_library(kipiplugin_flickrexport MODULE ${kipiplugin_flickrexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_flickrexport
                       kipiplugins
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
+                      KF5::KIOCore
+                      
                      )
 
 configure_file(kipiplugin_flickrexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop)

@@ -26,16 +26,16 @@ set(kipiplugin_videoslideshow_PART_SRCS plugin/plugin_videoslideshow.cpp
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QTGSTREAMER_FLAGS}")
 
-KDE4_ADD_PLUGIN(kipiplugin_videoslideshow ${kipiplugin_videoslideshow_PART_SRCS})
+add_library(kipiplugin_videoslideshow MODULE ${kipiplugin_videoslideshow_PART_SRCS})
 
 target_link_libraries(kipiplugin_videoslideshow
                       magickiface
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::ThreadWeaver
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       ${ImageMagick_LIBRARIES}
                       ${QTGSTREAMER_LIBRARIES}
                       ${QTGSTREAMER_UTILS_LIBRARIES}

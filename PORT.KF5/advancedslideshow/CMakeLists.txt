@@ -30,7 +30,7 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            plugin/plugin_advancedslideshow.cpp
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
+ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
                   ui/maindialog.ui
                   ui/captiondialog.ui
                   ui/advanceddialog.ui
@@ -39,16 +39,16 @@ KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
                   ui/playbackwidget.ui
                  )
 
-KDE4_ADD_PLUGIN(kipiplugin_advancedslideshow ${kipiplugin_advancedslideshow_PART_SRCS})
+add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_PART_SRCS})
 
 target_link_libraries(kipiplugin_advancedslideshow
-                      ${KDE4_KPARTS_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
+                      KF5::Parts
+                      
                       ${QT_QTOPENGL_LIBRARY}
                       ${OPENGL_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       ${KDE4_PHONON_LIBRARY}
 
                       # For Linux only.

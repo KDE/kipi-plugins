@@ -20,18 +20,18 @@ set(kipiplugin_debianscreenshots_PART_SRCS
 #    dsjob.cpp
    )
 
-QT4_ADD_RESOURCES(kipiplugin_debianscreenshots_QRC_SRCS plugin_debianscreenshots.qrc)
+qt5_add_resources(kipiplugin_debianscreenshots_QRC_SRCS plugin_debianscreenshots.qrc)
 
-KDE4_ADD_PLUGIN(kipiplugin_debianscreenshots ${kipiplugin_debianscreenshots_PART_SRCS} ${kipiplugin_debianscreenshots_QRC_SRCS} )
+add_library(kipiplugin_debianscreenshots MODULE ${kipiplugin_debianscreenshots_PART_SRCS} ${kipiplugin_debianscreenshots_QRC_SRCS} )
 
 target_link_libraries(kipiplugin_debianscreenshots
                       kipiplugins
-                      ${KIPI_LIBRARIES}
+                      KF5::Kipi
                       ${QJSON_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::KExiv2
+                      KF5::KDcraw
+                      KF5::KIOCore
+                      
                      )
 
 configure_file(kipiplugin_debianscreenshots.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop)

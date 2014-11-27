@@ -8,7 +8,7 @@ subdirs(icons)
 
 include_directories(${MEDIAWIKI_INCLUDE_DIR})
 
-KDE4_ADD_UI_FILES(ui_src wmwindow.ui)
+ki18n_wrap_ui(ui_src wmwindow.ui)
 
 set(kipiplugin_wikimedia_PART_SRCS
     plugin_wikimedia.cpp
@@ -18,17 +18,17 @@ set(kipiplugin_wikimedia_PART_SRCS
     wmwidget.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_wikimedia ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
+add_library(kipiplugin_wikimedia MODULE ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
 
 target_link_libraries(kipiplugin_wikimedia
                       kipiplugins
                       mediawiki
                       ${MEDIAWIKI_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
+                      KF5::KIOCore
+                      
                      )
 
 configure_file(kipiplugin_wikimedia.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)

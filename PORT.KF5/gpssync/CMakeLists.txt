@@ -61,14 +61,14 @@ if(NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
        )
 endif()
 
-KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
+add_library(kipiplugin_gpssync MODULE ${kipiplugin_gpssync_PART_SRCS})
 
 # TODO: verify that the libkgeomap library is installed!
 target_link_libraries(kipiplugin_gpssync
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_KHTML_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
+                      KF5::Parts
+                      KF5::KHtml
+                      KF5::Kipi
+                      KF5::KExiv2
                       ${KGEOMAP_LIBRARIES}
                       kipiplugins
                      )
@@ -76,7 +76,7 @@ target_link_libraries(kipiplugin_gpssync
 if(KDE4_BUILD_TESTS)
     # needed by modeltest
     target_link_libraries(kipiplugin_gpssync
-                          ${QT_QTTEST_LIBRARY}
+                          Qt5::Test
                           kipiplugins
                          )
 endif()
@@ -93,5 +93,5 @@ install(FILES   data/bookmarks-marker.png
         DESTINATION ${DATA_INSTALL_DIR}/gpssync/)
 
 if(KDE4_BUILD_TESTS)
-    MACRO_OPTIONAL_ADD_SUBDIRECTORY(tests)
+    ecm_optional_add_subdirectory(tests)
 endif()

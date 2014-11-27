@@ -6,9 +6,9 @@
 
 set(kipiplugin_wallpaper_PART_SRCS plugin_wallpaper.cpp)
 
-KDE4_ADD_PLUGIN(kipiplugin_wallpaper ${kipiplugin_wallpaper_PART_SRCS})
+add_library(kipiplugin_wallpaper MODULE ${kipiplugin_wallpaper_PART_SRCS})
 
-target_link_libraries(kipiplugin_wallpaper ${KDE4_KPARTS_LIBS} ${KIPI_LIBRARIES})
+target_link_libraries(kipiplugin_wallpaper KF5::Parts KF5::Kipi)
 
 configure_file(kipiplugin_wallpaper.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wallpaper.desktop)
 

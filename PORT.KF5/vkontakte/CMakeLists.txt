@@ -17,15 +17,15 @@ set(kipiplugin_vkontakte_PART_SRCS
     vkapi.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_vkontakte ${kipiplugin_vkontakte_PART_SRCS})
+add_library(kipiplugin_vkontakte MODULE ${kipiplugin_vkontakte_PART_SRCS})
 
 target_link_libraries(kipiplugin_vkontakte
                       kipiplugins
-                      ${KIPI_LIBRARIES}
-#                      ${KDCRAW_LIBRARIES}
-#                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      KF5::Kipi
+#                      KF5::KDcraw
+#                      KF5::KExiv2
+                      
+                      KF5::KIOCore
                       ${LIBKVKONTAKTE_LIBRARIES}
                      )
 

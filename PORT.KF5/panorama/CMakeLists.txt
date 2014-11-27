@@ -65,15 +65,15 @@ foreach(_currentfile ${panorama_common_SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(libpanorama STATIC ${panorama_common_SRCS})
+add_library(libpanorama STATIC ${panorama_common_SRCS})
 
 target_link_libraries(libpanorama
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::ThreadWeaver
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       kipiplugins
                      )
 
@@ -82,7 +82,7 @@ target_link_libraries(libpanorama
 
 set(kipiplugin_panorama_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_panorama.cpp)
 
-KDE4_ADD_PLUGIN(kipiplugin_panorama ${kipiplugin_panorama_PART_SRCS})
+add_library(kipiplugin_panorama MODULE ${kipiplugin_panorama_PART_SRCS})
 
 target_link_libraries(kipiplugin_panorama libpanorama)
 
@@ -98,7 +98,7 @@ install(FILES   plugin/kipiplugin_panoramaui.rc                                D
 if(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
     set(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
 
-    KDE4_ADD_EXECUTABLE(pto_parser_test ${pto_parser_test_SRCS})
+    add_executable(pto_parser_test ${pto_parser_test_SRCS})
 
     target_link_libraries(pto_parser_test libpanorama)
 endif()
@@ -110,7 +110,7 @@ set(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
 
 KDE4_ADD_APP_ICON(panorama_SRCS "./icons/*kipi-panorama.png")
 
-KDE4_ADD_EXECUTABLE(panoramagui ${panorama_SRCS})
+add_executable(panoramagui ${panorama_SRCS})
 
 target_link_libraries(panoramagui libpanorama)
 

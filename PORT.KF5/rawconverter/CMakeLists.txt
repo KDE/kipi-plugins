@@ -23,15 +23,15 @@ set(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
                                       dialogs/myimagelist.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})
+add_library(kipiplugin_rawconverter MODULE ${kipiplugin_rawconverter_PART_SRCS})
 
 target_link_libraries(kipiplugin_rawconverter
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::ThreadWeaver
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       kipiplugins
                      )
 

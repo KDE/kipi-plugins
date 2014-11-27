@@ -119,7 +119,7 @@ set(PhotoLayoutsEditor_RCS
     resources/icons.qrc
    )
 
-QT4_ADD_RESOURCES(PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS})
+qt5_add_resources(PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS})
 
 set(INCLUDE_DIRS
     borders
@@ -153,12 +153,12 @@ set(INCLUDE_DIRS
    )
 
 include_directories(${QT_INCLUDE}
-                    ${KDE4_INCLUDES}
+                    
                     ${INCLUDE_DIRS}
                     ${KIPI_INCLUDE_DIR}
                    )
 
-KDE4_ADD_KCFG_FILES( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc )
+kconfig_add_kcfg_files( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (bug: #269903)
 foreach(_currentfile ${PhotoLayoutsEditor_SRCS})
@@ -173,15 +173,15 @@ if(NOT MSVC)
     #    set_target_properties( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
 endif()
 
-KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
+add_library( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
 
 target_link_libraries(libphotolayoutseditor 
                       PropertyBrowser
                       ${QT_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KPARTS_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      
+                      KF5::Parts
+                      KF5::Kipi
+                      KF5::KDcraw
                       kipiplugins
                      )
 
@@ -192,7 +192,7 @@ install(FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR}
 
 set(kipiplugin_PhotoLayoutsEditor_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_photolayoutseditor.cpp)
 
-KDE4_ADD_PLUGIN(kipiplugin_photolayoutseditor ${kipiplugin_PhotoLayoutsEditor_PART_SRCS})
+add_library(kipiplugin_photolayoutseditor MODULE ${kipiplugin_PhotoLayoutsEditor_PART_SRCS})
 
 target_link_libraries(kipiplugin_photolayoutseditor libphotolayoutseditor)
 
@@ -209,7 +209,7 @@ set(PhotoLayoutsEditor_SRCS plugin/main.cpp)
 
 KDE4_ADD_APP_ICON(PhotoLayoutsEditor_SRCS "./resources/app/*photolayoutseditor.png")
 
-KDE4_ADD_EXECUTABLE(photolayoutseditor ${PhotoLayoutsEditor_SRCS})
+add_executable(photolayoutseditor ${PhotoLayoutsEditor_SRCS})
 
 target_link_libraries(photolayoutseditor libphotolayoutseditor)
 

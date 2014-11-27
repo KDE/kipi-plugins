@@ -29,12 +29,12 @@ if(QTKOAUTH_FOUND)
        )
 endif()
 
-KDE4_ADD_PLUGIN(kipiplugin_imgurexport ${kipiplugin_imgurexport_PART_SRCS})
+add_library(kipiplugin_imgurexport MODULE ${kipiplugin_imgurexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_imgurexport
-                      ${KIPI_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KEXIV2_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KIOCore
+                      KF5::KExiv2
                       ${QJSON_LIBRARIES}
                       kipiplugins
                      )

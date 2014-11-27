@@ -41,14 +41,14 @@ foreach(_currentfile ${expoblending_common_SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(libexpoblending STATIC ${expoblending_common_SRCS})
+add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 
 target_link_libraries(libexpoblending
-                      ${KDE4_KPARTS_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       kipiplugins
                      )
 
@@ -57,7 +57,7 @@ target_link_libraries(libexpoblending
 
 set(kipiplugin_expoblending_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp)
 
-KDE4_ADD_PLUGIN(kipiplugin_expoblending ${kipiplugin_expoblending_PART_SRCS})
+add_library(kipiplugin_expoblending MODULE ${kipiplugin_expoblending_PART_SRCS})
 
 target_link_libraries(kipiplugin_expoblending libexpoblending)
 
@@ -74,7 +74,7 @@ set(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
 
 KDE4_ADD_APP_ICON(expoblending_SRCS "./icons/*kipi-expoblending.png")
 
-KDE4_ADD_EXECUTABLE(expoblending ${expoblending_SRCS})
+add_executable(expoblending ${expoblending_SRCS})
 
 target_link_libraries(expoblending libexpoblending)
 

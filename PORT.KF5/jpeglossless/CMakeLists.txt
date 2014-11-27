@@ -27,19 +27,19 @@ set(kipiplugin_jpeglossless_PART_SRCS plugin/plugin_jpeglossless.cpp
                                       libjpeg/transupp.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
+add_library(kipiplugin_jpeglossless MODULE ${kipiplugin_jpeglossless_PART_SRCS})
 
 if(WIN32)
     set_target_properties( kipiplugin_jpeglossless PROPERTIES COMPILE_FLAGS -DJPEG_STATIC )
 endif()
 
 target_link_libraries(kipiplugin_jpeglossless
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::ThreadWeaver
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       ${JPEG_LIBRARY}
                       kipiplugins
                      )

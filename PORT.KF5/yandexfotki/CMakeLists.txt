@@ -22,15 +22,15 @@ set(kipiplugin_yandexfotki_PART_SRCS
     yandexauth.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_yandexfotki ${kipiplugin_yandexfotki_PART_SRCS})
+add_library(kipiplugin_yandexfotki MODULE ${kipiplugin_yandexfotki_PART_SRCS})
 
 target_link_libraries(kipiplugin_yandexfotki
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
                       ${QCA2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      
+                      KF5::KIOCore
                       kipiplugins
                      )
 

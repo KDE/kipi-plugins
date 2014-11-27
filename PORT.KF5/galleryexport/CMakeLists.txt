@@ -16,16 +16,16 @@ set(kipiplugin_galleryexport_PART_SRCS
     gallerympform.cpp
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_galleryexport_PART_SRCS galleryalbumwidget.ui)
+ki18n_wrap_ui(kipiplugin_galleryexport_PART_SRCS galleryalbumwidget.ui)
 
-KDE4_ADD_PLUGIN(kipiplugin_galleryexport ${kipiplugin_galleryexport_PART_SRCS})
+add_library(kipiplugin_galleryexport MODULE ${kipiplugin_galleryexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_galleryexport
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KIOCore
+                      
                       kipiplugins
                      )
 

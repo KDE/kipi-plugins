@@ -63,17 +63,17 @@ set(kipiplugin_removeredeyes_PART_SRCS
     ${libcvblobs_SRCS}
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
+add_library(kipiplugin_removeredeyes MODULE ${kipiplugin_removeredeyes_PART_SRCS})
 
 target_link_libraries(kipiplugin_removeredeyes
-                      ${KIPI_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_KDECORE_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::Kipi
+                      KF5::KDcraw
+                      KF5::KExiv2
+                      KF5::ThreadWeaver
+                      
+                      KF5::Parts
+                      KF5::KDELibs4Support
+                      
                       ${OpenCV_LIBRARIES}
                       kipiplugins
                      )

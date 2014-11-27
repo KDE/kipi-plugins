@@ -55,7 +55,7 @@ foreach(_currentfile ${libmd5_SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(libmd5 STATIC ${libmd5_SRCS})
+add_library(libmd5 STATIC ${libmd5_SRCS})
 
 set(libxmp_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XML_Node.cpp
@@ -87,7 +87,7 @@ foreach(_currentfile ${libxmp_SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(libxmp STATIC ${libxmp_SRCS})
+add_library(libxmp STATIC ${libxmp_SRCS})
 
 target_link_libraries(libxmp libmd5 ${EXPAT_LIBRARY})
 
@@ -218,7 +218,7 @@ foreach(_currentfile ${libdng_SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
+add_library(libdng STATIC ${libdng_SRCS})
 
 if(WIN32)
     target_link_libraries(libdng libxmp)

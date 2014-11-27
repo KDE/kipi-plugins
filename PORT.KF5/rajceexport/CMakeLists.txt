@@ -18,14 +18,14 @@ set(kipiplugin_rajceexport_PART_SRCS
     rajcewindow.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_rajceexport ${kipiplugin_rajceexport_PART_SRCS})
+add_library(kipiplugin_rajceexport MODULE ${kipiplugin_rajceexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_rajceexport
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      
+                      KF5::KIOCore
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
                       kipiplugins

@@ -14,14 +14,14 @@ set(kipiplugin_piwigoexport_PART_SRCS
     piwigotalker.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_piwigoexport ${kipiplugin_piwigoexport_PART_SRCS})
+add_library(kipiplugin_piwigoexport MODULE ${kipiplugin_piwigoexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_piwigoexport
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KIOCore
+                      
                       kipiplugins
                      )
 

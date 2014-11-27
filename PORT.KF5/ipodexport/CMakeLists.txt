@@ -14,19 +14,19 @@ set(kipiplugin_ipodexport_PART_SRCS
     imagelist.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
+add_library(kipiplugin_ipodexport MODULE ${kipiplugin_ipodexport_PART_SRCS})
 
 add_definitions(-DQT_NO_KEYWORDS)
 
 target_link_libraries(kipiplugin_ipodexport
                       ${GOBJECT_LIBRARIES}
                       ${GLIB2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
+                      
                       ${IPOD_LIBRARIES}
                       ${GDK_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KIO_LIBRARY}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KIOCore
                       kipiplugins
                      )
 

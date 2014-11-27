@@ -18,15 +18,15 @@ set(kipiplugin_facebook_PART_SRCS
     facebookjob.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_facebook ${kipiplugin_facebook_PART_SRCS})
+add_library(kipiplugin_facebook MODULE ${kipiplugin_facebook_PART_SRCS})
 
 target_link_libraries(kipiplugin_facebook
                       kipiplugins
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
+                      KF5::KIOCore
+                      
                       ${QJSON_LIBRARIES}
                      )
 

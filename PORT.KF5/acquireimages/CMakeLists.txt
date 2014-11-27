@@ -21,14 +21,14 @@ foreach(_currentfile ${acquireimages_common_SRCS})
    endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(libacquireimages STATIC ${acquireimages_common_SRCS})
+add_library(libacquireimages STATIC ${acquireimages_common_SRCS})
 
 target_link_libraries(libacquireimages
-                      ${KDE4_KPARTS_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
+                      KF5::Parts
+                      
+                      KF5::Kipi
                       ${KSANE_LIBRARY}
-                      ${KEXIV2_LIBRARIES}
+                      KF5::KExiv2
                       kipiplugins
                      )
 
@@ -37,7 +37,7 @@ target_link_libraries(libacquireimages
 
 set(kipiplugin_acquireimages_PART_SRCS plugin_acquireimages.cpp)
 
-KDE4_ADD_PLUGIN(kipiplugin_acquireimages ${kipiplugin_acquireimages_PART_SRCS})
+add_library(kipiplugin_acquireimages MODULE ${kipiplugin_acquireimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_acquireimages libacquireimages)
 
@@ -53,7 +53,7 @@ install(FILES   kipiplugin_acquireimagesui.rc                                DES
 set(scangui_SRCS scangui.cpp)
 
 KDE4_ADD_APP_ICON(scangui_SRCS "${KDE4_INSTALL_DIR}/share/icons/oxygen/*/devices/scanner.png")
-KDE4_ADD_EXECUTABLE(scangui ${scangui_SRCS})
+add_executable(scangui ${scangui_SRCS})
 
 target_link_libraries(scangui libacquireimages)
 

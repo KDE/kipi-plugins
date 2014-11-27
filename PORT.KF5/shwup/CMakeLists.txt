@@ -19,15 +19,15 @@ set(kipiplugin_shwup_PART_SRCS
     swwidget.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_shwup ${kipiplugin_shwup_PART_SRCS})
+add_library(kipiplugin_shwup MODULE ${kipiplugin_shwup_PART_SRCS})
 
 target_link_libraries(kipiplugin_shwup
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       ${QCA2_LIBRARIES}
-                      ${KDE4_KIO_LIBS}
-                      ${KDE4_KDEUI_LIBS}
+                      KF5::KIOCore
+                      
                       kipiplugins
                      )
 

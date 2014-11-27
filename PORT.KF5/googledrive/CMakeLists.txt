@@ -17,14 +17,14 @@ set(kipiplugin_googledrive_PART_SRCS
     gdtalker.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_googledrive ${kipiplugin_googledrive_PART_SRCS})
+add_library(kipiplugin_googledrive MODULE ${kipiplugin_googledrive_PART_SRCS})
 
 target_link_libraries(kipiplugin_googledrive
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      
+                      KF5::KIOCore
                       ${QJSON_LIBRARIES}
                       kipiplugins
                      )

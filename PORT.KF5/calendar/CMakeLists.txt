@@ -14,12 +14,12 @@ set(kipiplugin_calendar_PART_SRCS plugin/plugin_calendar.cpp
                                   wizard/monthwidget.cpp
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_calendar_PART_SRCS ui/caltemplate.ui
+ki18n_wrap_ui(kipiplugin_calendar_PART_SRCS ui/caltemplate.ui
                                                 ui/calevents.ui
                                                 ui/calprogress.ui
                  )
 
-KDE4_ADD_PLUGIN(kipiplugin_calendar ${kipiplugin_calendar_PART_SRCS})
+add_library(kipiplugin_calendar MODULE ${kipiplugin_calendar_PART_SRCS})
 
 include_directories(${KDEPIMLIBS_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
@@ -28,11 +28,11 @@ include_directories(${KDEPIMLIBS_INCLUDE_DIR}
                    )
 
 target_link_libraries(kipiplugin_calendar 
-                      ${KDE4_KPARTS_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${KIPI_LIBRARIES} 
-                      ${KEXIV2_LIBRARIES} 
-                      ${KDCRAW_LIBRARIES} 
+                      KF5::Parts 
+                       
+                      KF5::Kipi 
+                      KF5::KExiv2 
+                      KF5::KDcraw 
                       ${KDE4_KCALCORE_LIBS} 
                       kipiplugins
                      )

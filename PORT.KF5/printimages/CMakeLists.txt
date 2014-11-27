@@ -23,27 +23,27 @@ set(kipiplugin_printimages_PART_SRCS
     wizard/customdlg.cpp
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
+ki18n_wrap_ui(kipiplugin_printimages_PART_SRCS
                   ui/photopage.ui
                   ui/croppage.ui
                   ui/customlayout.ui
                   ui/printoptionspage.ui
                  )
 
-KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
+kconfig_add_kcfg_files(kipiplugin_printimages_PART_SRCS
                     ${CMAKE_CURRENT_SOURCE_DIR}/wizard/printimagesconfig.kcfgc
                    )
 
-KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_PART_SRCS})
+add_library(kipiplugin_printimages MODULE ${kipiplugin_printimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_printimages
-                      ${KDE4_KDECORE_LIBS}
-                      ${KDE4_KIO_LIBS}
-                      ${QT_QTCORE_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
-                      ${KIPI_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
+                      KF5::KDELibs4Support
+                      KF5::KIOCore
+                      Qt5::Core
+                      Qt5::Gui
+                      KF5::Kipi
+                      KF5::KDcraw
+                      KF5::KExiv2
                       kipiplugins
                      )
 

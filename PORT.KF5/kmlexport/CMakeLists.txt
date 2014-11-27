@@ -11,12 +11,12 @@ set(kipiplugin_kmlexport_PART_SRCS plugin_kmlexport.cpp
                                    kmlexportconfig.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_kmlexport ${kipiplugin_kmlexport_PART_SRCS})
+add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_kmlexport
-                      ${KDE4_KPARTS_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
+                      KF5::Parts
+                      KF5::Kipi
+                      KF5::KExiv2
                       kipiplugins
                      )
 
@@ -27,5 +27,5 @@ install(TARGETS kipiplugin_kmlexport                                     DESTINA
 install(FILES   kipiplugin_kmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
 if(KDE4_BUILD_TESTS)
-    MACRO_OPTIONAL_ADD_SUBDIRECTORY(tests)
+    ecm_optional_add_subdirectory(tests)
 endif()

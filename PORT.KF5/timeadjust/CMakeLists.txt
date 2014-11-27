@@ -15,15 +15,15 @@ set(kipiplugin_timeadjust_PART_SRCS plugin_timeadjust.cpp
                                     settingswidget.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_timeadjust ${kipiplugin_timeadjust_PART_SRCS})
+add_library(kipiplugin_timeadjust MODULE ${kipiplugin_timeadjust_PART_SRCS})
 
 target_link_libraries(kipiplugin_timeadjust
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::ThreadWeaver
+                      
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       kipiplugins
                      )
 

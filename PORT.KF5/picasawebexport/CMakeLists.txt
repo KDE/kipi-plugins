@@ -18,14 +18,14 @@ set(kipiplugin_picasawebexport_PART_SRCS
     picasawebimglist.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})
+add_library(kipiplugin_picasawebexport MODULE ${kipiplugin_picasawebexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_picasawebexport
-                      ${KDCRAW_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_KIO_LIBS}
+                      KF5::KDcraw
+                      KF5::Kipi
+                      KF5::KExiv2
+                      
+                      KF5::KIOCore
                       kipiplugins
                      )
 
