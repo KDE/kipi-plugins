@@ -6,7 +6,7 @@
 
 add_subdirectory(test)
 
-add_definitions(${KDE4_ENABLE_EXCEPTIONS})
+kde_enable_exceptions()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/savemethods
