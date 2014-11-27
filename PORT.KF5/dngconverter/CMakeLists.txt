@@ -7,12 +7,11 @@
 # =======================================================
 # DNG SDK and XMP SDK use C++ exceptions
 
-add_definitions(${KDE4_ENABLE_EXCEPTIONS})
+kde_enable_exceptions()
 
 # =======================================================
 # XMP SDK source code.
 
-KDE4_NO_ENABLE_FINAL(kipiplugin_dngwriter)
 
 include_directories(${EXPAT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5

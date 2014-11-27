@@ -4,11 +4,9 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-include_directories(${KSANE_INCLUDE_DIR})
-
 # =======================================================
 # Common source code
-
+find_package(KF5Sane)
 set(acquireimages_common_SRCS
     scandialog.cpp
     saveimgthread.cpp
@@ -27,7 +25,7 @@ target_link_libraries(libacquireimages
                       KF5::Parts
                       
                       KF5::Kipi
-                      ${KSANE_LIBRARY}
+                      KF5::Sane
                       KF5::KExiv2
                       kipiplugins
                      )

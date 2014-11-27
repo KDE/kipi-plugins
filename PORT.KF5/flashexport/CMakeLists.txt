@@ -32,7 +32,6 @@ target_link_libraries(kipiplugin_flashexport
                       kipiplugins
                      )
 
-ecm_install_icons(${ICON_INSTALL_DIR})
 
 configure_file(kipiplugin_flashexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)
 

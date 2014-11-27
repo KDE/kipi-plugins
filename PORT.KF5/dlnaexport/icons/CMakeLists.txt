@@ -1,3 +1,3 @@
-KDE4_INSTALL_ICONS( ${ICON_INSTALL_DIR} )
+ecm_install_icons( ${ICON_INSTALL_DIR} )
 
 
