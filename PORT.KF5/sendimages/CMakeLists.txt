@@ -12,15 +12,14 @@ set(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp
                                     sendimages.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_sendimages ${kipiplugin_sendimages_PART_SRCS})
+add_library(kipiplugin_sendimages MODULE ${kipiplugin_sendimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_sendimages
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::ThreadWeaver
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
                       kipiplugins
                      )
 
