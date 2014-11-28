@@ -18,7 +18,7 @@ set(kipiplugin_flashexport_PART_SRCS plugin_flashexport.cpp
                                      importWizard/firstrunpage.cpp
                                      importWizard/importwizarddlg.cpp
                                      importWizard/progresspage.cpp
-   )
+)
 
 add_library(kipiplugin_flashexport MODULE ${kipiplugin_flashexport_PART_SRCS})
 
@@ -26,12 +26,14 @@ target_link_libraries(kipiplugin_flashexport
                       KF5::Parts
                       KF5::KIOCore
                       KF5::Archive
-                      
-                      KF5::Kipi
-                      KF5::KExiv2
-                      KF5::KDcraw
+                      KF5::KDELibs4Support
+
+                      ${KF5Kipi_LIBRARIES}
+                      ${KF5KExiv2_LIBRARIES}
+                      ${KF5KDcraw_LIBRARIES}
+
                       KF5kipiplugins
-                     )
+)
 
 
 configure_file(kipiplugin_flashexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)

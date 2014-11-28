@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -48,9 +48,9 @@
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
 #include <KGlobal>
-// LibKDcraw includes
 
-//QT5 #include <version.h>
+// Libkdcraw includes
+
 #include <kdcraw.h>
 
 // Local includes
