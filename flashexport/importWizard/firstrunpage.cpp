@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "firstrunpage.moc"
+#include "firstrunpage.h"
 
 // Qt includes
 

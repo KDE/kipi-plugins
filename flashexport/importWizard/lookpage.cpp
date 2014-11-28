@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "lookpage.moc"
+#include "lookpage.h"
 
 // Qt includes
 

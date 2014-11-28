@@ -39,7 +39,7 @@ public:
 
     FlashExportAboutData()
         : KPAboutData(ki18n("Flash Export"), 0,
-                      KAboutData::License_GPL,
+                      KAboutLicense::GPL,
                       ki18n("A Kipi plugin to export images to Flash using the SimpleViewer's components."),
                       ki18n("(c) 2005-2006, Joern Ahrens\n"
                             "(c) 2008-2012, Gilles Caulier\n"
@@ -48,25 +48,25 @@ public:
     {
         setHandbookEntry("flashexport");
 
-        addAuthor(ki18n("Joern Ahrens"),
-                ki18n("Author"),
+        addAuthor(i18n("Joern Ahrens"),
+                i18n("Author"),
                 "joern dot ahrens at kdemail dot net");
 
-        addAuthor(ki18n("Gilles Caulier"),
-                ki18n("Developer and maintainer"),
+        addAuthor(i18n("Gilles Caulier"),
+                i18n("Developer and maintainer"),
                 "caulier dot gilles at gmail dot com");
 
-        addAuthor(ki18n("Veaceslav Munteanu"),
-                ki18n("Developer and maintainer"),
+        addAuthor(i18n("Veaceslav Munteanu"),
+                i18n("Developer and maintainer"),
                 "slavuttici at gmail dot com");
 
-        addCredit(ki18n("Felix Turner"),
-                ki18n("Author of the Simple Viewer Flash component"),
+        addCredit(i18n("Felix Turner"),
+                i18n("Author of the Simple Viewer Flash component"),
                 0,
                 "http://www.simpleviewer.net");
 
-        addCredit(ki18n("Mikkel B. Stegmann"),
-                ki18n("Basis for the index.html template"),
+        addCredit(i18n("Mikkel B. Stegmann"),
+                i18n("Basis for the index.html template"),
                 0,
                 "http://www.stegmann.dk/mikkel/porta");
     }

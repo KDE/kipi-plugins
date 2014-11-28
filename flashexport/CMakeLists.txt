@@ -25,6 +25,7 @@ add_library(kipiplugin_flashexport MODULE ${kipiplugin_flashexport_PART_SRCS})
 target_link_libraries(kipiplugin_flashexport
                       KF5::Parts
                       KF5::KIOCore
+                      KF5::Archive
                       
                       KF5::Kipi
                       KF5::KExiv2

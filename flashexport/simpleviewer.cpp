@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "simpleviewer.moc"
+#include "simpleviewer.h"
 
 // Qt includes
 
@@ -47,10 +47,10 @@
 #include <kstandardguiitem.h>
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
-
+#include <KGlobal>
 // LibKDcraw includes
 
-#include <version.h>
+//QT5 #include <version.h>
 #include <kdcraw.h>
 
 // Local includes

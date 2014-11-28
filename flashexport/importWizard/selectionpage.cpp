@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "selectionpage.moc"
+#include "selectionpage.h"
 
 // Qt includes
 

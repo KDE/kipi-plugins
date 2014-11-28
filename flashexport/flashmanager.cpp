@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "flashmanager.moc"
+#include "flashmanager.h"
 
 // KDE includes
 

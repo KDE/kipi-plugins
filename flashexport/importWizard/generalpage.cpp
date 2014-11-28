@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "generalpage.moc"
+#include "generalpage.h"
 
 // Qt includes
 
