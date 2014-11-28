@@ -324,15 +324,11 @@ if(KF5Kipi_FOUND)
             add_definitions(-D_AFX_SECURE_NO_WARNINGS)
         endif()
 
-        # Debug settings
+        add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-#         set(AREA_CODE_GENERAL "51000")
-#         set(AREA_CODE_LOADING "51001")
-#         add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL})
-#         add_definitions(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
-#         add_definitions(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
-#         add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
-
+        if(NOT WIN32)
+            configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
+        endif()
 
         add_subdirectory(common)
 
@@ -340,56 +336,71 @@ if(KF5Kipi_FOUND)
             add_subdirectory(tests)
         endif()
 
-        # Plugins which will be always compiled
+# Plugins to port to KF5 imediatly
 
-#         add_subdirectory(timeadjust)
-#         add_subdirectory(jpeglossless)
-#         add_subdirectory(rawconverter)
-#         add_subdirectory(metadataedit)
+         add_subdirectory(printimages)
+         add_subdirectory(kmlexport)
+
 #         add_subdirectory(sendimages)
+#         add_subdirectory(timeadjust)
+#         add_subdirectory(metadataedit)
 #         add_subdirectory(flashexport)
+#         add_subdirectory(expoblending)
+#
+#         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
+#             add_subdirectory(dlnaexport)
+#         endif()
+#
+#         if(KDEPIMLIBS_FOUND)
+#             add_subdirectory(calendar)
+#         endif()
+#
+#         if(KSANE_FOUND)
+#             add_subdirectory(acquireimages)
+#         endif()
+#
+#         if(OpenCV_FOUND)
+#             add_subdirectory(removeredeyes)
+#         endif()
+#
+#         if(BUILD_VIEWERS)
+#             add_subdirectory(advancedslideshow)
+#             add_subdirectory(imageviewer)
+#         endif()
+#
+#         if(EXPAT_FOUND)
+#             if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
+#                 add_subdirectory(dngconverter)
+#             endif()
+#         endif()
+#
+#         if(KGEOMAP_FOUND)
+#             add_subdirectory(gpssync)
+#         endif()
+#
+#         if(FLEX_FOUND AND BISON_FOUND)
+#             add_subdirectory(panorama)
+#         endif()
+#
+#         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+#             add_subdirectory(videoslideshow)
+#         endif()
+
+# Plugins to re-factoring.
 #         add_subdirectory(flickrexport)
 #         add_subdirectory(galleryexport)
 #         add_subdirectory(piwigoexport)
 #         add_subdirectory(kioexportimport)
 #         add_subdirectory(picasawebexport)
 #         add_subdirectory(smug)
-         add_subdirectory(printimages)
-#         add_subdirectory(expoblending)
-#         add_subdirectory(kopete)
-#         add_subdirectory(batchprocessimages)
 #         add_subdirectory(rajceexport)
-         add_subdirectory(kmlexport)
 #         add_subdirectory(imageshackexport)
-#         add_subdirectory(photolayoutseditor)
-#         add_subdirectory(jalbumexport)
-# 
-#         # Plugin not yet ready for production
-#         #add_subdirectory(photivointegration)
-# 
-#         # Plugins which are optional dependencies.
-# 
-#         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
-#             add_subdirectory(dlnaexport)
-#         endif()
-# 
-#         if(KDEPIMLIBS_FOUND)
-#             add_subdirectory(calendar)
-#         endif()
-# 
+#
 #         if(QCA2_FOUND)
 #             add_subdirectory(shwup)
 #             add_subdirectory(yandexfotki)
 #         endif()
-# 
-#         if(IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
-#             add_subdirectory(ipodexport)
-#         endif()
-# 
-#         if(OpenCV_FOUND)
-#             add_subdirectory(removeredeyes)
-#         endif()
-# 
+#
 #         if(QJSON_FOUND)
 #             add_subdirectory(debianscreenshots)
 #             add_subdirectory(facebook)
@@ -397,60 +408,28 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(googledrive)
 #             add_subdirectory(dropbox)
 #         endif()
-# 
+#
 #         if(LIBKVKONTAKTE_FOUND)
 #             add_subdirectory(vkontakte)
 #         endif()
-# 
+#
+#         if(MEDIAWIKI_FOUND)
+#             add_subdirectory(mediawiki)
+#         endif()
+
+# Plugins in pending state
 #         # Currently the cmake module distributed w/ cmake uses a different variable
 #         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
 #         # distributed w/ kdelibs LIBEXSLT_LIBRARIES.
 #         if(NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
 #             set(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})
 #         endif()
-# 
+#
 #         if(LIBXML2_FOUND AND LIBXSLT_FOUND AND LIBXSLT_EXSLT_LIBRARIES)
 #             add_subdirectory(htmlexport)
 #         endif()
-# 
-#         if(KSANE_FOUND)
-#             add_subdirectory(acquireimages)
-#         endif()
-# 
-#         if(BUILD_VIEWERS)
-#             add_subdirectory(advancedslideshow)
-#             add_subdirectory(imageviewer)
-#         endif()
-# 
-#         if(EXPAT_FOUND)
-#             if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-#                 add_subdirectory(dngconverter)
-#             endif()
-#         endif()
-# 
-#         if(KGEOMAP_FOUND)
-#             add_subdirectory(gpssync)
-#         endif()
-# 
-#         if(MEDIAWIKI_FOUND)
-#             add_subdirectory(mediawiki)
-#         endif()
-# 
-#         if(FLEX_FOUND AND BISON_FOUND)
-#             add_subdirectory(panorama)
-#         endif()
-# 
-#         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-#             add_subdirectory(videoslideshow)
-#         endif()
-# 
-#         if(BUILD_WALLPAPER)
-#             add_subdirectory(wallpaper)
-#         endif()
-
-        if(NOT WIN32)
-            configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
-        endif()
+#
+#         add_subdirectory(photolayoutseditor)
 
     endif()
 
