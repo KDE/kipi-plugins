@@ -10,6 +10,6 @@ remove_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 add_subdirectory(hupnp)
 add_subdirectory(hupnp_av)
 
-if(KDE4_BUILD_TESTS)
+if(BUILD_TESTING)
     add_subdirectory(avtest)
 endif()

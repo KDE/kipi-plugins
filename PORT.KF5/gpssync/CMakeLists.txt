@@ -38,7 +38,7 @@ set(kipiplugin_gpssync_PART_SRCS
     tests/simpletreemodel/simpletreemodel.cpp
    )
 
-if(KDE4_BUILD_TESTS)
+if(BUILD_TESTING)
     include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
     #add_definitions(-DGPSSYNC_MODELTEST)
     set(kipiplugin_gpssync_PART_SRCS
@@ -73,7 +73,7 @@ target_link_libraries(kipiplugin_gpssync
                       KF5kipiplugins
                      )
 
-if(KDE4_BUILD_TESTS)
+if(BUILD_TESTING)
     # needed by modeltest
     target_link_libraries(kipiplugin_gpssync
                           Qt5::Test
@@ -92,6 +92,6 @@ install(FILES   data/bookmarks-marker.png
                 data/searchmarker-selected.png
         DESTINATION ${DATA_INSTALL_DIR}/gpssync/)
 
-if(KDE4_BUILD_TESTS)
+if(BUILD_TESTING)
     ecm_optional_add_subdirectory(tests)
 endif()
