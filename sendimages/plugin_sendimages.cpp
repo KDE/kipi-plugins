@@ -46,7 +46,7 @@
 namespace KIPISendimagesPlugin
 {
 
-K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
+K_PLUGIN_FACTORY(SendImagesFactory, registerPlugin<Plugin_SendImages>();)
 
 class Plugin_SendImages::Private
 {
@@ -156,3 +156,5 @@ void Plugin_SendImages::slotPrepareEmail()
 }
 
 } // namespace KIPISendimagesPlugin
+
+#include "plugin_sendimages.moc"
