@@ -96,7 +96,6 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
     endif()
 
     message(STATUS "libkexiv2 found       : ${KF5KExiv2_FOUND}")
-    message(STATUS "libkexiv2 include dir : ${KF5KExiv2_INCLUDE_DIRS}")
     message(STATUS "libkexiv2 library     : ${KF5KExiv2_LIBRARIES}")
 
 endmacro()
