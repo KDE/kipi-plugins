@@ -37,7 +37,7 @@
 
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <ktempdir.h>
+#include <QTemporaryDir>
 
 // LibKDcraw includes
 
@@ -235,10 +235,10 @@ void ImageResize::resize(const EmailSettings& settings)
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 
-        KTempDir tmpDir(KStandardDirs::locateLocal("tmp", t->m_settings.tempFolderName + t->m_settings.tempPath), 0700);
+        QTemporaryDir tmpDir(KStandardDirs::locateLocal("tmp", t->m_settings.tempFolderName + t->m_settings.tempPath));
         tmpDir.setAutoRemove(false);
         QFileInfo fi(t->m_orgUrl.fileName());
-        t->m_destName = tmpDir.name() + QString("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
+        t->m_destName = tmpDir.path() + QString("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
 
         connect(t, SIGNAL(startingResize(QUrl)),
                 this, SIGNAL(startingResize(QUrl)));

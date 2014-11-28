@@ -41,7 +41,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <ktempdir.h>
+#include <QTemporaryDir>
 #include <ktoolinvocation.h>
 
 // LibKIPI includes
@@ -128,9 +128,9 @@ void SendImages::firstStage()
         d->threadImgResize->wait();
     }
 
-    KTempDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"), 0700);
+    QTemporaryDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"));
     tmpDir.setAutoRemove(false);
-    d->settings.tempPath = tmpDir.name();
+    d->settings.tempPath = tmpDir.path();
 
     QDir tmp(d->settings.tempPath);
     QStringList folders = tmp.absolutePath().split('/', QString::SkipEmptyParts);
@@ -674,7 +674,7 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
 
 void SendImages::slotCleanUp()
 {
-    KTempDir::removeDir(d->settings.tempPath);
+    QDir((d->settings.tempPath)).removeRecursively();
 }
 
 }  // namespace KIPISendimagesPlugin
