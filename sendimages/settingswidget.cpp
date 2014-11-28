@@ -29,17 +29,15 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QApplication>
 
 // KDE includes
 
-#include <k4aboutdata.h>
-#include <kcomponentdata.h>
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <kglobal.h>
 
 namespace KIPISendimagesPlugin
 {
@@ -109,11 +107,11 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     //---------------------------------------------
 
     d->addComments = new QCheckBox(i18n("Attach a file with image properties from %1",
-                                   KComponentData::mainComponent().aboutData()->programName()),
+                                   QApplication::applicationName()),
                                    this);
     d->addComments->setWhatsThis(i18n("If you enable this option, all image properties set by %1 "
                                       "as Comments, Rating, or Tags, will be added as an attached file.",
-                                      KComponentData::mainComponent().aboutData()->programName()));
+                                      QApplication::applicationName()));
 
     // --------------------------------------------------------
 
