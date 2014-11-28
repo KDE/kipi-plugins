@@ -218,7 +218,7 @@ void SlideShowLoader::prev()
     int newBorn = (m_currIndex - ((m_cacheSize & 2) == 0 ? (m_cacheSize / 2)
                                                          : int(m_cacheSize / 2) + 1)) % m_pathList.count();
 
-    m_currIndex = (m_currIndex - 1) % m_pathList.count();
+    m_currIndex = m_currIndex > 0 ? m_currIndex - 1 : m_pathList.count() - 1;
 
     if (victim == newBorn)
         return;
