@@ -74,7 +74,7 @@ target_link_libraries(libpanorama
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 # =======================================================

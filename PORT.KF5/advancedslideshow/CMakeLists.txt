@@ -55,7 +55,7 @@ target_link_libraries(kipiplugin_advancedslideshow
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
 
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)

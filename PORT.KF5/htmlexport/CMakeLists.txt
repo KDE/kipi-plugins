@@ -43,7 +43,7 @@ target_link_libraries(kipiplugin_htmlexport
                       KF5::KIOCore
                       Qt5::Core
                       Qt5::Gui
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 include_directories(${LIBXSLT_INCLUDE_DIR}

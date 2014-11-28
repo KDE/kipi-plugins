@@ -26,7 +26,7 @@ target_link_libraries(kipiplugin_dropbox
                       
                       KF5::KIOCore
                       ${QJSON_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_dropbox.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop)

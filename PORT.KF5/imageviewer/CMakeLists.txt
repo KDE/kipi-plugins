@@ -29,7 +29,7 @@ target_link_libraries(kipiplugin_imageviewer
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
 
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_imageviewer.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)

@@ -17,7 +17,7 @@ target_link_libraries(kipiplugin_kmlexport
                       KF5::Parts
                       KF5::Kipi
                       KF5::KExiv2
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_kmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop)

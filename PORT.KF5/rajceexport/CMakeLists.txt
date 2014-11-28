@@ -28,7 +28,7 @@ target_link_libraries(kipiplugin_rajceexport
                       KF5::KIOCore
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_rajceexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_rajceexport.desktop)

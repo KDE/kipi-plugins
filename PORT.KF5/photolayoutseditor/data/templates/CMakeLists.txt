@@ -4,7 +4,7 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-set(templates_dir ${TEMPLATES_INSTALL_DIR}/kipiplugins_photolayoutseditor/data/templates)
+set(templates_dir ${TEMPLATES_INSTALL_DIR}/KF5kipiplugins_photolayoutseditor/data/templates)
 
 install(FILES "a4/h/Bear boy.ple" DESTINATION ${templates_dir}/a4/h)
 install(FILES "a4/h/Bear girl.ple" DESTINATION ${templates_dir}/a4/h)

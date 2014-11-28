@@ -24,7 +24,7 @@ target_link_libraries(kipiplugin_photivointegration
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_photivointegration.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop)

@@ -182,7 +182,7 @@ target_link_libraries(libphotolayoutseditor
                       KF5::Parts
                       KF5::Kipi
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 install(FILES ./settings/photolayoutseditor.kcfg DESTINATION ${KCFG_INSTALL_DIR})

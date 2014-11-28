@@ -75,7 +75,7 @@ target_link_libraries(kipiplugin_removeredeyes
                       KF5::KDELibs4Support
                       
                       ${OpenCV_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_removeredeyes.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop)

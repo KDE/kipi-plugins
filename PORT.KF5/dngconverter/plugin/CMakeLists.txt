@@ -24,7 +24,7 @@ target_link_libraries(dngconverter
                       ${KDE4_THREADWEAVER_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
-                      kipiplugins
+                      KF5kipiplugins
                       libdng
                      )
 
@@ -45,7 +45,7 @@ target_link_libraries(kipiplugin_dngconverter
                       ${KDE4_THREADWEAVER_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
-                      kipiplugins
+                      KF5kipiplugins
                       libdng
                      )
 

@@ -41,7 +41,7 @@ target_link_libraries(kipiplugin_jpeglossless
                       KF5::KExiv2
                       KF5::KDcraw
                       ${JPEG_LIBRARY}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_jpeglossless.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop)

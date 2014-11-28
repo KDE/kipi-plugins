@@ -16,7 +16,7 @@ target_link_libraries(gpssync_test_correlator
                         ${QT_QTGUI_LIBRARY}
                         ${QT_QTXML_LIBRARY}
                         ${KGEOMAP_LIBRARIES}
-                        kipiplugins
+                        KF5kipiplugins
                      )
 
 if(NOT WIN32)
@@ -30,7 +30,7 @@ if(NOT WIN32)
                           ${QT_QTTEST_LIBRARY}
                           ${QT_QTGUI_LIBRARY}
                           ${KGEOMAP_LIBRARIES}
-                          kipiplugins
+                          KF5kipiplugins
                          )
 
 endif()
@@ -47,7 +47,7 @@ target_link_libraries(gpssync_test_rgtagmodel
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
                       ${KGEOMAP_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                     )
 
 KDE4_ADD_EXECUTABLE(gpssync_test_kipiimageitem
@@ -65,7 +65,7 @@ target_link_libraries(gpssync_test_kipiimageitem
                       ${KEXIV2_LIBRARIES}
                       ${KGEOMAP_LIBRARIES}
                       ${KIPI_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 add_test(gpssync_test_correlator       ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)

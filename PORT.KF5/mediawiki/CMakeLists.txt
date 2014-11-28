@@ -21,7 +21,7 @@ set(kipiplugin_wikimedia_PART_SRCS
 add_library(kipiplugin_wikimedia MODULE ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
 
 target_link_libraries(kipiplugin_wikimedia
-                      kipiplugins
+                      KF5kipiplugins
                       mediawiki
                       ${MEDIAWIKI_LIBRARIES}
                       KF5::Kipi

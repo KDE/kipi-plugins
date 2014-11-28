@@ -27,7 +27,7 @@ target_link_libraries(libacquireimages
                       KF5::Kipi
                       KF5::Sane
                       KF5::KExiv2
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 # =======================================================

@@ -23,7 +23,7 @@ ki18n_wrap_ui(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)
 add_library(kipiplugin_flickrexport MODULE ${kipiplugin_flickrexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_flickrexport
-                      kipiplugins
+                      KF5kipiplugins
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw

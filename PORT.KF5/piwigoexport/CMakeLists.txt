@@ -22,7 +22,7 @@ target_link_libraries(kipiplugin_piwigoexport
                       KF5::KExiv2
                       KF5::KIOCore
                       
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_piwigoexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop)

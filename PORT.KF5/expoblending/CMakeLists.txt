@@ -49,7 +49,7 @@ target_link_libraries(libexpoblending
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 # =======================================================

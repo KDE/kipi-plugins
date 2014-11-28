@@ -39,7 +39,7 @@ target_link_libraries(kipiplugin_videoslideshow
                       ${ImageMagick_LIBRARIES}
                       ${QTGSTREAMER_LIBRARIES}
                       ${QTGSTREAMER_UTILS_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_videoslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop)

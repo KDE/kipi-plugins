@@ -32,7 +32,7 @@ target_link_libraries(kipiplugin_rawconverter
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_rawconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop)

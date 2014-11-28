@@ -28,7 +28,7 @@ target_link_libraries(kipiplugin_shwup
                       ${QCA2_LIBRARIES}
                       KF5::KIOCore
                       
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_shwup.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_shwup.desktop)

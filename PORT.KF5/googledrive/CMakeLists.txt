@@ -26,7 +26,7 @@ target_link_libraries(kipiplugin_googledrive
                       
                       KF5::KIOCore
                       ${QJSON_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_googledrive.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googledrive.desktop)

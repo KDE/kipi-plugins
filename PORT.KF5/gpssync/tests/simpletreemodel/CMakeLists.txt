@@ -14,7 +14,7 @@ target_link_libraries(gpssync_test_simpletreemodel
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 add_test(gpssync_test_simpletreemodel ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_simpletreemodel)

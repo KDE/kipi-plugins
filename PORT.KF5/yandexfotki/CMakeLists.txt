@@ -31,7 +31,7 @@ target_link_libraries(kipiplugin_yandexfotki
                       ${QCA2_LIBRARIES}
                       
                       KF5::KIOCore
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_yandexfotki.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop)

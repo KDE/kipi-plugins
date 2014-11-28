@@ -23,7 +23,7 @@ target_link_libraries(kipiplugin_imageshackexport
                       KF5::KExiv2
                       KF5::KIOCore
                       
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_imageshackexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageshackexport.desktop)

@@ -36,7 +36,7 @@ target_link_libraries(kipiplugin_imgurexport
                       KF5::KIOCore
                       KF5::KExiv2
                       ${QJSON_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 if(QTKOAUTH_FOUND)

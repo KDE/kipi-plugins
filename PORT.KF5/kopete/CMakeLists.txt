@@ -12,7 +12,7 @@ set(kipiplugin_kopete_PART_SRCS
 add_library(kipiplugin_kopete MODULE ${kipiplugin_kopete_PART_SRCS} )
 
 target_link_libraries(kipiplugin_kopete
-                      kipiplugins
+                      KF5kipiplugins
                       KF5::Kipi
                       KF5::KIOCore
                       

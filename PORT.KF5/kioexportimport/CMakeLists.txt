@@ -20,7 +20,7 @@ target_link_libraries(${PLUGIN_NAME}
                       
                       KF5::Kipi
                       KF5::KIOCore
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(${PLUGIN_NAME}.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.desktop)

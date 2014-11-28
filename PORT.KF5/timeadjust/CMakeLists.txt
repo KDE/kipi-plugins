@@ -24,7 +24,7 @@ target_link_libraries(kipiplugin_timeadjust
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_timeadjust.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_timeadjust.desktop)

@@ -36,7 +36,7 @@ target_link_libraries(kipiplugin_calendar
                       KF5::KExiv2 
                       KF5::KDcraw 
                       ${KDE4_KCALCORE_LIBS} 
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_calendar.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_calendar.desktop)

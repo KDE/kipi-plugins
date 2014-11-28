@@ -48,7 +48,7 @@ ki18n_wrap_ui(kipiplugin_batchprocessimages_PART_SRCS
 add_library(kipiplugin_batchprocessimages MODULE ${kipiplugin_batchprocessimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_batchprocessimages
-                      kipiplugins
+                      KF5kipiplugins
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDELibs4Support

@@ -43,7 +43,7 @@ target_link_libraries(kipiplugin_dlnaexport
                       KF5::KIOCore
                       ${QT_LIBRARIES}
                       ${QT_QTXMLPATTERNS_LIBRARY}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 if(HUPNP_FOUND AND HUPNPAV_FOUND)

@@ -29,7 +29,7 @@ target_link_libraries(kipiplugin_flashexport
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 

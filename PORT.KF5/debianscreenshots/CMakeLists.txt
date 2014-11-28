@@ -25,7 +25,7 @@ qt5_add_resources(kipiplugin_debianscreenshots_QRC_SRCS plugin_debianscreenshots
 add_library(kipiplugin_debianscreenshots MODULE ${kipiplugin_debianscreenshots_PART_SRCS} ${kipiplugin_debianscreenshots_QRC_SRCS} )
 
 target_link_libraries(kipiplugin_debianscreenshots
-                      kipiplugins
+                      KF5kipiplugins
                       KF5::Kipi
                       ${QJSON_LIBRARIES}
                       KF5::KExiv2

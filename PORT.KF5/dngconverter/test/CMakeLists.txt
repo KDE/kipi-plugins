@@ -32,5 +32,5 @@ target_link_libraries(raw2dng
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
                       libdng
-                      kipiplugins
+                      KF5kipiplugins
                      )

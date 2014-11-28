@@ -23,7 +23,7 @@ target_link_libraries(kipiplugin_smug
                       KF5::KDcraw
                       KF5::KIOCore
                       
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(kipiplugin_smug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_smug.desktop)

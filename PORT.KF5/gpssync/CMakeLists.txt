@@ -70,14 +70,14 @@ target_link_libraries(kipiplugin_gpssync
                       KF5::Kipi
                       KF5::KExiv2
                       ${KGEOMAP_LIBRARIES}
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 if(KDE4_BUILD_TESTS)
     # needed by modeltest
     target_link_libraries(kipiplugin_gpssync
                           Qt5::Test
-                          kipiplugins
+                          KF5kipiplugins
                          )
 endif()
 
