@@ -44,7 +44,7 @@ target_link_libraries(kipiplugin_printimages
                       KF5::Kipi
                       KF5::KDcraw
                       KF5::KExiv2
-                      kipiplugins
+                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_printimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)

@@ -57,7 +57,8 @@
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kdesktopfile.h>
-
+#include <KLocale>
+#include <KGlobal>
 // libkipi includes
 
 #include <imagecollectionselector.h>
@@ -154,8 +155,8 @@ Wizard::Wizard(QWidget* const parent)
     d->m_infopageCurrentPhoto = 0;
 
     // Caption
-    setCaption(i18n("Print assistant"));
-
+    setWindowTitle(i18n("Print assistant"));
+#if 0 //PORT QT5
     // About data
     KPAboutData* about = new KPAboutData(ki18n("Print assistant"),
                              QByteArray(),
@@ -175,7 +176,7 @@ Wizard::Wizard(QWidget* const parent)
 
     about->setHandbookEntry("printwizard");
     setAboutData(about);
-
+#endif
     //d->m_photoPage  = new InfoPage ( this, i18n ( infoPageName ) );
     d->m_photoPage      = new PhotoPage(this, i18n(photoPageName));
     d->m_cropPage       = new CropPage(this, i18n(cropPageName)) ;
@@ -1760,7 +1761,7 @@ void Wizard::outputChanged(const QString& text)
     {
         delete d->m_printer;
         d->m_printer = new QPrinter();
-        d->m_printer->setOutputFormat(QPrinter::PostScriptFormat);
+        //PORT TO QT5 d->m_printer->setOutputFormat(QPrinter::PostScriptFormat);
     }
     else // real printer
     {
