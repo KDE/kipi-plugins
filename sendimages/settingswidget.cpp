@@ -109,11 +109,11 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     //---------------------------------------------
 
     d->addComments = new QCheckBox(i18n("Attach a file with image properties from %1",
-                                   KGlobal::mainComponent().aboutData()->programName()),
+                                   KComponentData::mainComponent().aboutData()->programName()),
                                    this);
     d->addComments->setWhatsThis(i18n("If you enable this option, all image properties set by %1 "
                                       "as Comments, Rating, or Tags, will be added as an attached file.",
-                                      KGlobal::mainComponent().aboutData()->programName()));
+                                      KComponentData::mainComponent().aboutData()->programName()));
 
     // --------------------------------------------------------
 
