@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2003-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,18 +25,14 @@
 // Qt includes
 
 #include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <kactioncollection.h>
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kgenericfactory.h>
-#include <kglobal.h>
-#include <klibloader.h>
 #include <klocale.h>
+#include <kpluginfactory.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>
@@ -95,7 +91,7 @@ void Plugin_SendImages::setup(QWidget* const widget)
 
     if (!iface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -126,7 +122,7 @@ void Plugin_SendImages::slotActivate()
 
     if (!iface)
     {
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
@@ -137,7 +133,7 @@ void Plugin_SendImages::slotActivate()
 
     delete d->dialog;
 
-    d->dialog = new SendImagesDialog(kapp->activeWindow(), images.images());
+    d->dialog = new SendImagesDialog(QApplication::activeWindow(), images.images());
     d->dialog->show();
 
     connect(d->dialog, SIGNAL(okClicked()),
@@ -150,7 +146,7 @@ void Plugin_SendImages::slotPrepareEmail()
 
     if (!interface)
     {
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
