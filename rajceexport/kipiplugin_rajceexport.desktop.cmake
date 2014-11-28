@@ -46,6 +46,7 @@ Comment[el]=Εργαλείο εξαγωγής εικόνων σε μια απο�
 Comment[en_GB]=A tool to export images to a remote rajce.net service
 Comment[es]=Una herramienta para exportar imágenes al servicio remoto de rajce.net
 Comment[et]=Tööriist piltide eksportimiseks rajce.net-i veebiteenusesse
+Comment[fi]=Kuvien vienti rajce.net-verkkopalveluun
 Comment[fr]=Un outil d'exportation d'images vers le service en ligne « rejce.net »
 Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís chianda rajce.net
 Comment[gl]=Unha ferramenta para exportar imaxes a un servizo web rajce.net remoto

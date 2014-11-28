@@ -11,6 +11,7 @@ Name[de]=jAlbum-Export
 Name[el]=jAlbumExport
 Name[en_GB]=jAlbumExport
 Name[es]=Exportar a jAlbum
+Name[fi]=jAlbum-vienti
 Name[fr]=Exportation « jAlbum »
 Name[gl]=jAlbumExport
 Name[hu]=jAlbum exportálás

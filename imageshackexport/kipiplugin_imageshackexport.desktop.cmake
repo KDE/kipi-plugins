@@ -42,6 +42,7 @@ Comment[el]=Εργαλείο εξαγωγής εικόνων στην υπηρε
 Comment[en_GB]=A tool to export images to Imageshack web service
 Comment[es]=Una herramienta para exportar imágenes al servicio web de Imageshack
 Comment[et]=Tööriist piltide eksportimiseks Imageshacki veebiteenusesse
+Comment[fi]=Kuvien vienti Imageshack-verkkopalveluun
 Comment[fr]=Outil pour l'exportation vers le service en ligne « Imageshack »
 Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís Ghréasáin Imageshack
 Comment[gl]=Ferramenta para exportar imaxes ao servizo web Imageshack.

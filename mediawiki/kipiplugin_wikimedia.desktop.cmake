@@ -41,6 +41,7 @@ Comment[el]=Εργαλείο εξαγωγής εικόνων σε μια απο�
 Comment[en_GB]=A tool to export images to a remote MediaWiki web service
 Comment[es]=Una herramienta para exportar imágenes al servicio web de MediaWiki
 Comment[et]=Tööriist piltide eksportimiseks MediaWiki veebiteenusesse
+Comment[fi]=Kuvien vienti MediaWiki-verkkopalveluun
 Comment[fr]=Outil d'exportation d'images vers le service en ligne « MediaWiki »
 Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís Ghréasáin MediaWiki i gcéin
 Comment[gl]=Ferramenta para exportar imaxes a un servizo web MediaWiki remoto

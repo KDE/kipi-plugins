@@ -14,6 +14,7 @@ Name[en_GB]=iPodExport
 Name[es]=iPodExport
 Name[et]=iPodi eksport
 Name[eu]=iPod esportatzea
+Name[fi]=iPod-kopiointi
 Name[fr]=Exportation « IPod »
 Name[ga]=iPodExport
 Name[gl]=iPodExport

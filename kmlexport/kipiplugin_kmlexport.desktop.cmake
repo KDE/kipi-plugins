@@ -32,6 +32,7 @@ Name[el]=KMLExport
 Name[en_GB]=KMLExport
 Name[es]=KMLExport
 Name[et]=KML-i eksport
+Name[fi]=KML-vienti
 Name[fr]=Exportation « KML »
 Name[ga]=KMLExport
 Name[gl]=KMLExport

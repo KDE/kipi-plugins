@@ -51,6 +51,7 @@ Comment[de]=Ein Werkzeug zur Stapelverarbeitung von Bildern
 Comment[el]=Εργαλείο ακολουθιακής επεξεργασίας εικόνων
 Comment[en_GB]=A tool to batch process images
 Comment[es]=Una herramienta para procesar imágenes por lotes
+Comment[fi]=Kuvien käsittely eräajossa
 Comment[is]=Verkfæri til að meðhöndla margar myndir í einu
 Comment[it]=Uno strumento per elaborare automaticamente le immagini
 Comment[nl]=Een hulpmiddel voor het bewerken van afbeeldingen in bulk

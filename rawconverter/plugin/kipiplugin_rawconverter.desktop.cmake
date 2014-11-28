@@ -60,6 +60,7 @@ Comment[en_GB]=A tool to convert Raw Image to JPEG/PNG/TIFF
 Comment[es]=Una herramienta para convertir imágenes RAW a JPEG/PNG/TIFF
 Comment[et]=Tööriist toorpiltide teisendamiseks JPEG/PNG/TIFF-piltidkes
 Comment[eu]=Irudi gordinak (Raw) JPEG/PNG/TIFF formatura bihurtzeko tresna
+Comment[fi]=Raw-kuvien muuntaminen JPEG/PNG/TIFF-muotoon
 Comment[fr]=Outil de conversion d'images « RAW » en JPEG / PNG / TIFF
 Comment[ga]=Uirlis a thiontaíonn íomhánna RAW go JPEG/PNG/TIFF
 Comment[gl]=Unha ferramenta para converter imaxes Raw en JPEG/PNG/TIFF
