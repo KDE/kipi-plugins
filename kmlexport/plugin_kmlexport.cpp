@@ -26,7 +26,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_kmlexport.moc"
+#include "plugin_kmlexport.h"
 
 // Qt includes
 
@@ -61,9 +61,9 @@ K_PLUGIN_FACTORY( KMLExportFactory, registerPlugin<Plugin_KMLExport>(); )
 K_EXPORT_PLUGIN ( KMLExportFactory("kipiplugin_kmlexport") )
 
 Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
-    : Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
+    : Plugin( /*KMLExportFactory::componentData(),*/ parent, "KMLExport")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
+    //PORT QT5 kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
 
     setUiBaseName("kipiplugin_kmlexportui.rc");
     setupXML();
@@ -142,3 +142,4 @@ void Plugin_KMLExport::slotKMLGenerate()
 }
 
 } // namespace KIPIKMLExportPlugin
+#include "plugin_kmlexport.moc"

@@ -242,7 +242,7 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
     fullFileName         = baseFileName + '.' + imageFormat.toLower();
     QString destPath     = m_tempDestDir + m_imageDir + fullFileName;
 
-    if (!image.save(destPath, imageFormat.toAscii(), 85))
+    if (!image.save(destPath, imageFormat.toLatin1().constData(), 85))
     {
         // if not able to save the image, it's pointless to create a placemark
         logWarning(i18n("Could not save image '%1' to '%2'",path,destPath));
@@ -354,7 +354,7 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
         QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
         QString destPath     = m_tempDestDir + m_imageDir + iconFileName;
 
-        if (!icon.save(destPath, imageFormat.toAscii(), 85))
+        if (!icon.save(destPath, imageFormat.toLatin1().constData(), 85))
         {
             logWarning(i18n("Could not save icon for image '%1' to '%2'",path,destPath));
         }
@@ -532,7 +532,7 @@ void KmlExport::generate()
     delete m_kmlDocument;
     m_kmlDocument = 0;
 
-    KIO::moveAs(m_tempDestDir, m_baseDestDir, KIO::HideProgressInfo | KIO::Overwrite);
+    KIO::moveAs(QUrl::fromLocalFile(m_tempDestDir), QUrl::fromLocalFile(m_baseDestDir), KIO::HideProgressInfo | KIO::Overwrite);
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
 }

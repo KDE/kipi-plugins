@@ -17,7 +17,7 @@
  *
  * ============================================================ */
 
-#include "test_kmlexport_gpxparsing.moc"
+#include "test_kmlexport_gpxparsing.h"
 
 // Qt includes
 

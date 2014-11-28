@@ -283,9 +283,9 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
         }
     }
 
-    kDebug(AREA_CODE_LOADING) << "GPX File " << url.fileName()
-                    << " parsed with " << numPoints()
-                    << " points extracted" ;
+    //kDebug(AREA_CODE_LOADING) << "GPX File " << url.fileName()
+    //                << " parsed with " << numPoints()
+    //                << " points extracted" ;
     return true;
 }
 

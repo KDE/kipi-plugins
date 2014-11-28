@@ -26,6 +26,6 @@ install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop DESTINA
 install(TARGETS kipiplugin_kmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES   kipiplugin_kmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
 
-if(KDE4_BUILD_TESTS)
-    ecm_optional_add_subdirectory(tests)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
 endif()

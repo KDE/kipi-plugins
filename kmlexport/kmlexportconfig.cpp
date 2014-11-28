@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kmlexportconfig.moc"
+#include "kmlexportconfig.h"
 
 // Qt includes
 
@@ -275,7 +275,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     // --------------------------------------------------------------
     // About data and help button.
-
+/* PORT QT5
     KPAboutData* const about = new KPAboutData(ki18n("KML Export"),
                                    0,
                                    KAboutData::License_GPL,
@@ -296,7 +296,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     about->setHandbookEntry("kmlexport");
     setAboutData(about);
-
+*/
     // --------------------------------------------------------------
     // Configuration file management
 
@@ -435,7 +435,7 @@ void KMLExportConfig::readSettings()
     ImageSizeInput_->setValue(size);
 
     AltitudeCB_->setCurrentIndex(AltitudeMode);
-    DestinationDirectory_->setUrl(baseDestDir);
+    DestinationDirectory_->setUrl(QUrl::fromLocalFile(baseDestDir));
     DestinationUrl_->setText(UrlDestDir);
     FileName_->setText(KMLFileName);
 

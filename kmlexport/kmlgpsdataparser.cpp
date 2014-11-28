@@ -83,7 +83,7 @@ void KMLGPSDataParser::CreateTrackLine(QDomElement& parent, QDomDocument& root, 
 void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root, int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
-    kDebug(AREA_CODE_LOADING) << "creation d'un trackpoint" ;
+    //kDebug(AREA_CODE_LOADING) << "creation d'un trackpoint" ;
 
     // create the points
     QDomElement kmlPointsFolder = addKmlElement(parent, "Folder");

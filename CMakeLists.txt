@@ -78,6 +78,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Core
              Widgets
              Gui
+             Test
 )
 
 find_package(KF5 REQUIRED COMPONENTS
@@ -358,7 +359,7 @@ if(KF5Kipi_FOUND)
 #         add_subdirectory(kopete)
 #         add_subdirectory(batchprocessimages)
 #         add_subdirectory(rajceexport)
-#         add_subdirectory(kmlexport)
+         add_subdirectory(kmlexport)
 #         add_subdirectory(imageshackexport)
 #         add_subdirectory(photolayoutseditor)
 #         add_subdirectory(jalbumexport)
