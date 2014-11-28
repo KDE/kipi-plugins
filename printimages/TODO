@@ -1,0 +1,35 @@
+- Get printers  from QPrinterInfo interface             DONE
+- Get page size from QPrinSetup   interface             DONE
+- Using QPrintDialog with QPrinter settings             almost DONE
+- Fix photgrid if page size is in inches                DONE
+- check update on size, sometimes it's not as expected  DONE
+- add template icons (Andreas Trink's code)             DONE
+- manage again "Print to JPG"                           DONE
+- print to JPG and bad path behaviour                   DONE
+- cancel printing should terminate wizard               DONE
+- move number of copies to first page                   DONE
+- remove number of copies from second page              DONE
+- add caption per page                                  DONE
+- show caption into info page preview                   DONE
+- set caption data when new photo is selected           DONE
+- add a template how-to file                            DONE
+- add fit as many option                                DONE
+- FIX custom layout icon                                almost DONE
+- save custom layout data into config file              DONE
+- add tool tips                                         some
+- add an attribute for desktop file
+- add Atckin's layout to p.a.
+- fix UIs                                               some
+- first assistant page should be a choice between 
+  "one photo per page"   aka p.i.
+  "more photos per page" aka p.a.
+- clean code
+- evaluate if removing p.i. after merging.
+
+Found QT odd behaviors
+- QPageSetupDialog::open does not set QPrinter correctly (Unix?) -> used exec
+- QPrinter Custom page size (HP CUPS settings) is restored as custom 0,0
+- QPrintDialog(Qprinter*) does not care QPrinter margins if OutputFormat
+  is set as PdfFormat or PostScriptFormat
+- QPrinterInfo::availablePrinters() seems to be usefull for PageSizes
+  only for default in case of printers :(
