@@ -20,8 +20,14 @@
 #ifndef KIPIPLUGINS_DEBUG_H
 #define KIPIPLUGINS_DEBUG_H
 
+// Qt includes
+
 #include <QLoggingCategory>
 
-Q_DECLARE_LOGGING_CATEGORY(KIPIPLUGINS_LOG)
+// Local includes
+
+#include "kipiplugins_export.h"
+
+KIPIPLUGINS_EXPORT Q_DECLARE_LOGGING_CATEGORY(KIPIPLUGINS_LOG)
 
 #endif // KIPIPLUGINS_DEBUG_H
