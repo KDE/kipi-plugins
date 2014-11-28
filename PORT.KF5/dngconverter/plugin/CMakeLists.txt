@@ -53,4 +53,4 @@ configure_file(kipiplugin_dngconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_dngconverter                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_dngconverterui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_dngconverterui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

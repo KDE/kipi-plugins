@@ -14,4 +14,4 @@ configure_file(kipiplugin_wallpaper.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/ki
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wallpaper.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_wallpaper                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_wallpaperui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_wallpaperui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

@@ -35,4 +35,4 @@ configure_file(kipiplugin_flickrexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_flickrexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_flickrexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_flickrexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

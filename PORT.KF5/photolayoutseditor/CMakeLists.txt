@@ -200,7 +200,7 @@ configure_file(plugin/kipiplugin_photolayoutseditor.desktop.cmake ${CMAKE_CURREN
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_photolayoutseditor                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_photolayoutseditorui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_photolayoutseditorui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Stand-alone version of PhotoLayoutsEditor

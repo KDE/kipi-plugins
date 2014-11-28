@@ -90,7 +90,7 @@ configure_file(plugin/kipiplugin_panorama.desktop.cmake ${CMAKE_CURRENT_BINARY_D
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_panorama                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_panoramaui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_panoramaui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Test program

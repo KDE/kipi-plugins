@@ -30,4 +30,4 @@ configure_file(kipiplugin_smug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplu
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_smug.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_smug                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_smugui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_smugui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

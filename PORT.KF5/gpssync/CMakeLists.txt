@@ -85,7 +85,7 @@ configure_file(kipiplugin_gpssync.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_gpssync                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_gpssyncui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_gpssyncui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 
 install(FILES   data/bookmarks-marker.png
                 data/searchmarker-normal.png

@@ -38,4 +38,4 @@ configure_file(kipiplugin_yandexfotki.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_yandexfotki                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES kipiplugin_yandexfotkiui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES kipiplugin_yandexfotkiui.rc                                  DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

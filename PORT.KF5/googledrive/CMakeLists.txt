@@ -33,4 +33,4 @@ configure_file(kipiplugin_googledrive.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googledrive.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_googledrive                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_googledriveui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_googledriveui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

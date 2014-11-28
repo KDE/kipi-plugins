@@ -60,4 +60,4 @@ configure_file(plugin/kipiplugin_batchprocessimages.desktop.cmake ${CMAKE_CURREN
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_batchprocessimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES plugin/kipiplugin_batchprocessimagesui.rc                                  DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES plugin/kipiplugin_batchprocessimagesui.rc                                  DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

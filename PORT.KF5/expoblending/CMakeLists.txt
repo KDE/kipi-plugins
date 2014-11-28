@@ -65,7 +65,7 @@ configure_file(plugin/kipiplugin_expoblending.desktop.cmake ${CMAKE_CURRENT_BINA
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_expoblending                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_expoblendingui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_expoblendingui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 
 # =======================================================
 # Stand alone version of ExpoBlending plugin

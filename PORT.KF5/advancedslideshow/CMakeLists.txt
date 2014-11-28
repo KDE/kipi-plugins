@@ -62,4 +62,4 @@ configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake ${CMAKE_CURRENT
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_advancedslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_advancedslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_advancedslideshowui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

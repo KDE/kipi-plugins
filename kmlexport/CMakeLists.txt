@@ -24,7 +24,7 @@ configure_file(kipiplugin_kmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/ki
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_kmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_kmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_kmlexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)

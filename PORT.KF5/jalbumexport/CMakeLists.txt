@@ -30,4 +30,4 @@ configure_file(kipiplugin_jalbumexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_jalbumexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_jalbumexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_jalbumexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_jalbumexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

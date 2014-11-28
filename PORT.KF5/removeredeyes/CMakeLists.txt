@@ -82,5 +82,5 @@ configure_file(plugin/kipiplugin_removeredeyes.desktop.cmake ${CMAKE_CURRENT_BIN
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop     DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_removeredeyes                                                DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_removeredeyesui.rc                                    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_removeredeyesui.rc                                    DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 install(FILES   widgets/controlwidget.svg plugin/removeredeyes_classifier_eye_20_20.xml DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)

@@ -29,5 +29,5 @@ configure_file(kipiplugin_piwigoexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_piwigoexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_piwigoexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_piwigoexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 install(FILES   piwigo_logo.png                                             DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_piwigoexport/pics)

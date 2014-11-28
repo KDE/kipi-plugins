@@ -38,4 +38,4 @@ configure_file(kipiplugin_debianscreenshots.desktop.cmake ${CMAKE_CURRENT_BINARY
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_debianscreenshots                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_debianscreenshotsui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_debianscreenshotsui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

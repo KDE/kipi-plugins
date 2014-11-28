@@ -27,4 +27,4 @@ configure_file(${PLUGIN_NAME}.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS ${PLUGIN_NAME}                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   ${PLUGIN_NAME}ui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${PLUGIN_NAME}ui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

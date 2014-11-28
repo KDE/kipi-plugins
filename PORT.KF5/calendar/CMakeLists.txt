@@ -43,4 +43,4 @@ configure_file(plugin/kipiplugin_calendar.desktop.cmake ${CMAKE_CURRENT_BINARY_D
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_calendar.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_calendar                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_calendarui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_calendarui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

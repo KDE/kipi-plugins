@@ -34,4 +34,4 @@ configure_file(kipiplugin_ipodexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/k
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_ipodexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_ipodexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_ipodexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

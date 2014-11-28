@@ -58,6 +58,6 @@ configure_file(kipiplugin_htmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/k
 
 install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS   kipiplugin_htmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES     kipiplugin_htmlexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES     kipiplugin_htmlexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 install(FILES     THEME_HOWTO                                               DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)
 install(DIRECTORY themes                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport)

@@ -48,4 +48,4 @@ configure_file(plugin/kipiplugin_jpeglossless.desktop.cmake ${CMAKE_CURRENT_BINA
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_jpeglossless                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_jpeglosslessui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_jpeglosslessui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

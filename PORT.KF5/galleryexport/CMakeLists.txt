@@ -33,5 +33,5 @@ configure_file(kipiplugin_galleryexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_galleryexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_galleryexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_galleryexportui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_galleryexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 install(FILES   gallery_logo.png                                             DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_galleryexport/pics)

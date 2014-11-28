@@ -34,4 +34,4 @@ configure_file(kipiplugin_facebook.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kip
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_facebook                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_facebookui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_facebookui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

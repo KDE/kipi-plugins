@@ -22,4 +22,4 @@ configure_file(kipiplugin_kopete.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipip
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_kopete                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_kopeteui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_kopeteui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

@@ -46,4 +46,4 @@ configure_file(plugin/kipiplugin_videoslideshow.desktop.cmake ${CMAKE_CURRENT_BI
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_videoslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_videoslideshowui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_videoslideshowui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

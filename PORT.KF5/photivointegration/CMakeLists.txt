@@ -31,4 +31,4 @@ configure_file(kipiplugin_photivointegration.desktop.cmake ${CMAKE_CURRENT_BINAR
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_photivointegration.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_photivointegration                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_photivointegrationui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kipiplugin_photivointegrationui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)

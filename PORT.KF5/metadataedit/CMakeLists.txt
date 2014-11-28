@@ -62,4 +62,4 @@ configure_file(plugin/kipiplugin_metadataedit.desktop.cmake ${CMAKE_CURRENT_BINA
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_metadataedit                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   plugin/kipiplugin_metadataeditui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   plugin/kipiplugin_metadataeditui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
