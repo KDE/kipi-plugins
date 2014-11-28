@@ -275,7 +275,8 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     // --------------------------------------------------------------
     // About data and help button.
-/* PORT QT5
+#pragma message: PORT QT5
+/*
     KPAboutData* const about = new KPAboutData(ki18n("KML Export"),
                                    0,
                                    KAboutData::License_GPL,

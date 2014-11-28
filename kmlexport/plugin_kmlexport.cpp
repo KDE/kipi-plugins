@@ -63,7 +63,8 @@ K_EXPORT_PLUGIN ( KMLExportFactory("kipiplugin_kmlexport") )
 Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     : Plugin( /*KMLExportFactory::componentData(),*/ parent, "KMLExport")
 {
-    //PORT QT5 kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
+#pragma message: PORT QT5
+    //kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
 
     setUiBaseName("kipiplugin_kmlexportui.rc");
     setupXML();
