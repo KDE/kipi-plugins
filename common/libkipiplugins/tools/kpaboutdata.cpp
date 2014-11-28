@@ -109,8 +109,7 @@ void KPAboutData::setHelpButton(QPushButton* const help)
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction * const handbook   = new QAction(QIcon::fromTheme("help-contents"), i18n("Handbook"), helpMenu);
 
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
+    connect(handbook, &QAction::triggered, this, &KPAboutData::slotHelp);
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     help->setMenu(helpMenu->menu());

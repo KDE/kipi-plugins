@@ -144,11 +144,9 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
 
     d->progressTimer = new QTimer(this);
 
-    connect(d->progressTimer, SIGNAL(timeout()),
-            this, SLOT(slotProgressTimerDone()));
+    connect(d->progressTimer, &QTimer::timeout, this, &KPPreviewManager::slotProgressTimerDone);
 
-    connect(d->button, SIGNAL(clicked()),
-            this, SIGNAL(signalButtonClicked()));
+    connect(d->button, &QPushButton::clicked, this, &KPPreviewManager::signalButtonClicked);
 }
 
 KPPreviewManager::~KPPreviewManager()

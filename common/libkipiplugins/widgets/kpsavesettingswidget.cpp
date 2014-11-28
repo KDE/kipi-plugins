@@ -115,11 +115,9 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());
 
-    connect(d->formatComboBox, SIGNAL(activated(int)),
-            this, SIGNAL(signalSaveFormatChanged()));
+    connect(d->formatComboBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &KPSaveSettingsWidget::signalSaveFormatChanged);
 
-    connect(d->conflictButtonGroup, SIGNAL(buttonClicked(int)),
-            this, SIGNAL(signalConflictButtonChanged(int)));
+    connect(d->conflictButtonGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &KPSaveSettingsWidget::signalConflictButtonChanged);
 }
 
 KPSaveSettingsWidget::~KPSaveSettingsWidget()

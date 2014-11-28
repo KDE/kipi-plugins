@@ -60,8 +60,7 @@ public:
 KPProgressWidget::KPProgressWidget(QWidget* const parent)
     : QProgressBar(parent), d(new Private)
 {
-    connect(this, SIGNAL(valueChanged(int)),
-            this, SLOT(slotValueChanged(int)));
+    connect(this, &KPProgressWidget::valueChanged, this, &KPProgressWidget::slotValueChanged);
 }
 
 KPProgressWidget::~KPProgressWidget()
@@ -119,8 +118,7 @@ void KPProgressWidget::progressScheduled(const QString& title, bool canBeCancele
 
         if (canBeCanceled)
         {
-            connect(d->iface, SIGNAL(progressCanceled(QString)),
-                    this, SLOT(slotProgressCanceled(QString)));
+            connect(d->iface, &Interface::progressCanceled, this, &KPProgressWidget::slotProgressCanceled);
         }
     }
 #endif // KIPI_VERSION >= 0x010500

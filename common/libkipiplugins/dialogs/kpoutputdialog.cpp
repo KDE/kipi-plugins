@@ -79,8 +79,7 @@ KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
 
     setMainWidget(vbox);
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotCopyToCliboard()));
+    connect(this, &KPOutputDialog::user1Clicked, this, &KPOutputDialog::slotCopyToCliboard);
 
     resize(600, 400);
 }

@@ -311,8 +311,7 @@ void KPImagesListView::setup(int iconSize)
     header()->setResizeMode(User5, QHeaderView::Interactive);
     header()->setResizeMode(User6, QHeaderView::Stretch);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem*,int)));
+    connect(this, &KPImagesListView::itemClicked, this, &KPImagesListView::slotItemClicked);
 }
 
 void KPImagesListView::enableDragAndDrop(const bool enable)
@@ -574,60 +573,45 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    connect(d->listView, SIGNAL(signalAddedDropedItems(QList<QUrl>)),
-            this, SLOT(slotAddImages(QList<QUrl>)));
+    connect(d->listView, &KPImagesListView::signalAddedDropedItems, this, &KPImagesList::slotAddImages);
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
-                this, SLOT(slotThumbnail(QUrl,QPixmap)));
+        connect(d->iface, &Interface::gotThumbnail, this, &KPImagesList::slotThumbnail);
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(QUrl,QImage)),
-            this, SLOT(slotRawThumb(QUrl,QImage)));
+    connect(d->loadRawThumb, &KPRawThumbThread::signalRawThumb, this, &KPImagesList::slotRawThumb);
 
-    connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
-            this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
+    connect(d->listView, &KPImagesListView::signalItemClicked, this, &KPImagesList::signalItemClicked);
 
-    connect(d->listView, SIGNAL(signalContextMenuRequested()),
-            this, SIGNAL(signalContextMenuRequested()));
+    connect(d->listView, &KPImagesListView::signalContextMenuRequested, this, &KPImagesList::signalContextMenuRequested);
 
     // queue this connection because itemSelectionChanged is emitted
     // while items are deleted, and accessing selectedItems at that
     // time causes a crash ...
-    connect(d->listView, SIGNAL(itemSelectionChanged()),
-            this, SLOT(slotImageListChanged()), Qt::QueuedConnection);
+    connect(d->listView, &KPImagesListView::itemSelectionChanged, this, &KPImagesList::slotImageListChanged, Qt::QueuedConnection);
 
-    connect(this, SIGNAL(signalImageListChanged()),
-            this, SLOT(slotImageListChanged()));
+    connect(this, &KPImagesList::signalImageListChanged, this, &KPImagesList::slotImageListChanged);
 
     // --------------------------------------------------------
 
-    connect(d->addButton, SIGNAL(clicked()),
-            this, SLOT(slotAddItems()));
+    connect(d->addButton, &CtrlButton::clicked, this, &KPImagesList::slotAddItems);
 
-    connect(d->removeButton, SIGNAL(clicked()),
-            this, SLOT(slotRemoveItems()));
+    connect(d->removeButton, &CtrlButton::clicked, this, &KPImagesList::slotRemoveItems);
 
-    connect(d->moveUpButton, SIGNAL(clicked()),
-            this, SLOT(slotMoveUpItems()));
+    connect(d->moveUpButton, &CtrlButton::clicked, this, &KPImagesList::slotMoveUpItems);
 
-    connect(d->moveDownButton, SIGNAL(clicked()),
-            this, SLOT(slotMoveDownItems()));
+    connect(d->moveDownButton, &CtrlButton::clicked, this, &KPImagesList::slotMoveDownItems);
 
-    connect(d->clearButton, SIGNAL(clicked()),
-            this, SLOT(slotClearItems()));
+    connect(d->clearButton, &CtrlButton::clicked, this, &KPImagesList::slotClearItems);
 
-    connect(d->loadButton, SIGNAL(clicked()),
-            this, SLOT(slotLoadItems()));
+    connect(d->loadButton, &CtrlButton::clicked, this, &KPImagesList::slotLoadItems);
 
-    connect(d->saveButton, SIGNAL(clicked()),
-            this, SLOT(slotSaveItems()));
+    connect(d->saveButton, &CtrlButton::clicked, this, &KPImagesList::slotSaveItems);
 
-    connect(d->progressTimer, SIGNAL(timeout()),
-            this, SLOT(slotProgressTimerDone()));
+    connect(d->progressTimer, &QTimer::timeout, this, &KPImagesList::slotProgressTimerDone);
 
     // --------------------------------------------------------
 

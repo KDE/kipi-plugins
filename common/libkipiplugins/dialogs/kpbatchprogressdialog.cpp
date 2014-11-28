@@ -121,11 +121,9 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 
     //---------------------------------------------
 
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(slotContextMenu()));
+    connect(this, &KPBatchProgressWidget::customContextMenuRequested, this, &KPBatchProgressWidget::slotContextMenu);
 
-    connect(d->progress, SIGNAL(signalProgressCanceled()),
-            this, SIGNAL(signalProgressCanceled()));
+    connect(d->progress, &KPProgressWidget::signalProgressCanceled, this, &KPBatchProgressWidget::signalProgressCanceled);
 }
 
 KPBatchProgressWidget::~KPBatchProgressWidget()
@@ -188,8 +186,7 @@ void KPBatchProgressWidget::slotContextMenu()
     QMenu popmenu(this);
     QAction * const action = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy to Clipboard"), this);
 
-    connect(action, SIGNAL(triggered(bool)),
-            this, SLOT(slotCopy2ClipBoard()));
+    connect(action, &QAction::triggered, this, &KPBatchProgressWidget::slotCopy2ClipBoard);
 
     popmenu.addAction(action);
     popmenu.exec(QCursor::pos());
@@ -225,11 +222,9 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
     setMainWidget(w);
     resize(600, 400);
 
-    connect(w, SIGNAL(signalProgressCanceled()),
-            this, SIGNAL(cancelClicked()));
+    connect(w, &KPBatchProgressWidget::signalProgressCanceled, this, &KPBatchProgressDialog::cancelClicked);
 
-    connect(this, SIGNAL(cancelClicked()),
-            this, SLOT(slotCancel()));
+    connect(this, &KPBatchProgressDialog::cancelClicked, this, &KPBatchProgressDialog::slotCancel);
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()

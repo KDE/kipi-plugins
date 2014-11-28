@@ -520,20 +520,17 @@ KPPreviewImage::KPPreviewImage(QWidget* const parent)
     d->zoomInAction = new QAction(QIcon::fromTheme("zoom-in"), i18n("Zoom In"), this);
     d->zoomInAction->setToolTip(i18n("Zoom In"));
     d->zoomInAction->setShortcut(Qt::Key_Plus);
-    connect(d->zoomInAction, SIGNAL(triggered()),
-            this, SLOT(slotZoomIn()));
+    connect(d->zoomInAction, &QAction::triggered, this, &KPPreviewImage::slotZoomIn);
 
     d->zoomOutAction = new QAction(QIcon::fromTheme("zoom-out"), i18n("Zoom Out"), this);
     d->zoomOutAction->setToolTip(i18n("Zoom Out"));
     d->zoomOutAction->setShortcut(Qt::Key_Minus);
-    connect(d->zoomOutAction, SIGNAL(triggered()),
-            this, SLOT(slotZoomOut()));
+    connect(d->zoomOutAction, &QAction::triggered, this, &KPPreviewImage::slotZoomOut);
 
     d->zoom2FitAction = new QAction(QIcon::fromTheme("zoom-fit-best"), i18n("Zoom to Fit"), this);
     d->zoom2FitAction->setToolTip(i18n("Zoom to Fit"));
     d->zoom2FitAction->setShortcut(Qt::Key_Asterisk);
-    connect(d->zoom2FitAction, SIGNAL(triggered()),
-            this, SLOT(slotZoom2Fit()));
+    connect(d->zoom2FitAction, &QAction::triggered, this, &KPPreviewImage::slotZoom2Fit);
 
     addAction(d->zoomInAction);
     addAction(d->zoomOutAction);

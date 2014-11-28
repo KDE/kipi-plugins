@@ -117,14 +117,12 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
-                this, SLOT(slotThumbnail(QUrl,QPixmap)));
+        connect(d->iface, &Interface::gotThumbnail, this, &KPImageDialogPreview::slotThumbnail);
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(QUrl,QImage)),
-            this, SLOT(slotRawThumb(QUrl,QImage)));
+    connect(d->loadRawThumb, &KPRawThumbThread::signalRawThumb, this, &KPImageDialogPreview::slotRawThumb);
 }
 
 KPImageDialogPreview::~KPImageDialogPreview()
