@@ -31,7 +31,6 @@
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klibloader.h>
@@ -46,12 +45,12 @@
 
 #include "sendimages.h"
 #include "sendimagesdialog.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPISendimagesPlugin
 {
 
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
-K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
 
 class Plugin_SendImages::Private
 {
@@ -72,10 +71,10 @@ public:
 };
 
 Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
-    : Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
+    : Plugin(parent, "SendImages"), 
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_SendImages plugin loaded";
 
     setUiBaseName("kipiplugin_sendimagesui.rc");
     setupXML();

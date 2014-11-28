@@ -28,25 +28,24 @@
 
 #include <QCloseEvent>
 #include <QGridLayout>
+#include <QMenu>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <QMenu>
 #include <khelpmenu.h>
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
-// LibKIPI includes
+// Libkipi includes
 
-#include <libkipi/imagecollection.h>
-#include <libkipi/interface.h>
+#include <imagecollection.h>
+#include <interface.h>
 
 // Local includes
 
@@ -69,13 +68,13 @@ public:
         settingsWidget = 0;
     }
 
-    KUrl::List      urls;
+    QList<QUrl>      urls;
 
     MyImageList*    imagesList;
     SettingsWidget* settingsWidget;
 };
 
-SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& urls)
+SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>& urls)
     : KPToolDialog(0), d(new Private)
 {
     d->urls = urls;
@@ -102,19 +101,19 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    KPAboutData* about = new KPAboutData(ki18n("Send Images"),
-                             0,
-                             KAboutData::License_GPL,
-                             ki18n("A plugin to e-mail items"),
-                             ki18n("(c) 2003-2013, Gilles Caulier"));
+    KPAboutData* const about = new KPAboutData(ki18n("Send Images"),
+                                   0,
+                                   KAboutLicense::GPL,
+                                   ki18n("A plugin to e-mail items"),
+                                   ki18n("(c) 2003-2014, Gilles Caulier"));
 
-    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
+    about->addAuthor(ki18n("Gilles Caulier").toString(), ki18n("Author and Maintainer").toString(),
                      "caulier dot gilles at gmail dot com");
 
-    about->addAuthor(ki18n("Michael Hoechstetter"), ki18n("Developer"),
+    about->addAuthor(ki18n("Michael Hoechstetter").toString(), ki18n("Developer").toString(),
                      "michael dot hoechstetter at gmx dot de");
 
-    about->addAuthor(ki18n("Tom Albers"), ki18n("Developer"),
+    about->addAuthor(ki18n("Tom Albers").toString(), ki18n("Developer").toString(),
                      "tomalbers at kde dot nl");
 
     about->setHandbookEntry("sendimages");

@@ -341,7 +341,7 @@ if(KF5Kipi_FOUND)
          add_subdirectory(printimages)
          add_subdirectory(kmlexport)
 
-#         add_subdirectory(sendimages)
+         add_subdirectory(sendimages)
 #         add_subdirectory(timeadjust)
 #         add_subdirectory(metadataedit)
 #         add_subdirectory(flashexport)

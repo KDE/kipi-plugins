@@ -25,7 +25,6 @@
 
 // Qt includes
 
-#include <QDebug>
 #include <QDir>
 #include <QImage>
 #include <QFile>
@@ -50,6 +49,7 @@
 #include "kpversion.h"
 #include "kpwriteimage.h"
 #include "kpmetadata.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
 
@@ -111,7 +111,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
     QFileInfo tmp(destName);
     QFileInfo tmpDir(tmp.dir().absolutePath());
 
-    qCDebug(KIPIPLUGINS_LOG)() << "tmpDir: " << tmp.dir().absolutePath();
+    qCDebug(KIPIPLUGINS_LOG) << "tmpDir: " << tmp.dir().absolutePath();
 
     if (!tmpDir.exists() || !tmpDir.isWritable())
     {
@@ -175,7 +175,9 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
         if (emailSettings.format() == QString("JPEG"))
         {
-            if ( !img.save(destPath, emailSettings.format().toLatin1(), emailSettings.imageCompression) )
+            if ( !img.save(destPath,
+                           emailSettings.format().toLatin1().constData(),
+                           emailSettings.imageCompression) )
             {
                 err = i18n("Cannot save resized image (JPEG). Aborting.");
                 return false;
@@ -220,16 +222,16 @@ ImageResize::~ImageResize()
 
 void ImageResize::resize(const EmailSettings& settings)
 {
-    RJobCollection* const collection = new RJobCollection(this);
-    *m_count                         = 0;
-    int i                            = 1;
+    RJobCollection collection;
+    *m_count = 0;
+    int i    = 1;
 
     for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
          it != settings.itemsList.constEnd(); ++it)
     {
         QString tmp;
 
-        Task* const t = new Task(this, m_count);
+        Task* const t = new Task(m_count);
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 
@@ -247,11 +249,11 @@ void ImageResize::resize(const EmailSettings& settings)
         connect(t, SIGNAL(failedResize(QUrl,QString,int)),
                 this, SIGNAL(failedResize(QUrl,QString,int)));
 
-        collection->addJob(t);
+        collection.append(t);
         i++;
     }
 
-    appendJob(collection);
+    appendJobs(collection);
 }
 
 void ImageResize::cancel()
@@ -263,7 +265,6 @@ void ImageResize::cancel()
 void ImageResize::slotFinished()
 {
     emit completeResize();
-    RActionThreadBase::slotFinished();
 }
 
 }  // namespace KIPISendimagesPlugin

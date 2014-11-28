@@ -45,7 +45,7 @@ class SendImagesDialog : public KPToolDialog
 
 public:
 
-    SendImagesDialog(QWidget* const parent, const KUrl::List& urls);
+    SendImagesDialog(QWidget* const parent, const QList<QUrl>& urls);
     ~SendImagesDialog();
 
     EmailSettings emailSettings() const;

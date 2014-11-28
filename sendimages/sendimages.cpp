@@ -37,7 +37,6 @@
 // KDE includes
 
 #include <kapplication.h>
-#include <kdebug.h>
 #include <kguiitem.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -53,6 +52,7 @@
 // Local includes
 
 #include "kpbatchprogressdialog.h"
+#include "kipiplugins_debug.h"
 #include "imageresize.h"
 
 using namespace KIPI;
@@ -81,8 +81,8 @@ public:
 
     bool                   cancel;
 
-    KUrl::List             attachementFiles;
-    KUrl::List             failedResizedImages;
+    QList<QUrl>             attachementFiles;
+    QList<QUrl>             failedResizedImages;
 
     Interface*             iface;
 
@@ -99,14 +99,14 @@ SendImages::SendImages(const EmailSettings& settings, QObject* const parent)
     d->settings        = settings;
     d->threadImgResize = new ImageResize(this);
 
-    connect(d->threadImgResize, SIGNAL(startingResize(KUrl)),
-            this, SLOT(slotStartingResize(KUrl)));
+    connect(d->threadImgResize, SIGNAL(startingResize(QUrl)),
+            this, SLOT(slotStartingResize(QUrl)));
 
-    connect(d->threadImgResize, SIGNAL(finishedResize(KUrl,KUrl,int)),
-            this, SLOT(slotFinishedResize(KUrl,KUrl,int)));
+    connect(d->threadImgResize, SIGNAL(finishedResize(QUrl,QUrl,int)),
+            this, SLOT(slotFinishedResize(QUrl,QUrl,int)));
 
-    connect(d->threadImgResize, SIGNAL(failedResize(KUrl,QString,int)),
-            this, SLOT(slotFailedResize(KUrl,QString,int)));
+    connect(d->threadImgResize, SIGNAL(failedResize(QUrl,QString,int)),
+            this, SLOT(slotFailedResize(QUrl,QString,int)));
 
     connect(d->threadImgResize, SIGNAL(completeResize()),
             this, SLOT(slotCompleteResize()));
@@ -193,7 +193,7 @@ void SendImages::slotCancel()
     slotCleanUp();
 }
 
-void SendImages::slotStartingResize(const KUrl& orgUrl)
+void SendImages::slotStartingResize(const QUrl& orgUrl)
 {
     if (d->cancel) return;
 
@@ -201,12 +201,12 @@ void SendImages::slotStartingResize(const KUrl& orgUrl)
     d->progressDlg->progressWidget()->addedAction(text, StartingMessage);
 }
 
-void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent)
+void SendImages::slotFinishedResize(const QUrl& orgUrl, const QUrl& emailUrl, int percent)
 {
     if (d->cancel) return;
 
     d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
-    kDebug() << emailUrl;
+    qCDebug(KIPIPLUGINS_LOG) << emailUrl;
     d->attachementFiles.append(emailUrl);
     d->settings.setEmailUrl(orgUrl, emailUrl);
 
@@ -214,7 +214,7 @@ void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, in
     d->progressDlg->progressWidget()->addedAction(text, SuccessMessage);
 }
 
-void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int percent)
+void SendImages::slotFailedResize(const QUrl& orgUrl, const QString& error, int percent)
 {
     if (d->cancel) return;
 
@@ -293,7 +293,7 @@ void SendImages::buildPropertiesFile()
         propertiesFile.open(QIODevice::WriteOnly);
         stream << propertiesText << "\n";
         propertiesFile.close();
-        d->attachementFiles.append(propertiesFile.fileName());
+        d->attachementFiles << QUrl(propertiesFile.fileName());
 
         d->progressDlg->progressWidget()->addedAction(i18n("Image properties file done"), SuccessMessage);
     }
@@ -305,7 +305,7 @@ bool SendImages::showFailedResizedImages() const
     {
         QStringList list;
 
-        for (KUrl::List::const_iterator it = d->failedResizedImages.constBegin();
+        for (QList<QUrl>::const_iterator it = d->failedResizedImages.constBegin();
             it != d->failedResizedImages.constEnd(); ++it)
         {
             list.append((*it).fileName());
@@ -323,7 +323,7 @@ bool SendImages::showFailedResizedImages() const
             case KMessageBox::Yes:
             {
                 // Added source image files instead resized images...
-                for (KUrl::List::const_iterator it = d->failedResizedImages.constBegin();
+                for (QList<QUrl>::const_iterator it = d->failedResizedImages.constBegin();
                     it != d->failedResizedImages.constEnd(); ++it)
                 {
                     d->attachementFiles.append(*it);
@@ -349,32 +349,32 @@ bool SendImages::showFailedResizedImages() const
     return true;
 }
 
-KUrl::List SendImages::divideEmails() const
+QList<QUrl> SendImages::divideEmails() const
 {
     qint64 myListSize = 0;
 
-    KUrl::List processedNow;            // List witch can be processed now.
-    KUrl::List todoAttachement;         // Still todo list
+    QList<QUrl> processedNow;            // List witch can be processed now.
+    QList<QUrl> todoAttachement;         // Still todo list
 
-    kDebug() << "Attachment limit: " << d->settings.attachementLimitInBytes();
+    qCDebug(KIPIPLUGINS_LOG) << "Attachment limit: " << d->settings.attachementLimitInBytes();
 
-    for (KUrl::List::const_iterator it = d->attachementFiles.constBegin();
+    for (QList<QUrl>::const_iterator it = d->attachementFiles.constBegin();
         it != d->attachementFiles.constEnd(); ++it)
     {
         QFile file((*it).path());
-        kDebug() << "File: " << file.fileName() << " Size: " << file.size();
+        qCDebug(KIPIPLUGINS_LOG) << "File: " << file.fileName() << " Size: " << file.size();
 
         if ((myListSize + file.size()) <= d->settings.attachementLimitInBytes())
         {
             myListSize += file.size();
             processedNow.append(*it);
-            kDebug() << "Current list size: " << myListSize;
+            qCDebug(KIPIPLUGINS_LOG) << "Current list size: " << myListSize;
         }
         else
         {
             if ((file.size()) >= d->settings.attachementLimitInBytes())
             {
-                kDebug() << "File \"" << file.fileName() << "\" is out of attachment limit!";
+                qCDebug(KIPIPLUGINS_LOG) << "File \"" << file.fileName() << "\" is out of attachment limit!";
                 QString text = i18n("The file \"%1\" is too big to be sent, please reduce its size or change your settings" , file.fileName());
                 d->progressDlg->progressWidget()->addedAction(text, WarningMessage);
             }
@@ -395,7 +395,7 @@ bool SendImages::invokeMailAgent()
     if (d->cancel) return false;
 
     bool       agentInvoked = false;
-    KUrl::List fileList;
+    QList<QUrl> fileList;
 
     do
     {
@@ -405,7 +405,7 @@ bool SendImages::invokeMailAgent()
         {
             QStringList stringFileList;
 
-            foreach(const KUrl& file, fileList)
+            foreach(const QUrl& file, fileList)
             {
                 stringFileList << file.path();
             }
@@ -444,7 +444,7 @@ bool SendImages::invokeMailAgent()
                     args.append("-m");
                     args.append("mailto:");
 
-                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("-a");
                         args.append((*it).path());
@@ -480,7 +480,7 @@ bool SendImages::invokeMailAgent()
                     args.append("--compose");
                     args.append("--attach");
 
-                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append((*it).path());
                     }
@@ -525,7 +525,7 @@ bool SendImages::invokeMailAgent()
 
                     QString tmp = "mailto:?subject=";
 
-                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append("&attach=");
                         tmp.append( (*it).path() );
@@ -558,7 +558,7 @@ bool SendImages::invokeMailAgent()
                     prog = QString("cmd");
 #endif
 
-                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("--attach");
                         args.append((*it).path());
@@ -610,7 +610,7 @@ bool SendImages::invokeMailAgent()
                     args.append("-compose");
                     QString tmp = "attachment='";
 
-                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
+                    for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append( "file://" );
                         tmp.append((*it).path());
@@ -644,7 +644,7 @@ bool SendImages::invokeMailAgent()
 
 void SendImages::invokeMailAgentError(const QString& prog, const QStringList& args)
 {
-    kDebug() << "Command Line: " << prog << args;
+    qCDebug(KIPIPLUGINS_LOG) << "Command Line: " << prog << args;
     QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
     d->progressDlg->progressWidget()->addedAction(text, ErrorMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
@@ -657,7 +657,7 @@ void SendImages::invokeMailAgentError(const QString& prog, const QStringList& ar
 
 void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& args)
 {
-    kDebug() << "Command Line: " << prog << args;
+    qCDebug(KIPIPLUGINS_LOG) << "Command Line: " << prog << args;
     QString text = i18n("Starting \"%1\" program...", prog);
     d->progressDlg->progressWidget()->addedAction(text, StartingMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());

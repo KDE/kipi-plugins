@@ -47,9 +47,9 @@ public:
 
 private Q_SLOTS:
 
-    void slotStartingResize(const KUrl&);
-    void slotFinishedResize(const KUrl&, const KUrl&, int);
-    void slotFailedResize(const KUrl&, const QString&, int);
+    void slotStartingResize(const QUrl&);
+    void slotFinishedResize(const QUrl&, const QUrl&, int);
+    void slotFailedResize(const QUrl&, const QString&, int);
     void slotCompleteResize();
     void slotCancel();
     void slotCleanUp();
@@ -77,7 +77,7 @@ private:
         The returned list are images than we can send immediately, and are removed from d->attachementFiles list.
         Files which still in d->attachementFiles need to be send by another pass.
      */
-    KUrl::List divideEmails() const;
+    QList<QUrl> divideEmails() const;
 
 private:
 

@@ -78,7 +78,7 @@ public:
         MEDIUM,
         BIG,
         VERYBIG,
-        HUGE
+        LARGE
     };
 
     enum ImageFormat

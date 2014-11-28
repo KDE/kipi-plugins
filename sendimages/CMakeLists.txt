@@ -17,12 +17,14 @@ set(kipiplugin_sendimages_PART_SRCS imageresize.cpp
 add_library(kipiplugin_sendimages MODULE ${kipiplugin_sendimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_sendimages
-                      KF5kipiplugins
                       KF5::Parts
-                      KF5::Kipi
-                      KF5::KExiv2
-                      KF5::KDcraw
                       KF5::KDELibs4Support
+
+                      ${KF5Kipi_LIBRARIES}
+                      ${KF5KExiv2_LIBRARIES}
+                      ${KF5KDcraw_LIBRARIES}
+
+                      KF5kipiplugins
 )
 
 configure_file(kipiplugin_sendimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
