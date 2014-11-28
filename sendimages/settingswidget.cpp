@@ -30,6 +30,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QApplication>
+#include <QSpinBox>
 
 // KDE includes
 
@@ -37,7 +38,6 @@
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 namespace KIPISendimagesPlugin
 {
@@ -75,8 +75,8 @@ public:
     QCheckBox*    changeImagesProp;
     QCheckBox*    addComments;
 
-    KIntNumInput* imageCompression;
-    KIntNumInput* attachmentlimit;
+    QSpinBox* imageCompression;
+    QSpinBox* attachmentlimit;
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
@@ -115,8 +115,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    d->attachmentlimit = new KIntNumInput(this);
-    d->attachmentlimit->setRange(1, 50, 1);
+    d->attachmentlimit = new QSpinBox(this);
+    d->attachmentlimit->setRange(1, 50);
+    d->attachmentlimit->setSingleStep(1);
     d->attachmentlimit->setValue(17);
     d->attachmentlimit->setSuffix(i18n(" MB"));
 
@@ -185,8 +186,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    d->imageCompression = new KIntNumInput(groupBox);
-    d->imageCompression->setRange(1, 100, 1);
+    d->imageCompression = new QSpinBox(groupBox);
+    d->imageCompression->setRange(1, 100);
+    d->imageCompression->setSingleStep(1);
     d->imageCompression->setValue(75);
     whatsThis = i18n("<p>The new compression value of JPEG images to be sent:</p>");
     whatsThis = whatsThis + i18n("<p><b>1</b>: very high compression<br/>"
