@@ -1,6 +1,0 @@
-File=printimagesconfig.kcfg
-ClassName=PrintImagesConfig
-NameSpace=KIPIPrintImagesPlugin
-Singleton=true
-Mutators=true
-UseEnumTypes=true

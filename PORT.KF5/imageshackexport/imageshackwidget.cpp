@@ -45,8 +45,8 @@
 
 // LibKIPI includes
 
-#include <libkipi/uploadwidget.h>
-#include <libkipi/imagecollection.h>
+#include <uploadwidget.h>
+#include <imagecollection.h>
 
 // Local includes
 

@@ -42,7 +42,7 @@
 
 // LibKIPI includes
 
-#include <libkipi/imagecollectionselector.h>
+#include <imagecollectionselector.h>
 
 // Local includes
 

@@ -72,9 +72,9 @@
 #include "rgtagmodel.h"
 #include "tests/simpletreemodel/simpletreemodel.h"
 
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
-#include <libkipi/version.h>
+#include <interface.h>
+#include <imagecollection.h>
+#include <version.h>
 
 #ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>

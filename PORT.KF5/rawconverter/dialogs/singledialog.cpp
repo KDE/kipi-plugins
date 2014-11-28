@@ -62,13 +62,13 @@ extern "C"
 
 // LibKDcraw includes
 
-#include <libkdcraw/version.h>
-#include <libkdcraw/dcrawsettingswidget.h>
+#include <version.h>
+#include <dcrawsettingswidget.h>
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
-#include <libkipi/pluginloader.h>
+#include <interface.h>
+#include <pluginloader.h>
 
 // Local includes
 

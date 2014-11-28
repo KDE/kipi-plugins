@@ -59,14 +59,14 @@
 
 // LibKIPI includes
 
-#include <libkipi/uploadwidget.h>
-#include <libkipi/interface.h>
+#include <uploadwidget.h>
+#include <interface.h>
 
 // libKdcraw includes
 
-#include <libkdcraw/rexpanderbox.h>
-#include <libkdcraw/version.h>
-#include <libkdcraw/squeezedcombobox.h>
+#include <rexpanderbox.h>
+#include <version.h>
+#include <squeezedcombobox.h>
 
 // Local includes
 

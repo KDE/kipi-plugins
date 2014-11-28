@@ -30,7 +30,7 @@
 
 // Libkdcraw includes
 
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 namespace DNGIface
 {

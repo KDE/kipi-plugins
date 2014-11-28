@@ -35,7 +35,7 @@
 
 // Libkdcraw includes
 
-#include <libkdcraw/ractionthreadbase.h>
+#include <ractionthreadbase.h>
 
 // local includes
 

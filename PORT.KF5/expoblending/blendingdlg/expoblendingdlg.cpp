@@ -67,12 +67,12 @@ extern "C"
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
+#include <interface.h>
 
 // libKdcraw includes
 
-#include <libkdcraw/version.h>
-#include <libkdcraw/rexpanderbox.h>
+#include <version.h>
+#include <rexpanderbox.h>
 
 // Local includes
 

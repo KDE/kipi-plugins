@@ -68,7 +68,7 @@ extern "C"
 
 // LibKDcraw includes
 
-#include <libkdcraw/version.h>
+#include <version.h>
 
 // Local includes
 

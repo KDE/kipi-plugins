@@ -55,7 +55,7 @@
 
 // libkipi includes
 
-#include <libkipi/interface.h>
+#include <interface.h>
 #include <QApplication>
 #include <QDesktopWidget>
 

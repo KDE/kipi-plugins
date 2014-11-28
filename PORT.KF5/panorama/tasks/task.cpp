@@ -32,7 +32,7 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 namespace KIPIPanoramaPlugin
 {

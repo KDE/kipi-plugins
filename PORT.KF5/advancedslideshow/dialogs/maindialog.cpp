@@ -49,7 +49,7 @@
 
 // Libkipi includes
 
-#include <libkipi/imagecollection.h>
+#include <imagecollection.h>
 
 // Local includes
 

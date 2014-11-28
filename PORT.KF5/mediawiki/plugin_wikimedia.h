@@ -30,7 +30,7 @@
 
 // KIPI includes
 
-#include <libkipi/plugin.h>
+#include <plugin.h>
 
 // MediaWiki includes
 

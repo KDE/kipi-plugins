@@ -35,7 +35,7 @@
 #include <kurl.h>
 
 // LibKIPI
-#include <libkipi/interface.h>
+#include <interface.h>
 
 // Local
 #include "CanvasSize.h"

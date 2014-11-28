@@ -36,12 +36,12 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 // Libkipi includes
 
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
+#include <interface.h>
+#include <imagecollection.h>
 #include <QStandardPaths>
 
 // local includes

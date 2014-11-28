@@ -43,9 +43,9 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
-#include <libkipi/pluginloader.h>
+#include <interface.h>
+#include <imagecollection.h>
+#include <pluginloader.h>
 
 namespace KIPIWallPaperPlugin
 {

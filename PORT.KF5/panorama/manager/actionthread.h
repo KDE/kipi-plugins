@@ -38,8 +38,8 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/rawdecodingsettings.h>
-#include <libkdcraw/ractionthreadbase.h>
+#include <rawdecodingsettings.h>
+#include <ractionthreadbase.h>
 
 // Local includes
 

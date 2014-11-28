@@ -26,8 +26,8 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/kdcraw.h>
-#include <libkdcraw/rawdecodingsettings.h>
+#include <kdcraw.h>
+#include <rawdecodingsettings.h>
 
 // Local includes
 

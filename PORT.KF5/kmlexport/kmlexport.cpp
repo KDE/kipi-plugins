@@ -48,9 +48,9 @@ extern "C"
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
-#include <libkipi/plugin.h>
-#include <libkipi/imagecollection.h>
+#include <interface.h>
+#include <plugin.h>
+#include <imagecollection.h>
 
 // Local includes
 

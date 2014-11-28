@@ -32,7 +32,7 @@
 #include <kurl.h>
 
 // KIPI
-#include <libkipi/imagecollection.h>
+#include <imagecollection.h>
 
 // Local
 #include <theme.h>

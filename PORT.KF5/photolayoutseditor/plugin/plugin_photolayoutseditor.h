@@ -29,7 +29,7 @@
 #include <QWidget>
 #include <QVariant>
 
-#include <libkipi/plugin.h>
+#include <plugin.h>
 
 namespace KIPI
 {

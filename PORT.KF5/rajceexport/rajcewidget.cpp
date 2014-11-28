@@ -48,8 +48,8 @@
 
 // Libkipi includes
 
-#include <libkipi/interface.h>
-#include <libkipi/uploadwidget.h>
+#include <interface.h>
+#include <uploadwidget.h>
 
 // Local includes
 

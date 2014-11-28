@@ -36,7 +36,7 @@
 
 // Include files for KIPI
 
-#include <libkipi/imagecollection.h>
+#include <imagecollection.h>
 
 namespace KIPIFlashExportPlugin
 {

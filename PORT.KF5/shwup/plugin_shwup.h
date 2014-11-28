@@ -32,7 +32,7 @@
 
 // LibKIPI includes
 
-#include <libkipi/plugin.h>
+#include <plugin.h>
 
 class QAction;
 

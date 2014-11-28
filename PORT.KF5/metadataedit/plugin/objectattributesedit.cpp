@@ -41,7 +41,7 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/squeezedcombobox.h>
+#include <squeezedcombobox.h>
 
 // Local includes
 

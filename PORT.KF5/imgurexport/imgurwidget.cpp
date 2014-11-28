@@ -33,7 +33,7 @@
 #include <kpushbutton.h>
 #include <kdebug.h>
 
-#include <libkipi/pluginloader.h>
+#include <pluginloader.h>
 
 // Local includes
 

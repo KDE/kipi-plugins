@@ -36,7 +36,7 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/squeezedcombobox.h>
+#include <squeezedcombobox.h>
 
 // libKExiv2 includes
 
