@@ -141,7 +141,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->imagesResize->insertItem(EmailSettings::MEDIUM,    i18n("Medium (800 pixels)"));
     d->imagesResize->insertItem(EmailSettings::BIG,       i18n("Big (1024 pixels)"));
     d->imagesResize->insertItem(EmailSettings::VERYBIG,   i18n("Very Big (1280 pixels)"));
-    d->imagesResize->insertItem(EmailSettings::LARGE,     i18n("Huge - for printing (1600 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::LARGE,     i18n("Large - for printing (1600 pixels)"));
     d->imagesResize->setCurrentIndex(EmailSettings::MEDIUM);
     QString whatsThis = i18n("<p>Select the size of the images that are to be sent:</p>"
                              "<p><b>%1</b>: use this if you have a very slow Internet "
