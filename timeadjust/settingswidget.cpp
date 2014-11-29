@@ -499,7 +499,7 @@ QDateTime SettingsWidget::calculateAdjustedDate(const QDateTime& originalTime) c
 void SettingsWidget::slotDetAdjustmentByClockPhoto()
 {
     // Determine the currently selected item and preselect it as clock photo
-    KUrl defaultUrl;
+    QUrl defaultUrl;
 
     if (d->imageList)
     {

@@ -47,16 +47,16 @@ class Task : public RActionJob
 
 public:
 
-    Task(const KUrl& url);
+    Task(const QUrl& url);
     ~Task();
 
     void setSettings(const TimeAdjustSettings& settings);
-    void setItemsMap(QMap<KUrl, QDateTime> itemsMap);
+    void setItemsMap(QMap<QUrl, QDateTime> itemsMap);
 
 Q_SIGNALS:
 
-    void signalProcessStarted(const KUrl&);
-    void signalProcessEnded(const KUrl&, int);
+    void signalProcessStarted(const QUrl&);
+    void signalProcessEnded(const QUrl&, int);
 
 protected:
 

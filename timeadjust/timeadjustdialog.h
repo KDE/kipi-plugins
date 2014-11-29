@@ -52,7 +52,7 @@ public:
     explicit TimeAdjustDialog(QWidget* const parent = 0);
     ~TimeAdjustDialog();
 
-    void addItems(const KUrl::List& images);
+    void addItems(const QList<QUrl>& images);
     void disableApplTimestamp();
 
 Q_SIGNALS:
@@ -70,8 +70,8 @@ private Q_SLOTS:
     void slotThreadFinished();
     void slotCancelThread();
     void slotButtonClicked(int);
-    void slotProcessStarted(const KUrl&);
-    void slotProcessEnded(const KUrl&, int);
+    void slotProcessStarted(const QUrl&);
+    void slotProcessEnded(const QUrl&, int);
     void setBusy(bool);
 
     /** Read the Used Timestamps for all selected files

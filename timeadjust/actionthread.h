@@ -57,16 +57,16 @@ public:
     explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void setUpdatedDates(const QMap<KUrl, QDateTime>& map);
+    void setUpdatedDates(const QMap<QUrl, QDateTime>& map);
     void setSettings(const TimeAdjustSettings& settings);
     void cancel();
 
-    static KUrl newUrl(const KUrl& url, const QDateTime& dt);
+    static QUrl newUrl(const QUrl& url, const QDateTime& dt);
 
 Q_SIGNALS:
 
-    void signalProcessStarted(const KUrl&);
-    void signalProcessEnded(const KUrl&, int);
+    void signalProcessStarted(const QUrl&);
+    void signalProcessEnded(const QUrl&, int);
     void signalCancelTask();
     
 public:

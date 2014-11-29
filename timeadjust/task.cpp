@@ -58,16 +58,16 @@ public:
     {
     }
 
-    KUrl                  url;
+    QUrl                  url;
 
     // Settings from GUI.
     TimeAdjustSettings    settings;
 
     // Map of item urls and Updated Timestamps.
-    QMap<KUrl, QDateTime> itemsMap;
+    QMap<QUrl, QDateTime> itemsMap;
 };
 
-Task::Task(const KUrl& url)
+Task::Task(const QUrl& url)
     : RActionJob(),
       d(new Private)
 {
@@ -85,7 +85,7 @@ void Task::setSettings(const TimeAdjustSettings& settings)
     d->settings = settings;
 }
 
-void Task::setItemsMap(QMap<KUrl, QDateTime> itemsMap)
+void Task::setItemsMap(QMap<QUrl, QDateTime> itemsMap)
 {
     d->itemsMap = itemsMap;
 }
@@ -222,7 +222,7 @@ void Task::run()
     if (d->settings.updFileName)
     {
         bool ret    = true;
-        KUrl newUrl = ActionThread::newUrl(d->url, dt);
+        QUrl newUrl = ActionThread::newUrl(d->url, dt);
 
         if (KDE_rename(QFile::encodeName(d->url.toLocalFile()).constData(), QFile::encodeName(newUrl.toLocalFile()).constData()) != 0)
             ret = false;

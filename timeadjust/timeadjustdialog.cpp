@@ -86,9 +86,9 @@ public:
 
     SettingsWidget*       settingsView;
 
-    QMap<KUrl, QDateTime> itemsUsedMap;           // Map of item urls and Used Timestamps.
-    QMap<KUrl, QDateTime> itemsUpdatedMap;        // Map of item urls and Updated Timestamps.
-    QMap<KUrl, int>       itemsStatusMap;         // Map of item urls and status flag.
+    QMap<QUrl, QDateTime> itemsUsedMap;           // Map of item urls and Used Timestamps.
+    QMap<QUrl, QDateTime> itemsUpdatedMap;        // Map of item urls and Updated Timestamps.
+    QMap<QUrl, int>       itemsStatusMap;         // Map of item urls and status flag.
 
     KPProgressWidget*     progressBar;
     MyImageList*          listView;
@@ -160,11 +160,11 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()));
 
-    connect(d->thread, SIGNAL(signalProcessStarted(KUrl)),
-            this, SLOT(slotProcessStarted(KUrl)));
+    connect(d->thread, SIGNAL(signalProcessStarted(QUrl)),
+            this, SLOT(slotProcessStarted(QUrl)));
 
-    connect(d->thread, SIGNAL(signalProcessEnded(KUrl,int)),
-            this, SLOT(slotProcessEnded(KUrl,int)));
+    connect(d->thread, SIGNAL(signalProcessEnded(QUrl,int)),
+            this, SLOT(slotProcessEnded(QUrl,int)));
 
     connect(d->progressBar, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancelThread()));
@@ -227,14 +227,14 @@ void TimeAdjustDialog::disableApplTimestamp()
     d->settingsView->disableApplTimestamp();
 }
 
-void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
+void TimeAdjustDialog::addItems(const QList<QUrl>& imageUrls)
 {
     d->itemsStatusMap.clear();
     d->listView->listView()->clear();
     d->itemsUsedMap.clear();
     d->itemsUpdatedMap.clear();
 
-    foreach (const KUrl& url, imageUrls)
+    foreach (const QUrl& url, imageUrls)
     {
         d->itemsUsedMap.insert(url, QDateTime());
     }
@@ -245,7 +245,7 @@ void TimeAdjustDialog::addItems(const KUrl::List& imageUrls)
 
 void TimeAdjustDialog::slotReadTimestamps()
 {
-    foreach (const KUrl& url, d->itemsUsedMap.keys())
+    foreach (const QUrl& url, d->itemsUsedMap.keys())
     {
         d->itemsUsedMap.insert(url, QDateTime());
     }
@@ -274,7 +274,7 @@ void TimeAdjustDialog::slotReadTimestamps()
 
         default:  // CUSTOMDATE
         {
-            foreach (const KUrl& url, d->itemsUsedMap.keys())
+            foreach (const QUrl& url, d->itemsUsedMap.keys())
             {
                 d->itemsUsedMap.insert(url, d->settingsView->customDate());
             }
@@ -287,9 +287,9 @@ void TimeAdjustDialog::slotReadTimestamps()
 
 void TimeAdjustDialog::readApplicationTimestamps()
 {
-    KUrl::List floatingDateItems;
+    QList<QUrl> floatingDateItems;
 
-    foreach (const KUrl& url, d->itemsUsedMap.keys())
+    foreach (const QUrl& url, d->itemsUsedMap.keys())
     {
         KPImageInfo info(url);
 
@@ -309,7 +309,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
 void TimeAdjustDialog::readFileTimestamps()
 {
-    foreach (const KUrl& url, d->itemsUsedMap.keys())
+    foreach (const QUrl& url, d->itemsUsedMap.keys())
     {
         QFileInfo fileInfo(url.toLocalFile());
         d->itemsUsedMap.insert(url, fileInfo.lastModified());
@@ -318,7 +318,7 @@ void TimeAdjustDialog::readFileTimestamps()
 
 void TimeAdjustDialog::readMetadataTimestamps()
 {
-    foreach (const KUrl& url, d->itemsUsedMap.keys())
+    foreach (const QUrl& url, d->itemsUsedMap.keys())
     {
         KPMetadata meta;
 
@@ -456,12 +456,12 @@ void TimeAdjustDialog::slotCloseClicked()
     done(Close);
 }
 
-void TimeAdjustDialog::slotProcessStarted(const KUrl& url)
+void TimeAdjustDialog::slotProcessStarted(const QUrl& url)
 {
     d->listView->processing(url);
 }
 
-void TimeAdjustDialog::slotProcessEnded(const KUrl& url, int status)
+void TimeAdjustDialog::slotProcessEnded(const QUrl& url, int status)
 {
     d->listView->processed(url, (status == MyImageList::NOPROCESS_ERROR));
     d->itemsStatusMap.insert(url, status);
@@ -489,7 +489,7 @@ void TimeAdjustDialog::updateListView()
     // TODO : this loop can take a while, especially when items mist is huge.
     //        Moving this loop code to ActionThread is the right way for the future.
 
-    foreach (const KUrl& url, d->itemsUsedMap.keys())
+    foreach (const QUrl& url, d->itemsUsedMap.keys())
     {
         d->itemsUpdatedMap.insert(url, d->settingsView->calculateAdjustedDate(d->itemsUsedMap.value(url)));
     }

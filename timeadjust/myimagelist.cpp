@@ -52,9 +52,9 @@ MyImageList::~MyImageList()
 {
 }
 
-void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings)
+void MyImageList::setItemDates(const QMap<QUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings)
 {
-    foreach (const KUrl& url, map.keys())
+    foreach (const QUrl& url, map.keys())
     {
         KPImagesListViewItem* const item = listView()->findItem(url);
 
@@ -82,9 +82,9 @@ void MyImageList::setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type,
     }
 }
 
-void MyImageList::setStatus(const QMap<KUrl, int>& status)
+void MyImageList::setStatus(const QMap<QUrl, int>& status)
 {
-    foreach (const KUrl& url, status.keys())
+    foreach (const QUrl& url, status.keys())
     {
         KPImagesListViewItem* const item = listView()->findItem(url);
 

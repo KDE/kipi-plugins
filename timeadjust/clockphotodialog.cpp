@@ -74,7 +74,7 @@ public:
     KPPreviewManager* imagePreview;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const KUrl& defaultUrl)
+ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const QUrl& defaultUrl)
     : KDialog(parent), d(new Private)
 {
     // This dialog should be modal with three buttons: Ok, Cancel, and load
@@ -159,7 +159,7 @@ DeltaTime ClockPhotoDialog::deltaValues() const
     return d->deltaValues;
 }
 
-bool ClockPhotoDialog::setImage(const KUrl& imageFile)
+bool ClockPhotoDialog::setImage(const QUrl& imageFile)
 {
     bool success = false;
 

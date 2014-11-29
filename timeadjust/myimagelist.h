@@ -28,10 +28,7 @@
 
 #include <QMap>
 #include <QDateTime>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -71,8 +68,8 @@ public:
     explicit MyImageList(QWidget* const parent);
     ~MyImageList();
 
-    void setItemDates(const QMap<KUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);
-    void setStatus(const QMap<KUrl, int>& status);
+    void setItemDates(const QMap<QUrl, QDateTime>& map, FieldType type, const TimeAdjustSettings& settings);
+    void setStatus(const QMap<QUrl, int>& status);
 };
 }  // namespace KIPITimeAdjustPlugin
 

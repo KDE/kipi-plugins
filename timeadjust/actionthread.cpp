@@ -45,7 +45,7 @@ public:
     TimeAdjustSettings    settings;
 
     // Map of item urls and Updated Timestamps.
-    QMap<KUrl, QDateTime> itemsMap;
+    QMap<QUrl, QDateTime> itemsMap;
 };
 
 
@@ -64,22 +64,22 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
+void ActionThread::setUpdatedDates(const QMap<QUrl, QDateTime>& map)
 {
     d->itemsMap = map;
     RJobCollection collection;
 
-    foreach (const KUrl& url, d->itemsMap.keys())
+    foreach (const QUrl& url, d->itemsMap.keys())
     {
         Task* const t = new Task(url);
         t->setSettings(d->settings);
         t->setItemsMap(map);
 
-        connect(t, SIGNAL(signalProcessStarted(KUrl)),
-                this, SIGNAL(signalProcessStarted(KUrl)));
+        connect(t, SIGNAL(signalProcessStarted(QUrl)),
+                this, SIGNAL(signalProcessStarted(QUrl)));
 
-        connect(t, SIGNAL(signalProcessEnded(KUrl,int)),
-                this, SIGNAL(signalProcessEnded(KUrl,int)));
+        connect(t, SIGNAL(signalProcessEnded(QUrl,int)),
+                this, SIGNAL(signalProcessEnded(QUrl,int)));
 
         connect(this, SIGNAL(signalCancelTask()),
                 t, SLOT(cancel()), Qt::QueuedConnection);
@@ -105,9 +105,9 @@ void ActionThread::cancel()
 /** Static public method also called from GUI to update listview information about new filename
  *  computed with timeStamp.
  */
-KUrl ActionThread::newUrl(const KUrl& url, const QDateTime& dt)
+QUrl ActionThread::newUrl(const QUrl& url, const QDateTime& dt)
 {
-    if (!dt.isValid()) return KUrl();
+    if (!dt.isValid()) return QUrl();
 
     QFileInfo fi(url.path());
 
@@ -117,8 +117,8 @@ KUrl ActionThread::newUrl(const KUrl& url, const QDateTime& dt)
     newFileName += '.';
     newFileName += fi.completeSuffix();
 
-    KUrl newUrl = url;
-    newUrl.setFileName(newFileName);
+    QUrl newUrl = url;
+    newUrl.setPath(newUrl.path() + newFileName);
 
     return newUrl;
 }
