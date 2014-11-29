@@ -57,5 +57,5 @@ Icon=kipi-dropbox
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_dropbox
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Saurabh Patel, saurabhpatel7717 at gmail dot com

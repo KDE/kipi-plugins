@@ -89,5 +89,5 @@ Type=Service
 Icon=draw-eraser
 X-KDE-Library=kipiplugin_removeredeyes
 X-KIPI-PluginCategories=Batch
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Andi Clemens, andi dot clemens at googlemail dot com

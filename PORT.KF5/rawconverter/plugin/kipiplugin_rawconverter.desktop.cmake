@@ -95,5 +95,5 @@ Icon=rawconverter
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_rawconverter
 X-KIPI-PluginCategories=Batch,Tools
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Gilles Caulier, caulier dot gilles at gmail dot com

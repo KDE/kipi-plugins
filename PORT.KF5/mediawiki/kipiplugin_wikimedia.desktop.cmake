@@ -65,4 +65,4 @@ Type=Service
 X-KDE-Library=kipiplugin_wikimedia
 author=Guillaume Hormiere, hormiere dot guillaume at gmail dot com
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}

@@ -86,5 +86,5 @@ Icon=kipi-flickr
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Vardhman Jain, vardhman at gmail dot com

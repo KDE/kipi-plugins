@@ -72,5 +72,5 @@ Icon=kipi-rajce
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_rajceexport
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Lukas Krejci, krejci.l at centrum dot cz

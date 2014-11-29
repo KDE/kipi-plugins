@@ -70,5 +70,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kopete
 Icon=kopete
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Pau Garcia i Quiles, pgquiles at elpauer dot org

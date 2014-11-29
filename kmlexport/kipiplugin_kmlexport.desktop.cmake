@@ -59,5 +59,5 @@ Type=Service
 X-KDE-Library=kipiplugin_kmlexport
 X-KIPI-ReqFeatures=ImagesHasTime
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Gilles Caulier, caulier dot gilles at gmail dot com

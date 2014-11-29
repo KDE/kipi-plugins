@@ -92,5 +92,5 @@ Icon=kipi-picasa
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_picasawebexport
 X-KIPI-PluginCategories=Export,Import
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Vardhman Jain, vardhman at gmail dot com

@@ -70,5 +70,5 @@ ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_panorama
 X-KIPI-PluginCategories=Tools
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Benjamin Girault, benjamin dot girault at gmail dot com

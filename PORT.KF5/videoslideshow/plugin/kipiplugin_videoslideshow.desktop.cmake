@@ -65,4 +65,4 @@ X-KDE-Library=kipiplugin_videoslideshow
 author=A Janardhan Reddy, annapareddyjanardhanreddy at gmail dot com
 X-KIPI-ReqFeatures=
 X-KIPI-PluginCategories=Tools
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}

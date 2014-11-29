@@ -80,5 +80,5 @@ Icon=folder-remote
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kioexportimport
 X-KIPI-PluginCategories=Export,Import
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Johannes Wienke, languitar at semipol dot de

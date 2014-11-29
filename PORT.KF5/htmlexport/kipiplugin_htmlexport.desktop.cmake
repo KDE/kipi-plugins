@@ -95,5 +95,5 @@ ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_htmlexport
 X-KIPI-PluginCategories=Export
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Aurelien Gateau, aurelien dot gateau at free dot fr

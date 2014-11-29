@@ -102,5 +102,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar
 X-KIPI-MergeMenu=false
 X-KIPI-PluginCategories=Tools
-X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 author=Orgad Shaneh, orgads at gmail dot com
