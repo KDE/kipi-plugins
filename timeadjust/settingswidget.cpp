@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "settingswidget.moc"
+#include "settingswidget.h"
 
 // Qt includes
 

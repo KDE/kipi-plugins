@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "myimagelist.moc"
+#include "myimagelist.h"
 
 // KDE includes
 

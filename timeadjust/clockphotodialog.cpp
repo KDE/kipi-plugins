@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "clockphotodialog.moc"
+#include "clockphotodialog.h"
 
 // Qt includes
 

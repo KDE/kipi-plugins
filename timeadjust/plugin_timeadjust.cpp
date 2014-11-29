@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "plugin_timeadjust.moc"
+#include "plugin_timeadjust.h"
 
 // KDE includes
 
@@ -66,10 +66,10 @@ public:
 };
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
-    : Plugin(TimeAdjustFactory::componentData(), parent, "TimeAdjust"),
+    : Plugin(/*TimeAdjustFactory::componentData(),*/ parent, "TimeAdjust"),
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
+    //kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
 
     setUiBaseName("kipiplugin_timeadjustui.rc");
     setupXML();
@@ -141,3 +141,5 @@ void Plugin_TimeAdjust::slotActivate()
 }
 
 }  // namespace KIPITimeAdjustPlugin
+#include "plugin_timeadjust.moc"
+

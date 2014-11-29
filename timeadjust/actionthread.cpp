@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "actionthread.moc"
+#include "actionthread.h"
 
 // Qt Includes
 

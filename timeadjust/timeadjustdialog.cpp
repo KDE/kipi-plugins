@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "timeadjustdialog.moc"
+#include "timeadjustdialog.h"
 
 // Qt includes
 

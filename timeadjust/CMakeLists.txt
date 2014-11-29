@@ -6,6 +6,9 @@
 
 subdirs(icons)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_timeadjust\")
+
+
 set(kipiplugin_timeadjust_PART_SRCS plugin_timeadjust.cpp
                                     timeadjustdialog.cpp
                                     clockphotodialog.cpp
@@ -19,8 +22,6 @@ add_library(kipiplugin_timeadjust MODULE ${kipiplugin_timeadjust_PART_SRCS})
 
 target_link_libraries(kipiplugin_timeadjust
                       KF5::Parts
-                      KF5::ThreadWeaver
-                      
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
