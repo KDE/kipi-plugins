@@ -37,6 +37,7 @@
 #include <QTimeEdit>
 #include <QComboBox>
 #include <QPointer>
+#include <QVBoxLayout>
 
 // KDE includes
 
@@ -45,7 +46,6 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kvbox.h>
 
 // libKdcraw includes
 
@@ -149,12 +149,14 @@ public:
 SettingsWidget::SettingsWidget(QWidget* const parent)
     : QScrollArea(parent), d(new Private)
 {
-    KVBox* const panel   = new KVBox(viewport());
+    QWidget* const panel    = new QWidget(viewport());
     setWidget(panel);
     setWidgetResizable(true);
 
-    d->settingsExpander  = new RExpanderBox(panel);
+    d->settingsExpander     = new RExpanderBox(panel);
     d->settingsExpander->setObjectName("Time Adjust Settings Expander");
+    QVBoxLayout* const vlay = new QVBoxLayout(panel);
+    vlay->addWidget(d->settingsExpander);
 
     // -- Settings View Used Timestamps ---------------------------------------------------------
 
