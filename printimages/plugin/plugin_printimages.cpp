@@ -57,6 +57,7 @@ extern "C"
 
 #include "printhelper.h"
 #include "wizard.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIPrintImagesPlugin
 {
@@ -67,8 +68,7 @@ K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantList& /*args*/ )
     : Plugin ( /*PrintImagesFactory::componentData(),*/ parent, "PrintImages" )
 {
-#pragma message: PORT QT5
-    //kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_SendImages plugin loaded";
 
     setUiBaseName("kipiplugin_printimagesui.rc");
     setupXML();
