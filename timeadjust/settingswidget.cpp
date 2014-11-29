@@ -25,6 +25,7 @@
 
 // Qt includes
 
+#include <QApplication>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QGridLayout>
@@ -39,7 +40,6 @@
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <kconfig.h>
 #include <kiconloader.h>
@@ -49,7 +49,7 @@
 
 // libKdcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <rexpanderbox.h>
 
 // Local includes
@@ -163,7 +163,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->useButtonGroup              = new QButtonGroup(d->useSettingsBox);
     d->useButtonGroup->setExclusive(true);
 
-    QString applDateLabelString = i18n("%1 timestamp", KGlobal::mainComponent().aboutData()->programName());
+    QString applDateLabelString = i18n("%1 timestamp", QApplication::applicationName());
     d->useApplDateBtn           = new QRadioButton(QString(), d->useSettingsBox);
     d->useApplDateLbl           = new QLabel(applDateLabelString);
     d->useApplDateLbl->setIndent(5);
@@ -337,12 +337,8 @@ void SettingsWidget::disableApplTimestamp()
 
 void SettingsWidget::readSettings(KConfigGroup& group)
 {
-#if KDCRAW_VERSION >= 0x020000
     d->settingsExpander->readSettings(group);
-#else
-    d->settingsExpander->readSettings();
-#endif
-    
+
     int useTimestampType = group.readEntry("Use Timestamp Type", (int)TimeAdjustSettings::APPDATE);
     if      (useTimestampType == TimeAdjustSettings::APPDATE)      d->useApplDateBtn->setChecked(true);
     else if (useTimestampType == TimeAdjustSettings::FILEDATE)     d->useFileDateBtn->setChecked(true);
@@ -374,11 +370,7 @@ void SettingsWidget::readSettings(KConfigGroup& group)
 
 void SettingsWidget::saveSettings(KConfigGroup& group)
 {
-#if KDCRAW_VERSION >= 0x020000
     d->settingsExpander->writeSettings(group);
-#else
-    d->settingsExpander->writeSettings();
-#endif
 
     group.writeEntry("Custom Date",                   d->useCustDateInput->dateTime());
     group.writeEntry("Custom Time",                   d->useCustTimeInput->dateTime());

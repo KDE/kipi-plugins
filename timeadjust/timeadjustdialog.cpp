@@ -128,26 +128,26 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     KPAboutData* const about = new KPAboutData(ki18n("Time Adjust"),
                                    0,
-                                   KAboutData::License_GPL,
+                                   KAboutLicense::GPL,
                                    ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
                                    ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
                                          "(c) 2006-2014, Gilles Caulier\n"
                                          "(c) 2012, Smit Mehta"));
 
-    about->addAuthor(ki18n("Jesper K. Pedersen"),
-                     ki18n("Author"),
+    about->addAuthor(ki18n("Jesper K. Pedersen").toString(),
+                     ki18n("Author").toString(),
                      "blackie at kde dot org");
 
-    about->addAuthor(ki18n("Gilles Caulier"),
-                     ki18n("Developer"),
+    about->addAuthor(ki18n("Gilles Caulier").toString(),
+                     ki18n("Developer").toString(),
                      "caulier dot gilles at gmail dot com");
 
-    about->addAuthor(ki18n("Smit Mehta"),
-                     ki18n("Developer"),
+    about->addAuthor(ki18n("Smit Mehta").toString(),
+                     ki18n("Developer").toString(),
                      "smit dot meh at gmail dot com");
 
-    about->addAuthor(ki18n("Pieter Edelman"),
-                     ki18n("Developer"),
+    about->addAuthor(ki18n("Pieter Edelman").toString(),
+                     ki18n("Developer").toString(),
                      "p dot edelman at gmx dot net");
 
     about->setHandbookEntry("timeadjust");

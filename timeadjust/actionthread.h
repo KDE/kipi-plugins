@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <kurl.h>
-#include <threadweaver/Job.h>
 
 // Libkdcraw includes
 
@@ -45,7 +44,6 @@
 #include "timeadjustsettings.h"
 
 using namespace KDcrawIface;
-using namespace ThreadWeaver;
 
 namespace KIPITimeAdjustPlugin
 {

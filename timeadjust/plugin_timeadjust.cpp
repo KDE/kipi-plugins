@@ -23,9 +23,12 @@
 
 #include "plugin_timeadjust.h"
 
-// KDE includes
+// Qt includes
 
 #include <QAction>
+
+// KDE includes
+
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -33,7 +36,6 @@
 #include <kgenericfactory.h>
 #include <kwindowsystem.h>
 #include <kiconloader.h>
-#include <klibloader.h>
 #include <klocale.h>
 
 // LibKIPI includes
@@ -49,7 +51,6 @@ namespace KIPITimeAdjustPlugin
 {
 
 K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
-K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 
 class Plugin_TimeAdjust::Private
 {
@@ -141,5 +142,5 @@ void Plugin_TimeAdjust::slotActivate()
 }
 
 }  // namespace KIPITimeAdjustPlugin
-#include "plugin_timeadjust.moc"
 
+#include "plugin_timeadjust.moc"

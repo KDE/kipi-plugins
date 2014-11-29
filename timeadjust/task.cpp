@@ -37,8 +37,6 @@ extern "C"
 
 // KDE includes
 
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
 #include <kdebug.h>
 #include <kde_file.h>
 
@@ -51,19 +49,17 @@ extern "C"
 
 namespace KIPITimeAdjustPlugin
 {
-    
+
 class Task::Private
 {
 public:
 
     Private()
     {
-        cancel    = false;
     }
 
-    bool                  cancel;
     KUrl                  url;
-    
+
     // Settings from GUI.
     TimeAdjustSettings    settings;
 
@@ -71,21 +67,17 @@ public:
     QMap<KUrl, QDateTime> itemsMap;
 };
 
-Task::Task(QObject* const parent, const KUrl& url)
-    : Job(parent), d(new Private)
+Task::Task(const KUrl& url)
+    : RActionJob(),
+      d(new Private)
 {
     d->url = url;
 }
 
 Task::~Task()
 {
-    slotCancel();
+    cancel();
     delete d;
-}
-
-void Task::slotCancel()
-{
-    d->cancel = true;
 }
 
 void Task::setSettings(const TimeAdjustSettings& settings)
@@ -100,7 +92,7 @@ void Task::setItemsMap(QMap<KUrl, QDateTime> itemsMap)
 
 void Task::run()
 {
-    if (d->cancel) return;
+    if (m_cancel) return;
 
     QDateTime dt = d->itemsMap.value(d->url);
 
@@ -142,7 +134,7 @@ void Task::run()
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
                         dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
-                
+
                 if (d->settings.updEXIFThmDate)
                 {
                     ret &= meta.setExifTagString("Exif.Image.PreviewDateTime",
@@ -232,7 +224,7 @@ void Task::run()
         bool ret    = true;
         KUrl newUrl = ActionThread::newUrl(d->url, dt);
 
-        if (KDE_rename(QFile::encodeName(d->url.toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
+        if (KDE_rename(QFile::encodeName(d->url.toLocalFile()).constData(), QFile::encodeName(newUrl.toLocalFile()).constData()) != 0)
             ret = false;
 
         ret &= KPMetadata::moveSidecar(d->url, newUrl);
@@ -240,7 +232,7 @@ void Task::run()
         if (!ret)
             status |= MyImageList::FILE_NAME_ERROR;
     }
-    
+
     if (d->settings.updAppDate)
     {
         KPImageInfo info(d->url);
@@ -251,5 +243,5 @@ void Task::run()
 
     emit signalProcessEnded(d->url, status);
 }
-    
+
 } // namespace KIPITimeAdjustPlugin

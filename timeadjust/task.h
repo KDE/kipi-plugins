@@ -21,14 +21,12 @@
  *
  * ============================================================ */
 
-
 #ifndef TASK_H
 #define TASK_H
 
 // KDE includes
 
 #include <kurl.h>
-#include <threadweaver/Job.h>
 
 // Libkdcraw includes
 
@@ -39,20 +37,19 @@
 #include "timeadjustsettings.h"
 
 using namespace KDcrawIface;
-using namespace ThreadWeaver;
 
 namespace KIPITimeAdjustPlugin
 {
 
-class Task : public Job
+class Task : public RActionJob
 {
     Q_OBJECT
 
 public:
 
-    Task(QObject* const parent, const KUrl& url);
+    Task(const KUrl& url);
     ~Task();
-    
+
     void setSettings(const TimeAdjustSettings& settings);
     void setItemsMap(QMap<KUrl, QDateTime> itemsMap);
 
@@ -65,10 +62,6 @@ protected:
 
     void run();
 
-public Q_SLOTS:
-
-    void slotCancel();
-    
 private:
 
     class Private;

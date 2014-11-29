@@ -29,8 +29,6 @@
 
 // KDE includes
 
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
 #include <kdebug.h>
 
 // Local includes
@@ -68,12 +66,12 @@ ActionThread::~ActionThread()
 
 void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
 {
-    d->itemsMap                     = map;
-    JobCollection* const collection = new JobCollection();
+    d->itemsMap = map;
+    RJobCollection collection;
 
     foreach (const KUrl& url, d->itemsMap.keys())
     {
-        Task* const t = new Task(this, url);
+        Task* const t = new Task(url);
         t->setSettings(d->settings);
         t->setItemsMap(map);
 
@@ -84,12 +82,12 @@ void ActionThread::setUpdatedDates(const QMap<KUrl, QDateTime>& map)
                 this, SIGNAL(signalProcessEnded(KUrl,int)));
 
         connect(this, SIGNAL(signalCancelTask()),
-                t, SLOT(slotCancel()), Qt::QueuedConnection);
+                t, SLOT(cancel()), Qt::QueuedConnection);
 
-        collection->addJob(t);
+        collection.append(t);
      }
 
-    appendJob(collection);
+    appendJobs(collection);
 }
 
 void ActionThread::setSettings(const TimeAdjustSettings& settings)
