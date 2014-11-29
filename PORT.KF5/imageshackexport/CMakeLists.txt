@@ -26,7 +26,7 @@ target_link_libraries(kipiplugin_imageshackexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_imageshackexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageshackexport.desktop)
+configure_file(kipiplugin_imageshackexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageshackexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageshackexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_imageshackexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

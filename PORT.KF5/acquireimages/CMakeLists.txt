@@ -39,7 +39,7 @@ add_library(kipiplugin_acquireimages MODULE ${kipiplugin_acquireimages_PART_SRCS
 
 target_link_libraries(kipiplugin_acquireimages libacquireimages)
 
-configure_file(kipiplugin_acquireimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_acquireimages.desktop)
+configure_file(kipiplugin_acquireimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_acquireimages.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_acquireimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_acquireimages                                     DESTINATION ${PLUGIN_INSTALL_DIR})

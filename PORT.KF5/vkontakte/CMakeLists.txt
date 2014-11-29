@@ -29,7 +29,7 @@ target_link_libraries(kipiplugin_vkontakte
                       ${LIBKVKONTAKTE_LIBRARIES}
                      )
 
-configure_file(kipiplugin_vkontakte.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)
+configure_file(kipiplugin_vkontakte.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_vkontakte                                     DESTINATION ${PLUGIN_INSTALL_DIR})

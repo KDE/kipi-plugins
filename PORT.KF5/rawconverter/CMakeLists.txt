@@ -35,7 +35,7 @@ target_link_libraries(kipiplugin_rawconverter
                       KF5kipiplugins
                      )
 
-configure_file(plugin/kipiplugin_rawconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop)
+configure_file(plugin/kipiplugin_rawconverter.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_rawconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_rawconverter                                            DESTINATION ${PLUGIN_INSTALL_DIR})

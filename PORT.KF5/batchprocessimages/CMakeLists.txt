@@ -56,7 +56,7 @@ target_link_libraries(kipiplugin_batchprocessimages
                       
                      )
 
-configure_file(plugin/kipiplugin_batchprocessimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop)
+configure_file(plugin/kipiplugin_batchprocessimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_batchprocessimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})

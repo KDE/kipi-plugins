@@ -196,7 +196,7 @@ add_library(kipiplugin_photolayoutseditor MODULE ${kipiplugin_PhotoLayoutsEditor
 
 target_link_libraries(kipiplugin_photolayoutseditor libphotolayoutseditor)
 
-configure_file(plugin/kipiplugin_photolayoutseditor.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop)
+configure_file(plugin/kipiplugin_photolayoutseditor.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_photolayoutseditor                                            DESTINATION ${PLUGIN_INSTALL_DIR})

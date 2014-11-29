@@ -34,7 +34,7 @@ target_link_libraries(kipiplugin_debianscreenshots
                       
                      )
 
-configure_file(kipiplugin_debianscreenshots.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop)
+configure_file(kipiplugin_debianscreenshots.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_debianscreenshots.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_debianscreenshots                                     DESTINATION ${PLUGIN_INSTALL_DIR})

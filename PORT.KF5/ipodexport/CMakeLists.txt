@@ -30,7 +30,7 @@ target_link_libraries(kipiplugin_ipodexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_ipodexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_ipodexport.desktop)
+configure_file(kipiplugin_ipodexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_ipodexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_ipodexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

@@ -31,7 +31,7 @@ target_link_libraries(kipiplugin_shwup
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_shwup.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_shwup.desktop)
+configure_file(kipiplugin_shwup.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_shwup.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_shwup.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_shwup                                     DESTINATION ${PLUGIN_INSTALL_DIR})

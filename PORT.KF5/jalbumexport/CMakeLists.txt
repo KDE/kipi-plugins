@@ -26,7 +26,7 @@ target_link_libraries(kipiplugin_jalbumexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_jalbumexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_jalbumexport.desktop)
+configure_file(kipiplugin_jalbumexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_jalbumexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_jalbumexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_jalbumexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

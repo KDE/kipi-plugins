@@ -29,7 +29,7 @@ target_link_libraries(kipiplugin_picasawebexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_picasawebexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_picasawebexport.desktop)
+configure_file(kipiplugin_picasawebexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_picasawebexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_picasawebexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_picasawebexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

@@ -32,7 +32,7 @@ target_link_libraries(kipiplugin_imageviewer
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_imageviewer.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
+configure_file(kipiplugin_imageviewer.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_imageviewer                                     DESTINATION ${PLUGIN_INSTALL_DIR})

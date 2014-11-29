@@ -27,7 +27,7 @@ target_link_libraries(kipiplugin_sendimages
                       KF5kipiplugins
 )
 
-configure_file(kipiplugin_sendimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
+configure_file(kipiplugin_sendimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_sendimages                                     DESTINATION ${PLUGIN_INSTALL_DIR})

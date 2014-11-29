@@ -42,7 +42,7 @@ target_link_libraries(kipiplugin_videoslideshow
                       KF5kipiplugins
                      )
 
-configure_file(plugin/kipiplugin_videoslideshow.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop)
+configure_file(plugin/kipiplugin_videoslideshow.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_videoslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_videoslideshow                                            DESTINATION ${PLUGIN_INSTALL_DIR})

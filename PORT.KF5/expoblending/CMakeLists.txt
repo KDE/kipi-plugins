@@ -61,7 +61,7 @@ add_library(kipiplugin_expoblending MODULE ${kipiplugin_expoblending_PART_SRCS})
 
 target_link_libraries(kipiplugin_expoblending libexpoblending)
 
-configure_file(plugin/kipiplugin_expoblending.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop)
+configure_file(plugin/kipiplugin_expoblending.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_expoblending                                            DESTINATION ${PLUGIN_INSTALL_DIR})

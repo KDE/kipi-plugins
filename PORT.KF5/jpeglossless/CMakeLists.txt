@@ -44,7 +44,7 @@ target_link_libraries(kipiplugin_jpeglossless
                       KF5kipiplugins
                      )
 
-configure_file(plugin/kipiplugin_jpeglossless.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop)
+configure_file(plugin/kipiplugin_jpeglossless.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_jpeglossless                                            DESTINATION ${PLUGIN_INSTALL_DIR})

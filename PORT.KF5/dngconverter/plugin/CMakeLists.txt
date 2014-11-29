@@ -49,7 +49,7 @@ target_link_libraries(kipiplugin_dngconverter
                       libdng
                      )
 
-configure_file(kipiplugin_dngconverter.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dngconverter.desktop)
+configure_file(kipiplugin_dngconverter.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dngconverter.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_dngconverter                                     DESTINATION ${PLUGIN_INSTALL_DIR})

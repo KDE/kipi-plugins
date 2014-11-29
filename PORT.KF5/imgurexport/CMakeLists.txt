@@ -45,7 +45,7 @@ if(QTKOAUTH_FOUND)
   )
 endif()
 
-configure_file(kipiplugin_imgurexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop)
+configure_file(kipiplugin_imgurexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgurexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_imgurexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

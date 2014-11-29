@@ -86,7 +86,7 @@ add_library(kipiplugin_panorama MODULE ${kipiplugin_panorama_PART_SRCS})
 
 target_link_libraries(kipiplugin_panorama libpanorama)
 
-configure_file(plugin/kipiplugin_panorama.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop)
+configure_file(plugin/kipiplugin_panorama.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_panorama                                            DESTINATION ${PLUGIN_INSTALL_DIR})

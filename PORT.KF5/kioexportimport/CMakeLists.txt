@@ -23,7 +23,7 @@ target_link_libraries(${PLUGIN_NAME}
                       KF5kipiplugins
                      )
 
-configure_file(${PLUGIN_NAME}.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.desktop)
+configure_file(${PLUGIN_NAME}.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS ${PLUGIN_NAME}                                     DESTINATION ${PLUGIN_INSTALL_DIR})

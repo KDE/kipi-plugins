@@ -10,7 +10,7 @@ add_library(kipiplugin_wallpaper MODULE ${kipiplugin_wallpaper_PART_SRCS})
 
 target_link_libraries(kipiplugin_wallpaper KF5::Parts KF5::Kipi)
 
-configure_file(kipiplugin_wallpaper.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wallpaper.desktop)
+configure_file(kipiplugin_wallpaper.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wallpaper.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wallpaper.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_wallpaper                                     DESTINATION ${PLUGIN_INSTALL_DIR})

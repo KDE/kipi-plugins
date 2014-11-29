@@ -26,7 +26,7 @@ target_link_libraries(kipiplugin_smug
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_smug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_smug.desktop)
+configure_file(kipiplugin_smug.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_smug.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_smug.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_smug                                     DESTINATION ${PLUGIN_INSTALL_DIR})

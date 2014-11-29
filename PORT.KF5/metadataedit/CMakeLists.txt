@@ -58,7 +58,7 @@ target_link_libraries(kipiplugin_metadataedit
                       KF5kipiplugins
                      )
 
-configure_file(plugin/kipiplugin_metadataedit.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop)
+configure_file(plugin/kipiplugin_metadataedit.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_metadataedit                                            DESTINATION ${PLUGIN_INSTALL_DIR})

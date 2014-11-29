@@ -25,7 +25,7 @@ target_link_libraries(kipiplugin_piwigoexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_piwigoexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop)
+configure_file(kipiplugin_piwigoexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_piwigoexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_piwigoexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

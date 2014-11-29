@@ -81,7 +81,7 @@ if(BUILD_TESTING)
                          )
 endif()
 
-configure_file(kipiplugin_gpssync.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop)
+configure_file(kipiplugin_gpssync.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_gpssync.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_gpssync                                     DESTINATION ${PLUGIN_INSTALL_DIR})

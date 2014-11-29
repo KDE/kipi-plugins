@@ -31,7 +31,7 @@ target_link_libraries(kipiplugin_rajceexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_rajceexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_rajceexport.desktop)
+configure_file(kipiplugin_rajceexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_rajceexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_rajceexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_rajceexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

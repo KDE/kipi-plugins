@@ -29,7 +29,7 @@ target_link_libraries(kipiplugin_galleryexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_galleryexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_galleryexport.desktop)
+configure_file(kipiplugin_galleryexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_galleryexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_galleryexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_galleryexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

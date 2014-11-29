@@ -22,7 +22,7 @@ target_link_libraries(kipiplugin_kmlexport
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_kmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop)
+configure_file(kipiplugin_kmlexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_kmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

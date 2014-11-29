@@ -78,7 +78,7 @@ target_link_libraries(kipiplugin_removeredeyes
                       KF5kipiplugins
                      )
 
-configure_file(plugin/kipiplugin_removeredeyes.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop)
+configure_file(plugin/kipiplugin_removeredeyes.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop     DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_removeredeyes                                                DESTINATION ${PLUGIN_INSTALL_DIR})

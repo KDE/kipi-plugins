@@ -31,7 +31,7 @@ target_link_libraries(kipiplugin_wikimedia
                       
                      )
 
-configure_file(kipiplugin_wikimedia.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)
+configure_file(kipiplugin_wikimedia.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_wikimedia                                     DESTINATION ${PLUGIN_INSTALL_DIR})

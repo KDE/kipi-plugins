@@ -50,7 +50,7 @@ target_link_libraries(kipiplugin_printimages
                       KF5kipiplugins
                      )
 
-configure_file(plugin/kipiplugin_printimages.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
+configure_file(plugin/kipiplugin_printimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
 
 install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS   kipiplugin_printimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})

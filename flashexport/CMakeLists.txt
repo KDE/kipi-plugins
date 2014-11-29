@@ -38,7 +38,7 @@ target_link_libraries(kipiplugin_flashexport
 )
 
 
-configure_file(kipiplugin_flashexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)
+configure_file(kipiplugin_flashexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_flashexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

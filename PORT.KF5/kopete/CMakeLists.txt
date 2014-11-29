@@ -18,7 +18,7 @@ target_link_libraries(kipiplugin_kopete
                       
                      )
 
-configure_file(kipiplugin_kopete.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop)
+configure_file(kipiplugin_kopete.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kopete.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_kopete                                     DESTINATION ${PLUGIN_INSTALL_DIR})

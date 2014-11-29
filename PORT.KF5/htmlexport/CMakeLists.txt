@@ -54,7 +54,7 @@ add_definitions(${LIBXSLT_DEFINITIONS}
                 ${LIBXML2_DEFINITIONS}
                )
 
-configure_file(kipiplugin_htmlexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop)
+configure_file(kipiplugin_htmlexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop)
 
 install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_htmlexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS   kipiplugin_htmlexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

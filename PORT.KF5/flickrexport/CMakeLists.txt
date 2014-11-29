@@ -31,7 +31,7 @@ target_link_libraries(kipiplugin_flickrexport
                       
                      )
 
-configure_file(kipiplugin_flickrexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop)
+configure_file(kipiplugin_flickrexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_flickrexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})

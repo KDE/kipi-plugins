@@ -62,7 +62,7 @@ elseif(NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND)
 
 endif()
 
-configure_file(kipiplugin_dlnaexport.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
+configure_file(kipiplugin_dlnaexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_dlnaexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
