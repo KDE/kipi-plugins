@@ -4,6 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_kmlexport\")
+
 set(kipiplugin_kmlexport_PART_SRCS plugin_kmlexport.cpp
                                    gpsdataparser.cpp
                                    kmlexport.cpp

@@ -4,6 +4,9 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_printimages\")
+
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/wizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/tools
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
