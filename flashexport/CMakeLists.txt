@@ -8,6 +8,8 @@ subdirs(icons)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/importWizard)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_flashexport\")
+
 set(kipiplugin_flashexport_PART_SRCS plugin_flashexport.cpp
                                      simpleviewer.cpp
                                      flashmanager.cpp
