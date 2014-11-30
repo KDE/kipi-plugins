@@ -34,20 +34,23 @@ macro(DETECT_LIBKIPI MIN_VERSION)
     message(STATUS "libkipi found       : ${KF5Kipi_FOUND}")
     message(STATUS "libkipi library     : ${KF5Kipi_LIBRARIES}")
 
-    # detect libkipi so version used to compile kipi tool to identify if plugin can be loaded in memory by libkipi.
-
-    find_file(KF5KipiConfig_FOUND libkipi_config.h PATHS ${KF5Kipi_INCLUDE_DIRS})
-    file(READ "${KF5KipiConfig_FOUND}" KIPI_CONFIG_H_CONTENT)
-
-    string(REGEX REPLACE
-           ".*static +const +int +kipi_binary_version += ([^ ;]+).*"
-           "\\1"
-           KIPI_LIB_SO_CUR_VERSION_FOUND
-           "${KIPI_CONFIG_H_CONTENT}"
-          )
-
-    set(KIPI_LIB_SO_CUR_VERSION ${KIPI_LIB_SO_CUR_VERSION_FOUND} CACHE STRING "libkipi so version")
-    message(STATUS "libkipi SO version  : ${KIPI_LIB_SO_CUR_VERSION}")
+#     message(STATUS "libkipi includes    : ${KF5Kipi_INCLUDE_DIR}")
+#     message(STATUS "libkipi includes    : ${Kipi_INCLUDE_DIRS}")
+# 
+#     # detect libkipi so version used to compile kipi tool to identify if plugin can be loaded in memory by libkipi.
+# 
+#     find_file(KF5KipiConfig_FOUND libkipi_config.h PATHS ${KF5Kipi_INCLUDE_DIRS})
+#     file(READ "${KF5KipiConfig_FOUND}" KIPI_CONFIG_H_CONTENT)
+# 
+#     string(REGEX REPLACE
+#            ".*static +const +int +kipi_binary_version += ([^ ;]+).*"
+#            "\\1"
+#            KIPI_LIB_SO_CUR_VERSION_FOUND
+#            "${KIPI_CONFIG_H_CONTENT}"
+#           )
+# 
+#     set(KIPI_LIB_SO_CUR_VERSION ${KIPI_LIB_SO_CUR_VERSION_FOUND} CACHE STRING "libkipi so version")
+#     message(STATUS "libkipi SO version  : ${KIPI_LIB_SO_CUR_VERSION}")
 
 endmacro()
 
