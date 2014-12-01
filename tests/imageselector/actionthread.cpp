@@ -120,7 +120,7 @@ void ActionThread::rotate(const QList<QUrl>& list)
 
         connect(job, &Task::signalDone, this, &ActionThread::slotJobDone);
 
-        collection.append(job);
+        collection.insert(job, 0);
 
         qDebug() << "Appending file to process " << url;
     }

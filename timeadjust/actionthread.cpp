@@ -84,7 +84,7 @@ void ActionThread::setUpdatedDates(const QMap<QUrl, QDateTime>& map)
         connect(this, SIGNAL(signalCancelTask()),
                 t, SLOT(cancel()), Qt::QueuedConnection);
 
-        collection.append(t);
+        collection.insert(t, 0);
      }
 
     appendJobs(collection);

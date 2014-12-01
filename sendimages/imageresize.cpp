@@ -249,7 +249,7 @@ void ImageResize::resize(const EmailSettings& settings)
         connect(t, SIGNAL(failedResize(QUrl,QString,int)),
                 this, SIGNAL(failedResize(QUrl,QString,int)));
 
-        collection.append(t);
+        collection.insert(t, 0);
         i++;
     }
 
