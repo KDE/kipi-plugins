@@ -915,7 +915,7 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
-    if(!KIO::NetAccess::dircopy(KUrl(d->tempDir->name() + "./"), d->settings->exportUrl))
+    if(!KIO::NetAccess::dircopy(KUrl(d->tempDir->name() + "./"), d->settings->exportUrl, 0))
         return false;
 
     d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);
