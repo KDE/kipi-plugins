@@ -162,6 +162,7 @@ Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
 Name=Keyboard navigation
+Name[ca]=Navegació amb el teclat
 Name[de]=Tastatur-Navigation
 Name[el]=Πλοήγηση με πληκτρολόγιο
 Name[en_GB]=Keyboard navigation
@@ -193,6 +194,7 @@ Caption_1[de]=Aus
 
 [X-HTMLExport Parameter preload]
 Name=Preload
+Name[ca]=Càrrega prèvia
 Name[de]=Vorwegladen
 Name[el]=Προφόρτωση
 Name[en_GB]=Preload
