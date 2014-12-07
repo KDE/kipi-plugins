@@ -31,10 +31,10 @@
 // Qt includes
 
 #include <QPointer>
+#include <QAction>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>

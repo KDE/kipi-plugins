@@ -19,6 +19,7 @@ target_link_libraries(kipiplugin_kmlexport
                       KF5::Parts
                       KF5::Kipi
                       KF5::KExiv2
+                      KF5::KDELibs4Support
                       KF5kipiplugins
                      )
 
