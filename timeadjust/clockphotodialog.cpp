@@ -34,14 +34,15 @@
 #include <QMouseEvent>
 #include <QResizeEvent>
 #include <QSize>
+#include <QIcon>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <QIcon>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kpushbutton.h>
+#include <kwindowconfig.h>
 
 // Local includes
 
@@ -214,14 +215,14 @@ void ClockPhotoDialog::loadSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Clock Photo Dialog"));
-    restoreDialogSize(group);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
 }
 
 void ClockPhotoDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Clock Photo Dialog"));
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 }
 
 void ClockPhotoDialog::slotLoadPhoto()

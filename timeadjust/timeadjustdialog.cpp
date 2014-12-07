@@ -51,10 +51,11 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
+#include <kwindowconfig.h>
 
 // Local includes
 
@@ -207,7 +208,7 @@ void TimeAdjustDialog::readSettings()
     d->settingsView->readSettings(group);
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void TimeAdjustDialog::saveSettings()
@@ -218,7 +219,7 @@ void TimeAdjustDialog::saveSettings()
     d->settingsView->saveSettings(group);
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 
