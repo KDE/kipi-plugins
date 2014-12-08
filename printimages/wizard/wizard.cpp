@@ -302,8 +302,8 @@ Wizard::Wizard(QWidget* const parent)
     connect(d->m_imagesFilesListBox, SIGNAL(signalMoveUpItem()),
             this, SLOT(BtnPrintOrderUp_clicked()));
 
-    connect(d->m_imagesFilesListBox, SIGNAL(signalAddItems(KUrl::List)),
-            this, SLOT(slotAddItems(KUrl::List)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalAddItems(QList<QUrl>)),
+            this, SLOT(slotAddItems(QList<QUrl>)));
 
     connect(d->m_imagesFilesListBox, SIGNAL(signalRemovingItem(KIPIPlugins::KPImagesListViewItem*)),
             this, SLOT(slotRemovingItem(KIPIPlugins::KPImagesListViewItem*)));
@@ -374,7 +374,7 @@ void createPhotoGrid(TPhotoSize* p, int pageWidth, int pageHeight, int rows, int
     }
 }
 
-void Wizard::print(const KUrl::List& fileList, const QString& tempPath)
+void Wizard::print(const QList<QUrl>& fileList, const QString& tempPath)
 {
     for (int i = 0; i < d->m_photos.count(); ++i)
         delete d->m_photos.at(i);
@@ -1589,17 +1589,17 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
     }
 }
 
-void Wizard::slotAddItems(const KUrl::List& list)
+void Wizard::slotAddItems(const QList<QUrl>& list)
 {
     if (list.count() == 0)
     {
         return;
     }
 
-    KUrl::List urls;
+    QList<QUrl> urls;
     d->m_imagesFilesListBox->blockSignals(true);
 
-    for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
         KUrl imageUrl = *it;
 
@@ -1645,7 +1645,7 @@ void Wizard::increaseCopies()
 {
     if (d->m_photos.size())
     {
-        KUrl::List list;
+        QList<QUrl> list;
         KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
 
         if (!item)
@@ -1679,7 +1679,7 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
         // set to first photo
         d->m_infopageCurrentPhoto = 0;
         d->m_imagesFilesListBox->listView()->clear();
-        KUrl::List list;
+        QList<QUrl> list;
 
         for (int i = 0; i < d->m_photos.count();++i)
         {

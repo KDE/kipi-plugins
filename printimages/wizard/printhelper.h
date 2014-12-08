@@ -41,7 +41,7 @@ public:
     PrintHelper(QWidget* const parent);
     ~PrintHelper();
 
-    void print(const KUrl::List& fileList);
+    void print(const QList<QUrl>& fileList);
 
 private:
 

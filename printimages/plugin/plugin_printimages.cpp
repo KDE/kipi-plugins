@@ -135,7 +135,7 @@ void Plugin_PrintImages::slotPrintImagesActivate()
     if ( !album.isValid() )
         return;
 
-    KUrl::List fileList = album.images();
+    QList<QUrl> fileList = album.images();
 
     if ( fileList.isEmpty() )
     {
@@ -156,7 +156,7 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     if ( !album.isValid() )
         return;
 
-    KUrl::List fileList = album.images();
+    QList<QUrl> fileList = album.images();
 
     if (fileList.isEmpty())
     {

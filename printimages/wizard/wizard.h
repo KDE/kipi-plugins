@@ -62,7 +62,7 @@ public:
     Wizard(QWidget* const);
     ~Wizard();
 
-    void print(const KUrl::List& fileList, const QString& tempPath);
+    void print(const QList<QUrl>& fileList, const QString& tempPath);
 
 protected Q_SLOTS:
 
@@ -94,7 +94,7 @@ protected Q_SLOTS:
     virtual void increaseCopies();
     virtual void infopage_updateCaptions();
 
-    virtual void slotAddItems(const KUrl::List&);
+    virtual void slotAddItems(const QList<QUrl>&);
     virtual void slotRemovingItem(KIPIPlugins::KPImagesListViewItem*);
     virtual void slotContextMenuRequested();
     virtual void slotXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*);

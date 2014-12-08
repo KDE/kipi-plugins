@@ -202,7 +202,7 @@ PrintHelper::~PrintHelper()
     delete d;
 }
 
-void PrintHelper::print(const KUrl::List& fileList)
+void PrintHelper::print(const QList<QUrl>& fileList)
 {
     QPrinter printer;
 
