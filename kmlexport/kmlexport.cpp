@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,15 +36,15 @@ extern "C"
 #include <QPainter>
 #include <QRegExp>
 #include <QTextStream>
+#include <QStandardPaths>
+#include <QApplication>
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kconfig.h>
 #include <kio/copyjob.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
 
 // LibKIPI includes
 
@@ -76,7 +76,7 @@ KmlExport::KmlExport(Interface* const interface)
     m_GPXAltitudeMode    = 0;
     m_kmlDocument        = 0;
     m_interface          = interface;
-    m_progressDialog     = new KPBatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
+    m_progressDialog     = new KPBatchProgressDialog(QApplication::activeWindow(), i18n("Generating KML file..."));
 }
 
 KmlExport::~KmlExport()
@@ -510,13 +510,13 @@ void KmlExport::generate()
         }
 
         m_progressDialog->progressWidget()->setProgress(pos, count);
-        kapp->processEvents();
+        QApplication::processEvents();
     }
 
     if (defectImage)
     {
         /** @todo if defectImage==count there are no pictures exported, does is it worth to continue? */
-        KMessageBox::information(kapp->activeWindow(),
+        KMessageBox::information(QApplication::activeWindow(),
                                  i18np("No position data for 1 picture",
                                        "No position data for %1 pictures", defectImage));
     }
@@ -565,8 +565,9 @@ int KmlExport::getConfig()
     m_GPXOpacity         = group.readEntry("Track Opacity", 64 );
     m_GPXAltitudeMode    = group.readEntry("GPX Altitude Mode", 0);
 
-    KStandardDirs dir;
-    m_tempDestDir        = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
+    m_tempDestDir        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "kipi-kmlrexportplugin-" + QString::number(getpid()) + "/";
+    QDir().mkpath(m_tempDestDir);
+
     m_imageDir           = "images/";
     m_googlemapSize      = 32;
     return 1;
