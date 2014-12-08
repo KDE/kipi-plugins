@@ -33,7 +33,7 @@
 
 #include <kstandarddirs.h>
 #include <kvbox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>

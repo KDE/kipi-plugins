@@ -32,6 +32,7 @@
 #include <QDomText>
 #include <QFile>
 #include <QPointer>
+#include <QTemporaryDir>
 #include <QApplication>
 
 // KDE includes
@@ -42,11 +43,10 @@
 #include <kfilemetainfo.h>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kstandardguiitem.h>
-#include <ktempdir.h>
 #include <ktoolinvocation.h>
 
 // Libkdcraw includes
@@ -100,7 +100,7 @@ public:
     QString                           hostUrl;
     QStringList                       simpleViewerFiles;
 
-    KTempDir*                         tempDir;
+    QTemporaryDir*                    tempDir;
 
     Interface*                        interface;
 
@@ -279,7 +279,7 @@ void SimpleViewer::slotProcess()
 bool SimpleViewer::createExportDirectories() const
 {
     delete d->tempDir;
-    d->tempDir = new KTempDir(KStandardDirs::locateLocal("tmp", "flashexport"));
+    d->tempDir = new QTemporaryDir(KStandardDirs::locateLocal("tmp", "flashexport"));
     d->tempDir->setAutoRemove(true);
 
     d->progressWdg->addedAction(i18n("Creating directories..."), StartingMessage);
@@ -296,7 +296,7 @@ bool SimpleViewer::createExportDirectories() const
     if(d->settings->plugType == 0)
     {
 
-        QUrl thumbsDir = QUrl(d->tempDir->name());
+        QUrl thumbsDir = QUrl(d->tempDir->path());
         thumbsDir.setPath(thumbsDir.path() + "/thumbs");
 
         if(!KIO::NetAccess::mkdir(thumbsDir, kapp->activeWindow()))
@@ -307,7 +307,7 @@ bool SimpleViewer::createExportDirectories() const
         }
     }
 
-    QUrl imagesDir = QUrl(d->tempDir->name());
+    QUrl imagesDir = QUrl(d->tempDir->path());
 
 
     kDebug() << "image folder url is" << imagesDir.url();
@@ -354,7 +354,7 @@ bool SimpleViewer::exportImages()
 
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
 
-    QUrl xmlFile(d->tempDir->name());
+    QUrl xmlFile(d->tempDir->path());
 
     QFile file(xmlFile.path());
     file.open(QIODevice::WriteOnly);
@@ -463,10 +463,10 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
     bool resizeImages   = d->settings->resizeExportImages;
     bool fixOrientation = d->settings->fixOrientation;
 
-    QUrl thumbsDir(d->tempDir->name());
+    QUrl thumbsDir(d->tempDir->path());
     thumbsDir.setPath(thumbsDir.path() + "/thumbs");
 
-    QUrl imagesDir(d->tempDir->name());
+    QUrl imagesDir(d->tempDir->path());
     imagesDir.setPath(imagesDir.path() + "/images");
 
     qSort(images.begin(), images.end(), cmpUrl);
@@ -764,7 +764,7 @@ bool SimpleViewer::createIndex() const
             indexTemplate.replace("{HOSTURL}",  d->hostUrl);
             indexTemplate.replace("{HOSTNAME}", d->hostName);
 
-            QFile outfile(d->tempDir->name() + "/index.html");
+            QFile outfile(d->tempDir->path() + "/index.html");
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -794,7 +794,7 @@ bool SimpleViewer::createIndex() const
             //indexTemplate.replace("{HOSTNAME}", d->hostName);
             //indexTemplate.replace("{HOSTURL}",  d->hostUrl);
 
-            QFile outfile(d->tempDir->name() + "/index.html");
+            QFile outfile(d->tempDir->path() + "/index.html");
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -837,7 +837,7 @@ bool SimpleViewer::createIndex() const
             indexTemplate.replace("{BACKCOLOR}" ,   d->settings->backColor.name().replace('#', "0x"));
             indexTemplate.replace("{BACKOUTCOLOR}", d->settings->bkgndOuterColor.name().replace('#', "0x"));
 
-            QFile outfile(d->tempDir->name() + "/index.html");
+            QFile outfile(d->tempDir->path() + "/index.html");
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -864,7 +864,7 @@ bool SimpleViewer::createIndex() const
             indexTemplate.replace("{COLOR}",    d->settings->textColor.name());
             indexTemplate.replace("{BGCOLOR}",  d->settings->backgroundColor.name());
 
-            QFile outfile(d->tempDir->name() + "/index.html");
+            QFile outfile(d->tempDir->path() + "/index.html");
             outfile.open(QIODevice::WriteOnly);
             QTextStream out(&outfile);
             out << indexTemplate;
@@ -917,7 +917,7 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
-    if(!KIO::NetAccess::dircopy(QUrl(d->tempDir->name() + "./"), d->settings->exportUrl, 0))
+    if(!KIO::NetAccess::dircopy(QUrl(d->tempDir->path() + "./"), d->settings->exportUrl, 0))
         return false;
 
     d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);

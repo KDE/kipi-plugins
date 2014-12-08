@@ -33,7 +33,7 @@
 
 #include <kdialog.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <knuminput.h>
 #include <kurlrequester.h>
 #include <kvbox.h>
