@@ -38,16 +38,18 @@ extern "C"
 
 #include <QWidget>
 #include <QPrinter>
+#include <QStandardPaths>
+#include <QAction>
+#include <QDir>
+#include <QApplication>
+
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>
@@ -139,7 +141,7 @@ void Plugin_PrintImages::slotPrintImagesActivate()
 
     if ( fileList.isEmpty() )
     {
-        KMessageBox::sorry ( kapp->activeWindow(), i18n ( "Please select one or more photos to print." ),
+        KMessageBox::sorry ( QApplication::activeWindow(), i18n ( "Please select one or more photos to print." ),
                             i18n ( "Print images" ) );
         return;
     }
@@ -160,15 +162,16 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
 
     if (fileList.isEmpty())
     {
-        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select one or more photos to print."),
+        KMessageBox::sorry(QApplication::activeWindow(), i18n("Please select one or more photos to print."),
                            i18n("Print assistant"));
         return;
     }
 
     QWidget* const parent = QApplication::activeWindow();
     Wizard printAssistant(parent);
-    KStandardDirs dir;
-    QString tempPath = dir.saveLocation("tmp", "kipi-printassistantdplugin-" + QString::number(getpid()) + '/');
+
+    QString tempPath        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "kipi-printassistantdplugin-" + QString::number(getpid()) + "/";
+    QDir().mkpath(tempPath);
     printAssistant.print(fileList, tempPath);
 
     if (printAssistant.exec() == QDialog::Rejected)
@@ -176,4 +179,5 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
 }
 
 } // namespace KIPIPrintImagesPlugin
+
 #include "plugin_printimages.moc"
