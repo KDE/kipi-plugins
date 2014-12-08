@@ -157,7 +157,7 @@ public:
 public:
 
     // full path
-    KUrl            filename;
+    QUrl            filename;
     int             m_thumbnailSize;
 
     QRect           cropRegion;

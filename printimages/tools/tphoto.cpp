@@ -53,7 +53,7 @@ TPhoto::TPhoto(int thumbnailSize)
 
     copies                = 1;
     //TODO mPrintPosition;
-    filename              = "";
+    filename              = QUrl();
     m_metaIface           = NULL;
 
     m_thumbnail           = NULL;

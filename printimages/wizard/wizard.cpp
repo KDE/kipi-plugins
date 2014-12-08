@@ -1601,7 +1601,7 @@ void Wizard::slotAddItems(const QList<QUrl>& list)
 
     for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
-        KUrl imageUrl = *it;
+        QUrl imageUrl = *it;
 
         // Check if the new item already exist in the list.
         bool found = false;
@@ -2171,8 +2171,8 @@ void Wizard::BtnSaveAs_clicked()
     kDebug() << "Save As Clicked";
     KConfig config ( "kipirc" );
     KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
-    KUrl outputPath; // force to get current directory as default
-    outputPath = group.readPathEntry ( "OutputPath", outputPath.url() );
+    QUrl outputPath; // force to get current directory as default
+    outputPath = QUrl(group.readPathEntry ( "OutputPath", outputPath.url() ));
     QString filename=KFileDialog::getSaveFileName ( outputPath,QString ( ".jpeg" ) );
     d->m_cropPage->m_fileName->setText(filename);
 }
@@ -2269,8 +2269,8 @@ void Wizard::readSettings(const QString& pageName)
         if (d->m_photoPage->m_printer_choice->currentText() == i18n("Print to JPG"))
         {
             // set the last output path
-            KUrl outputPath; // force to get current directory as default
-            outputPath = group.readPathEntry("OutputPath", outputPath.url());
+            QUrl outputPath; // force to get current directory as default
+            outputPath = QUrl(group.readPathEntry("OutputPath", outputPath.url()));
             
             d->m_cropPage->m_fileName->setVisible(true);
             d->m_cropPage->m_fileName->setEnabled(true);
