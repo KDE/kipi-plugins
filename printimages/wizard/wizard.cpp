@@ -156,28 +156,27 @@ Wizard::Wizard(QWidget* const parent)
 
     // Caption
     setWindowTitle(i18n("Print assistant"));
-#pragma message("PORT QT5")
-/*
-    // About data
-    KPAboutData* about = new KPAboutData(ki18n("Print assistant"),
-                             QByteArray(),
-                             KAboutData::License_GPL,
-                             ki18n("A KIPI plugin to print images"),
-                             ki18n("(c) 2003-2004, Todd Shoemaker\n"
-                                   "(c) 2007-2013, Angelo Naselli"));
 
-    about->addAuthor(ki18n("Todd Shoemaker"), ki18n("Author"),
+    // About data
+    KPAboutData* const about = new KPAboutData(ki18n("Print assistant"),
+                                               0,
+                                               KAboutLicense::GPL,
+                                               ki18n("A KIPI plugin to print images"),
+                                               ki18n("(c) 2003-2004, Todd Shoemaker\n"
+                                               "(c) 2007-2013, Angelo Naselli"));
+
+    about->addAuthor(ki18n("Todd Shoemaker").toString(), ki18n("Author").toString(),
                      "todd@theshoemakers.net");
 
-    about->addAuthor(ki18n("Angelo Naselli"), ki18n("Developer and maintainer"),
+    about->addAuthor(ki18n("Angelo Naselli").toString(), ki18n("Developer and maintainer").toString(),
                      "anaselli@linux.it");
 
-    about->addAuthor(ki18n("Andreas Trink"), ki18n("Contributor"),
+    about->addAuthor(ki18n("Andreas Trink").toString(), ki18n("Contributor").toString(),
                      "atrink@nociaro.org");
 
     about->setHandbookEntry("printwizard");
     setAboutData(about);
-*/
+
     //d->m_photoPage  = new InfoPage ( this, i18n ( infoPageName ) );
     d->m_photoPage      = new PhotoPage(this, i18n(photoPageName));
     d->m_cropPage       = new CropPage(this, i18n(cropPageName)) ;

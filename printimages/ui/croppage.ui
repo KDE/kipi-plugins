@@ -162,7 +162,7 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
       <widget class="KLineEdit" name="m_fileName"/>
      </item>
      <item>
-      <widget class="KPushButton" name="BtnSaveAs">
+      <widget class="QPushButton" name="BtnSaveAs">
        <property name="text">
         <string>Save As</string>
        </property>
@@ -182,7 +182,7 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
    <header>klineedit.h</header>
    </customwidget>
    <customwidget>
-   <class>KPushButton</class>
+   <class>QPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
   </customwidget>
