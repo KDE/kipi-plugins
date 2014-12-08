@@ -32,10 +32,11 @@
 #include <QDomText>
 #include <QFile>
 #include <QPointer>
+#include <QApplication>
 
 // KDE includes
 
-#include <k4aboutdata.h>
+#include <kaboutdata.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -47,7 +48,6 @@
 #include <kstandardguiitem.h>
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
-#include <KGlobal>
 
 // Libkdcraw includes
 
@@ -113,8 +113,8 @@ SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
     : QObject(parent), d(new SimpleViewerPriv)
 {
     d->interface = interface;
-    d->hostName  = KGlobal::mainComponent().aboutData()->programName();
-    d->hostUrl   = KGlobal::mainComponent().aboutData()->homepage();
+    d->hostName  = QApplication::applicationName();
+    d->hostUrl   = KAboutData::applicationData().homepage();
 
     if (d->hostUrl.isEmpty())
     {
