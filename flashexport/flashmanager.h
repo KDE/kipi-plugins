@@ -60,7 +60,7 @@ public:
     void setIface(Interface* const iface);
     Interface* iface() const;
 
-    bool installPlugin(const KUrl& url);
+    bool installPlugin(const QUrl& url);
 
     SimpleViewer* simpleView() const;
 

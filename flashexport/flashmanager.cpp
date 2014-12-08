@@ -93,7 +93,7 @@ Interface* FlashManager::iface() const
     return d->iface;
 }
 
-bool FlashManager::installPlugin(const KUrl& url)
+bool FlashManager::installPlugin(const QUrl& url)
 {
     if(d->simple->unzip(url.path()))
         return true;

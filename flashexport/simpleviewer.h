@@ -100,7 +100,7 @@ private:
      * @param galleryElem - xml tag that contains info about all uploaded images( SimpleViewer, Autoviewer, PostcardViewer)
      * @param photosElem - xml tag that contains info about all uploaded images (TiltViewer)
      */
-    void processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
+    void processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                          QDomElement& galleryElem, QDomElement& photosElem);
 
     /**
@@ -132,7 +132,7 @@ private:
      * @param newName new image file name used by gallery
      */
     void cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
-                     const KUrl& url, const QString& newName) const;
+                     const QUrl& url, const QString& newName) const;
 
     /**
      * Creates the index.html file
@@ -152,7 +152,7 @@ private:
 
     bool extractFile(const KArchiveEntry* entry) const;
 
-    static bool cmpUrl(const KUrl& url1, const KUrl& url2);
+    static bool cmpUrl(const QUrl& url1, const QUrl& url2);
 
 Q_SIGNALS:
 

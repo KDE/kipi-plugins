@@ -60,7 +60,7 @@ public:
         urlRequester = 0;
     }
 
-    KUrl           url;
+    QUrl           url;
 
     KUrlRequester* urlRequester;
 };
@@ -96,8 +96,8 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
     d->urlRequester = new KUrlRequester(vbox);
-    connect(d->urlRequester, SIGNAL(urlSelected(KUrl)),
-            this, SLOT(slotUrlSelected(KUrl)));
+    connect(d->urlRequester, SIGNAL(urlSelected(QUrl)),
+            this, SLOT(slotUrlSelected(QUrl)));
 
     setPageWidget(vbox);
     setLeftBottomPix(DesktopIcon("kipi-flash", 128));
@@ -113,13 +113,13 @@ void FirstRunPage::slotDownload(const QString& url)
     KToolInvocation::invokeBrowser(url);
 }
 
-void FirstRunPage::slotUrlSelected(const KUrl& url)
+void FirstRunPage::slotUrlSelected(const QUrl& url)
 {
     d->url = url;
     emit signalUrlObtained();
 }
 
-KUrl FirstRunPage::getUrl() const
+QUrl FirstRunPage::getUrl() const
 {
     return d->url;
 }

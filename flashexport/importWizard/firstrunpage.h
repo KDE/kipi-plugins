@@ -59,7 +59,7 @@ public:
     /**
      * Returns the URL, where the SimpleViewer package is stored
      */
-    KUrl getUrl() const;
+    QUrl getUrl() const;
 
 Q_SIGNALS:
 
@@ -75,7 +75,7 @@ private Q_SLOTS:
     /**
      * Starts the installation of SimpleViewer
      */
-    void slotUrlSelected(const KUrl& url);
+    void slotUrlSelected(const QUrl& url);
 
 private:
 

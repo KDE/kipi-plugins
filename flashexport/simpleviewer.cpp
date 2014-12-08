@@ -284,7 +284,7 @@ bool SimpleViewer::createExportDirectories() const
 
     d->progressWdg->addedAction(i18n("Creating directories..."), StartingMessage);
 
-    KUrl root = d->settings->exportUrl;
+    QUrl root = d->settings->exportUrl;
     kDebug() << "export url is" << root.url();
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
     {
@@ -296,8 +296,9 @@ bool SimpleViewer::createExportDirectories() const
     if(d->settings->plugType == 0)
     {
 
-        KUrl thumbsDir = d->tempDir->name();
-        thumbsDir.addPath("/thumbs");
+        QUrl thumbsDir = QUrl(d->tempDir->name());
+        thumbsDir.setPath(thumbsDir.path() + "/thumbs");
+
         if(!KIO::NetAccess::mkdir(thumbsDir, kapp->activeWindow()))
         {
             d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir.url()),
@@ -306,8 +307,9 @@ bool SimpleViewer::createExportDirectories() const
         }
     }
 
-    KUrl imagesDir = d->tempDir->name();
-    imagesDir.addPath("/images");
+    QUrl imagesDir = QUrl(d->tempDir->name());
+
+
     kDebug() << "image folder url is" << imagesDir.url();
 
     if(!KIO::NetAccess::mkdir(imagesDir, kapp->activeWindow()))
@@ -323,7 +325,7 @@ bool SimpleViewer::createExportDirectories() const
     return true;
 }
 
-bool SimpleViewer::cmpUrl(const KUrl& url1, const KUrl& url2)
+bool SimpleViewer::cmpUrl(const QUrl& url1, const QUrl& url2)
 {
     KPMetadata meta;
     meta.load(url1.path());
@@ -352,8 +354,8 @@ bool SimpleViewer::exportImages()
 
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
 
-    KUrl xmlFile(d->tempDir->name());
-    xmlFile.addPath("/gallery.xml");
+    QUrl xmlFile(d->tempDir->name());
+
     QFile file(xmlFile.path());
     file.open(QIODevice::WriteOnly);
 
@@ -431,13 +433,13 @@ bool SimpleViewer::exportImages()
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
         {
             QList<QUrl> images = (*it).images();
-            processKUrlList(images,xmlDoc,galleryElem,photosElem);
+            processQUrlList(images,xmlDoc,galleryElem,photosElem);
         }
     }
     else
     {
         QList<QUrl> images = d->settings->imageDialogList;
-        processKUrlList(images,xmlDoc,galleryElem,photosElem);
+        processQUrlList(images,xmlDoc,galleryElem,photosElem);
     }
 
     QByteArray data(xmlDoc.toByteArray());
@@ -447,7 +449,7 @@ bool SimpleViewer::exportImages()
 
     return true;
 }
-void SimpleViewer::processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
+void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                                    QDomElement& galleryElem, QDomElement& photosElem)
 {
     KPMetadata meta;
@@ -461,11 +463,11 @@ void SimpleViewer::processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
     bool resizeImages   = d->settings->resizeExportImages;
     bool fixOrientation = d->settings->fixOrientation;
 
-    KUrl thumbsDir(d->tempDir->name());
-    thumbsDir.addPath("/thumbs");
+    QUrl thumbsDir(d->tempDir->name());
+    thumbsDir.setPath(thumbsDir.path() + "/thumbs");
 
-    KUrl imagesDir(d->tempDir->name());
-    imagesDir.addPath("/images");
+    QUrl imagesDir(d->tempDir->name());
+    imagesDir.setPath(imagesDir.path() + "/images");
 
     qSort(images.begin(), images.end(), cmpUrl);
 
@@ -473,7 +475,7 @@ void SimpleViewer::processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         !d->canceled && (it != images.constEnd()) ; ++it)
     {
         kapp->processEvents();
-        KUrl url = *it;
+        QUrl url = *it;
         QFileInfo fi(url.path());
 
         //video can't be exported, need to add for all video files
@@ -520,8 +522,8 @@ void SimpleViewer::processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
 
         if(d->settings->plugType == 0)
         {
-            KUrl thumbnailPath(thumbsDir);
-            thumbnailPath.addPath(newName);
+            QUrl thumbnailPath(thumbsDir);
+            thumbnailPath.setPath(thumbnailPath.path() + newName);
 
             if (resizeImages && fixOrientation)
                 meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
@@ -529,8 +531,8 @@ void SimpleViewer::processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
             thumbnail.save(thumbnailPath.path(), "JPEG");
         }
 
-        KUrl imagePath(imagesDir);
-        imagePath.addPath(newName);
+        QUrl imagePath(imagesDir);
+        imagePath.setPath(imagePath.path() + newName);
 
         if (resizeImages && fixOrientation)
             rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
@@ -609,7 +611,7 @@ bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resized
 }
 
 void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
-                               const KUrl& url, const QString& newName) const
+                               const QUrl& url, const QString& newName) const
 {
     if(d->canceled)
         return;
@@ -897,7 +899,7 @@ bool SimpleViewer::copySimpleViewer() const
     entries = dir.entryList(QDir::Files);
     for(QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
-        files.append(KUrl(dir.absolutePath() + '/' + *it));
+        files.append(QUrl(dir.absolutePath() + '/' + *it));
     }
 
     // TODO: catch errors
@@ -915,7 +917,7 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
-    if(!KIO::NetAccess::dircopy(KUrl(d->tempDir->name() + "./"), d->settings->exportUrl, 0))
+    if(!KIO::NetAccess::dircopy(QUrl(d->tempDir->name() + "./"), d->settings->exportUrl, 0))
         return false;
 
     d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);

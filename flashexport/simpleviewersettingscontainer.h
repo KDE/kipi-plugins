@@ -73,7 +73,7 @@ public:
         /** All items must be initialized in constructor to avoid warinings **/
         plugType             = SIMPLE;
         imgGetOption         = COLLECTION;
-        exportUrl            = KUrl();
+        exportUrl            = QUrl();
 
         enableRightClickOpen = false;
         resizeExportImages   = false;
@@ -196,7 +196,7 @@ public:
 
 
     //Settings for all plug-ins
-    KUrl                         exportUrl;
+    QUrl                         exportUrl;
 
     bool                         enableRightClickOpen;
     bool                         resizeExportImages;
