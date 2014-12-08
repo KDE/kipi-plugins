@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : a dialog to edit EXIF metadata
  *
- * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006      by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006      by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -32,15 +32,9 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
+#include <kwindowconfig.h>
 #include <kconfig.h>
-#include <kiconloader.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <kpushbutton.h>
-#include <khelpmenu.h>
-#include <ktoolinvocation.h>
-#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -184,7 +178,7 @@ void SendImagesDialog::readSettings()
     d->settingsWidget->setEmailSettings(settings);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void SendImagesDialog::saveSettings()
@@ -202,7 +196,7 @@ void SendImagesDialog::saveSettings()
     group.writeEntry("AttachmentLimit",    settings.attachmentLimitInMbytes);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 
