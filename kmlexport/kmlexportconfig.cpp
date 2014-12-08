@@ -34,15 +34,15 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QMenu>
+#include <QComboBox>
 
 // KDE includes
 
 #include <kapplication.h>
-#include <kcombobox.h>
 #include <kcolorbutton.h>
 #include <kconfig.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kwindowconfig.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
@@ -101,7 +101,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     // target preference, suite
 
     QLabel* const AltitudeLabel_ = new QLabel(i18n("Picture Altitude:" ), TargetPreferenceGroupBox);
-    AltitudeCB_                  = new KComboBox( TargetPreferenceGroupBox );
+    AltitudeCB_                  = new QComboBox( TargetPreferenceGroupBox );
     AltitudeCB_->addItem(i18n("clamp to ground"));
     AltitudeCB_->addItem(i18n("relative to ground"));
     AltitudeCB_->addItem(i18n("absolute"));
@@ -178,7 +178,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     GPXFileUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
-    timeZoneCB     = new KComboBox(GPXTracksGroupBox );
+    timeZoneCB     = new QComboBox(GPXTracksGroupBox );
     timeZoneCB->addItem(i18n("GMT-12:00"), 0);
     timeZoneCB->addItem(i18n("GMT-11:00"), 1);
     timeZoneCB->addItem(i18n("GMT-10:00"), 2);
@@ -223,7 +223,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     GPXTracksOpacityInput_->setValue(100 );
 
     GPXAltitudeLabel_ = new QLabel(i18n("Track Altitude:"), GPXTracksGroupBox);
-    GPXAltitudeCB_    = new KComboBox(GPXTracksGroupBox);
+    GPXAltitudeCB_    = new QComboBox(GPXTracksGroupBox);
     GPXAltitudeCB_->addItem(i18n("clamp to ground"));
     GPXAltitudeCB_->addItem(i18n("relative to ground"));
     GPXAltitudeCB_->addItem(i18n("absolute"));

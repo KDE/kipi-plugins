@@ -28,24 +28,28 @@
 #include <QGroupBox>
 #include <QLayout>
 #include <QCheckBox>
-
+#include <QComboBox>
+#include <QApplication>
 
 // KDE includes
 
 #include <kcolorbutton.h>
-#include <kcombobox.h>
-#include <kdialog.h>
 #include <khbox.h>
-#include <klocale.h>
-#include <knuminput.h>
+#include <klocalizedstring.h>
 #include <kvbox.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 
+// Libkdcraw includes
+
+#include <rnuminput.h>
+
 //Local includes
 
 #include "simpleviewer.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {
@@ -79,20 +83,20 @@ public:
     }
 
     KVBox*        vbox;
-    KComboBox*    thumbnailPosition;
+    QComboBox*    thumbnailPosition;
 
     KColorButton* textColor;
     KColorButton* backgroundColor;
     KColorButton* frameColor;
 
-    KIntNumInput* frameWidth;
-    KIntNumInput* stagePadding;
-    KIntNumInput* thumbnailColumns;
-    KIntNumInput* thumbnailRows;
+    RIntNumInput* frameWidth;
+    RIntNumInput* stagePadding;
+    RIntNumInput* thumbnailColumns;
+    RIntNumInput* thumbnailRows;
 
     // ---Autoviewer------
-    KIntNumInput* displayTime;
-    KIntNumInput* imagePadding;
+    RIntNumInput* displayTime;
+    RIntNumInput* imagePadding;
 
     // ---Tiltviewer------
     KColorButton* bkgndInnerColor;
@@ -102,9 +106,9 @@ public:
     QCheckBox*    showFlipButton;
 
     // ---Postcardviewer----
-    KIntNumInput* cellDimension;
-    KIntNumInput* zoomInPerc;
-    KIntNumInput* zoomOutPerc;
+    RIntNumInput* cellDimension;
+    RIntNumInput* zoomInPerc;
+    RIntNumInput* zoomOutPerc;
 };
 
 LookPage::LookPage(KAssistantDialog* const dlg)
@@ -120,12 +124,12 @@ LookPage::~LookPage()
 
 void LookPage::setPageContent(int plugType)
 {
-
     if(d->vbox)
     {
        removePageWidget(d->vbox);
        delete d->vbox;
     }
+
     d->vbox= new KVBox(this);
     /* Every plugin have it's own settings
     * Keep a page for every plugin for a easier maintenance
@@ -141,7 +145,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox       = new KHBox;
             QLabel* label     = new QLabel(i18n("Thumbnail &Rows:"), hbox);
-            d->thumbnailRows  = new KIntNumInput(hbox);
+            d->thumbnailRows  = new RIntNumInput(hbox);
             d->thumbnailRows->setRange(1, 10, 1);
             d->thumbnailRows->setValue(3);
             d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
@@ -149,7 +153,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox2        = new KHBox;
             QLabel* label2      = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
-            d->thumbnailColumns = new KIntNumInput(hbox2);
+            d->thumbnailColumns = new RIntNumInput(hbox2);
             d->thumbnailColumns->setRange(1, 10, 1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
@@ -157,7 +161,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox3         = new KHBox;
             QLabel* label3       = new QLabel(i18n("Thumbnail &Position:"), hbox3);
-            d->thumbnailPosition = new KComboBox(hbox3);
+            d->thumbnailPosition = new QComboBox(hbox3);
             QString pos_right  = i18nc("thumbnail position: right",  "Right");
             QString pos_left   = i18nc("thumbnail position: left",   "Left");
             QString pos_top    = i18nc("thumbnail position: top",    "Top");
@@ -169,8 +173,8 @@ void LookPage::setPageContent(int plugType)
             d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
             label3->setBuddy(d->thumbnailPosition);
 
-            vlay->setMargin(KDialog::spacingHint());
-            vlay->setSpacing(KDialog::spacingHint());
+            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay->addWidget(hbox);
             vlay->addWidget(hbox2);
             vlay->addWidget(hbox3);
@@ -200,8 +204,8 @@ void LookPage::setPageContent(int plugType)
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label6->setBuddy(d->frameColor);
 
-            vlay2->setMargin(KDialog::spacingHint());
-            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay2->addWidget(hbox4);
             vlay2->addWidget(hbox5);
             vlay2->addWidget(hbox6);
@@ -213,7 +217,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox7   = new KHBox;
             QLabel* label7 = new QLabel(i18n("&Frame Width:"), hbox7);
-            d->frameWidth  = new KIntNumInput(hbox7);
+            d->frameWidth  = new RIntNumInput(hbox7);
             d->frameWidth->setRange(0, 10, 1);
             d->frameWidth->setValue(1);
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
@@ -221,14 +225,14 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox8    = new KHBox;
             QLabel* label8  = new QLabel(i18n("&Stage Padding:"), hbox8);
-            d->stagePadding = new KIntNumInput(hbox8);
+            d->stagePadding = new RIntNumInput(hbox8);
             d->stagePadding->setRange(10, 100, 1);
             d->stagePadding->setValue(20);
             d->stagePadding->setWhatsThis(i18n("Distance between image and thumbnails in pixels."));
             label8->setBuddy(d->stagePadding);
 
-            vlay3->setMargin(KDialog::spacingHint());
-            vlay3->setSpacing(KDialog::spacingHint());
+            vlay3->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay3->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay3->addWidget(hbox7);
             vlay3->addWidget(hbox8);
 
@@ -242,14 +246,14 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox          = new KHBox;
             QLabel* label        = new QLabel(i18n("&Display Time:"), hbox);
-            d->displayTime = new KIntNumInput(hbox);
+            d->displayTime = new RIntNumInput(hbox);
             d->displayTime->setRange(1, 15, 1);
             d->displayTime->setValue(3);
             d->displayTime->setWhatsThis(i18n("Number of seconds each image will display in auto-play mode."));
             label->setBuddy(d->displayTime);
 
-            vlay->setMargin(KDialog::spacingHint());
-            vlay->setSpacing(KDialog::spacingHint());
+            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay->addWidget(hbox);
 
             //---Colors Options -----------------------------------------------
@@ -270,8 +274,8 @@ void LookPage::setPageContent(int plugType)
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
 
-            vlay2->setMargin(KDialog::spacingHint());
-            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay2->addWidget(hbox2);
             vlay2->addWidget(hbox3);
 
@@ -282,7 +286,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox4    = new KHBox;
             QLabel* label4  = new QLabel(i18n("&Frame Width:"), hbox4);
-            d->frameWidth = new KIntNumInput(hbox4);
+            d->frameWidth = new RIntNumInput(hbox4);
             d->frameWidth->setRange(0, 10, 1);
             d->frameWidth->setValue(1);
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
@@ -290,14 +294,14 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox5    = new KHBox;
             QLabel* label5  = new QLabel(i18n("&Image Padding:"), hbox5);
-            d->imagePadding = new KIntNumInput(hbox5);
+            d->imagePadding = new RIntNumInput(hbox5);
             d->imagePadding->setRange(10, 100, 1);
             d->imagePadding->setValue(20);
             d->imagePadding->setWhatsThis(i18n("Distance between images in pixels"));
             label5->setBuddy(d->imagePadding);
 
-            vlay3->setMargin(KDialog::spacingHint());
-            vlay3->setSpacing(KDialog::spacingHint());
+            vlay3->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay3->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay3->addWidget(hbox4);
             vlay3->addWidget(hbox5);
 
@@ -311,7 +315,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox          = new KHBox;
             QLabel* label        = new QLabel(i18n(" &Rows:"), hbox);
-            d->thumbnailRows = new KIntNumInput(hbox);
+            d->thumbnailRows = new RIntNumInput(hbox);
             d->thumbnailRows->setRange(1, 10, 1);
             d->thumbnailRows->setValue(3);
             d->thumbnailRows->setWhatsThis(i18n("Number of rows of images to display."));
@@ -319,7 +323,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox2          = new KHBox;
             QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
-            d->thumbnailColumns = new KIntNumInput(hbox2);
+            d->thumbnailColumns = new RIntNumInput(hbox2);
             d->thumbnailColumns->setRange(1, 10, 1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of columns of images to display."));
@@ -336,8 +340,8 @@ void LookPage::setPageContent(int plugType)
                                             "the images' orientations will be set according "
                                             "to their Exif information."));
 
-            vlay->setMargin(KDialog::spacingHint());
-            vlay->setSpacing(KDialog::spacingHint());
+            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay->addWidget(hbox);
             vlay->addWidget(hbox2);
             vlay->addWidget(d->showFlipButton);
@@ -376,8 +380,8 @@ void LookPage::setPageContent(int plugType)
             d->backColor->setWhatsThis(i18n("Image's back color when pressing flip button"));
             label6->setBuddy(d->bkgndOuterColor);
 
-            vlay2->setMargin(KDialog::spacingHint());
-            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay2->addWidget(hbox3);
             vlay2->addWidget(hbox4);
             vlay2->addWidget(hbox5);
@@ -393,7 +397,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox          = new KHBox;
             QLabel* label        = new QLabel(i18n("Cell Dimension:"), hbox);
-            d->cellDimension = new KIntNumInput(hbox);
+            d->cellDimension = new RIntNumInput(hbox);
             d->cellDimension->setRange(500, 1500, 1);
             d->cellDimension->setValue(800);
             d->cellDimension->setWhatsThis(i18n("Dimension of displayed image cells. Please use a higher value if you set high image size"));
@@ -401,14 +405,14 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox2          = new KHBox;
             QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
-            d->thumbnailColumns = new KIntNumInput(hbox2);
+            d->thumbnailColumns = new RIntNumInput(hbox2);
             d->thumbnailColumns->setRange(1, 10, 1);
             d->thumbnailColumns->setValue(3);
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
             label2->setBuddy(d->thumbnailColumns);
 
-            vlay->setMargin(KDialog::spacingHint());
-            vlay->setSpacing(KDialog::spacingHint());
+            vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay->addWidget(hbox);
             vlay->addWidget(hbox2);
 
@@ -438,8 +442,8 @@ void LookPage::setPageContent(int plugType)
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label5->setBuddy(d->frameColor);
 
-            vlay2->setMargin(KDialog::spacingHint());
-            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay2->addWidget(hbox3);
             vlay2->addWidget(hbox4);
             vlay2->addWidget(hbox5);
@@ -451,7 +455,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox6   = new KHBox;
             QLabel* label6 = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
-            d->zoomInPerc  = new KIntNumInput(hbox6);
+            d->zoomInPerc  = new RIntNumInput(hbox6);
             d->zoomInPerc->setRange(0, 100, 1);
             d->zoomInPerc->setValue(100);
             d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
@@ -459,7 +463,7 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox7   = new KHBox;
             QLabel* label7 = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
-            d->zoomOutPerc = new KIntNumInput(hbox7);
+            d->zoomOutPerc = new RIntNumInput(hbox7);
             d->zoomOutPerc->setRange(0, 100, 1);
             d->zoomOutPerc->setValue(15);
             d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
@@ -467,14 +471,14 @@ void LookPage::setPageContent(int plugType)
 
             KHBox* hbox8   = new KHBox;
             QLabel* label8 = new QLabel(i18n("&Frame Width:"), hbox8);
-            d->frameWidth  = new KIntNumInput(hbox8);
+            d->frameWidth  = new RIntNumInput(hbox8);
             d->frameWidth->setRange(0, 15, 1);
             d->frameWidth->setValue(3);
             d->frameWidth->setWhatsThis(i18n("The frame width"));
             label8->setBuddy(d->frameWidth);
 
-            vlay3->setMargin(KDialog::spacingHint());
-            vlay3->setSpacing(KDialog::spacingHint());
+            vlay3->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+            vlay3->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
             vlay3->addWidget(hbox6);
             vlay3->addWidget(hbox7);
             vlay3->addWidget(hbox8);

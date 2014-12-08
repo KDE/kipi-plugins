@@ -28,22 +28,28 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
+#include <QStandardPaths>
+#include <QLineEdit>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
-#include <kdialog.h>
-#include <klineedit.h>
 #include <klocalizedstring.h>
-#include <knuminput.h>
 #include <kurlrequester.h>
 #include <kvbox.h>
-#include <kstandarddirs.h>
+//#include <kstandarddirs.h>
 #include <kiconloader.h>
-#include <QStandardPaths>
+
+// Libkdcraw includes
+
+#include <rnuminput.h>
 
 //Local includes
 
 #include "simpleviewer.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {
@@ -66,7 +72,7 @@ public:
         showKeywords       = 0;
     }
 
-    KLineEdit*     title;
+    QLineEdit*     title;
 
     QCheckBox*     resizeExportImages;
     QCheckBox*     showComments;
@@ -75,8 +81,8 @@ public:
     QCheckBox*     openInKonqueror;
     QCheckBox*     showKeywords;
 
-    KIntNumInput*  imagesExportSize;
-    KIntNumInput*  maxImageDimension;
+    RIntNumInput*  imagesExportSize;
+    RIntNumInput*  maxImageDimension;
 
     KUrlRequester* exportUrl;
 };
@@ -91,11 +97,11 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
 
     QGroupBox* box    = new QGroupBox(i18n("Gallery &Title"), vbox);
     QVBoxLayout* vlay = new QVBoxLayout(box);
-    d->title          = new KLineEdit(this);
+    d->title          = new QLineEdit(this);
     d->title->setWhatsThis(i18n("Enter here the gallery title"));
 
-    vlay->setMargin(KDialog::spacingHint());
-    vlay->setSpacing(KDialog::spacingHint());
+    vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay->addWidget(d->title);
 
     // ------------------------------------------------------------------------
@@ -105,8 +111,8 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     d->exportUrl       = new KUrlRequester(QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")), this);
     d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
 
-    vlay2->setMargin(KDialog::spacingHint());
-    vlay2->setSpacing(KDialog::spacingHint());
+    vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay2->addWidget(d->exportUrl);
 
     // ------------------------------------------------------------------------
@@ -125,9 +131,9 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
                                          "the images' orientations will be set according "
                                          "to their Exif information."));
 
-    KHBox* hbox          = new KHBox;
-    QLabel* label        = new QLabel(i18n("&Target Images' Size:"), hbox);
-    d->imagesExportSize = new KIntNumInput(hbox);
+    KHBox* hbox         = new KHBox;
+    QLabel* label       = new QLabel(i18n("&Target Images' Size:"), hbox);
+    d->imagesExportSize = new RIntNumInput(hbox);
     d->imagesExportSize->setRange(200, 2000, 1);
     d->imagesExportSize->setValue(640);
     d->imagesExportSize->setWhatsThis(i18n("The new size of the exported images, in pixels. "
@@ -141,12 +147,11 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->fixOrientation, SLOT(setEnabled(bool)));
 
-    KHBox* hbox2          = new KHBox;
-    QLabel* label2        = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
-    d->maxImageDimension = new KIntNumInput(hbox2);
+    KHBox* hbox2         = new KHBox;
+    QLabel* label2       = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
+    d->maxImageDimension = new RIntNumInput(hbox2);
     d->maxImageDimension->setRange(200, 2000, 1);
     d->maxImageDimension->setValue(640);
-    d->maxImageDimension->setLabel(i18n("&Displayed Images' Size:"), Qt::AlignVCenter);
     d->maxImageDimension->setWhatsThis(i18n("Scales the displayed images to this size. Normally, use "
                                             "the height or width of your largest image (in pixels). "
                                             "Images will not be scaled up above this size, to "
@@ -157,9 +162,9 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     grid->addWidget(d->fixOrientation,     1, 1, 1, 1);
     grid->addWidget(hbox,   2, 1, 1, 1);
     grid->addWidget(hbox2,  3, 0, 1, 2);
-    grid->setColumnMinimumWidth(0, KDialog::spacingHint());
-    grid->setMargin(KDialog::spacingHint());
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setColumnMinimumWidth(0, QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
@@ -187,8 +192,8 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
                                           "gallery will be opened in Konqueror automatically."));
 
 
-    vlay4->setMargin(KDialog::spacingHint());
-    vlay4->setSpacing(KDialog::spacingHint());
+    vlay4->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay4->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay4->addWidget(d->showComments);
     vlay4->addWidget(d->rightClick);
     vlay4->addWidget(d->openInKonqueror);

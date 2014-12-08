@@ -33,11 +33,11 @@ class QCheckBox;
 class QGridLayout;
 class QGroupBox;
 class QLabel;
-class KLineEdit;
+class QLineEdit;
 class QRadioButton;
 class QSpacerItem;
+class QComboBox;
 
-class KComboBox;
 class KColorButton;
 class KUrlRequester;
 
@@ -83,14 +83,14 @@ public:
     QRadioButton*  LocalTargetRadioButton_;
     QRadioButton*  GoogleMapTargetRadioButton_;
 
-    KLineEdit*     DestinationUrl_;
-    KLineEdit*     FileName_;
+    QLineEdit*     DestinationUrl_;
+    QLineEdit*     FileName_;
 
     QCheckBox*     GPXTracksCheckBox_;
 
-    KComboBox*     AltitudeCB_;
-    KComboBox*     timeZoneCB;
-    KComboBox*     GPXAltitudeCB_;
+    QComboBox*     AltitudeCB_;
+    QComboBox*     timeZoneCB;
+    QComboBox*     GPXAltitudeCB_;
 
     KColorButton*  GPXTrackColor_;
 
