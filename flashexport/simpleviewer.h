@@ -100,7 +100,7 @@ private:
      * @param galleryElem - xml tag that contains info about all uploaded images( SimpleViewer, Autoviewer, PostcardViewer)
      * @param photosElem - xml tag that contains info about all uploaded images (TiltViewer)
      */
-    void processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
+    void processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                          QDomElement& galleryElem, QDomElement& photosElem);
 
     /**

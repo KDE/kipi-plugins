@@ -66,12 +66,12 @@ void TemplateIcon::begin()
     scale_height         = float(m_icon_size.height())                                     / float(m_paper_size.height());
 
 #ifdef DEBUG_OUTPUT
-    kDebug() << "begin: m_paper_size.width =" <<  m_paper_size.width();
-    kDebug() << "begin: m_paper_size.height=" <<  m_paper_size.height();
-    kDebug() << "begin: m_icon_size.width  =" <<  m_icon_size.width();
-    kDebug() << "begin: m_icon_size.height =" <<  m_icon_size.height();
-    kDebug() << "begin: scale_width      =" <<  scale_width;
-    kDebug() << "begin: scale_height     =" <<  scale_height;
+    qCDebug(KIPIPLUGINS_LOG) << "begin: m_paper_size.width =" <<  m_paper_size.width();
+    qCDebug(KIPIPLUGINS_LOG) << "begin: m_paper_size.height=" <<  m_paper_size.height();
+    qCDebug(KIPIPLUGINS_LOG) << "begin: m_icon_size.width  =" <<  m_icon_size.width();
+    qCDebug(KIPIPLUGINS_LOG) << "begin: m_icon_size.height =" <<  m_icon_size.height();
+    qCDebug(KIPIPLUGINS_LOG) << "begin: scale_width      =" <<  scale_width;
+    qCDebug(KIPIPLUGINS_LOG) << "begin: scale_height     =" <<  scale_height;
 #endif
 
     // icon back ground
@@ -88,10 +88,10 @@ void TemplateIcon::begin()
 void TemplateIcon::fillRect( int x, int y, int w, int h, const QColor& color )
 {
 #ifdef DEBUG_OUTPUT
-    kDebug() << "fillRect: x1=" << x << " => " << x     * scale_width;
-    kDebug() << "fillRect: y1=" << y << " => " << y     * scale_height;
-    kDebug() << "fillRect: x2=" << w << " => " << (x + w) * scale_width;
-    kDebug() << "fillRect: y2=" << h << " => " << (y + h) * scale_height;
+    qCDebug(KIPIPLUGINS_LOG) << "fillRect: x1=" << x << " => " << x     * scale_width;
+    qCDebug(KIPIPLUGINS_LOG) << "fillRect: y1=" << y << " => " << y     * scale_height;
+    qCDebug(KIPIPLUGINS_LOG) << "fillRect: x2=" << w << " => " << (x + w) * scale_width;
+    qCDebug(KIPIPLUGINS_LOG) << "fillRect: y2=" << h << " => " << (y + h) * scale_height;
 #endif
 
     painter->fillRect( (int)(m_icon_margin + x * scale_width),

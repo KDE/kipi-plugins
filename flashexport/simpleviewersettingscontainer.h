@@ -117,7 +117,7 @@ public:
         zoomInPerc           = 0;
 
         collections          = QList<KIPI::ImageCollection>();
-        imageDialogList      = KUrl::List();
+        imageDialogList      = QList<QUrl>();
     };
 
     ~SimpleViewerSettingsContainer()
@@ -241,7 +241,7 @@ public:
     int                          zoomInPerc;
 
     QList<KIPI::ImageCollection> collections;
-    KUrl::List                   imageDialogList;
+    QList<QUrl>                   imageDialogList;
 };
 
 }  // namespace KIPIFlashExportPlugin

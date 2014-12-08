@@ -430,13 +430,13 @@ bool SimpleViewer::exportImages()
         for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
         {
-            KUrl::List images = (*it).images();
+            QList<QUrl> images = (*it).images();
             processKUrlList(images,xmlDoc,galleryElem,photosElem);
         }
     }
     else
     {
-        KUrl::List images = d->settings->imageDialogList;
+        QList<QUrl> images = d->settings->imageDialogList;
         processKUrlList(images,xmlDoc,galleryElem,photosElem);
     }
 
@@ -447,7 +447,7 @@ bool SimpleViewer::exportImages()
 
     return true;
 }
-void SimpleViewer::processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
+void SimpleViewer::processKUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
                                    QDomElement& galleryElem, QDomElement& photosElem)
 {
     KPMetadata meta;
@@ -469,7 +469,7 @@ void SimpleViewer::processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
 
     qSort(images.begin(), images.end(), cmpUrl);
 
-    for(KUrl::List::ConstIterator it = images.constBegin();
+    for(QList<QUrl>::ConstIterator it = images.constBegin();
         !d->canceled && (it != images.constEnd()) ; ++it)
     {
         kapp->processEvents();
@@ -888,7 +888,7 @@ bool SimpleViewer::copySimpleViewer() const
     d->progressWdg->addedAction(i18n("Copying flash files..."), StartingMessage);
 
     // Due to its license, simpleviewer is installed in $KDEHOME
-    KUrl::List  files;
+    QList<QUrl>  files;
     QStringList entries;
     QDir        dir;
 
