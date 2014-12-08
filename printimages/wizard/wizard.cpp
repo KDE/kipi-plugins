@@ -42,12 +42,13 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
+#include <QStandardPaths>
+#include <QMenu>
 
 // KDE includes
 
 #include <kapplication.h>
 #include <kconfigdialogmanager.h>
-#include <QMenu>
 #include <kpushbutton.h>
 #include <kfile.h>
 #include <kfiledialog.h>
@@ -57,9 +58,10 @@
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kdesktopfile.h>
-#include <KLocale>
-#include <KGlobal>
-// libkipi includes
+#include <klocale.h>
+#include <kglobal.h>
+
+// Libkipi includes
 
 #include <imagecollectionselector.h>
 #include <interface.h>
@@ -537,7 +539,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
                             kDebug() <<  "template desktop file name" << desktopFileName;
 
-                            const QStringList list         = KGlobal::dirs()->findAllResources("data", desktopFileName);
+                            const QStringList list         = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, desktopFileName);
                             QStringList::ConstIterator it  = list.constBegin();
                             QStringList::ConstIterator end = list.constEnd();
 
@@ -639,7 +641,7 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     d->m_photoSizes.clear();
 
     // get template-files and parse them
-    const QStringList list = KGlobal::dirs()->findAllResources("data", "kipiplugin_printimages/templates/*.xml");
+    const QStringList list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "kipiplugin_printimages/templates/*.xml");
 
     foreach(const QString& fn, list)
     {
@@ -1756,13 +1758,6 @@ void Wizard::outputChanged(const QString& text)
 
         d->m_printer = new QPrinter();
         d->m_printer->setOutputFormat(QPrinter::PdfFormat);
-    }
-    else if (text == i18n("Print to PS"))
-    {
-        delete d->m_printer;
-        d->m_printer = new QPrinter();
-#pragma message("PORT QT5")
-        //d->m_printer->setOutputFormat(QPrinter::PostScriptFormat);
     }
     else // real printer
     {
