@@ -68,10 +68,10 @@ public:
 
     /*! generate the kml element for pictures with tumbnails
      *  @param interface the kipi interface
-     *  @param KUrl the URL of the picture
+     *  @param QUrl the URL of the picture
      *  @param kmlAlbum the album used
      */
-    void generateImagesthumb(const KUrl&, QDomElement& kmlAlbum);
+    void generateImagesthumb(const QUrl&, QDomElement& kmlAlbum);
 
     /*! Produce a web-friendly file name
      *  otherwise, while google earth works fine, maps.google.com may not find pictures and thumbnail

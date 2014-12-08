@@ -173,9 +173,9 @@ QImage KmlExport::generateBorderedThumbnail(const QImage& fullImage, int size) c
 }
 
 /*!
-\fn KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum )
+\fn KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum )
  */
-void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum )
+void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum )
 {
     KPImageInfo info(imageURL);
 
@@ -393,7 +393,7 @@ void KmlExport::addTrack(QDomElement& kmlAlbum)
     }
 
     m_gpxParser.clear();
-    bool ret = m_gpxParser.loadGPXFile(m_GPXFile);
+    bool ret = m_gpxParser.loadGPXFile(QUrl(m_GPXFile));
 
     if (!ret)
     {
@@ -473,16 +473,16 @@ void KmlExport::generate()
     }
 
     KPMetadata meta;
-    KUrl::List images = selection.images();
+    QList<QUrl> images = selection.images();
     int defectImage   = 0;
     int pos           = 1;
     int count         = images.count();
-    KUrl::List::ConstIterator imagesEnd (images.constEnd());
+    QList<QUrl>::ConstIterator imagesEnd (images.constEnd());
 
-    for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
+    for( QList<QUrl>::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
     {
         double alt, lat, lng;
-        KUrl url        = *selIt;
+        QUrl url        = *selIt;
         KPImageInfo info(url);
         bool hasGPSInfo = info.hasGeolocationInfo();
 

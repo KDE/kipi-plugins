@@ -11,15 +11,18 @@ set(kipiplugin_kmlexport_PART_SRCS plugin_kmlexport.cpp
                                    kmlexport.cpp
                                    kmlgpsdataparser.cpp
                                    kmlexportconfig.cpp
-   )
+)
 
 add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_kmlexport
                       KF5::Parts
-                      KF5::Kipi
-                      KF5::KExiv2
                       KF5::KDELibs4Support
+                      
+                      ${KF5Kipi_LIBRARIES}
+                      ${KF5KExiv2_LIBRARIES}
+                      ${KF5KDcraw_LIBRARIES}
+
                       KF5kipiplugins
                      )
 

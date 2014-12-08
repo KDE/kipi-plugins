@@ -192,7 +192,7 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
     return QDateTime();
 }
 
-bool GPSDataParser::loadGPXFile(const KUrl& url)
+bool GPSDataParser::loadGPXFile(const QUrl& url)
 {
     QFile gpxfile(url.path());
 

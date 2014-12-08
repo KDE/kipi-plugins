@@ -39,9 +39,14 @@ class QSpacerItem;
 
 class KComboBox;
 class KColorButton;
-class KIntNumInput;
 class KUrlRequester;
 
+namespace KDcrawIface
+{
+class RIntNumInput;
+}
+
+using namespace KDcrawIface;
 using namespace KIPIPlugins;
 
 namespace KIPIKMLExportPlugin
@@ -67,8 +72,8 @@ public:
     QLabel*        timeZoneLabel_;
     QLabel*        GPXLineWidthLabel_;
     QLabel*        GPXColorLabel_;
-    QLabel*        GPXTracksOpacityLabel_;
     QLabel*        GPXAltitudeLabel_;
+    QLabel*        GPXTracksOpacityLabel_;
 
     QGroupBox*     TargetPreferenceGroupBox;
     QGroupBox*     TargetTypeGroupBox;
@@ -90,12 +95,12 @@ public:
     KColorButton*  GPXTrackColor_;
 
     KUrlRequester* DestinationDirectory_;
-    KUrlRequester* GPXFileKUrlRequester_;
+    KUrlRequester* GPXFileUrlRequester_;
 
-    KIntNumInput*  ImageSizeInput_;
-    KIntNumInput*  IconSizeInput_;
-    KIntNumInput*  GPXTracksOpacityInput_;
-    KIntNumInput*  GPXLineWidthInput_;
+    RIntNumInput*  ImageSizeInput_;
+    RIntNumInput*  IconSizeInput_;
+    RIntNumInput*  GPXTracksOpacityInput_;
+    RIntNumInput*  GPXLineWidthInput_;
 
 public Q_SLOTS:
 

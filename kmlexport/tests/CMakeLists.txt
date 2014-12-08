@@ -6,13 +6,12 @@
 
 add_executable(test_kmlexport_gpxparsing
                     test_kmlexport_gpxparsing.cpp
-                   )
+)
 
 target_link_libraries(test_kmlexport_gpxparsing
                       KF5::KDELibs4Support
                       Qt5::Test
                       Qt5::Gui
-                     )
+)
 
 add_test(test_kmlexport_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_kmlexport_gpxparsing)
-

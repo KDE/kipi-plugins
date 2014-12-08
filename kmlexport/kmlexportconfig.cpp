@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,6 +33,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QMenu>
 
 // KDE includes
 
@@ -42,10 +43,13 @@
 #include <kconfig.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <QMenu>
-#include <knuminput.h>
+#include <kwindowconfig.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
+
+// Libkdcraw includes
+
+#include <rnuminput.h>
 
 // Local includes
 
@@ -142,11 +146,11 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     QGroupBox* const SizeGroupBox = new QGroupBox(i18n("Sizes" ), page);
     SizeGroupBoxLayout            = new QGridLayout(SizeGroupBox);
     IconSizeLabel                 = new QLabel(i18n("Icon Size:" ), SizeGroupBox);
-    IconSizeInput_                = new KIntNumInput(SizeGroupBox);
+    IconSizeInput_                = new RIntNumInput(SizeGroupBox);
     IconSizeInput_->setValue(33);
 
     ImageSizeLabel  = new QLabel(i18n("Image Size:"), SizeGroupBox);
-    ImageSizeInput_ = new KIntNumInput(SizeGroupBox);
+    ImageSizeInput_ = new RIntNumInput(SizeGroupBox);
     ImageSizeInput_->setValue(320);
 
     SizeGroupBoxLayout->addWidget(IconSizeLabel,   0, 0, 1, 1);
@@ -169,9 +173,9 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     // file selector
     GPXFileLabel_ = new QLabel(i18n("GPX file:"), GPXTracksGroupBox);
 
-    GPXFileKUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
-    GPXFileKUrlRequester_->setFilter(i18n("%1|GPS Exchange Format",QString("*.gpx")));
-    GPXFileKUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
+    GPXFileUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
+    GPXFileUrlRequester_->setFilter(i18n("%1|GPS Exchange Format",QString("*.gpx")));
+    GPXFileUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
     timeZoneCB     = new KComboBox(GPXTracksGroupBox );
@@ -207,17 +211,16 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
                                   "can be converted to match the local time"));
 
     GPXLineWidthLabel_ = new QLabel(i18n("Track Width:" ), GPXTracksGroupBox);
-    GPXLineWidthInput_ = new KIntNumInput( GPXTracksGroupBox);
+    GPXLineWidthInput_ = new RIntNumInput( GPXTracksGroupBox);
     GPXLineWidthInput_->setValue(4);
 
     GPXColorLabel_ = new QLabel(i18n("Track Color:" ), GPXTracksGroupBox);
     GPXTrackColor_ = new KColorButton(QColor("#ffffff"), GPXTracksGroupBox);
 
-    GPXTracksOpacityInput_ = new KIntNumInput(GPXTracksGroupBox);
+    GPXTracksOpacityLabel_ = new QLabel(i18n("Opacity (%):"), GPXTracksGroupBox);
+    GPXTracksOpacityInput_ = new RIntNumInput(GPXTracksGroupBox);
     GPXTracksOpacityInput_->setRange(0, 100, 1);
     GPXTracksOpacityInput_->setValue(100 );
-    GPXTracksOpacityInput_->setLabel(i18n("Opacity:" ), Qt::AlignVCenter);
-    GPXTracksOpacityInput_->setSuffix(QString::fromAscii("%"));
 
     GPXAltitudeLabel_ = new QLabel(i18n("Track Altitude:"), GPXTracksGroupBox);
     GPXAltitudeCB_    = new KComboBox(GPXTracksGroupBox);
@@ -237,14 +240,15 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     GPXTracksGroupBoxLayout->addWidget( GPXTracksCheckBox_,     0, 0, 1, 4);
     GPXTracksGroupBoxLayout->addWidget( GPXFileLabel_,          1, 0, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXFileKUrlRequester_,  1, 1, 1, 3);
+    GPXTracksGroupBoxLayout->addWidget( GPXFileUrlRequester_,  1, 1, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( timeZoneLabel_,         2, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( timeZoneCB,             2, 1, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( GPXLineWidthLabel_,     3, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( GPXLineWidthInput_,     3, 1, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( GPXColorLabel_,         4, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( GPXTrackColor_,         4, 1, 1, 1);
-    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 2);
+    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityLabel_, 4, 2, 1, 1);
+    GPXTracksGroupBoxLayout->addWidget( GPXTracksOpacityInput_, 4, 2, 1, 3);
     GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_,      5, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_,         5, 1, 1, 3);
     GPXTracksGroupBoxLayout->setAlignment( Qt::AlignTop );
@@ -275,29 +279,28 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     // --------------------------------------------------------------
     // About data and help button.
-#pragma message("PORT QT5")
-/*
+
     KPAboutData* const about = new KPAboutData(ki18n("KML Export"),
                                    0,
-                                   KAboutData::License_GPL,
+                                   KAboutLicense::GPL,
                                    ki18n("A Kipi plugin for KML exporting"),
                                    ki18n("(c) 2006-2007, Stéphane Pontier"));
 
-    about->addAuthor(ki18n("Stéphane Pontier"),
-                     ki18n("Developer and maintainer"),
+    about->addAuthor(ki18n("Stéphane Pontier").toString(),
+                     ki18n("Developer and maintainer").toString(),
                             "shadow dot walker at free dot fr");
 
-    about->addAuthor(ki18n("Gilles Caulier"),
-                     ki18n("Developer and maintainer"),
+    about->addAuthor(ki18n("Gilles Caulier").toString(),
+                     ki18n("Developer and maintainer").toString(),
                            "caulier dot gilles at gmail dot com");
 
-    about->addAuthor(ki18n("Michael G. Hansen"),
-                     ki18n("Maintainer"),
+    about->addAuthor(ki18n("Michael G. Hansen").toString(),
+                     ki18n("Maintainer").toString(),
                            "mike at mghansen dot de");
 
     about->setHandbookEntry("kmlexport");
     setAboutData(about);
-*/
+
     // --------------------------------------------------------------
     // Configuration file management
 
@@ -352,7 +355,7 @@ void KMLExportConfig::slotKMLTracksCheckButtonToggled(bool)
 {
     if (GPXTracksCheckBox_->isChecked())
     {
-        GPXFileKUrlRequester_->setEnabled(true);
+        GPXFileUrlRequester_->setEnabled(true);
         GPXFileLabel_->setEnabled(true);
         timeZoneCB->setEnabled(true);
         GPXColorLabel_->setEnabled(true);
@@ -366,7 +369,7 @@ void KMLExportConfig::slotKMLTracksCheckButtonToggled(bool)
     }
     else
     {
-        GPXFileKUrlRequester_->setEnabled(false);
+        GPXFileUrlRequester_->setEnabled(false);
         GPXFileLabel_->setEnabled(false);
         timeZoneCB->setEnabled(false);
         GPXColorLabel_->setEnabled(false);
@@ -425,7 +428,7 @@ void KMLExportConfig::readSettings()
     GPXAltitudeMode     = group.readEntry("GPX Altitude Mode", 0);
 
     KConfigGroup group2 = config.group(QString("KMLExport Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 
     // -- Apply Settings to widgets ------------------------------
 
@@ -477,7 +480,7 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("KMLFileName",       FileName_->text());
     group.writeEntry("Altitude Mode",     AltitudeCB_->currentIndex() );
     group.writeEntry("UseGPXTracks",      GPXTracksCheckBox_->isChecked());
-    group.writeEntry("GPXFile",           GPXFileKUrlRequester_->lineEdit()->originalText());
+    group.writeEntry("GPXFile",           GPXFileUrlRequester_->lineEdit()->originalText());
     group.writeEntry("Time Zone",         timeZoneCB->currentIndex() );
     group.writeEntry("Line Width",        GPXLineWidthInput_->value());
     group.writeEntry("Track Color",   	  GPXTrackColor_->color().name () );
@@ -485,7 +488,7 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("GPX Altitude Mode", GPXAltitudeCB_->currentIndex() );
 
     KConfigGroup group2 = config.group(QString("KMLExport Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
 
     config.sync();
 }

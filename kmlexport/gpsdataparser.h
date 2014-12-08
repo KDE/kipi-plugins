@@ -48,7 +48,7 @@ public:
     GPSDataParser();
     ~GPSDataParser() {};
 
-    bool loadGPXFile(const KUrl& url);
+    bool loadGPXFile(const QUrl& url);
 
     void clear();
     int  numPoints() const;
