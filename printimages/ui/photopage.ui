@@ -187,11 +187,6 @@
            </item>
            <item>
             <property name="text">
-             <string>Print to PS</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
              <string>Print to JPG</string>
             </property>
            </item>

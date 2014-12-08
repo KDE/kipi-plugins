@@ -35,19 +35,19 @@
 #include <QPrintDialog>
 #include <QProgressDialog>
 #include <QList>
+#include <QApplication>
 
 // KDE includes
 
-#include <kapplication.h>
 #include <klocale.h>
 #include <kdeprintdialog.h>
-#include <kdebug.h>
 
 // Local includes
 
 #include "tphoto.h"
 #include "printoptionspage.h"
 #include "atkinspagelayout.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIPrintImagesPlugin
 {
@@ -82,7 +82,7 @@ PrintHelperDialog::PrintHelperDialog(QPrinter* const printer, PrintOptionsPage* 
 
 void PrintHelperDialog::manageQPrintDialogChanges(QPrinter* /*printer*/)
 {
-    kDebug() << "It has been called!";
+    qCDebug(KIPIPLUGINS_LOG) << "It has been called!";
 }
 
 // -----------------------------------------------------------------
@@ -157,7 +157,7 @@ public:
         Qt::Alignment alignment = Qt::Alignment ( doc.pAddInfo->mPrintPosition );
         int posX, posY;
 
-//         kDebug() << "alignment " << alignment << " image size " << imageSize << " viewport size " << viewportSize;
+//         qCDebug(KIPIPLUGINS_LOG) << "alignment " << alignment << " image size " << imageSize << " viewport size " << viewportSize;
 
         if ( alignment & Qt::AlignLeft )
         {
@@ -209,7 +209,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
     for (int i = 0; i < d->m_photos.count(); ++i)
     {
         delete d->m_photos.at(i);
-        KApplication::kApplication()->processEvents();
+        QApplication::processEvents();
     }
 
     d->m_photos.clear();
@@ -220,7 +220,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
         photo->filename = fileList[i];
         photo->pAddInfo = new AdditionalInfo();
         d->m_photos.append(photo);
-        KApplication::kApplication()->processEvents();
+        QApplication::processEvents();
     }
 
     PrintOptionsPage* const optionsPage = new PrintOptionsPage(d->mParent, &d->m_photos);
@@ -270,7 +270,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
             {
                 if (pPhoto->pAddInfo->mAutoRotate)
                 {
-                    kDebug() << "image size " << pPhoto->size() ;
+                    qCDebug(KIPIPLUGINS_LOG) << "image size " << pPhoto->size() ;
                     printer.setOrientation(pPhoto->width() <= pPhoto->height() ? QPrinter::Portrait
                                                                                : QPrinter::Landscape);
                 }
@@ -280,7 +280,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
             rect = painter.viewport();
         }
 
-        KApplication::kApplication()->processEvents();
+        QApplication::processEvents();
 
         if (optionsPage->printUsingAtkinsLayout())
         {
@@ -311,7 +311,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
         {
             TPhoto* pPhoto         = d->m_photos.at(i);
             QImage image           =  pPhoto->loadPhoto();
-        //       kDebug() << "Img size " << image.size() << " viewportSize " << rect.size();
+        //       qCDebug(KIPIPLUGINS_LOG) << "Img size " << image.size() << " viewportSize " << rect.size();
 
             // if horPages is > 0 vertPages is as well
             bool multipagePrinting = optionsPage->mp_horPages() > 0;
@@ -327,7 +327,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
                 int x2;
                 int y2;
                 imageRec.getCoords(&x1, &y1, &x2, &y2);
-        //         kDebug() << "Img coords (" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ")";
+        //         qCDebug(KIPIPLUGINS_LOG) << "Img coords (" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ")";
                 QRect destRec = QRect(QPoint(0, 0), QPoint(x2 / horPages, y2 / vertPages));
 
                 for (int px = 1; px <= horPages; ++px)
@@ -338,7 +338,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
                         int sy = ((py - 1) * y2 / vertPages);
                         int ex = (px * x2 / horPages);
                         int ey = (py * y2 / vertPages);
-            //             kDebug() << "Img part coords (" << sx << ", " << sy << ", " << ex << ", " << ey << ")";
+            //             qCDebug(KIPIPLUGINS_LOG) << "Img part coords (" << sx << ", " << sy << ", " << ex << ", " << ey << ")";
                         QImage destImage = image.copy(QRect(QPoint(sx, sy), QPoint(ex, ey)));
                         QSize destSize   = destImage.size();
                         destSize.scale(rect.size(), Qt::KeepAspectRatio);
@@ -361,7 +361,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
                 QSize size = d->adjustSize(*pPhoto, printer.resolution(), rect.size());
                 QPoint pos = d->adjustPosition(*pPhoto, size, rect.size());
 
-        //         kDebug()  << " pos " << pos << " size " << size;
+        //         qCDebug(KIPIPLUGINS_LOG)  << " pos " << pos << " size " << size;
 
                 painter.setViewport(pos.x(), pos.y(), size.width(), size.height());
 
@@ -392,7 +392,7 @@ void PrintHelper::print(const QList<QUrl>& fileList)
         //TODO manage a cancel signal instead
         if (pbar.wasCanceled())
         {
-            KApplication::kApplication()->processEvents();
+            QApplication::processEvents();
             break;
         }
 

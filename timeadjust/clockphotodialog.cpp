@@ -39,7 +39,6 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kdebug.h>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include <kwindowconfig.h>

@@ -47,14 +47,12 @@
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kconfigdialogmanager.h>
 #include <kpushbutton.h>
 #include <kfile.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdeprintdialog.h>
-#include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kdesktopfile.h>
@@ -77,6 +75,7 @@
 #include "customdlg.h"
 #include "ui_croppage.h"
 #include "ui_photopage.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIPrintImagesPlugin
 {
@@ -188,12 +187,12 @@ Wizard::Wizard(QWidget* const parent)
 
     QList<QPrinterInfo>::iterator it;
     d->m_printerList    = QPrinterInfo::availablePrinters();
-    kDebug() << " printers: " << d->m_printerList.count();
+    qCDebug(KIPIPLUGINS_LOG) << " printers: " << d->m_printerList.count();
     //d->m_photoPage->m_printer_choice->setInsertPolicy(QComboBox::InsertAtTop/*QComboBox::InsertAlphabetically*/);
 
     for (it = d->m_printerList.begin(); it != d->m_printerList.end(); ++it)
     {
-        kDebug() << " printer: " << it->printerName();
+        qCDebug(KIPIPLUGINS_LOG) << " printer: " << it->printerName();
         d->m_photoPage->m_printer_choice->addItem(it->printerName());
     }
 
@@ -405,7 +404,7 @@ void Wizard::print(const QList<QUrl>& fileList, const QString& tempPath)
 void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 {
     QDomDocument doc("mydocument");
-    kDebug() << " XXX: " <<  fn;
+    qCDebug(KIPIPLUGINS_LOG) << " XXX: " <<  fn;
 
     if (fn.isEmpty())
     {
@@ -430,7 +429,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
     // print out the element names of all elements that are direct children
     // of the outermost element.
     QDomElement docElem = doc.documentElement();
-    kDebug() << docElem.tagName(); // the node really is an element.
+    qCDebug(KIPIPLUGINS_LOG) << docElem.tagName(); // the node really is an element.
 
     QSizeF size;
     QString unit;
@@ -449,7 +448,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
             {
                 size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
                 unit = e.attribute("unit", "mm");
-                kDebug() <<  e.tagName() << " name=" << e.attribute("name", "??")
+                qCDebug(KIPIPLUGINS_LOG) <<  e.tagName() << " name=" << e.attribute("name", "??")
                          << " size= " << size
                          << " unit= " << unit;
 
@@ -466,17 +465,17 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                     {
                         size *= 25.4;
                         scaleValue = 1000;
-                        kDebug() << "template size " << size << " page size " << pageSize;
+                        qCDebug(KIPIPLUGINS_LOG) << "template size " << size << " page size " << pageSize;
                     }
                     else if (unit == "cm")
                     {
                         size *= 10;
                         scaleValue = 100;
-                        kDebug() << "template size " << size << " page size " << pageSize;
+                        qCDebug(KIPIPLUGINS_LOG) << "template size " << size << " page size " << pageSize;
                     }
                     else
                     {
-                        kWarning() << "Wrong unit " << unit << " skipping layout";
+                        qCWarning(KIPIPLUGINS_LOG) << "Wrong unit " << unit << " skipping layout";
                         n = n.nextSibling();
                         continue;
                     }
@@ -493,14 +492,14 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                          (size.height() > (pageSize.height() + round_value) ||
                           size.width()  > (pageSize.width() + round_value)))
                 {
-                    kDebug() << "skipping size " << size << " page size " << pageSize;
+                    qCDebug(KIPIPLUGINS_LOG) << "skipping size " << size << " page size " << pageSize;
                     // skipping layout it can't fit
                     n = n.nextSibling();
                     continue;
                 }
 
                 // Next templates are good
-                kDebug() << "layout size " << size << " page size " << pageSize;
+                qCDebug(KIPIPLUGINS_LOG) << "layout size " << size << " page size " << pageSize;
                 QDomNode np = e.firstChild();
 
                 while (!np.isNull())
@@ -537,7 +536,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             QString desktopFileName = QString("kipiplugin_printimages/templates/") +
                                                       QString(ep.attribute("name", "XXX")) + ".desktop";
 
-                            kDebug() <<  "template desktop file name" << desktopFileName;
+                            qCDebug(KIPIPLUGINS_LOG) <<  "template desktop file name" << desktopFileName;
 
                             const QStringList list         = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, desktopFileName);
                             QStringList::ConstIterator it  = list.constBegin();
@@ -550,7 +549,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             else
                             {
                                 p->label = ep.attribute("name", "XXX");
-                                kWarning() << "missed template translation " << desktopFileName;
+                                qCWarning(KIPIPLUGINS_LOG) << "missed template translation " << desktopFileName;
                             }
 
                             p->dpi        = ep.attribute("dpi", "0").toInt();
@@ -588,12 +587,12 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                                         }
                                         else
                                         {
-                                            kWarning() << " Wrong grid configuration, rows " << rows << ", columns " << columns;
+                                            qCWarning(KIPIPLUGINS_LOG) << " Wrong grid configuration, rows " << rows << ", columns " << columns;
                                         }
                                     }
                                     else
                                     {
-                                        kDebug() << "    " <<  et.tagName();
+                                        qCDebug(KIPIPLUGINS_LOG) << "    " <<  et.tagName();
                                     }
                                 }
 
@@ -606,7 +605,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                         }
                         else
                         {
-                            kDebug() << "? " <<  ep.tagName() << " attr=" << ep.attribute("name", "??");
+                            qCDebug(KIPIPLUGINS_LOG) << "? " <<  ep.tagName() << " attr=" << ep.attribute("name", "??");
                         }
                     }
 
@@ -615,7 +614,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
             }
             else
             {
-                kDebug() << "??" << e.tagName() << " name=" << e.attribute("name", "??");
+                qCDebug(KIPIPLUGINS_LOG) << "??" << e.tagName() << " name=" << e.attribute("name", "??");
             }
         }
 
@@ -625,7 +624,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
 void Wizard::initPhotoSizes(const QSizeF& pageSize)
 {
-    kDebug() << "New page size " << pageSize
+    qCDebug(KIPIPLUGINS_LOG) << "New page size " << pageSize
              << ", old page size " << d->m_pageSize;
 
     // don't refresh anything if we haven't changed page sizes.
@@ -645,16 +644,16 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
 
     foreach(const QString& fn, list)
     {
-        kDebug() << " LIST: " <<  fn;
+        qCDebug(KIPIPLUGINS_LOG) << " LIST: " <<  fn;
         parseTemplateFile(fn, pageSize);
     }
 
-    kDebug() << "d->m_photoSizes.count()=" << d->m_photoSizes.count();
-    kDebug() << "d->m_photoSizes.isEmpty()=" << d->m_photoSizes.isEmpty();
+    qCDebug(KIPIPLUGINS_LOG) << "d->m_photoSizes.count()=" << d->m_photoSizes.count();
+    qCDebug(KIPIPLUGINS_LOG) << "d->m_photoSizes.isEmpty()=" << d->m_photoSizes.isEmpty();
 
     if (d->m_photoSizes.isEmpty())
     {
-        kDebug() << "Empty photoSize-list, create default size\n";
+        qCDebug(KIPIPLUGINS_LOG) << "Empty photoSize-list, create default size\n";
         // There is no valid page size yet.  Create a default page (B10) to prevent crashes.
         TPhotoSize* const p = new TPhotoSize;
         p->dpi              = 0;
@@ -841,7 +840,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* const photo, int captionW, int ca
 
     p.setFont(font);
     p.setPen(photo->pCaptionInfo->m_caption_color);
-    kDebug() << "Number of lines " << (int) captionByLines.count() ;
+    qCDebug(KIPIPLUGINS_LOG) << "Number of lines " << (int) captionByLines.count() ;
 
     // Now draw the caption
     // TODO allow printing captions  per photo and on top, bottom and vertically
@@ -878,7 +877,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
             format =  photo->pCaptionInfo->m_caption_text;
             break;
         default:
-            kWarning() << "UNKNOWN caption type " << photo->pCaptionInfo->m_caption_type;
+            qCWarning(KIPIPLUGINS_LOG) << "UNKNOWN caption type " << photo->pCaptionInfo->m_caption_type;
             break;
     }
 
@@ -1016,8 +1015,8 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
         QRect newRectViewPort = QRect(x1 + left, y1 + top, w, h);
         QSize imageSize       = img.size();
 
-        //     kDebug() << "Image         " << photo->filename << " size " << imageSize;
-        //     kDebug() << "viewport size " << newRectViewPort.size();
+        //     qCDebug(KIPIPLUGINS_LOG) << "Image         " << photo->filename << " size " << imageSize;
+        //     qCDebug(KIPIPLUGINS_LOG) << "viewport size " << newRectViewPort.size();
 
         QPoint point;
 
@@ -1047,7 +1046,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             p.save();
             QString caption;
             caption = captionFormatter(photo);
-            kDebug() << "Caption " << caption ;
+            qCDebug(KIPIPLUGINS_LOG) << "Caption " << caption ;
 
             // draw the text at (0,0), but we will translate and rotate the world
             // before drawing so the text will be in the correct location
@@ -1073,7 +1072,7 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             }
 
             p.rotate(orientatation);
-            kDebug() << "rotation " << photo->rotation << " orientation " << orientatation ;
+            qCDebug(KIPIPLUGINS_LOG) << "rotation " << photo->rotation << " orientation " << orientatation ;
             int tx = left;
             int ty = top;
 
@@ -1283,7 +1282,7 @@ void Wizard::infopage_setCaptionButtons()
 
 void Wizard::slotXMLCustomElement(QXmlStreamWriter& xmlWriter)
 {
-    kDebug() << " invoked " ;
+    qCDebug(KIPIPLUGINS_LOG) << " invoked " ;
     xmlWriter.writeStartElement("pa_layout");
     xmlWriter.writeAttribute("Printer", d->m_photoPage->m_printer_choice->currentText());
     xmlWriter.writeAttribute("PageSize", QString("%1").arg(d->m_printer->paperSize()));
@@ -1317,7 +1316,7 @@ void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::KPImagesL
 
 void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 {
-    kDebug() << " invoked " << xmlReader.name();
+    qCDebug(KIPIPLUGINS_LOG) << " invoked " << xmlReader.name();
 
     while (!xmlReader.atEnd())
     {
@@ -1330,7 +1329,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 
             if (!attr.isEmpty())
             {
-                kDebug() <<  " found " << attr.toString();
+                qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                 int index = d->m_photoPage->m_printer_choice->findText(attr.toString());
 
                 if (index != -1)
@@ -1345,7 +1344,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 
             if (!attr.isEmpty())
             {
-                kDebug() <<  " found " << attr.toString();
+                qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                 QPrinter::PaperSize paperSize = (QPrinter::PaperSize)attr.toString().toInt(&ok);
                 d->m_printer->setPaperSize(paperSize);
             }
@@ -1354,7 +1353,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 
             if (!attr.isEmpty())
             {
-                kDebug() <<  " found " << attr.toString();
+                qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                 d->m_savedPhotoSize = attr.toString();
             }
         }
@@ -1369,7 +1368,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 
     if (list.count())
     {
-        kDebug() << " PhotoSize " << list[0]->text();
+        qCDebug(KIPIPLUGINS_LOG) << " PhotoSize " << list[0]->text();
         d->m_photoPage->ListPhotoSizes->setCurrentItem(list[0]);
     }
     else
@@ -1386,11 +1385,11 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
     {
         // read image is the last.
         TPhoto* const pPhoto = d->m_photos[d->m_photos.size()-1];
-        kDebug() << " invoked " << xmlReader.name();
+        qCDebug(KIPIPLUGINS_LOG) << " invoked " << xmlReader.name();
 
         while (xmlReader.readNextStartElement())
         {
-            kDebug() << pPhoto->filename << " " << xmlReader.name();
+            qCDebug(KIPIPLUGINS_LOG) << pPhoto->filename << " " << xmlReader.name();
 
             if (xmlReader.name() == "pa_caption")
             {
@@ -1411,7 +1410,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
 
                 if (!attr.isEmpty())
                 {
-                    kDebug() <<  " found " << attr.toString();
+                    qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_type = (CaptionInfo::AvailableCaptions)attr.toString().toInt(&ok);
                 }
 
@@ -1419,7 +1418,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
 
                 if (!attr.isEmpty())
                 {
-                    kDebug() <<  " found " << attr.toString();
+                    qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_font.fromString(attr.toString());
                 }
 
@@ -1427,7 +1426,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
 
                 if (!attr.isEmpty())
                 {
-                    kDebug() <<  " found " << attr.toString();
+                    qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_color.setNamedColor(attr.toString());
                 }
 
@@ -1435,7 +1434,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
 
                 if (!attr.isEmpty())
                 {
-                    kDebug() <<  " found " << attr.toString();
+                    qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_size = attr.toString().toInt(&ok);
                 }
 
@@ -1443,7 +1442,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
 
                 if (!attr.isEmpty())
                 {
-                    kDebug() <<  " found " << attr.toString();
+                    qCDebug(KIPIPLUGINS_LOG) <<  " found " << attr.toString();
                     pPhoto->pCaptionInfo->m_caption_text = attr.toString();
                 }
 
@@ -1466,7 +1465,7 @@ void Wizard::slotContextMenuRequested()
                 this , SLOT(increaseCopies()));
 
         TPhoto* const pPhoto  = d->m_photos[itemIndex];
-        kDebug() << " copies " << pPhoto->copies << " first " << pPhoto->first;
+        qCDebug(KIPIPLUGINS_LOG) << " copies " << pPhoto->copies << " first " << pPhoto->first;
 
         if (pPhoto->copies > 1 || !pPhoto->first)
         {
@@ -1490,7 +1489,7 @@ void Wizard::imageSelected(QTreeWidgetItem* item)
 
     int itemIndex                      = d->m_imagesFilesListBox->listView()->indexFromItem(l_item).row();
 
-    kDebug() << " current row now is " << itemIndex;
+    qCDebug(KIPIPLUGINS_LOG) << " current row now is " << itemIndex;
     d->m_infopageCurrentPhoto = itemIndex;
 
     infopage_setCaptionButtons();
@@ -1505,7 +1504,7 @@ void Wizard::decreaseCopies()
         if (!item)
             return;
 
-        kDebug() << " Removing a copy of " << item->url();
+        qCDebug(KIPIPLUGINS_LOG) << " Removing a copy of " << item->url();
         d->m_imagesFilesListBox->slotRemoveItems();
     }
 }
@@ -1566,13 +1565,13 @@ void Wizard::slotRemovingItem(KIPIPlugins::KPImagesListViewItem* item)
             }
             else
             {
-                kDebug() << " NULL TPhoto object ";
+                qCDebug(KIPIPLUGINS_LOG) << " NULL TPhoto object ";
                 return;
             }
 
             if (pPhotoToRemove)
             {
-                kDebug() << "Removed fileName: " << pPhotoToRemove->filename.fileName() << " copy number " << copies;
+                qCDebug(KIPIPLUGINS_LOG) << "Removed fileName: " << pPhotoToRemove->filename.fileName() << " copy number " << copies;
             }
 
             d->m_photos.removeAt(itemIndex);
@@ -1618,7 +1617,7 @@ void Wizard::slotAddItems(const QList<QUrl>& list)
                 TPhoto* const pPhoto = new TPhoto(*pCurrentPhoto);
                 pPhoto->first        = false;
                 d->m_photos.append(pPhoto);
-                kDebug() << "Added fileName: " << pPhoto->filename.fileName() << " copy number " << pCurrentPhoto->copies;
+                qCDebug(KIPIPLUGINS_LOG) << "Added fileName: " << pPhoto->filename.fileName() << " copy number " << pCurrentPhoto->copies;
             }
         }
 
@@ -1628,7 +1627,7 @@ void Wizard::slotAddItems(const QList<QUrl>& list)
             pPhoto->filename     = *it;
             pPhoto->first        = true;
             d->m_photos.append(pPhoto);
-            kDebug() << "Added new fileName: " << pPhoto->filename.fileName();
+            qCDebug(KIPIPLUGINS_LOG) << "Added new fileName: " << pPhoto->filename.fileName();
         }
     }
 
@@ -1653,7 +1652,7 @@ void Wizard::increaseCopies()
             return;
 
         list.append(item->url());
-        kDebug() << " Adding a copy of " << item->url();
+        qCDebug(KIPIPLUGINS_LOG) << " Adding a copy of " << item->url();
         d->m_imagesFilesListBox->slotAddImages(list);
     }
 }
@@ -1666,10 +1665,10 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
     if (before)
     {
         saveSettings(before->name());
-        kDebug() << " before " << before->name();
+        qCDebug(KIPIPLUGINS_LOG) << " before " << before->name();
     }
 
-    kDebug() << " current " << current->name();
+    qCDebug(KIPIPLUGINS_LOG) << " current " << current->name();
 
     if (current->name() == i18n(photoPageName))
     {
@@ -1741,7 +1740,7 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
         else
         {
             // NOTE it should not pass here
-            kDebug() << "Not any photos selected cropping is disabled";
+            qCDebug(KIPIPLUGINS_LOG) << "Not any photos selected cropping is disabled";
         }
     }
 
@@ -1768,7 +1767,7 @@ void Wizard::outputChanged(const QString& text)
         {
             if (it->printerName() == text)
             {
-                kDebug() << "Chosen printer: " << it->printerName();
+                qCDebug(KIPIPLUGINS_LOG) << "Chosen printer: " << it->printerName();
                 delete d->m_printer;
                 d->m_printer = new QPrinter(*it);
             }
@@ -1953,7 +1952,7 @@ void Wizard::BtnPrintOrderUp_clicked()
     d->m_imagesFilesListBox->blockSignals(true);
     int currentIndex = d->m_imagesFilesListBox->listView()->currentIndex().row();
 
-    kDebug() << "Moved photo " << currentIndex << " to  " << currentIndex + 1;
+    qCDebug(KIPIPLUGINS_LOG) << "Moved photo " << currentIndex << " to  " << currentIndex + 1;
 
     d->m_photos.swap(currentIndex, currentIndex + 1);
     d->m_imagesFilesListBox->blockSignals(false);
@@ -2035,7 +2034,7 @@ void Wizard::ListPhotoSizes_selected()
 
             if ((height > (size.height() + round_value) || width  > (size.width() + round_value)))
             {
-                kDebug() << "photo size " << QSize(width, height) << "> page size " << size;
+                qCDebug(KIPIPLUGINS_LOG) << "photo size " << QSize(width, height) << "> page size " << size;
                 delete s;
                 s = NULL;
             }
@@ -2083,7 +2082,7 @@ void Wizard::ListPhotoSizes_selected()
                         for (int col = 0; col < nColumns; ++col)
                         {
                             photoX = dx * (col + 1) + (col * width);
-                            kDebug() << "photo at P(" << photoX << ", " << photoY << ") size(" << width << ", " << height;
+                            qCDebug(KIPIPLUGINS_LOG) << "photo at P(" << photoX << ", " << photoY << ") size(" << width << ", " << height;
 
                             s->layouts.append(new QRect(photoX, photoY,
                                                         width, height));
@@ -2093,7 +2092,7 @@ void Wizard::ListPhotoSizes_selected()
                 }
                 else
                 {
-                    kDebug() << "I can't go on, rows " << nRows << "> columns " << nColumns;
+                    qCDebug(KIPIPLUGINS_LOG) << "I can't go on, rows " << nRows << "> columns " << nColumns;
                     delete s;
                     s = NULL;
                 }
@@ -2136,7 +2135,7 @@ void Wizard::BtnPrintOrderDown_clicked()
     d->m_imagesFilesListBox->blockSignals(true);
     int currentIndex = d->m_imagesFilesListBox->listView()->currentIndex().row();
 
-    kDebug() << "Moved photo " << currentIndex - 1 << " to  " << currentIndex;
+    qCDebug(KIPIPLUGINS_LOG) << "Moved photo " << currentIndex - 1 << " to  " << currentIndex;
 
     d->m_photos.swap(currentIndex, currentIndex - 1);
     d->m_imagesFilesListBox->blockSignals(false);
@@ -2162,7 +2161,7 @@ void Wizard::BtnPreviewPageUp_clicked()
 }
 void Wizard::BtnSaveAs_clicked()
 {
-    kDebug() << "Save As Clicked";
+    qCDebug(KIPIPLUGINS_LOG) << "Save As Clicked";
     KConfig config ( "kipirc" );
     KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
     QUrl outputPath; // force to get current directory as default
@@ -2172,7 +2171,7 @@ void Wizard::BtnSaveAs_clicked()
 }
 void Wizard::saveSettings(const QString& pageName)
 {
-    kDebug() << pageName;
+    qCDebug(KIPIPLUGINS_LOG) << pageName;
 
     // Save the current settings
     KConfig config("kipirc");
@@ -2227,7 +2226,7 @@ void Wizard::readSettings(const QString& pageName)
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("PrintAssistant"));
 
-    kDebug() << pageName;
+    qCDebug(KIPIPLUGINS_LOG) << pageName;
 
     if (pageName == i18n(photoPageName))
     {
@@ -2265,7 +2264,7 @@ void Wizard::readSettings(const QString& pageName)
             // set the last output path
             QUrl outputPath; // force to get current directory as default
             outputPath = QUrl(group.readPathEntry("OutputPath", outputPath.url()));
-            
+
             d->m_cropPage->m_fileName->setVisible(true);
             d->m_cropPage->m_fileName->setEnabled(true);
             d->m_cropPage->m_fileName->setText(outputPath.path());
@@ -2274,7 +2273,7 @@ void Wizard::readSettings(const QString& pageName)
         }
         else
         {
-            
+
             d->m_cropPage->m_fileName->setVisible(false);
             d->m_cropPage->BtnSaveAs->setVisible(false);
 
@@ -2287,7 +2286,7 @@ void Wizard::printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layo
     d->m_cancelPrinting = false;
     QProgressDialog pbar(this);
     pbar.setRange(0, photos.count());
-    KApplication::kApplication()->processEvents();
+    QApplication::processEvents();
 
     QPainter p;
     p.begin(&printer);
@@ -2303,7 +2302,7 @@ void Wizard::printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layo
             printer.newPage();
 
         pbar.setValue(current);
-        KApplication::kApplication()->processEvents();
+        QApplication::processEvents();
 
         if (d->m_cancelPrinting)
         {
@@ -2322,7 +2321,7 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
     QProgressDialog pbar(this);
     pbar.setRange(0, photos.count());
 
-    KApplication::kApplication()->processEvents();
+    QApplication::processEvents();
 
     int current   = 0;
     int pageCount = 1;
@@ -2390,7 +2389,7 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
 
         pageCount++;
         pbar.setValue(current);
-        KApplication::kApplication()->processEvents();
+        QApplication::processEvents();
 
         if (d->m_cancelPrinting)
             break;
@@ -2417,7 +2416,7 @@ void Wizard::removeGimpFiles()
 //TODO not needed at the moment maybe we can remove it
 void Wizard::slotPageRemoved(KPageWidgetItem* page)
 {
-    kDebug() << page->name();
+    qCDebug(KIPIPLUGINS_LOG) << page->name();
 }
 
 void Wizard::crop_selection(int)
@@ -2469,16 +2468,16 @@ void Wizard::accept()
         qreal left, top, right, bottom;
         d->m_printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
 
-        kDebug() << "Margins before print dialog: left " << left
+        qCDebug(KIPIPLUGINS_LOG) << "Margins before print dialog: left " << left
                  << " right " << right << " top " << top << " bottom " << bottom;
-        kDebug() << "(1) paper page " << d->m_printer->paperSize() << " size " << d->m_printer->paperSize(QPrinter::Millimeter);
+        qCDebug(KIPIPLUGINS_LOG) << "(1) paper page " << d->m_printer->paperSize() << " size " << d->m_printer->paperSize(QPrinter::Millimeter);
 
         QPrinter::PaperSize paperSize =  d->m_printer->paperSize();
 
         std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(d->m_printer, this));
         dialog->setWindowTitle(i18n("Print assistant"));
 
-        kDebug() << "(2) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
+        qCDebug(KIPIPLUGINS_LOG) << "(2) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
 
         bool wantToPrint = (dialog->exec() == QDialog::Accepted);
 
@@ -2488,17 +2487,17 @@ void Wizard::accept()
             return;
         }
 
-        kDebug() << "(3) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
+        qCDebug(KIPIPLUGINS_LOG) << "(3) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
 
         // Why paperSize changes if printer properties is not pressed?
         if (paperSize !=  d->m_printer->paperSize())
             d->m_printer->setPaperSize(paperSize);
 
-        kDebug() << "(4) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
+        qCDebug(KIPIPLUGINS_LOG) << "(4) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
 
         dialog->printer()->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
 
-        kDebug() << "Dialog exit, new margins: left " << left
+        qCDebug(KIPIPLUGINS_LOG) << "Dialog exit, new margins: left " << left
                  << " right " << right << " top " << top << " bottom " << bottom;
 
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -2546,7 +2545,7 @@ void Wizard::accept()
             return;
         }
         
-        kDebug() << path;
+        qCDebug(KIPIPLUGINS_LOG) << path;
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         printPhotosToFile(d->m_photos, path, s);
         QApplication::restoreOverrideCursor();
@@ -2560,13 +2559,13 @@ void Wizard::pagesetupdialogexit()
 {
     QPrinter* const printer = d->m_pDlg->printer();
 
-    kDebug() << "Dialog exit, new size " << printer->paperSize(QPrinter::Millimeter)
+    qCDebug(KIPIPLUGINS_LOG) << "Dialog exit, new size " << printer->paperSize(QPrinter::Millimeter)
              << " internal size " << d->m_printer->paperSize(QPrinter::Millimeter);
 
     qreal left, top, right, bottom;
     d->m_printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
 
-    kDebug() << "Dialog exit, new margins: left " << left
+    qCDebug(KIPIPLUGINS_LOG) << "Dialog exit, new margins: left " << left
              << " right " << right << " top " << top << " bottom " << bottom;
 
     // next should be useless invoke once changing wizard page
@@ -2574,10 +2573,10 @@ void Wizard::pagesetupdialogexit()
 
     //     d->m_pageSize = d->m_printer.paperSize(QPrinter::Millimeter);
 #ifdef NOT_YET
-    kDebug() << " dialog exited num of copies: " << printer->numCopies()
+    qCDebug(KIPIPLUGINS_LOG) << " dialog exited num of copies: " << printer->numCopies()
              << " inside:   " << d->m_printer->numCopies();
 
-    kDebug() << " dialog exited from : " << printer->fromPage()
+    qCDebug(KIPIPLUGINS_LOG) << " dialog exited from : " << printer->fromPage()
              << " to:   " << d->m_printer->toPage();
 #endif
 }
