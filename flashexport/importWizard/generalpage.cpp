@@ -43,6 +43,7 @@
 
 // Libkdcraw includes
 
+#include <rwidgetutils.h>
 #include <rnuminput.h>
 
 //Local includes
@@ -91,7 +92,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
       d(new GeneralPagePriv)
 {
-    KVBox *vbox       = new KVBox(this);
+    RVBox *vbox       = new RVBox(this);
 
     // ------------------------------------------------------------------------
 
@@ -131,7 +132,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
                                          "the images' orientations will be set according "
                                          "to their Exif information."));
 
-    KHBox* hbox         = new KHBox;
+    RHBox* hbox         = new RHBox;
     QLabel* label       = new QLabel(i18n("&Target Images' Size:"), hbox);
     d->imagesExportSize = new RIntNumInput(hbox);
     d->imagesExportSize->setRange(200, 2000, 1);
@@ -147,7 +148,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->fixOrientation, SLOT(setEnabled(bool)));
 
-    KHBox* hbox2         = new KHBox;
+    RHBox* hbox2         = new RHBox;
     QLabel* label2       = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
     d->maxImageDimension = new RIntNumInput(hbox2);
     d->maxImageDimension->setRange(200, 2000, 1);

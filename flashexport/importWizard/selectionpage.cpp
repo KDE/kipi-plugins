@@ -34,18 +34,24 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollectionselector.h>
 
-//Local includes
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
+
+// Local includes
 
 #include "flashmanager.h"
 #include "kpimageslist.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIFlashExportPlugin
 {
-    
+
 class SelectionPage::SelectionPagePriv
 {
 public:
@@ -61,7 +67,7 @@ public:
     ImageCollectionSelector* imageCollectionSelector;
     KPImagesList*            imageList;
     FlashManager*            manager;
-    KVBox*                   vbox;
+    RVBox*                   vbox;
 };
 
 SelectionPage::SelectionPage(FlashManager* const mngr, KAssistantDialog* const dlg)
@@ -78,7 +84,7 @@ void SelectionPage::setPageContent(int choice)
         delete d->vbox;
     }
 
-    d->vbox = new KVBox(this);
+    d->vbox = new RVBox(this);
 
     if(choice == 0) // Collection Selector
     {

@@ -43,6 +43,7 @@
 
 // Libkdcraw includes
 
+#include <rwidgetutils.h>
 #include <rnuminput.h>
 
 //Local includes
@@ -82,7 +83,7 @@ public:
 
     }
 
-    KVBox*        vbox;
+    RVBox*        vbox;
     QComboBox*    thumbnailPosition;
 
     KColorButton* textColor;
@@ -130,7 +131,7 @@ void LookPage::setPageContent(int plugType)
        delete d->vbox;
     }
 
-    d->vbox= new KVBox(this);
+    d->vbox= new RVBox(this);
     /* Every plugin have it's own settings
     * Keep a page for every plugin for a easier maintenance
     * even if some settings are common
@@ -143,7 +144,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
             QVBoxLayout* vlay = new QVBoxLayout(box);
 
-            KHBox* hbox       = new KHBox;
+            RHBox* hbox       = new RHBox;
             QLabel* label     = new QLabel(i18n("Thumbnail &Rows:"), hbox);
             d->thumbnailRows  = new RIntNumInput(hbox);
             d->thumbnailRows->setRange(1, 10, 1);
@@ -151,7 +152,7 @@ void LookPage::setPageContent(int plugType)
             d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
             label->setBuddy(d->thumbnailRows);
 
-            KHBox* hbox2        = new KHBox;
+            RHBox* hbox2        = new RHBox;
             QLabel* label2      = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
             d->thumbnailColumns = new RIntNumInput(hbox2);
             d->thumbnailColumns->setRange(1, 10, 1);
@@ -159,7 +160,7 @@ void LookPage::setPageContent(int plugType)
             d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
             label2->setBuddy(d->thumbnailColumns);
 
-            KHBox* hbox3         = new KHBox;
+            RHBox* hbox3         = new RHBox;
             QLabel* label3       = new QLabel(i18n("Thumbnail &Position:"), hbox3);
             d->thumbnailPosition = new QComboBox(hbox3);
             QString pos_right  = i18nc("thumbnail position: right",  "Right");
@@ -184,20 +185,20 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
             QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-            KHBox* hbox4    = new KHBox;
+            RHBox* hbox4    = new RHBox;
             QLabel* label4  = new QLabel(i18n("&Text Color:"), hbox4);
             d->textColor    = new KColorButton(hbox4);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label4->setBuddy(d->textColor);
 
-            KHBox* hbox5       = new KHBox;
+            RHBox* hbox5       = new RHBox;
             QLabel* label5     = new QLabel(i18n("&Background Color:"), hbox5);
             d->backgroundColor = new KColorButton(hbox5);
             d->backgroundColor->setColor(QColor("#181818"));
             label5->setBuddy(d->backgroundColor);
 
-            KHBox* hbox6    = new KHBox;
+            RHBox* hbox6    = new RHBox;
             QLabel* label6  = new QLabel(i18n("&Frame Color:"), hbox6);
             d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox6);
             d->frameColor->setColor(QColor("#FFFFFF"));
@@ -215,7 +216,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
             QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
-            KHBox* hbox7   = new KHBox;
+            RHBox* hbox7   = new RHBox;
             QLabel* label7 = new QLabel(i18n("&Frame Width:"), hbox7);
             d->frameWidth  = new RIntNumInput(hbox7);
             d->frameWidth->setRange(0, 10, 1);
@@ -223,7 +224,7 @@ void LookPage::setPageContent(int plugType)
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
             label7->setBuddy(d->frameWidth);
 
-            KHBox* hbox8    = new KHBox;
+            RHBox* hbox8    = new RHBox;
             QLabel* label8  = new QLabel(i18n("&Stage Padding:"), hbox8);
             d->stagePadding = new RIntNumInput(hbox8);
             d->stagePadding->setRange(10, 100, 1);
@@ -244,7 +245,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
             QVBoxLayout* vlay = new QVBoxLayout(box);
 
-            KHBox* hbox          = new KHBox;
+            RHBox* hbox          = new RHBox;
             QLabel* label        = new QLabel(i18n("&Display Time:"), hbox);
             d->displayTime = new RIntNumInput(hbox);
             d->displayTime->setRange(1, 15, 1);
@@ -261,13 +262,13 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
             QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-            KHBox* hbox2       = new KHBox;
+            RHBox* hbox2       = new RHBox;
             QLabel* label2     = new QLabel(i18n("&Background Color:"), hbox2);
             d->backgroundColor = new KColorButton(hbox2);
             d->backgroundColor->setColor(QColor("#181818"));
             label2->setBuddy(d->backgroundColor);
 
-            KHBox* hbox3    = new KHBox;
+            RHBox* hbox3    = new RHBox;
             QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
             d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
@@ -284,7 +285,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
             QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
-            KHBox* hbox4    = new KHBox;
+            RHBox* hbox4    = new RHBox;
             QLabel* label4  = new QLabel(i18n("&Frame Width:"), hbox4);
             d->frameWidth = new RIntNumInput(hbox4);
             d->frameWidth->setRange(0, 10, 1);
@@ -292,7 +293,7 @@ void LookPage::setPageContent(int plugType)
             d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
             label4->setBuddy(d->frameWidth);
 
-            KHBox* hbox5    = new KHBox;
+            RHBox* hbox5    = new RHBox;
             QLabel* label5  = new QLabel(i18n("&Image Padding:"), hbox5);
             d->imagePadding = new RIntNumInput(hbox5);
             d->imagePadding->setRange(10, 100, 1);
@@ -313,7 +314,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
             QVBoxLayout* vlay = new QVBoxLayout(box);
 
-            KHBox* hbox          = new KHBox;
+            RHBox* hbox          = new RHBox;
             QLabel* label        = new QLabel(i18n(" &Rows:"), hbox);
             d->thumbnailRows = new RIntNumInput(hbox);
             d->thumbnailRows->setRange(1, 10, 1);
@@ -321,7 +322,7 @@ void LookPage::setPageContent(int plugType)
             d->thumbnailRows->setWhatsThis(i18n("Number of rows of images to display."));
             label->setBuddy(d->thumbnailRows);
 
-            KHBox* hbox2          = new KHBox;
+            RHBox* hbox2          = new RHBox;
             QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
             d->thumbnailColumns = new RIntNumInput(hbox2);
             d->thumbnailColumns->setRange(1, 10, 1);
@@ -352,28 +353,28 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box2    = new QGroupBox(i18nc("Settings for flash export navigation", "Colors"), d->vbox);
             QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-            KHBox* hbox3    = new KHBox;
+            RHBox* hbox3    = new RHBox;
             QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
             d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
             d->frameColor->setColor(QColor("#FFFFFF"));
             d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
             label3->setBuddy(d->frameColor);
 
-            KHBox* hbox4    = new KHBox;
+            RHBox* hbox4    = new RHBox;
             QLabel* label4  = new QLabel(i18n("Background &Inner Color:"), hbox4);
             d->bkgndInnerColor    = new KColorButton(hbox4);
             d->bkgndInnerColor->setColor(QColor("#FFFFFF"));
             d->bkgndInnerColor->setWhatsThis(i18n("Color of the stage background gradient center."));
             label4->setBuddy(d->bkgndInnerColor);
 
-            KHBox* hbox5    = new KHBox;
+            RHBox* hbox5    = new RHBox;
             QLabel* label5  = new QLabel(i18n("Background &Outer Color:"), hbox5);
             d->bkgndOuterColor    = new KColorButton(hbox5);
             d->bkgndOuterColor->setColor(QColor("#FFFFFF"));
             d->bkgndOuterColor->setWhatsThis(i18n("Color of the stage background gradient edge."));
             label5->setBuddy(d->bkgndOuterColor);
 
-            KHBox* hbox6    = new KHBox;
+            RHBox* hbox6    = new RHBox;
             QLabel* label6  = new QLabel(i18n("Image Back Color:"), hbox6);
             d->backColor    = new KColorButton(hbox6);
             d->backColor->setColor(QColor("#FFFFFF"));
@@ -395,7 +396,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
             QVBoxLayout* vlay = new QVBoxLayout(box);
 
-            KHBox* hbox          = new KHBox;
+            RHBox* hbox          = new RHBox;
             QLabel* label        = new QLabel(i18n("Cell Dimension:"), hbox);
             d->cellDimension = new RIntNumInput(hbox);
             d->cellDimension->setRange(500, 1500, 1);
@@ -403,7 +404,7 @@ void LookPage::setPageContent(int plugType)
             d->cellDimension->setWhatsThis(i18n("Dimension of displayed image cells. Please use a higher value if you set high image size"));
             label->setBuddy(d->cellDimension);
 
-            KHBox* hbox2          = new KHBox;
+            RHBox* hbox2          = new RHBox;
             QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
             d->thumbnailColumns = new RIntNumInput(hbox2);
             d->thumbnailColumns->setRange(1, 10, 1);
@@ -422,20 +423,20 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
             QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-            KHBox* hbox3    = new KHBox;
+            RHBox* hbox3    = new RHBox;
             QLabel* label3  = new QLabel(i18n("&Caption Color:"), hbox3);
             d->textColor    = new KColorButton(hbox3);
             d->textColor->setColor(QColor("#FFFFFF"));
             d->textColor->setWhatsThis(i18n("Color of title and caption text"));
             label3->setBuddy(d->textColor);
 
-            KHBox* hbox4       = new KHBox;
+            RHBox* hbox4       = new RHBox;
             QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
             d->backgroundColor = new KColorButton(hbox4);
             d->backgroundColor->setColor(QColor("#181818"));
             label4->setBuddy(d->backgroundColor);
 
-            KHBox* hbox5    = new KHBox;
+            RHBox* hbox5    = new RHBox;
             QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
             d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox5);
             d->frameColor->setColor(QColor("#FFFFFF"));
@@ -453,7 +454,7 @@ void LookPage::setPageContent(int plugType)
             QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
             QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
-            KHBox* hbox6   = new KHBox;
+            RHBox* hbox6   = new RHBox;
             QLabel* label6 = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
             d->zoomInPerc  = new RIntNumInput(hbox6);
             d->zoomInPerc->setRange(0, 100, 1);
@@ -461,7 +462,7 @@ void LookPage::setPageContent(int plugType)
             d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
             label6->setBuddy(d->zoomInPerc);
 
-            KHBox* hbox7   = new KHBox;
+            RHBox* hbox7   = new RHBox;
             QLabel* label7 = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
             d->zoomOutPerc = new RIntNumInput(hbox7);
             d->zoomOutPerc->setRange(0, 100, 1);
@@ -469,7 +470,7 @@ void LookPage::setPageContent(int plugType)
             d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
             label7->setBuddy(d->zoomOutPerc);
 
-            KHBox* hbox8   = new KHBox;
+            RHBox* hbox8   = new RHBox;
             QLabel* label8 = new QLabel(i18n("&Frame Width:"), hbox8);
             d->frameWidth  = new RIntNumInput(hbox8);
             d->frameWidth->setRange(0, 15, 1);

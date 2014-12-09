@@ -32,7 +32,6 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <kvbox.h>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
@@ -40,13 +39,19 @@
 #include <kurlrequester.h>
 #include <kiconloader.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollectionselector.h>
+
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
 
 // Local includes
 
 #include "kpversion.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {
@@ -70,8 +75,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("First Run")),
       d(new FirstRunPagePriv)
 {
-    KVBox* vbox   = new KVBox(this);
-//    QVBoxLayout* topLayout = new QVBoxLayout(vbox);
+    RVBox* vbox   = new RVBox(this);
     QLabel* info1 = new QLabel(vbox);
     info1->setWordWrap(true);
     info1->setText( i18n("<p>SimpleViewer's plugins are Flash components which are free to use, "

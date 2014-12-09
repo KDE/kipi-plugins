@@ -35,9 +35,15 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 
-//Local includes
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
+
+// Local includes
 
 #include "simpleviewer.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {
@@ -51,7 +57,7 @@ public:
         plugin_select  = 0;
         imageGetOption = 0;
     }
-    
+
     KComboBox* plugin_select;
     KComboBox* imageGetOption;
 };
@@ -60,7 +66,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("Welcome to FlashExport Tool")),
       d(new IntroPagePriv)
 {
-    KVBox* vbox   = new KVBox(this);
+    RVBox* vbox   = new RVBox(this);
     QLabel* title = new QLabel(vbox);
 
     title->setWordWrap(true);
@@ -77,7 +83,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
                         "<p>2. TiltViewer is quite CPU intensive</p>"
                         "<p>3. Postcardviewer is designed only for small amount of photos</p>"
                         "</qt>"));
-    KHBox* hbox          = new KHBox(vbox);
+    RHBox* hbox          = new RHBox(vbox);
     QLabel* label        = new QLabel(i18n("Select &Plugin:"), hbox);
 
     d->plugin_select = new KComboBox(hbox);
@@ -95,7 +101,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
 
     // ComboBox for image selection method
 
-    KHBox* hbox2          = new KHBox(vbox);
+    RHBox* hbox2          = new RHBox(vbox);
     QLabel* getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
     d->imageGetOption     = new KComboBox(hbox2);
     QString collection    = i18nc("Collections",     "Collections");
