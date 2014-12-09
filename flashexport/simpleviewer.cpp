@@ -38,11 +38,12 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kfilemetainfo.h>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
+#include <kio/job.h>
+#include <kjobwidgets.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
@@ -170,7 +171,7 @@ void SimpleViewer::appendPluginFiles(int pluginType)
 
 void SimpleViewer::initProgressWdg() const
 {
-    d->progressWdg = new KPBatchProgressWidget(kapp->activeWindow());
+    d->progressWdg = new KPBatchProgressWidget(QApplication::activeWindow());
     kDebug() << "progress dialog initialized";
 }
 
@@ -256,13 +257,15 @@ void SimpleViewer::slotProcess()
     if(d->canceled)
     {
 
-        int ret = KMessageBox::warningYesNo(kapp->activeWindow(),
+        int ret = KMessageBox::warningYesNo(QApplication::activeWindow(),
                                             i18n("Export was canceled.\n"
                                                  "Do you want to delete files in %1 that have already been created?",
                                                  d->settings->exportUrl.path()));
         if(ret == KMessageBox::Yes)
         {
-            KIO::NetAccess::del(d->settings->exportUrl, kapp->activeWindow());
+            auto deleteJob = KIO::file_delete(d->settings->exportUrl);
+            KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
+            deleteJob->exec();
         }
     }
 
@@ -286,7 +289,11 @@ bool SimpleViewer::createExportDirectories() const
 
     QUrl root = d->settings->exportUrl;
     kDebug() << "export url is" << root.url();
-    if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
+
+    auto mkdirJob = KIO::mkdir(root);
+    KJobWidgets::setWindow(mkdirJob, QApplication::activeWindow());
+
+    if (!mkdirJob->exec())
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", root.url()),
                                     ErrorMessage);
@@ -299,7 +306,10 @@ bool SimpleViewer::createExportDirectories() const
         QUrl thumbsDir = QUrl(d->tempDir->path());
         thumbsDir.setPath(thumbsDir.path() + "/thumbs");
 
-        if(!KIO::NetAccess::mkdir(thumbsDir, kapp->activeWindow()))
+        auto mkdirJob2 = KIO::mkdir(thumbsDir);
+        KJobWidgets::setWindow(mkdirJob2, QApplication::activeWindow());
+
+        if (!mkdirJob2->exec())
         {
             d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir.url()),
                                    ErrorMessage);
@@ -312,7 +322,10 @@ bool SimpleViewer::createExportDirectories() const
 
     kDebug() << "image folder url is" << imagesDir.url();
 
-    if(!KIO::NetAccess::mkdir(imagesDir, kapp->activeWindow()))
+    auto mkdirJob3 = KIO::mkdir(imagesDir);
+    KJobWidgets::setWindow(mkdirJob3, QApplication::activeWindow());
+
+    if(!mkdirJob3->exec())
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
                                     ErrorMessage);
@@ -474,7 +487,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
     for(QList<QUrl>::ConstIterator it = images.constBegin();
         !d->canceled && (it != images.constEnd()) ; ++it)
     {
-        kapp->processEvents();
+        QApplication::processEvents();
         QUrl url = *it;
         QFileInfo fi(url.path());
 
@@ -917,7 +930,11 @@ bool SimpleViewer::upload() const
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
-    if(!KIO::NetAccess::dircopy(QUrl(d->tempDir->path() + "./"), d->settings->exportUrl, 0))
+    auto dircopyJob = KIO::copy(QUrl(d->tempDir->path() + "./"), d->settings->exportUrl);
+    KJobWidgets::setWindow(dircopyJob, 0);
+    dircopyJob->exec();
+
+    if(!dircopyJob->exec())
         return false;
 
     d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);

@@ -22,10 +22,16 @@
 
 #include "importwizarddlg.h"
 
-// KDE includes
+// Qt includes
 
 #include <QMenu>
-#include <klocale.h>
+#include <QStandardPaths>
+#include <QApplication>
+
+// KDE includes
+
+#include <klocalizedstring.h>
+#include <kjobwidgets.h>
 #include <khelpmenu.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
@@ -35,12 +41,10 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kio/netaccess.h>
-#include <kapplication.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
-#include <QStandardPaths>
 
 // Locale incudes.
 
@@ -211,7 +215,7 @@ void ImportWizardDlg::back()
 
 bool ImportWizardDlg::checkIfFolderExist()
 {
-    if(KIO::NetAccess::exists(d->settings->exportUrl, KIO::NetAccess::DestinationSide, kapp->activeWindow()))
+    if(KIO::NetAccess::exists(d->settings->exportUrl, KIO::NetAccess::DestinationSide, QApplication::activeWindow()))
     {
         int ret = KMessageBox::warningYesNoCancel(this,
                                                   i18n("Target folder %1 already exists.\n"
@@ -221,7 +225,11 @@ bool ImportWizardDlg::checkIfFolderExist()
         switch(ret)
         {
             case KMessageBox::Yes:
-                if(!KIO::NetAccess::del(d->settings->exportUrl, kapp->activeWindow()))
+            {
+                auto deleteJob = KIO::file_delete(d->settings->exportUrl);
+                KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
+
+                if(!deleteJob->exec())
                 {
                     KMessageBox::error(this, i18n("Could not delete %1.\n"
                                        "Please choose another export folder.",
@@ -230,7 +238,7 @@ bool ImportWizardDlg::checkIfFolderExist()
                 }
 
                 return true;
-
+            }
             case KMessageBox::No:
                 return false;
 

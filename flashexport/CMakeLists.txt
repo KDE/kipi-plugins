@@ -28,6 +28,7 @@ target_link_libraries(kipiplugin_flashexport
                       KF5::Parts
                       KF5::KIOCore
                       KF5::Archive
+                      KF5::JobWidgets
                       KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
