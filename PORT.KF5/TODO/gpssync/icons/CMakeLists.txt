@@ -4,4 +4,4 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-ecm_install_icons(${ICON_INSTALL_DIR})
+ecm_install_icons(ICONS hi16-apps-kipi-gpsimagetag.png  hi32-apps-kipi-gpsimagetag.png DESTINATION ${ICON_INSTALL_DIR})

@@ -35,7 +35,7 @@ target_link_libraries(kipiplugin_calendar
                       KF5::Kipi 
                       KF5::KExiv2 
                       KF5::KDcraw 
-                      ${KDE4_KCALCORE_LIBS} 
+                      KF5::CalendarCore 
                       KF5kipiplugins
                      )
 

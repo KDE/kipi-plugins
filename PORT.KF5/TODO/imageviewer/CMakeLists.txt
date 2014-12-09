@@ -6,6 +6,8 @@
 
 subdirs(icons cursors)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_imageviewer\")
+
 set(kipiplugin_imageviewer_PART_SRCS
     texture.cpp
     timer.cpp
