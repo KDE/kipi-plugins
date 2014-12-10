@@ -26,17 +26,16 @@
 // Qt includes
 
 #include <QAction>
+#include <QApplication>
 
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kapplication.h>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kwindowsystem.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // LibKIPI includes
 
@@ -46,6 +45,7 @@
 // Local includes
 
 #include "timeadjustdialog.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPITimeAdjustPlugin
 {

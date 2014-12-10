@@ -37,7 +37,6 @@ extern "C"
 
 // KDE includes
 
-#include <kdebug.h>
 #include <kde_file.h>
 
 // Local includes
@@ -46,6 +45,7 @@ extern "C"
 #include "kpimageinfo.h"
 #include "myimagelist.h"
 #include "actionthread.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPITimeAdjustPlugin
 {

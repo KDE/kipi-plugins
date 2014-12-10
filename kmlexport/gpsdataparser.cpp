@@ -35,9 +35,9 @@
 #include <QFile>
 #include <QString>
 
-// KDE includes
+// Local includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 namespace KIPIKMLExportPlugin
 {
