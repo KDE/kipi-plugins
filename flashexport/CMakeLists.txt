@@ -4,7 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-subdirs(icons)
+add_subdirectory(icons)
+add_subdirectory(data)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/importWizard)
 
@@ -44,9 +45,3 @@ configure_file(kipiplugin_flashexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DI
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_flashexport                                     DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES   kipiplugin_flashexportui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
-
-install(FILES data/space.png       DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport/simpleviewer_html)
-install(FILES data/index.template  DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)
-install(FILES data/index2.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)
-install(FILES data/index3.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)
-install(FILES data/index4.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)
