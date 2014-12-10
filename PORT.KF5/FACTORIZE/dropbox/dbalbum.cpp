@@ -80,7 +80,7 @@ void DBNewAlbum::slotTextChanged(const QString &text)
 void DBNewAlbum::getFolderTitle(DBFolder& folder)
 {
     folder.title = QString("/") + m_titleEdt->text();
-    kDebug() << "getFolderTitle " << folder.title;
+    qCDebug(KIPIPLUGINS_LOG) << "getFolderTitle " << folder.title;
 }
 
 } // namespace KIPIDropboxPlugin

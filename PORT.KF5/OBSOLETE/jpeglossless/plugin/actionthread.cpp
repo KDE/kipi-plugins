@@ -108,7 +108,7 @@ protected:
             }
             default:
             {
-                kError() << "Unknown action specified";
+                qCCritical(KIPIPLUGINS_LOG) << "Unknown action specified";
                 break;
             }
         }
@@ -200,12 +200,12 @@ void ActionThread::slotJobDone(ThreadWeaver::Job* job)
 
     if (task->errString.isEmpty())
     {
-        kDebug() << "Job done:" << task->fileUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Job done:" << task->fileUrl.toLocalFile();
         emit finished(task->fileUrl, task->action);
     }
     else
     {
-        kDebug() << "Could not complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
+        qCDebug(KIPIPLUGINS_LOG) << "Could not complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
         emit failed(task->fileUrl, task->action,task->errString);
     }
 
@@ -215,7 +215,7 @@ void ActionThread::slotJobDone(ThreadWeaver::Job* job)
 void ActionThread::slotJobStarted(ThreadWeaver::Job* job)
 {
     Task* const task = static_cast<Task*>(job);
-    kDebug() << "Job Started:" << task->fileUrl.toLocalFile();
+    qCDebug(KIPIPLUGINS_LOG) << "Job Started:" << task->fileUrl.toLocalFile();
     emit starting(task->fileUrl, task->action);
 }
 

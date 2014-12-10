@@ -107,7 +107,7 @@ KioImportWindow::~KioImportWindow()
 
 void KioImportWindow::slotImport()
 {
-    kDebug() << "starting to import urls: " << m_importWidget->sourceUrls();
+    qCDebug(KIPIPLUGINS_LOG) << "starting to import urls: " << m_importWidget->sourceUrls();
 
     // start copying and react on signals
     setEnabled(false);
@@ -130,7 +130,7 @@ void KioImportWindow::slotCopyingDone(KIO::Job* job, const KUrl& from,
     Q_UNUSED(directory);
     Q_UNUSED(renamed);
 
-    kDebug() << "copied " << to.prettyUrl();
+    qCDebug(KIPIPLUGINS_LOG) << "copied " << to.prettyUrl();
 
     m_importWidget->imagesList()->removeItemByUrl(from);
 }
@@ -156,7 +156,7 @@ void KioImportWindow::slotSourceAndTargetUpdated()
     bool hasUrlToImport = !m_importWidget->sourceUrls().empty();
     bool hasTarget      = m_importWidget->uploadWidget()->selectedImageCollection().uploadPath().isValid();
 
-    kDebug() << "switching import button activity with: hasUrlToImport = "
+    qCDebug(KIPIPLUGINS_LOG) << "switching import button activity with: hasUrlToImport = "
                   << hasUrlToImport << ", hasTarget = " << hasTarget;
 
     enableButton(User1, hasUrlToImport && hasTarget);

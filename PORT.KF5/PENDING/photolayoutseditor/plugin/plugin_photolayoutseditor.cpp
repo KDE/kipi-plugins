@@ -58,7 +58,7 @@ Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject* const parent, cons
     m_parentWidget = 0;
     m_manager      = 0;
 
-    kDebug() << "Plugin_PhotoLayoutsEditor plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_PhotoLayoutsEditor plugin loaded";
 
     setUiBaseName("kipiplugin_photolayoutseditorui.rc");
     setupXML();
@@ -78,7 +78,7 @@ void Plugin_PhotoLayoutsEditor::setup(QWidget* const widget)
     m_interface = interface();
     if (!m_interface)
     {
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
@@ -104,7 +104,7 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
 {
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

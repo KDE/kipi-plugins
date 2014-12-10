@@ -81,7 +81,7 @@ void Plugin_GPSSync::setup(QWidget* const widget)
 
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!" ;
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!" ;
         return;
     }
 

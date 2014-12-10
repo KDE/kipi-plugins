@@ -443,7 +443,7 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
 //    }
 //    else
 //    {
-//        kDebug() << "upload to gallery " << gallery;
+//        qCDebug(KIPIPLUGINS_LOG) << "upload to gallery " << gallery;
 //        m_state = IMGHCK_ADDPHOTOGALLERY;
 //        job->setProperty("k_galleryName", gallery);
 //        m_job->setProperty("k_step", STEP_UPLOADITEM);
@@ -508,7 +508,7 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
     }
     else
     {
-        kDebug() << elem.tagName();
+        qCDebug(KIPIPLUGINS_LOG) << elem.tagName();
         QDomNode node = elem.firstChild();
         if (node.nodeName() == "error") {
             errCode =  parseErrorResponse(elem, errMsg);
@@ -549,7 +549,7 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
                 url.addQueryItem("image[]", imgPath);
                 url.addQueryItem("cookie", m_imageshack->registrationCode());
 
-                kDebug() << url.url();
+                qCDebug(KIPIPLUGINS_LOG) << url.url();
 
                 m_job->kill();
 
@@ -576,7 +576,7 @@ void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
     QString errMsg = "";
     QDomDocument domDoc("galleryXML");
 
-    kDebug() << data;
+    qCDebug(KIPIPLUGINS_LOG) << data;
 
     if (!domDoc.setContent(data))
         return;

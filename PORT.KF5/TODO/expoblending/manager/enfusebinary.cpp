@@ -49,24 +49,24 @@ bool EnfuseBinary::parseHeader(const QString& output)
 
     if (firstLine.startsWith(m_headerStarts))
     {
-        kDebug() << path() << " help header line: \n" << firstLine;
+        qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, m_headerStarts.length()));
         QStringList versionList = version().split('.');
         versionList.pop_back();
         versionDouble = versionList.join(QString(".")).toDouble();
         emit signalEnfuseVersion(versionDouble);
-        kDebug() << "Found " << path() << " version: " << version();
+        qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
         return true;
     }
     else if (firstLine.startsWith(headerStartsOld))
     {
-        kDebug() << path() << " help header line: \n" << firstLine;
+        qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, headerStartsOld.length()));
         QStringList versionList = version().split('.');
         versionList.pop_back();
         versionDouble = versionList.join(QString(".")).toDouble();
         emit signalEnfuseVersion(versionDouble);
-        kDebug() << "Found " << path() << " version: " << version();
+        qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
         return true;
     }
 

@@ -120,7 +120,7 @@ void MinidlnaServer::setBinaryPath(const QString& path)
 void MinidlnaServer::startMinidlnaServer()
 {
     QString program           = d->minidlnaBinaryPath;
-    kDebug() << d->minidlnaBinaryPath;
+    qCDebug(KIPIPLUGINS_LOG) << d->minidlnaBinaryPath;
     QStringList arguments;
     arguments << "-d" << "-R" << "-f" << d->filePath;
     QProcess *minidlnaProcess = new QProcess(this);

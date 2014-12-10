@@ -95,7 +95,7 @@ void Plugin_VideoSlideShow::setup(QWidget* const widget)
 
     if (!iface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -126,7 +126,7 @@ void Plugin_VideoSlideShow::slotExport()
 
     if (!iface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

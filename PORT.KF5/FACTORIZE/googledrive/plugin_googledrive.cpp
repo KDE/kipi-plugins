@@ -82,7 +82,7 @@ void Plugin_GoogleDrive::setup(QWidget* const widget)
 
     if(!interface())
     {
-        kDebug() << "kipi interface is null";
+        qCDebug(KIPIPLUGINS_LOG) << "kipi interface is null";
         return;
     }
 

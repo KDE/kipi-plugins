@@ -37,7 +37,7 @@ void XmpMM::load(const KPMetadata& meta)
     if (meta.hasXmp())
     {
         KExiv2::MetaDataMap mmMap = meta.getXmpTagsDataList(QStringList("xmpMM"));
-        kDebug() << "mmMap.size():" << mmMap.size();
+        qCDebug(KIPIPLUGINS_LOG) << "mmMap.size():" << mmMap.size();
 
         loadIDs(mmMap);
         loadHistory(mmMap);
@@ -76,7 +76,7 @@ void XmpMM::loadHistory(const KExiv2::MetaDataMap& mmMap)
         hist.when       = mmMap[node + "when"];
         history.push_back(hist);
     }
-    kDebug() << "history.size():" << history.size();
+    qCDebug(KIPIPLUGINS_LOG) << "history.size():" << history.size();
 }
 
 // ----------------------------------------------------------------------------

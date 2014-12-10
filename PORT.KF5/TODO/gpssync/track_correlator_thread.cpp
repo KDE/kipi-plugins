@@ -79,7 +79,7 @@ void TrackCorrelatorThread::run()
             itemDateTime.setTimeSpec(Qt::UTC);
         }
 
-        kDebug()<<itemDateTime;
+        qCDebug(KIPIPLUGINS_LOG)<<itemDateTime;
         // find the last point before our item:
         QDateTime lastSmallerTime;
         QPair<int, int> lastIndexPair;
@@ -271,7 +271,7 @@ void TrackCorrelatorThread::run()
         {
             TrackCorrelator::Correlation::List readyItems;
             readyItems << correlatedData;
-            kDebug()<<"correlated!";
+            qCDebug(KIPIPLUGINS_LOG)<<"correlated!";
             emit(signalItemsCorrelated(readyItems));
         }
     }

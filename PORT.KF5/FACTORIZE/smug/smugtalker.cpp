@@ -482,7 +482,7 @@ void SmugTalker::data(KIO::Job*, const QByteArray& data)
 QString SmugTalker::errorToText(int errCode, const QString &errMsg)
 {
     QString transError;
-    kDebug() << "errorToText: " << errCode << ": " << errMsg;
+    qCDebug(KIPIPLUGINS_LOG) << "errorToText: " << errCode << ": " << errMsg;
 
     switch (errCode)
     {
@@ -589,7 +589,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Login response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Login response:" << endl << data;
 
     QDomElement e = doc.documentElement();
 
@@ -630,7 +630,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -656,7 +656,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Logout response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Logout response:" << endl << data;
 
     QDomElement e = doc.documentElement();
 
@@ -675,7 +675,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -714,13 +714,13 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Add Photo response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Add Photo response:" << endl << data;
 
     QDomElement document = doc.documentElement();
 
     if (document.tagName() == "rsp")
     {
-        kDebug() << "rsp stat: " << document.attribute("stat");
+        qCDebug(KIPIPLUGINS_LOG) << "rsp stat: " << document.attribute("stat");
         if (document.attribute("stat") == "ok")
         {
             errCode = 0;
@@ -730,14 +730,14 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
             QDomElement error = document.firstChildElement("err");
             errCode = error.attribute("code").toInt();
             errMsg = error.attribute("msg");
-            kDebug() << "error" << errCode << ":" << errMsg << endl;
+            qCDebug(KIPIPLUGINS_LOG) << "error" << errCode << ":" << errMsg << endl;
         }
     }
     else
     {
         errCode = -2;
         errMsg  = "Malformed response from smugmug: " + document.tagName();
-        kDebug() << "Error:" << errCode << errMsg;
+        qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
     }
 
     emit signalBusy(false);
@@ -753,7 +753,7 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Create Album response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Create Album response:" << endl << data;
 
     int newAlbumID = -1;
     QDomElement e  = doc.documentElement();
@@ -768,15 +768,15 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
         if (e.tagName() == "Album")
         {
             newAlbumID = e.attribute("id").toInt();
-            kDebug() << "AlbumID: " << newAlbumID;
-            kDebug() << "Key: " << e.attribute("Key");
+            qCDebug(KIPIPLUGINS_LOG) << "AlbumID: " << newAlbumID;
+            qCDebug(KIPIPLUGINS_LOG) << "Key: " << e.attribute("Key");
             errCode = 0;
         }
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -794,7 +794,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Albums response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Albums response:" << endl << data;
 
     QList <SmugAlbum> albumsList;
     QDomElement e = doc.documentElement();
@@ -856,7 +856,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -878,7 +878,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Photos response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Photos response:" << endl << data;
 
     QList <SmugPhoto> photosList;
     QDomElement e = doc.documentElement();
@@ -942,7 +942,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -962,7 +962,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse AlbumTemplates response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse AlbumTemplates response:" << endl << data;
 
     QList<SmugAlbumTmpl> albumTList;
     QDomElement e = doc.documentElement();
@@ -1001,7 +1001,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -1021,7 +1021,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Categories response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Categories response:" << endl << data;
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
@@ -1057,7 +1057,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 
@@ -1077,7 +1077,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse SubCategories response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse SubCategories response:" << endl << data;
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
@@ -1113,7 +1113,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg  = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error:" << errCode << errMsg;
         }
     }
 

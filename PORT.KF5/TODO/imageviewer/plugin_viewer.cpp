@@ -83,7 +83,7 @@ void Plugin_viewer::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -122,13 +122,13 @@ void Plugin_viewer::slotActivate()
             break;
 
         case oglNoRectangularTexture:
-            kError() << "GL_ARB_texture_rectangle not supported";
+            qCCritical(KIPIPLUGINS_LOG) << "GL_ARB_texture_rectangle not supported";
             delete d->widget;
             KMessageBox::error(0, i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case oglNoContext:
-            kError() << "no OpenGL context found";
+            qCCritical(KIPIPLUGINS_LOG) << "no OpenGL context found";
             delete d->widget;
             KMessageBox::error(0, i18n("OpenGL error"), i18n("No OpenGL context found"));
             break;

@@ -516,7 +516,7 @@ void GPSCorrelatorWidget::slotCorrelate()
 
 void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::TrackCorrelator::Correlation::List& correlatedItems)
 {
-    kDebug()<<correlatedItems.count();
+    qCDebug(KIPIPLUGINS_LOG)<<correlatedItems.count();
     d->correlationTriedCount+=correlatedItems.count();
 
     for (int i=0; i<correlatedItems.count(); ++i)

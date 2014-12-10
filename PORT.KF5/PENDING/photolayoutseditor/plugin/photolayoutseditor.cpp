@@ -784,11 +784,11 @@ void PhotoLayoutsEditor::loadEffects()
             {
                 d->effectsMap[name] = plugin;
                 PhotoEffectsLoader::registerEffect(plugin);
-                kDebug() << "PhotoLayoutsEditor: Loaded effect " << service->name();
+                qCDebug(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: Loaded effect " << service->name();
             }
             else
             {
-                kWarning() << "PhotoLayoutsEditor: createInstance returned 0 for "
+                qCWarning(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: createInstance returned 0 for "
                            << service->name()
                            << " (" << service->library() << ")"
                            << " with error: "
@@ -825,11 +825,11 @@ void PhotoLayoutsEditor::loadBorders()
             {
                 d->bordersMap[name] = plugin;
                 BorderDrawersLoader::registerDrawer(plugin);
-                kDebug() << "PhotoLayoutsEditor: Loaded border:" << service->name();
+                qCDebug(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: Loaded border:" << service->name();
             }
             else
             {
-                kWarning() << "PhotoLayoutsEditor: createInstance returned 0 for "
+                qCWarning(KIPIPLUGINS_LOG) << "PhotoLayoutsEditor: createInstance returned 0 for "
                            << service->name()
                            << " (" << service->library() << ")"
                            << " with error: "

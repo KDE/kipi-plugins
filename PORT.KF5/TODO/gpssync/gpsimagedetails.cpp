@@ -352,7 +352,7 @@ void GPSImageDetails::slotSetCurrentImage(const QModelIndex& index)
     if (index.isValid())
     {
         KipiImageItem* const item = d->imageModel->itemFromIndex(index);
-        kDebug()<<item;
+        qCDebug(KIPIPLUGINS_LOG)<<item;
 
         if (item)
         {

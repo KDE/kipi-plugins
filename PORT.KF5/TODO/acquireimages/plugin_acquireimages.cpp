@@ -81,7 +81,7 @@ void Plugin_AcquireImages::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "KIPI interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "KIPI interface is null!";
         return;
     }
 

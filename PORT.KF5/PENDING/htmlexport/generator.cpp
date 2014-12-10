@@ -510,7 +510,7 @@ bool Generator::run()
     if (!d->init()) return false;
 
     QString destDir=d->mInfo->destUrl().toLocalFile();
-    kDebug() << destDir;
+    qCDebug(KIPIPLUGINS_LOG) << destDir;
     if (!d->createDir(destDir)) return false;
 
     if (!d->copyTheme()) return false;

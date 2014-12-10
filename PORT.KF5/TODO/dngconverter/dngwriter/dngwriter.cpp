@@ -171,7 +171,7 @@ int DNGWriter::convert()
     {
         if (inputFile().isEmpty())
         {
-            kDebug() << "DNGWriter: No input file to convert. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: No input file to convert. Aborted..." ;
             return PROCESSFAILED;
         }
 
@@ -190,13 +190,13 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: Loading RAW data from " << inputInfo.fileName() ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Loading RAW data from " << inputInfo.fileName() ;
 
         KDcraw rawProcessor;
 
         if (!rawProcessor.rawFileIdentify(identifyMake, inputFile()))
         {
-            kDebug() << "DNGWriter: Reading RAW file failed. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Reading RAW file failed. Aborted..." ;
             return PROCESSFAILED;
         }
 
@@ -233,13 +233,13 @@ int DNGWriter::convert()
                                          useFullSensorImage,             // arg deprecated with KDCRAW >=0x020001
                                          0))
         {
-            kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return FILENOTSUPPORTED;
         }
 #else
         if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, 0))
         {
-            kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return FILENOTSUPPORTED;
         }
 #endif
@@ -247,32 +247,32 @@ int DNGWriter::convert()
         if (d->cancel)
             return PROCESSCANCELED;
 
-        kDebug() << "DNGWriter: Raw data loaded:" ;
-        kDebug() << "--- Data Size:     " << rawData.size() << " bytes";
-        kDebug() << "--- Date:          " << identify.dateTime.toString(Qt::ISODate);
-        kDebug() << "--- Make:          " << identify.make;
-        kDebug() << "--- Model:         " << identify.model;
-        kDebug() << "--- ImageSize:     " << identify.imageSize.width() << "x" << identify.imageSize.height();
-        kDebug() << "--- FullSize:      " << identify.fullSize.width() << "x" << identify.fullSize.height();
-        kDebug() << "--- OutputSize:    " << identify.outputSize.width() << "x" << identify.outputSize.height();
-        kDebug() << "--- Orientation:   " << identify.orientation;
-        kDebug() << "--- Top margin:    " << identify.topMargin;
-        kDebug() << "--- Left margin:   " << identify.leftMargin;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Raw data loaded:" ;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Data Size:     " << rawData.size() << " bytes";
+        qCDebug(KIPIPLUGINS_LOG) << "--- Date:          " << identify.dateTime.toString(Qt::ISODate);
+        qCDebug(KIPIPLUGINS_LOG) << "--- Make:          " << identify.make;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Model:         " << identify.model;
+        qCDebug(KIPIPLUGINS_LOG) << "--- ImageSize:     " << identify.imageSize.width() << "x" << identify.imageSize.height();
+        qCDebug(KIPIPLUGINS_LOG) << "--- FullSize:      " << identify.fullSize.width() << "x" << identify.fullSize.height();
+        qCDebug(KIPIPLUGINS_LOG) << "--- OutputSize:    " << identify.outputSize.width() << "x" << identify.outputSize.height();
+        qCDebug(KIPIPLUGINS_LOG) << "--- Orientation:   " << identify.orientation;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Top margin:    " << identify.topMargin;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Left margin:   " << identify.leftMargin;
 #if KDCRAW_VERSION < 0x020001
-        kDebug() << "--- Right margin:  " << identify.rightMargin;
-        kDebug() << "--- Bottom margin: " << identify.bottomMargin;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Right margin:  " << identify.rightMargin;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Bottom margin: " << identify.bottomMargin;
 #endif
-        kDebug() << "--- Filter:        " << identify.filterPattern;
-        kDebug() << "--- Colors:        " << identify.rawColors;
-        kDebug() << "--- Black:         " << identify.blackPoint;
-        kDebug() << "--- White:         " << identify.whitePoint;
-        kDebug() << "--- CAM->XYZ:" ;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Filter:        " << identify.filterPattern;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Colors:        " << identify.rawColors;
+        qCDebug(KIPIPLUGINS_LOG) << "--- Black:         " << identify.blackPoint;
+        qCDebug(KIPIPLUGINS_LOG) << "--- White:         " << identify.whitePoint;
+        qCDebug(KIPIPLUGINS_LOG) << "--- CAM->XYZ:" ;
 
         QString matrixVal;
 
         for(int i=0; i<4; ++i)
         {
-            kDebug() << "                   "
+            qCDebug(KIPIPLUGINS_LOG) << "                   "
                      << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[i][0],
                                                                     identify.cameraXYZMatrix[i][1],
                                                                     identify.cameraXYZMatrix[i][2]);
@@ -331,7 +331,7 @@ int DNGWriter::convert()
 
             if (identify.filterPattern.length() != 16)
             {
-                kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
                 return FILENOTSUPPORTED;
             }
 
@@ -357,14 +357,14 @@ int DNGWriter::convert()
                 }
                 else
                 {
-                    kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
+                    qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
                     return FILENOTSUPPORTED;
                 }
             }
         }
         else
         {
-            kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
             return FILENOTSUPPORTED;
         }
 
@@ -372,7 +372,7 @@ int DNGWriter::convert()
         {
             if (false == fujiRotate(rawData, identify))
             {
-                kDebug() << "Can not rotate fuji image. Aborted...";
+                qCDebug(KIPIPLUGINS_LOG) << "Can not rotate fuji image. Aborted...";
                 return PROCESSFAILED;
             }
 
@@ -406,7 +406,7 @@ int DNGWriter::convert()
         // Check if number of Raw Color components is supported.
         if ((identify.rawColors != 3) && (identify.rawColors != 4))
         {
-            kDebug() << "DNGWriter: Number of Raw color components not supported. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Number of Raw color components not supported. Aborted..." ;
             return PROCESSFAILED;
         }
 
@@ -421,7 +421,7 @@ int DNGWriter::convert()
         QFile rawdataFile(rawdataFilePath);
         if (!rawdataFile.open(QIODevice::WriteOnly))
         {
-            kDebug() << "DNGWriter: Cannot open file to write RAW data. Aborted..." ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Cannot open file to write RAW data. Aborted..." ;
             return PROCESSFAILED;
         }
         QDataStream rawdataStream(&rawdataFile);
@@ -433,7 +433,7 @@ int DNGWriter::convert()
         if (d->cancel)
             return PROCESSCANCELED;
 
-        kDebug() << "DNGWriter: DNG memory allocation and initialization" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG memory allocation and initialization" ;
 
         dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
 
@@ -469,7 +469,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: DNG Negative structure creation" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG Negative structure creation" ;
 
         AutoPtr<dng_negative> negative(host.Make_dng_negative());
 
@@ -623,7 +623,7 @@ int DNGWriter::convert()
 
                     if (camXYZ.MaxEntry() == 0.0)
                     {
-                        kDebug() << "DNGWriter: camera XYZ Matrix is null : camera not supported" ;
+                        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: camera XYZ Matrix is null : camera not supported" ;
                         return FILENOTSUPPORTED;
                     }
 
@@ -649,7 +649,7 @@ int DNGWriter::convert()
 
                     if (camXYZ.MaxEntry() == 0.0)
                     {
-                        kDebug() << "DNGWriter: camera XYZ Matrix is null : camera not supported" ;
+                        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: camera XYZ Matrix is null : camera not supported" ;
                         return FILENOTSUPPORTED;
                     }
 
@@ -677,7 +677,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: Updating metadata to DNG Negative" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Updating metadata to DNG Negative" ;
 
         dng_exif* const exif = negative->GetExif();
         exif->fModel.Set_ASCII(identify.model.toAscii());
@@ -1058,7 +1058,7 @@ int DNGWriter::convert()
 
             if (!mkrnts.isEmpty())
             {
-                kDebug() << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" ;
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" ;
 
                 dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
                 dng_memory_stream stream(memalloc);
@@ -1098,7 +1098,7 @@ int DNGWriter::convert()
 
         if (d->backupOriginalRawFile)
         {
-            kDebug() << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)";
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)";
 
             QFileInfo originalFileInfo(inputFile());
 
@@ -1120,7 +1120,7 @@ int DNGWriter::convert()
 
             if (!compressedFile.open())
             {
-                kDebug() << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted...";
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted...";
                 return PROCESSFAILED;
             }
 
@@ -1132,7 +1132,7 @@ int DNGWriter::convert()
 
                 QByteArray compressedDataBlock = qCompress((const uchar*)originalDataBlock.data(), originalBlockLength, -1);
                 compressedDataBlock.remove(0, 4); // removes qCompress own header
-                kDebug() << "DNGWriter: compressed data block " << originalBlockLength << " -> " << compressedDataBlock.size();
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: compressed data block " << originalBlockLength << " -> " << compressedDataBlock.size();
 
                 offset += compressedDataBlock.size();
                 offsets.push_back(offset);
@@ -1182,7 +1182,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: Build DNG Negative" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Build DNG Negative" ;
 
         // Assign Raw image data.
         negative->SetStage1Image(image);
@@ -1208,7 +1208,7 @@ int DNGWriter::convert()
 
         if (d->previewMode != DNGWriter::NONE)
         {
-            kDebug() << "DNGWriter: DNG preview image creation" ;
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG preview image creation" ;
 
             // Construct a preview image as TIFF format.
             AutoPtr<dng_image> tiffImage;
@@ -1234,7 +1234,7 @@ int DNGWriter::convert()
 
             if (!pre_image.loadFromData((uchar*)&tiff_mem_buffer.front(), tiff_mem_buffer.size(), "TIFF"))
             {
-                kDebug() << "DNGWriter: Cannot load TIFF preview data in memory. Aborted..." ;
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Cannot load TIFF preview data in memory. Aborted..." ;
                 return PROCESSFAILED;
             }
 
@@ -1242,13 +1242,13 @@ int DNGWriter::convert()
 
             if (!previewFile.open())
             {
-                kDebug() << "DNGWriter: Cannot open temporary file to write JPEG preview. Aborted..." ;
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Cannot open temporary file to write JPEG preview. Aborted..." ;
                 return PROCESSFAILED;
             }
 
             if (!pre_image.save(previewFile.fileName(), "JPEG", 90))
             {
-                kDebug() << "DNGWriter: Cannot save file to write JPEG preview. Aborted..." ;
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Cannot save file to write JPEG preview. Aborted..." ;
                 return PROCESSFAILED;
             }
 
@@ -1276,7 +1276,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: DNG thumbnail creation" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG thumbnail creation" ;
 
         dng_image_preview thumbnail;
         dng_render thumbnail_render(host, *negative);
@@ -1290,7 +1290,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: Creating DNG file " << outputInfo.fileName() ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Creating DNG file " << outputInfo.fileName() ;
 
         dng_image_writer writer;
         dng_file_stream filestream(QFile::encodeName(dngFilePath), true);
@@ -1307,7 +1307,7 @@ int DNGWriter::convert()
         {
             if (inputInfo.suffix().toUpper() == QString("ORF"))
             {
-                kDebug() << "DNGWriter: cleanup makernotes using Exiv2" ;
+                qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: cleanup makernotes using Exiv2" ;
 
                 meta.setWriteRawFiles(true);
                 meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
@@ -1328,7 +1328,7 @@ int DNGWriter::convert()
         {
             QDateTime date = meta.getImageDateTime();
 
-            kDebug() << "DNGWriter: Setting modification date from meta data: " << date.toString();
+            qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Setting modification date from meta data: " << date.toString();
 
             // don't touch access time
             struct stat st;
@@ -1344,17 +1344,17 @@ int DNGWriter::convert()
     catch (const dng_exception& exception)
     {
         int ret = exception.ErrorCode();
-        kDebug() << "DNGWriter: DNG SDK exception code (" << ret << ")" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG SDK exception code (" << ret << ")" ;
         return DNGSDKINTERNALERROR;
     }
 
     catch (...)
     {
-        kDebug() << "DNGWriter: DNG SDK exception code unknow" ;
+        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG SDK exception code unknow" ;
         return DNGSDKINTERNALERROR;
     }
 
-    kDebug() << "DNGWriter: DNG conversion complete..." ;
+    qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: DNG conversion complete..." ;
 
     return PROCESSCOMPLETE;
 }

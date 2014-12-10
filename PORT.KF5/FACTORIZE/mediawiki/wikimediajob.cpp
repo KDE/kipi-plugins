@@ -94,14 +94,14 @@ void WikiMediaJob::begin()
 void WikiMediaJob::setImageMap(const QMap <QString,QMap <QString,QString> >& imageDesc)
 {
     d->imageDesc = imageDesc;
-    kDebug() << "Map length:" << imageDesc.size();
+    qCDebug(KIPIPLUGINS_LOG) << "Map length:" << imageDesc.size();
 }
 
 void WikiMediaJob::uploadHandle(KJob* j)
 {
     if(j != 0)
     {
-        kDebug() << "Upload error" << j->error() << j->errorString() << j->errorText();
+        qCDebug(KIPIPLUGINS_LOG) << "Upload error" << j->error() << j->errorString() << j->errorText();
         emit uploadProgress(100);
 
         disconnect(j, SIGNAL(result(KJob*)), 
@@ -135,7 +135,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
         QMap<QString,QString> info = d->imageDesc.take(keys.first());
         Upload* const e1           = new Upload(*d->mediawiki, this);
 
-        kDebug() << "Path:" << keys.first();
+        qCDebug(KIPIPLUGINS_LOG) << "Path:" << keys.first();
 
         QFile* const file = new QFile(keys.first(),this);
         file->open(QIODevice::ReadOnly);
@@ -143,9 +143,9 @@ void WikiMediaJob::uploadHandle(KJob* j)
 
         e1->setFile(file);
         d->currentFile = file->fileName();
-        kDebug() << "Name:" << file->fileName();
+        qCDebug(KIPIPLUGINS_LOG) << "Name:" << file->fileName();
         e1->setFilename(info["title"].replace(" ", "_"));
-        kDebug() << "Title:" << info["title"];
+        qCDebug(KIPIPLUGINS_LOG) << "Title:" << info["title"];
 
         if(!info["comments"].isEmpty())
         {
@@ -214,7 +214,7 @@ QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
 
     if(!latitude.isEmpty() && !longitude.isEmpty())
     {
-        kDebug() << "Latitude:" << latitude << "; longitude:" << longitude;
+        qCDebug(KIPIPLUGINS_LOG) << "Latitude:" << latitude << "; longitude:" << longitude;
         text.append("{{Coord").append("|").append(latitude).append("|").append(longitude).append("}}\n");
     }
 

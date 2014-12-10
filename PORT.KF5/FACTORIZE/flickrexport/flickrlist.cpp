@@ -376,7 +376,7 @@ void FlickrList::slotAddImages(const KUrl::List& list)
 
         if (!found)
         {
-            kDebug() << "Insterting new item " << imageUrl.fileName();
+            qCDebug(KIPIPLUGINS_LOG) << "Insterting new item " << imageUrl.fileName();
             new FlickrListViewItem(listView(), imageUrl, m_is23,
                                    isPublic, isFamily, isFriends,
                                    safetyLevel, contentType);
@@ -522,7 +522,7 @@ void FlickrListViewItem::setPublic(bool status)
         setCheckState(FlickrList::PUBLIC, Qt::Unchecked);
     }
 
-    kDebug() << "Public status set to" << m_public;
+    qCDebug(KIPIPLUGINS_LOG) << "Public status set to" << m_public;
 }
 
 void FlickrListViewItem::setFamily(bool status)
@@ -535,7 +535,7 @@ void FlickrListViewItem::setFamily(bool status)
         setCheckState(FlickrList::FAMILY, m_family ? Qt::Checked : Qt::Unchecked);
     }
 
-    kDebug() << "Family status set to" << m_family;
+    qCDebug(KIPIPLUGINS_LOG) << "Family status set to" << m_family;
 }
 
 void FlickrListViewItem::setFriends(bool status)
@@ -548,21 +548,21 @@ void FlickrListViewItem::setFriends(bool status)
         setCheckState(FlickrList::FRIENDS, m_friends ? Qt::Checked : Qt::Unchecked);
     }
 
-    kDebug() << "Friends status set to" << m_friends;
+    qCDebug(KIPIPLUGINS_LOG) << "Friends status set to" << m_friends;
 }
 
 void FlickrListViewItem::setSafetyLevel(FlickrList::SafetyLevel safetyLevel)
 {
     m_safetyLevel = safetyLevel;
     setData(FlickrList::SAFETYLEVEL, Qt::DisplayRole, QVariant(safetyLevel));
-    kDebug() << "Safety level set to" << safetyLevel;
+    qCDebug(KIPIPLUGINS_LOG) << "Safety level set to" << safetyLevel;
 }
 
 void FlickrListViewItem::setContentType(FlickrList::ContentType contentType)
 {
     m_contentType = contentType;
     setData(FlickrList::CONTENTTYPE, Qt::DisplayRole, QVariant(contentType));
-    kDebug() << "Content type set to" << contentType;
+    qCDebug(KIPIPLUGINS_LOG) << "Content type set to" << contentType;
 }
 
 bool FlickrListViewItem::isPublic() const

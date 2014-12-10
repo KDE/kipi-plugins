@@ -216,7 +216,7 @@ void JAlbumWindow::slotNewAlbum()
     {
         KMessageBox::information(this,
                  i18n("Failed to create album directory"));
-        kDebug() << "Failed to create album directory";
+        qCDebug(KIPIPLUGINS_LOG) << "Failed to create album directory";
         return;
     }
 
@@ -227,7 +227,7 @@ void JAlbumWindow::slotNewAlbum()
     {
         KMessageBox::information(this,
                 i18n("Could not open 'albumfiles.txt' for writing"));
-        kDebug() << "Could not open 'albumfiles.txt' for writing";
+        qCDebug(KIPIPLUGINS_LOG) << "Could not open 'albumfiles.txt' for writing";
         return;
     }
 
@@ -245,7 +245,7 @@ void JAlbumWindow::slotNewAlbum()
     {
         KMessageBox::information(this,
                 i18n("Could not open 'jalbum-settings.jap' for writing"));
-        kDebug() << "Could not open 'jalbum-settings.jap' for writing";
+        qCDebug(KIPIPLUGINS_LOG) << "Could not open 'jalbum-settings.jap' for writing";
         return;
     }
 

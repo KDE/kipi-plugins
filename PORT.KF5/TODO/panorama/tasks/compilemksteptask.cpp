@@ -84,7 +84,7 @@ void CompileMKStepTask::run()
     args << mkFile;
 
     process->setProgram(args);
-    kDebug() << "make command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "make command line: " << process->program();
 
     process->start();
 
@@ -94,7 +94,7 @@ void CompileMKStepTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "make job's output (" << mkFile << "):" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "make job's output (" << mkFile << "):" << endl << process->readAll();
 
     successFlag = true;
     return;

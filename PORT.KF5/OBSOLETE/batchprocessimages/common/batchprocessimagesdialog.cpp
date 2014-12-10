@@ -606,7 +606,7 @@ void BatchProcessImagesDialog::slotFinished()
     }
 
     int ValRet = m_ProcessusProc->exitCode();
-    kWarning() << "Convert exit (" << ValRet << ")";
+    qCWarning(KIPIPLUGINS_LOG) << "Convert exit (" << ValRet << ")";
 
     switch (ValRet)
     {
@@ -718,7 +718,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
 
 void BatchProcessImagesDialog::slotPreview()
 {
-    kDebug() << "BatchProcessImagesDialog::slotPreview";
+    qCDebug(KIPIPLUGINS_LOG) << "BatchProcessImagesDialog::slotPreview";
 
     if (m_listFiles->currentItem() == 0)
     {
@@ -782,7 +782,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
     int ValRet                   = m_PreviewProc->exitCode();
 
-    kDebug() << "Convert exit (" << ValRet << ")";
+    qCDebug(KIPIPLUGINS_LOG) << "Convert exit (" << ValRet << ")";
 
     if (ValRet == 0)
     {
@@ -934,7 +934,7 @@ int BatchProcessImagesDialog::overwriteMode()
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
-    kDebug() << "BatchProcessImagesDialog::processAborted";
+    qCDebug(KIPIPLUGINS_LOG) << "BatchProcessImagesDialog::processAborted";
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
     m_listFiles->scrollToItem(m_listFiles->currentItem());

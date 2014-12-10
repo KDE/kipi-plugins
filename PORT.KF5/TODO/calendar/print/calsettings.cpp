@@ -210,18 +210,18 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 {
     if (url.isEmpty())
     {
-        kDebug() << "Loading calendar from file failed: No valid url provided!";
+        qCDebug(KIPIPLUGINS_LOG) << "Loading calendar from file failed: No valid url provided!";
         return;
     }
 
     KCalCore::MemoryCalendar::Ptr memCal(new KCalCore::MemoryCalendar("UTC"));
     KCalCore::FileStorage::Ptr fileStorage(new KCalCore::FileStorage(memCal, url.path(), new KCalCore::ICalFormat));
 
-    kDebug() << "Loading calendar from file " << url.path();
+    qCDebug(KIPIPLUGINS_LOG) << "Loading calendar from file " << url.path();
 
     if (!fileStorage->load())
     {
-        kDebug() << "Failed!";
+        qCDebug(KIPIPLUGINS_LOG) << "Failed!";
     }
     else
     {
@@ -238,7 +238,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 
         foreach(const KCalCore::Event::Ptr event, list)
         {
-            kDebug() << event->summary() << endl << "--------";
+            qCDebug(KIPIPLUGINS_LOG) << event->summary() << endl << "--------";
             counter++;
 
             if (event->recurs())
@@ -258,7 +258,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
             }
         }
 
-        kDebug() << "Loaded " << counter << " events";
+        qCDebug(KIPIPLUGINS_LOG) << "Loaded " << counter << " events";
         memCal->close();
         fileStorage->close();
     }

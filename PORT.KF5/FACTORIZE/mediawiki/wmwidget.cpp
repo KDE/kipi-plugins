@@ -606,7 +606,7 @@ WmWidget::~WmWidget()
 
 void WmWidget::readSettings(KConfigGroup& group)
 {
-    kDebug() <<  "Read settings from" << group.name();
+    qCDebug(KIPIPLUGINS_LOG) <<  "Read settings from" << group.name();
 
 #if KDCRAW_VERSION >= 0x020000
     d->settingsExpander->readSettings(group);
@@ -632,7 +632,7 @@ void WmWidget::readSettings(KConfigGroup& group)
     d->WikisHistory = group.readEntry("Wikis history",         QStringList());
     d->UrlsHistory  = group.readEntry("Urls history",          QStringList());
 
-    kDebug() <<  "UrlHistory.size: " << d->UrlsHistory.size() << "; WikisHistory.size:" << d->WikisHistory.size();
+    qCDebug(KIPIPLUGINS_LOG) <<  "UrlHistory.size: " << d->UrlsHistory.size() << "; WikisHistory.size:" << d->WikisHistory.size();
 
     for(int i = 0 ; i < d->UrlsHistory.size() && i < d->WikisHistory.size() ; i++)
     {
@@ -642,7 +642,7 @@ void WmWidget::readSettings(KConfigGroup& group)
 
 void WmWidget::saveSettings(KConfigGroup& group)
 {
-    kDebug() <<  "Save settings to" << group.name();
+    qCDebug(KIPIPLUGINS_LOG) <<  "Save settings to" << group.name();
 
 #if KDCRAW_VERSION >= 0x020000
     d->settingsExpander->writeSettings(group);
@@ -858,13 +858,13 @@ void WmWidget::slotRemoveImagesDesc(const KUrl::List urls)
     {
         QString path = (*it).path();
         d->imagesDescInfo.remove(path);
-        kDebug() << "Remove" << path << "; new length:" << d->imagesDescInfo.size();
+        qCDebug(KIPIPLUGINS_LOG) << "Remove" << path << "; new length:" << d->imagesDescInfo.size();
     }
 }
 
 void WmWidget::slotRestoreExtension()
 {
-    kDebug() << "RestoreExtension";
+    qCDebug(KIPIPLUGINS_LOG) << "RestoreExtension";
 
     QString imageTitle;
     QString originalExtension;
@@ -895,7 +895,7 @@ void WmWidget::slotRestoreExtension()
             d->titleEdit->setText(imageTitle);
         }
 
-        kDebug() << urls.at(i).path() << "renamed to" << imageTitle;
+        qCDebug(KIPIPLUGINS_LOG) << urls.at(i).path() << "renamed to" << imageTitle;
         imageMetaData["title"]               = imageTitle;
         d->imagesDescInfo[urls.at(i).path()] = imageMetaData;
     }
@@ -903,7 +903,7 @@ void WmWidget::slotRestoreExtension()
 
 void WmWidget::slotApplyTitle()
 {
-    kDebug() << "ApplyTitle";
+    qCDebug(KIPIPLUGINS_LOG) << "ApplyTitle";
 
     QString givenTitle = title();
     QString imageTitle;
@@ -942,7 +942,7 @@ void WmWidget::slotApplyTitle()
             imageTitle.replace(imageTitle.indexOf("#"), 1, number);
         }
 
-        kDebug() << urls.at(i).path() << "renamed to" << imageTitle;
+        qCDebug(KIPIPLUGINS_LOG) << urls.at(i).path() << "renamed to" << imageTitle;
         imageMetaData["title"]               = imageTitle;
         d->imagesDescInfo[urls.at(i).path()] = imageMetaData;
     }
@@ -1070,103 +1070,103 @@ QMap <QString,QMap <QString,QString> > WmWidget::allImagesDesc()
 
 QString WmWidget::author() const
 {
-    kDebug() << "WmWidget::author()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::author()";
     return d->authorEdit->text();
 }
 
 QString WmWidget::source() const
 {
-    kDebug() << "WmWidget::source()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::source()";
     return d->sourceEdit->text();
 }
 
 QString WmWidget::genCategories() const
 {
-    kDebug() << "WmWidget::genCategories()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::genCategories()";
     return d->genCatEdit->toPlainText();
 }
 
 QString WmWidget::genText() const
 {
-    kDebug() << "WmWidget::genText()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::genText()";
     return d->genTxtEdit->toPlainText();
 }
 
 QString WmWidget::genComments() const
 {
-    kDebug() << "WmWidget::genComments()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::genComments()";
     return d->genComEdit->toPlainText();
 }
 
 int WmWidget::quality() const
 {
-    kDebug() << "WmWidget::quality()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::quality()";
     return d->imageQualitySpB->value();
 }
 
 int WmWidget::dimension() const
 {
-    kDebug() << "WmWidget::dimension()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::dimension()";
     return d->dimensionSpB->value();
 }
 
 bool WmWidget::resize() const
 {
-    kDebug() << "WmWidget::resize()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::resize()";
     return d->resizeChB->isChecked();
 }
 
 bool WmWidget::removeMeta() const
 {
-    kDebug() << "WmWidget::removeMeta()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::removeMeta()";
     return d->removeMetaChB->isChecked();
 }
 
 bool WmWidget::removeGeo() const
 {
-    kDebug() << "WmWidget::removeGeo()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::removeGeo()";
     return d->removeGeoChB->isChecked();
 }
 
 QString WmWidget::license() const
 {
-    kDebug() << "WmWidget::license()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::license()";
     return d->licenseComboBox->itemData(d->licenseComboBox->currentIndex()).toString();
 }
 
 QString WmWidget::title() const
 {
-    kDebug() << "WmWidget::title()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::title()";
     return d->titleEdit->text();
 }
 
 QString WmWidget::categories() const
 {
-    kDebug() << "WmWidget::categories()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::categories()";
     return d->categoryEdit->toPlainText();
 }
 
 QString WmWidget::description() const
 {
-    kDebug() << "WmWidget::description()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::description()";
     return d->descEdit->toPlainText();
 }
 
 QString WmWidget::date() const
 {
-    kDebug() << "WmWidget::date()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::date()";
     return d->dateEdit->text();
 }
 
 QString WmWidget::latitude() const
 {
-    kDebug() << "WmWidget::latitude()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::latitude()";
     return d->latitudeEdit->text();
 }
 
 QString WmWidget::longitude() const
 {
-    kDebug() << "WmWidget::longitude()";
+    qCDebug(KIPIPLUGINS_LOG) << "WmWidget::longitude()";
     return d->longitudeEdit->text();
 }
 

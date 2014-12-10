@@ -186,7 +186,7 @@ void SwConnector::setupRequest(KIO::TransferJob* const job, const QString& reque
 
 void SwConnector::getRestServiceURL()
 {
-    kDebug() << "getRestServiceURL: " << endl;
+    qCDebug(KIPIPLUGINS_LOG) << "getRestServiceURL: " << endl;
 
     if (m_job)
     {
@@ -215,7 +215,7 @@ void SwConnector::getRestServiceURL()
 
 void SwConnector::slotRequestRestURLRedirection(KIO::Job* job, const KUrl& newUrl)
 {
-    kDebug() << "slotRequestRestURLRedirection: " << newUrl.prettyUrl() << endl;
+    qCDebug(KIPIPLUGINS_LOG) << "slotRequestRestURLRedirection: " << newUrl.prettyUrl() << endl;
 
     // we need to submit the data differently to the new url
     // so we must kill the existing job to prevent internal redirection
@@ -258,7 +258,7 @@ void SwConnector::listAlbums()
 
 void SwConnector::createAlbum(const SwAlbum& album)
 {
-    kDebug() << "createAlbum" << endl;
+    qCDebug(KIPIPLUGINS_LOG) << "createAlbum" << endl;
 
     emit signalBusy(true);
 
@@ -281,7 +281,7 @@ void SwConnector::createAlbum(const SwAlbum& album)
 
 bool SwConnector::addPhoto(const QString& imgPath, long long albumID, const QString& /*caption*/)
 {
-    kDebug() << "addPhoto" << endl;
+    qCDebug(KIPIPLUGINS_LOG) << "addPhoto" << endl;
 
     emit signalBusy(true);
 
@@ -341,7 +341,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* const job, const QByteArray& d
     // check for transfer errors
     if (job->error())
     {
-        kDebug() << "getResponseDoc: job error"  << endl;
+        qCDebug(KIPIPLUGINS_LOG) << "getResponseDoc: job error"  << endl;
         // show error message
         job->ui()->setWindow(m_parent);
         job->ui()->showErrorMessage();
@@ -356,7 +356,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* const job, const QByteArray& d
     if (!doc.setContent(data))
     {
         // not XML data!
-        kDebug() << "getResponseDoc: response data is not XML"  << endl;
+        qCDebug(KIPIPLUGINS_LOG) << "getResponseDoc: response data is not XML"  << endl;
         return failureDocElem;
     }
 
@@ -365,7 +365,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* const job, const QByteArray& d
     if (docElem.tagName() != "resp")
     {
         // unexpected xml content
-        kDebug() << "getResponseDoc: unexpected xml content"  << endl;
+        qCDebug(KIPIPLUGINS_LOG) << "getResponseDoc: unexpected xml content"  << endl;
         return failureDocElem;
     }
 
@@ -375,7 +375,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* const job, const QByteArray& d
     {
         QDomNode errorNode = docElem.firstChild();
         QString errorCode  = errorNode.toElement().attribute("code");
-        kDebug() << "getResponseDoc: service error: " << errorCode << endl;
+        qCDebug(KIPIPLUGINS_LOG) << "getResponseDoc: service error: " << errorCode << endl;
         // more work needed...
 
         // application level error
@@ -402,13 +402,13 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* const job, const QByteArray& d
     }
 
     // response is valid, handler will use data.
-    kDebug() << "getResponseDoc: valid response: " << data << endl;
+    qCDebug(KIPIPLUGINS_LOG) << "getResponseDoc: valid response: " << data << endl;
     return docElem;
 }
 
 void SwConnector::requestRestURLResultHandler(KIO::Job* const job, const QByteArray& data)
 {
-    kDebug() << "requestRestURLResultHandler: " << endl;
+    qCDebug(KIPIPLUGINS_LOG) << "requestRestURLResultHandler: " << endl;
 
     QDomElement docElem = getResponseDoc(job, data);
 
@@ -436,7 +436,7 @@ void SwConnector::requestRestURLResultHandler(KIO::Job* const job, const QByteAr
         {
             m_apiDomainURL = rx.cap(1);
             m_apiRestPath  = rx.cap(2);
-            kDebug() << "requestRestURLResultHandler: " << m_apiDomainURL << m_apiRestPath << endl;
+            qCDebug(KIPIPLUGINS_LOG) << "requestRestURLResultHandler: " << m_apiDomainURL << m_apiRestPath << endl;
             emit signalBusy(false);
             emit signalRequestRestURLDone(0, "");
             return;

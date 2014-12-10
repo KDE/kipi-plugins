@@ -297,7 +297,7 @@ void SlideShowKB::setNewKBEffect()
             break;
 
         default:
-            kDebug() << "Unknown transition effect, falling back to crossfade";
+            qCDebug(KIPIPLUGINS_LOG) << "Unknown transition effect, falling back to crossfade";
             m_effect = new BlendKBEffect(this, needFadeIn);
             break;
     }

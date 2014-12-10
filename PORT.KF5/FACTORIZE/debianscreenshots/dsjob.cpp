@@ -78,7 +78,7 @@ void DebianScreenshotsJob::start()
 //     cfgGroup.writeEntry("Expires", talk.getSessionExpires());
 //     cfgGroup.sync();
 //     
-//     kDebug() << "logged in" << talk.getSessionExpires();
+//     qCDebug(KIPIPLUGINS_LOG) << "logged in" << talk.getSessionExpires();
 //     talk.listAlbums();
 //}
 
@@ -117,7 +117,7 @@ void DebianScreenshotsJob::start()
 //         addPhoto(0, QString());
 //     }
 //     
-//     kDebug() << "listed" << id;
+//     qCDebug(KIPIPLUGINS_LOG) << "listed" << id;
 //}
 
 void DebianScreenshotsJob::addScreenshot(int code, const QString& message)

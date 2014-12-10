@@ -149,7 +149,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
 
-    kDebug() << "Added file " << path << " with detected mime type " << mime;
+    qCDebug(KIPIPLUGINS_LOG) << "Added file " << path << " with detected mime type " << mime;
 
     return true;
 }

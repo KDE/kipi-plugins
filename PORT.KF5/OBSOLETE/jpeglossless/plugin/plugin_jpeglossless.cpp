@@ -125,7 +125,7 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
 
     if (!iface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -380,7 +380,7 @@ void Plugin_JPEGLossless::slotCancel()
 
     if ( !interface )
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -411,7 +411,7 @@ void Plugin_JPEGLossless::slotStarting(const KUrl& url, int action)
         }
         default:
         {
-            kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
+            qCWarning(KIPIPLUGINS_LOG) << "KIPIJPEGLossLessPlugin: Unknown event";
             break;
         }
     }
@@ -444,7 +444,7 @@ void Plugin_JPEGLossless::slotFinished(const KUrl& url, int action)
         }
         default:
         {
-            kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
+            qCWarning(KIPIPLUGINS_LOG) << "KIPIJPEGLossLessPlugin: Unknown event";
             break;
         }
     }
@@ -480,7 +480,7 @@ void Plugin_JPEGLossless::slotFailed(const KUrl& url, int action, const QString&
         }
         default:
         {
-            kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
+            qCWarning(KIPIPLUGINS_LOG) << "KIPIJPEGLossLessPlugin: Unknown event";
             break;
         }
     }
@@ -520,7 +520,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
         if ( !interface )
         {
-           kError() << "Kipi interface is null!";
+           qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
            return;
         }
 
@@ -534,7 +534,7 @@ KUrl::List Plugin_JPEGLossless::images()
 
     if ( !interface )
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return KUrl::List();
     }
 

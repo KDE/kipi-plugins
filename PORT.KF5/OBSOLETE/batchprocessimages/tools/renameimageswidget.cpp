@@ -159,7 +159,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget* parent, KIPI::Interface* interfa
     connect(m_interface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
             this, SLOT(slotGotPreview(KUrl,QPixmap)));
 
-    kDebug() << m_urlList;
+    qCDebug(KIPIPLUGINS_LOG) << m_urlList;
     for (KUrl::List::iterator it = m_urlList.begin();
             it != m_urlList.end(); ++it)
     {

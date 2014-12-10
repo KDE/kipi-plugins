@@ -264,7 +264,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
         path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(path);
-        kDebug() << "Resizing and saving to temp file: " << path ;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path ;
 
         // Restore all metadata.
         KPMetadata meta;
@@ -277,7 +277,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         }
         else
         {
-            kWarning() << "Image " << photoPath << " has no exif data";
+            qCWarning(KIPIPLUGINS_LOG) << "Image " << photoPath << " has no exif data";
         }
     }
 
@@ -668,11 +668,11 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
                 if (key == "status")      // key == "status" NOT FOUND!!!
                 {
                     success = (value == "0");
-                    kWarning() << "Create Album. success: " << success ;
+                    qCWarning(KIPIPLUGINS_LOG) << "Create Album. success: " << success ;
                 }
                 else if (key.startsWith(QLatin1String(("status_text"))))
                 {
-                    kDebug() << "STATUS: Create Album: " << value ;
+                    qCDebug(KIPIPLUGINS_LOG) << "STATUS: Create Album: " << value ;
                 }
             }
         }
@@ -725,11 +725,11 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray& data)
                 if (key == "status")
                 {
                     success = (value == "0");
-                    kWarning() << "Add photo. success: " << success ;
+                    qCWarning(KIPIPLUGINS_LOG) << "Add photo. success: " << success ;
                 }
                 else if (key.startsWith(QLatin1String(("status_text"))))
                 {
-                    kDebug() << "STATUS: Add Photo: " << value ;
+                    qCDebug(KIPIPLUGINS_LOG) << "STATUS: Add Photo: " << value ;
                 }
             }
         }

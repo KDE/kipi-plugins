@@ -34,11 +34,8 @@
 // KDE includes
 
 #include <kcolorbutton.h>
-#include <khbox.h>
 #include <klocalizedstring.h>
-#include <kvbox.h>
 #include <kstandarddirs.h>
-#include <kdebug.h>
 #include <kiconloader.h>
 
 // Libkdcraw includes
@@ -46,9 +43,10 @@
 #include <rwidgetutils.h>
 #include <rnuminput.h>
 
-//Local includes
+// Local includes
 
 #include "simpleviewer.h"
+#include "kipiplugins_debug.h"
 
 using namespace KDcrawIface;
 
@@ -488,7 +486,7 @@ void LookPage::setPageContent(int plugType)
         }
 
         default:
-            kDebug() << "Unknown plugin type";
+            qCDebug(KIPIPLUGINS_LOG) << "Unknown plugin type";
             break;
     }
 

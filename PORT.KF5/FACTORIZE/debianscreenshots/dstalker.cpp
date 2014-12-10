@@ -71,7 +71,7 @@ DsTalker::~DsTalker()
 bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
                              const QString& packageVersion, const QString& description)
 {
-    kDebug() << "Adding screenshot " << imgPath << " to package "
+    qCDebug(KIPIPLUGINS_LOG) << "Adding screenshot " << imgPath << " to package "
              << packageName << " " << packageVersion<< " using description '" << description << "'";
 
     if (m_job)
@@ -89,7 +89,7 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
     form.addFile(imgPath, imgPath, "file");
     form.finish();
 
-    kDebug() << "FORM: " << endl << form.formData();
+    qCDebug(KIPIPLUGINS_LOG) << "FORM: " << endl << form.formData();
 
     KIO::TransferJob* const job = KIO::http_post(m_uploadUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
@@ -108,7 +108,7 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
 
  void DsTalker::data(KIO::Job*, const QByteArray& data)
  {
-     kDebug() << Q_FUNC_INFO;
+     qCDebug(KIPIPLUGINS_LOG) << Q_FUNC_INFO;
 
      if (data.isEmpty())
      {
@@ -135,7 +135,7 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
 
 //     else
 //     {
-//         kDebug() << "Uploaded successfully screenshot " << job->queryMetaData("Screenshot")
+//         qCDebug(KIPIPLUGINS_LOG) << "Uploaded successfully screenshot " << job->queryMetaData("Screenshot")
 //                  << " to Debian Screenshots for package " << job->queryMetaData("Package")
 //                  << " " << job->queryMetaData("Version")
 //                  << " with description " << job->queryMetaData("Description");

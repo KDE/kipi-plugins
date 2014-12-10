@@ -98,7 +98,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 
     if(!m_interface)
     {
-        kError() << "KIPI interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "KIPI interface is null!";
         return;
     }
 
@@ -130,7 +130,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
 {
     if (!interface())
     {
-        kError() << "Kipi m_interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi m_interface is null!";
         return;
     }
 
@@ -167,7 +167,7 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 
     if (!m_interface)
     {
-        kError() << "Kipi m_interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi m_interface is null!";
         m_actionSlideShow->setEnabled(false);
         return;
     }
@@ -176,7 +176,7 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 
     if (!currAlbum.isValid())
     {
-        kError() << "Current image collection is not valid.";
+        qCCritical(KIPIPLUGINS_LOG) << "Current image collection is not valid.";
         m_actionSlideShow->setEnabled(false);
         return;
     }
@@ -188,7 +188,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 {
     if (!m_interface)
     {
-        kError() << "Kipi m_interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi m_interface is null!";
         return;
     }
 

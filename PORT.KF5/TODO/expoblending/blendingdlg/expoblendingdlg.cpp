@@ -461,7 +461,7 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
         }
     }
 
-    kDebug() << "Renaming " << temp << " to " << newUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Renaming " << temp << " to " << newUrl;
 
     if (!newUrl.isEmpty())
     {
@@ -523,7 +523,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
             }
             default:
             {
-                kWarning() << "Unknown action";
+                qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                 break;
             }
         }
@@ -569,7 +569,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                     break;
                 }
             }
@@ -606,7 +606,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                     break;
                 }
             }

@@ -225,7 +225,7 @@ void Wizard::getDirectoriesFromCollection()
 
     foreach(ImageCollection images, d->collectionSelector->selectedImageCollections())
     {
-        kDebug() << images.path().path();
+        qCDebug(KIPIPLUGINS_LOG) << images.path().path();
         d->directories << images.path().path();
     }
 

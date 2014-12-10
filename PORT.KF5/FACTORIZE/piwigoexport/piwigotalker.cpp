@@ -186,7 +186,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
     m_md5sum  = computeMD5Sum(mediaPath);
 
-    kDebug() << mediaPath << " " << m_md5sum.toHex();
+    qCDebug(KIPIPLUGINS_LOG) << mediaPath << " " << m_md5sum.toHex();
 
     if (mediaPath.endsWith(".mp4") || mediaPath.endsWith(".MP4") ||
         mediaPath.endsWith(".ogg") || mediaPath.endsWith(".OGG") ||
@@ -211,7 +211,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
         if (!rescale)
         {
-            kDebug() << "Upload the original version: " << m_path;
+            qCDebug(KIPIPLUGINS_LOG) << "Upload the original version: " << m_path;
         } else {
             // Rescale the image
             if (image.width() > maxWidth || image.height() > maxHeight)
@@ -222,7 +222,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
             m_path = m_tmpPath = KStandardDirs::locateLocal("tmp", KUrl(mediaPath).fileName());
             image.save(m_path, "JPEG", quality);
 
-            kDebug() << "Upload a resized version: " << m_path ;
+            qCDebug(KIPIPLUGINS_LOG) << "Upload a resized version: " << m_path ;
 
             // Restore all metadata with EXIF
             // in the resized version
@@ -235,7 +235,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
             }
             else
             {
-                kDebug() << "Image " << mediaPath << " has no exif data";
+                qCDebug(KIPIPLUGINS_LOG) << "Image " << mediaPath << " has no exif data";
             }
         }
     }
@@ -264,10 +264,10 @@ bool PiwigoTalker::addPhoto(int   albumId,
     if (info.hasDate())
         m_date = info.date();
 
-    kDebug() << "Title: " << m_title;
-    kDebug() << "Comment: " << m_comment;
-    kDebug() << "Author: " << m_author;
-    kDebug() << "Date: " << m_date;
+    qCDebug(KIPIPLUGINS_LOG) << "Title: " << m_title;
+    qCDebug(KIPIPLUGINS_LOG) << "Comment: " << m_comment;
+    qCDebug(KIPIPLUGINS_LOG) << "Author: " << m_author;
+    qCDebug(KIPIPLUGINS_LOG) << "Date: " << m_date;
 
     QStringList qsl;
     qsl.append("method=pwg.images.exist");
@@ -312,11 +312,11 @@ void PiwigoTalker::slotResult(KJob* job)
         if (state == GE_LOGIN)
         {
             emit signalLoginFailed(tempjob->errorString());
-            kDebug() << tempjob->errorString();
+            qCDebug(KIPIPLUGINS_LOG) << tempjob->errorString();
         }
         else if (state == GE_GETVERSION)
         {
-            kDebug() << tempjob->errorString();
+            qCDebug(KIPIPLUGINS_LOG) << tempjob->errorString();
             // Version isn't mandatory and errors can be ignored
             // As login succeeded, albums can be listed
             listAlbums();
@@ -390,7 +390,7 @@ void PiwigoTalker::parseResponseLogin(const QByteArray& data)
     bool foundResponse = false;
     m_loggedIn         = false;
 
-    kDebug() << "parseResponseLogin: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseLogin: " << QString(data);
 
     while (!ts.atEnd())
     {
@@ -447,7 +447,7 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
 
     bool foundResponse = false;
 
-    kDebug() << "parseResponseGetVersion: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseGetVersion: " << QString(data);
 
     while (!ts.atEnd())
     {
@@ -465,14 +465,14 @@ void PiwigoTalker::parseResponseGetVersion(const QByteArray& data)
                 {
                     QStringList qsl = verrx.capturedTexts();
                     m_version       = qsl[1].toInt() * 10 + qsl[2].toInt();
-                    kDebug() << "Version: " << m_version;
+                    qCDebug(KIPIPLUGINS_LOG) << "Version: " << m_version;
                     break;
                 }
             }
         }
     }
 
-    kDebug() << "foundResponse : " << foundResponse;
+    qCDebug(KIPIPLUGINS_LOG) << "foundResponse : " << foundResponse;
 
     if (m_version < PIWIGO_VER_2_4)
     {
@@ -495,7 +495,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
     GAlbumList albumList;
     GAlbumList::iterator iter = albumList.begin();
 
-    kDebug() << "parseResponseListAlbums";
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseListAlbums";
 
     while (!ts.atEnd())
     {
@@ -522,7 +522,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
                 album.ref_num = ts.attributes().value("id").toString().toInt();
                 album.parent_ref_num = -1;
 
-                kDebug() << album.ref_num << "\n";
+                qCDebug(KIPIPLUGINS_LOG) << album.ref_num << "\n";
 
                 iter = albumList.insert(iter, album);
             }
@@ -530,7 +530,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
             if (ts.name() == "name")
             {
                 (*iter).name = ts.readElementText();
-                kDebug() << (*iter).name << "\n";
+                qCDebug(KIPIPLUGINS_LOG) << (*iter).name << "\n";
             }
 
             if (ts.name() == "uppercats")
@@ -541,7 +541,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
                 if (catlist.size() > 1 && catlist.at(catlist.size() - 2).toInt() != (*iter).ref_num)
                 {
                     (*iter).parent_ref_num = catlist.at(catlist.size() - 2).toInt();
-                    kDebug() << (*iter).parent_ref_num << "\n";
+                    qCDebug(KIPIPLUGINS_LOG) << (*iter).parent_ref_num << "\n";
                 }
             }
         }
@@ -575,7 +575,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
     bool foundResponse = false;
     bool success       = false;
 
-    kDebug() << "parseResponseDoesPhotoExist: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseDoesPhotoExist: " << QString(data);
 
     while (!ts.atEnd())
     {
@@ -602,7 +602,7 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
                 if (qsl[1] == QString(m_md5sum.toHex()))
                 {
                     m_photoId = qsl[2].toInt();
-                    kDebug() << "m_photoId: " << m_photoId;
+                    qCDebug(KIPIPLUGINS_LOG) << "m_photoId: " << m_photoId;
 
                     emit signalProgressInfo(i18n("Photo '%1' already exists.", m_title));
 
@@ -674,7 +674,7 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     bool success       = false;
     QList<int> categories;
 
-    kDebug() << "parseResponseGetInfo: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseGetInfo: " << QString(data);
 
     while (!ts.atEnd())
     {
@@ -699,7 +699,7 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
         }
     }
 
-    kDebug() << "success : " << success;
+    qCDebug(KIPIPLUGINS_LOG) << "success : " << success;
 
     if (!foundResponse)
     {
@@ -756,7 +756,7 @@ void PiwigoTalker::parseResponseSetInfo(const QByteArray& data)
     bool foundResponse = false;
     bool success       = false;
 
-    kDebug() << "parseResponseSetInfo: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseSetInfo: " << QString(data);
 
     while (!ts.atEnd())
     {
@@ -836,7 +836,7 @@ void PiwigoTalker::parseResponseAddPhotoChunk(const QByteArray& data)
     bool foundResponse = false;
     bool success       = false;
 
-    kDebug() << "parseResponseAddPhotoChunk: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseAddPhotoChunk: " << QString(data);
 
     while (!ts.atEnd())
     {
@@ -910,7 +910,7 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
     bool foundResponse = false;
     bool success       = false;
 
-    kDebug() << "parseResponseAddPhotoSummary: " << QString(data);
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseAddPhotoSummary: " << QString(data);
 
     while (!ts.atEnd())
     {

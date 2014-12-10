@@ -70,8 +70,8 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
         cameraGMTDateTime.setTimeSpec(Qt::UTC);
     }
 
-    kDebug() << "    photoDateTime: " << photoDateTime << photoDateTime.timeSpec();
-    kDebug() << "cameraGMTDateTime: " << cameraGMTDateTime << cameraGMTDateTime.timeSpec();
+    qCDebug(KIPIPLUGINS_LOG) << "    photoDateTime: " << photoDateTime << photoDateTime.timeSpec();
+    qCDebug(KIPIPLUGINS_LOG) << "cameraGMTDateTime: " << cameraGMTDateTime << cameraGMTDateTime.timeSpec();
 
     // We are trying to find the right date in the GPS points list.
     bool findItem = false;
@@ -84,8 +84,8 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
         // Camera GMT time and the GPS device GMT time.
 
         nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
-//         kDebug() << it.key() << cameraGMTDateTime << nbSecs;
-//         kDebug() << it.key().timeSpec() << cameraGMTDateTime.timeSpec() << nbSecs;
+//         qCDebug(KIPIPLUGINS_LOG) << it.key() << cameraGMTDateTime << nbSecs;
+//         qCDebug(KIPIPLUGINS_LOG) << it.key().timeSpec() << cameraGMTDateTime.timeSpec() << nbSecs;
 
         // We tring to find the minimal accuracy.
         if( nbSecs < maxGapTime && nbSecs < nbSecItem)

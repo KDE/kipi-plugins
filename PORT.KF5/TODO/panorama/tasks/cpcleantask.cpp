@@ -79,7 +79,7 @@ void CpCleanTask::run()
 
     process->setProgram(args);
 
-    kDebug() << "CPClean command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "CPClean command line: " << process->program();
 
     process->start();
 
@@ -89,7 +89,7 @@ void CpCleanTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "cpclean's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "cpclean's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

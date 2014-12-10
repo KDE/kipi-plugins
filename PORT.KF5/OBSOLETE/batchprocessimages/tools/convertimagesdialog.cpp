@@ -282,8 +282,8 @@ void ConvertImagesDialog::processDone()
             QString tgt = destinationUrl().path() + '/' + item->nameDest();
             QFileInfo fi(tgt);
 
-            kDebug() << src ;
-            kDebug() << tgt << fi.size();
+            qCDebug(KIPIPLUGINS_LOG) << src ;
+            qCDebug(KIPIPLUGINS_LOG) << tgt << fi.size();
 
             KPMetadata metaIn(src);
 

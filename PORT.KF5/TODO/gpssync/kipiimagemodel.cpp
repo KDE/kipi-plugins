@@ -97,7 +97,7 @@ QModelIndex KipiImageModel::index(int row, int column, const QModelIndex& parent
         Q_ASSERT(parent.model()==this);
     }
 
-//     kDebug()<<row<<column<<parent;
+//     qCDebug(KIPIPLUGINS_LOG)<<row<<column<<parent;
 
     if (parent.isValid())
     {
@@ -263,7 +263,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     const QString itemKeyString  = CacheKeyFromSizeAndUrl(size, imageItem->url());
     QPixmap thumbnailPixmap;
     const bool havePixmapInCache = d->pixmapCache->find(itemKeyString, thumbnailPixmap);
-//     kDebug()<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
+//     qCDebug(KIPIPLUGINS_LOG)<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
 
     if (havePixmapInCache)
         return thumbnailPixmap;
@@ -305,7 +305,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
 
 void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap)
 {
-    kDebug()<<url<<pixmap.size();
+    qCDebug(KIPIPLUGINS_LOG)<<url<<pixmap.size();
 
     if (pixmap.isNull())
         return;
@@ -314,7 +314,7 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
 
     // find the item corresponding to the URL:
     const QModelIndex imageIndex = indexFromUrl(url);
-    kDebug()<<url<<imageIndex.isValid();
+    qCDebug(KIPIPLUGINS_LOG)<<url<<imageIndex.isValid();
 
     if (imageIndex.isValid())
     {
@@ -335,7 +335,7 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
                 {
                     // match, send it out.
                     d->requestedPixmaps.removeAt(i);
-                    kDebug()<<i;
+                    qCDebug(KIPIPLUGINS_LOG)<<i;
 
                     // save the pixmap:
                     const QString itemKeyString = CacheKeyFromSizeAndUrl(effectiveSize, url);
@@ -356,7 +356,7 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
         {
             const int targetSize = openRequests.at(i).second;
             d->requestedPixmaps.removeAt(openRequests.at(i).first);
-            kDebug()<<i<<targetSize;
+            qCDebug(KIPIPLUGINS_LOG)<<i<<targetSize;
 
             QPixmap scaledPixmap = pixmap.scaled(targetSize, targetSize, Qt::KeepAspectRatio);
 
@@ -414,7 +414,7 @@ bool KipiImageSortProxyModel::lessThan(const QModelIndex& left, const QModelInde
 {
     if ((!left.isValid())||(!right.isValid()))
     {
-//         kDebug()<<"INVALID INDICES"<<left<<right;
+//         qCDebug(KIPIPLUGINS_LOG)<<"INVALID INDICES"<<left<<right;
         return false;
     }
 
@@ -422,7 +422,7 @@ bool KipiImageSortProxyModel::lessThan(const QModelIndex& left, const QModelInde
     const KipiImageItem* const itemLeft  = d->imageModel->itemFromIndex(left);
     const KipiImageItem* const itemRight = d->imageModel->itemFromIndex(right);
 
-//     kDebug()<<itemLeft<<itemRight<<column<<rowCount()<<d->imageModel->rowCount();
+//     qCDebug(KIPIPLUGINS_LOG)<<itemLeft<<itemRight<<column<<rowCount()<<d->imageModel->rowCount();
     return itemLeft->lessThan(itemRight, column);
 }
 

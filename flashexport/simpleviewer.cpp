@@ -38,7 +38,6 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kdebug.h>
 #include <kfilemetainfo.h>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
@@ -59,6 +58,7 @@
 #include "kpversion.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -132,7 +132,7 @@ SimpleViewer::~SimpleViewer()
 
 void SimpleViewer::appendPluginFiles(int pluginType)
 {
-    kDebug() << "Value of plugin type in append files" << pluginType;
+    qCDebug(KIPIPLUGINS_LOG) << "Value of plugin type in append files" << pluginType;
     switch(pluginType)
     {
         case 0:
@@ -141,7 +141,7 @@ void SimpleViewer::appendPluginFiles(int pluginType)
             d->simpleViewerFiles.append("web/svcore/js/swfobject.js");
                     d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/simpleviewer/", true);
                     d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/");
-                    kDebug() << "Data dir when set is " << d->dataDir;
+                    qCDebug(KIPIPLUGINS_LOG) << "Data dir when set is " << d->dataDir;
             break;
         case 1:
             d->simpleViewerFiles.clear();
@@ -172,7 +172,7 @@ void SimpleViewer::appendPluginFiles(int pluginType)
 void SimpleViewer::initProgressWdg() const
 {
     d->progressWdg = new KPBatchProgressWidget(QApplication::activeWindow());
-    kDebug() << "progress dialog initialized";
+    qCDebug(KIPIPLUGINS_LOG) << "progress dialog initialized";
 }
 
 void SimpleViewer::startExport()
@@ -180,7 +180,7 @@ void SimpleViewer::startExport()
     if(d->canceled)
         return;
 
-     kDebug() << "SimpleViewer started...";
+     qCDebug(KIPIPLUGINS_LOG) << "SimpleViewer started...";
     // Estimate the number of actions for the KIPIPlugins progress dialog.
     d->progressWdg->addedAction(i18n("Initialising..."), StartingMessage);
     d->totalActions    = 0;
@@ -288,7 +288,7 @@ bool SimpleViewer::createExportDirectories() const
     d->progressWdg->addedAction(i18n("Creating directories..."), StartingMessage);
 
     QUrl root = d->settings->exportUrl;
-    kDebug() << "export url is" << root.url();
+    qCDebug(KIPIPLUGINS_LOG) << "export url is" << root.url();
 
     auto mkdirJob = KIO::mkdir(root);
     KJobWidgets::setWindow(mkdirJob, QApplication::activeWindow());
@@ -320,7 +320,7 @@ bool SimpleViewer::createExportDirectories() const
     QUrl imagesDir = QUrl(d->tempDir->path());
 
 
-    kDebug() << "image folder url is" << imagesDir.url();
+    qCDebug(KIPIPLUGINS_LOG) << "image folder url is" << imagesDir.url();
 
     auto mkdirJob3 = KIO::mkdir(imagesDir);
     KJobWidgets::setWindow(mkdirJob3, QApplication::activeWindow());
@@ -761,7 +761,7 @@ bool SimpleViewer::createIndex() const
             if(indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
-                kDebug() << "No indexTemplateName" ;
+                qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
                 return false;
             }
 
@@ -791,7 +791,7 @@ bool SimpleViewer::createIndex() const
             if(indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
-                kDebug() << "No indexTemplateName" ;
+                qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
                 return false;
             }
 
@@ -821,7 +821,7 @@ bool SimpleViewer::createIndex() const
             if(indexTemplateName.isEmpty())
             {
             //TODO: errormsg
-                kDebug() << "No indexTemplateName" ;
+                qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
                 return false;
             }
 
@@ -863,7 +863,7 @@ bool SimpleViewer::createIndex() const
             if(indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
-                kDebug() << "No indexTemplateName" ;
+                qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
                 return false;
             }
 
@@ -908,7 +908,7 @@ bool SimpleViewer::copySimpleViewer() const
     QDir        dir;
 
     dir.setPath(d->dataDir);
-    kDebug() << "Data dir is " << d->dataDir; 
+    qCDebug(KIPIPLUGINS_LOG) << "Data dir is " << d->dataDir; 
     entries = dir.entryList(QDir::Files);
     for(QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
@@ -958,7 +958,7 @@ bool SimpleViewer::openArchive(KZip& zip) const
 {
     if(!zip.open(QIODevice::ReadOnly))
     {
-        kDebug() << "Open archive failed\n";
+        qCDebug(KIPIPLUGINS_LOG) << "Open archive failed\n";
         return false;
     }
     return true;
@@ -970,8 +970,8 @@ bool SimpleViewer::extractArchive(KZip& zip) const
     QStringList names = zip.directory()->entries();
     if(names.count() != 1)
     {
-        kDebug() << "Wrong SimpleViewer Version or corrupted archive" ;
-        kDebug() << "Content of the archive root folder" << names ;
+        qCDebug(KIPIPLUGINS_LOG) << "Wrong SimpleViewer Version or corrupted archive" ;
+        qCDebug(KIPIPLUGINS_LOG) << "Content of the archive root folder" << names ;
         return false;
     }
 
@@ -979,7 +979,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
     const KArchiveEntry* root = zip.directory()->entry(names[0]);
     if(!root || !root->isDirectory())
     {
-        kDebug() << "could not open " << names[0] << " of zipname" ;
+        qCDebug(KIPIPLUGINS_LOG) << "could not open " << names[0] << " of zipname" ;
         return false;
     }
 
@@ -993,7 +993,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
         if(!extractFile(entry))
         {
             //TODO error msg
-            kDebug() << "could not open " << *it << " of zipname" ;
+            qCDebug(KIPIPLUGINS_LOG) << "could not open " << *it << " of zipname" ;
             return false;
         }
     }
@@ -1035,7 +1035,7 @@ void SimpleViewer::setSettings(SimpleViewerSettingsContainer* const setting)
     d->settings = setting;
     d->canceled = false;
 
-    kDebug() << "Settings reached SimpleViewer";
+    qCDebug(KIPIPLUGINS_LOG) << "Settings reached SimpleViewer";
 }
 
 } // namespace KIPIFlashExportPlugin

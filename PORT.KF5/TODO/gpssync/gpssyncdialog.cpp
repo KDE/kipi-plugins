@@ -350,7 +350,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 //         if (d->buttonBox->buttonRole(testButton)==QDialogButtonBox::AcceptRole)
         {
             QPushButton* const pushButton = dynamic_cast<QPushButton*>(testButton);
-            kDebug() << pushButton << pushButton->isDefault();
+            qCDebug(KIPIPLUGINS_LOG) << pushButton << pushButton->isDefault();
 
             if (pushButton)
             {
@@ -650,7 +650,7 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
 
 void GPSSyncDialog::slotFileMetadataLoaded(int beginIndex, int endIndex)
 {
-    kDebug()<<beginIndex<<endIndex;
+    qCDebug(KIPIPLUGINS_LOG)<<beginIndex<<endIndex;
     d->fileIOCountDone += (endIndex-beginIndex);
     slotProgressChanged(d->fileIOCountDone);
 
@@ -1100,7 +1100,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
 
 void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
 {
-    kDebug() << beginIndex << endIndex;
+    qCDebug(KIPIPLUGINS_LOG) << beginIndex << endIndex;
 
     d->fileIOCountDone += (endIndex-beginIndex);
     slotProgressChanged(d->fileIOCountDone);

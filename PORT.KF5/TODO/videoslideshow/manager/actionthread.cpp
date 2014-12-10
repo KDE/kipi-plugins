@@ -384,7 +384,7 @@ void ActionThread::ProcessFrame(Frame* const frm)
 {
     if (!frm)
     {
-        kDebug() << "Frame to process is null";
+        qCDebug(KIPIPLUGINS_LOG) << "Frame to process is null";
         return;
     }
 

@@ -133,7 +133,7 @@ void KioExportWindow::reactivate()
 
 void KioExportWindow::restoreSettings()
 {
-    kDebug() <<  "pass here";
+    qCDebug(KIPIPLUGINS_LOG) <<  "pass here";
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
     m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QStringList()));
@@ -145,7 +145,7 @@ void KioExportWindow::restoreSettings()
 
 void KioExportWindow::saveSettings()
 {
-    kDebug() <<  "pass here";
+    qCDebug(KIPIPLUGINS_LOG) <<  "pass here";
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
     group.writeEntry(HISTORY_URL_PROPERTY, m_exportWidget->history().toStringList());
@@ -172,7 +172,7 @@ void KioExportWindow::updateUploadButton()
     bool listNotEmpty = !m_exportWidget->imagesList()->imageUrls().empty();
     enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
 
-    kDebug() << "Updated upload button with listNotEmpty = "
+    qCDebug(KIPIPLUGINS_LOG) << "Updated upload button with listNotEmpty = "
              << listNotEmpty << ", targetUrl().isValid() = "
              << m_exportWidget->targetUrl().isValid();
 }
@@ -186,7 +186,7 @@ void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
     Q_UNUSED(directory);
     Q_UNUSED(renamed);
 
-    kDebug() << "copied " << to.prettyUrl();
+    qCDebug(KIPIPLUGINS_LOG) << "copied " << to.prettyUrl();
 
     m_exportWidget->imagesList()->removeItemByUrl(from);
 }

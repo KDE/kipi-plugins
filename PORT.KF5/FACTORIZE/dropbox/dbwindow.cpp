@@ -241,7 +241,7 @@ void DBWindow::slotSetUserName(const QString& msg)
 void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
 {
     m_widget->m_albumsCoB->clear();
-    kDebug() << "slotListAlbumsDone1:" << list.size();
+    qCDebug(KIPIPLUGINS_LOG) << "slotListAlbumsDone1:" << list.size();
     
     for(int i=0;i<list.size();i++)
     {
@@ -334,11 +334,11 @@ void DBWindow::slotStartTransfer()
 
 void DBWindow::uploadNextPhoto()
 {
-    kDebug() << "in upload nextphoto " << m_transferQueue.count();
+    qCDebug(KIPIPLUGINS_LOG) << "in upload nextphoto " << m_transferQueue.count();
 
     if(m_transferQueue.isEmpty())
     {
-        kDebug() << "empty";
+        qCDebug(KIPIPLUGINS_LOG) << "empty";
         m_widget->progressBar()->progressCompleted();
         return;
     }
@@ -363,7 +363,7 @@ void DBWindow::slotAddPhotoFailed(const QString& msg)
     {
         m_transferQueue.clear();
         m_widget->progressBar()->hide();
-        kDebug() << "In slotAddPhotoFailed 1";
+        qCDebug(KIPIPLUGINS_LOG) << "In slotAddPhotoFailed 1";
         // refresh the thumbnails
         //slotTagSelected();
     }
@@ -399,7 +399,7 @@ void DBWindow::slotNewAlbumRequest()
     {
         DBFolder newFolder;
         m_albumDlg->getFolderTitle(newFolder);
-        kDebug() << "in slotNewAlbumRequest() " << newFolder.title;
+        qCDebug(KIPIPLUGINS_LOG) << "in slotNewAlbumRequest() " << newFolder.title;
         m_currentAlbumName = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
         QString temp = m_currentAlbumName + newFolder.title;
         m_talker->createFolder(temp);
@@ -427,7 +427,7 @@ void DBWindow::slotAccessTokenFailed()
 
 void DBWindow::slotAccessTokenObtained(const QString& msg1,const QString& msg2,const QString& msg3)
 {
-    kDebug() << "acc : 111";
+    qCDebug(KIPIPLUGINS_LOG) << "acc : 111";
     m_accToken       = msg1;
     m_accTokenSecret = msg2;
     m_accoauthToken  = msg3;

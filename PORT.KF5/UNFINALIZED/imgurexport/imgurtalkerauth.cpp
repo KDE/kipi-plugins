@@ -128,10 +128,10 @@ void ImgurTalkerAuth::cancel()
 
 void ImgurTalkerAuth::imageUpload (const KUrl& filePath)
 {
-    kDebug() << "Authenticated" << (d->OAuthService->isAuthorized() ? "Yes" : "No");
+    qCDebug(KIPIPLUGINS_LOG) << "Authenticated" << (d->OAuthService->isAuthorized() ? "Yes" : "No");
     setCurrentUrl(filePath);
 
-    kDebug() << "Authenticated upload of" << currentUrl();
+    qCDebug(KIPIPLUGINS_LOG) << "Authenticated upload of" << currentUrl();
 
     m_state = IE_ADDPHOTO;
 
@@ -204,11 +204,11 @@ void ImgurTalkerAuth::slotOAuthLogin()
 
 void ImgurTalkerAuth::slotTemporaryTokenReceived(const QString& token, const QString& tokenSecret)
 {
-    kDebug() << "Temporary token received: " << token << tokenSecret;
+    qCDebug(KIPIPLUGINS_LOG) << "Temporary token received: " << token << tokenSecret;
 
     if( d->OAuthService->lastError() == KQOAuthManager::NoError)
     {
-        kDebug() << "Asking for user's permission to access protected resources. Opening URL: " << ImgurConnection::OAuthAuthorizationEndPoint();
+        qCDebug(KIPIPLUGINS_LOG) << "Asking for user's permission to access protected resources. Opening URL: " << ImgurConnection::OAuthAuthorizationEndPoint();
         d->OAuthService->getUserAuthorization(KUrl(ImgurConnection::OAuthAuthorizationEndPoint()));
     }
 
@@ -216,13 +216,13 @@ void ImgurTalkerAuth::slotTemporaryTokenReceived(const QString& token, const QSt
     {
 //        emit signalAuthenticated(false, getAuthError(d->OAuthService->lastError()));
 //        emit signalBusy(false);
-        kDebug() << "Error :" << getAuthError(d->OAuthService->lastError());
+        qCDebug(KIPIPLUGINS_LOG) << "Error :" << getAuthError(d->OAuthService->lastError());
     }
 }
 
 void ImgurTalkerAuth::slotAuthorizationReceived(const QString& token, const QString& verifier)
 {
-    kDebug() << "User authorization received: " << token << verifier;
+    qCDebug(KIPIPLUGINS_LOG) << "User authorization received: " << token << verifier;
 
     if (d->OAuthService->lastError() == KQOAuthManager::NoError)
     {
@@ -235,13 +235,13 @@ void ImgurTalkerAuth::slotAuthorizationReceived(const QString& token, const QStr
         emit signalBusy(false);
 
         d->OAuthRequest->clearRequest();
-        kDebug() << "Auth error :" << getAuthError(d->OAuthService->lastError());
+        qCDebug(KIPIPLUGINS_LOG) << "Auth error :" << getAuthError(d->OAuthService->lastError());
     }
 }
 
 void ImgurTalkerAuth::slotAccessTokenReceived(const QString& token, const QString& tokenSecret)
 {
-    kDebug() << "Access token received: " << token << tokenSecret;
+    qCDebug(KIPIPLUGINS_LOG) << "Access token received: " << token << tokenSecret;
 
     d->oauthToken       = token.toAscii();
     d->oauthTokenSecret = tokenSecret.toAscii();
@@ -249,21 +249,21 @@ void ImgurTalkerAuth::slotAccessTokenReceived(const QString& token, const QStrin
     emit signalAuthenticated(true, i18n("OK"));
     emit signalBusy(false);
 
-    kDebug() << "Access tokens now stored";
+    qCDebug(KIPIPLUGINS_LOG) << "Access tokens now stored";
 }
 
 void ImgurTalkerAuth::slotAuthorizedRequestDone()
 {
-    kDebug() << "Request received from Imgur!";
+    qCDebug(KIPIPLUGINS_LOG) << "Request received from Imgur!";
 }
 
 void ImgurTalkerAuth::slotRequestReady(const QByteArray& response)
 {
-//    kDebug() << "Authorized: " << d->OAuthService->isAuthorized();
-//    kDebug() << "Verified: " << d->OAuthService->isAuthorized();
-//    kDebug() << "End point: " << d->OAuthRequest->requestEndpoint();
+//    qCDebug(KIPIPLUGINS_LOG) << "Authorized: " << d->OAuthService->isAuthorized();
+//    qCDebug(KIPIPLUGINS_LOG) << "Verified: " << d->OAuthService->isAuthorized();
+//    qCDebug(KIPIPLUGINS_LOG) << "End point: " << d->OAuthRequest->requestEndpoint();
 
-//    kDebug() << "Response from the service: " << response;
+//    qCDebug(KIPIPLUGINS_LOG) << "Response from the service: " << response;
 
     if (d->OAuthService->isAuthorized() && d->OAuthService->isVerified() &&
         d->OAuthRequest->requestEndpoint() == QUrl(ImgurConnection::APIuploadURL())

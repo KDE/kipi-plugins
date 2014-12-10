@@ -57,20 +57,20 @@ void MPForm::reset()
 
 void MPForm::finish()
 {
-    kDebug() << "in finish";
+    qCDebug(KIPIPLUGINS_LOG) << "in finish";
     QString str;
     str += "--";
     str += m_boundary;
     str += "--";
     m_buffer.append(str.toAscii());
-    kDebug() << "finish:" << m_buffer;
+    qCDebug(KIPIPLUGINS_LOG) << "finish:" << m_buffer;
 }
 
 void MPForm::addPair(const QString& name, const QString& description, const QString& path,const QString& id)
 {
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
-    kDebug() << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
+    qCDebug(KIPIPLUGINS_LOG) << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
     QString str;
 
     str += "--";
@@ -98,7 +98,7 @@ void MPForm::addPair(const QString& name, const QString& description, const QStr
 bool MPForm::addFile(const QString &path)
 {
     QString str;
-    kDebug() << "in addfile" << path;
+    qCDebug(KIPIPLUGINS_LOG) << "in addfile" << path;
 
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime = ptr->name();

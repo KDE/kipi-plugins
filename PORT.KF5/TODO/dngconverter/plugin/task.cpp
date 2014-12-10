@@ -196,7 +196,7 @@ void Task::run()
 
         default:
         {
-            kError() << "Unknown action specified";
+            qCCritical(KIPIPLUGINS_LOG) << "Unknown action specified";
             break;
         }
     }

@@ -336,7 +336,7 @@ QItemSelectionModel* KipiImageList::getSelectionModel() const
 
 void KipiImageList::slotInternalTreeViewImageActivated(const QModelIndex& index)
 {
-    kDebug()<<index<<d->imageSortProxyModel->mapToSource(index);
+    qCDebug(KIPIPLUGINS_LOG)<<index<<d->imageSortProxyModel->mapToSource(index);
     emit(signalImageActivated(d->imageSortProxyModel->mapToSource(index)));
 }
 

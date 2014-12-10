@@ -208,12 +208,12 @@ void SearchBackend::slotResult(KJob* kJob)
         QDomDocument doc;
         doc.setContent(resultString); // error-handling
         QDomElement docElement = doc.documentElement(); // error-handling
-        kDebug()<<docElement.toElement().tagName();
+        qCDebug(KIPIPLUGINS_LOG)<<docElement.toElement().tagName();
 
         for (QDomNode resultNode = docElement.firstChild(); !resultNode.isNull(); resultNode = resultNode.nextSibling())
         {
             QDomElement resultElement = resultNode.toElement();
-            kDebug()<<resultElement.tagName();
+            qCDebug(KIPIPLUGINS_LOG)<<resultElement.tagName();
 
             if (resultElement.isNull())
             {

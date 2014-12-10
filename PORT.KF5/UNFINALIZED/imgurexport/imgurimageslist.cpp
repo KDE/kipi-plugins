@@ -73,7 +73,7 @@ ImgurImagesList::~ImgurImagesList()
 
 void ImgurImagesList::updateItemWidgets()
 {
-    kDebug() << "update";
+    qCDebug(KIPIPLUGINS_LOG) << "update";
 }
 
 void ImgurImagesList::slotAddImages(const KUrl::List& list)

@@ -151,7 +151,7 @@ ActionThread::ActionThread(QObject* const parent)
 ActionThread::~ActionThread()
 {
 
-    kDebug() << "ActionThread shutting down."
+    qCDebug(KIPIPLUGINS_LOG) << "ActionThread shutting down."
              << "Canceling all actions and waiting for them";
 
     // cancel the thread
@@ -159,7 +159,7 @@ ActionThread::~ActionThread()
     // wait for the thread to finish
     wait();
 
-    kDebug() << "Thread finished";
+    qCDebug(KIPIPLUGINS_LOG) << "Thread finished";
 
     d->cleanAlignTmpDir();
 
@@ -179,7 +179,7 @@ void ActionThread::cleanUpResultFiles()
     QMutexLocker(&d->enfuseTmpUrlsMutex);
     foreach(const KUrl& url, d->enfuseTmpUrls)
     {
-        kDebug() << "Removing temp file " << url.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Removing temp file " << url.toLocalFile();
         KTempDir::removeDir(url.toLocalFile());
     }
     d->enfuseTmpUrls.clear();
@@ -387,7 +387,7 @@ void ActionThread::run()
                     settings.outputFormat   = KPSaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
                     bool result             = startEnfuse(t->urls, destUrl, settings, t->binaryPath, errors);
 
-                    kDebug() << "Preview result was: " << result;
+                    qCDebug(KIPIPLUGINS_LOG) << "Preview result was: " << result;
 
                     // preserve exif information for auto rotation
                     if (result)
@@ -581,7 +581,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
 
         d->alignProcess->setProgram(args);
 
-        kDebug() << "Align command line: " << d->alignProcess->program();
+        qCDebug(KIPIPLUGINS_LOG) << "Align command line: " << d->alignProcess->program();
 
         d->alignProcess->start();
 
@@ -609,13 +609,13 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
 
         for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = d->preProcessedUrlsMap.constBegin() ; it != d->preProcessedUrlsMap.constEnd(); ++it)
         {
-            kDebug() << "Pre-processed output urls map: " << it.key() << " , "
+            qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: " << it.key() << " , "
                                                           << it.value().preprocessedUrl << " , "
                                                           << it.value().previewUrl << " ; ";
         }
 
-        kDebug() << "Align exit status    : " << d->alignProcess->exitStatus();
-        kDebug() << "Align exit code      : " << d->alignProcess->exitCode();
+        qCDebug(KIPIPLUGINS_LOG) << "Align exit status    : " << d->alignProcess->exitStatus();
+        qCDebug(KIPIPLUGINS_LOG) << "Align exit code      : " << d->alignProcess->exitCode();
 
         if (d->alignProcess->exitStatus() != QProcess::NormalExit)
             return false;
@@ -633,12 +633,12 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
     {
         for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = d->preProcessedUrlsMap.constBegin() ; it != d->preProcessedUrlsMap.constEnd(); ++it)
         {
-            kDebug() << "Pre-processed output urls map: " << it.key() << " , "
+            qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: " << it.key() << " , "
                                                           << it.value().preprocessedUrl << " , "
                                                           << it.value().previewUrl << " ; ";
         }
 
-        kDebug() << "Alignment not performed.";
+        qCDebug(KIPIPLUGINS_LOG) << "Alignment not performed.";
         return true;
     }
 }
@@ -666,7 +666,7 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
             metaOut.applyChanges();
         }
 
-        kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
+        qCDebug(KIPIPLUGINS_LOG) << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
     }
 
@@ -735,7 +735,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         return false;
     }
 
-    kDebug() << "Convert RAW output url: " << outUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Convert RAW output url: " << outUrl;
 
     return true;
 }
@@ -800,7 +800,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
 
     d->enfuseProcess->setProgram(args);
 
-    kDebug() << "Enfuse command line: " << d->enfuseProcess->program();
+    qCDebug(KIPIPLUGINS_LOG) << "Enfuse command line: " << d->enfuseProcess->program();
 
     d->enfuseProcess->start();
 
@@ -810,9 +810,9 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
         return false;
     }
 
-    kDebug() << "Enfuse output url: "  << outUrl;
-    kDebug() << "Enfuse exit status: " << d->enfuseProcess->exitStatus();
-    kDebug() << "Enfuse exit code:   " << d->enfuseProcess->exitCode();
+    qCDebug(KIPIPLUGINS_LOG) << "Enfuse output url: "  << outUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Enfuse exit status: " << d->enfuseProcess->exitStatus();
+    qCDebug(KIPIPLUGINS_LOG) << "Enfuse exit code:   " << d->enfuseProcess->exitCode();
 
     if (d->enfuseProcess->exitStatus() != QProcess::NormalExit)
         return false;
@@ -924,7 +924,7 @@ float ActionThread::getAverageSceneLuminance(const KUrl& url)
             expo = (float)(nmr) / (float)(div);
     }
 
-    kDebug() << url.fileName() << " : expo = " << expo;
+    qCDebug(KIPIPLUGINS_LOG) << url.fileName() << " : expo = " << expo;
 
     if (meta.getExifTagRational("Exif.Photo.FNumber", num, den))
     {
@@ -947,7 +947,7 @@ float ActionThread::getAverageSceneLuminance(const KUrl& url)
             fnum = (float)(exp(log(2.0) * (float)(num) / (float)(den) / 2.0));
     }
 
-    kDebug() << url.fileName() << " : fnum = " << fnum;
+    qCDebug(KIPIPLUGINS_LOG) << url.fileName() << " : fnum = " << fnum;
 
     // Some cameras/lens DO print the fnum but with value 0, and this is not allowed for ev computation purposes.
 
@@ -971,14 +971,14 @@ float ActionThread::getAverageSceneLuminance(const KUrl& url)
         iso = 100.0;
     }
 
-    kDebug() << url.fileName() << " : iso = " << iso;
+    qCDebug(KIPIPLUGINS_LOG) << url.fileName() << " : iso = " << iso;
 
     // At this point the three variables have to be != -1
 
     if (expo != -1.0 && iso != -1.0 && fnum != -1.0)
     {
         float asl = (expo * iso) / (fnum * fnum * 12.07488f);
-        kDebug() << url.fileName() << " : ASL ==> " << asl;
+        qCDebug(KIPIPLUGINS_LOG) << url.fileName() << " : ASL ==> " << asl;
 
         return asl;
     }

@@ -78,7 +78,7 @@ void Plugin_KioExportImport::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -116,7 +116,7 @@ void Plugin_KioExportImport::setupActions()
 
 void Plugin_KioExportImport::slotActivateExport()
 {
-    kDebug() << "Starting KIO export";
+    qCDebug(KIPIPLUGINS_LOG) << "Starting KIO export";
 
     if (!m_dlgExport)
     {
@@ -136,7 +136,7 @@ void Plugin_KioExportImport::slotActivateExport()
 
 void Plugin_KioExportImport::slotActivateImport()
 {
-    kDebug() << "Starting KIO import";
+    qCDebug(KIPIPLUGINS_LOG) << "Starting KIO import";
 
     if (!m_dlgImport)
     {

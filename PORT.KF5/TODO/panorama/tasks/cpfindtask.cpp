@@ -78,7 +78,7 @@ void CpFindTask::run()
 
     process->setProgram(args);
 
-    kDebug() << "CPFind command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "CPFind command line: " << process->program();
 
     process->start();
 
@@ -88,7 +88,7 @@ void CpFindTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "cpfind's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "cpfind's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

@@ -66,7 +66,7 @@ void Timer::start()
 void Timer::at(const QString& s)
 {
     d->meantime = d->timer.elapsed() - d->meantime;
-    kDebug() << "stopwatch:" << s << ": " << d->meantime << " ms    overall: " << d->timer.elapsed() << " ms";
+    qCDebug(KIPIPLUGINS_LOG) << "stopwatch:" << s << ": " << d->meantime << " ms    overall: " << d->timer.elapsed() << " ms";
 }
 
 } // namespace KIPIViewerPlugin

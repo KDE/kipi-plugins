@@ -88,7 +88,7 @@ void OptimisationTask::run()
 
     process->setProgram(args);
 
-    kDebug() << "autooptimiser command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "autooptimiser command line: " << process->program();
 
     process->start();
 
@@ -98,7 +98,7 @@ void OptimisationTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "autooptimiser's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "autooptimiser's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

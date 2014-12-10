@@ -31,7 +31,6 @@
 
 // KDE includes
 
-#include <kdebug.h>
 #include <klibloader.h>
 #include <klocalizedstring.h>
 
@@ -42,6 +41,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "flashmanager.h"
 #include "aboutdata.h"
 
@@ -75,7 +75,7 @@ void Plugin_FlashExport::setup(QWidget* const widget)
 
     if (!m_interface)
     {
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
@@ -101,7 +101,7 @@ void Plugin_FlashExport::slotActivate()
 {
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

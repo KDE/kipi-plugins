@@ -186,7 +186,7 @@ void YandexFotkiTalker::listAlbums()
 
 void YandexFotkiTalker::listAlbumsNext()
 {
-    kDebug() << "listAlbumsNext";
+    qCDebug(KIPIPLUGINS_LOG) << "listAlbumsNext";
 
     KIO::TransferJob* const job = KIO::get(m_albumsNextUrl,
                                   KIO::NoReload, KIO::HideProgressInfo);
@@ -223,7 +223,7 @@ void YandexFotkiTalker::listPhotos(const YandexFotkiAlbum& album)
 // protected member
 void YandexFotkiTalker::listPhotosNext()
 {
-    kDebug() << "listPhotosNext";
+    qCDebug(KIPIPLUGINS_LOG) << "listPhotosNext";
 
     KIO::TransferJob* const job = KIO::get(m_photosNextUrl,
                                   KIO::NoReload, KIO::HideProgressInfo);
@@ -278,7 +278,7 @@ void YandexFotkiTalker::updatePhoto(YandexFotkiPhoto& photo, const YandexFotkiAl
 
 void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
 {
-    kDebug() << "updatePhotoFile" << photo;
+    qCDebug(KIPIPLUGINS_LOG) << "updatePhotoFile" << photo;
 
     QFile imageFile(photo.localUrl());
 
@@ -367,7 +367,7 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
 
     m_buffer = doc.toString(1).toUtf8(); // with idents
 
-    kDebug() << "Prepared data: " << m_buffer;
+    qCDebug(KIPIPLUGINS_LOG) << "Prepared data: " << m_buffer;
     m_lastPhoto = &photo;
 
     m_state = STATE_UPDATEPHOTO_INFO;
@@ -408,7 +408,7 @@ void YandexFotkiTalker::updateAlbum(YandexFotkiAlbum& album)
     }
     else
     {
-        kError() << "Updating albums is not yet supported";
+        qCCritical(KIPIPLUGINS_LOG) << "Updating albums is not yet supported";
     }
 }
 
@@ -436,8 +436,8 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
     entryElem.appendChild(password);
 
     const QByteArray postData = doc.toString(1).toUtf8(); // with idents
-    kDebug() << "Prepared data: " << postData;
-    kDebug() << "Url" << m_apiAlbumsUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Prepared data: " << postData;
+    qCDebug(KIPIPLUGINS_LOG) << "Url" << m_apiAlbumsUrl;
 
     KIO::TransferJob* const job = KIO::http_post(m_apiAlbumsUrl, postData,
                                   KIO::HideProgressInfo);
@@ -506,8 +506,8 @@ bool YandexFotkiTalker::prepareJobResult(KJob* job, State error)
     if (transferJob->error() || transferJob->isErrorPage())
     {
         const QString code = transferJob->queryMetaData("responsecode");
-        kDebug() << "Transfer Error" << code << transferJob->errorString();
-        kDebug() << "Buffer:" << m_buffer;
+        qCDebug(KIPIPLUGINS_LOG) << "Transfer Error" << code << transferJob->errorString();
+        qCDebug(KIPIPLUGINS_LOG) << "Buffer:" << m_buffer;
 
         if (code == "401" || code == "403") // auth required
         {
@@ -565,7 +565,7 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 
     if ( !doc.setContent( m_buffer ) )
     {
-        kError() << "Invalid XML: parse error" << m_buffer;
+        qCCritical(KIPIPLUGINS_LOG) << "Invalid XML: parse error" << m_buffer;
         return setErrorState(STATE_GETSERVICE_ERROR);
     }
 
@@ -580,12 +580,12 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
     {
         workspaceElem = rootElem.firstChildElement("workspace");
         prefix = "";
-        kError() << "Service document without namespaces found";
+        qCCritical(KIPIPLUGINS_LOG) << "Service document without namespaces found";
     }
 
     if (workspaceElem.isNull())
     {
-        kDebug() << "Invalid XML data: workspace element";
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML data: workspace element";
         return setErrorState(STATE_GETSERVICE_ERROR);
     }
 
@@ -623,7 +623,7 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 
     if (apiAlbumsUrl.isNull() || apiPhotosUrl.isNull())
     {
-        kDebug() << "Invalid XML data: service URLs";
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML data: service URLs";
         return setErrorState(STATE_GETSERVICE_ERROR);
     }
 
@@ -631,10 +631,10 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
     m_apiPhotosUrl = apiPhotosUrl;
     m_apiTagsUrl = apiTagsUrl;
 
-    kDebug() << "ServiceUrls:";
-    kDebug() << "Albums" << m_apiAlbumsUrl;
-    kDebug() << "Photos" << m_apiPhotosUrl;
-    kDebug() << "Tags" << m_apiTagsUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "ServiceUrls:";
+    qCDebug(KIPIPLUGINS_LOG) << "Albums" << m_apiAlbumsUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Photos" << m_apiPhotosUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Tags" << m_apiTagsUrl;
 
     m_state = STATE_GETSERVICE_DONE;
     emit signalGetServiceDone();
@@ -645,7 +645,7 @@ void YandexFotkiTalker::parseResponseCheckToken(KJob *job)
 {
     m_job = 0;
 
-    kDebug() << "checkToken" << job->error() << job->errorString() << job->errorText();
+    qCDebug(KIPIPLUGINS_LOG) << "checkToken" << job->error() << job->errorString() << job->errorText();
 
     if (job->error())
         return setErrorState(STATE_CHECKTOKEN_INVALID);
@@ -678,14 +678,14 @@ void YandexFotkiTalker::parseResponseGetSession(KJob* job)
         requestIdElem.isNull() || requestIdElem.nodeType() != QDomNode::ElementNode)
     {
 
-        kDebug() << "Invalid XML" << m_buffer;
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML" << m_buffer;
         return setErrorState(STATE_GETSESSION_ERROR);
     }
 
     m_sessionKey = keyElem.text();
     m_sessionId  = requestIdElem.text();
 
-    kDebug() << "Session started" << m_sessionKey << m_sessionId;
+    qCDebug(KIPIPLUGINS_LOG) << "Session started" << m_sessionKey << m_sessionId;
 
     m_state = STATE_GETSESSION_DONE;
     emit signalGetSessionDone();
@@ -700,7 +700,7 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
 
     if ( !doc.setContent( m_buffer ) )
     {
-        kDebug() << "Invalid XML: parse error" << m_buffer;
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML: parse error" << m_buffer;
         return setErrorState(STATE_GETTOKEN_ERROR);
     }
 
@@ -713,14 +713,14 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
 
         if (errorElem.isNull() || errorElem.nodeType() != QDomNode::ElementNode)
         {
-            kDebug() << "Auth unknown error";
+            qCDebug(KIPIPLUGINS_LOG) << "Auth unknown error";
             return setErrorState(STATE_GETTOKEN_ERROR);
         }
 
         /*
           // checked by HTTP error code in prepareJobResult
         const QString errorCode = errorElem.attribute("code", "0");
-        kDebug() << QString("Auth error: %1, code=%2").arg(errorElem.text()).arg(errorCode);
+        qCDebug(KIPIPLUGINS_LOG) << QString("Auth error: %1, code=%2").arg(errorElem.text()).arg(errorCode);
 
         if (errorCode == "2")  { // Invalid credentials
             return setErrorState(STATE_GETTOKEN_INVALID_CREDENTIALS);
@@ -732,7 +732,7 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
 
     m_token = tokenElem.text();
 
-    kDebug() << "Token got" << m_token;
+    qCDebug(KIPIPLUGINS_LOG) << "Token got" << m_token;
     m_state = STATE_GETTOKEN_DONE;
     emit signalGetTokenDone();
 }
@@ -747,7 +747,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
 
     if ( !doc.setContent( m_buffer ) )
     {
-        kDebug() << "Invalid XML: parse error";
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML: parse error";
         return setErrorState(STATE_LISTALBUMS_ERROR);
     }
 
@@ -807,7 +807,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
             linkSelf.isNull() || linkEdit.isNull() || linkPhotos.isNull())
         {
             errorOccurred = true;
-            kDebug() << "Invalid XML data: invalid entry on line" << entryElem.lineNumber();
+            qCDebug(KIPIPLUGINS_LOG) << "Invalid XML data: invalid entry on line" << entryElem.lineNumber();
             // simple skip this record, no addtional messages to user
             continue;
         }
@@ -833,7 +833,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
                             password
                         ));
 
-        kDebug() << "Found album:" << m_albums.last();
+        qCDebug(KIPIPLUGINS_LOG) << "Found album:" << m_albums.last();
     }
 
     // TODO: pagination like listPhotos
@@ -841,7 +841,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
     // if an error has occurred and we didn't find anything => notify user
     if (errorOccurred && m_albums.empty())
     {
-        kDebug() << "No result and errors have occurred";
+        qCDebug(KIPIPLUGINS_LOG) << "No result and errors have occurred";
         return setErrorState(STATE_LISTALBUMS_ERROR);
     }
 
@@ -852,7 +852,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
     }
     else
     {
-        kDebug() << "List albums done: " << m_albums.size();
+        qCDebug(KIPIPLUGINS_LOG) << "List albums done: " << m_albums.size();
         m_state = STATE_LISTALBUMS_DONE;
         emit signalListAlbumsDone(m_albums);
     }
@@ -905,7 +905,7 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
         !accessAttr.hasAttribute("value"))
     {
 
-        kDebug() << "Invalid XML data, error on line" << entryElem.lineNumber();
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML data, error on line" << entryElem.lineNumber();
         // simple skip this record, no addtional messages to user
         return false;
     }
@@ -922,7 +922,7 @@ bool YandexFotkiTalker::parsePhotoXml(const QDomElement& entryElem, YandexFotkiP
         access = YandexFotkiPhoto::ACCESS_PUBLIC;
     else
     {
-        kError() << "Unknown photo access level: " << accessString;
+        qCCritical(KIPIPLUGINS_LOG) << "Unknown photo access level: " << accessString;
         access = YandexFotkiPhoto::ACCESS_PUBLIC;
     }
 
@@ -979,7 +979,7 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
 
     if ( !doc.setContent( m_buffer ) )
     {
-        kError() << "Invalid XML, parse error: " << m_buffer;
+        qCCritical(KIPIPLUGINS_LOG) << "Invalid XML, parse error: " << m_buffer;
         return setErrorState(STATE_LISTPHOTOS_ERROR);
     }
 
@@ -1024,7 +1024,7 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     // if an error has occurred and we didn't find anything => notify user
     if (errorOccurred && initialSize == m_photos.size())
     {
-        kError() << "No photos found, some XML errors have occurred";
+        qCCritical(KIPIPLUGINS_LOG) << "No photos found, some XML errors have occurred";
         return setErrorState(STATE_LISTPHOTOS_ERROR);
     }
 
@@ -1035,7 +1035,7 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     }
     else
     {
-        kDebug() << "List photos done: " << m_photos.size();
+        qCDebug(KIPIPLUGINS_LOG) << "List photos done: " << m_photos.size();
         m_state = STATE_LISTPHOTOS_DONE;
         emit signalListPhotosDone(m_photos);
     }
@@ -1046,12 +1046,12 @@ void YandexFotkiTalker::parseResponseUpdatePhotoFile(KJob* job)
     if (!prepareJobResult(job, STATE_UPDATEPHOTO_FILE_ERROR))
         return;
 
-    kDebug() << "Uploaded photo document" << m_buffer;
+    qCDebug(KIPIPLUGINS_LOG) << "Uploaded photo document" << m_buffer;
     QDomDocument doc("entry");
 
     if ( !doc.setContent( m_buffer ) )
     {
-        kDebug() << "Invalid XML, parse error" << m_buffer;
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML, parse error" << m_buffer;
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }
 
@@ -1062,7 +1062,7 @@ void YandexFotkiTalker::parseResponseUpdatePhotoFile(KJob* job)
 
     if (!parsePhotoXml(entryElem, tmpPhoto))
     {
-        kDebug() << "Invalid XML, entry not found" << m_buffer;
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML, entry not found" << m_buffer;
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }
 
@@ -1090,14 +1090,14 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
     QDomDocument doc("entry");
     if ( !doc.setContent( m_buffer ) )
     {
-        kDebug() << "Invalid XML: parse error" << m_buffer;
+        qCDebug(KIPIPLUGINS_LOG) << "Invalid XML: parse error" << m_buffer;
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }
 
     const QDomElement entryElem = doc.documentElement();
     if(!parsePhotoXml(entryElem, photo))
     {
-        kDebug() << "Can't reload photo after uploading";
+        qCDebug(KIPIPLUGINS_LOG) << "Can't reload photo after uploading";
         return setErrorState(STATE_UPDATEPHOTO_INFO_ERROR);
     }*/
 
@@ -1108,12 +1108,12 @@ void YandexFotkiTalker::parseResponseUpdatePhotoInfo(KJob* job)
 
 void YandexFotkiTalker::parseResponseUpdateAlbum(KJob* job)
 {
-    kDebug() << "!!!";
+    qCDebug(KIPIPLUGINS_LOG) << "!!!";
 
     if (!prepareJobResult(job, STATE_UPDATEALBUM_ERROR))
         return;
 
-    kDebug() << "Updated album" << m_buffer;
+    qCDebug(KIPIPLUGINS_LOG) << "Updated album" << m_buffer;
 
     m_state     = STATE_UPDATEALBUM_DONE;
     m_lastPhoto = 0;

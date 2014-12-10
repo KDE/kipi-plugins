@@ -100,7 +100,7 @@ void CreateMKTask::run()
 
     process->setProgram(args);
 
-    kDebug() << "pto2mk command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "pto2mk command line: " << process->program();
 
     process->start();
 
@@ -110,7 +110,7 @@ void CreateMKTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "pto2mk's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "pto2mk's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

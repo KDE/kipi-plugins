@@ -346,23 +346,23 @@ void SwWindow::slotBusy(bool val)
 
 void SwWindow::slotUserChangeRequest()
 {
-    kDebug() << "Slot Change User Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request";
     authenticate();
 }
 
 void SwWindow::slotReloadAlbumsRequest()
 {
-    kDebug() << "Reload Albums Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Reload Albums Request";
     m_connector->listAlbums();
 }
 
 void SwWindow::slotNewAlbumRequest()
 {
-    kDebug() << "Slot New Album Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot New Album Request";
 
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
-        kDebug() << "Calling New Album method";
+        qCDebug(KIPIPLUGINS_LOG) << "Calling New Album method";
         SwAlbum newAlbum;
         m_albumDlg->getAlbumProperties(newAlbum);
         m_connector->createAlbum(newAlbum);
@@ -377,7 +377,7 @@ void SwWindow::slotLoginInvalid()
 
 void SwWindow::slotStartTransfer()
 {
-    kDebug() << "slotStartTransfer invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotStartTransfer invoked";
 
     m_transferQueue = m_widget->m_imgList->imageUrls();
 
@@ -456,7 +456,7 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
 
     if (isRAW)
     {
-        kDebug() << "Get RAW preview " << imgPath;
+        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
         KDcraw::loadRawPreview(image, imgPath);
     }
     else
@@ -475,12 +475,12 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
 
     if (m_widget->m_resizeChB->isChecked() && (image.width() > maxDim || image.height() > maxDim))
     {
-        kDebug() << "Resizing to " << maxDim;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                              Qt::SmoothTransformation);
     }
 
-    kDebug() << "Saving to temp file: " << m_tmpPath;
+    qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << m_tmpPath;
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image

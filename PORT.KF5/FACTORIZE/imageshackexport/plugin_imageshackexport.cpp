@@ -71,7 +71,7 @@ Plugin_ImageshackExport::Plugin_ImageshackExport(QObject* const parent, const QV
     : Plugin(Factory::componentData(), parent, "ImageshackExport"),
       d(new Private())
 {
-    kDebug() << "Plugin_ImageshackExport plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_ImageshackExport plugin loaded";
 
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
@@ -94,7 +94,7 @@ void Plugin_ImageshackExport::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

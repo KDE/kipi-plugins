@@ -119,7 +119,7 @@ public:
             }
         }
 
-        kError() << "Could not find a resize tool with localized name '"
+        qCCritical(KIPIPLUGINS_LOG) << "Could not find a resize tool with localized name '"
                  << name << "'. Using first one.";
 
         return resizeTools[0];
@@ -147,7 +147,7 @@ ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, QWidget* paren
     d(new ResizeImagesDialogPriv(this))
 {
 
-    kDebug() << "Creating resize dialog";
+    qCDebug(KIPIPLUGINS_LOG) << "Creating resize dialog";
 
     // set up resize types
     d->addResizeType<OneDimResizeCommandBuilder, OneDimResizeOptionsDialog>(i18n("Proportional (1 dim.)"));
@@ -237,7 +237,7 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 {
     d->getResizeToolByName(m_Type->currentText()).commandBuilder->buildCommand(
                            proc, item, albumDest);
-    kDebug() << "generated command line: " << proc->program();
+    qCDebug(KIPIPLUGINS_LOG) << "generated command line: " << proc->program();
 }
 
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,

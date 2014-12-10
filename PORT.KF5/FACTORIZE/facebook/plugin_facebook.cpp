@@ -86,7 +86,7 @@ void Plugin_Facebook::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kDebug() << "Kipi interface is null!";
+        qCDebug(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

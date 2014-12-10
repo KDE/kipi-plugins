@@ -254,7 +254,7 @@ void PreProcessingPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                     break;
                 }
             }
@@ -272,7 +272,7 @@ void PreProcessingPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                     break;
                 }
             }

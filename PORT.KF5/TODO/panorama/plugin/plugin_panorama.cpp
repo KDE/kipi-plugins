@@ -89,7 +89,7 @@ void Plugin_Panorama::setup(QWidget* const widget)
 
     if (!m_interface)
     {
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
@@ -115,7 +115,7 @@ void Plugin_Panorama::slotActivate()
 {
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

@@ -62,7 +62,7 @@ void Task::run()
 
     if (!ld->locator)
     {
-        kDebug() << "no locator has been defined";
+        qCDebug(KIPIPLUGINS_LOG) << "no locator has been defined";
         return;
     }
 

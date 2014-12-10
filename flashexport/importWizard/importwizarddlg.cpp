@@ -39,7 +39,6 @@
 #include <kconfig.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
-#include <kdebug.h>
 #include <kio/netaccess.h>
 
 // Libkipi includes
@@ -55,6 +54,7 @@
 #include "generalpage.h"
 #include "lookpage.h"
 #include "progresspage.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -99,7 +99,7 @@ ImportWizardDlg::ImportWizardDlg(FlashManager* const mngr, QWidget* const parent
     //SimpleViewer must be initialized, or we will get a null poiter.
     d->mngr->initSimple();
     d->simple            = mngr->simpleView();
-    kDebug() << "pointer of simpleview" << mngr->simpleView();
+    qCDebug(KIPIPLUGINS_LOG) << "pointer of simpleview" << mngr->simpleView();
 
     //-----------------------------------------------------------------
 
@@ -270,7 +270,7 @@ bool ImportWizardDlg::checkIfPluginInstalled()
             return ! KStandardDirs::locate("data","kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty();
             break;
         default:
-            kDebug() << "Unknown plugin type";
+            qCDebug(KIPIPLUGINS_LOG) << "Unknown plugin type";
             return false;
     }
 

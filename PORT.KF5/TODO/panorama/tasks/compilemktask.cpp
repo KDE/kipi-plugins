@@ -79,7 +79,7 @@ void CompileMKTask::run()
 
     process->setProgram(args);
 
-    kDebug() << "make command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "make command line: " << process->program();
 
     process->start();
 
@@ -89,7 +89,7 @@ void CompileMKTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "make's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "make's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

@@ -137,9 +137,9 @@ QString PicasawebLogin::username() const
 
 void PicasawebLogin::setUsername(const QString& username)
 {
-    kDebug()<<" The username passed to me is "<<username ;
+    qCDebug(KIPIPLUGINS_LOG)<<" The username passed to me is "<<username ;
     m_nameEdit->setText(username);
-    kDebug()<<" The username passed to me is "<<username ;
+    qCDebug(KIPIPLUGINS_LOG)<<" The username passed to me is "<<username ;
 }
 
 void PicasawebLogin::setPassword(const QString& password)

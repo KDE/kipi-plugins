@@ -171,7 +171,7 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
     }
     concat.append(url.encodedQuery());
 
-    kDebug() << "CALL: " << concat;
+    qCDebug(KIPIPLUGINS_LOG) << "CALL: " << concat;
 
     return concat;
 }
@@ -260,7 +260,7 @@ void FbTalker::doOAuth()
     // TODO (Dirk): Check which of these permissions can be optional.
     url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,offline_access");
     url.addQueryItem("response_type", "token");
-    kDebug() << "OAuth URL: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -291,7 +291,7 @@ void FbTalker::doOAuth()
 
         url                        = KUrl( textbox->text() );
         QString fragment           = url.fragment();
-        kDebug() << "Split out the fragment from the URL: " << fragment;
+        qCDebug(KIPIPLUGINS_LOG) << "Split out the fragment from the URL: " << fragment;
         QStringList params         = fragment.split('&');
         QList<QString>::iterator i = params.begin();
 
@@ -468,7 +468,7 @@ void FbTalker::changePerm()
     url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "http://www.facebook.com/apps/application.php?id=107648075065");
     url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
-    kDebug() << "Change Perm URL: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Change Perm URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -545,7 +545,7 @@ void FbTalker::listFriends()
 
 void FbTalker::listAlbums(long long userID)
 {
-    kDebug() << "Requesting albums for user " << userID;
+    qCDebug(KIPIPLUGINS_LOG) << "Requesting albums for user " << userID;
 
     if (m_job)
     {
@@ -678,7 +678,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
 
 bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QString& caption)
 {
-    kDebug() << "Adding photo " << imgPath << " to album with id "
+    qCDebug(KIPIPLUGINS_LOG) << "Adding photo " << imgPath << " to album with id "
              << albumID << " using caption '" << caption << "'";
 
     if (m_job)
@@ -715,7 +715,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     form.finish();
 
-    kDebug() << "FORM: " << endl << form.formData();
+    qCDebug(KIPIPLUGINS_LOG) << "FORM: " << endl << form.formData();
 
     KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.upload"), form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent",    m_userAgent);
@@ -770,7 +770,7 @@ void FbTalker::data(KIO::Job*, const QByteArray& data)
 QString FbTalker::errorToText(int errCode, const QString &errMsg)
 {
     QString transError;
-    kDebug() << "errorToText: " << errCode << ": " << errMsg;
+    qCDebug(KIPIPLUGINS_LOG) << "errorToText: " << errCode << ": " << errMsg;
 
     switch (errCode)
     {
@@ -904,12 +904,12 @@ int FbTalker::parseErrorResponse(const QDomElement& e, QString& errMsg)
         if (node.nodeName() == "error_code")
         {
             errCode = node.toElement().text().toInt();
-            kDebug() << "Error Code:" << errCode;
+            qCDebug(KIPIPLUGINS_LOG) << "Error Code:" << errCode;
         }
         else if (node.nodeName() == "error_msg")
         {
             errMsg = node.toElement().text();
-            kDebug() << "Error Text:" << errMsg;
+            qCDebug(KIPIPLUGINS_LOG) << "Error Text:" << errMsg;
         }
     }
 
@@ -928,7 +928,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
 
     emit signalLoginProgress(3);
 
-    kDebug() << "Parse CreateToken response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse CreateToken response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "auth_createToken_response")
@@ -949,7 +949,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     url.addQueryItem("api_key", m_apiKey);
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("auth_token", m_authToken);
-    kDebug() << "Login URL: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Login URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -982,7 +982,7 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
 
     emit signalLoginProgress(5);
 
-    kDebug() << "Parse GetSession response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse GetSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "auth_getSession_response")
@@ -1025,7 +1025,7 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
     bool ok;
     QJson::Parser parser;
 
-    kDebug() << "Parse exchange_session response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse exchange_session response:" << endl << data;
 
     QVariantList result = parser.parse (data, &ok).toList();
 
@@ -1071,7 +1071,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 
     emit signalLoginProgress(4);
 
-    kDebug() << "Parse GetLoggedInUser response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse GetLoggedInUser response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
 
@@ -1113,7 +1113,7 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
     if (m_state == FB_GETUSERINFO) // during login
         emit signalLoginProgress(7);
 
-    kDebug() << "Parse GetUserInfo response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse GetUserInfo response:" << endl << data;
 
     QList<FbUser> friendsList;
     QDomElement docElem = doc.documentElement();
@@ -1198,7 +1198,7 @@ void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
     if (m_loginInProgress)
         emit signalLoginProgress(9);
 
-    kDebug() << "Parse HasAppPermission response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse HasAppPermission response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
 
@@ -1233,7 +1233,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse ExpireSession response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse ExpireSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
 
@@ -1246,7 +1246,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
         errCode = parseErrorResponse(docElem, errMsg);
     }
 
-    kDebug() << "Error Code : " << errCode;
+    qCDebug(KIPIPLUGINS_LOG) << "Error Code : " << errCode;
 
     // consider we are logged out in any case
     m_accessToken.clear();
@@ -1266,7 +1266,7 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Add Photo response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Add Photo response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
 
@@ -1300,7 +1300,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Create Album response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Create Album response:" << endl << data;
 
     QString newAlbumID;
     QDomElement docElem = doc.documentElement();
@@ -1317,7 +1317,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
             if (node.nodeName() == "aid")
             {
                 newAlbumID = node.toElement().text();
-                kDebug() << "newAID: " << newAlbumID;
+                qCDebug(KIPIPLUGINS_LOG) << "newAID: " << newAlbumID;
             }
         }
 
@@ -1342,7 +1342,7 @@ void FbTalker::parseResponseListFriends(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Friends response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Friends response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     QString friendsUIDs;
@@ -1394,7 +1394,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Albums response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Albums response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     QList <FbAlbum> albumsList;
@@ -1443,7 +1443,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                     }
                 }
 
-                kDebug() << "AID: " << album.id;
+                qCDebug(KIPIPLUGINS_LOG) << "AID: " << album.id;
                 albumsList.append(album);
             }
         }
@@ -1471,7 +1471,7 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug() << "Parse Photos response:" << endl << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse Photos response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     QList <FbPhoto> photosList;

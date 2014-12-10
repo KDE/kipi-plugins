@@ -68,7 +68,7 @@ K_PLUGIN_FACTORY ( PrintImagesFactory, registerPlugin<Plugin_PrintImages>(); )
 K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 
 Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantList& /*args*/ )
-    : Plugin ( /*PrintImagesFactory::componentData(),*/ parent, "PrintImages" )
+    : Plugin(parent, "PrintImages")
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_SendImages plugin loaded";
 
@@ -90,7 +90,7 @@ void Plugin_PrintImages::setup(QWidget* const widget)
 
     if ( !m_interface )
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

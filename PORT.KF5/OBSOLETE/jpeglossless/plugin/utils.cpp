@@ -170,7 +170,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
 
     process << src + QString("[0]");
 
-    kDebug() << "ImageMagick Command line: " << process.program();
+    qCDebug(KIPIPLUGINS_LOG) << "ImageMagick Command line: " << process.program();
 
     process.start();
 
@@ -209,7 +209,7 @@ bool Utils::isJPEG(const QString& file)
     // Check if its not MPO format (See bug #307277).
     QString ext    = fileInfo.suffix().toUpper();
 
-    kDebug() << "mimetype = " << format << " ext = " << ext;
+    qCDebug(KIPIPLUGINS_LOG) << "mimetype = " << format << " ext = " << ext;
 
     if (format != "JPEG" || ext == "MPO")
     {
@@ -259,7 +259,7 @@ bool Utils::moveOneFile(const QString& src, const QString& dst)
 
     if (::stat(QFile::encodeName(dst), &stbuf) != 0)
     {
-        kError() << "KIPIJPEGLossLessPlugin:moveOneFile: failed to stat src";
+        qCCritical(KIPIPLUGINS_LOG) << "KIPIJPEGLossLessPlugin:moveOneFile: failed to stat src";
         return false;
     }
 
@@ -272,12 +272,12 @@ bool Utils::moveOneFile(const QString& src, const QString& dst)
 
     if (::utime(QFile::encodeName(dst), &timbuf) != 0)
     {
-        kError() << "KIPIJPEGLossLessPlugin:moveOneFile: failed to update dst time";
+        qCCritical(KIPIPLUGINS_LOG) << "KIPIJPEGLossLessPlugin:moveOneFile: failed to update dst time";
     }
 
     if (::unlink(QFile::encodeName(src).data()) != 0)
     {
-        kError() << "KIPIJPEGLossLessPlugin:moveOneFile: failed to unlink src";
+        qCCritical(KIPIPLUGINS_LOG) << "KIPIJPEGLossLessPlugin:moveOneFile: failed to unlink src";
     }
 
     return true;

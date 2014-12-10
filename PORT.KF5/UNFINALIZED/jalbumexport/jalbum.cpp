@@ -105,7 +105,7 @@ void JAlbum::load()
     KConfig config("kipirc");
     KConfigGroup group = config.group("jAlbum Settings");
 
-    kDebug() << "Reading data from kipirc file..";
+    qCDebug(KIPIPLUGINS_LOG) << "Reading data from kipirc file..";
 
 #ifdef WIN32
     dfltAlbumPath = QString(qgetenv("HOMEDRIVE").constData());
@@ -138,12 +138,12 @@ void JAlbum::save()
     KConfig config("kipirc");
     KConfigGroup group = config.group("jAlbum Settings");
 
-    kDebug() << "Saving data to kipirc file..";
+    qCDebug(KIPIPLUGINS_LOG) << "Saving data to kipirc file..";
 
     group.writeEntry(QString("AlbumPath"),   albumPath().path() );
     group.writeEntry(QString("JarPath"),     jarPath().path() );
 
-    kDebug() << "syncing..";
+    qCDebug(KIPIPLUGINS_LOG) << "syncing..";
     config.sync();
 }
 
@@ -158,7 +158,7 @@ bool JAlbum::createDir(const QString& dirName)
         {
             if (!dir.mkdir(part))
             {
-                kDebug() << "Could not create directory";
+                qCDebug(KIPIPLUGINS_LOG) << "Could not create directory";
                 return false;
             }
         }

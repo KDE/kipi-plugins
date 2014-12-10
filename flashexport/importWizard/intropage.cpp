@@ -30,9 +30,7 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <kvbox.h>
-#include <klocale.h>
-#include <kdebug.h>
+#include <klocalizedstring.h>
 #include <kiconloader.h>
 
 // Libkdcraw includes
@@ -42,6 +40,7 @@
 // Local includes
 
 #include "simpleviewer.h"
+#include "kipiplugins_debug.h"
 
 using namespace KDcrawIface;
 
@@ -124,7 +123,7 @@ void IntroPage::settings(SimpleViewerSettingsContainer* const settings)
 {
     settings->plugType = (SimpleViewerSettingsContainer::PluginType)d->plugin_select->currentIndex();
     settings->imgGetOption = (SimpleViewerSettingsContainer::ImageGetOption)d->imageGetOption->currentIndex();
-    kDebug() << "Plugin type obtained" ;
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin type obtained" ;
 }
 
 }   // namespace KIPIFlashExportPlugin

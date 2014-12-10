@@ -86,8 +86,8 @@ void TestSimpleTreeModel::testModel1()
     QModelIndex topIndex = treeModel->index(0, 0, QModelIndex());
     if (treeModel->rowCount(topIndex) > 0) {
         QModelIndex childIndex = treeModel->index(0, 0, topIndex);
-        kDebug()<<childIndex;
-        kDebug()<<treeModel->parent(childIndex);
+        qCDebug(KIPIPLUGINS_LOG)<<childIndex;
+        qCDebug(KIPIPLUGINS_LOG)<<treeModel->parent(childIndex);
         Q_ASSERT(treeModel->parent(childIndex) == topIndex);
     }
 

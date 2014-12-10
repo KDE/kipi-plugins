@@ -882,11 +882,11 @@ void CBlobResult::RaiseError(const int errorCode) const
     switch (errorCode)
     {
         case EXCEPTION_BLOB_OUT_OF_BOUNDS:
-            kDebug() << "Error en CBlobResult: Intentant accedir a un blob no existent";
+            qCDebug(KIPIPLUGINS_LOG) << "Error en CBlobResult: Intentant accedir a un blob no existent";
             break;
 
         default:
-            kDebug() << "Error en CBlobResult: Codi d'error desconegut";
+            qCDebug(KIPIPLUGINS_LOG) << "Error en CBlobResult: Codi d'error desconegut";
             break;
     }
 

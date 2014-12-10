@@ -242,7 +242,7 @@ void ImageshackWindow::slotStartTransfer()
         return;
     }
 
-    kDebug() << "Transfer started!";
+    qCDebug(KIPIPLUGINS_LOG) << "Transfer started!";
 
     m_imagesTotal = m_transferQueue.count();
     m_imagesCount = 0;
@@ -291,7 +291,7 @@ void ImageshackWindow::slotButtonClicked(int button)
 
 void ImageshackWindow::slotChangeRegistrantionCode()
 {
-    kDebug() << "Change registration code";
+    qCDebug(KIPIPLUGINS_LOG) << "Change registration code";
     m_imageshack->m_registrationCode.clear();
     authenticate();
 }

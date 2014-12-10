@@ -175,9 +175,9 @@ void WMWindow::reactivate()
     d->widget->imagesList()->loadImagesFromCurrentSelection();
     d->widget->loadImageInfoFirstLoad();
     d->widget->clearEditFields();
-    kDebug() << "imagesList items count:" << d->widget->imagesList()->listView()->topLevelItemCount();
-    kDebug() << "imagesList url length:"  << d->widget->imagesList()->imageUrls(false).size();
-    kDebug() << "allImagesDesc length:"   << d->widget->allImagesDesc().size();
+    qCDebug(KIPIPLUGINS_LOG) << "imagesList items count:" << d->widget->imagesList()->listView()->topLevelItemCount();
+    qCDebug(KIPIPLUGINS_LOG) << "imagesList url length:"  << d->widget->imagesList()->imageUrls(false).size();
+    qCDebug(KIPIPLUGINS_LOG) << "allImagesDesc length:"   << d->widget->allImagesDesc().size();
     show();
 }
 
@@ -232,11 +232,11 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 
         if (d->widget->resize() && (image.width() > maxDim || image.height() > maxDim))
         {
-            kDebug() << "Resizing to " << maxDim;
+            qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
-        kDebug() << "Saving to temp file: " << d->tmpPath;
+        qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << d->tmpPath;
         image.save(d->tmpPath, "JPEG", d->widget->quality());
     }
     else
@@ -336,7 +336,7 @@ void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QStr
 
 int WMWindow::slotLoginHandle(KJob* loginJob)
 {
-    kDebug() << loginJob->error() << loginJob->errorString() << loginJob->errorText();
+    qCDebug(KIPIPLUGINS_LOG) << loginJob->error() << loginJob->errorString() << loginJob->errorText();
 
     if(loginJob->error())
     {
@@ -379,7 +379,7 @@ bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
         if(c && c->key() == Qt::Key_Return)
         {
             event->ignore();
-            kDebug() << "Key event pass";
+            qCDebug(KIPIPLUGINS_LOG) << "Key event pass";
             return false;
 
         }

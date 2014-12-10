@@ -89,7 +89,7 @@ void Plugin_ImgurExport::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -129,7 +129,7 @@ void Plugin_ImgurExport::slotActivate()
 
     d->winExport->reactivate();
 
-    kDebug() << "We have activated the imgur exporter!";
+    qCDebug(KIPIPLUGINS_LOG) << "We have activated the imgur exporter!";
 }
 
 } // namespace KIPIImgurExportPlugin

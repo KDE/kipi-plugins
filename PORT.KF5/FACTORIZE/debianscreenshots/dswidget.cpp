@@ -223,13 +223,13 @@ void DsWidget::slotCompletePackageNameFinished(QNetworkReply* reply)
     // Check if this is the reply for the last request, or a delayed reply we are receiving just now
     if( QString::compare(replyUrl.toString(), m_lastQueryUrl.toString(), Qt::CaseInsensitive) != 0 )
     {
-        kDebug() << "Received a delayed reply, discarding it";
+        qCDebug(KIPIPLUGINS_LOG) << "Received a delayed reply, discarding it";
         return; // It was a delayed reply, discard it
     }
 
     if ( reply->error() )
     {
-        kDebug() << "Didn't receive a reply for request " << replyUrl.toEncoded().constData() << " - " <<  qPrintable(reply->errorString());
+        qCDebug(KIPIPLUGINS_LOG) << "Didn't receive a reply for request " << replyUrl.toEncoded().constData() << " - " <<  qPrintable(reply->errorString());
     }
     else
     {
@@ -237,7 +237,7 @@ void DsWidget::slotCompletePackageNameFinished(QNetworkReply* reply)
 
         if( ba.isEmpty() )
         {
-            kDebug() << "No completion data received for request " << replyUrl.toEncoded().constData() << "(probably no package matches that pattern)";
+            qCDebug(KIPIPLUGINS_LOG) << "No completion data received for request " << replyUrl.toEncoded().constData() << "(probably no package matches that pattern)";
             return;
         }
 
@@ -278,7 +278,7 @@ void DsWidget::slotFindVersionsForPackageFinished(QNetworkReply* reply)
 
     if (reply->error())
     {
-        kWarning() << "Download of " << replyUrl.toEncoded().constData() << "failed: " <<  qPrintable(reply->errorString());
+        qCWarning(KIPIPLUGINS_LOG) << "Download of " << replyUrl.toEncoded().constData() << "failed: " <<  qPrintable(reply->errorString());
     }
     else
     {
@@ -290,7 +290,7 @@ void DsWidget::slotFindVersionsForPackageFinished(QNetworkReply* reply)
 
         if (ok)
         {
-            kDebug() << "Query " << replyUrl.toEncoded().constData() << "succeeded";
+            qCDebug(KIPIPLUGINS_LOG) << "Query " << replyUrl.toEncoded().constData() << "succeeded";
 
             QMap<QString, QVariant> versions = versionSuggestions.toMap();
 
@@ -313,7 +313,7 @@ void DsWidget::slotFindVersionsForPackageFinished(QNetworkReply* reply)
         }
         else
         {
-            kDebug() << "Query " << replyUrl.toEncoded().constData() << "failed";
+            qCDebug(KIPIPLUGINS_LOG) << "Query " << replyUrl.toEncoded().constData() << "failed";
         }
     }
 

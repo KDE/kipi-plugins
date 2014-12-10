@@ -80,7 +80,7 @@ void Plugin_ExpoBlending::setup(QWidget* const widget)
     m_interface = interface();
     if (!m_interface)
     {
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
@@ -105,7 +105,7 @@ void Plugin_ExpoBlending::slotActivate()
 {
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

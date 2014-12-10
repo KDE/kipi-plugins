@@ -174,7 +174,7 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
 
     readSettings();
 
-    kDebug() << "Calling Login method";
+    qCDebug(KIPIPLUGINS_LOG) << "Calling Login method";
     buttonStateChange(m_talker->loggedIn());
     authenticate();
 }
@@ -344,12 +344,12 @@ void FbWindow::authenticate()
     // Converting old world session keys into OAuth2 tokens
     if (! m_sessionKey.isEmpty() && m_accessToken.isEmpty())
     {
-        kDebug() << "Exchanging session tokens to OAuth";
+        qCDebug(KIPIPLUGINS_LOG) << "Exchanging session tokens to OAuth";
         m_talker->exchangeSession(m_sessionKey);
     }
     else
     {
-        kDebug() << "Calling Login method";
+        qCDebug(KIPIPLUGINS_LOG) << "Calling Login method";
         m_talker->authenticate(m_accessToken, m_sessionExpires);
     }
 }
@@ -415,7 +415,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
         albumDebug.append(album.id + ": " + album.title + '\n');
     }
 
-    kDebug() << "Received albums (errCode = " << errCode << ", errMsg = "
+    qCDebug(KIPIPLUGINS_LOG) << "Received albums (errCode = " << errCode << ", errMsg = "
              << errMsg << "): " << albumDebug;
 
     if (errCode != 0)
@@ -557,7 +557,7 @@ void FbWindow::slotBusy(bool val)
 
 void FbWindow::slotUserChangeRequest()
 {
-    kDebug() << "Slot Change User Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request";
 
     if (m_talker->loggedIn())
     {
@@ -571,7 +571,7 @@ void FbWindow::slotUserChangeRequest()
 
 void FbWindow::slotReloadAlbumsRequest(long long userID)
 {
-    kDebug() << "Reload Albums Request for UID:" << userID;
+    qCDebug(KIPIPLUGINS_LOG) << "Reload Albums Request for UID:" << userID;
 
     if (userID == 0)
     {
@@ -588,11 +588,11 @@ void FbWindow::slotReloadAlbumsRequest(long long userID)
 
 void FbWindow::slotNewAlbumRequest()
 {
-    kDebug() << "Slot New Album Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot New Album Request";
 
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
-        kDebug() << "Calling New Album method";
+        qCDebug(KIPIPLUGINS_LOG) << "Calling New Album method";
         FbAlbum newAlbum;
         m_albumDlg->getAlbumProperties(newAlbum);
         m_talker->createAlbum(newAlbum);
@@ -601,7 +601,7 @@ void FbWindow::slotNewAlbumRequest()
 
 void FbWindow::slotStartTransfer()
 {
-    kDebug() << "slotStartTransfer invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotStartTransfer invoked";
 
     if (m_import)
     {
@@ -626,7 +626,7 @@ void FbWindow::slotStartTransfer()
         }
 
         m_currentAlbumID = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
-        kDebug() << "upload request got album id from widget: " << m_currentAlbumID;
+        qCDebug(KIPIPLUGINS_LOG) << "upload request got album id from widget: " << m_currentAlbumID;
         m_imagesTotal    = m_transferQueue.count();
         m_imagesCount    = 0;
 
@@ -665,7 +665,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
 
     if (isRAW)
     {
-        kDebug() << "Get RAW preview " << imgPath;
+        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
         KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
     }
     else
@@ -687,12 +687,12 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     if (m_widget->m_resizeChB->isChecked()
         && (image.width() > maxDim || image.height() > maxDim))
     {
-        kDebug() << "Resizing to " << maxDim;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                              Qt::SmoothTransformation);
     }
 
-    kDebug() << "Saving to temp file: " << m_tmpPath;
+    qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << m_tmpPath;
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image

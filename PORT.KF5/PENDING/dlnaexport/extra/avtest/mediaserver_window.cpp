@@ -83,7 +83,7 @@ MediaServerWindow::MediaServerWindow(QWidget *parent) :
     config.setPathToDeviceDescription(filePath);
     config.setCacheControlMaxAge(180);
 
-    kDebug() << "filepath properly set : " << filePath;
+    qCDebug(KIPIPLUGINS_LOG) << "filepath properly set : " << filePath;
 
     HDeviceHostConfiguration hostConfiguration;
     hostConfiguration.setDeviceModelCreator(creator);

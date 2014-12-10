@@ -578,7 +578,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
             }
             default:
             {
-                kWarning() << "Unknown action";
+                qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                 break;
             }
         }
@@ -598,7 +598,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                     break;
                 }
             }
@@ -624,7 +624,7 @@ void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action";
                     break;
                 }
             }

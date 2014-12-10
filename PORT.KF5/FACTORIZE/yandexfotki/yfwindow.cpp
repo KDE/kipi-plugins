@@ -519,7 +519,7 @@ void YandexFotkiWindow::slotChangeUserClicked()
 
 void YandexFotkiWindow::slotCloseEvent(QCloseEvent* event)
 {
-    kDebug() << "closeEvent";
+    qCDebug(KIPIPLUGINS_LOG) << "closeEvent";
     writeSettings();
     reset();
     event->accept();
@@ -583,7 +583,7 @@ void YandexFotkiWindow::authenticate(bool forceAuthWindow)
 
     /*else
     {
-        kDebug() << "Checking old token...";
+        qCDebug(KIPIPLUGINS_LOG) << "Checking old token...";
         m_talker.checkToken();
         return;
     }
@@ -646,8 +646,8 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     const YandexFotkiPhoto::Access access = static_cast<YandexFotkiPhoto::Access>(
                                             m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
 
-    kDebug() << "";
-    kDebug() << "----";
+    qCDebug(KIPIPLUGINS_LOG) << "";
+    qCDebug(KIPIPLUGINS_LOG) << "----";
     m_transferQueue.clear();
 
     foreach(const KUrl& url, m_imgList->imageUrls(true))
@@ -677,7 +677,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         {
             if (policy == POLICY_SKIP)
             {
-                kDebug() << "SKIP: " << imgPath;
+                qCDebug(KIPIPLUGINS_LOG) << "SKIP: " << imgPath;
                 continue;
             }
 
@@ -727,11 +727,11 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
 
         if (updateFile)
         {
-            kDebug() << "METADATA + IMAGE: " << imgPath;
+            qCDebug(KIPIPLUGINS_LOG) << "METADATA + IMAGE: " << imgPath;
         }
         else
         {
-            kDebug() << "METADATA: " << imgPath;
+            qCDebug(KIPIPLUGINS_LOG) << "METADATA: " << imgPath;
         }
     }
 
@@ -740,8 +740,8 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         return;    // nothing to do
     }
 
-    kDebug() << "----";
-    kDebug() << "";
+    qCDebug(KIPIPLUGINS_LOG) << "----";
+    qCDebug(KIPIPLUGINS_LOG) << "";
 
     updateControls(false);
     updateNextPhoto();
@@ -785,7 +785,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
                 if (m_resizeCheck->isChecked() && (image.width() > maxDim || image.height() > maxDim))
                 {
-                    kDebug() << "Resizing to " << maxDim;
+                    qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
                     image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                          Qt::SmoothTransformation);
                 }
@@ -824,7 +824,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
         const YandexFotkiAlbum& album = m_talker.albums().at(m_albumsCombo->currentIndex());
 
-        kDebug() << photo.originalUrl();
+        qCDebug(KIPIPLUGINS_LOG) << photo.originalUrl();
 
         m_talker.updatePhoto(photo, album);
 
@@ -859,7 +859,7 @@ void YandexFotkiWindow::slotReloadAlbumsRequest()
 
 void YandexFotkiWindow::slotStartTransfer()
 {
-    kDebug() << "slotStartTransfer invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotStartTransfer invoked";
 
     if (m_albumsCombo->currentIndex() == -1 || m_albumsCombo->count() == 0)
     {
@@ -873,7 +873,7 @@ void YandexFotkiWindow::slotStartTransfer()
         // list photos of the album, then start upload
         const YandexFotkiAlbum& album = m_talker.albums().at(m_albumsCombo->currentIndex());
 
-        kDebug() << "Album selected" << album;
+        qCDebug(KIPIPLUGINS_LOG) << "Album selected" << album;
 
         updateControls(false);
         m_talker.listPhotos(album);
@@ -900,7 +900,7 @@ void YandexFotkiWindow::slotError()
 /*
         case YandexFotkiTalker::STATE_CHECKTOKEN_INVALID:
             // remove old expired token
-            kDebug() << "CheckToken invalid";
+            qCDebug(KIPIPLUGINS_LOG) << "CheckToken invalid";
             m_talker.setToken(QString());
             // don't say anything, simple show new auth window
             authenticate(true);
@@ -918,7 +918,7 @@ void YandexFotkiWindow::slotError()
             break;
         case YandexFotkiTalker::STATE_UPDATEPHOTO_FILE_ERROR:
         case YandexFotkiTalker::STATE_UPDATEPHOTO_INFO_ERROR:
-            kDebug() << "UpdatePhotoError";
+            qCDebug(KIPIPLUGINS_LOG) << "UpdatePhotoError";
             if (KMessageBox::warningContinueCancel(this,
                      i18n("Failed to upload image %1\n"
                           "Do you want to continue?",
@@ -940,7 +940,7 @@ void YandexFotkiWindow::slotError()
             }
             break;
         default:
-            kDebug() << "Unhandled error" << m_talker.state();
+            qCDebug(KIPIPLUGINS_LOG) << "Unhandled error" << m_talker.state();
             KMessageBox::error(this, i18n("Unknown error"));
     }
 
@@ -951,13 +951,13 @@ void YandexFotkiWindow::slotError()
 
 void YandexFotkiWindow::slotGetServiceDone()
 {
-    kDebug() << "GetService Done";
+    qCDebug(KIPIPLUGINS_LOG) << "GetService Done";
     m_talker.getSession();
 }
 
 void YandexFotkiWindow::slotGetSessionDone()
 {
-    kDebug() << "GetSession Done";
+    qCDebug(KIPIPLUGINS_LOG) << "GetSession Done";
     m_talker.getToken();
 }
 
@@ -993,7 +993,7 @@ void YandexFotkiWindow::slotListAlbumsDone(const QList<YandexFotkiAlbum>& albums
 
 void YandexFotkiWindow::slotUpdatePhotoDone(YandexFotkiPhoto& photo)
 {
-    kDebug() << "photoUploaded" << photo;
+    qCDebug(KIPIPLUGINS_LOG) << "photoUploaded" << photo;
 
     KPMetadata meta;
 
@@ -1004,7 +1004,7 @@ void YandexFotkiWindow::slotUpdatePhotoDone(YandexFotkiPhoto& photo)
         if (meta.setXmpTagString(XMP_SERVICE_ID, photo.urn(), false) &&
             meta.save(photo.originalUrl()))
         {
-            kDebug() << "MARK: " << photo.originalUrl();
+            qCDebug(KIPIPLUGINS_LOG) << "MARK: " << photo.originalUrl();
         }
     }
 
@@ -1014,7 +1014,7 @@ void YandexFotkiWindow::slotUpdatePhotoDone(YandexFotkiPhoto& photo)
 
 void YandexFotkiWindow::slotUpdateAlbumDone()
 {
-    kDebug() << "Album created";
+    qCDebug(KIPIPLUGINS_LOG) << "Album created";
     m_albumsCombo->clear();
     m_talker.listAlbums();
 }

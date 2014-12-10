@@ -240,7 +240,7 @@ void GDWindow::slotSetUserName(const QString& msg)
 void GDWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
 {
     m_widget->m_albumsCoB->clear();
-    kDebug() << "slotListAlbumsDone1:" << list.size();
+    qCDebug(KIPIPLUGINS_LOG) << "slotListAlbumsDone1:" << list.size();
 
     for(int i=0;i<list.size();i++)
     {
@@ -275,7 +275,7 @@ void GDWindow::slotBusy(bool val)
 
 void GDWindow::slotTextBoxEmpty()
 {
-    kDebug() << "in slotTextBoxEmpty";
+    qCDebug(KIPIPLUGINS_LOG) << "in slotTextBoxEmpty";
     KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
                                   "To complete the authentication click \"Change Account\", "
                                   "or \"Start Upload\" to authenticate again."));
@@ -316,7 +316,7 @@ void GDWindow::slotStartTransfer()
     {
         KPImageInfo info(m_widget->m_imgList->imageUrls().value(i));
         GDPhoto temp;
-        kDebug() << "in start transfer info " <<info.title() << info.description();
+        qCDebug(KIPIPLUGINS_LOG) << "in start transfer info " <<info.title() << info.description();
         temp.title          = info.title();
         temp.description    = info.description().section("\n",0,0);
 
@@ -339,7 +339,7 @@ void GDWindow::slotStartTransfer()
 
 void GDWindow::uploadNextPhoto()
 {
-    kDebug() << "in upload nextphoto " << m_transferQueue.count();
+    qCDebug(KIPIPLUGINS_LOG) << "in upload nextphoto " << m_transferQueue.count();
 
     if(m_transferQueue.isEmpty())
     {
@@ -388,7 +388,7 @@ void GDWindow::slotAddPhotoSucceeded()
     m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
     m_transferQueue.pop_front();
     m_imagesCount++;
-    kDebug() << "In slotAddPhotoSucceeded" << m_imagesCount;
+    qCDebug(KIPIPLUGINS_LOG) << "In slotAddPhotoSucceeded" << m_imagesCount;
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
     uploadNextPhoto();

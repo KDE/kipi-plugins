@@ -150,7 +150,7 @@ void ImgurTalker::parseResponse(const QByteArray& buffer)
         emit signalError(m_currentUrl, error);
 
         // received something unexpected
-        kDebug() << error.message;
+        qCDebug(KIPIPLUGINS_LOG) << error.message;
     }
 
     emit signalBusy(false);
@@ -165,7 +165,7 @@ void ImgurTalker::slotResult(KJob* kjob)
         ImgurError err;
         err.message = i18n("Upload failed");
         emit signalError(m_currentUrl, err); //job->errorString()
-        kDebug() << "Error :" << job->errorString();
+        qCDebug(KIPIPLUGINS_LOG) << "Error :" << job->errorString();
     }
 
     parseResponse(d->buffer);
@@ -220,7 +220,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     QJson::Parser p;
     QVariant      r = p.parse(data, &ok);
 
-//    kDebug() << data;
+//    qCDebug(KIPIPLUGINS_LOG) << data;
     if (ok)
     {
         QMap<QString, QVariant> m = r.toMap();
@@ -278,7 +278,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
             }
 
             emit signalError(m_currentUrl, error); // p.errorString()
-            kDebug() << "Imgur Error:" << p.errorString();
+            qCDebug(KIPIPLUGINS_LOG) << "Imgur Error:" << p.errorString();
         }
 
         if (responseType == "upload" )
@@ -407,7 +407,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
         error.message = i18n("Parse error");
 
         emit signalError (m_currentUrl, error);
-        kDebug() << "Parse Error:" << p.errorString();
+        qCDebug(KIPIPLUGINS_LOG) << "Parse Error:" << p.errorString();
     }
 
     return ok;
@@ -419,7 +419,7 @@ void ImgurTalker::imageUpload (const KUrl& filePath)
 
     setCurrentUrl(filePath);
 
-    kDebug() << "Anonymous upload of " << filePath;
+    qCDebug(KIPIPLUGINS_LOG) << "Anonymous upload of " << filePath;
 
     emit signalUploadStart(filePath);
     emit signalBusy(true);

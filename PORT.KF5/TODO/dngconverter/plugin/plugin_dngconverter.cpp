@@ -72,7 +72,7 @@ void Plugin_DNGConverter::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -100,7 +100,7 @@ void Plugin_DNGConverter::slotActivate()
 {
     if (!interface())
     {
-        kError() << "Kipi interface is null!" ;
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!" ;
         return;
     }
 

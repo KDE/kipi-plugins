@@ -198,7 +198,7 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
 
     readSettings();
 
-    kDebug() << "Calling Login method";
+    qCDebug(KIPIPLUGINS_LOG) << "Calling Login method";
     buttonStateChange(m_talker->loggedIn());
 
 
@@ -585,7 +585,7 @@ void SmugWindow::slotBusy(bool val)
 
 void SmugWindow::slotUserChangeRequest(bool anonymous)
 {
-    kDebug() << "Slot Change User Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request";
 
     if (m_talker->loggedIn())
         m_talker->logout();
@@ -624,14 +624,14 @@ void SmugWindow::slotReloadAlbumsRequest()
 
 void SmugWindow::slotNewAlbumRequest()
 {
-    kDebug() << "Slot New Album Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot New Album Request";
 
     // get list of album templates from SmugMug to fill in dialog
     m_talker->listAlbumTmpl();
 
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
-        kDebug() << "Calling New Album method";
+        qCDebug(KIPIPLUGINS_LOG) << "Calling New Album method";
         m_currentTmplID = m_albumDlg->m_templateCoB->itemData(
                         m_albumDlg->m_templateCoB->currentIndex()).toInt();
         m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
@@ -645,7 +645,7 @@ void SmugWindow::slotNewAlbumRequest()
 
 void SmugWindow::slotStartTransfer()
 {
-    kDebug() << "slotStartTransfer invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotStartTransfer invoked";
 
     if (m_import)
     {
@@ -682,9 +682,9 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->progressScheduled(i18n("Smug Export"), true, true);
         m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
 
-        kDebug() << "m_currentAlbumID" << m_currentAlbumID;
+        qCDebug(KIPIPLUGINS_LOG) << "m_currentAlbumID" << m_currentAlbumID;
         uploadNextPhoto();
-        kDebug() << "slotStartTransfer done";
+        qCDebug(KIPIPLUGINS_LOG) << "slotStartTransfer done";
     }
 }
 
@@ -693,7 +693,7 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     QImage image;
     if (isRAW)
     {
-        kDebug() << "Get RAW preview " << imgPath;
+        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
         KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
     }
     else
@@ -713,12 +713,12 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     if (m_widget->m_resizeChB->isChecked()
         && (image.width() > maxDim || image.height() > maxDim))
     {
-        kDebug() << "Resizing to " << maxDim;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                              Qt::SmoothTransformation);
     }
 
-    kDebug() << "Saving to temp file: " << m_tmpPath;
+    qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << m_tmpPath;
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta-data to temporary image

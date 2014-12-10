@@ -117,7 +117,7 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interfac
                              + QString(picasaweb_video_extentions));
 
     patternList.prepend(allSupportedFiles);
-    kDebug() << allSupportedFiles;
+    qCDebug(KIPIPLUGINS_LOG) << allSupportedFiles;
 
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete

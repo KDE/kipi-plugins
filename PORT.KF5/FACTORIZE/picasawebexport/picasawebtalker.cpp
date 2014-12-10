@@ -162,7 +162,7 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
 {
     if (!token.isNull() || token.length() > 0)
     {
-        kDebug() << " Checktoken being called" << token ;
+        qCDebug(KIPIPLUGINS_LOG) << " Checktoken being called" << token ;
         m_loginName = username;
         m_username  = username;
         m_userEmailId = userEmailId;
@@ -187,7 +187,7 @@ void PicasawebTalker::checkToken(const QString& token)
 
     KUrl url("http://picasaweb.google.com/data/feed/api");
     url.addPath("/user/" + m_username);
-    kDebug() << " token value is " << token ;
+    qCDebug(KIPIPLUGINS_LOG) << " token value is " << token ;
     QString auth_string = "GoogleLogin auth=" + token;
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
@@ -663,7 +663,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_CHECKTOKEN) 
         {
-            kDebug() << " Error encountered in checking token, require user credentials" ;
+            qCDebug(KIPIPLUGINS_LOG) << " Error encountered in checking token, require user credentials" ;
             return getToken(m_username, "");
         }
     }
@@ -730,7 +730,7 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray& data)
         if ( strList.count() > 0 )
         {
             m_token = strList[1].trimmed();
-            kDebug() << " m_token as obtained in token Response " << m_token ;
+            qCDebug(KIPIPLUGINS_LOG) << " m_token as obtained in token Response " << m_token ;
             success = true;
         }
     }

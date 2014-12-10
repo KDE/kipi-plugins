@@ -289,7 +289,7 @@ void PicasawebWindow::writeSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("PicasawebExport Settings");
-    kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
+    qCDebug(KIPIPLUGINS_LOG) << "Writing token value as ########### " << m_talker->token() << " #######" ;
     grp.writeEntry("token",         m_talker->token());
     grp.writeEntry("username",      m_username);
     grp.writeEntry("userEmail",     m_userEmailId);
@@ -502,7 +502,7 @@ void PicasawebWindow::slotBusy(bool val)
 
 void PicasawebWindow::slotUserChangeRequest(bool /*anonymous*/)
 {
-    kDebug() << "Slot Change User Request ";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request ";
     m_talker->authenticate();
 }
 
@@ -513,7 +513,7 @@ void PicasawebWindow::slotReloadAlbumsRequest()
 
 void PicasawebWindow::slotNewAlbumRequest()
 {
-    kDebug() << "Slot New Album Request";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot New Album Request";
 
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
@@ -525,7 +525,7 @@ void PicasawebWindow::slotNewAlbumRequest()
 
 void PicasawebWindow::slotStartTransfer()
 {
-    kDebug() << "slotStartTransfer invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotStartTransfer invoked";
 
     if (m_import)
     {
@@ -556,7 +556,7 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 
     if (isRAW)
     {
-        kDebug() << "Get RAW preview " << imgPath;
+        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << imgPath;
         KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
     }
     else
@@ -575,12 +575,12 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 
     if (m_widget->m_resizeChB->isChecked() && (image.width() > maxDim || image.height() > maxDim))
     {
-        kDebug() << "Resizing to " << maxDim;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                              Qt::SmoothTransformation);
     }
 
-    kDebug() << "Saving to temp file: " << m_tmpPath;
+    qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << m_tmpPath;
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image
@@ -782,7 +782,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         bRet = meta.save(fileName);
     }
 
-    kDebug() << "bRet : " << bRet;
+    qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
 
     m_widget->m_imgList->processed(m_transferQueue.first().first, (errCode == 0));
 
@@ -874,7 +874,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const
                 bRet = meta.save(tmpUrl.toLocalFile());
             }
 
-            kDebug() << "bRet : " << bRet;
+            qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
 
             m_transferQueue.pop_front();
             m_imagesCount++;

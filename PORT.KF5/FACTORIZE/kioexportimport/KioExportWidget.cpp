@@ -153,7 +153,7 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 
 void KioExportWidget::updateTargetLabel()
 {
-    kDebug() << "Call for url "
+    qCDebug(KIPIPLUGINS_LOG) << "Call for url "
              << m_targetUrl.prettyUrl() << ", valid = "
              << m_targetUrl.isValid();
 

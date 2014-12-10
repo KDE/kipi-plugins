@@ -100,7 +100,7 @@ void Plugin_Kopete::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -111,7 +111,7 @@ void Plugin_Kopete::slotAboutToShowMenu()
 {
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 
@@ -156,7 +156,7 @@ void Plugin_Kopete::slotAboutToShowMenu()
         }
 
         bool canAcceptFiles = contactProperties.value().value("file_reachable", false).toBool();
-        kDebug() << "Contact " << contact << (canAcceptFiles ? "can" : "cannot") << " accept files via IM";
+        qCDebug(KIPIPLUGINS_LOG) << "Contact " << contact << (canAcceptFiles ? "can" : "cannot") << " accept files via IM";
         if(!canAcceptFiles)
         {
             continue;
@@ -179,7 +179,7 @@ void Plugin_Kopete::slotAboutToShowMenu()
 
 void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 {
-    kDebug() << "Received a request to transfer file(s) to contact " << contactId;
+    qCDebug(KIPIPLUGINS_LOG) << "Received a request to transfer file(s) to contact " << contactId;
 
     KUrl::List imgList   = interface()->currentSelection().images();
 
@@ -201,7 +201,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 
     foreach(const KUrl& imgUrl, imgList)
     {
-        kDebug() << "Sending file " << imgUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Sending file " << imgUrl.toLocalFile();
         m_kopeteDBus.call("sendFile", QVariant::fromValue(contactId), QVariant::fromValue(imgUrl.toLocalFile()));
     }
 }

@@ -97,7 +97,7 @@ void Plugin_BatchProcessImages::setup(QWidget* const widget)
     m_iface = interface();
     if (!m_iface)
     {
-        kError() << "Kipi interface is null!" ;
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!" ;
         return;
     }
 
@@ -233,7 +233,7 @@ void Plugin_BatchProcessImages::slotActivate()
 {
     if (!m_iface)
     {
-        kError() << "Kipi interface is null!" ;
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!" ;
         return;
     }
 
@@ -303,7 +303,7 @@ void Plugin_BatchProcessImages::slotActivate()
     }
     else
     {
-        kWarning() << "The impossible happened... unknown batch action specified";
+        qCWarning(KIPIPLUGINS_LOG) << "The impossible happened... unknown batch action specified";
         return;
     }
 }

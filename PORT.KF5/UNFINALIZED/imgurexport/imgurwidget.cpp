@@ -216,7 +216,7 @@ void ImgurWidget::slotImageListChanged()
 void ImgurWidget::slotImageUploadStart(const KUrl& imgPath)
 {
     d->processedCount++;
-    kDebug() << "Processing" << imgPath;
+    qCDebug(KIPIPLUGINS_LOG) << "Processing" << imgPath;
 //    imagesList()->clearProcessedStatus();
 
     imagesList()->processing(imgPath);
@@ -239,9 +239,9 @@ void ImgurWidget::slotImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess
     meta.setXmpTagString("Xmp.kipi.ImgurDeleteHash", success.image.deletehash);
     bool saved = meta.applyChanges();
 
-    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
-    kDebug() << "URL" << ImgurConnection::pageURL(success.image.hash);
-    kDebug() << "Delete URL" << ImgurConnection::deleteURL(success.image.deletehash);
+    qCDebug(KIPIPLUGINS_LOG) << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
+    qCDebug(KIPIPLUGINS_LOG) << "URL" << ImgurConnection::pageURL(success.image.hash);
+    qCDebug(KIPIPLUGINS_LOG) << "Delete URL" << ImgurConnection::deleteURL(success.image.deletehash);
 
     imagesList()->processed(imgPath, true);
 

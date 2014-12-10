@@ -143,7 +143,7 @@ void Gallery::load()
     KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");
 
-    kDebug() << "Reading data from kipirc file..";
+    qCDebug(KIPIPLUGINS_LOG) << "Reading data from kipirc file..";
 
     d->mName     = group.readEntry("Name",     QString() );
     d->mUrl      = group.readEntry("URL",      QString() );
@@ -157,7 +157,7 @@ void Gallery::save()
     KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");
 
-    kDebug() << "Saving data to kipirc file..";
+    qCDebug(KIPIPLUGINS_LOG) << "Saving data to kipirc file..";
 
     group.writeEntry(QString("Name"),     name() );
     group.writeEntry(QString("URL"),      url() );
@@ -165,7 +165,7 @@ void Gallery::save()
     group.writeEntry(QString("Version"),  version() );
     group.writeEntry(QString("Password"), password() );
 
-    kDebug() << "syncing..";
+    qCDebug(KIPIPLUGINS_LOG) << "syncing..";
     config.sync();
 }
 

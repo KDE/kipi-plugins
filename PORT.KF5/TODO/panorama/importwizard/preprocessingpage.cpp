@@ -254,7 +254,7 @@ void PreProcessingPage::slotShowDetails()
 
 void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
-    kDebug() << "SlotAction";
+    qCDebug(KIPIPLUGINS_LOG) << "SlotAction";
     QString text;
 
     QMutexLocker lock(&d->progressMutex);
@@ -291,7 +291,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -326,7 +326,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
                     break;
                 }
             }

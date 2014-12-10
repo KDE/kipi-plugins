@@ -218,7 +218,7 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
         }
         default:
         {
-            kDebug() << "Invalid output file format" ;
+            qCDebug(KIPIPLUGINS_LOG) << "Invalid output file format" ;
             return false;
         }
     }
@@ -226,7 +226,7 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
     if (m_cancel)
     {
         if (::remove(QFile::encodeName(destPath)) != 0)
-            kDebug() << "Cannot remove " << destPath;
+            qCDebug(KIPIPLUGINS_LOG) << "Cannot remove " << destPath;
 
         return false;
     }

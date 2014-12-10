@@ -80,7 +80,7 @@ void FacebookJob::loginDone(int errCode, const QString& error)
     cfgGroup.writeEntry("Expires",     m_talk.getSessionExpires());
     cfgGroup.sync();
 
-    kDebug() << "logged in" << m_talk.getSessionExpires();
+    qCDebug(KIPIPLUGINS_LOG) << "logged in" << m_talk.getSessionExpires();
     m_talk.listAlbums();
 }
 
@@ -120,7 +120,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
         addPhoto(0, QString());
     }
 
-    kDebug() << "listed" << id;
+    qCDebug(KIPIPLUGINS_LOG) << "listed" << id;
 }
 
 void FacebookJob::albumCreated(int errCode, const QString& error, const QString& albumId)
@@ -136,7 +136,7 @@ void FacebookJob::albumCreated(int errCode, const QString& error, const QString&
     setPercent(30);
     m_albumId = albumId;
     addPhoto(0, QString());
-    kDebug() << "album created" << albumId;
+    qCDebug(KIPIPLUGINS_LOG) << "album created" << albumId;
 }
 
 void FacebookJob::addPhoto(int code, const QString& message)

@@ -152,7 +152,7 @@ struct Theme::Private
             }
             else
             {
-                kWarning() << "Parameter '" << internalName << "' has unknown type '" << type << "'. Falling back to string type\n";
+                qCWarning(KIPIPLUGINS_LOG) << "Parameter '" << internalName << "' has unknown type '" << type << "'. Falling back to string type\n";
                 parameter = new StringThemeParameter();
             }
 

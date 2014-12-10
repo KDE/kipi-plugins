@@ -84,7 +84,7 @@ void Plugin_KMLExport::setup(QWidget* const widget)
 
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!" ;
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!" ;
         return;
     }
 
@@ -110,7 +110,7 @@ void Plugin_KMLExport::slotKMLExport()
 {
     if (!m_interface)
     {
-        kError() << "Kipi interface is null!" ;
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!" ;
         return;
     }
 
@@ -118,7 +118,7 @@ void Plugin_KMLExport::slotKMLExport()
 
     if ( !selection.isValid() )
     {
-        kDebug() << "No Selection!" ;
+        qCDebug(KIPIPLUGINS_LOG) << "No Selection!" ;
     }
     else
     {

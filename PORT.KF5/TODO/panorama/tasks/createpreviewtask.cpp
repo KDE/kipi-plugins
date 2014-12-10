@@ -62,7 +62,7 @@ void CreatePreviewTask::run()
     if (data.images.size() != preProcessedUrlsMap.size())
     {
         errString = i18n("Project file parsing failed.");
-        kDebug() << "Missing parsing data!";
+        qCDebug(KIPIPLUGINS_LOG) << "Missing parsing data!";
         successFlag = false;
         return;
     }
@@ -86,8 +86,8 @@ void CreatePreviewTask::run()
         if (it == ppum->constEnd())
         {
             errString = i18n("Unknown input file in the project file: %1", image.fileName);
-            kDebug() << "Unknown input File in the PTO: " << image.fileName;
-            kDebug() << "IMG: " << imgUrl.toLocalFile();
+            qCDebug(KIPIPLUGINS_LOG) << "Unknown input File in the PTO: " << image.fileName;
+            qCDebug(KIPIPLUGINS_LOG) << "IMG: " << imgUrl.toLocalFile();
             successFlag = false;
             return;
         }
@@ -110,7 +110,7 @@ void CreatePreviewTask::run()
     previewPtoUrl->setFileName("preview.pto");
     data.createFile(previewPtoUrl->toLocalFile());
 
-    kDebug() << "Preview PTO File created: " << previewPtoUrl->fileName();
+    qCDebug(KIPIPLUGINS_LOG) << "Preview PTO File created: " << previewPtoUrl->fileName();
 
     successFlag = true;
 }

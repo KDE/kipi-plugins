@@ -61,7 +61,7 @@ QString XmpInfo::isDerivate(const QString& image) const
     }
     else
     {
-        kWarning() << "Loading Metadata for file" << image << "failed";
+        qCWarning(KIPIPLUGINS_LOG) << "Loading Metadata for file" << image << "failed";
     }
 
     return QString("- unknown -");
@@ -80,7 +80,7 @@ XmpMM XmpInfo::getXmpMM(const QString& image) const
     }
     else
     {
-        kWarning() << "Loading Metadata for file" << image << "failed";
+        qCWarning(KIPIPLUGINS_LOG) << "Loading Metadata for file" << image << "failed";
     }
 
     return mm;

@@ -161,10 +161,10 @@ void DBTalker::continueWithAccessToken(const QString& msg1, const QString& msg2,
 void DBTalker::doOAuth()
 {
     KUrl url("https://api.dropbox.com/1/oauth/authorize");
-    kDebug() << "in doOAuth()" << m_oauthToken;
+    qCDebug(KIPIPLUGINS_LOG) << "in doOAuth()" << m_oauthToken;
     url.addQueryItem("oauth_token",m_oauthToken);
 
-    kDebug() << "OAuth URL: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -233,7 +233,7 @@ void DBTalker::getAccessToken()
 void DBTalker::createFolder(const QString& path)
 {
     //path also has name of new folder so send path parameter accordingly
-    kDebug() << "in cre fol " << path;
+    qCDebug(KIPIPLUGINS_LOG) << "in cre fol " << path;
 
     KUrl url("https://api.dropbox.com/1/fileops/create_folder");
     url.addQueryItem("root",m_root);
@@ -445,27 +445,27 @@ void DBTalker::slotResult(KJob* kjob)
     switch(m_state)
     {
         case (DB_REQ_TOKEN):
-            kDebug() << "In DB_REQ_TOKEN";
+            qCDebug(KIPIPLUGINS_LOG) << "In DB_REQ_TOKEN";
             parseResponseRequestToken(m_buffer);
             break;
         case (DB_ACCESSTOKEN):
-            kDebug() << "In DB_ACCESSTOKEN" << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In DB_ACCESSTOKEN" << m_buffer;
             parseResponseAccessToken(m_buffer);
             break;
         case (DB_LISTFOLDERS):
-            kDebug() << "In DB_LISTFOLDERS";
+            qCDebug(KIPIPLUGINS_LOG) << "In DB_LISTFOLDERS";
             parseResponseListFolders(m_buffer);
             break;
         case (DB_CREATEFOLDER):
-            kDebug() << "In DB_CREATEFOLDER";
+            qCDebug(KIPIPLUGINS_LOG) << "In DB_CREATEFOLDER";
             parseResponseCreateFolder(m_buffer);
             break;
         case (DB_ADDPHOTO):
-            kDebug() << "In DB_ADDPHOTO";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In DB_ADDPHOTO";// << m_buffer;
             parseResponseAddPhoto(m_buffer);
             break;
         case (DB_USERNAME):
-            kDebug() << "In DB_USERNAME";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In DB_USERNAME";// << m_buffer;
             parseResponseUserName(m_buffer);
             break;
         default:
@@ -596,9 +596,9 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
                     {
                         if(b[i] == "path" && i==4)
                         {
-                            kDebug() << i << " " << b[i] << " : " << qwer[b[i]] << " " << qwer[b[i]].value<QString>() << endl;
+                            qCDebug(KIPIPLUGINS_LOG) << i << " " << b[i] << " : " << qwer[b[i]] << " " << qwer[b[i]].value<QString>() << endl;
                             QString name = qwer[b[i]].value<QString>().section('/',-2);
-                            kDebug() << "str " << name;
+                            qCDebug(KIPIPLUGINS_LOG) << "str " << name;
                             list.append(qMakePair(qwer[b[i]].value<QString>(),name));
                             queue.enqueue(qwer[b[i]].value<QString>());
                             //listFolders(qwer[b[i]].value<QString>());

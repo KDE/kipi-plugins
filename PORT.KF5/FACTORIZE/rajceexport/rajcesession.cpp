@@ -79,15 +79,15 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
 
     if (maxDimension > 0 && ((unsigned) image.width() > maxDimension || (unsigned) image.height() > maxDimension))
     {
-        kDebug() << "Resizing to " << maxDimension;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing to " << maxDimension;
         image = image.scaled(maxDimension, maxDimension, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
 
-    kDebug() << "Saving to temp file: " << ret.scaledImagePath;
+    qCDebug(KIPIPLUGINS_LOG) << "Saving to temp file: " << ret.scaledImagePath;
     image.save(ret.scaledImagePath, "JPEG", jpgQuality);
 
     QImage thumb = image.scaled(thumbDimension, thumbDimension, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    kDebug() << "Saving thumb to temp file: " << ret.thumbPath;
+    qCDebug(KIPIPLUGINS_LOG) << "Saving thumb to temp file: " << ret.thumbPath;
     thumb.save(ret.thumbPath, "JPEG", jpgQuality);
 
     // copy meta data to temporary image
@@ -503,7 +503,7 @@ void AlbumListCommand::parseResponse(QXmlQuery& q, SessionState& state)
         q.evaluateTo(&detail);
         album.createDate = QDateTime::fromString(detail.trimmed(), "yyyy-MM-dd hh:mm:ss");
 
-        kDebug() << "Create date: " << detail.trimmed() << " = " << QDateTime::fromString(detail.trimmed(), "yyyy-MM-dd hh:mm:ss");
+        qCDebug(KIPIPLUGINS_LOG) << "Create date: " << detail.trimmed() << " = " << QDateTime::fromString(detail.trimmed(), "yyyy-MM-dd hh:mm:ss");
 
         q.setQuery("data(./updateDate)");
         q.evaluateTo(&detail);
@@ -562,7 +562,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
 
     if (isRaw)
     {
-        kDebug() << "Get RAW preview " << path;
+        qCDebug(KIPIPLUGINS_LOG) << "Get RAW preview " << path;
         KDcrawIface::KDcraw::loadRawPreview(m_image, path);
     }
     else
@@ -572,7 +572,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
 
     if (m_image.isNull())
     {
-        kDebug() << "Could not read in an image from " << path << ". Adding the photo will not work.";
+        qCDebug(KIPIPLUGINS_LOG) << "Could not read in an image from " << path << ". Adding the photo will not work.";
         return;
     }
 
@@ -659,7 +659,7 @@ QByteArray AddPhotoCommand::encode() const
 {
     if (m_image.isNull())
     {
-        kDebug() << m_imagePath << " could not be read, no data will be sent.";
+        qCDebug(KIPIPLUGINS_LOG) << m_imagePath << " could not be read, no data will be sent.";
         return QByteArray();
     }
 
@@ -672,7 +672,7 @@ QByteArray AddPhotoCommand::encode() const
 
     QString xml = getXml();
 
-    kDebug() << "Really sending:\n" << xml;
+    qCDebug(KIPIPLUGINS_LOG) << "Really sending:\n" << xml;
 
     //now we can create the form with all the info
     m_form->reset();
@@ -706,7 +706,7 @@ const SessionState& RajceSession::state() const
 
 void RajceSession::_startJob(RajceCommand* command)
 {
-    kDebug() << "Sending command:\n" << command->getXml();
+    qCDebug(KIPIPLUGINS_LOG) << "Sending command:\n" << command->getXml();
 
     QByteArray data             = command->encode();
     KIO::TransferJob* const job = KIO::http_post(RAJCE_URL, data, KIO::HideProgressInfo);
@@ -760,7 +760,7 @@ void RajceSession::finished(KJob*)
 {
     QString response = QString::fromUtf8(m_buffer.data());
 
-    kDebug() << response;
+    qCDebug(KIPIPLUGINS_LOG) << response;
 
     m_queueAccess.lock();
 
@@ -773,7 +773,7 @@ void RajceSession::finished(KJob*)
 
     delete c;
 
-    kDebug() << "State after command: " << m_state;
+    qCDebug(KIPIPLUGINS_LOG) << "State after command: " << m_state;
 
     //let the users react on the command before we
     //let the next queued command in.
@@ -837,11 +837,11 @@ void RajceSession::clearLastError()
 
 void RajceSession::slotPercent(KJob* job, ulong percent)
 {
-    kDebug() << "Percent signalled: " << percent;
+    qCDebug(KIPIPLUGINS_LOG) << "Percent signalled: " << percent;
 
     if (job == m_currentJob)
     {
-        kDebug() << "Re-emitting percent";
+        qCDebug(KIPIPLUGINS_LOG) << "Re-emitting percent";
         emit busyProgress(m_commandQueue.head()->commandType(), percent);
     }
 }

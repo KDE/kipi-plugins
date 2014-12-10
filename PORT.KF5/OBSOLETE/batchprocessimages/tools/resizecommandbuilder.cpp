@@ -72,7 +72,7 @@ void ResizeCommandBuilder::setQuality(unsigned int quality)
 {
     if (quality > MAX_QUALITY)
     {
-        kWarning() << "Got quality > " << MAX_QUALITY << ": " << quality
+        qCWarning(KIPIPLUGINS_LOG) << "Got quality > " << MAX_QUALITY << ": " << quality
                         << ", truncating it to " << MAX_QUALITY;
         m_quality = MAX_QUALITY;
     }
@@ -86,7 +86,7 @@ void ResizeCommandBuilder::setFilterName(const QString& filterName)
 {
     if (!getAllowedFilters().contains(filterName))
     {
-        kWarning() << "Unknown filter with name" << filterName <<". Using default";
+        qCWarning(KIPIPLUGINS_LOG) << "Unknown filter with name" << filterName <<". Using default";
         m_filterName = "";
     }
     else
@@ -135,7 +135,7 @@ void OneDimResizeCommandBuilder::setSize(unsigned int size)
 {
     if (size < MIN_SIZE)
     {
-        kWarning() << "Got size beneath minimum " << MIN_SIZE << ": "
+        qCWarning(KIPIPLUGINS_LOG) << "Got size beneath minimum " << MIN_SIZE << ": "
                    << size << ". Truncating it to " << MIN_SIZE;
         m_size = MIN_SIZE;
     }
@@ -206,7 +206,7 @@ void TwoDimResizeCommandBuilder::setWidth(unsigned int width)
 {
     if (width < MIN_SIZE)
     {
-        kWarning() << "Got width beneath minimum " << MIN_SIZE << ": "
+        qCWarning(KIPIPLUGINS_LOG) << "Got width beneath minimum " << MIN_SIZE << ": "
                    << width << ". Truncating it to " << MIN_SIZE;
         m_width = MIN_SIZE;
     }
@@ -220,7 +220,7 @@ void TwoDimResizeCommandBuilder::setHeight(unsigned int height)
 {
     if (height < MIN_SIZE)
     {
-        kWarning() << "Got height beneath minimum " << MIN_SIZE << ": "
+        qCWarning(KIPIPLUGINS_LOG) << "Got height beneath minimum " << MIN_SIZE << ": "
                    << height << ". Truncating it to " << MIN_SIZE;
         m_height = MIN_SIZE;
     }
@@ -270,7 +270,7 @@ void NonProportionalResizeCommandBuilder::setWidth(unsigned int width)
 {
     if (width < MIN_SIZE)
     {
-        kWarning() << "Got width beneath minimum " << MIN_SIZE << ": "
+        qCWarning(KIPIPLUGINS_LOG) << "Got width beneath minimum " << MIN_SIZE << ": "
                    << width << ". Truncating it to " << MIN_SIZE;
         m_width = MIN_SIZE;
     }
@@ -284,7 +284,7 @@ void NonProportionalResizeCommandBuilder::setHeight(unsigned int height)
 {
     if (height < MIN_SIZE)
     {
-        kWarning() << "Got height beneath minimum " << MIN_SIZE << ": "
+        qCWarning(KIPIPLUGINS_LOG) << "Got height beneath minimum " << MIN_SIZE << ": "
                    << height << ". Truncating it to " << MIN_SIZE;
         m_height = MIN_SIZE;
     }
@@ -311,7 +311,7 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
                 BatchProcessImagesItem *item, const QString& albumDest)
 {
 
-    kDebug() << "resizing for settings: paperWidth = " << m_paperWidth
+    qCDebug(KIPIPLUGINS_LOG) << "resizing for settings: paperWidth = " << m_paperWidth
              << ", paperHeight = " << m_paperHeight << ", dpi = "
              << m_dpi;
 
@@ -320,7 +320,7 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
     bool loaded = img.load(item->pathSrc());
     if (!loaded)
     {
-        kError() << "Unable to load image " << item->pathSrc();
+        qCCritical(KIPIPLUGINS_LOG) << "Unable to load image " << item->pathSrc();
         return;
     }
 
@@ -344,7 +344,7 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
 		paperWidthInPixels  = (int)((float)(m_paperWidth  * m_dpi) / oneInchInMM);
 	}
 
-	kDebug() << "paper size in pixel: " << paperWidthInPixels << "x"
+	qCDebug(KIPIPLUGINS_LOG) << "paper size in pixel: " << paperWidthInPixels << "x"
              << paperHeightInPixels;
 
 	*proc << "convert" << "-verbose";

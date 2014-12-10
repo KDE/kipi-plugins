@@ -73,7 +73,7 @@ void CopyFilesTask::run()
     if (!panoFile.exists())
     {
         errString = i18n("Temporary panorama file does not exists.");
-        kDebug() << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -81,7 +81,7 @@ void CopyFilesTask::run()
     if (finalPanoFile.exists())
     {
         errString = i18n("A file named %1 already exists.", finalPanoUrl.fileName());
-        kDebug() << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -89,7 +89,7 @@ void CopyFilesTask::run()
     if (savePTO && !ptoFile.exists())
     {
         errString = i18n("Temporary project file does not exist.");
-        kDebug() << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -97,12 +97,12 @@ void CopyFilesTask::run()
     if (savePTO && finalPTOFile.exists())
     {
         errString = i18n("A file named %1 already exists.", finalPTOUrl.fileName());
-        kDebug() << "Final project file already exists: " + finalPTOUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " + finalPTOUrl.toLocalFile();
         successFlag = false;
         return;
     }
 
-    kDebug() << "Copying GPS info...";
+    qCDebug(KIPIPLUGINS_LOG) << "Copying GPS info...";
       
     // Find first src image which contain geolocation and save it to target pano file. 
     
@@ -110,13 +110,13 @@ void CopyFilesTask::run()
     
     for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
     {
-        kDebug() << i.key();
+        qCDebug(KIPIPLUGINS_LOG) << i.key();
 
         KPMetadata metaSrc(i.key().toLocalFile());
 
         if(metaSrc.getGPSInfo(alt, lat, lng))
         {
-            kDebug() << "GPS info found and saved in " << panoUrl;
+            qCDebug(KIPIPLUGINS_LOG) << "GPS info found and saved in " << panoUrl;
             KPMetadata metaDst(panoUrl.toLocalFile());
             metaDst.setGPSInfo(alt, lat, lng);
             metaDst.applyChanges();
@@ -144,21 +144,21 @@ void CopyFilesTask::run()
     metaDst.setImageDateTime(QDateTime::currentDateTime());
     metaDst.applyChanges();    
     
-    kDebug() << "Copying panorama file...";
+    qCDebug(KIPIPLUGINS_LOG) << "Copying panorama file...";
     
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
     {
         errString = i18n("Cannot move panorama from %1 to %2.",
                          panoUrl.toLocalFile(),
                          finalPanoUrl.toLocalFile());
-        kDebug() << "Cannot move panorama: QFile error = " << panoFile.error();
+        qCDebug(KIPIPLUGINS_LOG) << "Cannot move panorama: QFile error = " << panoFile.error();
         successFlag = false;
         return;
     }
 
     if (addGPlusMetadata)
     {
-        kDebug() << "Adding G+ metadata...";
+        qCDebug(KIPIPLUGINS_LOG) << "Adding G+ metadata...";
         KPMetadata metaIn(panoUrl.toLocalFile());
         KPMetadata metaOut(finalPanoUrl.toLocalFile());
         metaOut.registerXmpNameSpace("http://ns.google.com/photos/1.0/panorama/", "GPano");
@@ -170,7 +170,7 @@ void CopyFilesTask::run()
 
     if (savePTO)
     {
-        kDebug() << "Copying project file...";
+        qCDebug(KIPIPLUGINS_LOG) << "Copying project file...";
     
         if (!ptoFile.copy(finalPTOUrl.toLocalFile()))
         {
@@ -181,7 +181,7 @@ void CopyFilesTask::run()
             return;
         }
 
-        kDebug() << "Copying converted RAW files...";
+        qCDebug(KIPIPLUGINS_LOG) << "Copying converted RAW files...";
         
         for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
         {

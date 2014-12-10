@@ -83,7 +83,7 @@ void AutoCropTask::run()
 
     process->setProgram(args);
 
-    kDebug() << "pano_modify command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "pano_modify command line: " << process->program();
 
     process->start();
 
@@ -93,7 +93,7 @@ void AutoCropTask::run()
         successFlag = false;
         return;
     }
-    kDebug() << "pano_modify's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "pano_modify's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

@@ -37,7 +37,7 @@ bool PTOType::createFile(const QString& filepath)
 {
     QFile file(filepath);
     if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
-        kDebug() << "Cannot open " << filepath << " to write the pto file";
+        qCDebug(KIPIPLUGINS_LOG) << "Cannot open " << filepath << " to write the pto file";
         return false;
     }
 
@@ -114,7 +114,7 @@ bool PTOType::createFile(const QString& filepath)
                 out << " r:CROP";
             break;
         default:
-            kError() << "Unknown file format for pto file generation!";
+            qCCritical(KIPIPLUGINS_LOG) << "Unknown file format for pto file generation!";
             file.close();
             return false;
     }
@@ -279,7 +279,7 @@ bool PTOType::createFile(const QString& filepath)
                     out << "Re";
                     break;
                 case Optimisation::UNKNOWN:
-                    kError() << "Unknown optimisation parameter!";
+                    qCCritical(KIPIPLUGINS_LOG) << "Unknown optimisation parameter!";
                     file.close();
                     return false;
             }

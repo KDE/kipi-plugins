@@ -189,12 +189,12 @@ void Task::run()
 
             if (!ret)
             {
-                kDebug() << "Failed to update metadata in file " << d->url.fileName();
+                qCDebug(KIPIPLUGINS_LOG) << "Failed to update metadata in file " << d->url.fileName();
             }
         }
         else
         {
-            kDebug() << "Failed to load metadata from file " << d->url.fileName();
+            qCDebug(KIPIPLUGINS_LOG) << "Failed to load metadata from file " << d->url.fileName();
         }
 
         if (!ret)

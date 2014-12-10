@@ -205,7 +205,7 @@ void FinalPage::setMinidlnaBinaryPath(const QString& path)
 {
     if (!d->Mdlna)
     {
-        kDebug() << "d->Mdlna is null";
+        qCDebug(KIPIPLUGINS_LOG) << "d->Mdlna is null";
         return;
     }
 

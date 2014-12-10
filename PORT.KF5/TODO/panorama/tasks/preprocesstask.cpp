@@ -118,7 +118,7 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
             metaOut.setImageDimensions(QSize(preview.width(), preview.height()));
             metaOut.applyChanges();
         }
-        kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
+        qCDebug(KIPIPLUGINS_LOG) << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
     }
     else
@@ -203,7 +203,7 @@ bool PreProcessTask::convertRaw()
         return false;
     }
 
-    kDebug() << "Convert RAW output url: " << outUrl;
+    qCDebug(KIPIPLUGINS_LOG) << "Convert RAW output url: " << outUrl;
 
     return true;
 }

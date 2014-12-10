@@ -23,10 +23,9 @@
 
 #include "flashmanager.h"
 
-// KDE includes
+// Qt includes
 
-#include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 
 // LibKIPI includes
 
@@ -37,6 +36,7 @@
 #include "aboutdata.h"
 #include "importwizarddlg.h"
 #include "simpleviewer.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
 
@@ -80,7 +80,7 @@ void FlashManager::initSimple()
 {
 // it cannot be initialized in main function because interface pointer is null.
     d->simple = new SimpleViewer(d->iface,this);
-    kDebug() << "simpleview Initialized...";
+    qCDebug(KIPIPLUGINS_LOG) << "simpleview Initialized...";
 }
 
 void FlashManager::setIface(Interface* const iface)
@@ -113,7 +113,7 @@ void FlashManager::run()
 
 void FlashManager::startWizard()
 {
-    d->wizard = new ImportWizardDlg(this, kapp->activeWindow());
+    d->wizard = new ImportWizardDlg(this, QApplication::activeWindow());
     d->wizard->show();
 }
 

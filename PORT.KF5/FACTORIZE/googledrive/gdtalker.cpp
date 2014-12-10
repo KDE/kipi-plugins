@@ -114,7 +114,7 @@ void GDTalker::doOAuth()
     url.addQueryItem("response_type",m_response_type);
     url.addQueryItem("client_id",m_client_id);
     url.addQueryItem("access_type","offline");
-    kDebug() << "OAuth URL: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -138,13 +138,13 @@ void GDTalker::doOAuth()
 
     if(window->exec() == QDialog::Accepted && !(textbox->text().isEmpty()))
     {
-        kDebug() << "1";
+        qCDebug(KIPIPLUGINS_LOG) << "1";
         m_code = textbox->text();
     }
 
     if(textbox->text().isEmpty())
     {
-        kDebug() << "3";
+        qCDebug(KIPIPLUGINS_LOG) << "3";
         emit signalTextBoxEmpty();
     }
 
@@ -249,7 +249,7 @@ void GDTalker::listFolders()
 {
     KUrl url("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'");
     QString auth = "Authorization: " + m_bearer_access_token.toAscii();
-    kDebug() << auth;
+    qCDebug(KIPIPLUGINS_LOG) << auth;
     KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
     job->addMetaData("content-type","Content-Type: application/json");
     job->addMetaData("customHTTPHeader",auth.toAscii());
@@ -290,7 +290,7 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     data += "\"application/vnd.google-apps.folder\"";
     data += "}\r\n";
 
-    kDebug() << "data:" << data;
+    qCDebug(KIPIPLUGINS_LOG) << "data:" << data;
     QString auth = "Authorization: " + m_bearer_access_token.toAscii();
     KIO::TransferJob* const job = KIO::http_post(url,data,KIO::HideProgressInfo);
     job->addMetaData("content-type","Content-Type: application/json");
@@ -374,7 +374,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GDPhoto& info,const QString
     connect(job,SIGNAL(result(KJob*)),
             this,SLOT(slotResult(KJob*)));
 
-    kDebug() << "In add photo";
+    qCDebug(KIPIPLUGINS_LOG) << "In add photo";
     m_state = GD_ADDPHOTO;
     m_job   = job;
     m_buffer.resize(0);
@@ -419,27 +419,27 @@ void GDTalker::slotResult(KJob* kjob)
     switch(m_state)
     {
         case (GD_ACCESSTOKEN):
-            kDebug() << "In GD_ACCESSTOKEN";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_ACCESSTOKEN";// << m_buffer;
             parseResponseAccessToken(m_buffer);
             break;
         case (GD_LISTFOLDERS):
-            kDebug() << "In GD_LISTFOLDERS";
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_LISTFOLDERS";
             parseResponseListFolders(m_buffer);
             break;
         case (GD_CREATEFOLDER):
-            kDebug() << "In GD_CREATEFOLDER";
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_CREATEFOLDER";
             parseResponseCreateFolder(m_buffer);
             break;
         case (GD_ADDPHOTO):
-            kDebug() << "In GD_ADDPHOTO";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_ADDPHOTO";// << m_buffer;
             parseResponseAddPhoto(m_buffer);
             break;
         case (GD_USERNAME):
-            kDebug() << "In GD_USERNAME";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_USERNAME";// << m_buffer;
             parseResponseUserName(m_buffer);
             break;
         case (GD_REFRESHTOKEN):
-            kDebug() << "In GD_REFRESHTOKEN" << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_REFRESHTOKEN" << m_buffer;
             parseResponseRefreshToken(m_buffer);
             break;
         default:
@@ -459,7 +459,7 @@ void GDTalker::parseResponseAccessToken(const QByteArray& data)
     }
 
     m_bearer_access_token = "Bearer " + m_access_token;
-    kDebug() << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
+    qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
     //emit signalAccessTokenObtained();
     emit signalRefreshTokenObtained(m_refresh_token);
 }
@@ -475,7 +475,7 @@ void GDTalker::parseResponseRefreshToken(const QByteArray& data)
     }
 
     m_bearer_access_token = "Bearer " + m_access_token;
-    kDebug() << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
+    qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
     emit signalAccessTokenObtained();
 }
 
@@ -493,9 +493,9 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
         return;
     }
 
-    kDebug() << "in parseResponseUserName";
+    qCDebug(KIPIPLUGINS_LOG) << "in parseResponseUserName";
     QVariantMap rlist = result.toMap();
-    kDebug() << "size " << rlist.size();
+    qCDebug(KIPIPLUGINS_LOG) << "size " << rlist.size();
     QList<QString> keys = rlist.uniqueKeys();
 
     QString temp;
@@ -504,7 +504,7 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
     {
         if(keys[i] == "name")
         {
-            kDebug() << "username:" << rlist[keys[i]].value<QString>();
+            qCDebug(KIPIPLUGINS_LOG) << "username:" << rlist[keys[i]].value<QString>();
             temp = rlist[keys[i]].value<QString>();
             break;
         }
@@ -569,7 +569,7 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
     QVariantMap rMap    = result.toMap();
     QList<QString> keys = rMap.uniqueKeys();
 
-    kDebug() << "in parse folder" << rMap.size();
+    qCDebug(KIPIPLUGINS_LOG) << "in parse folder" << rMap.size();
 
     for(int i=0;i<rMap.size();i++)
     {
@@ -601,7 +601,7 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     QVariant result = parser.parse(data, &ok);
     QVariantMap rMap = result.toMap();
     QList<QString> keys = rMap.uniqueKeys();
-    kDebug() << "in parse folder" << rMap.size();
+    qCDebug(KIPIPLUGINS_LOG) << "in parse folder" << rMap.size();
 
     for(int i=0;i<rMap.size();i++)
     {

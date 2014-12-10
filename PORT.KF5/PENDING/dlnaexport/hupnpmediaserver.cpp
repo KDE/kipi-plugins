@@ -102,7 +102,7 @@ MediaServer::MediaServer(QObject* const parent)
 
     config.setPathToDeviceDescription(filePath);
 
-    kDebug() << "filepath properly set : " << filePath;
+    qCDebug(KIPIPLUGINS_LOG) << "filepath properly set : " << filePath;
 
     config.setCacheControlMaxAge(180);
 
@@ -115,7 +115,7 @@ MediaServer::MediaServer(QObject* const parent)
 
     if (!d->deviceHost->init(hostConfiguration))
     {
-        kDebug() << "Initialization failed. Description : " << d->deviceHost->errorDescription().toLocal8Bit();
+        qCDebug(KIPIPLUGINS_LOG) << "Initialization failed. Description : " << d->deviceHost->errorDescription().toLocal8Bit();
     }
 }
 

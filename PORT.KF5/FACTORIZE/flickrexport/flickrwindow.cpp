@@ -223,7 +223,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     m_talker->m_authProgressDlg = m_authProgressDlg;
 
-    kDebug() << "Calling auth methods";
+    qCDebug(KIPIPLUGINS_LOG) << "Calling auth methods";
 
     if (m_token.length() < 1)
     {
@@ -400,7 +400,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_token    = token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
-    kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
+    qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
 
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
@@ -435,7 +435,7 @@ void FlickrWindow::slotError(const QString& msg)
 
 void FlickrWindow::slotUserChangeRequest()
 {
-    kDebug() << "Slot Change User Request ";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request ";
     m_talker->getFrob();
     //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
@@ -527,7 +527,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
         fps.id = id;
 
-        kDebug() << "Created new photoset with temporary id " << id;
+        qCDebug(KIPIPLUGINS_LOG) << "Created new photoset with temporary id " << id;
         // Append the new photoset to the list.
         m_talker->m_photoSetsList->prepend(fps);
         m_talker->m_selectedPhotoSet = fps;
@@ -537,7 +537,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
     }
     else
     {
-        kDebug() << "New Photoset creation aborted ";
+        qCDebug(KIPIPLUGINS_LOG) << "New Photoset creation aborted ";
     }
 
     delete dlg;
@@ -567,7 +567,7 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 
 void FlickrWindow::slotPopulatePhotoSetComboBox()
 {
-    kDebug() << "slotPopulatePhotoSetComboBox invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotPopulatePhotoSetComboBox invoked";
 
     if (m_talker && m_talker->m_photoSetsList)
     {
@@ -602,7 +602,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
 */
 void FlickrWindow::slotUser1()
 {
-    kDebug() << "SlotUploadImages invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages invoked";
 
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
 
@@ -622,7 +622,7 @@ void FlickrWindow::slotUser1()
         if (lvItem)
         {
             KPImageInfo info(lvItem->url());
-            kDebug() << "Adding images to the list";
+            qCDebug(KIPIPLUGINS_LOG) << "Adding images to the list";
             FPhotoInfo temp;
 
             temp.title                 = info.title();
@@ -687,7 +687,7 @@ void FlickrWindow::slotUser1()
 
             while (itTags != allTags.end())
             {
-                kDebug() << "Tags list: " << (*itTags);
+                qCDebug(KIPIPLUGINS_LOG) << "Tags list: " << (*itTags);
                 ++itTags;
             }
 
@@ -700,7 +700,7 @@ void FlickrWindow::slotUser1()
     m_uploadCount = 0;
     m_widget->progressBar()->reset();
     slotAddPhotoNext();
-    kDebug() << "SlotUploadImages done";
+    qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages done";
 }
 
 void FlickrWindow::slotAddPhotoNext()

@@ -101,7 +101,7 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
     myerr->error_message = buffer;
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug() << buffer;
+    qCDebug(KIPIPLUGINS_LOG) << buffer;
 #endif
 
     longjmp(myerr->setjmp_buffer, 1);
@@ -116,7 +116,7 @@ static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
     char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
 
-    kDebug() << buffer << " (" << msg_level << ")";
+    qCDebug(KIPIPLUGINS_LOG) << buffer << " (" << msg_level << ")";
 #endif
 }
 
@@ -128,7 +128,7 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
     char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
 
-    kDebug() << buffer;
+    qCDebug(KIPIPLUGINS_LOG) << buffer;
 #endif
 }
 
@@ -151,7 +151,7 @@ bool transformJPEG(const QString& src, const QString& dest, Matrix& userAction, 
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
-    kDebug() << "Transforming with option " << flip << " " << rotate;
+    qCDebug(KIPIPLUGINS_LOG) << "Transforming with option " << flip << " " << rotate;
 
     if (!transformJPEG(src, dest, flip, rotate, err))
         return false;
@@ -224,7 +224,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
 
     if (!input_file.open(QIODevice::ReadOnly))
     {
-        kError() << "ImageRotate/ImageFlip: Error in opening input file";
+        qCCritical(KIPIPLUGINS_LOG) << "ImageRotate/ImageFlip: Error in opening input file";
         err = i18n("Error in opening input file");
         return false;
     }
@@ -246,7 +246,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
     if (!output_file.open(QIODevice::ReadWrite))
     {
         input_file.close();
-        kError() << "ImageRotate/ImageFlip: Error in opening output file";
+        qCCritical(KIPIPLUGINS_LOG) << "ImageRotate/ImageFlip: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
     }
@@ -331,7 +331,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
 
         if (!input_file.open(QIODevice::ReadOnly))
         {
-            kError() << "ImageRotate/ImageFlip: Error in opening input file";
+            qCCritical(KIPIPLUGINS_LOG) << "ImageRotate/ImageFlip: Error in opening input file";
             err = i18n("Error in opening input file");
             return false;
         }
@@ -341,7 +341,7 @@ bool transformJPEG(const QString& src, const QString& destGiven, JXFORM_CODE fli
         if (!output_file.open(QIODevice::ReadWrite))
         {
             input_file.close();
-            kError() << "ImageRotate/ImageFlip: Error in opening output file";
+            qCCritical(KIPIPLUGINS_LOG) << "ImageRotate/ImageFlip: Error in opening output file";
             err = i18n("Error in opening output file");
             return false;
         }

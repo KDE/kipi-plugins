@@ -170,7 +170,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
     if (!input_file.open(QIODevice::ReadOnly))
     {
-        kError() << "Image2GrayScale: Error in opening input file";
+        qCCritical(KIPIPLUGINS_LOG) << "Image2GrayScale: Error in opening input file";
         err = i18n("Error in opening input file");
         return false;
     }
@@ -178,7 +178,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     if (!output_file.open(QIODevice::ReadWrite))
     {
         input_file.close();
-        kError() << "Image2GrayScale: Error in opening output file";
+        qCCritical(KIPIPLUGINS_LOG) << "Image2GrayScale: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
     }
@@ -249,7 +249,7 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     process << "-type" << "Grayscale";
     process << src + QString("[0]") << dest;
 
-    kDebug() << "ImageMagick Command line: " << process.program();
+    qCDebug(KIPIPLUGINS_LOG) << "ImageMagick Command line: " << process.program();
 
     process.start();
 

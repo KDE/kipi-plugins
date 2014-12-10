@@ -253,7 +253,7 @@ void ImageLoadingThread::loadRaw(const KUrl& url)
         }
         else
         {
-            kDebug() << "Failed to allocate memory for loading raw file";
+            qCDebug(KIPIPLUGINS_LOG) << "Failed to allocate memory for loading raw file";
         }
 
         ProgressEvent* emitEvent = new ProgressEvent(this);

@@ -91,7 +91,7 @@ void Plugin_PhotivoIntegration::setup(QWidget* const widget)
     if (!m_iface)
     {
        /// No need special debug space outside load plugin area, it will be selected automatically.
-       kError() << "Kipi interface is null!";
+       qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
        return;
     }
 
