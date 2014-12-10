@@ -48,6 +48,7 @@
 namespace KIPIFlashExportPlugin
 {
 
+K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
 K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
 Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList&)
@@ -116,3 +117,4 @@ void Plugin_FlashExport::slotActivate()
 
 } // namespace KIPIFlashExportPlugin
 
+#include "plugin_flashexport.moc"
