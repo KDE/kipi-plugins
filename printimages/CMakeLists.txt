@@ -54,6 +54,6 @@ configure_file(plugin/kipiplugin_printimages.desktop.cmake.in ${CMAKE_CURRENT_BI
 
 install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS   kipiplugin_printimages                                            DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES     plugin/kipiplugin_printimagesui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES     plugin/kipiplugin_printimagesui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
 install(FILES     TEMPLATE_HOWTO                                                    DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)
 install(DIRECTORY templates                                                         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages)
