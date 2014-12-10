@@ -116,4 +116,3 @@ void Plugin_FlashExport::slotActivate()
 
 } // namespace KIPIFlashExportPlugin
 
-#include "plugin_flashexport.moc"
