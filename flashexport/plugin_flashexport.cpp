@@ -23,21 +23,19 @@
 
 #include "plugin_flashexport.h"
 
-// KDE includes
+// Qt includes
 
 #include <QAction>
-#include <kactioncollection.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <QKeySequence>
+#include <QApplication>
+
+// KDE includes
+
 #include <kdebug.h>
-#include <kgenericfactory.h>
-#include <kiconloader.h>
 #include <klibloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kwindowsystem.h>
-#include <KShortcut>
-// LibKIPI includes
+#include <klocalizedstring.h>
+
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>
@@ -50,18 +48,15 @@
 namespace KIPIFlashExportPlugin
 {
 
-K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
 K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
 Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList&)
-    : Plugin(/*FlashExportFactory::componentData(),*/ parent, "FlashExport")
+    : Plugin(parent, "FlashExport")
 {
     m_interface    = 0;
     m_action       = 0;
     m_parentWidget = 0;
     m_manager      = 0;
-
-    //QT5 kDebug(AREA_CODE_LOADING) << "Plugin_Flashexport plugin loaded";
 
     setUiBaseName("kipiplugin_flashexportui.rc");
     setupXML();
@@ -77,6 +72,7 @@ void Plugin_FlashExport::setup(QWidget* const widget)
     Plugin::setup(m_parentWidget);
 
     m_interface = interface();
+
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
@@ -93,7 +89,7 @@ void Plugin_FlashExport::setupActions()
     m_action = new QAction(this);
     m_action->setText(i18n("Export to F&lash..."));
     m_action->setIcon(QIcon::fromTheme("kipi-flash"));
-    //QT5 m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));
+    m_action->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_L));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
@@ -119,4 +115,5 @@ void Plugin_FlashExport::slotActivate()
 }
 
 } // namespace KIPIFlashExportPlugin
+
 #include "plugin_flashexport.moc"
