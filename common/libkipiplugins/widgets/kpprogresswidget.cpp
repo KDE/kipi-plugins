@@ -27,7 +27,7 @@
 
 #include <QString>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <libkipi_version.h>
 #include <interface.h>

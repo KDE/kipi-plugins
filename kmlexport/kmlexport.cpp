@@ -46,7 +46,7 @@ extern "C"
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <plugin.h>

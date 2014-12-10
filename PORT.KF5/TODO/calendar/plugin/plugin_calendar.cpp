@@ -32,7 +32,7 @@
 #include <kgenericfactory.h>
 #include <klibloader.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

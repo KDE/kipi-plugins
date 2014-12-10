@@ -43,7 +43,7 @@
 #include <kdialog.h>
 #include <kdebug.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <uploadwidget.h>
 #include <imagecollection.h>

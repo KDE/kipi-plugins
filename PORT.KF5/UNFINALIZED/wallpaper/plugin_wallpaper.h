@@ -29,7 +29,7 @@
 
 #include <QVariant>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <plugin.h>
 

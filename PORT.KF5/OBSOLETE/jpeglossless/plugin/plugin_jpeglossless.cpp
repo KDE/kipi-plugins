@@ -44,7 +44,7 @@
 #include <kshortcut.h>
 #include <kstandardguiitem.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <pluginloader.h>

@@ -56,11 +56,11 @@ using namespace KDcrawIface;
 namespace KIPIFlashExportPlugin
 {
 
-class FirstRunPage::FirstRunPagePriv
+class FirstRunPage::Private
 {
 public:
 
-    FirstRunPagePriv()
+    Private()
     {
         urlRequester = 0;
     }
@@ -73,7 +73,7 @@ public:
 // link this page to SimpleViewer to gain access to settings container.
 FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("First Run")),
-      d(new FirstRunPagePriv)
+      d(new Private)
 {
     RVBox* vbox   = new RVBox(this);
     QLabel* info1 = new QLabel(vbox);

@@ -52,7 +52,7 @@
 #include <version.h>
 #include <kdcraw.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <uploadwidget.h>

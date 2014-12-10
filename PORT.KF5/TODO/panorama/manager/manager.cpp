@@ -32,7 +32,7 @@
 
 #include <kdebug.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

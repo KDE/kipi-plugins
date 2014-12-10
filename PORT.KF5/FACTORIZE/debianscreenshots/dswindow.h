@@ -23,7 +23,7 @@
 #ifndef DSWINDOW_H
 #define DSWINDOW_H
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

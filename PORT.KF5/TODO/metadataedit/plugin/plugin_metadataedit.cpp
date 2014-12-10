@@ -43,7 +43,7 @@
 #include <QMenu>
 #include <kmessagebox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>

@@ -43,7 +43,7 @@
 #include <kpushbutton.h>
 #include <ktabwidget.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>

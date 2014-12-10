@@ -53,7 +53,7 @@
 #include <kurl.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

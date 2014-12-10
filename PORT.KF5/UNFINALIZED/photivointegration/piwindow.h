@@ -27,7 +27,7 @@
 
 #include <QObject>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

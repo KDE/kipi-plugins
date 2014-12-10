@@ -30,7 +30,7 @@
 
 #include <QWidget>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <uploadwidget.h>

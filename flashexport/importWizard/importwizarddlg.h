@@ -27,10 +27,7 @@
 
 #include <QString>
 #include <QWidget>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -83,8 +80,8 @@ private Q_SLOTS:
 
 private:
 
-    class ImportWizardDlgPriv;
-    ImportWizardDlgPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIFlashExportPlugin

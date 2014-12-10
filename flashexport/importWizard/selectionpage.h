@@ -27,7 +27,7 @@
 
 #include <QWidget>
 
-// Include files for KIPI
+// Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>
@@ -74,8 +74,8 @@ public:
 
 private:
 
-    class SelectionPagePriv;
-    SelectionPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIFlashExportPlugin

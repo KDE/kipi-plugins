@@ -59,11 +59,11 @@
 namespace KIPIFlashExportPlugin
 {
 
-class ImportWizardDlg::ImportWizardDlgPriv
+class ImportWizardDlg::Private
 {
 public:
 
-    ImportWizardDlgPriv()
+    Private()
     {
         mngr              = 0;
         simple            = 0;
@@ -89,7 +89,7 @@ public:
 };
 
 ImportWizardDlg::ImportWizardDlg(FlashManager* const mngr, QWidget* const parent)
-    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
+    : KPWizardDialog(parent), d(new Private)
 {
     setModal(false);
     setWindowTitle(i18n("Flash Export Wizard"));

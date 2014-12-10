@@ -42,7 +42,7 @@
 
 #include <QtKOAuth>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

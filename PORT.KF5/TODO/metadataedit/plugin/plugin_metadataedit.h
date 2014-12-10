@@ -32,7 +32,7 @@
 
 #include <KUrl>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <plugin.h>
 

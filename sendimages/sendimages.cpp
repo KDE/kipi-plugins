@@ -44,7 +44,7 @@
 #include <QTemporaryDir>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <pluginloader.h>

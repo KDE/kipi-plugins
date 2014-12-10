@@ -37,7 +37,7 @@
 #include <kurl.h>
 #include <kio/jobclasses.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

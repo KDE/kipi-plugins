@@ -45,7 +45,7 @@
 #include <klocale.h>
 #include <kurl.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

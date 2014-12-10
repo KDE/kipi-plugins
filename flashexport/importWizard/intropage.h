@@ -23,10 +23,6 @@
 #ifndef INTRO_PAGE_H
 #define INTRO_PAGE_H
 
-// KDE includes
-
-#include <kcombobox.h>
-
 // Local includes
 
 #include "kpwizardpage.h"
@@ -50,8 +46,8 @@ public:
 
 private:
 
-    class IntroPagePriv;
-    IntroPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIFlashExportPlugin

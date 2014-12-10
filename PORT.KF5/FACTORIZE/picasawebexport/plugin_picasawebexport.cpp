@@ -48,7 +48,7 @@ extern "C"
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

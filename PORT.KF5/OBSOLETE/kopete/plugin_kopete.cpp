@@ -47,7 +47,7 @@
 #include <kstandarddirs.h>
 #include <QMenu>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>

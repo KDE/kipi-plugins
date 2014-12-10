@@ -44,7 +44,7 @@
 
 #include <libkgeomap/lookup_factory.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

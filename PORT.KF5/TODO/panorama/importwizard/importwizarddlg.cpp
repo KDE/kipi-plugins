@@ -37,7 +37,7 @@
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

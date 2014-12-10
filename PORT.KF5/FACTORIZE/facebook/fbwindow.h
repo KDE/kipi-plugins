@@ -29,7 +29,7 @@
 
 #include <QList>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

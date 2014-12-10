@@ -36,7 +36,7 @@
 #include <kiconloader.h>
 #include <kio/previewjob.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

@@ -57,7 +57,7 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <uploadwidget.h>
 #include <imagecollection.h>

@@ -39,7 +39,7 @@
 #include <dcrawinfocontainer.h>
 #include <kdcraw.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <pluginloader.h>

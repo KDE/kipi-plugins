@@ -40,7 +40,7 @@
 
 #include <libksane/ksane.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>

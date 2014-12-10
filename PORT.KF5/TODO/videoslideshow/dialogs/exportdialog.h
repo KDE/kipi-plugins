@@ -33,7 +33,7 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 

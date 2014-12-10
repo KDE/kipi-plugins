@@ -26,6 +26,7 @@
 
 #include <QLabel>
 #include <QPixmap>
+#include <QComboBox>
 
 // KDE includes
 
@@ -47,23 +48,23 @@ using namespace KDcrawIface;
 namespace KIPIFlashExportPlugin
 {
 
-class IntroPage::IntroPagePriv
+class IntroPage::Private
 {
 public:
   
-    IntroPagePriv()
+    Private()
     {
         plugin_select  = 0;
         imageGetOption = 0;
     }
 
-    KComboBox* plugin_select;
-    KComboBox* imageGetOption;
+    QComboBox* plugin_select;
+    QComboBox* imageGetOption;
 };
 
 IntroPage::IntroPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("Welcome to FlashExport Tool")),
-      d(new IntroPagePriv)
+      d(new Private)
 {
     RVBox* vbox   = new RVBox(this);
     QLabel* title = new QLabel(vbox);
@@ -85,7 +86,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
     RHBox* hbox          = new RHBox(vbox);
     QLabel* label        = new QLabel(i18n("Select &Plugin:"), hbox);
 
-    d->plugin_select = new KComboBox(hbox);
+    d->plugin_select = new QComboBox(hbox);
     QString simplew  = i18nc("SimpleViewer",   "SimpleViewer");
     QString tilt     = i18nc("TiltViewer",     "TiltViewer");
     QString autov    = i18nc("AutoViewer",     "AutoViewer");
@@ -102,7 +103,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
 
     RHBox* hbox2          = new RHBox(vbox);
     QLabel* getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
-    d->imageGetOption     = new KComboBox(hbox2);
+    d->imageGetOption     = new QComboBox(hbox2);
     QString collection    = i18nc("Collections",     "Collections");
     QString dialog   = i18nc("Image Dialog",    "Image Dialog");
     d->imageGetOption->insertItem(SimpleViewerSettingsContainer::COLLECTION, collection);

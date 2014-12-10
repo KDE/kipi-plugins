@@ -28,7 +28,7 @@
 #include <QVariant>
 #include <QDBusInterface>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <plugin.h>
 

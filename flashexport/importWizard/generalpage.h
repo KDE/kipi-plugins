@@ -49,8 +49,8 @@ public:
 
 private:
 
-    class GeneralPagePriv;
-    GeneralPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIFlashExportPlugin

@@ -43,7 +43,7 @@
 #include <klocale.h>
 #include <QMenu>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

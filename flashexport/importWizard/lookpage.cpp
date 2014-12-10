@@ -53,11 +53,11 @@ using namespace KDcrawIface;
 namespace KIPIFlashExportPlugin
 {
 
-class LookPage::LookPagePriv
+class LookPage::Private
 {
 public:
 
-    LookPagePriv()
+    Private()
     {
         thumbnailPosition = 0;
         textColor         = 0;
@@ -112,7 +112,7 @@ public:
 
 LookPage::LookPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("Configure appearance")),
-      d(new LookPagePriv)
+      d(new Private)
 {
 }
 

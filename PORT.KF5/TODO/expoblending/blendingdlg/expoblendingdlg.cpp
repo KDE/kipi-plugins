@@ -65,7 +65,7 @@ extern "C"
 #include <kio/renamedialog.h>
 #include <kde_file.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

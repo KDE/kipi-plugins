@@ -31,13 +31,13 @@
 #include <QImage>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QUrl>
 
 // KDE includes
 
-#include <kurl.h>
 #include <kzip.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 
@@ -165,8 +165,8 @@ public Q_SLOTS:
 
 private:
 
-    class SimpleViewerPriv;
-    SimpleViewerPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIFlashExportPlugin

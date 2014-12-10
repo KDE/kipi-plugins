@@ -50,7 +50,7 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

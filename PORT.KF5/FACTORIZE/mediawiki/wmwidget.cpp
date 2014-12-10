@@ -57,7 +57,7 @@
 #include <ktextedit.h>
 #include <kvbox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <uploadwidget.h>
 #include <interface.h>

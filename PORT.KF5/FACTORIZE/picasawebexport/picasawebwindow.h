@@ -31,7 +31,7 @@
 #include <QLinkedList>
 #include <QPair>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

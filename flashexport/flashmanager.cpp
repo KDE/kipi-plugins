@@ -27,7 +27,7 @@
 
 #include <QApplication>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 
@@ -43,11 +43,11 @@ using namespace KIPIPlugins;
 namespace KIPIFlashExportPlugin
 {
 
-class FlashManager::FlashManagerPriv
+class FlashManager::Private
 {
 public:
 
-    FlashManagerPriv()
+    Private()
     {
         iface               = 0;
         wizard              = 0;
@@ -65,7 +65,8 @@ public:
 };
 
 FlashManager::FlashManager(QObject* const parent)
-   : QObject(parent), d(new FlashManagerPriv)
+   : QObject(parent),
+     d(new Private)
 {
 }
 

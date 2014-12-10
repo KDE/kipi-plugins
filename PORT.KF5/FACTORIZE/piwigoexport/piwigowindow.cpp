@@ -59,7 +59,7 @@
 #include <kurllabel.h>
 #include <kstandarddirs.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>

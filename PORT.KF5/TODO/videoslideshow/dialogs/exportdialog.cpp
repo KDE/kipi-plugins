@@ -47,7 +47,7 @@
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <pluginloader.h>

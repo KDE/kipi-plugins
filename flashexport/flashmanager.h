@@ -74,8 +74,8 @@ private:
 
 private:
 
-    class FlashManagerPriv;
-    FlashManagerPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIExpoBlendingPlugin

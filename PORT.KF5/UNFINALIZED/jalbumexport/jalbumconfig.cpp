@@ -41,7 +41,7 @@
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <version.h>
 #include <interface.h>

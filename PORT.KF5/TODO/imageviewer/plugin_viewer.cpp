@@ -32,7 +32,7 @@
 #include <kmessagebox.h>
 #include <kurl.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>

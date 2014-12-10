@@ -53,7 +53,7 @@ extern "C"
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>

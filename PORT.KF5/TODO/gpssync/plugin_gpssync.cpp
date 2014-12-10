@@ -43,7 +43,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>

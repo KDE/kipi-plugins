@@ -28,9 +28,8 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdialog.h>
-#include <kvbox.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 
@@ -52,11 +51,11 @@ using namespace KDcrawIface;
 namespace KIPIFlashExportPlugin
 {
 
-class SelectionPage::SelectionPagePriv
+class SelectionPage::Private
 {
 public:
 
-    SelectionPagePriv()
+    Private()
     {
         imageCollectionSelector = 0;
         imageList               = 0;
@@ -71,7 +70,7 @@ public:
 };
 
 SelectionPage::SelectionPage(FlashManager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("Select Image Collections")), d(new SelectionPagePriv)
+    : KPWizardPage(dlg, i18n("Select Image Collections")), d(new Private)
 {
     d->manager=mngr;
 }

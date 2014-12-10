@@ -33,7 +33,7 @@
 
 // KDE includes
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

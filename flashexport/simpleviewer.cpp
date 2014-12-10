@@ -63,11 +63,11 @@
 namespace KIPIFlashExportPlugin
 {
 
-class SimpleViewer::SimpleViewerPriv
+class SimpleViewer::Private
 {
 public:
 
-    SimpleViewerPriv() :
+    Private() :
         maxThumbSize(45),
         viewer("simpleviewer.swf")
     {
@@ -111,7 +111,7 @@ public:
 };
 
 SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
-    : QObject(parent), d(new SimpleViewerPriv)
+    : QObject(parent), d(new Private)
 {
     d->interface = interface;
     d->hostName  = QApplication::applicationName();

@@ -41,7 +41,7 @@
 
 #include <kdcraw.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include "kpimageslist.h"
 #include "kpaboutdata.h"

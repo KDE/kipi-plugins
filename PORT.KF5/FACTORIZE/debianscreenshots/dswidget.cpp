@@ -51,7 +51,7 @@
 #include <kdebug.h>
 #include <kio/accessmanager.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <uploadwidget.h>
 #include <imagecollection.h>

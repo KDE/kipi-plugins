@@ -54,7 +54,7 @@
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>

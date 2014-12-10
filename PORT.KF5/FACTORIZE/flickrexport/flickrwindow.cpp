@@ -53,7 +53,7 @@
 #include <kwallet.h>
 #include <kpushbutton.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

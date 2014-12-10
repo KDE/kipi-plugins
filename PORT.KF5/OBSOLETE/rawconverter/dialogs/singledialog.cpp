@@ -65,7 +65,7 @@ extern "C"
 #include <version.h>
 #include <dcrawsettingswidget.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 #include <pluginloader.h>

@@ -30,12 +30,11 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <kvbox.h>
 #include <klocale.h>
 #include <kcombobox.h>
 #include <kiconloader.h>
 
-//Local includes
+// Local includes
 
 #include "simpleviewer.h"
 #include "simpleviewersettingscontainer.h"

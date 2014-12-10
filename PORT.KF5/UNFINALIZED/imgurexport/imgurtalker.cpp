@@ -32,7 +32,7 @@
 #include <kio/job.h>
 #include <klocale.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 

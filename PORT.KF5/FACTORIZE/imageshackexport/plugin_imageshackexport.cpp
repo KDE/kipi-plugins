@@ -38,7 +38,7 @@
 #include <kmessagebox.h>
 #include <kxmlguiclient.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

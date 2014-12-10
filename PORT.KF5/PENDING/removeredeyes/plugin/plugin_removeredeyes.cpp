@@ -34,7 +34,7 @@
 #include <klibloader.h>
 #include <klocale.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <imagecollection.h>
 #include <interface.h>

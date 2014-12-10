@@ -23,12 +23,15 @@
 #ifndef FIRSTRUNPAGE_H
 #define FIRSTRUNPAGE_H
 
-// Include files for KDE
+// Qt includes
+
+#include <QUrl>
+
+// KDE includes
 
 #include <kdialog.h>
-#include <kurl.h>
 
-// Include files for KIPI
+// Libkipi includes
 
 #include <interface.h>
 
@@ -79,8 +82,8 @@ private Q_SLOTS:
 
 private:
 
-    class FirstRunPagePriv;
-    FirstRunPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIFlashexport

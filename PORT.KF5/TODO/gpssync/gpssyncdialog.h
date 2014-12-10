@@ -46,7 +46,7 @@
 #include <libkgeomap/modelhelper.h>
 #include <libkgeomap/tracks.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

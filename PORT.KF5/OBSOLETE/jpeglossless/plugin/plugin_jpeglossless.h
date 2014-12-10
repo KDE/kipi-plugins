@@ -29,7 +29,7 @@
 
 #include <kurl.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <plugin.h>
 #include <imagecollection.h>

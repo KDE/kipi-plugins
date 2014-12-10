@@ -55,7 +55,7 @@
 #include <kstandarddirs.h>
 #include <kcombobox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

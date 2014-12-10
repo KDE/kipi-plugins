@@ -37,8 +37,6 @@
 
 #include <klocalizedstring.h>
 #include <kurlrequester.h>
-#include <kvbox.h>
-//#include <kstandarddirs.h>
 #include <kiconloader.h>
 
 // Libkdcraw includes
@@ -55,11 +53,11 @@ using namespace KDcrawIface;
 namespace KIPIFlashExportPlugin
 {
 
-class GeneralPage::GeneralPagePriv
+class GeneralPage::Private
 {
 public:
 
-    GeneralPagePriv()
+    Private()
     {
         title              = 0;
         resizeExportImages = 0;
@@ -90,7 +88,7 @@ public:
 
 GeneralPage::GeneralPage (KAssistantDialog* dlg)
     : KPWizardPage(dlg, i18n("General Settings")),
-      d(new GeneralPagePriv)
+      d(new Private)
 {
     RVBox *vbox       = new RVBox(this);
 

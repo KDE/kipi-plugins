@@ -38,7 +38,7 @@
 #include <klocale.h>
 #include <kapplication.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

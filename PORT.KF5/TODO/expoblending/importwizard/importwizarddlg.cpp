@@ -34,7 +34,7 @@
 #include <klocale.h>
 #include <kpushbutton.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

@@ -25,7 +25,7 @@
 
 #include "calwidget.moc"
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

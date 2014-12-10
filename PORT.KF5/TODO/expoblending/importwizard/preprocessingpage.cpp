@@ -44,7 +44,7 @@
 #include <kconfig.h>
 #include <kpixmapsequence.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 

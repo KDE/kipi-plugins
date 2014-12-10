@@ -51,8 +51,8 @@ public:
 
 private:
 
-    class LookPagePriv;
-    LookPagePriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }   // namespace KIPIFlashExportPlugin
