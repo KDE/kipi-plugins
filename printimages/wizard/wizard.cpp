@@ -44,6 +44,7 @@
 #include <QStringRef>
 #include <QStandardPaths>
 #include <QMenu>
+#include <QIcon>
 
 // KDE includes
 
@@ -276,7 +277,7 @@ Wizard::Wizard(QWidget* const parent)
     printListLayout->setMargin(0);
     printListLayout->setSpacing(0);
 
-    d->m_imagesFilesListBox = new KPImagesList(d->m_photoPage->mPrintList, KIconLoader::SizeMedium);
+    d->m_imagesFilesListBox = new KPImagesList(d->m_photoPage->mPrintList, 32);
     d->m_imagesFilesListBox->setAllowDuplicate(true);
     d->m_imagesFilesListBox->setControlButtons(KPImagesList::Add      |
                                                KPImagesList::Remove   |
@@ -288,8 +289,8 @@ Wizard::Wizard(QWidget* const parent)
     d->m_imagesFilesListBox->setControlButtonsPlacement(KPImagesList::ControlButtonsAbove);
     d->m_imagesFilesListBox->enableDragAndDrop(false);
 
-    d->m_cropPage->BtnCropRotateRight->setIcon(SmallIcon("object-rotate-right"));
-    d->m_cropPage->BtnCropRotateLeft->setIcon(SmallIcon("object-rotate-left"));
+    d->m_cropPage->BtnCropRotateRight->setIcon(QIcon::fromTheme("object-rotate-right").pixmap(16, 16));
+    d->m_cropPage->BtnCropRotateLeft->setIcon(QIcon::fromTheme("object-rotate-left").pixmap(16, 16));
 
     printListLayout->addWidget(d->m_imagesFilesListBox);
     d->m_photoPage->mPrintList->setLayout(printListLayout);
@@ -329,8 +330,8 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(slotXMLCustomElement(QXmlStreamReader&)));
 
     // To get rid of icons that sometime are not shown
-    d->m_photoPage->BtnPreviewPageUp->setIcon(SmallIcon("arrow-right"));
-    d->m_photoPage->BtnPreviewPageDown->setIcon(SmallIcon("arrow-left"));
+    d->m_photoPage->BtnPreviewPageUp->setIcon(QIcon::fromTheme("arrow-right").pixmap(16, 16));
+    d->m_photoPage->BtnPreviewPageDown->setIcon(QIcon::fromTheme("arrow-left").pixmap(16, 16));
     //arrow-up-double
     d->m_currentPreviewPage = 0;
     d->m_currentCropPhoto   = 0;
