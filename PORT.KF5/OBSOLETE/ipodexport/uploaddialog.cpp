@@ -58,7 +58,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kinputdialog.h>
 #include <kio/previewjob.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kmountpoint.h>

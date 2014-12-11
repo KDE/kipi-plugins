@@ -36,7 +36,7 @@
 
 #include "kipiplugins_debug.h"
 #include <kconfig.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <klineedit.h>
 #include <QComboBox>

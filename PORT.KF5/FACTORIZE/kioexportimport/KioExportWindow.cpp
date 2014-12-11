@@ -34,7 +34,7 @@
 #include "kipiplugins_debug.h"
 #include <khelpmenu.h>
 #include <kio/copyjob.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>

@@ -40,7 +40,7 @@
 #include <kdebug.h>
 #include <kdeprintdialog.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 
 // Libkipi includes

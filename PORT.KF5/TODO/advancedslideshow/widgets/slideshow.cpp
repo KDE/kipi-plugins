@@ -50,7 +50,7 @@
 
 #include <QApplication>
 #include <kglobalsettings.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // libkipi includes

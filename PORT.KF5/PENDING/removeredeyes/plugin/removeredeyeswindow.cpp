@@ -36,7 +36,7 @@
 #include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>

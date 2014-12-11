@@ -25,7 +25,7 @@
 // KDE includes
 
 #include <QIcon>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace KIPIIpodExportPlugin
 {

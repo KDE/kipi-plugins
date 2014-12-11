@@ -37,7 +37,7 @@
 #include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <klistwidget.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <ktextbrowser.h>
 #include <kurlrequester.h>

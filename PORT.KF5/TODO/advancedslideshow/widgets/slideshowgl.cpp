@@ -56,7 +56,7 @@
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // local includes

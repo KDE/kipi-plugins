@@ -29,7 +29,7 @@
 
 #include <kcalendarsystem.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // Libkipi includes

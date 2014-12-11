@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kactioncollection.h>
 #include <QMenu>
 #include <QAction>

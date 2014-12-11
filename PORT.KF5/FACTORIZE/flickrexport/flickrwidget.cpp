@@ -43,7 +43,7 @@
 #include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <kseparator.h>

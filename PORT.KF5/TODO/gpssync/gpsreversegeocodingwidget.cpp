@@ -47,7 +47,7 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kseparator.h>

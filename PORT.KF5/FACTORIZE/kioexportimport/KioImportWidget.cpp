@@ -30,7 +30,7 @@
 
 #include <kdialog.h>
 #include <kfile.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kpushbutton.h>
 
 // Libkipi includes

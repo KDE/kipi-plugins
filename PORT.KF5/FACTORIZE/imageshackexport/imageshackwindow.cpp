@@ -46,7 +46,7 @@
 #include <kconfig.h>
 #include "kipiplugins_debug.h"
 #include <QIcon>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>

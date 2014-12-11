@@ -40,7 +40,7 @@
 #include <kaboutdata.h>
 #include <QApplication>
 #include "kipiplugins_debug.h"
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>

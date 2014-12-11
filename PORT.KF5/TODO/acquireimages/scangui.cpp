@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include <QApplication>
 #include <kcmdlineargs.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QIcon>
 #include <kconfig.h>
 #include <kglobal.h>

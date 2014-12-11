@@ -39,7 +39,7 @@
 #include <QUrl>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace KIPIAdvancedSlideshowPlugin
 {

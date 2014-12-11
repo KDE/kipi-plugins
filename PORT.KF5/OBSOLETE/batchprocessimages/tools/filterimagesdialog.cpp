@@ -36,7 +36,7 @@
 #include <kconfig.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <knuminput.h>

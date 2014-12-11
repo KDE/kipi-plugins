@@ -52,7 +52,7 @@ extern "C"
 #include <kprocess.h>
 #include <kdebug.h>
 #include <ktemporaryfile.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QUrl>
 
 // LibKDcraw includes

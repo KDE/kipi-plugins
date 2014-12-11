@@ -47,7 +47,7 @@
 
 #include <kdialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <knuminput.h>
 #include <kio/previewjob.h>
 #include <kpixmapsequence.h>

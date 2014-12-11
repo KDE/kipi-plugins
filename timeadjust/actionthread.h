@@ -30,9 +30,6 @@
 #include <QDateTime>
 #include <QMutex>
 #include <QMap>
-
-// KDE includes
-
 #include <QUrl>
 
 // Libkdcraw includes

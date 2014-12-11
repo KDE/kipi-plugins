@@ -36,7 +36,7 @@
 // KDE includes
 
 #include <QComboBox>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <knuminput.h>
 
 namespace KIPIBatchProcessImagesPlugin

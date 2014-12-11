@@ -29,7 +29,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QUrl>
 
 namespace KIPIBatchProcessImagesPlugin

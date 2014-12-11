@@ -55,7 +55,7 @@ extern "C"
 // KDE includes
 
 #include <kprocess.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QUrl>
 #include <kdebug.h>
 

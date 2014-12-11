@@ -36,7 +36,7 @@
 // KDE includes
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include "kipiplugins_debug.h"
 
 // MediaWiki includes

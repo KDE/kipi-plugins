@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kpushbutton.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
 #include <kpixmapsequence.h>

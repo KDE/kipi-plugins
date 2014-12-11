@@ -56,7 +56,7 @@
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kglobal.h>
 
 // Libkipi includes

@@ -37,7 +37,7 @@
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kwindowsystem.h>
 

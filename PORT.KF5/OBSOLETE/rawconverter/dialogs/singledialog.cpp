@@ -54,7 +54,7 @@ extern "C"
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
 #include <kde_file.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>

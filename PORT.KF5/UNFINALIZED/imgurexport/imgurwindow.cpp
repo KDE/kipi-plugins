@@ -27,7 +27,7 @@
 #include "kipiplugins_debug.h"
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kdialog.h>
 

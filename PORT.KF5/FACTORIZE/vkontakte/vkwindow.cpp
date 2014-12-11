@@ -49,7 +49,7 @@
 #include <kde_file.h>
 #include "kipiplugins_debug.h"
 #include <kconfig.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdialog.h>
 #include <klineedit.h>
 #include <QComboBox>

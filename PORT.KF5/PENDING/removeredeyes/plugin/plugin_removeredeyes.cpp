@@ -32,7 +32,7 @@
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

@@ -52,7 +52,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kio/renamedialog.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kde_file.h>
 #include <kprogressdialog.h>
 

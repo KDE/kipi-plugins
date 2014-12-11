@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <klineedit.h>

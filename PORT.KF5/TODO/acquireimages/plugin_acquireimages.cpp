@@ -32,7 +32,7 @@
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kwindowsystem.h>
 

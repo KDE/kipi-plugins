@@ -47,7 +47,7 @@
 #include <kfiledialog.h>
 #include <khelpmenu.h>
 #include <QIcon>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>

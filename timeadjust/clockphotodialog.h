@@ -24,10 +24,13 @@
 #ifndef CLOCKPHOTODIALOG_H
 #define CLOCKPHOTODIALOG_H
 
+// Qt includes
+
+#include <QUrl>
+
 // KDE includes
 
 #include <kdialog.h>
-#include <QUrl>
 
 namespace KIPITimeAdjustPlugin
 {

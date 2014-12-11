@@ -32,7 +32,7 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include "kipiplugins_debug.h"
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace KIPIImageshackExportPlugin
 {

@@ -44,7 +44,7 @@
 #include <kconfiggroup.h>
 #include <kglobal.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kseparator.h>
 
 // local includes

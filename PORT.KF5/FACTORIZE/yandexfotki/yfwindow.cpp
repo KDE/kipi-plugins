@@ -66,7 +66,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <kio/renamedialog.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>

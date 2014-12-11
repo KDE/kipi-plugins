@@ -37,7 +37,7 @@
 #include <kcolorbutton.h>
 #include <QComboBox>
 #include <kdebug.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <knuminput.h>
 
 namespace KIPIBatchProcessImagesPlugin

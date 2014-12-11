@@ -29,7 +29,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include "kipiplugins_debug.h"
 

@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QAction>
 #include <kgenericfactory.h>
 #include <klibloader.h>

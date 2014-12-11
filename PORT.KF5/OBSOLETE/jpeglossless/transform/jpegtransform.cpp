@@ -56,7 +56,7 @@ extern "C"
 // KDE includes
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <ktemporaryfile.h>
 
 // Local includes

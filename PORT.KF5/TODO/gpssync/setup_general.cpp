@@ -33,7 +33,7 @@
 // KDE includes
 
 #include <QComboBox>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // local includes
 

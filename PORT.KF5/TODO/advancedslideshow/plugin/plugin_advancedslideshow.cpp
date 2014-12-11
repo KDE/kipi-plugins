@@ -43,7 +43,7 @@ extern "C"
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QAction>
 #include <QApplication>
 #include <kgenericfactory.h>

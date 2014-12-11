@@ -56,7 +56,7 @@ extern "C"
 
 #include <kprocess.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // Local includes
 

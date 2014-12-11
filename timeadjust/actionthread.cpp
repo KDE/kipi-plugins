@@ -27,12 +27,9 @@
 
 #include <QFileInfo>
 
-// KDE includes
-
-#include "kipiplugins_debug.h"
-
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "task.h"
 
 namespace KIPITimeAdjustPlugin

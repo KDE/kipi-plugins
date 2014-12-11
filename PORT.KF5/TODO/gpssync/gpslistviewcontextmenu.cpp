@@ -37,7 +37,7 @@
 
 #include <QAction>
 #include <QMenu>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 
 // libkgeomap includes

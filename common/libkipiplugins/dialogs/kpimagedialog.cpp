@@ -34,6 +34,7 @@
 
 #include <kimageio.h>
 #include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdialog.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>

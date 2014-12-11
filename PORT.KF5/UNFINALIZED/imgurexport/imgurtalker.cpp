@@ -30,7 +30,7 @@
 
 #include "kipiplugins_debug.h"
 #include <kio/job.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

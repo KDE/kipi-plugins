@@ -35,7 +35,7 @@
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include <khelpclient.h>
 

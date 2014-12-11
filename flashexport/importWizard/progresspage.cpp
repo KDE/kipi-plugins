@@ -30,7 +30,7 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QComboBox>
 #include <kiconloader.h>
 

@@ -30,7 +30,7 @@
 
 #include "kipiplugins_debug.h"
 #include <QApplication>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>

@@ -39,7 +39,7 @@
 
 #include <kpushbutton.h>
 #include <QComboBox>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdialog.h>
 #include "kipiplugins_debug.h"
 

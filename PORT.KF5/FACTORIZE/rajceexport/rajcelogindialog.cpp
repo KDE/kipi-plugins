@@ -35,7 +35,7 @@
 
 #include "kipiplugins_debug.h"
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace KIPIRajceExportPlugin
 {

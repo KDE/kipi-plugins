@@ -34,7 +34,7 @@
 
 #include <QComboBox>
 #include <kdialog.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace KIPIPlugins
 {

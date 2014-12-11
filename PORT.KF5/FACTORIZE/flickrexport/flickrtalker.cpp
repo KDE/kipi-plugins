@@ -49,7 +49,7 @@
 #include "kipiplugins_debug.h"
 #include <kio/jobuidelegate.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>

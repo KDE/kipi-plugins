@@ -41,7 +41,7 @@ extern "C"
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 
 namespace KIPIPrintImagesPlugin

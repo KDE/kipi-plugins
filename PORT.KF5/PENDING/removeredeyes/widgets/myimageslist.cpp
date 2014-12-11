@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

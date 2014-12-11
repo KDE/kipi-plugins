@@ -38,7 +38,7 @@
 #include <kcalendarsystem.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // LibKDcraw includes
 

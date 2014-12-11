@@ -51,7 +51,7 @@
 #include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktextedit.h>

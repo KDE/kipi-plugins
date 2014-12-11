@@ -44,7 +44,7 @@
 #include <kaboutdata.h>
 #include <kconfig.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // libKdcraw includes

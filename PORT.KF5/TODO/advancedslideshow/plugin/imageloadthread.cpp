@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdebug.h>
 
 // LibKDcraw includes

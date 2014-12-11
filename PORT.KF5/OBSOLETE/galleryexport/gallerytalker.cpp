@@ -43,7 +43,7 @@
 #include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // LibKDcraw includes

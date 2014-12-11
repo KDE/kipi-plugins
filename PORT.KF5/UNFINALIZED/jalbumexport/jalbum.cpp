@@ -33,7 +33,7 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include "kipiplugins_debug.h"
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 #define JALBUM_JAR_PATH "/usr/share/jalbum/JAlbum.jar"
 

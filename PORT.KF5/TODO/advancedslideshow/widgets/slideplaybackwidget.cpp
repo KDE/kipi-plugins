@@ -35,7 +35,7 @@
 
 #include <QApplication>
 #include <QIcon>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdebug.h>
 
 namespace KIPIAdvancedSlideshowPlugin

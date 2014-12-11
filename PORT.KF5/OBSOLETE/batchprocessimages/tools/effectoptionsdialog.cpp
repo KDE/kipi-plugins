@@ -35,7 +35,7 @@
 // KDE includes
 
 #include <kcolorbutton.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <knuminput.h>
 
 namespace KIPIBatchProcessImagesPlugin
