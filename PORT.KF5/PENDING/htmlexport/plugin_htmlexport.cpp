@@ -32,7 +32,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>

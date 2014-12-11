@@ -41,7 +41,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -263,7 +263,7 @@ void JAlbumWindow::slotNewAlbum()
 
 void JAlbumWindow::slotSettings()
 {
-    QPointer<JAlbumEdit> dlg = new JAlbumEdit(kapp->activeWindow(), d->jalbum, i18n("Edit jAlbum Data") );
+    QPointer<JAlbumEdit> dlg = new JAlbumEdit(QApplication::activeWindow(), d->jalbum, i18n("Edit jAlbum Data") );
 
     if( dlg->exec() == QDialog::Accepted )
     {

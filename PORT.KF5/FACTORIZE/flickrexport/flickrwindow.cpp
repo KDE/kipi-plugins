@@ -41,7 +41,7 @@
 #include <QMenu>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kiconloader.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
@@ -495,7 +495,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
      * Flickr yet. */
 
     // Call the dialog
-    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
+    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(QApplication::activeWindow());
     dlg->titleEdit->setText(guessSensibleSetName(m_imglst->imageUrls()));
     int resp                              = dlg->exec();
 

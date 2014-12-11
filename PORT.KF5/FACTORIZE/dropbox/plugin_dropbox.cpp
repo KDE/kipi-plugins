@@ -38,7 +38,7 @@ extern "C"
 
 #include <kdebug.h>
 #include <kconfig.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
@@ -110,7 +110,7 @@ void Plugin_Dropbox::slotExport()
 
     if(!m_dlgExport)
     {
-        m_dlgExport = new DBWindow(tmp,kapp->activeWindow());
+        m_dlgExport = new DBWindow(tmp,QApplication::activeWindow());
     }
     else
     {

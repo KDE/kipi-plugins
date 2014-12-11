@@ -41,7 +41,7 @@
 #include <kiconloader.h>
 #include <kdialog.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kpixmapsequence.h>
 
 // Local includes
@@ -319,7 +319,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
 void OptimizePage::slotShowDetails()
 {
-    KPOutputDialog dlg(kapp->activeWindow(),
+    KPOutputDialog dlg(QApplication::activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
 

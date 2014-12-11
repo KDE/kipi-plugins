@@ -32,7 +32,7 @@ extern "C"
 
 #include <kactioncollection.h>
 #include <QAction>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
@@ -97,7 +97,7 @@ void Plugin_iPodExport::slotImageUpload()
 {
     if (!m_dlgImageUpload)
     {
-        m_dlgImageUpload = new UploadDialog(i18n("iPod Export"), kapp->activeWindow());
+        m_dlgImageUpload = new UploadDialog(i18n("iPod Export"), QApplication::activeWindow());
     }
     else
     {

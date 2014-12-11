@@ -31,13 +31,13 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QSpinBox>
+#include <QComboBox>
 
 // KDE includes
 
-#include <kcombobox.h>
 #include <kdialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace KIPISendimagesPlugin
 {
@@ -68,9 +68,9 @@ public:
     QLabel*       labelAttachmentLimit;
     QLabel*       labelImageCompression;
 
-    KComboBox*    mailAgentName;
-    KComboBox*    imagesResize;
-    KComboBox*    imagesFormat;
+    QComboBox*    mailAgentName;
+    QComboBox*    imagesResize;
+    QComboBox*    imagesFormat;
 
     QCheckBox*    changeImagesProp;
     QCheckBox*    addComments;
@@ -88,7 +88,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
-    d->mailAgentName = new KComboBox(this);
+    d->mailAgentName = new QComboBox(this);
     d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default mail agent", "Default"));
     d->mailAgentName->insertItem(EmailSettings::BALSA,         "Balsa");
     d->mailAgentName->insertItem(EmailSettings::CLAWSMAIL,     "Claws Mail");
@@ -134,7 +134,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     QGroupBox* const groupBox = new QGroupBox(i18n("Image Properties"), this);
     QGridLayout* const grid2  = new QGridLayout(groupBox);
 
-    d->imagesResize = new KComboBox(groupBox);
+    d->imagesResize = new QComboBox(groupBox);
     d->imagesResize->insertItem(EmailSettings::VERYSMALL, i18n("Very Small (320 pixels)"));
     d->imagesResize->insertItem(EmailSettings::SMALL,     i18n("Small (640 pixels)"));
     d->imagesResize->insertItem(EmailSettings::MEDIUM,    i18n("Medium (800 pixels)"));
@@ -166,7 +166,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     //---------------------------------------------
 
-    d->imagesFormat = new KComboBox(groupBox);
+    d->imagesFormat = new QComboBox(groupBox);
     d->imagesFormat->insertItem(EmailSettings::JPEG, "JPEG");
     d->imagesFormat->insertItem(EmailSettings::PNG,  "PNG");
     d->imagesFormat->setCurrentIndex(EmailSettings::JPEG);

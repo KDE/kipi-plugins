@@ -46,7 +46,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <QIcon>
@@ -403,7 +403,7 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(QApplication::activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
 
     if ( configDlg->exec() != QDialog::Accepted )
     {
@@ -645,7 +645,7 @@ void PiwigoWindow::slotEnableSpinBox(int n)
 void PiwigoWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> dlg = new PiwigoEdit(QApplication::activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
 
     if ( dlg->exec() == QDialog::Accepted )
     {

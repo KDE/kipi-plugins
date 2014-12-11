@@ -30,7 +30,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -142,7 +142,7 @@ void Plugin_PhotivoIntegration::slotActivate()
     if (!piWin)
     {
         // cleaned it up in close button/destructor
-        piWin = new PIWindow(kapp->activeWindow());
+        piWin = new PIWindow(QApplication::activeWindow());
     }
     else
     {

@@ -45,7 +45,7 @@ extern "C"
 
 #include <klocale.h>
 #include <QAction>
-#include <kapplication.h>
+#include <QApplication>
 #include <kgenericfactory.h>
 #include <kactioncollection.h>
 #include <klibloader.h>
@@ -147,7 +147,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
         m_sharedData->showSelectedFilesOnly = false;
     }
 
-    SlideShowConfig* const slideShowConfig = new SlideShowConfig(kapp->activeWindow(), m_sharedData);
+    SlideShowConfig* const slideShowConfig = new SlideShowConfig(QApplication::activeWindow(), m_sharedData);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
@@ -201,7 +201,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     if (m_urlList.isEmpty())
     {
-        KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
+        KMessageBox::sorry(QApplication::activeWindow(), i18n("There are no images to show."));
         return;
     }
 
@@ -258,7 +258,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     else
     {
         if (!QGLFormat::hasOpenGL())
-            KMessageBox::error(kapp->activeWindow(),
+            KMessageBox::error(QApplication::activeWindow(),
                                i18n("OpenGL support is not available on your system."));
         else
         {

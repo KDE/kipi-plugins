@@ -42,7 +42,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <QIcon>

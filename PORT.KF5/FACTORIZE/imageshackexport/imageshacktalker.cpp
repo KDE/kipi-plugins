@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kio/job.h>
 #include <ktoolinvocation.h>

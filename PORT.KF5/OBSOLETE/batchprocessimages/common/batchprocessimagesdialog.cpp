@@ -45,7 +45,7 @@ extern "C"
 // KDE includes
 
 #include <kdeversion.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <kfileitem.h>
@@ -423,7 +423,7 @@ bool BatchProcessImagesDialog::startProcess()
     KUrl desturl(targetAlbum + '/' + item->nameDest());
 
     if (KIO::NetAccess::exists(desturl, KIO::NetAccess::DestinationSide,
-                               kapp->activeWindow()) == true)
+                               QApplication::activeWindow()) == true)
     {
         switch (overwriteMode())
         {
@@ -665,7 +665,7 @@ void BatchProcessImagesDialog::slotFinished()
             {
                 KUrl deleteImage(item->pathSrc());
 
-                if (KIO::NetAccess::del(deleteImage, kapp->activeWindow()) == false)
+                if (KIO::NetAccess::del(deleteImage, QApplication::activeWindow()) == false)
                 {
                     item->changeResult(i18nc("batch process result", "Warning:"));
                     item->changeError(i18n("cannot remove original image file."));
@@ -799,7 +799,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
 
         KUrl deletePreviewImage(m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG");
 
-        KIO::NetAccess::del(deletePreviewImage, kapp->activeWindow());
+        KIO::NetAccess::del(deletePreviewImage, QApplication::activeWindow());
     }
     else
     {
@@ -947,9 +947,9 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
         KUrl deleteImage = m_ui->m_destinationUrl->url();
         deleteImage.addPath(item->nameDest());
 
-        if (KIO::NetAccess::exists(deleteImage, KIO::NetAccess::DestinationSide, kapp->activeWindow())
+        if (KIO::NetAccess::exists(deleteImage, KIO::NetAccess::DestinationSide, QApplication::activeWindow())
                 == true)
-            KIO::NetAccess::del(deleteImage, kapp->activeWindow());
+            KIO::NetAccess::del(deleteImage, QApplication::activeWindow());
     }
 
     endProcess();
@@ -986,7 +986,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo* fi)
                      + fi->filePath().section('.', -1);
     }
     while (Enumerator < 100 &&
-           KIO::NetAccess::exists(NewDestUrl, KIO::NetAccess::SourceSide, kapp->activeWindow()) == true);
+           KIO::NetAccess::exists(NewDestUrl, KIO::NetAccess::SourceSide, QApplication::activeWindow()) == true);
 
     if (Enumerator == 100)
         return QString();

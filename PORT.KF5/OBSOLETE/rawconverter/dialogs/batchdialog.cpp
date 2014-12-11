@@ -50,7 +50,7 @@ extern "C"
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kcursor.h>
 #include <kdebug.h>

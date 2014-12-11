@@ -39,7 +39,7 @@
 #include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 

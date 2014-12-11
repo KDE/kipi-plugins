@@ -41,7 +41,7 @@ extern "C"
 
 #include <kdebug.h>
 #include <kconfig.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
@@ -134,7 +134,7 @@ void Plugin_Smug::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new SmugWindow(tmp, false, kapp->activeWindow());
+        m_dlgExport = new SmugWindow(tmp, false, QApplication::activeWindow());
     }
     else
     {
@@ -155,7 +155,7 @@ void Plugin_Smug::slotImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new SmugWindow(tmp, true, kapp->activeWindow());
+        m_dlgImport = new SmugWindow(tmp, true, QApplication::activeWindow());
     }
     else
     {

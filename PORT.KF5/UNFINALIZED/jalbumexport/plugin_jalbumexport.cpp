@@ -37,7 +37,7 @@ extern "C"
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
-#include <kapplication.h>
+#include <QApplication>
 
 // Libkipi includes
 
@@ -123,11 +123,11 @@ void Plugin_JAlbumExport::slotExport()
 
     if(!config.hasGroup("jAlbum Settings") )
     {
-        configDlg = new JAlbumEdit(kapp->activeWindow(), d->jalbum, i18n("Edit jAlbum Data") );
+        configDlg = new JAlbumEdit(QApplication::activeWindow(), d->jalbum, i18n("Edit jAlbum Data") );
         configDlg->exec();
     }
 
-    dlg = new JAlbumWindow(kapp->activeWindow(), d->jalbum);
+    dlg = new JAlbumWindow(QApplication::activeWindow(), d->jalbum);
     dlg->exec();
 
     delete configDlg;

@@ -29,7 +29,7 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <klocale.h>
 #include <QAction>
 #include <kactioncollection.h>
@@ -115,7 +115,7 @@ void Plugin_ImgurExport::slotActivate()
     if (!d->winExport)
     {
         // We clean it up in the close button
-        d->winExport = new ImgurWindow(kapp->activeWindow());
+        d->winExport = new ImgurWindow(QApplication::activeWindow());
     }
     else
     {

@@ -38,7 +38,7 @@
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 
 // Libkipi includes

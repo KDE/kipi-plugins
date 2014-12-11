@@ -39,7 +39,7 @@
 #include <QMenu>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kiconloader.h>
 #include <khtml_part.h>
 #include <khtmlview.h>

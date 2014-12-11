@@ -38,7 +38,7 @@
 #include <kvbox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <QApplication>
 
 // Local includes
 

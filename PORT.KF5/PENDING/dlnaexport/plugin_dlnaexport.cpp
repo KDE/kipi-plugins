@@ -37,7 +37,7 @@ extern "C"
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
-#include <kapplication.h>
+#include <QApplication>
 
 // Libkipi includes
 
@@ -115,7 +115,7 @@ void Plugin_DLNAExport::slotExport()
     if (!d->dlgExport)
     {
         // We clean it up in the close button
-        d->dlgExport = new Wizard(kapp->activeWindow());
+        d->dlgExport = new Wizard(QApplication::activeWindow());
     }
     else
     {
@@ -127,7 +127,7 @@ void Plugin_DLNAExport::slotExport()
         else
         {
             delete d->dlgExport;
-            d->dlgExport = new Wizard(kapp->activeWindow());
+            d->dlgExport = new Wizard(QApplication::activeWindow());
         }
     }
 

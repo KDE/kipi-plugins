@@ -29,7 +29,7 @@
 
 #include <kactioncollection.h>
 #include <QAction>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
@@ -121,7 +121,7 @@ void Plugin_KioExportImport::slotActivateExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KioExportWindow(kapp->activeWindow());
+        m_dlgExport = new KioExportWindow(QApplication::activeWindow());
     }
     else
     {
@@ -141,7 +141,7 @@ void Plugin_KioExportImport::slotActivateImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new KioImportWindow(kapp->activeWindow());
+        m_dlgImport = new KioImportWindow(QApplication::activeWindow());
     }
     else
     {

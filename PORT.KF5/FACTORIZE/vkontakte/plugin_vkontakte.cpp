@@ -31,7 +31,7 @@
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
 
@@ -113,7 +113,7 @@ void Plugin_Vkontakte::slotExport()
     {
         // This object will live forever, we will reuse it on future accesses
         // to the plugin.
-        m_dlgExport = new VkontakteWindow(false, kapp->activeWindow());
+        m_dlgExport = new VkontakteWindow(false, QApplication::activeWindow());
     }
     else
     {

@@ -38,7 +38,7 @@
 #include <QtIntPropertyManager>
 #include <QtVariantPropertyManager>
 
-#include <kapplication.h>
+#include <QApplication>
 #include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;

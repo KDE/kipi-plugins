@@ -32,7 +32,7 @@
 #include <QGraphicsScene>
 #include <QMimeData>
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>

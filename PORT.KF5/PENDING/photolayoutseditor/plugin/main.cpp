@@ -31,7 +31,7 @@
 #include <QString>
 
 #include <klocalizedstring.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <QIcon>

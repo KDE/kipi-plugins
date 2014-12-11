@@ -33,7 +33,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
@@ -128,11 +128,11 @@ void Plugin_GalleryExport::slotSync()
 
     if(!config.hasGroup("Gallery Settings") )
     {
-        configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
+        configDlg = new GalleryEdit(QApplication::activeWindow(), d->gallery, i18n("Edit Gallery Data") );
         configDlg->exec();
     }
 
-    dlg = new GalleryWindow(kapp->activeWindow(), d->gallery);
+    dlg = new GalleryWindow(QApplication::activeWindow(), d->gallery);
     dlg->exec();
 
     delete configDlg;

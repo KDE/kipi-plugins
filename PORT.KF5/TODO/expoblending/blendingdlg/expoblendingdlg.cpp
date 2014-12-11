@@ -50,7 +50,7 @@ extern "C"
 // KDE includes
 
 #include <klineedit.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kvbox.h>
 #include <kcursor.h>
@@ -277,7 +277,7 @@ void ExpoBlendingDlg::slotFileFormatChanged()
 
 void ExpoBlendingDlg::slotPreviewButtonClicked()
 {
-    KPOutputDialog dlg(kapp->activeWindow(),
+    KPOutputDialog dlg(QApplication::activeWindow(),
                        i18n("Enfuse Processing Messages"),
                        d->output);
 

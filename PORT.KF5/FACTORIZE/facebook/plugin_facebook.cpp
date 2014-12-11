@@ -39,7 +39,7 @@ extern "C"
 // KDE includes
 
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
@@ -126,7 +126,7 @@ void Plugin_Facebook::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new FbWindow(tmp, false, kapp->activeWindow());
+        m_dlgExport = new FbWindow(tmp, false, QApplication::activeWindow());
     }
     else
     {
@@ -147,7 +147,7 @@ void Plugin_Facebook::slotImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new FbWindow(tmp, true, kapp->activeWindow());
+        m_dlgImport = new FbWindow(tmp, true, QApplication::activeWindow());
     }
     else
     {

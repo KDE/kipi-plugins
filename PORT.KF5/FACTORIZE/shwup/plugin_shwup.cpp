@@ -41,7 +41,7 @@ extern "C"
 
 #include <kdebug.h>
 #include <kconfig.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
@@ -120,7 +120,7 @@ void Plugin_Shwup::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new SwWindow(tmp, kapp->activeWindow());
+        m_dlgExport = new SwWindow(tmp, QApplication::activeWindow());
     }
     else
     {

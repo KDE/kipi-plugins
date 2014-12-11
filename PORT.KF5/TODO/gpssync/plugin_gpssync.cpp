@@ -35,7 +35,7 @@
 #include <QAction>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
@@ -115,7 +115,7 @@ bool Plugin_GPSSync::checkSidecarSettings()
         && (!hset.metadataSettings().useXMPSidecar4Reading) )
     {
         const int result = KMessageBox::warningContinueCancel(
-                kapp->activeWindow(),
+                QApplication::activeWindow(),
                 i18n(
                         "You have enabled writing to sidecar files for metadata storage in the host application,"
                         " but not for reading."
@@ -150,7 +150,7 @@ void Plugin_GPSSync::slotGPSSync()
         return;
     }
 
-    GPSSyncDialog* const dialog = new GPSSyncDialog(kapp->activeWindow());
+    GPSSyncDialog* const dialog = new GPSSyncDialog(QApplication::activeWindow());
 
     dialog->setImages( images.images() );
     dialog->show();

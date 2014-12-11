@@ -48,7 +48,7 @@
 #include <khtmlview.h>
 #include <kseparator.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <QApplication>
 
 // Libkipi includes
 

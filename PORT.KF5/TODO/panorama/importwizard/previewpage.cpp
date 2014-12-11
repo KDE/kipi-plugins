@@ -33,7 +33,7 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kvbox.h>
 #include <klocale.h>
 #include <kdialog.h>

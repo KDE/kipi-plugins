@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <QMenu>

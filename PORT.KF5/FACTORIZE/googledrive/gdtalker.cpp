@@ -46,7 +46,7 @@
 #include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
@@ -119,7 +119,7 @@ void GDTalker::doOAuth()
 
     emit signalBusy(false);
 
-    KDialog* const window         = new KDialog(kapp->activeWindow(),0);
+    KDialog* const window         = new KDialog(QApplication::activeWindow(),0);
     window->setModal(true);
     window->setWindowTitle(i18n("Google Drive Authorization"));
     window->setButtons(KDialog::Ok | KDialog::Cancel);

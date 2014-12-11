@@ -48,7 +48,7 @@
 #include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
@@ -169,7 +169,7 @@ void DBTalker::doOAuth()
 
     emit signalBusy(false);
 
-    KDialog* const dialog = new KDialog(kapp->activeWindow(),0);
+    KDialog* const dialog = new KDialog(QApplication::activeWindow(),0);
     dialog->setModal(true);
     dialog->setWindowTitle(i18n("Authorize Dropbox"));
     dialog->setButtons(KDialog::Ok | KDialog::Cancel);

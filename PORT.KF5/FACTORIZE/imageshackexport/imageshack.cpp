@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>

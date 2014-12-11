@@ -32,7 +32,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
@@ -149,7 +149,7 @@ void Plugin_RawConverter::slotActivateSingle()
 
     if (!KPMetadata::isRawFile(images.images()[0]))
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("\"%1\" is not a RAW file.", images.images()[0].fileName()));
         return;
     }

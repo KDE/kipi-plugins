@@ -33,15 +33,15 @@
 #include <QStringList>
 #include <QTextCodec>
 #include <QTextStream>
+#include <QApplication>
+#include <QTemporaryDir>
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kguiitem.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <QTemporaryDir>
 #include <ktoolinvocation.h>
 
 // Libkipi includes
@@ -140,7 +140,7 @@ void SendImages::firstStage()
         d->settings.tempFolderName = folders.last();
     }
 
-    d->progressDlg = new KPBatchProgressDialog(kapp->activeWindow(), i18n("Email images"));
+    d->progressDlg = new KPBatchProgressDialog(QApplication::activeWindow(), i18n("Email images"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
@@ -311,7 +311,7 @@ bool SendImages::showFailedResizedImages() const
             list.append((*it).fileName());
         }
 
-        int valRet = KMessageBox::warningYesNoCancelList(kapp->activeWindow(),
+        int valRet = KMessageBox::warningYesNoCancelList(QApplication::activeWindow(),
                                   i18n("The images listed below cannot be resized.\n"
                                        "Do you want them to be added as attachments "
                                        "(without resizing)?"),

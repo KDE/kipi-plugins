@@ -38,7 +38,7 @@
 // KDE
 
 #include <kaboutdata.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kio/job.h>

@@ -44,7 +44,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kcodecs.h>
 #include <kdebug.h>
 #include <kio/jobuidelegate.h>
@@ -279,7 +279,7 @@ void FlickrTalker::slotAuthenticate()
     qCDebug(KIPIPLUGINS_LOG) << "Authenticate url: " << url;
 
     KToolInvocation::invokeBrowser(url.url());
-    int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
+    int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
                                              i18n("Please follow the instructions in the browser window, then "
                                                   "return to press corresponding button."),
                                              i18n("%1 Service Web Authorization", m_serviceName),
@@ -796,7 +796,7 @@ void FlickrTalker::slotError(const QString& error)
             break;
     };
 
-    KMessageBox::error(kapp->activeWindow(),
+    KMessageBox::error(QApplication::activeWindow(),
                        i18n("Error Occurred: %1\nCannot proceed any further.", transError));
 }
 
@@ -1003,7 +1003,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
 
-            int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
+            int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
                                                      i18n("Your token is invalid. Would you like to "
                                                           "get a new token to proceed?\n"));
 
@@ -1162,7 +1162,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
             QString msg = node.toElement().attribute("msg");
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << msg;
-            KMessageBox::error(kapp->activeWindow(), i18n("PhotoSet creation failed: ") + msg);
+            KMessageBox::error(QApplication::activeWindow(), i18n("PhotoSet creation failed: ") + msg);
         }
 
         node = node.nextSibling();

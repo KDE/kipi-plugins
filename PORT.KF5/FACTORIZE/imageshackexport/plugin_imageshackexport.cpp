@@ -30,7 +30,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
@@ -121,7 +121,7 @@ void Plugin_ImageshackExport::slotExport()
 {
     QPointer<ImageshackWindow> dlg;
 
-    dlg = new ImageshackWindow(kapp->activeWindow(), d->imageshack);
+    dlg = new ImageshackWindow(QApplication::activeWindow(), d->imageshack);
     dlg->exec();
 
     delete dlg;

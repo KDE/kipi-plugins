@@ -32,12 +32,12 @@
 #include <QMutexLocker>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QTemporaryDir>
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kstandarddirs.h>
-#include <QTemporaryDir>
 
 // LibKDcraw includes
 

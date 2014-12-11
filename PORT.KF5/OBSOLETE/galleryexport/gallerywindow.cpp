@@ -41,7 +41,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <khelpmenu.h>
@@ -381,7 +381,7 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> configDlg = new GalleryEdit(QApplication::activeWindow(), d->gallery, i18n("Edit Gallery Data") );
 
     if ( configDlg->exec() != QDialog::Accepted )
     {
@@ -784,7 +784,7 @@ void GalleryWindow::slotEnableSpinBox(int n)
 void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> dlg = new GalleryEdit(QApplication::activeWindow(), d->gallery, i18n("Edit Gallery Data") );
 
     if( dlg->exec() == QDialog::Accepted )
     {

@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kconfig.h>

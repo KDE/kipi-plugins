@@ -31,7 +31,7 @@
 #include <QPaintEngine>
 #include <QVBoxLayout>
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 

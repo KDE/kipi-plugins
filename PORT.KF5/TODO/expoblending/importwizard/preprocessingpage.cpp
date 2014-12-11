@@ -39,7 +39,7 @@
 #include <kvbox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kiconloader.h>
 #include <kconfig.h>
 #include <kpixmapsequence.h>
@@ -219,7 +219,7 @@ void PreProcessingPage::slotProgressTimerDone()
 
 void PreProcessingPage::slotShowDetails()
 {
-    KPOutputDialog dlg(kapp->activeWindow(),
+    KPOutputDialog dlg(QApplication::activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
 

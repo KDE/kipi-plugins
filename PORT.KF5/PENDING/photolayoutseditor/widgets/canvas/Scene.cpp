@@ -71,7 +71,7 @@
 #include <QBuffer>
 
 // KDE
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 #include <kurl.h>

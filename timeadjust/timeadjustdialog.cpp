@@ -47,7 +47,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
@@ -393,7 +393,7 @@ void TimeAdjustDialog::slotApplyClicked()
     }
     else
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("Select at least one option"),
                            i18n("Adjust Time & Date"));
     }
@@ -480,7 +480,7 @@ void TimeAdjustDialog::slotThreadFinished()
 
 void TimeAdjustDialog::updateListView()
 {
-    kapp->setOverrideCursor(Qt::WaitCursor);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
 
     TimeAdjustSettings prm = d->settingsView->settings();
 
@@ -496,7 +496,7 @@ void TimeAdjustDialog::updateListView()
 
     d->listView->setItemDates(d->itemsUpdatedMap, MyImageList::TIMESTAMP_UPDATED, prm);
 
-    kapp->restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
 }
 
 }  // namespace KIPITimeAdjustPlugin

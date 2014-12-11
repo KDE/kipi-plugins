@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <krandom.h>

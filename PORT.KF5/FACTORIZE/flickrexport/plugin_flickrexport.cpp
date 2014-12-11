@@ -44,7 +44,7 @@ extern "C"
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
@@ -138,7 +138,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr");
+        m_dlgFlickr = new FlickrWindow(tmp, QApplication::activeWindow(), "Flickr");
     }
     else
     {
@@ -161,7 +161,7 @@ void Plugin_FlickrExport::slotActivate23()
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23");
+        m_dlg23 = new FlickrWindow(tmp, QApplication::activeWindow(), "23");
     }
     else
     {
@@ -184,7 +184,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr");
+        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), "Zooomr");
     }
     else
     {

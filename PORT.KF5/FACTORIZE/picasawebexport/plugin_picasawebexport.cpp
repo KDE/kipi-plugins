@@ -43,7 +43,7 @@ extern "C"
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
@@ -131,7 +131,7 @@ void Plugin_PicasawebExport::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new PicasawebWindow(tmp, false, kapp->activeWindow());
+        m_dlgExport = new PicasawebWindow(tmp, false, QApplication::activeWindow());
     }
     else
     {
@@ -152,7 +152,7 @@ void Plugin_PicasawebExport::slotImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new PicasawebWindow(tmp, true, kapp->activeWindow());
+        m_dlgImport = new PicasawebWindow(tmp, true, QApplication::activeWindow());
     }
     else
     {

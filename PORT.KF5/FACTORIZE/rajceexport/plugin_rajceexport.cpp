@@ -44,7 +44,7 @@ extern "C"
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
-#include <kapplication.h>
+#include <QApplication>
 
 // Libkipi includes
 
@@ -112,7 +112,7 @@ void Plugin_RajceExport::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new RajceWindow(tmp, kapp->activeWindow());
+        m_dlgExport = new RajceWindow(tmp, QApplication::activeWindow());
     }
     else
     {

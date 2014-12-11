@@ -131,7 +131,7 @@ void Plugin_WikiMedia::slotExport()
     if (!d->dlgExport)
     {
         // We clean it up in the close button
-        d->dlgExport = new WMWindow(tmp, kapp->activeWindow());
+        d->dlgExport = new WMWindow(tmp, QApplication::activeWindow());
     }
     else
     {

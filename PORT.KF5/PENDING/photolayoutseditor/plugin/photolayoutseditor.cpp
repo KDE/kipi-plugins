@@ -57,7 +57,7 @@
 #include <ktip.h>
 #include <kaboutdata.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kprintpreview.h>
 #include <kconfigdialog.h>
 #include <kservice.h>

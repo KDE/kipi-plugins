@@ -34,7 +34,7 @@
 #include <QPainter>
 
 #include <klocalizedstring.h>
-#include <kapplication.h>
+#include <QApplication>
 
 using namespace KIPIPhotoLayoutsEditor;
 

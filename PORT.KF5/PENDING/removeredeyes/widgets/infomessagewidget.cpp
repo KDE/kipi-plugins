@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kiconloader.h>
 
 namespace KIPIRemoveRedEyesPlugin

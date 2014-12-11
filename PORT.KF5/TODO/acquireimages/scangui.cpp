@@ -24,7 +24,7 @@
 // KDE includes
 
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <QIcon>

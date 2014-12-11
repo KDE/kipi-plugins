@@ -27,7 +27,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -91,7 +91,7 @@ void Plugin_Calendar::setupActions()
 
 void Plugin_Calendar::slotActivate()
 {
-    CalWizard w(kapp->activeWindow());
+    CalWizard w(QApplication::activeWindow());
     w.exec();
 }
 

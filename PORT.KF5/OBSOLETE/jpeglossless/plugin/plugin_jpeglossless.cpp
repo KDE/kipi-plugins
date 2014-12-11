@@ -33,7 +33,7 @@
 #include <QAction>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <QMenu>
@@ -286,7 +286,7 @@ void Plugin_JPEGLossless::flip(FlipAction action, const QString& title)
     delete d->progressDlg;
     d->progressDlg = 0;
 
-    d->progressDlg = new KPBatchProgressDialog(kapp->activeWindow(),
+    d->progressDlg = new KPBatchProgressDialog(QApplication::activeWindow(),
                          i18n("Flip images %1", title));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -328,7 +328,7 @@ void Plugin_JPEGLossless::rotate(RotateAction action, const QString& title)
 
     delete d->progressDlg;
     d->progressDlg = 0;
-    d->progressDlg = new KPBatchProgressDialog(kapp->activeWindow(),
+    d->progressDlg = new KPBatchProgressDialog(QApplication::activeWindow(),
                          i18n("Rotate images %1", title));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -345,7 +345,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     KUrl::List items = images();
 
     if (items.count() <= 0 ||
-        KMessageBox::No == KMessageBox::warningYesNo(kapp->activeWindow(),
+        KMessageBox::No == KMessageBox::warningYesNo(QApplication::activeWindow(),
                      i18n("<p>Are you sure you wish to convert the selected image(s) to "
                          "black and white? This operation <b>cannot</b> be undone.</p>")))
         return;
@@ -359,7 +359,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     delete d->progressDlg;
     d->progressDlg = 0;
 
-    d->progressDlg = new KPBatchProgressDialog(kapp->activeWindow(),
+    d->progressDlg = new KPBatchProgressDialog(QApplication::activeWindow(),
                          i18n("Convert images to black & white"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),

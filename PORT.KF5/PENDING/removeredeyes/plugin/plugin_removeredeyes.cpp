@@ -28,7 +28,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>

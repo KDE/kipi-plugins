@@ -26,7 +26,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
@@ -129,7 +129,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (!m_scanDlg)
     {
-        m_scanDlg = new ScanDialog(m_saneWidget, kapp->activeWindow(), new ScanDialogAboutData);
+        m_scanDlg = new ScanDialog(m_saneWidget, QApplication::activeWindow(), new ScanDialogAboutData);
     }
     else
     {

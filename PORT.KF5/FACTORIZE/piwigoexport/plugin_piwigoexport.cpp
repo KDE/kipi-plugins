@@ -34,7 +34,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
@@ -115,11 +115,11 @@ void Plugin_PiwigoExport::slotSync()
 
     if (!config.hasGroup("Piwigo Settings") )
     {
-        configDlg = new PiwigoEdit(kapp->activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
+        configDlg = new PiwigoEdit(QApplication::activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
         configDlg->exec();
     }
 
-    dlg = new PiwigoWindow(kapp->activeWindow(), m_pPiwigo);
+    dlg = new PiwigoWindow(QApplication::activeWindow(), m_pPiwigo);
     dlg->exec();
 
     delete configDlg;

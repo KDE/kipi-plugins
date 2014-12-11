@@ -30,7 +30,7 @@
 #include <QPrinter>
 #include <QQueue>
 
-#include <kapplication.h>
+#include <QApplication>
 
 QString KIPIPhotoLayoutsEditor::name()
 {

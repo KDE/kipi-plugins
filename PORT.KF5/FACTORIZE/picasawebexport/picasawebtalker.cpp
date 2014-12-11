@@ -48,7 +48,7 @@
 #include <QtAlgorithms>
 // KDE includes
 
-#include <kapplication.h>
+#include <QApplication>
 #include <kcodecs.h>
 #include <kdebug.h>
 #include <kio/job.h>
@@ -107,7 +107,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     QString url = "https://www.google.com/accounts/ClientLogin";
 
-    QPointer<PicasawebLogin> loginDialog = new PicasawebLogin(kapp->activeWindow(), i18n("Login"), username, password);
+    QPointer<PicasawebLogin> loginDialog = new PicasawebLogin(QApplication::activeWindow(), i18n("Login"), username, password);
 
     QString username_edit, password_edit;
 
@@ -637,7 +637,7 @@ void PicasawebTalker::slotError(const QString & error)
             transError=i18n("Unknown error");
     };
 
-    KMessageBox::error(kapp->activeWindow(), i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
+    KMessageBox::error(QApplication::activeWindow(), i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
 }
 
 void PicasawebTalker::slotResult(KJob *job)

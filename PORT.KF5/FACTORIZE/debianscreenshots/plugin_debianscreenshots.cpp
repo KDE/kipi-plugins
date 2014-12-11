@@ -34,7 +34,7 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
@@ -112,7 +112,7 @@ void Plugin_DebianScreenshots::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new DsWindow(tmp, kapp->activeWindow());
+        m_dlgExport = new DsWindow(tmp, QApplication::activeWindow());
     }
     else
     {

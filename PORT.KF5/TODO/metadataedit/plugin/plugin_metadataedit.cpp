@@ -32,7 +32,7 @@
 #include <QAction>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -178,7 +178,7 @@ void Plugin_MetadataEdit::slotEditAllMetadata()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<MetadataEditDialog> dialog = new MetadataEditDialog(kapp->activeWindow(), images.images());
+    QPointer<MetadataEditDialog> dialog = new MetadataEditDialog(QApplication::activeWindow(), images.images());
     dialog->exec();
 
     delete dialog;
@@ -197,7 +197,7 @@ void Plugin_MetadataEdit::slotImportExif()
         d->lastSelectedDirectory = images.images().first().upUrl();
     }
     KUrl importEXIFFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
-                                                  QString(), kapp->activeWindow(),
+                                                  QString(), QApplication::activeWindow(),
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
        return;
@@ -207,7 +207,7 @@ void Plugin_MetadataEdit::slotImportExif()
     KPMetadata meta;
     if (!meta.load(importEXIFFile.path()))
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("Cannot load metadata from \"%1\"", importEXIFFile.fileName()),
                            i18n("Import EXIF Metadata"));
         return;
@@ -221,14 +221,14 @@ void Plugin_MetadataEdit::slotImportExif()
 
     if (exifData.isEmpty())
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("\"%1\" does not have EXIF metadata.", importEXIFFile.fileName()),
                            i18n("Import EXIF Metadata"));
         return;
     }
 
     if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
+                     QApplication::activeWindow(),
                      i18n("EXIF metadata from the currently selected pictures will be permanently "
                           "replaced by the EXIF content of \"%1\".\n"
                           "Do you want to continue?", importEXIFFile.fileName()),
@@ -269,7 +269,7 @@ void Plugin_MetadataEdit::slotImportExif()
     if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
-                    kapp->activeWindow(),
+                    QApplication::activeWindow(),
                     i18n("Unable to set EXIF metadata from:"),
                     errorFiles,
                     i18n("Import EXIF Metadata"));
@@ -289,7 +289,7 @@ void Plugin_MetadataEdit::slotImportIptc()
         d->lastSelectedDirectory = images.images().first().upUrl();
     }
     KUrl importIPTCFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
-                                                  QString(), kapp->activeWindow(),
+                                                  QString(), QApplication::activeWindow(),
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
        return;
@@ -299,7 +299,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     KPMetadata meta;
     if (!meta.load(importIPTCFile.path()))
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("Cannot load metadata from \"%1\"", importIPTCFile.fileName()),
                            i18n("Import IPTC Metadata"));
         return;
@@ -308,14 +308,14 @@ void Plugin_MetadataEdit::slotImportIptc()
     QByteArray iptcData = meta.getIptc();
     if (iptcData.isEmpty())
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("\"%1\" does not have IPTC metadata.", importIPTCFile.fileName()),
                            i18n("Import IPTC Metadata"));
         return;
     }
 
     if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
+                     QApplication::activeWindow(),
                      i18n("IPTC metadata from the currently selected pictures will be permanently "
                           "replaced by the IPTC content of \"%1\".\n"
                           "Do you want to continue?", importIPTCFile.fileName()),
@@ -356,7 +356,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
-                    kapp->activeWindow(),
+                    QApplication::activeWindow(),
                     i18n("Unable to set IPTC metadata from:"),
                     errorFiles,
                     i18n("Import IPTC Metadata"));
@@ -376,7 +376,7 @@ void Plugin_MetadataEdit::slotImportXmp()
         d->lastSelectedDirectory = images.images().first().upUrl();
     }
     KUrl importXMPFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
-                                                 QString(), kapp->activeWindow(),
+                                                 QString(), QApplication::activeWindow(),
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
        return;
@@ -386,7 +386,7 @@ void Plugin_MetadataEdit::slotImportXmp()
     KPMetadata meta;
     if (!meta.load(importXMPFile.path()))
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("Cannot load metadata from \"%1\"", importXMPFile.fileName()),
                            i18n("Import XMP Metadata"));
         return;
@@ -395,14 +395,14 @@ void Plugin_MetadataEdit::slotImportXmp()
     QByteArray xmpData = meta.getXmp();
     if (xmpData.isEmpty())
     {
-        KMessageBox::error(kapp->activeWindow(),
+        KMessageBox::error(QApplication::activeWindow(),
                            i18n("\"%1\" does not have XMP metadata.", importXMPFile.fileName()),
                            i18n("Import XMP Metadata"));
         return;
     }
 
     if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
+                     QApplication::activeWindow(),
                      i18n("XMP metadata from the currently selected pictures will be permanently "
                           "replaced by the XMP content of \"%1\".\n"
                           "Do you want to continue?", importXMPFile.fileName()),
@@ -443,7 +443,7 @@ void Plugin_MetadataEdit::slotImportXmp()
     if (!errorFiles.isEmpty())
     {
         KMessageBox::errorList(
-                    kapp->activeWindow(),
+                    QApplication::activeWindow(),
                     i18n("Unable to set XMP metadata from:"),
                     errorFiles,
                     i18n("Import XMP Metadata"));

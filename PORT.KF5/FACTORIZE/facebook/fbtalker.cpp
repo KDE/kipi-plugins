@@ -45,7 +45,7 @@
 #include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kapplication.h>
+#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 
@@ -265,7 +265,7 @@ void FbTalker::doOAuth()
 
     emit signalBusy(false);
 
-    KDialog* const window         = new KDialog(kapp->activeWindow(), 0);
+    KDialog* const window         = new KDialog(QApplication::activeWindow(), 0);
     window->setModal(true);
     window->setWindowTitle( i18n("Facebook Application Authorization") );
     window->setButtons(KDialog::Ok | KDialog::Cancel);
@@ -473,7 +473,7 @@ void FbTalker::changePerm()
 
     emit signalBusy(false);
 
-    KMessageBox::information(kapp->activeWindow(),
+    KMessageBox::information(QApplication::activeWindow(),
                   i18n("Please follow the instructions in the browser window. "
                        "Press \"OK\" when done."),
                   i18n("Facebook Application Authorization"));
@@ -953,7 +953,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
-    int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
+    int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
                   i18n("Please follow the instructions in the browser window. "
                        "Press \"Yes\" if you have authenticated and \"No\" if you failed."),
                   i18n("Facebook Service Web Authorization"));
