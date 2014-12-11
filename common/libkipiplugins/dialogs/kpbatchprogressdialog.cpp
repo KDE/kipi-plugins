@@ -34,10 +34,6 @@
 #include <QMenu>
 #include <QAction>
 #include <QIcon>
-#include <QDialogButtonBox>
-#include <QHBoxLayout>
-#include <QStyle>
-#include <QPushButton>
 
 // KDE includes
 
@@ -107,7 +103,7 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
    : RVBox(parent), d(new Private)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    layout()->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    layout()->setSpacing(KDialog::spacingHint());
 
     d->actionsList = new QListWidget(this);
     d->actionsList->setSortingEnabled(false);
@@ -210,27 +206,23 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
 
 // ---------------------------------------------------------------------------------
 
-KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const, const QString& caption)
-   : QDialog(0)
+KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
+   : KDialog(0)
 {
+    setCaption(caption);
+    setButtons(Cancel);
+    setDefaultButton(Cancel);
     setModal(false);
-    setWindowTitle(caption);
 
-    m_progress                      = new KPBatchProgressWidget(this);
-    m_progress->progressScheduled(caption, QIcon::fromTheme("kipi").pixmap(22, 22));
-    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Cancel, this);
-
-    QVBoxLayout* const vbx          = new QVBoxLayout(this);
-    vbx->addWidget(m_progress);
-    vbx->addWidget(buttons);
-    setLayout(vbx);
-
+    KPBatchProgressWidget* const w = new KPBatchProgressWidget(this);
+    w->progressScheduled(caption, QIcon::fromTheme("kipi").pixmap(22, 22));
+    setMainWidget(w);
     resize(600, 400);
 
-    connect(m_progress, &KPBatchProgressWidget::signalProgressCanceled,
-            this, &KPBatchProgressDialog::slotCancel);
+    connect(w, &KPBatchProgressWidget::signalProgressCanceled,
+            this, &KPBatchProgressDialog::cancelClicked);
 
-    connect(buttons->button(QDialogButtonBox::Cancel), &QPushButton::clicked,
+    connect(this, &KPBatchProgressDialog::cancelClicked,
             this, &KPBatchProgressDialog::slotCancel);
 }
 
@@ -238,9 +230,9 @@ KPBatchProgressDialog::~KPBatchProgressDialog()
 {
 }
 
-KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
+KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
 {
-    return m_progress;
+    return (qobject_cast<KPBatchProgressWidget*>(mainWidget()));
 }
 
 void KPBatchProgressDialog::slotCancel()
