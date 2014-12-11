@@ -50,7 +50,7 @@ target_link_libraries(KF5kipiplugins
                       KF5::I18n
                       KF5::ConfigCore
 
-#                      KF5::KDELibs4Support
+                      KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}

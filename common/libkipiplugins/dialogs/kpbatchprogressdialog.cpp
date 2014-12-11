@@ -58,24 +58,22 @@ public:
         switch(messageType)
         {
             case StartingMessage:
-                setIcon(SmallIcon("system-run"));
+                setIcon(QIcon::fromTheme("system-run").pixmap(16, 16));
                 break;
             case SuccessMessage:
-                setIcon(SmallIcon("dialog-ok"));
+                setIcon(QIcon::fromTheme("dialog-ok").pixmap(16, 16));
                 break;
             case WarningMessage:
-                setIcon(SmallIcon("dialog-warning"));
+                setIcon(QIcon::fromTheme("dialog-warning").pixmap(16, 16));
                 setForeground(QBrush(Qt::darkYellow));
                 break;
             case ErrorMessage:
-                setIcon(SmallIcon("dialog-error"));
+                setIcon(QIcon::fromTheme("dialog-error").pixmap(16, 16));
                 setForeground(QBrush(Qt::red));
                 break;
             case ProgressMessage:
-                setIcon(SmallIcon("dialog-information"));
-                break;
             default:
-                setIcon(SmallIcon("dialog-information"));
+                setIcon(QIcon::fromTheme("dialog-information").pixmap(16, 16));
                 break;
         }
 
