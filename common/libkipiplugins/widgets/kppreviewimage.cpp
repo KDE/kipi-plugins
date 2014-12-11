@@ -44,7 +44,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kiconloader.h>
 
 // libKdcraw includes
 

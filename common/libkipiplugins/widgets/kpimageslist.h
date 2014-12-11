@@ -34,11 +34,11 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QIcon>
+#include <QUrl>
 
 // KDE includes
 
 #include <kfileitem.h>
-#include <QUrl>
 #include <kiconloader.h>
 
 // Local includes

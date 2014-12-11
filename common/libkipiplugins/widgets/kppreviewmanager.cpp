@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kiconloader.h>
 #include <kpixmapsequence.h>
 
 // Local includes
@@ -56,7 +55,7 @@ public:
 
     Private()
     {
-        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix   = KPixmapSequence("process-working", 22);
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0;

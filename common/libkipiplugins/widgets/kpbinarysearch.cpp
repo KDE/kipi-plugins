@@ -31,7 +31,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kiconloader.h>
 
 // Local includes
 
@@ -55,7 +54,7 @@ struct KPBinarySearch::Private
 KPBinarySearch::KPBinarySearch(QWidget* const parent)
     : QTreeWidget(parent), d(new Private)
 {
-    setIconSize(QSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall));
+    setIconSize(QSize(16, 16));
     setAlternatingRowColors(true);
     setSelectionMode(QAbstractItemView::NoSelection);
     setSortingEnabled(false);
@@ -94,7 +93,7 @@ void KPBinarySearch::addBinary(KPBinaryIface& binary)
     d->binaryIfaces.append(&binary);
     d->items.append(new QTreeWidgetItem());
     QTreeWidgetItem* const item = d->items[d->items.size() - 1];
-    item->setIcon(Status, QIcon(SmallIcon("dialog-cancel")));
+    item->setIcon(Status, QIcon::fromTheme("dialog-cancel").pixmap(16, 16));
     item->setText(Binary, binary.baseName());
     item->setText(Version, binary.version());
     item->setToolTip(Status, i18n("Binary not found."));
@@ -155,12 +154,12 @@ bool KPBinarySearch::allBinariesFound()
         {
             if (!binary->developmentVersion())
             {
-                d->items[index]->setIcon(Status, QIcon(SmallIcon("dialog-ok-apply")));
+                d->items[index]->setIcon(Status, QIcon::fromTheme("dialog-ok-apply").pixmap(16, 16));
                 d->items[index]->setToolTip(Status, QString());
             }
             else
             {
-                d->items[index]->setIcon(Status, QIcon(SmallIcon("dialog-warning")));
+                d->items[index]->setIcon(Status, QIcon::fromTheme("dialog-warning").pixmap(16, 16));
                 d->items[index]->setToolTip(Status, i18n("A development version has been detect. "
                                                          "There is no guarantee on the behavior of this binary."));
                 d->downloadLabel->show();

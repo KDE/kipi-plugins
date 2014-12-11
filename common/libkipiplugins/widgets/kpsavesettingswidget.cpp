@@ -29,11 +29,13 @@
 #include <QLabel>
 #include <QRadioButton>
 #include <QVBoxLayout>
+#include <QApplication>
+#include <QStyle>
+#include <QComboBox>
 
 // KDE includes
 
-#include <QComboBox>
-#include <kdialog.h>
+#include <kconfiggroup.h>
 #include <klocalizedstring.h>
 
 namespace KIPIPlugins
@@ -102,8 +104,8 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
     d->conflictButtonGroup->setExclusive(true);
     d->overwriteButton->setChecked(true);
 
-    vlay->setMargin(KDialog::spacingHint());
-    vlay->setSpacing(KDialog::spacingHint());
+    vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
@@ -112,8 +114,8 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
     d->grid->addWidget(d->conflictLabel,  1, 0, 1, 2);
     d->grid->addWidget(conflictBox,       2, 0, 1, 2);
     d->grid->setRowStretch(4, 10);
-    d->grid->setMargin(KDialog::spacingHint());
-    d->grid->setSpacing(KDialog::spacingHint());
+    d->grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     connect(d->formatComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &KPSaveSettingsWidget::signalSaveFormatChanged);
 
