@@ -30,10 +30,6 @@
 #include <QFile>
 #include <QFileInfo>
 
-// KDE includes
-
-#include <kde_file.h>
-
 // Local includes
 
 #include "kpmetasettings.h"
@@ -132,8 +128,8 @@ bool KPMetadata::moveSidecar(const QUrl& src, const QUrl& dst)
     if (hasSidecar(src.toLocalFile()))
     {
 
-        if (KDE_rename((const char*)(QFile::encodeName(sidecarUrl(src).toLocalFile()).constData()),
-                       (const char*)(QFile::encodeName(sidecarUrl(dst).toLocalFile())).constData()) != 0)
+        if (QFile::rename((const char*)(QFile::encodeName(sidecarUrl(src).toLocalFile()).constData()),
+                          (const char*)(QFile::encodeName(sidecarUrl(dst).toLocalFile())).constData()) != 0)
             return false;
     }
     return true;
@@ -141,8 +137,9 @@ bool KPMetadata::moveSidecar(const QUrl& src, const QUrl& dst)
 
 bool KPMetadata::isRawFile(const QUrl& url)
 {
-    QString rawFilesExt(KDcraw::rawFiles());
+    QString   rawFilesExt(KDcraw::rawFiles());
     QFileInfo fileInfo(url.toLocalFile());
+
     return (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()));
 }
 
