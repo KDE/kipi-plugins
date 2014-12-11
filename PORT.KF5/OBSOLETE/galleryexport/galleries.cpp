@@ -34,7 +34,7 @@
 #include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <klocale.h>
 
 namespace KIPIGalleryExportPlugin

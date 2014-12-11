@@ -29,7 +29,7 @@
 #define KIPIPHOTOFRAMESEDITOR_PFECONFIGSKELETON_H
 
 #include <kconfigskeleton.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 #include <kglobalsettings.h>
 #include <settings/PFEConfig.h>

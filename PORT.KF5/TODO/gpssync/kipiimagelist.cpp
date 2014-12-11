@@ -36,7 +36,7 @@
 
 #include <QAction>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kiconloader.h>
 #include <QMenu>
 

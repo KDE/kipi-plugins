@@ -34,7 +34,7 @@
 // KDE includes
 
 #include <QApplication>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <ktoolinvocation.h>
 #include <kio/jobuidelegate.h>

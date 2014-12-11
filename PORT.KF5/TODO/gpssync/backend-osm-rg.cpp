@@ -36,7 +36,7 @@
 //KDE includes
 
 #include <kurl.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/job.h>
 
 //local includes

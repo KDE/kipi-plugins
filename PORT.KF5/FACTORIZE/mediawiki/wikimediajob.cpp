@@ -37,7 +37,7 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 // MediaWiki includes
 

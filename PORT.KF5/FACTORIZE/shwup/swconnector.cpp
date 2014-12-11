@@ -45,7 +45,7 @@
 // KDE includes
 
 #include <kcodecs.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kurl.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>

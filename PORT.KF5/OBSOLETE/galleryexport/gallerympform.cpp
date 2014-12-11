@@ -37,7 +37,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kmimetype.h>
 #include <krandom.h>
 #include <kurl.h>

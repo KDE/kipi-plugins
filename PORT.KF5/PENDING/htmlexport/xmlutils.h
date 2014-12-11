@@ -25,7 +25,7 @@
 #ifndef XMLUTILS_H
 #define XMLUTILS_H
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 #include <libxml/xmlwriter.h>
 

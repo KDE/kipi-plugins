@@ -41,7 +41,7 @@
 #include <kcombobox.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 // Libkipi includes
 

@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 namespace KIPIFlickrExportPlugin
 {

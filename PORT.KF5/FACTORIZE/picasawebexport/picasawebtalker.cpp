@@ -50,7 +50,7 @@
 
 #include <QApplication>
 #include <kcodecs.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>

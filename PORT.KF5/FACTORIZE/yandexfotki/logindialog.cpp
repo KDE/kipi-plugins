@@ -36,7 +36,7 @@
 #include <kurllabel.h>
 #include <ktoolinvocation.h> // for URLs
 #include <kmessagebox.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <klineedit.h>
 #include <klocale.h>
 

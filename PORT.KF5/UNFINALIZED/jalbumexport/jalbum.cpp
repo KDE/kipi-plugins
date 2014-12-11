@@ -32,7 +32,7 @@
 #include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <klocale.h>
 
 #define JALBUM_JAR_PATH "/usr/share/jalbum/JAlbum.jar"

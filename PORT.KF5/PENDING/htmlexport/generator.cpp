@@ -39,7 +39,7 @@
 
 #include <kaboutdata.h>
 #include <QApplication>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <klocale.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>

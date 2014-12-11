@@ -48,7 +48,7 @@
 #include <klineedit.h>
 #include <kcompletion.h>
 #include <kcompletionbox.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/accessmanager.h>
 
 // Libkipi includes

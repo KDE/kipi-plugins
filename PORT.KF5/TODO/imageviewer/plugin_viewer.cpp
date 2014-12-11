@@ -27,7 +27,7 @@
 
 #include <QAction>
 #include <kactioncollection.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>

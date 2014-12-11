@@ -35,7 +35,7 @@
 #include <QAction>
 #include <kactioncollection.h>
 #include <QApplication>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klocale.h>

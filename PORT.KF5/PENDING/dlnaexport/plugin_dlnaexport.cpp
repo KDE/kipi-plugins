@@ -31,7 +31,7 @@ extern "C"
 
 #include <QAction>
 #include <klibloader.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 #include <kshortcut.h>
 #include <kactioncollection.h>

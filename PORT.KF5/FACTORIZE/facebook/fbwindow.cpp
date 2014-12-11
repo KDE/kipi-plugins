@@ -35,7 +35,7 @@
 
 #include <kcombobox.h>
 #include <QMenu>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <klocale.h>
 #include <kpushbutton.h>

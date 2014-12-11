@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <klocale.h>
 

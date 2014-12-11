@@ -51,7 +51,7 @@ extern "C"
 
 #include <QApplication>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kfiledialog.h>
 #include <kfileitem.h>
 #include <kguiitem.h>

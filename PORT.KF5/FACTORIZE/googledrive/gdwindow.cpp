@@ -45,7 +45,7 @@
 #include <khtmlview.h>
 #include <ktabwidget.h>
 #include <krun.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kwallet.h>

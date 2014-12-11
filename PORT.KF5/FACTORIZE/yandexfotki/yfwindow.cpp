@@ -59,7 +59,7 @@ extern "C"
 
 #include <kcombobox.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kde_file.h>
 #include <kdeversion.h>
 #include <kdialog.h>

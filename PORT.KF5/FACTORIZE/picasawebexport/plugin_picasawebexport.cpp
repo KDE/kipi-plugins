@@ -42,7 +42,7 @@ extern "C"
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <QApplication>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>

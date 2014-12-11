@@ -45,7 +45,7 @@
 #include <QApplication>
 #include <kcombobox.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>

@@ -33,7 +33,7 @@
 // KDE includes
 
 #include <kurl.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <krandom.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>

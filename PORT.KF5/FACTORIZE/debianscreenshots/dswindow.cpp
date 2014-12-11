@@ -35,7 +35,7 @@
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 // LibKDcraw includes
 

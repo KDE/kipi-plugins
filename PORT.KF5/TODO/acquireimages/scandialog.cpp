@@ -33,7 +33,7 @@
 
 #include <QApplication>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kfiledialog.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>

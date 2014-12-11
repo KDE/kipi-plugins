@@ -34,7 +34,7 @@
 // KDE
 
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
 #include <kurl.h>

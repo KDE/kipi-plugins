@@ -35,7 +35,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kiconloader.h>
 #include <kcombobox.h>
 

@@ -46,7 +46,7 @@
 
 #include <QApplication>
 #include <kcodecs.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/jobuidelegate.h>
 #include <klineedit.h>
 #include <klocale.h>

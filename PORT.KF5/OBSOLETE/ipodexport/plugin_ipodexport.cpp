@@ -34,7 +34,7 @@ extern "C"
 #include <QAction>
 #include <QApplication>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>

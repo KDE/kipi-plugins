@@ -33,7 +33,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kfiledialog.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <khbox.h>
 #include <ktoolinvocation.h>
 #include <kcombobox.h>

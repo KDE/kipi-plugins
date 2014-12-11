@@ -24,7 +24,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 //define next to get debug output
 #undef DEBUG_OUTPUT

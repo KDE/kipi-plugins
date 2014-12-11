@@ -24,7 +24,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <klocale.h>

@@ -38,7 +38,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kio/jobuidelegate.h>
 #include <klocale.h>
 #include <kstandarddirs.h>

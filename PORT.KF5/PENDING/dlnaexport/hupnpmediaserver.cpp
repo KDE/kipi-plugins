@@ -26,7 +26,7 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kurl.h>
 
 // libHUpnp includes

@@ -31,7 +31,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 // Local includes
 

@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <klineedit.h>
 #include <klocale.h>
 

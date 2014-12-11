@@ -37,7 +37,7 @@ extern "C"
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <KConfig>
 #include <KApplication>
 #include <QAction>

@@ -31,7 +31,7 @@
 
 #include <klocale.h>
 #include <kpushbutton.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 #include <pluginloader.h>
 

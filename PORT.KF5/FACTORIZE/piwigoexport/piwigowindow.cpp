@@ -48,7 +48,7 @@
 #include <kaboutdata.h>
 #include <QApplication>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <QIcon>
 #include <klocale.h>
 #include <QMenu>

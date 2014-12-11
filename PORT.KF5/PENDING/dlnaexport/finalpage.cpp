@@ -39,7 +39,7 @@
 #include <kpushbutton.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>

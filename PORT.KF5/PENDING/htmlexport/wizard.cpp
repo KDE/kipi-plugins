@@ -34,7 +34,7 @@
 #include <QApplication>
 #include <kcombobox.h>
 #include <kconfigdialogmanager.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <klistwidget.h>
 #include <klocale.h>
