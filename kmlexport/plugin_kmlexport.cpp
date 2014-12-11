@@ -32,17 +32,13 @@
 
 #include <QPointer>
 #include <QAction>
+#include <QApplication>
 
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kdebug.h>
-#include <kgenericfactory.h>
 #include <klibloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 
@@ -122,7 +118,7 @@ void Plugin_KMLExport::slotKMLExport()
     }
     else
     {
-        KMLExportConfig* const kmlExportConfigGui = new KMLExportConfig(kapp->activeWindow());
+        KMLExportConfig* const kmlExportConfigGui = new KMLExportConfig(QApplication::activeWindow());
 
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
                 this, SLOT(slotKMLGenerate()));
@@ -143,4 +139,5 @@ void Plugin_KMLExport::slotKMLGenerate()
 }
 
 } // namespace KIPIKMLExportPlugin
+
 #include "plugin_kmlexport.moc"

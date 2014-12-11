@@ -28,10 +28,7 @@
 
 #include <QDateTime>
 #include <QMap>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 

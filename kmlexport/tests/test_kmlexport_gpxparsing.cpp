@@ -1,5 +1,8 @@
 /* ============================================================
  *
+ * This file is a part of kipi-plugins project
+ * http://www.digikam.org
+ *
  * Date        : 2010-01-17
  * Description : test parsing gpx data
  *

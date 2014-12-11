@@ -35,13 +35,13 @@
 #include <QRadioButton>
 #include <QMenu>
 #include <QComboBox>
+#include <QApplication>
+#include <QLineEdit>
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kcolorbutton.h>
 #include <kconfig.h>
-#include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
 #include <kstandarddirs.h>
@@ -117,15 +117,15 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
 
     destinationDirectoryLabel_ = new QLabel(i18n("Destination Directory:"), TargetPreferenceGroupBox);
 
-    // DestinationDirectory_ = new KLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
+    // DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
     DestinationDirectory_= new KUrlRequester(TargetPreferenceGroupBox);
     DestinationDirectory_->setWindowTitle(i18n("Select a directory in which to save the kml file and pictures"));
     DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
 
     DestinationUrlLabel_ = new QLabel(i18n("Destination URL:"), TargetPreferenceGroupBox);
-    DestinationUrl_      = new KLineEdit(TargetPreferenceGroupBox);
+    DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
     FileNameLabel_       = new QLabel(i18n( "Filename:" ), TargetPreferenceGroupBox);
-    FileName_            = new KLineEdit(TargetPreferenceGroupBox);
+    FileName_            = new QLineEdit(TargetPreferenceGroupBox);
 
     TargetPreferenceGroupBoxLayout->addWidget(TargetTypeGroupBox,         0, 0, 2, 5);
     TargetPreferenceGroupBoxLayout->addWidget(AltitudeLabel_,             2, 0, 1, 5);
@@ -480,7 +480,7 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("KMLFileName",       FileName_->text());
     group.writeEntry("Altitude Mode",     AltitudeCB_->currentIndex() );
     group.writeEntry("UseGPXTracks",      GPXTracksCheckBox_->isChecked());
-    group.writeEntry("GPXFile",           GPXFileUrlRequester_->lineEdit()->originalText());
+    group.writeEntry("GPXFile",           GPXFileUrlRequester_->text());
     group.writeEntry("Time Zone",         timeZoneCB->currentIndex() );
     group.writeEntry("Line Width",        GPXLineWidthInput_->value());
     group.writeEntry("Track Color",   	  GPXTrackColor_->color().name () );
