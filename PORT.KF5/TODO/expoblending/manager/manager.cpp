@@ -54,7 +54,7 @@ public:
         dlg    = 0;
     }
 
-    KUrl::List             inputUrls;
+    QUrl::List             inputUrls;
 
     ItemUrlsMap            preProcessedUrlsMap;
 
@@ -125,12 +125,12 @@ Interface* Manager::iface() const
     return d->iface;
 }
 
-void Manager::setItemsList(const KUrl::List& urls)
+void Manager::setItemsList(const QUrl::List& urls)
 {
     d->inputUrls = urls;
 }
 
-KUrl::List Manager::itemsList() const
+QUrl::List Manager::itemsList() const
 {
     return d->inputUrls;
 }

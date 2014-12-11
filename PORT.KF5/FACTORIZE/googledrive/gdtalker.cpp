@@ -108,7 +108,7 @@ bool GDTalker::authenticated()
  */
 void GDTalker::doOAuth()
 {
-    KUrl url("https://accounts.google.com/o/oauth2/auth");
+    QUrl url("https://accounts.google.com/o/oauth2/auth");
     url.addQueryItem("scope",m_scope);
     url.addQueryItem("redirect_uri",m_redirect_uri);
     url.addQueryItem("response_type",m_response_type);
@@ -158,7 +158,7 @@ void GDTalker::doOAuth()
  */
 void GDTalker::getAccessToken()
 {
-    KUrl url("https://accounts.google.com/o/oauth2/token?");
+    QUrl url("https://accounts.google.com/o/oauth2/token?");
     url.addQueryItem("scope",m_scope.toAscii());
     url.addQueryItem("response_type",m_response_type.toAscii());
     url.addQueryItem("token_uri",m_token_uri.toAscii());
@@ -192,7 +192,7 @@ void GDTalker::getAccessToken()
  */
 void GDTalker::getAccessTokenFromRefreshToken(const QString& msg)
 {
-    KUrl url("https://accounts.google.com/o/oauth2/token");
+    QUrl url("https://accounts.google.com/o/oauth2/token");
 
     QByteArray postData;
     postData = "&client_id=";
@@ -222,7 +222,7 @@ void GDTalker::getAccessTokenFromRefreshToken(const QString& msg)
  */
 void GDTalker::getUserName()
 {
-    KUrl url("https://www.googleapis.com/drive/v2/about");
+    QUrl url("https://www.googleapis.com/drive/v2/about");
     url.addQueryItem("scope", m_scope);
     url.addQueryItem("access_token", m_access_token);
     QString auth = "Authorization: " + m_bearer_access_token.toAscii();
@@ -247,7 +247,7 @@ void GDTalker::getUserName()
  */
 void GDTalker::listFolders()
 {
-    KUrl url("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'");
+    QUrl url("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'");
     QString auth = "Authorization: " + m_bearer_access_token.toAscii();
     qCDebug(KIPIPLUGINS_LOG) << auth;
     KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
@@ -276,7 +276,7 @@ void GDTalker::createFolder(const QString& title,const QString& id)
         m_job = 0;
     }
 
-    KUrl url("https://www.googleapis.com/drive/v2/files");
+    QUrl url("https://www.googleapis.com/drive/v2/files");
     QByteArray data;
     data += "{\"title\":\"";
     data += title.toAscii();
@@ -317,7 +317,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GDPhoto& info,const QString
     }
     emit signalBusy(true);
     MPForm form;
-    form.addPair(KUrl(imgPath).fileName(),info.description,imgPath,id);
+    form.addPair(QUrl(imgPath).fileName(),info.description,imgPath,id);
     QString path = imgPath;
     QImage image;
 
@@ -361,7 +361,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GDPhoto& info,const QString
     form.finish();
 
     QString auth = "Authorization: " + m_bearer_access_token.toAscii();
-    KUrl url("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart");
+    QUrl url("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart");
     KIO::TransferJob* job = KIO::http_post(url,form.formData(),KIO::HideProgressInfo);
     job->addMetaData("content-type",form.contentType());
     job->addMetaData("content-length","Content-Length:"+form.getFileSize());

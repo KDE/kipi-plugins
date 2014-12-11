@@ -39,7 +39,7 @@
 #include "kipiimagelist.h"
 
 /// @cond false
-class KUrl;
+class QUrl;
 /// @endcond
 
 namespace KIPIGPSSyncPlugin
@@ -62,7 +62,7 @@ public:
 protected:
 
     void setGPSDataForSelectedItems(const GPSDataContainer& gpsData, const QString& undoDescription);
-    bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl);
+    bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, QUrl* const itemUrl);
     void removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription);
 
     virtual bool eventFilter(QObject* watched, QEvent* event);

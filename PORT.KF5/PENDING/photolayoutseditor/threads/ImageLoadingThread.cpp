@@ -67,7 +67,7 @@ class ImageLoadingThread::ImageLoadingThreadPrivate
     {
     }
 
-    KUrl::List m_urls;
+    QUrl::List m_urls;
     QSemaphore m_sem;
     qint64     m_size;
     qint64     m_loaded_bytes;
@@ -118,12 +118,12 @@ ImageLoadingThread::~ImageLoadingThread()
 
 void ImageLoadingThread::run()
 {
-    KUrl::List urls = d->m_urls;
+    QUrl::List urls = d->m_urls;
 
     // Calculating reading progress
     d->m_loaded_bytes = d->m_size = 0;
 
-    foreach(const KUrl& url, urls)
+    foreach(const QUrl& url, urls)
     {
         QFile f(url.path());
         f.open(QIODevice::ReadOnly);
@@ -140,7 +140,7 @@ void ImageLoadingThread::run()
         goto finish_thread;
 
     // Reading
-    foreach(const KUrl& url, urls)
+    foreach(const QUrl& url, urls)
     {
         ProgressEvent* startEvent = new ProgressEvent(this);
         startEvent->setData(ProgressEvent::Init, 0);
@@ -170,7 +170,7 @@ void ImageLoadingThread::setMaximumProgress(double limit)
     d->m_max_progress = limit;
 }
 
-void ImageLoadingThread::setImageUrl(const KUrl& url)
+void ImageLoadingThread::setImageUrl(const QUrl& url)
 {
     d->m_sem.acquire();
     d->m_urls.clear();
@@ -178,14 +178,14 @@ void ImageLoadingThread::setImageUrl(const KUrl& url)
     d->m_sem.release();
 }
 
-void ImageLoadingThread::setImagesUrls(const KUrl::List& urls)
+void ImageLoadingThread::setImagesUrls(const QUrl::List& urls)
 {
     d->m_sem.acquire();
     d->m_urls = urls;
     d->m_sem.release();
 }
 
-void ImageLoadingThread::loadRaw(const KUrl& url)
+void ImageLoadingThread::loadRaw(const QUrl& url)
 {
     ProgressEvent* loadingImageActionEvent = new ProgressEvent(this);
     loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));
@@ -268,7 +268,7 @@ void ImageLoadingThread::loadRaw(const KUrl& url)
     delete loader;
 }
 
-void ImageLoadingThread::loadImage(const KUrl& url)
+void ImageLoadingThread::loadImage(const QUrl& url)
 {
     ProgressEvent* loadingImageActionEvent = new ProgressEvent(this);
     loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));

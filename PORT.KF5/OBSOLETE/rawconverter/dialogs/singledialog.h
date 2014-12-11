@@ -69,16 +69,16 @@ private:
 
     void busy(bool busy);
 
-    void setIdentity(const KUrl& url, const QString& identity);
-    void setThumbnail(const KUrl& url, const QPixmap& thumb);
+    void setIdentity(const QUrl& url, const QString& identity);
+    void setThumbnail(const QUrl& url, const QPixmap& thumb);
 
-    void previewing(const KUrl& url);
-    void previewed(const KUrl& url, const QString& tmpFile);
-    void previewFailed(const KUrl& url);
+    void previewing(const QUrl& url);
+    void previewed(const QUrl& url, const QString& tmpFile);
+    void previewFailed(const QUrl& url);
 
-    void processing(const KUrl& url);
-    void processed(const KUrl& url, const QString& tmpFile);
-    void processingFailed(const KUrl& url);
+    void processing(const QUrl& url);
+    void processed(const QUrl& url, const QString& tmpFile);
+    void processingFailed(const QUrl& url);
 
 private Q_SLOTS:
 
@@ -92,7 +92,7 @@ private Q_SLOTS:
 
     void slotAction(const KIPIRawConverterPlugin::ActionData&);
 
-    void slotThumbnail(const KUrl&, const QPixmap&);
+    void slotThumbnail(const QUrl&, const QPixmap&);
 
     void slotSixteenBitsImageToggled(bool);
 

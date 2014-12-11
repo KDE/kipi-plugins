@@ -322,8 +322,8 @@ public:
     }
 
     QList<SearchResultModel::SearchResultItem> searchResults;
-    KUrl                                       markerNormalUrl;
-    KUrl                                       markerSelectedUrl;
+    QUrl                                       markerNormalUrl;
+    QUrl                                       markerSelectedUrl;
     QPixmap                                    markerNormal;
     QPixmap                                    markerSelected;
     QItemSelectionModel*                       selectionModel;
@@ -545,7 +545,7 @@ bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, KGeoMap:
     return true;
 }
 
-bool SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const
+bool SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, QUrl* const url) const
 {
     return d->model->getMarkerIcon(index, offset, size, pixmap, url);
 }
@@ -565,7 +565,7 @@ KGeoMap::ModelHelper* SearchWidget::getModelHelper()
     return d->searchResultModelHelper;
 }
 
-bool SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const
+bool SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, QUrl* const url) const
 {
     // determine the id of the marker
     const int markerNumber    = index.row();
@@ -715,7 +715,7 @@ void SearchWidget::slotCopyCoordinates()
     const QModelIndex currentIndex                        = d->searchResultsSelectionModel->currentIndex();
     const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(currentIndex);
 
-    CoordinatesToClipboard(currentItem.result.coordinates, KUrl(), currentItem.result.name);
+    CoordinatesToClipboard(currentItem.result.coordinates, QUrl(), currentItem.result.name);
 }
 
 void SearchWidget::saveSettingsToGroup(KConfigGroup* const group)

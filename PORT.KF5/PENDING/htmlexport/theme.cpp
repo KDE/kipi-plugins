@@ -69,7 +69,7 @@ struct Theme::Private
     }
 
     KDesktopFile* mDesktopFile;
-    KUrl          mUrl;
+    QUrl          mUrl;
     ParameterList mParameterList;
 
     /**
@@ -218,7 +218,7 @@ Theme::Ptr Theme::findByInternalName(const QString& internalName)
 
 QString Theme::internalName() const
 {
-    KUrl url = d->mUrl;
+    QUrl url = d->mUrl;
     url.setFileName("");
     return url.fileName();
 }

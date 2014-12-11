@@ -343,7 +343,7 @@ void GalleryWindow::readSettings()
 void GalleryWindow::slotDoLogin()
 {
     GalleryTalker::setGallery2((2 == d->gallery->version()));
-    KUrl url(d->gallery->url());
+    QUrl url(d->gallery->url());
 
     if (url.protocol().isEmpty())
     {
@@ -676,12 +676,12 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    const KUrl::List urls(iface()->currentSelection().images());
+    const QUrl::List urls(iface()->currentSelection().images());
 
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
-    for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
         d->uploadList->append( (*it).path() );
     }
@@ -721,7 +721,7 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    d->progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
+    d->progressDlg->setLabelText( i18n("Uploading file %1", QUrl(photoPath).fileName()) );
 
     if (d->progressDlg->isHidden())
         d->progressDlg->show();

@@ -63,7 +63,7 @@ PIImgList::~PIImgList()
 
 // PIImgListViewItem public ///////////////////////////////////////////////////
 
-PIImgListViewItem::PIImgListViewItem(KPImagesListView* const view, const KUrl& url)
+PIImgListViewItem::PIImgListViewItem(KPImagesListView* const view, const QUrl& url)
     : KPImagesListViewItem(view, url)
 {
 }

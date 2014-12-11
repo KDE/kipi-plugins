@@ -134,7 +134,7 @@ FlickrTalker::~FlickrTalker()
 /** Compute MD5 signature using url queries keys and values following Flickr notice:
     http://www.flickr.com/services/api/auth.spec.html
 */
-QString FlickrTalker::getApiSig(const QString& secret, const KUrl& url)
+QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 {
     QMap<QString, QString> queries = url.queryItems();
     QString compressed(secret);
@@ -179,7 +179,7 @@ void FlickrTalker::getFrob()
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
     url.addQueryItem("method", "flickr.auth.getFrob");
     url.addQueryItem("api_key", m_apikey);
     QString md5 = getApiSig(m_secret, url);
@@ -224,7 +224,7 @@ void FlickrTalker::checkToken(const QString& token)
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
     url.addQueryItem("method", "flickr.auth.checkToken");
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("auth_token", token);
@@ -270,7 +270,7 @@ void FlickrTalker::slotAuthenticate()
         m_job = 0;
     }
 
-    KUrl url(m_authUrl);
+    QUrl url(m_authUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("frob", m_frob);
     url.addQueryItem("perms", "write");
@@ -309,7 +309,7 @@ void FlickrTalker::getToken()
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.auth.getToken");
     url.addQueryItem("frob", m_frob);
@@ -350,7 +350,7 @@ void FlickrTalker::getToken()
 void FlickrTalker::listPhotoSets()
 {
     qCDebug(KIPIPLUGINS_LOG) << "List photoset invoked";
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
     url.addQueryItem("auth_token", m_token);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.photosets.getList");
@@ -392,7 +392,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", method);
     url.addQueryItem("frob", m_frob);
@@ -451,7 +451,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     }
 
     qCDebug(KIPIPLUGINS_LOG) << "create photoset invoked";
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
     url.addQueryItem("auth_token", m_token);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.photosets.create");
@@ -500,7 +500,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
     }
 
     qCDebug(KIPIPLUGINS_LOG) << "addPhotoToPhotoSet invoked";
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
 
     /* If the photoset id starts with the special string "UNDEFINED_", it means
      * it doesn't exist yet on Flickr and needs to be created. Note that it's
@@ -552,10 +552,10 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         m_job = 0;
     }
 
-    KUrl    url(m_uploadUrl);
+    QUrl    url(m_uploadUrl);
 
     // We dont' want to modify url as such, we just used the KURL object for storing the query items.
-    KUrl  url2("");
+    QUrl  url2("");
     QString path = photoPath;
     MPForm  form;
 

@@ -146,7 +146,7 @@ private:
     QByteArray   m_buffer;
 
     QString      m_userAgent;
-    KUrl         m_apiURL;
+    QUrl         m_apiURL;
     QString      m_apiVersion;
     QString      m_secretKey;
     QString      m_appID;

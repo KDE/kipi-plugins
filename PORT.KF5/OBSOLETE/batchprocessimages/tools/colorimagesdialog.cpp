@@ -52,7 +52,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ColorImagesDialog::ColorImagesDialog(const KUrl::List& urlList, QWidget *parent)
+ColorImagesDialog::ColorImagesDialog(const QUrl::List& urlList, QWidget *parent)
     : BatchProcessImagesDialog(urlList, i18n("Batch Image-Color Processing"), parent)
 {
     m_nbItem = m_selectedImageFiles.count();

@@ -38,7 +38,7 @@ namespace KIPIRemoveRedEyesPlugin
 QString SaveSubfolder::savePath(const QString& path, const QString& extra) const
 {
     QFileInfo info(path);
-    KUrl savePath(info.path());
+    QUrl savePath(info.path());
 
     savePath.addPath(extra);
 
@@ -57,7 +57,7 @@ QString SaveSubfolder::savePath(const QString& path, const QString& extra) const
 QString SavePrefix::savePath(const QString& path, const QString& extra) const
 {
     QFileInfo info(path);
-    KUrl savePath(info.path());
+    QUrl savePath(info.path());
 
     QString file = QString(extra);
     file.append(info.fileName());
@@ -71,7 +71,7 @@ QString SavePrefix::savePath(const QString& path, const QString& extra) const
 QString SaveSuffix::savePath(const QString& path, const QString& extra) const
 {
     QFileInfo info(path);
-    KUrl savePath(info.path());
+    QUrl savePath(info.path());
 
     QString file = info.completeBaseName();
     file.append(extra);

@@ -222,7 +222,7 @@ KIPI::Interface * PhotoLayoutsEditor::interface() const
     return this->m_interface;
 }
 
-void PhotoLayoutsEditor::setItemsList(const KUrl::List & images)
+void PhotoLayoutsEditor::setItemsList(const QUrl::List & images)
 {
     if (!m_canvas)
         return;
@@ -240,9 +240,9 @@ void PhotoLayoutsEditor::setupActions()
 //    d->openFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_O));
     actionCollection()->addAction("open", d->openFileAction);
     //------------------------------------------------------------------------
-    d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(KUrl)), actionCollection());
-    KUrl::List urls = PLEConfigSkeleton::recentFiles();
-    foreach(KUrl url, urls)
+    d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(QUrl)), actionCollection());
+    QUrl::List urls = PLEConfigSkeleton::recentFiles();
+    foreach(QUrl url, urls)
         d->openRecentFilesMenu->addUrl(url);
     connect(d->openRecentFilesMenu, SIGNAL(recentListCleared()), this, SLOT(clearRecentList()));
     actionCollection()->addAction("open_recent", d->openRecentFilesMenu);
@@ -336,11 +336,11 @@ void PhotoLayoutsEditor::refreshActions()
     d->toolsWidget->setEnabled(isEnabledForCanvas);
 }
 
-void PhotoLayoutsEditor::addRecentFile(const KUrl & url)
+void PhotoLayoutsEditor::addRecentFile(const QUrl & url)
 {
     if (url.isValid())
     {
-        KUrl::List tempList = PLEConfigSkeleton::recentFiles();
+        QUrl::List tempList = PLEConfigSkeleton::recentFiles();
         tempList.removeAll(url);
         tempList.push_back(url);
         unsigned maxCount = PLEConfigSkeleton::recentFilesCount();
@@ -355,7 +355,7 @@ void PhotoLayoutsEditor::addRecentFile(const KUrl & url)
 
 void PhotoLayoutsEditor::clearRecentList()
 {
-    PLEConfigSkeleton::setRecentFiles(KUrl::List());
+    PLEConfigSkeleton::setRecentFiles(QUrl::List());
 }
 
 void PhotoLayoutsEditor::createWidgets()
@@ -389,7 +389,7 @@ void PhotoLayoutsEditor::createWidgets()
     d->statusBar = new PLEStatusBar(this);
     this->setStatusBar(d->statusBar);
 
-    //this->open(KUrl("/home/coder89/Desktop/second.ple"));   /// TODO : Uncomment and set correct path when delevoping
+    //this->open(QUrl("/home/coder89/Desktop/second.ple"));   /// TODO : Uncomment and set correct path when delevoping
 }
 
 void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
@@ -403,7 +403,7 @@ void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
     this->prepareSignalsConnections();
 }
 
-void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
+void PhotoLayoutsEditor::createCanvas(const QUrl & fileUrl)
 {
     if (m_canvas)
     {
@@ -485,7 +485,7 @@ void PhotoLayoutsEditor::open()
     QString tmp;
     if (dialog->hasTemplateSelected() && !(tmp = dialog->templateSelected()).isEmpty())
     {
-        open(KUrl(dialog->templateSelected()));
+        open(QUrl(dialog->templateSelected()));
     }
     else
     {
@@ -503,7 +503,7 @@ void PhotoLayoutsEditor::open()
 void PhotoLayoutsEditor::openDialog()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
+        d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
     d->fileDialog->setOperationMode(KFileDialog::Opening);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
@@ -512,7 +512,7 @@ void PhotoLayoutsEditor::openDialog()
         open(d->fileDialog->selectedUrl());
 }
 
-void PhotoLayoutsEditor::open(const KUrl & fileUrl)
+void PhotoLayoutsEditor::open(const QUrl & fileUrl)
 {
     if (m_canvas && m_canvas->file() == fileUrl)
         return;
@@ -539,14 +539,14 @@ void PhotoLayoutsEditor::save()
 void PhotoLayoutsEditor::saveAs()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
+        d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
     d->fileDialog->setOperationMode(KFileDialog::Saving);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
     int result = d->fileDialog->exec();
     if (result == KFileDialog::Accepted)
     {
-        KUrl url = d->fileDialog->selectedUrl();
+        QUrl url = d->fileDialog->selectedUrl();
         saveFile(url);
     }
 }
@@ -554,14 +554,14 @@ void PhotoLayoutsEditor::saveAs()
 void PhotoLayoutsEditor::saveAsTemplate()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
+        d->fileDialog = new KFileDialog(QUrl(), i18n("*.ple|Photo Layouts Editor files"), this);
     d->fileDialog->setOperationMode(KFileDialog::Saving);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
     int result = d->fileDialog->exec();
     if (result == KFileDialog::Accepted)
     {
-        KUrl url = d->fileDialog->selectedUrl();
+        QUrl url = d->fileDialog->selectedUrl();
         if (m_canvas)
             m_canvas->saveTemplate(url);
         else
@@ -570,7 +570,7 @@ void PhotoLayoutsEditor::saveAsTemplate()
     }
 }
 
-void PhotoLayoutsEditor::saveFile(const KUrl & fileUrl, bool setFileAsDefault)
+void PhotoLayoutsEditor::saveFile(const QUrl & fileUrl, bool setFileAsDefault)
 {
     if (m_canvas)
         m_canvas->save(fileUrl, setFileAsDefault);
@@ -583,7 +583,7 @@ void PhotoLayoutsEditor::exportFile()
 {
     if (!m_canvas)
         return;
-    ImageFileDialog * imageDialog = new ImageFileDialog(KUrl(), this);
+    ImageFileDialog * imageDialog = new ImageFileDialog(QUrl(), this);
     imageDialog->setOperationMode(KFileDialog::Saving);
     int result = imageDialog->exec();
     if (result == KFileDialog::Accepted)
@@ -694,7 +694,7 @@ void PhotoLayoutsEditor::loadNewImage()
     if (!m_canvas)
         return;
 
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
+    QUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
     if (!urls.isEmpty())
         m_canvas->addImages(urls);
 }

@@ -49,7 +49,7 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-typedef QMap<KUrl, QImage> LoadedImages;
+typedef QMap<QUrl, QImage> LoadedImages;
 
 class SharedContainer;
 
@@ -58,7 +58,7 @@ class LoadThread : public QThread
 
 public:
 
-    LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const KUrl& path,
+    LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
                KPMetadata::ImageOrientation orientation, int width, int height);
     ~LoadThread();
 
@@ -70,7 +70,7 @@ private:
 
     QMutex*                      m_imageLock;
     LoadedImages*                m_loadedImages;
-    KUrl                         m_path;
+    QUrl                         m_path;
     QString                      m_filename;
     KPMetadata::ImageOrientation m_orientation;
     int                          m_swidth;
@@ -79,7 +79,7 @@ private:
 
 // ----------------------------------------------------------------------------
 
-typedef QMap<KUrl, LoadThread*> LoadingThreads;
+typedef QMap<QUrl, LoadThread*> LoadingThreads;
 
 class SlideShowLoader
 {
@@ -95,7 +95,7 @@ public:
 
     QImage  getCurrent();
     QString currFileName() const;
-    KUrl    currPath() const;
+    QUrl    currPath() const;
 
 private:
 

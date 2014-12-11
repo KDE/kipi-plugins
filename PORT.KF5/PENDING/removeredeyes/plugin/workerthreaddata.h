@@ -24,7 +24,7 @@
 #ifndef WORKERTHREADDATA_H
 #define WORKERTHREADDATA_H
 
-class KUrl;
+class QUrl;
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -34,14 +34,14 @@ class WorkerThreadData
 
 public:
 
-    explicit WorkerThreadData(const KUrl& url, int current=0, int eyes=0);
+    explicit WorkerThreadData(const QUrl& url, int current=0, int eyes=0);
     ~WorkerThreadData();
 
 public:
 
     int         current;
     int         eyes;
-    const KUrl& urls;
+    const QUrl& urls;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

@@ -40,14 +40,14 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePreviewTask::CreatePreviewTask(QObject* parent, const KUrl& workDir, const PTOType& inputPTO, 
-                                     KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
+CreatePreviewTask::CreatePreviewTask(QObject* parent, const QUrl& workDir, const PTOType& inputPTO, 
+                                     QUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
     : Task(parent, CREATEMKPREVIEW, workDir), previewPtoUrl(&previewPtoUrl),
       ptoData(inputPTO), preProcessedUrlsMap(preProcessedUrlsMap)
 {}
 
-CreatePreviewTask::CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO, 
-                                     KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
+CreatePreviewTask::CreatePreviewTask(const QUrl& workDir, const PTOType& inputPTO, 
+                                     QUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
     : Task(0, CREATEMKPREVIEW, workDir), previewPtoUrl(&previewPtoUrl),
       ptoData(inputPTO), preProcessedUrlsMap(preProcessedUrlsMap)
 {}
@@ -79,7 +79,7 @@ void CreatePreviewTask::run()
     for (int imageId = 0; imageId < data.images.size(); imageId++)
     {
         PTOType::Image& image = data.images[imageId];
-        KUrl imgUrl(KUrl(tmpDir), image.fileName);
+        QUrl imgUrl(QUrl(tmpDir), image.fileName);
         ItemUrlsMap::const_iterator it;
         const ItemUrlsMap *ppum = &preProcessedUrlsMap;
         for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl != imgUrl; ++it);
@@ -92,7 +92,7 @@ void CreatePreviewTask::run()
             return;
         }
         image.fileName = it.value().previewUrl.fileName();
-        KUrl preview(KUrl(tmpDir), image.fileName);
+        QUrl preview(QUrl(tmpDir), image.fileName);
         KPMetadata metaImage(preview.toLocalFile());
         image.size = metaImage.getPixelSize();
         image.optimisationParameters.clear();

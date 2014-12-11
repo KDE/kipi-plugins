@@ -168,7 +168,7 @@ void EncoderDecoder::encodeVideo(const QString& destination, const QString& audi
 
     bool audio = false;
 
-    if(KUrl(audiFile).isValid() && !audiFile.isEmpty())
+    if(QUrl(audiFile).isValid() && !audiFile.isEmpty())
         audio = true;
 
     switch(type)
@@ -233,7 +233,7 @@ void EncoderDecoder::encodeVideo(const QString& destination, const QString& audi
 
     bool audio = true;
 
-    if(audiFile.isEmpty() || !KUrl(audiFile).isValid())
+    if(audiFile.isEmpty() || !QUrl(audiFile).isValid())
         audio = false;
 
     QGst::BinPtr audioSrcBin;

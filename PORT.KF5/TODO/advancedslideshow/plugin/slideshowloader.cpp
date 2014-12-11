@@ -54,7 +54,7 @@ using namespace KDcrawIface;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-LoadThread::LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const KUrl& path,
+LoadThread::LoadThread(LoadedImages* const loadedImages, QMutex* const imageLock, const QUrl& path,
                        KPMetadata::ImageOrientation orientation, int width, int height)
     : QThread()
 {
@@ -116,12 +116,12 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     m_threadLock     = new QMutex();
     m_sharedData     = sharedData;
 
-    KUrl                         filePath;
+    QUrl                         filePath;
     KPMetadata::ImageOrientation orientation;
 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
     {
-        filePath    = KUrl(m_pathList[i].first);
+        filePath    = QUrl(m_pathList[i].first);
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
@@ -136,7 +136,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); ++i)
     {
         int toLoad  = (m_currIndex - i) % m_pathList.count();
-        filePath    = KUrl(m_pathList[toLoad].first);
+        filePath    = QUrl(m_pathList[toLoad].first);
         KPImageInfo info(filePath);
         orientation = info.orientation();
 
@@ -198,7 +198,7 @@ void SlideShowLoader::next()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    KUrl filePath                            = KUrl(m_pathList[newBorn].first);
+    QUrl filePath                            = QUrl(m_pathList[newBorn].first);
     KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
@@ -239,7 +239,7 @@ void SlideShowLoader::prev()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    KUrl filePath                            = KUrl(m_pathList[newBorn].first);
+    QUrl filePath                            = QUrl(m_pathList[newBorn].first);
     KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
@@ -265,12 +265,12 @@ QImage SlideShowLoader::getCurrent()
 
 QString SlideShowLoader::currFileName() const
 {
-    return KUrl(m_pathList[m_currIndex].first).fileName();
+    return QUrl(m_pathList[m_currIndex].first).fileName();
 }
 
-KUrl SlideShowLoader::currPath() const
+QUrl SlideShowLoader::currPath() const
 {
-    return KUrl(m_pathList[m_currIndex].first);
+    return QUrl(m_pathList[m_currIndex].first);
 }
 
 void SlideShowLoader::checkIsIn(int index)
@@ -286,7 +286,7 @@ void SlideShowLoader::checkIsIn(int index)
     }
     else
     {
-        KUrl filePath                            = KUrl(m_pathList[index].first);
+        QUrl filePath                            = QUrl(m_pathList[index].first);
         KPImageInfo info(filePath);
         KPMetadata::ImageOrientation orientation = info.orientation();
 

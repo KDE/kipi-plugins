@@ -454,7 +454,7 @@ void RajceWidget::startUpload()
 
     m_uploadQueue.clear();
 
-    foreach(KUrl image, m_imgList->imageUrls(true))
+    foreach(QUrl image, m_imgList->imageUrls(true))
     {
         QString imagePath = image.toLocalFile();
         m_uploadQueue.append(imagePath);
@@ -513,7 +513,7 @@ void RajceWidget::uploadNext()
 {
     if (m_currentUploadImage != m_uploadQueue.begin())
     {
-        m_imgList->processed(KUrl::fromLocalFile(*m_currentUploadImage), (m_session->state().lastErrorCode() == 0));
+        m_imgList->processed(QUrl::fromLocalFile(*m_currentUploadImage), (m_session->state().lastErrorCode() == 0));
     }
 
     if (m_currentUploadImage == m_uploadQueue.end())
@@ -522,7 +522,7 @@ void RajceWidget::uploadNext()
         return;
     }
 
-    m_imgList->processing(KUrl::fromLocalFile(*m_currentUploadImage));
+    m_imgList->processing(QUrl::fromLocalFile(*m_currentUploadImage));
 
     QString currentPhoto = *m_currentUploadImage;
     ++m_currentUploadImage;
@@ -538,7 +538,7 @@ void RajceWidget::cancelUpload()
     if (m_uploadingPhotos && m_currentUploadImage != m_uploadQueue.begin() &&
         m_currentUploadImage != m_uploadQueue.end())
     {
-        m_imgList->processed(KUrl::fromLocalFile(*m_currentUploadImage), false);
+        m_imgList->processed(QUrl::fromLocalFile(*m_currentUploadImage), false);
     }
 
     disconnect(m_session, SIGNAL(busyFinished(uint)),

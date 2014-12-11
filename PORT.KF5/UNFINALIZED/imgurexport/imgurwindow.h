@@ -77,15 +77,15 @@ public Q_SLOTS:
     void slotBusy(bool val);
 
     void slotButtonClicked(KDialog::ButtonCode button);
-    void slotAddPhotoSuccess(const KUrl& currentImage, const ImgurSuccess& success);
-    void slotAddPhotoError(const KUrl& currentImage, const ImgurError& error);
+    void slotAddPhotoSuccess(const QUrl& currentImage, const ImgurSuccess& success);
+    void slotAddPhotoError(const QUrl& currentImage, const ImgurError& error);
 //    void slotAuthenticated(bool yes);
     void slotAuthenticated(bool yes, const QString& message = "");
 
 Q_SIGNALS:
 
-    void signalImageUploadSuccess(const KUrl&, const ImgurSuccess&);
-    void signalImageUploadError(const KUrl&, const ImgurError&);
+    void signalImageUploadSuccess(const QUrl&, const ImgurSuccess&);
+    void signalImageUploadError(const QUrl&, const ImgurError&);
     void signalImageUploadCompleted();
     void signalContinueUpload(bool yes);
 

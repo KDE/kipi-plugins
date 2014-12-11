@@ -310,7 +310,7 @@ void GDWindow::slotStartTransfer()
         }
     }
 
-    typedef QPair<KUrl, GDPhoto> Pair;
+    typedef QPair<QUrl, GDPhoto> Pair;
 
     for(int i=0 ;i < (m_widget->m_imgList->imageUrls().size()) ; i++)
     {
@@ -348,7 +348,7 @@ void GDWindow::uploadNextPhoto()
         return;
     }
 
-    typedef QPair<KUrl,GDPhoto> Pair;
+    typedef QPair<QUrl,GDPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
     GDPhoto info      = pathComments.second;
 
@@ -458,7 +458,7 @@ void GDWindow::slotTransferCancel()
 
 void GDWindow::slotUserChangeRequest()
 {
-    KUrl url("https://accounts.google.com/logout");
+    QUrl url("https://accounts.google.com/logout");
     KToolInvocation::invokeBrowser(url.url());
 
     if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser, "

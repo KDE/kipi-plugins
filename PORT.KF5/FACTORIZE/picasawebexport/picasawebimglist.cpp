@@ -71,7 +71,7 @@ PicasawebImagesList::~PicasawebImagesList()
 void PicasawebImagesList::slotAddItems()
 {
     PicasawebImageDialog dlg(this, iface());
-    KUrl::List urls = dlg.urls();
+    QUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
         slotAddImages(urls);
 
@@ -89,7 +89,7 @@ public:
     {
     }
 
-    KUrl::List urls;
+    QUrl::List urls;
 };
 
 // ------------------------------------------------------------------------
@@ -148,7 +148,7 @@ PicasawebImageDialog::~PicasawebImageDialog()
     delete d;
 }
 
-KUrl::List PicasawebImageDialog::urls() const
+QUrl::List PicasawebImageDialog::urls() const
 {
     return d->urls;
 }

@@ -77,14 +77,14 @@ int CalSettings::year() const
     return params.year;
 }
 
-void CalSettings::setImage(int month, const KUrl& path)
+void CalSettings::setImage(int month, const QUrl& path)
 {
     m_monthMap.insert(month, path);
 }
 
-KUrl CalSettings::image(int month) const
+QUrl CalSettings::image(int month) const
 {
-    return m_monthMap.contains(month) ? m_monthMap[month] : KUrl();
+    return m_monthMap.contains(month) ? m_monthMap[month] : QUrl();
 }
 
 void CalSettings::setPaperSize(const QString& paperSize)
@@ -206,7 +206,7 @@ void CalSettings::addSpecial(const QDate& date, const Day& info)
     }
 }
 
-void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
+void CalSettings::loadSpecial(const QUrl& url, const QColor& color)
 {
     if (url.isEmpty())
     {

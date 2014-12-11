@@ -90,7 +90,7 @@ EnfuseSettings EnfuseStackItem::enfuseSettings() const
     return d->settings;
 }
 
-KUrl EnfuseStackItem::url() const
+QUrl EnfuseStackItem::url() const
 {
     return d->settings.previewUrl;
 }
@@ -266,20 +266,20 @@ void EnfuseStackList::clearSelected()
         delete item;
 }
 
-void EnfuseStackList::setOnItem(const KUrl& url, bool on)
+void EnfuseStackList::setOnItem(const QUrl& url, bool on)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)
         item->setOn(on);
 }
 
-void EnfuseStackList::removeItem(const KUrl& url)
+void EnfuseStackList::removeItem(const QUrl& url)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     delete item;
 }
 
-void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
+void EnfuseStackList::addItem(const QUrl& url, const EnfuseSettings& settings)
 {
     if (!url.isValid())
         return;
@@ -301,7 +301,7 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
     }
 }
 
-void EnfuseStackList::setThumbnail(const KUrl& url, const QImage& img)
+void EnfuseStackList::setThumbnail(const QUrl& url, const QImage& img)
 {
     if (img.isNull()) return;
 
@@ -327,7 +327,7 @@ void EnfuseStackList::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
-EnfuseStackItem* EnfuseStackList::findItemByUrl(const KUrl& url)
+EnfuseStackItem* EnfuseStackList::findItemByUrl(const QUrl& url)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -341,7 +341,7 @@ EnfuseStackItem* EnfuseStackList::findItemByUrl(const KUrl& url)
     return 0;
 }
 
-void EnfuseStackList::processingItem(const KUrl& url, bool run)
+void EnfuseStackList::processingItem(const QUrl& url, bool run)
 {
     d->processItem = findItemByUrl(url);
     if (d->processItem)
@@ -360,7 +360,7 @@ void EnfuseStackList::processingItem(const KUrl& url, bool run)
     }
 }
 
-void EnfuseStackList::processedItem(const KUrl& url, bool success)
+void EnfuseStackList::processedItem(const QUrl& url, bool success)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)

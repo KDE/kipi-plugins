@@ -57,7 +57,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, QWidget* parent)
+ConvertImagesDialog::ConvertImagesDialog(const QUrl::List& urlList, QWidget* parent)
     : BatchProcessImagesDialog(urlList, i18n("Batch Convert Images"), parent)
 {
     setOptionBoxTitle(i18n("Image Conversion Options"));

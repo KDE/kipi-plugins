@@ -54,10 +54,10 @@ ImageshackTalker::ImageshackTalker(Imageshack* imghack)
     m_state(IMGHCK_DONOTHING)
 {
     m_userAgent   = QString("KIPI-Plugin-Imageshack/%1").arg(kipiplugins_version);
-    m_photoApiUrl = KUrl("http://www.imageshack.us/upload_api.php");
-    m_videoApiUrl = KUrl("http://render.imageshack.us/upload_api.php");
-    m_loginApiUrl = KUrl("http://my.imageshack.us/setlogin.php");
-    m_galleryUrl  = KUrl("http://www.imageshack.us/gallery_api.php");
+    m_photoApiUrl = QUrl("http://www.imageshack.us/upload_api.php");
+    m_videoApiUrl = QUrl("http://render.imageshack.us/upload_api.php");
+    m_loginApiUrl = QUrl("http://my.imageshack.us/setlogin.php");
+    m_galleryUrl  = QUrl("http://www.imageshack.us/gallery_api.php");
     m_appKey      = "YPZ2L9WV2de2a1e08e8fbddfbcc1c5c39f94f92a";
 }
 
@@ -187,7 +187,7 @@ void ImageshackTalker::getGalleries()
     emit signalBusy(true);
     emit signalJobInProgress(3, 4, i18n("Getting galleries from server"));
 
-    KUrl gUrl(m_galleryUrl);
+    QUrl gUrl(m_galleryUrl);
     gUrl.addQueryItem("action", "gallery_list");
     gUrl.addQueryItem("user", m_imageshack->username());
 
@@ -220,7 +220,7 @@ void ImageshackTalker::checkRegistrationCode()
     args.append("&xml=yes");
 
     QByteArray tmp = args.toUtf8();
-    KIO::TransferJob* job = KIO::http_post(KUrl(m_loginApiUrl), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(QUrl(m_loginApiUrl), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -387,7 +387,7 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
     emit signalBusy(true);
     QMap<QString, QString> args;
     args["key"]        = m_appKey;
-    args["fileupload"] = KUrl(path).fileName();
+    args["fileupload"] = QUrl(path).fileName();
 
     MPForm form;
 
@@ -405,7 +405,7 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
         form.addPair(it.key(), it.value());
     }
 
-    if (!form.addFile(KUrl(path).fileName(), path))
+    if (!form.addFile(QUrl(path).fileName(), path))
     {
         emit signalBusy(false);
         return;
@@ -417,17 +417,17 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
     QString mime = mimeType(path);
 
     // TODO support for video uploads
-    KUrl uploadUrl;
+    QUrl uploadUrl;
 
     if (mime.startsWith(QLatin1String("video/")))
     {
-        uploadUrl = KUrl(m_videoApiUrl);
+        uploadUrl = QUrl(m_videoApiUrl);
         m_state = IMGHCK_ADDVIDEO;
     }
     else
     {
         // image file
-        uploadUrl = KUrl(m_photoApiUrl);
+        uploadUrl = QUrl(m_photoApiUrl);
         m_state   = IMGHCK_ADDPHOTO;
     }
 
@@ -544,7 +544,7 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
             {
                 QString imgPath = QString("img") + server + "/" + bucket + "/" + image.firstChild().toText().data();
 
-                KUrl url(m_job->property("k_galleryName").toString());
+                QUrl url(m_job->property("k_galleryName").toString());
                 url.addQueryItem("action", "add");
                 url.addQueryItem("image[]", imgPath);
                 url.addQueryItem("cookie", m_imageshack->registrationCode());

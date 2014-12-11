@@ -325,7 +325,7 @@ void CanvasEditTool::patternStyleChanged(Qt::BrushStyle /*patternStyle*/)
 
 void CanvasEditTool::imageUrlRequest()
 {
-    static KUrl startUrl("~");
+    static QUrl startUrl("~");
     KFileDialog fd(startUrl, "", 0);
     fd.setOperationMode(KFileDialog::Opening);
     fd.setMode(KFile::File);
@@ -377,7 +377,7 @@ void CanvasEditTool::imageUrlRequest()
 
 void CanvasEditTool::borderImageUrlRequest()
 {
-    static KUrl startUrl("~");
+    static QUrl startUrl("~");
     KFileDialog fd(startUrl, "", 0);
     fd.setOperationMode(KFileDialog::Opening);
     fd.setMode(KFile::File);

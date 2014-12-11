@@ -373,7 +373,7 @@ void PiwigoWindow::readSettings()
 
 void PiwigoWindow::slotDoLogin()
 {
-    KUrl url(d->pPiwigo->url());
+    QUrl url(d->pPiwigo->url());
 
     if (url.protocol().isEmpty())
     {
@@ -533,7 +533,7 @@ void PiwigoWindow::slotAlbumSelected()
 
 void PiwigoWindow::slotAddPhoto()
 {
-    const KUrl::List urls(iface()->currentSelection().images());
+    const QUrl::List urls(iface()->currentSelection().images());
 
     if ( urls.isEmpty())
     {
@@ -541,7 +541,7 @@ void PiwigoWindow::slotAddPhoto()
         return;
     }
 
-    for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
         d->pUploadList->append( (*it).path() );
     }
@@ -575,11 +575,11 @@ void PiwigoWindow::slotAddPhotoNext()
 
     if (!res)
     {
-        slotAddPhotoFailed( i18n("The file %1 is not a supported image or video format", KUrl(photoPath).fileName()) );
+        slotAddPhotoFailed( i18n("The file %1 is not a supported image or video format", QUrl(photoPath).fileName()) );
         return;
     }
 
-    d->progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
+    d->progressDlg->setLabelText( i18n("Uploading file %1", QUrl(photoPath).fileName()) );
 
     if (d->progressDlg->isHidden())
         d->progressDlg->show();

@@ -56,7 +56,7 @@ public:
 
 protected:
 
-    KUrl::List images();
+    QUrl::List images();
 
 private Q_SLOTS:
 
@@ -67,9 +67,9 @@ private Q_SLOTS:
     void slotRotateExif();
     void slotConvert2GrayScale();
     void slotCancel();
-    void slotStarting(const KUrl& url, int action);
-    void slotFinished(const KUrl& url, int action);
-    void slotFailed(const KUrl& url, int action, const QString& errString);
+    void slotStarting(const QUrl& url, int action);
+    void slotFinished(const QUrl& url, int action);
+    void slotFailed(const QUrl& url, int action, const QString& errString);
 
 private:
 

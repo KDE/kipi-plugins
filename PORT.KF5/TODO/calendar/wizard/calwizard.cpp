@@ -142,7 +142,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
     if (current == wPrintPage_)
     {
         months_.clear();
-        KUrl image;
+        QUrl image;
         QString month;
         QStringList printList;
         QDate d;

@@ -30,16 +30,16 @@
 namespace KIPIPanoramaPlugin
 {
 
-OptimisationTask::OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
+OptimisationTask::OptimisationTask(QObject* parent, const QUrl& workDir, const QUrl& input,
+                                   QUrl& autoOptimiserPtoUrl, bool levelHorizon,
                                    const QString& autooptimiserPath)
     : Task(parent, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
       ptoUrl(&input), levelHorizon(levelHorizon),
       autooptimiserPath(autooptimiserPath), process(0)
 {}
 
-OptimisationTask::OptimisationTask(const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
+OptimisationTask::OptimisationTask(const QUrl& workDir, const QUrl& input,
+                                   QUrl& autoOptimiserPtoUrl, bool levelHorizon,
                                    const QString& autooptimiserPath)
     : Task(0, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
       ptoUrl(&input), levelHorizon(levelHorizon),

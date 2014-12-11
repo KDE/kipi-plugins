@@ -159,23 +159,23 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
-    connect(d->imagesList, SIGNAL(signalAddItems(KUrl::List)),
-            this, SLOT(slotAddItems(KUrl::List)));
+    connect(d->imagesList, SIGNAL(signalAddItems(QUrl::List)),
+            this, SLOT(slotAddItems(QUrl::List)));
 
-    connect(d->imagesList, SIGNAL(signalRemovedItems(KUrl::List)),
-            this, SLOT(slotRemoveItems(KUrl::List)));
+    connect(d->imagesList, SIGNAL(signalRemovedItems(QUrl::List)),
+            this, SLOT(slotRemoveItems(QUrl::List)));
 
     connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    connect(this, SIGNAL(signalImageUploadSuccess(KUrl,ImgurSuccess)),
-            d->imagesList, SLOT(slotUploadSuccess(KUrl,ImgurSuccess)));
+    connect(this, SIGNAL(signalImageUploadSuccess(QUrl,ImgurSuccess)),
+            d->imagesList, SLOT(slotUploadSuccess(QUrl,ImgurSuccess)));
 
-    connect(this, SIGNAL(signalImageUploadError(KUrl,ImgurError)),
-            d->imagesList, SLOT(slotUploadError(KUrl,ImgurError)));
+    connect(this, SIGNAL(signalImageUploadError(QUrl,ImgurError)),
+            d->imagesList, SLOT(slotUploadError(QUrl,ImgurError)));
 
-//    connect(this, SIGNAL(signalImageUploadStart(KUrl)),
-//            d->imagesList, SLOT(processing(KUrl)));
+//    connect(this, SIGNAL(signalImageUploadStart(QUrl)),
+//            d->imagesList, SLOT(processing(QUrl)));
 
 #ifdef OAUTH_ENABLED
     connect(d->changeUserBtn, SIGNAL(clicked()),
@@ -196,12 +196,12 @@ ImgurWidget::~ImgurWidget()
     delete d;
 }
 
-void ImgurWidget::slotAddItems(const KUrl::List& list)
+void ImgurWidget::slotAddItems(const QUrl::List& list)
 {
     emit signalAddItems(list);
 }
 
-void ImgurWidget::slotRemoveItems(const KUrl::List& list)
+void ImgurWidget::slotRemoveItems(const QUrl::List& list)
 {
     emit signalRemoveItems(list);
 }
@@ -213,7 +213,7 @@ void ImgurWidget::slotImageListChanged()
     progressBar()->setMaximum(imagesList()->imageUrls().size());
 }
 
-void ImgurWidget::slotImageUploadStart(const KUrl& imgPath)
+void ImgurWidget::slotImageUploadStart(const QUrl& imgPath)
 {
     d->processedCount++;
     qCDebug(KIPIPLUGINS_LOG) << "Processing" << imgPath;
@@ -229,7 +229,7 @@ void ImgurWidget::slotImageUploadStart(const KUrl& imgPath)
     progressBar()->progressStatusChanged(i18n("Processing %1", imgPath.fileName()));
 }
 
-void ImgurWidget::slotImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess& success)
+void ImgurWidget::slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess& success)
 {
     const QString path = imgPath.toLocalFile();
 
@@ -250,7 +250,7 @@ void ImgurWidget::slotImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess
     emit signalImageUploadSuccess(imgPath, success);
 }
 
-void ImgurWidget::slotImageUploadError(const KUrl& imgPath, const ImgurError& error)
+void ImgurWidget::slotImageUploadError(const QUrl& imgPath, const ImgurError& error)
 {
     imagesList()->processed(imgPath, false);
     emit signalImageUploadError(imgPath, error);

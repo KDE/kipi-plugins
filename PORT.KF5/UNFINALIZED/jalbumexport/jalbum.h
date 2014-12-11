@@ -42,8 +42,8 @@ public:
     JAlbum();
     ~JAlbum();
 
-    KUrl albumPath() const;
-    KUrl jarPath()   const;
+    QUrl albumPath() const;
+    QUrl jarPath()   const;
 
     void setPath(const QString& albumPath);
     void setJar(const QString& jar);

@@ -64,9 +64,9 @@ public:
 
 public Q_SLOTS:
 
-    void slotAddImages(const KUrl::List& list);
-    void slotUploadSuccess(const KUrl& imageUrl, const ImgurSuccess& success);
-    void slotUploadError(const KUrl& imageUrl, const ImgurError& error);
+    void slotAddImages(const QUrl::List& list);
+    void slotUploadSuccess(const QUrl& imageUrl, const ImgurSuccess& success);
+    void slotUploadError(const QUrl& imageUrl, const ImgurError& error);
     void slotDoubleClick(QTreeWidgetItem* element, int i);
 };
 
@@ -76,7 +76,7 @@ class ImgurImageListViewItem : public KPImagesListViewItem
 {
 public:
 
-    ImgurImageListViewItem(KPImagesListView* const view, const KUrl& url);
+    ImgurImageListViewItem(KPImagesListView* const view, const QUrl& url);
     virtual ~ImgurImageListViewItem();
 
     void setTitle(const QString& str);

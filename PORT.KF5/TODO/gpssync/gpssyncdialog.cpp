@@ -123,18 +123,18 @@ public:
     {
     }
 
-    QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
+    QPair<QUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
     {
         KipiImageItem* const item = imageModel->itemFromIndex(itemIndex);
         if (!item)
-            return QPair<KUrl, QString>(KUrl(), QString());
+            return QPair<QUrl, QString>(QUrl(), QString());
 
-        return QPair<KUrl, QString>(item->url(), item->saveChanges(true, true));
+        return QPair<QUrl, QString>(item->url(), item->saveChanges(true, true));
     }
 
 public:
 
-    typedef QPair<KUrl, QString> result_type;
+    typedef QPair<QUrl, QString> result_type;
     KipiImageModel* const        imageModel;
 };
 
@@ -148,20 +148,20 @@ public:
     {
     }
 
-    QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
+    QPair<QUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
     {
         KipiImageItem* const item = imageModel->itemFromIndex(itemIndex);
         if (!item)
-            return QPair<KUrl, QString>(KUrl(), QString());
+            return QPair<QUrl, QString>(QUrl(), QString());
 
         item->loadImageData(false, true);
 
-        return QPair<KUrl, QString>(item->url(), QString());
+        return QPair<QUrl, QString>(item->url(), QString());
     }
 
 public:
 
-    typedef QPair<KUrl, QString> result_type;
+    typedef QPair<QUrl, QString> result_type;
     KipiImageModel* const        imageModel;
 };
 
@@ -226,8 +226,8 @@ public:
     KGeoMap::TrackManager*                   trackManager;
 
     // Loading and saving
-    QFuture<QPair<KUrl,QString> >            fileIOFuture;
-    QFutureWatcher<QPair<KUrl,QString> >*    fileIOFutureWatcher;
+    QFuture<QPair<QUrl,QString> >            fileIOFuture;
+    QFutureWatcher<QPair<QUrl,QString> >*    fileIOFutureWatcher;
     int                                      fileIOCountDone;
     int                                      fileIOCountTotal;
     bool                                     fileIOCloseAfterSaving;
@@ -617,9 +617,9 @@ void GPSSyncDialog::setCurrentTab(int index)
     d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
 }
 
-void GPSSyncDialog::setImages(const KUrl::List& images)
+void GPSSyncDialog::setImages(const QUrl::List& images)
 {
-    for ( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
+    for ( QUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
     {
         KipiImageItem* const newItem = new KipiImageItem(iface(), *it);
         newItem->loadImageData(true, false);
@@ -639,7 +639,7 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
     // initiate the saving
     d->fileIOCountDone     = 0;
     d->fileIOCountTotal    = imagesToLoad.count();
-    d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    d->fileIOFutureWatcher = new QFutureWatcher<QPair<QUrl, QString> >(this);
 
     connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
             this, SLOT(slotFileMetadataLoaded(int,int)));
@@ -1089,7 +1089,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     d->fileIOCountDone        = 0;
     d->fileIOCountTotal       = dirtyImages.count();
     d->fileIOCloseAfterSaving = closeAfterwards;
-    d->fileIOFutureWatcher    = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    d->fileIOFutureWatcher    = new QFutureWatcher<QPair<QUrl, QString> >(this);
 
     connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
             this, SLOT(slotFileChangesSaved(int,int)));
@@ -1110,7 +1110,7 @@ void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
         slotSetUIEnabled(true);
 
         // any errors?
-        QList<QPair<KUrl, QString> > errorList;
+        QList<QPair<QUrl, QString> > errorList;
 
         for (int i=0; i<d->fileIOFuture.resultCount(); ++i)
         {

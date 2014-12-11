@@ -68,14 +68,14 @@ public:
     }
 
     JAlbum*             jalbum;
-    KUrlComboRequester* albumsInput;
-    KUrlComboRequester* jarInput;
+    QUrlComboRequester* albumsInput;
+    QUrlComboRequester* jarInput;
     KFileDialog*        albumsDialog;
     KFileDialog*        jarDialog;
     KPushButton*        albumsSearchButton;
     KPushButton*        jarSearchButton;
-    KUrl                albumsPath;
-    KUrl                jarPath;
+    QUrl                albumsPath;
+    QUrl                jarPath;
 };
 
 JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QString& title)
@@ -94,7 +94,7 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
 
     KHBox* const hbox   = new KHBox();
     QLabel* const label = new QLabel(hbox);
-    d->albumsInput      = new KUrlComboRequester(hbox);
+    d->albumsInput      = new QUrlComboRequester(hbox);
     d->albumsDialog     = 0;
 
     if(d->albumsInput->button())
@@ -118,7 +118,7 @@ JAlbumEdit::JAlbumEdit(QWidget* const pParent, JAlbum* const pJAlbum, const QStr
 
     KHBox* const hbox2   = new KHBox();
     QLabel* const label2 = new QLabel(hbox2);
-    d->jarInput          = new KUrlComboRequester(hbox2);
+    d->jarInput          = new QUrlComboRequester(hbox2);
     d->jarDialog         = 0;
 
     if(d->jarInput->button())
@@ -175,7 +175,7 @@ void JAlbumEdit::slotShowAlbumDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
 
-    d->albumsDialog = new KFileDialog(KUrl(), "*", this);
+    d->albumsDialog = new KFileDialog(QUrl(), "*", this);
     d->albumsDialog->setMode(KFile::Directory);
     d->albumsDialog->setWindowTitle(i18n("Select Albums Location"));
     d->albumsDialog->setOperationMode(KFileDialog::Opening);
@@ -197,7 +197,7 @@ void JAlbumEdit::slotShowJarDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
 
-    d->jarDialog = new KFileDialog(KUrl(), "*", this);
+    d->jarDialog = new KFileDialog(QUrl(), "*", this);
     d->jarDialog->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
     d->jarDialog->setWindowTitle(i18n("Select jar File Location"));
     d->jarDialog->setOperationMode(KFileDialog::Other);

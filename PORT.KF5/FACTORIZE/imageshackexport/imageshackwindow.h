@@ -107,7 +107,7 @@ private:
     unsigned int      m_imagesCount;
     unsigned int      m_imagesTotal;
 
-    KUrl::List        m_transferQueue;
+    QUrl::List        m_transferQueue;
 
     Imageshack*       m_imageshack;
     ImageshackWidget* m_widget;

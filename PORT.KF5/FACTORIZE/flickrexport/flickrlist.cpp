@@ -334,7 +334,7 @@ void FlickrList::singleComboBoxChanged(QTreeWidgetItem* item, int column)
     }
 }
 
-void FlickrList::slotAddImages(const KUrl::List& list)
+void FlickrList::slotAddImages(const QUrl::List& list)
 {
     /* Replaces the ImagesList::slotAddImages method, so that
      * FlickrListViewItems can be added instead of ImagesListViewItems */
@@ -356,11 +356,11 @@ void FlickrList::slotAddImages(const KUrl::List& list)
     // Figure out which of the supplied URL's should actually be added and which
     // of them already exist.
     bool found;
-    KUrl::List added_urls;
+    QUrl::List added_urls;
 
-    for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
-        KUrl imageUrl = *it;
+        QUrl imageUrl = *it;
         found         = false;
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
@@ -392,7 +392,7 @@ void FlickrList::slotAddImages(const KUrl::List& list)
 // ------------------------------------------------------------------------------------------------
 
 FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
-                                       const KUrl& url,
+                                       const QUrl& url,
                                        bool is23 = false,
                                        bool accessPublic  = true,
                                        bool accessFamily  = true,
@@ -402,7 +402,7 @@ FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
     : KPImagesListViewItem(view, url),
       m_is23(is23)
 {
-    /* Initialize the FlickrListViewItem with the ImagesListView and a KUrl
+    /* Initialize the FlickrListViewItem with the ImagesListView and a QUrl
      * object pointing to the location on disk.
      * If the photo is meant for 23HQ, the service_23 flag should be set to
      * true.

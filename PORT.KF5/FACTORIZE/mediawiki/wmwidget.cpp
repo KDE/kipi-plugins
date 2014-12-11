@@ -595,8 +595,8 @@ WmWidget::WmWidget(QWidget* const parent)
     connect(d->imgList, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SLOT(slotLoadImagesDesc(QTreeWidgetItem*)));
 
-    connect(d->imgList, SIGNAL(signalRemovedItems(KUrl::List)),
-            this, SLOT(slotRemoveImagesDesc(KUrl::List)));
+    connect(d->imgList, SIGNAL(signalRemovedItems(QUrl::List)),
+            this, SLOT(slotRemoveImagesDesc(QUrl::List)));
 }
 
 WmWidget::~WmWidget()
@@ -770,7 +770,7 @@ void WmWidget::slotAddWikiClicked()
 
 void WmWidget::loadImageInfoFirstLoad()
 {
-    KUrl::List urls = d->imgList->imageUrls(false);
+    QUrl::List urls = d->imgList->imageUrls(false);
 
     QString title;
     QString date;
@@ -852,9 +852,9 @@ void WmWidget::slotLoadImagesDesc(QTreeWidgetItem* item)
     }
 }
 
-void WmWidget::slotRemoveImagesDesc(const KUrl::List urls)
+void WmWidget::slotRemoveImagesDesc(const QUrl::List urls)
 {
-    for (KUrl::List::const_iterator it = urls.begin(); it != urls.end(); ++it)
+    for (QUrl::List::const_iterator it = urls.begin(); it != urls.end(); ++it)
     {
         QString path = (*it).path();
         d->imagesDescInfo.remove(path);
@@ -869,7 +869,7 @@ void WmWidget::slotRestoreExtension()
     QString imageTitle;
     QString originalExtension;
     QString currentExtension;
-    KUrl::List urls;
+    QUrl::List urls;
     QMap<QString, QString> imageMetaData;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
@@ -908,7 +908,7 @@ void WmWidget::slotApplyTitle()
     QString givenTitle = title();
     QString imageTitle;
     QString number;
-    KUrl::List urls;
+    QUrl::List urls;
     QMap<QString, QString> imageMetaData;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
     QStringList parts;
@@ -950,7 +950,7 @@ void WmWidget::slotApplyTitle()
 
 void WmWidget::slotApplyDate()
 {
-    KUrl::List urls;
+    QUrl::List urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -970,7 +970,7 @@ void WmWidget::slotApplyDate()
 
 void WmWidget::slotApplyCategories()
 {
-    KUrl::List urls;
+    QUrl::List urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -990,7 +990,7 @@ void WmWidget::slotApplyCategories()
 
 void WmWidget::slotApplyDescription()
 {
-    KUrl::List urls;
+    QUrl::List urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -1011,7 +1011,7 @@ void WmWidget::slotApplyDescription()
 void WmWidget::slotApplyLatitude()
 {
 
-    KUrl::List urls;
+    QUrl::List urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -1031,7 +1031,7 @@ void WmWidget::slotApplyLatitude()
 
 void WmWidget::slotApplyLongitude()
 {
-    KUrl::List urls;
+    QUrl::List urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -1051,7 +1051,7 @@ void WmWidget::slotApplyLongitude()
 
 QMap <QString,QMap <QString,QString> > WmWidget::allImagesDesc()
 {
-    KUrl::List urls = d->imgList->imageUrls(false);
+    QUrl::List urls = d->imgList->imageUrls(false);
 
     for (int i = 0; i < urls.size(); ++i)
     {

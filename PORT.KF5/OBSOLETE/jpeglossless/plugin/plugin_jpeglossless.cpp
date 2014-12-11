@@ -89,7 +89,7 @@ public:
     QAction *               action_RotateImage;
     QAction *               action_FlipImage;
 
-    KUrl::List             images;
+    QUrl::List             images;
 
     KPBatchProgressDialog* progressDlg;
 
@@ -131,14 +131,14 @@ void Plugin_JPEGLossless::setup(QWidget* const widget)
 
     d->thread = new ActionThread(this);
 
-    connect( d->thread, SIGNAL(starting(KUrl,int)),
-             this, SLOT(slotStarting(KUrl,int)));
+    connect( d->thread, SIGNAL(starting(QUrl,int)),
+             this, SLOT(slotStarting(QUrl,int)));
 
-    connect( d->thread, SIGNAL(finished(KUrl,int)),
-             this, SLOT(slotFinished(KUrl,int)));
+    connect( d->thread, SIGNAL(finished(QUrl,int)),
+             this, SLOT(slotFinished(QUrl,int)));
 
-    connect( d->thread, SIGNAL(failed(KUrl,int,QString)),
-             this, SLOT(slotFailed(KUrl,int,QString)));
+    connect( d->thread, SIGNAL(failed(QUrl,int,QString)),
+             this, SLOT(slotFailed(QUrl,int,QString)));
 
     bool hasSelection = iface->currentSelection().isValid();
 
@@ -272,7 +272,7 @@ void Plugin_JPEGLossless::slotFlipVertically()
 
 void Plugin_JPEGLossless::flip(FlipAction action, const QString& title)
 {
-    KUrl::List items = images();
+    QUrl::List items = images();
 
     if (items.count() <= 0)
         return;
@@ -315,7 +315,7 @@ void Plugin_JPEGLossless::slotRotateExif()
 
 void Plugin_JPEGLossless::rotate(RotateAction action, const QString& title)
 {
-    KUrl::List items = images();
+    QUrl::List items = images();
 
     if (items.count() <= 0)
         return;
@@ -342,7 +342,7 @@ void Plugin_JPEGLossless::rotate(RotateAction action, const QString& title)
 
 void Plugin_JPEGLossless::slotConvert2GrayScale()
 {
-    KUrl::List items = images();
+    QUrl::List items = images();
 
     if (items.count() <= 0 ||
         KMessageBox::No == KMessageBox::warningYesNo(QApplication::activeWindow(),
@@ -387,7 +387,7 @@ void Plugin_JPEGLossless::slotCancel()
     interface->refreshImages( d->images );
 }
 
-void Plugin_JPEGLossless::slotStarting(const KUrl& url, int action)
+void Plugin_JPEGLossless::slotStarting(const QUrl& url, int action)
 {
     QString text;
     QString filePath = url.toLocalFile();
@@ -419,7 +419,7 @@ void Plugin_JPEGLossless::slotStarting(const KUrl& url, int action)
     d->progressDlg->progressWidget()->addedAction(text, StartingMessage);
 }
 
-void Plugin_JPEGLossless::slotFinished(const KUrl& url, int action)
+void Plugin_JPEGLossless::slotFinished(const QUrl& url, int action)
 {
     Q_UNUSED(url);
 
@@ -454,7 +454,7 @@ void Plugin_JPEGLossless::slotFinished(const KUrl& url, int action)
     oneTaskCompleted();
 }
 
-void Plugin_JPEGLossless::slotFailed(const KUrl& url, int action, const QString& errString)
+void Plugin_JPEGLossless::slotFailed(const QUrl& url, int action, const QString& errString)
 {
     Q_UNUSED(url);
 
@@ -528,20 +528,20 @@ void Plugin_JPEGLossless::oneTaskCompleted()
     }
 }
 
-KUrl::List Plugin_JPEGLossless::images()
+QUrl::List Plugin_JPEGLossless::images()
 {
     Interface* const interface = dynamic_cast<Interface*>( parent() );
 
     if ( !interface )
     {
         qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
-        return KUrl::List();
+        return QUrl::List();
     }
 
     ImageCollection images = interface->currentSelection();
 
     if ( !images.isValid() )
-        return KUrl::List();
+        return QUrl::List();
 
     // We don't want the set of images to change before we are done
     // and tells the host app to refresh the images.

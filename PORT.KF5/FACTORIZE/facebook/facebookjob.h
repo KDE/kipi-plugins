@@ -34,7 +34,7 @@
 #include "fbalbum.h"
 #include "fbtalker.h"
 
-class KUrl;
+class QUrl;
 
 namespace KIPIFacebookPlugin
 {
@@ -45,10 +45,10 @@ Q_OBJECT
 
 public:
 
-    FacebookJob(const QString& albumName, const KUrl::List& url, QObject* const parent=0);
+    FacebookJob(const QString& albumName, const QUrl::List& url, QObject* const parent=0);
 
     virtual void start();
-    virtual KUrl::List urls() const;
+    virtual QUrl::List urls() const;
     virtual KIcon icon()      const;
 
 private slots:
@@ -60,7 +60,7 @@ private slots:
 
 private:
 
-    KUrl::List m_urls;
+    QUrl::List m_urls;
     FbTalker   m_talk;
     QString    m_albumName;
     QString    m_albumId;

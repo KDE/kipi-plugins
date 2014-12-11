@@ -53,7 +53,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BorderImagesDialog::BorderImagesDialog(const KUrl::List& urlList, QWidget* parent)
+BorderImagesDialog::BorderImagesDialog(const QUrl::List& urlList, QWidget* parent)
     : BatchProcessImagesDialog(urlList, i18n("Batch-Bordering Images"), parent)
 {
     m_nbItem = m_selectedImageFiles.count();

@@ -117,7 +117,7 @@ public:
     explicit GPSSyncDialog(QWidget* const parent);
     ~GPSSyncDialog();
 
-    void setImages(const KUrl::List& images);
+    void setImages(const QUrl::List& images);
 
 protected:
 

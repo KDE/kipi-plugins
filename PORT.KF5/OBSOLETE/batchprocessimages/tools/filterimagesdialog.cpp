@@ -51,7 +51,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-FilterImagesDialog::FilterImagesDialog(const KUrl::List& urlList, QWidget *parent)
+FilterImagesDialog::FilterImagesDialog(const QUrl::List& urlList, QWidget *parent)
         : BatchProcessImagesDialog(urlList, i18n("Batch Image Filtering"), parent)
 {
     m_nbItem = m_selectedImageFiles.count();

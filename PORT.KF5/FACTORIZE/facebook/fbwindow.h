@@ -39,7 +39,7 @@
 
 class QCloseEvent;
 
-class KUrl;
+class QUrl;
 
 namespace KIPI
 {
@@ -139,7 +139,7 @@ private:
     unsigned int m_sessionExpires;
     QString      m_accessToken;            // OAuth access token
 
-    KUrl::List   m_transferQueue;
+    QUrl::List   m_transferQueue;
 
     FbTalker*    m_talker;
     FbWidget*    m_widget;

@@ -373,7 +373,7 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
         return;
     }
 
-    typedef QPair<KUrl,PicasaWebPhoto> Pair;
+    typedef QPair<QUrl,PicasaWebPhoto> Pair;
     m_transferQueue.clear();
     QList<PicasaWebPhoto>::const_iterator itPWP;
 
@@ -409,16 +409,16 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
         return;
     }
 
-    typedef QPair<KUrl,PicasaWebPhoto> Pair;
+    typedef QPair<QUrl,PicasaWebPhoto> Pair;
 
     m_transferQueue.clear();
 
-    KUrl::List urlList = m_widget->m_imgList->imageUrls(true);
+    QUrl::List urlList = m_widget->m_imgList->imageUrls(true);
 
     if (urlList.isEmpty())
         return;
 
-    for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         KPImageInfo info(*it);
         PicasaWebPhoto temp;
@@ -608,7 +608,7 @@ void PicasawebWindow::uploadNextPhoto()
         return;
     }
 
-    typedef QPair<KUrl, PicasaWebPhoto> Pair;
+    typedef QPair<QUrl, PicasaWebPhoto> Pair;
     Pair pathComments   = m_transferQueue.first();
     PicasaWebPhoto info = m_transferQueue.first().second;
 
@@ -828,7 +828,7 @@ void PicasawebWindow::downloadNextPhoto()
 void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
 {
     PicasaWebPhoto item = m_transferQueue.first().second;
-    KUrl tmpUrl         = QString(m_tmpDir + item.title);
+    QUrl tmpUrl         = QString(m_tmpDir + item.title);
 
     if (item.mimeType == "video/mpeg4")
     {
@@ -903,7 +903,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const
         }
     }
 
-    KUrl newUrl = QString(m_widget->getDestinationPath() + tmpUrl.fileName());
+    QUrl newUrl = QString(m_widget->getDestinationPath() + tmpUrl.fileName());
     bool bSkip  = false;
 
     QFileInfo targetInfo(newUrl.toLocalFile());

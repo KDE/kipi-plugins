@@ -101,8 +101,8 @@ ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/,
     connect(d->saneWidget, SIGNAL(imageReady(QByteArray&,int,int,int,int)),
             this, SLOT(slotSaveImage(QByteArray&,int,int,int,int)));
 
-    connect(d->saveThread, SIGNAL(signalComplete(KUrl,bool)),
-            this, SLOT(slotThreadDone(KUrl,bool)));
+    connect(d->saveThread, SIGNAL(signalComplete(QUrl,bool)),
+            this, SLOT(slotThreadDone(QUrl,bool)));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotCloseClicked()));
@@ -178,7 +178,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
         return;
     }
 
-    KUrl newURL = imageFileSaveDialog->selectedUrl();
+    QUrl newURL = imageFileSaveDialog->selectedUrl();
     QFileInfo fi(newURL.toLocalFile());
 
     // Check if target image format have been selected from Combo List of dialog.
@@ -255,13 +255,13 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     d->saveThread->start();
 }
 
-void ScanDialog::slotThreadDone(const KUrl& url, bool success)
+void ScanDialog::slotThreadDone(const QUrl& url, bool success)
 {
     if (!success)
         KMessageBox::error(0, i18n("Cannot save \"%1\" file", url.fileName()));
 
     if (iface())
-        iface()->refreshImages( KUrl::List(url) );
+        iface()->refreshImages( QUrl::List(url) );
 
     unsetCursor();
     setEnabled(true);

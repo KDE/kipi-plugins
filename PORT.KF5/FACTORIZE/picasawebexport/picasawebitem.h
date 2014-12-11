@@ -78,9 +78,9 @@ public:
     QString     mimeType;
     QString     gpsLon;
     QString     gpsLat;
-    KUrl        originalURL;
-    KUrl        thumbURL;
-    KUrl        editUrl;
+    QUrl        originalURL;
+    QUrl        thumbURL;
+    QUrl        editUrl;
 };
 
 } // namespace KIPIPicasawebExportPlugin

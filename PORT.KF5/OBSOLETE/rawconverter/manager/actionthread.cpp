@@ -75,39 +75,39 @@ void ActionThread::setSettings(const RawDecodingSettings& rawDecodingSettings,
     d->outputFormat        = outputFormat;
 }
 
-void ActionThread::processRawFile(const KUrl& url)
+void ActionThread::processRawFile(const QUrl& url)
 {
-    KUrl::List oneFile;
+    QUrl::List oneFile;
     oneFile.append(url);
     processRawFiles(oneFile);
 }
 
-void ActionThread::processHalfRawFile(const KUrl& url)
+void ActionThread::processHalfRawFile(const QUrl& url)
 {
-    KUrl::List oneFile;
+    QUrl::List oneFile;
     oneFile.append(url);
     processHalfRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFile(const KUrl& url, bool full)
+void ActionThread::identifyRawFile(const QUrl& url, bool full)
 {
-    KUrl::List oneFile;
+    QUrl::List oneFile;
     oneFile.append(url);
     identifyRawFiles(oneFile, full);
 }
 
-void ActionThread::thumbRawFile(const KUrl& url)
+void ActionThread::thumbRawFile(const QUrl& url)
 {
-    KUrl::List oneFile;
+    QUrl::List oneFile;
     oneFile.append(url);
     thumbRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
+void ActionThread::identifyRawFiles(const QUrl::List& urlList, bool full)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         Task* const t = new Task(this, *it, full ? IDENTIFY_FULL : IDENTIFY);
         t->setSettings(d->rawDecodingSettings, d->outputFormat);
@@ -127,11 +127,11 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
     appendJob(collection);
 }
 
-void ActionThread::thumbRawFiles(const KUrl::List& urlList)
+void ActionThread::thumbRawFiles(const QUrl::List& urlList)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         Task* const t = new Task(this, *it, THUMBNAIL);
         t->setSettings(d->rawDecodingSettings, d->outputFormat);
@@ -151,11 +151,11 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
     appendJob(collection);
 }
 
-void ActionThread::processRawFiles(const KUrl::List& urlList)
+void ActionThread::processRawFiles(const QUrl::List& urlList)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         Task* const t = new Task(this, *it, PROCESS);
         t->setSettings(d->rawDecodingSettings, d->outputFormat);
@@ -175,11 +175,11 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
     appendJob(collection);
 }
 
-void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
+void ActionThread::processHalfRawFiles(const QUrl::List& urlList)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         Task* const t = new Task(this, *it, PREVIEW);
         t->setSettings(d->rawDecodingSettings, d->outputFormat);

@@ -47,14 +47,14 @@ public:
     ~SaveImgThread();
 
     void setPreviewImage(const QImage& img);
-    void setTargetFile(const KUrl& url, const QString& format);
+    void setTargetFile(const QUrl& url, const QString& format);
     void setScannerModel(const QString& make, const QString& model);
     void setImageData(const QByteArray& ksaneData, int width, int height,
                       int bytesPerLine, int ksaneFormat);
 
 Q_SIGNALS:
 
-    void signalComplete(const KUrl&, bool);
+    void signalComplete(const QUrl&, bool);
 
 private:
 

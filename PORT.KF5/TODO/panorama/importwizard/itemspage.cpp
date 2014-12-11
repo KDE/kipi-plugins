@@ -104,7 +104,7 @@ void ItemsPage::slotSetupList()
     slotImageListChanged();
 }
 
-KUrl::List ItemsPage::itemUrls() const
+QUrl::List ItemsPage::itemUrls() const
 {
     return d->list->imageUrls();
 }

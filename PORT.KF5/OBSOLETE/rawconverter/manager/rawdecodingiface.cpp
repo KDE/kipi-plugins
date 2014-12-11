@@ -162,7 +162,7 @@ bool RawDecodingIface::loadedFromDecoder(const QString& filePath,
     QByteArray prof = KPWriteImage::getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
     QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
     QFileInfo fi(filePath);
-    KUrl url(filePath);
+    QUrl url(filePath);
     destPath = fi.absolutePath() + QString("/") + ".kipi-rawconverter-tmp-" 
                                  + QString::number(QDateTime::currentDateTime().toTime_t()) + QString(url.fileName());
 

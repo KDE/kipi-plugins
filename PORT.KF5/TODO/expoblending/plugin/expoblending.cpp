@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     KApplication app;
     aboutData->setProgramLogo(QIcon::fromTheme("kipi-expoblending"));
 
-    KUrl::List urlList;
+    QUrl::List urlList;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     for(int i = 0; i < args->count(); ++i)
     {

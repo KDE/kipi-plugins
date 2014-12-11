@@ -185,7 +185,7 @@ void PicasawebTalker::checkToken(const QString& token)
         m_job = 0;
     }
 
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    QUrl url("http://picasaweb.google.com/data/feed/api");
     url.addPath("/user/" + m_username);
     qCDebug(KIPIPLUGINS_LOG) << " token value is " << token ;
     QString auth_string = "GoogleLogin auth=" + token;
@@ -224,7 +224,7 @@ void PicasawebTalker::listAlbums(const QString& username)
         m_job->kill();
         m_job = 0;
     }
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    QUrl url("http://picasaweb.google.com/data/feed/api");
     // do not encode username to support email address
     url.addPath("/user/" + username);
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
@@ -258,7 +258,7 @@ void PicasawebTalker::listPhotos(const QString& username,
         m_job->kill();
         m_job = 0;
     }
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    QUrl url("http://picasaweb.google.com/data/feed/api");
     url.addPath("/user/" + username);
     url.addPath("/albumid/" + albumId);
     url.addQueryItem("thumbsize", "200");
@@ -341,7 +341,7 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     QByteArray buffer;
     buffer.append(docMeta.toString().toUtf8());
 
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    QUrl url("http://picasaweb.google.com/data/feed/api");
     url.addPath("/user/" + m_username);
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* const job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
@@ -371,7 +371,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
         m_job = 0;
     }
 
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    QUrl url("http://picasaweb.google.com/data/feed/api");
     url.addPath("/user/" + m_username);
     url.addPath("/albumid/" + albumId);
     QString     auth_string = "GoogleLogin auth=" + m_token;

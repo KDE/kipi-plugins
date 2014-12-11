@@ -74,15 +74,15 @@ public:
     /**
      * Returns the currently selected target url. Maybe invalid.
      */
-    KUrl targetUrl() const;
+    QUrl targetUrl() const;
 
     /**
      * Sets the target url this widget should point at.
      */
-    void setTargetUrl(const KUrl& url);
+    void setTargetUrl(const QUrl& url);
 
-    KUrl::List history() const;
-    void setHistory(const KUrl::List& urls);
+    QUrl::List history() const;
+    void setHistory(const QUrl::List& urls);
 
 private Q_SLOTS:
 
@@ -91,7 +91,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
 
-    void signalTargetUrlChanged(const KUrl& target);
+    void signalTargetUrlChanged(const QUrl& target);
 
 private:
 
@@ -99,10 +99,10 @@ private:
 
 private:
 
-    KUrlComboRequester* m_targetLabel;
+    QUrlComboRequester* m_targetLabel;
     KFileDialog*        m_targetDialog;
     KPushButton*        m_targetSearchButton;
-    KUrl                m_targetUrl;
+    QUrl                m_targetUrl;
     KPImagesList*       m_imageList;
 };
 

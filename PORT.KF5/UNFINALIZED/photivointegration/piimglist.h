@@ -65,7 +65,7 @@ class PIImgListViewItem : public KPImagesListViewItem
 {
 public:
 
-    PIImgListViewItem(KPImagesListView* const view, const KUrl& url);
+    PIImgListViewItem(KPImagesListView* const view, const QUrl& url);
     virtual ~PIImgListViewItem();
 
     void setTitle(const QString& str);

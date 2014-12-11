@@ -74,9 +74,9 @@ void BatchProcessImagesList::dragMoveEvent(QDragMoveEvent* event)
 
 void BatchProcessImagesList::dropEvent(QDropEvent* event)
 {
-    const KUrl::List urlList = KUrl::List::fromMimeData(event->mimeData());
+    const QUrl::List urlList = QUrl::List::fromMimeData(event->mimeData());
     QStringList paths;
-    Q_FOREACH(const KUrl& url, urlList) {
+    Q_FOREACH(const QUrl& url, urlList) {
         paths << url.toLocalFile();
     }
 

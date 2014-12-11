@@ -83,7 +83,7 @@ private slots:
     /**
      * Removes the copied image from the image list.
      */
-    void slotCopyingDone(KIO::Job* job, const KUrl& from, const KUrl& to,
+    void slotCopyingDone(KIO::Job* job, const QUrl& from, const QUrl& to,
                          time_t mtime, bool directory, bool renamed);
 
     /**

@@ -60,11 +60,11 @@ public:
     void setUpdateFileDate(bool b);
     void setPreviewMode(int mode);
 
-    void identifyRawFile(const KUrl& url);
-    void identifyRawFiles(const KUrl::List& urlList);
+    void identifyRawFile(const QUrl& url);
+    void identifyRawFiles(const QUrl::List& urlList);
 
-    void processRawFile(const KUrl& url);
-    void processRawFiles(const KUrl::List& urlList);
+    void processRawFile(const QUrl& url);
+    void processRawFiles(const QUrl::List& urlList);
 
     void cancel();
 

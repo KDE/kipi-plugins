@@ -76,7 +76,7 @@ void ImgurImagesList::updateItemWidgets()
     qCDebug(KIPIPLUGINS_LOG) << "update";
 }
 
-void ImgurImagesList::slotAddImages(const KUrl::List& list)
+void ImgurImagesList::slotAddImages(const QUrl::List& list)
 {
     /* Replaces the KPImagesList::slotAddImages method, so that
      * ImgurImageListViewItems can be added instead of ImagesListViewItems */
@@ -85,9 +85,9 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     // of them already exist.
     bool found;
 
-    for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
-        KUrl imageUrl = *it;
+        QUrl imageUrl = *it;
         found         = false;
 
         KPMetadata meta(imageUrl.toLocalFile());
@@ -129,12 +129,12 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     emit signalAddItems(list);
 }
 
-void ImgurImagesList::slotUploadError(const KUrl& /*localFile*/, const ImgurError& /*error*/)
+void ImgurImagesList::slotUploadError(const QUrl& /*localFile*/, const ImgurError& /*error*/)
 {
     // TODO
 }
 
-void ImgurImagesList::slotUploadSuccess(const KUrl& localFile, const ImgurSuccess& success)
+void ImgurImagesList::slotUploadSuccess(const QUrl& localFile, const ImgurSuccess& success)
 {
     for (int i = 0; i < listView()->topLevelItemCount(); ++i)
     {
@@ -171,7 +171,7 @@ void ImgurImagesList::slotDoubleClick(QTreeWidgetItem* element, int i)
 
 // ------------------------------------------------------------------------------------------------
 
-ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, const KUrl& url)
+ImgurImageListViewItem::ImgurImageListViewItem(KPImagesListView* const view, const QUrl& url)
     : KPImagesListViewItem(view, url)
 {
     const QColor blue = QColor (0,0,255);

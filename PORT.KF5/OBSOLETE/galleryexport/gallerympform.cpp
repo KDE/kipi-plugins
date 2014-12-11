@@ -168,7 +168,7 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 
     str += "\"; ";
     str += "filename=\"";
-    str += QFile::encodeName(KUrl(path).fileName());
+    str += QFile::encodeName(QUrl(path).fileName());
     str += "\"";
     str += "\r\n";
     str += "Content-Type: ";

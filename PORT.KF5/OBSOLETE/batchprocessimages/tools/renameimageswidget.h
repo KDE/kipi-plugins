@@ -62,7 +62,7 @@ class RenameImagesWidget : public QWidget
 public:
 
     RenameImagesWidget(QWidget *parent, KIPI::Interface* interface,
-                       const KUrl::List& urlList);
+                       const QUrl::List& urlList);
     ~RenameImagesWidget();
 
 public Q_SLOTS:
@@ -76,7 +76,7 @@ private Q_SLOTS:
     void slotListViewDoubleClicked(QTreeWidgetItem*);
     void slotImageSelected(QTreeWidgetItem*);
     void slotOptionsChanged();
-    void slotGotPreview(const KUrl&, const QPixmap&);
+    void slotGotPreview(const QUrl&, const QPixmap&);
 
     void slotAddImages();
     void slotRemoveImage();
@@ -98,7 +98,7 @@ private:
 private:
 
     KIPI::Interface*            m_interface;
-    KUrl::List                  m_urlList;
+    QUrl::List                  m_urlList;
     QTimer*                     m_timer;
     KProgressDialog*            m_progress;
     bool                        m_overwriteAll;

@@ -79,7 +79,7 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
     {
         d->runningBackend = backendName;
 
-        KUrl jobUrl("http://nominatim.openstreetmap.org/search");
+        QUrl jobUrl("http://nominatim.openstreetmap.org/search");
         jobUrl.addQueryItem("format", "xml");
         jobUrl.addQueryItem("q", searchTerm);
 
@@ -101,7 +101,7 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
 
         // documentation: http://www.geonames.org/export/geonames-search.html
 
-        KUrl jobUrl("http://ws.geonames.org/search");
+        QUrl jobUrl("http://ws.geonames.org/search");
         jobUrl.addQueryItem("type", "xml");
         jobUrl.addQueryItem("q", searchTerm);
 

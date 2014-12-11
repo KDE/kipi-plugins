@@ -124,10 +124,10 @@ private:
     QByteArray  m_buffer;
 
     QString     m_userAgent;
-    KUrl        m_photoApiUrl;
-    KUrl        m_videoApiUrl;
-    KUrl        m_loginApiUrl;
-    KUrl        m_galleryUrl;
+    QUrl        m_photoApiUrl;
+    QUrl        m_videoApiUrl;
+    QUrl        m_loginApiUrl;
+    QUrl        m_galleryUrl;
     QString     m_appKey;
 
     bool        m_loginInProgress;

@@ -72,7 +72,7 @@ public:
     QString    model;
     QString    format;
 
-    KUrl       newUrl;
+    QUrl       newUrl;
 };
 
 SaveImgThread::SaveImgThread(QObject* const parent)
@@ -103,7 +103,7 @@ void SaveImgThread::setPreviewImage(const QImage& img)
     d->img = img;
 }
 
-void SaveImgThread::setTargetFile(const KUrl& url, const QString& format)
+void SaveImgThread::setTargetFile(const QUrl& url, const QString& format)
 {
     d->newUrl = url;
     d->format = format;

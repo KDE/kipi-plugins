@@ -114,15 +114,15 @@ void KioImportWindow::slotImport()
     KIO::CopyJob *copyJob = KIO::copy(m_importWidget->imagesList()->imageUrls(),
                             m_importWidget->uploadWidget()->selectedImageCollection().uploadPath());
 
-    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,KUrl,KUrl,time_t,bool,bool)),
-            this, SLOT(slotCopyingDone(KIO::Job*,KUrl,KUrl,time_t,bool,bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));
 }
 
-void KioImportWindow::slotCopyingDone(KIO::Job* job, const KUrl& from,
-                                      const KUrl& to, time_t mtime, bool directory, bool renamed)
+void KioImportWindow::slotCopyingDone(KIO::Job* job, const QUrl& from,
+                                      const QUrl& to, time_t mtime, bool directory, bool renamed)
 {
     Q_UNUSED(job);
     Q_UNUSED(to);

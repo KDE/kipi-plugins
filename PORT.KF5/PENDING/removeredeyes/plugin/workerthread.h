@@ -87,7 +87,7 @@ public:
     void setLocator(Locator* const locator);
 
     void loadSettings(const CommonSettings&);
-    void setImagesList(const KUrl::List&);
+    void setImagesList(const QUrl::List&);
     void setTempFile(const QString&, ImageType);
 
     void cancel();
@@ -126,7 +126,7 @@ public:
     SaveMethod*    saveMethod;
     Locator*       locator;
 
-    KUrl::List     urls;
+    QUrl::List     urls;
     QString        maskPreviewFile;
     QString        correctedPreviewFile;
     QString        originalPreviewFile;
@@ -142,9 +142,9 @@ class Task : public Job
 
 public:
 
-    explicit Task(const KUrl& url, QObject* const parent = 0, WorkerThread::Private* const d = 0);
+    explicit Task(const QUrl& url, QObject* const parent = 0, WorkerThread::Private* const d = 0);
 
-    const KUrl& url;
+    const QUrl& url;
 
 Q_SIGNALS:
 

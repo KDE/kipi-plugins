@@ -62,17 +62,17 @@ public:
     void setSettings(const RawDecodingSettings& rawDecodingSettings,
                      KPSaveSettingsWidget::OutputFormat outputFormat);
 
-    void identifyRawFile(const KUrl& url, bool full=false);
-    void identifyRawFiles(const KUrl::List& urlList, bool full=false);
+    void identifyRawFile(const QUrl& url, bool full=false);
+    void identifyRawFiles(const QUrl::List& urlList, bool full=false);
 
-    void thumbRawFile(const KUrl& url);
-    void thumbRawFiles(const KUrl::List& urlList);
+    void thumbRawFile(const QUrl& url);
+    void thumbRawFiles(const QUrl::List& urlList);
 
-    void processHalfRawFile(const KUrl& url);
-    void processHalfRawFiles(const KUrl::List& urlList);
+    void processHalfRawFile(const QUrl& url);
+    void processHalfRawFiles(const QUrl::List& urlList);
 
-    void processRawFile(const KUrl& url);
-    void processRawFiles(const KUrl::List& urlList);
+    void processRawFile(const QUrl& url);
+    void processRawFiles(const QUrl::List& urlList);
 
     void cancel();
 

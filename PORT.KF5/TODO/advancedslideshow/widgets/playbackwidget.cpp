@@ -40,7 +40,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-PlaybackWidget::PlaybackWidget(QWidget* const parent, KUrl::List& urls, SharedContainer* const sharedData)
+PlaybackWidget::PlaybackWidget(QWidget* const parent, QUrl::List& urls, SharedContainer* const sharedData)
     : QWidget(parent)
 {
     setupUi(this);
@@ -160,7 +160,7 @@ void PlaybackWidget::setZeroTime()
     m_isZeroTime = true;
 }
 
-void PlaybackWidget::enqueue(const KUrl::List& urls)
+void PlaybackWidget::enqueue(const QUrl::List& urls)
 {
     m_urlList   = urls;
     m_currIndex = 0;

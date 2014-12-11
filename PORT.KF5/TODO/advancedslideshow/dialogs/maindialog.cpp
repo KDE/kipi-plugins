@@ -346,11 +346,11 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     if (!pitem)
         return;
 
-    KUrl url;
+    QUrl url;
     url.setPath(pitem->url().path());
 
-    connect(m_sharedData->iface(), SIGNAL(gotThumbnail(KUrl,QPixmap)),
-            this, SLOT(slotThumbnail(KUrl,QPixmap)));
+    connect(m_sharedData->iface(), SIGNAL(gotThumbnail(QUrl,QPixmap)),
+            this, SLOT(slotThumbnail(QUrl,QPixmap)));
 
     m_sharedData->iface()->thumbnail(url, ICONSIZE);
 
@@ -363,12 +363,12 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     }
 }
 
-void MainDialog::addItems(const KUrl::List& fileList)
+void MainDialog::addItems(const QUrl::List& fileList)
 {
     if (fileList.isEmpty())
         return;
 
-    KUrl::List files = fileList;
+    QUrl::List files = fileList;
 
     m_ImagesFilesListBox->slotAddImages(files);
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
@@ -432,7 +432,7 @@ void MainDialog::slotUseMillisecondsToggled()
 
 void MainDialog::slotSelection()
 {
-    KUrl::List urlList;
+    QUrl::List urlList;
 
     if (m_selectedFilesButton->isChecked())
     {
@@ -441,7 +441,7 @@ void MainDialog::slotSelection()
     }
     else if (m_allFilesButton->isChecked())
     {
-        KUrl currentPath = m_sharedData->iface()->currentAlbum().path();
+        QUrl currentPath = m_sharedData->iface()->currentAlbum().path();
         QList<KIPI::ImageCollection> albumList;
         albumList        = m_sharedData->iface()->allAlbums();
 
@@ -476,7 +476,7 @@ void MainDialog::slotPortfolioDurationChanged(int)
     emit signalTotalTimeChanged( m_totalTime );
 }
 
-void MainDialog::slotThumbnail(const KUrl& /*url*/, const QPixmap& pix)
+void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
 {
     if (pix.isNull())
         m_previewLabel->setPixmap(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));

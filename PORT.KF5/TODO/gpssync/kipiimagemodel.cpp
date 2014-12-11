@@ -218,7 +218,7 @@ Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
 }
 
-KipiImageItem* KipiImageModel::itemFromUrl(const KUrl& url) const
+KipiImageItem* KipiImageModel::itemFromUrl(const QUrl& url) const
 {
     for (int i=0; i<d->items.count(); ++i)
     {
@@ -229,7 +229,7 @@ KipiImageItem* KipiImageModel::itemFromUrl(const KUrl& url) const
     return 0;
 }
 
-QModelIndex KipiImageModel::indexFromUrl(const KUrl& url) const
+QModelIndex KipiImageModel::indexFromUrl(const QUrl& url) const
 {
     for (int i=0; i<d->items.count(); ++i)
     {
@@ -240,7 +240,7 @@ QModelIndex KipiImageModel::indexFromUrl(const KUrl& url) const
     return QModelIndex();
 }
 
-static QString CacheKeyFromSizeAndUrl(const int size, const KUrl& url)
+static QString CacheKeyFromSizeAndUrl(const int size, const QUrl& url)
 {
     return QString("%1-%3").arg(size).arg(url.pathOrUrl());
 }
@@ -287,7 +287,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     // TODO: what about raw images? The old version of the plugin had a special loading mechanism for those
     if (d->interface)
     {
-        d->interface->thumbnails(KUrl::List()<<imageItem->url(), size);
+        d->interface->thumbnails(QUrl::List()<<imageItem->url(), size);
     }
     else
     {
@@ -303,7 +303,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     return QPixmap();
 }
 
-void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap)
+void KipiImageModel::slotThumbnailFromInterface(const QUrl& url, const QPixmap& pixmap)
 {
     qCDebug(KIPIPLUGINS_LOG)<<url<<pixmap.size();
 
@@ -374,8 +374,8 @@ void KipiImageModel::setKipiInterface(KIPI::Interface* const interface)
 {
     d->interface = interface;
 
-    connect(d->interface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-            this, SLOT(slotThumbnailFromInterface(KUrl,QPixmap)));
+    connect(d->interface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+            this, SLOT(slotThumbnailFromInterface(QUrl,QPixmap)));
 }
 
 // --------------------------------------------------------------------------------------------

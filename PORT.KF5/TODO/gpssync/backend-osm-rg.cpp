@@ -117,7 +117,7 @@ void BackendOsmRG::nextPhoto()
     if (d->jobs.isEmpty())
         return;
 
-    KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
+    QUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
     jobUrl.addQueryItem("format", "xml");
     jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
     jobUrl.addQueryItem("lon", d->jobs.first().request.first().coordinates.lonString());

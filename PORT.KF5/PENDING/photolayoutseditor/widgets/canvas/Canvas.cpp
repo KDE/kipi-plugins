@@ -272,24 +272,24 @@ void Canvas::addImage(const QImage & image)
 /** ###########################################################################################################################
  * Add new image from the specified url
  #############################################################################################################################*/
-void Canvas::addImage(const KUrl & imageUrl)
+void Canvas::addImage(const QUrl & imageUrl)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImageUrl(imageUrl);
     ilt->setMaximumProgress(0.9);
-    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+    connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
     ilt->start();
 }
 
 /** ###########################################################################################################################
  * Add images from the specified url's list
  #############################################################################################################################*/
-void Canvas::addImages(const KUrl::List & images)
+void Canvas::addImages(const QUrl::List & images)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImagesUrls(images);
     ilt->setMaximumProgress(0.9);
-    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+    connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
     ilt->start();
 }
 
@@ -335,7 +335,7 @@ void Canvas::setAntialiasing(bool antialiasing)
 /** ###########################################################################################################################
  * Makes use of loaded image
  #############################################################################################################################*/
-void Canvas::imageLoaded(const KUrl & url, const QImage & image)
+void Canvas::imageLoaded(const QUrl & url, const QImage & image)
 {
     if (!image.isNull())
     {
@@ -935,7 +935,7 @@ void Canvas::scale(const QRect & rect)
 /** ###########################################################################################################################
  * Returns file object connected with canvas
  #############################################################################################################################*/
-KUrl Canvas::file() const
+QUrl Canvas::file() const
 {
     return m_file;
 }
@@ -943,7 +943,7 @@ KUrl Canvas::file() const
 /** ###########################################################################################################################
  * Sets the file connected with canvas
  #############################################################################################################################*/
-void Canvas::setFile(const KUrl & file)
+void Canvas::setFile(const QUrl & file)
 {
     if (file.isValid() && !file.isEmpty())
         m_file = file;
@@ -952,9 +952,9 @@ void Canvas::setFile(const KUrl & file)
 /** ###########################################################################################################################
  * Sets the file connected with canvas
  #############################################################################################################################*/
-void Canvas::save(const KUrl & fileUrl, bool setAsDefault)
+void Canvas::save(const QUrl & fileUrl, bool setAsDefault)
 {
-    KUrl tempFile = fileUrl;
+    QUrl tempFile = fileUrl;
     if (fileUrl.isEmpty() || !fileUrl.isValid())
     {
         if (m_file.isEmpty() || !m_file.isValid())
@@ -978,7 +978,7 @@ void Canvas::save(const KUrl & fileUrl, bool setAsDefault)
 /** ###########################################################################################################################
  * Save canvas as a template
  #############################################################################################################################*/
-void Canvas::saveTemplate(const KUrl & fileUrl)
+void Canvas::saveTemplate(const QUrl & fileUrl)
 {
     if (fileUrl.isEmpty() || !fileUrl.isValid())
     {

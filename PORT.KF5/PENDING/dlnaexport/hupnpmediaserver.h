@@ -45,8 +45,8 @@ public:
     explicit MediaServer(QObject* const parent = 0);
     virtual ~MediaServer();
 
-    void addImagesOnServer(const KUrl::List&);
-    void addImagesOnServer(const QMap<QString, KUrl::List>&);
+    void addImagesOnServer(const QUrl::List&);
+    void addImagesOnServer(const QMap<QString, QUrl::List>&);
 
 private:
 

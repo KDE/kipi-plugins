@@ -125,7 +125,7 @@ MediaServer::~MediaServer()
      delete d;
 }
 
-void MediaServer::addImagesOnServer(const KUrl::List& imageUrlList)
+void MediaServer::addImagesOnServer(const QUrl::List& imageUrlList)
 {
     QList<HItem*> itemList;
 
@@ -136,12 +136,12 @@ void MediaServer::addImagesOnServer(const KUrl::List& imageUrlList)
     }
 }
 
-void MediaServer::addImagesOnServer(const QMap<QString, KUrl::List>& collectionMap)
+void MediaServer::addImagesOnServer(const QMap<QString, QUrl::List>& collectionMap)
 {
     QList<HContainer*> containerList;
     QList<HItem*>      itemList;
     QList<QString>     keys        = collectionMap.uniqueKeys();
-    KUrl::List         imageUrlList;
+    QUrl::List         imageUrlList;
     int                currentSize = 0;
 
     for (int i = 0; i<keys.size(); i++)

@@ -46,7 +46,7 @@ class QButtonGroup;
 class QCloseEvent;
 class QProgressBar;
 
-class KUrl;
+class QUrl;
 class KProgressDialog;
 class KPasswordDialog;
 class QComboBox;

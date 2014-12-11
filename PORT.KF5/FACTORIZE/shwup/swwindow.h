@@ -37,7 +37,7 @@
 class QCloseEvent;
 
 class KProgressDialog;
-class KUrl;
+class QUrl;
 
 namespace KIPIPlugins
 {
@@ -125,7 +125,7 @@ private:
     KProgressDialog* m_progressDlg;
     SwLogin*         m_loginDlg;
 
-    KUrl::List       m_transferQueue;
+    QUrl::List       m_transferQueue;
 
     SwConnector*     m_connector;
     SwWidget*        m_widget;

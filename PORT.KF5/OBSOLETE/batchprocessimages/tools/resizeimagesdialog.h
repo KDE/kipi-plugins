@@ -36,7 +36,7 @@ class ResizeImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    ResizeImagesDialog(const KUrl::List& images, QWidget* parent = 0);
+    ResizeImagesDialog(const QUrl::List& images, QWidget* parent = 0);
     ~ResizeImagesDialog();
 
 private Q_SLOTS:

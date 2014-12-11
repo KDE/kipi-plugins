@@ -184,7 +184,7 @@ void SlideShowConfig::readSettings()
 
     // Soundtrack tab
     d->sharedData->soundtrackLoop             = grp.readEntry("Soundtrack Loop", false);
-    d->sharedData->soundtrackPath             = KUrl(grp.readEntry("Soundtrack Path", "" ));
+    d->sharedData->soundtrackPath             = QUrl(grp.readEntry("Soundtrack Path", "" ));
     d->sharedData->soundtrackRememberPlaylist = grp.readEntry("Soundtrack Remember Playlist", false);
 
     // Advanced tab
@@ -207,7 +207,7 @@ void SlideShowConfig::readSettings()
 
         foreach(const QString& playlistFile, playlistFiles)
         {
-            KUrl file(playlistFile);
+            QUrl file(playlistFile);
             QFileInfo fi(file.toLocalFile());
             if (fi.isFile())
             {

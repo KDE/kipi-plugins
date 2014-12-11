@@ -52,7 +52,7 @@ public:
     BatchDialog();
     ~BatchDialog();
 
-    void addItems(const KUrl::List& itemList);
+    void addItems(const QUrl::List& itemList);
 
 protected:
 
@@ -66,8 +66,8 @@ private:
     void busy(bool busy);
 
     void processAll();
-    void processed(const KUrl& url, const QString& tmpFile);
-    void processingFailed(const KUrl& url);
+    void processed(const QUrl& url, const QString& tmpFile);
+    void processingFailed(const QUrl& url);
 
 private Q_SLOTS:
 

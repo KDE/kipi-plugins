@@ -31,7 +31,7 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-DebianScreenshotsJob::DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* const parent)
+DebianScreenshotsJob::DebianScreenshotsJob(const QString& packageName, const QUrl::List& url, QObject* const parent)
     : KJob(parent), m_urls(url), m_packageName(packageName)
 {
     setObjectName("DebianScreenshotsJob");
@@ -124,7 +124,7 @@ void DebianScreenshotsJob::addScreenshot(int code, const QString& message)
 {
 //     if(code==0 && !m_urls.isEmpty()) {
 //         int count = percent()+(100-percent())/m_urls.size();
-//         KUrl url = m_urls.takeLast();
+//         QUrl url = m_urls.takeLast();
 //         bool c = talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
 //         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
 //         
@@ -143,7 +143,7 @@ KIcon DebianScreenshotsJob::icon() const
     return QIcon::fromTheme("debian");
 }
 
-QList<KUrl> DebianScreenshotsJob::urls() const
+QList<QUrl> DebianScreenshotsJob::urls() const
 {
     return m_urls;
 }

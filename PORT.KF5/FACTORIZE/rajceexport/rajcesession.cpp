@@ -53,7 +53,7 @@ using namespace KIPIPlugins;
 namespace KIPIRajceExportPlugin
 {
 
-const KUrl     RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
+const QUrl     RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
 const unsigned THUMB_SIZE = 100;
 
 struct PreparedImage

@@ -34,14 +34,14 @@
 namespace KIPIPanoramaPlugin
 {
 
-CpCleanTask::CpCleanTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+CpCleanTask::CpCleanTask(QObject* parent, const QUrl& workDir, const QUrl& input,
+                         QUrl& cpCleanPtoUrl, const QString& cpCleanPath)
     : Task(parent, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
       cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
 {}
 
-CpCleanTask::CpCleanTask(const KUrl& workDir, const KUrl& input,
-                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+CpCleanTask::CpCleanTask(const QUrl& workDir, const QUrl& input,
+                         QUrl& cpCleanPtoUrl, const QString& cpCleanPath)
     : Task(0, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
       cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
 {}

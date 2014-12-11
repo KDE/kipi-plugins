@@ -55,7 +55,7 @@ public:
     explicit CalPainter(QPaintDevice* const pd);
     virtual ~CalPainter();
 
-    void setImage(const KUrl& imagePath, KPMetadata::ImageOrientation orientation);
+    void setImage(const QUrl& imagePath, KPMetadata::ImageOrientation orientation);
     void paint(int month);
 
 Q_SIGNALS:
@@ -76,7 +76,7 @@ private:
 
     QImage                       image_;
 
-    KUrl                         imagePath_;
+    QUrl                         imagePath_;
 };
 
 }  // NameSpace KIPICalendarPlugin

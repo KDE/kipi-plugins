@@ -41,16 +41,16 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePtoTask::CreatePtoTask(QObject* parent, const KUrl& workDir, PanoramaFileType fileType,
-                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
+CreatePtoTask::CreatePtoTask(QObject* parent, const QUrl& workDir, PanoramaFileType fileType,
+                             QUrl& ptoUrl, const QUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
                              bool addGPlusMetadata, const QString& huginVersion)
     : Task(parent, CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
       fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles),
       addGPlusMetadata(addGPlusMetadata), huginVersion(huginVersion)
 {}
 
-CreatePtoTask::CreatePtoTask(const KUrl& workDir, PanoramaFileType fileType,
-                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
+CreatePtoTask::CreatePtoTask(const QUrl& workDir, PanoramaFileType fileType,
+                             QUrl& ptoUrl, const QUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
                              bool addGPlusMetadata, const QString& huginVersion)
     : Task(0, CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
       fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles),
@@ -121,8 +121,8 @@ void CreatePtoTask::run()
     int i = 0;
     for (i = 0; i < inputFiles->size(); ++i)
     {
-        KUrl inputFile(inputFiles->at(i));
-        KUrl preprocessedUrl(preProcessedMap->value(inputFile).preprocessedUrl);
+        QUrl inputFile(inputFiles->at(i));
+        QUrl preprocessedUrl(preProcessedMap->value(inputFile).preprocessedUrl);
         KPMetadata meta;
         meta.load(preprocessedUrl.toLocalFile());
         QSize size = meta.getPixelSize();

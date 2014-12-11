@@ -451,7 +451,7 @@ void SlideShowSettingsWidget::setUpVideoSettings()
 
 void SlideShowSettingsWidget::slotSelectTempDirectory()
 {
-    QString path = KFileDialog::getExistingDirectory(KUrl(), this, i18n("Select temporary directory"));
+    QString path = KFileDialog::getExistingDirectory(QUrl(), this, i18n("Select temporary directory"));
 
     if (!path.isEmpty())
     {
@@ -496,7 +496,7 @@ QString SlideShowSettingsWidget::getTempDirPath() const
 
 void SlideShowSettingsWidget::setTempDirPath(const QString& path)
 {
-    if(KUrl(path).isValid())
+    if(QUrl(path).isValid())
         d->path = path;
     else
         d->path = QDir::tempPath();

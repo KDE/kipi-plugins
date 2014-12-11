@@ -83,11 +83,11 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
     d->parent    = parent;
     d->interface = interface;
     d->job       = 0;
-    m_queue      = new KUrl::List();
+    m_queue      = new QUrl::List();
     m_state      = IR_LOGOUT;
 
-    connect(this, SIGNAL(signalUploadDone(KUrl)),
-            this, SLOT(slotUploadDone(KUrl)));
+    connect(this, SIGNAL(signalUploadDone(QUrl)),
+            this, SLOT(slotUploadDone(QUrl)));
 
     // -------------------------------------------------------------------------
 /**/
@@ -175,7 +175,7 @@ void ImgurTalker::slotResult(KJob* kjob)
     return;
 }
 
-void ImgurTalker::slotUploadDone(const KUrl& currentFile)
+void ImgurTalker::slotUploadDone(const QUrl& currentFile)
 {
     // removing the top of the queue
     if (!m_queue->isEmpty())
@@ -413,7 +413,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     return ok;
 }
 
-void ImgurTalker::imageUpload (const KUrl& filePath)
+void ImgurTalker::imageUpload (const QUrl& filePath)
 {
     m_state = IE_ADDPHOTO;
 
@@ -426,7 +426,7 @@ void ImgurTalker::imageUpload (const KUrl& filePath)
 
     MPForm form;
 
-    KUrl exportUrl = KUrl(ImgurConnection::APIuploadURL());
+    QUrl exportUrl = QUrl(ImgurConnection::APIuploadURL());
 
     exportUrl.addQueryItem("key",   d->anonymousKey.data());
     exportUrl.addQueryItem("name",  filePath.fileName());
@@ -455,7 +455,7 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
     // @TODO : make sure it works
     MPForm form;
 
-    KUrl removeUrl = KUrl(ImgurConnection::APIdeleteURL());
+    QUrl removeUrl = QUrl(ImgurConnection::APIdeleteURL());
     removeUrl.addPath(delete_hash + ".json");
 
     form.finish();
@@ -483,14 +483,14 @@ void ImgurTalker::cancel()
     emit signalBusy(false);
 }
 
-void ImgurTalker::slotAddItems(const KUrl::List& list)
+void ImgurTalker::slotAddItems(const QUrl::List& list)
 {
     if (list.isEmpty())
     {
         return;
     }
 
-    for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
+    for( QUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         if (!m_queue->contains(*it))
         {
@@ -501,14 +501,14 @@ void ImgurTalker::slotAddItems(const KUrl::List& list)
     emit signalQueueChanged();
 }
 
-void ImgurTalker::slotRemoveItems(const KUrl::List &list)
+void ImgurTalker::slotRemoveItems(const QUrl::List &list)
 {
     if (list.isEmpty())
     {
         return;
     }
 
-    for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
+    for( QUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         m_queue->removeAll(*it);
     }
@@ -516,17 +516,17 @@ void ImgurTalker::slotRemoveItems(const KUrl::List &list)
     emit signalQueueChanged();
 }
 
-void ImgurTalker::setCurrentUrl(const KUrl& url)
+void ImgurTalker::setCurrentUrl(const QUrl& url)
 {
     m_currentUrl = url;
 }
 
-KUrl::List* ImgurTalker::imageQueue() const
+QUrl::List* ImgurTalker::imageQueue() const
 {
     return m_queue;
 }
 
-KUrl ImgurTalker::currentUrl() const
+QUrl ImgurTalker::currentUrl() const
 {
     return m_currentUrl;
 }

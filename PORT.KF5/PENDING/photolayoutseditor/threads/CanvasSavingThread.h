@@ -42,8 +42,8 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             explicit CanvasSavingThread(QObject* parent = 0);
-            void save(Canvas * canvas, const KUrl& url);
-            void saveAsTemplate(Canvas * canvas, const KUrl& url);
+            void save(Canvas * canvas, const QUrl& url);
+            void saveAsTemplate(Canvas * canvas, const QUrl& url);
             virtual void progresChanged(double progress);
             virtual void progresName(const QString& name);
 
@@ -67,7 +67,7 @@ namespace KIPIPhotoLayoutsEditor
         private:
 
             Canvas* m_canvas;
-            KUrl    m_url;
+            QUrl    m_url;
             bool    m_template;
     };
 }

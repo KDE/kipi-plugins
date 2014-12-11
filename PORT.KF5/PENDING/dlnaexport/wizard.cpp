@@ -82,8 +82,8 @@ public:
     KPageWidgetItem*                     finalPageItem;
     KPageWidgetItem*                     collectionSelectorPageItem;
     KPageWidgetItem*                     welcomePageItem;
-    KUrl::List                           imageList;
-    QMap<QString, KUrl::List>            collectionMap;
+    QUrl::List                           imageList;
+    QMap<QString, QUrl::List>            collectionMap;
     QStringList                          directories;
     WelcomePage::ImplementationGetOption implementationOptionSelected;
 };

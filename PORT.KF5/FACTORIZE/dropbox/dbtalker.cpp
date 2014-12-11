@@ -112,7 +112,7 @@ QString DBTalker::generateNonce(qint32 length)
  */
 void DBTalker::obtain_req_token()
 {
-    KUrl url("https://api.dropbox.com/1/oauth/request_token");
+    QUrl url("https://api.dropbox.com/1/oauth/request_token");
     url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
     url.addQueryItem("oauth_nonce", nonce);
     url.addQueryItem("oauth_signature",m_oauth_signature);
@@ -160,7 +160,7 @@ void DBTalker::continueWithAccessToken(const QString& msg1, const QString& msg2,
  */
 void DBTalker::doOAuth()
 {
-    KUrl url("https://api.dropbox.com/1/oauth/authorize");
+    QUrl url("https://api.dropbox.com/1/oauth/authorize");
     qCDebug(KIPIPLUGINS_LOG) << "in doOAuth()" << m_oauthToken;
     url.addQueryItem("oauth_token",m_oauthToken);
 
@@ -204,7 +204,7 @@ void DBTalker::doOAuth()
  */
 void DBTalker::getAccessToken()
 {
-    KUrl url("https://api.dropbox.com/1/oauth/access_token");
+    QUrl url("https://api.dropbox.com/1/oauth/access_token");
     url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
     url.addQueryItem("oauth_nonce", nonce);
     url.addQueryItem("oauth_signature",m_access_oauth_signature);
@@ -235,7 +235,7 @@ void DBTalker::createFolder(const QString& path)
     //path also has name of new folder so send path parameter accordingly
     qCDebug(KIPIPLUGINS_LOG) << "in cre fol " << path;
 
-    KUrl url("https://api.dropbox.com/1/fileops/create_folder");
+    QUrl url("https://api.dropbox.com/1/fileops/create_folder");
     url.addQueryItem("root",m_root);
     url.addQueryItem("path",path);
 
@@ -295,7 +295,7 @@ void DBTalker::getUserName()
 void DBTalker::listFolders(const QString& path)
 {
     QString make_url = QString("https://api.dropbox.com/1/metadata/dropbox/") + path;
-    KUrl url(make_url);
+    QUrl url(make_url);
     url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
     url.addQueryItem("oauth_nonce", nonce);
     url.addQueryItem("oauth_signature",m_access_oauth_signature);
@@ -370,9 +370,9 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
         return false;
     }
 
-    QString uploadPath = uploadFolder + KUrl(imgPath).fileName();
+    QString uploadPath = uploadFolder + QUrl(imgPath).fileName();
     QString m_url = QString("https://api-content.dropbox.com/1/files_put/dropbox/") + "/" +uploadPath;
-    KUrl url(m_url);
+    QUrl url(m_url);
     url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
     url.addQueryItem("oauth_nonce", nonce);
     url.addQueryItem("oauth_signature",m_access_oauth_signature);

@@ -51,7 +51,7 @@ class RenameImagesDialog : public KPToolDialog
 
 public:
 
-    RenameImagesDialog(const KUrl::List& images, QWidget* parent);
+    RenameImagesDialog(const QUrl::List& images, QWidget* parent);
     ~RenameImagesDialog();
 
 private:

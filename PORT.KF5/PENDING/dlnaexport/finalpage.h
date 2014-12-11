@@ -47,8 +47,8 @@ public:
     explicit FinalPage(QWidget* const parent);
     ~FinalPage();
 
-    void setImages(const KUrl::List&);
-    void setCollectionMap(const QMap<QString, KUrl::List>&);
+    void setImages(const QUrl::List&);
+    void setCollectionMap(const QMap<QString, QUrl::List>&);
     void setDirectories (const QStringList&);
     void clearImages();
     void setOptions(WelcomePage::ImplementationGetOption);

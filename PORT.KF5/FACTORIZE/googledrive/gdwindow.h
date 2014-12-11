@@ -39,7 +39,7 @@
 class QCloseEvent;
 
 class KProgressDialog;
-class KUrl;
+class QUrl;
 
 namespace KIPI
 {
@@ -122,7 +122,7 @@ private:
 
     QString                       m_currentAlbumId;
 
-    QList< QPair<KUrl, GDPhoto> > m_transferQueue;
+    QList< QPair<QUrl, GDPhoto> > m_transferQueue;
 };
 
 } // namespace KIPIGoogleDrivePlugin

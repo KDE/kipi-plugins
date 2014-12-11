@@ -100,7 +100,7 @@ void SmugTalker::login(const QString& email, const QString& password)
     emit signalBusy(true);
     emit signalLoginProgress(1, 4, i18n("Logging in to SmugMug service..."));
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
 
     if (email.isEmpty()) 
     {
@@ -143,7 +143,7 @@ void SmugTalker::logout()
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.logout");
     url.addQueryItem("SessionID", m_sessionID);
 
@@ -174,7 +174,7 @@ void SmugTalker::listAlbums(const QString& nickName)
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.albums.get");
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("Heavy", "1");
@@ -209,7 +209,7 @@ void SmugTalker::listPhotos(int albumID,
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.images.get");
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("AlbumID", QString::number(albumID));
@@ -247,7 +247,7 @@ void SmugTalker::listAlbumTmpl()
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.albumtemplates.get");
     url.addQueryItem("SessionID", m_sessionID);
 
@@ -277,7 +277,7 @@ void SmugTalker::listCategories()
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.categories.get");
     url.addQueryItem("SessionID", m_sessionID);
 
@@ -307,7 +307,7 @@ void SmugTalker::listSubCategories(int categoryID)
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.subcategories.get");
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("CategoryID", QString::number(categoryID));
@@ -338,7 +338,7 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
 
     emit signalBusy(true);
 
-    KUrl url(m_apiURL);
+    QUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.albums.create");
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("Title", album.title);
@@ -425,7 +425,7 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID,
     form.finish();
 
     QString customHdr;
-    KUrl url("http://upload.smugmug.com/photos/xmladd.mg");
+    QUrl url("http://upload.smugmug.com/photos/xmladd.mg");
     KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("UserAgent", m_userAgent);

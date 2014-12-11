@@ -48,8 +48,8 @@ public:
     {
     }
 
-    KUrl             mAlbumPath;
-    KUrl             mJarPath;
+    QUrl             mAlbumPath;
+    QUrl             mJarPath;
 };
 
 JAlbum::JAlbum()
@@ -63,12 +63,12 @@ JAlbum::~JAlbum()
     delete d;
 }
 
-KUrl JAlbum::albumPath() const
+QUrl JAlbum::albumPath() const
 {
     return d->mAlbumPath;
 }
 
-KUrl JAlbum::jarPath() const
+QUrl JAlbum::jarPath() const
 {
     return d->mJarPath;
 }

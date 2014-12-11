@@ -204,16 +204,16 @@ void SwConnector::getRestServiceURL()
 
     m_resultHandler             = &SwConnector::requestRestURLResultHandler;
     KIO::TransferJob* const job = KIO::get(m_apiStartURL, KIO::Reload, KIO::HideProgressInfo);
-    setupRequest(job, KUrl(m_apiStartURL).path(), method, md5, type, length, false); // initial request will NOT send password
+    setupRequest(job, QUrl(m_apiStartURL).path(), method, md5, type, length, false); // initial request will NOT send password
 
-    connect(job, SIGNAL(redirection(KIO::Job*,KUrl)),
-            this, SLOT(slotRequestRestURLRedirection(KIO::Job*,KUrl)));
+    connect(job, SIGNAL(redirection(KIO::Job*,QUrl)),
+            this, SLOT(slotRequestRestURLRedirection(KIO::Job*,QUrl)));
 
     m_job   = job;
     m_buffer.resize(0);
 }
 
-void SwConnector::slotRequestRestURLRedirection(KIO::Job* job, const KUrl& newUrl)
+void SwConnector::slotRequestRestURLRedirection(KIO::Job* job, const QUrl& newUrl)
 {
     qCDebug(KIPIPLUGINS_LOG) << "slotRequestRestURLRedirection: " << newUrl.prettyUrl() << endl;
 
@@ -288,7 +288,7 @@ bool SwConnector::addPhoto(const QString& imgPath, long long albumID, const QStr
     QString requestPath = QString("/user/%1/album/id/%2/contribution?name=%3")
                 .arg( QString(QUrl::toPercentEncoding(m_user.email)) )
                 .arg( QString(QUrl::toPercentEncoding(QString::number(albumID))) )
-                .arg( QString(QUrl::toPercentEncoding(KUrl(imgPath).fileName())) );
+                .arg( QString(QUrl::toPercentEncoding(QUrl(imgPath).fileName())) );
 
     QFile imageFile(imgPath);
 

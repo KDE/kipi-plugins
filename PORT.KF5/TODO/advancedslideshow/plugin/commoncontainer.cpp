@@ -35,7 +35,7 @@ SharedContainer::SharedContainer()
     delayMsMinValue               = 0;
     delayMsLineStep               = 0;
     ImagesHasComments             = false;
-    urlList                       = KUrl::List();
+    urlList                       = QUrl::List();
     mainPage                      = 0;
     captionPage                   = 0;
     advancedPage                  = 0;

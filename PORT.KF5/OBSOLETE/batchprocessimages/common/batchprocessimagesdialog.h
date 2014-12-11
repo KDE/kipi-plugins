@@ -69,7 +69,7 @@ public:
     // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
     // children dialog class.
 
-    BatchProcessImagesDialog(const KUrl::List& urlList, const QString& caption, QWidget* const parent = 0);
+    BatchProcessImagesDialog(const QUrl::List& urlList, const QString& caption, QWidget* const parent = 0);
     ~BatchProcessImagesDialog();
 
 protected:
@@ -102,7 +102,7 @@ protected:
     QString                  m_commandLine;
     QString                  m_tmpFolder;
     QString                  m_previewOutput;
-    KUrl::List               m_selectedImageFiles;
+    QUrl::List               m_selectedImageFiles;
 
     // --------------------------------------------------------------------------------------------------------
     // Standards functions
@@ -127,7 +127,7 @@ protected:
     /**
      * @return destination url
      */
-    KUrl destinationUrl() const;
+    QUrl destinationUrl() const;
 
     /**
      * Set title of option group box

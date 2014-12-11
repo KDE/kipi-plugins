@@ -53,7 +53,7 @@ class CalPrinter : public QThread
 public:
 
     CalPrinter(QPrinter* const printer,
-               QMap<int, KUrl>& months,
+               QMap<int, QUrl>& months,
                Interface* const interface,
                QObject* const parent);
 
@@ -77,7 +77,7 @@ private:
 
     bool             cancelled_;
 
-    QMap<int, KUrl>  months_;
+    QMap<int, QUrl>  months_;
     QPrinter*        printer_;
 
     CalPainter*      painter_;

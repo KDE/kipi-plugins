@@ -47,7 +47,7 @@ public:
 
 public Q_SLOTS:
 
-    void addEyeCounterByUrl(const KUrl&, int);
+    void addEyeCounterByUrl(const QUrl&, int);
 };
 
 }  // namespace KIPIRemoveRedEyesPlugin

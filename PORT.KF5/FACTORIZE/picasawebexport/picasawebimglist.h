@@ -54,7 +54,7 @@ public:
     PicasawebImageDialog(QWidget* const parent, KIPI::Interface* const iface);
     ~PicasawebImageDialog();
 
-    KUrl::List urls() const;
+    QUrl::List urls() const;
 
 private:
 

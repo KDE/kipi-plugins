@@ -61,17 +61,17 @@ void TestKipiImageItem::cleanupTestCase()
 /**
  * @brief Return the path of the directory containing the test data
  */
-KUrl GetTestDataDirectory()
+QUrl GetTestDataDirectory()
 {
     // any better ideas on how to get the path?
-    const KUrl thisCPPFile(__FILE__);
-    KUrl testDataDir = thisCPPFile.upUrl();
+    const QUrl thisCPPFile(__FILE__);
+    QUrl testDataDir = thisCPPFile.upUrl();
     testDataDir.addPath("data/");
     return testDataDir;
 }
 
 
-KipiImageItem* ItemFromFile(const KUrl& url)
+KipiImageItem* ItemFromFile(const QUrl& url)
 {
     QScopedPointer<KipiImageItem> imageItem(new KipiImageItem(0, url));
 
@@ -92,17 +92,17 @@ void TestKipiImageItem::testNoOp()
 
 void TestKipiImageItem::testBasicLoading()
 {
-    const KUrl testDataDir = GetTestDataDirectory();
+    const QUrl testDataDir = GetTestDataDirectory();
 
     {
         // test failure on not-existing file
-        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(KUrl(testDataDir, "not-existing")));
+        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(QUrl(testDataDir, "not-existing")));
         QVERIFY(!imageItem);
     }
 
     {
         // load a file without GPS info
-        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(KUrl(testDataDir, "exiftest-nogps.png")));
+        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(QUrl(testDataDir, "exiftest-nogps.png")));
         QVERIFY(imageItem);
 
         const GPSDataContainer container = imageItem->gpsData();
@@ -115,7 +115,7 @@ void TestKipiImageItem::testBasicLoading()
 
     {
         // load a file with geo:5,15,25
-        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(KUrl(testDataDir, "exiftest-5_15_25.jpg")));
+        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(QUrl(testDataDir, "exiftest-5_15_25.jpg")));
         QVERIFY(imageItem);
 
         const GPSDataContainer container = imageItem->gpsData();

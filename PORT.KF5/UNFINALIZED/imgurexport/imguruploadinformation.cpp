@@ -55,12 +55,12 @@ QString ImgurUploadInformation::Caption ()
     return d.caption;
 }
 
-void ImgurUploadInformation::setFileUrl(const KUrl& filePath)
+void ImgurUploadInformation::setFileUrl(const QUrl& filePath)
 {
     d.fileUrl = filePath;
 }
 
-KUrl ImgurUploadInformation::fileUrl()
+QUrl ImgurUploadInformation::fileUrl()
 {
     return d.fileUrl;
 }

@@ -53,10 +53,10 @@ class SoundItem : public QObject, public QListWidgetItem
 
 public:
 
-    SoundItem(QListWidget* const parent, const KUrl& url);
+    SoundItem(QListWidget* const parent, const QUrl& url);
     ~SoundItem();
 
-    KUrl    url()       const;
+    QUrl    url()       const;
     QString artist()    const;
     QString title()     const;
     QTime   totalTime() const;
@@ -64,7 +64,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalTotalTimeReady(const KUrl&, const QTime&);
+    void signalTotalTimeReady(const QUrl&, const QTime&);
 
 private Q_SLOTS:
 
@@ -72,7 +72,7 @@ private Q_SLOTS:
 
 private:
 
-    KUrl                 m_url;
+    QUrl                 m_url;
     QString              m_artist;
     QString              m_title;
     QTime                m_totalTime;
@@ -91,11 +91,11 @@ public:
 
 public:
 
-    KUrl::List fileUrls();
+    QUrl::List fileUrls();
 
 Q_SIGNALS:
 
-    void signalAddedDropItems(const KUrl::List& filesUrl);
+    void signalAddedDropItems(const QUrl::List& filesUrl);
 
 protected:
 

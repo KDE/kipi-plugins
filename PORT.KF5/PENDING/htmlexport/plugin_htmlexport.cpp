@@ -153,7 +153,7 @@ void Plugin_HTMLExport::slotActivate()
 
     if (info.openInBrowser())
     {
-        KUrl url=info.destUrl();
+        QUrl url=info.destUrl();
         url.addPath("index.html");
         KRun::runUrl(url, "text/html", parent);
     }

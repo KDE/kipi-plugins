@@ -34,7 +34,7 @@
 namespace KIPIPanoramaPlugin
 {
 
-CompileMKStepTask::CompileMKStepTask(QObject* parent, const KUrl& workDir, int id, const KUrl& mkUrl,
+CompileMKStepTask::CompileMKStepTask(QObject* parent, const QUrl& workDir, int id, const QUrl& mkUrl,
                                      const QString& nonaPath, const QString& enblendPath,
                                      const QString& makePath, bool preview)
     : Task(parent, preview ? NONAFILEPREVIEW : NONAFILE, workDir),
@@ -42,7 +42,7 @@ CompileMKStepTask::CompileMKStepTask(QObject* parent, const KUrl& workDir, int i
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
-CompileMKStepTask::CompileMKStepTask(const KUrl& workDir, int id, const KUrl& mkUrl,
+CompileMKStepTask::CompileMKStepTask(const QUrl& workDir, int id, const QUrl& mkUrl,
                                      const QString& nonaPath, const QString& enblendPath,
                                      const QString& makePath, bool preview)
     : Task(0, preview ? NONAFILEPREVIEW : NONAFILE, workDir),

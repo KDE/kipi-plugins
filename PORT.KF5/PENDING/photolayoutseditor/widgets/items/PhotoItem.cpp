@@ -88,12 +88,12 @@ public:
 
 class KIPIPhotoLayoutsEditor::PhotoItemUrlChangeCommand : public QUndoCommand
 {
-    KUrl       m_url;
+    QUrl       m_url;
     PhotoItem* m_item;
 
 public:
 
-    PhotoItemUrlChangeCommand(const KUrl & url, PhotoItem * item, QUndoCommand * parent = 0) :
+    PhotoItemUrlChangeCommand(const QUrl & url, PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Path Change"), parent),
         m_url(url),
         m_item(item)
@@ -111,7 +111,7 @@ public:
 
     void run()
     {
-        KUrl temp = m_item->d->fileUrl();
+        QUrl temp = m_item->d->fileUrl();
         m_item->d->setFileUrl(m_url);
         m_url = temp;
     }
@@ -226,7 +226,7 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
                 resultPath.clear();
             else
             {
-                KUrl fileUrl(filePath);
+                QUrl fileUrl(filePath);
                 ImageFileDialog dialog(fileUrl);
                 result = dialog.exec();
                 resultPath = dialog.selectedFile();
@@ -251,12 +251,12 @@ QImage & PhotoItem::PhotoItemPrivate::image()
     return m_image;
 }
 
-void PhotoItem::PhotoItemPrivate::setFileUrl(const KUrl & url)
+void PhotoItem::PhotoItemPrivate::setFileUrl(const QUrl & url)
 {
     this->m_file_path = url;
 }
 
-KUrl & PhotoItem::PhotoItemPrivate::fileUrl()
+QUrl & PhotoItem::PhotoItemPrivate::fileUrl()
 {
     return this->m_file_path;
 }
@@ -570,7 +570,7 @@ void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        KUrl::List urls;
+        QUrl::List urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -603,7 +603,7 @@ void PhotoItem::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        KUrl::List urls;
+        QUrl::List urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -632,7 +632,7 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        KUrl::List urls;
+        QUrl::List urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -716,7 +716,7 @@ void PhotoItem::setImage(const QImage & image)
     PhotoLayoutsEditor::instance()->endUndoCommandGroup();
 }
 
-void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
+void PhotoItem::imageLoaded(const QUrl & url, const QImage & image)
 {
     if (image.isNull())
         return;
@@ -730,11 +730,11 @@ void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
     PhotoLayoutsEditor::instance()->endUndoCommandGroup();
 }
 
-void PhotoItem::setImageUrl(const KUrl & url)
+void PhotoItem::setImageUrl(const QUrl & url)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImagesUrls(url);
-    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+    connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
     ilt->start();
 }
 

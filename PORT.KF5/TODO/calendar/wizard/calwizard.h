@@ -96,7 +96,7 @@ private:
 
     CalPrinter*      printThread_;
 
-    QMap<int, KUrl>  months_;
+    QMap<int, QUrl>  months_;
 };
 
 }  // NameSpace KIPICalendarPlugin

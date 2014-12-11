@@ -106,7 +106,7 @@ bool PiwigoTalker::loggedIn() const
     return m_loggedIn;
 }
 
-void PiwigoTalker::login(const KUrl& url, const QString& name, const QString& passwd)
+void PiwigoTalker::login(const QUrl& url, const QString& name, const QString& passwd)
 {
     m_job   = 0;
     m_url   = url;
@@ -174,7 +174,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
                             int   maxHeight,
                             int   quality)
 {
-    KUrl mediaUrl = KUrl(mediaPath);
+    QUrl mediaUrl = QUrl(mediaPath);
 
     m_job     = 0;
     m_state   = GE_CHECKPHOTOEXIST;
@@ -219,7 +219,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
                 image = image.scaled(maxWidth, maxHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             }
 
-            m_path = m_tmpPath = KStandardDirs::locateLocal("tmp", KUrl(mediaPath).fileName());
+            m_path = m_tmpPath = KStandardDirs::locateLocal("tmp", QUrl(mediaPath).fileName());
             image.save(m_path, "JPEG", quality);
 
             qCDebug(KIPIPLUGINS_LOG) << "Upload a resized version: " << m_path ;
@@ -280,7 +280,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
-    emit signalProgressInfo( i18n("Check if %1 already exists", KUrl(mediaPath).fileName()) );
+    emit signalProgressInfo( i18n("Check if %1 already exists", QUrl(mediaPath).fileName()) );
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -819,7 +819,7 @@ void PiwigoTalker::addNextChunk()
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
-    emit signalProgressInfo( i18n("Upload the chunk %1/%2 of %3", m_chunkId, m_nbOfChunks, KUrl(m_path).fileName()) );
+    emit signalProgressInfo( i18n("Upload the chunk %1/%2 of %3", m_chunkId, m_nbOfChunks, QUrl(m_path).fileName()) );
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
@@ -877,7 +877,7 @@ void PiwigoTalker::addPhotoSummary()
     QStringList qsl;
     qsl.append("method=pwg.images.add");
     qsl.append("original_sum=" + m_md5sum.toHex());
-    qsl.append("original_filename=" + KUrl(m_path).fileName().toUtf8().toPercentEncoding());
+    qsl.append("original_filename=" + QUrl(m_path).fileName().toUtf8().toPercentEncoding());
     qsl.append("name=" + m_title.toUtf8().toPercentEncoding());
     if (!m_author.isEmpty()) qsl.append("author=" + m_author.toUtf8().toPercentEncoding());
     if (!m_comment.isEmpty()) qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
@@ -893,7 +893,7 @@ void PiwigoTalker::addPhotoSummary()
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
-    emit signalProgressInfo( i18n("Upload the metadata of %1", KUrl(m_path).fileName()) );
+    emit signalProgressInfo( i18n("Upload the metadata of %1", QUrl(m_path).fileName()) );
 
     connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));

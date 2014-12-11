@@ -650,7 +650,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     qCDebug(KIPIPLUGINS_LOG) << "----";
     m_transferQueue.clear();
 
-    foreach(const KUrl& url, m_imgList->imageUrls(true))
+    foreach(const QUrl& url, m_imgList->imageUrls(true))
     {
         KPImageInfo info(url);
         KPMetadata  meta;

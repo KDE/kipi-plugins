@@ -72,7 +72,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RenameImagesWidget::RenameImagesWidget(QWidget* parent, KIPI::Interface* interface,
-                                       const KUrl::List& urlList)
+                                       const QUrl::List& urlList)
     : QWidget(parent),
       m_interface(interface),
       m_urlList(urlList),
@@ -156,11 +156,11 @@ RenameImagesWidget::RenameImagesWidget(QWidget* parent, KIPI::Interface* interfa
     connect(m_timer, SIGNAL(timeout()),
             this, SLOT(slotNext()));
 
-    connect(m_interface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-            this, SLOT(slotGotPreview(KUrl,QPixmap)));
+    connect(m_interface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+            this, SLOT(slotGotPreview(QUrl,QPixmap)));
 
     qCDebug(KIPIPLUGINS_LOG) << m_urlList;
-    for (KUrl::List::iterator it = m_urlList.begin();
+    for (QUrl::List::iterator it = m_urlList.begin();
             it != m_urlList.end(); ++it)
     {
         new BatchProcessImagesItem(ui->m_listView,
@@ -241,7 +241,7 @@ void RenameImagesWidget::slotImageSelected(QTreeWidgetItem* item)
     ui->m_pixLabel->clear();
 
     BatchProcessImagesItem* it = static_cast<BatchProcessImagesItem*>(item);
-    m_interface->thumbnail(KUrl(it->pathSrc()), ui->m_pixLabel->height());
+    m_interface->thumbnail(QUrl(it->pathSrc()), ui->m_pixLabel->height());
 }
 
 void RenameImagesWidget::sortList(QAction* action)
@@ -262,7 +262,7 @@ void RenameImagesWidget::sortList(QAction* action)
         }
         else if (action == m_byDateAction)
         {
-            KUrl url(item->pathSrc());
+            QUrl url(item->pathSrc());
             KIPIPlugins::KPImageInfo info(url);
             item->changeSortKey(info.date().toString(Qt::ISODate));
         }
@@ -342,7 +342,7 @@ void RenameImagesWidget::updateListing()
 
 QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemPosition)
 {
-    KUrl url;
+    QUrl url;
     url.setPath(item->pathSrc());
 
     QFileInfo fi(item->pathSrc());
@@ -465,7 +465,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
     return newName;
 }
 
-void RenameImagesWidget::slotGotPreview(const KUrl&, const QPixmap& pixmap)
+void RenameImagesWidget::slotGotPreview(const QUrl&, const QPixmap& pixmap)
 {
     ui->m_pixLabel->setPixmap(pixmap);
 }
@@ -511,9 +511,9 @@ void RenameImagesWidget::slotNext()
     }
 
     BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(it);
-    KUrl src;
+    QUrl src;
     src.setPath(item->pathSrc());
-    KUrl dst = src.upUrl();
+    QUrl dst = src.upUrl();
     dst.addPath(item->text(2));
 
     bool skip      = false;
@@ -615,9 +615,9 @@ void RenameImagesWidget::slotNext()
 
 void RenameImagesWidget::slotAddImages()
 {
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
+    QUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
 
-    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    for (QUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
         if (m_urlList.contains(*it))
             continue;

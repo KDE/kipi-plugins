@@ -154,7 +154,7 @@ ViewerWidget::ViewerWidget()
     ImageCollection selection = d->iface->currentSelection();
     ImageCollection album     = d->iface->currentAlbum();
 
-    KUrl::List myfiles; //pics which are displayed in imageviewer
+    QUrl::List myfiles; //pics which are displayed in imageviewer
     QString selectedImage; //selected pic in hostapp
 
     int foundNumber = 0;
@@ -181,7 +181,7 @@ ViewerWidget::ViewerWidget()
     }
 
     // populate QStringList::d->files
-    for(KUrl::List::Iterator it = myfiles.begin(); it != myfiles.end(); ++it)
+    for(QUrl::List::Iterator it = myfiles.begin(); it != myfiles.end(); ++it)
     {
         // find selected image in album in order to determine the first displayed image
         // in case one image was selected and the entire album was loaded

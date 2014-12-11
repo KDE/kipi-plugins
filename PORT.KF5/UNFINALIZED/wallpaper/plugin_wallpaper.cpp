@@ -146,7 +146,7 @@ void Plugin_WallPaper::slotSetWallpaper()
    if ( !images.isValid() )
        return;
 
-   KUrl url                      = images.images()[0];
+   QUrl url                      = images.images()[0];
    QString path                  = url.path();
    QDBusInterface* dbusInterface = new QDBusInterface("org.kde.plasma-desktop", "/App", "local.PlasmaApp");
    QDBusReply<void> reply        = dbusInterface->call("setWallpaperImage", path);

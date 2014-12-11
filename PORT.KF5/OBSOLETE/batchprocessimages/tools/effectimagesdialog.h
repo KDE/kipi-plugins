@@ -38,7 +38,7 @@ class EffectImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    explicit EffectImagesDialog(const KUrl::List& images, QWidget* parent = 0);
+    explicit EffectImagesDialog(const QUrl::List& images, QWidget* parent = 0);
     ~EffectImagesDialog();
 
 private Q_SLOTS:

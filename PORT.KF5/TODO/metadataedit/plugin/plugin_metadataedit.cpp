@@ -79,7 +79,7 @@ public:
 
     Interface* interface;
 
-    KUrl       lastSelectedDirectory;
+    QUrl       lastSelectedDirectory;
 };
 
 Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* const parent, const QVariantList&)
@@ -196,7 +196,7 @@ void Plugin_MetadataEdit::slotImportExif()
     {
         d->lastSelectedDirectory = images.images().first().upUrl();
     }
-    KUrl importEXIFFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
+    QUrl importEXIFFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
                                                   QString(), QApplication::activeWindow(),
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
@@ -235,14 +235,14 @@ void Plugin_MetadataEdit::slotImportExif()
                      i18n("Import EXIF Metadata")) != KMessageBox::Yes)
         return;
 
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
+    QUrl::List  imageURLs = images.images();
+    QUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KUrl::List::iterator it = imageURLs.begin() ;
+    for( QUrl::List::iterator it = imageURLs.begin() ;
          it != imageURLs.end(); ++it)
     {
-        KUrl url = *it;
+        QUrl url = *it;
         bool ret = false;
 
         if (KPMetadata::canWriteExif(url.path()))
@@ -288,7 +288,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     {
         d->lastSelectedDirectory = images.images().first().upUrl();
     }
-    KUrl importIPTCFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
+    QUrl importIPTCFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
                                                   QString(), QApplication::activeWindow(),
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
@@ -322,14 +322,14 @@ void Plugin_MetadataEdit::slotImportIptc()
                      i18n("Import IPTC Metadata")) != KMessageBox::Yes)
         return;
 
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
+    QUrl::List  imageURLs = images.images();
+    QUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KUrl::List::iterator it = imageURLs.begin() ;
+    for( QUrl::List::iterator it = imageURLs.begin() ;
          it != imageURLs.end(); ++it)
     {
-        KUrl url = *it;
+        QUrl url = *it;
         bool ret = false;
 
         if (KPMetadata::canWriteIptc(url.path()))
@@ -375,7 +375,7 @@ void Plugin_MetadataEdit::slotImportXmp()
     {
         d->lastSelectedDirectory = images.images().first().upUrl();
     }
-    KUrl importXMPFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
+    QUrl importXMPFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
                                                  QString(), QApplication::activeWindow(),
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
@@ -409,14 +409,14 @@ void Plugin_MetadataEdit::slotImportXmp()
                      i18n("Import XMP Metadata")) != KMessageBox::Yes)
         return;
 
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
+    QUrl::List  imageURLs = images.images();
+    QUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KUrl::List::iterator it = imageURLs.begin() ;
+    for( QUrl::List::iterator it = imageURLs.begin() ;
          it != imageURLs.end(); ++it)
     {
-        KUrl url = *it;
+        QUrl url = *it;
         bool ret = false;
 
         if (KPMetadata::canWriteXmp(url.path()))

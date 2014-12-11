@@ -159,9 +159,9 @@ struct Generator::Private
     {
         mProgressDialog->progressWidget()->addedAction(i18n("Copying theme"), ProgressMessage);
 
-        KUrl srcUrl=KUrl(mTheme->directory());
+        QUrl srcUrl=QUrl(mTheme->directory());
 
-        KUrl destUrl=mInfo->destUrl();
+        QUrl destUrl=mInfo->destUrl();
         destUrl.addPath(srcUrl.fileName());
 
         if (QFile::exists(destUrl.toLocalFile()))
@@ -178,13 +178,13 @@ struct Generator::Private
     }
 
     // Url => local temp path
-    typedef QHash<KUrl, QString> RemoteUrlHash;
+    typedef QHash<QUrl, QString> RemoteUrlHash;
 
-    bool downloadRemoteUrls(const QString& collectionName, const KUrl::List& _list, RemoteUrlHash* hash)
+    bool downloadRemoteUrls(const QString& collectionName, const QUrl::List& _list, RemoteUrlHash* hash)
     {
         Q_ASSERT(hash);
-        KUrl::List list;
-        Q_FOREACH(const KUrl& url, _list)
+        QUrl::List list;
+        Q_FOREACH(const QUrl& url, _list)
         {
             if (!url.isLocalFile())
             {
@@ -201,7 +201,7 @@ struct Generator::Private
 
         mProgressDialog->progressWidget()->setTotal(list.count());
         int count = 0;
-        Q_FOREACH(const KUrl& url, list)
+        Q_FOREACH(const QUrl& url, list)
         {
             if (mProgressDialog->isHidden())
             {
@@ -269,14 +269,14 @@ struct Generator::Private
             xmlWriter.writeElement("comment", collection.comment());
 
             // Gather image element list
-            KUrl::List imageList = collection.images();
+            QUrl::List imageList = collection.images();
             RemoteUrlHash remoteUrlHash;
             if (!downloadRemoteUrls(collection.name(), imageList, &remoteUrlHash))
             {
                 return false;
             }
             QList<ImageElement> imageElementList;
-            Q_FOREACH(const KUrl& url, imageList)
+            Q_FOREACH(const QUrl& url, imageList)
             {
                 const QString path = remoteUrlHash.value(url, url.toLocalFile());
                 if (path.isEmpty())

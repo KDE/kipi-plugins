@@ -73,7 +73,7 @@ private:
 
     QAction *         m_actionSlideShow;
     KIPI::Interface* m_interface;
-    KUrl::List       m_urlList;
+    QUrl::List       m_urlList;
     SharedContainer* m_sharedData;
 };
 

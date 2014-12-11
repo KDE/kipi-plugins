@@ -39,7 +39,7 @@ QString ImageFileDialog::FILTER =   "*.bpm|(*.bmp) Windows Bitmap\n"
                                     "*.xbm|(*.xbm) X11 Bitmap\n"
                                     "*.xpm|(*.xpm) X11 Pixmap";
 
-ImageFileDialog::ImageFileDialog(const KUrl & startDir, QWidget * parent, QWidget * widget) :
+ImageFileDialog::ImageFileDialog(const QUrl & startDir, QWidget * parent, QWidget * widget) :
     KFileDialog(startDir, FILTER, parent, widget),
     m_format(0)
 {

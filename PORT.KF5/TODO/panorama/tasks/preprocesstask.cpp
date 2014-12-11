@@ -42,14 +42,14 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-PreProcessTask::PreProcessTask(QObject* const parent, const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
-                               const KUrl& sourceUrl, const RawDecodingSettings& rawSettings)
+PreProcessTask::PreProcessTask(QObject* const parent, const QUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
+                               const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
     : Task(parent, PREPROCESS_INPUT, workDir), id(id),
       fileUrl(sourceUrl), preProcessedUrl(&targetUrls), settings(rawSettings)
 {}
 
-PreProcessTask::PreProcessTask(const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
-                               const KUrl& sourceUrl, const RawDecodingSettings& rawSettings)
+PreProcessTask::PreProcessTask(const QUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
+                               const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
     : Task(0, PREPROCESS_INPUT, workDir), id(id),
       fileUrl(sourceUrl), preProcessedUrl(&targetUrls), settings(rawSettings)
 {}
@@ -97,9 +97,9 @@ void PreProcessTask::run()
     return;
 }
 
-bool PreProcessTask::computePreview(const KUrl& inUrl)
+bool PreProcessTask::computePreview(const QUrl& inUrl)
 {
-    KUrl& outUrl = preProcessedUrl->previewUrl;
+    QUrl& outUrl = preProcessedUrl->previewUrl;
 
     QFileInfo fi(inUrl.toLocalFile());
     outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
@@ -130,8 +130,8 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
 
 bool PreProcessTask::convertRaw()
 {
-    const KUrl& inUrl = fileUrl;
-    KUrl &outUrl      = preProcessedUrl->preprocessedUrl;
+    const QUrl& inUrl = fileUrl;
+    QUrl &outUrl      = preProcessedUrl->preprocessedUrl;
 
     int        width, height, rgbmax;
     QByteArray imageData;

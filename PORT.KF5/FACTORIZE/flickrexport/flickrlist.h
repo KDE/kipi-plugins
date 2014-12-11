@@ -93,7 +93,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    virtual void slotAddImages(const KUrl::List& list);
+    virtual void slotAddImages(const QUrl::List& list);
 
 private:
 
@@ -129,7 +129,7 @@ class FlickrListViewItem : public KPImagesListViewItem
 
 public:
 
-    FlickrListViewItem(KPImagesListView* const view, const KUrl& url,
+    FlickrListViewItem(KPImagesListView* const view, const QUrl& url,
                        bool, bool, bool, bool,
                        FlickrList::SafetyLevel, FlickrList::ContentType);
     //virtual ~FlickrListViewItem();

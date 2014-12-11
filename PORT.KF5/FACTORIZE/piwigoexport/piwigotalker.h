@@ -85,7 +85,7 @@ public:
 
     bool loggedIn() const;
 
-    void login(const KUrl& url, const QString& name, const QString& passwd);
+    void login(const QUrl& url, const QString& name, const QString& passwd);
     void listAlbums();
     void listPhotos(const QString& albumName);
 
@@ -138,7 +138,7 @@ private:
     QWidget*          m_parent;
     State             m_state;
     QString           m_cookie;
-    KUrl              m_url;
+    QUrl              m_url;
     KIO::TransferJob* m_job;
     bool              m_loggedIn;
     QByteArray        m_talker_buffer;

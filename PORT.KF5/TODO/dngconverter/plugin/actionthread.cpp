@@ -105,25 +105,25 @@ void ActionThread::setPreviewMode(int mode)
     d->previewMode = mode;
 }
 
-void ActionThread::processRawFile(const KUrl& url)
+void ActionThread::processRawFile(const QUrl& url)
 {
-    KUrl::List oneFile;
+    QUrl::List oneFile;
     oneFile.append(url);
     processRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFile(const KUrl& url)
+void ActionThread::identifyRawFile(const QUrl& url)
 {
-    KUrl::List oneFile;
+    QUrl::List oneFile;
     oneFile.append(url);
     identifyRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFiles(const KUrl::List& urlList)
+void ActionThread::identifyRawFiles(const QUrl::List& urlList)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         Task* const t = new Task(this, *it, IDENTIFY);
         t->setBackupOriginalRawFile(d->backupOriginalRawFile);
@@ -146,11 +146,11 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList)
     appendJob(collection);
 }
 
-void ActionThread::processRawFiles(const KUrl::List& urlList)
+void ActionThread::processRawFiles(const QUrl::List& urlList)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         Task* const t = new Task(this, *it, PROCESS);
         t->setBackupOriginalRawFile(d->backupOriginalRawFile);

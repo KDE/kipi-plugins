@@ -69,7 +69,7 @@ public:
     ImgurTalkerAuth(Interface* const iface, QWidget* const parent = 0);
     ~ImgurTalkerAuth();
 
-    void imageUpload(const KUrl& filePath);
+    void imageUpload(const QUrl& filePath);
     void cancel();
 
 Q_SIGNALS:

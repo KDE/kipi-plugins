@@ -38,7 +38,7 @@
 
 class QCloseEvent;
 
-class KUrl;
+class QUrl;
 
 namespace KIPI
 {
@@ -117,7 +117,7 @@ private:
 
     QString              m_currentAlbumName;
 
-    KUrl::List           m_transferQueue;
+    QUrl::List           m_transferQueue;
 
     QString              m_accToken;
     QString              m_accTokenSecret;

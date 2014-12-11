@@ -206,8 +206,8 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     //connect( m_tagView, SIGNAL(selectionChanged()),
     //         SLOT(slotTagSelected()) );
 
-    //connect( m_photoView->browserExtension(), SIGNAL(openURLRequest(KUrl,KParts::URLArgs)),
-    //         SLOT(slotOpenPhoto(KUrl)) );
+    //connect( m_photoView->browserExtension(), SIGNAL(openURLRequest(QUrl,KParts::URLArgs)),
+    //         SLOT(slotOpenPhoto(QUrl)) );
 
     // --------------------------------------------------------------------------
 
@@ -447,12 +447,12 @@ void FlickrWindow::slotUserChangeRequest()
  * accept the path if it occurs at least 50% of the time. It could also look
  * further up in the path name.
  */
-QString FlickrWindow::guessSensibleSetName(const KUrl::List& urlList)
+QString FlickrWindow::guessSensibleSetName(const QUrl::List& urlList)
 {
     QMap<QString,int> nrFolderOccurences;
 
     // Extract last component of directory
-    foreach(const KUrl& url, urlList)
+    foreach(const QUrl& url, urlList)
     {
         QString dir      = url.directory();
         QStringList list = dir.split('/');
@@ -559,7 +559,7 @@ void FlickrWindow::slotTagSelected()
 {
     // TODO
 }
-void FlickrWindow::slotOpenPhoto( const KUrl& url )
+void FlickrWindow::slotOpenPhoto( const QUrl& url )
 {
     new KRun(url);
 }
@@ -611,7 +611,7 @@ void FlickrWindow::slotUser1()
         return;
     }
 
-    typedef QPair<KUrl, FPhotoInfo> Pair;
+    typedef QPair<QUrl, FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
@@ -714,7 +714,7 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    typedef QPair<KUrl, FPhotoInfo> Pair;
+    typedef QPair<QUrl, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
 

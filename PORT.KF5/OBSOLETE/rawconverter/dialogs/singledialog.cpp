@@ -107,7 +107,7 @@ public:
 
     QString               inputFileName;
 
-    KUrl                  inputFile;
+    QUrl                  inputFile;
 
     KPPreviewManager*     previewWidget;
 
@@ -310,7 +310,7 @@ void SingleDialog::saveSettings()
 void SingleDialog::slotUser1()
 {
     d->thread->setSettings(d->decodingSettingsBox->settings(), KPSaveSettingsWidget::OUTPUT_PNG);
-    d->thread->processHalfRawFile(KUrl(d->inputFile));
+    d->thread->processHalfRawFile(QUrl(d->inputFile));
 
     if (!d->thread->isRunning())
         d->thread->start();
@@ -320,7 +320,7 @@ void SingleDialog::slotUser1()
 void SingleDialog::slotUser2()
 {
     d->thread->setSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
-    d->thread->processRawFile(KUrl(d->inputFile));
+    d->thread->processRawFile(QUrl(d->inputFile));
 
     if (!d->thread->isRunning())
         d->thread->start();
@@ -336,23 +336,23 @@ void SingleDialog::slotIdentify()
 {
     if (!d->iface->hasFeature(HostSupportsThumbnails))
     {
-        d->thread->thumbRawFile(KUrl(d->inputFile));
+        d->thread->thumbRawFile(QUrl(d->inputFile));
     }
     else
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+                this, SLOT(slotThumbnail(QUrl,QPixmap)));
 
-        d->iface->thumbnail(KUrl(d->inputFile), 256);
+        d->iface->thumbnail(QUrl(d->inputFile), 256);
     }
 
-    d->thread->identifyRawFile(KUrl(d->inputFile), true);
+    d->thread->identifyRawFile(QUrl(d->inputFile), true);
 
     if (!d->thread->isRunning())
         d->thread->start();
 }
 
-void SingleDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void SingleDialog::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     setThumbnail(url.path(), pix);
 }
@@ -367,39 +367,39 @@ void SingleDialog::busy(bool val)
     enableButton(Close, !val);
 }
 
-void SingleDialog::setIdentity(const KUrl& /*url*/, const QString& identity)
+void SingleDialog::setIdentity(const QUrl& /*url*/, const QString& identity)
 {
     d->previewWidget->setText(d->inputFileName + QString(" :\n") + identity, Qt::white);
 }
 
-void SingleDialog::setThumbnail(const KUrl& url, const QPixmap& thumbnail)
+void SingleDialog::setThumbnail(const QUrl& url, const QPixmap& thumbnail)
 {
     if (url == d->inputFile)
         d->previewWidget->setThumbnail(thumbnail);
 }
 
-void SingleDialog::previewing(const KUrl& /*url*/)
+void SingleDialog::previewing(const QUrl& /*url*/)
 {
     d->previewWidget->setBusy(true, i18n("Generating Preview..."));
 }
 
-void SingleDialog::previewed(const KUrl& /*url*/, const QString& tmpFile)
+void SingleDialog::previewed(const QUrl& /*url*/, const QString& tmpFile)
 {
     d->previewWidget->load(tmpFile);
     ::remove(QFile::encodeName(tmpFile));
 }
 
-void SingleDialog::previewFailed(const KUrl& /*url*/)
+void SingleDialog::previewFailed(const QUrl& /*url*/)
 {
     d->previewWidget->setText(i18n("Failed to generate preview"), Qt::red);
 }
 
-void SingleDialog::processing(const KUrl& /*url*/)
+void SingleDialog::processing(const QUrl& /*url*/)
 {
     d->previewWidget->setBusy(true, i18n("Processing Images..."));
 }
 
-void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
+void SingleDialog::processed(const QUrl& url, const QString& tmpFile)
 {
     d->previewWidget->load(tmpFile);
     QString filter("*.");
@@ -478,12 +478,12 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
             // Assign Kipi host attributes from original RAW image.
 
             KPImageInfo info(url);
-            info.cloneData(KUrl(destFile));
+            info.cloneData(QUrl(destFile));
         }
     }
 }
 
-void SingleDialog::processingFailed(const KUrl& /*url*/)
+void SingleDialog::processingFailed(const QUrl& /*url*/)
 {
     d->previewWidget->setBusy(false);
     d->previewWidget->setText(i18n("Failed to convert RAW image"), Qt::red);

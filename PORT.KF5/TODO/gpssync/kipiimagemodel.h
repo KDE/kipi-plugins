@@ -56,8 +56,8 @@ public:
     void addItem(KipiImageItem* const newItem);
     void setColumnCount(const int nColumns);
     KipiImageItem* itemFromIndex(const QModelIndex& index) const;
-    KipiImageItem* itemFromUrl(const KUrl& url) const;
-    QModelIndex indexFromUrl(const KUrl& url) const;
+    KipiImageItem* itemFromUrl(const QUrl& url) const;
+    QModelIndex indexFromUrl(const QUrl& url) const;
 
     QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size);
     void setKipiInterface(KIPI::Interface* const interface);
@@ -83,7 +83,7 @@ Q_SIGNALS:
 
 protected Q_SLOTS:
 
-    void slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap);
+    void slotThumbnailFromInterface(const QUrl& url, const QPixmap& pixmap);
 
 private:
 

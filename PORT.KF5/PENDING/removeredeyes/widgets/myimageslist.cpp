@@ -64,7 +64,7 @@ MyImagesList::~MyImagesList()
 {
 }
 
-void MyImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)
+void MyImagesList::addEyeCounterByUrl(const QUrl& url, int eyes)
 {
     QTreeWidgetItemIterator it(listView());
 

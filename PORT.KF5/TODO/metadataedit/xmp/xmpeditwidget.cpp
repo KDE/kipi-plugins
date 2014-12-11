@@ -107,9 +107,9 @@ public:
     KPageWidgetItem*     page_status;
     KPageWidgetItem*     page_properties;
 
-    KUrl::List           urls;
+    QUrl::List           urls;
 
-    KUrl::List::iterator currItem;
+    QUrl::List::iterator currItem;
 
     XMPContent*          contentPage;
     XMPKeywords*         keywordsPage;

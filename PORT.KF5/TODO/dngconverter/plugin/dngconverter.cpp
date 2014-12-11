@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
     BatchDialog* const converter = new BatchDialog(aboutData);
     app.setTopWidget(converter);
 
-    KUrl::List    urls;
+    QUrl::List    urls;
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
     for(int i = 0; i < args->count(); ++i)

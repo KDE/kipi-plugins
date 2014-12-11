@@ -44,7 +44,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundItem::SoundItem(QListWidget* const parent, const KUrl& url)
+SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
     : QListWidgetItem(parent)
 {
     m_url = url;
@@ -62,7 +62,7 @@ SoundItem::~SoundItem()
 {
 }
 
-KUrl SoundItem::url() const
+QUrl SoundItem::url() const
 {
     return m_url;
 }
@@ -153,14 +153,14 @@ void ListSoundItems::dragMoveEvent(QDragMoveEvent* e)
 void ListSoundItems::dropEvent(QDropEvent* e)
 {
     QList<QUrl> list = e->mimeData()->urls();
-    KUrl::List urls;
+    QUrl::List urls;
 
     foreach(const QUrl &url, list)
     {
         QFileInfo fi(url.toLocalFile());
 
         if (fi.isFile() && fi.exists())
-            urls.append(KUrl(url));
+            urls.append(QUrl(url));
     }
 
     e->acceptProposedAction();
@@ -169,9 +169,9 @@ void ListSoundItems::dropEvent(QDropEvent* e)
         emit signalAddedDropItems(urls);
 }
 
-KUrl::List ListSoundItems::fileUrls()
+QUrl::List ListSoundItems::fileUrls()
 {
-    KUrl::List files;
+    QUrl::List files;
 
     for (int i = 0; i < count(); ++i)
     {
@@ -179,7 +179,7 @@ KUrl::List ListSoundItems::fileUrls()
 
         if (sitem)
         {
-            files << KUrl(sitem->url());
+            files << QUrl(sitem->url());
         }
     }
 

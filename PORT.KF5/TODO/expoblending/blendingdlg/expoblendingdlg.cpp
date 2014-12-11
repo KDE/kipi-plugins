@@ -227,14 +227,14 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->bracketStack, SIGNAL(signalAddItems(KUrl::List)),
-            this, SLOT(slotAddItems(KUrl::List)));
+    connect(d->bracketStack, SIGNAL(signalAddItems(QUrl::List)),
+            this, SLOT(slotAddItems(QUrl::List)));
 
     connect(d->previewWidget, SIGNAL(signalButtonClicked()),
             this, SLOT(slotPreviewButtonClicked()));
 
-    connect(d->enfuseStack, SIGNAL(signalItemClicked(KUrl)),
-            this, SLOT(slotLoadProcessed(KUrl)));
+    connect(d->enfuseStack, SIGNAL(signalItemClicked(QUrl)),
+            this, SLOT(slotLoadProcessed(QUrl)));
 
     connect(d->templateFileName, SIGNAL(textChanged(QString)),
             this, SLOT(slotFileFormatChanged()));
@@ -285,13 +285,13 @@ void ExpoBlendingDlg::slotPreviewButtonClicked()
     dlg.exec();
 }
 
-void ExpoBlendingDlg::loadItems(const KUrl::List& urls)
+void ExpoBlendingDlg::loadItems(const QUrl::List& urls)
 {
     d->bracketStack->clear();
     d->bracketStack->addItems(urls);
 }
 
-void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
+void ExpoBlendingDlg::slotAddItems(const QUrl::List& urls)
 {
     if (!urls.empty())
     {
@@ -301,14 +301,14 @@ void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
     }
 }
 
-void ExpoBlendingDlg::slotLoadProcessed(const KUrl& url)
+void ExpoBlendingDlg::slotLoadProcessed(const QUrl& url)
 {
     d->mngr->thread()->loadProcessed(url);
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
 
-void ExpoBlendingDlg::setIdentity(const KUrl& url, const QString& identity)
+void ExpoBlendingDlg::setIdentity(const QUrl& url, const QString& identity)
 {
     BracketStackItem* item = d->bracketStack->findItem(url);
     if (item)
@@ -378,13 +378,13 @@ void ExpoBlendingDlg::saveSettings()
 
 void ExpoBlendingDlg::slotPreview()
 {
-    KUrl::List selectedUrl = d->bracketStack->urls();
+    QUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
-    KUrl::List preprocessedList;
+    QUrl::List preprocessedList;
 
-    foreach(const KUrl& url, selectedUrl)
+    foreach(const QUrl& url, selectedUrl)
     {
         ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
         preprocessedList.append(preprocessedUrls.previewUrl);
@@ -404,13 +404,13 @@ void ExpoBlendingDlg::slotProcess()
     if (list.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
-    KUrl::List preprocessedList;
+    QUrl::List preprocessedList;
 
     foreach(const EnfuseSettings& settings, list)
     {
         preprocessedList.clear();
         
-        foreach(const KUrl& url, settings.inputUrls)
+        foreach(const QUrl& url, settings.inputUrls)
         {
             ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
             preprocessedList.append(preprocessedUrls.preprocessedUrl);
@@ -422,9 +422,9 @@ void ExpoBlendingDlg::slotProcess()
     }
 }
 
-void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
+void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
 {
-    KUrl newUrl = temp;
+    QUrl newUrl = temp;
     newUrl.setFileName(settings.targetFileName);
     QFileInfo fi(newUrl.toLocalFile());
 

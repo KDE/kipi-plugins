@@ -255,7 +255,7 @@ void Plugin_BatchProcessImages::slotActivate()
         return;
     }
 
-    KUrl::List urlList = images.images();
+    QUrl::List urlList = images.images();
 
     QString from(sender()->objectName());
 

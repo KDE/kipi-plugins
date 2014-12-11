@@ -60,18 +60,18 @@ namespace KIPIPhotoLayoutsEditor
             void endUndoCommandGroup();
             void setInterface(KIPI::Interface * interface);
             bool hasInterface() const;
-            void setItemsList(const KUrl::List & images);
+            void setItemsList(const QUrl::List & images);
             KIPI::Interface * interface() const;
 
         public Q_SLOTS:
 
             void open();
             void openDialog();
-            void open(const KUrl & fileUrl);
+            void open(const QUrl & fileUrl);
             void save();
             void saveAs();
             void saveAsTemplate();
-            void saveFile(const KUrl & fileUrl = KUrl(), bool setFileAsDefault = true);
+            void saveFile(const QUrl & fileUrl = QUrl(), bool setFileAsDefault = true);
             void exportFile();
             void printPreview();
             void print();
@@ -79,7 +79,7 @@ namespace KIPIPhotoLayoutsEditor
             void loadNewImage();
             void setGridVisible(bool isVisible);
             void createCanvas(const CanvasSize & size);
-            void createCanvas(const KUrl & fileUrl);
+            void createCanvas(const QUrl & fileUrl);
             void settings();
             void setupGrid();
             void changeCanvasSize();
@@ -93,7 +93,7 @@ namespace KIPIPhotoLayoutsEditor
 
             bool queryClose();
             void refreshActions();
-            void addRecentFile(const KUrl & url);
+            void addRecentFile(const QUrl & url);
             void clearRecentList();
 
         private:

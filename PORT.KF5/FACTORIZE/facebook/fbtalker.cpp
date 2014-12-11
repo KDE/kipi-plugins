@@ -80,7 +80,7 @@ FbTalker::FbTalker(QWidget* const parent)
 
     m_userAgent       = QString("KIPI-Plugin-Fb/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion      = "1.0";
-    m_apiURL          = KUrl("https://api.facebook.com/method/");
+    m_apiURL          = QUrl("https://api.facebook.com/method/");
     m_secretKey       = "0434307e70dd12c414cc6d0928f132d8";
     m_appID           = "107648075065";
 }
@@ -223,7 +223,7 @@ void FbTalker::exchangeSession(const QString& sessionKey)
     args["sessions"]      = sessionKey;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -254,7 +254,7 @@ void FbTalker::doOAuth()
     // Find out whether this signalBusy is used here appropriately.
     emit signalBusy(true);
 
-    KUrl url("https://www.facebook.com/dialog/oauth");
+    QUrl url("https://www.facebook.com/dialog/oauth");
     url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "https://www.facebook.com/connect/login_success.html");
     // TODO (Dirk): Check which of these permissions can be optional.
@@ -289,7 +289,7 @@ void FbTalker::doOAuth()
         QString errorReason;
         QString errorCode;
 
-        url                        = KUrl( textbox->text() );
+        url                        = QUrl( textbox->text() );
         QString fragment           = url.fragment();
         qCDebug(KIPIPLUGINS_LOG) << "Split out the fragment from the URL: " << fragment;
         QStringList params         = fragment.split('&');
@@ -358,7 +358,7 @@ void FbTalker::getLoggedInUser()
     args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"users.getLoggedInUser"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"users.getLoggedInUser"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -399,7 +399,7 @@ void FbTalker::getUserInfo(const QString& userIDs)
     args["fields"]       = "name,profile_url";
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"users.getInfo"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"users.getInfo"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -442,7 +442,7 @@ void FbTalker::getUploadPermission()
     args["ext_perm"]     = "photo_upload";
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"users.hasAppPermission"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"users.hasAppPermission"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -464,7 +464,7 @@ void FbTalker::changePerm()
 
     emit signalBusy(true);
 
-    KUrl url("https://graph.facebook.com/oauth/authorize");
+    QUrl url("https://graph.facebook.com/oauth/authorize");
     url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "http://www.facebook.com/apps/application.php?id=107648075065");
     url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
@@ -496,7 +496,7 @@ void FbTalker::logout()
     args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"auth.expireSession"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"auth.expireSession"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -527,7 +527,7 @@ void FbTalker::listFriends()
     args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"friends.get"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"friends.get"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -563,7 +563,7 @@ void FbTalker::listAlbums(long long userID)
         args["uid"]      = QString::number(m_user.id);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.getAlbums"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.getAlbums"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -600,7 +600,7 @@ void FbTalker::listPhotos(long long userID, const QString &albumID)
         args["subj_id"]  = QString::number(m_user.id);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.get"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.get"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -660,7 +660,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
     }
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.createAlbum"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.createAlbum"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -691,7 +691,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     QMap<QString, QString> args;
     args["access_token"] = m_accessToken;
-    args["name"]         = KUrl(imgPath).fileName();
+    args["name"]         = QUrl(imgPath).fileName();
 
     if (!albumID.isEmpty())
         args["aid"]      = albumID;
@@ -717,7 +717,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     qCDebug(KIPIPLUGINS_LOG) << "FORM: " << endl << form.formData();
 
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.upload"), form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.upload"), form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent",    m_userAgent);
     job->addMetaData("content-type", form.contentType());
 
@@ -945,7 +945,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
         return;
     }
 
-    KUrl url("https://www.facebook.com/login.php");
+    QUrl url("https://www.facebook.com/login.php");
     url.addQueryItem("api_key", m_apiKey);
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("auth_token", m_authToken);

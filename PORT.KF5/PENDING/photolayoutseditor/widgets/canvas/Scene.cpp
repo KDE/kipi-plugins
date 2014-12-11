@@ -696,14 +696,14 @@ void Scene::changeSelectedImage()
     if (!item)
         return;
 
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance());
+    QUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance());
     if (urls.count() != 1)
         return;
 
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImageUrl(urls.first());
     ilt->setMaximumProgress(1);
-    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), item, SLOT(imageLoaded(KUrl,QImage)));
+    connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), item, SLOT(imageLoaded(QUrl,QImage)));
     ilt->start();
 }
 
@@ -1083,7 +1083,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
     {
-        KUrl::List urls;
+        QUrl::List urls;
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
@@ -1091,20 +1091,20 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
         ilt->setImagesUrls(urls);
         ilt->setMaximumProgress(0.9);
-        connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+        connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
         ilt->start();
     }
     else if (mimeData->hasFormat("text/uri-list"))
     {
         QList<QUrl> urls = mimeData->urls();
-        KUrl::List list;
+        QUrl::List list;
         foreach(QUrl url, urls)
-            list << KUrl(url);
+            list << QUrl(url);
 
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
         ilt->setImagesUrls(list);
         ilt->setMaximumProgress(0.9);
-        connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+        connect(ilt, SIGNAL(imageLoaded(QUrl,QImage)), this, SLOT(imageLoaded(QUrl,QImage)));
         ilt->start();
     }
 
@@ -1596,7 +1596,7 @@ void Scene::updateSelection()
 }
 
 //#####################################################################################################
-void Scene::imageLoaded(const KUrl & url, const QImage & image)
+void Scene::imageLoaded(const QUrl & url, const QImage & image)
 {
     if (!image.isNull())
     {

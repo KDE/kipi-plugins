@@ -119,7 +119,7 @@ void BackendGeonamesRG::nextPhoto()
     if (d->jobs.isEmpty())
         return;
 
-    KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
+    QUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
     jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
     jobUrl.addQueryItem("lng", d->jobs.first().request.first().coordinates.lonString());
     jobUrl.addQueryItem("lang", d->jobs.first().language);

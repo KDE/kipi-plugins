@@ -288,7 +288,7 @@ void BatchDialog::slotStartStop()
     }
 }
 
-void BatchDialog::addItems(const KUrl::List& itemList)
+void BatchDialog::addItems(const QUrl::List& itemList)
 {
     d->listView->slotAddImages(itemList);
 }
@@ -302,9 +302,9 @@ void BatchDialog::slotAborted()
 
 void BatchDialog::slotIdentify()
 {
-    KUrl::List urlList = d->listView->imageUrls(true);
+    QUrl::List urlList = d->listView->imageUrls(true);
 
-    for (KUrl::List::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QUrl::List::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
 
@@ -411,7 +411,7 @@ void BatchDialog::busy(bool busy)
     d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
 }
 
-void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
+void BatchDialog::processed(const QUrl& url, const QString& tmpFile)
 {
     MyImageListViewItem* const item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
 
@@ -435,7 +435,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     {
         if (KPMetadata::hasSidecar(tmpFile))
         {
-            if (!KPMetadata::moveSidecar(KUrl(tmpFile), KUrl(destFile)))
+            if (!KPMetadata::moveSidecar(QUrl(tmpFile), QUrl(destFile)))
             {
                 item->setStatus(QString("Failed to move sidecar"));
             }
@@ -455,14 +455,14 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             // Assign Kipi host attributes from original RAW image.
 
             KPImageInfo info(url);
-            info.cloneData(KUrl(destFile));
+            info.cloneData(QUrl(destFile));
         }
     }
 
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 
-void BatchDialog::processingFailed(const KUrl& url, int result)
+void BatchDialog::processingFailed(const QUrl& url, int result)
 {
     d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);

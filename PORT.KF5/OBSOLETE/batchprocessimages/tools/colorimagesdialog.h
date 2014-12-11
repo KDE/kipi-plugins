@@ -38,7 +38,7 @@ class ColorImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    explicit ColorImagesDialog(const KUrl::List& images, QWidget* parent = 0);
+    explicit ColorImagesDialog(const QUrl::List& images, QWidget* parent = 0);
     ~ColorImagesDialog();
 
 private Q_SLOTS:

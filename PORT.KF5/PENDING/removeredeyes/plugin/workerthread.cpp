@@ -46,7 +46,7 @@ using namespace KIPIPlugins;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-Task::Task(const KUrl& urli, QObject* const parent, WorkerThread::Private* const d)
+Task::Task(const QUrl& urli, QObject* const parent, WorkerThread::Private* const d)
     : Job(parent), url(urli)
 {
     this->ld = d;
@@ -165,14 +165,14 @@ void WorkerThread::loadSettings(const CommonSettings& newSettings)
     //    d->settings.keywordName     = newSettings.keywordName;
 }
 
-void WorkerThread::setImagesList(const KUrl::List& list)
+void WorkerThread::setImagesList(const QUrl::List& list)
 {
     pd->urls                        = list;
     JobCollection* const collection = new JobCollection(this);
 
-    for (KUrl::List::const_iterator it = pd->urls.constBegin(); it != pd->urls.constEnd(); ++it)
+    for (QUrl::List::const_iterator it = pd->urls.constBegin(); it != pd->urls.constEnd(); ++it)
     {
-        Task* const t = new Task((KUrl&)(*it), this, pd);
+        Task* const t = new Task((QUrl&)(*it), this, pd);
 
         connect(t, SIGNAL(calculationFinished(WorkerThreadData*)),
                 this, SIGNAL(calculationFinished(WorkerThreadData*)));

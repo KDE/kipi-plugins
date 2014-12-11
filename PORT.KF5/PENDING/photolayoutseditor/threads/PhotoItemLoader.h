@@ -49,7 +49,7 @@ namespace KIPIPhotoLayoutsEditor
 
         protected slots:
 
-            void imageLoaded(const KUrl & url, const QImage & image);
+            void imageLoaded(const QUrl & url, const QImage & image);
 
     };
 }

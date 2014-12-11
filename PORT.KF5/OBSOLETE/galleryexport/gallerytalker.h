@@ -41,7 +41,7 @@ namespace KIO
     class Job;
 }
 
-class KUrl;
+class QUrl;
 template <class T> class QList;
 
 namespace KIPIGalleryExportPlugin
@@ -88,7 +88,7 @@ public:
 
     bool loggedIn() const;
 
-    void login(const KUrl& url, const QString& name, const QString& passwd);
+    void login(const QUrl& url, const QString& name, const QString& passwd);
     void listAlbums();
     void listPhotos(const QString& albumName);
 

@@ -156,7 +156,7 @@ void LastPage::copyFiles()
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-    KUrl panoUrl(d->mngr->preProcessedMap().begin().key());
+    QUrl panoUrl(d->mngr->preProcessedMap().begin().key());
     panoUrl.setFileName(panoFileName(d->fileTemplateKLineEdit->text()));
     d->mngr->thread()->copyFiles(d->mngr->panoPtoUrl(),
                                  d->mngr->panoUrl(),

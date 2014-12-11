@@ -53,7 +53,7 @@ class PicasawebReplaceDialog : public QDialog
 public:
 
     PicasawebReplaceDialog(QWidget* const parent, const QString& caption,
-                           Interface* const iface, const KUrl& src, const KUrl& dest);
+                           Interface* const iface, const QUrl& src, const QUrl& dest);
     ~PicasawebReplaceDialog();
 
 public Q_SLOTS:
@@ -68,7 +68,7 @@ private Q_SLOTS:
 
     void slotResult(KJob *job);
     void slotData(KIO::Job *job, const QByteArray& data);
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    void slotThumbnail(const QUrl& url, const QPixmap& pix);
     void slotProgressTimerDone();
 
 private:

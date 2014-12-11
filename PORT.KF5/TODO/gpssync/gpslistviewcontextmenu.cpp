@@ -206,7 +206,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
             GPSDataContainer position;
-            KUrl             itemUrl;
+            QUrl             itemUrl;
             getCurrentItemPositionAndUrl(&position, &itemUrl);
             const QString itemFileName = itemUrl.fileName();
             d->bookmarkOwner->setPositionAndTitle(position.getCoordinates(), itemFileName);
@@ -256,7 +256,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
 
 }
 
-bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl)
+bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, QUrl* const itemUrl)
 {
     // NOTE: currentIndex does not seem to work any more since we use KLinkItemSelectionModel
     KipiImageModel* const imageModel          = d->imagesList->getModel();
@@ -298,7 +298,7 @@ bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* cons
 void GPSListViewContextMenu::copyActionTriggered()
 {
     GPSDataContainer gpsInfo;
-    KUrl itemUrl;
+    QUrl itemUrl;
 
     if (!getCurrentItemPositionAndUrl(&gpsInfo, &itemUrl))
     {

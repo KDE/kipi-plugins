@@ -94,7 +94,7 @@ enum ProcessState
     STOP_PROCESS
 };
 
-BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, const QString& caption, QWidget* const parent)
+BatchProcessImagesDialog::BatchProcessImagesDialog(const QUrl::List& urlList, const QString& caption, QWidget* const parent)
     : KPToolDialog(parent),
       m_listFile2Process_iterator(0),
       m_selectedImageFiles(urlList),
@@ -239,12 +239,12 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd()
 {
     QStringList ImageFilesList;
 
-    const KUrl::List urls = KPImageDialog::getImageUrls(this);
+    const QUrl::List urls = KPImageDialog::getImageUrls(this);
 
     if (urls.isEmpty())
         return;
 
-    for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
         ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
 
     slotAddDropItems(ImageFilesList);
@@ -276,7 +276,7 @@ void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
 
     QString IdemIndexed = "file:" + pitem->pathSrc();
 
-    KUrl url(IdemIndexed);
+    QUrl url(IdemIndexed);
 
     if ( !url.isValid() )
         return;
@@ -324,7 +324,7 @@ void BatchProcessImagesDialog::slotAddDropItems(const QStringList& filesPath)
 
         bool findItem = false;
 
-        for (KUrl::List::Iterator it2 = m_selectedImageFiles.begin();
+        for (QUrl::List::Iterator it2 = m_selectedImageFiles.begin();
                 it2 != m_selectedImageFiles.end(); ++it2)
         {
             QString currentFile = (*it2).path(); // PENDING(blackie) Handle URL's
@@ -420,7 +420,7 @@ bool BatchProcessImagesDialog::startProcess()
         }
     }
 
-    KUrl desturl(targetAlbum + '/' + item->nameDest());
+    QUrl desturl(targetAlbum + '/' + item->nameDest());
 
     if (KIO::NetAccess::exists(desturl, KIO::NetAccess::DestinationSide,
                                QApplication::activeWindow()) == true)
@@ -616,13 +616,13 @@ void BatchProcessImagesDialog::slotFinished()
             item->changeError(i18n("no processing error"));
             processDone();
 
-            KUrl src;
+            QUrl src;
             src.setPath(item->pathSrc());
-            KUrl dest = m_ui->m_destinationUrl->url();
+            QUrl dest = m_ui->m_destinationUrl->url();
             dest.addPath(item->nameDest());
             QString errmsg;
 
-            KUrl::List urlList;
+            QUrl::List urlList;
             urlList.append(src);
             urlList.append(dest);
             iface()->refreshImages(urlList);
@@ -663,7 +663,7 @@ void BatchProcessImagesDialog::slotFinished()
 
             if (m_ui->m_removeOriginal->isChecked() && src != dest)
             {
-                KUrl deleteImage(item->pathSrc());
+                QUrl deleteImage(item->pathSrc());
 
                 if (KIO::NetAccess::del(deleteImage, QApplication::activeWindow()) == false)
                 {
@@ -797,7 +797,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
         previewDialog->exec();
         delete previewDialog;
 
-        KUrl deletePreviewImage(m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG");
+        QUrl deletePreviewImage(m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG");
 
         KIO::NetAccess::del(deletePreviewImage, QApplication::activeWindow());
     }
@@ -848,7 +848,7 @@ void BatchProcessImagesDialog::listImageFiles()
     if (m_selectedImageFiles.isEmpty())
         return;
 
-    for (KUrl::List::Iterator it = m_selectedImageFiles.begin();
+    for (QUrl::List::Iterator it = m_selectedImageFiles.begin();
             it != m_selectedImageFiles.end(); ++it)
     {
         QString currentFile = (*it).path(); // PENDING(blackie) Handle URLS
@@ -944,7 +944,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 
     if (removeFlag == true)
     { // Try to delete de destination !
-        KUrl deleteImage = m_ui->m_destinationUrl->url();
+        QUrl deleteImage = m_ui->m_destinationUrl->url();
         deleteImage.addPath(item->nameDest());
 
         if (KIO::NetAccess::exists(deleteImage, KIO::NetAccess::DestinationSide, QApplication::activeWindow())
@@ -976,7 +976,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo* fi)
 {
     QString Temp;
     int Enumerator = 0;
-    KUrl NewDestUrl;
+    QUrl NewDestUrl;
 
     do
     {
@@ -1042,7 +1042,7 @@ bool BatchProcessImagesDialog::smallPreview() const
     return m_ui->m_smallPreview->isChecked();
 }
 
-KUrl BatchProcessImagesDialog::destinationUrl() const
+QUrl BatchProcessImagesDialog::destinationUrl() const
 {
     return m_ui->m_destinationUrl->url();
 }

@@ -81,7 +81,7 @@ UploadWidget* KioImportWidget::uploadWidget() const
     return m_uploadWidget;
 }
 
-KUrl::List KioImportWidget::sourceUrls() const
+QUrl::List KioImportWidget::sourceUrls() const
 {
     return m_imageList->imageUrls();
 }

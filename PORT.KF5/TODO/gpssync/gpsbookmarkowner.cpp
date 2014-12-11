@@ -181,7 +181,7 @@ public:
     KBookmarkManager*   bookmarkManager;
     KipiImageModel*     kipiImageModel;
     QPixmap             pixmap;
-    KUrl                bookmarkIconUrl;
+    QUrl                bookmarkIconUrl;
     bool                visible;
 };
 
@@ -258,7 +258,7 @@ bool GPSBookmarkModelHelper::itemCoordinates(const QModelIndex& index, KGeoMap::
     return itemCoordinates.hasCoordinates();
 }
 
-bool GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const
+bool GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, QUrl* const url) const
 {
     Q_UNUSED(index)
 

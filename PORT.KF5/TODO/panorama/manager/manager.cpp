@@ -97,27 +97,27 @@ struct Manager::ManagerPriv
             delete panoPtoData;
     }
 
-    KUrl::List                     inputUrls;
+    QUrl::List                     inputUrls;
 
-    KUrl                           basePtoUrl;
+    QUrl                           basePtoUrl;
     PTOType*                       basePtoData;
-    KUrl                           cpFindPtoUrl;
+    QUrl                           cpFindPtoUrl;
     PTOType*                       cpFindPtoData;
-    KUrl                           cpCleanPtoUrl;
+    QUrl                           cpCleanPtoUrl;
     PTOType*                       cpCleanPtoData;
-    KUrl                           autoOptimisePtoUrl;
+    QUrl                           autoOptimisePtoUrl;
     PTOType*                       autoOptimisePtoData;
-    KUrl                           viewAndCropOptimisePtoUrl;
+    QUrl                           viewAndCropOptimisePtoUrl;
     PTOType*                       viewAndCropOptimisePtoData;
-    KUrl                           previewPtoUrl;
+    QUrl                           previewPtoUrl;
     PTOType*                       previewPtoData;
-    KUrl                           panoPtoUrl;
+    QUrl                           panoPtoUrl;
     PTOType*                       panoPtoData;
 
-    KUrl                           previewMkUrl;
-    KUrl                           previewUrl;
-    KUrl                           mkUrl;
-    KUrl                           panoUrl;
+    QUrl                           previewMkUrl;
+    QUrl                           previewUrl;
+    QUrl                           mkUrl;
+    QUrl                           panoUrl;
 
     bool                           gPano;
 //     bool                           hdr;
@@ -254,7 +254,7 @@ Pto2MkBinary& Manager::pto2MkBinary() const
     return d->pto2MkBinary;
 }
 
-KUrl& Manager::basePtoUrl() const
+QUrl& Manager::basePtoUrl() const
 {
     return d->basePtoUrl;
 }
@@ -286,10 +286,10 @@ void Manager::resetBasePto()
     {
         pto.remove();
     }
-    d->basePtoUrl = KUrl();
+    d->basePtoUrl = QUrl();
 }
 
-KUrl& Manager::cpFindPtoUrl() const
+QUrl& Manager::cpFindPtoUrl() const
 {
     return d->cpFindPtoUrl;
 }
@@ -321,10 +321,10 @@ void Manager::resetCpFindPto()
     {
         pto.remove();
     }
-    d->cpFindPtoUrl = KUrl();
+    d->cpFindPtoUrl = QUrl();
 }
 
-KUrl& Manager::cpCleanPtoUrl() const
+QUrl& Manager::cpCleanPtoUrl() const
 {
     return d->cpCleanPtoUrl;
 }
@@ -356,10 +356,10 @@ void Manager::resetCpCleanPto()
     {
         pto.remove();
     }
-    d->cpCleanPtoUrl = KUrl();
+    d->cpCleanPtoUrl = QUrl();
 }
 
-KUrl& Manager::autoOptimisePtoUrl() const
+QUrl& Manager::autoOptimisePtoUrl() const
 {
     return d->autoOptimisePtoUrl;
 }
@@ -390,10 +390,10 @@ void Manager::resetAutoOptimisePto()
     {
         pto.remove();
     }
-    d->autoOptimisePtoUrl = KUrl();
+    d->autoOptimisePtoUrl = QUrl();
 }
 
-KUrl& Manager::viewAndCropOptimisePtoUrl() const
+QUrl& Manager::viewAndCropOptimisePtoUrl() const
 {
     return d->viewAndCropOptimisePtoUrl;
 }
@@ -425,10 +425,10 @@ void Manager::resetViewAndCropOptimisePto()
     {
         pto.remove();
     }
-    d->viewAndCropOptimisePtoUrl = KUrl();
+    d->viewAndCropOptimisePtoUrl = QUrl();
 }
 
-KUrl& Manager::previewPtoUrl() const
+QUrl& Manager::previewPtoUrl() const
 {
     return d->previewPtoUrl;
 }
@@ -459,10 +459,10 @@ void Manager::resetPreviewPto()
     {
         pto.remove();
     }
-    d->previewPtoUrl = KUrl();
+    d->previewPtoUrl = QUrl();
 }
 
-KUrl& Manager::panoPtoUrl() const
+QUrl& Manager::panoPtoUrl() const
 {
     return d->panoPtoUrl;
 }
@@ -493,10 +493,10 @@ void Manager::resetPanoPto()
     {
         pto.remove();
     }
-    d->panoPtoUrl = KUrl();
+    d->panoPtoUrl = QUrl();
 }
 
-KUrl& Manager::previewMkUrl() const
+QUrl& Manager::previewMkUrl() const
 {
     return d->previewMkUrl;
 }
@@ -508,10 +508,10 @@ void Manager::resetPreviewMkUrl()
     {
         pto.remove();
     }
-    d->previewMkUrl = KUrl();
+    d->previewMkUrl = QUrl();
 }
 
-KUrl& Manager::previewUrl() const
+QUrl& Manager::previewUrl() const
 {
     return d->previewUrl;
 }
@@ -523,10 +523,10 @@ void Manager::resetPreviewUrl()
     {
         pto.remove();
     }
-    d->previewUrl = KUrl();
+    d->previewUrl = QUrl();
 }
 
-KUrl& Manager::mkUrl() const
+QUrl& Manager::mkUrl() const
 {
     return d->mkUrl;
 }
@@ -538,10 +538,10 @@ void Manager::resetMkUrl()
     {
         pto.remove();
     }
-    d->mkUrl = KUrl();
+    d->mkUrl = QUrl();
 }
 
-KUrl& Manager::panoUrl() const
+QUrl& Manager::panoUrl() const
 {
     return d->panoUrl;
 }
@@ -553,7 +553,7 @@ void Manager::resetPanoUrl()
     {
         pto.remove();
     }
-    d->panoUrl = KUrl();
+    d->panoUrl = QUrl();
 }
 
 void Manager::setIface(Interface* const iface)
@@ -566,12 +566,12 @@ Interface* Manager::iface() const
     return d->iface;
 }
 
-void Manager::setItemsList(const KUrl::List& urls)
+void Manager::setItemsList(const QUrl::List& urls)
 {
     d->inputUrls = urls;
 }
 
-KUrl::List& Manager::itemsList() const
+QUrl::List& Manager::itemsList() const
 {
     return d->inputUrls;
 }

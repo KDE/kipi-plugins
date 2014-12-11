@@ -60,8 +60,8 @@ public:
     MonthWidget(Interface* const interface, QWidget* const parent, int month);
     ~MonthWidget();
 
-    KUrl imagePath() const;
-    void setImage(const KUrl& url);
+    QUrl imagePath() const;
+    void setImage(const QUrl& url);
     int month();
 
 Q_SIGNALS:
@@ -77,7 +77,7 @@ protected:
 
 private Q_SLOTS:
 
-    void gotThumbnail(const KUrl& url, const QPixmap& pix);
+    void gotThumbnail(const QUrl& url, const QPixmap& pix);
     void monthSelected();
 
 private:
@@ -91,7 +91,7 @@ private:
     const QSize thumbSize;
     QPixmap     thumb_;
     int         month_;
-    KUrl        imagePath_;
+    QUrl        imagePath_;
     Interface*  interface_;
 };
 

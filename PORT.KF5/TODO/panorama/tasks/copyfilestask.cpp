@@ -40,15 +40,15 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CopyFilesTask::CopyFilesTask(QObject* parent, const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
+CopyFilesTask::CopyFilesTask(QObject* parent, const QUrl& workDir, const QUrl& panoUrl, const QUrl& finalPanoUrl,
+                             const QUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
     : Task(parent, COPY, workDir), panoUrl(panoUrl), finalPanoUrl(finalPanoUrl),
       ptoUrl(ptoUrl), urlList(&urls), savePTO(savePTO), addGPlusMetadata(addGPlusMetadata)
 {
 }
 
-CopyFilesTask::CopyFilesTask(const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
+CopyFilesTask::CopyFilesTask(const QUrl& workDir, const QUrl& panoUrl, const QUrl& finalPanoUrl,
+                             const QUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
     : Task(0, COPY, workDir), panoUrl(panoUrl), finalPanoUrl(finalPanoUrl),
       ptoUrl(ptoUrl), urlList(&urls), savePTO(savePTO), addGPlusMetadata(addGPlusMetadata)
 {
@@ -64,7 +64,7 @@ void CopyFilesTask::run()
     QFile     finalPanoFile(finalPanoUrl.toLocalFile());
 
     QFileInfo fi(finalPanoUrl.toLocalFile());
-    KUrl      finalPTOUrl(finalPanoUrl);
+    QUrl      finalPTOUrl(finalPanoUrl);
     finalPTOUrl.setFileName(fi.completeBaseName() + ".pto");
 
     QFile     ptoFile(ptoUrl.toLocalFile());
@@ -187,7 +187,7 @@ void CopyFilesTask::run()
         {
             if (KPMetadata::isRawFile(i.key()))
             {
-                KUrl finalImgUrl(finalPanoUrl);
+                QUrl finalImgUrl(finalPanoUrl);
                 finalImgUrl.setFileName(i->preprocessedUrl.fileName());
                 QFile imgFile(i->preprocessedUrl.toLocalFile());
         

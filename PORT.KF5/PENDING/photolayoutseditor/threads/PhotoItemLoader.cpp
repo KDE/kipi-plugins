@@ -116,7 +116,7 @@ void PhotoItemLoader::run()
     else if ( !(imageAttribute = PhotoItem::PhotoItemPrivate::locateFile( imageElement.attribute("xlink:href") )).isEmpty() )
     {
         ImageLoadingThread * loader = new ImageLoadingThread(this);
-        loader->setImageUrl(KUrl(imageAttribute));
+        loader->setImageUrl(QUrl(imageAttribute));
         loader->start();
         loader->wait();
     }
@@ -132,7 +132,7 @@ void PhotoItemLoader::run()
     this->exit(0);
 }
 
-void PhotoItemLoader::imageLoaded(const KUrl & /*url*/, const QImage & image)
+void PhotoItemLoader::imageLoaded(const QUrl & /*url*/, const QImage & image)
 {
     if (image.isNull())
         this->exit(1);

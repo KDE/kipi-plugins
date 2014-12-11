@@ -81,8 +81,8 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
     connect(m_exportWidget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(KUrl)),
-            this, SLOT(slotTargetUrlChanged(KUrl)));
+    connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(QUrl)),
+            this, SLOT(slotTargetUrlChanged(QUrl)));
 
     // -- About data and help button ----------------------------------------
 
@@ -137,7 +137,7 @@ void KioExportWindow::restoreSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
     m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QStringList()));
-    m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, KUrl()));
+    m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, QUrl()));
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
     restoreDialogSize(group2);
@@ -161,7 +161,7 @@ void KioExportWindow::slotImageListChanged()
     updateUploadButton();
 }
 
-void KioExportWindow::slotTargetUrlChanged(const KUrl & target)
+void KioExportWindow::slotTargetUrlChanged(const QUrl & target)
 {
     Q_UNUSED(target);
     updateUploadButton();
@@ -177,8 +177,8 @@ void KioExportWindow::updateUploadButton()
              << m_exportWidget->targetUrl().isValid();
 }
 
-void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
-                                      const KUrl& to, time_t mtime, bool directory, bool renamed)
+void KioExportWindow::slotCopyingDone(KIO::Job *job, const QUrl& from,
+                                      const QUrl& to, time_t mtime, bool directory, bool renamed)
 {
     Q_UNUSED(job);
     Q_UNUSED(to);
@@ -216,8 +216,8 @@ void KioExportWindow::slotUpload()
     KIO::CopyJob* copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
                             m_exportWidget->targetUrl());
 
-    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,KUrl,KUrl,time_t,bool,bool)),
-            this, SLOT(slotCopyingDone(KIO::Job*,KUrl,KUrl,time_t,bool,bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));

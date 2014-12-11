@@ -64,8 +64,8 @@ public:
     KPushButton*    bAddAll;
     KPushButton*    bReplace;
     KPushButton*    bReplaceAll;
-    KUrl            src;
-    KUrl            dest;
+    QUrl            src;
+    QUrl            dest;
     Interface*      iface;
     QLabel*         lbSrc;
     QLabel*         lbDest;
@@ -77,7 +77,7 @@ public:
 };
 
 PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* const parent, const QString& _caption,
-                                               Interface* const _iface, const KUrl& _src, const KUrl& _dest)
+                                               Interface* const _iface, const QUrl& _src, const QUrl& _dest)
                       : QDialog(parent), d(new Private)
 {
     setObjectName("PicasawebReplaceDialog");
@@ -179,8 +179,8 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* const parent, const QStr
     // get source thumbnail
     if (d->iface && d->src.isValid())
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+                this, SLOT(slotThumbnail(QUrl,QPixmap)));
 
         d->iface->thumbnail(d->src, KIconLoader::SizeLarge);
     }
@@ -229,7 +229,7 @@ void PicasawebReplaceDialog::slotData(KIO::Job* /*job*/, const QByteArray& data)
     memcpy(d->buffer.data()+oldSize, data.data(), data.size());
 }
 
-void PicasawebReplaceDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void PicasawebReplaceDialog::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     if (url == d->src)
     {

@@ -38,7 +38,7 @@ class BorderImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    explicit BorderImagesDialog(const KUrl::List& urlList, QWidget* parent = 0);
+    explicit BorderImagesDialog(const QUrl::List& urlList, QWidget* parent = 0);
     ~BorderImagesDialog();
 
 private Q_SLOTS:

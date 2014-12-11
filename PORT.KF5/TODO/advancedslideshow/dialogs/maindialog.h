@@ -75,7 +75,7 @@ private Q_SLOTS:
     void slotPrintCommentsToggled();
     void slotSelection();
     void slotUseMillisecondsToggled();
-    void slotThumbnail(const KUrl&, const QPixmap&);
+    void slotThumbnail(const QUrl&, const QPixmap&);
     void slotImageListChanged();
 
     void slotPortfolioDurationChanged(int);
@@ -87,7 +87,7 @@ private:
     void loadEffectNames();
     void loadEffectNamesGL();
     void showNumberImages();
-    void addItems(const KUrl::List& fileList);
+    void addItems(const QUrl::List& fileList);
 
 private:
 

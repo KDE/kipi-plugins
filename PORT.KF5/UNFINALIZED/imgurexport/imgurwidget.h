@@ -57,24 +57,24 @@ public:
 
 Q_SIGNALS:
 
-    void signalAddItems(const KUrl::List& list);
-    void signalRemoveItems(const KUrl::List& list);
+    void signalAddItems(const QUrl::List& list);
+    void signalRemoveItems(const QUrl::List& list);
     void signalImageListChanged();
 
     void signalEnableAuthentication(bool yes);
     void signalClickedChangeUser();
-    void signalImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess& success);
-    void signalImageUploadError(const KUrl& imgPath, const ImgurError& error);
+    void signalImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess& success);
+    void signalImageUploadError(const QUrl& imgPath, const ImgurError& error);
 //    void signalLoggedUserChanged(QString loggedUser);
 //    void signalCredentialsChanged(QString loggedUser, QString passwd);
 
 public Q_SLOTS:
 
-    void slotAddItems(const KUrl::List& list);
-    void slotRemoveItems(const KUrl::List& list);
-    void slotImageUploadStart(const KUrl& imgPath);
-    void slotImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess& success);
-    void slotImageUploadError(const KUrl& imgPath, const ImgurError& error);
+    void slotAddItems(const QUrl::List& list);
+    void slotRemoveItems(const QUrl::List& list);
+    void slotImageUploadStart(const QUrl& imgPath);
+    void slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess& success);
+    void slotImageUploadError(const QUrl& imgPath, const ImgurError& error);
     void slotImageListChanged();
 
 

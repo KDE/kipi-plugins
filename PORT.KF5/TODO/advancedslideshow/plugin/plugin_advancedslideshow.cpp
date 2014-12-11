@@ -102,7 +102,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
         return;
     }
 
-    m_urlList = KUrl::List();
+    m_urlList = QUrl::List();
 
     connect(m_interface, SIGNAL(currentAlbumChanged(bool)),
             this, SLOT(slotAlbumChanged(bool)));
@@ -210,7 +210,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     FileList                     fileList;
     QStringList                  commentsList;
 
-    for (KUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
+    for (QUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
     {
         fileList.append(FileAnglePair((*urlIt).toLocalFile(), 0));
         commentsList.append(QString());

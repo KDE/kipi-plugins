@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
     KApplication app;
     aboutData->setProgramLogo(QIcon::fromTheme("kipi-panorama"));
 
-    KUrl::List urlList;
+    QUrl::List urlList;
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
     for(int i = 0; i < args->count(); ++i)

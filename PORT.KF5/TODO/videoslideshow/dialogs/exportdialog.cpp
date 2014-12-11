@@ -221,7 +221,7 @@ void ExportDialog::slotClose()
     done(Close);
 }
 
-void ExportDialog::addItems(const KUrl::List& itemList)
+void ExportDialog::addItems(const QUrl::List& itemList)
 {
     d->listView->slotAddImages(itemList);
 }
@@ -276,7 +276,7 @@ void ExportDialog::processAll(MyImageListViewItem* const item)
     VIDEO_TYPE videotype       = d->settingsBox->getVideoType();
     QString savePath           = d->settingsBox->getSaveFile();
 
-    if(!KUrl(path).isValid())
+    if(!QUrl(path).isValid())
     {
         path = QDir::tempPath();
         d->settingsBox->setTempDirPath(path);

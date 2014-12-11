@@ -40,11 +40,11 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreateFinalPtoTask::CreateFinalPtoTask(QObject* parent, const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop)
+CreateFinalPtoTask::CreateFinalPtoTask(QObject* parent, const QUrl& workDir, const PTOType& ptoData, QUrl& finalPtoUrl, const QRect& crop)
     : Task(parent, CREATEFINALPTO, workDir), ptoData(ptoData), finalPtoUrl(&finalPtoUrl), crop(crop)
 {}
 
-CreateFinalPtoTask::CreateFinalPtoTask(const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop)
+CreateFinalPtoTask::CreateFinalPtoTask(const QUrl& workDir, const PTOType& ptoData, QUrl& finalPtoUrl, const QRect& crop)
     : Task(0, CREATEFINALPTO, workDir), ptoData(ptoData), finalPtoUrl(&finalPtoUrl), crop(crop)
 {}
 

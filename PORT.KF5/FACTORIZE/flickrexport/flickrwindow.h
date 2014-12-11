@@ -49,7 +49,7 @@ class QCheckBox;
 
 class KLineEdit;
 class KHTMLPart;
-class KUrl;
+class QUrl;
 class QComboBox;
 
 namespace KIPI
@@ -110,7 +110,7 @@ private Q_SLOTS:
     //  void slotAlbums( const QValueList<GAlbum>& albumList );
     //  void slotPhotos( const QValueList<GPhoto>& photoList );
     //  void slotTagSelected();
-    //  void slotOpenPhoto( const KUrl& url );
+    //  void slotOpenPhoto( const QUrl& url );
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
@@ -129,7 +129,7 @@ private Q_SLOTS:
 
 private:
 
-    QString guessSensibleSetName(const KUrl::List& urlList);
+    QString guessSensibleSetName(const QUrl::List& urlList);
 
     void closeEvent(QCloseEvent*);
     void readSettings();
@@ -175,7 +175,7 @@ private:
 
     QProgressDialog*                       m_authProgressDlg;
 
-    QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
+    QList< QPair<QUrl, FPhotoInfo> >       m_uploadQueue;
 
 //  KWallet::Wallet*                       m_wallet;
     KHTMLPart*                             m_photoView;

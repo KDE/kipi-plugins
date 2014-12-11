@@ -96,8 +96,8 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
     connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->list, SIGNAL(signalAddItems(KUrl::List)),
-            this, SLOT(slotAddItems(KUrl::List)));
+    connect(d->list, SIGNAL(signalAddItems(QUrl::List)),
+            this, SLOT(slotAddItems(QUrl::List)));
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -115,7 +115,7 @@ void ItemsPage::slotSetupList()
     slotAddItems(d->mngr->itemsList());
 }
 
-void ItemsPage::slotAddItems(const KUrl::List& urls)
+void ItemsPage::slotAddItems(const QUrl::List& urls)
 {
     if (!urls.empty())
     {
@@ -127,12 +127,12 @@ void ItemsPage::slotAddItems(const KUrl::List& urls)
     slotImageListChanged();
 }
 
-KUrl::List ItemsPage::itemUrls() const
+QUrl::List ItemsPage::itemUrls() const
 {
     return d->list->imageUrls();
 }
 
-void ItemsPage::setIdentity(const KUrl& url, const QString& identity)
+void ItemsPage::setIdentity(const QUrl& url, const QString& identity)
 {
     KPImagesListViewItem* item = d->list->listView()->findItem(url);
     if (item)

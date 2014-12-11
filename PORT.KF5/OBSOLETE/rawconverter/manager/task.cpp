@@ -64,7 +64,7 @@ public:
 
     bool                               cancel;
 
-    KUrl                               url;
+    QUrl                               url;
     Action                             action;
 
     RawDecodingIface                   dcrawIface;
@@ -76,7 +76,7 @@ public:
     RawDecodingSettings                rawDecodingSettings;
 };
 
-Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action)
+Task::Task(QObject* const parent, const QUrl& fileUrl, const Action& action)
     : Job(parent), d(new Private)
 {
     d->url    = fileUrl;

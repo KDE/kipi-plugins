@@ -68,7 +68,7 @@ void CalPainter::cancel()
     cancelled_ = true;
 }
 
-void CalPainter::setImage(const KUrl& imagePath, KPMetadata::ImageOrientation orientation)
+void CalPainter::setImage(const QUrl& imagePath, KPMetadata::ImageOrientation orientation)
 {
     imagePath_   = imagePath;
     orientation_ = orientation;

@@ -133,7 +133,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += name.toAscii();
     str += "\"; ";
     str += "filename=\"";
-    str += QFile::encodeName(KUrl(path).fileName());
+    str += QFile::encodeName(QUrl(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: ";
     str += file_size.toAscii();

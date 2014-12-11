@@ -82,7 +82,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void slotRequestRestURLRedirection(KIO::Job* job, const KUrl& newUrl);
+    void slotRequestRestURLRedirection(KIO::Job* job, const QUrl& newUrl);
     void data(KIO::Job* job, const QByteArray& data);
     void slotResult(KJob* job);
 

@@ -49,11 +49,11 @@ QTEST_KDEMAIN_CORE(TestGPXParsing)
 /**
  * @brief Return the path of the directory containing the test data
  */
-KUrl GetTestDataDirectory()
+QUrl GetTestDataDirectory()
 {
     // any better ideas on how to get the path?
-    const KUrl thisCPPFile(__FILE__);
-    KUrl testDataDir = thisCPPFile.upUrl();
+    const QUrl thisCPPFile(__FILE__);
+    QUrl testDataDir = thisCPPFile.upUrl();
     testDataDir.addPath("data/");
     return testDataDir;
 }
@@ -70,10 +70,10 @@ void TestGPXParsing::testNoOp()
  */
 void TestGPXParsing::testCorrelator1()
 {
-    const KUrl testDataDir = GetTestDataDirectory();
+    const QUrl testDataDir = GetTestDataDirectory();
 
-    KUrl::List fileList;
-    fileList << KUrl(testDataDir, "gpxfile-1.gpx");
+    QUrl::List fileList;
+    fileList << QUrl(testDataDir, "gpxfile-1.gpx");
 
     KGeoMap::TrackManager myParser;
 
@@ -132,10 +132,10 @@ void TestGPXParsing::testCorrelator1()
  */
 void TestGPXParsing::testInterpolation()
 {
-    const KUrl testDataDir = GetTestDataDirectory();
+    const QUrl testDataDir = GetTestDataDirectory();
 
-    KUrl::List fileList;
-    fileList << KUrl(testDataDir, "gpxfile-1.gpx");
+    QUrl::List fileList;
+    fileList << QUrl(testDataDir, "gpxfile-1.gpx");
 
     KGeoMap::TrackManager myParser;
 

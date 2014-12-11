@@ -89,11 +89,11 @@ public:
 
     void setYear(int year);
     int  year() const;
-    void setImage(int month, const KUrl& url);
-    KUrl image(int month) const;
+    void setImage(int month, const QUrl& url);
+    QUrl image(int month) const;
     void clearSpecial();
     void addSpecial(const QDate& date, const Day& info);
-    void loadSpecial(const KUrl& url, const QColor& color);
+    void loadSpecial(const QUrl& url, const QColor& color);
     bool isSpecial(int month, int day) const;
 
     QColor getDayColor(int month, int day) const;
@@ -138,7 +138,7 @@ private:
 
     static QPointer<CalSettings> s_instance;
 
-    QMap<int, KUrl>              m_monthMap;
+    QMap<int, QUrl>              m_monthMap;
     QMap<QDate, Day>             m_special;
 };
 

@@ -41,7 +41,7 @@ namespace KIPICalendarPlugin
 {
 
 CalPrinter::CalPrinter(QPrinter* const printer,
-                       QMap<int, KUrl>& months,
+                       QMap<int, QUrl>& months,
                        Interface* const interface,
                        QObject* const parent)
     : QThread(parent)

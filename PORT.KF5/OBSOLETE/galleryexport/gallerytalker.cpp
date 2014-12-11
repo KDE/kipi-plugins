@@ -75,7 +75,7 @@ public:
     QWidget*          widget;
     State             state;
     QString           cookie;
-    KUrl              galleryUrl;
+    QUrl              galleryUrl;
     KIO::TransferJob* job;
     bool              loggedIn;
     QByteArray        talker_buffer;
@@ -107,7 +107,7 @@ bool GalleryTalker::loggedIn() const
     return d->loggedIn;
 }
 
-void GalleryTalker::login(const KUrl& url, const QString& name, const QString& passwd)
+void GalleryTalker::login(const QUrl& url, const QString& name, const QString& passwd)
 {
     d->job        = 0;
     d->galleryUrl = url;
@@ -262,7 +262,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
-        path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
+        path = KStandardDirs::locateLocal("tmp", QUrl(photoPath).fileName());
         image.save(path);
         qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path ;
 

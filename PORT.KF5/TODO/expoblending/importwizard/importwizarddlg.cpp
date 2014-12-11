@@ -116,7 +116,7 @@ Manager* ImportWizardDlg::manager() const
     return d->mngr;
 }
 
-KUrl::List ImportWizardDlg::itemUrls() const
+QUrl::List ImportWizardDlg::itemUrls() const
 {
     return d->itemsPage->itemUrls();
 }

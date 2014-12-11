@@ -44,14 +44,14 @@ CanvasSavingThread::CanvasSavingThread(QObject* parent) :
 {
 }
 
-void CanvasSavingThread::save(Canvas* canvas, const KUrl & url)
+void CanvasSavingThread::save(Canvas* canvas, const QUrl & url)
 {
     m_canvas = canvas;
     m_url    = url;
     this->start();
 }
 
-void CanvasSavingThread::saveAsTemplate(Canvas * canvas, const KUrl& url)
+void CanvasSavingThread::saveAsTemplate(Canvas * canvas, const QUrl& url)
 {
     m_canvas = canvas;
     m_url    = url;

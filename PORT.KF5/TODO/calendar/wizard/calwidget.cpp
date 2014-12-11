@@ -56,7 +56,7 @@ void CalWidget::paintEvent(QPaintEvent* e)
     int month = _current;
     CalPainter painter(this);
 
-    KUrl imgUrl = CalSettings::instance()->image(month);
+    QUrl imgUrl = CalSettings::instance()->image(month);
     KPImageInfo info(imgUrl);
     KPMetadata::ImageOrientation orientation = info.orientation();
     painter.setImage(imgUrl, orientation);

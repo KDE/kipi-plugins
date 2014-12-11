@@ -72,21 +72,21 @@ public:
     ImgurTalker(Interface* const iface, QWidget* const parent = 0);
     ~ImgurTalker();
 
-    KUrl        currentUrl() const;
-    void        setCurrentUrl(const KUrl& u);
+    QUrl        currentUrl() const;
+    void        setCurrentUrl(const QUrl& u);
     void        cancel();
     bool        imageRemove(const QString& hash);
-    KUrl::List* imageQueue() const;
-    void        imageUpload(const KUrl& filePath);
+    QUrl::List* imageQueue() const;
+    void        imageUpload(const QUrl& filePath);
     void        parseResponse(const QByteArray& result);
 
 Q_SIGNALS:
     void signalUploadProgress(int);
     void signalBusy(bool busy);
-    void signalUploadStart(const KUrl& currentFile);
-    void signalUploadDone(const KUrl& currentFile);
-    void signalError(const KUrl& currentFile, const ImgurError& err);
-    void signalSuccess(const KUrl& currentFile, const ImgurSuccess& success);
+    void signalUploadStart(const QUrl& currentFile);
+    void signalUploadDone(const QUrl& currentFile);
+    void signalError(const QUrl& currentFile, const ImgurError& err);
+    void signalSuccess(const QUrl& currentFile, const ImgurSuccess& success);
     void signalQueueChanged();
 
 private:
@@ -98,15 +98,15 @@ protected Q_SLOTS:
 
     void slotResult(KJob* job);
     void slotData(KIO::Job* job, const QByteArray& data);
-    void slotAddItems(const KUrl::List& list);
-    void slotRemoveItems(const KUrl::List& list);
-    void slotUploadDone(const KUrl& currentFile);
+    void slotAddItems(const QUrl::List& list);
+    void slotRemoveItems(const QUrl::List& list);
+    void slotUploadDone(const QUrl& currentFile);
     void slotContinueUpload(bool yes);
 
 protected:
 
-    KUrl::List* m_queue;
-    KUrl        m_currentUrl;
+    QUrl::List* m_queue;
+    QUrl        m_currentUrl;
     State       m_state;
 
 private:

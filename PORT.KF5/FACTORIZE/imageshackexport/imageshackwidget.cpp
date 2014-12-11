@@ -267,7 +267,7 @@ ImageshackWidget::~ImageshackWidget()
 
 void ImageshackWidget::removeVideosFromList()
 {
-    KUrl::List urls = m_imgList->imageUrls();
+    QUrl::List urls = m_imgList->imageUrls();
 
     for (int i = 0; i < urls.size(); ++i)
     {

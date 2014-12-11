@@ -72,7 +72,7 @@ CalTemplate::CalTemplate(KIPI::Interface* const interface, QWidget* const parent
     const KCalendarSystem* const cal = KLocale::global()->calendar();
     int currentYear                  = cal->year(QDate::currentDate());
 
-    KUrl::List urlList;
+    QUrl::List urlList;
     KIPI::ImageCollection images = interface->currentSelection();
 
     if (images.isValid() && !images.images().isEmpty())

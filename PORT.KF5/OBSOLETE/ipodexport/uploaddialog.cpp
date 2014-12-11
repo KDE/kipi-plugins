@@ -293,9 +293,9 @@ void UploadDialog::loadImagesFromCurrentSelection()
 
     if( images.isValid() )
     {
-        KUrl::List selected = images.images();
+        QUrl::List selected = images.images();
 
-        for( KUrl::List::Iterator it = selected.begin(); it != selected.end(); ++it )
+        for( QUrl::List::Iterator it = selected.begin(); it != selected.end(); ++it )
         {
             addUrlToList( (*it).path() );
         }
@@ -507,7 +507,7 @@ void UploadDialog::imageSelected(QTreeWidgetItem* item)
 
     QString IdemIndexed = "file:" + pitem->pathSrc();
 
-    KUrl url( IdemIndexed );
+    QUrl url( IdemIndexed );
 
     if ( !url.isValid() )
         return;
@@ -550,7 +550,7 @@ void UploadDialog::gotImagePreview(const KFileItem* url, const QPixmap& pixmap)
 void UploadDialog::imagesFilesButtonAdd()
 {
     QStringList fileList;
-    KUrl::List  urls;
+    QUrl::List  urls;
 
 #if KIPI_PLUGIN
     urls = KPImageDialog::getImageUrls(this);
@@ -567,7 +567,7 @@ void UploadDialog::imagesFilesButtonAdd()
 
     if ( urls.isEmpty() ) return;
 
-    for( KUrl::List::ConstIterator it = urls.constBegin() ; it != urls.constEnd() ; ++it )
+    for( QUrl::List::ConstIterator it = urls.constBegin() ; it != urls.constEnd() ; ++it )
         fileList << (*it).path();
 
     addDropItems( fileList );

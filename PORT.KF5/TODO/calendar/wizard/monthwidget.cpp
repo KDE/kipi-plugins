@@ -76,8 +76,8 @@ MonthWidget::MonthWidget(Interface* const interface, QWidget* const parent, int 
                                KIconLoader::SizeMedium,
                                KIconLoader::DisabledState)));
 
-    connect(interface_, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-            this, SLOT(gotThumbnail(KUrl,QPixmap)));
+    connect(interface_, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+            this, SLOT(gotThumbnail(QUrl,QPixmap)));
 
     connect(this, SIGNAL(pressed()), 
             this, SLOT(monthSelected()));
@@ -87,7 +87,7 @@ MonthWidget::~MonthWidget()
 {
 }
 
-KUrl MonthWidget::imagePath() const
+QUrl MonthWidget::imagePath() const
 {
     return imagePath_;
 }
@@ -136,7 +136,7 @@ void MonthWidget::setThumb(const QPixmap& pic)
     update();
 }
 
-void MonthWidget::setImage(const KUrl& url)
+void MonthWidget::setImage(const QUrl& url)
 {
     if (!url.isValid())
     {
@@ -164,14 +164,14 @@ void MonthWidget::setImage(const KUrl& url)
 
 void MonthWidget::dropEvent(QDropEvent* event)
 {
-    KUrl::List srcURLs = KUrl::List::fromMimeData(event->mimeData());
+    QUrl::List srcURLs = QUrl::List::fromMimeData(event->mimeData());
 
     if (srcURLs.isEmpty())
     {
         return;
     }
 
-    KUrl url = srcURLs.first();
+    QUrl url = srcURLs.first();
     setImage(url);
 }
 
@@ -180,7 +180,7 @@ void MonthWidget::monthSelected()
   emit monthSelected(month_);
 }
 
-void MonthWidget::gotThumbnail(const KUrl& url, const QPixmap& pix)
+void MonthWidget::gotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     if (url != imagePath_)
     {

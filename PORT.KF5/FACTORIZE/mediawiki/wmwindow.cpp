@@ -282,7 +282,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    KUrl::List urls = d->widget->imagesList()->imageUrls(false);
+    QUrl::List urls = d->widget->imagesList()->imageUrls(false);
     QMap <QString, QMap <QString, QString> > imagesDesc = d->widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)

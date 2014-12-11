@@ -126,7 +126,7 @@ void ImgurTalkerAuth::cancel()
     emit signalBusy(false);
 }
 
-void ImgurTalkerAuth::imageUpload (const KUrl& filePath)
+void ImgurTalkerAuth::imageUpload (const QUrl& filePath)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Authenticated" << (d->OAuthService->isAuthorized() ? "Yes" : "No");
     setCurrentUrl(filePath);
@@ -150,7 +150,7 @@ void ImgurTalkerAuth::imageUpload (const KUrl& filePath)
     QByteArray imageData   = imageFile.readAll();
 
     d->OAuthRequest->setEnableDebugOutput (false);
-    d->OAuthRequest->initRequest(KQOAuthRequest::AuthorizedRequest, KUrl(ImgurConnection::APIuploadURL()));
+    d->OAuthRequest->initRequest(KQOAuthRequest::AuthorizedRequest, QUrl(ImgurConnection::APIuploadURL()));
     d->OAuthRequest->setConsumerKey(d->consumerKey.data() );
     d->OAuthRequest->setConsumerSecretKey(d->consumerSecret.data() );
     d->OAuthRequest->setToken( d->oauthToken.data() );
@@ -178,7 +178,7 @@ void ImgurTalkerAuth::slotOAuthLogin()
 {
     m_state = IE_LOGIN;
 
-    d->OAuthRequest->initRequest(KQOAuthRequest::TemporaryCredentials, KUrl(ImgurConnection::OAuthTokenEndPoint()));
+    d->OAuthRequest->initRequest(KQOAuthRequest::TemporaryCredentials, QUrl(ImgurConnection::OAuthTokenEndPoint()));
     d->OAuthRequest->setConsumerKey(d->consumerKey.data());
     d->OAuthRequest->setConsumerSecretKey(d->consumerSecret.data());
 
@@ -209,7 +209,7 @@ void ImgurTalkerAuth::slotTemporaryTokenReceived(const QString& token, const QSt
     if( d->OAuthService->lastError() == KQOAuthManager::NoError)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Asking for user's permission to access protected resources. Opening URL: " << ImgurConnection::OAuthAuthorizationEndPoint();
-        d->OAuthService->getUserAuthorization(KUrl(ImgurConnection::OAuthAuthorizationEndPoint()));
+        d->OAuthService->getUserAuthorization(QUrl(ImgurConnection::OAuthAuthorizationEndPoint()));
     }
 
     if (d->OAuthService->lastError() != KQOAuthManager::NoError)
@@ -226,7 +226,7 @@ void ImgurTalkerAuth::slotAuthorizationReceived(const QString& token, const QStr
 
     if (d->OAuthService->lastError() == KQOAuthManager::NoError)
     {
-        d->OAuthService->getUserAccessTokens(KUrl(ImgurConnection::OAuthAccessEndPoint()));
+        d->OAuthService->getUserAccessTokens(QUrl(ImgurConnection::OAuthAccessEndPoint()));
     }
 
     if( d->OAuthService->lastError() != KQOAuthManager::NoError)

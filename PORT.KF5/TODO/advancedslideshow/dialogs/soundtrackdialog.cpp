@@ -55,7 +55,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview(QWidget* const parent, KUrl::List& urls, SharedContainer* const sharedData)
+SoundtrackPreview::SoundtrackPreview(QWidget* const parent, QUrl::List& urls, SharedContainer* const sharedData)
     : KDialog(parent)
 {
     setModal(true);
@@ -80,8 +80,8 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
     m_sharedData = sharedData;
     m_totalTime  = QTime(0, 0, 0);
     m_imageTime  = QTime(0, 0, 0);
-    m_tracksTime = new QMap<KUrl, QTime>();
-    m_soundItems = new QMap<KUrl, SoundItem*>();
+    m_tracksTime = new QMap<QUrl, QTime>();
+    m_soundItems = new QMap<QUrl, SoundItem*>();
     m_timeMutex  = new QMutex();
 
     m_soundtrackTimeLabel->setText(m_totalTime.toString());
@@ -121,8 +121,8 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
     connect( m_SoundFilesListBox, SIGNAL(currentRowChanged(int)),
              this, SLOT(slotSoundFilesSelected(int)) );
 
-    connect( m_SoundFilesListBox, SIGNAL(signalAddedDropItems(KUrl::List)),
-             this, SLOT(slotAddDropItems(KUrl::List)));
+    connect( m_SoundFilesListBox, SIGNAL(signalAddedDropItems(QUrl::List)),
+             this, SLOT(slotAddDropItems(QUrl::List)));
 
     connect( m_SoundFilesButtonAdd, SIGNAL(clicked()),
              this, SLOT(slotSoundFilesButtonAdd()) );
@@ -183,17 +183,17 @@ void SoundtrackDialog::saveSettings()
     m_sharedData->soundtrackUrls             = m_urlList;
 }
 
-void SoundtrackDialog::addItems(const KUrl::List& fileList)
+void SoundtrackDialog::addItems(const QUrl::List& fileList)
 {
     if (fileList.isEmpty())
         return;
 
-    KUrl::List Files = fileList;
+    QUrl::List Files = fileList;
 
-    for (KUrl::List::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
     {
-        KUrl currentFile             = *it;
-        KUrl path                    = KUrl(currentFile.path().section('/', 0, -1));
+        QUrl currentFile             = *it;
+        QUrl path                    = QUrl(currentFile.path().section('/', 0, -1));
         m_sharedData->soundtrackPath = path;
         SoundItem* const item        = new SoundItem(m_SoundFilesListBox, path);
         item->setName(currentFile.path().section('/', -1));
@@ -201,8 +201,8 @@ void SoundtrackDialog::addItems(const KUrl::List& fileList)
 
         m_soundItems->insert(path, item);
 
-        connect(m_soundItems->value(path), SIGNAL(signalTotalTimeReady(KUrl,QTime)),
-                this, SLOT(slotAddNewTime(KUrl,QTime)));
+        connect(m_soundItems->value(path), SIGNAL(signalTotalTimeReady(QUrl,QTime)),
+                this, SLOT(slotAddNewTime(QUrl,QTime)));
 
         m_urlList.append(path);
     }
@@ -223,7 +223,7 @@ void SoundtrackDialog::updateTracksNumber()
     {
         displayTime.addMSecs(1000 * (number - 1));
 
-        for (QMap<KUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); ++it)
+        for (QMap<QUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); ++it)
         {
             int hours = it.value().hour()   + displayTime.hour();
             int mins  = it.value().minute() + displayTime.minute();
@@ -251,7 +251,7 @@ void SoundtrackDialog::updateTracksNumber()
 
 void SoundtrackDialog::updateFileList()
 {
-    KUrl::List files = m_SoundFilesListBox->fileUrls();
+    QUrl::List files = m_SoundFilesListBox->fileUrls();
     m_urlList        = files;
 
     m_SoundFilesButtonUp->setEnabled(!files.isEmpty());
@@ -304,7 +304,7 @@ void SoundtrackDialog::compareTimes()
     m_statusBarLabel->setFont(statusBarFont);
 }
 
-void SoundtrackDialog::slotAddNewTime(const KUrl& url, const QTime& trackTime)
+void SoundtrackDialog::slotAddNewTime(const QUrl& url, const QTime& trackTime)
 {
     m_timeMutex->lock();
     m_tracksTime->insert(url, trackTime);
@@ -322,7 +322,7 @@ void SoundtrackDialog::slotSoundFilesSelected( int row )
     }
 }
 
-void SoundtrackDialog::slotAddDropItems(const KUrl::List& filesUrl)
+void SoundtrackDialog::slotAddDropItems(const QUrl::List& filesUrl)
 {
     if (!filesUrl.isEmpty())
     {
@@ -342,7 +342,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd()
     dlg->setWindowTitle(i18n("Select sound files"));
     dlg->exec();
 
-    KUrl::List urls = dlg->selectedUrls();
+    QUrl::List urls = dlg->selectedUrls();
 
     if (!urls.isEmpty())
     {
@@ -463,7 +463,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
         if (file.open(QIODevice::ReadOnly|QIODevice::Text))
         {
             QTextStream in(&file);
-            KUrl::List playlistFiles;
+            QUrl::List playlistFiles;
 
             while (!in.atEnd())
             {
@@ -473,7 +473,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
                 if (line.startsWith('#') || line.isEmpty())
                     continue;
 
-                KUrl fUrl(line);
+                QUrl fUrl(line);
 
                 if (fUrl.isValid())
                 {
@@ -519,11 +519,11 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
         if (file.open(QIODevice::WriteOnly|QIODevice::Text))
         {
             QTextStream out(&file);
-            KUrl::List playlistFiles = m_SoundFilesListBox->fileUrls();
+            QUrl::List playlistFiles = m_SoundFilesListBox->fileUrls();
 
             for (int i = 0; i < playlistFiles.count(); ++i)
             {
-                KUrl fUrl(playlistFiles.at(i));
+                QUrl fUrl(playlistFiles.at(i));
 
                 if (fUrl.isValid())
                 {
@@ -548,7 +548,7 @@ void SoundtrackDialog::slotSoundFilesButtonReset()
 
 void SoundtrackDialog::slotPreviewButtonClicked()
 {
-    KUrl::List urlList;
+    QUrl::List urlList;
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {

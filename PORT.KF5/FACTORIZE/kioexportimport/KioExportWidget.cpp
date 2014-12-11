@@ -52,7 +52,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
 
     KHBox* const hbox   = new KHBox(this);
     QLabel* const label = new QLabel(hbox);
-    m_targetLabel       = new KUrlComboRequester(hbox);
+    m_targetLabel       = new QUrlComboRequester(hbox);
     m_targetDialog      = 0;
 
     if(m_targetLabel->button())
@@ -102,14 +102,14 @@ KioExportWidget::~KioExportWidget()
 {
 }
 
-KUrl KioExportWidget::targetUrl() const
+QUrl KioExportWidget::targetUrl() const
 {
     return m_targetUrl;
 }
 
-KUrl::List KioExportWidget::history() const
+QUrl::List KioExportWidget::history() const
 {
-    KUrl::List urls;
+    QUrl::List urls;
 
     for (int i=0; i <= m_targetLabel->comboBox()->count(); i++)
         urls << m_targetLabel->comboBox()->itemText(i);
@@ -117,15 +117,15 @@ KUrl::List KioExportWidget::history() const
     return urls;
 }
 
-void KioExportWidget::setHistory(const KUrl::List& urls)
+void KioExportWidget::setHistory(const QUrl::List& urls)
 {
     m_targetLabel->comboBox()->clear();
 
-    foreach (KUrl url, urls)
+    foreach (QUrl url, urls)
         m_targetLabel->comboBox()->addUrl(url);
 }
 
-void KioExportWidget::setTargetUrl(const KUrl& url)
+void KioExportWidget::setTargetUrl(const QUrl& url)
 {
     m_targetUrl = url;
     updateTargetLabel();
@@ -135,7 +135,7 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
 
-    m_targetDialog = new KFileDialog(KUrl(), "*", this);
+    m_targetDialog = new KFileDialog(QUrl(), "*", this);
     m_targetDialog->setMode(KFile::Directory);
     m_targetDialog->setWindowTitle(i18n("Select target..."));
     m_targetDialog->setOperationMode(KFileDialog::Other);

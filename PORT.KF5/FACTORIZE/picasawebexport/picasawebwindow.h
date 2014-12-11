@@ -40,7 +40,7 @@
 #include "kptooldialog.h"
 #include "kpaboutdata.h"
 
-class KUrl;
+class QUrl;
 
 using namespace KIPIPlugins;
 
@@ -122,7 +122,7 @@ private:
 
     int                                       m_renamingOpt;
 
-    QLinkedList< QPair<KUrl,PicasaWebPhoto> > m_transferQueue;
+    QLinkedList< QPair<QUrl,PicasaWebPhoto> > m_transferQueue;
 
     PicasawebTalker*                          m_talker;
     PicasawebWidget*                          m_widget;

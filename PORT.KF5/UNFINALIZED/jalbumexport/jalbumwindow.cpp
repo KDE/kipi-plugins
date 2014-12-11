@@ -193,7 +193,7 @@ void JAlbumWindow::slotNewAlbum()
     QString destFile;
 
     // photoPath
-    const KUrl::List urls(iface()->currentSelection().images());
+    const QUrl::List urls(iface()->currentSelection().images());
 
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
@@ -231,7 +231,7 @@ void JAlbumWindow::slotNewAlbum()
         return;
     }
 
-    for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
         fprintf(file, "%s\t%s\n", (*it).fileName().toLocal8Bit().data(), (*it).path().toLocal8Bit().data() );
     }

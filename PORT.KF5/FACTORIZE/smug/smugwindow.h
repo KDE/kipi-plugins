@@ -41,7 +41,7 @@
 
 class QCloseEvent;
 
-class KUrl;
+class QUrl;
 class KProgressDialog;
 class KPasswordDialog;
 
@@ -129,7 +129,7 @@ private:
 
     KPasswordDialog* m_loginDlg;
 
-    KUrl::List       m_transferQueue;
+    QUrl::List       m_transferQueue;
 
     SmugTalker*      m_talker;
     SmugWidget*      m_widget;

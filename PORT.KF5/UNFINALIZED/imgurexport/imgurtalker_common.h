@@ -53,9 +53,9 @@ public:
     static QString OAuthAccessEndPoint()        {return QString ("https://api.imgur.com/oauth/access_token");}
     static QString OAuthAuthorizationEndPoint() {return QString ("https://api.imgur.com/oauth/authorize");}
 
-    static KUrl originalURL(QString imageHash)  { return KUrl ("http://i.imgur.com/" + imageHash + ".jpg"); } // this is wrong
-    static KUrl pageURL(QString imageHash)      { return KUrl ("http://imgur.com/" + imageHash);}
-    static KUrl deleteURL(QString deleteHash)   { return KUrl ("http://imgur.com/delete/" + deleteHash);}
+    static QUrl originalURL(QString imageHash)  { return QUrl ("http://i.imgur.com/" + imageHash + ".jpg"); } // this is wrong
+    static QUrl pageURL(QString imageHash)      { return QUrl ("http://imgur.com/" + imageHash);}
+    static QUrl deleteURL(QString deleteHash)   { return QUrl ("http://imgur.com/delete/" + deleteHash);}
 };
 
 /*
@@ -100,7 +100,7 @@ struct ImgurUploadData
 {
     QString title;
     QString caption;
-    KUrl    fileUrl;
+    QUrl    fileUrl;
 };
 
 // -----------------------------------------------------------------------------
@@ -126,11 +126,11 @@ struct ImgurSuccess
 
     struct ImgurLinks
     {
-        KUrl original;
-        KUrl imgur_page;
-        KUrl delete_page;
-        KUrl small_square;
-        KUrl large_thumbnail;
+        QUrl original;
+        QUrl imgur_page;
+        QUrl delete_page;
+        QUrl small_square;
+        QUrl large_thumbnail;
     } links;
 };
 

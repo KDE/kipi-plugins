@@ -86,7 +86,7 @@ public:
     KPushButton*                         startButton;
     KPushButton*                         stopButton;
     QStringList                          directories;
-    QMap<QString, KUrl::List>            collectionMap;
+    QMap<QString, QUrl::List>            collectionMap;
     WelcomePage::ImplementationGetOption implementation;
 };
 
@@ -160,7 +160,7 @@ void FinalPage::turnOn()
     d->stopButton->setEnabled(true);
 }
 
-void FinalPage::setCollectionMap(const QMap<QString, KUrl::List>& collectionMap)
+void FinalPage::setCollectionMap(const QMap<QString, QUrl::List>& collectionMap)
 {
     d->collectionMap = collectionMap;
 }
@@ -170,7 +170,7 @@ FinalPage::~FinalPage()
     delete d;
 }
 
-void FinalPage::setImages(const KUrl::List& imageList)
+void FinalPage::setImages(const QUrl::List& imageList)
 {
     d->imgList->slotAddImages(imageList);
 }

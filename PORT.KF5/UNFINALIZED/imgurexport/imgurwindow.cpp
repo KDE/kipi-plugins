@@ -111,31 +111,31 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     connect(d->webService, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(d->webService, SIGNAL(signalUploadStart(KUrl)),
-            d->widget, SLOT(slotImageUploadStart(KUrl)));
+    connect(d->webService, SIGNAL(signalUploadStart(QUrl)),
+            d->widget, SLOT(slotImageUploadStart(QUrl)));
 
-    connect(d->webService, SIGNAL(signalError(KUrl,ImgurError)),
-            d->widget, SLOT(slotImageUploadError(KUrl,ImgurError)));
+    connect(d->webService, SIGNAL(signalError(QUrl,ImgurError)),
+            d->widget, SLOT(slotImageUploadError(QUrl,ImgurError)));
 
-    connect(d->webService, SIGNAL(signalSuccess(KUrl,ImgurSuccess)),
-            d->widget, SLOT(slotImageUploadSuccess(KUrl,ImgurSuccess)));
+    connect(d->webService, SIGNAL(signalSuccess(QUrl,ImgurSuccess)),
+            d->widget, SLOT(slotImageUploadSuccess(QUrl,ImgurSuccess)));
 
     // this signal/slot controls if the webservice should continue upload or not
-    connect(d->webService, SIGNAL(signalError(KUrl,ImgurError)),
-            this, SLOT(slotAddPhotoError(KUrl,ImgurError)));
+    connect(d->webService, SIGNAL(signalError(QUrl,ImgurError)),
+            this, SLOT(slotAddPhotoError(QUrl,ImgurError)));
 
-    connect(d->webService, SIGNAL(signalSuccess(KUrl,ImgurSuccess)),
-            this, SLOT(slotAddPhotoSuccess(KUrl,ImgurSuccess)));
+    connect(d->webService, SIGNAL(signalSuccess(QUrl,ImgurSuccess)),
+            this, SLOT(slotAddPhotoSuccess(QUrl,ImgurSuccess)));
 
     connect(this, SIGNAL(signalContinueUpload(bool)),
             d->webService, SLOT(slotContinueUpload(bool)));
 
     // adding/removing items from the image list
-    connect(d->widget, SIGNAL(signalAddItems(KUrl::List)),
-            d->webService, SLOT(slotAddItems(KUrl::List)));
+    connect(d->widget, SIGNAL(signalAddItems(QUrl::List)),
+            d->webService, SLOT(slotAddItems(QUrl::List)));
 
-    connect(d->widget, SIGNAL(signalRemoveItems(KUrl::List)),
-            d->webService, SLOT(slotRemoveItems(KUrl::List)));
+    connect(d->widget, SIGNAL(signalRemoveItems(QUrl::List)),
+            d->webService, SLOT(slotRemoveItems(QUrl::List)));
 
    // ---------------------------------------------------------------
 #ifdef OAUTH_ENABLED
@@ -198,7 +198,7 @@ void ImgurWindow::slotImageQueueChanged()
     enableButton(User1, !d->webService->imageQueue()->isEmpty());
 }
 
-void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, const ImgurError& error)
+void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurError& error)
 {
     if (!d->webService->imageQueue()->isEmpty())
     {
@@ -223,7 +223,7 @@ void ImgurWindow::slotAddPhotoError(const KUrl& /*currentImage*/, const ImgurErr
     return;
 }
 
-void ImgurWindow::slotAddPhotoSuccess(const KUrl& /*currentImage*/, const ImgurSuccess& /*success*/)
+void ImgurWindow::slotAddPhotoSuccess(const QUrl& /*currentImage*/, const ImgurSuccess& /*success*/)
 {
    emit signalContinueUpload(true);
 }

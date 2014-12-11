@@ -38,10 +38,10 @@ class DebianScreenshotsJob : public KJob
 
 public:
 
-    DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* const parent=0);
+    DebianScreenshotsJob(const QString& packageName, const QUrl::List& url, QObject* const parent=0);
 
     virtual void start();
-    virtual QList< KUrl > urls() const;
+    virtual QList< QUrl > urls() const;
     virtual KIcon icon() const;
 
 private slots:
@@ -54,7 +54,7 @@ private:
 
 private:
 
-    KUrl::List m_urls;
+    QUrl::List m_urls;
     QString    m_packageName;
 };
 

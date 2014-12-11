@@ -39,11 +39,11 @@ namespace KIPIPhotoLayoutsEditor
             Q_OBJECT
 
             Canvas* canvas;
-            KUrl    url;
+            QUrl    url;
 
         public:
 
-            SavingThread(Canvas* canvas, const KUrl& url, QObject* parent = 0);
+            SavingThread(Canvas* canvas, const QUrl& url, QObject* parent = 0);
 
         protected:
 

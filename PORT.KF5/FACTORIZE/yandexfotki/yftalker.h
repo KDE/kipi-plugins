@@ -240,7 +240,7 @@ protected:
     QString              m_apiTagsUrl;
 
     // constants
-    static const QString SESSION_URL; // use QString insted of KUrl, we need .arg
+    static const QString SESSION_URL; // use QString insted of QUrl, we need .arg
     static const QString TOKEN_URL;
     static const QString SERVICE_URL;
     static const QString AUTH_REALM;

@@ -66,7 +66,7 @@ public:
 
     QImage  image;
 
-    KUrl    fileUrl;
+    QUrl    fileUrl;
 
     Action  action;
 };

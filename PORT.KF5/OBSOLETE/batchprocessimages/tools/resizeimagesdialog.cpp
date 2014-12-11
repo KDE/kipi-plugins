@@ -142,7 +142,7 @@ const QString ResizeImagesDialog::ResizeImagesDialogPriv::RC_GROUP_NAME = "Resiz
 
 typedef QList<ResizeTool>::iterator ResizeToolIterator;
 
-ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, QWidget* parent)
+ResizeImagesDialog::ResizeImagesDialog(const QUrl::List& urlList, QWidget* parent)
     : BatchProcessImagesDialog(urlList, i18n("Batch Resize Images"), parent),
     d(new ResizeImagesDialogPriv(this))
 {

@@ -61,15 +61,15 @@ public:
     ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void rotate(const KUrl::List& urlList, RotateAction val);
-    void flip(const KUrl::List& urlList, FlipAction val);
-    void convert2grayscale(const KUrl::List& urlList);
+    void rotate(const QUrl::List& urlList, RotateAction val);
+    void flip(const QUrl::List& urlList, FlipAction val);
+    void convert2grayscale(const QUrl::List& urlList);
 
 Q_SIGNALS:
 
-    void starting(const KUrl& url, int action);
-    void finished(const KUrl& url, int action);
-    void failed(const KUrl& url, int action, const QString& errString);
+    void starting(const QUrl& url, int action);
+    void finished(const QUrl& url, int action);
+    void failed(const QUrl& url, int action, const QString& errString);
 
 private Q_SLOTS:
 

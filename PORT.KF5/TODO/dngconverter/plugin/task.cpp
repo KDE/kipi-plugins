@@ -82,7 +82,7 @@ public:
 
     int        previewMode;
 
-    KUrl       url;
+    QUrl       url;
     Action     action;
 
     DNGWriter  dngProcessor;
@@ -91,7 +91,7 @@ public:
 };
 
 
-Task::Task(QObject* const parent, const KUrl& fileUrl, const Action& action)
+Task::Task(QObject* const parent, const QUrl& fileUrl, const Action& action)
     : Job(parent), d(new Private)
 {
     d->url    = fileUrl;

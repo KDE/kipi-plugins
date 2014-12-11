@@ -79,7 +79,7 @@ private Q_SLOTS:
     void slotAlbums(const QList<GAlbum>& albumList);
     void slotPhotos(const QList<GPhoto>& photoList);
     void slotAlbumSelected();
-//    void slotOpenPhoto(const KUrl& url);      // DISABLED for NOW!
+//    void slotOpenPhoto(const QUrl& url);      // DISABLED for NOW!
     void slotNewAlbum();
     void slotAddPhoto();
     void slotAddPhotoNext();

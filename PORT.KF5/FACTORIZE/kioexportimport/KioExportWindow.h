@@ -89,12 +89,12 @@ private Q_SLOTS:
     /**
      * Processes changes in the target url.
      */
-    void slotTargetUrlChanged(const KUrl & target);
+    void slotTargetUrlChanged(const QUrl & target);
 
     /**
      * Removes the copied image from the image list.
      */
-    void slotCopyingDone(KIO::Job* job, const KUrl& from, const KUrl& to,
+    void slotCopyingDone(KIO::Job* job, const QUrl& from, const QUrl& to,
                          time_t mtime, bool directory, bool renamed);
 
     /**

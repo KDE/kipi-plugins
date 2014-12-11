@@ -54,7 +54,7 @@ MyImageList::~MyImageList()
 {
 }
 
-void MyImageList::slotAddImages(const KUrl::List& list)
+void MyImageList::slotAddImages(const QUrl::List& list)
 {
     /* Replaces the KPImagesList::slotAddImages method, so that
      * MyImageListViewItems can be added instead of ImagesListViewItems */
@@ -63,9 +63,9 @@ void MyImageList::slotAddImages(const KUrl::List& list)
     // of them already exist.
     bool found = false;
 
-    for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+    for (QUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
-        KUrl imageUrl = *it;
+        QUrl imageUrl = *it;
         found         = false;
 
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
@@ -117,7 +117,7 @@ void MyImageList::slotRemoveItems()
 
 // ------------------------------------------------------------------------------------------------
 
-MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
+MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const QUrl& url)
     : KPImagesListViewItem(view, url)
 {
 }

@@ -120,7 +120,7 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
     return success;
 }
 
-KipiImageItem::KipiImageItem(Interface* const interface, const KUrl& url)
+KipiImageItem::KipiImageItem(Interface* const interface, const QUrl& url)
     : m_interface(interface),
       m_model(0),
       m_url(url),

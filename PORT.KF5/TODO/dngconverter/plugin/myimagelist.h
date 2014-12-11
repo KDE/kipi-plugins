@@ -53,7 +53,7 @@ public:
 
 public Q_SLOTS:
 
-    virtual void slotAddImages(const KUrl::List& list);
+    virtual void slotAddImages(const QUrl::List& list);
 
 protected Q_SLOTS:
 
@@ -67,7 +67,7 @@ class MyImageListViewItem : public KPImagesListViewItem
 
 public:
 
-    MyImageListViewItem(KPImagesListView* const view, const KUrl& url);
+    MyImageListViewItem(KPImagesListView* const view, const QUrl& url);
     virtual ~MyImageListViewItem();
 
     void setDestFileName(const QString& str);

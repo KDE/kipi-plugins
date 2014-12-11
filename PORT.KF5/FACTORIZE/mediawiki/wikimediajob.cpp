@@ -61,7 +61,7 @@ public:
         mediawiki = 0;
     }
 
-    KUrl::List                               urls;
+    QUrl::List                               urls;
     Interface*                               interface;
     MediaWiki*                               mediawiki;
     QString                                  error;

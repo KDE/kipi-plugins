@@ -30,7 +30,7 @@
 
 using namespace KIPIPhotoLayoutsEditor;
 
-SavingThread::SavingThread(Canvas * canvas, const KUrl & url, QObject * parent) :
+SavingThread::SavingThread(Canvas * canvas, const QUrl & url, QObject * parent) :
     QThread(parent),
     canvas(canvas),
     url(url)

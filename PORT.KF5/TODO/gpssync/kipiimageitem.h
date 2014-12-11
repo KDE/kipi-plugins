@@ -130,7 +130,7 @@ public:
 
     static const int ColumnGPSImageItemCount = 13;
 
-    KipiImageItem(Interface* const interface, const KUrl& url);
+    KipiImageItem(Interface* const interface, const QUrl& url);
     virtual ~KipiImageItem();
 
     /// @name Loading and saving
@@ -141,7 +141,7 @@ public:
     inline bool isDirty() const       { return m_dirty; }
     //@}
 
-    inline KUrl url() const           { return m_url; };
+    inline QUrl url() const           { return m_url; };
 
     inline QDateTime dateTime() const { return m_dateTime; };
 
@@ -202,7 +202,7 @@ protected:
     Interface*             m_interface;
     KipiImageModel*        m_model;
 
-    KUrl                   m_url;
+    QUrl                   m_url;
     QDateTime              m_dateTime;
 
     bool                   m_dirty;

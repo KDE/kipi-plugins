@@ -111,7 +111,7 @@ public:
     int                     marginHint;
     int                     spacingHint;
 
-    KUrl                    gpxFileOpenLastDirectory;
+    QUrl                    gpxFileOpenLastDirectory;
     QPushButton*            gpxLoadFilesButton;
     QTreeView*              gpxFileList;
     QLabel*                 maxTimeLabel;
@@ -359,7 +359,7 @@ GPSCorrelatorWidget::~GPSCorrelatorWidget()
 
 void GPSCorrelatorWidget::slotLoadTrackFiles()
 {
-    const KUrl::List gpxFiles = KFileDialog::getOpenUrls(d->gpxFileOpenLastDirectory,
+    const QUrl::List gpxFiles = KFileDialog::getOpenUrls(d->gpxFileOpenLastDirectory,
                                                         i18n("%1|GPS Exchange Format", QString("*.gpx")), this,
                                                         i18n("Select GPX File to Load") );
 
@@ -377,11 +377,11 @@ void GPSCorrelatorWidget::slotAllTrackFilesReady()
 {
     // are there any invalid files?
     QStringList invalidFiles;
-    const QList<QPair<KUrl, QString> > loadErrorFiles = d->trackManager->readLoadErrors();
+    const QList<QPair<QUrl, QString> > loadErrorFiles = d->trackManager->readLoadErrors();
 
     for (int i=0; i<loadErrorFiles.count(); ++i)
     {
-        const QPair<KUrl, QString> currentError = loadErrorFiles.at(i);
+        const QPair<QUrl, QString> currentError = loadErrorFiles.at(i);
         const QString fileErrorString = QString("%1: %2").arg(currentError.first.toLocalFile()).arg(currentError.second);
 
         invalidFiles << fileErrorString;

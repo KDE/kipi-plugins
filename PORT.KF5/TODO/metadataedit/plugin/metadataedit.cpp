@@ -78,8 +78,8 @@ public:
 
     bool                 isReadOnly;
 
-    KUrl::List           urls;
-    KUrl::List::iterator currItem;
+    QUrl::List           urls;
+    QUrl::List::iterator currItem;
 
     KTabWidget*          tabWidget;
 
@@ -88,7 +88,7 @@ public:
     XMPEditWidget*       tabXmp;
 };
 
-MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const KUrl::List& urls)
+MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const QUrl::List& urls)
     : KPToolDialog(parent), d(new Private)
 {
     d->urls     = urls;
@@ -176,7 +176,7 @@ MetadataEditDialog::~MetadataEditDialog()
     delete d;
 }
 
-KUrl::List::iterator MetadataEditDialog::currentItem() const
+QUrl::List::iterator MetadataEditDialog::currentItem() const
 {
     return d->currItem;
 }

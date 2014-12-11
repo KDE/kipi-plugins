@@ -49,7 +49,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* const parent, const KUrl& url, const Action& action);
+    Task(QObject* const parent, const QUrl& url, const Action& action);
     ~Task();
 
     void setBackupOriginalRawFile(bool b);

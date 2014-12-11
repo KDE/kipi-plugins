@@ -68,7 +68,7 @@ public:
     int                  delayMsLineStep;
 
     bool                 ImagesHasComments;
-    KUrl::List           urlList;
+    QUrl::List           urlList;
 
     MainDialog*          mainPage;
     CaptionDialog*       captionPage;
@@ -107,8 +107,8 @@ public:
     bool                 soundtrackLoop;
     bool                 soundtrackRememberPlaylist;
     bool                 soundtrackPlayListNeedsUpdate;
-    KUrl                 soundtrackPath;
-    KUrl::List           soundtrackUrls;
+    QUrl                 soundtrackPath;
+    QUrl::List           soundtrackUrls;
 
     // --> Advanced page
     bool                 useMilliseconds;

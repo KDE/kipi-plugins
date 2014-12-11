@@ -33,7 +33,7 @@
 
 class QCloseEvent;
 
-class KUrl;
+class QUrl;
 
 namespace KIPI
 {
@@ -107,7 +107,7 @@ private:
     QString      m_tmpDir;
     QString      m_tmpPath;
 
-    KUrl::List   m_transferQueue;
+    QUrl::List   m_transferQueue;
 
     DsTalker*    m_talker;
     DsWidget*    m_widget;

@@ -31,7 +31,7 @@
 namespace KIPIFacebookPlugin
 {
 
-FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* const parent)
+FacebookJob::FacebookJob(const QString& albumName, const QUrl::List& url, QObject* const parent)
     : KJob(parent), m_urls(url), m_talk(0), m_albumName(albumName)
 {
     setObjectName("FacebookJob");
@@ -144,7 +144,7 @@ void FacebookJob::addPhoto(int code, const QString& message)
     if(code == 0 && !m_urls.isEmpty())
     {
         int count = percent()+(100-percent())/m_urls.size();
-        KUrl url  = m_urls.takeLast();
+        QUrl url  = m_urls.takeLast();
         bool c    = m_talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
 
@@ -167,7 +167,7 @@ KIcon FacebookJob::icon() const
     return QIcon::fromTheme("kipi-facebook");
 }
 
-KUrl::List FacebookJob::urls() const
+QUrl::List FacebookJob::urls() const
 {
     return m_urls;
 }

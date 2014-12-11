@@ -181,7 +181,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Received a request to transfer file(s) to contact " << contactId;
 
-    KUrl::List imgList   = interface()->currentSelection().images();
+    QUrl::List imgList   = interface()->currentSelection().images();
 
     // Check if Kopete is still running
     if ( contactId.isEmpty() || !kopeteRunning() )
@@ -199,7 +199,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
         return;
     }
 
-    foreach(const KUrl& imgUrl, imgList)
+    foreach(const QUrl& imgUrl, imgList)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Sending file " << imgUrl.toLocalFile();
         m_kopeteDBus.call("sendFile", QVariant::fromValue(contactId), QVariant::fromValue(imgUrl.toLocalFile()));

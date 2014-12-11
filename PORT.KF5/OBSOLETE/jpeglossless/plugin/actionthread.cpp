@@ -71,7 +71,7 @@ public:
 
     QString      errString;
 
-    KUrl         fileUrl;
+    QUrl         fileUrl;
 
     Action       action;
     RotateAction rotAction;
@@ -126,11 +126,11 @@ ActionThread::~ActionThread()
 {
 }
 
-void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
+void ActionThread::rotate(const QUrl::List& urlList, RotateAction val)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
     {
         Task* const t = new Task(this);
         t->fileUrl    = *it;
@@ -149,11 +149,11 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     appendJob(collection);
 }
 
-void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
+void ActionThread::flip(const QUrl::List& urlList, FlipAction val)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
     {
         Task* const t = new Task(this);
         t->fileUrl    = *it;
@@ -172,11 +172,11 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     appendJob(collection);
 }
 
-void ActionThread::convert2grayscale(const KUrl::List& urlList)
+void ActionThread::convert2grayscale(const QUrl::List& urlList)
 {
     JobCollection* const collection = new JobCollection();
 
-    for (KUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
+    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it )
     {
         ActionThread::Task* const t = new Task(this);
         t->fileUrl                  = *it;

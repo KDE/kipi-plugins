@@ -131,7 +131,7 @@ private:
     void parseResponseCreatePhotoSet(const QByteArray& data);
     void parseResponseAddPhotoToPhotoSet(const QByteArray& data);
 
-    QString getApiSig(const QString& secret, const KUrl& url);
+    QString getApiSig(const QString& secret, const QUrl& url);
 
 private Q_SLOTS:
 

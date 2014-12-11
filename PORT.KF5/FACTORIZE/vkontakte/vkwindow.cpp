@@ -415,7 +415,7 @@ void VkontakteWindow::slotStartTransfer()
 
         QStringList files;
 
-        foreach(const KUrl& url, m_imgList->imageUrls(true))
+        foreach(const QUrl& url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
         Vkontakte::UploadPhotosJob* const job = new Vkontakte::UploadPhotosJob(m_vkapi->accessToken(),

@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <KUrl>
+#include <QUrl>
 
 // Local includes
 
@@ -54,8 +54,8 @@ public:
     void setCaption(const QString& text);
     QString Caption();
 
-    void setFileUrl(const KUrl& filePath);
-    KUrl fileUrl();
+    void setFileUrl(const QUrl& filePath);
+    QUrl fileUrl();
 
 private:
 
