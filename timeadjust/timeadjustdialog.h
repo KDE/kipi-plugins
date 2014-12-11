@@ -28,9 +28,6 @@
 // Qt includes
 
 #include <QDateTime>
-
-// KDE includes
-
 #include <QUrl>
 
 // Local includes

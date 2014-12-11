@@ -44,16 +44,15 @@
 #include <QTimeEdit>
 #include <QToolButton>
 #include <QVBoxLayout>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <kvbox.h>
 #include <kwindowconfig.h>
 
 // Local includes
