@@ -24,20 +24,19 @@
 
 // Qt includes
 
+#include <QApplication>
+#include <QStyle>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPointer>
 #include <QDesktopServices>
 #include <QImageReader>
+#include <QFileDialog>
 
 // KDE includes
 
-#include <kimageio.h>
 #include <klocale.h>
 #include <klocalizedstring.h>
-#include <kdialog.h>
-#include <kstandarddirs.h>
-#include <kfiledialog.h>
 #include <kio/previewjob.h>
 
 // LibKDcraw includes
@@ -109,7 +108,7 @@ KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
     d->infoLabel->setAlignment(Qt::AlignCenter);
 
     vlay->setMargin(0);
-    vlay->setSpacing(KDialog::spacingHint());
+    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay->addWidget(d->imageLabel);
     vlay->addWidget(d->infoLabel);
     vlay->addStretch();
@@ -413,23 +412,27 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
     d->fileFormats = patternList.join("\n");
 
     QString alternatePath         = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
-    QPointer<KFileDialog> dlg     = new KFileDialog(QUrl(d->iface ? d->iface->currentAlbum().url().path()
-                                                                  : alternatePath),
-                                                    d->fileFormats, parent);
+    QPointer<QFileDialog> dlg     = new QFileDialog(parent, QString(),
+                                                    d->iface ? d->iface->currentAlbum().url().path()
+                                                             : alternatePath,
+                                                    d->fileFormats);
+/*
+    NOTE: KF5 do not provide a way to pass preview widget.
     KPImageDialogPreview* const preview = new KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);
-    dlg->setOperationMode(KFileDialog::Opening);
+*/
+    dlg->setAcceptMode(QFileDialog::AcceptOpen);
 
     if (singleSelect)
     {
-        dlg->setMode( KFile::File );
+        dlg->setFileMode( QFileDialog::ExistingFile );
         dlg->setWindowTitle(i18n("Select an Image"));
         dlg->exec();
-        d->url = dlg->selectedUrl();
+        d->url = dlg->selectedUrls().first();
     }
     else
     {
-        dlg->setMode( KFile::Files );
+        dlg->setFileMode( QFileDialog::ExistingFiles );
         dlg->setWindowTitle(i18n("Select Images"));
         dlg->exec();
         d->urls = dlg->selectedUrls();
