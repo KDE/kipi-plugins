@@ -42,17 +42,16 @@
 #include <QXmlStreamAttributes>
 #include <QStringRef>
 #include <QStandardPaths>
+#include <QFileDialog>
+#include <QIcon>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
-#include <kdialog.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <knuminput.h>
 #include <kio/previewjob.h>
 #include <kpixmapsequence.h>
-#include <kfiledialog.h>
-#include <kglobalsettings.h>
 
 // Libkipi includes
 
@@ -76,7 +75,7 @@ using namespace KIPIPlugins;
 namespace KIPIPlugins
 {
 
-const int DEFAULTSIZE = KIconLoader::SizeLarge;
+const int DEFAULTSIZE = 48;
 
 class KPImagesListViewItem::Private
 {
@@ -108,7 +107,7 @@ KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const Q
                             << " for list view " << view;
     d->view      = view;
     int iconSize = d->view->iconSize().width();
-    setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState), false);
+    setThumb(QIcon::fromTheme("image-x-generic").pixmap(iconSize, iconSize, QIcon::Disabled));
     setUrl(url);
     setRating(-1);
     setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
@@ -499,7 +498,7 @@ public:
         progressCount         = 0;
         progressTimer         = 0;
         loadRawThumb          = 0;
-        progressPix           = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix           = KPixmapSequence("process-working", 22);
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -522,7 +521,7 @@ public:
     CtrlButton*       loadButton;
     CtrlButton*       saveButton;
 
-    QList<QUrl>        processItems;
+    QList<QUrl>       processItems;
     KPixmapSequence   progressPix;
     int               progressCount;
     QTimer*           progressTimer;
@@ -547,13 +546,13 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    d->addButton      = new CtrlButton(SmallIcon("list-add"), this);
-    d->removeButton   = new CtrlButton(SmallIcon("list-remove"), this);
-    d->moveUpButton   = new CtrlButton(SmallIcon("arrow-up"), this);
-    d->moveDownButton = new CtrlButton(SmallIcon("arrow-down"), this);
-    d->clearButton    = new CtrlButton(SmallIcon("edit-clear-list"), this);
-    d->loadButton     = new CtrlButton(SmallIcon("document-open"), this);
-    d->saveButton     = new CtrlButton(SmallIcon("document-save"), this);
+    d->addButton      = new CtrlButton(QIcon::fromTheme("list-add").pixmap(16, 16),        this);
+    d->removeButton   = new CtrlButton(QIcon::fromTheme("list-remove").pixmap(16, 16),     this);
+    d->moveUpButton   = new CtrlButton(QIcon::fromTheme("arrow-up").pixmap(16, 16),        this);
+    d->moveDownButton = new CtrlButton(QIcon::fromTheme("arrow-down").pixmap(16, 16),      this);
+    d->clearButton    = new CtrlButton(QIcon::fromTheme("edit-clear-list").pixmap(16, 16), this);
+    d->loadButton     = new CtrlButton(QIcon::fromTheme("document-open").pixmap(16, 16),   this);
+    d->saveButton     = new CtrlButton(QIcon::fromTheme("document-save").pixmap(16, 16),   this);
 
     d->addButton->setToolTip(i18n("Add new images to the list"));
     d->removeButton->setToolTip(i18n("Remove selected images from the list"));
@@ -637,8 +636,8 @@ void KPImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
     mainLayout->addWidget(d->listView, 1, 1, 1, 1);
     mainLayout->setRowStretch(1, 10);
     mainLayout->setColumnStretch(1, 10);
-    mainLayout->setMargin(KDialog::spacingHint());
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 
@@ -732,13 +731,13 @@ void KPImagesList::setAllowRAW(bool allow)
 
 void KPImagesList::setIconSize(int size)
 {
-    if (size < KIconLoader::SizeSmall)
+    if (size < 16)
     {
-        d->iconSize = KIconLoader::SizeSmall;
+        d->iconSize = 16;
     }
-    else if (size > KIconLoader::SizeEnormous)
+    else if (size > 128)
     {
-        d->iconSize = KIconLoader::SizeEnormous;
+        d->iconSize = 128;
     }
     else
     {
@@ -921,9 +920,9 @@ void KPImagesList::slotLoadItems()
 {
     QUrl loadLevelsFile;
 
-    loadLevelsFile = KFileDialog::getOpenUrl(QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
-                                             QString( "*" ), this,
-                                             QString( i18n("Select the image file list to load")) );
+    loadLevelsFile = QFileDialog::getOpenFileUrl(this, i18n("Select the image file list to load"),
+                                                 QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
+                                                 QString( "*" ));
 
     if ( loadLevelsFile.isEmpty() )
     {
@@ -981,9 +980,9 @@ void KPImagesList::slotLoadItems()
 void KPImagesList::slotSaveItems()
 {
     QUrl saveLevelsFile;
-    saveLevelsFile = KFileDialog::getSaveUrl(QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
-                                             QString( "*" ), this,
-                                             QString( i18n("Select the image file list to save")) );
+    saveLevelsFile = QFileDialog::getSaveFileUrl(this, i18n("Select the image file list to save"),
+                                                 QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
+                                                 QString( "*" ));
 
     qDebug(KIPIPLUGINS_LOG) << "file url " << saveLevelsFile.toDisplayString();
 
@@ -1128,7 +1127,7 @@ void KPImagesList::processed(const QUrl& url, bool success)
     if (item)
     {
         d->processItems.removeAll(url);
-        item->setProcessedIcon(SmallIcon(success ?  "dialog-ok" : "dialog-cancel"));
+        item->setProcessedIcon(QIcon::fromTheme(success ?  "dialog-ok" : "dialog-cancel").pixmap(16, 16));
         item->setState(success ? KPImagesListViewItem::Success : KPImagesListViewItem::Failed);
 
         if(d->processItems.isEmpty())

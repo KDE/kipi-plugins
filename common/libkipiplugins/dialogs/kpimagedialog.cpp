@@ -32,10 +32,10 @@
 #include <QDesktopServices>
 #include <QImageReader>
 #include <QFileDialog>
+#include <QLocale>
 
 // KDE includes
 
-#include <klocale.h>
 #include <klocalizedstring.h>
 #include <kio/previewjob.h>
 
@@ -197,8 +197,7 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
                 model = d->metaIface.getXmpTagString("Xmp.tiff.Model");
 
             if (d->metaIface.getImageDateTime().isValid())
-                dateTime = KLocale::global()->formatDateTime(d->metaIface.getImageDateTime(),
-                                                             KLocale::ShortDate, true);
+                dateTime = QLocale().toString(d->metaIface.getImageDateTime(), QLocale::ShortFormat);
 
             aperture = d->metaIface.getExifTagString("Exif.Photo.FNumber");
             if (aperture.isEmpty())
@@ -247,6 +246,7 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
             DcrawInfoContainer info;
             KDcraw             dcrawIface;
             dcrawIface.rawFileIdentify(info, d->currentUrl.path());
+
             if (info.isDecodable)
             {
                 if (!info.make.isEmpty())
@@ -256,7 +256,7 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
                     model = info.model;
 
                 if (info.dateTime.isValid())
-                    dateTime = KLocale::global()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
+                    dateTime = QLocale().toString(info.dateTime, QLocale::ShortFormat);
 
                 if (info.aperture != -1.0)
                     aperture = QString::number(info.aperture);

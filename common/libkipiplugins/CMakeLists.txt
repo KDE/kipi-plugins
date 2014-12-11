@@ -26,12 +26,12 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
 )
 
 add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})
@@ -49,8 +49,9 @@ target_link_libraries(KF5kipiplugins
                       Qt5::Gui
                       KF5::I18n
                       KF5::ConfigCore
+                      KF5::KIOFileWidgets
 
-                      KF5::KDELibs4Support
+#                      KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}

@@ -39,7 +39,6 @@
 // KDE includes
 
 #include <kfileitem.h>
-#include <kiconloader.h>
 
 // Local includes
 
