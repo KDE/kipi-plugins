@@ -45,9 +45,9 @@ extern "C"
 
 // KDE includes
 
+#include <kmessagebox.h>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
-#include <kmessagebox.h>
 
 // Libkipi includes
 

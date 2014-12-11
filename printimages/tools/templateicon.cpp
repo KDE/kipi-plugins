@@ -22,7 +22,7 @@
 
 #include "templateicon.h"
 
-// KDE includes
+// Local includes
 
 #include "kipiplugins_debug.h"
 

@@ -29,9 +29,6 @@
 #include <QRect>
 #include <QFont>
 #include <QColor>
-
-// KDE includes
-
 #include <QUrl>
 
 namespace KIPIPlugins

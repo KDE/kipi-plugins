@@ -23,7 +23,7 @@
 #ifndef TEMPLATEICON_H
 #define TEMPLATEICON_H
 
-// QT incudes
+// Qt incudes
 
 #include <QPrinter>
 #include <QPainter>

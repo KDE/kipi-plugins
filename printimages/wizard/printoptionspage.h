@@ -27,6 +27,7 @@
 
 #include <QWidget>
 #include <QPrinter>
+
 // Local includes
 
 #include "tphoto.h"

@@ -28,6 +28,7 @@
 #include <QPainter>
 #include <QIcon>
 #include <QPrinter>
+
 // Local includes
 
 #include "kpimageslist.h"

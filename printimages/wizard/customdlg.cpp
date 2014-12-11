@@ -24,8 +24,12 @@
 // Local includes
 
 #include "customdlg.h"
-#include <KConfig>
-#include <KConfigGroup>
+
+// KDE includes
+
+#include <kconfig.h>
+#include <kconfiggroup.h>
+
 namespace KIPIPrintImagesPlugin
 {
 
