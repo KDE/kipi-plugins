@@ -38,7 +38,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kiconloader.h>
 
 // Local includes
 
@@ -103,7 +102,7 @@ public:
 };
 
 KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
-   : KVBox(parent), d(new Private)
+   : RVBox(parent), d(new Private)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     layout()->setSpacing(KDialog::spacingHint());
@@ -222,9 +221,11 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
     setMainWidget(w);
     resize(600, 400);
 
-    connect(w, &KPBatchProgressWidget::signalProgressCanceled, this, &KPBatchProgressDialog::cancelClicked);
+    connect(w, &KPBatchProgressWidget::signalProgressCanceled,
+            this, &KPBatchProgressDialog::cancelClicked);
 
-    connect(this, &KPBatchProgressDialog::cancelClicked, this, &KPBatchProgressDialog::slotCancel);
+    connect(this, &KPBatchProgressDialog::cancelClicked,
+            this, &KPBatchProgressDialog::slotCancel);
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()

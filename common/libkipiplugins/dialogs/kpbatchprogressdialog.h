@@ -32,12 +32,17 @@
 // KDE includes
 
 #include <kdialog.h>
-#include <kvbox.h>
+
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
 
 // Local includes
 
 #include "kipiplugins_export.h"
 #include "kpprogresswidget.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {
@@ -53,7 +58,7 @@ enum ActionMessageType
 
 // --------------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPBatchProgressWidget : public KVBox
+class KIPIPLUGINS_EXPORT KPBatchProgressWidget : public RVBox
 {
     Q_OBJECT
 
