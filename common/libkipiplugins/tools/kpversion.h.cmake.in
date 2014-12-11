@@ -29,7 +29,7 @@
 
 // KDE includes.
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 namespace pluginsVersion
 {
@@ -47,12 +47,12 @@ static inline KLocalizedString additionalInformation()
 {
     QString gitVer       = pluginsVersion::gitVersion();
     KLocalizedString ret = ki18n("IRC:\n"
-                     "irc.freenode.net - #kde-imaging\n\n"
-                     "Feedback:\n"
-                     "kde-imaging@kde.org\n\n"
-                     "Build date: %1 (target: %2)")
-                     .subs(__DATE__)
-                     .subs("@CMAKE_BUILD_TYPE@");
+                                 "irc.freenode.net - #kde-imaging\n\n"
+                                 "Feedback:\n"
+                                 "kde-imaging@kde.org\n\n"
+                                 "Build date: %1 (target: %2)")
+                                 .subs(__DATE__)
+                                 .subs("@CMAKE_BUILD_TYPE@");
 
     if (!gitVer.isEmpty() && !gitVer.startsWith("unknow") && !gitVer.startsWith("export"))
     {

@@ -27,10 +27,10 @@
 
 #include <QProcess>
 #include <QMessageBox>
+#include <QFileDialog>
 
 // KDE includes
 
-#include <kfiledialog.h>
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -146,10 +146,10 @@ void KPBinaryIface::slotNavigateAndCheck()
 #endif
     }
 
-    QString f = KFileDialog::getOpenFileName(start,
-                                             QString(m_binaryBaseName),
-                                             0,
-                                             QString(i18n("Navigate to %1", m_binaryBaseName)));
+    QString f = QFileDialog::getOpenFileName(0, QString(i18n("Navigate to %1", m_binaryBaseName)),
+                                             start.path(),
+                                             QString(m_binaryBaseName));
+
     QString dir = QUrl(f).adjusted(QUrl::RemoveFilename).path();
     m_searchPaths << dir;
 

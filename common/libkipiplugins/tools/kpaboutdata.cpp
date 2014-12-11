@@ -28,15 +28,13 @@
 #include <QIcon>
 #include <QAction>
 #include <QMenu>
+#include <QPushButton>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kcomponentdata.h>
-#include <kstandarddirs.h>
-#include <kglobalsettings.h>
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 #include <khelpclient.h>
 
 // Local includes
@@ -62,14 +60,10 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                  QString(),
                  QString("http://www.digikam.org"))
 {
-    if (KComponentData::hasMainComponent())
-    {
-        // setProgramLogo is defined from kde 3.4.0 on
-        QString directory = KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png");
+    QString directory = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-plugins_logo.png");
 
-        // set the kipiplugins logo inside the about dialog
-        setProgramLogo(QImage(directory));
-    }
+    // set the kipiplugins logo inside the about dialog
+    setProgramLogo(QImage(directory));
 
     // set the plugin description into long text description
     setOtherText(pluginDescription.toString());
@@ -77,10 +71,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     // put the plugin name and version with kipi-plugins and kipi-plugins version
     KLocalizedString shortDesc = additionalInformation();
 
-    if (KComponentData::hasMainComponent())
-    {
-        qCDebug(KIPIPLUGINS_LOG) << shortDesc.toString().constData() ;
-    }
+    qCDebug(KIPIPLUGINS_LOG) << shortDesc.toString().constData() ;
 
     // and set the string into the short description
     setShortDescription(shortDesc.toString());
@@ -103,13 +94,13 @@ void KPAboutData::setHandbookEntry(const QString& entry)
 
 void KPAboutData::setHelpButton(QPushButton* const help)
 {
-    if (!help) return;
-
     KHelpMenu* const helpMenu = new KHelpMenu(help, *(this), false);
+
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction * const handbook   = new QAction(QIcon::fromTheme("help-contents"), i18n("Handbook"), helpMenu);
 
-    connect(handbook, &QAction::triggered, this, &KPAboutData::slotHelp);
+    connect(handbook, &QAction::triggered,
+            this, &KPAboutData::slotHelp);
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     help->setMenu(helpMenu->menu());
