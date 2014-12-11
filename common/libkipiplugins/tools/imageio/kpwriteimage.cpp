@@ -7,7 +7,7 @@
  * Description : Kipi-Plugins shared library.
  *               Interface to write image data to common picture format.
  *
- * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,11 +45,7 @@ extern "C"
 #include <QByteArray>
 #include <QFile>
 #include <QDataStream>
-#include <QDebug>
-
-// KDE includes
-
-#include <kstandarddirs.h>
+#include <QStandardPaths>
 
 // Local includes
 
@@ -783,7 +779,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
 QByteArray KPWriteImage::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
 {
-    QString filePath = KStandardDirs::installPath("data") + QString("libkdcraw/profiles/");
+    QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("libkdcraw/profiles/"));
 
     switch(colorSpace)
     {
