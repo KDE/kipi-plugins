@@ -42,7 +42,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 
 // Libkipi includes
@@ -102,7 +102,7 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     albumsBox->setWhatsThis(i18n("This is the Picasaweb album that will be used for transfer."));
     QGridLayout* const albumsBoxLayout = new QGridLayout(albumsBox);
 
-    m_albumsCoB         = new KComboBox(albumsBox);
+    m_albumsCoB         = new QComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn       = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
@@ -119,7 +119,7 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     QGroupBox* const sizeBox         = new QGroupBox(i18n("Max Dimension"), settingsBox);
     sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
     QVBoxLayout* const sizeBoxLayout = new QVBoxLayout(sizeBox);
-    m_dlDimensionCoB                 = new KComboBox(sizeBox);
+    m_dlDimensionCoB                 = new QComboBox(sizeBox);
     m_dlDimensionCoB->addItem(i18n("Original Size"), "d");
     m_dlDimensionCoB->addItem(i18n("1600 px"), "1600");
     m_dlDimensionCoB->addItem(i18n("1440 px"), "1440");

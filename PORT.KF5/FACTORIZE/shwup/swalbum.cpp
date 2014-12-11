@@ -33,7 +33,7 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // local includes
 

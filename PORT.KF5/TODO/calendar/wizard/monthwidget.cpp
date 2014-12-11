@@ -43,7 +43,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Libkipi includes
 

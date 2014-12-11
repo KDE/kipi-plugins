@@ -38,7 +38,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 
 // Libkipi includes
@@ -102,7 +102,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent)
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Album:"),albBox);
-    m_albumsCoB          = new KComboBox(albBox);
+    m_albumsCoB          = new QComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",

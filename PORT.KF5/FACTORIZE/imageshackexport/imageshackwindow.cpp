@@ -53,7 +53,7 @@
 #include <krun.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // Libkipi includes
 

@@ -50,7 +50,7 @@ class QCheckBox;
 class KLineEdit;
 class KHTMLPart;
 class KUrl;
-class KComboBox;
+class QComboBox;
 
 namespace KIPI
 {
@@ -145,7 +145,7 @@ private:
     QPushButton*                           m_newAlbumBtn;
     QPushButton*                           m_changeUserButton;
 
-    KComboBox*                             m_albumsListComboBox;
+    QComboBox*                             m_albumsListComboBox;
     QCheckBox*                             m_publicCheckBox;
     QCheckBox*                             m_familyCheckBox;
     QCheckBox*                             m_friendsCheckBox;

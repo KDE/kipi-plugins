@@ -32,7 +32,7 @@
 
 #include <qtest_kde.h>
 #include <kdebug.h>
-#include <kurl.h>
+#include <QUrl>
 
 // libkgeomap includes
 

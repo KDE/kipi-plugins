@@ -30,7 +30,7 @@
 // KDE includes
 
 #include <kio/job.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Libkipi includes
 
@@ -44,7 +44,7 @@
 class QFileInfo;
 class QLabel;
 
-class KComboBox;
+class QComboBox;
 class KProcess;
 
 namespace Ui
@@ -81,7 +81,7 @@ protected:
     // --------------------------------------------------------------------------------------------------------
     // Widgets used by inherited dialogs
     QLabel*                  m_labelType;
-    KComboBox*               m_Type;
+    QComboBox*               m_Type;
     QPushButton*             m_optionsButton;
 
     BatchProcessImagesList*  m_listFiles;

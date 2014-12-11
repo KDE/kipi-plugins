@@ -26,7 +26,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 class QWidget;
 

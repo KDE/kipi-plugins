@@ -34,7 +34,7 @@
 
 class QCheckBox;
 
-class KComboBox;
+class QComboBox;
 class KIntNumInput;
 
 namespace KIPIBatchProcessImagesPlugin
@@ -56,8 +56,8 @@ public:
     KIntNumInput    *m_JPEGCompression;
     KIntNumInput    *m_PNGCompression;
     QCheckBox       *m_compressLossLess;
-    KComboBox       *m_TIFFCompressionAlgo;
-    KComboBox       *m_TGACompressionAlgo;
+    QComboBox       *m_TIFFCompressionAlgo;
+    QComboBox       *m_TGACompressionAlgo;
 
 public Q_SLOTS:
 

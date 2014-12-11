@@ -32,7 +32,7 @@
 
 // KDE
 #include <kxmlguiwindow.h>
-#include <kurl.h>
+#include <QUrl>
 
 // LibKIPI
 #include <interface.h>

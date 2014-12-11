@@ -45,7 +45,7 @@
 class KJob;
 class QToolButton;
 class KPushButton;
-class KComboBox;
+class QComboBox;
 
 namespace KIPIVkontaktePlugin
 {
@@ -90,7 +90,7 @@ protected:
 
 private:
 
-    KComboBox*                     m_albumsCombo;
+    QComboBox*                     m_albumsCombo;
     KPushButton*                   m_newAlbumButton;
     KPushButton*                   m_reloadAlbumsButton;
     QToolButton*                   m_editAlbumButton;

@@ -39,7 +39,7 @@
 #include "kipiplugins_debug.h"
 #include <kmimetype.h>
 #include <krandom.h>
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPIPicasawebExportPlugin
 {

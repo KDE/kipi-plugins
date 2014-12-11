@@ -44,7 +44,7 @@
 #include <QIcon>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kstandarddirs.h>
 
 // Libkipi includes

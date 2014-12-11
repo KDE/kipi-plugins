@@ -46,7 +46,7 @@
 
 #include <kcodecs.h>
 #include "kipiplugins_debug.h"
-#include <kurl.h>
+#include <QUrl>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kmimetype.h>

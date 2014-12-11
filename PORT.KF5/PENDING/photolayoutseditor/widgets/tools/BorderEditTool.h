@@ -31,7 +31,7 @@
 #include <QDockWidget>
 #include <QDoubleSpinBox>
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kcolorbutton.h>
 #include <kpushbutton.h>
 

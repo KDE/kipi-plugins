@@ -59,7 +59,7 @@
 
 #include <QAction>
 #include <QApplication>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfig.h>
 #include "kipiplugins_debug.h"
 #include <kdialogbuttonbox.h>

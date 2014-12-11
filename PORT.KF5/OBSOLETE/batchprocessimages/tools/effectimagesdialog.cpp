@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <QApplication>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfig.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>

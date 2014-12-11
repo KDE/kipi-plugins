@@ -32,7 +32,7 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // local includes
 
@@ -64,7 +64,7 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent)
     m_descEdt           = new KTextEdit;
     m_descEdt->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
-    m_privacyCoB        = new KComboBox;
+    m_privacyCoB        = new QComboBox;
     m_privacyCoB->setEditable(false);
     m_privacyCoB->setWhatsThis(i18n("Privacy setting of the album that will be created (required)."));
     m_privacyCoB->addItem(QIcon::fromTheme("secure-card"),           i18n("Only Me"),                 FB_ME);

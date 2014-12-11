@@ -38,7 +38,7 @@
 // KDE includes
 
 #include <kpushbutton.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klocale.h>
 #include <kdialog.h>
 #include "kipiplugins_debug.h"
@@ -125,7 +125,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     QGridLayout* const gwLayout = new QGridLayout(m_galleriesWidget);
 
     QLabel* const galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
-    m_galleriesCob       = new KComboBox(m_galleriesWidget);
+    m_galleriesCob       = new QComboBox(m_galleriesWidget);
     m_galleriesCob->addItem(i18n("Create new gallery"), "--new-gallery--");
     m_galleriesCob->setEditable(false);
 
@@ -204,7 +204,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     QLabel* const heightLbl = new QLabel(i18n("Height:"), optionsBox);
 
-    m_resizeOptsCob = new KComboBox(optionsBox);
+    m_resizeOptsCob = new QComboBox(optionsBox);
     updateResizeOpts();
     m_resizeOptsCob->setEditable(false);
 

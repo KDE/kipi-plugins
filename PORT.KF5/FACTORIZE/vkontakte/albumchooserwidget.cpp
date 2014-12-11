@@ -28,7 +28,7 @@
 #include <QVBoxLayout>
 #include <klocalizedstring.h>
 #include <kguiitem.h>
-#include <KComboBox>
+#include <QComboBox>
 #include <KPushButton>
 #include <QToolButton>
 #include <KMessageBox>
@@ -57,7 +57,7 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent, VkAPI* const vkapi
     setWhatsThis(i18n("This is the VKontakte album that will be used for the transfer."));
     QVBoxLayout* const albumsBoxLayout = new QVBoxLayout(this);
 
-    m_albumsCombo        = new KComboBox(this);
+    m_albumsCombo        = new QComboBox(this);
     m_albumsCombo->setEditable(false);
 
     m_newAlbumButton     = new KPushButton(KGuiItem(i18n("New Album"), "list-add", i18n("Create new VKontakte album")), this);

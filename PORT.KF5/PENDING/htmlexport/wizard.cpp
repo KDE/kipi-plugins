@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <QApplication>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfigdialogmanager.h>
 #include "kipiplugins_debug.h"
 #include <kdialog.h>

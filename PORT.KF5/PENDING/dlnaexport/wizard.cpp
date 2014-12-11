@@ -33,7 +33,7 @@
 // KDE includes
 
 #include "kipiplugins_debug.h"
-#include <kurl.h>
+#include <QUrl>
 
 // libHUpnp includes
 

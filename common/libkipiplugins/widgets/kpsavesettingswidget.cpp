@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kdialog.h>
 #include <klocale.h>
 
@@ -61,7 +61,7 @@ public:
 
     QButtonGroup* conflictButtonGroup;
 
-    KComboBox*    formatComboBox;
+    QComboBox*    formatComboBox;
 
     QRadioButton* overwriteButton;
     QRadioButton* promptButton;
@@ -74,7 +74,7 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
 
     d->grid           = new QGridLayout(this);
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
-    d->formatComboBox = new KComboBox( this );
+    d->formatComboBox = new QComboBox( this );
     d->formatComboBox->setWhatsThis(i18n("<p>Set the output file format to use here:</p>"
                                          "<p><b>JPEG</b>: output the processed image in JPEG format. "
                                          "This format will give smaller-sized files.</p>"
@@ -115,7 +115,7 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());
 
-    connect(d->formatComboBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &KPSaveSettingsWidget::signalSaveFormatChanged);
+    connect(d->formatComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &KPSaveSettingsWidget::signalSaveFormatChanged);
 
     connect(d->conflictButtonGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &KPSaveSettingsWidget::signalConflictButtonChanged);
 }

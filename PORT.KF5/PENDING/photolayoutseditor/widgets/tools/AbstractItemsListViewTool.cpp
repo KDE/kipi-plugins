@@ -33,7 +33,7 @@
 
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
@@ -414,7 +414,7 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel 
     layout->setMargin(0);
     this->setLayout(layout);
     QStringList registeredDrawers = parent->options();
-    KComboBox * comboBox = new KComboBox(this);
+    QComboBox * comboBox = new QComboBox(this);
     comboBox->addItems(registeredDrawers);
     comboBox->setCurrentIndex(-1);
     connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(itemSelected(QString)));

@@ -26,7 +26,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfiggroup.h>
 
 namespace KIPIHTMLExport {
@@ -66,7 +66,7 @@ void ListThemeParameter::init(const QByteArray& internalName, const KConfigGroup
 }
 
 QWidget* ListThemeParameter::createWidget(QWidget* parent, const QString& widgetDefaultValue) const {
-	KComboBox* comboBox = new KComboBox(parent);
+	QComboBox* comboBox = new QComboBox(parent);
 
 	QStringList::ConstIterator
 		it = d->mOrderedValueList.constBegin(),
@@ -85,7 +85,7 @@ QWidget* ListThemeParameter::createWidget(QWidget* parent, const QString& widget
 
 QString ListThemeParameter::valueFromWidget(QWidget* widget) const {
 	Q_ASSERT(widget);
-	KComboBox* comboBox = static_cast<KComboBox*>(widget);
+	QComboBox* comboBox = static_cast<QComboBox*>(widget);
 	return d->mOrderedValueList[comboBox->currentIndex()];
 }
 

@@ -39,7 +39,7 @@
 #include <klocale.h>
 #include <QMenu>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <kprogressdialog.h>

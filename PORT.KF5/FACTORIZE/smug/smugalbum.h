@@ -30,7 +30,7 @@
 
 class QGroupBox;
 class QRadioButton;
-class KComboBox;
+class QComboBox;
 class KLineEdit;
 class KTextEdit;
 
@@ -54,9 +54,9 @@ private:
 
     KLineEdit*    m_titleEdt;
     KTextEdit*    m_descEdt;
-    KComboBox*    m_categCoB;
-    KComboBox*    m_subCategCoB;
-    KComboBox*    m_templateCoB;
+    QComboBox*    m_categCoB;
+    QComboBox*    m_subCategCoB;
+    QComboBox*    m_templateCoB;
 
     QGroupBox*    m_privBox;
     KLineEdit*    m_passwdEdt;

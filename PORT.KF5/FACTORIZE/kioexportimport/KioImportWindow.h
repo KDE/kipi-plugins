@@ -27,7 +27,7 @@
 // KDE includes
 
 #include <kjob.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kio/job.h>
 
 // Local includes

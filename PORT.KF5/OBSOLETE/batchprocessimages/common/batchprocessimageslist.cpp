@@ -30,7 +30,7 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPIBatchProcessImagesPlugin
 {

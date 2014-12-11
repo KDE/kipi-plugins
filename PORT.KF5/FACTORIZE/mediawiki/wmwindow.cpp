@@ -38,9 +38,9 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <QMenu>
-#include <kurl.h>
+#include <QUrl>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 

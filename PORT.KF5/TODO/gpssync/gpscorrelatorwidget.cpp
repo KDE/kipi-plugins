@@ -43,7 +43,7 @@
 // KDE includes
 
 #include <QApplication>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfig.h>
 #include "kipiplugins_debug.h"
 #include <kfiledialog.h>
@@ -59,7 +59,7 @@
 #include <ksqueezedtextlabel.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <kurl.h>
+#include <QUrl>
 #include <QStandardPaths>
 
 // local includes
@@ -119,9 +119,9 @@ public:
     QButtonGroup*           timeZoneGroup;
     QRadioButton*           timeZoneSystem;
     QRadioButton*           timeZoneManual;
-    KComboBox*              timeZoneCB;
+    QComboBox*              timeZoneCB;
     QCheckBox*              offsetEnabled;
-    KComboBox*              offsetSign;
+    QComboBox*              offsetSign;
     KIntSpinBox*            offsetMin;
     KIntSpinBox*            offsetSec;
 
@@ -202,7 +202,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     d->timeZoneGroup->addButton(d->timeZoneSystem, 1);
     d->timeZoneGroup->addButton(d->timeZoneManual, 2);
 
-    d->timeZoneCB               = new KComboBox(this);
+    d->timeZoneCB               = new QComboBox(this);
 
     // See list of time zones over the world :
     // http://en.wikipedia.org/wiki/List_of_time_zones
@@ -263,7 +263,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
                         "wrong camera clock."));
 
     QWidget* const offsetWidget = new QWidget(this);
-    d->offsetSign               = new KComboBox(offsetWidget);
+    d->offsetSign               = new QComboBox(offsetWidget);
     d->offsetSign->addItem("+");
     d->offsetSign->addItem("-");
     d->offsetSign->setWhatsThis(i18n("Set whether the camera offset "

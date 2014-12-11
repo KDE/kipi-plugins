@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kdialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -145,8 +145,8 @@ public:
 
     QCheckBox*                      originalTransCheck;
 
-    KComboBox*                      priorityCB;
-    KComboBox*                      objectTypeCB;
+    QComboBox*                      priorityCB;
+    QComboBox*                      objectTypeCB;
 
     KLineEdit*                      objectAttributeEdit;
     KLineEdit*                      originalTransEdit;
@@ -181,7 +181,7 @@ XMPProperties::XMPProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
-    d->priorityCB    = new KComboBox(this);
+    d->priorityCB    = new QComboBox(this);
     d->priorityCB->insertItem(0, i18nc("editorial urgency of content", "0: None"));
     d->priorityCB->insertItem(1, i18nc("editorial urgency of content", "1: High"));
     d->priorityCB->insertItem(2, "2");

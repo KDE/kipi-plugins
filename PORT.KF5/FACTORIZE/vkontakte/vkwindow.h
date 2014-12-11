@@ -47,7 +47,7 @@ class QToolButton;
 
 class KUrl;
 class KPasswordDialog;
-class KComboBox;
+class QComboBox;
 class KPushButton;
 class KLineEdit;
 class KJob;

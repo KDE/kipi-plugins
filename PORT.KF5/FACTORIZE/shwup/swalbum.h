@@ -30,7 +30,7 @@
 
 class KLineEdit;
 class KTextEdit;
-class KComboBox;
+class QComboBox;
 
 namespace KIPIShwupPlugin
 {

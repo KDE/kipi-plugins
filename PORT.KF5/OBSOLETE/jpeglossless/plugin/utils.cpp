@@ -53,7 +53,7 @@ extern "C"
 #include <kdebug.h>
 #include <ktemporaryfile.h>
 #include <klocale.h>
-#include <kurl.h>
+#include <QUrl>
 
 // LibKDcraw includes
 

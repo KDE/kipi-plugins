@@ -39,7 +39,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 
 // Libkipi includes
@@ -120,7 +120,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     albumsBox->setWhatsThis(i18n("This is the SmugMug album that will be used for transfer."));
     QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
 
-    m_albumsCoB         = new KComboBox(albumsBox);
+    m_albumsCoB         = new QComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
     m_nickNameLbl       = new QLabel(i18n("Nickname:"), albumsBox);
     m_nickNameEdt       = new KLineEdit(albumsBox);

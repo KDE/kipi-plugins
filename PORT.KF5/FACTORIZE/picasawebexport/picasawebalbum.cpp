@@ -34,7 +34,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klineedit.h>
 #include <ktextedit.h>
 

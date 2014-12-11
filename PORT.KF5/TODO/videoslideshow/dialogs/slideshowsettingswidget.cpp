@@ -44,7 +44,7 @@
 #include <kpushbutton.h>
 #include <klocalizeddate.h>
 #include <kfiledialog.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kseparator.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>

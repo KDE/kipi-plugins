@@ -82,7 +82,7 @@ void ResizeOptionsBaseDialog::layout()
     qualityGroupBox->setLayout(qualityGroupBoxLayout);
 
     m_resizeFilterLabel    = new QLabel(i18n("Filter:"), qualityGroupBox);
-    m_resizeFilterComboBox = new KComboBox();
+    m_resizeFilterComboBox = new QComboBox();
     m_defaultFilterName    = i18nc("Filter name", "&lt;default&gt;");
     m_resizeFilterComboBox->addItem(m_defaultFilterName);
     // we really don't need to translate these filter names
@@ -509,7 +509,7 @@ void PrintPrepareResizeOptionsDialog::prependWidgets()
     QGridLayout *sizeGroupBoxLayout = new QGridLayout(sizeGroupBox);
 
     m_paperSizeLabel = new QLabel(i18n("Paper size (cm):"), sizeGroupBox);
-    m_paperSizeComboBox = new KComboBox(sizeGroupBox);
+    m_paperSizeComboBox = new QComboBox(sizeGroupBox);
     m_paperSizeComboBox->addItem("9x13");
     m_paperSizeComboBox->addItem("10x15");
     m_paperSizeComboBox->addItem("13x19");
@@ -525,7 +525,7 @@ void PrintPrepareResizeOptionsDialog::prependWidgets()
     m_paperSizeLabel->setBuddy(m_paperSizeComboBox);
 
     m_dpiLabel = new QLabel(i18n("Print resolution (dpi):"), sizeGroupBox);
-    m_dpiComboBox = new KComboBox(sizeGroupBox);
+    m_dpiComboBox = new QComboBox(sizeGroupBox);
     m_dpiComboBox->addItem("75");
     m_dpiComboBox->addItem("150");
     m_dpiComboBox->addItem("300");

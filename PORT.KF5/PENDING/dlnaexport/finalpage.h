@@ -27,7 +27,7 @@
 
 #include <QWidget>
 #include <QString>
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 

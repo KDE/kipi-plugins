@@ -59,7 +59,7 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
-#include <kurl.h>
+#include <QUrl>
 
 // LibKDcraw includes
 

@@ -37,7 +37,7 @@
 #include <kdialog.h>
 #include "kipiplugins_debug.h"
 #include <kiconloader.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // Local includes
 
@@ -70,7 +70,7 @@ public:
     QLabel*         getImplementationLbl;
     QLabel*         binariesLbl;
 
-    KComboBox*      implementationGetOption;
+    QComboBox*      implementationGetOption;
     KPBinarySearch* binariesWidget;
     MinidlnaBinary  minidlnaBinary;
 };
@@ -99,7 +99,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
 
     // ComboBox for implementation selection method
     d->getImplementationLbl    = new QLabel(i18n("&Choose the implementation:"),settingsBox);
-    d->implementationGetOption = new KComboBox(settingsBox);
+    d->implementationGetOption = new QComboBox(settingsBox);
     d->implementationGetOption->insertItem(WelcomePage::HUPNP, "HUPnP API");
     d->getImplementationLbl->setBuddy(d->implementationGetOption);
 

@@ -33,10 +33,10 @@
 
 #include <kfiledialog.h>
 #include <kpushbutton.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kurlrequester.h>
 
-class KComboBox;
+class QComboBox;
 
 namespace KIPIPlugins
 {

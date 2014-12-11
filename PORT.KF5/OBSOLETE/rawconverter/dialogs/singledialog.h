@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kdialog.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 

@@ -35,7 +35,7 @@
 // KDE includes
 
 #include <kcolorbutton.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kdialog.h>
 #include <klocale.h>
 #include <knuminput.h>
@@ -65,7 +65,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
     { // Depth
         QLabel *m_label_depthValue = new QLabel(i18n("Depth value:"), box);
         dvlay->addWidget(m_label_depthValue);
-        m_depthValue = new KComboBox(box);
+        m_depthValue = new QComboBox(box);
         m_depthValue->addItem("8");
         m_depthValue->addItem("16");
         m_depthValue->addItem("32");

@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 class QDragEnterEvent;
 class QDropEvent;

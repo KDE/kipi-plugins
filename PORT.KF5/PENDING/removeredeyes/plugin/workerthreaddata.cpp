@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPIRemoveRedEyesPlugin
 {

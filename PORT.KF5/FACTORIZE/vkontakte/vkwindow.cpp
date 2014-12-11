@@ -52,7 +52,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <QMenu>
 #include <khelpmenu.h>

@@ -49,7 +49,7 @@ class QProgressBar;
 class KUrl;
 class KProgressDialog;
 class KPasswordDialog;
-class KComboBox;
+class QComboBox;
 class KPushButton;
 class KLineEdit;
 
@@ -155,10 +155,10 @@ protected:
     QGroupBox*               m_albumsBox;
     KPushButton*             m_newAlbumButton;
     KPushButton*             m_reloadAlbumsButton;
-    KComboBox*               m_albumsCombo;
+    QComboBox*               m_albumsCombo;
 
     // upload settings
-    KComboBox*               m_accessCombo;
+    QComboBox*               m_accessCombo;
     QCheckBox*               m_hideOriginalCheck;
     QCheckBox*               m_disableCommentsCheck;
     QCheckBox*               m_adultCheck;

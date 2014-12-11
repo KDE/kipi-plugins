@@ -26,7 +26,7 @@
 #include "CanvasSizeDialog.moc"
 
 // KDE
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
 
@@ -103,17 +103,17 @@ class KIPIPhotoLayoutsEditor::CanvasSizeDialogPrivate
 
         QWidget *   sizeWidget;
         QWidget *   advancedWidget;
-        KComboBox * paperSize;
+        QComboBox * paperSize;
         QDoubleSpinBox *  xSize;
         QDoubleSpinBox *  ySize;
         QButtonGroup *  orientationGroup;
         KPushButton *   verticalButton;
         QLabel *    sizeLabel;
         KPushButton *   horizontalButton;
-        KComboBox * sizeUnitsWidget;
+        QComboBox * sizeUnitsWidget;
         QDoubleSpinBox *  xResolution;
         QDoubleSpinBox *  yResolution;
-        KComboBox * resolutionUnitsWidget;
+        QComboBox * resolutionUnitsWidget;
 
         static int WIDTH;
         static int HEIGHT;
@@ -336,7 +336,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
 
     /// ----------------------- TEMPLATES PART -----------------------
     QGridLayout * gridLayout = new QGridLayout();
-    d->paperSize = new KComboBox(main);
+    d->paperSize = new QComboBox(main);
     d->paperSize->addItem( i18n("Custom") );
     d->paperSize->insertSeparator(1);
     d->paperSize->addItems(d->paperSizes.keys());
@@ -377,7 +377,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     gridLayout->addWidget(d->ySize,1,1);
 
     // Unit widget
-    d->sizeUnitsWidget = new KComboBox(d->sizeWidget);
+    d->sizeUnitsWidget = new QComboBox(d->sizeWidget);
     d->sizeUnitsWidget->addItems(CanvasSize::sizeUnitsNames());
     d->sizeUnitsWidget->setCurrentItem(tempSizeUnits);
     d->currentSizeUnit = tempSizeUnits;
@@ -427,7 +427,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     gridLayout->addWidget(d->yResolution,1,1);
 
     // Unit widget
-    d->resolutionUnitsWidget = new KComboBox(d->sizeWidget);
+    d->resolutionUnitsWidget = new QComboBox(d->sizeWidget);
     d->resolutionUnitsWidget->addItems(CanvasSize::resolutionUnitsNames());
     d->resolutionUnitsWidget->setCurrentItem(tempResolutionUnits);
     d->currentResolutionUnit = tempResolutionUnits;

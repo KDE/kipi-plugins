@@ -28,7 +28,7 @@
 
 #include <QWidget>
 
-#include <kcombobox.h>
+#include <QComboBox>
 
 #include "AbstractTool.h"
 

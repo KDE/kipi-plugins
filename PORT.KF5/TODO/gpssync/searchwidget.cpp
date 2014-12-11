@@ -38,7 +38,7 @@
 // KDE includes
 
 #include <QAction>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfiggroup.h>
 #include <khbox.h>
 #include <klineedit.h>
@@ -125,7 +125,7 @@ public:
     // Search: UI
     QTreeView*               treeView;
     QVBoxLayout*             mainVBox;
-    KComboBox*               backendSelectionBox;
+    QComboBox*               backendSelectionBox;
     QAction *                 actionClearResultsList;
     QAction *                 actionKeepOldResults;
     QAction *                 actionToggleAllResultsVisibility;
@@ -197,7 +197,7 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->actionRemovedSelectedSearchResultsFromList = new QAction(i18n("Remove from results list"), this);
     d->actionRemovedSelectedSearchResultsFromList->setIcon(SmallIcon("list-remove"));
 
-    d->backendSelectionBox                            = new KComboBox(actionHBox);
+    d->backendSelectionBox                            = new QComboBox(actionHBox);
     d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));
     const QList<QPair<QString, QString> > backendList = d->searchBackend->getBackends();
 

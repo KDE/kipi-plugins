@@ -46,7 +46,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfiggroup.h>
 #include "kipiplugins_debug.h"
 #include <kdialog.h>

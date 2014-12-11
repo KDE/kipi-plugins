@@ -44,7 +44,7 @@
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <kurl.h>
+#include <QUrl>
 
 // LibKSane includes
 

@@ -35,9 +35,9 @@
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <khbox.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 

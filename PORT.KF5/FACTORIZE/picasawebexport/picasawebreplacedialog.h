@@ -26,7 +26,7 @@
 #include <QDialog>
 #include <QString>
 
-#include <kurl.h>
+#include <QUrl>
 #include <kio/global.h>
 #include <kio/job.h>
 

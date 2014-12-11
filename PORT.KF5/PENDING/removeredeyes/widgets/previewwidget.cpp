@@ -32,7 +32,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 

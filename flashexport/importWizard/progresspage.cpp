@@ -31,7 +31,7 @@
 
 #include <kstandarddirs.h>
 #include <klocale.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kiconloader.h>
 
 // Local includes

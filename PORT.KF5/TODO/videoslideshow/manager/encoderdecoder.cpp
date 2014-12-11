@@ -42,7 +42,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPIVideoSlideShowPlugin
 {

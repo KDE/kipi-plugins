@@ -35,7 +35,7 @@
 // KDE includes
 
 #include <kcolorbutton.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
@@ -79,7 +79,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
 
     if (FilterType == 0)
     { // Add noise
-        m_noiseType = new KComboBox(false, box);
+        m_noiseType = new QComboBox(false, box);
         m_noiseType->addItem(i18nc("image noise type", "Uniform"));
         m_noiseType->addItem(i18nc("image noise type", "Gaussian"));
         m_noiseType->addItem(i18nc("image noise type", "Multiplicative"));

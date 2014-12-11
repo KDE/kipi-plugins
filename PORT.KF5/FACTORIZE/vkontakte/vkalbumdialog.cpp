@@ -40,7 +40,7 @@
 #include <klineedit.h>
 #include <ktextedit.h>
 #include <kmessagebox.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // libvkontakte includes
 
@@ -79,7 +79,7 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
     QGroupBox* const privacyBox         = new QGroupBox(i18n("Privacy Settings"), mainWidget);
     QGridLayout* const privacyBoxLayout = new QGridLayout;
 
-    m_albumPrivacyCombo = new KComboBox(privacyBox);
+    m_albumPrivacyCombo = new QComboBox(privacyBox);
     m_albumPrivacyCombo->addItem(i18n("Only me"),               QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
     m_albumPrivacyCombo->addItem(i18n("My friends"),            QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
     m_albumPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
@@ -87,7 +87,7 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
     privacyBoxLayout->addWidget(new QLabel(i18n("Album available to:")), 0, 0);
     privacyBoxLayout->addWidget(m_albumPrivacyCombo, 0, 1);
 
-    m_commentsPrivacyCombo = new KComboBox(privacyBox);
+    m_commentsPrivacyCombo = new QComboBox(privacyBox);
     m_commentsPrivacyCombo->addItem(i18n("Only me"),               QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
     m_commentsPrivacyCombo->addItem(i18n("My friends"),            QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
     m_commentsPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));

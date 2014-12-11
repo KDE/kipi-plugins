@@ -32,7 +32,7 @@
 
 #include <QMenu>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include "kipiplugins_debug.h"

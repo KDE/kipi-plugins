@@ -41,7 +41,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
@@ -116,7 +116,7 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     albumsBox->setWhatsThis(i18n("This is the Rajce.net album that will be used for transfer."));
     QGridLayout* const albumsBoxLayout = new QGridLayout(albumsBox);
 
-    m_albumsCoB       = new KComboBox(albumsBox);
+    m_albumsCoB       = new QComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",

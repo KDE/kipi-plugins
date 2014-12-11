@@ -33,7 +33,7 @@ class QCheckBox;
 class QLineEdit;
 class QLabel;
 class QGroupBox;
-class KComboBox;
+class QComboBox;
 class KPushButton;
 
 namespace KIPIPlugins
@@ -103,8 +103,8 @@ private:
     KPushButton*                   m_chgRegCodeBtn;
     KPushButton*                   m_reloadGalleriesBtn;
 
-    KComboBox*                     m_resizeOptsCob;
-    KComboBox*                     m_galleriesCob;
+    QComboBox*                     m_resizeOptsCob;
+    QComboBox*                     m_galleriesCob;
 
     QSpinBox*                      m_widthSpb;
     QSpinBox*                      m_heightSpb;

@@ -28,7 +28,7 @@
 
 #include <QImage>
 
-#include <kurl.h>
+#include <QUrl>
 
 #include "AbstractPhotoItemLoader.h"
 

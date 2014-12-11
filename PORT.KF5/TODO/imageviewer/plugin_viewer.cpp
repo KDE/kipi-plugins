@@ -30,7 +30,7 @@
 #include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Libkipi includes
 

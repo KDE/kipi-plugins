@@ -40,7 +40,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfiggroup.h>
 #include <kglobal.h>
 #include <klineedit.h>
@@ -96,7 +96,7 @@ public:
     QCheckBox*                   cbNSatellites;
     KLineEdit*                   leNSatellites;
     QCheckBox*                   cbFixType;
-    KComboBox*                   comboFixType;
+    QComboBox*                   comboFixType;
     QCheckBox*                   cbDop;
     KLineEdit*                   leDop;
 
@@ -155,7 +155,7 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     formLayout->addRow(d->cbNSatellites, d->leNSatellites);
 
     d->cbFixType = new QCheckBox(i18n("Fix type"), this);
-    d->comboFixType = new KComboBox(this);
+    d->comboFixType = new QComboBox(this);
     d->comboFixType->addItem(i18n("2-d"), QVariant(2));
     d->comboFixType->addItem(i18n("3-d"), QVariant(3));
     formLayout->addRow(d->cbFixType, d->comboFixType);

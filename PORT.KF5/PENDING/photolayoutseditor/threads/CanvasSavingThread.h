@@ -28,7 +28,7 @@
 
 #include <QThread>
 
-#include <kurl.h>
+#include <QUrl>
 
 #include "ProgressObserver.h"
 

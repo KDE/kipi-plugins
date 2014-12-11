@@ -57,7 +57,7 @@ extern "C"
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfig.h>
 #include "kipiplugins_debug.h"
 #include <kde_file.h>
@@ -166,7 +166,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_albumsBox->setWhatsThis(i18n("This is the Yandex.Fotki album that will be used for the transfer."));
     QGridLayout* const albumsBoxLayout = new QGridLayout(m_albumsBox);
 
-    m_albumsCombo        = new KComboBox(m_albumsBox);
+    m_albumsCombo        = new QComboBox(m_albumsBox);
     m_albumsCombo->setEditable(false);
 
     m_newAlbumButton     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
@@ -242,7 +242,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     policyRadio4->setWhatsThis(i18n("Add photo as new"));
 
     QLabel* const accessLabel = new QLabel(i18n("Privacy settings:"), optionsBox);
-    m_accessCombo             = new KComboBox(false, optionsBox);
+    m_accessCombo             = new QComboBox(false, optionsBox);
     m_accessCombo->addItem(QIcon::fromTheme("folder"), i18n("Public access"),         YandexFotkiPhoto::ACCESS_PUBLIC);
     m_accessCombo->addItem(QIcon::fromTheme("folder-red"), i18n("Friends access"),    YandexFotkiPhoto::ACCESS_FRIENDS);
     m_accessCombo->addItem(QIcon::fromTheme("folder-locked"), i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);

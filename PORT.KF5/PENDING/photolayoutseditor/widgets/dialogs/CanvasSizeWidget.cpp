@@ -24,7 +24,7 @@
 
 #include "CanvasSizeWidget.moc"
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <klocalizedstring.h>
 
@@ -49,10 +49,10 @@ class CanvasSizeWidget::Private
     QDoubleSpinBox *  xSize;
     QDoubleSpinBox *  ySize;
     QLabel *    sizeLabel;
-    KComboBox * sizeUnitsWidget;
+    QComboBox * sizeUnitsWidget;
     QDoubleSpinBox *  xResolution;
     QDoubleSpinBox *  yResolution;
-    KComboBox * resolutionUnitsWidget;
+    QComboBox * resolutionUnitsWidget;
 
     static int WIDTH;
     static int HEIGHT;
@@ -160,7 +160,7 @@ void CanvasSizeWidget::setupUI(const QSizeF & size, const QString & sizeUnits, c
     gridLayout->addWidget(d->ySize,1,1);
 
     // Unit widget
-    d->sizeUnitsWidget = new KComboBox(d->sizeWidget);
+    d->sizeUnitsWidget = new QComboBox(d->sizeWidget);
     d->sizeUnitsWidget->addItems(CanvasSize::sizeUnitsNames());
     d->sizeUnitsWidget->setCurrentItem(tempSizeUnits);
     d->currentSizeUnit = tempSizeUnits;
@@ -197,7 +197,7 @@ void CanvasSizeWidget::setupUI(const QSizeF & size, const QString & sizeUnits, c
     gridLayout->addWidget(d->yResolution,1,1);
 
     // Unit widget
-    d->resolutionUnitsWidget = new KComboBox(d->sizeWidget);
+    d->resolutionUnitsWidget = new QComboBox(d->sizeWidget);
     d->resolutionUnitsWidget->addItems(CanvasSize::resolutionUnitsNames());
     d->resolutionUnitsWidget->setCurrentItem(tempResolutionUnits);
     d->currentResolutionUnit = tempResolutionUnits;

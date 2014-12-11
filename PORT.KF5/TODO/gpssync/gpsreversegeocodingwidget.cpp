@@ -43,7 +43,7 @@
 // KDE includes
 
 #include <QAction>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kinputdialog.h>
@@ -52,7 +52,7 @@
 #include <kmessagebox.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kvbox.h>
 
 // Libkgeomap includes
@@ -153,8 +153,8 @@ public:
     GPSUndoCommand*      undoCommand;
     QModelIndex          currentTagTreeIndex;
 
-    KComboBox*           serviceComboBox;
-    KComboBox*           languageEdit;
+    QComboBox*           serviceComboBox;
+    QComboBox*           languageEdit;
     QList<RGInfo>        photoList;
     QList<RGBackend*>    backendRGList;
     RGBackend*           currentBackend;
@@ -286,7 +286,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
     d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
-    d->languageEdit  = new KComboBox(d->UGridContainer);
+    d->languageEdit  = new QComboBox(d->UGridContainer);
 
     /// @todo Is there a ready-made widget for this?
     d->languageEdit->addItem(i18n("English"),       "en");
@@ -335,7 +335,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     d->languageEdit->addItem(i18n("Vietnamese"),    "vi");
 
     d->serviceLabel    = new QLabel(i18n("Select service:"), d->UGridContainer);
-    d->serviceComboBox = new KComboBox(d->UGridContainer);
+    d->serviceComboBox = new QComboBox(d->UGridContainer);
 
     d->serviceComboBox->addItem(i18n("Open Street Map"));
     d->serviceComboBox->addItem(i18n("Geonames.org place name (non-US)"));

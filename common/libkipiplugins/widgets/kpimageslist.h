@@ -38,7 +38,7 @@
 // KDE includes
 
 #include <kfileitem.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kiconloader.h>
 
 // Local includes

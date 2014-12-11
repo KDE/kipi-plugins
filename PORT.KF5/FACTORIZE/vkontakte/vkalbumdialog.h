@@ -32,7 +32,7 @@
 
 #include <libkvkontakte/albuminfo.h>
 
-class KComboBox;
+class QComboBox;
 class KTextEdit;
 class KLineEdit;
 
@@ -58,8 +58,8 @@ protected:
 
     KLineEdit*              m_titleEdit;
     KTextEdit*              m_summaryEdit;
-    KComboBox*              m_albumPrivacyCombo;
-    KComboBox*              m_commentsPrivacyCombo;
+    QComboBox*              m_albumPrivacyCombo;
+    QComboBox*              m_commentsPrivacyCombo;
 
     Vkontakte::AlbumInfoPtr m_album;
 };

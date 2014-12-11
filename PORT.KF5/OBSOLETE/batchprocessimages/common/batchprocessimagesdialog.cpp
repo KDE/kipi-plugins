@@ -46,7 +46,7 @@ extern "C"
 
 #include <kdeversion.h>
 #include <QApplication>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kio/netaccess.h>

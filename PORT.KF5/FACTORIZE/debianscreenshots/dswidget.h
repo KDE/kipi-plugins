@@ -30,7 +30,7 @@
 
 class QButtonGroup;
 class QNetworkReply;
-class KComboBox;
+class QComboBox;
 class KLineEdit;
 
 namespace KIO
@@ -86,7 +86,7 @@ private:
     QUrl                           m_lastQueryUrl;
 
     KLineEdit*                     m_pkgLineEdit;
-    KComboBox*                     m_versionsComboBox;
+    QComboBox*                     m_versionsComboBox;
     KLineEdit*                     m_descriptionLineEdit;
 
     KIO::AccessManager*            m_httpManager;

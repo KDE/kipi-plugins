@@ -35,7 +35,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klineedit.h>
 #include <ktextedit.h>
 
@@ -69,12 +69,12 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_titleEdt->setWhatsThis(
         i18n("Title of the album that will be created (required)."));
 
-    m_categCoB          = new KComboBox;
+    m_categCoB          = new QComboBox;
     m_categCoB->setEditable(false);
     m_categCoB->setWhatsThis(
         i18n("Category of the album that will be created (required)."));
 
-    m_subCategCoB       = new KComboBox;
+    m_subCategCoB       = new QComboBox;
     m_subCategCoB->setEditable(false);
     m_subCategCoB->setWhatsThis(
         i18n("Subcategory of the album that will be created (optional)."));
@@ -83,7 +83,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
-    m_templateCoB      = new KComboBox;
+    m_templateCoB      = new QComboBox;
     m_templateCoB->setEditable(false);
     m_templateCoB->setWhatsThis(
         i18n("Album template for the new album (optional)."));

@@ -37,7 +37,7 @@
 #include <QApplication>
 #include "kipiplugins_debug.h"
 #include <kmimetype.h>
-#include <kurl.h>
+#include <QUrl>
 #include <krandom.h>
 
 namespace KIPIFlickrExportPlugin

@@ -27,7 +27,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 // Libkipi includes
 

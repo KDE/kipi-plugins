@@ -37,7 +37,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 #include <kio/job.h>
 
 template <class T> class QList;

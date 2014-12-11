@@ -35,7 +35,7 @@
 //KDE includes
 
 #include <kconfig.h>
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPIPlugins
 {

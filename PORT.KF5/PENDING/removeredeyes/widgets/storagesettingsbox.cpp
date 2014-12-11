@@ -32,7 +32,7 @@
 
 #include <klineedit.h>
 #include <klocale.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // Local includes
 
@@ -53,7 +53,7 @@ struct StorageSettingsBox::Private
 
     QCheckBox* keywordCB;
 
-    KComboBox* saveMethodCB;
+    QComboBox* saveMethodCB;
 
     KLineEdit* keywordLineEdit;
     KLineEdit* saveMethodLineEdit;
@@ -79,7 +79,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* const parent)
 
     // ----------------------------------------------------------------
 
-    d->saveMethodCB = new KComboBox;
+    d->saveMethodCB = new QComboBox;
     d->saveMethodCB->insertItem(Subfolder, i18n("Save in Subfolder"));
     d->saveMethodCB->insertItem(Prefix,    i18n("Add Prefix"));
     d->saveMethodCB->insertItem(Suffix,    i18n("Add Suffix"));

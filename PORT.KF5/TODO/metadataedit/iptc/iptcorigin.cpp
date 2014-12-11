@@ -35,7 +35,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kcomponentdata.h>
 #include <kdatewidget.h>
 #include <kdialog.h>

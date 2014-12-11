@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <QMenu>
 #include "kipiplugins_debug.h"
 #include <kconfig.h>

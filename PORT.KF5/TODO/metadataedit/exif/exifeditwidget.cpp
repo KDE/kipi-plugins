@@ -43,7 +43,7 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 #include <kconfiggroup.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Libkipi includes
 

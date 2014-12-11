@@ -33,7 +33,7 @@
 // KDE includes
 
 #include <kdialog.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <knuminput.h>
 #include <kcolorbutton.h>
 
@@ -160,7 +160,7 @@ private:
 
     // quality settings
     QLabel               *m_resizeFilterLabel;
-    KComboBox            *m_resizeFilterComboBox;
+    QComboBox            *m_resizeFilterComboBox;
     KIntNumInput         *m_qualityInput;
 };
 
@@ -317,8 +317,8 @@ private:
     KIntNumInput                     *m_customPaperHeightInput;
     KIntNumInput                     *m_customDpiInput;
 
-    KComboBox                        *m_paperSizeComboBox;
-    KComboBox                        *m_dpiComboBox;
+    QComboBox                        *m_paperSizeComboBox;
+    QComboBox                        *m_dpiComboBox;
 
     QCheckBox                        *m_customSettingsCheckBox;
     QCheckBox                        *m_stretchCheckBox;

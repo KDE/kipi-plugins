@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kdatewidget.h>
 #include <kdialog.h>
 #include <kglobal.h>
@@ -98,9 +98,9 @@ public:
     QPushButton*                   setTodayReleasedBtn;
     QPushButton*                   setTodayExpiredBtn;
 
-    KComboBox*                     priorityCB;
-    KComboBox*                     objectCycleCB;
-    KComboBox*                     objectTypeCB;
+    QComboBox*                     priorityCB;
+    QComboBox*                     objectCycleCB;
+    QComboBox*                     objectTypeCB;
 
     KLineEdit*                     objectTypeDescEdit;
     KLineEdit*                     originalTransEdit;
@@ -182,7 +182,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
-    d->priorityCB    = new KComboBox(this);
+    d->priorityCB    = new QComboBox(this);
     d->priorityCB->insertItem(0, i18nc("editorial urgency of content", "0: None"));
     d->priorityCB->insertItem(1, i18nc("editorial urgency of content", "1: High"));
     d->priorityCB->insertItem(2, "2");
@@ -198,7 +198,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->objectCycleCheck = new MetadataCheckBox(i18n("Cycle:"), this);
-    d->objectCycleCB    = new KComboBox(this);
+    d->objectCycleCB    = new QComboBox(this);
     d->objectCycleCB->insertItem(0, i18n("Morning"));
     d->objectCycleCB->insertItem(1, i18n("Afternoon"));
     d->objectCycleCB->insertItem(2, i18n("Evening"));
@@ -207,7 +207,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->objectTypeCheck    = new MetadataCheckBox(i18n("Type:"), this);
-    d->objectTypeCB       = new KComboBox(this);
+    d->objectTypeCB       = new QComboBox(this);
     d->objectTypeDescEdit = new KLineEdit(this);
     d->objectTypeDescEdit->setClearButtonShown(true);
     d->objectTypeDescEdit->setValidator(asciiValidator);

@@ -37,7 +37,7 @@
 #include "kipiplugins_debug.h"
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Local
 

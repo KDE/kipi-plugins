@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klocale.h>
 #include <knuminput.h>
 
@@ -119,7 +119,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     // TIFF File format.
 
     m_label_TIFFimageCompression = new QLabel(i18n("Image compression algorithm:"));
-    m_TIFFCompressionAlgo        = new KComboBox;
+    m_TIFFCompressionAlgo        = new QComboBox;
     m_TIFFCompressionAlgo->addItem("LZW");
     m_TIFFCompressionAlgo->addItem("JPEG");
     m_TIFFCompressionAlgo->addItem(i18nc("image compression", "None"));
@@ -137,7 +137,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     // TGA File format.
 
     m_label_TGAimageCompression = new QLabel(i18n("Image compression algorithm:"));
-    m_TGACompressionAlgo        = new KComboBox;
+    m_TGACompressionAlgo        = new QComboBox;
     m_TGACompressionAlgo->addItem("RLE");
     m_TGACompressionAlgo->addItem(i18nc("image compression", "None"));
     m_TGACompressionAlgo->setWhatsThis(i18n("Select here the TGA compression algorithm."));

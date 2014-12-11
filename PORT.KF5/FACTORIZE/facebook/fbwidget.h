@@ -32,7 +32,7 @@ class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
 
-class KComboBox;
+class QComboBox;
 class KPushButton;
 
 namespace KIPI
@@ -98,8 +98,8 @@ private:
     KPushButton*                   m_changeUserBtn;
 
     QButtonGroup*                  m_dlGrp;
-    KComboBox*                     m_friendsCoB;
-    KComboBox*                     m_albumsCoB;
+    QComboBox*                     m_friendsCoB;
+    QComboBox*                     m_albumsCoB;
     KPushButton*                   m_newAlbumBtn;
     KPushButton*                   m_reloadAlbumsBtn;
 

@@ -36,7 +36,7 @@ class QRadioButton;
 class QSpinBox;
 class QProgressBar;
 
-class KComboBox;
+class QComboBox;
 class KPushButton;
 
 namespace KIPI
@@ -111,7 +111,7 @@ private:
     QSpinBox*                  m_dimensionSpB;
     QSpinBox*                  m_imageQualitySpB;
 
-    KComboBox*                 m_albumsCoB;
+    QComboBox*                 m_albumsCoB;
 
     KPushButton*               m_newAlbumBtn;
     KPushButton*               m_reloadAlbumsBtn;

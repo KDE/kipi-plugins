@@ -27,7 +27,7 @@
 
 #include <kstandarddirs.h>
 #include "kipiplugins_debug.h"
-#include <kurl.h>
+#include <QUrl>
 
 // Qt includes
 

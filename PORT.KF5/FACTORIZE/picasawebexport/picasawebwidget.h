@@ -46,7 +46,7 @@ class QCheckBox;
 class QRadioButton;
 
 class KPushButton;
-class KComboBox;
+class QComboBox;
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -101,8 +101,8 @@ private:
     QSpinBox*         m_dimensionSpB;
     QSpinBox*         m_imageQualitySpB;
 
-    KComboBox*        m_albumsCoB;
-    KComboBox*        m_dlDimensionCoB;
+    QComboBox*        m_albumsCoB;
+    QComboBox*        m_dlDimensionCoB;
     QButtonGroup*     m_tagsBGrp;
 
     KPushButton*      m_newAlbumBtn;

@@ -29,7 +29,7 @@
 
 class KLineEdit;
 class KTextEdit;
-class KComboBox;
+class QComboBox;
 
 namespace KIPIFacebookPlugin
 {
@@ -52,7 +52,7 @@ private:
     KLineEdit* m_titleEdt;
     KLineEdit* m_locEdt;
     KTextEdit* m_descEdt;
-    KComboBox* m_privacyCoB;
+    QComboBox* m_privacyCoB;
 
     friend class FbWindow;
 };

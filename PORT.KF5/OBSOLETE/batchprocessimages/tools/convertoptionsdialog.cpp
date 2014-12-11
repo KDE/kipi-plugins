@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klocale.h>
 #include <knuminput.h>
 
@@ -96,7 +96,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
     { // TIFF
         QLabel *m_label_imageCompression = new QLabel(i18n("Image compression algorithm:"), box);
         dvlay->addWidget(m_label_imageCompression);
-        m_TIFFCompressionAlgo = new KComboBox(box);
+        m_TIFFCompressionAlgo = new QComboBox(box);
         m_TIFFCompressionAlgo->addItem("LZW");
         m_TIFFCompressionAlgo->addItem("JPEG");
         m_TIFFCompressionAlgo->addItem(i18nc("No TIFF compression", "None"));
@@ -109,7 +109,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
       { // TGA
         QLabel *m_label_imageCompression = new QLabel(i18n("Image compression algorithm:"), box);
         dvlay->addWidget(m_label_imageCompression);
-        m_TGACompressionAlgo = new KComboBox(box);
+        m_TGACompressionAlgo = new QComboBox(box);
         m_TGACompressionAlgo->addItem("RLE");
         m_TGACompressionAlgo->addItem(i18nc("No TGA compression", "None"));
         m_TGACompressionAlgo->setWhatsThis(i18n("Select here the compression algorithm."));

@@ -39,7 +39,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
@@ -193,7 +193,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     m_reloadphotoset             = new QPushButton(accountBox);
     m_reloadphotoset->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_reloadphotoset->setText(i18n("&Reload"));
-    m_albumsListComboBox         = new KComboBox(settingsBox);
+    m_albumsListComboBox         = new QComboBox(settingsBox);
 
     accountLayout->addWidget(userNameLabel,          0, 0);
     accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);

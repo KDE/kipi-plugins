@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 #include <kio/jobclasses.h>
 
 // QtKOAuth includes

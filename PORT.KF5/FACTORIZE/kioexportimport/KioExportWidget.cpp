@@ -36,7 +36,7 @@
 #include "kipiplugins_debug.h"
 #include <khbox.h>
 #include <ktoolinvocation.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 // Local includes
 

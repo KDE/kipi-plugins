@@ -36,7 +36,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <klocale.h>

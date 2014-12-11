@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 #include "kipiplugins_debug.h"
 
 // Libkipi includes

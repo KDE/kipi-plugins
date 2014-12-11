@@ -34,7 +34,7 @@
 
 #include <QApplication>
 #include <kcolorbutton.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kconfig.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>

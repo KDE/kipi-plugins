@@ -65,7 +65,7 @@ extern "C"
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kdeversion.h>
 
 // Libkipi includes

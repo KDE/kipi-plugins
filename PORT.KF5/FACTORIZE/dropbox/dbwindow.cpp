@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klineedit.h>
 #include <QMenu>
 #include <klocale.h>
@@ -50,7 +50,7 @@
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
-#include <kurl.h>
+#include <QUrl>
 #include <ktoolinvocation.h>
 
 // Libkipi includes

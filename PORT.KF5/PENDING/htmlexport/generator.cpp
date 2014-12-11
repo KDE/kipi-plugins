@@ -45,7 +45,7 @@
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
-#include <kurl.h>
+#include <QUrl>
 
 // KIPI
 

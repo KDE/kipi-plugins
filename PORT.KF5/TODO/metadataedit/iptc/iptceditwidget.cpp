@@ -41,7 +41,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 

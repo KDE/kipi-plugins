@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
+#include <QComboBox>
 #include <klocale.h>
 
 // local includes
@@ -51,7 +51,7 @@ public:
         cbMapLayout = 0;
     }
 
-    KComboBox* cbMapLayout;
+    QComboBox* cbMapLayout;
 };
 
 SetupGeneral::SetupGeneral(QWidget* const parent)
@@ -60,7 +60,7 @@ SetupGeneral::SetupGeneral(QWidget* const parent)
     QVBoxLayout* const mainLayout  = new QVBoxLayout(this);
 
     QHBoxLayout* const hboxLayout1 = new QHBoxLayout();
-    d->cbMapLayout                 = new KComboBox(this);
+    d->cbMapLayout                 = new QComboBox(this);
     d->cbMapLayout->addItem(i18n("One map"), QVariant::fromValue(MapLayoutOne));
     d->cbMapLayout->addItem(i18n("Two maps - horizontal"), QVariant::fromValue(MapLayoutHorizontal));
     d->cbMapLayout->addItem(i18n("Two maps - vertical"), QVariant::fromValue(MapLayoutVertical));

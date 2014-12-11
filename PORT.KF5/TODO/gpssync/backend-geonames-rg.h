@@ -29,7 +29,7 @@
 
 //kde includes
 
-#include <kurl.h>
+#include <QUrl>
 
 //Qt includes
 

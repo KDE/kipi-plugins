@@ -142,7 +142,7 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
 //    CanvasEditTool * m_parent;
 
     QMap<QString, BackgroundType> background_types;
-    KComboBox * background_type_widget;
+    QComboBox * background_type_widget;
     QStackedLayout * background_widgets;
 
     QWidget * background_color_widget;
@@ -155,13 +155,13 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
 //    KUrlRequester * background_image_file;
     QPixmap background_image_empty_pixmap;
     QPushButton * background_image_label;
-    KComboBox * background_image_scalling;
+    QComboBox * background_image_scalling;
     QMap<ScallingType, QString> background_image_scalling_map;
     QCheckBox * background_image_tiled;
     QGroupBox * background_alignBox;
-    KComboBox * background_image_HAlign;
+    QComboBox * background_image_HAlign;
     QMap<Qt::Alignment, QString> background_image_Halignment_map;
-    KComboBox * background_image_VAlign;
+    QComboBox * background_image_VAlign;
     QMap<Qt::Alignment, QString> background_image_Valignment_map;
     QGroupBox * background_sizeBox;
     QSpinBox * background_image_width;
@@ -526,7 +526,7 @@ void CanvasEditTool::setupGUI()
     backgroundGroup->setLayout(backgroundLayout);
     {
         // Background type widget
-        d->background_type_widget = new KComboBox(backgroundGroup);
+        d->background_type_widget = new QComboBox(backgroundGroup);
         d->background_type_widget->addItems( d->background_types.keys() );
         backgroundLayout->addRow(i18n("Type"), d->background_type_widget);
 
@@ -556,7 +556,7 @@ void CanvasEditTool::setupGUI()
         d->background_image_label->setIcon(QIcon(d->background_image_empty_pixmap));
         d->background_image_label->setIconSize(d->background_image_empty_pixmap.size());
 
-        d->background_image_scalling = new KComboBox(d->background_image_widget);
+        d->background_image_scalling = new QComboBox(d->background_image_widget);
         d->background_image_scalling->addItems(d->background_image_scalling_map.values());
         d->background_image_scalling->setEnabled(false);
         d->backgroundImageFormLayout->addRow(i18n("Scaling"), d->background_image_scalling);
@@ -569,11 +569,11 @@ void CanvasEditTool::setupGUI()
         d->background_alignBox = new QGroupBox(i18n("Alignment"));
         QFormLayout * alignForm = new QFormLayout();
         d->background_alignBox->setLayout(alignForm);
-            d->background_image_HAlign = new KComboBox(d->background_image_widget);
+            d->background_image_HAlign = new QComboBox(d->background_image_widget);
             d->background_image_HAlign->addItems(d->background_image_Halignment_map.values());
             d->background_image_HAlign->setEnabled(false);
             alignForm->addRow(i18n("Horizontal"), d->background_image_HAlign);
-            d->background_image_VAlign = new KComboBox(d->background_image_widget);
+            d->background_image_VAlign = new QComboBox(d->background_image_widget);
             d->background_image_VAlign->addItems(d->background_image_Valignment_map.values());
             d->background_image_VAlign->setEnabled(false);
             alignForm->addRow(i18n("Vertical"), d->background_image_VAlign);

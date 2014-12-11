@@ -37,7 +37,7 @@
 
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
-#include <kcombobox.h>
+#include <QComboBox>
 
 using namespace KIPIPhotoLayoutsEditor;
 

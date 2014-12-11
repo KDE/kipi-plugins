@@ -43,7 +43,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <kcombobox.h>
+#include <QComboBox>
 #include <kpushbutton.h>
 #include <klineedit.h>
 #include <kcompletion.h>
@@ -138,7 +138,7 @@ DsWidget::DsWidget(QWidget* const parent)
             this, SLOT(slotFindVersionsForPackageFinished(QNetworkReply*)));
 
     QLabel* const versionLabel = new QLabel(i18n("Software version:"), pkgGroupBox);
-    m_versionsComboBox         = new KComboBox(pkgGroupBox);
+    m_versionsComboBox         = new QComboBox(pkgGroupBox);
     m_versionsComboBox->setEditable(false);
     m_versionsComboBox->setEnabled(false); // Disable until we have a package name
     m_versionsComboBox->setMinimumContentsLength(40);

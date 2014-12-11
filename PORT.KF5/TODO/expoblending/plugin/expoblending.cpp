@@ -28,7 +28,7 @@
 #include <QApplication>
 #include <kcmdlineargs.h>
 #include <klocale.h>
-#include <kurl.h>
+#include <QUrl>
 #include <QIcon>
 #include <kconfig.h>
 #include <kglobal.h>

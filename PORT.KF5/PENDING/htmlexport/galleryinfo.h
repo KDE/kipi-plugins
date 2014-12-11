@@ -29,7 +29,7 @@
 #include <QList>
 
 // KDE
-#include <kurl.h>
+#include <QUrl>
 
 // KIPI
 #include <imagecollection.h>

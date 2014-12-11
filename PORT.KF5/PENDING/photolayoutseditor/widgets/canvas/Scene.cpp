@@ -74,7 +74,7 @@
 #include <QApplication>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
-#include <kurl.h>
+#include <QUrl>
 
 using namespace KIPIPhotoLayoutsEditor;
 

@@ -30,7 +30,7 @@
 // KDE includes
 
 #include <kfiledialog.h>
-#include <kurl.h>
+#include <QUrl>
 
 namespace KIPI
 {
