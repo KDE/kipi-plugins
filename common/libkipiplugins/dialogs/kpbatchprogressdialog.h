@@ -28,10 +28,7 @@
 // Qt includes
 
 #include <QCloseEvent>
-
-// KDE includes
-
-#include <kdialog.h>
+#include <QDialog>
 
 // Libkdcraw includes
 
@@ -99,7 +96,7 @@ private:
 
 // --------------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPBatchProgressDialog : public KDialog
+class KIPIPLUGINS_EXPORT KPBatchProgressDialog : public QDialog
 {
     Q_OBJECT
 
@@ -108,11 +105,15 @@ public:
     explicit KPBatchProgressDialog(QWidget* const parent=0, const QString& caption=QString());
     ~KPBatchProgressDialog();
 
-    KPBatchProgressWidget* progressWidget();
+    KPBatchProgressWidget* progressWidget() const;
 
 private Q_SLOTS:
 
     void slotCancel();
+
+private:
+
+    KPBatchProgressWidget* m_progress;
 };
 
 }  // namespace KIPIPlugins
