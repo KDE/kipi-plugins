@@ -42,6 +42,7 @@ extern "C"
 // KDE includes
 
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
