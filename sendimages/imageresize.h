@@ -27,9 +27,6 @@
 
 #include <QString>
 #include <QMutex>
-
-// KDE includes
-
 #include <QUrl>
 
 // Libkdcraw includes

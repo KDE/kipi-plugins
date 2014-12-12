@@ -310,7 +310,8 @@ void KPImagesListView::setup(int iconSize)
     header()->setResizeMode(User5, QHeaderView::Interactive);
     header()->setResizeMode(User6, QHeaderView::Stretch);
 
-    connect(this, &KPImagesListView::itemClicked, this, &KPImagesListView::slotItemClicked);
+    connect(this, &KPImagesListView::itemClicked,
+            this, &KPImagesListView::slotItemClicked);
 }
 
 void KPImagesListView::enableDragAndDrop(const bool enable)
@@ -576,16 +577,20 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     if (d->iface)
     {
-        connect(d->iface, &Interface::gotThumbnail, this, &KPImagesList::slotThumbnail);
+        connect(d->iface, &Interface::gotThumbnail, 
+                this, &KPImagesList::slotThumbnail);
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, &KPRawThumbThread::signalRawThumb, this, &KPImagesList::slotRawThumb);
+    connect(d->loadRawThumb, &KPRawThumbThread::signalRawThumb, 
+            this, &KPImagesList::slotRawThumb);
 
-    connect(d->listView, &KPImagesListView::signalItemClicked, this, &KPImagesList::signalItemClicked);
+    connect(d->listView, &KPImagesListView::signalItemClicked, 
+            this, &KPImagesList::signalItemClicked);
 
-    connect(d->listView, &KPImagesListView::signalContextMenuRequested, this, &KPImagesList::signalContextMenuRequested);
+    connect(d->listView, &KPImagesListView::signalContextMenuRequested, 
+            this, &KPImagesList::signalContextMenuRequested);
 
     // queue this connection because itemSelectionChanged is emitted
     // while items are deleted, and accessing selectedItems at that
@@ -596,21 +601,29 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    connect(d->addButton, &CtrlButton::clicked, this, &KPImagesList::slotAddItems);
+    connect(d->addButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotAddItems);
 
-    connect(d->removeButton, &CtrlButton::clicked, this, &KPImagesList::slotRemoveItems);
+    connect(d->removeButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotRemoveItems);
 
-    connect(d->moveUpButton, &CtrlButton::clicked, this, &KPImagesList::slotMoveUpItems);
+    connect(d->moveUpButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotMoveUpItems);
 
-    connect(d->moveDownButton, &CtrlButton::clicked, this, &KPImagesList::slotMoveDownItems);
+    connect(d->moveDownButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotMoveDownItems);
 
-    connect(d->clearButton, &CtrlButton::clicked, this, &KPImagesList::slotClearItems);
+    connect(d->clearButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotClearItems);
 
-    connect(d->loadButton, &CtrlButton::clicked, this, &KPImagesList::slotLoadItems);
+    connect(d->loadButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotLoadItems);
 
-    connect(d->saveButton, &CtrlButton::clicked, this, &KPImagesList::slotSaveItems);
+    connect(d->saveButton, &CtrlButton::clicked, 
+            this, &KPImagesList::slotSaveItems);
 
-    connect(d->progressTimer, &QTimer::timeout, this, &KPImagesList::slotProgressTimerDone);
+    connect(d->progressTimer, &QTimer::timeout, 
+            this, &KPImagesList::slotProgressTimerDone);
 
     // --------------------------------------------------------
 

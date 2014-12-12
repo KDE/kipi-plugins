@@ -88,27 +88,27 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
     setMinimumSize(QSize(400, 300));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QFrame* const vbox        = new QFrame(this);
+    QFrame* const vbox         = new QFrame(this);
     QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
     vbox->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
     vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
-    QLabel* space1   = new QLabel(vbox);
-    d->progressLabel = new QLabel(vbox);
+    QLabel* const space1   = new QLabel(vbox);
+    d->progressLabel       = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    QLabel* space2   = new QLabel(vbox);
-    d->thumbLabel    = new QLabel(vbox);
+    QLabel* const space2   = new QLabel(vbox);
+    d->thumbLabel          = new QLabel(vbox);
     d->thumbLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    QLabel* space3   = new QLabel(vbox);
-    d->textLabel     = new QLabel(vbox);
+    QLabel* const space3   = new QLabel(vbox);
+    d->textLabel           = new QLabel(vbox);
     d->textLabel->setScaledContents(true);
     d->textLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     QWidget* const hbox        = new QWidget(vbox);
     QHBoxLayout* const hboxLay = new QHBoxLayout(hbox);
-    QLabel* space4   = new QLabel(hbox);
-    d->button        = new QPushButton(hbox);
+    QLabel* const space4       = new QLabel(hbox);
+    d->button                  = new QPushButton(hbox);
     d->button->hide();
-    QLabel* space5   = new QLabel(hbox);
+    QLabel* const space5       = new QLabel(hbox);
 
     hboxLay->addWidget(space4);
     hboxLay->addWidget(d->button);
@@ -116,7 +116,7 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
     hboxLay->setStretchFactor(space4, 10);
     hboxLay->setStretchFactor(space5, 10);
 
-    QLabel* space6   = new QLabel(vbox);
+    QLabel* const space6 = new QLabel(vbox);
 
     vboxLay->addWidget(space1);
     vboxLay->addWidget(d->progressLabel);
@@ -143,9 +143,11 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
 
     d->progressTimer = new QTimer(this);
 
-    connect(d->progressTimer, &QTimer::timeout, this, &KPPreviewManager::slotProgressTimerDone);
+    connect(d->progressTimer, &QTimer::timeout,
+            this, &KPPreviewManager::slotProgressTimerDone);
 
-    connect(d->button, &QPushButton::clicked, this, &KPPreviewManager::signalButtonClicked);
+    connect(d->button, &QPushButton::clicked,
+            this, &KPPreviewManager::signalButtonClicked);
 }
 
 KPPreviewManager::~KPPreviewManager()
