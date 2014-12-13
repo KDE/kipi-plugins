@@ -38,6 +38,7 @@ extern "C"
 #include <QTextStream>
 #include <QStandardPaths>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -45,7 +46,6 @@ extern "C"
 #include <kconfiggroup.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // Libkipi includes
 
@@ -517,7 +517,8 @@ void KmlExport::generate()
     if (defectImage)
     {
         /** @todo if defectImage==count there are no pictures exported, does is it worth to continue? */
-        KMessageBox::information(QApplication::activeWindow(),
+        QMessageBox::information(QApplication::activeWindow(),
+                                 i18n("Missing position"),
                                  i18np("No position data for 1 picture",
                                        "No position data for %1 pictures", defectImage));
     }
