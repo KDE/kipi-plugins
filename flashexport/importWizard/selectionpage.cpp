@@ -25,13 +25,11 @@
 // Qt includes
 
 #include <QVBoxLayout>
+#include <QIcon>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
-#include <kstandarddirs.h>
-#include <kiconloader.h>
 
 // Libkipi includes
 
@@ -97,7 +95,7 @@ void SelectionPage::setPageContent(int choice)
     }
 
     setPageWidget(d->vbox);
-    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
+    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
 }
 
 SelectionPage::~SelectionPage()
