@@ -34,6 +34,7 @@
 #include <QPointer>
 #include <QTemporaryDir>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -44,7 +45,6 @@
 #include <kio/job.h>
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kstandardguiitem.h>
 #include <ktoolinvocation.h>
@@ -257,11 +257,12 @@ void SimpleViewer::slotProcess()
     if(d->canceled)
     {
 
-        int ret = KMessageBox::warningYesNo(QApplication::activeWindow(),
-                                            i18n("Export was canceled.\n"
-                                                 "Do you want to delete files in %1 that have already been created?",
-                                                 d->settings->exportUrl.path()));
-        if(ret == KMessageBox::Yes)
+        int ret = QMessageBox::warning(QApplication::activeWindow(),
+                                       i18n("Export was canceled"),
+                                       i18n("Do you want to delete files in %1 that have already been created?",
+                                            d->settings->exportUrl.path()),
+                                       QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
+        if(ret == QMessageBox::Yes)
         {
             auto deleteJob = KIO::file_delete(d->settings->exportUrl);
             KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
