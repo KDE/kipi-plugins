@@ -35,14 +35,15 @@
 #include <QTextStream>
 #include <QApplication>
 #include <QTemporaryDir>
+#include <QMessageBox>
 
 // KDE includes
 
-#include <kguiitem.h>
+#include <kstandardguiitem.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
+#include <kmessagebox.h>
 
 // Libkipi includes
 
