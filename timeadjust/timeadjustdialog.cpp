@@ -45,15 +45,16 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kwindowconfig.h>
+#include <kstandardguiitem.h>
 
 // Local includes
 
@@ -392,9 +393,9 @@ void TimeAdjustDialog::slotApplyClicked()
     }
     else
     {
-        KMessageBox::error(QApplication::activeWindow(),
-                           i18n("Select at least one option"),
-                           i18n("Adjust Time & Date"));
+        QMessageBox::critical(QApplication::activeWindow(),
+                              i18n("Adjust Time & Date"),
+                              i18n("Select at least one option"));
     }
 }
 
