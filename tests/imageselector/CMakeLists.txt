@@ -13,6 +13,7 @@ add_executable(imageselector ${imageselector_SRCS})
 
 target_link_libraries(imageselector
                       Qt5::Gui
+                      Qt5::Core
                       KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}

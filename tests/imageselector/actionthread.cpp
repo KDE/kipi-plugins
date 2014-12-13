@@ -114,11 +114,14 @@ void ActionThread::rotate(const QList<QUrl>& list)
         Task* const job = new Task();
         job->fileUrl    = url;
 
-        connect(job, &Task::signalStarted, this, &ActionThread::slotJobStarted);
+        connect(job, &Task::signalStarted, 
+                this, &ActionThread::slotJobStarted);
 
-        connect(job, &Task::signalProgress, this, &ActionThread::slotJobProgress);
+        connect(job, &Task::signalProgress, 
+                this, &ActionThread::slotJobProgress);
 
-        connect(job, &Task::signalDone, this, &ActionThread::slotJobDone);
+        connect(job, &Task::signalDone, 
+                this, &ActionThread::slotJobDone);
 
         collection.insert(job, 0);
 
