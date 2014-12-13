@@ -102,8 +102,8 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->postProcessing = new KPBatchProgressWidget(vbox);
     d->postProcessing->hide();
 
-    vbox->setSpacing(KDialog::spacingHint());
-    vbox->setMargin(KDialog::spacingHint());
+    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     setPageWidget(vbox);
 

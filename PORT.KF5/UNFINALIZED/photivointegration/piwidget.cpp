@@ -90,14 +90,14 @@ PIWidget::PIWidget(QWidget* const parent /* = 0 */)
     infoBoxLayout->addWidget(d->info);
     infoBoxLayout->addStretch(10);
     infoBoxLayout->setAlignment(d->photivoLink, Qt::AlignTop);
-    infoBoxLayout->setSpacing(KDialog::spacingHint());
-    infoBoxLayout->setMargin(KDialog::spacingHint());
+    infoBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    infoBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // horizontal layout: image list on the left side; link and info on the right
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
     mainLayout->addWidget(d->imagesList);
     mainLayout->addWidget(infoBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     // update image info after selected image has changed

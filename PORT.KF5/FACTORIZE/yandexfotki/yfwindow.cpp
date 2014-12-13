@@ -154,8 +154,8 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     accountBoxLayout->addWidget(m_loginLabel, 0, 1);
 
     accountBoxLayout->addWidget(m_changeUserButton, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
@@ -279,8 +279,8 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     optionsBoxLayout->setRowStretch(14, 10);
 
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -294,12 +294,12 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);

@@ -275,7 +275,7 @@ XMPProperties::XMPProperties(QWidget* const parent)
     grid->setRowStretch(8, 10);
     grid->setColumnStretch(4, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

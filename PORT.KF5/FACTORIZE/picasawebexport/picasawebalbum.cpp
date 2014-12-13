@@ -81,8 +81,8 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Description:"), m_descEdt);
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Location:"), m_locEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(KDialog::spacingHint());
-    albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     albumBox->setLayout(albumBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -105,8 +105,8 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
 
     QFormLayout* const privBoxLayout = new QFormLayout;
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
-    privBoxLayout->setSpacing(KDialog::spacingHint());
-    privBoxLayout->setMargin(KDialog::spacingHint());
+    privBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    privBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     privBox->setLayout(privBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -114,7 +114,7 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
     QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(privBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
     mainWidget->setLayout(mainLayout);
 }

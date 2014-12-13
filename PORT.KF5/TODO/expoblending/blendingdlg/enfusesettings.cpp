@@ -151,8 +151,8 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
     grid->addWidget(d->contrastInput,   5, 1, 1, 1);
     grid->addWidget(d->ciecam02CB,      6, 0, 1, 2);
     grid->setRowStretch(7, 10);
-    grid->setMargin(KDialog::spacingHint());
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 

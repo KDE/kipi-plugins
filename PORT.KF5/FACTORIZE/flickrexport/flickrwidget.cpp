@@ -203,8 +203,8 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     accountLayout->addWidget(m_newAlbumBtn,          1, 2,Qt::AlignLeft);
     accountLayout->addWidget(m_reloadphotoset,       1, 2,Qt::AlignRight);
     accountLayout->setColumnStretch(1, 10);
-    accountLayout->setSpacing(KDialog::spacingHint());
-    accountLayout->setMargin(KDialog::spacingHint());
+    accountLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // -- Layout for the tags -------------------------------------------------
 
@@ -341,10 +341,10 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     resizingBoxLayout->addWidget(m_resizeCheckBox,      1, 0, 1, 4);
     resizingBoxLayout->addWidget(resizeLabel,           2, 1, 1, 2);
     resizingBoxLayout->addWidget(m_dimensionSpinBox,    2, 3, 1, 1);
-    resizingBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
+    resizingBoxLayout->setColumnMinimumWidth(0, QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     resizingBoxLayout->setColumnStretch(1, 10);
-    resizingBoxLayout->setSpacing(KDialog::spacingHint());
-    resizingBoxLayout->setMargin(KDialog::spacingHint());
+    resizingBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    resizingBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // -- Put it all together -------------------------------------------------
 
@@ -354,13 +354,13 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     settingsBoxLayout->addWidget(m_sendOriginalCheckBox);
     settingsBoxLayout->addWidget(m_resizingBox);
     settingsBoxLayout->addStretch(10);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     flickrWidgetLayout->addWidget(headerLabel);
     flickrWidgetLayout->addWidget(line);
     flickrWidgetLayout->addWidget(m_tab, 5);
-    flickrWidgetLayout->setSpacing(KDialog::spacingHint());
+    flickrWidgetLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     flickrWidgetLayout->addWidget(m_progressBar);
     flickrWidgetLayout->setMargin(0);
 

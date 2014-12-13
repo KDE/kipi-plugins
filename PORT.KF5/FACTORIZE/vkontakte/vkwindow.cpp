@@ -177,12 +177,12 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(m_settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);

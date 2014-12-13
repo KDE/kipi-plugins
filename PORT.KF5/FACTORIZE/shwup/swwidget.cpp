@@ -94,8 +94,8 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
     accountBoxLayout->addWidget(m_changeUserBtn,        1, 0, 1, 4);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
@@ -158,8 +158,8 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     optionsBoxLayout->addWidget(dimensionLbl,       2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,     2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
@@ -168,14 +168,14 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     settingsBoxLayout->addWidget(albBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     updateLabels();  // use empty labels until login

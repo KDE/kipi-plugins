@@ -77,7 +77,7 @@ YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotk
 
     QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainWidget->setLayout(mainLayout);
 }
 

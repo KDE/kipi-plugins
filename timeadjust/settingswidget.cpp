@@ -196,8 +196,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->useCustomDateTodayBtn->setIcon(SmallIcon("go-jump-today"));
     d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
 
-    useGBLayout->setMargin(KDialog::spacingHint());
-    useGBLayout->setSpacing(KDialog::spacingHint());
+    useGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    useGBLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     useGBLayout->setColumnStretch(1, 1);
     useGBLayout->setColumnStretch(2, 1);
     useGBLayout->addWidget(d->useApplDateBtn,         0, 0, 1, 1);
@@ -234,8 +234,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->adjTimeInput->setDisplayFormat("hh:mm:ss");
     d->adjDetByClockPhotoBtn    = new QPushButton(i18n("Determine difference from clock photo"));
 
-    adjustGBLayout->setMargin(KDialog::spacingHint());
-    adjustGBLayout->setSpacing(KDialog::spacingHint());
+    adjustGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    adjustGBLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     adjustGBLayout->setColumnStretch(0, 1);
     adjustGBLayout->setColumnStretch(1, 1);
     adjustGBLayout->setColumnStretch(3, 1);
@@ -260,8 +260,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->updXMPDateCheck          = new QCheckBox(i18n("XMP"),                d->updateSettingsBox);
     d->updFileNameCheck         = new QCheckBox(i18n("Filename"),           d->updateSettingsBox);
 
-    updateGBLayout->setMargin(KDialog::spacingHint());
-    updateGBLayout->setSpacing(KDialog::spacingHint());
+    updateGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    updateGBLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     updateGBLayout->setColumnStretch(0, 1);
     updateGBLayout->setColumnStretch(1, 1);
     updateGBLayout->addWidget(d->updAppDateCheck,     0, 0, 1, 1);

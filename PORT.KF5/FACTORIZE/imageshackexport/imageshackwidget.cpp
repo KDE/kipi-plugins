@@ -103,8 +103,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     accountBoxLayout->addWidget(accountEmail,         1, 0, 1, 1);
     accountBoxLayout->addWidget(m_accountEmailLbl,    1, 1, 1, 2);
     accountBoxLayout->addWidget(m_chgRegCodeBtn,      2, 0, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ----------------------------------------------
 
@@ -219,8 +219,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     resizeOptionsLayout->addWidget(m_widthSpb,      4, 2, 1, 2);
     resizeOptionsLayout->addWidget(heightLbl,       5, 1, 1, 2);
     resizeOptionsLayout->addWidget(m_heightSpb,     5, 2, 1, 2);
-    resizeOptionsLayout->setSpacing(KDialog::spacingHint());
-    resizeOptionsLayout->setMargin(KDialog::spacingHint());
+    resizeOptionsLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    resizeOptionsLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_tagsFld             = new QLineEdit(settingsBox);
     QLabel* const tagsLbl = new QLabel(i18n("Tags (optional):"), settingsBox);
@@ -234,8 +234,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     optionsBoxLayout->addWidget(m_tagsFld,          2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_remBarChb,        3, 0, 1, 2);
     optionsBoxLayout->setRowStretch(4, 10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_progressBar         = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
@@ -248,14 +248,14 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     settingsBoxLayout->addWidget(m_galleriesBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     updateLabels();

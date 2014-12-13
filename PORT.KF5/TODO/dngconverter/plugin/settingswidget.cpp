@@ -159,8 +159,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->conflictButtonGroup->setExclusive(true);
     d->overwriteButton->setChecked(true);
 
-    vlay->setMargin(KDialog::spacingHint());
-    vlay->setSpacing(KDialog::spacingHint());
+    vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
@@ -174,8 +174,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     settingsBoxLayout->addWidget(d->conflictLabel,         7, 0, 1, 1);
     settingsBoxLayout->addWidget(conflictBox,              8, 0, 1, 1);
     settingsBoxLayout->setRowStretch(9, 10);
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     connect(dngLogoLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(processUrl(QString)));

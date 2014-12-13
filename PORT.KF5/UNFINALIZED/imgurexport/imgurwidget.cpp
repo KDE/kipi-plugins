@@ -125,8 +125,8 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 //    accountBoxLayout->addWidget(userNameDisplayLbl,   0, 2, 1, 2);
     accountBoxLayout->addWidget(d->changeUserBtn,        2, 0, 1, 2);
 
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
 //    connect(d->dlg, SIGNAL(signalWalletOpened(bool)),
 //            this, SLOT(slotSetLoggedUser(bool)));
@@ -149,14 +149,14 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     settingsBoxLayout->addStretch(10);
 //    settingsBoxLayout->setAlignment(d->textLbl, Qt::AlignTop);
     settingsBoxLayout->setAlignment(d->progressBar, Qt::AlignBottom);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // -------------------------------------------------------------------------
 
     mainLayout->addWidget(d->imagesList, 0, 0, 2, 1);
     mainLayout->addWidget(settingsBox, 0, 1, Qt::AlignTop);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     connect(d->imagesList, SIGNAL(signalAddItems(QUrl::List)),

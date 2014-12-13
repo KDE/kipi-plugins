@@ -80,8 +80,8 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent)
     albumBoxLayout->addRow(i18nc("new facebook album", "Description:"), m_descEdt);
     albumBoxLayout->addRow(i18nc("new facebook album", "Privacy:"),     m_privacyCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(KDialog::spacingHint());
-    albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainWidget->setLayout(albumBoxLayout);
 }
 

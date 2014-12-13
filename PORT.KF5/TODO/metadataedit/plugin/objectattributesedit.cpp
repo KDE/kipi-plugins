@@ -179,7 +179,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* const parent, bool ascii, in
     grid->setColumnStretch(0, 10);
     grid->setColumnStretch(4, 100);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

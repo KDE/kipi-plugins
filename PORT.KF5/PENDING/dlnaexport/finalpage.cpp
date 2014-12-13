@@ -115,7 +115,7 @@ FinalPage::FinalPage(QWidget* const parent)
     mainLayout->addWidget(d->imgList);
     mainLayout->addWidget(d->startButton);
     mainLayout->addWidget(d->stopButton);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     // ------------------------------------------------------------------------

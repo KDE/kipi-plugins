@@ -165,7 +165,7 @@ EXIFAdjust::EXIFAdjust(QWidget* const parent)
     grid->setColumnStretch(1, 10);
     grid->setRowStretch(6, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

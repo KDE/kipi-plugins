@@ -74,14 +74,14 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     centerLayout->addWidget(m_passwdEdit, 1, 1);
     centerLayout->addWidget(nameLabel,    0, 0);
     centerLayout->addWidget(passwdLabel,  1, 0);
-    centerLayout->setMargin(KDialog::spacingHint());
-    centerLayout->setSpacing(KDialog::spacingHint());
+    centerLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    centerLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     vbox->addWidget(m_headerLabel);
     vbox->addWidget(hline);
     vbox->addLayout(centerLayout);
     vbox->setMargin(0);
-    vbox->setSpacing(KDialog::spacingHint());
+    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     resize(QSize(300, 150).expandedTo(minimumSizeHint()));
 

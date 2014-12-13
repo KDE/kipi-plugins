@@ -36,7 +36,6 @@
 
 // KDE includes
 
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 
 namespace KIPISendimagesPlugin
@@ -211,8 +210,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     grid2->addWidget(d->imageCompression,      2, 1, 1, 2);
     grid2->setRowStretch(4, 10);
     grid2->setColumnStretch(2, 10);
-    grid2->setMargin(KDialog::spacingHint());
-    grid2->setSpacing(KDialog::spacingHint());
+    grid2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     grid2->setAlignment(Qt::AlignTop);
 
     // --------------------------------------------------------
@@ -227,7 +226,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     grid->setRowStretch(5, 10);
     grid->setColumnStretch(3, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //---------------------------------------------
 

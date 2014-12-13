@@ -150,7 +150,7 @@ IPTCStatus::IPTCStatus(QWidget* const parent)
     grid->setColumnStretch(2, 10);
     grid->setRowStretch(10, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

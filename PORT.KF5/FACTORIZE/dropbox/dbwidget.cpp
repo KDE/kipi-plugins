@@ -93,8 +93,8 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
     accountBoxLayout->addWidget(m_changeUserBtn,      1,0,1,4);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //-------------------------------------------------------------
 
@@ -151,8 +151,8 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,   2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3,10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -165,14 +165,14 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     settingsBoxLayout->addWidget(albBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //--------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     updateLabels();

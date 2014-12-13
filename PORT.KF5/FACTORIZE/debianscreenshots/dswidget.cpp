@@ -168,7 +168,7 @@ DsWidget::DsWidget(QWidget* const parent)
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 }
 

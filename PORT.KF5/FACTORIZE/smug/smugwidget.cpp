@@ -111,8 +111,8 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     accountBoxLayout->addWidget(m_emailLbl,             3, 0, 1, 1);
     accountBoxLayout->addWidget(m_email,                3, 1, 1, 1);
     accountBoxLayout->addWidget(m_changeUserBtn,        4, 1, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
@@ -191,8 +191,8 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     optionsBoxLayout->addWidget(dimensionLbl,       2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,     2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -206,14 +206,14 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     updateLabels();  // use empty labels until login

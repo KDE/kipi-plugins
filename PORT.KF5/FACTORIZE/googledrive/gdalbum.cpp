@@ -59,8 +59,8 @@ GDNewAlbum::GDNewAlbum(QWidget* const parent):KDialog(parent)
     QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("folder edit","Title:"),m_titleEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(KDialog::spacingHint());
-    albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainWidget->setLayout(albumBoxLayout);
 }
 

@@ -95,8 +95,8 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     albumBoxLayout->addRow(i18nc("new smug album dialog", "Description:"), m_descEdt);
     albumBoxLayout->addRow(i18nc("new smug album dialog", "Template:"), m_templateCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(KDialog::spacingHint());
-    albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     albumBox->setLayout(albumBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -129,15 +129,15 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
     privBoxLayout->addRow(i18n("Password:"), m_passwdEdt);
     privBoxLayout->addRow(i18n("Password Hint:"), m_hintEdt);
-    privBoxLayout->setSpacing(KDialog::spacingHint());
-    privBoxLayout->setMargin(KDialog::spacingHint());
+    privBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    privBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     m_privBox->setLayout(privBoxLayout);
 
     // ------------------------------------------------------------------------
     QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(m_privBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
     mainWidget->setLayout(mainLayout);
 

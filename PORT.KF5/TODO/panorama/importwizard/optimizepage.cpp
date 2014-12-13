@@ -156,8 +156,8 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     QLabel* space4                  = new QLabel(vbox);
     vbox->setStretchFactor(space4, 10);
 
-    vbox->setSpacing(KDialog::spacingHint());
-    vbox->setMargin(KDialog::spacingHint());
+    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     setPageWidget(vbox);
 

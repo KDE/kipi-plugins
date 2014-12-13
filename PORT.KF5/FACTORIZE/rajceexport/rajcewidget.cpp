@@ -107,8 +107,8 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     accountBoxLayout->addWidget(m_userNameLbl,   2, 0, 1, 1);
     accountBoxLayout->addWidget(m_userName,      2, 1, 1, 1);
     accountBoxLayout->addWidget(m_changeUserBtn, 3, 1, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
@@ -163,8 +163,8 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     optionsBoxLayout->addWidget(dimensionLbl,      1, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,    1, 2, 1, 1);
     optionsBoxLayout->setRowStretch(8, 10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -180,14 +180,14 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ------------------------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     update();

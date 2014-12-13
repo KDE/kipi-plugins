@@ -109,7 +109,7 @@ XMPKeywords::XMPKeywords(QWidget* const parent)
     grid->setColumnStretch(0, 10);
     grid->setRowStretch(5, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

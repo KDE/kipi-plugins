@@ -171,7 +171,7 @@ struct Wizard::Private
         // spacers
         QGridLayout* layout = new QGridLayout(content);
         layout->setMargin(0);
-        layout->setSpacing(KDialog::spacingHint());
+        layout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
         // Create widgets
         Theme::ParameterList parameterList      = theme->parameterList();

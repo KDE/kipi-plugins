@@ -80,7 +80,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* const parent, const QString& tit
     grid->addWidget(d->valueCheck, 0, 0, 1, 1);
     grid->addWidget(d->editor,     1, 0, 1, 1);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

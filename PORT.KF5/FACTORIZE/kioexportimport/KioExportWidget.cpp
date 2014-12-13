@@ -82,7 +82,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     layout->addWidget(hbox);
     layout->addWidget(m_targetSearchButton);
     layout->addWidget(m_imageList);
-    layout->setSpacing(KDialog::spacingHint());
+    layout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     layout->setMargin(0);
 
     // ------------------------------------------------------------------------

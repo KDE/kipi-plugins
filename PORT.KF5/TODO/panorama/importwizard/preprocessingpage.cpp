@@ -141,8 +141,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     vbox->setStretchFactor(space1, 2);
     vbox->setStretchFactor(space3, 2);
     vbox->setStretchFactor(space4, 10);
-    vbox->setSpacing(KDialog::spacingHint());
-    vbox->setMargin(KDialog::spacingHint());
+    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     setPageWidget(vbox);
 

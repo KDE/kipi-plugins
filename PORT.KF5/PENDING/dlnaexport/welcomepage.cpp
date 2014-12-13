@@ -109,12 +109,12 @@ WelcomePage::WelcomePage(QWidget* const parent)
     settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 1, 2);
     settingsBoxLayout->addWidget(d->getImplementationLbl,    3, 0, 1, 1);
     settingsBoxLayout->addWidget(d->implementationGetOption, 3, 1, 1, 1);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     mainLayout->addWidget(d->iconLbl,                        1, 0, 1, 2, Qt::AlignCenter);
     mainLayout->addWidget(d->titleLbl,                       2, 0, 1, 2, Qt::AlignCenter);
     mainLayout->addWidget(settingsBox,                       3, 0, 5, 2);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),

@@ -276,7 +276,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     grid->setColumnStretch(3, 10);
     grid->setRowStretch(14, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

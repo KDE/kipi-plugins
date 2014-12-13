@@ -77,8 +77,8 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent, VkAPI* const vkapi)
     accountBoxLayout->addWidget(loginDescLabel,     0, 0);
     accountBoxLayout->addWidget(m_loginLabel,       0, 1);
     accountBoxLayout->addWidget(m_changeUserButton, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));

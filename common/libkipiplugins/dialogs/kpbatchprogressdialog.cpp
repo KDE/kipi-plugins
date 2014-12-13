@@ -103,7 +103,7 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
    : RVBox(parent), d(new Private)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    layout()->setSpacing(KDialog::spacingHint());
+    layout()->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     d->actionsList = new QListWidget(this);
     d->actionsList->setSortingEnabled(false);

@@ -105,8 +105,8 @@ XMPContent::XMPContent(QWidget* const parent)
                                             syncOptions);
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), syncOptions);
 
-    vlay->setMargin(KDialog::spacingHint());
-    vlay->setSpacing(KDialog::spacingHint());
+    vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay->addWidget(d->syncJFIFCommentCheck);
     vlay->addWidget(d->syncHOSTCommentCheck);
     vlay->addWidget(d->syncEXIFCommentCheck);
@@ -134,7 +134,7 @@ XMPContent::XMPContent(QWidget* const parent)
     grid->setRowStretch(6, 10);
     grid->setColumnStretch(2, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 

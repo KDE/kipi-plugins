@@ -258,7 +258,7 @@ WmWidget::WmWidget(QWidget* const parent)
     QLabel* const longitudeLabel = new QLabel(d->fileBox);
     longitudeLabel->setText(i18n("Longitude:"));
 
-    uploadBoxLayout->setSpacing(KDialog::spacingHint());
+    uploadBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     uploadBoxLayout->addWidget(d->fileBox, 0, Qt::AlignTop);
 
     fileBoxLayout->addWidget(titleLabel,       1, 0,1,1);
@@ -511,8 +511,8 @@ WmWidget::WmWidget(QWidget* const parent)
     optionsBoxLayout->addWidget(d->removeMetaChB,   3, 0, 1, 2);
     optionsBoxLayout->addWidget(d->removeGeoChB,    4, 0, 1, 2);
     optionsBoxLayout->setRowStretch(3, 10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     d->settingsExpander->addItem(d->optionsBox, i18n("Options"), QString("options"), true);
     d->settingsExpander->setItemIcon(2, SmallIcon("system-run"));
@@ -539,7 +539,7 @@ WmWidget::WmWidget(QWidget* const parent)
 
     mainLayout->addWidget(d->headerLbl);
     mainLayout->addWidget(wrapper);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->addWidget(d->progressBar);
     mainLayout->setMargin(0);
 

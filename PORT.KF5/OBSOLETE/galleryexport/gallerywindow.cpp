@@ -163,16 +163,16 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
     hlay2->addWidget(resizeLabel);
     hlay2->addWidget(dimensionSpinBox);
-    hlay2->setSpacing(KDialog::spacingHint());
-    hlay2->setMargin(KDialog::spacingHint());
+    hlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    hlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // ---------------------------------------------------------------------------
 
     vlay2->addWidget(resizeCheckBox);
     vlay2->addLayout(hlay2);
     vlay2->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    vlay2->setSpacing(KDialog::spacingHint());
-    vlay2->setMargin(KDialog::spacingHint());
+    vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     optionsBox->setLayout(vlay2);
 
@@ -181,8 +181,8 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     vlay->addWidget(newAlbumBtn);
     vlay->addWidget(addPhotoBtn);
     vlay->addWidget(optionsBox);
-    vlay->setSpacing(KDialog::spacingHint());
-    vlay->setMargin(KDialog::spacingHint());
+    vlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     optionFrame->setLayout(vlay);
 
@@ -191,8 +191,8 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     hlay->addWidget(logo);
     hlay->addWidget(albumView);
     hlay->addWidget(optionFrame);
-    hlay->setSpacing(KDialog::spacingHint());
-    hlay->setMargin(KDialog::spacingHint());
+    hlay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    hlay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     widget->setLayout(hlay);
 }

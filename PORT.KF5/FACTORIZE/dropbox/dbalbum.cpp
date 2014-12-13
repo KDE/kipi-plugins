@@ -62,8 +62,8 @@ DBNewAlbum::DBNewAlbum(QWidget* const parent)
     QFormLayout* const albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18nc("album edit","Title:"),m_titleEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(KDialog::spacingHint());
-    albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainWidget->setLayout(albumBoxLayout);
     connect(m_titleEdt, SIGNAL(textChanged(QString)), this, SLOT(slotTextChanged(QString)));
 }
