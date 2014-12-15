@@ -28,17 +28,13 @@
 #include <QStandardPaths>
 #include <QApplication>
 #include <QMessageBox>
+#include <QStandardPaths>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kjobwidgets.h>
-#include <khelpmenu.h>
-#include <kpushbutton.h>
-#include <ktoolinvocation.h>
-#include <kstandarddirs.h>
 #include <kconfig.h>
-#include <kglobalsettings.h>
 #include <kio/netaccess.h>
 
 // Libkipi includes
@@ -267,16 +263,16 @@ bool ImportWizardDlg::checkIfPluginInstalled()
     switch(d->settings->plugType)
     {
         case 0:
-            return ! KStandardDirs::locate("data","kipiplugin_flashexport/simpleviewer/simpleviewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/simpleviewer/simpleviewer.swf").isEmpty();
             break;
         case 1:
-            return ! KStandardDirs::locate("data","kipiplugin_flashexport/autoviewer/autoviewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/autoviewer/autoviewer.swf").isEmpty();
             break;
         case 2:
-            return ! KStandardDirs::locate("data","kipiplugin_flashexport/tiltviewer/TiltViewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/tiltviewer/TiltViewer.swf").isEmpty();
             break;
         case 3:
-            return ! KStandardDirs::locate("data","kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty();
             break;
         default:
             qCDebug(KIPIPLUGINS_LOG) << "Unknown plugin type";

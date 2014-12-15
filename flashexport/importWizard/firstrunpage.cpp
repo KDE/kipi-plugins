@@ -28,16 +28,14 @@
 #include <QPixmap>
 #include <QFrame>
 #include <QLayout>
+#include <QIcon>
 
 // KDE includes
 
-#include <kstandarddirs.h>
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
 #include <kurlrequester.h>
-#include <kiconloader.h>
 
 // Libkipi includes
 
@@ -104,7 +102,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
             this, SLOT(slotUrlSelected(QUrl)));
 
     setPageWidget(vbox);
-    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
+    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
 }
 
 FirstRunPage::~FirstRunPage()

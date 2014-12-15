@@ -32,12 +32,12 @@
 #include <QLineEdit>
 #include <QApplication>
 #include <QStyle>
+#include <QIcon>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kurlrequester.h>
-#include <kiconloader.h>
 
 // Libkdcraw includes
 
@@ -201,7 +201,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     // ------------------------------------------------------------------------
 
     setPageWidget(vbox);
-    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
+    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
 }
 
 GeneralPage::~GeneralPage()

@@ -26,13 +26,12 @@
 
 #include <QLabel>
 #include <QPixmap>
+#include <QIcon>
+#include <QComboBox>
 
 // KDE includes
 
-#include <kstandarddirs.h>
 #include <klocalizedstring.h>
-#include <QComboBox>
-#include <kiconloader.h>
 
 // Local includes
 
@@ -47,12 +46,12 @@ namespace KIPIFlashExportPlugin
 ProgressPage::ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("Exporting..."))
 {
-    SimpleViewer* simple               = mngr->simpleView();
-    KPBatchProgressWidget* progresswdg = simple->progressWidget();
+    SimpleViewer* const simple               = mngr->simpleView();
+    KPBatchProgressWidget* const progresswdg = simple->progressWidget();
     progresswdg->show();
 
     setPageWidget(progresswdg);
-    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
+    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
 }
 
 ProgressPage::~ProgressPage()

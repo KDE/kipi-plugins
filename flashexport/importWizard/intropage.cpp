@@ -27,12 +27,11 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QComboBox>
+#include <QIcon>
 
 // KDE includes
 
-#include <kstandarddirs.h>
 #include <klocalizedstring.h>
-#include <kiconloader.h>
 
 // Libkdcraw includes
 
@@ -113,7 +112,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
 
 
     setPageWidget(vbox);
-    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
+    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
 }
 
 IntroPage::~IntroPage()

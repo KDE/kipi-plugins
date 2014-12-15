@@ -45,8 +45,8 @@
 #include <kio/job.h>
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 #include <kstandardguiitem.h>
+#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
 // Libkdcraw includes
@@ -148,21 +148,21 @@ void SimpleViewer::appendPluginFiles(int pluginType)
             d->simpleViewerFiles.append("autoviewer.swf");
             d->simpleViewerFiles.append("swfobject.js");
             d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/autoviewer/", true);
-                    d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/autoviewer/");
+            d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/autoviewer/");
             break;
         case 2:
             d->simpleViewerFiles.clear();
             d->simpleViewerFiles.append("TiltViewer.swf");
             d->simpleViewerFiles.append("swfobject.js");
             d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/tiltviewer/", true);
-                        d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/tiltviewer/");
+            d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/tiltviewer/");
             break;
         case 3:
             d->simpleViewerFiles.clear();
             d->simpleViewerFiles.append("viewer.swf");
             d->simpleViewerFiles.append("swfobject.js");
             d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/postcardviewer/", true);
-                        d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/postcardviewer/");
+            d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/postcardviewer/");
             break;
         default:
             break;

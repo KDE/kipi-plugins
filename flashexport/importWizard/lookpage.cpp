@@ -30,13 +30,12 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QApplication>
+#include <QIcon>
 
 // KDE includes
 
 #include <kcolorbutton.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
-#include <kiconloader.h>
 
 // Libkdcraw includes
 
@@ -493,7 +492,7 @@ void LookPage::setPageContent(int plugType)
     // ------------------------------------------------------------------------
 
     setPageWidget(d->vbox);
-    setLeftBottomPix(DesktopIcon("kipi-flash", 128));
+    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
 }
 
 void LookPage::setSettings(const SimpleViewerSettingsContainer* const settings)
