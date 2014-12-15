@@ -27,6 +27,7 @@
 #include <QMenu>
 #include <QStandardPaths>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -38,7 +39,6 @@
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kglobalsettings.h>
-#include <kmessagebox.h>
 #include <kio/netaccess.h>
 
 // Libkipi includes
@@ -134,13 +134,18 @@ ImportWizardDlg::~ImportWizardDlg()
 
 void ImportWizardDlg::slotActivate()
 {
-    if(d->mngr->installPlugin(d->firstrunPage->getUrl()))
+    if (d->mngr->installPlugin(d->firstrunPage->getUrl()))
+    {
         setValid(d->firstrunPage->page(),true);
+    }
     else
-        KMessageBox::error(this, i18n("<p>SimpleViewer installation failed. </p>"
-                                      "<p>Please check if:</p>"
-                                      "<p>- archive corresponds to plugin selected on previous page.</p>"
-                                      "<p>- archive is up-to-date and is not corrupted.</p>"));
+    {
+        QMessageBox::critical(this, i18n("SimpleViewer installation failed"),
+                              i18n("<p>Failed to install SimpleViewer. </p>"
+                                   "<p>Please check if:</p>"
+                                   "<p>- archive corresponds to plugin selected on previous page.</p>"
+                                   "<p>- archive is up-to-date and is not corrupted.</p>"));
+    }
 }
 
 void ImportWizardDlg::slotFinishEnable()
@@ -182,7 +187,8 @@ void ImportWizardDlg::next()
     {
         if (d->selectionPage->isSelectionEmpty(d->settings->imgGetOption))
         {
-            KMessageBox::sorry(this, i18n("You must select at least one collection to export."));
+            QMessageBox::information(this, i18n("Problem to export collection"),
+                                     i18n("You must select at least one collection to export."));
             return;
         }
     }
@@ -217,32 +223,35 @@ bool ImportWizardDlg::checkIfFolderExist()
 {
     if(KIO::NetAccess::exists(d->settings->exportUrl, KIO::NetAccess::DestinationSide, QApplication::activeWindow()))
     {
-        int ret = KMessageBox::warningYesNoCancel(this,
-                                                  i18n("Target folder %1 already exists.\n"
-                                                       "Do you want to overwrite it? All data in this folder will be lost.",
-                                                       d->settings->exportUrl.path()));
+        int ret = QMessageBox::warning(this, i18n("Target Directory Exists"),
+                                       i18n("Target folder %1 already exists.\n"
+                                            "Do you want to overwrite it? All data in this folder will be lost.",
+                                            d->settings->exportUrl.path()),
+                                       QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)
+                                      );
 
         switch(ret)
         {
-            case KMessageBox::Yes:
+            case QMessageBox::Yes:
             {
                 auto deleteJob = KIO::file_delete(d->settings->exportUrl);
                 KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
 
                 if(!deleteJob->exec())
                 {
-                    KMessageBox::error(this, i18n("Could not delete %1.\n"
-                                       "Please choose another export folder.",
-                                       d->settings->exportUrl.path()));
+                    QMessageBox::critical(this, i18n("Cannot Delete Directory"),
+                                          i18n("Could not delete %1.\n"
+                                               "Please choose another export folder.",
+                                               d->settings->exportUrl.path()));
                     return false;
                 }
 
                 return true;
             }
-            case KMessageBox::No:
+            case QMessageBox::No:
                 return false;
 
-            case KMessageBox::Cancel:
+            case QMessageBox::Cancel:
                 return false;
 
             default:
