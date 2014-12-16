@@ -1,0 +1,9 @@
+Kipi-plugins 4.6.0 - Release date: 2014/12/14
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 302306 - HTML export crashes digiKam with floating cards theme.
+002 ==> 341379 - Advanced slideshow crashes if it runs manually backwards [patch].
