@@ -15,6 +15,9 @@ macro(DETECT_LIBKIPI MIN_VERSION)
         if(KF5Kipi_FOUND)
             set(KF5Kipi_LIBRARIES KF5::Kipi)
             get_target_property(KF5Kipi_INCLUDE_DIRS KF5::Kipi INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5Kipi_FOUND TRUE)
+        else()
+            set(KF5Kipi_FOUND FALSE)
         endif()
 
     else()
@@ -24,6 +27,9 @@ macro(DETECT_LIBKIPI MIN_VERSION)
 
         if(NOT KF5Kipi_FOUND)
             message(ERROR "libkipi : local library not found")
+            set(KF5Kipi_FOUND FALSE)
+        else()
+            set(KF5Kipi_FOUND TRUE)            
         endif()
 
         set(KF5Kipi_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkipi/src ${CMAKE_BINARY_DIR}/extra/libkipi/src ${CMAKE_BINARY_DIR}/extra/libkipi)
@@ -53,6 +59,8 @@ macro(DETECT_LIBKIPI MIN_VERSION)
 
 endmacro()
 
+###########################################################################################################################################"
+
 macro(DETECT_LIBKDCRAW MIN_VERSION)
 
     if (NOT DIGIKAMSC_COMPILE_LIBKDCRAW)
@@ -63,6 +71,9 @@ macro(DETECT_LIBKDCRAW MIN_VERSION)
         if(KF5KDcraw_FOUND)
             set(KF5KDcraw_LIBRARIES KF5::KDcraw)
             get_target_property(KF5KDcraw_INCLUDE_DIRS KF5::KDcraw INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5KDcraw_FOUND TRUE)
+        else()
+            set(KF5KDcraw_FOUND FALSE)
         endif()
 
     else()
@@ -72,6 +83,9 @@ macro(DETECT_LIBKDCRAW MIN_VERSION)
 
         if(NOT KF5KDcraw_FOUND)
             message(ERROR "libkdcraw : local library not found")
+            set(KF5KDcraw_FOUND FALSE)
+        else()
+            set(KF5KDcraw_FOUND TRUE)            
         endif()
 
         set(KF5KDcraw_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkdcraw/src ${CMAKE_BINARY_DIR}/extra/libkdcraw/src ${CMAKE_BINARY_DIR}/extra/libkdcraw)
@@ -85,6 +99,8 @@ macro(DETECT_LIBKDCRAW MIN_VERSION)
 
 endmacro()
 
+###########################################################################################################################################"
+
 macro(DETECT_LIBKEXIV2 MIN_VERSION)
 
     if (NOT DIGIKAMSC_COMPILE_LIBKEXIV2)
@@ -95,6 +111,9 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
         if(KF5KExiv2_FOUND)
             set(KF5KExiv2_LIBRARIES KF5::KExiv2)
             get_target_property(KF5KExiv2_INCLUDE_DIRS KF5::KExiv2 INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5KExiv2_FOUND TRUE)
+        else()
+            set(KF5KExiv2_FOUND FALSE)
         endif()
 
     else()
@@ -104,6 +123,9 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
 
         if(NOT KF5KExiv2_FOUND)
             message(ERROR "libkexiv2 : local library not found")
+            set(KF5KExiv2_FOUND FALSE)
+        else()
+            set(KF5KExiv2_FOUND TRUE) 
         endif()
 
         set(KF5KExiv2_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkexiv2/src ${CMAKE_BINARY_DIR}/extra/libkexiv2/src ${CMAKE_BINARY_DIR}/extra/libkexiv2)
@@ -117,6 +139,8 @@ macro(DETECT_LIBKEXIV2 MIN_VERSION)
 
 endmacro()
 
+###########################################################################################################################################"
+
 macro(DETECT_LIBKFACE MIN_VERSION)
 
     if (NOT DIGIKAMSC_COMPILE_LIBKFACE)
@@ -127,6 +151,9 @@ macro(DETECT_LIBKFACE MIN_VERSION)
         if(KF5KFace_FOUND)
             set(KF5KFace_LIBRARIES KF5::KFace)
             get_target_property(KF5KFace_INCLUDE_DIRS KF5::KFace INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5KFace_FOUND TRUE)
+        else()
+            set(KF5KFace_FOUND FALSE)
         endif()
 
     else()
@@ -136,6 +163,9 @@ macro(DETECT_LIBKFACE MIN_VERSION)
 
         if(NOT KF5KFace_FOUND)
             message(ERROR "libkface : local library not found")
+            set(KF5KFace_FOUND FALSE)
+        else()
+            set(KF5KFace_FOUND TRUE) 
         endif()
 
         set(KF5KFace_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkface/src ${CMAKE_BINARY_DIR}/extra/libkface/src ${CMAKE_BINARY_DIR}/extra/libkface)
@@ -149,6 +179,8 @@ macro(DETECT_LIBKFACE MIN_VERSION)
 
 endmacro()
 
+###########################################################################################################################################"
+
 macro(DETECT_LIBKGEOMAP MIN_VERSION)
 
     if (NOT DIGIKAMSC_COMPILE_LIBKGEOMAP)
@@ -159,6 +191,9 @@ macro(DETECT_LIBKGEOMAP MIN_VERSION)
         if(KF5KGeomap_FOUND)
             set(KF5KGeomap_LIBRARIES KF5::KGeomap)
             get_target_property(KF5KGeomap_INCLUDE_DIRS KF5::KGeomap INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5KGeomap_FOUND TRUE)
+        else()
+            set(KF5KGeomap_FOUND FALSE)
         endif()
 
     else()
@@ -168,6 +203,9 @@ macro(DETECT_LIBKGEOMAP MIN_VERSION)
 
         if(NOT KF5KGeomap_FOUND)
             message(ERROR "libkgeomap : local library not found")
+            set(KF5KGeomap_FOUND FALSE)
+        else()
+            set(KF5KGeomap_FOUND TRUE) 
         endif()
 
         set(KF5KGeomap_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/extra/libkgeomap/src ${CMAKE_BINARY_DIR}/extra/libkgeomap/src ${CMAKE_BINARY_DIR}/extra/libkgeomap)
