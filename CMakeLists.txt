@@ -58,17 +58,25 @@ cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 find_package(ECM ${ECM_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${kipi-plugins_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
 
+# Cmake macros
 include(GenerateExportHeader)
+include(CheckFunctionExists)
+include(FeatureSummary)
+# ECM macros
+include(ECMOptionalAddSubdirectory)
+include(ECMAddTests)
+include(ECMMarkNonGuiExecutable)
 include(ECMGenerateHeaders)
 include(ECMGeneratePriFile)
 include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
-include(FeatureSummary)
+include(ECMInstallIcons)
+# KDE macros
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings)
-include(ECMInstallIcons)
-
+include(KDECompilerSettings)
+# Local macros
 include(MacroUtils)
 include(MacroLocalLibs)
 
