@@ -161,9 +161,9 @@ if(KF5Kipi_FOUND)
     PRINT_LIBRARY_STATUS("libjpeg"   "http://www.ijg.org"                                               "(version >= 6b)"                    JPEG_FOUND)
     PRINT_LIBRARY_STATUS("libtiff"   "http://www.remotesensing.org/libtiff"                             "(version >= 3.8.2)"                 TIFF_FOUND)
     PRINT_LIBRARY_STATUS("libpng"    "http://www.libpng.org/pub/png/libpng.html"                        "(version >= 1.2.7)"                 PNG_FOUND)
-    PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= 5.0.0"                  KF5Kipi_FOUND)
-    PRINT_LIBRARY_STATUS("libkexiv2" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2" "(version >= 5.0.0)"                 KF5KExiv2_FOUND)
-    PRINT_LIBRARY_STATUS("libkdcraw" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw" "(version >= 5.0.0)"                 KF5KDcraw_FOUND)
+    PRINT_LIBRARY_STATUS("libkipi"   "https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi"   "(version >= ${KIPI_MIN_VERSION}))"  KF5Kipi_FOUND)
+    PRINT_LIBRARY_STATUS("libkexiv2" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2" "(version >= ${KEXIV2_MIN_VERSION})" KF5KExiv2_FOUND)
+    PRINT_LIBRARY_STATUS("libkdcraw" "https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw" "(version >= ${KDCRAW_MIN_VERSION})" KF5KDcraw_FOUND)
 
     # Optional shared libraries results.
 
