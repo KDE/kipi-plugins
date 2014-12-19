@@ -934,7 +934,7 @@ void KPImagesList::slotLoadItems()
     QUrl loadLevelsFile;
 
     loadLevelsFile = QFileDialog::getOpenFileUrl(this, i18n("Select the image file list to load"),
-                                                 QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
+                                                 QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
                                                  QString( "*" ));
 
     if ( loadLevelsFile.isEmpty() )
@@ -994,7 +994,7 @@ void KPImagesList::slotSaveItems()
 {
     QUrl saveLevelsFile;
     saveLevelsFile = QFileDialog::getSaveFileUrl(this, i18n("Select the image file list to save"),
-                                                 QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
+                                                 QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
                                                  QString( "*" ));
 
     qDebug(KIPIPLUGINS_LOG) << "file url " << saveLevelsFile.toDisplayString();

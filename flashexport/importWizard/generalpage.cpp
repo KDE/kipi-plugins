@@ -107,7 +107,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
 
     QGroupBox* box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
     QVBoxLayout* vlay2 = new QVBoxLayout(box2);
-    d->exportUrl       = new KUrlRequester(QUrl(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")), this);
+    d->exportUrl       = new KUrlRequester(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")), this);
     d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
 
     vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
