@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011-2013 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -35,6 +35,7 @@
 #include <QTemporaryDir>
 #include <QApplication>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -47,7 +48,6 @@
 #include <klocalizedstring.h>
 #include <kstandardguiitem.h>
 #include <kstandarddirs.h>
-#include <ktoolinvocation.h>
 
 // Libkdcraw includes
 
@@ -275,8 +275,9 @@ void SimpleViewer::slotProcess()
         d->progressWdg->addedAction(i18nc("Flash export has finished", "Finished..."),
                                     SuccessMessage);
         emit signalProcessingDone();
+
         if(d->settings->openInKonqueror)
-            KToolInvocation::invokeBrowser(d->settings->exportUrl.path());
+            QDesktopServices::openUrl(d->settings->exportUrl);
     }
 }
 

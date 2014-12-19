@@ -29,11 +29,11 @@
 #include <QFrame>
 #include <QLayout>
 #include <QIcon>
+#include <QDesktopServices>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ktoolinvocation.h>
 #include <kurllabel.h>
 #include <kurlrequester.h>
 
@@ -87,7 +87,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     QLabel* info2   = new QLabel(vbox);
     info2->setText(i18n("<p>1.) Download plugin from the following url:</p>"));
 
-    KUrlLabel* link = new KUrlLabel(vbox);
+    KUrlLabel* const link = new KUrlLabel(vbox);
     link->setText("http://www.simpleviewer.net");
     link->setUrl("http://www.simpleviewer.net");
 
@@ -112,7 +112,7 @@ FirstRunPage::~FirstRunPage()
 
 void FirstRunPage::slotDownload(const QString& url)
 {
-    KToolInvocation::invokeBrowser(url);
+    QDesktopServices::openUrl(QUrl(url));
 }
 
 void FirstRunPage::slotUrlSelected(const QUrl& url)
