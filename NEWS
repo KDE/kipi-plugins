@@ -5,4 +5,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 342046 - In the export menu, Google Drive and Dropbox icons are huge, filling almost all the screen.
+002 ==> 
