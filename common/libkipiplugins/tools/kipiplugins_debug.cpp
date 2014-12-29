@@ -19,4 +19,4 @@
 
 #include "kipiplugins_debug.h"
 
-Q_LOGGING_CATEGORY(KIPIPLUGINS_LOG, "log_kipiplugins")
+Q_LOGGING_CATEGORY(KIPIPLUGINS_LOG, "kipi.plugins")
