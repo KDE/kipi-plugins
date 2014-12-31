@@ -114,10 +114,10 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->nonaBinary());
     d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
     d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif

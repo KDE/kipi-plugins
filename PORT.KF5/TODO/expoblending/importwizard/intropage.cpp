@@ -87,7 +87,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
 #endif
 

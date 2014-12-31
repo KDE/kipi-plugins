@@ -80,11 +80,11 @@ public:
 
     static QString      goodBaseName(const QString& b)
                         {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
                             return b + ".exe";
 #else
                             return b;
-#endif // Q_WS_WIN
+#endif // Q_OS_WIN
                         }
 
 public Q_SLOTS:

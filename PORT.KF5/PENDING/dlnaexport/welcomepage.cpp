@@ -120,7 +120,7 @@ WelcomePage::WelcomePage(QWidget* const parent)
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
             this, SLOT(slotChangeOptions(bool)));
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     d->binariesWidget->setEnabled(false);
 #endif
 }

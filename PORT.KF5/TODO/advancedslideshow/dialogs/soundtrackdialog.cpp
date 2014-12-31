@@ -22,7 +22,7 @@
 
 #include "soundtrackdialog.moc"
 
-#ifdef Q_WS_X11
+#ifdef HAVE_X11
 #include <fixx11h.h>
 #endif
 

@@ -30,7 +30,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-#ifdef Q_WS_X11
+#ifdef HAVE_X11
 #include <QX11Info>
 
 // X11 includes
@@ -38,7 +38,7 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <fixx11h.h>
-#endif // Q_WS_X11
+#endif // HAVE_X11
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -51,7 +51,7 @@ ScreenProperties::ScreenProperties(QWidget* const mainWidget)
 unsigned ScreenProperties::suggestFrameRate()
 {
 // use XRandR only in X11
-#ifndef Q_WS_X11
+#ifndef HAVE_X11
     return 25;
 #else
     int eventBase, errorBase;
@@ -108,7 +108,7 @@ unsigned ScreenProperties::suggestFrameRate()
     //qCDebug(KIPIPLUGINS_LOG) << "using " << bestRate << " Hz as framerate for effects";
     return bestRate;
 
-#endif // Q_WS_X11
+#endif // HAVE_X11
 }
 
 bool ScreenProperties::enableVSync()
