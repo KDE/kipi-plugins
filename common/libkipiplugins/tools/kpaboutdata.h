@@ -52,7 +52,7 @@ public:
                          const QByteArray& pluginVersion            = QByteArray(),
                          enum  KAboutLicense::LicenseKey            = KAboutLicense::GPL,
                          const KLocalizedString& pluginDescription  = KLocalizedString(),
-                         const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2014, kipi-plugins team"));
+                         const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2015, digiKam developers team"));
 
     KPAboutData(const KPAboutData& other);
     virtual ~KPAboutData();
