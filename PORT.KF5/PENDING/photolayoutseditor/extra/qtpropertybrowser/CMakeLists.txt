@@ -23,43 +23,43 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     ${QT_INCLUDE_DIR}
                    )
 
-QT4_GENERATE_MOC(src/qtpropertybrowser.h
+qt5_generate_moc(src/qtpropertybrowser.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowser.cpp
                 )
 
-QT4_GENERATE_MOC(src/qtpropertymanager.h
+qt5_generate_moc(src/qtpropertymanager.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertymanager.cpp
                 )
 
-QT4_GENERATE_MOC(src/qteditorfactory.h
+qt5_generate_moc(src/qteditorfactory.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qteditorfactory.cpp
                 )
 
-QT4_GENERATE_MOC(src/qtvariantproperty.h
+qt5_generate_moc(src/qtvariantproperty.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtvariantproperty.cpp
                 )
 
-QT4_GENERATE_MOC(src/qttreepropertybrowser.h
+qt5_generate_moc(src/qttreepropertybrowser.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qttreepropertybrowser.cpp
                 )
 
-QT4_GENERATE_MOC(src/qtbuttonpropertybrowser.h
+qt5_generate_moc(src/qtbuttonpropertybrowser.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtbuttonpropertybrowser.cpp
                 )
 
-QT4_GENERATE_MOC(src/qtgroupboxpropertybrowser.h
+qt5_generate_moc(src/qtgroupboxpropertybrowser.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtgroupboxpropertybrowser.cpp
                 )
 
-QT4_GENERATE_MOC(src/qtpropertymanager.cpp
+qt5_generate_moc(src/qtpropertymanager.cpp
                  ${CMAKE_CURRENT_BINARY_DIR}/qtpropertymanager.moc
                 )
 
-QT4_GENERATE_MOC(src/qteditorfactory.cpp
+qt5_generate_moc(src/qteditorfactory.cpp
                  ${CMAKE_CURRENT_BINARY_DIR}/qteditorfactory.moc
                 )
 
-QT4_GENERATE_MOC(src/qttreepropertybrowser.cpp
+qt5_generate_moc(src/qttreepropertybrowser.cpp
                  ${CMAKE_CURRENT_BINARY_DIR}/qttreepropertybrowser.moc
                 )
 
@@ -81,7 +81,7 @@ set_source_files_properties(${qtpropertyeditor_HEADERS_ONLY_MOC}
                             HEADER_FILE_ONLY true
                            )
 
-QT4_GENERATE_MOC(src/qtpropertybrowserutils_p.h
+qt5_generate_moc(src/qtpropertybrowserutils_p.h
                  ${CMAKE_CURRENT_BINARY_DIR}/moc_qtpropertybrowserutils_p.cpp
                 )
 
@@ -94,11 +94,11 @@ set(qtpropertyeditor_MOC
     ${qtpropertyeditor_HEADERS_ONLY_MOC}
    )
 
-QT4_ADD_RESOURCES(qtpropertyeditor_RESOURCES
+qt5_add_resources(qtpropertyeditor_RESOURCES
                   src/qtpropertybrowser.qrc
                  )
 
-QT4_ADD_RESOURCES(RESOURCE_SRCS src/qtpropertybrowser.qrc)
+qt5_add_resources(RESOURCE_SRCS src/qtpropertybrowser.qrc)
 
 set(SRCS ${extension_MOC}
         ${qtpropertyeditor_MOC}

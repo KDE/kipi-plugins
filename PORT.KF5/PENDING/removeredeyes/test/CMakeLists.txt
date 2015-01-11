@@ -13,7 +13,8 @@ if(NOT WIN32)
 
     set(testipp_SRCS testForIPP.cpp)
 
-    KDE4_ADD_EXECUTABLE(testipp NOGUI
+    add_executable(testipp
+ecm_mark_nongui_executable(testipp)
                         ${testipp_SRCS}
                        )
 

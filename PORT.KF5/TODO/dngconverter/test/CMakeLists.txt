@@ -9,7 +9,8 @@
 
 set(dngvalidate_SRCS ../dngwriter/extra/dng_sdk/dng_validate.cpp)
 
-KDE4_ADD_EXECUTABLE(dngvalidate NOGUI ${dngvalidate_SRCS})
+add_executable(dngvalidate ${dngvalidate_SRCS})
+ecm_mark_nongui_executable(dngvalidate)
 
 target_link_libraries(dngvalidate libdng ${CMAKE_THREAD_LIBS_INIT})
 
@@ -18,18 +19,19 @@ target_link_libraries(dngvalidate libdng ${CMAKE_THREAD_LIBS_INIT})
 
 set(raw2dng_SRCS raw2dng.cpp)
 
-KDE4_ADD_EXECUTABLE(raw2dng NOGUI
+add_executable(raw2dng
+ecm_mark_nongui_executable(raw2dng)
                     ${libdngwriter_SRCS}
                     ${raw2dng_SRCS}
                    )
 
 target_link_libraries(raw2dng
-                      ${KDE4_KDECORE_LIBS}
-                      ${KDE4_KIO_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
+                      KF5::KDELibs4Support
+                      KF5::KIOCore
+                      
                       ${QT_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::KExiv2
+                      KF5::KDcraw
                       ${CMAKE_THREAD_LIBS_INIT}
                       libdng
                       KF5kipiplugins

@@ -4,16 +4,16 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-KDE4_ADD_EXECUTABLE(gpssync_test_simpletreemodel
+add_executable(gpssync_test_simpletreemodel
                     test_simpletreemodel.cpp
                     simpletreemodel.cpp
                     ../../borrowed/modeltest.cpp
                    )
 
 target_link_libraries(gpssync_test_simpletreemodel
-                      ${KDE4_KDECORE_LIBS}
-                      ${QT_QTTEST_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
+                      KF5::KDELibs4Support
+                      Qt5::Test
+                      Qt5::Gui
                       KF5kipiplugins
                      )
 

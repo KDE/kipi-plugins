@@ -9,12 +9,13 @@
 
 set(dnginfo_SRCS dnginfo.cpp)
 
-KDE4_ADD_EXECUTABLE(dnginfo NOGUI ${dnginfo_SRCS})
+add_executable(dnginfo ${dnginfo_SRCS})
+ecm_mark_nongui_executable(dnginfo)
 
 target_link_libraries(dnginfo
                       libdng
-                      ${KDE4_KDECORE_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
+                      KF5::KDELibs4Support
+                      
                       ${QT_LIBRARIES}
                       ${EXPAT_LIBRARY}
                       ${CMAKE_THREAD_LIBS_INIT}

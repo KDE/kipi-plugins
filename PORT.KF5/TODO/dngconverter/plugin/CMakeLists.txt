@@ -15,14 +15,14 @@ endif()
 
 KDE4_ADD_APP_ICON(dngconverter_SRCS "../icons/*kipi-dngconverter.png")
 
-KDE4_ADD_EXECUTABLE(dngconverter ${dngconverter_SRCS})
+add_executable(dngconverter ${dngconverter_SRCS})
 
 target_link_libraries(dngconverter
-                      ${KDE4_KIO_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::KIOCore
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::ThreadWeaver
+                      KF5::KDcraw
                       ${CMAKE_THREAD_LIBS_INIT}
                       KF5kipiplugins
                       libdng
@@ -36,14 +36,14 @@ install(PROGRAMS dngconverter.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 set(kipiplugin_dngconverter_PART_SRCS plugin_dngconverter.cpp ${dngconverter_common_SRCS})
 
-KDE4_ADD_PLUGIN(kipiplugin_dngconverter ${kipiplugin_dngconverter_PART_SRCS})
+add_library(kipiplugin_dngconverter MODULE ${kipiplugin_dngconverter_PART_SRCS})
 
 target_link_libraries(kipiplugin_dngconverter
-                      ${KDE4_KPARTS_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
+                      KF5::Parts
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::ThreadWeaver
+                      KF5::KDcraw
                       ${CMAKE_THREAD_LIBS_INIT}
                       KF5kipiplugins
                       libdng

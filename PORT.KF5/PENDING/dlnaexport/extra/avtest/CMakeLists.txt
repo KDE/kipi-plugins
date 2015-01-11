@@ -24,7 +24,7 @@ set(AvTest_SRCS
     mediarenderer_window.cpp
    )
 
-QT4_WRAP_UI(AvTest_FORMS
+ki18n_wrap_ui(AvTest_FORMS
             controlpoint.ui
             mainwindow.ui
             mediarenderer_connectionwindow.ui
@@ -42,16 +42,16 @@ foreach(_currentfile ${SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_EXECUTABLE(avtest ${SRCS})
+add_executable(avtest ${SRCS})
 
 target_link_libraries(avtest
                       HUpnp
                       HUpnpAv
-                      ${KDE4_KDEUI_LIBS}
-                      ${KDE4_PHONON_LIBS}
+                      
+                      Phonon::phonon4qt5
                       ${QT_LIBRARIES}
-                      ${QT_QTNETWORK_LIBRARY}
-                      ${QT_QTXML_LIBRARY}
+                      Qt5::Network
+                      Qt5::Xml
                       ${QT_QTXMLPATTERNS_LIBRARY}
                      )
 

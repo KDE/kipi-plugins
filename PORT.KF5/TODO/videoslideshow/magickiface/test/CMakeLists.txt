@@ -12,13 +12,13 @@ include_directories(${ImageMagick_INCLUDE_DIRS}
 
 set(testmagickiface_SRCS testmagickiface.cpp)
 
-KDE4_ADD_EXECUTABLE(testmagickiface ${testmagickiface_SRCS})
+add_executable(testmagickiface ${testmagickiface_SRCS})
 
 target_link_libraries(testmagickiface
                       magickiface
-                      ${QT_QTTEST_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
-                      ${KDE4_KDECORE_LIBS}
+                      Qt5::Test
+                      Qt5::Gui
+                      KF5::KDELibs4Support
                       ${ImageMagick_LIBRARIES}
                      )
 

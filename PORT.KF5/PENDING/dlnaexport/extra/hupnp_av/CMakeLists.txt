@@ -249,7 +249,7 @@ set(HUpnpAv_MOC_HDRS
     src/transport/havtransport_adapter.h
    )
 
-QT4_WRAP_CPP(HUpnpAv_MOC_SRCS ${HUpnpAv_MOC_HDRS})
+qt5_wrap_cpp(HUpnpAv_MOC_SRCS ${HUpnpAv_MOC_HDRS})
 
 set(SRCS ${HUpnpAv_SRCS} ${HUpnpAv_MOC_SRCS})
 

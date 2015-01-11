@@ -8,7 +8,7 @@ add_subdirectory(test)
 
 include_directories(${ImageMagick_INCLUDE_DIRS}
                     ${QT_INCLUDES}
-                    ${KDE4_INCLUDES}
+                    
                     ${CMAKE_BINARY_DIR}
                    )
 
@@ -23,14 +23,14 @@ foreach(_currentfile ${magickiface_SRCS})
     endif()
 endforeach()
 
-KDE4_ADD_LIBRARY(magickiface STATIC ${magickiface_SRCS})
+add_library(magickiface STATIC ${magickiface_SRCS})
 
 if(NOT MSVC)
     set_target_properties(magickiface PROPERTIES COMPILE_FLAGS "-fPIC")
 endif()
 
 target_link_libraries(magickiface
-                      ${QT_QTGUI_LIBRARY}
-                      ${KDE4_KDECORE_LIBS}
+                      Qt5::Gui
+                      KF5::KDELibs4Support
                       ${ImageMagick_LIBRARIES}
                      )

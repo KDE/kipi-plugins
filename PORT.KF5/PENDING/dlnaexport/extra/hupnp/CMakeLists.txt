@@ -143,7 +143,7 @@ set(HUpnp_MOC_HDRS
     src/utils/hthreadpool_p.h
    )
 
-QT4_WRAP_CPP(HUpnp_MOC_SRCS ${HUpnp_MOC_HDRS})
+qt5_wrap_cpp(HUpnp_MOC_SRCS ${HUpnp_MOC_HDRS})
 
 set(SRCS ${HUpnp_SRCS} ${HUpnp_MOC_SRCS})
 

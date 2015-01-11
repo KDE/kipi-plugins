@@ -44,12 +44,12 @@ add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_P
 target_link_libraries(kipiplugin_advancedslideshow
                       KF5::Parts
                       
-                      ${QT_QTOPENGL_LIBRARY}
+                      Qt5::OpenGL
                       ${OPENGL_LIBRARIES}
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      ${KDE4_PHONON_LIBRARY}
+                      Phonon::phonon4qt5
 
                       # For Linux only.
                       ${X11_LIBRARIES}

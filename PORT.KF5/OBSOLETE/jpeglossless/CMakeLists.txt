@@ -9,7 +9,6 @@ subdirs(icons)
 # enable final triggers: http://bugs.kde.org/show_bug.cgi?id=126326
 # digikam: camera download: auto-rotated images loose EXIF info ...
 # So make sure nofinal is always used here!
-KDE4_NO_ENABLE_FINAL(kipiplugin_jpeglossless)
 
 include_directories(${JPEG_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg
