@@ -7,7 +7,7 @@
 add_subdirectory(test)
 
 include_directories(${ImageMagick_INCLUDE_DIRS}
-                    ${QT_INCLUDES}
+                    
                     
                     ${CMAKE_BINARY_DIR}
                    )

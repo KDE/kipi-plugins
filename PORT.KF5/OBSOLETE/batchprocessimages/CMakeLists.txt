@@ -10,8 +10,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/tools
                     
-                    ${KDE4_INCLUDE_DIR}
-                    ${QT_INCLUDES}
+                    
+                    
                    )
 
 set(kipiplugin_batchprocessimages_PART_SRCS

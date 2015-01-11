@@ -5,7 +5,7 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 include_directories(${ImageMagick_INCLUDE_DIRS}
-                    ${QT_INCLUDES}
+                    
                     ${CMAKE_CURRENT_BINARY_DIR}/../
                     ${CMAKE_CURRENT_SOURCE_DIR}/../
                    )
