@@ -881,6 +881,12 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
             info.removeGeolocationInfo();
         }
 
+        if (shouldWriteCoordinates | shouldRemoveCoordinates)
+        {
+            // See bug #342857: if data was written to the file, the interface must be notified of the changed checksum
+            m_interface->refreshImages(KUrl::List(m_url));
+        }
+
         if (!m_tagList.isEmpty())
         {
             QMap<QString, QVariant> attributes;

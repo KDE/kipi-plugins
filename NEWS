@@ -6,4 +6,5 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 342046 - In the export menu, Google Drive and Dropbox icons are huge, filling almost all the screen.
-002 ==> 
+002 ==> 342857 - Changed files are not reported to host application [patch].
+003 ==> 
