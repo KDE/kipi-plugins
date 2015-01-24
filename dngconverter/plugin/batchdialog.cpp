@@ -7,7 +7,7 @@
  * Description : DNG converter batch dialog
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
  * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
@@ -430,7 +430,6 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         }
     }
 
-
     if (!destFile.isEmpty())
     {
         if (KPMetadata::hasSidecar(tmpFile))
@@ -441,7 +440,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             }
         }
 
-        if (KDE::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
+        if (KDE::rename(tmpFile, destFile) != 0)
         {
             item->setStatus(QString("Failed to save image."));
             d->listView->processed(url, false);
