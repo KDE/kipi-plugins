@@ -5,4 +5,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 342194 - Geolocalisation not possible using google maps: "Malformated Url"
+002 ==> 
