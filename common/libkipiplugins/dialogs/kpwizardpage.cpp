@@ -33,9 +33,14 @@
 
 // KDE includes
 
-#include <kseparator.h>
 #include <kassistantdialog.h>
 #include <kpagewidgetmodel.h>
+
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
+
+using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {
@@ -87,7 +92,7 @@ KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     vboxLay->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vboxLay->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    KSeparator* const line = new KSeparator(Qt::Vertical, panel);
+    RLineWidget* const line = new RLineWidget(Qt::Vertical, panel);
 
     d->hlay->addWidget(vbox);
     d->hlay->addWidget(line);

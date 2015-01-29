@@ -71,11 +71,6 @@ Q_SIGNALS:
 private Q_SLOTS:
 
     /**
-     * Opens the browser with the SimpleViewer download page
-     */
-    void slotDownload(const QString& url);
-
-    /**
      * Starts the installation of SimpleViewer
      */
     void slotUrlSelected(const QUrl& url);

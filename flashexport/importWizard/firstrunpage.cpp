@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kurllabel.h>
 #include <kurlrequester.h>
 
 // Libkipi includes
@@ -73,8 +72,8 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("First Run")),
       d(new Private)
 {
-    RVBox* vbox   = new RVBox(this);
-    QLabel* info1 = new QLabel(vbox);
+    RVBox* const vbox   = new RVBox(this);
+    QLabel* const info1 = new QLabel(vbox);
     info1->setWordWrap(true);
     info1->setText( i18n("<p>SimpleViewer's plugins are Flash components which are free to use, "
                          "but use a license which comes into conflict with several distributions. "
@@ -84,20 +83,24 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
                          "so it is available for further use.</p>"
                          "<p><b>Note: Please download the plugin that you selected on the first page.</b></p>"));
 
-    QLabel* info2   = new QLabel(vbox);
+    QLabel* const info2   = new QLabel(vbox);
     info2->setText(i18n("<p>1.) Download plugin from the following url:</p>"));
 
-    KUrlLabel* const link = new KUrlLabel(vbox);
-    link->setText("http://www.simpleviewer.net");
-    link->setUrl("http://www.simpleviewer.net");
+    QLabel* const link = new QLabel(vbox);
+    link->setAlignment(Qt::AlignRight);
+    link->setToolTip(i18nc("@info:tooltip", "Visit LibRaw project website"));
+    link->setOpenExternalLinks(true);
+    link->setTextFormat(Qt::RichText);
+    link->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
+    link->setText(QString::fromLatin1("<a href=\"%1\">%2</a>")
+                          .arg(QLatin1String("http://www.simpleviewer.net"))
+                          .arg(QLatin1String("http://www.simpleviewer.net")));
 
-    connect(link, SIGNAL(leftClickedUrl(QString)),
-            this, SLOT(slotDownload(QString)));
-
-    QLabel* info3   = new QLabel(vbox);
+    QLabel* const info3   = new QLabel(vbox);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
     d->urlRequester = new KUrlRequester(vbox);
+
     connect(d->urlRequester, SIGNAL(urlSelected(QUrl)),
             this, SLOT(slotUrlSelected(QUrl)));
 
@@ -108,11 +111,6 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
 FirstRunPage::~FirstRunPage()
 {
     delete d;
-}
-
-void FirstRunPage::slotDownload(const QString& url)
-{
-    QDesktopServices::openUrl(QUrl(url));
 }
 
 void FirstRunPage::slotUrlSelected(const QUrl& url)
