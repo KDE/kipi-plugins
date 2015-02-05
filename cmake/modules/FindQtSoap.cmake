@@ -1,5 +1,5 @@
-# - Try to find QtSoap
-# Once done this will define
+#  Try to find QtSoap
+#  Once done this will define
 #
 #  QTSOAP_FOUND - system has QTSOAP
 #  QTSOAP_INCLUDE_DIRS - the QTSOAP include directory
@@ -24,6 +24,7 @@ else (QTSOAP_LIBRARIES AND QTSOAP_INCLUDE_DIRS)
       qtsoap.h
     PATHS
         /usr/include
+        /usr/include/qt4
         /usr/local/include
         /opt/local/include
         /sw/include
@@ -37,6 +38,7 @@ else (QTSOAP_LIBRARIES AND QTSOAP_INCLUDE_DIRS)
     NAMES
         qtsoap
         QtSolutions_SOAP-2.7
+        QtSolutions_SOAP-head
     PATHS
       /usr/lib64
       /usr/lib
