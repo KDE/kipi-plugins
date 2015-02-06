@@ -7,4 +7,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 342194 - Geolocalisation not possible using google maps: "Malformated Url"
 002 ==> 343777 - FindQtSoap.cmake doesn't find latest qtsoap built from git code [patch].
-003 ==> 
+003 ==> 308021 - digiKam crashes when making panorama / boost.
+004 ==> 
