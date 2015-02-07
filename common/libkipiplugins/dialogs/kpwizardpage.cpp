@@ -27,7 +27,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QStandardPaths>
+#include "qstandardpathwrap.h"
 #include <QApplication>
 #include <QStyle>
 
@@ -77,7 +77,7 @@ KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
     d->logo                    = new QLabel(vbox);
     d->logo->setAlignment(Qt::AlignTop);
-    d->logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+    d->logo->setPixmap(QPixmap(QStandardPathsWrap::locate(QStandardPaths::GenericDataLocation,
                                                       QString("kipi/data/kipi-logo.svg")))
                                .scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 

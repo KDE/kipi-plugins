@@ -29,7 +29,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QPushButton>
-#include <QStandardPaths>
+#include "qstandardpathwrap.h"
 
 // KDE includes
 
@@ -60,7 +60,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                  QString(),
                  QString("http://www.digikam.org"))
 {
-    QString directory = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-plugins_logo.png");
+    QString directory = QStandardPathsWrap::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-plugins_logo.png");
 
     // set the kipiplugins logo inside the about dialog
     setProgramLogo(QImage(directory));

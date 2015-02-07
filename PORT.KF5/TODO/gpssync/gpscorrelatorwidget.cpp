@@ -60,7 +60,7 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <QUrl>
-#include <QStandardPaths>
+#include "qstandardpathwrap.h"
 
 // local includes
 

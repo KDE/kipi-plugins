@@ -41,7 +41,7 @@
 #include <QPointer>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
-#include <QStandardPaths>
+#include "qstandardpathwrap.h"
 #include <QFileDialog>
 #include <QIcon>
 #include <QApplication>

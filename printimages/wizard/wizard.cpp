@@ -42,7 +42,7 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
-#include <QStandardPaths>
+#include "qstandardpathwrap.h"
 #include <QMenu>
 #include <QIcon>
 
@@ -539,7 +539,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
                             qCDebug(KIPIPLUGINS_LOG) <<  "template desktop file name" << desktopFileName;
 
-                            const QStringList list         = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, desktopFileName);
+                            const QStringList list         = QStandardPathsWrap::locateAll(QStandardPaths::GenericDataLocation, desktopFileName);
                             QStringList::ConstIterator it  = list.constBegin();
                             QStringList::ConstIterator end = list.constEnd();
 
@@ -641,7 +641,7 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     d->m_photoSizes.clear();
 
     // get template-files and parse them
-    const QStringList list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "kipiplugin_printimages/templates/*.xml");
+    const QStringList list = QStandardPathsWrap::locateAll(QStandardPaths::GenericDataLocation, "kipiplugin_printimages/templates/*.xml");
 
     foreach(const QString& fn, list)
     {
