@@ -38,7 +38,7 @@ extern "C"
 
 #include <QWidget>
 #include <QPrinter>
-#include "qstandardpathwrap.h"
+#include <QStandardPaths>
 #include <QAction>
 #include <QDir>
 #include <QApplication>

@@ -134,13 +134,13 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
-#
+# 
 #     if(NOT WIN32 AND NOT APPLE)
 #         MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
 #     endif()
-#
+# 
 #     # -- OpenCV ----------------------------------------------------------------------------------------
-#
+# 
 #     include(MacroUtils)
 #     include(MacroOpenCV)
 #     set(OPENCV_MIN_VERSION "2.4.9")
@@ -185,7 +185,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 0.3.0)"                  "Kipi-plugins will be compiled without libksane support."       KSANE_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libhupnp"       "http://www.herqq.org"                                            "(version >= 2.0.0)"                  "Internal version used instead"                                 HUPNP_FOUND AND HUPNPAV_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtsoap"      "https://github.com/commontk/QtSOAP"                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libqtsoap support."      QTSOAP_FOUND)
-#
+# 
 #     PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGl support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
 #     PRINT_OPTIONAL_QTMODULE_STATUS("Qt4 OpenGL"            QT_QTOPENGL_FOUND)
@@ -212,7 +212,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Shwup"       QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"  LIBXML2_FOUND AND LIBXSLT_FOUND)
-#
+# 
 #     # decide if AdvancedSlideshow and ImageViewer can be built
 #     if(NOT WIN32 AND NOT APPLE)
 #         if(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
@@ -227,14 +227,14 @@ if(KF5Kipi_FOUND)
 #             set(BUILD_VIEWERS FALSE)
 #         endif()
 #     endif()
-#
+# 
 #     # Decide if wallpaper plugin can be built
 #     # NOTE: See relevant patch which must be applied to KDE Plasma API :
 #     # https://git.reviewboard.kde.org/r/105319/
 #     # Relevant Bugzilla entry :
 #     # https://bugs.kde.org/show_bug.cgi?id=217950
 #     set(WALLPAPER_KDE_REQ_VER "5.0.0")
-#
+# 
 #     if(KDE_VERSION)
 #         if(${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
 #             set(BUILD_WALLPAPER FALSE)
@@ -242,7 +242,7 @@ if(KF5Kipi_FOUND)
 #             set(BUILD_WALLPAPER TRUE)
 #         endif()
 #     endif()
-#
+# 
 #     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
 #     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
 #     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KSANE_FOUND)
@@ -262,30 +262,30 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
-#
-#
+# 
+# 
 #     # Set QtGStreamer API version --------------------------------------------------------------------------
-#
+# 
 #     if(QTGSTREAMER_FOUND)
-#
+# 
 #         message(STATUS "----------------------------------------------------------------------------------")
 #         message(STATUS "")
-#
+# 
 #         if((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
 #            OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1) )
 #             set(GSTREAMER_API_1 TRUE)
 #         else()
 #             set(GSTREAMER_API_1 FALSE)
 #         endif()
-#
+# 
 #         configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
-#
+# 
 #         message(STATUS "Found QtGstreamer version: ${QtGStreamer_VERSION}")
 #         message(STATUS "Using GStreamer API 1:     ${GSTREAMER_API_1}")
-#
+# 
 #         message(STATUS "----------------------------------------------------------------------------------")
 #         message(STATUS "")
-#
+# 
 #     endif()
 
     # ==================================================================================================
@@ -320,7 +320,6 @@ if(KF5Kipi_FOUND)
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/widgets
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                             ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
-                            ${CMAKE_CURRENT_SOURCE_DIR}/qtwrappers
                             ${KF5KExiv2_INCLUDE_DIRS}
                             ${KF5KDcraw_INCLUDE_DIRS}
                             ${KF5Kipi_INCLUDE_DIRS}
@@ -428,7 +427,7 @@ if(KF5Kipi_FOUND)
 
 # Plugins in pending state
 #         # Currently the cmake module distributed w/ cmake uses a different variable
-#         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule
+#         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
 #         # distributed w/ kdelibs LIBEXSLT_LIBRARIES.
 #         if(NOT LIBXSLT_EXSLT_LIBRARIES AND LIBEXSLT_LIBRARIES)
 #             set(LIBXSLT_EXSLT_LIBRARIES ${LIBEXSLT_LIBRARIES})

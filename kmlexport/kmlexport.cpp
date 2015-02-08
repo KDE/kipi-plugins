@@ -36,7 +36,7 @@ extern "C"
 #include <QPainter>
 #include <QRegExp>
 #include <QTextStream>
-#include "qstandardpathwrap.h"
+#include <QStandardPaths>
 #include <QApplication>
 #include <QMessageBox>
 

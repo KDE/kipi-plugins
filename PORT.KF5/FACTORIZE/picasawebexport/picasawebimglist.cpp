@@ -42,7 +42,7 @@
 
 #include <interface.h>
 #include <imagecollection.h>
-#include "qstandardpathwrap.h"
+#include <QStandardPaths>
 
 // local includes
 

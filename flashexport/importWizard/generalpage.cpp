@@ -28,7 +28,7 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
-#include "qstandardpathwrap.h"
+#include <QStandardPaths>
 #include <QLineEdit>
 #include <QApplication>
 #include <QStyle>

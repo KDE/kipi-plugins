@@ -45,7 +45,7 @@ extern "C"
 #include <QByteArray>
 #include <QFile>
 #include <QDataStream>
-#include "qstandardpathwrap.h"
+#include <QStandardPaths>
 
 // Local includes
 
@@ -779,7 +779,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
 QByteArray KPWriteImage::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
 {
-    QString filePath = QStandardPathsWrap::locate(QStandardPaths::GenericDataLocation, QString("libkdcraw/profiles/"));
+    QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("libkdcraw/profiles/"));
 
     switch(colorSpace)
     {
