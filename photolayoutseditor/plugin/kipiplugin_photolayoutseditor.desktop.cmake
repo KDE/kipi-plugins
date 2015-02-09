@@ -47,6 +47,7 @@ Comment[pt_BR]=Ferramenta para criar leiautes de fotos
 Comment[sk]=Nástroj na tvorbu rozložení fotiek
 Comment[sl]=Orodje za urejanje razporedov slik
 Comment[sv]=Ett verktyg för skapa fotolayouter
+Comment[tr]=Fotoğraf yerleşimleri yapmak için bir araç
 Comment[uk]=Інструмент для створення фотокомпозицій
 Comment[x-test]=xxA tool to make photo layoutsxx
 Icon=photolayoutseditor

@@ -16,6 +16,7 @@ Comment[pt_BR]=Ferramenta para criar arquivos KML com imagens geolocalizadas.
 Comment[sk]=Nástroj na tvorbu KML súborov s geolokalizovanými obrázkami
 Comment[sl]=Orodje za ustvarjanje datotek KML, ki predstavijo sliko s koordinatami
 Comment[sv]=Ett verktyg för att skapa KML-filer med geografiskt lokaliserade bilder
+Comment[tr]=Konum içeren resimlerden KML dosyaları oluşturmak için bir araç
 Comment[uk]=Інструмент для створення файлів KML для показу зображення з координатами
 Comment[x-test]=xxA tool to create KML files with geolocated imagesxx
 Icon=applications-development-web

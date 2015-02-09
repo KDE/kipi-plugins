@@ -61,6 +61,7 @@ Comment[pt_BR]=Ferramenta para processar imagens em lote
 Comment[sk]=Nástroj na dávkové spracovanie obrázkov
 Comment[sl]=Orodje za paketno obdelavo slik
 Comment[sv]=Ett verktyg för att behandla bilder i bakgrunden
+Comment[tr]=Resimleri toplu işlemek için bir araç
 Comment[uk]=Інструмент для пакетної обробки зображень
 Comment[x-test]=xxA tool to batch process imagesxx
 Icon=borderimages
