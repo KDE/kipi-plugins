@@ -333,7 +333,7 @@ if(KF5Kipi_FOUND)
             add_definitions(-D_AFX_SECURE_NO_WARNINGS)
         endif()
 
-        add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+        add_definitions(-DQT_USE_QSTRINGBUILDER -DQT_USE_FAST_OPERATOR_PLUS)
 
         if(NOT WIN32)
             configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/kipi-plugins.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)

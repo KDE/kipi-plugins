@@ -4,7 +4,7 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-remove_definitions(-DQT_USE_FAST_CONCATENATION)
+remove_definitions(-DQT_USE_QSTRINGBUILDER)
 remove_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 
 add_subdirectory(hupnp)
