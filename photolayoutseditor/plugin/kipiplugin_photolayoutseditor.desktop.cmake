@@ -31,6 +31,7 @@ Name[uk]=Редактор компонування фотографій
 Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器
 Comment=A tool to make photo layouts
+Comment[bs]=Alat za pravljenje forografskih rasporeda
 Comment[ca]=Una eina per crear presentacions de les fotos
 Comment[cs]=Nástroj pro vytváření rozvržení snímků
 Comment[da]=Et værktøj til at lave fotolayout

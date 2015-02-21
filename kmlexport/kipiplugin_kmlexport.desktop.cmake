@@ -1,5 +1,6 @@
 [Desktop Entry]
 Comment=A tool to create KML files with geolocated images
+Comment[bs]=Alat za kreiranje KML datoteka s geolociranim slikama
 Comment[ca]=Una eina per crear fitxers KML per presentar imatges amb coordenades
 Comment[cs]=Modul pro vytváření souborů KML s obrázky se souřadnicemi.
 Comment[da]=Et værktøj til at oprette KML-filer med geolokaliserede billeder

@@ -44,6 +44,7 @@ Name[x-test]=xxBatchProcessImagesxx
 Name[zh_CN]=批处理图像
 Name[zh_TW]=批次處理影像
 Comment=A tool to batch process images
+Comment[bs]=Alat za grupnu obradu slika
 Comment[ca]=Una eina per a processar imatges per lots
 Comment[cs]=Nástroj pro dávkové zpracování obrázků
 Comment[da]=Et værktøj til batchbehandling af billeder
