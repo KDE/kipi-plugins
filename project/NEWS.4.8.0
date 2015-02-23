@@ -1,0 +1,10 @@
+Kipi-plugins 4.8.0 - Release date: 2015/02/22
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 342194 - Geolocalisation not possible using google maps: "Malformated Url"
+002 ==> 343777 - FindQtSoap.cmake doesn't find latest qtsoap built from git code [patch].
+003 ==> 308021 - digiKam crashes when making panorama / boost.

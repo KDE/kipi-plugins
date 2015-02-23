@@ -1,0 +1,11 @@
+Kipi-plugins 4.7.0 - Release date: 2015/01/25
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 342046 - In the export menu, Google Drive and Dropbox icons are huge, filling almost all the screen.
+002 ==> 342857 - Changed files are not reported to host application [patch].
+003 ==> 310580 - DNG Converter cannot save image if path have non-ascii characters [patch].
+
