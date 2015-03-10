@@ -108,7 +108,8 @@ endif()
 
 set(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
 
-KDE4_ADD_APP_ICON(panorama_SRCS "./icons/*kipi-panorama.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./icons/*kipi-panorama.png")
+ecm_add_app_icon(panorama_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(panoramagui ${panorama_SRCS})
 

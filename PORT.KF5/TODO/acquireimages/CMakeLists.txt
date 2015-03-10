@@ -50,7 +50,9 @@ install(FILES   kipiplugin_acquireimagesui.rc                                DES
 
 set(scangui_SRCS scangui.cpp)
 
-KDE4_ADD_APP_ICON(scangui_SRCS "${KDE4_INSTALL_DIR}/share/icons/oxygen/*/devices/scanner.png")
+file(GLOB ICONS_SRCS "${ICON_INSTALL_DIR}/oxygen/*/devices/scanner.png")
+ecm_add_app_icon(scangui_SRCS ICONS ${ICONS_SRCS})
+
 add_executable(scangui ${scangui_SRCS})
 
 target_link_libraries(scangui libacquireimages)

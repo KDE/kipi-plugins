@@ -13,7 +13,8 @@ if(WIN32)
     remove_definitions(${KDE4_ENABLE_EXCEPTIONS})
 endif()
 
-KDE4_ADD_APP_ICON(dngconverter_SRCS "../icons/*kipi-dngconverter.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/*kipi-dngconverter.png")
+ecm_add_app_icon(dngconverter_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(dngconverter ${dngconverter_SRCS})
 

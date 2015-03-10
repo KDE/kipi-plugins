@@ -207,7 +207,8 @@ install(FILES   plugin/kipiplugin_photolayoutseditorui.rc                       
 
 set(PhotoLayoutsEditor_SRCS plugin/main.cpp)
 
-KDE4_ADD_APP_ICON(PhotoLayoutsEditor_SRCS "./resources/app/*photolayoutseditor.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./resources/app/*photolayoutseditor.png")
+ecm_add_app_icon(PhotoLayoutsEditor_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(photolayoutseditor ${PhotoLayoutsEditor_SRCS})
 
