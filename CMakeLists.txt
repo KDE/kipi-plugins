@@ -44,7 +44,7 @@ set(KIPIPLUGINS_LIB_SO_VERSION_STRING
 # =======================================================
 
 set(CMAKE_MIN_VERSION   "2.8.12")
-set(ECM_MIN_VERSION     "1.1.0")
+set(ECM_MIN_VERSION     "1.7.0")
 set(KF5_VERSION         "5.1.0")
 set(REQUIRED_QT_VERSION "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
