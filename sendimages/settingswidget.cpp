@@ -157,7 +157,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
                              i18n("Medium (800 pixels)"),
                              i18n("Big (1024 pixels)"),
                              i18n("Very Big (1280 pixels)"),
-                             i18n("Huge - for printing (1600 pixels)"));
+                             i18n("Large - for printing (1600 pixels)"));
     d->imagesResize->setWhatsThis(whatsThis);
 
     d->labelImagesResize = new QLabel( i18n("Image size:"), groupBox);
