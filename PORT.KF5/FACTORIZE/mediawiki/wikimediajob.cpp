@@ -111,7 +111,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
                    this, SLOT(slotUploadProgress(KJob*,ulong)));
 
         // Error from previous upload
-        
+
         if((int)j->error() != 0)
         {
             const QString errorText = j->errorText();
@@ -128,7 +128,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
     }
 
     // Upload next image
-    
+
     if(!d->imageDesc.isEmpty())
     {
         QList<QString> keys        = d->imageDesc.keys();
@@ -215,7 +215,7 @@ QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
     if(!latitude.isEmpty() && !longitude.isEmpty())
     {
         qCDebug(KIPIPLUGINS_LOG) << "Latitude:" << latitude << "; longitude:" << longitude;
-        text.append("{{Coord").append("|").append(latitude).append("|").append(longitude).append("}}\n");
+        text.append("{{Location|").append(latitude).append("|").append(longitude).append("}}\n");
     }
 
     if(!info["genText"].isEmpty())
