@@ -166,19 +166,26 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     QStringList        list;
     KPMetadata::AltLangMap map;
 
+    d->objectNameEdit->setValues(map);
     d->objectNameEdit->setValid(false);
     map = meta.getXmpTagStringListLangAlt("Xmp.dc.title", false);
+
     if (!map.isEmpty())
+    {    
         d->objectNameEdit->setValues(map);
+        d->objectNameEdit->setValid(true);
+    }
 
     d->nicknameEdit->clear();
     d->nicknameCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.xmp.Nickname", false);
+
     if (!data.isNull())
     {
         d->nicknameEdit->setText(data);
         d->nicknameCheck->setChecked(true);
     }
+
     d->nicknameEdit->setEnabled(d->nicknameCheck->isChecked());
 
     list = meta.getXmpTagStringSeq("Xmp.xmp.Identifier", false);
@@ -187,11 +194,13 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.Instructions", false);
+
     if (!data.isNull())
     {
         d->specialInstructionEdit->setText(data);
         d->specialInstructionCheck->setChecked(true);
     }
+
     d->specialInstructionEdit->setEnabled(d->specialInstructionCheck->isChecked());
 
     blockSignals(false);
