@@ -237,12 +237,18 @@ void XMPContent::readMetadata(QByteArray& xmpData)
 
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
+    d->captionEdit->setValues(map);
     d->captionEdit->setValid(false);
     map = meta.getXmpTagStringListLangAlt("Xmp.dc.description", false);
 
     if (!map.isEmpty())
+    {
         d->captionEdit->setValues(map);
+        d->captionEdit->setValid(true);
+    }
 
+    d->writerEdit->clear();
+    d->writerCheck->setChecked(false);
     data = meta.getXmpTagString("Xmp.photoshop.CaptionWriter", false);
 
     if (!data.isNull())
@@ -253,11 +259,16 @@ void XMPContent::readMetadata(QByteArray& xmpData)
 
     d->writerEdit->setEnabled(d->writerCheck->isChecked());
 
+    map.clear();
+    d->copyrightEdit->setValues(map);
     d->copyrightEdit->setValid(false);
     map = meta.getXmpTagStringListLangAlt("Xmp.dc.rights", false);
 
     if (!map.isEmpty())
+    {
         d->copyrightEdit->setValues(map);
+        d->copyrightEdit->setValid(true);
+    }
 
     blockSignals(false);
 }

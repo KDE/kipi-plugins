@@ -7,7 +7,7 @@
  * Description : a widget to edit a tag with multiple alternative
  *               language string entries.
  *
- * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2013      by Victor Dodon <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -67,7 +67,7 @@ public:
 };
 
 AltLangStringsEdit::AltLangStringsEdit(QWidget* const parent, const QString& title, const QString& desc)
-                  : QWidget(parent), d(new AltLangStringsEditPriv)
+    : QWidget(parent), d(new AltLangStringsEditPriv)
 {
     d->valueCheck = new MetadataCheckBox(title, this);
     d->editor     = new AltLangStrEdit(this);
@@ -75,7 +75,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* const parent, const QString& tit
 
     // --------------------------------------------------------
 
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
     grid->setAlignment( Qt::AlignTop );
     grid->addWidget(d->valueCheck, 0, 0, 1, 1);
     grid->addWidget(d->editor,     1, 0, 1, 1);
@@ -118,6 +118,7 @@ AltLangStringsEdit::~AltLangStringsEdit()
 void AltLangStringsEdit::setValid(bool v)
 {
     d->valueCheck->setValid(v);
+    d->valueCheck->setChecked(v);
 }
 
 bool AltLangStringsEdit::isValid() const
@@ -150,7 +151,7 @@ bool AltLangStringsEdit::asDefaultAltLang() const
 
 void AltLangStringsEdit::slotSelectionChanged(const QString& lang)
 {
-    emit signalDefaultLanguageEnabled(lang == defaultAltLang());
+    emit signalDefaultLanguageEnabled(lang == "x-default");
 }
 
 }  // namespace KIPIMetadataEditPlugin
