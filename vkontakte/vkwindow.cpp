@@ -349,6 +349,7 @@ void VkontakteWindow::slotButtonClicked(int button)
         case KDialog::Close:
             // TODO: grab better code from picasawebexport/picasawebwindow.cpp:219
             reset();
+            done(KDialog::Close);
             break;
         default:
             KDialog::slotButtonClicked(button);
