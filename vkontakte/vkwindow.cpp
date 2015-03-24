@@ -88,17 +88,6 @@
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
 
-#undef SLOT_JOB_DONE_INIT
-#define SLOT_JOB_DONE_INIT(JobClass)                     \
-    JobClass* const job = dynamic_cast<JobClass*>(kjob); \
-    Q_ASSERT(job);                                       \
-    m_jobs.removeAll(job);                               \
-    if (job && job->error())                             \
-    {                                                    \
-        handleVkError(job);                              \
-        return;                                          \
-    }
-
 namespace KIPIVkontaktePlugin
 {
 
@@ -440,7 +429,11 @@ void VkontakteWindow::slotStartTransfer()
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 {
-    SLOT_JOB_DONE_INIT(Vkontakte::UploadPhotosJob)
+    Vkontakte::UploadPhotosJob* const job = dynamic_cast<Vkontakte::UploadPhotosJob*>(kjob);
+    Q_ASSERT(job);
+    m_jobs.removeAll(job);
+    if (job && job->error())
+        handleVkError(job);
 
     m_progressBar->hide();
     m_progressBar->progressCompleted();
