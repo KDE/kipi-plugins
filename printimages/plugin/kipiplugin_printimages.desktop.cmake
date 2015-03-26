@@ -11,6 +11,7 @@ Name[da]=Udskriv billeder
 Name[de]=Bilder drucken
 Name[el]=Εκτύπωση εικόνων
 Name[en_GB]=Print images
+Name[eo]=Presi bildojn
 Name[es]=Imprimir imágenes
 Name[et]=Piltide trükkimine
 Name[eu]=Inprimatu irudiak
