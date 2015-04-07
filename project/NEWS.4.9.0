@@ -1,0 +1,11 @@
+Kipi-plugins 4.9.0 - Release date: 2015/04/05
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 310977 - Applying data (exif, iptc, xmp caption) in "Edit all Metadata" window inconsistent - results in data loss.
+002 ==> 340330 - Deselecting "Show tracks on map" crashes the dialog.
+003 ==> 283504 - QJSon not optional.
+004 ==> 345802 - Html export does not longer export the description tag to gallery.xml.
