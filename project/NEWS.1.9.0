@@ -11,8 +11,3 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 003 ==> 243908 : GPSSync      : Coordinates do not get retrieved.
 004 ==> 181319 : GPSSync      : Provide a batch tool to add geolocation coordinates to a complete album.
 005 ==> 266771 : GPSSync      : Unable to get GPS coordinates from map with Geolocation function of digiKam.
-006 ==> 
-
-
-
-
