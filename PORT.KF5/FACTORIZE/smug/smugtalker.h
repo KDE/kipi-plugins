@@ -58,16 +58,18 @@ public:
     void    logout();
 
     void    listAlbums(const QString& nickName = "");
-    void    listPhotos(int albumID, 
+    void    listPhotos(qint64 albumID,
+                       const QString& albumKey, 
                        const QString& albumPassword = "", 
                        const QString& sitePassword = "");
     void    listAlbumTmpl();
     void    listCategories();
-    void    listSubCategories(int categoryID);
+    void    listSubCategories(qint64 categoryID);
 
     void    createAlbum(const SmugAlbum& album);
 
-    bool    addPhoto(const QString& imgPath, int albumID, 
+    bool    addPhoto(const QString& imgPath, qint64 albumID,
+                     const QString& albumKey,
                      const QString& caption);
     void    getPhoto(const QString& imgPath);
 
@@ -80,8 +82,8 @@ Q_SIGNALS:
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalGetPhotoDone(int errCode, const QString& errMsg,
                             const QByteArray& photoData);
-    void signalCreateAlbumDone(int errCode, const QString& errMsg,
-                               int newAlbumID);
+    void signalCreateAlbumDone(int errCode, const QString& errMsg, qint64 newAlbumID,
+                               const QString& newAlbumKey);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
                               const QList <SmugAlbum>& albumsList);
     void signalListPhotosDone(int errCode, const QString& errMsg,
