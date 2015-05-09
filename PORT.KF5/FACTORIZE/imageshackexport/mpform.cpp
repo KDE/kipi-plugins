@@ -108,7 +108,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += "--";
     str += m_boundary;
     str += "\r\n";
-    str += "Content-Disposition: form-data; name=\"fileupload\"; filename=";
+    str += "Content-Disposition: form-data; name=\"fileupload\"; filename=\"";
     str += QFile::encodeName(name);
     str += "\"\r\n";
     str += "Content-Length: ";
