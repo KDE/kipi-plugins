@@ -74,17 +74,17 @@ public:
         imageCount    = 0;
     }
 
-    int     id;
+    qint64  id;
 
     QString key;
     QString title;
     QString description;
     QString keywords;
 
-    int     categoryID;
+    qint64  categoryID;
     QString category;
 
-    int     subCategoryID;
+    qint64  subCategoryID;
     QString subCategory;
 
     bool    isPublic;
@@ -94,7 +94,7 @@ public:
     int     imageCount;
 
     // below fields only used by createAlbum (and not by listAlbums)
-    int     tmplID;
+    qint64  tmplID;
     QString tmpl;
 
     static bool lessThan(SmugAlbum& a, SmugAlbum& b)
@@ -115,7 +115,7 @@ public:
         id = -1;
     }
 
-    int     id;
+    qint64  id;
 
     QString key;
     QString caption;
@@ -138,7 +138,7 @@ public:
         isPublic = true;
     }
 
-    int     id;
+    qint64  id;
     QString name;
 
     bool    isPublic;
@@ -158,7 +158,7 @@ public:
         id = -1;
     }
 
-    int     id;
+    qint64  id;
     QString name;
 };
 

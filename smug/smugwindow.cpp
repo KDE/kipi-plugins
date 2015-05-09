@@ -173,8 +173,8 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
     connect(m_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
             this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
 
-    connect(m_talker, SIGNAL(signalCreateAlbumDone(int,QString,int)),
-            this, SLOT(slotCreateAlbumDone(int,QString,int)));
+    connect(m_talker, SIGNAL(signalCreateAlbumDone(int,QString,qint64,QString)),
+            this, SLOT(slotCreateAlbumDone(int,QString,qint64,QString)));
 
     connect(m_talker, SIGNAL(signalListAlbumsDone(int,QString,QList<SmugAlbum>)),
             this, SLOT(slotListAlbumsDone(int,QString,QList<SmugAlbum>)));
@@ -303,6 +303,7 @@ void SmugWindow::readSettings()
     m_email           = grp.readEntry("Email");
     m_password        = grp.readEntry("Password");
     m_currentAlbumID  = grp.readEntry("Current Album", -1);
+    m_currentAlbumKey = grp.readEntry("Current Key", -1);
 
     if (grp.readEntry("Resize", false))
     {
@@ -340,6 +341,7 @@ void SmugWindow::writeSettings()
     grp.writeEntry("Email",           m_email);
     grp.writeEntry("Password",        m_password);
     grp.writeEntry("Current Album",   m_currentAlbumID);
+    grp.writeEntry("Current Key",     m_currentAlbumKey);
     grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
@@ -423,7 +425,8 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
         else
             albumIcon = "folder";
 
-        m_widget->m_albumsCoB->addItem(KIcon(albumIcon), albumsList.at(i).title, albumsList.at(i).id);
+        QString data = QString("%1:%2").arg(albumsList.at(i).id).arg(albumsList.at(i).key);
+        m_widget->m_albumsCoB->addItem(KIcon(albumIcon), albumsList.at(i).title, data);
 
         if (m_currentAlbumID == albumsList.at(i).id)
             m_widget->m_albumsCoB->setCurrentIndex(i);
@@ -487,7 +490,7 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
             m_albumDlg->m_templateCoB->setCurrentIndex(i+1);
     }
 
-    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(m_albumDlg->m_templateCoB->currentIndex()).toInt();
+    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(m_albumDlg->m_templateCoB->currentIndex()).toLongLong();
 
     // now fill in categories
     m_talker->listCategories();
@@ -514,7 +517,7 @@ void SmugWindow::slotListCategoriesDone(int errCode, const QString& errMsg,
     }
 
     m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
-                          m_albumDlg->m_categCoB->currentIndex()).toInt();
+                          m_albumDlg->m_categCoB->currentIndex()).toLongLong();
     m_talker->listSubCategories(m_currentCategoryID);
 }
 
@@ -544,7 +547,7 @@ void SmugWindow::slotTemplateSelectionChanged(int index)
     if (index < 0)
         return;
 
-    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(index).toInt();
+    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(index).toLongLong();
 
     // if template is selected, then disable Security & Privacy
     m_albumDlg->m_privBox->setEnabled(m_currentTmplID == 0);
@@ -556,7 +559,7 @@ void SmugWindow::slotCategorySelectionChanged(int index)
         return;
 
     // subcategories are per category -> reload
-    m_currentCategoryID = m_albumDlg->m_categCoB->itemData(index).toInt();
+    m_currentCategoryID = m_albumDlg->m_categCoB->itemData(index).toLongLong();
     m_talker->listSubCategories(m_currentCategoryID);
 }
 
@@ -633,9 +636,9 @@ void SmugWindow::slotNewAlbumRequest()
     {
         kDebug() << "Calling New Album method";
         m_currentTmplID = m_albumDlg->m_templateCoB->itemData(
-                        m_albumDlg->m_templateCoB->currentIndex()).toInt();
+                        m_albumDlg->m_templateCoB->currentIndex()).toLongLong();
         m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
-                        m_albumDlg->m_categCoB->currentIndex()).toInt();
+                        m_albumDlg->m_categCoB->currentIndex()).toLongLong();
 
         SmugAlbum newAlbum;
         m_albumDlg->getAlbumProperties(newAlbum);
@@ -657,8 +660,11 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
         // list photos of the album, then start download
-        m_talker->listPhotos(m_widget->m_albumsCoB->itemData(
-                             m_widget->m_albumsCoB->currentIndex()).toInt(),
+        QString dataStr = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+        int colonIdx = dataStr.indexOf(':');
+        qint64 albumID = dataStr.left(colonIdx).toLongLong();
+        QString albumKey = dataStr.right(dataStr.length() - colonIdx - 1);
+        m_talker->listPhotos(albumID, albumKey,
                              m_widget->getAlbumPassword(),
                              m_widget->getSitePassword());
     }
@@ -670,8 +676,12 @@ void SmugWindow::slotStartTransfer()
         if (m_transferQueue.isEmpty())
             return;
 
-        m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                     m_widget->m_albumsCoB->currentIndex()).toInt();
+        QString data = m_widget->m_albumsCoB->itemData(
+                                     m_widget->m_albumsCoB->currentIndex()).toString();
+        int colonIdx = data.indexOf(':');
+        m_currentAlbumID = data.left(colonIdx).toLongLong();
+        m_currentAlbumKey = data.right(data.length() - colonIdx - 1);
+
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
 
@@ -761,12 +771,12 @@ void SmugWindow::uploadNextPhoto()
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;
         }
-        res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID, info.description());
+        res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID, m_currentAlbumKey, info.description());
     }
     else
     {
         m_tmpPath.clear();
-        res = m_talker->addPhoto(imgPath, m_currentAlbumID, info.description());
+        res = m_talker->addPhoto(imgPath, m_currentAlbumID, m_currentAlbumKey, info.description());
     }
 
     if (!res)
@@ -884,7 +894,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
 }
 
 void SmugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
-                                     int newAlbumID)
+                                     qint64 newAlbumID, const QString& newAlbumKey)
 {
     if (errCode != 0)
     {
@@ -894,6 +904,7 @@ void SmugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
 
     // reload album list and automatically select new album
     m_currentAlbumID = newAlbumID;
+    m_currentAlbumKey = newAlbumKey;
     m_talker->listAlbums();
 }
 

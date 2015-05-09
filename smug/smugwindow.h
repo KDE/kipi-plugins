@@ -81,7 +81,7 @@ private Q_SLOTS:
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
-    void slotCreateAlbumDone(int errCode, const QString& errMsg, int newAlbumID);
+    void slotCreateAlbumDone(int errCode, const QString& errMsg, qint64 newAlbumID, const QString& newAlbumKey);
     void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <SmugAlbum>& albumsList);
     void slotListPhotosDone(int errCode, const QString& errMsg, const QList <SmugPhoto>& photosList);
     void slotListAlbumTmplDone(int errCode, const QString& errMsg, const QList <SmugAlbumTmpl>& albumTList);
@@ -123,9 +123,10 @@ private:
     QString          m_anonymousNick;
     QString          m_email;
     QString          m_password;
-    int              m_currentAlbumID;
-    int              m_currentTmplID;
-    int              m_currentCategoryID;
+    qint64           m_currentAlbumID;
+    QString          m_currentAlbumKey;
+    qint64           m_currentTmplID;
+    qint64           m_currentCategoryID;
 
     KPasswordDialog* m_loginDlg;
 
