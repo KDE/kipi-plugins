@@ -59,6 +59,7 @@ Comment[nl]=Een hulpmiddel voor het bewerken van afbeeldingen in bulk
 Comment[pl]=Narzędzie do wsadowego przetwarzania obrazów
 Comment[pt]=Uma ferramenta para processar imagens em lote
 Comment[pt_BR]=Ferramenta para processar imagens em lote
+Comment[ru]=Инструмент для пакетной обработки изображений
 Comment[sk]=Nástroj na dávkové spracovanie obrázkov
 Comment[sl]=Orodje za paketno obdelavo slik
 Comment[sv]=Ett verktyg för att behandla bilder i bakgrunden
