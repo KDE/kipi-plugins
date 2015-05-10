@@ -176,16 +176,21 @@ void AlbumChooserWidget::startAlbumCreation(Vkontakte::AlbumInfoPtr album)
 
 void AlbumChooserWidget::slotAlbumCreationDone(KJob* kjob)
 {
-    SLOT_JOB_DONE_INIT(Vkontakte::CreateAlbumJob)
+    Vkontakte::CreateAlbumJob* const job = dynamic_cast<Vkontakte::CreateAlbumJob*>(kjob); \
+    Q_ASSERT(job);
+    if (job->error())
+    {
+        handleVkError(job);
+        updateBusyStatus(false);
+    }
+    else
+    {
+        // Select the newly created album in the combobox later (in "slotAlbumsReloadDone()")
+        m_albumToSelect = job->album()->aid();
 
-    if (!job) return;
-
-    // Select the newly created album in the combobox later (in "slotAlbumsReloadDone()")
-    m_albumToSelect = job->album()->aid();
-
-    startAlbumsReload();
-
-    updateBusyStatus(true);
+        startAlbumsReload();
+        updateBusyStatus(true);
+    }
 }
 
 //------------------------------
