@@ -433,8 +433,11 @@ void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
     Vkontakte::UploadPhotosJob* const job = dynamic_cast<Vkontakte::UploadPhotosJob*>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
-    if (job && job->error())
+
+    if (job == 0 || job->error())
+    {
         handleVkError(job);
+    }
 
     m_progressBar->hide();
     m_progressBar->progressCompleted();
