@@ -5,4 +5,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 274029 - Edit Metadata dialog doesn't honour settings for XMP sidecar [patch].
+002 ==> 
