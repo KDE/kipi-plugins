@@ -42,14 +42,14 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-PreProcessTask::PreProcessTask(QObject* const parent, const QUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
-                               const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
+PreProcessTask::PreProcessTask(QObject* const parent, const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
+                               const KUrl& sourceUrl, const RawDecodingSettings& rawSettings)
     : Task(parent, PREPROCESS_INPUT, workDir), id(id),
       fileUrl(sourceUrl), preProcessedUrl(&targetUrls), settings(rawSettings)
 {}
 
-PreProcessTask::PreProcessTask(const QUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
-                               const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
+PreProcessTask::PreProcessTask(const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
+                               const KUrl& sourceUrl, const RawDecodingSettings& rawSettings)
     : Task(0, PREPROCESS_INPUT, workDir), id(id),
       fileUrl(sourceUrl), preProcessedUrl(&targetUrls), settings(rawSettings)
 {}
@@ -97,18 +97,20 @@ void PreProcessTask::run()
     return;
 }
 
-bool PreProcessTask::computePreview(const QUrl& inUrl)
+bool PreProcessTask::computePreview(const KUrl& inUrl)
 {
-    QUrl& outUrl = preProcessedUrl->previewUrl;
+    KUrl& outUrl = preProcessedUrl->previewUrl;
 
     QFileInfo fi(inUrl.toLocalFile());
     outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
 
     QImage img;
+
     if (img.load(inUrl.toLocalFile()))
     {
         QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
         bool saved     = preview.save(outUrl.toLocalFile(), "JPEG");
+
         // save exif information also to preview image for auto rotation
         if (saved)
         {
@@ -118,20 +120,22 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
             metaOut.setImageDimensions(QSize(preview.width(), preview.height()));
             metaOut.applyChanges();
         }
-        qCDebug(KIPIPLUGINS_LOG) << "Preview Image url: " << outUrl << ", saved: " << saved;
+
+        kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
     }
     else
     {
         errString = i18n("Input image cannot be loaded for preview generation");
     }
+
     return false;
 }
 
 bool PreProcessTask::convertRaw()
 {
-    const QUrl& inUrl = fileUrl;
-    QUrl &outUrl      = preProcessedUrl->preprocessedUrl;
+    const KUrl& inUrl = fileUrl;
+    KUrl &outUrl      = preProcessedUrl->preprocessedUrl;
 
     int        width, height, rgbmax;
     QByteArray imageData;
@@ -167,10 +171,12 @@ bool PreProcessTask::convertRaw()
         metaIn.load(inUrl.toLocalFile());
         KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList("Photo"), true);
         KPMetadata::MetaDataMap::iterator it;
+
         for (it = m.begin(); it != m.end(); ++it)
         {
             metaIn.removeExifTag(it.key().toAscii().data(), false);
         }
+
         metaOut.setData(metaIn.data());
         metaOut.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         metaOut.setImageDimensions(QSize(width, height));
@@ -203,7 +209,7 @@ bool PreProcessTask::convertRaw()
         return false;
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "Convert RAW output url: " << outUrl;
+    kDebug() << "Convert RAW output url: " << outUrl;
 
     return true;
 }

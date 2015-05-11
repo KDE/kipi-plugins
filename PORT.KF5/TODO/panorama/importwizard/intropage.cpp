@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,12 +55,15 @@
 namespace KIPIPanoramaPlugin
 {
 
-struct IntroPage::IntroPagePriv
+struct IntroPage::Private
 {
-    IntroPagePriv(Manager* const m)
+    Private(Manager* const m)
         : mngr(m),
           addGPlusMetadataCheckBox(0),
-//           hdrCheckBox(0),
+
+          // TODO HDR
+//          hdrCheckBox(0),
+
           formatGroupBox(0),
           settingsGroupBox(0),
           jpegRadioButton(0),
@@ -71,9 +74,11 @@ struct IntroPage::IntroPagePriv
     }
 
     Manager*                      mngr;
-
     QCheckBox*                    addGPlusMetadataCheckBox;
+
+    // TODO HDR
 //     QCheckBox*                    hdrCheckBox;
+
     QGroupBox*                    formatGroupBox;
     QGroupBox*                    settingsGroupBox;
     QRadioButton*                 jpegRadioButton;
@@ -84,10 +89,10 @@ struct IntroPage::IntroPagePriv
 
 IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")),
-      d(new IntroPagePriv(mngr))
+      d(new Private(mngr))
 {
-    KVBox* vbox   = new KVBox(this);
-    QLabel* title = new QLabel(vbox);
+    KVBox* const vbox   = new KVBox(this);
+    QLabel* const title = new QLabel(vbox);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
@@ -101,8 +106,8 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                         "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
                         "</qt>"));
 
-    QGroupBox* binaryBox        = new QGroupBox(vbox);
-    QGridLayout* binaryLayout   = new QGridLayout;
+    QGroupBox* const binaryBox        = new QGroupBox(vbox);
+    QGridLayout* const binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18n("Panorama Binaries"));
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
@@ -114,32 +119,32 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->nonaBinary());
     d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
     d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
 #endif
-#ifdef Q_OS_WIN
+#ifdef Q_WS_WIN
     d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
 
-//     QVBoxLayout* settingsVBox   = new QVBoxLayout();
-//     d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);
-//     d->settingsGroupBox->setLayout(settingsVBox);
+    QVBoxLayout* const settingsVBox = new QVBoxLayout();
+    d->settingsGroupBox             = new QGroupBox(i18n("Panorama Settings"), vbox);
+    d->settingsGroupBox->setLayout(settingsVBox);
 
-//     d->addGPlusMetadataCheckBox = new QCheckBox(i18n("Add Google+ Metadata"), d->settingsGroupBox);
-//     d->addGPlusMetadataCheckBox->setToolTip(i18n("Add Exif metadata to the output panorama image for Google+ 3D viewer"));
-//     d->addGPlusMetadataCheckBox->setWhatsThis(i18n("<b>Add Google+ Metadata</b>: Enabling this allows the program to add "
-//                                                    "metadata to the output image such that when uploaded to Google+, the "
-//                                                    "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
-//                                                    "that this feature is most insteresting for large panoramas."));
-//     settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
+    d->addGPlusMetadataCheckBox     = new QCheckBox(i18n("Add Photosphere Metadata"), d->settingsGroupBox);
+    d->addGPlusMetadataCheckBox->setToolTip(i18n("Add Exif metadata to the output panorama image for Google+ 3D viewer"));
+    d->addGPlusMetadataCheckBox->setWhatsThis(i18n("<b>Add Photosphere Metadata</b>: Enabling this allows the program to add "
+                                                   "metadata to the output image such that when uploaded to Google+, the "
+                                                   "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
+                                                   "that this feature is most insteresting for large panoramas."));
+    settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
 
-    QVBoxLayout* formatVBox     = new QVBoxLayout();
-    d->formatGroupBox           = new QGroupBox(i18n("File Format"), vbox);
+    QVBoxLayout* const formatVBox = new QVBoxLayout();
+    d->formatGroupBox             = new QGroupBox(i18n("File Format"), vbox);
     d->formatGroupBox->setLayout(formatVBox);
-    QButtonGroup* group         = new QButtonGroup();
+    QButtonGroup* const group     = new QButtonGroup();
 
-    d->jpegRadioButton          = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
+    d->jpegRadioButton            = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
     // The following comment is to get the next string extracted for translation
     // xgettext: no-c-format
     d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
@@ -159,7 +164,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     group->addButton(d->tiffRadioButton);
 
     // TODO HDR
-    /*
+/*
     d->hdrRadioButton           = new QRadioButton(i18n("HDR output"), d->formatGroupBox);
     d->hdrRadioButton->setToolTip(i18n("Selects an High Dynamic Range (HDR) image, that can be processed further "
                                        "with a dedicated software."));
@@ -169,7 +174,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                                          "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
     formatVBox->addWidget(d->hdrRadioButton);
     group->addButton(d->hdrRadioButton);
-    */
+*/
 
     switch (d->mngr->format())
     {
@@ -190,8 +195,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-//     connect(d->addGPlusMetadataCheckBox, SIGNAL(stateChanged(int)),
-//             this, SLOT(slotToggleGPano(int)));
+    connect(d->addGPlusMetadataCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(slotToggleGPano(int)));
+
     slotToggleGPano(0);
 
     connect(group, SIGNAL(buttonClicked(QAbstractButton*)),
@@ -202,7 +208,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
 
-//     d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
+    d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
+
+    // TODO HDR
 //     d->hdrCheckBox->setChecked(d->mngr->hdr());
 }
 
@@ -219,6 +227,7 @@ bool IntroPage::binariesFound()
 void IntroPage::slotToggleGPano(int state)
 {
     d->mngr->setGPano(state);
+
     if (state)
     {
         d->formatGroupBox->setEnabled(false);
@@ -229,6 +238,7 @@ void IntroPage::slotToggleGPano(int state)
     }
 }
 
+    // TODO HDR
 /*
 void IntroPage::slotShowFileFormat(int state)
 {

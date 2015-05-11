@@ -34,21 +34,30 @@
 namespace KIPIPanoramaPlugin
 {
 
-CreateMKTask::CreateMKTask(QObject* parent, const QUrl& workDir, const QUrl& input, QUrl& mkUrl,
-                           QUrl& panoUrl, PanoramaFileType fileType,
+CreateMKTask::CreateMKTask(QObject* parent, const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
+                           KUrl& panoUrl, PanoramaFileType fileType,
                            const QString& pto2mkPath, bool preview)
-    : Task(parent, preview ? CREATEMKPREVIEW : CREATEMK, workDir), ptoUrl(&input), mkUrl(&mkUrl),
-      panoUrl(&panoUrl), fileType(fileType),
-      pto2mkPath(pto2mkPath), process(0)
-{}
+    : Task(parent, preview ? CREATEMKPREVIEW : CREATEMK, workDir),
+      ptoUrl(&input),
+      mkUrl(&mkUrl),
+      panoUrl(&panoUrl),
+      fileType(fileType),
+      pto2mkPath(pto2mkPath),
+      process(0)
+{
+}
 
-CreateMKTask::CreateMKTask(const QUrl& workDir, const QUrl& input, QUrl& mkUrl,
-                           QUrl& panoUrl, PanoramaFileType fileType,
+CreateMKTask::CreateMKTask(const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
+                           KUrl& panoUrl, PanoramaFileType fileType,
                            const QString& pto2mkPath, bool preview)
-    : Task(0, preview ? CREATEMKPREVIEW : CREATEMK, workDir), ptoUrl(&input), mkUrl(&mkUrl),
-      panoUrl(&panoUrl), fileType(fileType),
-      pto2mkPath(pto2mkPath), process(0)
-{}
+    : Task(0, preview ? CREATEMKPREVIEW : CREATEMK, workDir),
+      ptoUrl(&input), mkUrl(&mkUrl),
+      panoUrl(&panoUrl),
+      fileType(fileType),
+      pto2mkPath(pto2mkPath),
+      process(0)
+{
+}
 
 CreateMKTask::~CreateMKTask()
 {
@@ -67,10 +76,11 @@ void CreateMKTask::requestAbort()
 void CreateMKTask::run()
 {
     QFileInfo fi(ptoUrl->toLocalFile());
-    (*mkUrl) = tmpDir;
+    (*mkUrl)   = tmpDir;
     mkUrl->setFileName(fi.completeBaseName() + QString(".mk"));
 
     (*panoUrl) = tmpDir;
+
     switch (fileType)
     {
         case JPEG:
@@ -100,7 +110,7 @@ void CreateMKTask::run()
 
     process->setProgram(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "pto2mk command line: " << process->program();
+    kDebug() << "pto2mk command line: " << process->program();
 
     process->start();
 
@@ -110,7 +120,8 @@ void CreateMKTask::run()
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "pto2mk's output:" << endl << process->readAll();
+
+    kDebug() << "pto2mk's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

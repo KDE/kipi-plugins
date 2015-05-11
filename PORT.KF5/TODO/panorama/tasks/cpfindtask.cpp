@@ -30,17 +30,27 @@
 namespace KIPIPanoramaPlugin
 {
 
-CpFindTask::CpFindTask(QObject* parent, const QUrl& workDir, const QUrl& input,
-                       QUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
-    : Task(parent, CPFIND, workDir), cpFindPtoUrl(&cpFindUrl),
-      celeste(celeste), ptoUrl(&input), cpFindPath(cpFindPath), process(0)
-{}
+CpFindTask::CpFindTask(QObject* parent, const KUrl& workDir, const KUrl& input,
+                       KUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
+    : Task(parent, CPFIND, workDir),
+      cpFindPtoUrl(&cpFindUrl),
+      celeste(celeste),
+      ptoUrl(&input),
+      cpFindPath(cpFindPath),
+      process(0)
+{
+}
 
-CpFindTask::CpFindTask(const QUrl& workDir, const QUrl& input,
-                       QUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
-    : Task(0, CPFIND, workDir), cpFindPtoUrl(&cpFindUrl),
-      celeste(celeste), ptoUrl(&input), cpFindPath(cpFindPath), process(0)
-{}
+CpFindTask::CpFindTask(const KUrl& workDir, const KUrl& input,
+                       KUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
+    : Task(0, CPFIND, workDir),
+      cpFindPtoUrl(&cpFindUrl),
+      celeste(celeste),
+      ptoUrl(&input),
+      cpFindPath(cpFindPath),
+      process(0)
+{
+}
 
 CpFindTask::~CpFindTask()
 {
@@ -70,15 +80,17 @@ void CpFindTask::run()
 
     QStringList args;
     args << cpFindPath;
+
     if (celeste)
         args << "--celeste";
+
     args << "-o";
     args << cpFindPtoUrl->toLocalFile();
     args << ptoUrl->toLocalFile();
 
     process->setProgram(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "CPFind command line: " << process->program();
+    kDebug() << "CPFind command line: " << process->program();
 
     process->start();
 
@@ -88,7 +100,8 @@ void CpFindTask::run()
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "cpfind's output:" << endl << process->readAll();
+
+    kDebug() << "cpfind's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

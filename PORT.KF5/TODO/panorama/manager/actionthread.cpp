@@ -85,8 +85,8 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::preProcessFiles(const QUrl::List& urlList, ItemUrlsMap& preProcessedMap,
-                                   QUrl& baseUrl, QUrl& cpFindPtoUrl, QUrl& cpCleanPtoUrl,
+void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
+                                   KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
                                    bool celeste, PanoramaFileType fileType, bool gPano,
                                    const RawDecodingSettings& rawSettings, const QString& huginVersion,
                                    const QString& cpCleanPath, const QString& cpFindPath)
@@ -103,7 +103,7 @@ void ActionThread::preProcessFiles(const QUrl::List& urlList, ItemUrlsMap& prePr
     // TODO: try to append these jobs as a JobCollection inside a JobSequence
     int id = 0;
     QVector<PreProcessTask*> preProcessingTasks;
-    foreach (const QUrl& file, urlList)
+    foreach (const KUrl& file, urlList)
     {
         preProcessedMap.insert(file, ItemPreprocessedUrls());
 
@@ -171,7 +171,7 @@ void ActionThread::preProcessFiles(const QUrl::List& urlList, ItemUrlsMap& prePr
     appendJob(jobs);
 }
 
-void ActionThread::optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& viewCropPtoUrl,
+void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
                                    bool levelHorizon, bool buildGPano,
                                    const QString& autooptimiserPath, const QString& panoModifyPath)
 {
@@ -207,7 +207,7 @@ void ActionThread::optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& vie
     appendJob(jobs);
 }
 
-void ActionThread::generatePanoramaPreview(const PTOType& ptoData, QUrl& previewPtoUrl, QUrl& previewMkUrl, QUrl& previewUrl,
+void ActionThread::generatePanoramaPreview(const PTOType& ptoData, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                            const ItemUrlsMap& preProcessedUrlsMap,
                                            const QString& makePath, const QString& pto2mkPath,
                                            const QString& enblendPath, const QString& nonaPath)
@@ -242,7 +242,7 @@ void ActionThread::generatePanoramaPreview(const PTOType& ptoData, QUrl& preview
     appendJob(jobs);
 }
 
-void ActionThread::compileProject(const PTOType& basePtoData, QUrl& panoPtoUrl, QUrl& mkUrl, QUrl& panoUrl,
+void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, KUrl& mkUrl, KUrl& panoUrl,
                                   const ItemUrlsMap& preProcessedUrlsMap,
                                   PanoramaFileType fileType, const QRect& crop,
                                   const QString& makePath, const QString& pto2mkPath,
@@ -278,21 +278,22 @@ void ActionThread::compileProject(const PTOType& basePtoData, QUrl& panoPtoUrl, 
     appendJob(jobs);
 }
 
-void ActionThread::copyFiles(const QUrl& ptoUrl, const QUrl& panoUrl, const QUrl& finalPanoUrl,
+void ActionThread::copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
                              const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata)
 {
-    JobCollection   *jobs           = new JobCollection();
+    JobCollection* const jobs = new JobCollection();
 
-    CopyFilesTask *t = new CopyFilesTask(d->preprocessingTmpDir->name(),
-                                         panoUrl,
-                                         finalPanoUrl,
-                                         ptoUrl,
-                                         preProcessedUrlsMap,
-                                         savePTO,
-                                         addGPlusMetadata);
+    CopyFilesTask* const t    = new CopyFilesTask(d->preprocessingTmpDir->name(),
+                                                  panoUrl,
+                                                  finalPanoUrl,
+                                                  ptoUrl,
+                                                  preProcessedUrlsMap,
+                                                  savePTO,
+                                                  addGPlusMetadata);
 
     connect(t, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));
+
     connect(t, SIGNAL(done(ThreadWeaver::Job*)),
             this, SLOT(slotDone(ThreadWeaver::Job*)));
 
@@ -378,8 +379,8 @@ void ActionThread::slotDone(Job* j)
     ((QObject*) t)->deleteLater();
 }
 
-void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const QUrl& ptoUrl, QUrl& mkUrl,
-                                       QUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
+void ActionThread::appendStitchingJobs(Job* prevJob, JobCollection* jc, const KUrl& ptoUrl, KUrl& mkUrl,
+                                       KUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
                                        PanoramaFileType fileType,
                                        const QString& makePath, const QString& pto2mkPath,
                                        const QString& enblendPath, const QString& nonaPath, bool preview)

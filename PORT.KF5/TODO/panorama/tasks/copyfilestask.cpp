@@ -40,17 +40,27 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CopyFilesTask::CopyFilesTask(QObject* parent, const QUrl& workDir, const QUrl& panoUrl, const QUrl& finalPanoUrl,
-                             const QUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
-    : Task(parent, COPY, workDir), panoUrl(panoUrl), finalPanoUrl(finalPanoUrl),
-      ptoUrl(ptoUrl), urlList(&urls), savePTO(savePTO), addGPlusMetadata(addGPlusMetadata)
+CopyFilesTask::CopyFilesTask(QObject* parent, const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
+    : Task(parent, COPY, workDir),
+      panoUrl(panoUrl),
+      finalPanoUrl(finalPanoUrl),
+      ptoUrl(ptoUrl),
+      urlList(&urls),
+      savePTO(savePTO),
+      addGPlusMetadata(addGPlusMetadata)
 {
 }
 
-CopyFilesTask::CopyFilesTask(const QUrl& workDir, const QUrl& panoUrl, const QUrl& finalPanoUrl,
-                             const QUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
-    : Task(0, COPY, workDir), panoUrl(panoUrl), finalPanoUrl(finalPanoUrl),
-      ptoUrl(ptoUrl), urlList(&urls), savePTO(savePTO), addGPlusMetadata(addGPlusMetadata)
+CopyFilesTask::CopyFilesTask(const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
+    : Task(0, COPY, workDir),
+      panoUrl(panoUrl),
+      finalPanoUrl(finalPanoUrl),
+      ptoUrl(ptoUrl),
+      urlList(&urls),
+      savePTO(savePTO),
+      addGPlusMetadata(addGPlusMetadata)
 {
 }
 
@@ -64,16 +74,16 @@ void CopyFilesTask::run()
     QFile     finalPanoFile(finalPanoUrl.toLocalFile());
 
     QFileInfo fi(finalPanoUrl.toLocalFile());
-    QUrl      finalPTOUrl(finalPanoUrl);
+    KUrl      finalPTOUrl(finalPanoUrl);
     finalPTOUrl.setFileName(fi.completeBaseName() + ".pto");
 
     QFile     ptoFile(ptoUrl.toLocalFile());
     QFile     finalPTOFile(finalPTOUrl.toLocalFile());
-    
+
     if (!panoFile.exists())
     {
         errString = i18n("Temporary panorama file does not exists.");
-        qCDebug(KIPIPLUGINS_LOG) << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
+        kDebug() << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -81,84 +91,85 @@ void CopyFilesTask::run()
     if (finalPanoFile.exists())
     {
         errString = i18n("A file named %1 already exists.", finalPanoUrl.fileName());
-        qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
-        successFlag = false;
-        return;
-    }
-    
-    if (savePTO && !ptoFile.exists())
-    {
-        errString = i18n("Temporary project file does not exist.");
-        qCDebug(KIPIPLUGINS_LOG) << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
-        successFlag = false;
-        return;
-    }
-    
-    if (savePTO && finalPTOFile.exists())
-    {
-        errString = i18n("A file named %1 already exists.", finalPTOUrl.fileName());
-        qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " + finalPTOUrl.toLocalFile();
+        kDebug() << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
         successFlag = false;
         return;
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "Copying GPS info...";
-      
+    if (savePTO && !ptoFile.exists())
+    {
+        errString = i18n("Temporary project file does not exist.");
+        kDebug() << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
+        successFlag = false;
+        return;
+    }
+
+    if (savePTO && finalPTOFile.exists())
+    {
+        errString = i18n("A file named %1 already exists.", finalPTOUrl.fileName());
+        kDebug() << "Final project file already exists: " + finalPTOUrl.toLocalFile();
+        successFlag = false;
+        return;
+    }
+
+    kDebug() << "Copying GPS info...";
+
     // Find first src image which contain geolocation and save it to target pano file. 
-    
+
     double lat, lng, alt;
-    
+
     for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
     {
-        qCDebug(KIPIPLUGINS_LOG) << i.key();
+        kDebug() << i.key();
 
         KPMetadata metaSrc(i.key().toLocalFile());
 
         if(metaSrc.getGPSInfo(alt, lat, lng))
         {
-            qCDebug(KIPIPLUGINS_LOG) << "GPS info found and saved in " << panoUrl;
+            kDebug() << "GPS info found and saved in " << panoUrl;
             KPMetadata metaDst(panoUrl.toLocalFile());
             metaDst.setGPSInfo(alt, lat, lng);
             metaDst.applyChanges();
             break;
-        }        
+        }
     }
 
     // Restore usual and common metadata from first shot.
-    
+
     KPMetadata metaSrc(urlList->constBegin().key().toLocalFile());
     KPMetadata metaDst(panoUrl.toLocalFile());
     metaDst.setIptc(metaSrc.getIptc());
     metaDst.setXmp(metaSrc.getXmp());
     metaDst.setXmpTagString("Xmp.tiff.Make",  metaSrc.getExifTagString("Exif.Image.Make"));
     metaDst.setXmpTagString("Xmp.tiff.Model", metaSrc.getExifTagString("Exif.Image.Model"));
-    
+
     QString filesList;
-    
+
     for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
         filesList.append(i.key().fileName() + " ; ");
 
     filesList.truncate(filesList.length()-3);
-    
+
     metaDst.setXmpTagString("Xmp.kipi.PanoramaInputFiles", filesList, false);
     metaDst.setImageDateTime(QDateTime::currentDateTime());
     metaDst.applyChanges();    
-    
-    qCDebug(KIPIPLUGINS_LOG) << "Copying panorama file...";
-    
+
+    kDebug() << "Copying panorama file...";
+
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
     {
         errString = i18n("Cannot move panorama from %1 to %2.",
                          panoUrl.toLocalFile(),
                          finalPanoUrl.toLocalFile());
-        qCDebug(KIPIPLUGINS_LOG) << "Cannot move panorama: QFile error = " << panoFile.error();
+        kDebug() << "Cannot move panorama: QFile error = " << panoFile.error();
         successFlag = false;
         return;
     }
 
+    // NOTE : See https://developers.google.com/photo-sphere/metadata/ for details
     if (addGPlusMetadata)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Adding G+ metadata...";
+        kDebug() << "Adding PhotoSphere metadata...";
         KPMetadata metaIn(panoUrl.toLocalFile());
         KPMetadata metaOut(finalPanoUrl.toLocalFile());
         metaOut.registerXmpNameSpace("http://ns.google.com/photos/1.0/panorama/", "GPano");
@@ -170,8 +181,8 @@ void CopyFilesTask::run()
 
     if (savePTO)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Copying project file...";
-    
+        kDebug() << "Copying project file...";
+
         if (!ptoFile.copy(finalPTOUrl.toLocalFile()))
         {
             errString = i18n("Cannot move project file from %1 to %2.",
@@ -181,16 +192,16 @@ void CopyFilesTask::run()
             return;
         }
 
-        qCDebug(KIPIPLUGINS_LOG) << "Copying converted RAW files...";
-        
+        kDebug() << "Copying converted RAW files...";
+
         for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
         {
             if (KPMetadata::isRawFile(i.key()))
             {
-                QUrl finalImgUrl(finalPanoUrl);
+                KUrl finalImgUrl(finalPanoUrl);
                 finalImgUrl.setFileName(i->preprocessedUrl.fileName());
                 QFile imgFile(i->preprocessedUrl.toLocalFile());
-        
+
                 if (!imgFile.copy(finalImgUrl.toLocalFile()))
                 {
                     errString = i18n("Cannot copy converted image file from %1 to %2.",
