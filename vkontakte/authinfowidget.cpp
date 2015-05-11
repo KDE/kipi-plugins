@@ -187,9 +187,9 @@ void AuthInfoWidget::handleVkError(KJob* kjob)
 QString AuthInfoWidget::albumsURL() const
 {
     if (m_vkapi->isAuthenticated() && m_userId != -1)
-        return QString("http://vkontakte.ru/albums%1").arg(m_userId);
+        return QString("http://vk.com/albums%1").arg(m_userId);
     else
-        return QLatin1String("http://vkontakte.ru/");
+        return QLatin1String("http://vk.com/");
 }
 
 } // namespace KIPIVkontaktePlugin

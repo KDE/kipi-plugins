@@ -88,17 +88,6 @@
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
 
-#undef SLOT_JOB_DONE_INIT
-#define SLOT_JOB_DONE_INIT(JobClass)                     \
-    JobClass* const job = dynamic_cast<JobClass*>(kjob); \
-    Q_ASSERT(job);                                       \
-    m_jobs.removeAll(job);                               \
-    if (job && job->error())                             \
-    {                                                    \
-        handleVkError(job);                              \
-        return;                                          \
-    }
-
 namespace KIPIVkontaktePlugin
 {
 
@@ -360,6 +349,7 @@ void VkontakteWindow::slotButtonClicked(int button)
         case KDialog::Close:
             // TODO: grab better code from picasawebexport/picasawebwindow.cpp:219
             reset();
+            done(KDialog::Close);
             break;
         default:
             KDialog::slotButtonClicked(button);
@@ -440,7 +430,14 @@ void VkontakteWindow::slotStartTransfer()
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 {
-    SLOT_JOB_DONE_INIT(Vkontakte::UploadPhotosJob)
+    Vkontakte::UploadPhotosJob* const job = dynamic_cast<Vkontakte::UploadPhotosJob*>(kjob);
+    Q_ASSERT(job);
+    m_jobs.removeAll(job);
+
+    if (job == 0 || job->error())
+    {
+        handleVkError(job);
+    }
 
     m_progressBar->hide();
     m_progressBar->progressCompleted();
