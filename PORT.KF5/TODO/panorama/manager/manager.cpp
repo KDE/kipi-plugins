@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,9 +32,9 @@
 
 #include <kdebug.h>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -53,9 +53,9 @@
 namespace KIPIPanoramaPlugin
 {
 
-struct Manager::ManagerPriv
+struct Manager::Private
 {
-    ManagerPriv()
+    Private()
     : basePtoData(0),
       cpFindPtoData(0),
       cpCleanPtoData(0),
@@ -75,7 +75,7 @@ struct Manager::ManagerPriv
     }
 
 
-    ~ManagerPriv()
+    ~Private()
     {
 //         group.writeEntry("HDR", hdr);
         group.writeEntry("GPano", gPano);
@@ -97,27 +97,27 @@ struct Manager::ManagerPriv
             delete panoPtoData;
     }
 
-    QUrl::List                     inputUrls;
+    KUrl::List                     inputUrls;
 
-    QUrl                           basePtoUrl;
+    KUrl                           basePtoUrl;
     PTOType*                       basePtoData;
-    QUrl                           cpFindPtoUrl;
+    KUrl                           cpFindPtoUrl;
     PTOType*                       cpFindPtoData;
-    QUrl                           cpCleanPtoUrl;
+    KUrl                           cpCleanPtoUrl;
     PTOType*                       cpCleanPtoData;
-    QUrl                           autoOptimisePtoUrl;
+    KUrl                           autoOptimisePtoUrl;
     PTOType*                       autoOptimisePtoData;
-    QUrl                           viewAndCropOptimisePtoUrl;
+    KUrl                           viewAndCropOptimisePtoUrl;
     PTOType*                       viewAndCropOptimisePtoData;
-    QUrl                           previewPtoUrl;
+    KUrl                           previewPtoUrl;
     PTOType*                       previewPtoData;
-    QUrl                           panoPtoUrl;
+    KUrl                           panoPtoUrl;
     PTOType*                       panoPtoData;
 
-    QUrl                           previewMkUrl;
-    QUrl                           previewUrl;
-    QUrl                           mkUrl;
-    QUrl                           panoUrl;
+    KUrl                           previewMkUrl;
+    KUrl                           previewUrl;
+    KUrl                           mkUrl;
+    KUrl                           panoUrl;
 
     bool                           gPano;
 //     bool                           hdr;
@@ -150,7 +150,8 @@ private:
 };
 
 Manager::Manager(QObject* const parent)
-    : QObject(parent), d(new ManagerPriv)
+    : QObject(parent),
+      d(new Private)
 {
     d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
@@ -165,13 +166,13 @@ Manager::~Manager()
 
 bool Manager::checkBinaries()
 {
-    return d->autoOptimiserBinary.recheckDirectories()
-        && d->cpCleanBinary.recheckDirectories()
-        && d->cpFindBinary.recheckDirectories()
-        && d->enblendBinary.recheckDirectories()
-        && d->makeBinary.recheckDirectories()
-        && d->nonaBinary.recheckDirectories()
-        && d->pto2MkBinary.recheckDirectories();
+    return(d->autoOptimiserBinary.recheckDirectories() &&
+           d->cpCleanBinary.recheckDirectories()       &&
+           d->cpFindBinary.recheckDirectories()        &&
+           d->enblendBinary.recheckDirectories()       &&
+           d->makeBinary.recheckDirectories()          &&
+           d->nonaBinary.recheckDirectories()          &&
+           d->pto2MkBinary.recheckDirectories());
 }
 
 void Manager::setGPano(bool gPano)
@@ -254,7 +255,7 @@ Pto2MkBinary& Manager::pto2MkBinary() const
     return d->pto2MkBinary;
 }
 
-QUrl& Manager::basePtoUrl() const
+KUrl& Manager::basePtoUrl() const
 {
     return d->basePtoUrl;
 }
@@ -281,15 +282,18 @@ void Manager::resetBasePto()
         delete d->basePtoData;
         d->basePtoData = 0;
     }
+
     QFile pto(d->basePtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->basePtoUrl = QUrl();
+
+    d->basePtoUrl = KUrl();
 }
 
-QUrl& Manager::cpFindPtoUrl() const
+KUrl& Manager::cpFindPtoUrl() const
 {
     return d->cpFindPtoUrl;
 }
@@ -316,15 +320,18 @@ void Manager::resetCpFindPto()
         delete d->cpFindPtoData;
         d->cpFindPtoData = 0;
     }
+
     QFile pto(d->cpFindPtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->cpFindPtoUrl = QUrl();
+
+    d->cpFindPtoUrl = KUrl();
 }
 
-QUrl& Manager::cpCleanPtoUrl() const
+KUrl& Manager::cpCleanPtoUrl() const
 {
     return d->cpCleanPtoUrl;
 }
@@ -351,15 +358,18 @@ void Manager::resetCpCleanPto()
         delete d->cpCleanPtoData;
         d->cpCleanPtoData = 0;
     }
+
     QFile pto(d->cpCleanPtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->cpCleanPtoUrl = QUrl();
+
+    d->cpCleanPtoUrl = KUrl();
 }
 
-QUrl& Manager::autoOptimisePtoUrl() const
+KUrl& Manager::autoOptimisePtoUrl() const
 {
     return d->autoOptimisePtoUrl;
 }
@@ -381,19 +391,23 @@ const PTOType& Manager::autoOptimisePtoData()
 
 void Manager::resetAutoOptimisePto()
 {
-    if (d->autoOptimisePtoData != 0) {
+    if (d->autoOptimisePtoData != 0)
+    {
         delete d->autoOptimisePtoData;
         d->autoOptimisePtoData = 0;
     }
+
     QFile pto(d->autoOptimisePtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->autoOptimisePtoUrl = QUrl();
+
+    d->autoOptimisePtoUrl = KUrl();
 }
 
-QUrl& Manager::viewAndCropOptimisePtoUrl() const
+KUrl& Manager::viewAndCropOptimisePtoUrl() const
 {
     return d->viewAndCropOptimisePtoUrl;
 }
@@ -420,15 +434,18 @@ void Manager::resetViewAndCropOptimisePto()
         delete d->viewAndCropOptimisePtoData;
         d->viewAndCropOptimisePtoData = 0;
     }
+
     QFile pto(d->viewAndCropOptimisePtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->viewAndCropOptimisePtoUrl = QUrl();
+
+    d->viewAndCropOptimisePtoUrl = KUrl();
 }
 
-QUrl& Manager::previewPtoUrl() const
+KUrl& Manager::previewPtoUrl() const
 {
     return d->previewPtoUrl;
 }
@@ -450,19 +467,23 @@ const PTOType& Manager::previewPtoData()
 
 void Manager::resetPreviewPto()
 {
-    if (d->previewPtoData != 0) {
+    if (d->previewPtoData != 0)
+    {
         delete d->previewPtoData;
         d->previewPtoData = 0;
     }
+
     QFile pto(d->previewPtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->previewPtoUrl = QUrl();
+
+    d->previewPtoUrl = KUrl();
 }
 
-QUrl& Manager::panoPtoUrl() const
+KUrl& Manager::panoPtoUrl() const
 {
     return d->panoPtoUrl;
 }
@@ -484,19 +505,23 @@ const PTOType& Manager::panoPtoData()
 
 void Manager::resetPanoPto()
 {
-    if (d->panoPtoData != 0) {
+    if (d->panoPtoData != 0)
+    {
         delete d->panoPtoData;
         d->panoPtoData = 0;
     }
+
     QFile pto(d->panoPtoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->panoPtoUrl = QUrl();
+
+    d->panoPtoUrl = KUrl();
 }
 
-QUrl& Manager::previewMkUrl() const
+KUrl& Manager::previewMkUrl() const
 {
     return d->previewMkUrl;
 }
@@ -504,14 +529,16 @@ QUrl& Manager::previewMkUrl() const
 void Manager::resetPreviewMkUrl()
 {
     QFile pto(d->previewMkUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->previewMkUrl = QUrl();
+
+    d->previewMkUrl = KUrl();
 }
 
-QUrl& Manager::previewUrl() const
+KUrl& Manager::previewUrl() const
 {
     return d->previewUrl;
 }
@@ -519,14 +546,16 @@ QUrl& Manager::previewUrl() const
 void Manager::resetPreviewUrl()
 {
     QFile pto(d->previewUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->previewUrl = QUrl();
+
+    d->previewUrl = KUrl();
 }
 
-QUrl& Manager::mkUrl() const
+KUrl& Manager::mkUrl() const
 {
     return d->mkUrl;
 }
@@ -534,14 +563,16 @@ QUrl& Manager::mkUrl() const
 void Manager::resetMkUrl()
 {
     QFile pto(d->mkUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->mkUrl = QUrl();
+
+    d->mkUrl = KUrl();
 }
 
-QUrl& Manager::panoUrl() const
+KUrl& Manager::panoUrl() const
 {
     return d->panoUrl;
 }
@@ -549,11 +580,13 @@ QUrl& Manager::panoUrl() const
 void Manager::resetPanoUrl()
 {
     QFile pto(d->panoUrl.toLocalFile());
+
     if (pto.exists())
     {
         pto.remove();
     }
-    d->panoUrl = QUrl();
+
+    d->panoUrl = KUrl();
 }
 
 void Manager::setIface(Interface* const iface)
@@ -566,12 +599,12 @@ Interface* Manager::iface() const
     return d->iface;
 }
 
-void Manager::setItemsList(const QUrl::List& urls)
+void Manager::setItemsList(const KUrl::List& urls)
 {
     d->inputUrls = urls;
 }
 
-QUrl::List& Manager::itemsList() const
+KUrl::List& Manager::itemsList() const
 {
     return d->inputUrls;
 }

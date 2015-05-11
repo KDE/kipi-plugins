@@ -38,7 +38,7 @@
 #include <kvbox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <QApplication>
+#include <kapplication.h>
 
 // Local includes
 
@@ -104,7 +104,7 @@ void ItemsPage::slotSetupList()
     slotImageListChanged();
 }
 
-QUrl::List ItemsPage::itemUrls() const
+KUrl::List ItemsPage::itemUrls() const
 {
     return d->list->imageUrls();
 }

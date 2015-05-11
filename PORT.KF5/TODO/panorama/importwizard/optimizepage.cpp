@@ -41,7 +41,7 @@
 #include <kiconloader.h>
 #include <kdialog.h>
 #include <kdebug.h>
-#include <QApplication>
+#include <kapplication.h>
 #include <kpixmapsequence.h>
 
 // Local includes
@@ -156,8 +156,8 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     QLabel* space4                  = new QLabel(vbox);
     vbox->setStretchFactor(space4, 10);
 
-    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setSpacing(KDialog::spacingHint());
+    vbox->setMargin(KDialog::spacingHint());
 
     setPageWidget(vbox);
 
@@ -288,7 +288,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -309,7 +309,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -319,7 +319,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
 void OptimizePage::slotShowDetails()
 {
-    KPOutputDialog dlg(QApplication::activeWindow(),
+    KPOutputDialog dlg(kapp->activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
 

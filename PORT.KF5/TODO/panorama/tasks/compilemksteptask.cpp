@@ -34,7 +34,7 @@
 namespace KIPIPanoramaPlugin
 {
 
-CompileMKStepTask::CompileMKStepTask(QObject* parent, const QUrl& workDir, int id, const QUrl& mkUrl,
+CompileMKStepTask::CompileMKStepTask(QObject* parent, const KUrl& workDir, int id, const KUrl& mkUrl,
                                      const QString& nonaPath, const QString& enblendPath,
                                      const QString& makePath, bool preview)
     : Task(parent, preview ? NONAFILEPREVIEW : NONAFILE, workDir),
@@ -42,7 +42,7 @@ CompileMKStepTask::CompileMKStepTask(QObject* parent, const QUrl& workDir, int i
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
-CompileMKStepTask::CompileMKStepTask(const QUrl& workDir, int id, const QUrl& mkUrl,
+CompileMKStepTask::CompileMKStepTask(const KUrl& workDir, int id, const KUrl& mkUrl,
                                      const QString& nonaPath, const QString& enblendPath,
                                      const QString& makePath, bool preview)
     : Task(0, preview ? NONAFILEPREVIEW : NONAFILE, workDir),
@@ -84,7 +84,7 @@ void CompileMKStepTask::run()
     args << mkFile;
 
     process->setProgram(args);
-    qCDebug(KIPIPLUGINS_LOG) << "make command line: " << process->program();
+    kDebug() << "make command line: " << process->program();
 
     process->start();
 
@@ -94,7 +94,7 @@ void CompileMKStepTask::run()
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "make job's output (" << mkFile << "):" << endl << process->readAll();
+    kDebug() << "make job's output (" << mkFile << "):" << endl << process->readAll();
 
     successFlag = true;
     return;

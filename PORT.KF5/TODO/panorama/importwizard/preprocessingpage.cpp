@@ -43,14 +43,14 @@
 #include <kvbox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <QApplication>
+#include <kapplication.h>
 #include <kiconloader.h>
 #include <kconfig.h>
 #include <kpixmapsequence.h>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -141,8 +141,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     vbox->setStretchFactor(space1, 2);
     vbox->setStretchFactor(space3, 2);
     vbox->setStretchFactor(space4, 10);
-    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setSpacing(KDialog::spacingHint());
+    vbox->setMargin(KDialog::spacingHint());
 
     setPageWidget(vbox);
 
@@ -245,7 +245,7 @@ void PreProcessingPage::slotProgressTimerDone()
 
 void PreProcessingPage::slotShowDetails()
 {
-    KPOutputDialog dlg(QApplication::activeWindow(),
+    KPOutputDialog dlg(kapp->activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
     dlg.setAboutData(new PanoramaAboutData());
@@ -254,7 +254,7 @@ void PreProcessingPage::slotShowDetails()
 
 void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "SlotAction";
+    kDebug() << "SlotAction";
     QString text;
 
     QMutexLocker lock(&d->progressMutex);
@@ -291,7 +291,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -326,7 +326,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }

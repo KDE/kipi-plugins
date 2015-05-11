@@ -30,8 +30,8 @@
 namespace KIPIPanoramaPlugin
 {
 
-CompileMKTask::CompileMKTask(QObject* parent, const QUrl& workDir,
-                             const QUrl& mkUrl, const QUrl& /*panoUrl*/,
+CompileMKTask::CompileMKTask(QObject* parent, const KUrl& workDir,
+                             const KUrl& mkUrl, const KUrl& /*panoUrl*/,
                              const QString& nonaPath, const QString& enblendPath,
                              const QString& makePath, bool preview)
     : Task(parent, preview ? STITCHPREVIEW : STITCH, workDir),
@@ -39,8 +39,8 @@ CompileMKTask::CompileMKTask(QObject* parent, const QUrl& workDir,
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
-CompileMKTask::CompileMKTask(const QUrl& workDir,
-                             const QUrl& mkUrl, const QUrl& /*panoUrl*/,
+CompileMKTask::CompileMKTask(const KUrl& workDir,
+                             const KUrl& mkUrl, const KUrl& /*panoUrl*/,
                              const QString& nonaPath, const QString& enblendPath,
                              const QString& makePath, bool preview)
     : Task(0, preview ? STITCHPREVIEW : STITCH, workDir),
@@ -79,7 +79,7 @@ void CompileMKTask::run()
 
     process->setProgram(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "make command line: " << process->program();
+    kDebug() << "make command line: " << process->program();
 
     process->start();
 
@@ -89,7 +89,7 @@ void CompileMKTask::run()
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "make's output:" << endl << process->readAll();
+    kDebug() << "make's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

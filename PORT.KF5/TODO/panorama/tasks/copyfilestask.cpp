@@ -40,27 +40,27 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CopyFilesTask::CopyFilesTask(QObject* parent, const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
+CopyFilesTask::CopyFilesTask(QObject* const parent, const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata)
     : Task(parent, COPY, workDir),
       panoUrl(panoUrl),
       finalPanoUrl(finalPanoUrl),
       ptoUrl(ptoUrl),
       urlList(&urls),
-      savePTO(savePTO),
-      addGPlusMetadata(addGPlusMetadata)
+      savePTO(sPTO),
+      addGPlusMetadata(GPlusMetadata)
 {
 }
 
 CopyFilesTask::CopyFilesTask(const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata)
+                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata)
     : Task(0, COPY, workDir),
       panoUrl(panoUrl),
       finalPanoUrl(finalPanoUrl),
       ptoUrl(ptoUrl),
       urlList(&urls),
-      savePTO(savePTO),
-      addGPlusMetadata(addGPlusMetadata)
+      savePTO(sPTO),
+      addGPlusMetadata(GPlusMetadata)
 {
 }
 
@@ -152,7 +152,18 @@ void CopyFilesTask::run()
 
     metaDst.setXmpTagString("Xmp.kipi.PanoramaInputFiles", filesList, false);
     metaDst.setImageDateTime(QDateTime::currentDateTime());
-    metaDst.applyChanges();    
+
+    // NOTE : See https://developers.google.com/photo-sphere/metadata/ for details
+    if (addGPlusMetadata)
+    {
+        kDebug() << "Adding PhotoSphere metadata...";
+        metaDst.registerXmpNameSpace("http://ns.google.com/photos/1.0/panorama/", "GPano");
+        metaDst.setXmpTagString("Xmp.GPano.UsePanoramaViewer", "True");
+        metaDst.setXmpTagString("Xmp.GPano.StitchingSoftware", "Panorama Kipi Plugin with Hugin");
+        metaDst.setXmpTagString("Xmp.GPano.ProjectionType",    "equirectangular");
+    }
+
+    metaDst.applyChanges();
 
     kDebug() << "Copying panorama file...";
 
@@ -164,19 +175,6 @@ void CopyFilesTask::run()
         kDebug() << "Cannot move panorama: QFile error = " << panoFile.error();
         successFlag = false;
         return;
-    }
-
-    // NOTE : See https://developers.google.com/photo-sphere/metadata/ for details
-    if (addGPlusMetadata)
-    {
-        kDebug() << "Adding PhotoSphere metadata...";
-        KPMetadata metaIn(panoUrl.toLocalFile());
-        KPMetadata metaOut(finalPanoUrl.toLocalFile());
-        metaOut.registerXmpNameSpace("http://ns.google.com/photos/1.0/panorama/", "GPano");
-        metaOut.setXmpTagString("GPano:UsePanoramaViewer", "True");
-        metaOut.setXmpTagString("GPano:StitchingSoftware", "Panorama Kipi Plugin, with Hugin");
-        metaOut.setXmpTagString("GPano:ProjectionType", "equirectangular");
-        metaOut.applyChanges();
     }
 
     if (savePTO)

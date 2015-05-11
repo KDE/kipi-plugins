@@ -38,8 +38,8 @@
 
 // LibKDcraw includes
 
-#include <rawdecodingsettings.h>
-#include <ractionthreadbase.h>
+#include <libkdcraw/rawdecodingsettings.h>
+#include <libkdcraw/ractionthreadbase.h>
 
 // Local includes
 
@@ -67,18 +67,22 @@ public:
                          bool celeste, KIPIPanoramaPlugin::PanoramaFileType fileType, bool gPano,
                          const RawDecodingSettings& rawSettings, const QString& huginVersion,
                          const QString& cpCleanPath, const QString& cpFindPath);
+
     void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
                          bool levelHorizon, bool buildGPano,
                          const QString& autooptimiserPath, const QString& panoModifyPath);
+
     void generatePanoramaPreview(const PTOType& ptoData, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
                                  const QString& enblendPath, const QString& nonaPath);
+
     void compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, KUrl& mkUrl, KUrl& panoUrl,
                         const ItemUrlsMap& preProcessedUrlsMap,
                         PanoramaFileType fileType, const QRect& crop,
                         const QString& makePath, const QString& pto2mkPath,
                         const QString& enblendPath, const QString& nonaPath);
+
     void copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
                    const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata);
 

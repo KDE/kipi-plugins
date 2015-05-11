@@ -30,16 +30,16 @@
 namespace KIPIPanoramaPlugin
 {
 
-AutoCropTask::AutoCropTask(QObject* parent, const QUrl& workDir,
-                           const QUrl& autoOptimiserPtoUrl, QUrl& viewCropPtoUrl,
+AutoCropTask::AutoCropTask(QObject* parent, const KUrl& workDir,
+                           const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
                            bool /*buildGPano*/, const QString& panoModifyPath)
     : Task(parent, AUTOCROP, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
       viewCropPtoUrl(&viewCropPtoUrl),/* buildGPano(buildGPano),*/
       panoModifyPath(panoModifyPath), process(0)
 {}
 
-AutoCropTask::AutoCropTask(const QUrl& workDir,
-                           const QUrl& autoOptimiserPtoUrl, QUrl& viewCropPtoUrl,
+AutoCropTask::AutoCropTask(const KUrl& workDir,
+                           const KUrl& autoOptimiserPtoUrl, KUrl& viewCropPtoUrl,
                            bool /*buildGPano*/, const QString& panoModifyPath)
     : Task(0, AUTOCROP, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
       viewCropPtoUrl(&viewCropPtoUrl), /*buildGPano(buildGPano),*/
@@ -83,7 +83,7 @@ void AutoCropTask::run()
 
     process->setProgram(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify command line: " << process->program();
+    kDebug() << "pano_modify command line: " << process->program();
 
     process->start();
 
@@ -93,7 +93,7 @@ void AutoCropTask::run()
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify's output:" << endl << process->readAll();
+    kDebug() << "pano_modify's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

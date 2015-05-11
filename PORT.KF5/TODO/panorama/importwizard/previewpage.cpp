@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2011-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,7 +33,7 @@
 // KDE includes
 
 #include <kstandarddirs.h>
-#include <QApplication>
+#include <kapplication.h>
 #include <kvbox.h>
 #include <klocale.h>
 #include <kdialog.h>
@@ -102,8 +102,8 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->postProcessing = new KPBatchProgressWidget(vbox);
     d->postProcessing->hide();
 
-    vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    vbox->setSpacing(KDialog::spacingHint());
+    vbox->setMargin(KDialog::spacingHint());
 
     setPageWidget(vbox);
 
@@ -236,7 +236,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), QIcon::fromTheme("kipi-panorama").pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), KIcon("kipi-panorama").pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();
@@ -294,8 +294,8 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->output      = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
-                    qCDebug(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
-                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", ad.message.toHtmlEscaped()));
+                    kDebug() << "Preview compilation failed: " << ad.message;
+                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", Qt::escape(ad.message)));
                     errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
@@ -317,7 +317,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                             QString::number(d->totalProgress - 1),
                                             ad.message
                                            );
-                    qCDebug(KIPIPLUGINS_LOG) << "Nona call failed for file #" << ad.id;
+                    kDebug() << "Nona call failed for file #" << ad.id;
                     d->postProcessing->addedAction(message, ErrorMessage);
                     emit signalStitchingFinished(false);
                     break;
@@ -330,14 +330,14 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     }
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(i18n("Panorama compilation: %1", ad.message.toHtmlEscaped()), ErrorMessage);
-                    qCDebug(KIPIPLUGINS_LOG) << "Enblend call failed";
+                    d->postProcessing->addedAction(i18n("Panorama compilation: %1", Qt::escape(ad.message)), ErrorMessage);
+                    kDebug() << "Enblend call failed";
                     emit signalStitchingFinished(false);
                     break;
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -359,7 +359,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         return;
                     }
 
-                    qCDebug(KIPIPLUGINS_LOG) << "Preview Stitching finished";
+                    kDebug() << "Preview Stitching finished";
                     d->previewBusy = false;
 
                     d->title->setText(i18n("<qt>"
@@ -379,7 +379,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         ((double) panoCrop.width())  / panoSize.width()  * previewSize.width(),
                         ((double) panoCrop.height()) / panoSize.height() * previewSize.height()
                     ));
-                    qCDebug(KIPIPLUGINS_LOG) << "Preview URL: " << d->mngr->previewUrl();
+                    kDebug() << "Preview URL: " << d->mngr->previewUrl();
 
                     emit signalPreviewStitchingFinished(true);
 
@@ -391,7 +391,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->postProcessing->addedAction(message, SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
-                    qCDebug(KIPIPLUGINS_LOG) << "Nona URL #" << ad.id;
+                    kDebug() << "Nona URL #" << ad.id;
                     break;
                 }
                 case STITCH:
@@ -407,13 +407,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
                     d->postProcessing->progressCompleted();
                     d->postProcessing->hide();
-                    qCDebug(KIPIPLUGINS_LOG) << "Panorama stitched";
+                    kDebug() << "Panorama stitched";
                     emit signalStitchingFinished(true);
                     break;
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -443,7 +443,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             default:
             {
-                qCWarning(KIPIPLUGINS_LOG) << "Unknown starting action " << ad.action;
+                kWarning() << "Unknown starting action " << ad.action;
                 break;
             }
         }

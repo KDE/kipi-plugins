@@ -34,14 +34,14 @@
 namespace KIPIPanoramaPlugin
 {
 
-CpCleanTask::CpCleanTask(QObject* parent, const QUrl& workDir, const QUrl& input,
-                         QUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+CpCleanTask::CpCleanTask(QObject* parent, const KUrl& workDir, const KUrl& input,
+                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
     : Task(parent, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
       cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
 {}
 
-CpCleanTask::CpCleanTask(const QUrl& workDir, const QUrl& input,
-                         QUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+CpCleanTask::CpCleanTask(const KUrl& workDir, const KUrl& input,
+                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
     : Task(0, CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
       cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
 {}
@@ -79,7 +79,7 @@ void CpCleanTask::run()
 
     process->setProgram(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "CPClean command line: " << process->program();
+    kDebug() << "CPClean command line: " << process->program();
 
     process->start();
 
@@ -89,7 +89,7 @@ void CpCleanTask::run()
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "cpclean's output:" << endl << process->readAll();
+    kDebug() << "cpclean's output:" << endl << process->readAll();
 
     successFlag = true;
     return;

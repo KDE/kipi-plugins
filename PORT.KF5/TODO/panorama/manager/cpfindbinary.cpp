@@ -36,7 +36,7 @@ bool CPFindBinary::parseHeader(const QString& output)
 
     foreach(QString line, lines)
     {
-        qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << line;
+        kDebug() << path() << " help header line: \n" << line;
 
         if (line.contains(headerRegExp))
         {
