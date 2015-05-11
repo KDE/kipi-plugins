@@ -77,8 +77,8 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent, VkAPI* const vkapi)
     accountBoxLayout->addWidget(loginDescLabel,     0, 0);
     accountBoxLayout->addWidget(m_loginLabel,       0, 1);
     accountBoxLayout->addWidget(m_changeUserButton, 1, 1);
-    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setSpacing(KDialog::spacingHint());
+    accountBoxLayout->setMargin(KDialog::spacingHint());
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
@@ -187,9 +187,9 @@ void AuthInfoWidget::handleVkError(KJob* kjob)
 QString AuthInfoWidget::albumsURL() const
 {
     if (m_vkapi->isAuthenticated() && m_userId != -1)
-        return QString("http://vkontakte.ru/albums%1").arg(m_userId);
+        return QString("http://vk.com/albums%1").arg(m_userId);
     else
-        return QLatin1String("http://vkontakte.ru/");
+        return QLatin1String("http://vk.com/");
 }
 
 } // namespace KIPIVkontaktePlugin

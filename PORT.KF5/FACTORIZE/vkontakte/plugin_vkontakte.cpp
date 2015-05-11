@@ -25,19 +25,19 @@
 
 // KDE includes
 
-#include <klocalizedstring.h>
-#include <QAction>
+#include <klocale.h>
+#include <kaction.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
-#include <QApplication>
+#include <kdebug.h>
+#include <kapplication.h>
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -75,7 +75,7 @@ void Plugin_Vkontakte::setup(QWidget* const widget)
 
     if (!interface())
     {
-        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -86,11 +86,11 @@ void Plugin_Vkontakte::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionExport = new QAction(this);
+    m_actionExport = new KAction(this);
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
-    //m_actionExport->setIcon(QIcon::fromTheme("vkontakte"));
-    m_actionExport->setIcon(QIcon::fromTheme("preferences-web-browser-shortcuts"));
+    //m_actionExport->setIcon(KIcon("vkontakte"));
+    m_actionExport->setIcon(KIcon("preferences-web-browser-shortcuts"));
     //m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
     m_actionExport->setEnabled(false);
 
@@ -113,7 +113,7 @@ void Plugin_Vkontakte::slotExport()
     {
         // This object will live forever, we will reuse it on future accesses
         // to the plugin.
-        m_dlgExport = new VkontakteWindow(false, QApplication::activeWindow());
+        m_dlgExport = new VkontakteWindow(false, kapp->activeWindow());
     }
     else
     {

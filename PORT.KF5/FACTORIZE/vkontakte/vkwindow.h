@@ -45,9 +45,9 @@ class QButtonGroup;
 class QCloseEvent;
 class QToolButton;
 
-class QUrl;
+class KUrl;
 class KPasswordDialog;
-class QComboBox;
+class KComboBox;
 class KPushButton;
 class KLineEdit;
 class KJob;

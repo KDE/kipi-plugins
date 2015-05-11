@@ -47,14 +47,14 @@
 
 #include <kdeversion.h>
 #include <kde_file.h>
-#include "kipiplugins_debug.h"
+#include <kdebug.h>
 #include <kconfig.h>
-#include <klocalizedstring.h>
+#include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <QComboBox>
+#include <kcombobox.h>
 #include <kpushbutton.h>
-#include <QMenu>
+#include <kmenu.h>
 #include <khelpmenu.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
@@ -69,14 +69,14 @@
 
 // LibKDcraw includes
 
-#include <version.h>
-#include <kdcraw.h>
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
-#include <uploadwidget.h>
-#include <imagecollection.h>
+#include <libkipi/interface.h>
+#include <libkipi/uploadwidget.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
@@ -87,17 +87,6 @@
 #include "vkapi.h"
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
-
-#undef SLOT_JOB_DONE_INIT
-#define SLOT_JOB_DONE_INIT(JobClass)                     \
-    JobClass* const job = dynamic_cast<JobClass*>(kjob); \
-    Q_ASSERT(job);                                       \
-    m_jobs.removeAll(job);                               \
-    if (job && job->error())                             \
-    {                                                    \
-        handleVkError(job);                              \
-        return;                                          \
-    }
 
 namespace KIPIVkontaktePlugin
 {
@@ -177,16 +166,16 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setSpacing(KDialog::spacingHint());
+    settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(m_settingsBox);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(QIcon::fromTheme("vkontakte"));
+    setWindowIcon(KIcon("vkontakte"));
     setButtons(KDialog::Help | KDialog::User1 | KDialog::Close);
     setDefaultButton(Close);
     setModal(false);
@@ -360,6 +349,7 @@ void VkontakteWindow::slotButtonClicked(int button)
         case KDialog::Close:
             // TODO: grab better code from picasawebexport/picasawebwindow.cpp:219
             reset();
+            done(KDialog::Close);
             break;
         default:
             KDialog::slotButtonClicked(button);
@@ -415,7 +405,7 @@ void VkontakteWindow::slotStartTransfer()
 
         QStringList files;
 
-        foreach(const QUrl& url, m_imgList->imageUrls(true))
+        foreach(const KUrl& url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
         Vkontakte::UploadPhotosJob* const job = new Vkontakte::UploadPhotosJob(m_vkapi->accessToken(),
@@ -435,12 +425,19 @@ void VkontakteWindow::slotStartTransfer()
 
     m_progressBar->show();
     m_progressBar->progressScheduled(i18n("Vkontakte Export"), false, true);
-    m_progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    m_progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 {
-    SLOT_JOB_DONE_INIT(Vkontakte::UploadPhotosJob)
+    Vkontakte::UploadPhotosJob* const job = dynamic_cast<Vkontakte::UploadPhotosJob*>(kjob);
+    Q_ASSERT(job);
+    m_jobs.removeAll(job);
+
+    if (job == 0 || job->error())
+    {
+        handleVkError(job);
+    }
 
     m_progressBar->hide();
     m_progressBar->progressCompleted();

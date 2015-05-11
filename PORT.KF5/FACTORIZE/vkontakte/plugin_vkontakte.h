@@ -26,11 +26,11 @@
 
 // KDE includes
 
-#include <QAction>
+#include <kaction.h>
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <libkipi/plugin.h>
 
 // Local includes
 
@@ -63,7 +63,7 @@ private:
 
 private:
 
-    QAction *         m_actionExport;
+    KAction*         m_actionExport;
     VkontakteWindow* m_dlgExport;
 };
 
