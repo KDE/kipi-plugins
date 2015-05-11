@@ -38,7 +38,11 @@ namespace KIPIPanoramaPlugin
 {
 
 Task::Task(QObject* const parent, Action action, const KUrl& workDir)
-    : Job(parent), action(action), successFlag(false), isAbortedFlag(false), tmpDir(workDir)
+    : Job(parent),
+      action(action),
+      successFlag(false),
+      isAbortedFlag(false),
+      tmpDir(workDir)
 {
 }
 

@@ -41,15 +41,24 @@ namespace KIPIPanoramaPlugin
 {
 
 CreateFinalPtoTask::CreateFinalPtoTask(QObject* parent, const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop)
-    : Task(parent, CREATEFINALPTO, workDir), ptoData(ptoData), finalPtoUrl(&finalPtoUrl), crop(crop)
-{}
+    : Task(parent, CREATEFINALPTO, workDir),
+      ptoData(ptoData),
+      finalPtoUrl(&finalPtoUrl),
+      crop(crop)
+{
+}
 
 CreateFinalPtoTask::CreateFinalPtoTask(const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop)
-    : Task(0, CREATEFINALPTO, workDir), ptoData(ptoData), finalPtoUrl(&finalPtoUrl), crop(crop)
-{}
+    : Task(0, CREATEFINALPTO, workDir),
+      ptoData(ptoData),
+      finalPtoUrl(&finalPtoUrl),
+      crop(crop)
+{
+}
 
 CreateFinalPtoTask::~CreateFinalPtoTask()
-{}
+{
+}
 
 void CreateFinalPtoTask::run()
 {
@@ -57,21 +66,22 @@ void CreateFinalPtoTask::run()
     finalPtoUrl->setFileName(QString("final.pto"));
 
     QFile pto(finalPtoUrl->toLocalFile());
+
     if (pto.exists())
     {
-        errString = i18n("PTO file already created in the temporary directory.");
+        errString   = i18n("PTO file already created in the temporary directory.");
         successFlag = false;
         return;
     }
+
     if (!pto.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
     {
-        errString = i18n("PTO file cannot be created in the temporary directory.");
+        errString   = i18n("PTO file cannot be created in the temporary directory.");
         successFlag = false;
         return;
     }
 
     ptoData.project.crop = crop;
-
     ptoData.createFile(finalPtoUrl->toLocalFile());
 
     successFlag = true;

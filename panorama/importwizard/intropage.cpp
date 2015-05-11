@@ -219,6 +219,7 @@ bool IntroPage::binariesFound()
 void IntroPage::slotToggleGPano(int state)
 {
     d->mngr->setGPano(state);
+
     if (state)
     {
         d->formatGroupBox->setEnabled(false);

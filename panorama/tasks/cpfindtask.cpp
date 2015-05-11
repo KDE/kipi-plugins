@@ -32,15 +32,25 @@ namespace KIPIPanoramaPlugin
 
 CpFindTask::CpFindTask(QObject* parent, const KUrl& workDir, const KUrl& input,
                        KUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
-    : Task(parent, CPFIND, workDir), cpFindPtoUrl(&cpFindUrl),
-      celeste(celeste), ptoUrl(&input), cpFindPath(cpFindPath), process(0)
-{}
+    : Task(parent, CPFIND, workDir),
+      cpFindPtoUrl(&cpFindUrl),
+      celeste(celeste),
+      ptoUrl(&input),
+      cpFindPath(cpFindPath),
+      process(0)
+{
+}
 
 CpFindTask::CpFindTask(const KUrl& workDir, const KUrl& input,
                        KUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
-    : Task(0, CPFIND, workDir), cpFindPtoUrl(&cpFindUrl),
-      celeste(celeste), ptoUrl(&input), cpFindPath(cpFindPath), process(0)
-{}
+    : Task(0, CPFIND, workDir),
+      cpFindPtoUrl(&cpFindUrl),
+      celeste(celeste),
+      ptoUrl(&input),
+      cpFindPath(cpFindPath),
+      process(0)
+{
+}
 
 CpFindTask::~CpFindTask()
 {
@@ -70,8 +80,10 @@ void CpFindTask::run()
 
     QStringList args;
     args << cpFindPath;
+
     if (celeste)
         args << "--celeste";
+
     args << "-o";
     args << cpFindPtoUrl->toLocalFile();
     args << ptoUrl->toLocalFile();
@@ -88,6 +100,7 @@ void CpFindTask::run()
         successFlag = false;
         return;
     }
+
     kDebug() << "cpfind's output:" << endl << process->readAll();
 
     successFlag = true;

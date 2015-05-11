@@ -105,10 +105,12 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
     outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
 
     QImage img;
+
     if (img.load(inUrl.toLocalFile()))
     {
         QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
         bool saved     = preview.save(outUrl.toLocalFile(), "JPEG");
+
         // save exif information also to preview image for auto rotation
         if (saved)
         {
@@ -118,6 +120,7 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
             metaOut.setImageDimensions(QSize(preview.width(), preview.height()));
             metaOut.applyChanges();
         }
+
         kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
     }
@@ -125,6 +128,7 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
     {
         errString = i18n("Input image cannot be loaded for preview generation");
     }
+
     return false;
 }
 
@@ -167,10 +171,12 @@ bool PreProcessTask::convertRaw()
         metaIn.load(inUrl.toLocalFile());
         KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList("Photo"), true);
         KPMetadata::MetaDataMap::iterator it;
+
         for (it = m.begin(); it != m.end(); ++it)
         {
             metaIn.removeExifTag(it.key().toAscii().data(), false);
         }
+
         metaOut.setData(metaIn.data());
         metaOut.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         metaOut.setImageDimensions(QSize(width, height));

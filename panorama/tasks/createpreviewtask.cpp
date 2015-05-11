@@ -40,25 +40,32 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePreviewTask::CreatePreviewTask(QObject* parent, const KUrl& workDir, const PTOType& inputPTO, 
+CreatePreviewTask::CreatePreviewTask(QObject* parent, const KUrl& workDir, const PTOType& inputPTO,
                                      KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
-    : Task(parent, CREATEMKPREVIEW, workDir), previewPtoUrl(&previewPtoUrl),
-      ptoData(inputPTO), preProcessedUrlsMap(preProcessedUrlsMap)
-{}
+    : Task(parent, CREATEMKPREVIEW, workDir),
+      previewPtoUrl(&previewPtoUrl),
+      ptoData(inputPTO),
+      preProcessedUrlsMap(preProcessedUrlsMap)
+{
+}
 
-CreatePreviewTask::CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO, 
+CreatePreviewTask::CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO,
                                      KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
-    : Task(0, CREATEMKPREVIEW, workDir), previewPtoUrl(&previewPtoUrl),
-      ptoData(inputPTO), preProcessedUrlsMap(preProcessedUrlsMap)
-{}
+    : Task(0, CREATEMKPREVIEW, workDir),
+      previewPtoUrl(&previewPtoUrl),
+      ptoData(inputPTO),
+      preProcessedUrlsMap(preProcessedUrlsMap)
+{
+}
 
 CreatePreviewTask::~CreatePreviewTask()
-{}
+{
+}
 
 void CreatePreviewTask::run()
 {
-
     PTOType data(ptoData);
+
     if (data.images.size() != preProcessedUrlsMap.size())
     {
         errString = i18n("Project file parsing failed.");
@@ -69,20 +76,23 @@ void CreatePreviewTask::run()
 
     KPMetadata metaIn(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
     KPMetadata metaOut(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
-    double scalingFactor = ((double) metaOut.getPixelSize().width()) / ((double) metaIn.getPixelSize().width());
+    double scalingFactor             = ((double) metaOut.getPixelSize().width()) / ((double) metaIn.getPixelSize().width());
 
     data.project.fileFormat.fileType = PTOType::Project::FileFormat::JPEG;
-    data.project.fileFormat.quality = 90;
+    data.project.fileFormat.quality  = 90;
     data.project.size.setHeight(data.project.size.height() * scalingFactor);
     data.project.size.setWidth(data.project.size.width() * scalingFactor);
-    data.project.crop = QRect();
+    data.project.crop                = QRect();
+
     for (int imageId = 0; imageId < data.images.size(); imageId++)
     {
-        PTOType::Image& image = data.images[imageId];
+        PTOType::Image& image   = data.images[imageId];
         KUrl imgUrl(KUrl(tmpDir), image.fileName);
         ItemUrlsMap::const_iterator it;
-        const ItemUrlsMap *ppum = &preProcessedUrlsMap;
+        const ItemUrlsMap* ppum = &preProcessedUrlsMap;
+
         for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl != imgUrl; ++it);
+
         if (it == ppum->constEnd())
         {
             errString = i18n("Unknown input file in the project file: %1", image.fileName);
@@ -91,10 +101,11 @@ void CreatePreviewTask::run()
             successFlag = false;
             return;
         }
+
         image.fileName = it.value().previewUrl.fileName();
         KUrl preview(KUrl(tmpDir), image.fileName);
         KPMetadata metaImage(preview.toLocalFile());
-        image.size = metaImage.getPixelSize();
+        image.size     = metaImage.getPixelSize();
         image.optimisationParameters.clear();
     }
 

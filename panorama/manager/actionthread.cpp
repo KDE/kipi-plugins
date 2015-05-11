@@ -281,18 +281,19 @@ void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, 
 void ActionThread::copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
                              const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata)
 {
-    JobCollection   *jobs           = new JobCollection();
+    JobCollection* const jobs = new JobCollection();
 
-    CopyFilesTask *t = new CopyFilesTask(d->preprocessingTmpDir->name(),
-                                         panoUrl,
-                                         finalPanoUrl,
-                                         ptoUrl,
-                                         preProcessedUrlsMap,
-                                         savePTO,
-                                         addGPlusMetadata);
+    CopyFilesTask* const t    = new CopyFilesTask(d->preprocessingTmpDir->name(),
+                                                  panoUrl,
+                                                  finalPanoUrl,
+                                                  ptoUrl,
+                                                  preProcessedUrlsMap,
+                                                  savePTO,
+                                                  addGPlusMetadata);
 
     connect(t, SIGNAL(started(ThreadWeaver::Job*)),
             this, SLOT(slotStarting(ThreadWeaver::Job*)));
+
     connect(t, SIGNAL(done(ThreadWeaver::Job*)),
             this, SLOT(slotDone(ThreadWeaver::Job*)));
 
