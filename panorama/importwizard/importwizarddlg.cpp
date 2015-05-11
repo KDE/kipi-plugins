@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,7 +80,8 @@ struct ImportWizardDlg::Private
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
-    : KPWizardDialog(parent), d(new Private)
+    : KPWizardDialog(parent),
+      d(new Private)
 {
     setModal(false);
     setWindowTitle(i18n("Panorama Creator Wizard"));
@@ -99,8 +100,8 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Panorama Dialog"));
-    
-    if(group.exists())
+
+    if (group.exists())
     {
         restoreDialogSize(group);
     }
@@ -111,7 +112,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
         QRect srect                   = desktop->availableGeometry(screen);
         resize(800 <= srect.width()  ? 800 : srect.width(),
                750 <= srect.height() ? 750 : srect.height());
-    }  
+    }
 
     // ---------------------------------------------------------------
 
@@ -148,7 +149,7 @@ ImportWizardDlg::~ImportWizardDlg()
     KConfigGroup group = config.group(QString("Panorama Dialog"));
     saveDialogSize(group);
     config.sync();
-    
+
     delete d;
 }
 
@@ -212,6 +213,7 @@ void ImportWizardDlg::back()
             setValid(d->preProcessingPage->page(), true);
             return;
         }
+
         setValid(d->preProcessingPage->page(), true);
     }
     else if (currentPage() == d->optimizePage->page())
@@ -221,6 +223,7 @@ void ImportWizardDlg::back()
             setValid(d->optimizePage->page(), true);
             return;
         }
+
         setValid(d->optimizePage->page(), true);
         d->preProcessingPage->resetPage();
     }
@@ -320,7 +323,7 @@ void ImportWizardDlg::slotStitchingFinished(bool success)
 void ImportWizardDlg::slotCopyFinished(bool success)
 {
     if (success)
-    {   
+    {
         KAssistantDialog::accept();
     }
     else

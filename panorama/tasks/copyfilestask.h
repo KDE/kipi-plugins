@@ -50,10 +50,10 @@ private:
 
 public:
 
-    CopyFilesTask(QObject* parent, const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl, 
-                  const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata);
+    CopyFilesTask(QObject* const parent, const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+                  const KUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata);
     CopyFilesTask(const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                  const KUrl& ptoUrl, const ItemUrlsMap& urls, bool savePTO, bool addGPlusMetadata);
+                  const KUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata);
     ~CopyFilesTask();
 
 protected:

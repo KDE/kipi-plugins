@@ -44,18 +44,18 @@ private:
     KUrl* const                         autoOptimiserPtoUrl;
     const KUrl* const                   ptoUrl;
     const bool                          levelHorizon;
-//     const bool                          buildGPano;
+    const bool                          buildGPano;
     const QString                       autooptimiserPath;
 
     KProcess*                           process;
 
 public:
 
-    OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input, 
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon,
+    OptimisationTask(QObject* const parent, const KUrl& workDir, const KUrl& input, 
+                     KUrl& autoOptimiserPtoUrl, bool levelHorizon, bool gPano,
                      const QString& autooptimiserPath);
     OptimisationTask(const KUrl& workDir, const KUrl& input,
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon,
+                     KUrl& autoOptimiserPtoUrl, bool levelHorizon, bool gPano,
                      const QString& autooptimiserPath);
     ~OptimisationTask();
 
@@ -64,7 +64,6 @@ public:
 protected:
 
     void run();
-
 };
 
 }  // namespace KIPIPanoramaPlugin

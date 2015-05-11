@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -78,6 +78,7 @@ public:
 
     void setGPano(bool gPano);
     bool gPano() const;
+
 //     void setHDR(bool hdr);
 //     bool hdr() const;
 
@@ -126,17 +127,16 @@ public:
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings& rawDecodingSettings() const;
 
-    ItemUrlsMap& preProcessedMap() const;
-
-    ActionThread*           thread() const;
+    ItemUrlsMap&            preProcessedMap()     const;
+    ActionThread*           thread()              const;
     AutoOptimiserBinary&    autoOptimiserBinary() const;
-    CPCleanBinary&          cpCleanBinary() const;
-    CPFindBinary&           cpFindBinary() const;
-    EnblendBinary&          enblendBinary() const;
-    MakeBinary&             makeBinary() const;
-    NonaBinary&             nonaBinary() const;
-    PanoModifyBinary&       panoModifyBinary() const;
-    Pto2MkBinary&           pto2MkBinary() const;
+    CPCleanBinary&          cpCleanBinary()       const;
+    CPFindBinary&           cpFindBinary()        const;
+    EnblendBinary&          enblendBinary()       const;
+    MakeBinary&             makeBinary()          const;
+    NonaBinary&             nonaBinary()          const;
+    PanoModifyBinary&       panoModifyBinary()    const;
+    Pto2MkBinary&           pto2MkBinary()        const;
 
     void run();
 
@@ -150,8 +150,8 @@ private:
 
 private:
 
-    struct ManagerPriv;
-    ManagerPriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 } // namespace KIPIPanoramaPlugin

@@ -59,7 +59,7 @@ struct IntroPage::Private
 {
     Private(Manager* const m)
         : mngr(m),
-          addGPlusMetadataCheckBox(0),
+//          addGPlusMetadataCheckBox(0),
 
           // TODO HDR
 //          hdrCheckBox(0),
@@ -74,7 +74,9 @@ struct IntroPage::Private
     }
 
     Manager*                      mngr;
+/*
     QCheckBox*                    addGPlusMetadataCheckBox;
+*/
 
     // TODO HDR
 //     QCheckBox*                    hdrCheckBox;
@@ -126,7 +128,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
-
+/*
     QVBoxLayout* const settingsVBox = new QVBoxLayout();
     d->settingsGroupBox             = new QGroupBox(i18n("Panorama Settings"), vbox);
     d->settingsGroupBox->setLayout(settingsVBox);
@@ -138,7 +140,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                                                    "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
                                                    "that this feature is most insteresting for large panoramas."));
     settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
-
+*/
     QVBoxLayout* const formatVBox = new QVBoxLayout();
     d->formatGroupBox             = new QGroupBox(i18n("File Format"), vbox);
     d->formatGroupBox->setLayout(formatVBox);
@@ -195,10 +197,13 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
+/*
     connect(d->addGPlusMetadataCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotToggleGPano(int)));
 
-    slotToggleGPano(0);
+    d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
+*/
+    slotToggleGPano(0);  // Disabled for the moment
 
     connect(group, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(slotChangeFileFormat(QAbstractButton*)));
@@ -207,8 +212,6 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
             this, SIGNAL(signalIntroPageIsValid(bool)));
 
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
-
-    d->addGPlusMetadataCheckBox->setChecked(d->mngr->gPano());
 
     // TODO HDR
 //     d->hdrCheckBox->setChecked(d->mngr->hdr());
@@ -227,15 +230,6 @@ bool IntroPage::binariesFound()
 void IntroPage::slotToggleGPano(int state)
 {
     d->mngr->setGPano(state);
-
-    if (state)
-    {
-        d->formatGroupBox->setEnabled(false);
-    }
-    else
-    {
-        d->formatGroupBox->setEnabled(true);
-    }
 }
 
     // TODO HDR

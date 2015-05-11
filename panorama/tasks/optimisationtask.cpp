@@ -30,21 +30,31 @@
 namespace KIPIPanoramaPlugin
 {
 
-OptimisationTask::OptimisationTask(QObject* parent, const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
+OptimisationTask::OptimisationTask(QObject* const parent, const KUrl& workDir, const KUrl& input,
+                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon, bool gPano,
                                    const QString& autooptimiserPath)
-    : Task(parent, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
-      ptoUrl(&input), levelHorizon(levelHorizon),
-      autooptimiserPath(autooptimiserPath), process(0)
-{}
+    : Task(parent, OPTIMIZE, workDir),
+      autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
+      ptoUrl(&input),
+      levelHorizon(levelHorizon),
+      buildGPano(gPano),
+      autooptimiserPath(autooptimiserPath),
+      process(0)
+{
+}
 
 OptimisationTask::OptimisationTask(const KUrl& workDir, const KUrl& input,
-                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon,
+                                   KUrl& autoOptimiserPtoUrl, bool levelHorizon, bool gPano,
                                    const QString& autooptimiserPath)
-    : Task(0, OPTIMIZE, workDir), autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
-      ptoUrl(&input), levelHorizon(levelHorizon),
-      autooptimiserPath(autooptimiserPath), process(0)
-{}
+    : Task(0, OPTIMIZE, workDir),
+      autoOptimiserPtoUrl(&autoOptimiserPtoUrl),
+      ptoUrl(&input),
+      levelHorizon(levelHorizon),
+      buildGPano(gPano),
+      autooptimiserPath(autooptimiserPath),
+      process(0)
+{
+}
 
 OptimisationTask::~OptimisationTask()
 {
@@ -74,14 +84,17 @@ void OptimisationTask::run()
     QStringList args;
     args << autooptimiserPath;
     args << "-am";
+
     if (levelHorizon)
     {
         args << "-l";
     }
-//     if (!buildGPano)
-//     {
-        args << "-s";
-//     }
+
+    if (!buildGPano)
+    {
+       args << "-s";
+    }
+
     args << "-o";
     args << autoOptimiserPtoUrl->toLocalFile();
     args << ptoUrl->toLocalFile();
