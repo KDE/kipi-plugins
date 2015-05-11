@@ -3,7 +3,10 @@ Kipi-plugins 4.11.0 - Release date: 2015-06-14
 
 NEW FEATURES:
 
+Panorama : add PhotoShere metadata support.
+
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 274029 - Edit Metadata dialog doesn't honour settings for XMP sidecar [patch].
-002 ==> 
+002 ==> 346053 - Photo Sphere XMP Metadata.
+003 ==> 

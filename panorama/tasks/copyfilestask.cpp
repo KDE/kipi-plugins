@@ -166,9 +166,10 @@ void CopyFilesTask::run()
         return;
     }
 
+    // NOTE : See https://developers.google.com/photo-sphere/metadata/ for details
     if (addGPlusMetadata)
     {
-        kDebug() << "Adding G+ metadata...";
+        kDebug() << "Adding PhotoSphere metadata...";
         KPMetadata metaIn(panoUrl.toLocalFile());
         KPMetadata metaOut(finalPanoUrl.toLocalFile());
         metaOut.registerXmpNameSpace("http://ns.google.com/photos/1.0/panorama/", "GPano");
