@@ -7,4 +7,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 274029 - Edit Metadata dialog doesn't honour settings for XMP sidecar [patch].
 002 ==> 345358 - digiKam crash when vkontakte plugin failed to upload images.
-003 ==> 
+003 ==> 320308 - "Failed to upload photo into Flickr" every time after first use.
+004 ==> 
