@@ -10,4 +10,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 003 ==> 320308 - "Failed to upload photo into Flickr" every time after first use.
 004 ==> 327069 - Kipiplugins missing translations.
 005 ==> 243106 - Flickr uploader uploads with wrong date.
-006 ==> 
+006 ==> 291449 - To check the file size and report to the user if the file size exceeds limits set by flickr.
+007 ==> 
