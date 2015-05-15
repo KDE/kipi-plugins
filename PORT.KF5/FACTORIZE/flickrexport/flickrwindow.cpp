@@ -36,26 +36,26 @@
 
 // KDE includes
 
-#include <QComboBox>
+#include <kcombobox.h>
 #include <klineedit.h>
-#include <QMenu>
-#include <klocalizedstring.h>
+#include <kmenu.h>
+#include <klocale.h>
 #include <kmessagebox.h>
-#include <QApplication>
+#include <kapplication.h>
 #include <kiconloader.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <ktabwidget.h>
 #include <krun.h>
-#include "kipiplugins_debug.h"
+#include <kdebug.h>
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -85,15 +85,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     if (serviceName == QString("23"))
     {
-        setWindowIcon(QIcon::fromTheme("kipi-hq"));
+        setWindowIcon(KIcon("kipi-hq"));
     }
     else if (serviceName == QString("Zooomr"))
     {
-        setWindowIcon(QIcon::fromTheme("kipi-zooomr"));
+        setWindowIcon(KIcon("kipi-zooomr"));
     }
     else
     {
-        setWindowIcon(QIcon::fromTheme("kipi-flickr"));
+        setWindowIcon(KIcon("kipi-flickr"));
     }
 
     m_tmp                       = tmpFolder;
@@ -123,7 +123,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_userNameDisplayLabel      = m_widget->m_userNameDisplayLabel;
     m_imglst                    = m_widget->m_imglst;
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), QIcon::fromTheme("network-workgroup")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), KIcon("network-workgroup")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
@@ -206,8 +206,8 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     //connect( m_tagView, SIGNAL(selectionChanged()),
     //         SLOT(slotTagSelected()) );
 
-    //connect( m_photoView->browserExtension(), SIGNAL(openURLRequest(QUrl,KParts::URLArgs)),
-    //         SLOT(slotOpenPhoto(QUrl)) );
+    //connect( m_photoView->browserExtension(), SIGNAL(openURLRequest(KUrl,KParts::URLArgs)),
+    //         SLOT(slotOpenPhoto(KUrl)) );
 
     // --------------------------------------------------------------------------
 
@@ -223,7 +223,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     m_talker->m_authProgressDlg = m_authProgressDlg;
 
-    qCDebug(KIPIPLUGINS_LOG) << "Calling auth methods";
+    kDebug() << "Calling auth methods";
 
     if (m_token.length() < 1)
     {
@@ -400,7 +400,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_token    = token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
-    qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
+    kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
 
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
@@ -435,7 +435,7 @@ void FlickrWindow::slotError(const QString& msg)
 
 void FlickrWindow::slotUserChangeRequest()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request ";
+    kDebug() << "Slot Change User Request ";
     m_talker->getFrob();
     //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
@@ -447,12 +447,12 @@ void FlickrWindow::slotUserChangeRequest()
  * accept the path if it occurs at least 50% of the time. It could also look
  * further up in the path name.
  */
-QString FlickrWindow::guessSensibleSetName(const QUrl::List& urlList)
+QString FlickrWindow::guessSensibleSetName(const KUrl::List& urlList)
 {
     QMap<QString,int> nrFolderOccurences;
 
     // Extract last component of directory
-    foreach(const QUrl& url, urlList)
+    foreach(const KUrl& url, urlList)
     {
         QString dir      = url.directory();
         QStringList list = dir.split('/');
@@ -495,7 +495,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
      * Flickr yet. */
 
     // Call the dialog
-    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(QApplication::activeWindow());
+    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
     dlg->titleEdit->setText(guessSensibleSetName(m_imglst->imageUrls()));
     int resp                              = dlg->exec();
 
@@ -527,7 +527,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
         fps.id = id;
 
-        qCDebug(KIPIPLUGINS_LOG) << "Created new photoset with temporary id " << id;
+        kDebug() << "Created new photoset with temporary id " << id;
         // Append the new photoset to the list.
         m_talker->m_photoSetsList->prepend(fps);
         m_talker->m_selectedPhotoSet = fps;
@@ -537,7 +537,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
     }
     else
     {
-        qCDebug(KIPIPLUGINS_LOG) << "New Photoset creation aborted ";
+        kDebug() << "New Photoset creation aborted ";
     }
 
     delete dlg;
@@ -559,7 +559,7 @@ void FlickrWindow::slotTagSelected()
 {
     // TODO
 }
-void FlickrWindow::slotOpenPhoto( const QUrl& url )
+void FlickrWindow::slotOpenPhoto( const KUrl& url )
 {
     new KRun(url);
 }
@@ -567,7 +567,7 @@ void FlickrWindow::slotOpenPhoto( const QUrl& url )
 
 void FlickrWindow::slotPopulatePhotoSetComboBox()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "slotPopulatePhotoSetComboBox invoked";
+    kDebug() << "slotPopulatePhotoSetComboBox invoked";
 
     if (m_talker && m_talker->m_photoSetsList)
     {
@@ -602,7 +602,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
 */
 void FlickrWindow::slotUser1()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages invoked";
+    kDebug() << "SlotUploadImages invoked";
 
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
 
@@ -611,7 +611,7 @@ void FlickrWindow::slotUser1()
         return;
     }
 
-    typedef QPair<QUrl, FPhotoInfo> Pair;
+    typedef QPair<KUrl, FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
@@ -622,11 +622,12 @@ void FlickrWindow::slotUser1()
         if (lvItem)
         {
             KPImageInfo info(lvItem->url());
-            qCDebug(KIPIPLUGINS_LOG) << "Adding images to the list";
+            kDebug() << "Adding images to the list";
             FPhotoInfo temp;
 
             temp.title                 = info.title();
             temp.description           = info.description();
+	    temp.size                  = info.fileSize();
             temp.is_public             = lvItem->isPublic()  ? 1 : 0;
             temp.is_family             = lvItem->isFamily()  ? 1 : 0;
             temp.is_friend             = lvItem->isFriends() ? 1 : 0;
@@ -687,7 +688,7 @@ void FlickrWindow::slotUser1()
 
             while (itTags != allTags.end())
             {
-                qCDebug(KIPIPLUGINS_LOG) << "Tags list: " << (*itTags);
+                kDebug() << "Tags list: " << (*itTags);
                 ++itTags;
             }
 
@@ -700,7 +701,7 @@ void FlickrWindow::slotUser1()
     m_uploadCount = 0;
     m_widget->progressBar()->reset();
     slotAddPhotoNext();
-    qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages done";
+    kDebug() << "SlotUploadImages done";
 }
 
 void FlickrWindow::slotAddPhotoNext()
@@ -714,7 +715,7 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    typedef QPair<QUrl, FPhotoInfo> Pair;
+    typedef QPair<KUrl, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
 
@@ -744,25 +745,36 @@ void FlickrWindow::slotAddPhotoNext()
             }
         }
     }
-
-    bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
+    
+    kDebug()<<"Max allowed file size is : "<<((m_talker->getMaxAllowedFileSize()).toLongLong())<<"File Size is "<<info.size;
+    
+    if(info.size > ((m_talker->getMaxAllowedFileSize()).toLongLong()))
+    {
+	slotAddPhotoFailed("File Size exceeds maximum allowed file sie.");
+        return;
+    }
+    else
+    {
+        kDebug()<<"File size is within max allowed limit.";
+        bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
                                   m_sendOriginalCheckBox->isChecked(),
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
                                   m_imageQualitySpinBox->value());
 
-    if (!res)
-    {
-        slotAddPhotoFailed("");
-        return;
-    }
+        if (!res)
+        {
+            slotAddPhotoFailed("");
+            return;
+        }
 
-    if (m_widget->progressBar()->isHidden())
-    {
-        m_widget->progressBar()->show();
-        m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+        if (m_widget->progressBar()->isHidden())
+        {
+            m_widget->progressBar()->show();
+            m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
+            m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        }   
     }
 }
 

@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <QUrl>
+#include <kurl.h>
 #include <kio/job.h>
 
 // Local includes
@@ -68,7 +68,8 @@ public:
         FE_GETTOKEN,
         FE_GETAUTHORIZED,
         FE_CREATEPHOTOSET,
-        FE_ADDPHOTOTOPHOTOSET
+        FE_ADDPHOTOTOPHOTOSET,
+        FE_GETMAXSIZE
     };
 
 public:
@@ -78,6 +79,8 @@ public:
 
     QString getUserName() const;
     QString getUserId() const;
+    void    maxAllowedFileSize();
+    QString getMaxAllowedFileSize();
     void    getFrob();
     void    getToken();
     void    checkToken(const QString& token);
@@ -120,6 +123,7 @@ Q_SIGNALS:
 private:
 
     //  void parseResponseLogin(const QByteArray& data);
+    void parseResponseMaxSize(const QByteArray& data);
     void parseResponseListPhotoSets(const QByteArray& data);
     void parseResponseListPhotos(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
@@ -131,7 +135,7 @@ private:
     void parseResponseCreatePhotoSet(const QByteArray& data);
     void parseResponseAddPhotoToPhotoSet(const QByteArray& data);
 
-    QString getApiSig(const QString& secret, const QUrl& url);
+    QString getApiSig(const QString& secret, const KUrl& url);
 
 private Q_SLOTS:
 
@@ -153,6 +157,7 @@ private:
     QString    m_apikey;
     QString    m_secret;
     QString    m_frob;
+    QString    m_maxSize;
     QString    m_token;
     QString    m_username;
     QString    m_userId;
