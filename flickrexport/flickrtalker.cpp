@@ -150,6 +150,57 @@ QString FlickrTalker::getApiSig(const QString& secret, const KUrl& url)
     return context.hexDigest().data();
 }
 
+QString FlickrTalker::getMaxAllowedFileSize()
+{
+    return m_maxSize;
+}
+
+void FlickrTalker::maxAllowedFileSize()
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+
+    KUrl url(m_apiUrl);
+    url.addQueryItem("auth_token", m_token);
+    url.addQueryItem("api_key", m_apikey);
+    url.addQueryItem("method", "flickr.people.getLimits");
+    QString md5 = getApiSig(m_secret, url);
+    url.addQueryItem("api_sig", md5);;
+    kDebug() << "Get max file size url: " << url;
+
+    KIO::TransferJob* job = 0;
+    
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
+        // the redirect.
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    }
+    else
+    {
+        QByteArray tmp;
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    }
+
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+    
+    m_state = FE_GETMAXSIZE;
+    m_authProgressDlg->setLabelText(i18n("Getting the maximum allowed file size."));
+    m_authProgressDlg->setMaximum(4);
+    m_authProgressDlg->setValue(1);
+    m_job   = job;
+    m_buffer.resize(0);
+    emit signalBusy(true);
+}
+
 // MD5 signature of the request.
 /*
 QString FlickrTalker::getApiSig(const QString& secret, const QStringList &headers)
@@ -349,6 +400,11 @@ void FlickrTalker::getToken()
 
 void FlickrTalker::listPhotoSets()
 {
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
     kDebug() << "List photoset invoked";
     KUrl url(m_apiUrl);
     url.addQueryItem("auth_token", m_token);
@@ -866,9 +922,61 @@ void FlickrTalker::slotResult(KJob* kjob)
         case (FE_CREATEPHOTOSET):
             parseResponseCreatePhotoSet(m_buffer);
             break;
+	   
+	case (FE_GETMAXSIZE):
+	    parseResponseMaxSize(m_buffer);
 
         default:  // FR_LOGOUT
             break;
+    }
+}
+
+void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
+{
+    QString errorString;
+    QDomDocument doc("mydocument");
+
+    if (!doc.setContent(data))
+    {
+        return;
+    }
+
+    QDomElement docElem = doc.documentElement();
+    QDomNode node       = docElem.firstChild();
+
+    QDomElement e;
+
+    while (!node.isNull())
+    {
+        if (node.isElement() && node.nodeName() == "person")
+	{
+	    e                = node.toElement();
+            QDomNode details = e.firstChild();
+
+            while (!details.isNull())
+            {
+                if (details.isElement())
+                {
+		    e = details.toElement();
+
+                    if (details.nodeName() == "photos")
+                    {
+                        QDomAttr a = e.attributeNode("maxupload");
+			m_maxSize = a.value();
+			kDebug()<<"Max upload size is"<<m_maxSize;
+                    } 
+		}
+		details = details.nextSibling();
+	    }
+	}
+	if (node.isElement() && node.nodeName() == "err")
+        {
+            kDebug() << "Checking Error in response";
+            errorString = node.toElement().attribute("code");
+            kDebug() << "Error code=" << errorString;
+            kDebug() << "Msg=" << node.toElement().attribute("msg");
+        }
+	node = node.nextSibling();
     }
 }
 
@@ -1262,6 +1370,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     else
     {
         emit signalListPhotoSetsSucceeded();
+	maxAllowedFileSize();
     }
 }
 

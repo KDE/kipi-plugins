@@ -627,6 +627,7 @@ void FlickrWindow::slotUser1()
 
             temp.title                 = info.title();
             temp.description           = info.description();
+	    temp.size                  = info.fileSize();
             temp.is_public             = lvItem->isPublic()  ? 1 : 0;
             temp.is_family             = lvItem->isFamily()  ? 1 : 0;
             temp.is_friend             = lvItem->isFriends() ? 1 : 0;
@@ -744,25 +745,36 @@ void FlickrWindow::slotAddPhotoNext()
             }
         }
     }
-
-    bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
+    
+    kDebug()<<"Max allowed file size is : "<<((m_talker->getMaxAllowedFileSize()).toLongLong())<<"File Size is "<<info.size;
+    
+    if(info.size > ((m_talker->getMaxAllowedFileSize()).toLongLong()))
+    {
+	slotAddPhotoFailed("File Size exceeds maximum allowed file sie.");
+        return;
+    }
+    else
+    {
+        kDebug()<<"File size is within max allowed limit.";
+        bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
                                   m_sendOriginalCheckBox->isChecked(),
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
                                   m_imageQualitySpinBox->value());
 
-    if (!res)
-    {
-        slotAddPhotoFailed("");
-        return;
-    }
+        if (!res)
+        {
+            slotAddPhotoFailed("");
+            return;
+        }
 
-    if (m_widget->progressBar()->isHidden())
-    {
-        m_widget->progressBar()->show();
-        m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        if (m_widget->progressBar()->isHidden())
+        {
+            m_widget->progressBar()->show();
+            m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
+            m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+        }   
     }
 }
 

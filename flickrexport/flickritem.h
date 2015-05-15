@@ -88,6 +88,7 @@ public:
 
     QString                 title;
     QString                 description;
+    qlonglong               size;
     QStringList             tags;
 
     FlickrList::SafetyLevel safety_level;
