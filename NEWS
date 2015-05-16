@@ -11,4 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 004 ==> 327069 - Kipiplugins missing translations.
 005 ==> 243106 - Flickr uploader uploads with wrong date.
 006 ==> 291449 - To check the file size and report to the user if the file size exceeds limits set by flickr.
-007 ==> 
+007 ==> 228010] Let flickr export progress bar show progress of each image.
+008 ==> 
