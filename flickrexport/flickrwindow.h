@@ -90,7 +90,7 @@ class FlickrWindow : public KPToolDialog
 
 public:
 
-    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName);
+    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, QString uname);
     ~FlickrWindow();
 
     /**
@@ -132,7 +132,7 @@ private:
     QString guessSensibleSetName(const KUrl::List& urlList);
 
     void closeEvent(QCloseEvent*);
-    void readSettings();
+    void readSettings(QString uname);
     void writeSettings();
 
 private:

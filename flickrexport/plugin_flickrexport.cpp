@@ -56,6 +56,7 @@ extern "C"
 // Local includes
 
 #include "flickrwindow.h"
+#include "selectuserdlg.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -132,13 +133,15 @@ void Plugin_FlickrExport::setupActions()
 
 void Plugin_FlickrExport::slotActivateFlickr()
 {
+    SelectUserDlg* select = new SelectUserDlg(0,"Flickr");
+    select->reactivate();
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/"));
-
+    
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr");
+        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr",select->getUname());
     }
     else
     {
@@ -157,11 +160,21 @@ void Plugin_FlickrExport::slotActivate23()
 {
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/"));
-
+    
+    QString uname;
+    KConfig config("kipirc");
+    foreach ( const QString& group, config.groupList() ) 
+    {
+        if(!(group.contains("23")))
+	    continue;
+        KConfigGroup grp = config.group(group);
+	uname = grp.readEntry("username");
+    }
+    
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23");
+        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23",uname);
     }
     else
     {
@@ -181,10 +194,20 @@ void Plugin_FlickrExport::slotActivateZooomr()
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/"));
 
+    QString uname;
+    KConfig config("kipirc");
+    foreach ( const QString& group, config.groupList() ) 
+    {
+        if(!(group.contains("Zoomr")))
+	    continue;
+        KConfigGroup grp = config.group(group);
+	uname = grp.readEntry("username");
+    }
+    
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr");
+        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr",uname);
     }
     else
     {

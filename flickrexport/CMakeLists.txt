@@ -16,6 +16,7 @@ set(kipiplugin_flickrexport_PART_SRCS
     comboboxdelegate.cpp
     comboboxintermediate.cpp
     mpform.cpp
+    selectuserdlg.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)

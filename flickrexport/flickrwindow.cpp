@@ -74,7 +74,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName)
+FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, QString uname)
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
@@ -210,8 +210,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     //         SLOT(slotOpenPhoto(KUrl)) );
 
     // --------------------------------------------------------------------------
-
-    readSettings();
+    readSettings(uname);
 
     m_authProgressDlg = new QProgressDialog(this);
     m_authProgressDlg->setModal(true);
@@ -304,10 +303,11 @@ void FlickrWindow::reactivate()
     show();
 }
 
-void FlickrWindow::readSettings()
+void FlickrWindow::readSettings(QString uname)
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
+    kDebug()<<"Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,uname);
+    KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,uname));
     m_token          = grp.readEntry("token");
 
     m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags",      false));
@@ -368,7 +368,9 @@ void FlickrWindow::readSettings()
 void FlickrWindow::writeSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
+    kDebug()<<"Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
+    KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,m_username));
+    grp.writeEntry("username",m_username);
     grp.writeEntry("token", m_token);
     grp.writeEntry("Export Host Tags",                  m_exportHostTagsCheckBox->isChecked());
     grp.writeEntry("Show Extended Tag Options",         m_extendedTagsButton->isChecked());
@@ -402,6 +404,20 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_userId   = m_talker->getUserId();
     kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
+    
+    KConfig config("kipirc");
+    foreach ( const QString& group, config.groupList() ) 
+    {
+        if(!(group.contains(m_serviceName)))
+	    continue;
+        KConfigGroup grp = config.group(group);
+	if(group.contains(m_username))
+	{
+	    readSettings(m_username);
+	    break;
+	}
+    }
+    
 
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
     // folder-type photosets).
