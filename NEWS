@@ -21,5 +21,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 014 ==> 280215 - Can't add geolocation info to videos.
 015 ==> 210458 - Allow to use NMEA format as imported track file.
 016 ==> 273520 - Geolocation not working reliably.
-017 ==> 
-
+017 ==> 319657 - Unable to save geotags in *.CR2 and *.DNG.
+018 ==> 
