@@ -17,4 +17,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 010 ==> 134525 - Impossible to use both transitions in slideshow.
 011 ==> 182345 - Missing slideshow effects with control by hand.
 012 ==> 238601 - Slideshow should support reordering pictures.
-013 ==> 
+013 ==> 144007 - Allow to drag and drop location link over map.
+014 ==> 
