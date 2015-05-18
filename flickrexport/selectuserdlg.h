@@ -69,11 +69,13 @@ public:
     ~SelectUserDlg();
     void reactivate();
     QString getUname();
+    SelectUserDlg* getDlg();
     
 private:
     KComboBox*   userComboBox;
     QLabel*      label;
     QString      m_uname;
+    QString      m_serviceName;
 
 protected Q_SLOTS:
     virtual void slotButtonClicked(int button);

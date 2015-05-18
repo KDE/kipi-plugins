@@ -72,7 +72,7 @@ using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
-
+class SelectUserDlg;
 class FlickrWidget;
 class FlickrTalker;
 class FlickrList;
@@ -90,7 +90,7 @@ class FlickrWindow : public KPToolDialog
 
 public:
 
-    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, QString uname);
+    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, SelectUserDlg* dlg);
     ~FlickrWindow();
 
     /**
@@ -114,6 +114,7 @@ private Q_SLOTS:
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
+    void slotRemoveAccount();
     void slotPopulatePhotoSetComboBox();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
@@ -144,6 +145,7 @@ private:
 
     QPushButton*                           m_newAlbumBtn;
     QPushButton*                           m_changeUserButton;
+    QPushButton*                           m_removeAccount;
 
     KComboBox*                             m_albumsListComboBox;
     QCheckBox*                             m_publicCheckBox;
@@ -186,6 +188,7 @@ private:
     FlickrTalker*                          m_talker;
 
     FlickrList*                            m_imglst;
+    SelectUserDlg*                         m_select;
 };
 
 } // namespace KIPIFlickrExportPlugin

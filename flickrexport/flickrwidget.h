@@ -108,6 +108,7 @@ private: // Data
     QLabel*                             m_userNameDisplayLabel;
 
     QPushButton*                        m_changeUserButton;
+    QPushButton*                        m_removeAccount;
     QPushButton*                        m_newAlbumBtn;
     QPushButton*                        m_reloadphotoset;
     QPushButton*                        m_extendedTagsButton;

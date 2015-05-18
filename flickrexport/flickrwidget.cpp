@@ -183,25 +183,29 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     QLabel* const userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
     m_userNameDisplayLabel       = new QLabel(accountBox);
     m_changeUserButton           = new QPushButton(accountBox);
+    m_removeAccount              = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
     m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
-
+    m_changeUserButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    
+    m_removeAccount->setText(i18n("Remove Account"));
+    m_removeAccount->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    
     QLabel* const albumLabel     = new QLabel(i18n("PhotoSet:"), accountBox);
     m_newAlbumBtn                = new QPushButton(accountBox);
-    m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
     m_reloadphotoset             = new QPushButton(accountBox);
-    m_reloadphotoset->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_reloadphotoset->setText(i18n("&Reload"));
     m_albumsListComboBox         = new KComboBox(settingsBox);
 
     accountLayout->addWidget(userNameLabel,          0, 0);
     accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);
     accountLayout->addWidget(m_changeUserButton,     0, 2);
+    accountLayout->addWidget(m_removeAccount,        0, 3);
     accountLayout->addWidget(albumLabel,             1, 0);
     accountLayout->addWidget(m_albumsListComboBox,   1, 1);
-    accountLayout->addWidget(m_newAlbumBtn,          1, 2,Qt::AlignLeft);
-    accountLayout->addWidget(m_reloadphotoset,       1, 2,Qt::AlignRight);
+    accountLayout->addWidget(m_newAlbumBtn,          1, 2);
+    accountLayout->addWidget(m_reloadphotoset,       1, 3);
     accountLayout->setColumnStretch(1, 10);
     accountLayout->setSpacing(KDialog::spacingHint());
     accountLayout->setMargin(KDialog::spacingHint());

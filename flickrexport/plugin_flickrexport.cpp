@@ -104,7 +104,9 @@ void Plugin_FlickrExport::setupActions()
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(KIcon("kipi-flickr"));
     m_actionFlickr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_R));
-
+    
+    selectFlickr = new SelectUserDlg(0,"Flickr");
+    
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
 
@@ -115,6 +117,8 @@ void Plugin_FlickrExport::setupActions()
     m_action23->setIcon(KIcon("kipi-hq"));
     m_action23->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_2));
 
+    select23 = new SelectUserDlg(0,"23");
+    
     connect(m_action23, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate23()));
 
@@ -125,6 +129,8 @@ void Plugin_FlickrExport::setupActions()
     m_actionZooomr->setIcon(KIcon("kipi-zooomr"));
     m_actionZooomr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
 
+    selectZoomr = new SelectUserDlg(0,"Zooomr");
+    
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));
 
@@ -133,15 +139,14 @@ void Plugin_FlickrExport::setupActions()
 
 void Plugin_FlickrExport::slotActivateFlickr()
 {
-    SelectUserDlg* select = new SelectUserDlg(0,"Flickr");
-    select->reactivate();
+    selectFlickr->reactivate();
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/"));
     
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr",select->getUname());
+        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr", selectFlickr);
     }
     else
     {
@@ -158,23 +163,14 @@ void Plugin_FlickrExport::slotActivateFlickr()
 
 void Plugin_FlickrExport::slotActivate23()
 {
+    select23->reactivate();
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/"));
-    
-    QString uname;
-    KConfig config("kipirc");
-    foreach ( const QString& group, config.groupList() ) 
-    {
-        if(!(group.contains("23")))
-	    continue;
-        KConfigGroup grp = config.group(group);
-	uname = grp.readEntry("username");
-    }
     
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23",uname);
+        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23", select23);
     }
     else
     {
@@ -191,23 +187,14 @@ void Plugin_FlickrExport::slotActivate23()
 
 void Plugin_FlickrExport::slotActivateZooomr()
 {
+    selectZoomr->reactivate();
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/"));
-
-    QString uname;
-    KConfig config("kipirc");
-    foreach ( const QString& group, config.groupList() ) 
-    {
-        if(!(group.contains("Zoomr")))
-	    continue;
-        KConfigGroup grp = config.group(group);
-	uname = grp.readEntry("username");
-    }
     
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr",uname);
+        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr",selectZoomr);
     }
     else
     {

@@ -76,8 +76,10 @@ namespace KIPIFlickrExportPlugin
 SelectUserDlg::SelectUserDlg(QWidget* const parent,const QString& serviceName)
     : KPToolDialog(parent)
 {
+    m_serviceName = serviceName;
     setCaption(i18n("Flickr Account Selector"));
-    setButtons(Help|Ok);
+    setButtons(User1|Ok|Close);
+    setButtonGuiItem(User1, KGuiItem(i18n("Add another account"), KIcon("network-workgroup")));
     setDefaultButton(Close);
     setModal(true);
     
@@ -94,10 +96,10 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent,const QString& serviceName)
         setWindowIcon(KIcon("kipi-flickr"));
     }
     
-    m_uname = "";
+    m_uname = QString();
     
     label = new QLabel(this);
-    label->setText("Choose the Flickr account to use for exporting images: ");
+    label->setText("Choose the "+serviceName+" account to use for exporting images: ");
     
     userComboBox = new KComboBox(this);
     
@@ -118,7 +120,7 @@ void SelectUserDlg::reactivate()
     KConfig config("kipirc");
     foreach ( const QString& group, config.groupList() ) 
     {
-        if(!(group.contains("Flickr")))
+        if(!(group.contains(m_serviceName)))
 	    continue;
         KConfigGroup grp = config.group(group);
 	if(QString::compare(grp.readEntry("username"), QString(), Qt::CaseInsensitive)==0)
@@ -130,18 +132,30 @@ void SelectUserDlg::reactivate()
 
 void SelectUserDlg::slotButtonClicked(int button) 
 {
+    kDebug()<<"Button Clicked is "<<button;
     if(button == KDialog::Ok)
     {
         m_uname = userComboBox->currentText();
         accept();
     }
-    else
+    else if(button == KDialog::User1)
+    {
+        m_uname = QString();
+        KDialog::slotButtonClicked(KDialog::Close);
+    }else
         KDialog::slotButtonClicked(button);
+    
+    userComboBox->clear();
 }
 
 QString SelectUserDlg::getUname()
 {
     return m_uname;
+}
+
+SelectUserDlg* SelectUserDlg::getDlg()
+{
+    return this;
 }
 
 }

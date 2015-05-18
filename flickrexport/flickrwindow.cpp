@@ -69,12 +69,13 @@
 #include "flickrlist.h"
 #include "flickrnewphotosetdialog.h"
 #include "flickrwidget.h"
+#include "selectuserdlg.h"
 #include "ui_flickralbumdialog.h"
 
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, QString uname)
+FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* dlg)
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
@@ -95,7 +96,16 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     {
         setWindowIcon(KIcon("kipi-flickr"));
     }
-
+    
+    KConfig config("kipirc");
+    KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
+    if(grp.exists())
+    {
+        kDebug()<<QString("%1Export Settings").arg(m_serviceName)<<" EXISTSSSSSSSSSSSSSSSSSSSSSS deleting it !!! ";
+	grp.deleteGroup();
+    }
+    
+    m_select                    = dlg;
     m_tmp                       = tmpFolder;
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
@@ -120,6 +130,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_exportHostTagsCheckBox    = m_widget->m_exportHostTagsCheckBox;
     m_stripSpaceTagsCheckBox    = m_widget->m_stripSpaceTagsCheckBox;
     m_changeUserButton          = m_widget->m_changeUserButton;
+    m_removeAccount             = m_widget->m_removeAccount;
     m_userNameDisplayLabel      = m_widget->m_userNameDisplayLabel;
     m_imglst                    = m_widget->m_imglst;
 
@@ -198,6 +209,9 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotUserChangeRequest()));
+    
+    connect(m_removeAccount, SIGNAL(clicked()),
+            this, SLOT(slotRemoveAccount()));
 
     connect(m_newAlbumBtn, SIGNAL(clicked()),
             this, SLOT(slotCreateNewPhotoSet()));
@@ -210,7 +224,6 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     //         SLOT(slotOpenPhoto(KUrl)) );
 
     // --------------------------------------------------------------------------
-    readSettings(uname);
 
     m_authProgressDlg = new QProgressDialog(this);
     m_authProgressDlg->setModal(true);
@@ -222,17 +235,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     m_talker->m_authProgressDlg = m_authProgressDlg;
 
-    kDebug() << "Calling auth methods";
-
-    if (m_token.length() < 1)
-    {
-        m_talker->getFrob();
-    }
-    else
-    {
-        m_talker->checkToken(m_token);
-    }
-
+    
     // --------------------------------------------------------------------------
 
     connect(this, SIGNAL(closeClicked()),
@@ -299,6 +302,19 @@ void FlickrWindow::closeEvent(QCloseEvent* e)
 
 void FlickrWindow::reactivate()
 {
+    m_userNameDisplayLabel->setText(QString());
+    readSettings(m_select->getUname());
+    kDebug() << "Calling auth methods";
+
+    if (m_token.length() < 1)
+    {
+        m_talker->getFrob();
+    }
+    else
+    {
+        m_talker->checkToken(m_token);
+    }
+
     m_widget->m_imglst->loadImagesFromCurrentSelection();
     show();
 }
@@ -309,7 +325,7 @@ void FlickrWindow::readSettings(QString uname)
     kDebug()<<"Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,uname);
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,uname));
     m_token          = grp.readEntry("token");
-
+    kDebug()<<"Token is : "<<m_token;
     m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags",      false));
     m_extendedTagsButton->setChecked(grp.readEntry("Show Extended Tag Options", false));
     m_addExtraTagsCheckBox->setChecked(grp.readEntry("Add Extra Tags",          false));
@@ -369,8 +385,14 @@ void FlickrWindow::writeSettings()
 {
     KConfig config("kipirc");
     kDebug()<<"Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
+    if(QString::compare(QString("%1Export Settings").arg(m_serviceName), QString("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive)==0)
+    {
+        kDebug()<<"Not writing entry of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
+	return;
+    }
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,m_username));
     grp.writeEntry("username",m_username);
+    kDebug()<<"Token written of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username)<<" is "<<m_token;
     grp.writeEntry("token", m_token);
     grp.writeEntry("Export Host Tags",                  m_exportHostTagsCheckBox->isChecked());
     grp.writeEntry("Show Extended Tag Options",         m_extendedTagsButton->isChecked());
@@ -399,7 +421,7 @@ void FlickrWindow::slotDoLogin()
 
 void FlickrWindow::slotTokenObtained(const QString& token)
 {
-    m_token    = token;
+    kDebug()<<"Token Obtained is : "<<token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
     kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
@@ -417,8 +439,8 @@ void FlickrWindow::slotTokenObtained(const QString& token)
 	    break;
 	}
     }
-    
-
+    m_token    = token;
+    writeSettings();
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
     // folder-type photosets).
     if (m_serviceName != "Zooomr")
@@ -451,11 +473,35 @@ void FlickrWindow::slotError(const QString& msg)
 
 void FlickrWindow::slotUserChangeRequest()
 {
+    writeSettings();
     kDebug() << "Slot Change User Request ";
-    m_talker->getFrob();
+    m_select->reactivate();
+    readSettings(m_select->getUname());
+    if (m_token.length() < 1)
+    {
+        m_talker->getFrob();
+    }
+    else
+    {
+        m_talker->checkToken(m_token);
+    }
+    //m_talker->getFrob();
     //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
+void FlickrWindow::slotRemoveAccount()
+{
+    KConfig config("kipirc");
+    KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName).arg(m_username));
+    if(grp.exists())
+    {
+        kDebug()<<"Removing Account having group"<<QString("%1%2Export Settings").arg(m_serviceName);
+	grp.deleteGroup();
+    }
+    m_username = QString();
+    kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
+    m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
+}
 /**
  * Try to guess a sensible set name from the urls given.
  * Currently, it extracs the last path name component, and returns the most
