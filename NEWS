@@ -19,5 +19,6 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 012 ==> 238601 - Slideshow should support reordering pictures.
 013 ==> 144007 - Allow to drag and drop location link over map.
 014 ==> 280215 - Can't add geolocation info to videos.
-015 ==> 
+015 ==> 210458 - Allow to use NMEA format as imported track file.
+016 ==> 
 
