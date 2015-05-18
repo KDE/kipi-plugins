@@ -14,5 +14,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 007 ==> 228010 - Let flickr export progress bar show progress of each image.
 008 ==> 240147 - Allow to change Advanced Slideshow delay with mouse as with keyboard.
 009 ==> 261862 - Advanced slideshow controls not visible during a slideshow.
-010 ==> 
-
+010 ==> 134525 - Impossible to use both transitions in slideshow.
+011 ==> 
