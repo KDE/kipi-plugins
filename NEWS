@@ -11,5 +11,18 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 004 ==> 327069 - Kipiplugins missing translations.
 005 ==> 243106 - Flickr uploader uploads with wrong date.
 006 ==> 291449 - To check the file size and report to the user if the file size exceeds limits set by flickr.
-007 ==> 228010] Let flickr export progress bar show progress of each image.
-008 ==> 
+007 ==> 228010 - Let flickr export progress bar show progress of each image.
+008 ==> 240147 - Allow to change Advanced Slideshow delay with mouse as with keyboard.
+009 ==> 261862 - Advanced slideshow controls not visible during a slideshow.
+010 ==> 134525 - Impossible to use both transitions in slideshow.
+011 ==> 182345 - Missing slideshow effects with control by hand.
+012 ==> 238601 - Slideshow should support reordering pictures.
+013 ==> 144007 - Allow to drag and drop location link over map.
+014 ==> 280215 - Can't add geolocation info to videos.
+015 ==> 210458 - Allow to use NMEA format as imported track file.
+016 ==> 273520 - Geolocation not working reliably.
+017 ==> 319657 - Unable to save geotags in *.CR2 and *.DNG.
+018 ==> 304760 - OpenStreetMap shows only tiles from cache and does not download missing ones.
+019 ==> 328943 - Description EXIF information.
+020 ==> 274869 - Images without filename extension will not print.
+021 ==> 
