@@ -23,4 +23,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 016 ==> 273520 - Geolocation not working reliably.
 017 ==> 319657 - Unable to save geotags in *.CR2 and *.DNG.
 018 ==> 304760 - OpenStreetMap shows only tiles from cache and does not download missing ones.
-019 ==> 
+019 ==> 328943 - Description EXIF information.
+020 ==> 
