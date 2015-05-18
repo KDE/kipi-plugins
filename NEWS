@@ -20,5 +20,6 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 013 ==> 144007 - Allow to drag and drop location link over map.
 014 ==> 280215 - Can't add geolocation info to videos.
 015 ==> 210458 - Allow to use NMEA format as imported track file.
-016 ==> 
+016 ==> 273520 - Geolocation not working reliably.
+017 ==> 
 
