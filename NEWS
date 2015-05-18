@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 008 ==> 240147 - Allow to change Advanced Slideshow delay with mouse as with keyboard.
 009 ==> 261862 - Advanced slideshow controls not visible during a slideshow.
 010 ==> 134525 - Impossible to use both transitions in slideshow.
-011 ==> 
+011 ==> 182345 - Missing slideshow effects with control by hand.
+012 ==> 
