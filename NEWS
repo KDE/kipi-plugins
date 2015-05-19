@@ -33,4 +33,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 026 ==> 300458 - Imgur export is unusable from ksnapshot.
 027 ==> 339572 - Too much required information.
 028 ==> 264351 - KDE Global shortcuts do not work when using Advanced Slideshow.
-029 ==> 
+029 ==> 227978 - Problem with "image resize" when german umlaute in pathname.
+030 ==> 
