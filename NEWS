@@ -25,4 +25,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 018 ==> 304760 - OpenStreetMap shows only tiles from cache and does not download missing ones.
 019 ==> 328943 - Description EXIF information.
 020 ==> 274869 - Images without filename extension will not print.
-021 ==> 
+021 ==> 215705 - Save multiple account frobs, so we don't have to sign out and reauth each time.
+022 ==> 
