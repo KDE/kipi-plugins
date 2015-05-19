@@ -27,4 +27,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 020 ==> 274869 - Images without filename extension will not print.
 021 ==> 215705 - Save multiple account frobs, so we don't have to sign out and reauth each time.
 022 ==> 193890 - Allow to update "Modified" date from image.
-023 ==> 
+023 ==> 318661 - Export plugin does not convert to sRGB and strips existing ICC profile.
+024 ==> 
