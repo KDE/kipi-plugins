@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2005-16-05
+ * Date        : 2015-16-05
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>

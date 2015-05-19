@@ -80,6 +80,7 @@ public:
         is_friend    = false;
         safety_level = FlickrList::SAFE;
         content_type = FlickrList::PHOTO;
+	size         = 0;
     }
 
     bool                    is_public;
