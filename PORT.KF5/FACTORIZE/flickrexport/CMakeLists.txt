@@ -16,6 +16,7 @@ set(kipiplugin_flickrexport_PART_SRCS
     comboboxdelegate.cpp
     comboboxintermediate.cpp
     mpform.cpp
+    selectuserdlg.cpp
    )
 
 ki18n_wrap_ui(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)
@@ -28,7 +29,6 @@ target_link_libraries(kipiplugin_flickrexport
                       KF5::KExiv2
                       KF5::KDcraw
                       KF5::KIOCore
-                      
                      )
 
 configure_file(kipiplugin_flickrexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickrexport.desktop)

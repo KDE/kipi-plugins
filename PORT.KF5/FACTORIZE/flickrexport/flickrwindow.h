@@ -33,9 +33,9 @@
 
 // KDE includes
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -49,8 +49,8 @@ class QCheckBox;
 
 class KLineEdit;
 class KHTMLPart;
-class QUrl;
-class QComboBox;
+class KUrl;
+class KComboBox;
 
 namespace KIPI
 {
@@ -72,7 +72,7 @@ using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
-
+class SelectUserDlg;
 class FlickrWidget;
 class FlickrTalker;
 class FlickrList;
@@ -90,7 +90,7 @@ class FlickrWindow : public KPToolDialog
 
 public:
 
-    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName);
+    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, SelectUserDlg* dlg);
     ~FlickrWindow();
 
     /**
@@ -110,10 +110,11 @@ private Q_SLOTS:
     //  void slotAlbums( const QValueList<GAlbum>& albumList );
     //  void slotPhotos( const QValueList<GPhoto>& photoList );
     //  void slotTagSelected();
-    //  void slotOpenPhoto( const QUrl& url );
+    //  void slotOpenPhoto( const KUrl& url );
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
+    void slotRemoveAccount();
     void slotPopulatePhotoSetComboBox();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
@@ -129,10 +130,10 @@ private Q_SLOTS:
 
 private:
 
-    QString guessSensibleSetName(const QUrl::List& urlList);
+    QString guessSensibleSetName(const KUrl::List& urlList);
 
     void closeEvent(QCloseEvent*);
-    void readSettings();
+    void readSettings(QString uname);
     void writeSettings();
 
 private:
@@ -144,8 +145,9 @@ private:
 
     QPushButton*                           m_newAlbumBtn;
     QPushButton*                           m_changeUserButton;
+    QPushButton*                           m_removeAccount;
 
-    QComboBox*                             m_albumsListComboBox;
+    KComboBox*                             m_albumsListComboBox;
     QCheckBox*                             m_publicCheckBox;
     QCheckBox*                             m_familyCheckBox;
     QCheckBox*                             m_friendsCheckBox;
@@ -175,7 +177,7 @@ private:
 
     QProgressDialog*                       m_authProgressDlg;
 
-    QList< QPair<QUrl, FPhotoInfo> >       m_uploadQueue;
+    QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
 
 //  KWallet::Wallet*                       m_wallet;
     KHTMLPart*                             m_photoView;
@@ -186,6 +188,7 @@ private:
     FlickrTalker*                          m_talker;
 
     FlickrList*                            m_imglst;
+    SelectUserDlg*                         m_select;
 };
 
 } // namespace KIPIFlickrExportPlugin

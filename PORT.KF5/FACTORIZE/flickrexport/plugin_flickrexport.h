@@ -28,11 +28,11 @@
 
 #include <QVariant>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <plugin.h>
+#include <libkipi/plugin.h>
 
-class QAction;
+class KAction;
 
 using namespace KIPI;
 
@@ -40,6 +40,7 @@ namespace KIPIFlickrExportPlugin
 {
 
 class FlickrWindow;
+class SelectUserDlg;
 
 class Plugin_FlickrExport : public Plugin
 {
@@ -64,13 +65,17 @@ private:
 
 private:
 
-    QAction *      m_actionFlickr;
-    QAction *      m_action23;
-    QAction *      m_actionZooomr;
+    KAction*      m_actionFlickr;
+    KAction*      m_action23;
+    KAction*      m_actionZooomr;
 
     FlickrWindow* m_dlgFlickr;
     FlickrWindow* m_dlg23;
     FlickrWindow* m_dlgZooomr;
+    
+    SelectUserDlg* selectFlickr;
+    SelectUserDlg* select23;
+    SelectUserDlg* selectZoomr;
 };
 
 } //namespace KIPIFlickrExportPlugin

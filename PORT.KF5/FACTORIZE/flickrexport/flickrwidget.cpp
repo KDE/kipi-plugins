@@ -39,20 +39,20 @@
 
 // KDE includes
 
-#include <QComboBox>
+#include <kcombobox.h>
 #include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
-#include <klocalizedstring.h>
+#include <klocale.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <kseparator.h>
 #include <kiconloader.h>
-#include <QApplication>
+#include <kapplication.h>
 
-// Libkipi includes
+// LibKIPI includes
 
-#include <interface.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -183,28 +183,32 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     QLabel* const userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
     m_userNameDisplayLabel       = new QLabel(accountBox);
     m_changeUserButton           = new QPushButton(accountBox);
+    m_removeAccount              = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
     m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
-
+    m_changeUserButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    
+    m_removeAccount->setText(i18n("Remove Account"));
+    m_removeAccount->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    
     QLabel* const albumLabel     = new QLabel(i18n("PhotoSet:"), accountBox);
     m_newAlbumBtn                = new QPushButton(accountBox);
-    m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
     m_reloadphotoset             = new QPushButton(accountBox);
-    m_reloadphotoset->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_reloadphotoset->setText(i18n("&Reload"));
-    m_albumsListComboBox         = new QComboBox(settingsBox);
+    m_albumsListComboBox         = new KComboBox(settingsBox);
 
     accountLayout->addWidget(userNameLabel,          0, 0);
     accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);
     accountLayout->addWidget(m_changeUserButton,     0, 2);
+    accountLayout->addWidget(m_removeAccount,        0, 3);
     accountLayout->addWidget(albumLabel,             1, 0);
     accountLayout->addWidget(m_albumsListComboBox,   1, 1);
-    accountLayout->addWidget(m_newAlbumBtn,          1, 2,Qt::AlignLeft);
-    accountLayout->addWidget(m_reloadphotoset,       1, 2,Qt::AlignRight);
+    accountLayout->addWidget(m_newAlbumBtn,          1, 2);
+    accountLayout->addWidget(m_reloadphotoset,       1, 3);
     accountLayout->setColumnStretch(1, 10);
-    accountLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountLayout->setSpacing(KDialog::spacingHint());
+    accountLayout->setMargin(KDialog::spacingHint());
 
     // -- Layout for the tags -------------------------------------------------
 
@@ -341,10 +345,10 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     resizingBoxLayout->addWidget(m_resizeCheckBox,      1, 0, 1, 4);
     resizingBoxLayout->addWidget(resizeLabel,           2, 1, 1, 2);
     resizingBoxLayout->addWidget(m_dimensionSpinBox,    2, 3, 1, 1);
-    resizingBoxLayout->setColumnMinimumWidth(0, QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    resizingBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
     resizingBoxLayout->setColumnStretch(1, 10);
-    resizingBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    resizingBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    resizingBoxLayout->setSpacing(KDialog::spacingHint());
+    resizingBoxLayout->setMargin(KDialog::spacingHint());
 
     // -- Put it all together -------------------------------------------------
 
@@ -354,13 +358,13 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     settingsBoxLayout->addWidget(m_sendOriginalCheckBox);
     settingsBoxLayout->addWidget(m_resizingBox);
     settingsBoxLayout->addStretch(10);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setSpacing(KDialog::spacingHint());
+    settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     flickrWidgetLayout->addWidget(headerLabel);
     flickrWidgetLayout->addWidget(line);
     flickrWidgetLayout->addWidget(m_tab, 5);
-    flickrWidgetLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->addWidget(m_progressBar);
     flickrWidgetLayout->setMargin(0);
 

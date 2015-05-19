@@ -40,7 +40,7 @@ class QCheckBox;
 class QLabel;
 class QTreeWidgetItem;
 
-class QComboBox;
+class KComboBox;
 class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
@@ -108,12 +108,13 @@ private: // Data
     QLabel*                             m_userNameDisplayLabel;
 
     QPushButton*                        m_changeUserButton;
+    QPushButton*                        m_removeAccount;
     QPushButton*                        m_newAlbumBtn;
     QPushButton*                        m_reloadphotoset;
     QPushButton*                        m_extendedTagsButton;
     QPushButton*                        m_extendedPublicationButton;
 
-    QComboBox*                          m_albumsListComboBox;
+    KComboBox*                          m_albumsListComboBox;
 
     QCheckBox*                          m_exportHostTagsCheckBox;
     QCheckBox*                          m_stripSpaceTagsCheckBox;
