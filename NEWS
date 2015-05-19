@@ -31,4 +31,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 024 ==> 233675 - Shared binary programs dngconverter and scangui do not provide man pages.
 025 ==> 316310 - Tools - resize images doesn' work.
 026 ==> 300458 - Imgur export is unusable from ksnapshot.
-027 ==> 
+027 ==> 339572 - Too much required information.
+028 ==> 
