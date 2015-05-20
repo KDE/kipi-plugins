@@ -34,4 +34,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 027 ==> 339572 - Too much required information.
 028 ==> 264351 - KDE Global shortcuts do not work when using Advanced Slideshow.
 029 ==> 227978 - Problem with "image resize" when german umlaute in pathname.
-030 ==> 
+030 ==> 154076 - Corrupted image when use image viewer tool.
+031 ==> 
