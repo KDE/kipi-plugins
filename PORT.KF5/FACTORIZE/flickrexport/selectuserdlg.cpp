@@ -73,7 +73,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-SelectUserDlg::SelectUserDlg(QWidget* const parent,const QString& serviceName)
+SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     : KPToolDialog(parent)
 {
     m_serviceName = serviceName;
@@ -82,12 +82,12 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent,const QString& serviceName)
     setButtonGuiItem(User1, KGuiItem(i18n("Add another account"), KIcon("network-workgroup")));
     setDefaultButton(Close);
     setModal(true);
-    
-    if (serviceName == QString("23"))
+
+    if (m_serviceName == QString("23"))
     {
         setWindowIcon(KIcon("kipi-hq"));
     }
-    else if (serviceName == QString("Zooomr"))
+    else if (m_serviceName == QString("Zooomr"))
     {
         setWindowIcon(KIcon("kipi-zooomr"));
     }
@@ -95,60 +95,67 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent,const QString& serviceName)
     {
         setWindowIcon(KIcon("kipi-flickr"));
     }
-    
+
     m_uname = QString();
-    
-    label = new QLabel(this);
-    label->setText("Choose the "+serviceName+" account to use for exporting images: ");
-    
-    userComboBox = new KComboBox(this);
-    
-    setMainWidget(userComboBox);
+    m_label = new QLabel(this);
+    m_label->setText("Choose the " + m_serviceName + " account to use for exporting images: ");
+
+    m_userComboBox = new KComboBox(this);
+
+    setMainWidget(m_userComboBox);
     resize(300, 300);
-    
 }
 
 SelectUserDlg::~SelectUserDlg()
 {
-    delete userComboBox;
-    delete label;
+    delete m_userComboBox;
+    delete m_label;
 }
 
 void SelectUserDlg::reactivate()
 {
     QString uname;
     KConfig config("kipirc");
-    foreach ( const QString& group, config.groupList() ) 
+
+    foreach(const QString& group, config.groupList())
     {
-        if(!(group.contains(m_serviceName)))
-	    continue;
+        if (!(group.contains(m_serviceName)))
+            continue;
+
         KConfigGroup grp = config.group(group);
-	if(QString::compare(grp.readEntry("username"), QString(), Qt::CaseInsensitive)==0)
-	    continue;
-	userComboBox->addItem(grp.readEntry("username"));
+
+        if (QString::compare(grp.readEntry("username"), QString(), Qt::CaseInsensitive) == 0)
+            continue;
+
+        m_userComboBox->addItem(grp.readEntry("username"));
     }
+
     exec();
 }
 
 void SelectUserDlg::slotButtonClicked(int button) 
 {
     kDebug()<<"Button Clicked is "<<button;
-    if(button == KDialog::Ok)
+
+    if (button == KDialog::Ok)
     {
-        m_uname = userComboBox->currentText();
+        m_uname = m_userComboBox->currentText();
         accept();
     }
-    else if(button == KDialog::User1)
+    else if (button == KDialog::User1)
     {
         m_uname = QString();
         KDialog::slotButtonClicked(KDialog::Close);
-    }else
+    }
+    else
+    {
         KDialog::slotButtonClicked(button);
-    
-    userComboBox->clear();
+    }
+
+    m_userComboBox->clear();
 }
 
-QString SelectUserDlg::getUname()
+QString SelectUserDlg::getUname() const
 {
     return m_uname;
 }
@@ -158,4 +165,4 @@ SelectUserDlg* SelectUserDlg::getDlg()
     return this;
 }
 
-}
+} // namespace KIPIFlickrExportPlugin

@@ -30,8 +30,6 @@
 #include <QPair>
 #include <QLabel>
 
-// KDE includes
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -61,25 +59,31 @@ using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
+
 class SelectUserDlg : public KPToolDialog
 {
     Q_OBJECT
 public:
-    SelectUserDlg(QWidget* const parent,const QString& serviceName);
+
+    SelectUserDlg(QWidget* const parent, const QString& serviceName);
     ~SelectUserDlg();
-    void reactivate();
-    QString getUname();
+
+    void           reactivate();
+    QString        getUname() const;
     SelectUserDlg* getDlg();
-    
+
 private:
-    KComboBox*   userComboBox;
-    QLabel*      label;
+
+    KComboBox*   m_userComboBox;
+    QLabel*      m_label;
     QString      m_uname;
     QString      m_serviceName;
 
 protected Q_SLOTS:
+
     virtual void slotButtonClicked(int button);
-  
-};  
-}
-#endif
+};
+
+} // namespace KIPIFlickrExportPlugin
+
+#endif // SELECTUSERDLG_H
