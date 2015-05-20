@@ -7,7 +7,8 @@
  * @date   2012-07-01
  * @brief  Settings Widget
  *
- * @author Copyright (C) 2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ * @author Copyright (C) 2012      by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ *         Copyright (C) 2013-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +24,6 @@
  * ============================================================ */
 
 #include "slideshowsettingswidget.moc"
-
-// C ANSI includes
-
-#include <sys/socket.h>
 
 // Qt includes
 
@@ -108,7 +105,8 @@ public:
 };
 
 SlideShowSettingsWidget::SlideShowSettingsWidget(QWidget* const parent, Qt::WFlags flags)
-    : KTabWidget(parent, flags), d(new Private)
+    : KTabWidget(parent, flags),
+      d(new Private)
 {
     d->PPMSettingsWidget   = new QWidget();
     d->VideoSettingsWidget = new QWidget();
@@ -224,7 +222,7 @@ void SlideShowSettingsWidget::videoFormatChanged(int index)
     VIDEO_FORMAT format = (VIDEO_FORMAT)d->videoFormat->itemData(index).toInt();
 
     // set frame width and frame height for dvd, vcd,etc to standard tv size
-    if(format == VIDEO_FORMAT_NTSC)
+    if (format == VIDEO_FORMAT_NTSC)
     {
         switch(type)
         {
@@ -456,7 +454,6 @@ void SlideShowSettingsWidget::slotSelectTempDirectory()
     if (!path.isEmpty())
     {
         setTempDirPath(path);
-        d->tempDirLabel->setText(path);
     }
 }
 
@@ -469,7 +466,7 @@ void SlideShowSettingsWidget::slotSelectAudio()
 
 void SlideShowSettingsWidget::slotAudioChecked()
 {
-    if(!d->checkbox->isChecked())
+    if (!d->checkbox->isChecked())
     {
         d->audioPath = "";
         d->audioFile->setText(i18n("Audio Disabled"));
@@ -496,10 +493,12 @@ QString SlideShowSettingsWidget::getTempDirPath() const
 
 void SlideShowSettingsWidget::setTempDirPath(const QString& path)
 {
-    if(KUrl(path).isValid())
+    if (KUrl(path).isValid())
         d->path = path;
     else
         d->path = QDir::tempPath();
+
+    d->tempDirLabel->setText(path);
 }
 
 void SlideShowSettingsWidget::updateData(int time, TRANSITION_TYPE transition, TRANSITION_SPEED transSpeed, EFFECT effect)
