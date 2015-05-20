@@ -36,4 +36,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 029 ==> 227978 - Problem with "image resize" when german umlaute in pathname.
 030 ==> 154076 - Corrupted image when use image viewer tool.
 031 ==> 264045 - Export to remote computer does not work with fish:// urls.
-032 ==> 
+032 ==> 160893 - Use UPNP server as image database.
+033 ==> 
