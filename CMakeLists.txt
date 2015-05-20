@@ -133,6 +133,24 @@ if(KIPI_FOUND)
 
     endif()
 
+    # -- check the libkvkontakte version -----------------------------------------------------------------
+
+    set(LIBKVKONTAKTE_MIN_VERSION "4.10.90")
+
+    if(LIBKVKONTAKTE_VERSION)
+
+        message(STATUS "libkvkontakte: Found version ${LIBKVKONTAKTE_VERSION} (required: ${LIBKVKONTAKTE_MIN_VERSION})")
+        if(${LIBKVKONTAKTE_VERSION} VERSION_LESS ${LIBKVKONTAKTE_MIN_VERSION})
+            set(LIBKVKONTAKTE_FOUND FALSE)
+        endif()
+
+    else()
+
+        message(WARNING "libkvkontakte: Version information not found, your version is probably too old.")
+        set(LIBKVKONTAKTE_FOUND FALSE)
+
+    endif()
+
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
 
     if(NOT WIN32 AND NOT APPLE)
@@ -178,7 +196,7 @@ if(KIPI_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.0.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 1.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   MEDIAWIKI_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 0.1.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  LIBKVKONTAKTE_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= ${LIBKVKONTAKTE_MIN_VERSION})" "Kipi-plugins will be compiled without libkvkontakte support."  LIBKVKONTAKTE_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libgpod"        "http://www.gtkpod.org/libgpod.html"                              "(version >= 0.7.0)"                  "Kipi-plugins will be compiled without libgpod support."        IPOD_FOUND)
