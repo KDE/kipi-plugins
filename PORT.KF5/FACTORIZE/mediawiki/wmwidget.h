@@ -96,6 +96,7 @@ public:
     void readSettings(KConfigGroup& group);
     void saveSettings(KConfigGroup& group);
     void loadImageInfoFirstLoad();
+    void loadImageInfo(const KUrl& url);
     void clearEditFields();
 
 Q_SIGNALS:
