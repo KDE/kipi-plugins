@@ -39,4 +39,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 032 ==> 160893 - Use UPNP server as image database.
 033 ==> 340847 - MediaWiki: {{Coord}} template does not exist on Commons.
 034 ==> 335493 - Fix issues when metadata are loaded by MediaWiki tool [patch].
-035 ==> 
+035 ==> 300629 - Print Assistant does not follow system localization.
+036 ==> 
