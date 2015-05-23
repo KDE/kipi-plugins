@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -135,20 +135,22 @@ if(KIPI_FOUND)
 
     # -- check the libkvkontakte version -----------------------------------------------------------------
 
-    set(LIBKVKONTAKTE_MIN_VERSION "4.10.90")
+    if (NOT DIGIKAMSC_COMPILE_LIBKVKONTAKTE)
+        set(LIBKVKONTAKTE_MIN_VERSION "4.10.90")
 
-    if(LIBKVKONTAKTE_VERSION)
+        if(LIBKVKONTAKTE_VERSION)
 
-        message(STATUS "libkvkontakte: Found version ${LIBKVKONTAKTE_VERSION} (required: ${LIBKVKONTAKTE_MIN_VERSION})")
-        if(${LIBKVKONTAKTE_VERSION} VERSION_LESS ${LIBKVKONTAKTE_MIN_VERSION})
+            message(STATUS "libkvkontakte: Found version ${LIBKVKONTAKTE_VERSION} (required: ${LIBKVKONTAKTE_MIN_VERSION})")
+            if(${LIBKVKONTAKTE_VERSION} VERSION_LESS ${LIBKVKONTAKTE_MIN_VERSION})
+                set(LIBKVKONTAKTE_FOUND FALSE)
+            endif()
+
+        else()
+
+            message(WARNING "libkvkontakte: Version information not found, your version is probably too old.")
             set(LIBKVKONTAKTE_FOUND FALSE)
+
         endif()
-
-    else()
-
-        message(WARNING "libkvkontakte: Version information not found, your version is probably too old.")
-        set(LIBKVKONTAKTE_FOUND FALSE)
-
     endif()
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
