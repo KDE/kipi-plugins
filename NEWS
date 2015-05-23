@@ -40,4 +40,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 033 ==> 340847 - MediaWiki: {{Coord}} template does not exist on Commons.
 034 ==> 335493 - Fix issues when metadata are loaded by MediaWiki tool [patch].
 035 ==> 300629 - Print Assistant does not follow system localization.
-036 ==> 
+036 ==> 303167 - DNGConverter fails if folder of raw files contains special characters like german umlauts.
+037 ==> 
