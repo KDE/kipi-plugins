@@ -38,4 +38,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 031 ==> 264045 - Export to remote computer does not work with fish:// urls.
 032 ==> 160893 - Use UPNP server as image database.
 033 ==> 340847 - MediaWiki: {{Coord}} template does not exist on Commons.
-034 ==> 
+034 ==> 335493 - Fix issues when metadata are loaded by MediaWiki tool [patch].
+035 ==> 

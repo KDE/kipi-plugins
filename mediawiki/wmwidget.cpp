@@ -7,7 +7,7 @@
  * Description : A kipi plugin to export images to a MediaWiki wiki
  *
  * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  * Copyright (C) 2012      by Nathan Damie <nathan dot damie at gmail dot com>
  * Copyright (C) 2012      by Iliya Ivanov <ilko2002 at abv dot bg>
@@ -57,7 +57,7 @@
 #include <ktextedit.h>
 #include <kvbox.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <libkipi/uploadwidget.h>
 #include <libkipi/interface.h>
@@ -183,7 +183,8 @@ public:
 };
 
 WmWidget::WmWidget(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     setObjectName("WmWidget");
 
@@ -261,18 +262,18 @@ WmWidget::WmWidget(QWidget* const parent)
     uploadBoxLayout->setSpacing(KDialog::spacingHint());
     uploadBoxLayout->addWidget(d->fileBox, 0, Qt::AlignTop);
 
-    fileBoxLayout->addWidget(titleLabel,       1, 0,1,1);
-    fileBoxLayout->addWidget(dateLabel,        2, 0,1,1);
-    fileBoxLayout->addWidget(descLabel,        3, 0,1,1);
-    fileBoxLayout->addWidget(categoryLabel,    4, 0,1,1);
-    fileBoxLayout->addWidget(latitudeLabel,    5, 0,1,1);
-    fileBoxLayout->addWidget(longitudeLabel,   6, 0,1,1);
-    fileBoxLayout->addWidget(d->titleEdit,     1, 1,1,3);
-    fileBoxLayout->addWidget(d->dateEdit,      2, 1,1,3);
-    fileBoxLayout->addWidget(d->descEdit,      3, 1,1,3);
-    fileBoxLayout->addWidget(d->categoryEdit,  4, 1,1,3);
-    fileBoxLayout->addWidget(d->latitudeEdit,  5, 1,1,3);
-    fileBoxLayout->addWidget(d->longitudeEdit, 6, 1,1,3);
+    fileBoxLayout->addWidget(titleLabel,       1, 0, 1, 1);
+    fileBoxLayout->addWidget(dateLabel,        2, 0, 1, 1);
+    fileBoxLayout->addWidget(descLabel,        3, 0, 1, 1);
+    fileBoxLayout->addWidget(categoryLabel,    4, 0, 1, 1);
+    fileBoxLayout->addWidget(latitudeLabel,    5, 0, 1, 1);
+    fileBoxLayout->addWidget(longitudeLabel,   6, 0, 1, 1);
+    fileBoxLayout->addWidget(d->titleEdit,     1, 1, 1, 3);
+    fileBoxLayout->addWidget(d->dateEdit,      2, 1, 1, 3);
+    fileBoxLayout->addWidget(d->descEdit,      3, 1, 1, 3);
+    fileBoxLayout->addWidget(d->categoryEdit,  4, 1, 1, 3);
+    fileBoxLayout->addWidget(d->latitudeEdit,  5, 1, 1, 3);
+    fileBoxLayout->addWidget(d->longitudeEdit, 6, 1, 1, 3);
 
     // --------------------- Config tab ----------------------------------
 
@@ -606,7 +607,7 @@ WmWidget::~WmWidget()
 
 void WmWidget::readSettings(KConfigGroup& group)
 {
-    kDebug() <<  "Read settings from" << group.name();
+    kDebug() << "Read settings from" << group.name();
 
 #if KDCRAW_VERSION >= 0x020000
     d->settingsExpander->readSettings(group);
@@ -632,7 +633,7 @@ void WmWidget::readSettings(KConfigGroup& group)
     d->WikisHistory = group.readEntry("Wikis history",         QStringList());
     d->UrlsHistory  = group.readEntry("Urls history",          QStringList());
 
-    kDebug() <<  "UrlHistory.size: " << d->UrlsHistory.size() << "; WikisHistory.size:" << d->WikisHistory.size();
+    kDebug() << "UrlHistory.size: " << d->UrlsHistory.size() << "; WikisHistory.size:" << d->WikisHistory.size();
 
     for(int i = 0 ; i < d->UrlsHistory.size() && i < d->WikisHistory.size() ; i++)
     {
@@ -703,7 +704,7 @@ void WmWidget::updateLabels(const QString& userName, const QString& wikiName, co
 
 void WmWidget::invertAccountLoginBox()
 {
-    if(d->accountBox->isHidden())
+    if (d->accountBox->isHidden())
     {
         d->loginBox->hide();
         d->accountBox->show();
@@ -741,7 +742,7 @@ void WmWidget::slotLoginClicked()
 
 void WmWidget::slotNewWikiClicked()
 {
-    if(d->newWikiSv->isVisible())
+    if (d->newWikiSv->isVisible())
     {
         d->newWikiSv->setVisible(false);
     }
@@ -772,56 +773,55 @@ void WmWidget::loadImageInfoFirstLoad()
 {
     KUrl::List urls = d->imgList->imageUrls(false);
 
-    QString title;
-    QString date;
-    QString description;
+    d->imagesDescInfo.clear();
+
+    for (int j = 0; j < urls.size(); j++)
+    {
+        loadImageInfo(urls.at(j));
+    }
+}
+
+void WmWidget::loadImageInfo(const KUrl& url)
+{
+    KPImageInfo info(url.path());
+    QStringList keywar        = info.keywords();
+    QString date              = info.date().toString(Qt::ISODate).replace("T", " ", Qt::CaseSensitive);
+    QString title             = info.name();
+    QString description       = info.title();
     QString currentCategories;
     QString latitude;
     QString longitude;
 
-    d->imagesDescInfo.clear();
-
-    for(int j = 0; j < urls.size(); j++)
+    for (int i = 0; i < keywar.size(); i++) 
     {
-        KPImageInfo info(urls.at(j).path());
-        QStringList keywar = info.keywords();
-        date               = info.date().toString(Qt::ISODate);
-        date               = date.replace("T", " ", Qt::CaseSensitive);
-        title              = info.name();
-        description        = info.title();
-        currentCategories  = "";
-
-        for( int i = 0; i < keywar.size(); i++)
+        if (i == keywar.size() - 1)
         {
-            if(i == keywar.size()-1)
-            {
-                currentCategories.append(keywar.at(i));
-            }
-            else
-            {
-                currentCategories.append(keywar.at(i)).append("\n");
-            }
+            currentCategories.append(keywar.at(i));
         }
-
-        if(info.hasLatitude())
+        else
         {
-            latitude = QString::number(info.latitude(), 'f', 9);
+            currentCategories.append(keywar.at(i)).append("\n");
         }
-
-        if(info.hasLongitude())
-        {
-            longitude = QString::number(info.longitude(), 'f', 9);
-        }
-
-        QMap<QString, QString> imageMetaData;
-        imageMetaData["title"]       = title;
-        imageMetaData["date"]        = date;
-        imageMetaData["categories"]  = currentCategories;
-        imageMetaData["description"] = description;
-        imageMetaData["latitude"]    = latitude;
-        imageMetaData["longitude"]   = longitude;
-        d->imagesDescInfo.insert(urls.at(j).path(), imageMetaData);
     }
+
+    if (info.hasLatitude())
+    {
+        latitude = QString::number(info.latitude(), 'f', 9);
+    }
+
+    if (info.hasLongitude())
+    {
+        longitude = QString::number(info.longitude(), 'f', 9);
+    }
+
+    QMap<QString, QString> imageMetaData;
+    imageMetaData["title"]       = title;
+    imageMetaData["date"]        = date;
+    imageMetaData["categories"]  = currentCategories;
+    imageMetaData["description"] = description;
+    imageMetaData["latitude"]    = latitude;
+    imageMetaData["longitude"]   = longitude;
+    d->imagesDescInfo.insert(url.path(), imageMetaData);
 }
 
 void WmWidget::clearEditFields()
@@ -838,7 +838,15 @@ void WmWidget::slotLoadImagesDesc(QTreeWidgetItem* item)
 {
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
     KPImagesListViewItem* const l_item    = dynamic_cast<KPImagesListViewItem*>(item);
-    QMap<QString, QString> imageMetaData  = d->imagesDescInfo[l_item->url().path()];
+
+    QMap<QString, QString> imageMetaData;
+
+    if (!d->imagesDescInfo.contains(l_item->url().path())) 
+    {
+        loadImageInfo(l_item->url());
+    }
+
+    imageMetaData = d->imagesDescInfo[l_item->url().path()];
 
     d->titleEdit->setText(imageMetaData["title"]);
     d->dateEdit->setText(imageMetaData["date"].replace("T", " ", Qt::CaseSensitive));
@@ -928,7 +936,7 @@ void WmWidget::slotApplyTitle()
         imageTitle    = givenTitle;
 
         // If there is at least one #, replace it the correct number
-        if(minLength > 0)
+        if (minLength > 0)
         {
             parts      = imageTitle.split("#", QString::KeepEmptyParts);
             imageTitle = parts.first().append("#").append(parts.last());
