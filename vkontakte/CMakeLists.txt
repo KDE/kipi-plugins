@@ -12,7 +12,6 @@ set(kipiplugin_vkontakte_PART_SRCS
     vkalbumdialog.cpp
     albumchooserwidget.cpp
     authinfowidget.cpp
-    vkapi.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_vkontakte ${kipiplugin_vkontakte_PART_SRCS})

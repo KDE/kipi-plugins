@@ -51,10 +51,13 @@ class QToolButton;
 class KPushButton;
 class KComboBox;
 
+namespace Vkontakte
+{
+    class VkApi;
+}
+
 namespace KIPIVkontaktePlugin
 {
-
-class VkAPI;
 
 class AlbumChooserWidget : public QGroupBox
 {
@@ -62,7 +65,7 @@ class AlbumChooserWidget : public QGroupBox
 
 public:
 
-    AlbumChooserWidget(QWidget* const parent, VkAPI* const vkapi);
+    AlbumChooserWidget(QWidget* const parent, Vkontakte::VkApi* const vkapi);
     ~AlbumChooserWidget();
 
     void clearList();
@@ -106,7 +109,7 @@ private:
     /** album with this "aid" will be selected in slotAlbumsReloadDone() */
     int                            m_albumToSelect;
 
-    VkAPI*                         m_vkapi;
+    Vkontakte::VkApi*              m_vkapi;
 };
 
 } // namespace KIPIVkontaktePlugin

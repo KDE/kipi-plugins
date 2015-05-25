@@ -136,7 +136,7 @@ if(KIPI_FOUND)
     # -- check the libkvkontakte version -----------------------------------------------------------------
 
     if (NOT DIGIKAMSC_COMPILE_LIBKVKONTAKTE)
-        set(LIBKVKONTAKTE_MIN_VERSION "4.11.0")
+        set(LIBKVKONTAKTE_MIN_VERSION "4.12.0")
 
         if(LIBKVKONTAKTE_VERSION)
 

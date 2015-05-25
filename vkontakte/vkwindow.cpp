@@ -66,6 +66,7 @@
 // libkvkontakte includes
 
 #include <libkvkontakte/uploadphotosjob.h>
+#include <libkvkontakte/vkapi.h>
 
 // LibKIPI includes
 
@@ -79,7 +80,6 @@
 #include "kpversion.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
-#include "vkapi.h"
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
 
@@ -90,7 +90,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_albumsBox = NULL;
-    m_vkapi     = new VkAPI(this);
+    m_vkapi     = new Vkontakte::VkApi(this);
 
     // read settings from file
     readSettings();
@@ -300,6 +300,7 @@ void VkontakteWindow::readSettings()
     m_appId         = grp.readEntry("VkAppId", "2446321");
     m_albumToSelect = grp.readEntry("SelectedAlbumId", -1);
     m_vkapi->setAppId(m_appId);
+    m_vkapi->setRequiredPermissions(Vkontakte::AppPermissions::Photos);
     m_vkapi->setInitialAccessToken(grp.readEntry("AccessToken", ""));
 }
 

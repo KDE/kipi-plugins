@@ -39,16 +39,17 @@
 #include <libkvkontakte/createalbumjob.h>
 #include <libkvkontakte/editalbumjob.h>
 #include <libkvkontakte/deletealbumjob.h>
+#include <libkvkontakte/vkapi.h>
 
 // Local includes
 
 #include "vkalbumdialog.h"
-#include "vkapi.h"
 
 namespace KIPIVkontaktePlugin
 {
 
-AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent, VkAPI* const vkapi)
+AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent,
+                                       Vkontakte::VkApi* const vkapi)
     : QGroupBox(i18nc("@title:group Header above controls for managing albums", "Album"), parent)
 {
     m_vkapi         = vkapi;
