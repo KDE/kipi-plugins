@@ -37,7 +37,7 @@
 
 // LibKvkontakte includes
 
-#include <libkvkontakte/getvariablejob.h>
+#include <libkvkontakte/userinfojob.h>
 
 // Local includes
 
@@ -84,10 +84,7 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent, VkAPI* const vkapi)
             this, SLOT(slotChangeUserClicked()));
 
     connect(m_vkapi, SIGNAL(authenticated()),
-            this, SLOT(startGetFullName()));
-
-    connect(m_vkapi, SIGNAL(authenticated()),
-            this, SLOT(startGetUserId()));
+            this, SLOT(startGetUserInfo()));
 
     connect(this, SIGNAL(signalUpdateAuthInfo()),
             this, SLOT(updateAuthInfo()));
@@ -116,45 +113,27 @@ void AuthInfoWidget::slotChangeUserClicked()
 
 //---------------------------------------------------------------------------
 
-void AuthInfoWidget::startGetUserId()
+void AuthInfoWidget::startGetUserInfo()
 {
-    Vkontakte::GetVariableJob* const job = new Vkontakte::GetVariableJob(m_vkapi->accessToken(), 1280);
-
+    // Retrieve user info with UserInfoJob
+    Vkontakte::UserInfoJob* const job = new Vkontakte::UserInfoJob(m_vkapi->accessToken());
     connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotGetUserIdDone(KJob*)));
-
+            this, SLOT(slotGetUserInfoDone(KJob*)));
     job->start();
 }
 
-void AuthInfoWidget::slotGetUserIdDone(KJob* kjob)
+void AuthInfoWidget::slotGetUserInfoDone(KJob* kjob)
 {
-    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
+    SLOT_JOB_DONE_INIT(Vkontakte::UserInfoJob)
 
     if (!job) return;
 
-    m_userId = job->variable().toInt();
-    emit signalUpdateAuthInfo();
-}
+    QList<Vkontakte::UserInfoPtr> res = job->userInfo();
+    Vkontakte::UserInfoPtr user = res.first();
 
-//---------------------------------------------------------------------------
-
-void AuthInfoWidget::startGetFullName()
-{
-    Vkontakte::GetVariableJob* const job = new Vkontakte::GetVariableJob(m_vkapi->accessToken(), 1281);
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotGetFullNameDone(KJob*)));
-
-    job->start();
-}
-
-void AuthInfoWidget::slotGetFullNameDone(KJob *kjob)
-{
-    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
-
-    if (!job) return;
-
-    m_userFullName = job->variable().toString();
+    m_userId = user->uid();
+    m_userFullName = i18nc("Concatenation of first name (%1) and last name (%2)", "%1 %2",
+                           user->firstName(), user->lastName());
     emit signalUpdateAuthInfo();
 }
 

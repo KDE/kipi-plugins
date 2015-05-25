@@ -64,10 +64,8 @@ protected Q_SLOTS:
 
     void updateAuthInfo();
 
-    void startGetUserId();
-    void startGetFullName();
-    void slotGetUserIdDone(KJob* kjob);
-    void slotGetFullNameDone(KJob* kjob);
+    void startGetUserInfo();
+    void slotGetUserInfoDone(KJob* kjob);
 
 protected:
 
