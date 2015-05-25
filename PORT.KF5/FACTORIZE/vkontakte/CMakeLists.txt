@@ -22,9 +22,6 @@ add_library(kipiplugin_vkontakte MODULE ${kipiplugin_vkontakte_PART_SRCS})
 target_link_libraries(kipiplugin_vkontakte
                       KF5kipiplugins
                       KF5::Kipi
-#                      KF5::KDcraw
-#                      KF5::KExiv2
-                      
                       KF5::KIOCore
                       ${LIBKVKONTAKTE_LIBRARIES}
                      )
