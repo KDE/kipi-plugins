@@ -38,10 +38,7 @@
 // LibKvkontakte includes
 
 #include <libkvkontakte/userinfojob.h>
-
-// Local includes
-
-#include "vkapi.h"
+#include <libkvkontakte/vkapi.h>
 
 // TODO: share this code with `vkwindow.cpp`
 #define SLOT_JOB_DONE_INIT(JobClass) \
@@ -56,7 +53,8 @@
 namespace KIPIVkontaktePlugin
 {
 
-AuthInfoWidget::AuthInfoWidget(QWidget* const parent, VkAPI* const vkapi)
+AuthInfoWidget::AuthInfoWidget(QWidget* const parent,
+                               Vkontakte::VkApi* const vkapi)
     : QGroupBox(i18n("Account"), parent)
 {
     m_vkapi  = vkapi;

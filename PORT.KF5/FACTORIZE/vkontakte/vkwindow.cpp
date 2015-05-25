@@ -66,6 +66,7 @@
 // libkvkontakte includes
 
 #include <libkvkontakte/uploadphotosjob.h>
+#include <libkvkontakte/vkapi.h>
 
 // LibKDcraw includes
 
@@ -84,7 +85,6 @@
 #include "kpversion.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
-#include "vkapi.h"
 #include "albumchooserwidget.h"
 #include "authinfowidget.h"
 
@@ -95,7 +95,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
     m_albumsBox = NULL;
-    m_vkapi     = new VkAPI(this);
+    m_vkapi     = new Vkontakte::VkApi(this);
 
     // read settings from file
     readSettings();

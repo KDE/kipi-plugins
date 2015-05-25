@@ -64,13 +64,17 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
+namespace Vkontakte
+{
+    class VkApi;
+}
+
 using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIVkontaktePlugin
 {
 
-class VkAPI;
 class AlbumChooserWidget;
 class AuthInfoWidget;
 
@@ -151,7 +155,7 @@ protected:
     /** Pointers to running jobs */
     QList<KJob*>                   m_jobs;
 
-    VkAPI*                         m_vkapi;
+    Vkontakte::VkApi*              m_vkapi;
 
     int                            m_albumToSelect;
 

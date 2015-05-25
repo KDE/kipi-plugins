@@ -14,7 +14,6 @@ set(kipiplugin_vkontakte_PART_SRCS
     vkalbumdialog.cpp
     albumchooserwidget.cpp
     authinfowidget.cpp
-    vkapi.cpp
    )
 
 add_library(kipiplugin_vkontakte MODULE ${kipiplugin_vkontakte_PART_SRCS})
