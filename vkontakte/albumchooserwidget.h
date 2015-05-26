@@ -104,7 +104,7 @@ private:
     QToolButton*                   m_editAlbumButton;
     QToolButton*                   m_deleteAlbumButton;
 
-    QList<Vkontakte::AlbumInfoPtr> m_albums;
+    QList<Vkontakte::AlbumInfo>    m_albums;
 
     /** album with this "aid" will be selected in slotAlbumsReloadDone() */
     int                            m_albumToSelect;

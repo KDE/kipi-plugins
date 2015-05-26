@@ -127,11 +127,11 @@ bool AlbumChooserWidget::getCurrentAlbumInfo(
 
     if (index >= 0)
     {
-        Vkontakte::AlbumInfoPtr album = m_albums.at(index);
-        out.title = album->title();
-        out.description = album->description();
-        out.privacy = album->privacy();
-        out.commentPrivacy = album->commentPrivacy();
+        Vkontakte::AlbumInfo album = m_albums.at(index);
+        out.title = album.title();
+        out.description = album.description();
+        out.privacy = album.privacy();
+        out.commentPrivacy = album.commentPrivacy();
 
         return true;
     }
@@ -147,8 +147,8 @@ bool AlbumChooserWidget::getCurrentAlbumId(int &out)
 
     if (index >= 0)
     {
-        Vkontakte::AlbumInfoPtr album = m_albums.at(index);
-        out = album->aid();
+        Vkontakte::AlbumInfo album = m_albums.at(index);
+        out = album.aid();
 
         return true;
     }
@@ -167,7 +167,7 @@ void AlbumChooserWidget::selectAlbum(int aid)
 
     for (int i = 0; i < m_albums.size(); i ++)
     {
-        if (m_albums.at(i)->aid() == aid)
+        if (m_albums.at(i).aid() == aid)
         {
             m_albumsCombo->setCurrentIndex(i);
             break;
@@ -215,7 +215,7 @@ void AlbumChooserWidget::slotAlbumCreationDone(KJob* kjob)
     else
     {
         // Select the newly created album in the combobox later (in "slotAlbumsReloadDone()")
-        m_albumToSelect = job->album()->aid();
+        m_albumToSelect = job->album().aid();
 
         startAlbumsReload();
         updateBusyStatus(true);
@@ -350,8 +350,8 @@ void AlbumChooserWidget::slotAlbumsReloadDone(KJob* kjob)
     m_albumsCombo->clear();
     m_albums = job->list();
 
-    foreach (const Vkontakte::AlbumInfoPtr& album, m_albums)
-        m_albumsCombo->addItem(KIcon("folder-image"), album->title());
+    foreach (const Vkontakte::AlbumInfo &album, m_albums)
+        m_albumsCombo->addItem(KIcon("folder-image"), album.title());
 
     if (m_albumToSelect != -1)
     {

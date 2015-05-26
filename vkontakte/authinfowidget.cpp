@@ -126,12 +126,12 @@ void AuthInfoWidget::slotGetUserInfoDone(KJob* kjob)
 
     if (!job) return;
 
-    QList<Vkontakte::UserInfoPtr> res = job->userInfo();
-    Vkontakte::UserInfoPtr user = res.first();
+    QList<Vkontakte::UserInfo> res = job->userInfo();
+    Vkontakte::UserInfo user = res.first();
 
-    m_userId = user->uid();
+    m_userId = user.userId();
     m_userFullName = i18nc("Concatenation of first name (%1) and last name (%2)", "%1 %2",
-                           user->firstName(), user->lastName());
+                           user.firstName(), user.lastName());
     emit signalUpdateAuthInfo();
 }
 
