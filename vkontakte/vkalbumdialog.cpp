@@ -25,12 +25,12 @@
 
 // Qt includes
 
-#include <QtGui/QFormLayout>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
-#include <QtGui/QLabel>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QLabel>
 
 // KDE includes
 
