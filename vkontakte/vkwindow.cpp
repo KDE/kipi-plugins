@@ -53,7 +53,6 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <kcombobox.h>
-#include <kpushbutton.h>
 #include <kmenu.h>
 #include <khelpmenu.h>
 #include <kmessagebox.h>

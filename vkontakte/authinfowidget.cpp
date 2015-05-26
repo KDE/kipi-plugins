@@ -27,12 +27,12 @@
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
+#include <QtWidgets/QPushButton>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
-#include <kpushbutton.h>
 #include <kmessagebox.h>
 
 // LibKvkontakte includes
@@ -68,8 +68,9 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent,
     loginDescLabel->setWhatsThis(i18n("Your VKontakte login"));
 
     m_loginLabel       = new QLabel(this);
-    m_changeUserButton = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                         i18n("Change VKontakte account used to authenticate")), this);
+    m_changeUserButton = new QPushButton(QIcon::fromTheme("system-switch-user"),
+                                         i18n("Change Account"), this);
+    m_changeUserButton->setToolTip(i18n("Change VKontakte account used to authenticate"));
     m_changeUserButton->hide(); // changing account does not work anyway
 
     accountBoxLayout->addWidget(loginDescLabel,     0, 0);

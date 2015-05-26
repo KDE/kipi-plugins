@@ -26,11 +26,14 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QtWidgets/QPushButton>
+#include <QToolButton>
+
+// KDE Frameworks includes
+
 #include <klocalizedstring.h>
 #include <kguiitem.h>
 #include <KComboBox>
-#include <KPushButton>
-#include <QToolButton>
 #include <KMessageBox>
 
 // LibKvkontakte includes
@@ -61,9 +64,13 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent,
     m_albumsCombo        = new KComboBox(this);
     m_albumsCombo->setEditable(false);
 
-    m_newAlbumButton     = new KPushButton(KGuiItem(i18n("New Album"), "list-add", i18n("Create new VKontakte album")), this);
-    m_reloadAlbumsButton = new KPushButton(KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
-                                           i18n("Reload albums list")), this);
+    m_newAlbumButton     = new QPushButton(QIcon::fromTheme("list-add"),
+                                           i18n("New Album"), this);
+    m_newAlbumButton->setToolTip(i18n("Create new VKontakte album"));
+
+    m_reloadAlbumsButton = new QPushButton(QIcon::fromTheme("view-refresh"),
+                                           i18nc("reload albums list", "Reload"), this);
+    m_reloadAlbumsButton->setToolTip(i18n("Reload albums list"));
 
     m_editAlbumButton    = new QToolButton(this);
     m_editAlbumButton->setToolTip(i18n("Edit selected album"));

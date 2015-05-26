@@ -28,8 +28,8 @@
 #include <QGroupBox>
 
 class QLabel;
+class QPushButton;
 
-class KPushButton;
 class KJob;
 
 namespace Vkontakte
@@ -84,7 +84,7 @@ private:
 
     // GUI
     QLabel*      m_loginLabel;
-    KPushButton* m_changeUserButton;
+    QPushButton* m_changeUserButton;
 };
 
 } // namespace KIPIVkontaktePlugin
