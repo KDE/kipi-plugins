@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "albumchooserwidget.moc"
+#include "albumchooserwidget.h"
 
 // Qt includes
 

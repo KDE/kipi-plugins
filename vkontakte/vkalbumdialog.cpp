@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "vkalbumdialog.moc"
+#include "vkalbumdialog.h"
 
 // Qt includes
 

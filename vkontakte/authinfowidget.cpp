@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "authinfowidget.moc"
+#include "authinfowidget.h"
 
 // Qt includes
 

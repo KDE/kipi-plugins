@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "plugin_vkontakte.moc"
+#include "plugin_vkontakte.h"
 
 // KDE includes
 
@@ -125,3 +125,5 @@ void Plugin_Vkontakte::slotExport()
 }
 
 } // namespace KIPIVkontaktePlugin
+
+#include "plugin_vkontakte.moc"

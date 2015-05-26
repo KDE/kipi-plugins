@@ -26,7 +26,7 @@
  *
  * ============================================================ */
 
-#include "vkwindow.moc"
+#include "vkwindow.h"
 
 // Qt includes
 
