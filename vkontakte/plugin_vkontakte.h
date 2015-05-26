@@ -24,9 +24,9 @@
 #ifndef PLUGIN_VKONTAKTE_H
 #define PLUGIN_VKONTAKTE_H
 
-// KDE includes
+// Qt includes
 
-#include <kaction.h>
+#include <QtWidgets/QAction>
 
 // Libkipi includes
 
@@ -63,7 +63,7 @@ private:
 
 private:
 
-    KAction*         m_actionExport;
+    QAction*         m_actionExport;
     VkontakteWindow* m_dlgExport;
 };
 
