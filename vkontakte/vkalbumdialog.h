@@ -24,9 +24,9 @@
 #ifndef VKALBUMDIALOG_H
 #define VKALBUMDIALOG_H
 
-// KDE includes
+// Qt includes
 
-#include <kdialog.h>
+#include <QtWidgets/QDialog>
 
 // libkvkontakte includes
 
@@ -39,7 +39,7 @@ class KLineEdit;
 namespace KIPIVkontaktePlugin
 {
 
-class VkontakteAlbumDialog : public KDialog
+class VkontakteAlbumDialog : public QDialog
 {
     Q_OBJECT
 
@@ -74,7 +74,7 @@ public:
 
 protected Q_SLOTS:
 
-    void slotButtonClicked(int button);
+    virtual void accept();
 
 private:
 
