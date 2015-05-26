@@ -305,6 +305,7 @@ void VkontakteWindow::readSettings()
     m_appId         = grp.readEntry("VkAppId", "2446321");
     m_albumToSelect = grp.readEntry("SelectedAlbumId", -1);
     m_vkapi->setAppId(m_appId);
+    m_vkapi->setRequiredPermissions(Vkontakte::AppPermissions::Photos);
     m_vkapi->setInitialAccessToken(grp.readEntry("AccessToken", ""));
 }
 
