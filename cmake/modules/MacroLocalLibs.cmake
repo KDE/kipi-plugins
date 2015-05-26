@@ -225,7 +225,7 @@ macro(DETECT_LIBKVKONTAKTE MIN_VERSION)
 
     if (NOT DIGIKAMSC_COMPILE_LIBKVKONTAKTE)
 
-        message(STATUS "libkontakte : search system based library")
+        message(STATUS "libkvkontakte : search system based library")
         find_package(KF5Vkontakte ${MIN_VERSION})
 
         if(KF5Vkontakte_FOUND)
@@ -238,14 +238,14 @@ macro(DETECT_LIBKVKONTAKTE MIN_VERSION)
 
     else()
 
-        message(STATUS "libkontakte : use local library from ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/")
+        message(STATUS "libkvkontakte : use local library from ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/")
         find_file(KF5Vkontakte_FOUND CMakeLists.txt PATHS ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/)
 
         if(NOT KF5Vkontakte_FOUND)
-            message(ERROR "libkontakte : local library not found")
+            message(ERROR "libkvkontakte : local library not found")
             set(KF5Vkontakte_FOUND FALSE)
         else()
-            set(KF5Vkontakte_FOUND TRUE) 
+            set(KF5Vkontakte_FOUND TRUE)
         endif()
 
         set(LIBKVKONTAKTE_INCLUDES ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/ ${CMAKE_BINARY_DIR}/extra/libkvkontakte)
