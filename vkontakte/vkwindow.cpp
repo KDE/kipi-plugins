@@ -67,11 +67,6 @@
 
 #include <libkvkontakte/uploadphotosjob.h>
 
-// LibKDcraw includes
-
-#include <libkdcraw/version.h>
-#include <libkdcraw/kdcraw.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
