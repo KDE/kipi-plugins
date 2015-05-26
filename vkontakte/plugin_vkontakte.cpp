@@ -23,20 +23,15 @@
 
 #include "plugin_vkontakte.h"
 
+// Qt includes
+
+#include <QtWidgets/QApplication>
+
 // KDE includes
 
-#include <klocale.h>
-#include <kaction.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
-#include <kconfig.h>
-#include <kapplication.h>
-#include <kactioncollection.h>
-#include <kwindowsystem.h>
-
-// LibKIPI includes
-
-#include <interface.h>
+#include <KPluginFactory>
+#include <KLocalizedString>
+#include <KWindowSystem>
 
 // Local includes
 
@@ -47,7 +42,6 @@ namespace KIPIVkontaktePlugin
 {
 
 K_PLUGIN_FACTORY( Factory, registerPlugin<Plugin_Vkontakte>(); )
-K_EXPORT_PLUGIN ( Factory("kipiplugin_vkontakte") )
 
 Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     : Plugin(parent, "VKontakte")
@@ -111,7 +105,7 @@ void Plugin_Vkontakte::slotExport()
     {
         // This object will live forever, we will reuse it on future accesses
         // to the plugin.
-        m_dlgExport = new VkontakteWindow(false, kapp->activeWindow());
+        m_dlgExport = new VkontakteWindow(false, QApplication::activeWindow());
     }
     else
     {
