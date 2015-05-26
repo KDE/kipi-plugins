@@ -416,11 +416,28 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(googledrive)
 #             add_subdirectory(dropbox)
 #         endif()
-#
-#         if(LIBKVKONTAKTE_FOUND)
-#             add_subdirectory(vkontakte)
-#         endif()
-#
+
+        # LibKVkontakte
+        find_package(KF5Vkontakte 4.70.0 QUIET CONFIG)
+        set_package_properties(KF5Vkontakte PROPERTIES
+            DESCRIPTION "A library to access VK services"
+            URL "http://community.kde.org/LibKVkontakte"
+            TYPE OPTIONAL
+            PURPOSE "LibKVkontakte is required to build the VK export plugin"
+        )
+
+        if(KF5Vkontakte_FOUND)
+            set(LIBKVKONTAKTE_LIBRARIES
+                KF5::Vkontakte
+                $<TARGET_PROPERTY:KF5::Vkontakte,INTERFACE_LINK_LIBRARIES>
+            )
+            set(LIBKVKONTAKTE_INCLUDES
+                $<TARGET_PROPERTY:KF5::Vkontakte,INTERFACE_INCLUDE_DIRECTORIES>
+            )
+
+            add_subdirectory(vkontakte)
+        endif()
+
 #         if(MEDIAWIKI_FOUND)
 #             add_subdirectory(mediawiki)
 #         endif()
