@@ -1,6 +1,6 @@
 # Some useful macros to detect local or system based libraries
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -216,5 +216,45 @@ macro(DETECT_LIBKGEOMAP MIN_VERSION)
     message(STATUS "libkgeomap found      : ${KF5KGeoMap_FOUND}")
     message(STATUS "libkgeomap library    : ${KF5KGeoMap_LIBRARIES}")
     message(STATUS "libkgeomap includes   : ${KF5KGeoMap_INCLUDE_DIRS}")
+
+endmacro()
+
+###########################################################################################################################################"
+
+macro(DETECT_LIBKVKONTAKTE MIN_VERSION)
+
+    if (NOT DIGIKAMSC_COMPILE_LIBKVKONTAKTE)
+
+        message(STATUS "libkontakte : search system based library")
+        find_package(KF5Vkontakte ${MIN_VERSION})
+
+        if(KF5Vkontakte_FOUND)
+            set(LIBKVKONTAKTE_LIBRARIES KF5::Vkontakte)
+            get_target_property(LIBKVKONTAKTE_INCLUDES KF5::Vkontakte INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5Vkontakte_FOUND TRUE)
+        else()
+            set(KF5Vkontakte_FOUND FALSE)
+        endif()
+
+    else()
+
+        message(STATUS "libkontakte : use local library from ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/")
+        find_file(KF5Vkontakte_FOUND CMakeLists.txt PATHS ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/)
+
+        if(NOT KF5Vkontakte_FOUND)
+            message(ERROR "libkontakte : local library not found")
+            set(KF5Vkontakte_FOUND FALSE)
+        else()
+            set(KF5Vkontakte_FOUND TRUE) 
+        endif()
+
+        set(LIBKVKONTAKTE_INCLUDES ${CMAKE_SOURCE_DIR}/extra/libkvkontakte/ ${CMAKE_BINARY_DIR}/extra/libkvkontakte)
+        set(LIBKVKONTAKTE_LIBRARIES KF5Vkontakte)
+
+    endif()
+
+    message(STATUS "libkvkontakte found      : ${KF5Vkontakte_FOUND}")
+    message(STATUS "libkvkontakte library    : ${LIBKVKONTAKTE_LIBRARIES}")
+    message(STATUS "libkvkontakte includes   : ${LIBKVKONTAKTE_INCLUDES}")
 
 endmacro()

@@ -20,7 +20,9 @@ target_link_libraries(kipiplugin_vkontakte
                       KF5kipiplugins
                       KF5::Kipi
                       KF5::KIOCore
+                      
                       ${LIBKVKONTAKTE_LIBRARIES}
+                      ${KF5KDcraw_LIBRARIES}
                      )
 
 configure_file(kipiplugin_vkontakte.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_vkontakte.desktop)
