@@ -38,18 +38,6 @@
 #include "kptooldialog.h"
 
 class QLabel;
-class QSpinBox;
-class QCheckBox;
-class QGroupBox;
-class QButtonGroup;
-class QCloseEvent;
-class QToolButton;
-
-class KUrl;
-class KPasswordDialog;
-class KComboBox;
-class KPushButton;
-class KLineEdit;
 class KJob;
 
 namespace KIPI
