@@ -88,7 +88,7 @@ void Plugin_Vkontakte::setupActions()
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("vkontakte"));
-    m_actionExport->setIcon(KIcon("preferences-web-browser-shortcuts"));
+    m_actionExport->setIcon(QIcon::fromTheme("preferences-web-browser-shortcuts"));
     //m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
     m_actionExport->setEnabled(false);
 
