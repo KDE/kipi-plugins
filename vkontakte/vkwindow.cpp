@@ -170,7 +170,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(KIcon("vkontakte"));
+    setWindowIcon(KIcon("kipi"));
     setButtons(KDialog::Help | KDialog::User1 | KDialog::Close);
     setDefaultButton(Close);
     setModal(false);

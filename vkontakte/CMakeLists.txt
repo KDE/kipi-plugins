@@ -4,8 +4,6 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-subdirs(icons)
-
 include_directories(${LIBKVKONTAKTE_INCLUDES})
 
 set(kipiplugin_vkontakte_PART_SRCS

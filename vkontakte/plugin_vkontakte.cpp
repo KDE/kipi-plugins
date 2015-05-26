@@ -69,8 +69,6 @@ void Plugin_Vkontakte::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_vkontakte");
-
     setupActions();
 
     if (!interface())
