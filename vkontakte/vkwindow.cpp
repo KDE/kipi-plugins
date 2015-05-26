@@ -193,7 +193,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 
     KPAboutData* const about = new KPAboutData(ki18n("VKontakte Plugin"),
                                                0,
-                                               KAboutData::License_GPL,
+                                               KAboutLicense::GPL,
                                                ki18n("A Kipi plugin to export image collections to "
                                                      "VKontakte web service."),
                                                ki18n("(c) 2007-2009, Vardhman Jain\n"
@@ -202,7 +202,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
                                                      "(c) 2010-2013, Roman Tsisyk\n"
                                                      "(c) 2011-2013, Alexander Potashev"));
 
-    about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
+    about->addAuthor(i18n("Alexander Potashev"), i18n("Author"), QStringLiteral("aspotashev@gmail.com"));
     about->setHandbookEntry("VKontakte");
     setAboutData(about);
 
