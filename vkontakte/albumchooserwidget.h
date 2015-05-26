@@ -6,7 +6,7 @@
  * Date        : 2011-02-19
  * Description : A KIPI plugin to export images to VKontakte web service.
  *
- * Copyright (C) 2011-2012 by Alexander Potashev <aspotashev at gmail dot com>
+ * Copyright (C) 2011-2012, 2015  Alexander Potashev <aspotashev@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,6 +31,10 @@
 // LibKvkontakte includes
 
 #include <libkvkontakte/albuminfo.h>
+
+// Local includes
+
+#include "vkalbumdialog.h"
 
 // TODO: share this code with `vkwindow.cpp`
 #define SLOT_JOB_DONE_INIT(JobClass)                     \
@@ -63,7 +67,8 @@ public:
 
     void clearList();
 
-    Vkontakte::AlbumInfoPtr currentAlbum();
+    bool getCurrentAlbumInfo(VkontakteAlbumDialog::AlbumInfo &out);
+    bool getCurrentAlbumId(int &out);
     void selectAlbum(int aid);
 
 protected Q_SLOTS:
@@ -73,9 +78,9 @@ protected Q_SLOTS:
     void slotDeleteAlbumRequest();
     void slotReloadAlbumsRequest();
 
-    void startAlbumCreation(Vkontakte::AlbumInfoPtr album);
-    void startAlbumEditing(Vkontakte::AlbumInfoPtr album);
-    void startAlbumDeletion(Vkontakte::AlbumInfoPtr album);
+    void startAlbumCreation(const VkontakteAlbumDialog::AlbumInfo& album);
+    void startAlbumEditing(int aid, const VkontakteAlbumDialog::AlbumInfo& album);
+    void startAlbumDeletion(int aid);
     void startAlbumsReload();
 
     void slotAlbumCreationDone(KJob *kjob);
