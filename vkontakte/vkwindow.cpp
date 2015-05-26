@@ -326,11 +326,6 @@ void VkontakteWindow::writeSettings()
 
 //---------------------------------------------------------------------------
 
-QString VkontakteWindow::getDestinationPath() const
-{
-    return m_uploadWidget->selectedImageCollection().uploadPath().path();
-}
-
 void VkontakteWindow::slotFinished()
 {
     writeSettings();

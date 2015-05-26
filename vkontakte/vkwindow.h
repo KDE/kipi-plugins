@@ -89,8 +89,6 @@ public:
      */
     void startReactivation();
 
-    QString getDestinationPath() const;
-
 Q_SIGNALS:
 
     void signalUpdateBusyStatus(bool busy);
