@@ -70,9 +70,9 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
-#include <libkipi/uploadwidget.h>
-#include <libkipi/imagecollection.h>
+#include <interface.h>
+#include <uploadwidget.h>
+#include <imagecollection.h>
 
 // Local includes
 

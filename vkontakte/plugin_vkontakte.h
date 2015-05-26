@@ -30,7 +30,7 @@
 
 // Libkipi includes
 
-#include <libkipi/plugin.h>
+#include <plugin.h>
 
 // Local includes
 
