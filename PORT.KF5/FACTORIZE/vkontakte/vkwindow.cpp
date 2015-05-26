@@ -319,12 +319,15 @@ void VkontakteWindow::writeSettings()
     if (!m_vkapi->accessToken().isEmpty())
         grp.writeEntry("AccessToken", m_vkapi->accessToken());
 
-    Vkontakte::AlbumInfoPtr album = m_albumsBox->currentAlbum();
-
-    if (album.isNull())
+    int aid = 0;
+    if (!m_albumsBox->getCurrentAlbumId(aid))
+    {
         grp.deleteEntry("SelectedAlbumId");
+    }
     else
-        grp.writeEntry("SelectedAlbumId", album->aid());
+    {
+        grp.writeEntry("SelectedAlbumId", aid);
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -390,9 +393,8 @@ void VkontakteWindow::handleVkError(KJob* kjob)
 
 void VkontakteWindow::slotStartTransfer()
 {
-    Vkontakte::AlbumInfoPtr album = m_albumsBox->currentAlbum();
-
-    if (album.isNull())
+    int aid = 0;
+    if (!m_albumsBox->getCurrentAlbumId(aid))
     {
         // TODO: offer the user to create an album if there are no albums yet
         KMessageBox::information(this, i18n("Please select album first."));
@@ -412,7 +414,7 @@ void VkontakteWindow::slotStartTransfer()
         Vkontakte::UploadPhotosJob* const job = new Vkontakte::UploadPhotosJob(m_vkapi->accessToken(),
                                                                                files, 
                                                                                false /*m_checkKeepOriginal->isChecked()*/,
-                                                                               album->aid());
+                                                                               aid);
 
         connect(job, SIGNAL(result(KJob*)),
                 this, SLOT(slotPhotoUploadDone(KJob*)));

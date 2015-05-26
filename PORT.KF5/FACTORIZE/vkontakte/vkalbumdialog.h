@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to VKontakte.ru web service
  *
  * Copyright (C) 2011 by Roman Tsisyk <roman at tsisyk dot com>
- * Copyright (C) 2011 by Alexander Potashev <aspotashev at gmail dot com>
+ * Copyright (C) 2011, 2015  Alexander Potashev <aspotashev@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,23 +45,47 @@ class VkontakteAlbumDialog : public KDialog
 
 public:
 
-    VkontakteAlbumDialog(QWidget* const parent, Vkontakte::AlbumInfoPtr album, bool editing = false);
+    struct AlbumInfo
+    {
+        QString title;
+        QString description;
+        int privacy;
+        int commentPrivacy;
+    };
+
+    /**
+     * @brief Album creation dialog
+     *
+     * @param parent Parent widget
+     */
+    VkontakteAlbumDialog(QWidget* const parent);
+
+    /**
+     * @brief Album editing dialog
+     *
+     * @param parent Parent widget
+     * @param album Initial album properties
+     */
+    VkontakteAlbumDialog(QWidget* const parent, const AlbumInfo &album);
+
     ~VkontakteAlbumDialog();
 
-    Vkontakte::AlbumInfoPtr album() const;
+    const AlbumInfo &album() const;
 
 protected Q_SLOTS:
 
     void slotButtonClicked(int button);
 
-protected:
+private:
+
+    void initDialog(bool editing);
 
     KLineEdit*              m_titleEdit;
     KTextEdit*              m_summaryEdit;
     KComboBox*              m_albumPrivacyCombo;
     KComboBox*              m_commentsPrivacyCombo;
 
-    Vkontakte::AlbumInfoPtr m_album;
+    AlbumInfo               m_album;
 };
 
 } // namespace KIPIVkontaktePlugin

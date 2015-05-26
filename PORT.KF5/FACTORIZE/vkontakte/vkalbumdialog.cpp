@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to VKontakte web service
  *
  * Copyright (C) 2011 by Roman Tsisyk <roman at tsisyk dot com>
- * Copyright (C) 2011 by Alexander Potashev <aspotashev at gmail dot com>
+ * Copyright (C) 2011, 2015  Alexander Potashev <aspotashev@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,8 +49,25 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::AlbumInfoPtr album, bool editing)
+VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent)
+    : KDialog(parent), m_album()
+{
+    initDialog(false);
+}
+
+VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent,
+                                           const VkontakteAlbumDialog::AlbumInfo &album)
     : KDialog(parent), m_album(album)
+{
+    initDialog(true);
+}
+
+VkontakteAlbumDialog::~VkontakteAlbumDialog()
+{
+    // nothing
+}
+
+void VkontakteAlbumDialog::initDialog(bool editing)
 {
     setWindowTitle(editing ? i18nc("@title:window", "Edit album")
                            : i18nc("@title:window", "New album"));
@@ -64,10 +81,10 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
     QGroupBox* const albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), mainWidget);
     albumBox->setWhatsThis(i18n("These are basic settings for the new VKontakte album."));
 
-    m_titleEdit = new KLineEdit(album->title());
+    m_titleEdit = new KLineEdit(m_album.title);
     m_titleEdit->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
-    m_summaryEdit = new KTextEdit(album->description());
+    m_summaryEdit = new KTextEdit(m_album.description);
     m_summaryEdit->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
 
@@ -105,18 +122,13 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent, Vkontakte::Alb
 
     if (editing)
     {
-        m_titleEdit->setText(album->title());
-        m_summaryEdit->setText(album->description());
-        m_albumPrivacyCombo->setCurrentIndex(m_albumPrivacyCombo->findData(album->privacy()));
-        m_commentsPrivacyCombo->setCurrentIndex(m_commentsPrivacyCombo->findData(album->commentPrivacy()));
+        m_titleEdit->setText(m_album.title);
+        m_summaryEdit->setText(m_album.description);
+        m_albumPrivacyCombo->setCurrentIndex(m_albumPrivacyCombo->findData(m_album.privacy));
+        m_commentsPrivacyCombo->setCurrentIndex(m_commentsPrivacyCombo->findData(m_album.commentPrivacy));
     }
 
     m_titleEdit->setFocus();
-}
-
-VkontakteAlbumDialog::~VkontakteAlbumDialog()
-{
-    // nothing
 }
 
 void VkontakteAlbumDialog::slotButtonClicked(int button)
@@ -130,21 +142,26 @@ void VkontakteAlbumDialog::slotButtonClicked(int button)
             return;
         }
 
-        m_album->setTitle(m_titleEdit->text());
-        m_album->setDescription(m_summaryEdit->toPlainText());
+        m_album.title = m_titleEdit->text();
+        m_album.description = m_summaryEdit->toPlainText();
 
         if (m_albumPrivacyCombo->currentIndex() != -1)
-            m_album->setPrivacy(m_albumPrivacyCombo->itemData(m_albumPrivacyCombo->currentIndex()).toInt());
+            m_album.privacy = m_albumPrivacyCombo->itemData(m_albumPrivacyCombo->currentIndex()).toInt();
         else // for safety, see info about VK API bug below
-            m_album->setPrivacy(Vkontakte::AlbumInfo::PRIVACY_PRIVATE);
+            m_album.privacy = Vkontakte::AlbumInfo::PRIVACY_PRIVATE;
 
         if (m_commentsPrivacyCombo->currentIndex() != -1)
-            m_album->setCommentPrivacy(m_commentsPrivacyCombo->itemData(m_commentsPrivacyCombo->currentIndex()).toInt());
+            m_album.commentPrivacy = m_commentsPrivacyCombo->itemData(m_commentsPrivacyCombo->currentIndex()).toInt();
         else // VK API has a bug: if "comment_privacy" is not set, it will be set to PRIVACY_PUBLIC
-            m_album->setCommentPrivacy(Vkontakte::AlbumInfo::PRIVACY_PRIVATE);
+            m_album.commentPrivacy = Vkontakte::AlbumInfo::PRIVACY_PRIVATE;
     }
 
     return KDialog::slotButtonClicked(button);
+}
+
+const VkontakteAlbumDialog::AlbumInfo &VkontakteAlbumDialog::album() const
+{
+    return m_album;
 }
 
 } // namespace KIPIVkontaktePlugin
