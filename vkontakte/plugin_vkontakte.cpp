@@ -42,6 +42,7 @@
 // Local includes
 
 #include "vkwindow.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIVkontaktePlugin
 {
@@ -50,12 +51,12 @@ K_PLUGIN_FACTORY( Factory, registerPlugin<Plugin_Vkontakte>(); )
 K_EXPORT_PLUGIN ( Factory("kipiplugin_vkontakte") )
 
 Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
-    : Plugin(Factory::componentData(), parent, "VKontakte")
+    : Plugin(parent, "VKontakte")
 {
     m_dlgExport = 0;
     // m_dlgImport = 0;
 
-    kDebug(AREA_CODE_LOADING) << "Plugin_Vkontakte plugin loaded" ;
+    kDebug(KIPIPLUGINS_LOG) << "Plugin_Vkontakte plugin loaded";
 
     setUiBaseName("kipiplugin_vkontakteui.rc");
     setupXML();
