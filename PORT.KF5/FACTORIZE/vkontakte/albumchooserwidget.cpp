@@ -291,6 +291,7 @@ void AlbumChooserWidget::slotDeleteAlbumRequest()
         return;
     }
 
+    updateBusyStatus(true);
     startAlbumDeletion(aid);
 }
 
