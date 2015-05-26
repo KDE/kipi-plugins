@@ -32,7 +32,7 @@
 
 #include <libkvkontakte/albuminfo.h>
 
-class KComboBox;
+class QComboBox;
 class KTextEdit;
 class KLineEdit;
 
@@ -82,8 +82,8 @@ private:
 
     KLineEdit*              m_titleEdit;
     KTextEdit*              m_summaryEdit;
-    KComboBox*              m_albumPrivacyCombo;
-    KComboBox*              m_commentsPrivacyCombo;
+    QComboBox*              m_albumPrivacyCombo;
+    QComboBox*              m_commentsPrivacyCombo;
 
     AlbumInfo               m_album;
 };

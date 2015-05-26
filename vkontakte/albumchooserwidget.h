@@ -48,8 +48,8 @@
 
 class QToolButton;
 class QPushButton;
+class QComboBox;
 class KJob;
-class KComboBox;
 
 namespace Vkontakte
 {
@@ -98,7 +98,7 @@ protected:
 
 private:
 
-    KComboBox*                     m_albumsCombo;
+    QComboBox*                     m_albumsCombo;
     QPushButton*                   m_newAlbumButton;
     QPushButton*                   m_reloadAlbumsButton;
     QToolButton*                   m_editAlbumButton;

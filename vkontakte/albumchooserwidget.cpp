@@ -28,12 +28,12 @@
 #include <QVBoxLayout>
 #include <QtWidgets/QPushButton>
 #include <QToolButton>
+#include <QtWidgets/QComboBox>
 
 // KDE Frameworks includes
 
 #include <klocalizedstring.h>
 #include <kguiitem.h>
-#include <KComboBox>
 #include <KMessageBox>
 
 // LibKvkontakte includes
@@ -61,7 +61,7 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent,
     setWhatsThis(i18n("This is the VKontakte album that will be used for the transfer."));
     QVBoxLayout* const albumsBoxLayout = new QVBoxLayout(this);
 
-    m_albumsCombo        = new KComboBox(this);
+    m_albumsCombo        = new QComboBox(this);
     m_albumsCombo->setEditable(false);
 
     m_newAlbumButton     = new QPushButton(QIcon::fromTheme("list-add"),
