@@ -47,7 +47,6 @@
 
 #include <kdeversion.h>
 #include <kde_file.h>
-#include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
 #include <kdialog.h>
