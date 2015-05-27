@@ -6,7 +6,7 @@
  * Date        : 2010-11-15
  * Description : a kipi plugin to export images to VKontakte web service
  *
- * Copyright (C) 2011, 2012 by Alexander Potashev <aspotashev at gmail dot com>
+ * Copyright (C) 2011, 2012, 2015  Alexander Potashev <aspotashev@gmail.com>
  *
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>

@@ -6,7 +6,7 @@
  * Date        : 2010-11-15
  * Description : a kipi plugin to export images to VKontakte web service
  *
- * Copyright (C) 2011, 2012 by Alexander Potashev <aspotashev at gmail dot com>
+ * Copyright (C) 2011, 2012, 2015  Alexander Potashev <aspotashev@gmail.com>
  *
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
@@ -197,7 +197,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
                                                      "(c) 2008-2013, Gilles Caulier\n"
                                                      "(c) 2009, Luka Renko\n"
                                                      "(c) 2010-2013, Roman Tsisyk\n"
-                                                     "(c) 2011-2013, Alexander Potashev"));
+                                                     "(c) 2011-2015, Alexander Potashev"));
 
     about->addAuthor(i18n("Alexander Potashev"), i18n("Author"), QStringLiteral("aspotashev@gmail.com"));
     about->setHandbookEntry("VKontakte");
