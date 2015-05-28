@@ -242,6 +242,17 @@ void SendImages::secondStage()
 {
     if (d->cancel) return;
 
+    // If the initial list of files contained only unsupported file formats,
+    // and the user chose not to attach them without resizing, then there are
+    // no files approved for sending.
+    if (d->attachementFiles.isEmpty())
+    {
+        d->progressDlg->progressWidget()->addedAction(i18n("There are no files to send"), WarningMessage);
+        d->progressDlg->progressWidget()->setProgress(0, 100);
+        d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+        return;
+    }
+
     buildPropertiesFile();
     d->progressDlg->progressWidget()->setProgress(90, 100);
     invokeMailAgent();
