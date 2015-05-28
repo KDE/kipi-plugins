@@ -296,7 +296,7 @@ struct Generator::Private
             QFutureWatcher<void> watcher;
             watcher.setFuture(future);
             connect(&watcher, SIGNAL(progressValueChanged(int)),
-                    mProgressDialog, SLOT(setProgress(int)));
+                    mProgressDialog->progressWidget(), SLOT(setProgress(int)));
 
             mProgressDialog->progressWidget()->setTotal(imageElementList.count());
             while (!future.isFinished())
