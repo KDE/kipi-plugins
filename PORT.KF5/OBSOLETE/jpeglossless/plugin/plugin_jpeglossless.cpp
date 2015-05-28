@@ -504,7 +504,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
         if (d->failed)
         {
-            d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+            d->progressDlg->setButtonClose();
 
             disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                        this, SLOT(slotCancel()));

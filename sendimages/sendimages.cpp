@@ -186,7 +186,7 @@ void SendImages::slotCancel()
 
     d->progressDlg->progressWidget()->addedAction(i18n("Operation canceled by user"), WarningMessage);
     d->progressDlg->progressWidget()->setProgress(0, 100);
-    d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+    d->progressDlg->setButtonClose();
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                this, SLOT(slotCancel()));
@@ -659,7 +659,7 @@ void SendImages::invokeMailAgentError(const QString& prog, const QStringList& ar
     qCDebug(KIPIPLUGINS_LOG) << "Command Line: " << prog << args;
     QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
     d->progressDlg->progressWidget()->addedAction(text, ErrorMessage);
-    d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+    d->progressDlg->setButtonClose();
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                this, SLOT(slotCancel()));
@@ -672,7 +672,7 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
     qCDebug(KIPIPLUGINS_LOG) << "Command Line: " << prog << args;
     QString text = i18n("Starting \"%1\" program...", prog);
     d->progressDlg->progressWidget()->addedAction(text, StartingMessage);
-    d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+    d->progressDlg->setButtonClose();
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                this, SLOT(slotCancel()));

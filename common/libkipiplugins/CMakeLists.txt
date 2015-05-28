@@ -45,6 +45,8 @@ target_link_libraries(KF5kipiplugins
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
 
+                      KF5::WidgetsAddons
+
                       PUBLIC
                       Qt5::Gui
                       KF5::I18n

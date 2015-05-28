@@ -34,10 +34,14 @@
 #include <QMenu>
 #include <QAction>
 #include <QIcon>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QPushButton>
 
 // KDE includes
 
 #include <klocalizedstring.h>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 
 // Local includes
 
@@ -206,24 +210,47 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
 
 // ---------------------------------------------------------------------------------
 
-KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
-   : KDialog(0)
+class KPBatchProgressDialog::Private
 {
-    setCaption(caption);
-    setButtons(Cancel);
-    setDefaultButton(Cancel);
+public:
+
+    Private()
+        : progressWidget(nullptr)
+        , buttonBox(nullptr)
+    {
+    }
+
+    KPBatchProgressWidget* progressWidget;
+    QDialogButtonBox* buttonBox;
+};
+
+KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
+   : QDialog(0)
+   , d(new Private)
+{
     setModal(false);
+    setWindowTitle(caption);
 
-    KPBatchProgressWidget* const w = new KPBatchProgressWidget(this);
-    w->progressScheduled(caption, QIcon::fromTheme("kipi").pixmap(22, 22));
-    setMainWidget(w);
-    resize(600, 400);
+    d->buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, this);
+    d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
 
-    connect(w, &KPBatchProgressWidget::signalProgressCanceled,
+    d->progressWidget = new KPBatchProgressWidget(this);
+    d->progressWidget->progressScheduled(caption, QIcon::fromTheme("kipi").pixmap(22, 22));
+
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(d->progressWidget);
+    mainLayout->addWidget(d->buttonBox);
+
+    connect(d->buttonBox, &QDialogButtonBox::rejected,
+            this, &KPBatchProgressDialog::cancelClicked);
+
+    connect(d->progressWidget, &KPBatchProgressWidget::signalProgressCanceled,
             this, &KPBatchProgressDialog::cancelClicked);
 
     connect(this, &KPBatchProgressDialog::cancelClicked,
             this, &KPBatchProgressDialog::slotCancel);
+
+    resize(600, 400);
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()
@@ -232,7 +259,18 @@ KPBatchProgressDialog::~KPBatchProgressDialog()
 
 KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
 {
-    return (qobject_cast<KPBatchProgressWidget*>(mainWidget()));
+    return d->progressWidget;
+}
+
+void KPBatchProgressDialog::setButtonClose()
+{
+    KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Cancel), KStandardGuiItem::close());
+
+    // Clicking "Close" now does two things:
+    //  1. Emits signal cancelClicked(),
+    //  2. Accepts the dialog.
+    connect(d->buttonBox, &QDialogButtonBox::rejected,
+            this, &KPBatchProgressDialog::accept);
 }
 
 void KPBatchProgressDialog::slotCancel()
