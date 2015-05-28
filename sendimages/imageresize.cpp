@@ -68,6 +68,8 @@ Task::~Task()
 
 void Task::run()
 {
+    emit signalStarted();
+
     QString errString;
 
     emit startingResize(m_orgUrl);
@@ -94,6 +96,8 @@ void Task::run()
         *m_count = 0;
         m_mutex.unlock();
     }
+
+    emit signalDone();
 }
 
 bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
@@ -260,11 +264,6 @@ void ImageResize::cancel()
 {
     *m_count   = 0;
     RActionThreadBase::cancel();
-}
-
-void ImageResize::slotFinished()
-{
-    emit completeResize();
 }
 
 }  // namespace KIPISendimagesPlugin

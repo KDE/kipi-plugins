@@ -94,11 +94,6 @@ Q_SIGNALS:
     void startingResize(const QUrl& orgUrl);
     void finishedResize(const QUrl& orgUrl, const QUrl& emailUrl, int percent);
     void failedResize(const QUrl& orgUrl, const QString& errString, int percent);
-    void completeResize();
-
-private Q_SLOTS:
-
-    void slotFinished();
 
 private:
 

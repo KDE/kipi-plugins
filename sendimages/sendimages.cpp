@@ -109,7 +109,7 @@ SendImages::SendImages(const EmailSettings& settings, QObject* const parent)
     connect(d->threadImgResize, SIGNAL(failedResize(QUrl,QString,int)),
             this, SLOT(slotFailedResize(QUrl,QString,int)));
 
-    connect(d->threadImgResize, SIGNAL(completeResize()),
+    connect(d->threadImgResize, SIGNAL(finished()),
             this, SLOT(slotCompleteResize()));
 }
 
