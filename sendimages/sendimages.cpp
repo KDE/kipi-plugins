@@ -250,7 +250,7 @@ void SendImages::secondStage()
     {
         d->progressDlg->progressWidget()->addedAction(i18n("There are no files to send"), WarningMessage);
         d->progressDlg->progressWidget()->setProgress(0, 100);
-        d->progressDlg->setButtonClose();
+        d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
         return;
     }
 
