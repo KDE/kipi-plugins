@@ -53,6 +53,7 @@
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "timezonecombobox.h"
 #include "kpmetadata.h"
 
 using namespace KIPIPlugins;
@@ -76,6 +77,8 @@ public:
         countryCheck           = 0;
         dateCreatedSel         = 0;
         dateDigitalizedSel     = 0;
+        zoneCreatedSel         = 0;
+        zoneDigitalizedSel     = 0;
         dateCreatedCheck       = 0;
         dateDigitalizedCheck   = 0;
         syncHOSTDateCheck      = 0;
@@ -99,6 +102,9 @@ public:
     KDateTimeWidget*               dateCreatedSel;
     KDateTimeWidget*               dateDigitalizedSel;
 
+    TimeZoneComboBox*              zoneCreatedSel;
+    TimeZoneComboBox*              zoneDigitalizedSel;
+
     KLineEdit*                     cityEdit;
     KLineEdit*                     sublocationEdit;
     KLineEdit*                     provinceEdit;
@@ -116,6 +122,7 @@ XMPOrigin::XMPOrigin(QWidget* const parent)
     // --------------------------------------------------------
 
     d->dateDigitalizedCheck   = new QCheckBox(i18n("Digitization date"), this);
+    d->zoneDigitalizedSel     = new TimeZoneComboBox(this);
     d->dateDigitalizedSel     = new KDateTimeWidget(this);
 
     d->setTodayDigitalizedBtn = new QPushButton();
@@ -124,12 +131,15 @@ XMPOrigin::XMPOrigin(QWidget* const parent)
 
     d->dateDigitalizedSel->setWhatsThis(i18n("Set here the creation date of "
                                              "digital representation."));
+    d->zoneDigitalizedSel->setWhatsThis(i18n("Set here the time zone of "
+                                             "digital representation."));
 
     slotSetTodayDigitalized();
 
     // --------------------------------------------------------
 
     d->dateCreatedCheck   = new QCheckBox(i18n("Creation date"), this);
+    d->zoneCreatedSel     = new TimeZoneComboBox(this);
     d->dateCreatedSel     = new KDateTimeWidget(this);
     d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
                                                KGlobal::mainComponent().aboutData()->programName()),
@@ -141,6 +151,8 @@ XMPOrigin::XMPOrigin(QWidget* const parent)
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
     d->dateCreatedSel->setWhatsThis(i18n("Set here the creation date of "
+                                         "intellectual content."));
+    d->zoneCreatedSel->setWhatsThis(i18n("Set here the time zone of "
                                          "intellectual content."));
 
     slotSetTodayCreated();
@@ -177,24 +189,26 @@ XMPOrigin::XMPOrigin(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->dateDigitalizedCheck,                0, 0, 1, 5);
+    grid->addWidget(d->dateDigitalizedCheck,                0, 0, 1, 6);
     grid->addWidget(d->dateDigitalizedSel,                  1, 0, 1, 3);
-    grid->addWidget(d->setTodayDigitalizedBtn,              1, 4, 1, 1);
-    grid->addWidget(d->dateCreatedCheck,                    2, 0, 1, 5);
+    grid->addWidget(d->zoneDigitalizedSel,                  1, 3, 1, 1);
+    grid->addWidget(d->setTodayDigitalizedBtn,              1, 5, 1, 1);
+    grid->addWidget(d->dateCreatedCheck,                    2, 0, 1, 6);
     grid->addWidget(d->dateCreatedSel,                      3, 0, 1, 3);
-    grid->addWidget(d->setTodayCreatedBtn,                  3, 4, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck,                   4, 0, 1, 5);
-    grid->addWidget(d->syncEXIFDateCheck,                   5, 0, 1, 5);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),   6, 0, 1, 5);
+    grid->addWidget(d->zoneCreatedSel,                      3, 3, 1, 1);
+    grid->addWidget(d->setTodayCreatedBtn,                  3, 5, 1, 1);
+    grid->addWidget(d->syncHOSTDateCheck,                   4, 0, 1, 6);
+    grid->addWidget(d->syncEXIFDateCheck,                   5, 0, 1, 6);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   6, 0, 1, 6);
     grid->addWidget(d->cityCheck,                           7, 0, 1, 1);
-    grid->addWidget(d->cityEdit,                            7, 1, 1, 4);
+    grid->addWidget(d->cityEdit,                            7, 1, 1, 5);
     grid->addWidget(d->sublocationCheck,                    8, 0, 1, 1);
-    grid->addWidget(d->sublocationEdit,                     8, 1, 1, 4);
+    grid->addWidget(d->sublocationEdit,                     8, 1, 1, 5);
     grid->addWidget(d->provinceCheck,                       9, 0, 1, 1);
-    grid->addWidget(d->provinceEdit,                        9, 1, 1, 4);
+    grid->addWidget(d->provinceEdit,                        9, 1, 1, 5);
     grid->addWidget(d->countryCheck,                       10, 0, 1, 1);
-    grid->addWidget(d->countryCB,                          10, 1, 1, 4);
-    grid->setColumnStretch(3, 10);
+    grid->addWidget(d->countryCB,                          10, 1, 1, 5);
+    grid->setColumnStretch(4, 10);
     grid->setRowStretch(11, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -206,6 +220,12 @@ XMPOrigin::XMPOrigin(QWidget* const parent)
 
     connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
             d->dateDigitalizedSel, SLOT(setEnabled(bool)));
+
+    connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
+            d->zoneCreatedSel, SLOT(setEnabled(bool)));
+
+    connect(d->dateDigitalizedCheck, SIGNAL(toggled(bool)),
+            d->zoneDigitalizedSel, SLOT(setEnabled(bool)));
 
     connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
             d->syncHOSTDateCheck, SLOT(setEnabled(bool)));
@@ -253,6 +273,12 @@ XMPOrigin::XMPOrigin(QWidget* const parent)
     connect(d->dateDigitalizedSel, SIGNAL(valueChanged(QDateTime)),
             this, SIGNAL(signalModified()));
 
+    connect(d->zoneCreatedSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->zoneDigitalizedSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
     // --------------------------------------------------------
 
     connect(d->setTodayCreatedBtn, SIGNAL(clicked()),
@@ -284,11 +310,13 @@ XMPOrigin::~XMPOrigin()
 void XMPOrigin::slotSetTodayCreated()
 {
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
+    d->zoneCreatedSel->setToUTC();
 }
 
 void XMPOrigin::slotSetTodayDigitalized()
 {
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
+    d->zoneDigitalizedSel->setToUTC();
 }
 
 bool XMPOrigin::syncHOSTDateIsChecked() const
@@ -344,6 +372,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->dateCreatedCheck->setChecked(false);
+    d->zoneCreatedSel->setToUTC();
 
     if (!dateTimeStr.isEmpty())
     {
@@ -353,9 +382,12 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
         {
             d->dateCreatedSel->setDateTime(dateTime);
             d->dateCreatedCheck->setChecked(true);
+            d->zoneCreatedSel->setTimeZone(dateTimeStr);
         }
     }
+
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
+    d->zoneCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
 
@@ -363,6 +395,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
     d->dateDigitalizedCheck->setChecked(false);
+    d->zoneDigitalizedSel->setToUTC();
 
     if (!dateTimeStr.isEmpty())
     {
@@ -372,9 +405,12 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
         {
             d->dateDigitalizedSel->setDateTime(dateTime);
             d->dateDigitalizedCheck->setChecked(true);
+            d->zoneDigitalizedSel->setTimeZone(dateTimeStr);
         }
     }
+
     d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
+    d->zoneDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
@@ -436,6 +472,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
             d->countryCheck->setValid(false);
         }
     }
+
     d->countryCB->setEnabled(d->countryCheck->isChecked());
 
     blockSignals(false);
@@ -450,17 +487,23 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     if (d->dateCreatedCheck->isChecked())
     {
         meta.setXmpTagString("Xmp.photoshop.DateCreated",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+                                   getXMPCreationDate().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneCreatedSel->getTimeZone());
         meta.setXmpTagString("Xmp.xmp.CreateDate",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+                                   getXMPCreationDate().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneCreatedSel->getTimeZone());
         meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+                                   getXMPCreationDate().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneCreatedSel->getTimeZone());
         meta.setXmpTagString("Xmp.tiff.DateTime",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+                                   getXMPCreationDate().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneCreatedSel->getTimeZone());
         meta.setXmpTagString("Xmp.xmp.ModifyDate",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+                                   getXMPCreationDate().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneCreatedSel->getTimeZone());
         meta.setXmpTagString("Xmp.xmp.MetadataDate",
-                                   getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
+                                   getXMPCreationDate().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneCreatedSel->getTimeZone());
 
         if (syncEXIFDateIsChecked())
         {
@@ -479,25 +522,42 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
     }
 
     if (d->dateDigitalizedCheck->isChecked())
+    {
         meta.setXmpTagString("Xmp.exif.DateTimeDigitized",
-                                   d->dateDigitalizedSel->dateTime().toString("yyyy:MM:dd hh:mm:ss"));
+                                   d->dateDigitalizedSel->dateTime().toString("yyyy:MM:ddThh:mm:ss") +
+                                   d->zoneDigitalizedSel->getTimeZone());
+    }
     else
+    {
         meta.removeXmpTag("Xmp.exif.DateTimeDigitized");
+    }
 
     if (d->cityCheck->isChecked())
+    {
         meta.setXmpTagString("Xmp.photoshop.City", d->cityEdit->text());
+    }
     else
+    {
         meta.removeXmpTag("Xmp.photoshop.City");
+    }
 
     if (d->sublocationCheck->isChecked())
+    {
         meta.setXmpTagString("Xmp.iptc.Location", d->sublocationEdit->text());
+    }
     else
+    {
         meta.removeXmpTag("Xmp.iptc.Location");
+    }
 
     if (d->provinceCheck->isChecked())
+    {
         meta.setXmpTagString("Xmp.photoshop.State", d->provinceEdit->text());
+    }
     else
+    {
         meta.removeXmpTag("Xmp.photoshop.State");
+    }
 
     if (d->countryCheck->isChecked())
     {

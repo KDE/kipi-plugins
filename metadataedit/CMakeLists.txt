@@ -19,6 +19,7 @@ set(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
                                       plugin/multivaluesedit.cpp
                                       plugin/objectattributesedit.cpp
                                       plugin/metadataedit.cpp
+                                      plugin/timezonecombobox.cpp
                                       exif/exifeditwidget.cpp
                                       exif/exifcaption.cpp
                                       exif/exifdatetime.cpp

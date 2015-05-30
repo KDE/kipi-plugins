@@ -48,6 +48,7 @@
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "timezonecombobox.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
 
@@ -77,6 +78,7 @@ public:
         priorityCheck    = 0;
         dateSentSel      = 0;
         timeSentSel      = 0;
+        zoneSentSel      = 0;
         dateSentCheck    = 0;
         timeSentCheck    = 0;
         setTodaySentBtn  = 0;
@@ -129,6 +131,8 @@ public:
     FileFormatMap                  fileFormatMap;
 
     QTimeEdit*                     timeSentSel;
+
+    TimeZoneComboBox*              zoneSentSel;
 
     KComboBox*                     priorityCB;
 
@@ -251,6 +255,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
 
     d->dateSentCheck   = new QCheckBox(i18n("Sent date:"), this);
     d->timeSentCheck   = new QCheckBox(i18n("Sent time:"), this);
+    d->zoneSentSel     = new TimeZoneComboBox(this);
     d->dateSentSel     = new KDateWidget(this);
     d->timeSentSel     = new QTimeEdit(this);
 
@@ -260,6 +265,8 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
 
     d->dateSentSel->setWhatsThis(i18n("Set here the date when the service sent the material."));
     d->timeSentSel->setWhatsThis(i18n("Set here the time when the service sent the material."));
+    d->zoneSentSel->setWhatsThis(i18n("Set here the time zone when the service sent the material."));
+
     slotSetTodaySent();
 
     // --------------------------------------------------------
@@ -276,12 +283,12 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->destinationCheck,    0, 0, 1, 5);
-    grid->addWidget(d->destinationEdit,     1, 0, 1, 5);
+    grid->addWidget(d->destinationCheck,    0, 0, 1, 6);
+    grid->addWidget(d->destinationEdit,     1, 0, 1, 6);
     grid->addWidget(d->unoIDCheck,          2, 0, 1, 1);
-    grid->addWidget(d->unoIDEdit,           2, 1, 1, 4);
+    grid->addWidget(d->unoIDEdit,           2, 1, 1, 5);
     grid->addWidget(d->productIDCheck,      3, 0, 1, 1);
-    grid->addWidget(d->productIDEdit,       3, 1, 1, 4);
+    grid->addWidget(d->productIDEdit,       3, 1, 1, 5);
     grid->addWidget(d->serviceIDCheck,      4, 0, 1, 1);
     grid->addWidget(d->serviceIDEdit,       4, 1, 1, 1);
     grid->addWidget(d->envelopeIDCheck,     5, 0, 1, 1);
@@ -289,14 +296,15 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
     grid->addWidget(d->priorityCheck,       6, 0, 1, 1);
     grid->addWidget(d->priorityCB,          6, 1, 1, 1);
     grid->addWidget(d->formatCheck,         7, 0, 1, 1);
-    grid->addWidget(d->formatCB,            7, 1, 1, 4);
+    grid->addWidget(d->formatCB,            7, 1, 1, 5);
     grid->addWidget(d->dateSentCheck,       8, 0, 1, 2);
     grid->addWidget(d->timeSentCheck,       8, 2, 1, 2);
     grid->addWidget(d->dateSentSel,         9, 0, 1, 2);
     grid->addWidget(d->timeSentSel,         9, 2, 1, 1);
-    grid->addWidget(d->setTodaySentBtn,     9, 4, 1, 1);
-    grid->addWidget(note,                  10, 0, 1, 5);
-    grid->setColumnStretch(3, 10);
+    grid->addWidget(d->zoneSentSel,         9, 3, 1, 1);
+    grid->addWidget(d->setTodaySentBtn,     9, 5, 1, 1);
+    grid->addWidget(note,                  10, 0, 1, 6);
+    grid->setColumnStretch(4, 10);
     grid->setRowStretch(11, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -329,6 +337,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
 
     connect(d->timeSentCheck, SIGNAL(toggled(bool)),
             d->timeSentSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeSentCheck, SIGNAL(toggled(bool)),
+            d->zoneSentSel, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -388,6 +399,9 @@ IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
     connect(d->timeSentSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
+    connect(d->zoneSentSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
     // --------------------------------------------------------
 
     connect(d->setTodaySentBtn, SIGNAL(clicked()),
@@ -403,6 +417,7 @@ void IPTCEnvelope::slotSetTodaySent()
 {
     d->dateSentSel->setDate(QDate::currentDate());
     d->timeSentSel->setTime(QTime::currentTime());
+    d->zoneSentSel->setToUTC();
 }
 
 void IPTCEnvelope::readMetadata(QByteArray& iptcData)
@@ -420,56 +435,67 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     d->destinationEdit->clear();
     d->destinationCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Envelope.Destination", false);
+
     if (!data.isNull())
     {
         d->destinationEdit->setText(data);
         d->destinationCheck->setChecked(true);
     }
+
     d->destinationEdit->setEnabled(d->destinationCheck->isChecked());
 
     d->envelopeIDEdit->clear();
     d->envelopeIDCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Envelope.EnvelopeNumber", false);
+
     if (!data.isNull())
     {
         d->envelopeIDEdit->setText(data);
         d->envelopeIDCheck->setChecked(true);
     }
+
     d->envelopeIDEdit->setEnabled(d->envelopeIDCheck->isChecked());
 
     d->serviceIDEdit->clear();
     d->serviceIDCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Envelope.ServiceId", false);
+
     if (!data.isNull())
     {
         d->serviceIDEdit->setText(data);
         d->serviceIDCheck->setChecked(true);
     }
+
     d->serviceIDEdit->setEnabled(d->serviceIDCheck->isChecked());
 
     d->unoIDEdit->clear();
     d->unoIDCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Envelope.UNO", false);
+
     if (!data.isNull())
     {
         d->unoIDEdit->setText(data);
         d->unoIDCheck->setChecked(true);
     }
+
     d->unoIDEdit->setEnabled(d->unoIDCheck->isChecked());
 
     d->productIDEdit->clear();
     d->productIDCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Envelope.ProductId", false);
+
     if (!data.isNull())
     {
         d->productIDEdit->setText(data);
         d->productIDCheck->setChecked(true);
     }
+
     d->productIDEdit->setEnabled(d->productIDCheck->isChecked());
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);
+
     if (!data.isNull())
     {
         const int val = data.toInt();
@@ -481,12 +507,14 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
         else
             d->priorityCheck->setValid(false);
     }
+
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
     d->formatCB->setCurrentIndex(0);
     d->formatCheck->setChecked(false);
     format  = meta.getIptcTagString("Iptc.Envelope.FileFormat", false);
     version = meta.getIptcTagString("Iptc.Envelope.FileVersion", false);
+
     if (!format.isNull())
     {
         if (!version.isNull())
@@ -513,6 +541,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
         else
             d->formatCheck->setValid(false);
     }
+
     d->formatCB->setEnabled(d->formatCheck->isChecked());
 
     dateStr = meta.getIptcTagString("Iptc.Envelope.DateSent", false);
@@ -520,6 +549,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->dateSentSel->setDate(QDate::currentDate());
     d->dateSentCheck->setChecked(false);
+
     if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
@@ -529,10 +559,13 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
             d->dateSentCheck->setChecked(true);
         }
     }
+
     d->dateSentSel->setEnabled(d->dateSentCheck->isChecked());
 
     d->timeSentSel->setTime(QTime::currentTime());
     d->timeSentCheck->setChecked(false);
+    d->zoneSentSel->setToUTC();
+
     if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
@@ -540,9 +573,12 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
         {
             d->timeSentSel->setTime(time);
             d->timeSentCheck->setChecked(true);
-        }
+            d->zoneSentSel->setTimeZone(timeStr);
+       }
     }
+
     d->timeSentSel->setEnabled(d->timeSentCheck->isChecked());
+    d->zoneSentSel->setEnabled(d->timeSentCheck->isChecked());
 
     blockSignals(false);
 }
@@ -553,34 +589,58 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
     meta.setIptc(iptcData);
 
     if (d->destinationCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.Destination", d->destinationEdit->toPlainText());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.Destination");
+    }
 
     if (d->envelopeIDCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.EnvelopeNumber", d->envelopeIDEdit->text());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.EnvelopeNumber");
+    }
 
     if (d->serviceIDCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.ServiceId", d->serviceIDEdit->text());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.ServiceId");
+    }
 
     if (d->unoIDCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.UNO", d->unoIDEdit->text());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.UNO");
+    }
 
     if (d->productIDCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.ProductId", d->productIDEdit->text());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.ProductId");
+    }
 
     if (d->priorityCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.EnvelopePriority", QString::number(d->priorityCB->currentIndex()));
+    }
     else if (d->priorityCheck->isValid())
+    {
         meta.removeIptcTag("Iptc.Envelope.EnvelopePriority");
+    }
 
     if (d->formatCheck->isChecked())
     {
@@ -606,16 +666,25 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
     }
 
     if (d->dateSentCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.DateSent",
                                     d->dateSentSel->date().toString(Qt::ISODate));
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.DateSent");
+    }
 
     if (d->timeSentCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Envelope.TimeSent",
-                                    d->timeSentSel->time().toString(Qt::ISODate));
+                                    d->timeSentSel->time().toString(Qt::ISODate) +
+                                    d->zoneSentSel->getTimeZone());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Envelope.TimeSent");
+    }
 
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 

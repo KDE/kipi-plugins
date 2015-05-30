@@ -42,5 +42,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 035 ==> 300629 - Print Assistant does not follow system localization.
 036 ==> 303167 - DNGConverter fails if folder of raw files contains special characters like german umlauts.
 037 ==> 122284 - Using mouse button to switch between next/previous item do not work with all effects.
-038 ==> 
-
+038 ==> 317920 - Time zone data of IPTC metadata Date Created is unavailable and deleted in MetadataEdit [patch].
+039 ==> 
