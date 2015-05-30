@@ -142,6 +142,7 @@ void CopyFilesTask::run()
     metaDst.setXmp(metaSrc.getXmp());
     metaDst.setXmpTagString("Xmp.tiff.Make",  metaSrc.getExifTagString("Exif.Image.Make"));
     metaDst.setXmpTagString("Xmp.tiff.Model", metaSrc.getExifTagString("Exif.Image.Model"));
+    metaDst.setImageDateTime(metaSrc.getImageDateTime(), true);
 
     QString filesList;
 
