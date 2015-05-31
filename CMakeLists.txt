@@ -71,6 +71,7 @@ include(ECMGeneratePriFile)
 include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMInstallIcons)
+include(ECMAddAppIcon)
 # KDE macros
 include(KDEInstallDirs)
 include(KDECMakeSettings)
@@ -93,6 +94,8 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
 find_package(KF5 REQUIRED COMPONENTS
              KDELibs4Support
              Parts
+             Config
+             ThreadWeaver
 )
 
 # Dependencies detection required by all plugins
@@ -118,8 +121,8 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(GObject)                                     # For ipodexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(FLEX)                                        # For Panorama (must be found before KdepimLibs for MacOS).
-#     MACRO_OPTIONAL_FIND_PACKAGE(BISON)                                       # For Panorama (must be found before KdepimLibs for MacOS).
+    find_package(FLEX)                                        # For Panorama (must be found before KdepimLibs for MacOS).
+    find_package(BISON)                                       # For Panorama (must be found before KdepimLibs for MacOS).
 #     MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
 #     MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
 #     MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
@@ -259,7 +262,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          MEDIAWIKI_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 # 
@@ -386,9 +389,9 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(gpssync)
 #         endif()
 #
-#         if(FLEX_FOUND AND BISON_FOUND)
-#             add_subdirectory(panorama)
-#         endif()
+        if(FLEX_FOUND AND BISON_FOUND)
+            add_subdirectory(panorama)
+        endif()
 #
 #         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #             add_subdirectory(videoslideshow)

@@ -106,7 +106,7 @@ public:
     KPPreviewImage(QWidget* const parent);
     ~KPPreviewImage();
 
-    bool load(const QString& file) const;
+    bool load(const QUrl& file) const;
     bool setImage(const QImage& img) const;
     void enableSelectionArea(bool b);
     QRectF getSelectionArea();

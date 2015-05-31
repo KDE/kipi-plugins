@@ -157,7 +157,7 @@ KPPreviewManager::~KPPreviewManager()
 
 void KPPreviewManager::slotLoad(const QUrl& url)
 {
-    load(url.toLocalFile());
+    load(url);
 }
 
 void KPPreviewManager::setImage(const QImage& img, bool fit)
@@ -177,7 +177,7 @@ void KPPreviewManager::setImage(const QImage& img, bool fit)
     }
 }
 
-bool KPPreviewManager::load(const QString& file, bool fit)
+bool KPPreviewManager::load(const QUrl& file, bool fit)
 {
     setBusy(false);
 

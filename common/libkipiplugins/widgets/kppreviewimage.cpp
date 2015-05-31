@@ -584,17 +584,17 @@ void KPPreviewImage::setSelectionArea(QRectF rectangle)
         d->selection->setVisible(true);
 }
 
-bool KPPreviewImage::load(const QString& file) const
+bool KPPreviewImage::load(const QUrl& file) const
 {
     QImage image;
 
-    if (KPMetadata::isRawFile(QUrl(file)))
+    if (KPMetadata::isRawFile(file))
     {
-        KDcraw::loadRawPreview(image, file);
+        KDcraw::loadRawPreview(image, file.toLocalFile());
     }
     else
     {
-        image.load(file);
+        image.load(file.toLocalFile());
     }
 
     bool ret = setImage(image);

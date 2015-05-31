@@ -163,7 +163,7 @@ bool ClockPhotoDialog::setImage(const QUrl& imageFile)
 {
     bool success = false;
 
-    if (d->imagePreview->load(imageFile.toLocalFile()))
+    if (d->imagePreview->load(imageFile))
     {
         // Try to read the datetime data.
         KPMetadata meta;
