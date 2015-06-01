@@ -44,4 +44,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 037 ==> 122284 - Using mouse button to switch between next/previous item do not work with all effects.
 038 ==> 317920 - Time zone data of IPTC metadata Date Created is unavailable and deleted in MetadataEdit [patch].
 039 ==> 342687 - Panorama file time-stamps should be the same than the stitched pictures.
-040 ==> 
+040 ==> 311689 - Reverse Geocoding tags are sometimes not saved.
+041 ==> 
