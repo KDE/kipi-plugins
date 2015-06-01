@@ -765,18 +765,60 @@ int KPImagesList::iconSize() const
 
 void KPImagesList::loadImagesFromCurrentSelection()
 {
+    bool selection = checkSelection();
+    if(selection == true)
+    {
+        if (!d->iface)
+        {
+            return;
+        }
+
+        ImageCollection images = d->iface->currentSelection();
+
+        if (images.isValid())
+        {
+            slotAddImages(images.images());
+        }
+    }
+    else
+    {
+        loadImagesFromCurrentAlbum();
+    }
+}
+
+void KPImagesList::loadImagesFromCurrentAlbum()
+{
     if (!d->iface)
     {
         return;
     }
 
-    ImageCollection images = d->iface->currentSelection();
+    ImageCollection images = d->iface->currentAlbum();
 
     if (images.isValid())
     {
         slotAddImages(images.images());
     }
 }
+
+bool KPImagesList::checkSelection()
+{
+    if (!d->iface)
+    {
+        return false;
+    }
+
+    ImageCollection images = d->iface->currentSelection();
+    bool check_empty = images.images().empty();
+    if(check_empty == true)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}  
 
 void KPImagesList::slotAddImages(const KUrl::List& list)
 {

@@ -230,6 +230,8 @@ public:
     void                setAllowDuplicate(bool allow);
 
     void                loadImagesFromCurrentSelection();
+    void 		loadImagesFromCurrentAlbum();	  //a function to load all the images from the album if no image has been selected by user
+    bool 		checkSelection();                 //a function to check whether an image has been selected or not
 
     int                 iconSize()  const;
 
