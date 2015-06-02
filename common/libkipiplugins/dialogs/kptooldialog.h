@@ -61,6 +61,8 @@ public:
 
 private:
 
+    QPushButton* getHelpButton();
+
     class Private;
     Private* const d;
 };

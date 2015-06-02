@@ -92,33 +92,51 @@ Interface* KPDialogBase::iface() const
     return d->iface;
 }
 
-void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
+QPushButton* KPDialogBase::getHelpButton()
 {
-    if (!data || !d->dialog) return;
-
-    if (!help)
+    if (!d->dialog)
     {
-        KDialog* const kdlg = dynamic_cast<KDialog*>(d->dialog);
+        return nullptr;
+    }
 
-        if (kdlg)
-        {
-            help = kdlg->button(KDialog::Help);
-        }
-        else
-        {
-            KPageDialog* const kpdlg = dynamic_cast<KPageDialog*>(d->dialog);
+    {
+        KDialog* const dlg = dynamic_cast<KDialog*>(d->dialog);
 
-            if (kpdlg)
-            {
-                help = kpdlg->button(QDialogButtonBox::Help);
-            }
+        if (dlg)
+        {
+            return dlg->button(KDialog::Help);
         }
     }
 
-    if (!help) return;
+    {
+        KPageDialog* const dlg = dynamic_cast<KPageDialog*>(d->dialog);
 
-    d->about = data;
-    d->about->setHelpButton(help);
+        if (dlg)
+        {
+            return dlg->button(QDialogButtonBox::Help);
+        }
+    }
+
+    return nullptr;
+}
+
+void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
+{
+    if (!data)
+    {
+        return;
+    }
+
+    if (!help)
+    {
+        help = getHelpButton();
+    }
+
+    if (help)
+    {
+        d->about = data;
+        d->about->setHelpButton(help);
+    }
 }
 
 // -----------------------------------------------------------------------------------
