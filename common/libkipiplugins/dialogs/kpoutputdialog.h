@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <QString>
+#include <QtCore/QString>
 
 // Local includes
 
@@ -37,17 +37,19 @@ namespace KIPIPlugins
 
 class KPAboutData;
 
-class KIPIPLUGINS_EXPORT KPOutputDialog : public KPToolDialog
+class KIPIPLUGINS_EXPORT KPOutputDialog : public QDialog, public KPDialogBase
 {
     Q_OBJECT
 
 public:
 
-    explicit KPOutputDialog(QWidget* const parent=0,
-                            const QString& caption=QString(),
-                            const QString& Messages=QString(),
-                            const QString& Header=QString());
-    ~KPOutputDialog();
+    explicit KPOutputDialog(QWidget* const parent = 0,
+                            const QString& caption = QString(),
+                            const QString& messages = QString(),
+                            const QString& header = QString());
+    virtual ~KPOutputDialog();
+
+    QPushButton* helpButton() const;
 
 private Q_SLOTS:
 
@@ -61,4 +63,4 @@ private:
 
 }  // namespace KIPIPlugins
 
-#endif  // KPOUTPUTDIALOG_H
+#endif // KPOUTPUTDIALOG_H

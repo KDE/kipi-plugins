@@ -45,6 +45,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
+#include "kpoutputdialog.h"
 
 namespace KIPIPlugins
 {
@@ -114,6 +115,15 @@ QPushButton* KPDialogBase::getHelpButton()
         if (dlg)
         {
             return dlg->button(QDialogButtonBox::Help);
+        }
+    }
+
+    {
+        KPOutputDialog* const dlg = dynamic_cast<KPOutputDialog*>(d->dialog);
+
+        if (dlg)
+        {
+            return dlg->helpButton();
         }
     }
 

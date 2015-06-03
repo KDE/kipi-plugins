@@ -25,14 +25,13 @@
 // Qt includes
 
 #include <QLabel>
-#include <QMenu>
 #include <QTextBrowser>
 #include <QVBoxLayout>
 #include <QPushButton>
 
 // KDE includes
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 // Local includes
 
@@ -51,35 +50,37 @@ public:
     }
 
     QTextBrowser* debugView;
+    QDialogButtonBox* buttonBox;
 };
 
-KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
-                               const QString& Messages, const QString& Header)
-    : KPToolDialog(parent), d(new Private)
+KPOutputDialog::KPOutputDialog(QWidget* const parent, const QString& caption,
+                               const QString& messages, const QString& header)
+    : QDialog(parent), KPDialogBase(this), d(new Private)
 {
-    setCaption(caption);
     setModal(true);
-    setButtons(Ok | Help | User1);
-    setButtonText(User1, i18n("Copy to Clip&board"));
-    setDefaultButton(Ok);
+    setWindowTitle(caption);
 
-    //---------------------------------------------
+    // Create dialog buttons
+    d->buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Help, this);
+    d->buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 
-    QWidget* const vbox        = new QWidget(this);
-    QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
-    QLabel* const lHeader      = new QLabel(vbox);
-    d->debugView               = new QTextBrowser(vbox);
-    d->debugView->append(Messages);
-    lHeader->setText(Header);
+    QPushButton* copyButton = new QPushButton(QIcon::fromTheme("edit-copy"), i18n("Copy to Clip&board"));
+    d->buttonBox->addButton(copyButton, QDialogButtonBox::ActionRole);
 
-    vboxLay->addWidget(lHeader);
-    vboxLay->addWidget(d->debugView);
-    vboxLay->setSpacing(spacingHint());
-    vboxLay->setMargin(spacingHint());
+    // Create dialog contents
+    QLabel* const lHeader = new QLabel(this);
+    d->debugView = new QTextBrowser(this);
+    d->debugView->append(messages);
+    lHeader->setText(header);
 
-    setMainWidget(vbox);
+    // Put contained widgets together in a vertical layout
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(lHeader);
+    mainLayout->addWidget(d->debugView);
+    mainLayout->addWidget(d->buttonBox);
 
-    connect(this, &KPOutputDialog::user1Clicked, this, &KPOutputDialog::slotCopyToCliboard);
+    connect(d->buttonBox, &QDialogButtonBox::accepted, this, &KPOutputDialog::accept);
+    connect(copyButton, &QPushButton::clicked, this, &KPOutputDialog::slotCopyToCliboard);
 
     resize(600, 400);
 }
@@ -87,6 +88,11 @@ KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
 KPOutputDialog::~KPOutputDialog()
 {
     delete d;
+}
+
+QPushButton* KPOutputDialog::helpButton() const
+{
+    return d->buttonBox->button(QDialogButtonBox::Help);
 }
 
 void KPOutputDialog::slotCopyToCliboard()
