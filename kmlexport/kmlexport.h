@@ -98,7 +98,7 @@ public:
     void   generate();
     int    getConfig();
 
-public:
+private:
 
     bool             m_localTarget;
     bool             m_optimize_googlemap;
