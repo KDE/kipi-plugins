@@ -30,16 +30,15 @@
 #include <QDir>
 #include <QDomDocument>
 
+// Libkipi includes
+
+#include <imagecollection.h>
+
 // Local includes
 
 #include "kmlgpsdataparser.h"
 
 class QImage;
-
-namespace KIPI
-{
-    class Interface;
-}
 
 namespace KIPIPlugins 
 {
@@ -61,7 +60,9 @@ class KmlExport
 
 public:
 
-    KmlExport(Interface* const interface);
+    KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
+              const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection);
+
     ~KmlExport();
 
     /*! generate the kml element for pictures with tumbnails
@@ -133,7 +134,11 @@ private:
 
     QColor           m_GPXColor;
 
-    Interface*       m_interface;
+    // Information received from the KIPI interface
+    bool m_hostFeatureImagesHasComments;
+    bool m_hostFeatureImagesHasTime;
+    QString m_hostAlbumName;
+    ImageCollection m_hostSelection;
 
 private:
 

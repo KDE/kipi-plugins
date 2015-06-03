@@ -62,7 +62,8 @@ extern "C"
 namespace KIPIKMLExportPlugin
 {
 
-KmlExport::KmlExport(Interface* const interface)
+KmlExport::KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
+                     const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
 {
     m_localTarget        = true;
     m_optimize_googlemap = false;
@@ -76,7 +77,12 @@ KmlExport::KmlExport(Interface* const interface)
     m_GPXOpacity         = 64;
     m_GPXAltitudeMode    = 0;
     m_kmlDocument        = 0;
-    m_interface          = interface;
+
+    m_hostFeatureImagesHasComments = hostFeatureImagesHasComments;
+    m_hostFeatureImagesHasTime = hostFeatureImagesHasTime;
+    m_hostAlbumName = hostAlbumName;
+    m_hostSelection = hostSelection;
+
     m_progressDialog     = new KPBatchProgressDialog(QApplication::activeWindow(), i18n("Generating KML file..."));
 }
 
@@ -306,7 +312,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
             QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
             addKmlTextElement(kmlTimeStamp, "when", datetime.toString("yyyy-MM-ddThh:mm:ssZ"));
         }
-        else if (m_interface->hasFeature(ImagesHasTime))
+        else if (m_hostFeatureImagesHasTime)
         {
             QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
             addKmlTextElement(kmlTimeStamp, "when", (info.date()).toString("yyyy-MM-ddThh:mm:ssZ"));
@@ -323,7 +329,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
             my_description = "<img src=\"" + m_imageDirBasename + '/' + fullFileName + "\">";
         }
 
-        if ( m_interface->hasFeature( ImagesHasComments ) )
+        if (m_hostFeatureImagesHasComments)
         {
             my_description += "<br/>" + info.description() ;
         }
@@ -433,8 +439,6 @@ void KmlExport::generate()
     QDir().mkpath(m_imageDir.absolutePath());
 
     m_progressDialog->show();
-    ImageCollection selection = m_interface->currentSelection();
-    ImageCollection album     = m_interface->currentAlbum();
 
     // create the document, and it's root
     m_kmlDocument                   = new QDomDocument("");
@@ -445,7 +449,7 @@ void KmlExport::generate()
     m_kmlDocument->appendChild( kmlRoot );
 
     QDomElement kmlAlbum            = addKmlElement(kmlRoot, "Document");
-    QDomElement kmlName             = addKmlTextElement(kmlAlbum, "name", album.name());
+    QDomElement kmlName             = addKmlTextElement(kmlAlbum, "name", m_hostAlbumName);
     QDomElement kmlDescription      = addKmlHtmlElement(kmlAlbum, "description",
                                                         "Created with kmlexport <a href=\"http://www.digikam.org/\">kipi-plugin</a>");
 
@@ -455,7 +459,7 @@ void KmlExport::generate()
     }
 
     KPMetadata meta;
-    QList<QUrl> images = selection.images();
+    QList<QUrl> images = m_hostSelection.images();
     int defectImage   = 0;
     int pos           = 1;
     int count         = images.count();

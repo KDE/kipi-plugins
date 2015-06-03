@@ -129,8 +129,10 @@ void Plugin_KMLExport::slotKMLExport()
 
 void Plugin_KMLExport::slotKMLGenerate()
 {
-    ImageCollection selection = m_interface->currentSelection();
-    KmlExport myExport(m_interface);
+    KmlExport myExport(m_interface->hasFeature(ImagesHasComments),
+                       m_interface->hasFeature(ImagesHasTime),
+                       m_interface->currentAlbum().name(),
+                       m_interface->currentSelection());
 
     if(!myExport.getConfig())
         return;
