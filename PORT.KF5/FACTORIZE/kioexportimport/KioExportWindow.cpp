@@ -64,7 +64,6 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
     // -- Window setup ------------------------------------------------------
 
     setWindowTitle(i18n("Export to Remote Computer"));
-    setDefaultButton(Ok);
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
