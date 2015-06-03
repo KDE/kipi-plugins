@@ -24,9 +24,14 @@
 #ifndef KMLEXPORTCONFIG_H
 #define KMLEXPORTCONFIG_H
 
+// Libkipi includes
+
+#include <imagecollection.h>
+
 // Local includes
 
 #include "kptooldialog.h"
+#include "kmlexport.h"
 
 class QButtonGroup;
 class QCheckBox;
@@ -58,7 +63,9 @@ class KMLExportConfig : public KPToolDialog
 
 public:
 
-    KMLExportConfig(QWidget* const parent = 0);
+    KMLExportConfig(QWidget* const parent,
+                    bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
+                    const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection);
     ~KMLExportConfig();
 
 public:
@@ -120,6 +127,7 @@ protected Q_SLOTS:
 
     void slotOk();
     void slotCancel();
+    void slotKMLGenerate();
 
 protected:
 
@@ -130,6 +138,8 @@ protected:
     QGridLayout* SizeGroupBoxLayout;
     QGridLayout* TargetPreferenceGroupBoxLayout;
     QGridLayout* buttonGroupTargetTypeLayout;
+
+    KmlExport m_kmlExport;
 };
 
 } // KIPIKMLExportPlugin

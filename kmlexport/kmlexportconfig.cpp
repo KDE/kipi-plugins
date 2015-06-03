@@ -62,8 +62,11 @@ namespace KIPIKMLExportPlugin
 /**
  * @brief Constructs a KIPIKMLExport::KMLExportConfig which is a child of @parent.
  */
-KMLExportConfig::KMLExportConfig(QWidget* const parent)
+KMLExportConfig::KMLExportConfig(QWidget* const parent,
+                                 bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
+                                 const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
     : KPToolDialog(parent)
+    , m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
 {
     setButtons(Help|Ok|Cancel);
     setDefaultButton(Ok);
@@ -271,6 +274,9 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent)
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
+    connect(this, SIGNAL(okButtonClicked()),
+            this, SLOT(slotKMLGenerate()));
+
     connect(GoogleMapTargetRadioButton_, SIGNAL(toggled(bool)),
             this, SLOT(slotGoogleMapTargetRadioButtonToggled(bool)));
 
@@ -331,6 +337,14 @@ void KMLExportConfig::slotCancel()
 {
     saveSettings();
     done(Close);
+}
+
+void KMLExportConfig::slotKMLGenerate()
+{
+    if(!m_kmlExport.getConfig())
+        return;
+
+    m_kmlExport.generate();
 }
 
 void KMLExportConfig::slotGoogleMapTargetRadioButtonToggled(bool)

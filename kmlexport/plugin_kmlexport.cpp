@@ -112,32 +112,19 @@ void Plugin_KMLExport::slotKMLExport()
 
     ImageCollection selection = m_interface->currentSelection();
 
-    if ( !selection.isValid() )
+    if (!selection.isValid())
     {
-        qCDebug(KIPIPLUGINS_LOG) << "No Selection!" ;
-    }
-    else
-    {
-        KMLExportConfig* const kmlExportConfigGui = new KMLExportConfig(QApplication::activeWindow());
-
-        connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
-                this, SLOT(slotKMLGenerate()));
-
-        kmlExportConfigGui->show();
-    }
-}
-
-void Plugin_KMLExport::slotKMLGenerate()
-{
-    KmlExport myExport(m_interface->hasFeature(ImagesHasComments),
-                       m_interface->hasFeature(ImagesHasTime),
-                       m_interface->currentAlbum().name(),
-                       m_interface->currentSelection());
-
-    if(!myExport.getConfig())
+        qCDebug(KIPIPLUGINS_LOG) << "No Selection!";
         return;
+    }
 
-    myExport.generate();
+    KMLExportConfig* const dlg = new KMLExportConfig(
+        QApplication::activeWindow(),
+        m_interface->hasFeature(ImagesHasComments),
+        m_interface->hasFeature(ImagesHasTime),
+        m_interface->currentAlbum().name(),
+        m_interface->currentSelection());
+    dlg->show();
 }
 
 } // namespace KIPIKMLExportPlugin

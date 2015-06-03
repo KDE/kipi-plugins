@@ -57,7 +57,6 @@ public:
 
 protected Q_SLOTS:
 
-    void slotKMLGenerate();
     void slotKMLExport();
 
 private:
