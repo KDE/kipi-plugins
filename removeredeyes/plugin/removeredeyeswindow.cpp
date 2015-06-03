@@ -336,6 +336,9 @@ void RemoveRedEyesWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(d->configGroupName);
 
+    KConfigGroup group2 = config.group(QString("RemoveRedEyes Dialog"));
+    restoreDialogSize(group2);
+
     int storageMode = group.readEntry(d->configStorageModeEntry,                            (int)StorageSettingsBox::Subfolder);
     d->storageSettingsBox->setStorageMode(storageMode);
     d->storageSettingsBox->setExtra(group.readEntry(d->configExtraNameEntry,                "corrected"));
