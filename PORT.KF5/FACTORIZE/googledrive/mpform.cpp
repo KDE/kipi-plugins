@@ -73,6 +73,8 @@ void MPForm::addPair(const QString& name, const QString& description, const QStr
     qCDebug(KIPIPLUGINS_LOG) << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
     QString str;
 
+    // FIXME: Need to rewrite JSON serialization with Qt5's QJsonDocument and
+    // friends. See bug #348278.
     str += "--";
     str += m_boundary;
     str += "\r\n";
