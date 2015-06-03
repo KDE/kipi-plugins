@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "kmlexportconfig.h"
+#include "kmlwindow.h"
 
 // Qt includes
 
@@ -62,11 +62,11 @@ namespace KIPIKMLExportPlugin
 {
 
 /**
- * @brief Constructs a KIPIKMLExport::KMLExportConfig which is a child of @parent.
+ * @brief Constructs a KIPIKMLExport::KmlWindow which is a child of @parent.
  */
-KMLExportConfig::KMLExportConfig(QWidget* const parent,
-                                 bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
-                                 const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
+KmlWindow::KmlWindow(QWidget* const parent,
+                     bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
+                     const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
     : KPToolDialog(parent)
     , m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
 {
@@ -322,17 +322,17 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent,
 /**
  * @brief Destroys the object and frees any allocated resources
  */
-KMLExportConfig::~KMLExportConfig()
+KmlWindow::~KmlWindow()
 {
 }
 
-void KMLExportConfig::slotCancel()
+void KmlWindow::slotCancel()
 {
     saveSettings();
     done(Close);
 }
 
-void KMLExportConfig::slotKMLGenerate()
+void KmlWindow::slotKMLGenerate()
 {
     button(KDialog::User1)->setEnabled(false);
     KGuiItem::assign(button(KDialog::Cancel), KStandardGuiItem::close());
@@ -345,7 +345,7 @@ void KMLExportConfig::slotKMLGenerate()
     m_kmlExport.generate();
 }
 
-void KMLExportConfig::slotGoogleMapTargetRadioButtonToggled(bool)
+void KmlWindow::slotGoogleMapTargetRadioButtonToggled(bool)
 {
     if (GoogleMapTargetRadioButton_->isChecked())
     {
@@ -363,7 +363,7 @@ void KMLExportConfig::slotGoogleMapTargetRadioButtonToggled(bool)
     }
 }
 
-void KMLExportConfig::slotKMLTracksCheckButtonToggled(bool)
+void KmlWindow::slotKMLTracksCheckButtonToggled(bool)
 {
     if (GPXTracksCheckBox_->isChecked())
     {
@@ -395,7 +395,7 @@ void KMLExportConfig::slotKMLTracksCheckButtonToggled(bool)
     }
 }
 
-void KMLExportConfig::readSettings()
+void KmlWindow::readSettings()
 {
     bool    localTarget;
     bool    optimize_googlemap;
@@ -463,7 +463,7 @@ void KMLExportConfig::readSettings()
     GPXAltitudeCB_->setCurrentIndex(GPXAltitudeMode);
 }
 
-void KMLExportConfig::saveSettings()
+void KmlWindow::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("KMLExport Settings"));

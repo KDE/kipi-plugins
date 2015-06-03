@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef KMLEXPORTCONFIG_H
-#define KMLEXPORTCONFIG_H
+#ifndef KMLWINDOW_H
+#define KMLWINDOW_H
 
 // Libkipi includes
 
@@ -57,16 +57,16 @@ using namespace KIPIPlugins;
 namespace KIPIKMLExportPlugin
 {
 
-class KMLExportConfig : public KPToolDialog
+class KmlWindow : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    KMLExportConfig(QWidget* const parent,
-                    bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
-                    const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection);
-    ~KMLExportConfig();
+    KmlWindow(QWidget* const parent,
+              bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
+              const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection);
+    ~KmlWindow();
 
 public:
 
@@ -143,4 +143,4 @@ protected:
 
 } // KIPIKMLExportPlugin
 
-#endif // KMLEXPORTCONFIG_H
+#endif // KMLWINDOW_H

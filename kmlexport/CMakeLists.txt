@@ -10,7 +10,7 @@ set(kipiplugin_kmlexport_PART_SRCS plugin_kmlexport.cpp
                                    gpsdataparser.cpp
                                    kmlexport.cpp
                                    kmlgpsdataparser.cpp
-                                   kmlexportconfig.cpp
+                                   kmlwindow.cpp
 )
 
 add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})

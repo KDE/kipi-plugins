@@ -48,7 +48,7 @@
 // Local includes
 
 #include "kmlexport.h"
-#include "kmlexportconfig.h"
+#include "kmlwindow.h"
 #include "kipiplugins_debug.h"
 
 namespace KIPIKMLExportPlugin
@@ -118,7 +118,7 @@ void Plugin_KMLExport::slotKMLExport()
         return;
     }
 
-    KMLExportConfig* const dlg = new KMLExportConfig(
+    KmlWindow* const dlg = new KmlWindow(
         QApplication::activeWindow(),
         m_interface->hasFeature(ImagesHasComments),
         m_interface->hasFeature(ImagesHasTime),
