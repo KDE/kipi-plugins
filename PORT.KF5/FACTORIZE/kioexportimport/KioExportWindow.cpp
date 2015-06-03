@@ -40,6 +40,7 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 #include <QUrl>
+#include <KWindowConfig>
 
 // Local includes
 
@@ -139,7 +140,7 @@ void KioExportWindow::restoreSettings()
     m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, QUrl()));
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void KioExportWindow::saveSettings()
@@ -151,7 +152,7 @@ void KioExportWindow::saveSettings()
     group.writeEntry(TARGET_URL_PROPERTY,  m_exportWidget->targetUrl().url());
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 

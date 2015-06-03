@@ -45,6 +45,7 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <QUrl>
+#include <KWindowConfig>
 
 // LibKSane includes
 
@@ -117,14 +118,14 @@ void ScanDialog::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Scan Tool Dialog"));
-    restoreDialogSize(group);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
 }
 
 void ScanDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Scan Tool Dialog"));
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     config.sync();
 }
 

@@ -52,6 +52,7 @@
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
+#include <KWindowConfig>
 
 // Local includes
 
@@ -217,7 +218,7 @@ void BatchDialog::readSettings()
     d->settingsBox->setConflictRule((SettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SettingsWidget::OVERWRITE)));
 
     KConfigGroup group2 = config.group(QString("Batch DNG Converter Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void BatchDialog::saveSettings()
@@ -232,7 +233,7 @@ void BatchDialog::saveSettings()
     group.writeEntry("Conflict",              (int)d->settingsBox->conflictRule());
 
     KConfigGroup group2 = config.group(QString("Batch DNG Converter Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 

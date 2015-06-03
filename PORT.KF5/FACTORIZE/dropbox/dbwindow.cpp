@@ -52,6 +52,7 @@
 #include <kpushbutton.h>
 #include <QUrl>
 #include <ktoolinvocation.h>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -211,7 +212,7 @@ void DBWindow::readSettings()
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
 
     KConfigGroup dialogGroup = config.group("Dropbox Export Dialog");
-    restoreDialogSize(dialogGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void DBWindow::writeSettings()
@@ -228,7 +229,7 @@ void DBWindow::writeSettings()
     grp.writeEntry("Access Oauth Token", m_accoauthToken);
 
     KConfigGroup dialogGroup = config.group("Dropbox Export Dialog");
-    saveDialogSize(dialogGroup);
+    KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
 
     config.sync();
 }

@@ -64,6 +64,7 @@ extern "C"
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
 #include <kde_file.h>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -352,7 +353,7 @@ void ExpoBlendingDlg::readSettings()
     d->templateFileName->setText(group.readEntry("Template File Name", QString("enfuse")));
 
     KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void ExpoBlendingDlg::saveSettings()
@@ -372,7 +373,7 @@ void ExpoBlendingDlg::saveSettings()
     group.writeEntry("Template File Name", d->templateFileName->text());
 
     KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 

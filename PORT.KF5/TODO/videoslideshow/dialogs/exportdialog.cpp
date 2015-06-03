@@ -46,6 +46,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -237,7 +238,7 @@ void ExportDialog::readSettings()
     KConfigGroup group = config.group(QString("VideoSlideShow Settings"));
     QString path       = group.readEntry("Temp Dir", QString());
     d->settingsBox->setTempDirPath(path);
-    restoreDialogSize(group);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
 }
 
 void ExportDialog::saveSettings()
@@ -246,7 +247,7 @@ void ExportDialog::saveSettings()
     KConfigGroup group  = config.group(QString("VideoSlideShow Settings"));
 
     group.writeEntry("Temp Dir", d->settingsBox->getTempDirPath());
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 
     config.sync();
 }

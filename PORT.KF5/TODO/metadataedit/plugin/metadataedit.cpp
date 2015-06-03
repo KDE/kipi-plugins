@@ -42,6 +42,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktabwidget.h>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -244,7 +245,7 @@ void MetadataEditDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Metadata Edit Dialog"));
     d->tabWidget->setCurrentIndex(group.readEntry("Tab Index", 0));
-    restoreDialogSize(group);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
 }
 
 void MetadataEditDialog::saveSettings()
@@ -252,7 +253,7 @@ void MetadataEditDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Metadata Edit Dialog"));
     group.writeEntry("Tab Index", d->tabWidget->currentIndex());
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 
     d->tabExif->saveSettings();
     d->tabIptc->saveSettings();

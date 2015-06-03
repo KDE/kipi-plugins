@@ -43,6 +43,7 @@
 #include <QComboBox>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
+#include <KWindowConfig>
 
 // MediaWiki includes
 
@@ -189,7 +190,7 @@ void WMWindow::readSettings()
     d->widget->readSettings(group);
 
     KConfigGroup group2 = config.group(QString("MediaWiki export dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void WMWindow::saveSettings()
@@ -200,7 +201,7 @@ void WMWindow::saveSettings()
     d->widget->saveSettings(group);
 
     KConfigGroup group2 = config.group(QString("MediaWiki export dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 

@@ -46,6 +46,7 @@
 #include <kpushbutton.h>
 #include <kpassworddialog.h>
 #include <ktoolinvocation.h>
+#include <KWindowConfig>
 
 // LibKDcraw includes
 
@@ -324,12 +325,12 @@ void SmugWindow::readSettings()
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Smug Import Dialog");
-        restoreDialogSize(dialogGroup);
+        KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
     }
     else
     {
         KConfigGroup dialogGroup = config.group("Smug Export Dialog");
-        restoreDialogSize(dialogGroup);
+        KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
     }
 }
 
@@ -348,12 +349,12 @@ void SmugWindow::writeSettings()
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Smug Import Dialog");
-        saveDialogSize(dialogGroup);
+        KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     }
     else
     {
         KConfigGroup dialogGroup = config.group("Smug Export Dialog");
-        saveDialogSize(dialogGroup);
+        KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     }
     config.sync();
 }

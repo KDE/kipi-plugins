@@ -52,6 +52,7 @@
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
+#include <KWindowConfig>
 
 // LibKIPI includes
 
@@ -378,7 +379,7 @@ void FlickrWindow::readSettings(QString uname)
     m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",    85));
 
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
-    restoreDialogSize(dialogGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void FlickrWindow::writeSettings()
@@ -411,7 +412,7 @@ void FlickrWindow::writeSettings()
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
-    saveDialogSize(dialogGroup);
+    KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     config.sync();
 }
 

@@ -52,6 +52,7 @@
 #include <kpushbutton.h>
 #include <QUrl>
 #include <ktoolinvocation.h>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -213,7 +214,7 @@ void GDWindow::readSettings()
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
 
     KConfigGroup dialogGroup = config.group("Google Drive Export Dialog");
-    restoreDialogSize(dialogGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void GDWindow::writeSettings()
@@ -227,7 +228,7 @@ void GDWindow::writeSettings()
     grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
 
     KConfigGroup dialogGroup = config.group("Google Drive Export Dialog");
-    saveDialogSize(dialogGroup);
+    KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
 
     config.sync();
 }

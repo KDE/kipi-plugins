@@ -43,6 +43,7 @@
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <kprogressdialog.h>
+#include <KWindowConfig>
 
 // LibKDcraw includes
 
@@ -224,7 +225,7 @@ void SwWindow::readSettings()
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
 
     KConfigGroup dialogGroup = config.group("Shwup Export Dialog");
-    restoreDialogSize(dialogGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void SwWindow::writeSettings()
@@ -241,7 +242,7 @@ void SwWindow::writeSettings()
     grp.writeEntry("Image Quality", m_widget->m_imageQualitySpB->value());
 
     KConfigGroup dialogGroup = config.group("Shwup Export Dialog");
-    saveDialogSize(dialogGroup);
+    KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
 
     config.sync();
 }

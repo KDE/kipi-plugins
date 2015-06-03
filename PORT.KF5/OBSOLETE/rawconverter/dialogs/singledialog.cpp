@@ -59,6 +59,7 @@ extern "C"
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
+#include <KWindowConfig>
 
 // LibKDcraw includes
 
@@ -290,7 +291,7 @@ void SingleDialog::readSettings()
     d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->settings().sixteenBitsImage);
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void SingleDialog::saveSettings()
@@ -302,7 +303,7 @@ void SingleDialog::saveSettings()
     d->saveSettingsBox->writeSettings(group);
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 

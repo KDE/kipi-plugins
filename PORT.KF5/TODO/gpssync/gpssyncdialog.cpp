@@ -80,6 +80,7 @@
 #include <ktoolinvocation.h>
 #include <kundostack.h>
 #include <kvbox.h>
+#include <KWindowConfig>
 
 // Libkgeomap includes
 
@@ -684,7 +685,7 @@ void GPSSyncDialog::readSettings()
     d->rgWidget->readSettingsFromGroup(&groupRGWidget);
 
     const KConfigGroup groupDialog = KConfigGroup(&group, "Dialog");
-    restoreDialogSize(groupDialog);
+    KWindowConfig::restoreWindowSize(windowHandle(), groupDialog);
 
     // --------------------------
 
@@ -771,7 +772,7 @@ void GPSSyncDialog::saveSettings()
     d->rgWidget->saveSettingsToGroup(&groupRGWidget);
 
     KConfigGroup groupDialog = KConfigGroup(&group, "Dialog");
-    saveDialogSize(groupDialog);
+    KWindowConfig::saveWindowSize(windowHandle(), groupDialog);
 
     // --------------------------
 

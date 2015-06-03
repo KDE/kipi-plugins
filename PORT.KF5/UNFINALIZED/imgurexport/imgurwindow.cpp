@@ -30,6 +30,7 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kdialog.h>
+#include <KWindowConfig>
 
 // Local includes
 
@@ -279,7 +280,7 @@ void ImgurWindow::readSettings()
 //    KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group(QString("Imgur Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void ImgurWindow::saveSettings()
@@ -288,7 +289,7 @@ void ImgurWindow::saveSettings()
 //    KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group(QString("Imgur Dialog"));
-    saveDialogSize(group2);
+    KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
 

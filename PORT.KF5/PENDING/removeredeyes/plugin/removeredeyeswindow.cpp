@@ -42,6 +42,7 @@
 #include <kpushbutton.h>
 #include <ktabwidget.h>
 #include <ktemporaryfile.h>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -337,7 +338,7 @@ void RemoveRedEyesWindow::readSettings()
     KConfigGroup group = config.group(d->configGroupName);
 
     KConfigGroup group2 = config.group(QString("RemoveRedEyes Dialog"));
-    restoreDialogSize(group2);
+    KWindowConfig::restoreWindowSize(windowHandle(), group2);
 
     int storageMode = group.readEntry(d->configStorageModeEntry,                            (int)StorageSettingsBox::Subfolder);
     d->storageSettingsBox->setStorageMode(storageMode);
@@ -379,7 +380,7 @@ void RemoveRedEyesWindow::writeSettings()
     group.writeEntry(d->configKeywordNameEntry,     d->settings.keywordName);
 
     KConfigGroup dialogGroup = config.group("RemoveRedEyes Dialog");
-    saveDialogSize(dialogGroup);
+    KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     config.sync();
 }
 

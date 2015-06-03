@@ -40,6 +40,7 @@
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
+#include <KWindowConfig>
 
 // LibKDcraw includes
 
@@ -279,12 +280,12 @@ void FbWindow::readSettings()
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Facebook Import Dialog");
-        restoreDialogSize(dialogGroup);
+        KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
     }
     else
     {
         KConfigGroup dialogGroup = config.group("Facebook Export Dialog");
-        restoreDialogSize(dialogGroup);
+        KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
     }
 }
 
@@ -325,12 +326,12 @@ void FbWindow::writeSettings()
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Facebook Import Dialog");
-        saveDialogSize(dialogGroup);
+        KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     }
     else
     {
         KConfigGroup dialogGroup = config.group("Facebook Export Dialog");
-        saveDialogSize(dialogGroup);
+        KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     }
 
     config.sync();

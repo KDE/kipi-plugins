@@ -54,6 +54,7 @@
 #include <kurllabel.h>
 #include <kstandarddirs.h>
 #include <QComboBox>
+#include <KWindowConfig>
 
 // Libkipi includes
 
@@ -169,7 +170,7 @@ void ImageshackWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("Imageshack Settings");
-    restoreDialogSize(group);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
 
     if (group.readEntry("Private", false))
     {
@@ -207,7 +208,7 @@ void ImageshackWindow::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("Imageshack Settings");
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 
     group.writeEntry("Private", m_widget->m_privateImagesChb->isChecked());
 
