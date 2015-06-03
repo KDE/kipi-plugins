@@ -39,7 +39,6 @@
 
 // KDE includes
 
-#include <kstandardguiitem.h>
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
@@ -250,7 +249,7 @@ void SendImages::secondStage()
     {
         d->progressDlg->progressWidget()->addedAction(i18n("There are no files to send"), WarningMessage);
         d->progressDlg->progressWidget()->setProgress(0, 100);
-        d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
+        d->progressDlg->setButtonClose();
         return;
     }
 
