@@ -62,7 +62,6 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
 
     // window setup
     setWindowTitle(i18n("Import from Remote Computer"));
-    setDefaultButton(Ok);
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
