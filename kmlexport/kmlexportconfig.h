@@ -125,7 +125,6 @@ protected:
 
 protected Q_SLOTS:
 
-    void slotOk();
     void slotCancel();
     void slotKMLGenerate();
 

@@ -84,6 +84,7 @@ KmlExport::KmlExport(bool hostFeatureImagesHasComments, bool hostFeatureImagesHa
     m_hostSelection = hostSelection;
 
     m_progressDialog     = new KPBatchProgressDialog(QApplication::activeWindow(), i18n("Generating KML file..."));
+    m_progressDialog->setModal(true);
 }
 
 KmlExport::~KmlExport()

@@ -46,6 +46,8 @@
 #include <kwindowconfig.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
+#include <KGuiItem>
+#include <KStandardGuiItem>
 
 // Libkdcraw includes
 
@@ -68,10 +70,12 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent,
     : KPToolDialog(parent)
     , m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
 {
-    setButtons(Help|Ok|Cancel);
-    setDefaultButton(Ok);
+    setButtons(Help | User1 | Cancel);
+    setDefaultButton(Cancel);
     setCaption(i18n("KML Export"));
     setModal(true);
+
+    button(KDialog::User1)->setText(i18nc("@action:button", "&Export"));
 
     QWidget* const page = new QWidget( this );
     setMainWidget( page );
@@ -271,10 +275,7 @@ KMLExportConfig::KMLExportConfig(QWidget* const parent,
     connect(this, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
 
-    connect(this, SIGNAL(okClicked()),
-            this, SLOT(slotOk()));
-
-    connect(this, SIGNAL(okButtonClicked()),
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotKMLGenerate()));
 
     connect(GoogleMapTargetRadioButton_, SIGNAL(toggled(bool)),
@@ -325,14 +326,6 @@ KMLExportConfig::~KMLExportConfig()
 {
 }
 
-void KMLExportConfig::slotOk()
-{
-    saveSettings();
-
-    emit okButtonClicked();
-    accept();
-}
-
 void KMLExportConfig::slotCancel()
 {
     saveSettings();
@@ -341,6 +334,11 @@ void KMLExportConfig::slotCancel()
 
 void KMLExportConfig::slotKMLGenerate()
 {
+    button(KDialog::User1)->setEnabled(false);
+    KGuiItem::assign(button(KDialog::Cancel), KStandardGuiItem::close());
+
+    saveSettings();
+
     if(!m_kmlExport.getConfig())
         return;
 
