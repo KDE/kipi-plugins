@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -229,6 +229,14 @@ public:
     void                setAllowDuplicate(bool allow);
 
     void                loadImagesFromCurrentSelection();
+    
+    /** A function to load all the images from the album if no image has been selected by user.
+     */
+    void                loadImagesFromCurrentAlbum();
+
+    /** a function to check whether an image has been selected or not.
+     */
+    bool                checkSelection();
 
     int                 iconSize()  const;
 
