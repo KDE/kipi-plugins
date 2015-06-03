@@ -86,26 +86,6 @@ KmlExport::~KmlExport()
 }
 
 /*!
-    \fn KmlExport::createDir(QDir dir)
- */
-bool KmlExport::createDir(const QDir& dir) const
-{
-    if (dir.exists()) return true;
-
-    QDir parent = dir;
-    parent.cdUp();
-    bool ok     = createDir(parent);
-
-    if (!ok)
-    {
-        logError(i18n("Could not create '%1'", parent.path()));
-        return false;
-    }
-
-    return parent.mkdir(dir.dirName());
-}
-
-/*!
 \fn KmlExport::webifyFileName(const QString &fileName)
  */
 QString KmlExport::webifyFileName(const QString& fileName) const
@@ -241,7 +221,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     //baseFileName       = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
     fullFileName         = baseFileName + '.' + imageFormat.toLower();
-    QString destPath     = m_tempDestDir + m_imageDir + fullFileName;
+    QString destPath     = m_imageDir.filePath(fullFileName);
 
     if (!image.save(destPath, imageFormat.toLatin1().constData(), 85))
     {
@@ -336,11 +316,11 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
         if (m_optimize_googlemap)
         {
-            my_description = "<img src=\"" + m_UrlDestDir + m_imageDir + fullFileName + "\">";
+            my_description = "<img src=\"" + m_UrlDestDir + m_imageDirBasename + '/' + fullFileName + "\">";
         }
         else
         {
-            my_description = "<img src=\"" + m_imageDir + fullFileName + "\">";
+            my_description = "<img src=\"" + m_imageDirBasename + '/' + fullFileName + "\">";
         }
 
         if ( m_interface->hasFeature( ImagesHasComments ) )
@@ -353,7 +333,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
         // Save icon
         QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
-        QString destPath     = m_tempDestDir + m_imageDir + iconFileName;
+        QString destPath     = m_imageDir.filePath(iconFileName);
 
         if (!icon.save(destPath, imageFormat.toLatin1().constData(), 85))
         {
@@ -369,11 +349,11 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
             if (m_optimize_googlemap)
             {
-                addKmlTextElement(kmlIcon, "href", m_UrlDestDir + m_imageDir + iconFileName);
+                addKmlTextElement(kmlIcon, "href", m_UrlDestDir + m_imageDirBasename + '/' + iconFileName);
             }
             else
             {
-                addKmlTextElement(kmlIcon, "href", m_imageDir + iconFileName);
+                addKmlTextElement(kmlIcon, "href", m_imageDirBasename + '/' + iconFileName);
             }
 
             QDomElement kmlBallonStyle = addKmlElement(kmlStyle, "BalloonStyle");
@@ -449,7 +429,8 @@ void KmlExport::addTrack(QDomElement& kmlAlbum)
 void KmlExport::generate()
 {
     //! @todo perform a test here before continuing.
-    createDir(QString(m_tempDestDir + m_imageDir));
+    QDir().mkpath(m_tempDestDir.absolutePath());
+    QDir().mkpath(m_imageDir.absolutePath());
 
     m_progressDialog->show();
     ImageCollection selection = m_interface->currentSelection();
@@ -524,7 +505,7 @@ void KmlExport::generate()
     }
 
     /** @todo change to kml or kmz if compressed */
-    QFile file( m_tempDestDir + m_KMLFileName + ".kml");
+    QFile file(m_tempDestDir.filePath(m_KMLFileName + ".kml"));
     /** @todo handle file opening problems */
     file.open( QIODevice::WriteOnly );
     QTextStream stream( &file ); // we will serialize the data into the file
@@ -534,7 +515,7 @@ void KmlExport::generate()
     delete m_kmlDocument;
     m_kmlDocument = 0;
 
-    KIO::moveAs(QUrl::fromLocalFile(m_tempDestDir), QUrl::fromLocalFile(m_baseDestDir), KIO::HideProgressInfo | KIO::Overwrite);
+    KIO::moveAs(QUrl::fromLocalFile(m_tempDestDir.absolutePath()), QUrl::fromLocalFile(m_baseDestDir), KIO::HideProgressInfo | KIO::Overwrite);
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
 }
@@ -567,10 +548,11 @@ int KmlExport::getConfig()
     m_GPXOpacity         = group.readEntry("Track Opacity", 64 );
     m_GPXAltitudeMode    = group.readEntry("GPX Altitude Mode", 0);
 
-    m_tempDestDir        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "kipi-kmlrexportplugin-" + QString::number(getpid()) + "/";
-    QDir().mkpath(m_tempDestDir);
+    m_tempDestDir        = QDir(QDir::temp().filePath(QStringLiteral("kipi-kmlrexportplugin-%1").arg(getpid())));
 
-    m_imageDir           = "images/";
+    m_imageDirBasename   = QStringLiteral("images");
+    m_imageDir           = QDir(m_tempDestDir.filePath(m_imageDirBasename));
+
     m_googlemapSize      = 32;
     return 1;
 }

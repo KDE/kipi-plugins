@@ -64,8 +64,6 @@ public:
     KmlExport(Interface* const interface);
     ~KmlExport();
 
-    bool createDir(const QDir& dir) const;
-
     /*! generate the kml element for pictures with tumbnails
      *  @param interface the kipi interface
      *  @param QUrl the URL of the picture
@@ -116,12 +114,16 @@ public:
     int              m_GPXAltitudeMode;
 
     /** directory used in kmldocument structure */
-    QString          m_imageDir;
+    QString          m_imageDirBasename;
     QString          m_GPXFile;
     QString          m_UrlDestDir;
 
-    /** temporary directory where everything will be created */
-    QString          m_tempDestDir;
+    /**
+     * Temporary directory where everything will be created.
+     * m_imageDir is nested in m_tempDestDir.
+     */
+    QDir             m_tempDestDir;
+    QDir             m_imageDir;
 
     /** directory selected by user*/
     QString          m_baseDestDir;
