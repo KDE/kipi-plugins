@@ -89,7 +89,6 @@ public:
 protected Q_SLOTS:
 
     // ui slots
-    void slotCloseEvent(QCloseEvent* event);
     void slotChangeUserClicked();
     void slotResizeChecked();
 
@@ -113,6 +112,8 @@ protected Q_SLOTS:
     void slotButtonClicked(int button);
 
 protected:
+
+    void closeEvent(QCloseEvent* event);
 
     void readSettings();
     void writeSettings();

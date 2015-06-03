@@ -517,7 +517,7 @@ void YandexFotkiWindow::slotChangeUserClicked()
     authenticate(true);
 }
 
-void YandexFotkiWindow::slotCloseEvent(QCloseEvent* event)
+void YandexFotkiWindow::closeEvent(QCloseEvent* event)
 {
     qCDebug(KIPIPLUGINS_LOG) << "closeEvent";
     writeSettings();
