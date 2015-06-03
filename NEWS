@@ -1,8 +1,9 @@
-Kipi-plugins 5.0.0-beta1 - Release date: 2015/06/01
+Kipi-plugins 5.0.0-beta1 - Release date: 2015/07/05
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 348340 - Progress halts when finished resizing images.
+002 ==> 
