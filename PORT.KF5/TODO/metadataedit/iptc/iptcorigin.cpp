@@ -35,7 +35,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <QComboBox>
+#include <kcombobox.h>
 #include <kcomponentdata.h>
 #include <kdatewidget.h>
 #include <kdialog.h>
@@ -51,11 +51,12 @@
 
 // LibKDcraw includes
 
-#include <squeezedcombobox.h>
+#include <libkdcraw/squeezedcombobox.h>
 
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "timezonecombobox.h"
 #include "multivaluesedit.h"
 #include "kpmetadata.h"
 
@@ -83,6 +84,8 @@ public:
         dateDigitalizedSel     = 0;
         timeCreatedSel         = 0;
         timeDigitalizedSel     = 0;
+        zoneCreatedSel         = 0;
+        zoneDigitalizedSel     = 0;
         dateCreatedCheck       = 0;
         dateDigitalizedCheck   = 0;
         timeCreatedCheck       = 0;
@@ -106,6 +109,9 @@ public:
 
     QTimeEdit*                     timeCreatedSel;
     QTimeEdit*                     timeDigitalizedSel;
+
+    TimeZoneComboBox*              zoneCreatedSel;
+    TimeZoneComboBox*              zoneDigitalizedSel;
 
     QPushButton*                   setTodayCreatedBtn;
     QPushButton*                   setTodayDigitalizedBtn;
@@ -137,6 +143,7 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
 
     d->dateDigitalizedCheck   = new QCheckBox(i18n("Digitization date"), this);
     d->timeDigitalizedCheck   = new QCheckBox(i18n("Digitization time"), this);
+    d->zoneDigitalizedSel     = new TimeZoneComboBox(this);
     d->dateDigitalizedSel     = new KDateWidget(this);
     d->timeDigitalizedSel     = new QTimeEdit(this);
 
@@ -148,6 +155,8 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
                                              "digital representation."));
     d->timeDigitalizedSel->setWhatsThis(i18n("Set here the creation time of "
                                              "digital representation."));
+    d->zoneDigitalizedSel->setWhatsThis(i18n("Set here the time zone of "
+                                             "digital representation."));
 
     slotSetTodayDigitalized();
 
@@ -155,6 +164,7 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
 
     d->dateCreatedCheck   = new QCheckBox(i18n("Creation date"), this);
     d->timeCreatedCheck   = new QCheckBox(i18n("Creation time"), this);
+    d->zoneCreatedSel     = new TimeZoneComboBox(this);
     d->dateCreatedSel     = new KDateWidget(this);
     d->timeCreatedSel     = new QTimeEdit(this);
     d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
@@ -169,6 +179,8 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
     d->dateCreatedSel->setWhatsThis(i18n("Set here the creation date of "
                                          "intellectual content."));
     d->timeCreatedSel->setWhatsThis(i18n("Set here the creation time of "
+                                         "intellectual content."));
+    d->zoneCreatedSel->setWhatsThis(i18n("Set here the time zone of "
                                          "intellectual content."));
 
     slotSetTodayCreated();
@@ -242,29 +254,31 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
     grid->addWidget(d->timeDigitalizedCheck,                0, 2, 1, 2);
     grid->addWidget(d->dateDigitalizedSel,                  1, 0, 1, 2);
     grid->addWidget(d->timeDigitalizedSel,                  1, 2, 1, 1);
-    grid->addWidget(d->setTodayDigitalizedBtn,              1, 4, 1, 1);
+    grid->addWidget(d->zoneDigitalizedSel,                  1, 3, 1, 1);
+    grid->addWidget(d->setTodayDigitalizedBtn,              1, 5, 1, 1);
     grid->addWidget(d->dateCreatedCheck,                    2, 0, 1, 2);
     grid->addWidget(d->timeCreatedCheck,                    2, 2, 1, 2);
     grid->addWidget(d->dateCreatedSel,                      3, 0, 1, 2);
     grid->addWidget(d->timeCreatedSel,                      3, 2, 1, 1);
-    grid->addWidget(d->setTodayCreatedBtn,                  3, 4, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck,                   4, 0, 1, 5);
-    grid->addWidget(d->syncEXIFDateCheck,                   5, 0, 1, 5);
-    grid->addWidget(d->locationEdit,                        6, 0, 1, 5);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),   7, 0, 1, 5);
+    grid->addWidget(d->zoneCreatedSel,                      3, 3, 1, 1);
+    grid->addWidget(d->setTodayCreatedBtn,                  3, 5, 1, 1);
+    grid->addWidget(d->syncHOSTDateCheck,                   4, 0, 1, 6);
+    grid->addWidget(d->syncEXIFDateCheck,                   5, 0, 1, 6);
+    grid->addWidget(d->locationEdit,                        6, 0, 1, 6);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   7, 0, 1, 6);
     grid->addWidget(d->cityCheck,                           8, 0, 1, 1);
-    grid->addWidget(d->cityEdit,                            8, 1, 1, 4);
+    grid->addWidget(d->cityEdit,                            8, 1, 1, 5);
     grid->addWidget(d->sublocationCheck,                    9, 0, 1, 1);
-    grid->addWidget(d->sublocationEdit,                     9, 1, 1, 4);
+    grid->addWidget(d->sublocationEdit,                     9, 1, 1, 5);
     grid->addWidget(d->provinceCheck,                      10, 0, 1, 1);
-    grid->addWidget(d->provinceEdit,                       10, 1, 1, 4);
+    grid->addWidget(d->provinceEdit,                       10, 1, 1, 5);
     grid->addWidget(d->countryCheck,                       11, 0, 1, 1);
-    grid->addWidget(d->countryCB,                          11, 1, 1, 4);
-    grid->addWidget(note,                                  12, 0, 1, 5);
-    grid->setColumnStretch(3, 10);
+    grid->addWidget(d->countryCB,                          11, 1, 1, 5);
+    grid->addWidget(note,                                  12, 0, 1, 6);
+    grid->setColumnStretch(4, 10);
     grid->setRowStretch(13, 10);
     grid->setMargin(0);
-    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -279,6 +293,12 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
 
     connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
             d->timeDigitalizedSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeCreatedCheck, SIGNAL(toggled(bool)),
+            d->zoneCreatedSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeDigitalizedCheck, SIGNAL(toggled(bool)),
+            d->zoneDigitalizedSel, SLOT(setEnabled(bool)));
 
     connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
             d->syncHOSTDateCheck, SLOT(setEnabled(bool)));
@@ -341,6 +361,12 @@ IPTCOrigin::IPTCOrigin(QWidget* const parent)
     connect(d->timeDigitalizedSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
+    connect(d->zoneCreatedSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->zoneDigitalizedSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
     // --------------------------------------------------------
 
     connect(d->setTodayCreatedBtn, SIGNAL(clicked()),
@@ -373,12 +399,14 @@ void IPTCOrigin::slotSetTodayCreated()
 {
     d->dateCreatedSel->setDate(QDate::currentDate());
     d->timeCreatedSel->setTime(QTime::currentTime());
+    d->zoneCreatedSel->setToUTC();
 }
 
 void IPTCOrigin::slotSetTodayDigitalized()
 {
     d->dateDigitalizedSel->setDate(QDate::currentDate());
     d->timeDigitalizedSel->setTime(QTime::currentTime());
+    d->zoneDigitalizedSel->setToUTC();
 }
 
 bool IPTCOrigin::syncHOSTDateIsChecked() const
@@ -441,6 +469,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->timeCreatedSel->setTime(QTime::currentTime());
     d->timeCreatedCheck->setChecked(false);
+    d->zoneCreatedSel->setToUTC();
 
     if (!timeStr.isEmpty())
     {
@@ -449,9 +478,12 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
         {
             d->timeCreatedSel->setTime(time);
             d->timeCreatedCheck->setChecked(true);
+            d->zoneCreatedSel->setTimeZone(timeStr);
         }
     }
+
     d->timeCreatedSel->setEnabled(d->timeCreatedCheck->isChecked());
+    d->zoneCreatedSel->setEnabled(d->timeCreatedCheck->isChecked());
 
     dateStr = meta.getIptcTagString("Iptc.Application2.DigitizationDate", false);
     timeStr = meta.getIptcTagString("Iptc.Application2.DigitizationTime", false);
@@ -474,6 +506,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->timeDigitalizedSel->setTime(QTime::currentTime());
     d->timeDigitalizedCheck->setChecked(false);
+    d->zoneDigitalizedSel->setToUTC();
 
     if (!timeStr.isEmpty())
     {
@@ -483,10 +516,12 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
         {
             d->timeDigitalizedSel->setTime(time);
             d->timeDigitalizedCheck->setChecked(true);
+            d->zoneDigitalizedSel->setTimeZone(timeStr);
         }
     }
 
     d->timeDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
+    d->zoneDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
 
     code = meta.getIptcTagsStringList("Iptc.Application2.LocationCode", false);
 
@@ -598,19 +633,33 @@ void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     }
 
     if (d->dateDigitalizedCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.DigitizationDate", d->dateDigitalizedSel->date().toString(Qt::ISODate));
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.DigitizationDate");
+    }
 
     if (d->timeCreatedCheck->isChecked())
-        meta.setIptcTagString("Iptc.Application2.TimeCreated", d->timeCreatedSel->time().toString(Qt::ISODate));
+    {
+        meta.setIptcTagString("Iptc.Application2.TimeCreated", d->timeCreatedSel->time().toString(Qt::ISODate) +
+                                                               d->zoneCreatedSel->getTimeZone());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.TimeCreated");
+    }
 
     if (d->timeDigitalizedCheck->isChecked())
-        meta.setIptcTagString("Iptc.Application2.DigitizationTime", d->timeDigitalizedSel->time().toString(Qt::ISODate));
+    {
+        meta.setIptcTagString("Iptc.Application2.DigitizationTime", d->timeDigitalizedSel->time().toString(Qt::ISODate) +
+                                                                    d->zoneDigitalizedSel->getTimeZone());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.DigitizationTime");
+    }
 
     QStringList oldList, newList;
 

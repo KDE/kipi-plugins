@@ -14,6 +14,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/exif
 
 set(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
                                       plugin/metadatacheckbox.cpp
+                                      plugin/timezonecheckbox.cpp
                                       plugin/altlangstringedit.cpp
                                       plugin/multistringsedit.cpp
                                       plugin/multivaluesedit.cpp
@@ -51,7 +52,6 @@ add_library(kipiplugin_metadataedit MODULE ${kipiplugin_metadataedit_PART_SRCS})
 
 target_link_libraries(kipiplugin_metadataedit
                       KF5::Parts
-                      
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw

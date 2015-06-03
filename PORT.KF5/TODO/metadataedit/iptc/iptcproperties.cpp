@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <QComboBox>
+#include <kcombobox.h>
 #include <kdatewidget.h>
 #include <kdialog.h>
 #include <kglobal.h>
@@ -47,6 +47,7 @@
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "timezonecombobox.h"
 #include "objectattributesedit.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
@@ -66,6 +67,8 @@ public:
         dateExpiredSel      = 0;
         timeReleasedSel     = 0;
         timeExpiredSel      = 0;
+        zoneReleasedSel     = 0;
+        zoneExpiredSel      = 0;
         dateReleasedCheck   = 0;
         dateExpiredCheck    = 0;
         timeReleasedCheck   = 0;
@@ -95,12 +98,15 @@ public:
     QTimeEdit*                     timeReleasedSel;
     QTimeEdit*                     timeExpiredSel;
 
+    TimeZoneComboBox*              zoneReleasedSel;
+    TimeZoneComboBox*              zoneExpiredSel;
+
     QPushButton*                   setTodayReleasedBtn;
     QPushButton*                   setTodayExpiredBtn;
 
-    QComboBox*                     priorityCB;
-    QComboBox*                     objectCycleCB;
-    QComboBox*                     objectTypeCB;
+    KComboBox*                     priorityCB;
+    KComboBox*                     objectCycleCB;
+    KComboBox*                     objectTypeCB;
 
     KLineEdit*                     objectTypeDescEdit;
     KLineEdit*                     originalTransEdit;
@@ -131,6 +137,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
 
     d->dateReleasedCheck   = new QCheckBox(i18n("Release date"), this);
     d->timeReleasedCheck   = new QCheckBox(i18n("Release time"), this);
+    d->zoneReleasedSel     = new TimeZoneComboBox(this);
     d->dateReleasedSel     = new KDateWidget(this);
     d->timeReleasedSel     = new QTimeEdit(this);
 
@@ -142,12 +149,16 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
                                           "intellectual content."));
     d->timeReleasedSel->setWhatsThis(i18n("Set here the earliest intended usable time of "
                                           "intellectual content."));
+    d->zoneReleasedSel->setWhatsThis(i18n("Set here the earliest intended usable time zone of "
+                                          "intellectual content."));
+
     slotSetTodayReleased();
 
     // --------------------------------------------------------
 
     d->dateExpiredCheck   = new QCheckBox(i18n("Expiration date"), this);
     d->timeExpiredCheck   = new QCheckBox(i18n("Expiration time"), this);
+    d->zoneExpiredSel     = new TimeZoneComboBox(this);
     d->dateExpiredSel     = new KDateWidget(this);
     d->timeExpiredSel     = new QTimeEdit(this);
 
@@ -159,6 +170,8 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
                                          "intellectual content."));
     d->timeExpiredSel->setWhatsThis(i18n("Set here the latest intended usable time of "
                                          "intellectual content."));
+    d->zoneExpiredSel->setWhatsThis(i18n("Set here the latest intended usable time zone of "
+                                         "intellectual content."));
 
     slotSetTodayExpired();
 
@@ -167,7 +180,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     d->languageCheck = new MetadataCheckBox(i18n("Language:"), this);
     d->languageBtn   = new KLanguageButton(this);
 
-    QStringList list = KLocale::global()->allLanguagesList();
+    QStringList list = KGlobal::locale()->allLanguagesList();
 
     for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
     {
@@ -182,7 +195,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
-    d->priorityCB    = new QComboBox(this);
+    d->priorityCB    = new KComboBox(this);
     d->priorityCB->insertItem(0, i18nc("editorial urgency of content", "0: None"));
     d->priorityCB->insertItem(1, i18nc("editorial urgency of content", "1: High"));
     d->priorityCB->insertItem(2, "2");
@@ -198,7 +211,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->objectCycleCheck = new MetadataCheckBox(i18n("Cycle:"), this);
-    d->objectCycleCB    = new QComboBox(this);
+    d->objectCycleCB    = new KComboBox(this);
     d->objectCycleCB->insertItem(0, i18n("Morning"));
     d->objectCycleCB->insertItem(1, i18n("Afternoon"));
     d->objectCycleCB->insertItem(2, i18n("Evening"));
@@ -207,7 +220,7 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     // --------------------------------------------------------
 
     d->objectTypeCheck    = new MetadataCheckBox(i18n("Type:"), this);
-    d->objectTypeCB       = new QComboBox(this);
+    d->objectTypeCB       = new KComboBox(this);
     d->objectTypeDescEdit = new KLineEdit(this);
     d->objectTypeDescEdit->setClearButtonShown(true);
     d->objectTypeDescEdit->setValidator(asciiValidator);
@@ -251,13 +264,15 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     grid->addWidget(d->timeReleasedCheck,                   0, 2, 1, 2);
     grid->addWidget(d->dateReleasedSel,                     1, 0, 1, 2);
     grid->addWidget(d->timeReleasedSel,                     1, 2, 1, 1);
-    grid->addWidget(d->setTodayReleasedBtn,                 1, 4, 1, 1);
+    grid->addWidget(d->zoneReleasedSel,                     1, 3, 1, 1);
+    grid->addWidget(d->setTodayReleasedBtn,                 1, 5, 1, 1);
     grid->addWidget(d->dateExpiredCheck,                    2, 0, 1, 2);
     grid->addWidget(d->timeExpiredCheck,                    2, 2, 1, 2);
     grid->addWidget(d->dateExpiredSel,                      3, 0, 1, 2);
     grid->addWidget(d->timeExpiredSel,                      3, 2, 1, 1);
-    grid->addWidget(d->setTodayExpiredBtn,                  3, 4, 1, 1);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),   4, 0, 1, 5);
+    grid->addWidget(d->zoneExpiredSel,                      3, 3, 1, 1);
+    grid->addWidget(d->setTodayExpiredBtn,                  3, 5, 1, 1);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   4, 0, 1, 6);
     grid->addWidget(d->languageCheck,                       5, 0, 1, 1);
     grid->addWidget(d->languageBtn,                         5, 1, 1, 1);
     grid->addWidget(d->priorityCheck,                       6, 0, 1, 1);
@@ -266,17 +281,17 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     grid->addWidget(d->objectCycleCB,                       7, 1, 1, 1);
     grid->addWidget(d->objectTypeCheck,                     8, 0, 1, 1);
     grid->addWidget(d->objectTypeCB,                        8, 1, 1, 1);
-    grid->addWidget(d->objectTypeDescEdit,                  8, 2, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),   9, 0, 1, 5);
-    grid->addWidget(d->objectAttribute,                    10, 0, 1, 5);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),  11, 0, 1, 5);
+    grid->addWidget(d->objectTypeDescEdit,                  8, 2, 1, 4);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   9, 0, 1, 6);
+    grid->addWidget(d->objectAttribute,                    10, 0, 1, 6);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),  11, 0, 1, 6);
     grid->addWidget(d->originalTransCheck,                 12, 0, 1, 1);
-    grid->addWidget(d->originalTransEdit,                  12, 1, 1, 4);
-    grid->addWidget(note,                                  13, 0, 1, 5);
-    grid->setColumnStretch(3, 10);
+    grid->addWidget(d->originalTransEdit,                  12, 1, 1, 5);
+    grid->addWidget(note,                                  13, 0, 1, 6);
+    grid->setColumnStretch(4, 10);
     grid->setRowStretch(14, 10);
     grid->setMargin(0);
-    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -291,6 +306,12 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
 
     connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
             d->timeExpiredSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeReleasedCheck, SIGNAL(toggled(bool)),
+            d->zoneReleasedSel, SLOT(setEnabled(bool)));
+
+    connect(d->timeExpiredCheck, SIGNAL(toggled(bool)),
+            d->zoneExpiredSel, SLOT(setEnabled(bool)));
 
     connect(d->languageCheck, SIGNAL(toggled(bool)),
             d->languageBtn, SLOT(setEnabled(bool)));
@@ -356,6 +377,12 @@ IPTCProperties::IPTCProperties(QWidget* const parent)
     connect(d->timeExpiredSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
+    connect(d->zoneReleasedSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->zoneExpiredSel, SIGNAL(currentIndexChanged(QString)),
+            this, SIGNAL(signalModified()));
+
     // --------------------------------------------------------
 
     connect(d->setTodayReleasedBtn, SIGNAL(clicked()),
@@ -394,12 +421,14 @@ void IPTCProperties::slotSetTodayReleased()
 {
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->timeReleasedSel->setTime(QTime::currentTime());
+    d->zoneReleasedSel->setToUTC();
 }
 
 void IPTCProperties::slotSetTodayExpired()
 {
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->timeExpiredSel->setTime(QTime::currentTime());
+    d->zoneExpiredSel->setToUTC();
 }
 
 void IPTCProperties::readMetadata(QByteArray& iptcData)
@@ -435,6 +464,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->timeReleasedSel->setTime(QTime::currentTime());
     d->timeReleasedCheck->setChecked(false);
+    d->zoneReleasedSel->setToUTC();
 
     if (!timeStr.isEmpty())
     {
@@ -444,10 +474,12 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
         {
             d->timeReleasedSel->setTime(time);
             d->timeReleasedCheck->setChecked(true);
+            d->zoneReleasedSel->setTimeZone(timeStr);
         }
     }
 
     d->timeReleasedSel->setEnabled(d->timeReleasedCheck->isChecked());
+    d->zoneReleasedSel->setEnabled(d->timeReleasedCheck->isChecked());
 
     dateStr = meta.getIptcTagString("Iptc.Application2.ExpirationDate", false);
     timeStr = meta.getIptcTagString("Iptc.Application2.ExpirationTime", false);
@@ -470,6 +502,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->timeExpiredSel->setTime(QTime::currentTime());
     d->timeExpiredCheck->setChecked(false);
+    d->zoneExpiredSel->setToUTC();
 
     if (!timeStr.isEmpty())
     {
@@ -479,10 +512,12 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
         {
             d->timeExpiredSel->setTime(time);
             d->timeExpiredCheck->setChecked(true);
+            d->zoneExpiredSel->setTimeZone(timeStr);
         }
     }
 
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
+    d->zoneExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
 
     d->languageCheck->setChecked(false);
     data = meta.getIptcTagString("Iptc.Application2.Language", false);
@@ -519,6 +554,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->priorityCheck->setValid(false);
         }
     }
+
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
 
     d->objectCycleCB->setCurrentIndex(0);
@@ -601,38 +637,64 @@ void IPTCProperties::applyMetadata(QByteArray& iptcData)
     meta.setIptc(iptcData);
 
     if (d->dateReleasedCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.ReleaseDate",
                                     d->dateReleasedSel->date().toString(Qt::ISODate));
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.ReleaseDate");
+    }
 
     if (d->dateExpiredCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.ExpirationDate",
                                     d->dateExpiredSel->date().toString(Qt::ISODate));
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.ExpirationDate");
+    }
 
     if (d->timeReleasedCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.ReleaseTime",
-                                    d->timeReleasedSel->time().toString(Qt::ISODate));
+                                    d->timeReleasedSel->time().toString(Qt::ISODate) +
+                                    d->zoneReleasedSel->getTimeZone());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.ReleaseTime");
+    }
 
     if (d->timeExpiredCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.ExpirationTime",
-                                    d->timeExpiredSel->time().toString(Qt::ISODate));
+                                    d->timeExpiredSel->time().toString(Qt::ISODate) +
+                                    d->zoneExpiredSel->getTimeZone());
+    }
     else
+    {
         meta.removeIptcTag("Iptc.Application2.ExpirationTime");
+    }
 
     if (d->languageCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.Language", d->languageBtn->current());
+    }
     else if (d->languageCheck->isValid())
+    {
         meta.removeIptcTag("Iptc.Application2.Language");
+    }
 
     if (d->priorityCheck->isChecked())
+    {
         meta.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentIndex()));
+    }
     else if (d->priorityCheck->isValid())
+    {
         meta.removeIptcTag("Iptc.Application2.Urgency");
+    }
 
     if (d->objectCycleCheck->isChecked())
     {
