@@ -114,10 +114,6 @@ public Q_SLOTS:
     void slotGoogleMapTargetRadioButtonToggled(bool);
     void slotKMLTracksCheckButtonToggled(bool);
 
-Q_SIGNALS:
-
-    void okButtonClicked(); // Signal needed by plugin_kmlexport class
-
 protected:
 
     void saveSettings();
