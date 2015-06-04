@@ -26,62 +26,41 @@
 
 #include <QPushButton>
 #include <QLabel>
-#include <QProgressDialog>
-#include <QPixmap>
-#include <QCheckBox>
-#include <QStringList>
-#include <QSpinBox>
-#include <QPointer>
+#include <QVBoxLayout>
+#include <QDialogButtonBox>
 
 // KDE includes
 
 #include <kcombobox.h>
-#include <klineedit.h>
-#include <kmenu.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kapplication.h>
-#include <kiconloader.h>
-#include <khtml_part.h>
-#include <khtmlview.h>
-#include <ktabwidget.h>
-#include <krun.h>
-#include <kdebug.h>
+#include <klocalizedstring.h>
+#include <kicon.h>
 #include <kconfig.h>
-#include <kdeversion.h>
-#include <kwallet.h>
-#include <kpushbutton.h>
-
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
-// Local includes
-
-#include "kpaboutdata.h"
-#include "kpimageinfo.h"
-#include "kpversion.h"
-#include "kpprogresswidget.h"
-#include "login.h"
-#include "flickrtalker.h"
-#include "flickritem.h"
-#include "flickrlist.h"
-#include "flickrnewphotosetdialog.h"
-#include "flickrwidget.h"
-#include "ui_flickralbumdialog.h"
+#include <kconfiggroup.h>
 
 namespace KIPIFlickrExportPlugin
 {
 
 SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
-    : KPToolDialog(parent)
+    : QDialog(parent)
 {
     m_serviceName = serviceName;
-    setCaption(i18n("Flickr Account Selector"));
-    setButtons(User1|Ok|Close);
-    setButtonGuiItem(User1, KGuiItem(i18n("Add another account"), KIcon("network-workgroup")));
-    setDefaultButton(Close);
+
+    setWindowTitle(i18n("Flickr Account Selector"));
     setModal(true);
+
+    QDialogButtonBox* buttonBox = new QDialogButtonBox();
+
+    QPushButton* buttonNewAccount = new QPushButton(buttonBox);
+    buttonNewAccount->setText(i18n("Add another account"));
+    buttonNewAccount->setIcon(KIcon("network-workgroup"));
+
+    buttonBox->addButton(buttonNewAccount, QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(QDialogButtonBox::Ok);
+    buttonBox->addButton(QDialogButtonBox::Close);
+
+    buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
+
+    m_okButton = buttonBox->button(QDialogButtonBox::Ok);
 
     if (m_serviceName == QString("23"))
     {
@@ -97,13 +76,25 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     }
 
     m_uname = QString();
+
     m_label = new QLabel(this);
     m_label->setText("Choose the " + m_serviceName + " account to use for exporting images: ");
 
     m_userComboBox = new KComboBox(this);
 
-    setMainWidget(m_userComboBox);
-    resize(300, 300);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(m_label);
+    mainLayout->addWidget(m_userComboBox);
+    mainLayout->addWidget(buttonBox);
+    setLayout(mainLayout);
+
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+    connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
+            this, SLOT(slotOkClicked()));
+    connect(buttonNewAccount, SIGNAL(clicked()),
+            this, SLOT(slotNewAccountClicked()));
 }
 
 SelectUserDlg::~SelectUserDlg()
@@ -114,8 +105,9 @@ SelectUserDlg::~SelectUserDlg()
 
 void SelectUserDlg::reactivate()
 {
-    QString uname;
     KConfig config("kipirc");
+
+    m_userComboBox->clear();
 
     foreach(const QString& group, config.groupList())
     {
@@ -130,29 +122,19 @@ void SelectUserDlg::reactivate()
         m_userComboBox->addItem(grp.readEntry("username"));
     }
 
+    m_okButton->setEnabled(m_userComboBox->count() > 0);
+
     exec();
 }
 
-void SelectUserDlg::slotButtonClicked(int button) 
+void SelectUserDlg::slotOkClicked()
 {
-    kDebug()<<"Button Clicked is "<<button;
+    m_uname = m_userComboBox->currentText();
+}
 
-    if (button == KDialog::Ok)
-    {
-        m_uname = m_userComboBox->currentText();
-        accept();
-    }
-    else if (button == KDialog::User1)
-    {
-        m_uname = QString();
-        KDialog::slotButtonClicked(KDialog::Close);
-    }
-    else
-    {
-        KDialog::slotButtonClicked(button);
-    }
-
-    m_userComboBox->clear();
+void SelectUserDlg::slotNewAccountClicked()
+{
+    m_uname = QString();
 }
 
 QString SelectUserDlg::getUname() const
