@@ -252,4 +252,3 @@ set(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
 add_subdirectory(icons)
 add_subdirectory(plugin)
 add_subdirectory(test)
-add_subdirectory(dnginfo)

@@ -14,6 +14,22 @@ KDE4_ADD_EXECUTABLE(dngvalidate NOGUI ${dngvalidate_SRCS})
 target_link_libraries(dngvalidate libdng ${CMAKE_THREAD_LIBS_INIT})
 
 # =======================================================
+# DNGINFO command line tool
+
+set(dnginfo_SRCS dnginfo.cpp)
+
+KDE4_ADD_EXECUTABLE(dnginfo NOGUI ${dnginfo_SRCS})
+
+target_link_libraries(dnginfo
+                      libdng
+                      ${KDE4_KDECORE_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${QT_LIBRARIES}
+                      ${EXPAT_LIBRARY}
+                      ${CMAKE_THREAD_LIBS_INIT}
+                     )
+
+# =======================================================
 # RAW2DNG command line tool
 
 set(raw2dng_SRCS raw2dng.cpp)
