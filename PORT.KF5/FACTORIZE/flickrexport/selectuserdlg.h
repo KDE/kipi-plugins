@@ -25,42 +25,17 @@
 
 // Qt includes
 
-#include <QHash>
-#include <QList>
-#include <QPair>
-#include <QLabel>
+#include <QtCore/QString>
+#include <QtGui/QDialog>
 
-// LibKIPI includes
+class QLabel;
 
-#include <libkipi/interface.h>
-
-// Local includes
-
-#include "kptooldialog.h"
-#include "comboboxintermediate.h"
-
-class QProgressDialog;
-class QPushButton;
-class QSpinBox;
-class QCheckBox;
-
-class KLineEdit;
-class KHTMLPart;
-class KUrl;
 class KComboBox;
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
-
-using namespace KIPI;
-using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
 
-class SelectUserDlg : public KPToolDialog
+class SelectUserDlg : public QDialog
 {
     Q_OBJECT
 public:
@@ -76,12 +51,15 @@ private:
 
     KComboBox*   m_userComboBox;
     QLabel*      m_label;
+    QPushButton* m_okButton;
+
     QString      m_uname;
     QString      m_serviceName;
 
 protected Q_SLOTS:
 
-    virtual void slotButtonClicked(int button);
+    void slotOkClicked();
+    void slotNewAccountClicked();
 };
 
 } // namespace KIPIFlickrExportPlugin
