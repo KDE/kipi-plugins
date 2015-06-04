@@ -37,6 +37,10 @@
 #include <kmimetype.h>
 #include <krandom.h>
 
+// LibQJson
+
+#include <qjson/serializer.h>
+
 namespace KIPIGoogleDrivePlugin
 {
 
@@ -71,30 +75,42 @@ void MPForm::addPair(const QString& name, const QString& description, const QStr
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
     qCDebug(KIPIPLUGINS_LOG) << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
-    QString str;
+
+    // Generate JSON
+    QVariantMap photoInfo;
+    photoInfo.insert("title", name);
+    photoInfo.insert("description", description);
+    photoInfo.insert("mimeType", mime);
+
+    QVariantMap parentId;
+    parentId.insert("id", id);
+
+    QVariantList parents;
+    parents << parentId;
+
+    photoInfo.insert("parents", parents);
 
     // FIXME: Need to rewrite JSON serialization with Qt5's QJsonDocument and
     // friends. See bug #348278.
+    QJson::Serializer serializer;
+    bool ok = false;
+    QByteArray json = serializer.serialize(photoInfo, &ok);
+
+    if (!ok)
+    {
+        kError() << "Failed to serialize to JSON:" << photoInfo;
+        return;
+    }
+
+    // Append to the multipart
+    QByteArray str;
     str += "--";
-    str += m_boundary;
+    str += m_boundary.toAscii();
     str += "\r\n";
     str += "Content-Type:application/json; charset=UTF-8\r\n\r\n";
-    str += "{\"title\":\"";
-    str += name.toAscii();
-    str += "\",\r\n";
-    str += "\"description\":\"";
-    str += description.toAscii();                   //add description
-    str += "\",\r\n";
-    str += "\"mimeType\":\"";
-    str += mime.toAscii();                          //add mimetype
-    str += "\",\r\n";
-    str += "\"parents\":";
-    str += "[{";
-    str += "\"id\":\"";
-    str += id.toAscii();                            //add id
-    str += "\"}]\r\n";
-    str += "}\r\n";
-    m_buffer.append(str.toAscii());
+    str += json;
+    str += "\r\n";
+    m_buffer.append(str);
 }
 
 bool MPForm::addFile(const QString &path)
