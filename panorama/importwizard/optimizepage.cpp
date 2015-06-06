@@ -37,7 +37,8 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KConfig>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <kpixmapsequence.h>
 
@@ -97,7 +98,7 @@ struct OptimizePage::OptimizePagePriv
 };
 
 OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Optimization</b>")),
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Optimization</b>")),
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;
@@ -110,30 +111,30 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     KConfig config(QString::fromUtf8("kipirc"));
     KConfigGroup group              = config.group(QString::fromUtf8("Panorama Settings"));
 
-    d->horizonCheckbox              = new QCheckBox(i18n("Level horizon"), vbox);
+    d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), vbox);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
-    d->horizonCheckbox->setToolTip(i18n("Detect the horizon and adapt the project to make it horizontal."));
-    d->horizonCheckbox->setWhatsThis(i18n("<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
-                                          "the detected horizon is an horizontal line in the final panorama"));
+    d->horizonCheckbox->setToolTip(i18nc("@info:tooltip", "Detect the horizon and adapt the project to make it horizontal."));
+    d->horizonCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
+                                           "the detected horizon is an horizontal line in the final panorama"));
     /*if (!d->mngr->gPano())
     {
-        d->projectionAndSizeCheckbox = new QCheckBox(i18n("Automatic projection and output aspect"), vbox);
+        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic projection and output aspect"), vbox);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
-        d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the projection of the panorama and the area rendered on the "
-                                                      "resulting projection so that every photo fits in the resulting "
-                                                      "panorama."));
-        d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic projection and output aspect</b>: Automatically "
-                                                        "adapt the projection and the area rendered of the panorama to "
-                                                        "get every photos into the panorama."));
+        d->projectionAndSizeCheckbox->setToolTip(i18nc("@info:tooltip", "Adapt the projection of the panorama and the area rendered on the "
+                                                       "resulting projection so that every photo fits in the resulting "
+                                                       "panorama."));
+        d->projectionAndSizeCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Automatic projection and output aspect</b>: Automatically "
+                                                         "adapt the projection and the area rendered of the panorama to "
+                                                         "get every photos into the panorama."));
     }
     else
     {
-        d->projectionAndSizeCheckbox = new QCheckBox(i18n("Automatic output aspect"), vbox);
+        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic output aspect"), vbox);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
-        d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the area rendered on the resulting projection so that "
-                                                      "every photo fits in the resulting panorama."));
-        d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic output aspect</b>: Automatically adapt the area "
-                                                        "rendered of the panorama to get every photos into the panorama."));
+        d->projectionAndSizeCheckbox->setToolTip(i18nc("@info:tooltip", "Adapt the area rendered on the resulting projection so that "
+                                                       "every photo fits in the resulting panorama."));
+        d->projectionAndSizeCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Automatic output aspect</b>: Automatically adapt the area "
+                                                         "rendered of the panorama to get every photos into the panorama."));
     }*/
 
     d->preprocessResults            = new QLabel(vbox);
@@ -143,7 +144,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 
     KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(vbox);
     d->detailsBtn                   = new QPushButton(hbox);
-    d->detailsBtn->setText(i18n("Details..."));
+    d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
 
     QLabel* space2                  = new QLabel(hbox);
@@ -320,7 +321,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 void OptimizePage::slotShowDetails()
 {
     KPOutputDialog dlg(QApplication::activeWindow(),
-                       i18n("Pre-Processing Messages"),
+                       i18nc("@title:window", "Pre-Processing Messages"),
                        d->output);
 
     dlg.setAboutData(new PanoramaAboutData());
@@ -334,7 +335,7 @@ void OptimizePage::resetTitle()
                            "<p>The optimization step according to your settings is ready to be performed.</p>"
                            "<p>This step can include an automatic leveling of the horizon, and also "
                            "an automatic projection selection and size</p>"
-                           "<p>To perform this operation, the <b>%1</b> program from the "
+                           "<p>To perform this operation, the <command>%1</command> program from the "
                            "<a href='%2'>%3</a> project will be used.</p>"
                            "<p>Press the \"Next\" button to run the optimization.</p>"
                            "</qt>",

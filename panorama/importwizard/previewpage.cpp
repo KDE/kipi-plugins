@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // LibKDcraw includes
 
@@ -87,7 +87,7 @@ struct PreviewPage::Private
 };
 
 PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Preview and Post-Processing</b>")),
       d(new Private(mngr))
 {
     d->dlg            = dlg;
@@ -97,7 +97,7 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->title->setWordWrap(true);
 
     d->previewWidget  = new KPPreviewManager(vbox);
-    d->previewWidget->setButtonText(i18n("Details..."));
+    d->previewWidget->setButtonText(i18nc("@action:button", "Details..."));
     d->previewWidget->show();
 
     d->postProcessing = new KPBatchProgressWidget(vbox);
@@ -232,7 +232,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), QIcon::fromTheme(QString::fromUtf8("kipi-panorama")).pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18nc("@title:group", "Panorama Post-Processing"), QIcon::fromTheme(QString::fromUtf8("kipi-panorama")).pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();
@@ -289,8 +289,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
-                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", Qt::escape(ad.message)));
-                    errorString.replace(QString::fromUtf8("\n"), QString::fromUtf8("</p><p>"));
+                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>", Qt::escape(ad.message).replace(QString::fromUtf8("\n"), QString::fromUtf8("</p><p>"))));
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
 
@@ -306,11 +305,11 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     }
 
                     d->stitchingBusy = false;
-                    QString message  = i18n("Processing file %1 / %2: %3",
-                                            QString::number(ad.id + 1),
-                                            QString::number(d->totalProgress - 1),
-                                            ad.message
-                                           );
+                    QString message  = i18nc("Error message for image file number %1 out of %2", "Processing file %1 / %2: <message>%3</message>",
+                                             QString::number(ad.id + 1),
+                                             QString::number(d->totalProgress - 1),
+                                             ad.message
+                                            );
                     qCWarning(KIPIPLUGINS_LOG) << "Nona call failed for file #" << ad.id;
                     d->postProcessing->addedAction(message, ErrorMessage);
                     emit signalStitchingFinished(false);
@@ -324,7 +323,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     }
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(i18n("Panorama compilation: %1", Qt::escape(ad.message)), ErrorMessage);
+                    d->postProcessing->addedAction(i18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>", Qt::escape(ad.message)), ErrorMessage);
                     qCWarning(KIPIPLUGINS_LOG) << "Enblend call failed";
                     emit signalStitchingFinished(false);
                     break;
@@ -381,7 +380,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 case NONAFILE:
                 {
-                    QString message = i18n("Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
+                    QString message = i18nc("Success for image file number %1 out of %2", "Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
                     d->postProcessing->addedAction(message, SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
@@ -396,7 +395,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     }
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(i18n("Panorama compilation"), SuccessMessage);
+                    d->postProcessing->addedAction(i18nc("Success for panorama compilation", "Panorama compilation"), SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
                     d->postProcessing->progressCompleted();
@@ -426,13 +425,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             case NONAFILE:
             {
-                QString message = i18n("Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
+                QString message = i18nc("Compilation started for image file number %1 out of %2", "Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
                 d->postProcessing->addedAction(message, StartingMessage);
                 break;
             }
             case STITCH:
             {
-                d->postProcessing->addedAction(i18n("Panorama compilation"), StartingMessage);
+                d->postProcessing->addedAction(i18nc("Panorama compilation started", "Panorama compilation"), StartingMessage);
                 break;
             }
             default:

@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <KConfig>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KWindowConfig>
 
 // LibKIPI includes
@@ -82,7 +82,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
       d(new Private)
 {
     setModal(false);
-    setWindowTitle(i18n("Panorama Creator Wizard"));
+    setWindowTitle(i18nc("@title:window", "Panorama Creator Wizard"));
 
     d->mngr              = mngr;
     d->introPage         = new IntroPage(d->mngr, this);

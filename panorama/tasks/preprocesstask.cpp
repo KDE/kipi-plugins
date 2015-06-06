@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // Local includes
 
@@ -120,7 +120,7 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
     }
     else
     {
-        errString = i18n("Input image cannot be loaded for preview generation");
+        errString = i18n("Input image cannot be loaded for preview generation.");
     }
 
     return false;

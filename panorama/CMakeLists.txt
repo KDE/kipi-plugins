@@ -78,11 +78,11 @@ target_link_libraries(libpanorama
                       KF5::KDcraw
                       KF5::ConfigCore
                       KF5::ThreadWeaver
+                      KF5::I18n
                       KF5kipiplugins
                       ${KF5KDcraw_LIBRARIES}
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
-#                       threadweaver
                      )
 
 # =======================================================
@@ -103,7 +103,6 @@ install(FILES   plugin/kipiplugin_panoramaui.rc                                D
 # =======================================================
 # Test program
 
-# if(CMAKE_BUILD_TYPE MATCHES ".*[dD]ebug.*")
 if(BUILD_TESTING)
     set(pto_parser_test_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/parser_test.cpp)
 

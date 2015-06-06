@@ -96,6 +96,7 @@ find_package(KF5 REQUIRED COMPONENTS
              Parts
              Config
              ThreadWeaver
+             I18n
 )
 
 # Dependencies detection required by all plugins

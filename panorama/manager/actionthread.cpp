@@ -34,7 +34,6 @@
 
 // KDE includes
 
-#include <klocale.h>
 #include <ThreadWeaver/Queue>
 #include <ThreadWeaver/Sequence>
 #include <ThreadWeaver/QObjectDecorator>

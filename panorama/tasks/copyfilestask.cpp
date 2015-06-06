@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // Local includes
 
@@ -78,7 +78,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     if (finalPanoFile.exists())
     {
-        errString = i18n("A file named %1 already exists.", finalPanoUrl.fileName());
+        errString = i18n("A panorama file named <filename>%1</filename> already exists.", finalPanoUrl.fileName());
         qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " << finalPanoUrl.toLocalFile();
         successFlag = false;
         return;
@@ -94,7 +94,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     if (savePTO && finalPTOFile.exists())
     {
-        errString = i18n("A file named %1 already exists.", finalPTOUrl.fileName());
+        errString = i18n("A project file named <filename>%1</filename> already exists.", finalPTOUrl.fileName());
         qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " << finalPTOUrl.toLocalFile();
         successFlag = false;
         return;
@@ -158,7 +158,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
     {
-        errString = i18n("Cannot move panorama from %1 to %2.",
+        errString = i18n("Cannot move panorama from <filename>%1</filename> to <filename>%2</filename>.",
                          panoUrl.toLocalFile(),
                          finalPanoUrl.toLocalFile());
         qCDebug(KIPIPLUGINS_LOG) << "Cannot move panorama: QFile error = " << panoFile.error();
@@ -172,7 +172,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
         if (!ptoFile.copy(finalPTOUrl.toLocalFile()))
         {
-            errString = i18n("Cannot move project file from %1 to %2.",
+            errString = i18n("Cannot move project file from <filename>%1</filename> to <filename>%2</filename>.",
                              panoUrl.toLocalFile(),
                              finalPanoUrl.toLocalFile());
             successFlag = false;
@@ -191,7 +191,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
                 if (!imgFile.copy(finalImgUrl.toLocalFile()))
                 {
-                    errString = i18n("Cannot copy converted image file from %1 to %2.",
+                    errString = i18n("Cannot copy converted image file from <filename>%1</filename> to <filename>%2</filename>.",
                                      i->preprocessedUrl.toLocalFile(),
                                      finalImgUrl.toLocalFile());
                     successFlag = false;

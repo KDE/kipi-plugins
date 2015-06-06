@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // LibKDcraw includes
 
@@ -63,7 +63,7 @@ struct ItemsPage::ItemsPagePriv
 };
 
 ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
     KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);

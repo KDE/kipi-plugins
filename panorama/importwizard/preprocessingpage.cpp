@@ -41,7 +41,7 @@
 // KDE includes
 
 #include <KConfig>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <kpixmapsequence.h>
 
@@ -105,7 +105,7 @@ struct PreProcessingPage::PreProcessingPagePriv
 };
 
 PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Pre-Processing Images</b>")),
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Pre-Processing Images</b>")),
       d(new PreProcessingPagePriv)
 {
     d->mngr             = mngr;
@@ -118,19 +118,19 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     KConfig config(QString::fromUtf8("kipirc"));
     KConfigGroup group  = config.group(QString::fromUtf8("Panorama Settings"));
 
-    d->celesteCheckBox  = new QCheckBox(i18n("Detect moving skies"), vbox);
+    d->celesteCheckBox  = new QCheckBox(i18nc("@option:check", "Detect moving skies"), vbox);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
-    d->celesteCheckBox->setToolTip(i18n("Automatic detection of clouds to prevent wrong keypoints matching "
-                                        "between images due to moving clouds."));
-    d->celesteCheckBox->setWhatsThis(i18n("<b>Detect moving skies</b>: During the control points selection and matching, "
-                                          "this option discards any points that are associated to a possible cloud. This "
-                                          "is useful to prevent moving clouds from altering the control points matching "
-                                          "process."));
+    d->celesteCheckBox->setToolTip(i18nc("@info:tooltip", "Automatic detection of clouds to prevent wrong keypoints matching "
+                                         "between images due to moving clouds."));
+    d->celesteCheckBox->setWhatsThis(i18nc("@info:whatsthis", "<b>Detect moving skies</b>: During the control points selection and matching, "
+                                           "this option discards any points that are associated to a possible cloud. This "
+                                           "is useful to prevent moving clouds from altering the control points matching "
+                                           "process."));
 
     QLabel* space1   = new QLabel(vbox);
     KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(vbox);
     d->detailsBtn    = new QPushButton(hbox);
-    d->detailsBtn->setText(i18n("Details..."));
+    d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     QLabel* space2   = new QLabel(hbox);
     hbox->setStretchFactor(space2, 10);
@@ -246,7 +246,7 @@ void PreProcessingPage::slotProgressTimerDone()
 void PreProcessingPage::slotShowDetails()
 {
     KPOutputDialog dlg(QApplication::activeWindow(),
-                       i18n("Pre-Processing Messages"),
+                       i18nc("@title:window", "Pre-Processing Messages"),
                        d->output);
     dlg.setAboutData(new PanoramaAboutData());
     dlg.exec();

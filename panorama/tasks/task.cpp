@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // LibKDcraw includes
 
@@ -62,7 +62,7 @@ void Task::requestAbort()
 QString Task::getProcessError(QProcess& proc)
 {
     QString std = QString::fromLocal8Bit(proc.readAll());
-    return (i18n("Cannot run %1:\n\n %2", proc.program(), std));
+    return (i18n("Cannot run <command>%1</command>:\n\n <message>%2</message>", proc.program(), std));
 }
 
 }  // namespace KIPIPanoramaPlugin

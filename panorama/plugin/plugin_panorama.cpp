@@ -34,7 +34,7 @@
 
 #include <KConfig>
 #include <KPluginFactory>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // Libkipi includes
 
@@ -99,7 +99,7 @@ void Plugin_Panorama::setupActions()
     setDefaultCategory(ToolsPlugin);
 
     m_action = new QAction(this);
-    m_action->setText(i18n("Stitch images into a panorama..."));
+    m_action->setText(i18nc("@action", "Stitch images into a panorama..."));
     m_action->setIcon(QIcon::fromTheme(QString::fromUtf8("kipi-panorama")));
     m_action->setEnabled(false);
 

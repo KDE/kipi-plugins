@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // Local includes
 
@@ -86,7 +86,7 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
         if (it == ppum->constEnd())
         {
-            errString = i18n("Unknown input file in the project file: %1", image.fileName);
+            errString = i18n("Unknown input file in the project file: <filename>%1</filename>", image.fileName);
             qCDebug(KIPIPLUGINS_LOG) << "Unknown input File in the PTO: " << image.fileName;
             qCDebug(KIPIPLUGINS_LOG) << "IMG: " << imgUrl.toLocalFile();
             successFlag = false;

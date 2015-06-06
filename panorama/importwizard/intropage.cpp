@@ -37,7 +37,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // LibKDcraw includes
 
@@ -93,7 +93,7 @@ struct IntroPage::Private
 };
 
 IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")),
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Welcome to Panorama Tool</b>")),
       d(new Private(mngr))
 {
     KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
@@ -114,7 +114,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     QGroupBox* const binaryBox        = new QGroupBox(vbox);
     QGridLayout* const binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
-    binaryBox->setTitle(i18n("Panorama Binaries"));
+    binaryBox->setTitle(i18nc("@title:group", "Panorama Binaries"));
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->autoOptimiserBinary());
     d->binariesWidget->addBinary(d->mngr->cpCleanBinary());
@@ -133,50 +133,50 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 #endif
 /*
     QVBoxLayout* const settingsVBox = new QVBoxLayout();
-    d->settingsGroupBox             = new QGroupBox(i18n("Panorama Settings"), vbox);
+    d->settingsGroupBox             = new QGroupBox(i18nc("@title:group", "Panorama Settings"), vbox);
     d->settingsGroupBox->setLayout(settingsVBox);
 
-    d->addGPlusMetadataCheckBox     = new QCheckBox(i18n("Add Photosphere Metadata"), d->settingsGroupBox);
-    d->addGPlusMetadataCheckBox->setToolTip(i18n("Add Exif metadata to the output panorama image for Google+ 3D viewer"));
-    d->addGPlusMetadataCheckBox->setWhatsThis(i18n("<b>Add Photosphere Metadata</b>: Enabling this allows the program to add "
-                                                   "metadata to the output image such that when uploaded to Google+, the "
-                                                   "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
-                                                   "that this feature is most insteresting for large panoramas."));
+    d->addGPlusMetadataCheckBox     = new QCheckBox(i18nc("@option:check", "Add Photosphere Metadata"), d->settingsGroupBox);
+    d->addGPlusMetadataCheckBox->setToolTip(i18nc("@info:tooltip", "Add Exif metadata to the output panorama image for Google+ 3D viewer"));
+    d->addGPlusMetadataCheckBox->setWhatsThis(i18nc("@info:whatsthis", "<b>Add Photosphere Metadata</b>: Enabling this allows the program to add "
+                                                    "metadata to the output image such that when uploaded to Google+, the "
+                                                    "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
+                                                    "that this feature is most insteresting for large panoramas."));
     settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
 */
     QVBoxLayout* const formatVBox = new QVBoxLayout();
-    d->formatGroupBox             = new QGroupBox(i18n("File Format"), vbox);
+    d->formatGroupBox             = new QGroupBox(i18nc("@title:group", "File Format"), vbox);
     d->formatGroupBox->setLayout(formatVBox);
     QButtonGroup* const group     = new QButtonGroup();
 
-    d->jpegRadioButton            = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
+    d->jpegRadioButton            = new QRadioButton(i18nc("@option:radio", "JPEG output"), d->formatGroupBox);
     // The following comment is to get the next string extracted for translation
     // xgettext: no-c-format
-    d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
-                                        "(lossy compression, smaller size)."));
-    d->jpegRadioButton->setWhatsThis(i18n("<b>JPEG output</b>: Using JPEG output, the panorama file will be smaller "
-                                          "at the cost of information loss during compression. This is the easiest "
-                                          "way to share the result, or print it online or in a shop."));
+    d->jpegRadioButton->setToolTip(i18nc("@info:tooltip", "Selects a JPEG output with 90% compression rate "
+                                         "(lossy compression, smaller size)."));
+    d->jpegRadioButton->setWhatsThis(i18nc("@info:whatsthis", "<b>JPEG output</b>: Using JPEG output, the panorama file will be smaller "
+                                           "at the cost of information loss during compression. This is the easiest "
+                                           "way to share the result, or print it online or in a shop."));
     formatVBox->addWidget(d->jpegRadioButton);
     group->addButton(d->jpegRadioButton);
 
-    d->tiffRadioButton          = new QRadioButton(i18n("TIFF output"), d->formatGroupBox);
-    d->tiffRadioButton->setToolTip(i18n("Selects a TIFF output compressed using the LZW algorithm "
-                                        "(lossless compression, bigger size)."));
-    d->tiffRadioButton->setWhatsThis(i18n("<b>TIFF output</b>: Using TIFF output, you get the same color depth than "
-                                          "your original photos using RAW images at the cost of a bigger panorama file."));
+    d->tiffRadioButton          = new QRadioButton(i18nc("@option:radio", "TIFF output"), d->formatGroupBox);
+    d->tiffRadioButton->setToolTip(i18nc("@info:tooltip", "Selects a TIFF output compressed using the LZW algorithm "
+                                         "(lossless compression, bigger size)."));
+    d->tiffRadioButton->setWhatsThis(i18nc("@info:whatsthis", "<b>TIFF output</b>: Using TIFF output, you get the same color depth than "
+                                           "your original photos using RAW images at the cost of a bigger panorama file."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);
 
     // TODO HDR
 /*
-    d->hdrRadioButton           = new QRadioButton(i18n("HDR output"), d->formatGroupBox);
-    d->hdrRadioButton->setToolTip(i18n("Selects an High Dynamic Range (HDR) image, that can be processed further "
-                                       "with a dedicated software."));
-    d->hdrRadioButton->setWhatsThis(i18n("<b>HDR output</b>: Output in High Dynamic Range, meaning that every piece of "
-                                         "information contained in the original photos are preserved. Note that you "
-                                         "need another software to process the resulting panorama, like "
-                                         "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
+    d->hdrRadioButton           = new QRadioButton(i18nc("@option:radio", "HDR output"), d->formatGroupBox);
+    d->hdrRadioButton->setToolTip(i18nc("@info:tooltip", "Selects an High Dynamic Range (HDR) image, that can be processed further "
+                                        "with a dedicated software."));
+    d->hdrRadioButton->setWhatsThis(i18nc("@info:whatsthis", "<b>HDR output</b>: Output in High Dynamic Range, meaning that every piece of "
+                                          "information contained in the original photos are preserved. Note that you "
+                                          "need another software to process the resulting panorama, like "
+                                          "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
     formatVBox->addWidget(d->hdrRadioButton);
     group->addButton(d->hdrRadioButton);
 */
