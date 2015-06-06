@@ -9,7 +9,7 @@
  *               http://hugin.sourceforge.net/docs/nona/nona.txt, and
  *               on pto files produced by Hugin's tools.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,6 +25,8 @@
 
 #ifndef PTOTYPE_H
 #define PTOTYPE_H
+
+// Qt includes
 
 #include <QPoint>
 #include <QVector>
@@ -247,7 +249,7 @@ struct PTOType
 
             PTOType() : version(PRE_V2014) {}
             PTOType(const QString& version)
-                : version(version.split('.')[0].toInt() >= 2014 ? V2014 : PRE_V2014) {}
+                : version(version.split(QString::fromUtf8("."))[0].toInt() >= 2014 ? V2014 : PRE_V2014) {}
     bool    createFile(const QString& filepath);
 
     /* NOTE: Work in progress

@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,10 +26,6 @@
 // Qt includes
 
 #include <QPointer>
-
-// KDE includes
-
-// #include <threadweaver/Job.h>
 
 // LibKDcraw includes
 
@@ -53,15 +49,15 @@ public:
 
 private:
 
-    const KUrl                  fileUrl;
-    ItemPreprocessedUrls* const preProcessedUrl;
+    const QUrl                  fileUrl;
+    ItemPreprocessedUrls&       preProcessedUrl;
     const RawDecodingSettings   settings;
     QPointer<KDcraw>            rawProcess;
 
 public:
 
-    PreProcessTask(const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
-                   const KUrl& sourceUrl, const RawDecodingSettings& rawSettings);
+    PreProcessTask(const QString& workDirPath, int id, ItemPreprocessedUrls& targetUrls,
+                   const QUrl& sourceUrl, const RawDecodingSettings& rawSettings);
     ~PreProcessTask();
 
     void requestAbort();
@@ -72,7 +68,7 @@ protected:
 
 private:
 
-    bool computePreview(const KUrl& inUrl);
+    bool computePreview(const QUrl& inUrl);
     bool convertRaw();
 };
 

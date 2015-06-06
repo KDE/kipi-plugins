@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,11 +23,12 @@
 #ifndef TASK_H
 #define TASK_H
 
-// KDE includes
+// Qt includes
 
-// #include <threadweaver/Job.h>
+#include <QProcess>
+
+// KDE includes
 #include <ThreadWeaver/Job>
-#include <kprocess.h>
 
 // Local includes
 
@@ -47,11 +48,11 @@ protected:
 
     bool         successFlag;
     bool         isAbortedFlag;
-    const KUrl   tmpDir;
+    const QUrl   tmpDir;
 
 public:
 
-    Task(Action action, const KUrl& workDir);
+    Task(Action action, const QString& workDirPath);
     ~Task();
 
     bool success() const;
@@ -59,9 +60,7 @@ public:
 
 protected:
 
-//     virtual void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override = 0;
-
-    static QString getProcessError(KProcess& proc);
+    static QString getProcessError(QProcess& proc);
 };
 
 }  // namespace KIPIPanoramaPlugin

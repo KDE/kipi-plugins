@@ -29,14 +29,15 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QTextDocument>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kapplication.h>
-#include <kvbox.h>
 #include <klocale.h>
-#include <kdialog.h>
+
+// LibKDcraw includes
+
+#include "rwidgetutils.h"
 
 // Local includes
 
@@ -90,7 +91,7 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
       d(new Private(mngr))
 {
     d->dlg            = dlg;
-    KVBox* vbox       = new KVBox(this);
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
     d->title          = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
@@ -107,7 +108,7 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
@@ -205,12 +206,12 @@ void PreviewPage::startStitching()
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
 
-    QSize panoSize      = d->mngr->viewAndCropOptimisePtoData().project.size;
-    QRect panoSelection = d->mngr->viewAndCropOptimisePtoData().project.crop;
+    QSize panoSize      = d->mngr->viewAndCropOptimisePtoData()->project.size;
+    QRect panoSelection = d->mngr->viewAndCropOptimisePtoData()->project.crop;
 
     if (previewReady)
     {
-        QSize previewSize = d->mngr->previewPtoData().project.size;
+        QSize previewSize = d->mngr->previewPtoData()->project.size;
         QRectF selection  = d->previewWidget->getSelectionArea();
         QRectF proportionSelection(selection.x()      / previewSize.width(),
                                    selection.y()      / previewSize.height(),
@@ -231,7 +232,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), QIcon::fromTheme("kipi-panorama").pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18n("Panorama Post-Processing"), QIcon::fromTheme(QString::fromUtf8("kipi-panorama")).pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();
@@ -252,7 +253,7 @@ void PreviewPage::startStitching()
 
 void PreviewPage::resetPage()
 {
-    d->title->setText("");
+    d->title->setText(QString());
     d->postProcessing->progressCompleted();
     d->postProcessing->hide();
     d->previewWidget->show();
@@ -289,7 +290,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewBusy = false;
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
                     QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", Qt::escape(ad.message)));
-                    errorString.replace('\n', "</p><p>");
+                    errorString.replace(QString::fromUtf8("\n"), QString::fromUtf8("</p><p>"));
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
 
@@ -363,9 +364,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                            "</qt>"));
                     d->previewWidget->setSelectionAreaPossible(true);
                     d->previewWidget->load(QUrl::fromLocalFile(d->mngr->previewUrl().toLocalFile()), true);
-                    QSize panoSize    = d->mngr->viewAndCropOptimisePtoData().project.size;
-                    QRect panoCrop    = d->mngr->viewAndCropOptimisePtoData().project.crop;
-                    QSize previewSize = d->mngr->previewPtoData().project.size;
+                    QSize panoSize    = d->mngr->viewAndCropOptimisePtoData()->project.size;
+                    QRect panoCrop    = d->mngr->viewAndCropOptimisePtoData()->project.crop;
+                    QSize previewSize = d->mngr->previewPtoData()->project.size;
                     d->previewWidget->setSelectionArea(QRectF(
                         ((double) panoCrop.left())   / panoSize.width()  * previewSize.width(),
                         ((double) panoCrop.top())    / panoSize.height() * previewSize.height(),

@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  *
@@ -29,19 +29,15 @@
 // Qt includes
 
 #include <QThread>
+#include <QUrl>
 
 // KDE includes
 
-#include <kurl.h>
-#include <kprocess.h>
-// #include <threadweaver/Job.h>
-// #include <threadweaver/JobCollection.h>
 #include <ThreadWeaver/Sequence>
 
 // LibKDcraw includes
 
 #include <rawdecodingsettings.h>
-// #include <ractionthreadbase.h>
 
 // Local includes
 
@@ -64,28 +60,28 @@ public:
     explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
-    void preProcessFiles(const KUrl::List& urlList, KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
-                         KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
+    void preProcessFiles(const QList<QUrl>& urlList, KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
+                         QUrl& baseUrl, QUrl& cpFindPtoUrl, QUrl& cpCleanPtoUrl,
                          bool celeste, KIPIPanoramaPlugin::PanoramaFileType fileType, bool gPano,
                          const RawDecodingSettings& rawSettings, const QString& huginVersion,
                          const QString& cpCleanPath, const QString& cpFindPath);
 
-    void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
+    void optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& viewCropPtoUrl,
                          bool levelHorizon, bool buildGPano,
                          const QString& autooptimiserPath, const QString& panoModifyPath);
 
-    void generatePanoramaPreview(const PTOType& ptoData, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
+    void generatePanoramaPreview(QSharedPointer<const PTOType> ptoData, QUrl& previewPtoUrl, QUrl& previewMkUrl, QUrl& previewUrl,
                                  const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
                                  const QString& enblendPath, const QString& nonaPath);
 
-    void compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, KUrl& mkUrl, KUrl& panoUrl,
+    void compileProject(QSharedPointer<const PTOType> basePtoData, QUrl& panoPtoUrl, QUrl& mkUrl, QUrl& panoUrl,
                         const ItemUrlsMap& preProcessedUrlsMap,
                         PanoramaFileType fileType, const QRect& crop,
                         const QString& makePath, const QString& pto2mkPath,
                         const QString& enblendPath, const QString& nonaPath);
 
-    void copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+    void copyFiles(const QUrl& ptoUrl, const QUrl& panoUrl, const QUrl& finalPanoUrl,
                    const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata);
 
     void cancel();
@@ -97,11 +93,11 @@ Q_SIGNALS:
     void stepFinished(const KIPIPanoramaPlugin::ActionData& ad);
     void jobCollectionFinished(const KIPIPanoramaPlugin::ActionData& ad);
 
-    void cpFindPtoReady(const KUrl& cpFindPtoUrl);
-    void cpCleanPtoReady(const KUrl& cpCleanPtoUrl);
-    void optimizePtoReady(const KUrl& optimizePtoUrl);
-    void previewFileReady(const KUrl& previewFileUrl);
-    void panoFileReady(const KUrl& panoFileUrl);
+    void cpFindPtoReady(const QUrl& cpFindPtoUrl);
+    void cpCleanPtoReady(const QUrl& cpCleanPtoUrl);
+    void optimizePtoReady(const QUrl& optimizePtoUrl);
+    void previewFileReady(const QUrl& previewFileUrl);
+    void panoFileReady(const QUrl& panoFileUrl);
 
 private Q_SLOTS:
 
@@ -111,8 +107,8 @@ private Q_SLOTS:
 
 private:
 
-    void appendStitchingJobs(QSharedPointer<ThreadWeaver::Sequence>& js, const KUrl& ptoUrl, KUrl& mkUrl,
-                             KUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
+    void appendStitchingJobs(QSharedPointer<ThreadWeaver::Sequence>& js, const QUrl& ptoUrl, QUrl& mkUrl,
+                             QUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
                              PanoramaFileType fileType,
                              const QString& makePath, const QString& pto2mkPath,
                              const QString& enblendPath, const QString& nonaPath, bool preview);

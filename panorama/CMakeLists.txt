@@ -5,7 +5,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\")
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_panorama\" -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
+remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
 
 add_subdirectory(icons)
 
@@ -67,14 +68,11 @@ foreach(_currentfile ${panorama_common_SRCS})
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
 endforeach()
-# TODO: remove the following line after migration to QT5 
-set_source_files_properties(${panorama_common_SRCS} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fPIC")
 
 add_library(libpanorama STATIC ${panorama_common_SRCS})
 
 target_link_libraries(libpanorama
                       KF5::Parts
-                      KF5::KDELibs4Support
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
@@ -91,8 +89,6 @@ target_link_libraries(libpanorama
 # Panorama plugin
 
 set(kipiplugin_panorama_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_panorama.cpp)
-# TODO: remove the following line after migration to QT5 
-set_source_files_properties(${kipiplugin_panorama_PART_SRCS} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fPIC")
 
 add_library(kipiplugin_panorama MODULE ${kipiplugin_panorama_PART_SRCS})
 
@@ -120,8 +116,6 @@ endif()
 # Stand alone version of Panorama plugin
 
 set(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
-# TODO: remove the following line after migration to QT5 
-set_source_files_properties(${panorama_SRCS} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fPIC")
 
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./icons/hi*-apps-kipi-panorama.png")
 ecm_add_app_icon(panorama_SRCS ICONS ${ICONS_SRCS})

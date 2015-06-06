@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : Autodetect enblend binary program and version
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,14 +38,14 @@ class EnblendBinary : public KPBinaryIface
 public:
 
     EnblendBinary()
-        : KPBinaryIface(QString("enblend"), 
-                        QString("4.0"), 
-                        QString("enblend "),
+        : KPBinaryIface(QString::fromUtf8("enblend"), 
+                        QString::fromUtf8("4.0"), 
+                        QString::fromUtf8("enblend "),
                         0,
-                        QString("Hugin"), 
-                        QString("http://hugin.sourceforge.net"),
-                        QString("Panorama"),
-                        QStringList("-V")
+                        QString::fromUtf8("Hugin"), 
+                        QString::fromUtf8("http://hugin.sourceforge.net"),
+                        QString::fromUtf8("Panorama"),
+                        QStringList(QString::fromUtf8("-V"))
                        )
         { 
             setup(); 

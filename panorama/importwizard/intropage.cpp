@@ -33,12 +33,15 @@
 #include <QGroupBox>
 #include <QButtonGroup>
 #include <QVBoxLayout>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kvbox.h>
 #include <klocale.h>
+
+// LibKDcraw includes
+
+#include "rwidgetutils.h"
 
 // Local includes
 
@@ -93,7 +96,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")),
       d(new Private(mngr))
 {
-    KVBox* const vbox   = new KVBox(this);
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
     QLabel* const title = new QLabel(vbox);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
@@ -194,7 +197,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-tripod.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
 /*

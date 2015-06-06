@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : Autodetect make binary program
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,14 +38,14 @@ class MakeBinary : public KPBinaryIface
 public:
 
     MakeBinary()
-        : KPBinaryIface(QString("make"),
-                        QString("3.80"),
-                        QString("GNU Make "),
+        : KPBinaryIface(QString::fromUtf8("make"),
+                        QString::fromUtf8("3.80"),
+                        QString::fromUtf8("GNU Make "),
                         0,
-                        QString("GNU"),
-                        QString("http://www.gnu.org/software/make/"),
-                        QString("Panorama"),
-                        QStringList("-v")
+                        QString::fromUtf8("GNU"),
+                        QString::fromUtf8("http://www.gnu.org/software/make/"),
+                        QString::fromUtf8("Panorama"),
+                        QStringList(QString::fromUtf8("-v"))
                        )
         {
             setup();

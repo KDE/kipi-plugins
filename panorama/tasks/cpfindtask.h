@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 #ifndef CPFINDTASK_H
 #define CPFINDTASK_H
 
-// KDE includes
-
-// #include <threadweaver/Job.h>
-
 // Local includes
 
 #include "task.h"
@@ -41,17 +37,17 @@ class CpFindTask : public Task
 
 private:
 
-    KUrl* const                         cpFindPtoUrl;
+    QUrl&                               cpFindPtoUrl;
     const bool                          celeste;
-    const KUrl* const                   ptoUrl;
+    const QUrl&                         ptoUrl;
     const QString                       cpFindPath;
 
-    KProcess*                           process;
+    QSharedPointer<QProcess>            process;
 
 public:
 
-    CpFindTask(const KUrl& workDir, const KUrl& input,
-               KUrl& cpFindUrl, bool celeste, const QString& cpFindPath);
+    CpFindTask(const QString& workDirPath, const QUrl& input,
+               QUrl& cpFindUrl, bool celeste, const QString& cpFindPath);
     ~CpFindTask();
 
     void requestAbort();

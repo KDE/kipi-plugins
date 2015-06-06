@@ -40,11 +40,11 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePtoTask::CreatePtoTask(const KUrl& workDir, PanoramaFileType fileType,
-                             KUrl& ptoUrl, const KUrl::List& inputFiles, const ItemUrlsMap& preProcessedMap,
+CreatePtoTask::CreatePtoTask(const QString& workDirPath, PanoramaFileType fileType,
+                             QUrl& ptoUrl, const QList<QUrl>& inputFiles, const ItemUrlsMap& preProcessedMap,
                              bool addGPlusMetadata, const QString& huginVersion)
-    : Task(CREATEPTO, workDir), ptoUrl(&ptoUrl), preProcessedMap(&preProcessedMap),
-      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(&inputFiles),
+    : Task(CREATEPTO, workDirPath), ptoUrl(ptoUrl), preProcessedMap(&preProcessedMap),
+      fileType(addGPlusMetadata ? JPEG : fileType), inputFiles(inputFiles),
       addGPlusMetadata(addGPlusMetadata), huginVersion(huginVersion)
 {}
 
@@ -53,10 +53,9 @@ CreatePtoTask::~CreatePtoTask()
 
 void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    (*ptoUrl) = tmpDir;
-    ptoUrl->setFileName(QString("pano_base.pto"));
+    ptoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("pano_base.pto")));
 
-    QFile pto(ptoUrl->toLocalFile());
+    QFile pto(ptoUrl.toLocalFile());
     if (pto.exists())
     {
         errString = i18n("PTO file already created in the temporary directory.");
@@ -107,13 +106,13 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     panoBase.project.photometricReferenceId = 0;
 
     // 2. Images
-    panoBase.images.reserve(inputFiles->size());
-    panoBase.images.resize(inputFiles->size());
+    panoBase.images.reserve(inputFiles.size());
+    panoBase.images.resize(inputFiles.size());
     int i = 0;
-    for (i = 0; i < inputFiles->size(); ++i)
+    for (i = 0; i < inputFiles.size(); ++i)
     {
-        KUrl inputFile(inputFiles->at(i));
-        KUrl preprocessedUrl(preProcessedMap->value(inputFile).preprocessedUrl);
+        QUrl inputFile(inputFiles.at(i));
+        QUrl preprocessedUrl(preProcessedMap->value(inputFile).preprocessedUrl);
         KPMetadata meta;
         meta.load(preprocessedUrl.toLocalFile());
         QSize size = meta.getPixelSize();
@@ -192,18 +191,18 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     switch (fileType)
     {
         case TIFF:
-            panoBase.lastComments << "#hugin_outputImageType tif";
-            panoBase.lastComments << "#hugin_outputImageTypeCompression LZW";
+            panoBase.lastComments << QString::fromUtf8("#hugin_outputImageType tif");
+            panoBase.lastComments << QString::fromUtf8("#hugin_outputImageTypeCompression LZW");
             break;
         case JPEG:
-            panoBase.lastComments << "#hugin_outputImageType jpg";
-            panoBase.lastComments << "#hugin_outputJPEGQuality 90";
+            panoBase.lastComments << QString::fromUtf8("#hugin_outputImageType jpg");
+            panoBase.lastComments << QString::fromUtf8("#hugin_outputJPEGQuality 90");
             break;
         case HDR:
             // TODO: HDR
             break;
     }
-    panoBase.createFile(ptoUrl->toLocalFile());
+    panoBase.createFile(ptoUrl.toLocalFile());
 
     successFlag = true;
     return;

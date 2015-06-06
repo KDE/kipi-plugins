@@ -22,10 +22,6 @@
 
 #include "cpfindtask.h"
 
-// KDE includes
-
-#include <klocale.h>
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -33,25 +29,19 @@
 namespace KIPIPanoramaPlugin
 {
 
-CpFindTask::CpFindTask(const KUrl& workDir, const KUrl& input,
-                       KUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
-    : Task(CPFIND, workDir),
-      cpFindPtoUrl(&cpFindUrl),
+CpFindTask::CpFindTask(const QString& workDirPath, const QUrl& input,
+                       QUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
+    : Task(CPFIND, workDirPath),
+      cpFindPtoUrl(cpFindUrl),
       celeste(celeste),
-      ptoUrl(&input),
+      ptoUrl(input),
       cpFindPath(cpFindPath),
       process(0)
 {
 }
 
 CpFindTask::~CpFindTask()
-{
-    if (process)
-    {
-        delete process;
-        process = 0;
-    }
-}
+{}
 
 void CpFindTask::requestAbort()
 {
@@ -61,28 +51,24 @@ void CpFindTask::requestAbort()
 void CpFindTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     // Run CPFind to get control points and order the images
-    (*cpFindPtoUrl) = tmpDir;
-    cpFindPtoUrl->setFileName(QString("cp_pano.pto"));
+    cpFindPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("cp_pano.pto")));
 
-    process = new KProcess();
-    process->clearProgram();
+    process.reset(new QProcess());
     process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setOutputChannelMode(KProcess::MergedChannels);
+    process->setProcessChannelMode(QProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
-    args << cpFindPath;
-
     if (celeste)
-        args << "--celeste";
+        args << QString::fromUtf8("--celeste");
+    args << QString::fromUtf8("-o");
+    args << cpFindPtoUrl.toLocalFile();
+    args << ptoUrl.toLocalFile();
 
-    args << "-o";
-    args << cpFindPtoUrl->toLocalFile();
-    args << ptoUrl->toLocalFile();
+    process->setProgram(cpFindPath);
+    process->setArguments(args);
 
-    process->setProgram(args);
-
-    qCDebug(KIPIPLUGINS_LOG) << "CPFind command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "cpfind command line: " << process->program();
 
     process->start();
 
@@ -93,7 +79,7 @@ void CpFindTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         return;
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "cpfind's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "cpfind output:" << endl << process->readAll();
 
     successFlag = true;
     return;

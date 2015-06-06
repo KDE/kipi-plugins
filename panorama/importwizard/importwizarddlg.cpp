@@ -32,10 +32,7 @@
 // KDE includes
 
 #include <KConfig>
-#include <kmenu.h>
 #include <klocale.h>
-#include <kpushbutton.h>
-#include <kmessagebox.h>
 #include <KWindowConfig>
 
 // LibKIPI includes
@@ -99,8 +96,8 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 
     // ---------------------------------------------------------------
 
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Panorama Dialog"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group = config.group(QString::fromUtf8("Panorama Dialog"));
 
     if (group.exists())
     {
@@ -146,8 +143,8 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 
 ImportWizardDlg::~ImportWizardDlg()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Panorama Dialog"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group = config.group(QString::fromUtf8("Panorama Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     config.sync();
 
@@ -159,7 +156,7 @@ Manager* ImportWizardDlg::manager() const
     return d->mngr;
 }
 
-KUrl::List ImportWizardDlg::itemUrls() const
+QList<QUrl> ImportWizardDlg::itemUrls() const
 {
     return d->itemsPage->itemUrls();
 }

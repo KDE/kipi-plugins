@@ -30,14 +30,15 @@
 #include <QVBoxLayout>
 #include <QPixmap>
 #include <QTimer>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kdialog.h>
-#include <kvbox.h>
 #include <klocale.h>
-#include <kapplication.h>
+
+// LibKDcraw includes
+
+#include "rwidgetutils.h"
 
 // Local includes
 
@@ -65,7 +66,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
-    KVBox* vbox    = new KVBox(this);
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
     QLabel* label1 = new QLabel(vbox);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
@@ -84,7 +85,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-stack.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->list, SIGNAL(signalImageListChanged()),
@@ -103,7 +104,7 @@ void ItemsPage::slotSetupList()
     slotImageListChanged();
 }
 
-KUrl::List ItemsPage::itemUrls() const
+QList<QUrl> ItemsPage::itemUrls() const
 {
     return d->list->imageUrls();
 }

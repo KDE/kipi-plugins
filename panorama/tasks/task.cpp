@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,12 +37,11 @@
 namespace KIPIPanoramaPlugin
 {
 
-Task::Task(Action action, const KUrl& workDir)
-    : errString(""),
-      action(action),
+Task::Task(Action action, const QString& workDirPath)
+    : action(action),
       successFlag(false),
       isAbortedFlag(false),
-      tmpDir(workDir)
+      tmpDir(QUrl::fromLocalFile(workDirPath + QString::fromUtf8("/")))
 {
 }
 
@@ -60,10 +59,10 @@ void Task::requestAbort()
     isAbortedFlag = true;
 }
 
-QString Task::getProcessError(KProcess& proc)
+QString Task::getProcessError(QProcess& proc)
 {
-    QString std = proc.readAll();
-    return (i18n("Cannot run %1:\n\n %2", proc.program()[0], std));
+    QString std = QString::fromLocal8Bit(proc.readAll());
+    return (i18n("Cannot run %1:\n\n %2", proc.program(), std));
 }
 
 }  // namespace KIPIPanoramaPlugin

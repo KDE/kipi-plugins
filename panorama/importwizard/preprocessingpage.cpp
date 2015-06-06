@@ -35,21 +35,23 @@
 #include <QCheckBox>
 #include <QMutex>
 #include <QMutexLocker>
+#include <QStandardPaths>
+#include <QApplication>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kdialog.h>
-#include <kvbox.h>
+#include <KConfig>
 #include <klocale.h>
-#include <kapplication.h>
 #include <kiconloader.h>
-#include <kconfig.h>
 #include <kpixmapsequence.h>
 
 // LibKIPI includes
 
 #include <interface.h>
+
+// LibKDcraw includes
+
+#include "rwidgetutils.h"
 
 // Local includes
 
@@ -77,7 +79,7 @@ struct PreProcessingPage::PreProcessingPagePriv
           detailsBtn(0),
           mngr(0)
     {
-        progressPix = KIconLoader::global()->loadPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix = KIconLoader::global()->loadPixmapSequence(QString::fromUtf8("process-working"), KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;
@@ -108,13 +110,13 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 {
     d->mngr             = mngr;
     d->progressTimer    = new QTimer(this);
-    KVBox* vbox         = new KVBox(this);
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
     d->title            = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
 
-    KConfig config("kipirc");
-    KConfigGroup group  = config.group(QString("Panorama Settings"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group  = config.group(QString::fromUtf8("Panorama Settings"));
 
     d->celesteCheckBox  = new QCheckBox(i18n("Detect moving skies"), vbox);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
@@ -126,7 +128,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
                                           "process."));
 
     QLabel* space1   = new QLabel(vbox);
-    KHBox* hbox      = new KHBox(vbox);
+    KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(vbox);
     d->detailsBtn    = new QPushButton(hbox);
     d->detailsBtn->setText(i18n("Details..."));
     d->detailsBtn->hide();
@@ -148,7 +150,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
     resetTitle();
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-preprocessing.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-preprocessing.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
 //     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
@@ -163,8 +165,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
 PreProcessingPage::~PreProcessingPage()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Panorama Settings"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group = config.group(QString::fromUtf8("Panorama Settings"));
     group.writeEntry("Celeste", d->celesteCheckBox->isChecked());
     config.sync();
 
@@ -243,7 +245,7 @@ void PreProcessingPage::slotProgressTimerDone()
 
 void PreProcessingPage::slotShowDetails()
 {
-    KPOutputDialog dlg(kapp->activeWindow(),
+    KPOutputDialog dlg(QApplication::activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
     dlg.setAboutData(new PanoramaAboutData());

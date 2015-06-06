@@ -33,10 +33,8 @@
 
 // KDE includes
 
-#include <kmessagebox.h>
 #include <klocale.h>
-#include <kconfig.h>
-#include <kglobal.h>
+#include <KConfig>
 
 // Local includes
 
@@ -54,15 +52,12 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     PanoramaAboutData aboutData;
-//     aboutData->setApplicationData();
-//     aboutData->setAppName("panorama");
-//     aboutData->setCatalogName("kipiplugin_panorama");
 
     QCommandLineParser parser;
     parser.addHelpOption();
-    parser.addPositionalArgument("files", i18n("File(s) to open"), "+[file(s)]");
+    parser.addPositionalArgument(QString::fromUtf8("files"), i18n("File(s) to open"), QString::fromUtf8("+[file(s)]"));
     aboutData.setupCommandLine(&parser);
-    aboutData.setProgramLogo(QIcon::fromTheme("kipi-panorama"));
+    aboutData.setProgramLogo(QIcon::fromTheme(QString::fromUtf8("kipi-panorama")));
 
     parser.process(app);
     aboutData.processCommandLine(&parser);
@@ -74,10 +69,8 @@ int main(int argc, char* argv[])
     const QStringList args = parser.positionalArguments();
 
     for (auto& arg : args)
-//     for(int i = 0; i < args->count(); ++i)
     {
-//         urlList.append(args->url(i));
-       urlList.append(QUrl(arg));
+        urlList.append(QUrl::fromLocalFile(arg));
     }
 
     Manager mngr;

@@ -32,13 +32,16 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QCheckBox>
+#include <QStandardPaths>
+#include <QLineEdit>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kvbox.h>
 #include <klocale.h>
-#include <klineedit.h>
+
+// LibKDcraw includes
+
+#include "rwidgetutils.h"
 
 // Local includes
 
@@ -64,7 +67,7 @@ struct LastPage::Private
     QLabel*    title;
 
     QGroupBox* saveSettingsGroupBox;
-    KLineEdit* fileTemplateKLineEdit;
+    QLineEdit* fileTemplateKLineEdit;
     QCheckBox* savePtoCheckBox;
     QLabel*    warningLabel;
 
@@ -75,11 +78,11 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
      : KPWizardPage(dlg, i18n("<b>Panorama Stitched</b>")),
        d(new Private)
 {
-    KConfig config("kipirc");
-    KConfigGroup group        = config.group(QString("Panorama Settings"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group        = config.group(QString::fromUtf8("Panorama Settings"));
 
     d->mngr                   = mngr;
-    KVBox *vbox               = new KVBox(this);
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
     d->title                  = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
@@ -91,7 +94,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     QLabel *fileTemplateLabel = new QLabel(i18n("File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
-    d->fileTemplateKLineEdit  = new KLineEdit("panorama", d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit  = new QLineEdit(QString::fromUtf8("panorama"), d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
@@ -117,7 +120,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->fileTemplateKLineEdit, SIGNAL(textChanged(QString)),
@@ -132,8 +135,8 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
 LastPage::~LastPage()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Panorama Settings"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group = config.group(QString::fromUtf8("Panorama Settings"));
     group.writeEntry("Save PTO", d->savePtoCheckBox->isChecked());
     config.sync();
 
@@ -144,7 +147,7 @@ void LastPage::resetTitle()
 {
     QString first = d->mngr->itemsList().front().fileName();
     QString last = d->mngr->itemsList().back().fileName();
-    QString file = QString("%1-%2").arg(first.left(first.lastIndexOf('.'))).arg(last.left(last.lastIndexOf('.')));
+    QString file = QString::fromUtf8("%1-%2").arg(first.left(first.lastIndexOf(QString::fromUtf8(".")))).arg(last.left(last.lastIndexOf(QString::fromUtf8("."))));
     d->fileTemplateKLineEdit->setText(file);
 
     slotTemplateChanged(d->fileTemplateKLineEdit->text());
@@ -156,11 +159,11 @@ void LastPage::copyFiles()
     connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-    KUrl panoUrl(d->mngr->preProcessedMap().begin().key());
-    panoUrl.setFileName(panoFileName(d->fileTemplateKLineEdit->text()));
+    QUrl panoUrl = d->mngr->preProcessedMap().begin().key().adjusted(QUrl::RemoveFilename);
+    panoUrl.setPath(panoUrl.path() + panoFileName(d->fileTemplateKLineEdit->text()));
     d->mngr->thread()->copyFiles(d->mngr->panoPtoUrl(),
                                  d->mngr->panoUrl(),
-                                 panoUrl.toLocalFile(),
+                                 panoUrl,
                                  d->mngr->preProcessedMap(),
                                  d->savePtoCheckBox->isChecked(),
                                  d->mngr->gPano()
@@ -227,7 +230,7 @@ void LastPage::slotTemplateChanged(const QString&)
                            "the stitching process will be copied at the same time (those are "
                            "TIFF files that can be big).</p>"
                            "</qt>",
-                           QDir::toNativeSeparators(d->mngr->preProcessedMap().begin().key().directory())
+                           QDir::toNativeSeparators(d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename))
                           ));
     checkFiles();
 }
@@ -243,16 +246,17 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
     {
         default:
         case JPEG:
-            return fileTemplate + ".jpg";
+            return fileTemplate + QString::fromUtf8(".jpg");
         case TIFF:
-            return fileTemplate + ".tif";
+            return fileTemplate + QString::fromUtf8(".tif");
     }
 }
 
 void LastPage::checkFiles()
 {
-    QFile panoFile(d->mngr->preProcessedMap().begin().key().directory() + '/' + panoFileName(d->fileTemplateKLineEdit->text()));
-    QFile ptoFile(d->mngr->preProcessedMap().begin().key().directory() + '/' + d->fileTemplateKLineEdit->text() + ".pto");
+    QString dir = d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename);
+    QFile panoFile(dir + QString::fromUtf8("/") + panoFileName(d->fileTemplateKLineEdit->text()));
+    QFile ptoFile(dir + QString::fromUtf8("/") + d->fileTemplateKLineEdit->text() + QString::fromUtf8(".pto"));
     if (panoFile.exists() || (d->savePtoCheckBox->isChecked() && ptoFile.exists()))
     {
         emit signalIsValid(false);

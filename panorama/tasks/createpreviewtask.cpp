@@ -40,10 +40,10 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreatePreviewTask::CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO,
-                                     KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
-    : Task(CREATEMKPREVIEW, workDir),
-      previewPtoUrl(&previewPtoUrl),
+CreatePreviewTask::CreatePreviewTask(const QString& workDirPath, QSharedPointer<const PTOType> inputPTO,
+                                     QUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap)
+    : Task(CREATEMKPREVIEW, workDirPath),
+      previewPtoUrl(previewPtoUrl),
       ptoData(inputPTO),
       preProcessedUrlsMap(preProcessedUrlsMap)
 {
@@ -55,7 +55,7 @@ CreatePreviewTask::~CreatePreviewTask()
 
 void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    PTOType data(ptoData);
+    PTOType data(*ptoData);
 
     if (data.images.size() != preProcessedUrlsMap.size())
     {
@@ -75,14 +75,14 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     data.project.size.setWidth(data.project.size.width() * scalingFactor);
     data.project.crop                = QRect();
 
-    for (int imageId = 0; imageId < data.images.size(); imageId++)
+    for (auto& image : data.images)
     {
-        PTOType::Image& image   = data.images[imageId];
-        KUrl imgUrl(KUrl(tmpDir), image.fileName);
+        QUrl imgUrl = tmpDir.resolved(QUrl::fromLocalFile(image.fileName));
+
         ItemUrlsMap::const_iterator it;
         const ItemUrlsMap* ppum = &preProcessedUrlsMap;
 
-        for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl != imgUrl; ++it);
+        for (it = ppum->constBegin(); it != ppum->constEnd() && it.value().preprocessedUrl.toLocalFile() != imgUrl.toLocalFile(); ++it);
 
         if (it == ppum->constEnd())
         {
@@ -93,9 +93,8 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
             return;
         }
 
-        image.fileName = it.value().previewUrl.fileName();
-        KUrl preview(KUrl(tmpDir), image.fileName);
-        KPMetadata metaImage(preview.toLocalFile());
+        image.fileName = it.value().previewUrl.toLocalFile();
+        KPMetadata metaImage(image.fileName);
         image.size     = metaImage.getPixelSize();
         image.optimisationParameters.clear();
     }
@@ -105,14 +104,13 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     // Add two commented line for a JPEG output
     data.lastComments.clear();
-    data.lastComments << "#hugin_outputImageType jpg";
-    data.lastComments << "#hugin_outputJPEGQuality 90";
+    data.lastComments << QString::fromUtf8("#hugin_outputImageType jpg");
+    data.lastComments << QString::fromUtf8("#hugin_outputJPEGQuality 90");
 
-    (*previewPtoUrl) = tmpDir;
-    previewPtoUrl->setFileName("preview.pto");
-    data.createFile(previewPtoUrl->toLocalFile());
+    previewPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("preview.pto")));
+    data.createFile(previewPtoUrl.toLocalFile());
 
-    qCDebug(KIPIPLUGINS_LOG) << "Preview PTO File created: " << previewPtoUrl->fileName();
+    qCDebug(KIPIPLUGINS_LOG) << "Preview PTO File created: " << previewPtoUrl.fileName();
 
     successFlag = true;
 }

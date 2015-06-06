@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QFile>
+#include <QSharedPointer>
 
 // LibKIPI includes
 
@@ -67,8 +68,8 @@ struct Manager::Private
       iface(0),
       thread(0),
       wizard(0),
-      config("kipirc"),
-      group(config.group(QString("Panorama Settings")))
+      config(QString::fromUtf8("kipirc")),
+      group(config.group(QString::fromUtf8("Panorama Settings")))
     {
         gPano    = group.readEntry("GPano", false);
 //         hdr      = group.readEntry("HDR", false);
@@ -82,43 +83,29 @@ struct Manager::Private
         group.writeEntry("GPano", gPano);
         group.writeEntry("File Type", (int) fileType);
         config.sync();
-        if (basePtoData != 0)
-            delete basePtoData;
-        if (cpFindPtoData != 0)
-            delete cpFindPtoData;
-        if (cpCleanPtoData != 0)
-            delete cpCleanPtoData;
-        if (autoOptimisePtoData != 0)
-            delete autoOptimisePtoData;
-        if (viewAndCropOptimisePtoData != 0)
-            delete viewAndCropOptimisePtoData;
-        if (previewPtoData != 0)
-            delete previewPtoData;
-        if (panoPtoData != 0)
-            delete panoPtoData;
     }
 
-    KUrl::List                     inputUrls;
+    QList<QUrl>                    inputUrls;
 
-    KUrl                           basePtoUrl;
-    PTOType*                       basePtoData;
-    KUrl                           cpFindPtoUrl;
-    PTOType*                       cpFindPtoData;
-    KUrl                           cpCleanPtoUrl;
-    PTOType*                       cpCleanPtoData;
-    KUrl                           autoOptimisePtoUrl;
-    PTOType*                       autoOptimisePtoData;
-    KUrl                           viewAndCropOptimisePtoUrl;
-    PTOType*                       viewAndCropOptimisePtoData;
-    KUrl                           previewPtoUrl;
-    PTOType*                       previewPtoData;
-    KUrl                           panoPtoUrl;
-    PTOType*                       panoPtoData;
+    QUrl                           basePtoUrl;
+    QSharedPointer<PTOType>        basePtoData;
+    QUrl                           cpFindPtoUrl;
+    QSharedPointer<PTOType>        cpFindPtoData;
+    QUrl                           cpCleanPtoUrl;
+    QSharedPointer<PTOType>        cpCleanPtoData;
+    QUrl                           autoOptimisePtoUrl;
+    QSharedPointer<PTOType>        autoOptimisePtoData;
+    QUrl                           viewAndCropOptimisePtoUrl;
+    QSharedPointer<PTOType>        viewAndCropOptimisePtoData;
+    QUrl                           previewPtoUrl;
+    QSharedPointer<PTOType>        previewPtoData;
+    QUrl                           panoPtoUrl;
+    QSharedPointer<PTOType>        panoPtoData;
 
-    KUrl                           previewMkUrl;
-    KUrl                           previewUrl;
-    KUrl                           mkUrl;
-    KUrl                           panoUrl;
+    QUrl                           previewMkUrl;
+    QUrl                           previewUrl;
+    QUrl                           mkUrl;
+    QUrl                           panoUrl;
 
     bool                           gPano;
 //     bool                           hdr;
@@ -256,33 +243,29 @@ Pto2MkBinary& Manager::pto2MkBinary() const
     return d->pto2MkBinary;
 }
 
-KUrl& Manager::basePtoUrl() const
+QUrl& Manager::basePtoUrl() const
 {
     return d->basePtoUrl;
 }
 
-const PTOType& Manager::basePtoData()
+QSharedPointer<PTOType> Manager::basePtoData()
 {
-    if (d->basePtoData == 0)
+    if (d->basePtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->basePtoUrl.toLocalFile());
-        d->basePtoData = file.getPTO();
+        d->basePtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->basePtoData == 0)
-            d->basePtoData = new PTOType(cpFindBinary().version());
+        if (d->basePtoData.isNull())
+            d->basePtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->basePtoData);
+    return d->basePtoData;
 }
 
 void Manager::resetBasePto()
 {
-    if (d->basePtoData != 0)
-    {
-        delete d->basePtoData;
-        d->basePtoData = 0;
-    }
+    d->basePtoData.clear();
 
     QFile pto(d->basePtoUrl.toLocalFile());
 
@@ -291,36 +274,32 @@ void Manager::resetBasePto()
         pto.remove();
     }
 
-    d->basePtoUrl = KUrl();
+    d->basePtoUrl.clear();
 }
 
-KUrl& Manager::cpFindPtoUrl() const
+QUrl& Manager::cpFindPtoUrl() const
 {
     return d->cpFindPtoUrl;
 }
 
-const PTOType& Manager::cpFindPtoData()
+QSharedPointer<PTOType> Manager::cpFindPtoData()
 {
-    if (d->cpFindPtoData == 0)
+    if (d->cpFindPtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->cpFindPtoUrl.toLocalFile());
-        d->cpFindPtoData = file.getPTO();
+        d->cpFindPtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->cpFindPtoData == 0)
-            d->cpFindPtoData = new PTOType(cpFindBinary().version());
+        if (d->cpFindPtoData.isNull())
+            d->cpFindPtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->cpFindPtoData);
+    return d->cpFindPtoData;
 }
 
 void Manager::resetCpFindPto()
 {
-    if (d->cpFindPtoData != 0)
-    {
-        delete d->cpFindPtoData;
-        d->cpFindPtoData = 0;
-    }
+    d->cpFindPtoData.clear();
 
     QFile pto(d->cpFindPtoUrl.toLocalFile());
 
@@ -329,36 +308,32 @@ void Manager::resetCpFindPto()
         pto.remove();
     }
 
-    d->cpFindPtoUrl = KUrl();
+    d->cpFindPtoUrl.clear();
 }
 
-KUrl& Manager::cpCleanPtoUrl() const
+QUrl& Manager::cpCleanPtoUrl() const
 {
     return d->cpCleanPtoUrl;
 }
 
-const PTOType& Manager::cpCleanPtoData()
+QSharedPointer<PTOType> Manager::cpCleanPtoData()
 {
-    if (d->cpCleanPtoData == 0)
+    if (d->cpCleanPtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->cpCleanPtoUrl.toLocalFile());
-        d->cpCleanPtoData = file.getPTO();
+        d->cpCleanPtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->cpCleanPtoData == 0)
-            d->cpCleanPtoData = new PTOType(cpFindBinary().version());
+        if (d->cpCleanPtoData.isNull())
+            d->cpCleanPtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->cpCleanPtoData);
+    return d->cpCleanPtoData;
 }
 
 void Manager::resetCpCleanPto()
 {
-    if (d->cpCleanPtoData != 0)
-    {
-        delete d->cpCleanPtoData;
-        d->cpCleanPtoData = 0;
-    }
+    d->cpCleanPtoData.clear();
 
     QFile pto(d->cpCleanPtoUrl.toLocalFile());
 
@@ -367,36 +342,32 @@ void Manager::resetCpCleanPto()
         pto.remove();
     }
 
-    d->cpCleanPtoUrl = KUrl();
+    d->cpCleanPtoUrl.clear();
 }
 
-KUrl& Manager::autoOptimisePtoUrl() const
+QUrl& Manager::autoOptimisePtoUrl() const
 {
     return d->autoOptimisePtoUrl;
 }
 
-const PTOType& Manager::autoOptimisePtoData()
+QSharedPointer<PTOType> Manager::autoOptimisePtoData()
 {
-    if (d->autoOptimisePtoData == 0)
+    if (d->autoOptimisePtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->autoOptimisePtoUrl.toLocalFile());
-        d->autoOptimisePtoData = file.getPTO();
+        d->autoOptimisePtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->autoOptimisePtoData == 0)
-            d->autoOptimisePtoData = new PTOType(cpFindBinary().version());
+        if (d->autoOptimisePtoData.isNull())
+            d->autoOptimisePtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->autoOptimisePtoData);
+    return d->autoOptimisePtoData;
 }
 
 void Manager::resetAutoOptimisePto()
 {
-    if (d->autoOptimisePtoData != 0)
-    {
-        delete d->autoOptimisePtoData;
-        d->autoOptimisePtoData = 0;
-    }
+    d->autoOptimisePtoData.clear();
 
     QFile pto(d->autoOptimisePtoUrl.toLocalFile());
 
@@ -405,36 +376,32 @@ void Manager::resetAutoOptimisePto()
         pto.remove();
     }
 
-    d->autoOptimisePtoUrl = KUrl();
+    d->autoOptimisePtoUrl.clear();
 }
 
-KUrl& Manager::viewAndCropOptimisePtoUrl() const
+QUrl& Manager::viewAndCropOptimisePtoUrl() const
 {
     return d->viewAndCropOptimisePtoUrl;
 }
 
-const PTOType& Manager::viewAndCropOptimisePtoData()
+QSharedPointer<PTOType> Manager::viewAndCropOptimisePtoData()
 {
-    if (d->viewAndCropOptimisePtoData == 0)
+    if (d->viewAndCropOptimisePtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->viewAndCropOptimisePtoUrl.toLocalFile());
-        d->viewAndCropOptimisePtoData = file.getPTO();
+        d->viewAndCropOptimisePtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->viewAndCropOptimisePtoData == 0)
-            d->viewAndCropOptimisePtoData = new PTOType(cpFindBinary().version());
+        if (d->viewAndCropOptimisePtoData.isNull())
+            d->viewAndCropOptimisePtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->viewAndCropOptimisePtoData);
+    return d->viewAndCropOptimisePtoData;
 }
 
 void Manager::resetViewAndCropOptimisePto()
 {
-    if (d->viewAndCropOptimisePtoData != 0)
-    {
-        delete d->viewAndCropOptimisePtoData;
-        d->viewAndCropOptimisePtoData = 0;
-    }
+    d->viewAndCropOptimisePtoData.clear();
 
     QFile pto(d->viewAndCropOptimisePtoUrl.toLocalFile());
 
@@ -443,36 +410,32 @@ void Manager::resetViewAndCropOptimisePto()
         pto.remove();
     }
 
-    d->viewAndCropOptimisePtoUrl = KUrl();
+    d->viewAndCropOptimisePtoUrl.clear();
 }
 
-KUrl& Manager::previewPtoUrl() const
+QUrl& Manager::previewPtoUrl() const
 {
     return d->previewPtoUrl;
 }
 
-const PTOType& Manager::previewPtoData()
+QSharedPointer<PTOType> Manager::previewPtoData()
 {
-    if (d->previewPtoData == 0)
+    if (d->previewPtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->previewPtoUrl.toLocalFile());
-        d->previewPtoData = file.getPTO();
+        d->previewPtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->previewPtoData == 0)
-            d->previewPtoData = new PTOType(cpFindBinary().version());
+        if (d->previewPtoData.isNull())
+            d->previewPtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->previewPtoData);
+    return d->previewPtoData;
 }
 
 void Manager::resetPreviewPto()
 {
-    if (d->previewPtoData != 0)
-    {
-        delete d->previewPtoData;
-        d->previewPtoData = 0;
-    }
+    d->previewPtoData.clear();
 
     QFile pto(d->previewPtoUrl.toLocalFile());
 
@@ -481,36 +444,32 @@ void Manager::resetPreviewPto()
         pto.remove();
     }
 
-    d->previewPtoUrl = KUrl();
+    d->previewPtoUrl.clear();
 }
 
-KUrl& Manager::panoPtoUrl() const
+QUrl& Manager::panoPtoUrl() const
 {
     return d->panoPtoUrl;
 }
 
-const PTOType& Manager::panoPtoData()
+QSharedPointer<PTOType> Manager::panoPtoData()
 {
-    if (d->panoPtoData == 0)
+    if (d->panoPtoData.isNull())
     {
         PTOFile file(cpFindBinary().version());
         file.openFile(d->panoPtoUrl.toLocalFile());
-        d->panoPtoData = file.getPTO();
+        d->panoPtoData = QSharedPointer<PTOType>(file.getPTO());
 
-        if (d->panoPtoData == 0)
-            d->panoPtoData = new PTOType(cpFindBinary().version());
+        if (d->panoPtoData.isNull())
+            d->panoPtoData = QSharedPointer<PTOType>(new PTOType(cpFindBinary().version()));
     }
 
-    return *(d->panoPtoData);
+    return d->panoPtoData;
 }
 
 void Manager::resetPanoPto()
 {
-    if (d->panoPtoData != 0)
-    {
-        delete d->panoPtoData;
-        d->panoPtoData = 0;
-    }
+    d->panoPtoData.clear();
 
     QFile pto(d->panoPtoUrl.toLocalFile());
 
@@ -519,10 +478,10 @@ void Manager::resetPanoPto()
         pto.remove();
     }
 
-    d->panoPtoUrl = KUrl();
+    d->panoPtoUrl.clear();
 }
 
-KUrl& Manager::previewMkUrl() const
+QUrl& Manager::previewMkUrl() const
 {
     return d->previewMkUrl;
 }
@@ -536,10 +495,10 @@ void Manager::resetPreviewMkUrl()
         pto.remove();
     }
 
-    d->previewMkUrl = KUrl();
+    d->previewMkUrl.clear();
 }
 
-KUrl& Manager::previewUrl() const
+QUrl& Manager::previewUrl() const
 {
     return d->previewUrl;
 }
@@ -553,10 +512,10 @@ void Manager::resetPreviewUrl()
         pto.remove();
     }
 
-    d->previewUrl = KUrl();
+    d->previewUrl.clear();
 }
 
-KUrl& Manager::mkUrl() const
+QUrl& Manager::mkUrl() const
 {
     return d->mkUrl;
 }
@@ -570,10 +529,10 @@ void Manager::resetMkUrl()
         pto.remove();
     }
 
-    d->mkUrl = KUrl();
+    d->mkUrl.clear();
 }
 
-KUrl& Manager::panoUrl() const
+QUrl& Manager::panoUrl() const
 {
     return d->panoUrl;
 }
@@ -587,7 +546,7 @@ void Manager::resetPanoUrl()
         pto.remove();
     }
 
-    d->panoUrl = KUrl();
+    d->panoUrl.clear();
 }
 
 void Manager::setIface(Interface* const iface)
@@ -600,12 +559,12 @@ Interface* Manager::iface() const
     return d->iface;
 }
 
-void Manager::setItemsList(const KUrl::List& urls)
+void Manager::setItemsList(const QList<QUrl>& urls)
 {
     d->inputUrls = urls;
 }
 
-KUrl::List& Manager::itemsList() const
+QList<QUrl>& Manager::itemsList() const
 {
     return d->inputUrls;
 }

@@ -25,18 +25,16 @@
 
 #include "plugin_panorama.h"
 
-// KDE includes
+// Qt includes
 
 #include <QAction>
-#include <kactioncollection.h>
 #include <QApplication>
-#include <kconfig.h>
-#include <kgenericfactory.h>
-#include <kiconloader.h>
-#include <klibloader.h>
+
+// KDE includes
+
+#include <KConfig>
+#include <KPluginFactory>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kwindowsystem.h>
 
 // Libkipi includes
 
@@ -102,13 +100,13 @@ void Plugin_Panorama::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Stitch images into a panorama..."));
-    m_action->setIcon(QIcon::fromTheme("kipi-panorama"));
+    m_action->setIcon(QIcon::fromTheme(QString::fromUtf8("kipi-panorama")));
     m_action->setEnabled(false);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("panorama", m_action);
+    addAction(QString::fromUtf8("panorama"), m_action);
 }
 
 void Plugin_Panorama::slotActivate()

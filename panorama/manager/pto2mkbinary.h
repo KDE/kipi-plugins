@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : Autodetect pto2mk binary program and version
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,14 +38,14 @@ class Pto2MkBinary : public KPBinaryIface
 public:
 
     Pto2MkBinary()
-        : KPBinaryIface(QString("pto2mk"),
-                        QString("2010.4"), 
-                        QString("pto2mk version "),
+        : KPBinaryIface(QString::fromUtf8("pto2mk"),
+                        QString::fromUtf8("2010.4"), 
+                        QString::fromUtf8("pto2mk version "),
                         2, 
-                        QString("Hugin"),
-                        QString("http://hugin.sourceforge.net"),
-                        QString("Panorama"),
-                        QStringList("-h")
+                        QString::fromUtf8("Hugin"),
+                        QString::fromUtf8("http://hugin.sourceforge.net"),
+                        QString::fromUtf8("Panorama"),
+                        QStringList(QString::fromUtf8("-h"))
                        )
         { 
             setup(); 

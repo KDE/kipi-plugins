@@ -26,10 +26,6 @@
 
 #include <QFileInfo>
 
-// KDE includes
-
-#include <klocale.h>
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -37,12 +33,12 @@
 namespace KIPIPanoramaPlugin
 {
 
-CreateMKTask::CreateMKTask(const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
-                           KUrl& panoUrl, PanoramaFileType fileType,
+CreateMKTask::CreateMKTask(const QString& workDirPath, const QUrl& input, QUrl& mkUrl,
+                           QUrl& panoUrl, PanoramaFileType fileType,
                            const QString& pto2mkPath, bool preview)
-    : Task(preview ? CREATEMKPREVIEW : CREATEMK, workDir),
-      ptoUrl(&input), mkUrl(&mkUrl),
-      panoUrl(&panoUrl),
+    : Task(preview ? CREATEMKPREVIEW : CREATEMK, workDirPath),
+      ptoUrl(input), mkUrl(mkUrl),
+      panoUrl(panoUrl),
       fileType(fileType),
       pto2mkPath(pto2mkPath),
       process(0)
@@ -50,13 +46,7 @@ CreateMKTask::CreateMKTask(const KUrl& workDir, const KUrl& input, KUrl& mkUrl,
 }
 
 CreateMKTask::~CreateMKTask()
-{
-    if (process)
-    {
-        delete process;
-        process = 0;
-    }
-}
+{}
 
 void CreateMKTask::requestAbort()
 {
@@ -65,40 +55,36 @@ void CreateMKTask::requestAbort()
 
 void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    QFileInfo fi(ptoUrl->toLocalFile());
-    (*mkUrl)   = tmpDir;
-    mkUrl->setFileName(fi.completeBaseName() + QString(".mk"));
-
-    (*panoUrl) = tmpDir;
+    QFileInfo fi(ptoUrl.toLocalFile());
+    mkUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".mk")));
 
     switch (fileType)
     {
         case JPEG:
-            panoUrl->setFileName(fi.completeBaseName() + QString(".jpg"));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".jpg")));
             break;
         case TIFF:
-            panoUrl->setFileName(fi.completeBaseName() + QString(".tif"));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".tif")));
             break;
         case HDR:
-            panoUrl->setFileName(fi.completeBaseName() + QString(".hdr"));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".hdr")));
             break;
     }
 
-    process = new KProcess();
-    process->clearProgram();
+    process.reset(new QProcess());
     process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setOutputChannelMode(KProcess::MergedChannels);
+    process->setProcessChannelMode(QProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
-    args << pto2mkPath;
-    args << "-o";
-    args << mkUrl->toLocalFile();
-    args << "-p";
+    args << QString::fromUtf8("-o");
+    args << mkUrl.toLocalFile();
+    args << QString::fromUtf8("-p");
     args << fi.completeBaseName();
-    args << ptoUrl->toLocalFile();
+    args << ptoUrl.toLocalFile();
 
-    process->setProgram(args);
+    process->setProgram(pto2mkPath);
+    process->setArguments(args);
 
     qCDebug(KIPIPLUGINS_LOG) << "pto2mk command line: " << process->program();
 
@@ -111,7 +97,7 @@ void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         return;
     }
 
-    qCDebug(KIPIPLUGINS_LOG) << "pto2mk's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "pto2mk output:" << endl << process->readAll();
 
     successFlag = true;
     return;

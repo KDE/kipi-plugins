@@ -39,10 +39,10 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CreateFinalPtoTask::CreateFinalPtoTask(const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop)
-    : Task(CREATEFINALPTO, workDir),
-      ptoData(ptoData),
-      finalPtoUrl(&finalPtoUrl),
+CreateFinalPtoTask::CreateFinalPtoTask(const QString& workDirPath, QSharedPointer<const PTOType> ptoData, QUrl& finalPtoUrl, const QRect& crop)
+    : Task(CREATEFINALPTO, workDirPath),
+      ptoData(*ptoData),
+      finalPtoUrl(finalPtoUrl),
       crop(crop)
 {
 }
@@ -53,10 +53,9 @@ CreateFinalPtoTask::~CreateFinalPtoTask()
 
 void CreateFinalPtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    (*finalPtoUrl) = tmpDir;
-    finalPtoUrl->setFileName(QString("final.pto"));
+    finalPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("final.pto")));
 
-    QFile pto(finalPtoUrl->toLocalFile());
+    QFile pto(finalPtoUrl.toLocalFile());
 
     if (pto.exists())
     {
@@ -73,7 +72,7 @@ void CreateFinalPtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     }
 
     ptoData.project.crop = crop;
-    ptoData.createFile(finalPtoUrl->toLocalFile());
+    ptoData.createFile(finalPtoUrl.toLocalFile());
 
     successFlag = true;
     return;

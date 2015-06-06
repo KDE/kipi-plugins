@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 #ifndef CREATEPREVIEWTASK_H
 #define CREATEPREVIEWTASK_H
 
-// KDE includes
-
-// #include <threadweaver/Job.h>
-
 // Local includes
 
 #include "task.h"
@@ -42,14 +38,14 @@ class CreatePreviewTask : public Task
 
 private:
 
-    KUrl* const                         previewPtoUrl;
-    const PTOType&                      ptoData;
+    QUrl&                               previewPtoUrl;
+    QSharedPointer<const PTOType>       ptoData;
     const ItemUrlsMap                   preProcessedUrlsMap;
 
 public:
 
-    CreatePreviewTask(const KUrl& workDir, const PTOType& inputPTO, 
-                      KUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap);
+    CreatePreviewTask(const QString& workDirPath, QSharedPointer<const PTOType> inputPTO, 
+                      QUrl& previewPtoUrl, const ItemUrlsMap& preProcessedUrlsMap);
     ~CreatePreviewTask();
 
 protected:

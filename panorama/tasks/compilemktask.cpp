@@ -22,10 +22,6 @@
 
 #include "compilemktask.h"
 
-// KDE includes
-
-#include <klocale.h>
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -33,23 +29,17 @@
 namespace KIPIPanoramaPlugin
 {
 
-CompileMKTask::CompileMKTask(const KUrl& workDir,
-                             const KUrl& mkUrl, const KUrl& /*panoUrl*/,
+CompileMKTask::CompileMKTask(const QString& workDirPath,
+                             const QUrl& mkUrl, const QUrl& /*panoUrl*/,
                              const QString& nonaPath, const QString& enblendPath,
                              const QString& makePath, bool preview)
-    : Task(preview ? STITCHPREVIEW : STITCH, workDir),
-      /*panoUrl(&panoUrl),*/ mkUrl(&mkUrl), nonaPath(nonaPath),
+    : Task(preview ? STITCHPREVIEW : STITCH, workDirPath),
+      /*panoUrl(&panoUrl),*/ mkUrl(mkUrl), nonaPath(nonaPath),
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
 CompileMKTask::~CompileMKTask()
-{
-    if (process)
-    {
-        delete process;
-        process = 0;
-    }
-}
+{}
 
 void CompileMKTask::requestAbort()
 {
@@ -58,20 +48,19 @@ void CompileMKTask::requestAbort()
 
 void CompileMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    process = new KProcess();
-    process->clearProgram();
+    process.reset(new QProcess());
     process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setOutputChannelMode(KProcess::MergedChannels);
+    process->setProcessChannelMode(QProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
-    args << makePath;
-    args << "-f";
-    args << mkUrl->toLocalFile();
-    args << QString("ENBLEND='%1'").arg(enblendPath);
-    args << QString("NONA='%1'").arg(nonaPath);
+    args << QString::fromUtf8("-f");
+    args << mkUrl.toLocalFile();
+    args << QString::fromUtf8("ENBLEND='%1'").arg(enblendPath);
+    args << QString::fromUtf8("NONA='%1'").arg(nonaPath);
 
-    process->setProgram(args);
+    process->setProgram(makePath);
+    process->setArguments(args);
 
     qCDebug(KIPIPLUGINS_LOG) << "make command line: " << process->program();
 
@@ -83,7 +72,7 @@ void CompileMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "make's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "make output:" << endl << process->readAll();
 
     successFlag = true;
     return;

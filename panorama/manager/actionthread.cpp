@@ -30,17 +30,15 @@
 #include <QDateTime>
 #include <QSharedPointer>
 #include <QString>
+#include <QTemporaryDir>
 
 // KDE includes
 
 #include <klocale.h>
-#include <kstandarddirs.h>
-#include <ktempdir.h>
 #include <ThreadWeaver/Queue>
 #include <ThreadWeaver/Sequence>
 #include <ThreadWeaver/QObjectDecorator>
 #include <threadweaver/debuggingaids.h>
-
 
 // Local includes
 
@@ -55,29 +53,16 @@ namespace KIPIPanoramaPlugin
 struct ActionThread::Private
 {
     Private(QObject* parent = 0)
-         : preprocessingTmpDir(0), threadQueue(new Queue(parent))
+         : threadQueue(new Queue(parent))
     {
         ThreadWeaver::setDebugLevel(true, 10);
     }
 
     ~Private()
-    {
-        cleanPreprocessingTmpDir();
-    }
+    {}
 
-    KTempDir*                       preprocessingTmpDir;
+    QSharedPointer<QTemporaryDir>   preprocessingTmpDir;
     QSharedPointer<Queue>           threadQueue;
-
-
-    void cleanPreprocessingTmpDir()
-    {
-        if (preprocessingTmpDir)
-        {
-            preprocessingTmpDir->unlink();
-            delete preprocessingTmpDir;
-            preprocessingTmpDir = 0;
-        }
-    }
 };
 
 ActionThread::ActionThread(QObject* const parent)
@@ -111,29 +96,29 @@ void ActionThread::finish()
 }
 
 
-void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& preProcessedMap,
-                                   KUrl& baseUrl, KUrl& cpFindPtoUrl, KUrl& cpCleanPtoUrl,
+void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preProcessedMap,
+                                   QUrl& baseUrl, QUrl& cpFindPtoUrl, QUrl& cpCleanPtoUrl,
                                    bool celeste, PanoramaFileType fileType, bool gPano,
                                    const RawDecodingSettings& rawSettings, const QString& huginVersion,
                                    const QString& cpCleanPath, const QString& cpFindPath)
 {
-    d->cleanPreprocessingTmpDir();
+    QString prefix = QDir::tempPath() +
+                     QChar::fromLatin1('/') +
+                     QString::fromUtf8("kipi-panorama-tmp-") +
+                     QString::number(QDateTime::currentDateTime().toTime_t());
 
-    QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-panorama-tmp-") +
-                                                       QString::number(QDateTime::currentDateTime().toTime_t()));
-
-    d->preprocessingTmpDir = new KTempDir(prefix);
+    d->preprocessingTmpDir = QSharedPointer<QTemporaryDir>(new QTemporaryDir(prefix));
 
     QSharedPointer<Sequence> jobSeq(new Sequence());
 
     QSharedPointer<Collection> preprocessJobs(new Collection());
 
     int id = 0;
-    foreach (const KUrl& file, urlList)
+    for (const QUrl& file : urlList)
     {
         preProcessedMap.insert(file, ItemPreprocessedUrls());
 
-        QObjectDecorator* t = new QObjectDecorator(new PreProcessTask(d->preprocessingTmpDir->name(),
+        QObjectDecorator* t = new QObjectDecorator(new PreProcessTask(d->preprocessingTmpDir->path(),
                                                                       id++,
                                                                       preProcessedMap[file],
                                                                       file,
@@ -148,7 +133,7 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
     }
     (*jobSeq) << preprocessJobs;
 
-    QObjectDecorator* pto = new QObjectDecorator(new CreatePtoTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* pto = new QObjectDecorator(new CreatePtoTask(d->preprocessingTmpDir->path(),
                                                                    fileType,
                                                                    baseUrl,
                                                                    urlList,
@@ -163,7 +148,7 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
 
     (*jobSeq) << JobPointer(pto);
 
-    QObjectDecorator* cpFind = new QObjectDecorator(new CpFindTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* cpFind = new QObjectDecorator(new CpFindTask(d->preprocessingTmpDir->path(),
                                                                    baseUrl,
                                                                    cpFindPtoUrl,
                                                                    celeste,
@@ -176,7 +161,7 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
 
     (*jobSeq) << JobPointer(cpFind);
 
-    QObjectDecorator* cpClean = new QObjectDecorator(new CpCleanTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* cpClean = new QObjectDecorator(new CpCleanTask(d->preprocessingTmpDir->path(),
                                                                      cpFindPtoUrl,
                                                                      cpCleanPtoUrl,
                                                                      cpCleanPath));
@@ -191,13 +176,13 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, ItemUrlsMap& prePr
     d->threadQueue->enqueue(jobSeq);
 }
 
-void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& viewCropPtoUrl,
+void ActionThread::optimizeProject(QUrl& ptoUrl, QUrl& optimizePtoUrl, QUrl& viewCropPtoUrl,
                                    bool levelHorizon, bool buildGPano,
                                    const QString& autooptimiserPath, const QString& panoModifyPath)
 {
     QSharedPointer<Sequence> jobs(new Sequence());
 
-    QObjectDecorator* ot = new QObjectDecorator(new OptimisationTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* ot = new QObjectDecorator(new OptimisationTask(d->preprocessingTmpDir->path(),
                                                                      ptoUrl,
                                                                      optimizePtoUrl,
                                                                      levelHorizon,
@@ -211,7 +196,7 @@ void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& vie
 
     (*jobs) << ot;
 
-    QObjectDecorator* act = new QObjectDecorator(new AutoCropTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* act = new QObjectDecorator(new AutoCropTask(d->preprocessingTmpDir->path(),
                                                                   optimizePtoUrl,
                                                                   viewCropPtoUrl,
                                                                   buildGPano,
@@ -227,14 +212,14 @@ void ActionThread::optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, KUrl& vie
     d->threadQueue->enqueue(jobs);
 }
 
-void ActionThread::generatePanoramaPreview(const PTOType& ptoData, KUrl& previewPtoUrl, KUrl& previewMkUrl, KUrl& previewUrl,
+void ActionThread::generatePanoramaPreview(QSharedPointer<const PTOType> ptoData, QUrl& previewPtoUrl, QUrl& previewMkUrl, QUrl& previewUrl,
                                            const ItemUrlsMap& preProcessedUrlsMap,
                                            const QString& makePath, const QString& pto2mkPath,
                                            const QString& enblendPath, const QString& nonaPath)
 {
     QSharedPointer<Sequence> jobs(new Sequence());
 
-    QObjectDecorator* ptoTask = new QObjectDecorator(new CreatePreviewTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* ptoTask = new QObjectDecorator(new CreatePreviewTask(d->preprocessingTmpDir->path(),
                                                                            ptoData,
                                                                            previewPtoUrl,
                                                                            preProcessedUrlsMap));
@@ -261,7 +246,7 @@ void ActionThread::generatePanoramaPreview(const PTOType& ptoData, KUrl& preview
     d->threadQueue->enqueue(jobs);
 }
 
-void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, KUrl& mkUrl, KUrl& panoUrl,
+void ActionThread::compileProject(QSharedPointer<const PTOType> basePtoData, QUrl& panoPtoUrl, QUrl& mkUrl, QUrl& panoUrl,
                                   const ItemUrlsMap& preProcessedUrlsMap,
                                   PanoramaFileType fileType, const QRect& crop,
                                   const QString& makePath, const QString& pto2mkPath,
@@ -269,7 +254,7 @@ void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, 
 {
     QSharedPointer<Sequence> jobs(new Sequence());
 
-    QObjectDecorator* ptoTask = new QObjectDecorator(new CreateFinalPtoTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* ptoTask = new QObjectDecorator(new CreateFinalPtoTask(d->preprocessingTmpDir->path(),
                                                                             basePtoData,
                                                                             panoPtoUrl,
                                                                             crop));
@@ -296,10 +281,10 @@ void ActionThread::compileProject(const PTOType& basePtoData, KUrl& panoPtoUrl, 
     d->threadQueue->enqueue(jobs);
 }
 
-void ActionThread::copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+void ActionThread::copyFiles(const QUrl& ptoUrl, const QUrl& panoUrl, const QUrl& finalPanoUrl,
                              const ItemUrlsMap& preProcessedUrlsMap, bool savePTO, bool addGPlusMetadata)
 {
-    QObjectDecorator* t = new QObjectDecorator(new CopyFilesTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* t = new QObjectDecorator(new CopyFilesTask(d->preprocessingTmpDir->path(),
                                                                  panoUrl,
                                                                  finalPanoUrl,
                                                                  ptoUrl,
@@ -393,15 +378,15 @@ void ActionThread::slotDone(JobPointer j)
     emit jobCollectionFinished(ad);
 }
 
-void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const KUrl& ptoUrl, KUrl& mkUrl,
-                                       KUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
+void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const QUrl& ptoUrl, QUrl& mkUrl,
+                                       QUrl& outputUrl, const ItemUrlsMap& preProcessedUrlsMap,
                                        PanoramaFileType fileType,
                                        const QString& makePath, const QString& pto2mkPath,
                                        const QString& enblendPath, const QString& nonaPath, bool preview)
 {
     QSharedPointer<Sequence> jobs(new Sequence());
 
-    QObjectDecorator* createMKTask = new QObjectDecorator(new CreateMKTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* createMKTask = new QObjectDecorator(new CreateMKTask(d->preprocessingTmpDir->path(),
                                                                            ptoUrl,
                                                                            mkUrl,
                                                                            outputUrl,
@@ -418,7 +403,7 @@ void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const KUrl&
 
     for (int i = 0; i < preProcessedUrlsMap.size(); i++)
     {
-        QObjectDecorator* t = new QObjectDecorator(new CompileMKStepTask(d->preprocessingTmpDir->name(),
+        QObjectDecorator* t = new QObjectDecorator(new CompileMKStepTask(d->preprocessingTmpDir->path(),
                                                                          i,
                                                                          mkUrl,
                                                                          nonaPath,
@@ -434,7 +419,7 @@ void ActionThread::appendStitchingJobs(QSharedPointer<Sequence>& js, const KUrl&
         (*jobs) << t;
     }
 
-    QObjectDecorator* compileMKTask = new QObjectDecorator(new CompileMKTask(d->preprocessingTmpDir->name(),
+    QObjectDecorator* compileMKTask = new QObjectDecorator(new CompileMKTask(d->preprocessingTmpDir->path(),
                                                                              mkUrl,
                                                                              outputUrl,
                                                                              nonaPath,

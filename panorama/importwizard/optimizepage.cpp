@@ -32,16 +32,18 @@
 #include <QCheckBox>
 #include <QMutex>
 #include <QMutexLocker>
+#include <QStandardPaths>
+#include <QApplication>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kvbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kdialog.h>
-#include <kapplication.h>
 #include <kpixmapsequence.h>
+
+// LibKDcraw includes
+
+#include "rwidgetutils.h"
 
 // Local includes
 
@@ -70,7 +72,7 @@ struct OptimizePage::OptimizePagePriv
           detailsBtn(0),
           mngr(0)
     {
-        progressPix = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix = KPixmapSequence(QString::fromUtf8("process-working"), KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;
@@ -99,14 +101,14 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;
-    KVBox* vbox                     = new KVBox(this);
+    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
     d->progressTimer                = new QTimer(this);
     d->title                        = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    KConfig config("kipirc");
-    KConfigGroup group              = config.group(QString("Panorama Settings"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group              = config.group(QString::fromUtf8("Panorama Settings"));
 
     d->horizonCheckbox              = new QCheckBox(i18n("Level horizon"), vbox);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
@@ -139,7 +141,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     QLabel* space1                  = new QLabel(vbox);
     vbox->setStretchFactor(space1, 2);
 
-    KHBox* hbox                     = new KHBox(vbox);
+    KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(vbox);
     d->detailsBtn                   = new QPushButton(hbox);
     d->detailsBtn->setText(i18n("Details..."));
     d->detailsBtn->hide();
@@ -163,7 +165,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 
     resetTitle();
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
 //     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
@@ -178,8 +180,8 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 
 OptimizePage::~OptimizePage()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Panorama Settings"));
+    KConfig config(QString::fromUtf8("kipirc"));
+    KConfigGroup group = config.group(QString::fromUtf8("Panorama Settings"));
     group.writeEntry("Horizon", d->horizonCheckbox->isChecked());
 //     group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
     config.sync();
@@ -317,7 +319,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
 void OptimizePage::slotShowDetails()
 {
-    KPOutputDialog dlg(kapp->activeWindow(),
+    KPOutputDialog dlg(QApplication::activeWindow(),
                        i18n("Pre-Processing Messages"),
                        d->output);
 

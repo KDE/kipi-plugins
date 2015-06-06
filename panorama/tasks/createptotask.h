@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 #ifndef CREATEPTOTASK_H
 #define CREATEPTOTASK_H
 
-// KDE includes
-
-// #include <threadweaver/Job.h>
-
 // Local includes
 
 #include "task.h"
@@ -41,28 +37,23 @@ class CreatePtoTask : public Task
 
 private:
 
-    KUrl* const                         ptoUrl;
+    QUrl&                               ptoUrl;
     const ItemUrlsMap* const            preProcessedMap;
     const PanoramaFileType              fileType;
-    const KUrl::List* const             inputFiles;
+    const QList<QUrl>&            inputFiles;
     const bool                          addGPlusMetadata;
     const QString&                      huginVersion;
 
 public:
 
-    CreatePtoTask(const KUrl& workDir, KIPIPanoramaPlugin::PanoramaFileType fileType,
-                  KUrl& ptoUrl, const KUrl::List& inputFiles, const KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
+    CreatePtoTask(const QString& workDirPath, KIPIPanoramaPlugin::PanoramaFileType fileType,
+                  QUrl& ptoUrl, const QList<QUrl>& inputFiles, const KIPIPanoramaPlugin::ItemUrlsMap& preProcessedMap,
                   bool addGPlusMetadata, const QString& huginVersion);
     ~CreatePtoTask();
 
 protected:
 
     void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
-
-private:
-
-    bool computePreview(const KUrl& inUrl);
-    bool convertRaw();
 
 };
 

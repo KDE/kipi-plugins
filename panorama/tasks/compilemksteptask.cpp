@@ -26,10 +26,6 @@
 
 #include <QFileInfo>
 
-// KDE includes
-
-#include <klocale.h>
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -37,22 +33,16 @@
 namespace KIPIPanoramaPlugin
 {
 
-CompileMKStepTask::CompileMKStepTask(const KUrl& workDir, int id, const KUrl& mkUrl,
+CompileMKStepTask::CompileMKStepTask(const QString& workDirPath, int id, const QUrl& mkUrl,
                                      const QString& nonaPath, const QString& enblendPath,
                                      const QString& makePath, bool preview)
-    : Task(preview ? NONAFILEPREVIEW : NONAFILE, workDir),
-      id(id), mkUrl(&mkUrl), nonaPath(nonaPath),
+    : Task(preview ? NONAFILEPREVIEW : NONAFILE, workDirPath),
+      id(id), mkUrl(mkUrl), nonaPath(nonaPath),
       enblendPath(enblendPath), makePath(makePath), process(0)
 {}
 
 CompileMKStepTask::~CompileMKStepTask()
-{
-    if (process)
-    {
-        delete process;
-        process = 0;
-    }
-}
+{}
 
 void CompileMKStepTask::requestAbort()
 {
@@ -61,25 +51,24 @@ void CompileMKStepTask::requestAbort()
 
 void CompileMKStepTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    QFileInfo fi(mkUrl->toLocalFile());
+    QFileInfo fi(mkUrl.toLocalFile());
 
-    process = new KProcess();
-    process->clearProgram();
+    process.reset(new QProcess());
     process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setOutputChannelMode(KProcess::MergedChannels);
+    process->setProcessChannelMode(QProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
-    QString mkFile = fi.completeBaseName() + (id >= 10 ? (id >= 100 ? "0" : "00") : "000") + QString::number(id) + ".tif";
+    QString mkFile = fi.completeBaseName() + QString::fromUtf8(id >= 10 ? (id >= 100 ? "0" : "00") : "000") + QString::number(id) + QString::fromUtf8(".tif");
     QStringList args;
-    args << makePath;
-    args << "-f";
-    args << mkUrl->toLocalFile();
-    args << QString("ENBLEND='%1'").arg(enblendPath);
-    args << QString("NONA='%1'").arg(nonaPath);
+    args << QString::fromUtf8("-f");
+    args << mkUrl.toLocalFile();
+    args << QString::fromUtf8("ENBLEND='%1'").arg(enblendPath);
+    args << QString::fromUtf8("NONA='%1'").arg(nonaPath);
     args << mkFile;
 
-    process->setProgram(args);
-    qCDebug(KIPIPLUGINS_LOG) << "make command line: " << process->program();
+    process->setProgram(makePath);
+    process->setArguments(args);
+    qCDebug(KIPIPLUGINS_LOG) << "make job command line: " << process->program() << " " << process->arguments().join(QString::fromUtf8(" "));
 
     process->start();
 
@@ -89,7 +78,7 @@ void CompileMKStepTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "make job's output (" << mkFile << "):" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "make job output (" << mkFile << "):" << endl << process->readAll();
 
     successFlag = true;
     return;

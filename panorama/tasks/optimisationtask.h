@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 #ifndef OPTIMISATIONTASK_H
 #define OPTIMISATIONTASK_H
 
-// KDE includes
-
-// #include <threadweaver/Job.h>
-
 // Local includes
 
 #include "task.h"
@@ -41,18 +37,18 @@ class OptimisationTask : public Task
 
 private:
 
-    KUrl* const                         autoOptimiserPtoUrl;
-    const KUrl* const                   ptoUrl;
+    QUrl&                               autoOptimiserPtoUrl;
+    const QUrl&                         ptoUrl;
     const bool                          levelHorizon;
     const bool                          buildGPano;
     const QString                       autooptimiserPath;
 
-    KProcess*                           process;
+    QSharedPointer<QProcess>            process;
 
 public:
 
-    OptimisationTask(const KUrl& workDir, const KUrl& input,
-                     KUrl& autoOptimiserPtoUrl, bool levelHorizon, bool gPano,
+    OptimisationTask(const QString& workDirPath, const QUrl& input,
+                     QUrl& autoOptimiserPtoUrl, bool levelHorizon, bool gPano,
                      const QString& autooptimiserPath);
     ~OptimisationTask();
 

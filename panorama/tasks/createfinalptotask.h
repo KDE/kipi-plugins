@@ -6,7 +6,7 @@
  * Date        : 2012-12-05
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,10 +22,6 @@
 
 #ifndef CREATEPFINALPTOTASK_H
 #define CREATEPFINALPTOTASK_H
-
-// KDE includes
-
-// #include <threadweaver/Job.h>
 
 // Local includes
 
@@ -43,12 +39,12 @@ class CreateFinalPtoTask : public Task
 private:
 
     PTOType                 ptoData;
-    KUrl* const             finalPtoUrl;
+    QUrl&                   finalPtoUrl;
     const QRect             crop;
 
 public:
 
-    CreateFinalPtoTask(const KUrl& workDir, const PTOType& ptoData, KUrl& finalPtoUrl, const QRect& crop);
+    CreateFinalPtoTask(const QString& workDirPath, QSharedPointer<const PTOType> ptoData, QUrl& finalPtoUrl, const QRect& crop);
     ~CreateFinalPtoTask();
 
 protected:

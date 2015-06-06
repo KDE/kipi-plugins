@@ -42,10 +42,10 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-PreProcessTask::PreProcessTask(const KUrl& workDir, int id, ItemPreprocessedUrls& targetUrls,
-                               const KUrl& sourceUrl, const RawDecodingSettings& rawSettings)
-    : Task(PREPROCESS_INPUT, workDir), id(id),
-      fileUrl(sourceUrl), preProcessedUrl(&targetUrls), settings(rawSettings)
+PreProcessTask::PreProcessTask(const QString& workDirPath, int id, ItemPreprocessedUrls& targetUrls,
+                               const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
+    : Task(PREPROCESS_INPUT, workDirPath), id(id),
+      fileUrl(sourceUrl), preProcessedUrl(targetUrls), settings(rawSettings)
 {}
 
 PreProcessTask::~PreProcessTask()
@@ -65,7 +65,7 @@ void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     if (KPMetadata::isRawFile(fileUrl))
     {
-        preProcessedUrl->preprocessedUrl = tmpDir;
+        preProcessedUrl.preprocessedUrl = tmpDir;
 
         if (!convertRaw())
         {
@@ -76,12 +76,12 @@ void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     else
     {
         // NOTE: in this case, preprocessed Url is the original file Url.
-        preProcessedUrl->preprocessedUrl = fileUrl;
+        preProcessedUrl.preprocessedUrl = fileUrl;
     }
 
-    preProcessedUrl->previewUrl          = tmpDir;
+    preProcessedUrl.previewUrl = tmpDir;
 
-    if (!computePreview(preProcessedUrl->preprocessedUrl))
+    if (!computePreview(preProcessedUrl.preprocessedUrl))
     {
         successFlag = false;
         return;
@@ -91,12 +91,12 @@ void PreProcessTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     return;
 }
 
-bool PreProcessTask::computePreview(const KUrl& inUrl)
+bool PreProcessTask::computePreview(const QUrl& inUrl)
 {
-    KUrl& outUrl = preProcessedUrl->previewUrl;
+    QUrl& outUrl = preProcessedUrl.previewUrl;
 
     QFileInfo fi(inUrl.toLocalFile());
-    outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
+    outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QString::fromUtf8("."), QString::fromUtf8("_")) + QString::fromUtf8("-preview.jpg")));
 
     QImage img;
 
@@ -128,8 +128,8 @@ bool PreProcessTask::computePreview(const KUrl& inUrl)
 
 bool PreProcessTask::convertRaw()
 {
-    const KUrl& inUrl = fileUrl;
-    KUrl &outUrl      = preProcessedUrl->preprocessedUrl;
+    const QUrl& inUrl = fileUrl;
+    QUrl &outUrl      = preProcessedUrl.preprocessedUrl;
 
     int        width, height, rgbmax;
     QByteArray imageData;
@@ -163,7 +163,7 @@ bool PreProcessTask::convertRaw()
 
         KPMetadata metaIn, metaOut;
         metaIn.load(inUrl.toLocalFile());
-        KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList("Photo"), true);
+        KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList(QString::fromUtf8("Photo")), true);
         KPMetadata::MetaDataMap::iterator it;
 
         for (it = m.begin(); it != m.end(); ++it)
@@ -172,7 +172,7 @@ bool PreProcessTask::convertRaw()
         }
 
         metaOut.setData(metaIn.data());
-        metaOut.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        metaOut.setImageProgramId(QString::fromUtf8("Kipi-plugins"), QString::fromUtf8(kipiplugins_version));
         metaOut.setImageDimensions(QSize(width, height));
         metaOut.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
         metaOut.setXmpTagString("Xmp.tiff.Make",  metaOut.getExifTagString("Exif.Image.Make"));
@@ -185,7 +185,7 @@ bool PreProcessTask::convertRaw()
         wImageIface.setCancel(&isAbortedFlag);
         wImageIface.setImageData(imageData, width, height, true, false, prof, metaOut);
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString(".tif"));
+        outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QString::fromUtf8("."), QString::fromUtf8("_")) + QString::fromUtf8(".tif")));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
         {

@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -31,10 +31,7 @@
 #include <QImage>
 #include <QMetaType>
 #include <QMap>
-
-// KDE includes
-
-#include <kurl.h>
+#include <QUrl>
 
 // LibKDcraw includes
 
@@ -75,23 +72,23 @@ struct ItemPreprocessedUrls
 {
     ItemPreprocessedUrls() {}
 
-    ItemPreprocessedUrls(const KUrl& preprocessed, const KUrl& preview)
+    ItemPreprocessedUrls(const QUrl& preprocessed, const QUrl& preview)
         : preprocessedUrl(preprocessed), previewUrl(preview) {}
 
     virtual ~ItemPreprocessedUrls() {}
 
-    KUrl preprocessedUrl;              // Can be an original file or a converted version, depending on the original file type
-    KUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
+    QUrl preprocessedUrl;              // Can be an original file or a converted version, depending on the original file type
+    QUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
 };
 
-typedef QMap<KUrl, ItemPreprocessedUrls> ItemUrlsMap;   // Map between original Url and processed temp Urls.
+typedef QMap<QUrl, ItemPreprocessedUrls> ItemUrlsMap;   // Map between original Url and processed temp Urls.
 
 // ----------------------------------------------------------------------------------------------------------
 
 struct ActionData
 {
     ActionData()
-        : starting(false), success(false), message(""), id(0), action(NONE) {}
+        : starting(false), success(false), id(0), action(NONE) {}
 
     bool                starting;
     bool                success;

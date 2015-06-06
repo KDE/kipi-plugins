@@ -22,10 +22,6 @@
 
 #include "cpcleantask.h"
 
-// KDE includes
-
-#include <klocale.h>
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -34,20 +30,14 @@
 namespace KIPIPanoramaPlugin
 {
 
-CpCleanTask::CpCleanTask(const KUrl& workDir, const KUrl& input,
-                         KUrl& cpCleanPtoUrl, const QString& cpCleanPath)
-    : Task(CPCLEAN, workDir), cpCleanPtoUrl(&cpCleanPtoUrl),
-      cpFindPtoUrl(&input), cpCleanPath(cpCleanPath), process(0)
+CpCleanTask::CpCleanTask(const QString& workDirPath, const QUrl& input,
+                         QUrl& cpCleanPtoUrl, const QString& cpCleanPath)
+    : Task(CPCLEAN, workDirPath), cpCleanPtoUrl(cpCleanPtoUrl),
+      cpFindPtoUrl(input), cpCleanPath(cpCleanPath), process(0)
 {}
 
 CpCleanTask::~CpCleanTask()
-{
-    if (process)
-    {
-        delete process;
-        process = 0;
-    }
-}
+{}
 
 void CpCleanTask::requestAbort()
 {
@@ -56,24 +46,22 @@ void CpCleanTask::requestAbort()
 
 void CpCleanTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    (*cpCleanPtoUrl) = tmpDir;
-    cpCleanPtoUrl->setFileName(QString("cp_pano_clean.pto"));
+    cpCleanPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("cp_pano_clean.pto")));
 
-    process = new KProcess();
-    process->clearProgram();
+    process.reset(new QProcess());
     process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setOutputChannelMode(KProcess::MergedChannels);
+    process->setProcessChannelMode(QProcess::MergedChannels);
     process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
-    args << cpCleanPath;
-    args << "-o";
-    args << cpCleanPtoUrl->toLocalFile();
-    args << cpFindPtoUrl->toLocalFile();
+    args << QString::fromUtf8("-o");
+    args << cpCleanPtoUrl.toLocalFile();
+    args << cpFindPtoUrl.toLocalFile();
 
-    process->setProgram(args);
+    process->setProgram(cpCleanPath);
+    process->setArguments(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "CPClean command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "cpclean command line: " << process->program();
 
     process->start();
 
@@ -83,7 +71,7 @@ void CpCleanTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         successFlag = false;
         return;
     }
-    qCDebug(KIPIPLUGINS_LOG) << "cpclean's output:" << endl << process->readAll();
+    qCDebug(KIPIPLUGINS_LOG) << "cpclean output:" << endl << process->readAll();
 
     successFlag = true;
     return;

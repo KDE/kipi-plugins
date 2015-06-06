@@ -6,7 +6,7 @@
  * Date        : 2014-05-24
  * Description : a test program for the pto parser
  *
- * Copyright (C) 2011-2013 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,9 +32,9 @@ int main(int argc, char* argv[])
     if (argc != 2)
         return 1;
 
-    QString ptoFile(argv[1]);
+    QString ptoFile(QString::fromLocal8Bit(argv[1]));
 
-    PTOFile file("2014.0");
+    PTOFile file(QString::fromUtf8("2014.0"));
     file.openFile(ptoFile);
 
     PTOType* ptoData = file.getPTO();

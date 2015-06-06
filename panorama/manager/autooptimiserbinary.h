@@ -6,7 +6,7 @@
  * Date        : 2011-05-23
  * Description : Autodetect autooptimiser binary program and version
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,13 +38,13 @@ class AutoOptimiserBinary : public KPBinaryIface
 public:
 
     AutoOptimiserBinary()
-        : KPBinaryIface(QString("autooptimiser"), 
-                        QString("2010.4"), 
-                        QString("autooptimiser version "),
+        : KPBinaryIface(QString::fromUtf8("autooptimiser"), 
+                        QString::fromUtf8("2010.4"), 
+                        QString::fromUtf8("autooptimiser version "),
                         1, 
-                        QString("Hugin"), 
-                        QString("http://hugin.sourceforge.net"), 
-                        QString("Panorama")
+                        QString::fromUtf8("Hugin"), 
+                        QString::fromUtf8("http://hugin.sourceforge.net"), 
+                        QString::fromUtf8("Panorama")
                        )
         { 
             setup();

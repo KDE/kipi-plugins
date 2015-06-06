@@ -28,7 +28,7 @@ namespace pluginsVersion
 
 const QString gitVersion()
 {
-    return QString(GITVERSION);
+    return QString::fromUtf8(GITVERSION);
 }
 
 } // namespace pluginsVersion

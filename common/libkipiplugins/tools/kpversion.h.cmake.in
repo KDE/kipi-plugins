@@ -40,7 +40,7 @@ static const char kipiplugins_version[] = "${KIPIPLUGINS_VERSION_STRING}";
 
 static inline const QString kipipluginsVersion()
 {
-    return QString(kipiplugins_version);
+    return QString::fromUtf8(kipiplugins_version);
 }
 
 static inline KLocalizedString additionalInformation()
@@ -51,10 +51,10 @@ static inline KLocalizedString additionalInformation()
                                  "Feedback:\n"
                                  "kde-imaging@kde.org\n\n"
                                  "Build date: %1 (target: %2)")
-                                 .subs(__DATE__)
-                                 .subs("@CMAKE_BUILD_TYPE@");
+                                 .subs(QString::fromUtf8(__DATE__))
+                                 .subs(QString::fromUtf8("@CMAKE_BUILD_TYPE@"));
 
-    if (!gitVer.isEmpty() && !gitVer.startsWith("unknow") && !gitVer.startsWith("export"))
+    if (!gitVer.isEmpty() && !gitVer.startsWith(QString::fromUtf8("unknow")) && !gitVer.startsWith(QString::fromUtf8("export")))
     {
         ret = ki18n("IRC:\n"
                     "irc.freenode.net - #kde-imaging\n\n"
@@ -62,9 +62,9 @@ static inline KLocalizedString additionalInformation()
                     "kde-imaging@kde.org\n\n"
                     "Build date: %1 (target: %2)\n"
                     "Rev.: %3")
-                    .subs(__DATE__)
-                    .subs("@CMAKE_BUILD_TYPE@")
-                    .subs(QString("<a href='http://commits.kde.org/kipi-plugins/%1'>%2</a>").arg(gitVer).arg(gitVer));
+                    .subs(QString::fromUtf8(__DATE__))
+                    .subs(QString::fromUtf8("@CMAKE_BUILD_TYPE@"))
+                    .subs(QString::fromUtf8("<a href='http://commits.kde.org/kipi-plugins/%1'>%2</a>").arg(gitVer).arg(gitVer));
     }
 
     return ret;

@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
- * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -28,10 +28,6 @@
 // Qt includes
 
 #include <QObject>
-
-// KDE includes
-
-#include <kurl.h>
 
 // Libkdcraw includes
 
@@ -90,39 +86,39 @@ public:
     void setIface(Interface* const iface);
     Interface* iface() const;
 
-    void setItemsList(const KUrl::List& urls);
-    KUrl::List& itemsList() const;
+    void setItemsList(const QList<QUrl>& urls);
+    QList<QUrl>& itemsList() const;
 
-    KUrl&           basePtoUrl() const;
-    const PTOType&  basePtoData();
-    void            resetBasePto();
-    KUrl&           cpFindPtoUrl() const;
-    const PTOType&  cpFindPtoData();
-    void            resetCpFindPto();
-    KUrl&           cpCleanPtoUrl() const;
-    const PTOType&  cpCleanPtoData();
-    void            resetCpCleanPto();
-    KUrl&           autoOptimisePtoUrl() const;
-    const PTOType&  autoOptimisePtoData();
-    void            resetAutoOptimisePto();
-    KUrl&           viewAndCropOptimisePtoUrl() const;
-    const PTOType&  viewAndCropOptimisePtoData();
-    void            resetViewAndCropOptimisePto();
-    KUrl&           previewPtoUrl() const;
-    const PTOType&  previewPtoData();
-    void            resetPreviewPto();
-    KUrl&           panoPtoUrl() const;
-    const PTOType&  panoPtoData();
-    void            resetPanoPto();
+    QUrl&                   basePtoUrl() const;
+    QSharedPointer<PTOType> basePtoData();
+    void                    resetBasePto();
+    QUrl&                   cpFindPtoUrl() const;
+    QSharedPointer<PTOType> cpFindPtoData();
+    void                    resetCpFindPto();
+    QUrl&                   cpCleanPtoUrl() const;
+    QSharedPointer<PTOType> cpCleanPtoData();
+    void                    resetCpCleanPto();
+    QUrl&                   autoOptimisePtoUrl() const;
+    QSharedPointer<PTOType> autoOptimisePtoData();
+    void                    resetAutoOptimisePto();
+    QUrl&                   viewAndCropOptimisePtoUrl() const;
+    QSharedPointer<PTOType> viewAndCropOptimisePtoData();
+    void                    resetViewAndCropOptimisePto();
+    QUrl&                   previewPtoUrl() const;
+    QSharedPointer<PTOType> previewPtoData();
+    void                    resetPreviewPto();
+    QUrl&                   panoPtoUrl() const;
+    QSharedPointer<PTOType> panoPtoData();
+    void                    resetPanoPto();
 
-    KUrl&           previewMkUrl() const;
-    void            resetPreviewMkUrl();
-    KUrl&           previewUrl() const;
-    void            resetPreviewUrl();
-    KUrl&           mkUrl() const;
-    void            resetMkUrl();
-    KUrl&           panoUrl() const;
-    void            resetPanoUrl();
+    QUrl&                   previewMkUrl() const;
+    void                    resetPreviewMkUrl();
+    QUrl&                   previewUrl() const;
+    void                    resetPreviewUrl();
+    QUrl&                   mkUrl() const;
+    void                    resetMkUrl();
+    QUrl&                   panoUrl() const;
+    void                    resetPanoUrl();
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings& rawDecodingSettings() const;

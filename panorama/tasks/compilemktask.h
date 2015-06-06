@@ -6,7 +6,7 @@
  * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,10 +23,6 @@
 #ifndef COMPILEMKTASK_H
 #define COMPILEMKTASK_H
 
-// KDE includes
-
-// #include <threadweaver/Job.h>
-
 // Local includes
 
 #include "task.h"
@@ -42,17 +38,17 @@ class CompileMKTask : public Task
 private:
 
 //    const KUrl* const                   panoUrl;
-    const KUrl* const                   mkUrl;
+    const QUrl&                         mkUrl;
     const QString                       nonaPath;
     const QString                       enblendPath;
     const QString                       makePath;
 
-    KProcess*                           process;
+    QSharedPointer<QProcess>            process;
 
 public:
 
-    CompileMKTask(const KUrl& workDir,
-                  const KUrl& mkUrl, const KUrl& panoUrl,
+    CompileMKTask(const QString& workDirPath,
+                  const QUrl& mkUrl, const QUrl& panoUrl,
                   const QString& nonaPath, const QString& enblendPath,
                   const QString& makePath, bool preview);
     ~CompileMKTask();

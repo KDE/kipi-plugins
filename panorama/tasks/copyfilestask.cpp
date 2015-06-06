@@ -40,9 +40,9 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-CopyFilesTask::CopyFilesTask(const KUrl& workDir, const KUrl& panoUrl, const KUrl& finalPanoUrl,
-                             const KUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata)
-    : Task(COPY, workDir),
+CopyFilesTask::CopyFilesTask(const QString& workDirPath, const QUrl& panoUrl, const QUrl& finalPanoUrl,
+                             const QUrl& ptoUrl, const ItemUrlsMap& urls, bool sPTO, bool GPlusMetadata)
+    : Task(COPY, workDirPath),
       panoUrl(panoUrl),
       finalPanoUrl(finalPanoUrl),
       ptoUrl(ptoUrl),
@@ -62,8 +62,8 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     QFile     finalPanoFile(finalPanoUrl.toLocalFile());
 
     QFileInfo fi(finalPanoUrl.toLocalFile());
-    KUrl      finalPTOUrl(finalPanoUrl);
-    finalPTOUrl.setFileName(fi.completeBaseName() + ".pto");
+    QUrl      finalPTOUrl = finalPanoUrl.adjusted(QUrl::RemoveFilename)
+                                        .resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".pto")));
 
     QFile     ptoFile(ptoUrl.toLocalFile());
     QFile     finalPTOFile(finalPTOUrl.toLocalFile());
@@ -71,7 +71,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (!panoFile.exists())
     {
         errString = i18n("Temporary panorama file does not exists.");
-        qCDebug(KIPIPLUGINS_LOG) << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Temporary panorama file does not exists: " << panoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -79,7 +79,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (finalPanoFile.exists())
     {
         errString = i18n("A file named %1 already exists.", finalPanoUrl.fileName());
-        qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Final panorama file already exists: " << finalPanoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -87,7 +87,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (savePTO && !ptoFile.exists())
     {
         errString = i18n("Temporary project file does not exist.");
-        qCDebug(KIPIPLUGINS_LOG) << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Temporary project file does not exists: " << ptoUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -95,7 +95,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (savePTO && finalPTOFile.exists())
     {
         errString = i18n("A file named %1 already exists.", finalPTOUrl.fileName());
-        qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " + finalPTOUrl.toLocalFile();
+        qCDebug(KIPIPLUGINS_LOG) << "Final project file already exists: " << finalPTOUrl.toLocalFile();
         successFlag = false;
         return;
     }
@@ -135,7 +135,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     QString filesList;
 
     for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
-        filesList.append(i.key().fileName() + " ; ");
+        filesList.append(i.key().fileName() + QString::fromUtf8(" ; "));
 
     filesList.truncate(filesList.length()-3);
 
@@ -146,10 +146,10 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (addGPlusMetadata)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Adding PhotoSphere metadata...";
-        metaDst.registerXmpNameSpace("http://ns.google.com/photos/1.0/panorama/", "GPano");
-        metaDst.setXmpTagString("Xmp.GPano.UsePanoramaViewer", "True");
-        metaDst.setXmpTagString("Xmp.GPano.StitchingSoftware", "Panorama Kipi Plugin with Hugin");
-        metaDst.setXmpTagString("Xmp.GPano.ProjectionType",    "equirectangular");
+        metaDst.registerXmpNameSpace(QString::fromUtf8("http://ns.google.com/photos/1.0/panorama/"), QString::fromUtf8("GPano"));
+        metaDst.setXmpTagString("Xmp.GPano.UsePanoramaViewer", QString::fromUtf8("True"));
+        metaDst.setXmpTagString("Xmp.GPano.StitchingSoftware", QString::fromUtf8("Panorama Kipi Plugin with Hugin"));
+        metaDst.setXmpTagString("Xmp.GPano.ProjectionType",    QString::fromUtf8("equirectangular"));
     }
 
     metaDst.applyChanges();
@@ -185,8 +185,8 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
         {
             if (KPMetadata::isRawFile(i.key()))
             {
-                KUrl finalImgUrl(finalPanoUrl);
-                finalImgUrl.setFileName(i->preprocessedUrl.fileName());
+                QUrl finalImgUrl = finalPanoUrl.adjusted(QUrl::RemoveFilename)
+                                               .resolved(QUrl::fromLocalFile(i->preprocessedUrl.fileName()));
                 QFile imgFile(i->preprocessedUrl.toLocalFile());
 
                 if (!imgFile.copy(finalImgUrl.toLocalFile()))
