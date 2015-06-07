@@ -30,14 +30,11 @@
 #include <QMutexLocker>
 #include <QTextDocument>
 #include <QStandardPaths>
+#include <QVBoxLayout>
 
 // KDE includes
 
 #include <KLocalizedString>
-
-// LibKDcraw includes
-
-#include "rwidgetutils.h"
 
 // Local includes
 
@@ -91,22 +88,27 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
       d(new Private(mngr))
 {
     d->dlg            = dlg;
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
-    d->title          = new QLabel(vbox);
+
+    QVBoxLayout* const vbox = new QVBoxLayout();
+
+    d->title          = new QLabel(this);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
+    vbox->addWidget(d->title);
 
-    d->previewWidget  = new KPPreviewManager(vbox);
+    d->previewWidget  = new KPPreviewManager(this);
     d->previewWidget->setButtonText(i18nc("@action:button", "Details..."));
     d->previewWidget->show();
+    vbox->addWidget(d->previewWidget);
 
-    d->postProcessing = new KPBatchProgressWidget(vbox);
+    d->postProcessing = new KPBatchProgressWidget(this);
     d->postProcessing->hide();
+    vbox->addWidget(d->postProcessing);
 
     vbox->setSpacing(KDialog::spacingHint());
     vbox->setMargin(KDialog::spacingHint());
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

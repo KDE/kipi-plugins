@@ -36,10 +36,6 @@
 
 #include <KLocalizedString>
 
-// LibKDcraw includes
-
-#include "rwidgetutils.h"
-
 // Local includes
 
 #include "kpimageslist.h"
@@ -66,8 +62,10 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
-    QLabel* label1 = new QLabel(vbox);
+
+    QVBoxLayout* const vbox = new QVBoxLayout();
+
+    QLabel* label1 = new QLabel(this);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
                          "<p>Set here the list of your images to blend into a panorama. "
@@ -79,11 +77,13 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
                          "in the list will be the image that will be in the center of "
                          "the panorama.</p>"
                          "</qt>"));
+    vbox->addWidget(label1);
 
-    d->list = new KPImagesList(vbox);
+    d->list = new KPImagesList(this);
     d->list->slotAddImages(d->mngr->itemsList());
+    vbox->addWidget(d->list);
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

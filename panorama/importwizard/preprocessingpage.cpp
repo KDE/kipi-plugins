@@ -37,6 +37,8 @@
 #include <QMutexLocker>
 #include <QStandardPaths>
 #include <QApplication>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 // KDE includes
 
@@ -48,10 +50,6 @@
 // LibKIPI includes
 
 #include <interface.h>
-
-// LibKDcraw includes
-
-#include "rwidgetutils.h"
 
 // Local includes
 
@@ -110,15 +108,16 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 {
     d->mngr             = mngr;
     d->progressTimer    = new QTimer(this);
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
-    d->title            = new QLabel(vbox);
+    QVBoxLayout* const vbox = new QVBoxLayout();
+    d->title            = new QLabel(this);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
+    vbox->addWidget(d->title);
 
     KConfig config(QString::fromUtf8("kipirc"));
     KConfigGroup group  = config.group(QString::fromUtf8("Panorama Settings"));
 
-    d->celesteCheckBox  = new QCheckBox(i18nc("@option:check", "Detect moving skies"), vbox);
+    d->celesteCheckBox  = new QCheckBox(i18nc("@option:check", "Detect moving skies"), this);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
     d->celesteCheckBox->setToolTip(i18nc("@info:tooltip", "Automatic detection of clouds to prevent wrong keypoints matching "
                                          "between images due to moving clouds."));
@@ -126,27 +125,33 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
                                            "this option discards any points that are associated to a possible cloud. This "
                                            "is useful to prevent moving clouds from altering the control points matching "
                                            "process."));
+    vbox->addWidget(d->celesteCheckBox);
 
-    QLabel* space1   = new QLabel(vbox);
-    KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(vbox);
-    d->detailsBtn    = new QPushButton(hbox);
+    vbox->addStretch(2);
+
+    QHBoxLayout* const hbox = new QHBoxLayout();
+
+    d->detailsBtn    = new QPushButton(this);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
-    QLabel* space2   = new QLabel(hbox);
-    hbox->setStretchFactor(space2, 10);
+    hbox->addWidget(d->detailsBtn);
 
-    QLabel* space3   = new QLabel(vbox);
-    d->progressLabel = new QLabel(vbox);
+    hbox->addStretch(10);
+
+    vbox->addLayout(hbox);
+
+    vbox->addStretch(2);
+
+    d->progressLabel = new QLabel(this);
     d->progressLabel->setAlignment(Qt::AlignCenter);
-    QLabel* space4   = new QLabel(vbox);
+    vbox->addWidget(d->progressLabel);
 
-    vbox->setStretchFactor(space1, 2);
-    vbox->setStretchFactor(space3, 2);
-    vbox->setStretchFactor(space4, 10);
+    vbox->addStretch(10);
+
     vbox->setSpacing(KDialog::spacingHint());
     vbox->setMargin(KDialog::spacingHint());
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     resetTitle();
 

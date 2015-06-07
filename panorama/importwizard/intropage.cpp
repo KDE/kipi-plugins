@@ -39,10 +39,6 @@
 
 #include <KLocalizedString>
 
-// LibKDcraw includes
-
-#include "rwidgetutils.h"
-
 // Local includes
 
 #include "kpbinarysearch.h"
@@ -96,8 +92,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Welcome to Panorama Tool</b>")),
       d(new Private(mngr))
 {
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
-    QLabel* const title = new QLabel(vbox);
+    QVBoxLayout* const vbox = new QVBoxLayout();
+
+    QLabel* const title = new QLabel(this);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
@@ -110,8 +107,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                         "<p>For more information, please take a look at "
                         "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
                         "</qt>"));
+    vbox->addWidget(title);
 
-    QGroupBox* const binaryBox        = new QGroupBox(vbox);
+    QGroupBox* const binaryBox        = new QGroupBox(this);
     QGridLayout* const binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Panorama Binaries"));
@@ -131,9 +129,11 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
     d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
 #endif
+    vbox->addWidget(binaryBox);
+
 /*
     QVBoxLayout* const settingsVBox = new QVBoxLayout();
-    d->settingsGroupBox             = new QGroupBox(i18nc("@title:group", "Panorama Settings"), vbox);
+    d->settingsGroupBox             = new QGroupBox(i18nc("@title:group", "Panorama Settings"), this);
     d->settingsGroupBox->setLayout(settingsVBox);
 
     d->addGPlusMetadataCheckBox     = new QCheckBox(i18nc("@option:check", "Add Photosphere Metadata"), d->settingsGroupBox);
@@ -143,9 +143,10 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                                                     "Google+ 3D viewer is activated and the panorama can be seen in 3D. Note "
                                                     "that this feature is most insteresting for large panoramas."));
     settingsVBox->addWidget(d->addGPlusMetadataCheckBox);
+    vbox->addWidget(d->settingsGroupBox);
 */
     QVBoxLayout* const formatVBox = new QVBoxLayout();
-    d->formatGroupBox             = new QGroupBox(i18nc("@title:group", "File Format"), vbox);
+    d->formatGroupBox             = new QGroupBox(i18nc("@title:group", "File Format"), this);
     d->formatGroupBox->setLayout(formatVBox);
     QButtonGroup* const group     = new QButtonGroup();
 
@@ -167,6 +168,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                                            "your original photos using RAW images at the cost of a bigger panorama file."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);
+    vbox->addWidget(d->formatGroupBox);
 
     // TODO HDR
 /*
@@ -195,7 +197,8 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
             break;
     }
 
-    setPageWidget(vbox);
+//     setPageWidget(vbox);
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-tripod.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

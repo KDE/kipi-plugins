@@ -34,6 +34,8 @@
 #include <QMutexLocker>
 #include <QStandardPaths>
 #include <QApplication>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 // KDE includes
 
@@ -41,10 +43,6 @@
 #include <KLocalizedString>
 #include <kiconloader.h>
 #include <kpixmapsequence.h>
-
-// LibKDcraw includes
-
-#include "rwidgetutils.h"
 
 // Local includes
 
@@ -67,7 +65,7 @@ struct OptimizePage::OptimizePagePriv
           progressTimer(0),
           canceled(false),
           title(0),
-          preprocessResults(0),
+//           preprocessResults(0),
           horizonCheckbox(0),
 //           projectionAndSizeCheckbox(0),
           detailsBtn(0),
@@ -83,7 +81,7 @@ struct OptimizePage::OptimizePagePriv
     bool            canceled;
 
     QLabel*         title;
-    QLabel*         preprocessResults;
+//     QLabel*         preprocessResults;
 
     QCheckBox*      horizonCheckbox;
 //     QCheckBox*      projectionAndSizeCheckboxs;
@@ -102,23 +100,25 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
+    QVBoxLayout* const vbox = new QVBoxLayout();
     d->progressTimer                = new QTimer(this);
-    d->title                        = new QLabel(vbox);
+    d->title                        = new QLabel(this);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
+    vbox->addWidget(d->title);
 
     KConfig config(QString::fromUtf8("kipirc"));
     KConfigGroup group              = config.group(QString::fromUtf8("Panorama Settings"));
 
-    d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), vbox);
+    d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), this);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
     d->horizonCheckbox->setToolTip(i18nc("@info:tooltip", "Detect the horizon and adapt the project to make it horizontal."));
     d->horizonCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
                                            "the detected horizon is an horizontal line in the final panorama"));
+    vbox->addWidget(d->horizonCheckbox);
     /*if (!d->mngr->gPano())
     {
-        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic projection and output aspect"), vbox);
+        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic projection and output aspect"), this);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
         d->projectionAndSizeCheckbox->setToolTip(i18nc("@info:tooltip", "Adapt the projection of the panorama and the area rendered on the "
                                                        "resulting projection so that every photo fits in the resulting "
@@ -129,40 +129,43 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     }
     else
     {
-        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic output aspect"), vbox);
+        d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic output aspect"), this);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
         d->projectionAndSizeCheckbox->setToolTip(i18nc("@info:tooltip", "Adapt the area rendered on the resulting projection so that "
                                                        "every photo fits in the resulting panorama."));
         d->projectionAndSizeCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Automatic output aspect</b>: Automatically adapt the area "
                                                          "rendered of the panorama to get every photos into the panorama."));
-    }*/
+    }
+    vbox->addWidget(d->projectionAndSizeCheckbox);*/
 
-    d->preprocessResults            = new QLabel(vbox);
+//     d->preprocessResults            = new QLabel(this);
+//     vbox->addWidget(d->preprocessResults);
 
-    QLabel* space1                  = new QLabel(vbox);
-    vbox->setStretchFactor(space1, 2);
+    vbox->addStretch(2);
 
-    KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(vbox);
-    d->detailsBtn                   = new QPushButton(hbox);
+    QHBoxLayout* const hbox = new QHBoxLayout();
+
+    d->detailsBtn                   = new QPushButton(this);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
+    hbox->addWidget(d->detailsBtn);
 
-    QLabel* space2                  = new QLabel(hbox);
-    hbox->setStretchFactor(space2, 10);
+    hbox->addStretch(10);
 
-    QLabel* space3                  = new QLabel(vbox);
-    vbox->setStretchFactor(space3, 2);
+    vbox->addLayout(hbox);
 
-    d->progressLabel                = new QLabel(vbox);
+    vbox->addStretch(2);
+
+    d->progressLabel                = new QLabel(this);
     d->progressLabel->setAlignment(Qt::AlignCenter);
+    vbox->addWidget(d->progressLabel);
 
-    QLabel* space4                  = new QLabel(vbox);
-    vbox->setStretchFactor(space4, 10);
+    vbox->addStretch(10);
 
     vbox->setSpacing(KDialog::spacingHint());
     vbox->setMargin(KDialog::spacingHint());
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     resetTitle();
 

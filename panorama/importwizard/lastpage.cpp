@@ -42,10 +42,6 @@
 #include <KLocalizedString>
 #include <KConfig>
 
-// LibKDcraw includes
-
-#include "rwidgetutils.h"
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -85,18 +81,23 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
     KConfigGroup group        = config.group(QString::fromUtf8("Panorama Settings"));
 
     d->mngr                   = mngr;
-    KDcrawIface::RVBox* const vbox = new KDcrawIface::RVBox(this);
-    d->title                  = new QLabel(vbox);
+
+    QVBoxLayout* const vbox = new QVBoxLayout();
+
+    d->title                  = new QLabel(this);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
+    vbox->addWidget(d->title);
 
     QVBoxLayout *formatVBox   = new QVBoxLayout();
-    d->saveSettingsGroupBox   = new QGroupBox(i18nc("@title:group", "Save Settings"), vbox);
+
+    d->saveSettingsGroupBox   = new QGroupBox(i18nc("@title:group", "Save Settings"), this);
     d->saveSettingsGroupBox->setLayout(formatVBox);
     formatVBox->addStretch(1);
 
     QLabel *fileTemplateLabel = new QLabel(i18nc("@label:textbox", "File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
+
     d->fileTemplateKLineEdit  = new QLineEdit(QString::fromUtf8("panorama"), d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18nc("@info:tooltip", "Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18nc("@info:whatsthis", "<b>File name template</b>: Set here the base name of the files that "
@@ -105,6 +106,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
                                                 "name <i>panorama.jpg</i>. If you choose to save also the project file, "
                                                 "it will have the name <i>panorama.pto</i>."));
     formatVBox->addWidget(d->fileTemplateKLineEdit);
+
     d->savePtoCheckBox        = new QCheckBox(i18nc("@option:check", "Save project file"), d->saveSettingsGroupBox);
     d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
     d->savePtoCheckBox->setToolTip(i18nc("@info:tooltip", "Save the project file for further processing within Hugin GUI."));
@@ -114,14 +116,16 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
                                           "This is useful if you want a different projection, modify the horizon or "
                                           "the center of the panorama, or modify the control points to get better results."));
     formatVBox->addWidget(d->savePtoCheckBox);
+
     d->warningLabel = new QLabel(d->saveSettingsGroupBox);
     d->warningLabel->hide();
     formatVBox->addWidget(d->warningLabel);
 
-    QLabel* space             = new QLabel(vbox);
-    vbox->setStretchFactor(space, 2);
+    vbox->addWidget(d->saveSettingsGroupBox);
 
-    setPageWidget(vbox);
+    vbox->addStretch(2);
+
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
