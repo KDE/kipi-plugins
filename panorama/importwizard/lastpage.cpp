@@ -135,9 +135,6 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     connect(d->savePtoCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotPtoCheckBoxChanged(int)));
-
-    connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 }
 
 LastPage::~LastPage()
@@ -197,7 +194,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (last) " << ad.action;
                     break;
                 }
             }
@@ -216,7 +213,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (last) " << ad.action;
                     break;
                 }
             }

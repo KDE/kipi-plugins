@@ -113,15 +113,6 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
     connect(d->postProcessing, SIGNAL(signalProgressCanceled()),
             this, SLOT(slotCancel()));
 }
@@ -138,8 +129,18 @@ void PreviewPage::slotCancel()
 
 bool PreviewPage::cancel()
 {
+    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
     d->canceled = true;
     d->mngr->thread()->cancel();
+    d->mngr->thread()->finish();
     d->postProcessing->progressCompleted();
 
     QMutexLocker lock(&d->actionMutex);
@@ -171,6 +172,13 @@ void PreviewPage::computePreview()
     }
 
     QMutexLocker lock(&d->actionMutex);
+
+    connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
     d->canceled = false;
 
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
@@ -202,6 +210,16 @@ void PreviewPage::startStitching()
     }
 
     QMutexLocker lock(&d->actionMutex);
+
+    connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
     d->canceled      = false;
     d->stitchingBusy = true;
     d->curProgress   = 0;
@@ -271,11 +289,6 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
     {
         if (!ad.success)        // Something is failed...
         {
-            if (d->canceled)    // In that case, the error is expected
-            {
-                return;
-            }
-
             switch (ad.action)
             {
                 case CREATEPREVIEWPTO:
@@ -286,6 +299,12 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->output      = ad.message;
                     d->previewWidget->setBusy(false);
@@ -299,12 +318,27 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
                     break;
                 }
+                case CREATEMK:
+                case CREATEFINALPTO:
+                {
+                    // Nothing to do yet, a step is finished, that's all
+                    break;
+                }
                 case NONAFILE:
                 {
                     if (!d->stitchingBusy)
                     {
                         return;
                     }
+
+                    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
                     QString message  = i18nc("Error message for image file number %1 out of %2", "Processing file %1 / %2: <message>%3</message>",
@@ -324,6 +358,15 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         return;
                     }
 
+                    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
                     d->stitchingBusy = false;
                     d->postProcessing->addedAction(i18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>", Qt::escape(ad.message)), ErrorMessage);
                     qCWarning(KIPIPLUGINS_LOG) << "Enblend call failed";
@@ -332,7 +375,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (preview) " << ad.action;
                     break;
                 }
             }
@@ -342,7 +385,10 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             switch (ad.action)
             {
                 case CREATEPREVIEWPTO:
+                case CREATEMKPREVIEW:
                 case NONAFILEPREVIEW:
+                case CREATEFINALPTO:
+                case CREATEMK:
                 {
                     // Nothing to do yet, a step is finished, that's all
                     break;
@@ -353,6 +399,12 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     qCDebug(KIPIPLUGINS_LOG) << "Preview Stitching finished";
                     d->previewBusy = false;
@@ -396,6 +448,15 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         return;
                     }
 
+                    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
                     d->stitchingBusy = false;
                     d->postProcessing->addedAction(i18nc("Success for panorama compilation", "Panorama compilation"), SuccessMessage);
                     d->curProgress++;
@@ -408,7 +469,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (preview) " << ad.action;
                     break;
                 }
             }
@@ -438,7 +499,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             default:
             {
-                qCWarning(KIPIPLUGINS_LOG) << "Unknown starting action " << ad.action;
+                qCWarning(KIPIPLUGINS_LOG) << "Unknown starting action (preview) " << ad.action;
                 break;
             }
         }

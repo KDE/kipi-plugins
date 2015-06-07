@@ -158,9 +158,6 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-preprocessing.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-//     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
-//             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
 
@@ -296,7 +293,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (preprocessing) " << ad.action;
                     break;
                 }
             }
@@ -331,7 +328,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action " << ad.action;
+                    qCWarning(KIPIPLUGINS_LOG) << "Unknown action (preprocessing) " << ad.action;
                     break;
                 }
             }
