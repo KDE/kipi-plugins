@@ -202,6 +202,8 @@ void OptimizePage::process()
 //     d->projectionAndSizeCheckbox->hide();
     d->progressTimer->start(300);
 
+    connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
     connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
@@ -218,6 +220,8 @@ void OptimizePage::process()
 bool OptimizePage::cancel()
 {
     d->canceled = true;
+    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
@@ -271,20 +275,25 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 case OPTIMIZE:
                 case AUTOCROP:
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    d->title->setText(i18n("<qt>"
-                                           "<p>Optimization has failed.</p>"
-                                           "<p>Press \"Details\" to show processing messages.</p>"
-                                           "</qt>"));
-                    d->progressTimer->stop();
-                    d->horizonCheckbox->hide();
-//                     d->projectionAndSizeCheckbox->hide();
-                    d->detailsBtn->show();
-                    d->progressLabel->clear();
-                    d->output = ad.message;
-                    emit signalOptimized(false);
+                    if (d->detailsBtn->isHidden())
+                    {
+                        d->title->setText(i18n("<qt>"
+                                            "<p>Optimization has failed.</p>"
+                                            "<p>Press \"Details\" to show processing messages.</p>"
+                                            "</qt>"));
+                        d->progressTimer->stop();
+                        d->horizonCheckbox->hide();
+//                         d->projectionAndSizeCheckbox->hide();
+                        d->detailsBtn->show();
+                        d->progressLabel->clear();
+                        d->output = ad.message;
+                        emit signalOptimized(false);
+                    }
                     break;
                 }
                 default:
@@ -298,8 +307,14 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
+                case OPTIMIZE:
+                {
+                    return;
+                }
                 case AUTOCROP:
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 

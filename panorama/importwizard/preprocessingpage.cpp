@@ -187,6 +187,8 @@ void PreProcessingPage::process()
     d->celesteCheckBox->hide();
     d->progressTimer->start(300);
 
+    connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
     connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
@@ -214,6 +216,8 @@ bool PreProcessingPage::cancel()
 {
     d->canceled = true;
 
+    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
@@ -276,19 +280,25 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 case CPFIND:
                 case CPCLEAN:
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
-                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    d->title->setText(i18n("<qt>"
-                                            "<p>Pre-processing has failed.</p>"
-                                            "<p>Press \"Details\" to show processing messages.</p>"
-                                            "</qt>"));
-                    d->progressTimer->stop();
-                    d->celesteCheckBox->hide();
-                    d->detailsBtn->show();
-                    d->progressLabel->clear();
-                    d->output = ad.message;
-                    emit signalPreProcessed(false);
+                    qCWarning(KIPIPLUGINS_LOG) << "Job canceled: " << ad.action;
+                    if (d->detailsBtn->isHidden())  // Ensures only the first failed task is shown
+                    {
+                        d->title->setText(i18n("<qt>"
+                                                "<p>Pre-processing has failed.</p>"
+                                                "<p>Press \"Details\" to show processing messages.</p>"
+                                                "</qt>"));
+                        d->progressTimer->stop();
+                        d->celesteCheckBox->hide();
+                        d->detailsBtn->show();
+                        d->progressLabel->clear();
+                        d->output = ad.message;
+                        emit signalPreProcessed(false);
+                    }
                     break;
                 }
                 default:
@@ -318,6 +328,8 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 case CPCLEAN:
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
                     disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
                             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 

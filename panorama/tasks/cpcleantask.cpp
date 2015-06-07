@@ -65,8 +65,9 @@ void CpCleanTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     process->start();
 
-    if (!process->waitForFinished(-1) || process->exitCode() != 0)
+    if (!process->waitForFinished(-1) || process->exitCode() != QProcess::NormalExit)
     {
+        qCDebug(KIPIPLUGINS_LOG) << "cpclean output (failed):" << endl << process->readAll();
         errString = getProcessError(*process);
         successFlag = false;
         return;

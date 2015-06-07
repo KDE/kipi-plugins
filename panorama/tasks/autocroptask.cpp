@@ -72,6 +72,7 @@ void AutoCropTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     if (!process->waitForFinished(-1) || process->exitCode() != 0)
     {
+    qCDebug(KIPIPLUGINS_LOG) << "pano_modify output (failed):" << endl << process->readAll();
         errString = getProcessError(*process);
         successFlag = false;
         return;

@@ -74,6 +74,7 @@ void CpFindTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     if (!process->waitForFinished(-1) || process->exitStatus() != QProcess::NormalExit)
     {
+        qCDebug(KIPIPLUGINS_LOG) << "cpfind output (failed):" << endl << process->readAll();
         errString = getProcessError(*process);
         successFlag = false;
         return;

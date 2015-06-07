@@ -74,6 +74,7 @@ void CompileMKStepTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     if (!process->waitForFinished(-1) || process->exitCode() != 0)
     {
+        qCDebug(KIPIPLUGINS_LOG) << "make job output (" << mkFile << ") (failed):" << endl << process->readAll();
         errString = getProcessError(*process);
         successFlag = false;
         return;
