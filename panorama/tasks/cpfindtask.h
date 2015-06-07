@@ -25,14 +25,14 @@
 
 // Local includes
 
-#include "task.h"
+#include "commandtask.h"
 
 using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
 {
 
-class CpFindTask : public Task
+class CpFindTask : public CommandTask
 {
 
 private:
@@ -40,17 +40,12 @@ private:
     QUrl&                               cpFindPtoUrl;
     const bool                          celeste;
     const QUrl&                         ptoUrl;
-    const QString                       cpFindPath;
-
-    QSharedPointer<QProcess>            process;
 
 public:
 
     CpFindTask(const QString& workDirPath, const QUrl& input,
                QUrl& cpFindUrl, bool celeste, const QString& cpFindPath);
     ~CpFindTask();
-
-    void requestAbort();
 
 protected:
 

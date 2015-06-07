@@ -48,6 +48,7 @@ set(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/previewpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/task.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/commandtask.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/preprocesstask.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createfinalptotask.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createptotask.cpp

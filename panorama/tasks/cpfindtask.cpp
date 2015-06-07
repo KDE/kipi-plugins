@@ -31,32 +31,20 @@ namespace KIPIPanoramaPlugin
 
 CpFindTask::CpFindTask(const QString& workDirPath, const QUrl& input,
                        QUrl& cpFindUrl, bool celeste, const QString& cpFindPath)
-    : Task(CPFIND, workDirPath),
+    : CommandTask(CPFIND, workDirPath, cpFindPath),
       cpFindPtoUrl(cpFindUrl),
       celeste(celeste),
-      ptoUrl(input),
-      cpFindPath(cpFindPath),
-      process(0)
+      ptoUrl(input)
 {
 }
 
 CpFindTask::~CpFindTask()
 {}
 
-void CpFindTask::requestAbort()
-{
-    process->kill();
-}
-
 void CpFindTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     // Run CPFind to get control points and order the images
     cpFindPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("cp_pano.pto")));
-
-    process.reset(new QProcess());
-    process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setProcessChannelMode(QProcess::MergedChannels);
-    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
     if (celeste)
@@ -65,25 +53,11 @@ void CpFindTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     args << cpFindPtoUrl.toLocalFile();
     args << ptoUrl.toLocalFile();
 
-    process->setProgram(cpFindPath);
-    process->setArguments(args);
+    runProcess(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "cpfind command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "cpfind command line: " << getCommandLine();
 
-    process->start();
-
-    if (!process->waitForFinished(-1) || process->exitStatus() != QProcess::NormalExit)
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "cpfind output (failed):" << endl << process->readAll();
-        errString = getProcessError(*process);
-        successFlag = false;
-        return;
-    }
-
-    qCDebug(KIPIPLUGINS_LOG) << "cpfind output:" << endl << process->readAll();
-
-    successFlag = true;
-    return;
+    qCDebug(KIPIPLUGINS_LOG) << "cpfind output:" << endl << output;
 }
 
 }  // namespace KIPIPanoramaPlugin

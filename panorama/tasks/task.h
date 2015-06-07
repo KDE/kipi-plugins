@@ -28,6 +28,7 @@
 #include <QProcess>
 
 // KDE includes
+
 #include <ThreadWeaver/Job>
 
 // Local includes
@@ -57,10 +58,6 @@ public:
 
     bool success() const;
     void requestAbort();
-
-protected:
-
-    static QString getProcessError(QProcess& proc);
 };
 
 }  // namespace KIPIPanoramaPlugin

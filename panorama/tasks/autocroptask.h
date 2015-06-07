@@ -25,14 +25,14 @@
 
 // Local includes
 
-#include "task.h"
+#include "commandtask.h"
 
 using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
 {
 
-class AutoCropTask : public Task
+class AutoCropTask : public CommandTask
 {
 
 private:
@@ -40,9 +40,6 @@ private:
     const QUrl&                         autoOptimiserPtoUrl;
     QUrl&                               viewCropPtoUrl;
 //    const bool                          buildGPano;
-    const QString                       panoModifyPath;
-
-    QSharedPointer<QProcess>            process;
 
 public:
 
@@ -50,8 +47,6 @@ public:
                  const QUrl& autoOptimiserPtoUrl, QUrl& viewCropPtoUrl,
                  bool buildGPano, const QString& panoModifyPath);
     ~AutoCropTask();
-
-    void requestAbort();
 
 protected:
 

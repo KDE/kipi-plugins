@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-03-15
+ * Date        : 2015-06-07
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,41 +20,45 @@
  *
  * ============================================================ */
 
-#ifndef CREATEMKTASK_H
-#define CREATEMKTASK_H
+#ifndef COMMANDTASK_H
+#define COMMANDTASK_H
+
+// Qt includes
+
+#include <QProcess>
 
 // Local includes
 
-#include "commandtask.h"
-
-using namespace KDcrawIface;
+#include "task.h"
 
 namespace KIPIPanoramaPlugin
 {
 
-class CreateMKTask : public CommandTask
+class CommandTask : public Task
 {
+protected:
+
+    QString                             output;
 
 private:
 
-    const QUrl&                         ptoUrl;
-    QUrl&                               mkUrl;
-    QUrl&                               panoUrl;
-    const PanoramaFileType              fileType;
+    QSharedPointer<QProcess>            process;
 
 public:
 
-    CreateMKTask(const QString& workDirPath, const QUrl& input, QUrl& mkUrl,
-                 QUrl& panoUrl, PanoramaFileType fileType,
-                 const QString& pto2mkPath, bool preview);
-    ~CreateMKTask();
+    CommandTask(Action action, const QString& workDirPath, const QString& commandPath);
+    ~CommandTask();
+
+    void requestAbort();
 
 protected:
 
-    void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
-
+    void runProcess(QStringList& args);
+    QString getProgram();
+    QString getCommandLine();
+    QString getProcessError();
 };
 
 }  // namespace KIPIPanoramaPlugin
 
-#endif /* CREATEMKTASK_H */
+#endif /* COMMANDTASK_H */

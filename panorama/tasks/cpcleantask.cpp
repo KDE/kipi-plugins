@@ -25,57 +25,34 @@
 // Local includes
 
 #include <kipiplugins_debug.h>
-#include "ptofile.h"
 
 namespace KIPIPanoramaPlugin
 {
 
 CpCleanTask::CpCleanTask(const QString& workDirPath, const QUrl& input,
                          QUrl& cpCleanPtoUrl, const QString& cpCleanPath)
-    : Task(CPCLEAN, workDirPath), cpCleanPtoUrl(cpCleanPtoUrl),
-      cpFindPtoUrl(input), cpCleanPath(cpCleanPath), process(0)
+    : CommandTask(CPCLEAN, workDirPath, cpCleanPath),
+      cpCleanPtoUrl(cpCleanPtoUrl),
+      cpFindPtoUrl(input)
 {}
 
 CpCleanTask::~CpCleanTask()
 {}
 
-void CpCleanTask::requestAbort()
-{
-    process->kill();
-}
-
 void CpCleanTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     cpCleanPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("cp_pano_clean.pto")));
-
-    process.reset(new QProcess());
-    process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setProcessChannelMode(QProcess::MergedChannels);
-    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
     args << QString::fromUtf8("-o");
     args << cpCleanPtoUrl.toLocalFile();
     args << cpFindPtoUrl.toLocalFile();
 
-    process->setProgram(cpCleanPath);
-    process->setArguments(args);
+    runProcess(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "cpclean command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "cpclean command line: " << getCommandLine();
 
-    process->start();
-
-    if (!process->waitForFinished(-1) || process->exitCode() != QProcess::NormalExit)
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "cpclean output (failed):" << endl << process->readAll();
-        errString = getProcessError(*process);
-        successFlag = false;
-        return;
-    }
-    qCDebug(KIPIPLUGINS_LOG) << "cpclean output:" << endl << process->readAll();
-
-    successFlag = true;
-    return;
+    qCDebug(KIPIPLUGINS_LOG) << "cpclean output:" << endl << output;
 }
 
 }  // namespace KIPIPanoramaPlugin

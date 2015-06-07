@@ -32,27 +32,18 @@ namespace KIPIPanoramaPlugin
 AutoCropTask::AutoCropTask(const QString& workDirPath,
                            const QUrl& autoOptimiserPtoUrl, QUrl& viewCropPtoUrl,
                            bool /*buildGPano*/, const QString& panoModifyPath)
-    : Task(AUTOCROP, workDirPath), autoOptimiserPtoUrl(autoOptimiserPtoUrl),
-      viewCropPtoUrl(viewCropPtoUrl), /*buildGPano(buildGPano),*/
-      panoModifyPath(panoModifyPath), process(0)
+    : CommandTask(AUTOCROP, workDirPath, panoModifyPath),
+      autoOptimiserPtoUrl(autoOptimiserPtoUrl),
+      viewCropPtoUrl(viewCropPtoUrl)/*,
+      buildGPano(buildGPano),*/
 {}
 
 AutoCropTask::~AutoCropTask()
 {}
 
-void AutoCropTask::requestAbort()
-{
-    process->kill();
-}
-
 void AutoCropTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     viewCropPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("view_crop_pano.pto")));
-
-    process.reset(new QProcess());
-    process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setProcessChannelMode(QProcess::MergedChannels);
-    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
     args << QString::fromUtf8("-c");               // Center the panorama
@@ -63,24 +54,11 @@ void AutoCropTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     args << viewCropPtoUrl.toLocalFile();
     args << autoOptimiserPtoUrl.toLocalFile();
 
-    process->setProgram(panoModifyPath);
-    process->setArguments(args);
+    runProcess(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify command line: " << process->program() << " " << process->arguments().join(QString::fromUtf8(" "));
+    qCDebug(KIPIPLUGINS_LOG) << "pano_modify command line: " << getCommandLine();
 
-    process->start();
-
-    if (!process->waitForFinished(-1) || process->exitCode() != 0)
-    {
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify output (failed):" << endl << process->readAll();
-        errString = getProcessError(*process);
-        successFlag = false;
-        return;
-    }
-    qCDebug(KIPIPLUGINS_LOG) << "pano_modify output:" << endl << process->readAll();
-
-    successFlag = true;
-    return;
+    qCDebug(KIPIPLUGINS_LOG) << "pano_modify output:" << endl << output;
 }
 
 }  // namespace KIPIPanoramaPlugin

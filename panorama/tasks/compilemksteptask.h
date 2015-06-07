@@ -25,14 +25,14 @@
 
 // Local includes
 
-#include "task.h"
+#include "commandtask.h"
 
 using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
 {
 
-class CompileMKStepTask : public Task
+class CompileMKStepTask : public CommandTask
 {
 
 public:
@@ -44,9 +44,6 @@ private:
     const QUrl&                         mkUrl;
     const QString                       nonaPath;
     const QString                       enblendPath;
-    const QString                       makePath;
-
-    QSharedPointer<QProcess>            process;
 
 public:
 
@@ -54,8 +51,6 @@ public:
                       const QString& nonaPath, const QString& enblendPath,
                       const QString& makePath, bool preview);
     ~CompileMKStepTask();
-
-    void requestAbort();
 
 protected:
 

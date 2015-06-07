@@ -294,6 +294,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 case CREATEPREVIEWPTO:
                 case NONAFILEPREVIEW:
                 case STITCHPREVIEW:
+                case CREATEMKPREVIEW:
                 {
                     if (!d->previewBusy)
                     {
@@ -310,7 +311,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
-                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>", Qt::escape(ad.message).replace(QString::fromUtf8("\n"), QString::fromUtf8("</p><p>"))));
+                    QString errorString(xi18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>", Qt::escape(ad.message).replace(QString::fromUtf8("\n"), QString::fromUtf8("</p><p>"))));
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
 
@@ -319,9 +320,50 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     break;
                 }
                 case CREATEMK:
+                {
+                    if (!d->stitchingBusy)
+                    {
+                        return;
+                    }
+                    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    d->stitchingBusy = false;
+                    QString message  = xi18nc("Here a makefile is a script for GNU Make", "Cannot create makefile: <message>%3</message>", ad.message);
+                    qCWarning(KIPIPLUGINS_LOG) << "pto2mk call failed";
+                    d->postProcessing->addedAction(message, ErrorMessage);
+                    emit signalStitchingFinished(false);
+                    break;
+                }
                 case CREATEFINALPTO:
                 {
-                    // Nothing to do yet, a step is finished, that's all
+                    if (!d->stitchingBusy)
+                    {
+                        return;
+                    }
+
+                    disconnect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    disconnect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    d->stitchingBusy = false;
+                    QString message  = xi18nc("a project file is a .pto file, as given to hugin to build a panorama",
+                                              "Cannot create project file: <message>%3</message>",
+                                              ad.message);
+                    qCWarning(KIPIPLUGINS_LOG) << "pto creation failed";
+                    d->postProcessing->addedAction(message, ErrorMessage);
+                    emit signalStitchingFinished(false);
                     break;
                 }
                 case NONAFILE:
@@ -341,11 +383,11 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    QString message  = i18nc("Error message for image file number %1 out of %2", "Processing file %1 / %2: <message>%3</message>",
-                                             QString::number(ad.id + 1),
-                                             QString::number(d->totalProgress - 1),
-                                             ad.message
-                                            );
+                    QString message  = xi18nc("Error message for image file number %1 out of %2", "Processing file %1 / %2: <message>%3</message>",
+                                              QString::number(ad.id + 1),
+                                              QString::number(d->totalProgress - 1),
+                                              ad.message
+                                             );
                     qCWarning(KIPIPLUGINS_LOG) << "Nona call failed for file #" << ad.id;
                     d->postProcessing->addedAction(message, ErrorMessage);
                     emit signalStitchingFinished(false);
@@ -368,7 +410,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(i18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>", Qt::escape(ad.message)), ErrorMessage);
+                    d->postProcessing->addedAction(xi18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>", Qt::escape(ad.message)), ErrorMessage);
                     qCWarning(KIPIPLUGINS_LOG) << "Enblend call failed";
                     emit signalStitchingFinished(false);
                     break;

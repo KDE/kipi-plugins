@@ -36,22 +36,15 @@ namespace KIPIPanoramaPlugin
 CreateMKTask::CreateMKTask(const QString& workDirPath, const QUrl& input, QUrl& mkUrl,
                            QUrl& panoUrl, PanoramaFileType fileType,
                            const QString& pto2mkPath, bool preview)
-    : Task(preview ? CREATEMKPREVIEW : CREATEMK, workDirPath),
-      ptoUrl(input), mkUrl(mkUrl),
+    : CommandTask(preview ? CREATEMKPREVIEW : CREATEMK, workDirPath, pto2mkPath),
+      ptoUrl(input),
+      mkUrl(mkUrl),
       panoUrl(panoUrl),
-      fileType(fileType),
-      pto2mkPath(pto2mkPath),
-      process(0)
-{
-}
+      fileType(fileType)
+{}
 
 CreateMKTask::~CreateMKTask()
 {}
-
-void CreateMKTask::requestAbort()
-{
-    process->kill();
-}
 
 void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
@@ -71,11 +64,6 @@ void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
             break;
     }
 
-    process.reset(new QProcess());
-    process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setProcessChannelMode(QProcess::MergedChannels);
-    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-
     QStringList args;
     args << QString::fromUtf8("-o");
     args << mkUrl.toLocalFile();
@@ -83,25 +71,11 @@ void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     args << fi.completeBaseName();
     args << ptoUrl.toLocalFile();
 
-    process->setProgram(pto2mkPath);
-    process->setArguments(args);
+    runProcess(args);
 
-    qCDebug(KIPIPLUGINS_LOG) << "pto2mk command line: " << process->program();
+    qCDebug(KIPIPLUGINS_LOG) << "pto2mk command line: " << getCommandLine();
 
-    process->start();
-
-    if (!process->waitForFinished(-1) || process->exitCode() != 0)
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "pto2mk output (failed):" << endl << process->readAll();
-        errString = getProcessError(*process);
-        successFlag = false;
-        return;
-    }
-
-    qCDebug(KIPIPLUGINS_LOG) << "pto2mk output:" << endl << process->readAll();
-
-    successFlag = true;
-    return;
+    qCDebug(KIPIPLUGINS_LOG) << "pto2mk output:" << endl << output;
 }
 
 }  // namespace KIPIPanoramaPlugin
