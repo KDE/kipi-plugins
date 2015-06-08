@@ -838,13 +838,9 @@ void KPWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_
                                    char* const profile_data, png_uint_32 length)
 {
     png_textp      text;
-
-    register long  i;
-
+    long           i;
     uchar*         sp = 0;
-
     png_charp      dp;
-
     png_uint_32    allocated_length, description_length;
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
@@ -899,13 +895,10 @@ void KPWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_
 
 size_t KPWriteImage::concatenateString(char* const destination, const char* source, const size_t length)
 {
-    register char*       q = 0;
-
-    register const char* p = 0;
-
-    register size_t      i;
-
-    size_t               count;
+    char*       q = 0;
+    const char* p = 0;
+    size_t      i;
+    size_t      count;
 
     if ( !destination || !source || length == 0 )
         return 0;
@@ -940,11 +933,9 @@ size_t KPWriteImage::concatenateString(char* const destination, const char* sour
 
 size_t KPWriteImage::copyString(char* const destination, const char* source, const size_t length)
 {
-    register char*       q = 0;
-
-    register const char* p = 0;
-
-    register size_t      i;
+    char*       q = 0;
+    const char* p = 0;
+    size_t      i;
 
     if ( !destination || !source || length == 0 )
         return 0;
