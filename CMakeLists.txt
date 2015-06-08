@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -18,7 +18,7 @@ set(KIPIPLUGINS_MINOR_VERSION "0")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2015-06-01")
+set(KIPIPLUGINS_RELEASE_DATE "2015-07-05")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -122,15 +122,15 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(GObject)                                     # For ipodexport.
-    find_package(FLEX)                                        # For Panorama (must be found before KdepimLibs for MacOS).
-    find_package(BISON)                                       # For Panorama (must be found before KdepimLibs for MacOS).
+    find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
+    find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
 #     MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
 #     MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
 #     MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
 #     MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
 #     MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
 #     MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
-#     MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
+      DETECT_LIBKVKONTAKTE(4.70.0)                                             # For VKontakte.
 #     MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(QtSoap)                                      # For DlnaExport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
@@ -180,7 +180,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.0.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 1.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   MEDIAWIKI_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 0.1.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  LIBKVKONTAKTE_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libgpod"        "http://www.gtkpod.org/libgpod.html"                              "(version >= 0.7.0)"                  "Kipi-plugins will be compiled without libgpod support."        IPOD_FOUND)
@@ -258,7 +258,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          LIBKVKONTAKTE_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
@@ -420,9 +420,6 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(googledrive)
 #             add_subdirectory(dropbox)
 #         endif()
-
-        # LibKVkontakte
-        DETECT_LIBKVKONTAKTE(4.70.0)
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
