@@ -35,14 +35,9 @@ namespace KIPIPanoramaPlugin
 
 CommandTask::CommandTask(Action action, const QString& workDirPath, const QString& commandPath)
     : Task(action, workDirPath),
-      process(0)
-{
-    process.reset(new QProcess());
-    process->setWorkingDirectory(tmpDir.toLocalFile());
-    process->setProcessChannelMode(QProcess::MergedChannels);
-    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-    process->setProgram(commandPath);
-}
+      process(0),
+      commandPath(commandPath)
+{}
 
 CommandTask::~CommandTask()
 {}
@@ -50,11 +45,18 @@ CommandTask::~CommandTask()
 void CommandTask::requestAbort()
 {
     Task::requestAbort();
-    process->kill();
+    if (!process.isNull())
+        process->kill();
 }
 
 void CommandTask::runProcess(QStringList& args)
 {
+    process.reset(new QProcess());
+    process->setWorkingDirectory(tmpDir.toLocalFile());
+    process->setProcessChannelMode(QProcess::MergedChannels);
+    process->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+    process->setProgram(commandPath);
+
     process->setArguments(args);
 
     process->start();
@@ -68,16 +70,22 @@ void CommandTask::runProcess(QStringList& args)
 
 QString CommandTask::getProgram()
 {
+    if (process.isNull())
+        return QString();
     return process->program();
 }
 
 QString CommandTask::getCommandLine()
 {
+    if (process.isNull())
+        return QString();
     return (process->program() + QChar::fromLatin1(' ') + process->arguments().join(QChar::fromLatin1(' ')));
 }
 
 QString CommandTask::getProcessError()
 {
+    if (process.isNull())
+        return QString();
     return (xi18n("<title>Cannot run <command>%1</command>:</title><para><message>%2</message></para>", getProgram(), output));
 }
 

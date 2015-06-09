@@ -43,6 +43,7 @@ protected:
 private:
 
     QSharedPointer<QProcess>            process;
+    QString                             commandPath;
 
 public:
 
