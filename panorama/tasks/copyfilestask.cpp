@@ -187,7 +187,13 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
             {
                 QUrl finalImgUrl = finalPanoUrl.adjusted(QUrl::RemoveFilename)
                                                .resolved(QUrl::fromLocalFile(i->preprocessedUrl.fileName()));
+                QFile finalImgFile(finalImgUrl.toString(QUrl::PreferLocalFile));
                 QFile imgFile(i->preprocessedUrl.toLocalFile());
+
+                if (finalImgFile.exists())
+                {
+                    continue;
+                }
 
                 if (!imgFile.copy(finalImgUrl.toLocalFile()))
                 {

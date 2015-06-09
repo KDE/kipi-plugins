@@ -64,7 +64,6 @@ private:
 
     QString panoFileName(const QString& fileTemplate) const;
     void checkFiles();
-    void resetWarningMsg();
 
 private:
 

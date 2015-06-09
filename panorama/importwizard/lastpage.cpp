@@ -69,6 +69,7 @@ struct LastPage::Private
     QLineEdit* fileTemplateKLineEdit;
     QCheckBox* savePtoCheckBox;
     QLabel*    warningLabel;
+    QLabel*    errorLabel;
 
     Manager*   mngr;
 };
@@ -120,6 +121,10 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->warningLabel = new QLabel(d->saveSettingsGroupBox);
     d->warningLabel->hide();
     formatVBox->addWidget(d->warningLabel);
+
+    d->errorLabel = new QLabel(d->saveSettingsGroupBox);
+    d->errorLabel->hide();
+    formatVBox->addWidget(d->errorLabel);
 
     vbox->addWidget(d->saveSettingsGroupBox);
 
@@ -188,8 +193,9 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     emit signalCopyFinished(false);
-                    d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Error:</b> "
-                                                  "%1</font></p></qt>", ad.message));
+                    d->errorLabel->setText(i18n("<qt><p><font color=\"red\"><b>Error:</b> "
+                                                 "%1</font></p></qt>", ad.message));
+                    d->errorLabel->show();
                     break;
                 }
                 default:
@@ -263,11 +269,34 @@ void LastPage::checkFiles()
     QUrl ptoUrl(dir + d->fileTemplateKLineEdit->text() + QString::fromUtf8(".pto"));
     QFile panoFile(panoUrl.toString(QUrl::PreferLocalFile));
     QFile ptoFile(ptoUrl.toString(QUrl::PreferLocalFile));
-    // TODO: check for the raw files...
+
+    bool rawsOk = true;
+    if (d->savePtoCheckBox->isChecked())
+    {
+        for (auto& input : d->mngr->preProcessedMap().keys())
+        {
+            if (input != d->mngr->preProcessedMap()[input].preprocessedUrl)
+            {
+                QString dir = input.toString(QUrl::RemoveFilename);
+                QUrl derawUrl(dir + d->mngr->preProcessedMap()[input].preprocessedUrl.fileName());
+                QFile derawFile(derawUrl.toString(QUrl::PreferLocalFile));
+                rawsOk &= !derawFile.exists();
+            }
+        }
+    }
+
     if (panoFile.exists() || (d->savePtoCheckBox->isChecked() && ptoFile.exists()))
     {
         emit signalIsValid(false);
-        resetWarningMsg();
+        d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Warning:</b> "
+                                      "This file already exists.</font></p></qt>"));
+        d->warningLabel->show();
+    }
+    else if (!rawsOk)
+    {
+        emit signalIsValid(true);
+        d->warningLabel->setText(i18n("<qt><p><font color=\"orange\"><b>Warning:</b> "
+                                      "One or more converted raw files already exists (they will be skipped during the copying process).</font></p></qt>"));
         d->warningLabel->show();
     }
     else
@@ -276,12 +305,6 @@ void LastPage::checkFiles()
         d->warningLabel->hide();
     }
 
-}
-
-void LastPage::resetWarningMsg()
-{
-    d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Warning:</b> "
-                                  "This file already exists.</font></p></qt>"));
 }
 
 }   // namespace KIPIPanoramaPlugin
