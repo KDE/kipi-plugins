@@ -214,4 +214,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     m_dlgZooomr->reactivate();
 }
 
-} //namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrExportPlugin
+
+#include "plugin_flickrexport.moc"
+
