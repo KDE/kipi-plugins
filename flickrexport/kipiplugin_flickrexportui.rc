@@ -1,0 +1,19 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<!-- NOTE: don't forget to increase version ID when this file is modified -->
+<gui version="1" name="kipiplugin_flickrexport" >
+
+    <MenuBar>
+
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="flickrexport" group="kipi_export_group" />
+            <Action name="23export" group="kipi_export_group" />
+            <Action name="Zooomrexport" group="kipi_export_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>
+

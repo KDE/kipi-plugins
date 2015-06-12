@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" >
+ <class>FlickrAlbumDialog</class>
+ <widget class="QDialog" name="FlickrAlbumDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>351</width>
+    <height>263</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>New PhotoSet</string>
+  </property>
+  <property name="sizeGripEnabled" >
+   <bool>false</bool>
+  </property>
+  <widget class="QLabel" name="header" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>331</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>&lt;h3&gt;Create New PhotoSet &lt;/h3&gt;</string>
+   </property>
+   <property name="wordWrap" >
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="hline1" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>213</y>
+     <width>331</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="frameShape" >
+    <enum>QFrame::HLine</enum>
+   </property>
+   <property name="frameShadow" >
+    <enum>QFrame::Sunken</enum>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget" >
+   <property name="geometry" >
+    <rect>
+     <x>18</x>
+     <y>220</y>
+     <width>321</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" >
+    <property name="spacing" >
+     <number>6</number>
+    </property>
+    <property name="margin" >
+     <number>0</number>
+    </property>
+    <item>
+     <spacer name="Horizontal Spacing2" >
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType" >
+       <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0" >
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buttonOk" >
+      <property name="text" >
+       <string>&amp;OK</string>
+      </property>
+      <property name="shortcut" >
+       <string/>
+      </property>
+      <property name="autoDefault" >
+       <bool>true</bool>
+      </property>
+      <property name="default" >
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buttonCancel" >
+      <property name="text" >
+       <string>&amp;Cancel</string>
+      </property>
+      <property name="shortcut" >
+       <string/>
+      </property>
+      <property name="autoDefault" >
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget2" >
+   <property name="geometry" >
+    <rect>
+     <x>11</x>
+     <y>50</y>
+     <width>331</width>
+     <height>173</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout" >
+    <property name="fieldGrowthPolicy" >
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
+    <item row="0" column="0" >
+     <widget class="QLabel" name="titleLabel" >
+      <property name="text" >
+       <string>Title (required):</string>
+      </property>
+      <property name="wordWrap" >
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" >
+     <widget class="KLineEdit" name="titleEdit">
+      <property name="showClearButton" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+     </item>
+    <item row="1" column="0" >
+     <widget class="QLabel" name="captionLabel" >
+      <property name="text" >
+       <string>Description (optional)</string>
+      </property>
+      <property name="wordWrap" >
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" >
+     <widget class="QPlainTextEdit" name="descriptionEdit" />
+    </item>
+   </layout>
+  </widget>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget2</zorder>
+  <zorder>header</zorder>
+  <zorder>hline1</zorder>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>titleEdit</tabstop>
+  <tabstop>descriptionEdit</tabstop>
+  <tabstop>buttonOk</tabstop>
+  <tabstop>buttonCancel</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonOk</sender>
+   <signal>clicked()</signal>
+   <receiver>FlickrAlbumDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>FlickrAlbumDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

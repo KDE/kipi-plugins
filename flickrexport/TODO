@@ -1,0 +1,6 @@
+Could add these things to the plugin.
+	Support for viewing your photos stored at server.
+	Querying Space Limit from the server.
+	Allow fetching feature of images just uploaded, like url etc.
+
+flickrviewitem.h/.cpp is not yet ported to pure QT4 but it's not yet used.
