@@ -94,6 +94,8 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
 find_package(KF5 REQUIRED COMPONENTS
              KDELibs4Support
              Parts
+             Wallet
+             KHtml
              Config
              ThreadWeaver
              I18n
@@ -399,7 +401,7 @@ if(KF5Kipi_FOUND)
 #         endif()
 
 # Plugins to re-factoring.
-#         add_subdirectory(flickrexport)
+        add_subdirectory(flickrexport)
 #         add_subdirectory(galleryexport)
 #         add_subdirectory(piwigoexport)
 #         add_subdirectory(kioexportimport)

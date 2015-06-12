@@ -58,8 +58,7 @@
 
 // LibKDcraw includes
 
-#include <libkdcraw/version.h>
-#include <libkdcraw/kdcraw.h>
+#include <kdcraw.h>
 
 // Local includes
 

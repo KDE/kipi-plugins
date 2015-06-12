@@ -29,6 +29,8 @@ target_link_libraries(kipiplugin_flickrexport
                       KF5::KExiv2
                       KF5::KDcraw
                       KF5::KIOCore
+                      KF5::Wallet
+                      KF5::KHtml
                       KF5::KDELibs4Support
                      )
 
