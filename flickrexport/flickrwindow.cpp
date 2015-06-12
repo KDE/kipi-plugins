@@ -44,7 +44,6 @@
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kparts/browserhostextension.h>
-#include <khtml_part.h>
 #include <ktabwidget.h>
 #include <krun.h>
 #include <kdebug.h>
@@ -56,7 +55,7 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
+#include <interface.h>
 
 // Local includes
 
