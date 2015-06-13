@@ -36,6 +36,9 @@ extern "C"
 #include <unistd.h>
 }
 
+//Qt includes
+#include <QDebug>
+
 // KDE includes
 #include <KPluginFactory>
 #include <klocale.h>
@@ -44,7 +47,6 @@ extern "C"
 #include <kiconloader.h>
 #include <klibloader.h>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
@@ -72,7 +74,7 @@ K_EXPORT_PLUGIN(FlickrExportFactory("kipiplugin_flickrexport"))
 Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "FlickrExport")
 {
-    kDebug(KIPIPLUGINS_LOG) << "Plugin_FlickrExport plugin loaded";
+    qDebug(KIPIPLUGINS_LOG) << "Plugin_FlickrExport plugin loaded";
 
     KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
 
@@ -94,7 +96,7 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
 
     if (!interface())
     {
-        kError() << "Kipi interface is null!";
+        qCritical() << "Kipi interface is null!";
         return;
     }
 
