@@ -154,6 +154,12 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
                                                ki18n("(c) 2005-2008, Vardhman Jain\n"
                                                      "(c) 2008-2013, Gilles Caulier\n"
                                                      "(c) 2009, Luka Renko"));
+    
+    about->addAuthor(i18n("Vardhman Jain"), i18n("Author and maintainer"),
+                     "Vardhman at gmail dot com");
+
+    about->addAuthor(i18n("Gilles Caulier"), i18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
     about->setHandbookEntry("flickrexport");
     setAboutData(about);
