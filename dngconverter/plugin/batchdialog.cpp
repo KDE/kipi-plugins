@@ -104,7 +104,7 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     : KPToolDialog(0), d(new Private)
 {
     setWindowIcon(KIcon("kipi-dngconverter"));
-    setButtons(Help | Default | Apply | Close);
+    setButtons(Help | Default | User1 | Close);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
     setCaption(i18n("Batch convert RAW camera images to DNG"));
@@ -152,7 +152,7 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     connect(this, SIGNAL(defaultClicked()),
             this, SLOT(slotDefault()));
 
-    connect(this, SIGNAL(applyClicked()),
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartStop()));
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
@@ -393,15 +393,15 @@ void BatchDialog::busy(bool busy)
 
     if (d->busy)
     {
-        setButtonIcon(Apply,    KIcon("process-stop"));
-        setButtonText(Apply,    i18n("&Abort"));
-        setButtonToolTip(Apply, i18n("Abort the conversion of Raw files."));
+        setButtonIcon(User1,    KIcon("process-stop"));
+        setButtonText(User1,    i18n("&Abort"));
+        setButtonToolTip(User1, i18n("Abort the conversion of Raw files."));
     }
     else
     {
-        setButtonIcon(Apply,    KIcon("system-run"));
-        setButtonText(Apply,    i18n("Con&vert"));
-        setButtonToolTip(Apply, i18n("Start converting the Raw images using the current settings."));
+        setButtonIcon(User1,    KIcon("system-run"));
+        setButtonText(User1,    i18n("Con&vert"));
+        setButtonToolTip(User1, i18n("Start converting the Raw images using the current settings."));
     }
 
     d->settingsBox->setEnabled(!d->busy);
