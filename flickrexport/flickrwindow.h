@@ -33,7 +33,7 @@
 #include <QLinkedList>
 
 // KDE includes
-#include <KUrl>
+#include <QUrl>
 
 // LibKIPI includes
 
@@ -51,7 +51,7 @@ class QCheckBox;
 
 class KLineEdit;
 class KHTMLPart;
-class KUrl;
+class QUrl;
 class KComboBox;
 
 namespace KIPI
@@ -112,7 +112,7 @@ private Q_SLOTS:
     //  void slotAlbums( const QValueList<GAlbum>& albumList );
     //  void slotPhotos( const QValueList<GPhoto>& photoList );
     //  void slotTagSelected();
-    //  void slotOpenPhoto( const KUrl& url );
+    //  void slotOpenPhoto( const KUrl &url );
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
@@ -132,7 +132,7 @@ private Q_SLOTS:
 
 private:
 
-    QString guessSensibleSetName(const KUrl::List& urlList);
+    QString guessSensibleSetName(const QList<QUrl>& urlList);
 
     void closeEvent(QCloseEvent*);
     void readSettings(QString uname);
@@ -179,7 +179,7 @@ private:
 
     QProgressDialog*                       m_authProgressDlg;
 
-    QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
+    QList< QPair<QUrl, FPhotoInfo> >       m_uploadQueue;
 
 //  KWallet::Wallet*                       m_wallet;
     KHTMLPart*                             m_photoView;

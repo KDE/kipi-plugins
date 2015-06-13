@@ -509,14 +509,14 @@ void FlickrWindow::slotRemoveAccount()
  * accept the path if it occurs at least 50% of the time. It could also look
  * further up in the path name.
  */
-QString FlickrWindow::guessSensibleSetName(const KUrl::List& urlList)
+QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
 {
     QMap<QString,int> nrFolderOccurences;
 
     // Extract last component of directory
-    foreach(const KUrl& url, urlList)
+    foreach(const QUrl &url, urlList)
     {
-        QString dir      = url.directory();
+        QString dir      = url.adjusted(QUrl::RemoveFilename|QUrl::StripTrailingSlash).path();
         QStringList list = dir.split('/');
 
         if (list.isEmpty())
@@ -621,7 +621,7 @@ void FlickrWindow::slotTagSelected()
 {
     // TODO
 }
-void FlickrWindow::slotOpenPhoto( const KUrl& url )
+void FlickrWindow::slotOpenPhoto( const QUrl &url )
 {
     new KRun(url);
 }
@@ -673,7 +673,7 @@ void FlickrWindow::slotUser1()
         return;
     }
 
-    typedef QPair<KUrl, FPhotoInfo> Pair;
+    typedef QPair<QUrl, FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
@@ -777,7 +777,7 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    typedef QPair<KUrl, FPhotoInfo> Pair;
+    typedef QPair<QUrl, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
 

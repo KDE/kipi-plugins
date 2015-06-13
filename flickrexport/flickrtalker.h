@@ -27,13 +27,14 @@
 // Qt includes
 
 #include <QList>
+#include <QUrl>
+#include <QPair>
 #include <QString>
 #include <QObject>
 #include <QCryptographicHash>
 
 // KDE includes
 
-#include <kurl.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
@@ -137,7 +138,7 @@ private:
     void parseResponseCreatePhotoSet(const QByteArray& data);
     void parseResponseAddPhotoToPhotoSet(const QByteArray& data);
 
-    QString getApiSig(const QString& secret, const KUrl& url);
+    QString getApiSig(const QString& secret, const QUrl& url);
 
 private Q_SLOTS:
 

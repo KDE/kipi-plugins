@@ -45,7 +45,6 @@
 #include <QDialog>
 #include "kdialog.h"
 #include <klocale.h>
-#include <kurl.h>
 #include <kparts/browserhostextension.h>
 #include <khtml_part.h>
 #include <kseparator.h>

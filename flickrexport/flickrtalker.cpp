@@ -41,6 +41,7 @@
 #include <QMap>
 #include <QStringList>
 #include <QProgressDialog>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -133,16 +134,17 @@ FlickrTalker::~FlickrTalker()
 /** Compute MD5 signature using url queries keys and values following Flickr notice:
     http://www.flickr.com/services/api/auth.spec.html
 */
-QString FlickrTalker::getApiSig(const QString& secret, const KUrl& url)
+QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 {
-    QMap<QString, QString> queries = url.queryItems();
+    QUrlQuery urlQuery(url.query());
+    QList<QPair<QString, QString> > queries = urlQuery.queryItems();
     QString compressed(secret);
-
-    // NOTE: iterator QMap iterator will sort alphabetically items based on key values.
-    for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
+    
+    QPair<QString, QString> pair;
+    foreach(pair,queries)
     {
-        compressed.append(it.key());
-        compressed.append(it.value());
+        compressed.append(pair.first);
+	compressed.append(pair.second);
     }
 
     QCryptographicHash context(QCryptographicHash::Md5);
@@ -163,12 +165,15 @@ void FlickrTalker::maxAllowedFileSize()
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
-    url.addQueryItem("auth_token", m_token);
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("method", "flickr.people.getLimits");
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("auth_token", m_token);
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("method", "flickr.people.getLimits");
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);;
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "Get max file size url: " << url;
 
     KIO::TransferJob* job = 0;
@@ -231,11 +236,14 @@ void FlickrTalker::getFrob()
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
-    url.addQueryItem("method", "flickr.auth.getFrob");
-    url.addQueryItem("api_key", m_apikey);
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("method", "flickr.auth.getFrob");
+    urlQuery.addQueryItem("api_key", m_apikey);
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "Get frob url: " << url;
 
     KIO::TransferJob* job = 0;
@@ -276,12 +284,15 @@ void FlickrTalker::checkToken(const QString& token)
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
-    url.addQueryItem("method", "flickr.auth.checkToken");
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("auth_token", token);
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("method", "flickr.auth.checkToken");
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("auth_token", token);
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "Check token url: " << url;
     QByteArray tmp;
 
@@ -322,12 +333,15 @@ void FlickrTalker::slotAuthenticate()
         m_job = 0;
     }
 
-    KUrl url(m_authUrl);
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("frob", m_frob);
-    url.addQueryItem("perms", "write");
+    QUrl url(m_authUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("frob", m_frob);
+    urlQuery.addQueryItem("perms", "write");
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "Authenticate url: " << url;
 
     KToolInvocation::invokeBrowser(url.url());
@@ -361,12 +375,15 @@ void FlickrTalker::getToken()
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("method", "flickr.auth.getToken");
-    url.addQueryItem("frob", m_frob);
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("method", "flickr.auth.getToken");
+    urlQuery.addQueryItem("frob", m_frob);
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "Get token url: " << url;
 
     KIO::TransferJob* job = 0;
@@ -407,12 +424,15 @@ void FlickrTalker::listPhotoSets()
         m_job = 0;
     }
     kDebug() << "List photoset invoked";
-    KUrl url(m_apiUrl);
-    url.addQueryItem("auth_token", m_token);
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("method", "flickr.photosets.getList");
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("auth_token", m_token);
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("method", "flickr.photosets.getList");
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "List photoset URL" << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
@@ -449,19 +469,21 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
         m_job = 0;
     }
 
-    KUrl url(m_apiUrl);
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("method", method);
-    url.addQueryItem("frob", m_frob);
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("method", method);
+    urlQuery.addQueryItem("frob", m_frob);
 
     for (QStringList::const_iterator it = argList.constBegin(); it != argList.constEnd(); ++it)
     {
         QStringList str = (*it).split('=', QString::SkipEmptyParts);
-        url.addQueryItem(str[0], str[1]);
+        urlQuery.addQueryItem(str[0], str[1]);
     }
-
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "Get photo property url: " << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
@@ -508,15 +530,18 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     }
 
     kDebug() << "create photoset invoked";
-    KUrl url(m_apiUrl);
-    url.addQueryItem("auth_token", m_token);
-    url.addQueryItem("api_key", m_apikey);
-    url.addQueryItem("method", "flickr.photosets.create");
-    url.addQueryItem("title", albumTitle);
-    url.addQueryItem("description", albumDescription);
-    url.addQueryItem("primary_photo_id", primaryPhotoId);
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("auth_token", m_token);
+    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("method", "flickr.photosets.create");
+    urlQuery.addQueryItem("title", albumTitle);
+    urlQuery.addQueryItem("description", albumDescription);
+    urlQuery.addQueryItem("primary_photo_id", primaryPhotoId);
+    url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem("api_sig", md5);
+    url.setQuery(urlQuery);
     kDebug() << "List photo sets url: " << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
@@ -557,7 +582,8 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
     }
 
     kDebug() << "addPhotoToPhotoSet invoked";
-    KUrl url(m_apiUrl);
+    QUrl url(m_apiUrl);
+    QUrlQuery urlQuery;
 
     /* If the photoset id starts with the special string "UNDEFINED_", it means
      * it doesn't exist yet on Flickr and needs to be created. Note that it's
@@ -569,18 +595,20 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
     }
     else
     {
-        url.addQueryItem("auth_token", m_token);
+        urlQuery.addQueryItem("auth_token", m_token);
 
-        url.addQueryItem("photoset_id", photoSetId);
+        urlQuery.addQueryItem("photoset_id", photoSetId);
 
-        url.addQueryItem("api_key", m_apikey);
+        urlQuery.addQueryItem("api_key", m_apikey);
 
-        url.addQueryItem("method", "flickr.photosets.addPhoto");
+        urlQuery.addQueryItem("method", "flickr.photosets.addPhoto");
 
-        url.addQueryItem("photo_id", photoId);
-
+        urlQuery.addQueryItem("photo_id", photoId);
+        
+	url.setQuery(urlQuery);
         QString md5 = getApiSig(m_secret, url);
-        url.addQueryItem("api_sig", md5);
+        urlQuery.addQueryItem("api_sig", md5);
+	url.setQuery(urlQuery);
 
         QByteArray tmp;
         kDebug() << "Add photo to Photo set url: " << url;
@@ -609,59 +637,61 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         m_job = 0;
     }
 
-    KUrl    url(m_uploadUrl);
+    QUrl    url(m_uploadUrl);
 
     // We dont' want to modify url as such, we just used the KURL object for storing the query items.
-    KUrl  url2("");
+    QUrl  url2("");
+    QUrlQuery urlQuery;
     QString path = photoPath;
     MPForm  form;
 
     form.addPair("auth_token", m_token, "text/plain");
-    url2.addQueryItem("auth_token", m_token);
+    urlQuery.addQueryItem("auth_token", m_token);
 
     form.addPair("api_key", m_apikey, "text/plain");
-    url2.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem("api_key", m_apikey);
 
     QString ispublic = (info.is_public == 1) ? "1" : "0";
     form.addPair("is_public", ispublic, "text/plain");
-    url2.addQueryItem("is_public", ispublic);
+    urlQuery.addQueryItem("is_public", ispublic);
 
     QString isfamily = (info.is_family == 1) ? "1" : "0";
     form.addPair("is_family", isfamily, "text/plain");
-    url2.addQueryItem("is_family", isfamily);
+    urlQuery.addQueryItem("is_family", isfamily);
 
     QString isfriend = (info.is_friend == 1) ? "1" : "0";
     form.addPair("is_friend", isfriend, "text/plain");
-    url2.addQueryItem("is_friend", isfriend);
+    urlQuery.addQueryItem("is_friend", isfriend);
 
     QString safetyLevel = QString::number(static_cast<int>(info.safety_level));
     form.addPair("safety_level", safetyLevel, "text/plain");
-    url2.addQueryItem("safety_level", safetyLevel);
+    urlQuery.addQueryItem("safety_level", safetyLevel);
 
     QString contentType = QString::number(static_cast<int>(info.content_type));
     form.addPair("content_type", contentType, "text/plain");
-    url2.addQueryItem("content_type", contentType);
+    urlQuery.addQueryItem("content_type", contentType);
 
     QString tags = "\"" + info.tags.join("\" \"") + "\"";
 
     if (tags.length() > 0)
     {
         form.addPair("tags", tags, "text/plain");
-        url2.addQueryItem("tags", tags);
+        urlQuery.addQueryItem("tags", tags);
     }
 
     if (!info.title.isEmpty())
     {
         form.addPair("title", info.title, "text/plain");
-        url2.addQueryItem("title", info.title);
+        urlQuery.addQueryItem("title", info.title);
     }
 
     if (!info.description.isEmpty())
     {
         form.addPair("description", info.description, "text/plain");
-        url2.addQueryItem("description", info.description);
+        urlQuery.addQueryItem("description", info.description);
     }
-
+    
+    url2.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url2);
     form.addPair("api_sig", md5, "text/plain");
     QImage image;
