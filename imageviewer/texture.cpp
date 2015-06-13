@@ -27,6 +27,7 @@
 
 #include <QMatrix>
 #include <QFileInfo>
+#include <QtCore/QUrl>
 
 // KDE includes
 
@@ -34,7 +35,7 @@
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <kdcraw.h>
 
 // Local includes
@@ -129,7 +130,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     d->texnr        = tn;
 
     // check if its a RAW file.
-    if (KPMetadata::isRawFile(d->filename))
+    if (KPMetadata::isRawFile(QUrl::fromLocalFile(d->filename)))
     {
         // it's a RAW file, use the libkdcraw loader
         KDcraw::loadRawPreview(d->qimage, d->filename);
@@ -141,7 +142,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     }
 
     //handle rotation
-    KPImageInfo info(d->filename);
+    KPImageInfo info(QUrl::fromLocalFile(d->filename));
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
@@ -447,7 +448,7 @@ void Texture::rotate()
     loadInternal();
 
     //save new rotation in exif header
-    KPImageInfo info(d->filename);
+    KPImageInfo info(QUrl::fromLocalFile(d->filename));
     info.setOrientation(d->rotate_list[d->rotate_idx%4]);
 
     reset();

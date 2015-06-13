@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "plugin_viewer.moc"
+#include "plugin_viewer.h"
 
 // KDE includes
 
@@ -45,7 +45,6 @@ namespace KIPIViewerPlugin
 {
 
 K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
-K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
 class Plugin_viewer::Private
 {
@@ -62,10 +61,10 @@ public:
 };
 
 Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
-     : Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer"),
+     : Plugin(parent, "kipiplugin_imageviewer"),
        d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
+//     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 
     setUiBaseName("kipiplugin_imageviewerui.rc");
     setupXML();
@@ -136,3 +135,5 @@ void Plugin_viewer::slotActivate()
 }
 
 } // namespace KIPIViewerPlugin
+
+#include "plugin_viewer.moc"

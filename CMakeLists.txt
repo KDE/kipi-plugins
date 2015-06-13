@@ -89,6 +89,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Gui
              Xml
              Test
+             OPTIONAL_COMPONENTS OpenGL
 )
 
 find_package(KF5 REQUIRED COMPONENTS
@@ -119,7 +120,7 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
 #     MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                     # For Htmlexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)                                      # For AdvancedSlideshow and ImageViewer.
+    find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
 #     MACRO_OPTIONAL_FIND_PACKAGE(Ipod)                                        # For ipodexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
@@ -193,8 +194,8 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtsoap"      "https://github.com/commontk/QtSOAP"                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libqtsoap support."      QTSOAP_FOUND)
 # 
 #     PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGl support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
-#     PRINT_OPTIONAL_QTMODULE_STATUS("Qt4 OpenGL"            QT_QTOPENGL_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
+    PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
 
     # LINUX Only.
 #     if(NOT WIN32 AND NOT APPLE)
@@ -218,22 +219,22 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Shwup"       QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"  LIBXML2_FOUND AND LIBXSLT_FOUND)
-# 
-#     # decide if AdvancedSlideshow and ImageViewer can be built
-#     if(NOT WIN32 AND NOT APPLE)
-#         if(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND)
-#             set(BUILD_VIEWERS TRUE)
-#         else()
-#             set(BUILD_VIEWERS FALSE)
-#         endif()
-#     else()
-#         if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_FOUND AND QT_QTOPENGL_FOUND)
-#             set(BUILD_VIEWERS TRUE)
-#         elseif()
-#             set(BUILD_VIEWERS FALSE)
-#         endif()
-#     endif()
-# 
+
+     # decide if AdvancedSlideshow and ImageViewer can be built
+     if(NOT WIN32 AND NOT APPLE)
+         if(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
+             set(BUILD_VIEWERS TRUE)
+         else()
+             set(BUILD_VIEWERS FALSE)
+         endif()
+     else()
+         if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND Qt5OpenGL_FOUND)
+             set(BUILD_VIEWERS TRUE)
+         elseif()
+             set(BUILD_VIEWERS FALSE)
+         endif()
+     endif()
+
 #     # Decide if wallpaper plugin can be built
 #     # NOTE: See relevant patch which must be applied to KDE Plasma API :
 #     # https://git.reviewboard.kde.org/r/105319/
@@ -250,7 +251,7 @@ if(KF5Kipi_FOUND)
 #     endif()
 # 
 #     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
-#     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
+    PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
 #     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KSANE_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("DNGConverter"       EXPAT_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("DLNAExport"         (HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
@@ -376,12 +377,12 @@ if(KF5Kipi_FOUND)
 #         if(OpenCV_FOUND)
 #             add_subdirectory(removeredeyes)
 #         endif()
-#
-#         if(BUILD_VIEWERS)
+
+        if(BUILD_VIEWERS)
 #             add_subdirectory(advancedslideshow)
-#             add_subdirectory(imageviewer)
-#         endif()
-#
+            add_subdirectory(imageviewer)
+        endif()
+
 #         if(EXPAT_FOUND)
 #             if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
 #                 add_subdirectory(dngconverter)

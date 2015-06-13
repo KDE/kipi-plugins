@@ -46,15 +46,15 @@ HelpDialog::HelpDialog()
     setCaption(i18n("Usage of OpenGL Image Viewer"));
 
     KPAboutData* about = new KPAboutData(ki18n("OpenGL Image Viewer"), 0,
-                                         KAboutData::License_GPL,
+                                         KAboutLicense::GPL,
                                          ki18n("A Kipi plugin to view image using OpenGL."),
                                          ki18n("(c) 2007-2008, Markus Leuthold\n"
                                                "(c) 2008-2013, Gilles Caulier"));
 
-    about->addAuthor(ki18n("Markus Leuthold"), ki18n("Author"),
+    about->addAuthor(i18n("Markus Leuthold"), i18n("Author"),
                      "kusi at forum dot titlis dot org");
 
-    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+    about->addAuthor(i18n("Gilles Caulier"), i18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
     setAboutData(about);

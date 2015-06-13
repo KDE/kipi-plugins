@@ -21,12 +21,15 @@
  *
  * ============================================================ */
 
-#include "viewerwidget.moc"
+#include "viewerwidget.h"
 
 // Qt includes
 
 #include <QDesktopWidget>
 #include <QPointer>
+#include <QtCore/QUrl>
+#include <QtCore/QList>
+#include <QtCore/QDir>
 
 // KDE includes
 
@@ -154,7 +157,7 @@ ViewerWidget::ViewerWidget()
     ImageCollection selection = d->iface->currentSelection();
     ImageCollection album     = d->iface->currentAlbum();
 
-    QUrl::List myfiles; //pics which are displayed in imageviewer
+    QList<QUrl> myfiles; //pics which are displayed in imageviewer
     QString selectedImage; //selected pic in hostapp
 
     int foundNumber = 0;
@@ -181,12 +184,11 @@ ViewerWidget::ViewerWidget()
     }
 
     // populate QStringList::d->files
-    for(QUrl::List::Iterator it = myfiles.begin(); it != myfiles.end(); ++it)
+    for(QList<QUrl>::Iterator it = myfiles.begin(); it != myfiles.end(); ++it)
     {
         // find selected image in album in order to determine the first displayed image
         // in case one image was selected and the entire album was loaded
-        it->cleanPath();
-        QString s = (*it).path();
+        QString s = QDir::cleanPath(it->path());
 
         if ( s == selectedImage )
         {
@@ -195,7 +197,7 @@ ViewerWidget::ViewerWidget()
         }
 
         // only add images to d->files
-        KMimeType::Ptr type = KMimeType::findByUrl(s);
+        KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(s));
         bool isImage        = type->name().contains("image", Qt::CaseInsensitive);
 
         if ( isImage )
