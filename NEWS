@@ -48,4 +48,3 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 041 ==> 292482 - FACTORING : permit to fill image list with current selected album when no item are selected [patch].
 042 ==> 348278 - Export to GDrive fails when photo description contains double quotes.
 043 ==> 330919 - Previews of dng images converted from dark cr2 images are too bright.
-044 ==> 
