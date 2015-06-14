@@ -49,7 +49,7 @@ Plugin_Vkontakte::Plugin_Vkontakte(QObject* const parent, const QVariantList&)
     m_dlgExport = 0;
     // m_dlgImport = 0;
 
-    qDebug(KIPIPLUGINS_LOG) << "Plugin_Vkontakte plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Vkontakte plugin loaded";
 
     setUiBaseName("kipiplugin_vkontakteui.rc");
     setupXML();
@@ -67,7 +67,7 @@ void Plugin_Vkontakte::setup(QWidget* const widget)
 
     if (!interface())
     {
-        qCritical() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

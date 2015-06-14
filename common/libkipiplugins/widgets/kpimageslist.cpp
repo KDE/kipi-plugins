@@ -103,8 +103,8 @@ public:
 KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const QUrl& url)
     : QTreeWidgetItem(view), d(new Private)
 {
-    qDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << url
-                            << " for list view " << view;
+    qCDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << url
+                             << " for list view " << view;
     d->view      = view;
     int iconSize = d->view->iconSize().width();
     setThumb(QIcon::fromTheme("image-x-generic").pixmap(iconSize, iconSize, QIcon::Disabled));
@@ -201,13 +201,13 @@ void KPImagesListViewItem::setPixmap(const QPixmap& pix)
 
 void KPImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
-    qDebug(KIPIPLUGINS_LOG) << "Received new thumbnail for url " << d->url
-                            << ". My view is " << d->view;
+    qCDebug(KIPIPLUGINS_LOG) << "Received new thumbnail for url " << d->url
+                             << ". My view is " << d->view;
 
     if (!d->view)
     {
-        qCritical(KIPIPLUGINS_LOG) << "This item doesn't have a tree view. "
-                                   << "This should never happen!";
+        qCCritical(KIPIPLUGINS_LOG) << "This item doesn't have a tree view. "
+                                    << "This should never happen!";
         return;
     }
 
@@ -988,7 +988,7 @@ void KPImagesList::slotLoadItems()
 
     QFile file(loadLevelsFile.path());
 
-    qDebug(KIPIPLUGINS_LOG) << "file path " << loadLevelsFile.path();
+    qCDebug(KIPIPLUGINS_LOG) << "file path " << loadLevelsFile.path();
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader xmlReader;
     xmlReader.setDevice(&file);
@@ -1041,11 +1041,11 @@ void KPImagesList::slotSaveItems()
                                                  QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)),
                                                  QString( "*" ));
 
-    qDebug(KIPIPLUGINS_LOG) << "file url " << saveLevelsFile.toDisplayString();
+    qCDebug(KIPIPLUGINS_LOG) << "file url " << saveLevelsFile.toDisplayString();
 
     if ( saveLevelsFile.isEmpty() )
     {
-        qDebug(KIPIPLUGINS_LOG) << "empty url ";
+        qCDebug(KIPIPLUGINS_LOG) << "empty url ";
         return;
     }
 
