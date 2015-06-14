@@ -69,7 +69,6 @@ namespace KIPIFlickrExportPlugin
 {
 
 K_PLUGIN_FACTORY(FlickrExportFactory, registerPlugin<Plugin_FlickrExport>();)
-K_EXPORT_PLUGIN(FlickrExportFactory("kipiplugin_flickrexport"))
 
 Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "FlickrExport")
