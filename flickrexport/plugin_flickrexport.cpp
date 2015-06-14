@@ -58,12 +58,12 @@ extern "C"
 // LibKIPI includes
 
 #include <interface.h>
-#include "kipiplugins_debug.h"
 
 // Local includes
 
 #include "flickrwindow.h"
 #include "selectuserdlg.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -74,7 +74,7 @@ K_EXPORT_PLUGIN(FlickrExportFactory("kipiplugin_flickrexport"))
 Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "FlickrExport")
 {
-    qDebug(KIPIPLUGINS_LOG) << "Plugin_FlickrExport plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_FlickrExport plugin loaded";
 
     KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
 
@@ -96,7 +96,7 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
 
     if (!interface())
     {
-        qCritical() << "Kipi interface is null!";
+        qCCritical(KIPIPLUGINS_LOG) << "Kipi interface is null!";
         return;
     }
 

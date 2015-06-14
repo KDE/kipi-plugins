@@ -71,6 +71,7 @@
 #include "flickrwidget.h"
 #include "selectuserdlg.h"
 #include "ui_flickralbumdialog.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -96,15 +97,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     {
         setWindowIcon(QIcon::fromTheme("kipi-flickr"));
     }
-    
+
     KConfig config("kipirc");
     KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
     if(grp.exists())
     {
-        qDebug()<<QString("%1Export Settings").arg(m_serviceName)<<" EXISTSSSSSSSSSSSSSSSSSSSSSS deleting it !!! ";
+        qCDebug(KIPIPLUGINS_LOG) << QString("%1Export Settings").arg(m_serviceName) << " exists, deleting it";
 	grp.deleteGroup();
     }
-    
+
     m_select                    = dlg;
     m_tmp                       = tmpFolder;
     m_uploadCount               = 0;
@@ -304,7 +305,7 @@ void FlickrWindow::reactivate()
 {
     m_userNameDisplayLabel->setText(QString());
     readSettings(m_select->getUname());
-    qDebug() << "Calling auth methods";
+    qCDebug(KIPIPLUGINS_LOG) << "Calling auth methods";
 
     if (m_token.length() < 1)
     {
@@ -322,10 +323,10 @@ void FlickrWindow::reactivate()
 void FlickrWindow::readSettings(QString uname)
 {
     KConfig config("kipirc");
-    qDebug()<<"Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,uname);
+    qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,uname);
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,uname));
     m_token          = grp.readEntry("token");
-    qDebug()<<"Token is : "<<m_token;
+    qCDebug(KIPIPLUGINS_LOG) << "Token is : "<<m_token;
     m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags",      false));
     m_extendedTagsButton->setChecked(grp.readEntry("Show Extended Tag Options", false));
     m_addExtraTagsCheckBox->setChecked(grp.readEntry("Add Extra Tags",          false));
@@ -384,15 +385,15 @@ void FlickrWindow::readSettings(QString uname)
 void FlickrWindow::writeSettings()
 {
     KConfig config("kipirc");
-    qDebug()<<"Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
+    qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
     if(QString::compare(QString("%1Export Settings").arg(m_serviceName), QString("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive)==0)
     {
-        qDebug()<<"Not writing entry of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
+        qCDebug(KIPIPLUGINS_LOG) << "Not writing entry of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
 	return;
     }
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,m_username));
     grp.writeEntry("username",m_username);
-    qDebug()<<"Token written of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username)<<" is "<<m_token;
+    qCDebug(KIPIPLUGINS_LOG) << "Token written of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username)<<" is "<<m_token;
     grp.writeEntry("token", m_token);
     grp.writeEntry("Export Host Tags",                  m_exportHostTagsCheckBox->isChecked());
     grp.writeEntry("Show Extended Tag Options",         m_extendedTagsButton->isChecked());
@@ -421,10 +422,10 @@ void FlickrWindow::slotDoLogin()
 
 void FlickrWindow::slotTokenObtained(const QString& token)
 {
-    qDebug()<<"Token Obtained is : "<<token;
+    qCDebug(KIPIPLUGINS_LOG) << "Token Obtained is : "<<token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
-    qDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
+    qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
     
     KConfig config("kipirc");
@@ -474,7 +475,7 @@ void FlickrWindow::slotError(const QString& msg)
 void FlickrWindow::slotUserChangeRequest()
 {
     writeSettings();
-    qDebug() << "Slot Change User Request ";
+    qCDebug(KIPIPLUGINS_LOG) << "Slot Change User Request ";
     m_select->reactivate();
     readSettings(m_select->getUname());
     if (m_token.length() < 1)
@@ -495,11 +496,11 @@ void FlickrWindow::slotRemoveAccount()
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName).arg(m_username));
     if(grp.exists())
     {
-        qDebug()<<"Removing Account having group"<<QString("%1%2Export Settings").arg(m_serviceName);
+        qCDebug(KIPIPLUGINS_LOG) << "Removing Account having group"<<QString("%1%2Export Settings").arg(m_serviceName);
 	grp.deleteGroup();
     }
     m_username = QString();
-    qDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username;
+    qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
 }
 /**
@@ -589,7 +590,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
         fps.id = id;
 
-        qDebug() << "Created new photoset with temporary id " << id;
+        qCDebug(KIPIPLUGINS_LOG) << "Created new photoset with temporary id " << id;
         // Append the new photoset to the list.
         m_talker->m_photoSetsList->prepend(fps);
         m_talker->m_selectedPhotoSet = fps;
@@ -599,7 +600,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
     }
     else
     {
-        qDebug() << "New Photoset creation aborted ";
+        qCDebug(KIPIPLUGINS_LOG) << "New Photoset creation aborted ";
     }
 
     delete dlg;
@@ -629,7 +630,7 @@ void FlickrWindow::slotOpenPhoto( const QUrl &url )
 
 void FlickrWindow::slotPopulatePhotoSetComboBox()
 {
-    qDebug() << "slotPopulatePhotoSetComboBox invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "slotPopulatePhotoSetComboBox invoked";
 
     if (m_talker && m_talker->m_photoSetsList)
     {
@@ -664,7 +665,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
 */
 void FlickrWindow::slotUser1()
 {
-    qDebug() << "SlotUploadImages invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages invoked";
 
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
 
@@ -684,7 +685,7 @@ void FlickrWindow::slotUser1()
         if (lvItem)
         {
             KPImageInfo info(lvItem->url());
-            qDebug() << "Adding images to the list";
+            qCDebug(KIPIPLUGINS_LOG) << "Adding images to the list";
             FPhotoInfo temp;
 
             temp.title                 = info.title();
@@ -750,7 +751,7 @@ void FlickrWindow::slotUser1()
 
             while (itTags != allTags.end())
             {
-                qDebug() << "Tags list: " << (*itTags);
+                qCDebug(KIPIPLUGINS_LOG) << "Tags list: " << (*itTags);
                 ++itTags;
             }
 
@@ -763,7 +764,7 @@ void FlickrWindow::slotUser1()
     m_uploadCount = 0;
     m_widget->progressBar()->reset();
     slotAddPhotoNext();
-    qDebug() << "SlotUploadImages done";
+    qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages done";
 }
 
 void FlickrWindow::slotAddPhotoNext()
@@ -808,7 +809,7 @@ void FlickrWindow::slotAddPhotoNext()
         }
     }
     
-    qDebug()<<"Max allowed file size is : "<<((m_talker->getMaxAllowedFileSize()).toLongLong())<<"File Size is "<<info.size;
+    qCDebug(KIPIPLUGINS_LOG) << "Max allowed file size is : "<<((m_talker->getMaxAllowedFileSize()).toLongLong())<<"File Size is "<<info.size;
     
     if(info.size > ((m_talker->getMaxAllowedFileSize()).toLongLong()))
     {
@@ -817,7 +818,7 @@ void FlickrWindow::slotAddPhotoNext()
     }
     else
     {
-        qDebug()<<"File size is within max allowed limit.";
+        qCDebug(KIPIPLUGINS_LOG) << "File size is within max allowed limit.";
         bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
                                   m_sendOriginalCheckBox->isChecked(),

@@ -68,6 +68,7 @@
 #include "mpform.h"
 #include "flickritem.h"
 #include "flickrwindow.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
 
@@ -174,7 +175,7 @@ void FlickrTalker::maxAllowedFileSize()
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "Get max file size url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Get max file size url: " << url;
 
     KIO::TransferJob* job = 0;
     
@@ -244,7 +245,7 @@ void FlickrTalker::getFrob()
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "Get frob url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Get frob url: " << url;
 
     KIO::TransferJob* job = 0;
 
@@ -293,7 +294,7 @@ void FlickrTalker::checkToken(const QString& token)
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "Check token url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Check token url: " << url;
     QByteArray tmp;
 
     KIO::TransferJob* job = 0;
@@ -342,7 +343,7 @@ void FlickrTalker::slotAuthenticate()
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "Authenticate url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Authenticate url: " << url;
 
     KToolInvocation::invokeBrowser(url.url());
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
@@ -362,7 +363,7 @@ void FlickrTalker::slotAuthenticate()
     }
     else
     {
-        qDebug() << "User didn't proceed with getToken Authorization, cannot proceed further, aborting";
+        qCDebug(KIPIPLUGINS_LOG) << "User didn't proceed with getToken Authorization, cannot proceed further, aborting";
         cancel();
     }
 }
@@ -384,7 +385,7 @@ void FlickrTalker::getToken()
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "Get token url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Get token url: " << url;
 
     KIO::TransferJob* job = 0;
 
@@ -423,7 +424,7 @@ void FlickrTalker::listPhotoSets()
         m_job->kill();
         m_job = 0;
     }
-    qDebug() << "List photoset invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "List photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem("auth_token", m_token);
@@ -433,7 +434,7 @@ void FlickrTalker::listPhotoSets()
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "List photoset URL" << url;
+    qCDebug(KIPIPLUGINS_LOG) << "List photoset URL" << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
 
@@ -484,7 +485,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "Get photo property url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "Get photo property url: " << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
 
@@ -529,7 +530,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
         m_job = 0;
     }
 
-    qDebug() << "create photoset invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "create photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
     urlQuery.addQueryItem("auth_token", m_token);
@@ -542,7 +543,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem("api_sig", md5);
     url.setQuery(urlQuery);
-    qDebug() << "List photo sets url: " << url;
+    qCDebug(KIPIPLUGINS_LOG) << "List photo sets url: " << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
 
@@ -581,7 +582,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
         m_job = 0;
     }
 
-    qDebug() << "addPhotoToPhotoSet invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "addPhotoToPhotoSet invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
 
@@ -611,7 +612,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
 	url.setQuery(urlQuery);
 
         QByteArray tmp;
-        qDebug() << "Add photo to Photo set url: " << url;
+        qCDebug(KIPIPLUGINS_LOG) << "Add photo to Photo set url: " << url;
         KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
@@ -745,7 +746,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             qWarning() << "(flickrExport::Image doesn't have metadata)";
         }
 
-        qDebug() << "Resizing and saving to temp file: " << path;
+        qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path;
     }
 
     if (!form.addFile("photo", path))
@@ -995,7 +996,7 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
                     {
                         QDomAttr a = e.attributeNode("maxupload");
 			m_maxSize = a.value();
-			qDebug()<<"Max upload size is"<<m_maxSize;
+			qCDebug(KIPIPLUGINS_LOG) << "Max upload size is"<<m_maxSize;
                     } 
 		}
 		details = details.nextSibling();
@@ -1003,10 +1004,10 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
 	}
 	if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             errorString = node.toElement().attribute("code");
-            qDebug() << "Error code=" << errorString;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
         }
 	node = node.nextSibling();
     }
@@ -1031,23 +1032,23 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
         if (node.isElement() && node.nodeName() == "frob")
         {
             QDomElement e = node.toElement();    // try to convert the node to an element.
-            qDebug() << "Frob is" << e.text();
+            qCDebug(KIPIPLUGINS_LOG) << "Frob is" << e.text();
             m_frob        = e.text();            // this is what is obtained from data.
             success       = true;
         }
 
         if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             errorString = node.toElement().attribute("code");
-            qDebug() << "Error code=" << errorString;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
         }
 
         node = node.nextSibling();
     }
 
-    qDebug() << "GetFrob finished";
+    qCDebug(KIPIPLUGINS_LOG) << "GetFrob finished";
     m_authProgressDlg->setMaximum(4);
     m_authProgressDlg->setValue(2);
     m_state = FE_GETAUTHORIZED;
@@ -1094,13 +1095,13 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
 
                     if (details.nodeName() == "token")
                     {
-                        qDebug() << "Token=" << e.text();
+                        qCDebug(KIPIPLUGINS_LOG) << "Token=" << e.text();
                         m_token = e.text();//this is what is obtained from data.
                     }
 
                     if (details.nodeName() == "perms")
                     {
-                        qDebug() << "Perms=" << e.text();
+                        qCDebug(KIPIPLUGINS_LOG) << "Perms=" << e.text();
                         QString perms = e.text();//this is what is obtained from data.
 
                         if (perms == "write")
@@ -1119,12 +1120,12 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
 
                     if (details.nodeName() == "user")
                     {
-                        qDebug() << "nsid=" << e.attribute("nsid");
+                        qCDebug(KIPIPLUGINS_LOG) << "nsid=" << e.attribute("nsid");
                         m_userId   = e.attribute("nsid");
                         username   = e.attribute("username");
                         m_username = username;
-                        qDebug() << "username=" << e.attribute("username");
-                        qDebug() << "fullname=" << e.attribute("fullname");
+                        qCDebug(KIPIPLUGINS_LOG) << "username=" << e.attribute("username");
+                        qCDebug(KIPIPLUGINS_LOG) << "fullname=" << e.attribute("fullname");
                     }
                 }
 
@@ -1138,10 +1139,10 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
 
         if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             errorString = node.toElement().attribute("code");
-            qDebug() << "Error code=" << errorString;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
 
             int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
                                                      i18n("Your token is invalid. Would you like to "
@@ -1167,7 +1168,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
         emit signalError(errorString);
     }
 
-    qDebug() << "CheckToken finished";
+    qCDebug(KIPIPLUGINS_LOG) << "CheckToken finished";
 }
 
 void FlickrTalker::parseResponseGetToken(const QByteArray& data)
@@ -1200,20 +1201,20 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 
                     if (details.nodeName() == "token")
                     {
-                        qDebug() << "Token=" << e.text();
+                        qCDebug(KIPIPLUGINS_LOG) << "Token=" << e.text();
                         m_token = e.text();      //this is what is obtained from data.
                     }
 
                     if (details.nodeName() == "perms")
                     {
-                        qDebug() << "Perms=" << e.text();
+                        qCDebug(KIPIPLUGINS_LOG) << "Perms=" << e.text();
                     }
 
                     if (details.nodeName() == "user")
                     {
-                        qDebug() << "nsid=" << e.attribute("nsid");
-                        qDebug() << "username=" << e.attribute("username");
-                        qDebug() << "fullname=" << e.attribute("fullname");
+                        qCDebug(KIPIPLUGINS_LOG) << "nsid=" << e.attribute("nsid");
+                        qCDebug(KIPIPLUGINS_LOG) << "username=" << e.attribute("username");
+                        qCDebug(KIPIPLUGINS_LOG) << "fullname=" << e.attribute("fullname");
                         m_username = e.attribute("username");
                         m_userId   = e.attribute("nsid");
                     }
@@ -1226,17 +1227,17 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
         }
         else if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             errorString = node.toElement().attribute("code");
-            qDebug() << "Error code=" << errorString;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
             //emit signalError(code);
         }
 
         node = node.nextSibling();
     }
 
-    qDebug() << "GetToken finished";
+    qCDebug(KIPIPLUGINS_LOG) << "GetToken finished";
     //emit signalBusy( false );
     m_authProgressDlg->hide();
 
@@ -1252,7 +1253,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 
 void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
 {
-    qDebug() << "Parse response create photoset received " << data;
+    qCDebug(KIPIPLUGINS_LOG) << "Parse response create photoset received " << data;
 
     //bool success = false;
 
@@ -1291,17 +1292,17 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
             // Set the new id in the selected photo set.
             m_selectedPhotoSet.id = new_id;
 
-            qDebug() << "PhotoSet created successfully with id" << new_id;
+            qCDebug(KIPIPLUGINS_LOG) << "PhotoSet created successfully with id" << new_id;
             emit signalAddPhotoSetSucceeded();
         }
 
         if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             QString code = node.toElement().attribute("code");
-            qDebug() << "Error code=" << code;
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
             QString msg = node.toElement().attribute("msg");
-            qDebug() << "Msg=" << msg;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << msg;
             KMessageBox::error(kapp->activeWindow(), i18n("PhotoSet creation failed: ") + msg);
         }
 
@@ -1311,7 +1312,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
 
 void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 {
-    qDebug() << "parseResponseListPhotosets" << data;
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseListPhotosets" << data;
     bool success = false;
     QDomDocument doc("getListPhotoSets");
 
@@ -1344,7 +1345,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
                     if (detailsNode.nodeName() == "photoset")
                     {
-                        qDebug() << "id=" << e.attribute("id");
+                        qCDebug(KIPIPLUGINS_LOG) << "id=" << e.attribute("id");
                         photoSet_id              = e.attribute("id");     // this is what is obtained from data.
                         fps.id                   = photoSet_id;
                         QDomNode photoSetDetails = detailsNode.firstChild();
@@ -1356,13 +1357,13 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
                             if (photoSetDetails.nodeName() == "title")
                             {
-                                qDebug() << "Title=" << e_detail.text();
+                                qCDebug(KIPIPLUGINS_LOG) << "Title=" << e_detail.text();
                                 photoSet_title = e_detail.text();
                                 fps.title      = photoSet_title;
                             }
                             else if (photoSetDetails.nodeName() == "description")
                             {
-                                qDebug() << "Description =" << e_detail.text();
+                                qCDebug(KIPIPLUGINS_LOG) << "Description =" << e_detail.text();
                                 photoSet_description = e_detail.text();
                                 fps.description      = photoSet_description;
                             }
@@ -1383,17 +1384,17 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
         if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             QString code = node.toElement().attribute("code");
-            qDebug() << "Error code=" << code;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
             emit signalError(code);
         }
 
         node = node.nextSibling();
     }
 
-    qDebug() << "GetPhotoList finished";
+    qCDebug(KIPIPLUGINS_LOG) << "GetPhotoList finished";
 
     if (!success)
     {
@@ -1459,16 +1460,16 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
             e                = node.toElement();           // try to convert the node to an element.
             QDomNode details = e.firstChild();
             photoId          = e.text();
-            qDebug() << "Photoid= " << photoId;
+            qCDebug(KIPIPLUGINS_LOG) << "Photoid= " << photoId;
             success          = true;
         }
 
         if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             QString code = node.toElement().attribute("code");
-            qDebug() << "Error code=" << code;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
             emit signalError(code);
         }
 
@@ -1485,7 +1486,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
 
         if (photoSetId == "-1")
         {
-            qDebug() << "PhotoSet Id not set, not adding the photo to any photoset";
+            qCDebug(KIPIPLUGINS_LOG) << "PhotoSet Id not set, not adding the photo to any photoset";
             emit signalAddPhotoSucceeded();
         }
         else
@@ -1525,23 +1526,23 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
         {
             e       = node.toElement();                 // try to convert the node to an element.
             QDomNode details = e.firstChild();
-            qDebug() << "Photoid=" << e.text();
+            qCDebug(KIPIPLUGINS_LOG) << "Photoid=" << e.text();
             success = true;
         }
 
         if (node.isElement() && node.nodeName() == "err")
         {
-            qDebug() << "Checking Error in response";
+            qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             QString code = node.toElement().attribute("code");
-            qDebug() << "Error code=" << code;
-            qDebug() << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
             emit signalError(code);
         }
 
         node = node.nextSibling();
     }
 
-    qDebug() << "GetToken finished";
+    qCDebug(KIPIPLUGINS_LOG) << "GetToken finished";
 
     if (!success)
     {
@@ -1555,7 +1556,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
 
 void FlickrTalker::parseResponseAddPhotoToPhotoSet(const QByteArray& data)
 {
-    qDebug() << "parseResponseListPhotosets" << data;
+    qCDebug(KIPIPLUGINS_LOG) << "parseResponseListPhotosets" << data;
     emit signalAddPhotoSucceeded();
 }
 
