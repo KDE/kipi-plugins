@@ -40,7 +40,6 @@
 #include <kmimetype.h>
 #include <QUrl>
 #include <krandom.h>
-#include <kdebug.h>
 
 namespace KIPIFlickrExportPlugin
 {
