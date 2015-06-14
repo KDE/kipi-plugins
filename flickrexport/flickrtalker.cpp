@@ -138,14 +138,22 @@ FlickrTalker::~FlickrTalker()
 QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 {
     QUrlQuery urlQuery(url.query());
-    QList<QPair<QString, QString> > queries = urlQuery.queryItems();
-    QString compressed(secret);
+    QList<QPair<QString, QString> > temp_queries = urlQuery.queryItems();
+    QMap<QString, QString> queries;
     
     QPair<QString, QString> pair;
-    foreach(pair,queries)
+    foreach(pair,temp_queries)
     {
-        compressed.append(pair.first);
-	compressed.append(pair.second);
+        queries.insert(pair.first,pair.second);
+    }
+    
+    QString compressed(secret);
+    
+    // NOTE: iterator QMap iterator will sort alphabetically items based on key values.
+    for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
+    {
+        compressed.append(it.key());
+        compressed.append(it.value());
     }
 
     QCryptographicHash context(QCryptographicHash::Md5);
@@ -698,7 +706,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     QImage image;
 
     // Check if RAW file.
-    if (KPMetadata::isRawFile(QUrl(photoPath)))
+    if (KPMetadata::isRawFile(QUrl::fromLocalFile(photoPath)))
     {
         KDcrawIface::KDcraw::loadRawPreview(image, photoPath);
     }
