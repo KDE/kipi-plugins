@@ -40,6 +40,7 @@
 #include <kmimetype.h>
 #include <QUrl>
 #include <krandom.h>
+#include <kdebug.h>
 
 namespace KIPIFlickrExportPlugin
 {
@@ -104,7 +105,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl(path));
+    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
     QString mime       = ptr->name();
 
     if (mime.isEmpty())
@@ -134,7 +135,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += name.toAscii();
     str += "\"; ";
     str += "filename=\"";
-    str += QFile::encodeName(QUrl(path).fileName());
+    str += QFile::encodeName(QUrl::fromLocalFile(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: ";
     str += file_size.toAscii();
