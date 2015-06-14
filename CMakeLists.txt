@@ -141,11 +141,11 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
-# 
-#     if(NOT WIN32 AND NOT APPLE)
-#         MACRO_OPTIONAL_FIND_PACKAGE(X11)                                     # For AdvancedSlideshow and ImageViewer.
-#     endif()
-# 
+
+    if(NOT WIN32 AND NOT APPLE)
+        find_package(X11)                                                      # For AdvancedSlideshow and ImageViewer.
+    endif()
+
 #     # -- OpenCV ----------------------------------------------------------------------------------------
 # 
 #     include(MacroUtils)
@@ -198,9 +198,9 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
 
     # LINUX Only.
-#     if(NOT WIN32 AND NOT APPLE)
-#         PRINT_OPTIONAL_LIBRARY_STATUS("libX11" "http://www.x11.org" "(version >= 1.1.5)" "Kipi-plugins will be compiled without libX11 support." X11_FOUND AND X11_Xrandr_FOUND)
-#     endif()
+    if(NOT WIN32 AND NOT APPLE)
+        PRINT_OPTIONAL_LIBRARY_STATUS("libX11" "http://www.x11.org" "(version >= 1.1.5)" "Kipi-plugins will be compiled without libX11 support." X11_FOUND AND X11_Xrandr_FOUND)
+    endif()
 
     # Optional plugins results ----------------------------------------------------------------------------
 
