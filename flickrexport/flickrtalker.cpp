@@ -43,6 +43,7 @@
 #include <QProgressDialog>
 #include <QUrlQuery>
 #include <QDebug>
+#include <QStandardPaths>
 
 // KDE includes
 
@@ -53,7 +54,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
@@ -717,7 +717,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (!image.isNull())
     {
-        path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
+        path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString("/") + QFileInfo(photoPath).baseName().trimmed() + ".jpg";
 
         if (sendOriginal)
         {

@@ -39,11 +39,12 @@ extern "C"
 //Qt includes
 #include <QDebug>
 #include <QtWidgets/QApplication>
+#include <QStandardPaths>
+#include <QDir>
 
 // KDE includes
 #include <KPluginFactory>
 #include <kiconloader.h>
-#include <kstandarddirs.h>
 #include <KWindowSystem>
 
 // LibKIPI includes
@@ -137,8 +138,8 @@ void Plugin_FlickrExport::setupActions()
 void Plugin_FlickrExport::slotActivateFlickr()
 {
     selectFlickr->reactivate();
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/"));
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/");
+    QDir().mkpath(tmp);
     
     if (!m_dlgFlickr)
     {
@@ -161,8 +162,8 @@ void Plugin_FlickrExport::slotActivateFlickr()
 void Plugin_FlickrExport::slotActivate23()
 {
     select23->reactivate();
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/"));
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/");
+    QDir().mkpath(tmp);
     
     if (!m_dlg23)
     {
@@ -185,8 +186,8 @@ void Plugin_FlickrExport::slotActivate23()
 void Plugin_FlickrExport::slotActivateZooomr()
 {
     selectZoomr->reactivate();
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/"));
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/");
+    QDir().mkpath(tmp);
     
     if (!m_dlgZooomr)
     {
