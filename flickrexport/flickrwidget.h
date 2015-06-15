@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QWidget>
+#include <QTabWidget>
 
 // Local includes
 
@@ -41,7 +42,6 @@ class QLabel;
 class QTreeWidgetItem;
 
 class KComboBox;
-class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
 
@@ -101,7 +101,7 @@ private: // Functions
 
 private: // Data
 
-    KTabWidget*                         m_tab;
+    QTabWidget*                         m_tab;
 
     KHTMLPart*                          m_photoView;
 

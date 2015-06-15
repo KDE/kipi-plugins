@@ -45,7 +45,6 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kparts/browserhostextension.h>
-#include <ktabwidget.h>
 #include <krun.h>
 #include <kconfig.h>
 #include <kdeversion.h>

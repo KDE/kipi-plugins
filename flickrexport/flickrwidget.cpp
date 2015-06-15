@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <kcombobox.h>
-#include <ktabwidget.h>
 #include <klineedit.h>
 #include <QDialog>
 #include "kdialog.h"
@@ -49,6 +48,7 @@
 #include <khtml_part.h>
 #include <kseparator.h>
 #include <kiconloader.h>
+
 
 // LibKIPI includes
 
@@ -73,7 +73,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     QVBoxLayout* const flickrWidgetLayout = new QVBoxLayout(this);
     m_photoView                           = 0; //new KHTMLPart(splitter);
     KSeparator* const line                = new KSeparator(Qt::Horizontal, this);
-    m_tab                                 = new KTabWidget(this);
+    m_tab                                 = new QTabWidget(this);
     QLabel* const headerLabel             = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
