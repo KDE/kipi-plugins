@@ -49,7 +49,6 @@
 #include <khtml_part.h>
 #include <kseparator.h>
 #include <kiconloader.h>
-#include <kapplication.h>
 
 // LibKIPI includes
 
