@@ -41,18 +41,9 @@ extern "C"
 
 // KDE includes
 #include <KPluginFactory>
-#include <klocale.h>
-#include <kaction.h>
-#include <kgenericfactory.h>
 #include <kiconloader.h>
-#include <klibloader.h>
-#include <kconfig.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
-#include <kactioncollection.h>
-#include <kwindowsystem.h>
-
-#include <KLocalizedString>
 #include <KWindowSystem>
 
 // LibKIPI includes
@@ -106,7 +97,7 @@ void Plugin_FlickrExport::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
-    m_actionFlickr = new KAction(this);
+    m_actionFlickr = new QAction(this);
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(QIcon::fromTheme("kipi-flickr"));
     m_actionFlickr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_R));
@@ -118,7 +109,7 @@ void Plugin_FlickrExport::setupActions()
 
     addAction("flickrexport", m_actionFlickr);
 
-    m_action23 = new KAction(this);
+    m_action23 = new QAction(this);
     m_action23->setText(i18n("Export to &23..."));
     m_action23->setIcon(QIcon::fromTheme("kipi-hq"));
     m_action23->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_2));
@@ -130,7 +121,7 @@ void Plugin_FlickrExport::setupActions()
 
     addAction("23export", m_action23);
 
-    m_actionZooomr = new KAction(this);
+    m_actionZooomr = new QAction(this);
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
     m_actionZooomr->setIcon(QIcon::fromTheme("kipi-zooomr"));
     m_actionZooomr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_Z));

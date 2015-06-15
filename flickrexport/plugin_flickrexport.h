@@ -27,12 +27,11 @@
 // Qt includes
 
 #include <QVariant>
+#include <QtWidgets/QAction>
 
 // LibKIPI includes
 
 #include <plugin.h>
-
-class KAction;
 
 using namespace KIPI;
 
@@ -65,9 +64,9 @@ private:
 
 private:
 
-    KAction*      m_actionFlickr;
-    KAction*      m_action23;
-    KAction*      m_actionZooomr;
+    QAction*      m_actionFlickr;
+    QAction*      m_action23;
+    QAction*      m_actionZooomr;
 
     FlickrWindow* m_dlgFlickr;
     FlickrWindow* m_dlg23;
