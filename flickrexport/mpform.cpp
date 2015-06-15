@@ -37,9 +37,11 @@
 
 #include <QApplication>
 #include "kipiplugins_debug.h"
-#include <kmimetype.h>
+
 #include <QUrl>
 #include <krandom.h>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 namespace KIPIFlickrExportPlugin
 {
@@ -104,8 +106,9 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
-    QString mime       = ptr->name();
+    QMimeDatabase db;
+    QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
+    QString mime       = ptr.name();
 
     if (mime.isEmpty())
     {

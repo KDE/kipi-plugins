@@ -53,7 +53,6 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
