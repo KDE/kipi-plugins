@@ -38,11 +38,11 @@ extern "C"
 
 //Qt includes
 #include <QDebug>
+#include <QtWidgets/QApplication>
 
 // KDE includes
 #include <KPluginFactory>
 #include <kiconloader.h>
-#include <kapplication.h>
 #include <kstandarddirs.h>
 #include <KWindowSystem>
 
@@ -143,7 +143,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(tmp, kapp->activeWindow(), "Flickr", selectFlickr);
+        m_dlgFlickr = new FlickrWindow(tmp, QApplication::activeWindow(), "Flickr", selectFlickr);
     }
     else
     {
@@ -167,7 +167,7 @@ void Plugin_FlickrExport::slotActivate23()
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(tmp, kapp->activeWindow(), "23", select23);
+        m_dlg23 = new FlickrWindow(tmp, QApplication::activeWindow(), "23", select23);
     }
     else
     {
@@ -191,7 +191,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, kapp->activeWindow(), "Zooomr",selectZoomr);
+        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), "Zooomr",selectZoomr);
     }
     else
     {
