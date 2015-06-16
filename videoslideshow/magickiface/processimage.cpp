@@ -150,7 +150,7 @@ MagickImage* ProcessImage::transition(const MagickImage& from, const MagickImage
 {
     int w, h;
 
-    if (step <= 0 || step >= steps)
+    if (step < 0 || step >= steps)
     {
         Q_EMIT signalProcessError(QString("step: %1 is out of range (%2)").arg(step).arg(steps));
         return 0;
