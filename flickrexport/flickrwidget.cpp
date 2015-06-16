@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <kcombobox.h>
-#include <klineedit.h>
 #include <QDialog>
 #include <klocale.h>
 #include <kparts/browserhostextension.h>
@@ -235,7 +234,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
     QLabel* const tagsLabel         = new QLabel(i18n("Added Tags: "), m_extendedTagsBox);
-    m_tagsLineEdit                  = new KLineEdit(m_extendedTagsBox);
+    m_tagsLineEdit                  = new QLineEdit(m_extendedTagsBox);
     m_tagsLineEdit->setToolTip(i18n("Enter new tags here, separated by commas."));
     m_addExtraTagsCheckBox          = new QCheckBox(m_extendedTagsBox);
     m_addExtraTagsCheckBox->setText(i18n("Add tags per image"));

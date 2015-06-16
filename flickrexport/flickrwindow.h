@@ -31,6 +31,7 @@
 #include <QPair>
 #include <QLabel>
 #include <QLinkedList>
+#include <QLineEdit>
 
 // KDE includes
 #include <QUrl>
@@ -49,7 +50,6 @@ class QPushButton;
 class QSpinBox;
 class QCheckBox;
 
-class KLineEdit;
 class KHTMLPart;
 class QUrl;
 class KComboBox;
@@ -184,7 +184,7 @@ private:
 //  KWallet::Wallet*                       m_wallet;
     KHTMLPart*                             m_photoView;
 
-    KLineEdit*                             m_tagsLineEdit;
+    QLineEdit*                             m_tagsLineEdit;
 
     FlickrWidget*                          m_widget;
     FlickrTalker*                          m_talker;
