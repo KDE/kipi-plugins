@@ -29,12 +29,15 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
+
 // KDE includes
 
 #include <QDialog>
 #include <klineedit.h>
 #include <klocalizedstring.h>
-#include <kseparator.h>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 
@@ -60,7 +63,7 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
 
-    KSeparator* const hline = new KSeparator(Qt::Horizontal, this);
+    KDcrawIface::RLineWidget* const hline = new KDcrawIface::RLineWidget(Qt::Horizontal, this);
 
     QGridLayout* const centerLayout = new QGridLayout();
 
