@@ -23,9 +23,11 @@
 #ifndef FLICKRLIST_H
 #define FLICKRLIST_H
 
-//Qt includes
+// Qt includes
+
 #include <QUrl>
 #include <QList>
+
 // KDE includes
 
 #include <klineedit.h>
@@ -45,7 +47,8 @@ class FlickrList : public KPImagesList
 
 public:
 
-    /* The different columns in a Flickr list. */
+    /** The different columns in a Flickr list.
+     */
     enum FieldType
     {
         SAFETYLEVEL = KPImagesListView::User1,
@@ -56,7 +59,8 @@ public:
         FRIENDS     = KPImagesListView::User6
     };
 
-    /* The different possible safety levels recognized by Flickr. */
+    /** The different possible safety levels recognized by Flickr.
+     */
     enum SafetyLevel
     {
         SAFE        = 1,
@@ -65,7 +69,8 @@ public:
         MIXEDLEVELS = -1
     };
 
-    /* The different possible content types recognized by Flickr. */
+    /** The different possible content types recognized by Flickr.
+     */
     enum ContentType
     {
         PHOTO      = 1,
@@ -153,7 +158,8 @@ public:
      */
     QStringList extraTags() const;
 
-    /* This method should be called when one of the checkboxes is clicked. */
+    /** This method should be called when one of the checkboxes is clicked.
+     */
     void toggled();
 
     virtual void updateItemWidgets();
@@ -169,8 +175,7 @@ private:
     FlickrList::SafetyLevel m_safetyLevel;
     FlickrList::ContentType m_contentType;
 
-    /**
-     * LineEdit used for extra tags per image.
+    /** LineEdit used for extra tags per image.
      */
     KLineEdit*              m_tagLineEdit;
 };

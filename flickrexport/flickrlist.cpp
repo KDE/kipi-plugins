@@ -30,12 +30,12 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 #include <kiconloader.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "comboboxdelegate.h"
 
 namespace KIPIFlickrExportPlugin
