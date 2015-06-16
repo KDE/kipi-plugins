@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,16 +32,18 @@
 
 #include <QFile>
 #include <QUrl>
+#include <QApplication>
+#include <QUrl>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 // KDE includes
 
-#include <QApplication>
-#include "kipiplugins_debug.h"
-
-#include <QUrl>
 #include <krandom.h>
-#include <QMimeDatabase>
-#include <QMimeType>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -108,7 +110,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 {
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
-    QString mime       = ptr.name();
+    QString mime  = ptr.name();
 
     if (mime.isEmpty())
     {
