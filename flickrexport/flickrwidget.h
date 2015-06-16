@@ -28,6 +28,7 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <QLineEdit>
 
 // Local includes
 
@@ -42,7 +43,6 @@ class QLabel;
 class QTreeWidgetItem;
 
 class KComboBox;
-class KLineEdit;
 class KHTMLPart;
 
 namespace KIPIPlugins
@@ -129,7 +129,7 @@ private: // Data
     QGroupBox*                          m_extendedPublicationBox;
     QGroupBox*                          m_resizingBox;
 
-    KLineEdit*                          m_tagsLineEdit;
+    QLineEdit*                          m_tagsLineEdit;
 
     ComboBoxIntermediate*               m_contentTypeComboBox;
     ComboBoxIntermediate*               m_safetyLevelComboBox;

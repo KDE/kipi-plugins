@@ -39,7 +39,6 @@
 // KDE includes
 
 #include <kcombobox.h>
-#include <klineedit.h>
 #include <QMenu>
 #include <klocale.h>
 #include <kmessagebox.h>

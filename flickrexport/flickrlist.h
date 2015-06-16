@@ -27,10 +27,7 @@
 
 #include <QUrl>
 #include <QList>
-
-// KDE includes
-
-#include <klineedit.h>
+#include <QLineEdit>
 
 // Local includes
 
@@ -177,7 +174,7 @@ private:
 
     /** LineEdit used for extra tags per image.
      */
-    KLineEdit*              m_tagLineEdit;
+    QLineEdit*              m_tagLineEdit;
 };
 
 } // namespace KIPIFlickrExportPlugin

@@ -454,7 +454,7 @@ FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
 
 void FlickrListViewItem::updateItemWidgets()
 {
-    m_tagLineEdit = new KLineEdit(view());
+    m_tagLineEdit = new QLineEdit(view());
     m_tagLineEdit->setToolTip(i18n("Enter extra tags, separated by commas."));
     view()->setItemWidget(this, static_cast<KPImagesListView::ColumnType>(
                           FlickrList::TAGS), m_tagLineEdit);
