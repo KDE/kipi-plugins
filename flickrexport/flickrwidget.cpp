@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -38,22 +38,21 @@
 #include <QTreeWidget>
 #include <QApplication>
 #include <QStyle>
+#include <QDialog>
 
 // KDE includes
 
+#include <kconfiggroup.h>
 #include <kcombobox.h>
-#include <QDialog>
 #include <klocale.h>
 #include <kparts/browserhostextension.h>
 #include <khtml_part.h>
 #include <kseparator.h>
 #include <kiconloader.h>
 
-
 // LibKIPI includes
 
 #include <interface.h>
-#include <KConfigGroup>
 
 // Local includes
 
