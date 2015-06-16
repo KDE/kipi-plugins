@@ -452,6 +452,11 @@ FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
     updateItemWidgets();
 }
 
+FlickrListViewItem::~FlickrListViewItem()
+{
+    
+}
+
 void FlickrListViewItem::updateItemWidgets()
 {
     m_tagLineEdit = new QLineEdit(view());
