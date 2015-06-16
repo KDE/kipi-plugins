@@ -50,14 +50,16 @@ class ComboBoxDelegate : public QAbstractItemDelegate
 
 public:
 
-    ComboBoxDelegate(KPImagesList* const, QMap<int, QString>);
+    ComboBoxDelegate(KPImagesList* const, const QMap<int, QString>&);
 
     /* Whenever an element needs to be edited, this method should be called.
      * It's actually a hack to prevent the item text shining through whenever
-     * editing occurs. */
+     * editing occurs.
+     */
     void startEditing(QTreeWidgetItem*, int);
 
-    /* Overloaded functions to provide the delegate functionality. */
+    /* Overloaded functions to provide the delegate functionality.
+     */
     void paint(QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
     QWidget* createEditor(QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const;
@@ -66,19 +68,19 @@ public:
 
 private Q_SLOTS:
 
-    void commitAndCloseEditor(int);
+    void slotCommitAndCloseEditor(int);
     void slotResetEditedState(QObject*);
 
 private:
 
-    KPImagesList*            m_parent;
-    QMap<int, QString>       m_items;
+    KPImagesList*      m_parent;
+    QMap<int, QString> m_items;
 
     /* The row in the view that is currently being edited. Should be -1 to
      * indicate that no row is edited. */
-    int                      m_rowEdited;
+    int                m_rowEdited;
 
-    QSize                    m_size;
+    QSize              m_size;
 };
 
 } // namespace KIPIFlickrExportPlugin

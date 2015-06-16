@@ -32,12 +32,15 @@
 // KDE includes
 
 #include <klocalizedstring.h>
+
+// Local includes
+
 #include "kipiplugins_debug.h"
 
 namespace KIPIFlickrExportPlugin
 {
 
-ComboBoxDelegate::ComboBoxDelegate(KPImagesList* const parent, QMap<int, QString> items)
+ComboBoxDelegate::ComboBoxDelegate(KPImagesList* const parent, const QMap<int, QString>& items)
     : QAbstractItemDelegate(parent),
       m_parent(parent),
       m_items(items),
@@ -136,7 +139,7 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
     // If the index is changed, the editing should be finished and the editor
     // destroyed.
     connect(cb, SIGNAL(activated(int)),
-            this, SLOT(commitAndCloseEditor(int)));
+            this, SLOT(slotCommitAndCloseEditor(int)));
 
     // To keep track of the item being edited, the m_rowEdited parameter should
     // be reset when the editor is destroyed.
@@ -169,7 +172,7 @@ void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
     model->setData(index, selected);
 }
 
-void ComboBoxDelegate::commitAndCloseEditor(int)
+void ComboBoxDelegate::slotCommitAndCloseEditor(int)
 {
     // Emit the proper signals when editing has finished.
     QComboBox* const editor = qobject_cast<QComboBox*>(sender());
