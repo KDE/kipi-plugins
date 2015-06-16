@@ -137,7 +137,7 @@ public:
     FlickrListViewItem(KPImagesListView* const view, const QUrl& url,
                        bool, bool, bool, bool,
                        FlickrList::SafetyLevel, FlickrList::ContentType);
-    //virtual ~FlickrListViewItem();
+    ~FlickrListViewItem();
 
     void setPublic(bool);
     void setFamily(bool);
