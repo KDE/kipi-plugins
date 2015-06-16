@@ -122,7 +122,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->panoModifyBinary());
     d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
 #ifdef Q_WS_MAC
-    d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
+    d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");    // Huggin bundle PKG install
+    d->binariesWidget->addDirectory("/opt/local/bin");                    // Std Macports install
+    d->binariesWidget->addDirectory("/opt/digikam/bin");                  // digiKam Bundle PKG install
 #endif
 #ifdef Q_WS_WIN
     d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
