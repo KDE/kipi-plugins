@@ -36,7 +36,6 @@
 // KDE includes
 
 #include <QDialog>
-#include <klineedit.h>
 #include <klocalizedstring.h>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
@@ -67,9 +66,9 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
 
     QGridLayout* const centerLayout = new QGridLayout();
 
-    m_nameEdit   = new KLineEdit(this);
-    m_passwdEdit = new KLineEdit(this);
-    m_passwdEdit->setEchoMode(KLineEdit::Password);
+    m_nameEdit   = new QLineEdit(this);
+    m_passwdEdit = new QLineEdit(this);
+    m_passwdEdit->setEchoMode(QLineEdit::Password);
 
     QLabel* const nameLabel = new QLabel(this);
     nameLabel->setText(i18nc("flickr login", "Username:"));

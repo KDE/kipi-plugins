@@ -29,13 +29,13 @@
 #include <QString>
 #include <QApplication>
 #include <QStyle>
+#include <QLineEdit>
 
 // KDE includes
 
 #include <QDialog>
 
 class QLabel;
-class KLineEdit;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -57,8 +57,8 @@ public:
 private:
 
     QLabel*    m_headerLabel;
-    KLineEdit* m_nameEdit;
-    KLineEdit* m_passwdEdit;
+    QLineEdit* m_nameEdit;
+    QLineEdit* m_passwdEdit;
 };
 
 } // namespace KIPIFlickrExportPlugin
