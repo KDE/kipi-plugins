@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2009 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,7 +61,7 @@ public:
     enum State
     {
         FE_LOGOUT = -1,
-        FE_LOGIN = 0,
+        FE_LOGIN  = 0,
         FE_LISTPHOTOSETS,
         FE_LISTPHOTOS,
         FE_GETPHOTOPROPERTY,
@@ -144,7 +144,7 @@ private Q_SLOTS:
 
     void slotError(const QString& msg);
     void slotAuthenticate();
-    void data(KIO::Job* job, const QByteArray& data);
+    void slotData(KIO::Job* job, const QByteArray& data);
     void slotResult(KJob* job);
 
 private:

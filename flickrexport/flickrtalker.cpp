@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2009 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,8 +49,8 @@
 
 // KDE includes
 
-#include <kcodecs.h>
 #include <kio/jobuidelegate.h>
+#include <kcodecs.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -142,6 +142,7 @@ QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
     QMap<QString, QString> queries;
     
     QPair<QString, QString> pair;
+
     foreach(pair,temp_queries)
     {
         queries.insert(pair.first,pair.second);
@@ -201,7 +202,7 @@ void FlickrTalker::maxAllowedFileSize()
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -271,7 +272,7 @@ void FlickrTalker::getFrob()
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -320,7 +321,7 @@ void FlickrTalker::checkToken(const QString& token)
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -411,7 +412,7 @@ void FlickrTalker::getToken()
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -459,7 +460,7 @@ void FlickrTalker::listPhotoSets()
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -510,7 +511,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -570,7 +571,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
 
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -614,10 +615,10 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
 
         urlQuery.addQueryItem("photo_id", photoId);
         
-	url.setQuery(urlQuery);
+        url.setQuery(urlQuery);
         QString md5 = getApiSig(m_secret, url);
         urlQuery.addQueryItem("api_sig", md5);
-	url.setQuery(urlQuery);
+        url.setQuery(urlQuery);
 
         QByteArray tmp;
         qCDebug(KIPIPLUGINS_LOG) << "Add photo to Photo set url: " << url;
@@ -625,7 +626,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
         connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-                this, SLOT(data(KIO::Job*,QByteArray)));
+                this, SLOT(slotData(KIO::Job*,QByteArray)));
 
         connect(job, SIGNAL(result(KJob*)),
                 this, SLOT(slotResult(KJob*)));
@@ -768,7 +769,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     job->addMetaData("content-type", form.contentType());
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+            this, SLOT(slotData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -804,7 +805,7 @@ void FlickrTalker::cancel()
     }
 }
 
-void FlickrTalker::data(KIO::Job*, const QByteArray& data)
+void FlickrTalker::slotData(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
     {
@@ -910,9 +911,9 @@ void FlickrTalker::slotResult(KJob* kjob)
         }
         else
         {
-	    KIO::JobUiDelegate* job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-            job_ui->setWindow(m_parent);
-            job_ui->showErrorMessage();
+            KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
+                                               job_ui->setWindow(m_parent);
+                                               job_ui->showErrorMessage();
         }
 
         return;
@@ -963,9 +964,10 @@ void FlickrTalker::slotResult(KJob* kjob)
         case (FE_CREATEPHOTOSET):
             parseResponseCreatePhotoSet(m_buffer);
             break;
-	   
-	case (FE_GETMAXSIZE):
-	    parseResponseMaxSize(m_buffer);
+        
+        case (FE_GETMAXSIZE):
+            parseResponseMaxSize(m_buffer);
+            break;
 
         default:  // FR_LOGOUT
             break;
@@ -990,34 +992,37 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
     while (!node.isNull())
     {
         if (node.isElement() && node.nodeName() == "person")
-	{
-	    e                = node.toElement();
+        {
+            e                = node.toElement();
             QDomNode details = e.firstChild();
 
             while (!details.isNull())
             {
                 if (details.isElement())
                 {
-		    e = details.toElement();
+                    e = details.toElement();
 
                     if (details.nodeName() == "photos")
                     {
                         QDomAttr a = e.attributeNode("maxupload");
-			m_maxSize = a.value();
-			qCDebug(KIPIPLUGINS_LOG) << "Max upload size is"<<m_maxSize;
+                        m_maxSize = a.value();
+                        qCDebug(KIPIPLUGINS_LOG) << "Max upload size is"<<m_maxSize;
                     } 
-		}
-		details = details.nextSibling();
-	    }
-	}
-	if (node.isElement() && node.nodeName() == "err")
+                }
+
+                details = details.nextSibling();
+            }
+        }
+        
+        if (node.isElement() && node.nodeName() == "err")
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
             errorString = node.toElement().attribute("code");
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
         }
-	node = node.nextSibling();
+
+        node = node.nextSibling();
     }
 }
 
@@ -1411,7 +1416,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     else
     {
         emit signalListPhotoSetsSucceeded();
-	maxAllowedFileSize();
+    maxAllowedFileSize();
     }
 }
 
