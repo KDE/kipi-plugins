@@ -32,11 +32,9 @@
 #include <QLabel>
 #include <QLinkedList>
 #include <QLineEdit>
-
-// KDE includes
 #include <QUrl>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <interface.h>
 
@@ -49,9 +47,9 @@ class QProgressDialog;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
+class QUrl;
 
 class KHTMLPart;
-class QUrl;
 class KComboBox;
 
 namespace KIPI
@@ -92,7 +90,7 @@ class FlickrWindow : public KPToolDialog
 
 public:
 
-    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, SelectUserDlg* dlg);
+    FlickrWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName, SelectUserDlg* const dlg);
     ~FlickrWindow();
 
     /**

@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -34,12 +34,12 @@
 #include <QSpinBox>
 #include <QPointer>
 #include <QDebug>
-#include <QtWidgets/QApplication>
+#include <QApplication>
+#include <QMenu>
 
 // KDE includes
 
 #include <kcombobox.h>
-#include <QMenu>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
@@ -47,9 +47,9 @@
 #include <krun.h>
 #include <kconfig.h>
 #include <kdeversion.h>
-#include <kwallet.h>
 #include <kpushbutton.h>
-#include <KWindowConfig>
+#include <kwallet.h>
+#include <kwindowconfig.h>
 
 // LibKIPI includes
 
@@ -74,7 +74,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* dlg)
+FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* const dlg)
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
@@ -101,7 +101,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     if(grp.exists())
     {
         qCDebug(KIPIPLUGINS_LOG) << QString("%1Export Settings").arg(m_serviceName) << " exists, deleting it";
-	grp.deleteGroup();
+    grp.deleteGroup();
     }
 
     m_select                    = dlg;
@@ -384,11 +384,13 @@ void FlickrWindow::writeSettings()
 {
     KConfig config("kipirc");
     qCDebug(KIPIPLUGINS_LOG) << "Group name is : "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
-    if(QString::compare(QString("%1Export Settings").arg(m_serviceName), QString("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive)==0)
+
+    if (QString::compare(QString("%1Export Settings").arg(m_serviceName), QString("%1%2Export Settings").arg(m_serviceName,m_username), Qt::CaseInsensitive) == 0)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Not writing entry of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username);
-	return;
+        qCDebug(KIPIPLUGINS_LOG) << "Not writing entry of group " << QString("%1%2Export Settings").arg(m_serviceName,m_username);
+        return;
     }
+
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName,m_username));
     grp.writeEntry("username",m_username);
     qCDebug(KIPIPLUGINS_LOG) << "Token written of group "<<QString("%1%2Export Settings").arg(m_serviceName,m_username)<<" is "<<m_token;
@@ -427,19 +429,24 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
     
     KConfig config("kipirc");
+
     foreach ( const QString& group, config.groupList() ) 
     {
         if(!(group.contains(m_serviceName)))
-	    continue;
+            continue;
+
         KConfigGroup grp = config.group(group);
-	if(group.contains(m_username))
-	{
-	    readSettings(m_username);
-	    break;
-	}
+
+        if(group.contains(m_username))
+        {
+            readSettings(m_username);
+            break;
+        }
     }
+
     m_token    = token;
     writeSettings();
+
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
     // folder-type photosets).
     if (m_serviceName != "Zooomr")
@@ -492,15 +499,18 @@ void FlickrWindow::slotRemoveAccount()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group(QString("%1%2Export Settings").arg(m_serviceName).arg(m_username));
+
     if(grp.exists())
     {
         qCDebug(KIPIPLUGINS_LOG) << "Removing Account having group"<<QString("%1%2Export Settings").arg(m_serviceName);
-	grp.deleteGroup();
+        grp.deleteGroup();
     }
+
     m_username = QString();
     qCDebug(KIPIPLUGINS_LOG) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
 }
+
 /**
  * Try to guess a sensible set name from the urls given.
  * Currently, it extracs the last path name component, and returns the most
@@ -513,7 +523,7 @@ QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
     QMap<QString,int> nrFolderOccurences;
 
     // Extract last component of directory
-    foreach(const QUrl &url, urlList)
+    foreach(const QUrl& url, urlList)
     {
         QString dir      = url.adjusted(QUrl::RemoveFilename|QUrl::StripTrailingSlash).path();
         QStringList list = dir.split('/');
@@ -547,14 +557,14 @@ QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
     return QString();
 }
 
+/** This method is called when the photo set creation button is pressed. It
+ * summons a creation dialog for user input. When that is closed, it
+ * creates a new photo set in the local list. The id gets the form of
+ * UNDEFINED_ followed by a number, to indicate that it doesn't exist on
+ * Flickr yet.
+ */
 void FlickrWindow::slotCreateNewPhotoSet()
 {
-    /* This method is called when the photo set creation button is pressed. It
-     * summons a creation dialog for user input. When that is closed, it
-     * creates a new photo set in the local list. The id gets the form of
-     * UNDEFINED_ followed by a number, to indicate that it doesn't exist on
-     * Flickr yet. */
-
     // Call the dialog
     QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(QApplication::activeWindow());
     dlg->titleEdit->setText(guessSensibleSetName(m_imglst->imageUrls()));
@@ -688,7 +698,7 @@ void FlickrWindow::slotUser1()
 
             temp.title                 = info.title();
             temp.description           = info.description();
-	    temp.size                  = info.fileSize();
+            temp.size                  = info.fileSize();
             temp.is_public             = lvItem->isPublic()  ? 1 : 0;
             temp.is_family             = lvItem->isFamily()  ? 1 : 0;
             temp.is_friend             = lvItem->isFriends() ? 1 : 0;
@@ -811,7 +821,7 @@ void FlickrWindow::slotAddPhotoNext()
     
     if(info.size > ((m_talker->getMaxAllowedFileSize()).toLongLong()))
     {
-	slotAddPhotoFailed("File Size exceeds maximum allowed file sie.");
+        slotAddPhotoFailed("File Size exceeds maximum allowed file sie.");
         return;
     }
     else
