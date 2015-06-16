@@ -28,6 +28,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QDialog>
 
 // Libkdcraw includes
 
@@ -35,10 +37,8 @@
 
 // KDE includes
 
-#include <QDialog>
 #include <klocalizedstring.h>
-#include <KConfigGroup>
-#include <QDialogButtonBox>
+#include <kconfiggroup.h>
 
 namespace KIPIFlickrExportPlugin
 {
@@ -48,12 +48,16 @@ FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
     : QDialog(parent)
 {
     setWindowTitle(header);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Help|QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QDialogButtonBox* const buttonBox = new QDialogButtonBox(QDialogButtonBox::Help|QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout* const mainLayout     = new QVBoxLayout(this);
     setLayout(mainLayout);
-    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    QPushButton* const okButton       = buttonBox->button(QDialogButtonBox::Ok);
+
+    connect(buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
+
+    connect(buttonBox, SIGNAL(rejected()),
+            this, SLOT(reject()));
     
     okButton->setDefault(true);
     setModal(false);

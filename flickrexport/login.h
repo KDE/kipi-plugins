@@ -30,12 +30,7 @@
 #include <QApplication>
 #include <QStyle>
 #include <QLineEdit>
-
-// KDE includes
-
 #include <QDialog>
-
-class QLabel;
 
 namespace KIPIFlickrExportPlugin
 {
