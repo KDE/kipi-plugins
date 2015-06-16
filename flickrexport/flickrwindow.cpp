@@ -36,12 +36,12 @@
 #include <QDebug>
 #include <QApplication>
 #include <QMenu>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kcombobox.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kparts/browserhostextension.h>
 #include <krun.h>
@@ -474,7 +474,7 @@ void FlickrWindow::slotBusy(bool val)
 void FlickrWindow::slotError(const QString& msg)
 {
     //m_talker->slotError(msg);
-    KMessageBox::error(this, msg);
+    QMessageBox::critical(this, i18n("Error"), msg);
 }
 
 void FlickrWindow::slotUserChangeRequest()
@@ -862,13 +862,20 @@ void FlickrWindow::slotAddPhotoSucceeded()
 
 void FlickrWindow::slotListPhotoSetsFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
+    QMessageBox::critical(this, "Error", i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
 }
 
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg))
-        != KMessageBox::Continue)
+    QMessageBox warn(QMessageBox::Warning,
+                     i18n("Warning"),
+                     i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg),
+                     QMessageBox::Yes | QMessageBox::No);
+    
+    (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+    (warn.button(QMessageBox::No))->setText(i18n("Cancel"));
+    
+    if (warn.exec() != QMessageBox::Yes)
     {
         m_uploadQueue.clear();
         m_widget->progressBar()->reset();

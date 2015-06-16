@@ -46,16 +46,11 @@
 #include <QStandardPaths>
 #include <QtWidgets/QApplication>
 #include <QDesktopServices>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kio/jobuidelegate.h>
-#include <kcodecs.h>
-#include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <ktoolinvocation.h>
-#include <kguiitem.h>
 
 // LibKDcraw includes
 
@@ -355,14 +350,17 @@ void FlickrTalker::slotAuthenticate()
     qCDebug(KIPIPLUGINS_LOG) << "Authenticate url: " << url;
 
     QDesktopServices::openUrl(url);
-    int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
-                                             i18n("Please follow the instructions in the browser window, then "
-                                                  "return to press corresponding button."),
-                                             i18n("%1 Service Web Authorization", m_serviceName),
-                                             KGuiItem(i18n("I am authenticated"), "dialog-ok"),
-                                             KGuiItem(i18n("I am not authenticated"), "dialog-cancel"));
-
-    if (valueOk == KMessageBox::Yes)
+    
+    QMessageBox quest(QMessageBox::Question,
+                      i18n("%1 Service Web Authorization", m_serviceName),
+                      i18n("Please follow the instructions in the browser window, then "
+                           "return to press corresponding button."),
+                      QMessageBox::Yes | QMessageBox::No);
+    
+    (quest.button(QMessageBox::Yes))->setText(i18n("I am authenticated"));
+    (quest.button(QMessageBox::No))->setText(i18n("I am not authenticated"));
+    
+    if (quest.exec() == QMessageBox::Yes)
     {
         getToken();
         m_authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
@@ -893,8 +891,9 @@ void FlickrTalker::slotError(const QString& error)
             break;
     };
 
-    KMessageBox::error(QApplication::activeWindow(),
-                       i18n("Error Occurred: %1\nCannot proceed any further.", transError));
+    QMessageBox::critical(QApplication::activeWindow(),
+			  i18n("Error"),
+			  i18n("Error Occurred: %1\nCannot proceed any further.", transError));
 }
 
 void FlickrTalker::slotResult(KJob* kjob)
@@ -1157,11 +1156,12 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
 
-            int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
-                                                     i18n("Your token is invalid. Would you like to "
-                                                          "get a new token to proceed?\n"));
+            int valueOk = QMessageBox::question(QApplication::activeWindow(),
+						i18n("Invalid Token"),
+                                                i18n("Your token is invalid. Would you like to "
+                                                      "get a new token to proceed?\n"));
 
-            if (valueOk == KMessageBox::Yes)
+            if (valueOk == QMessageBox::Yes)
             {
                 getFrob();
                 return;
@@ -1316,7 +1316,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
             QString msg = node.toElement().attribute("msg");
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << msg;
-            KMessageBox::error(QApplication::activeWindow(), i18n("PhotoSet creation failed: ") + msg);
+            QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("PhotoSet creation failed: ") + msg);
         }
 
         node = node.nextSibling();
