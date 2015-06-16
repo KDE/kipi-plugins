@@ -151,7 +151,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
                                                ki18n("A Kipi plugin to export an image collection to a "
                                                      "Flickr / 23 / Zooomr web service."),
                                                ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                                     "(c) 2008-2013, Gilles Caulier\n"
+                                                     "(c) 2008-2015, Gilles Caulier\n"
                                                      "(c) 2009, Luka Renko"));
     
     about->addAuthor(i18n("Vardhman Jain"), i18n("Author and maintainer"),

@@ -37,15 +37,16 @@ extern "C"
 }
 
 //Qt includes
-#include <QDebug>
-#include <QtWidgets/QApplication>
+
+#include <QApplication>
 #include <QStandardPaths>
 #include <QDir>
 
 // KDE includes
-#include <KPluginFactory>
+
 #include <kiconloader.h>
-#include <KWindowSystem>
+#include <kpluginfactory.h>
+#include <kwindowsystem.h>
 
 // LibKIPI includes
 
@@ -210,4 +211,3 @@ void Plugin_FlickrExport::slotActivateZooomr()
 } // namespace KIPIFlickrExportPlugin
 
 #include "plugin_flickrexport.moc"
-

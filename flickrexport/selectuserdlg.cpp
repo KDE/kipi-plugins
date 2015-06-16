@@ -28,12 +28,12 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
+#include <QIcon>
 
 // KDE includes
 
 #include <kcombobox.h>
 #include <klocalizedstring.h>
-#include <QIcon>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
@@ -48,9 +48,8 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     setWindowTitle(i18n("Flickr Account Selector"));
     setModal(true);
 
-    QDialogButtonBox* buttonBox = new QDialogButtonBox();
-
-    QPushButton* buttonNewAccount = new QPushButton(buttonBox);
+    QDialogButtonBox* const buttonBox   = new QDialogButtonBox();
+    QPushButton* const buttonNewAccount = new QPushButton(buttonBox);
     buttonNewAccount->setText(i18n("Add another account"));
     buttonNewAccount->setIcon(QIcon::fromTheme("network-workgroup"));
 
@@ -82,17 +81,21 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
 
     m_userComboBox = new KComboBox(this);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(m_label);
     mainLayout->addWidget(m_userComboBox);
     mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
 
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
+
+    connect(buttonBox, SIGNAL(rejected()),
+            this, SLOT(reject()));
 
     connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(slotOkClicked()));
+
     connect(buttonNewAccount, SIGNAL(clicked()),
             this, SLOT(slotNewAccountClicked()));
 }

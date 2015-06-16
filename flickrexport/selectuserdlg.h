@@ -25,8 +25,8 @@
 
 // Qt includes
 
-#include <QtCore/QString>
-#include <QtWidgets/QDialog>
+#include <QString>
+#include <QDialog>
 
 class QLabel;
 
