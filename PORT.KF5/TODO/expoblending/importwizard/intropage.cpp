@@ -88,7 +88,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
 #ifdef Q_OS_MAC
-    d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
+    d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");    // Hugin bundle PKG install
+    d->binariesWidget->addDirectory("/opt/local/bin");                    // Std Macports install
+    d->binariesWidget->addDirectory("/opt/digikam/bin");                  // digiKam Bundle PKG install
 #endif
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
