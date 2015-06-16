@@ -45,6 +45,7 @@
 #include <QDebug>
 #include <QStandardPaths>
 #include <QtWidgets/QApplication>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -352,7 +353,7 @@ void FlickrTalker::slotAuthenticate()
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Authenticate url: " << url;
 
-    KToolInvocation::invokeBrowser(url.url());
+    QDesktopServices::openUrl(url);
     int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
                                              i18n("Please follow the instructions in the browser window, then "
                                                   "return to press corresponding button."),
