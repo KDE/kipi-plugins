@@ -117,7 +117,7 @@ JAlbumWindow::Private::Private(JAlbumWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 JAlbumWindow::JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum)
-    : KPToolDialog(parent),
+    : KP4ToolDialog(parent),
       d(new Private(this))
 {
     d->jalbum = pJAlbum;

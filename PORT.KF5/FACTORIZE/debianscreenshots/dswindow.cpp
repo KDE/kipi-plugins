@@ -60,7 +60,7 @@ static int maxWidth  = 800;
 static int maxHeight = 600;
 
 DsWindow::DsWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0),
+    : KP4ToolDialog(0),
       m_uploadEnabled(false),
       m_imagesCount(0),
       m_imagesTotal(0),

@@ -42,7 +42,7 @@ namespace KIPIDNGConverterPlugin
 class ActionData;
 class DNGConverterAboutData;
 
-class BatchDialog : public KPToolDialog
+class BatchDialog : public KP4ToolDialog
 {
 
 Q_OBJECT

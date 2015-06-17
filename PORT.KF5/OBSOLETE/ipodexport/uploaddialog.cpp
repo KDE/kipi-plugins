@@ -88,7 +88,7 @@ namespace KIPIIpodExportPlugin
 UploadDialog* UploadDialog::s_instance = 0;
 
 UploadDialog::UploadDialog(const QString& caption, QWidget* const /*parent*/)
-    : KPToolDialog(0),
+    : KP4ToolDialog(0),
       m_transferring(false),
       m_itdb(0),
       m_ipodInfo(0),

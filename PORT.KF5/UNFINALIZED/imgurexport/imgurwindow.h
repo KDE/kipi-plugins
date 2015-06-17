@@ -58,7 +58,7 @@ using namespace KIPIPlugins;
 namespace KIPIImgurExportPlugin
 {
 
-class ImgurWindow : public KPToolDialog
+class ImgurWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

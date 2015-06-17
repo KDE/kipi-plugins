@@ -200,7 +200,7 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 GalleryWindow::GalleryWindow(QWidget* const parent, Gallery* const pGallery)
-    : KPToolDialog(parent),
+    : KP4ToolDialog(parent),
       d(new Private(this))
 {
     d->gallery = pGallery;

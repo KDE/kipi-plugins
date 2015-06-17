@@ -49,7 +49,7 @@ namespace KIPIJAlbumExportPlugin
 {
 class JAlbum;
 
-class JAlbumWindow : public KPToolDialog
+class JAlbumWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

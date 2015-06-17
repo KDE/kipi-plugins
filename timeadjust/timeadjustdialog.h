@@ -40,7 +40,7 @@ using namespace KIPIPlugins;
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialog : public KPToolDialog
+class TimeAdjustDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

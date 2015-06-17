@@ -36,7 +36,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 class WorkerThreadData;
 
-class RemoveRedEyesWindow : public KPToolDialog
+class RemoveRedEyesWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

@@ -55,7 +55,7 @@ class GalleryTalker;
 class GAlbum;
 class GPhoto;
 
-class GalleryWindow : public KPToolDialog
+class GalleryWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

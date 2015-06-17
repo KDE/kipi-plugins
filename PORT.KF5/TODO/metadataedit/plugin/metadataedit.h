@@ -51,7 +51,7 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class MetadataEditDialog : public KPToolDialog
+class MetadataEditDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

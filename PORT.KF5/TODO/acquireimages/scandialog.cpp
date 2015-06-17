@@ -81,7 +81,7 @@ public:
 };
 
 ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/, ScanDialogAboutData* const about)
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     d->saneWidget = saneWidget;
     d->saveThread = new SaveImgThread(this);

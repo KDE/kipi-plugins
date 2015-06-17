@@ -219,7 +219,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
-    : KPToolDialog(parent),
+    : KP4ToolDialog(parent),
       d(new Private(this))
 {
     d->pPiwigo = pPiwigo;

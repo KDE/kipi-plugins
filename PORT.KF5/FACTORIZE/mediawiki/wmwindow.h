@@ -39,7 +39,7 @@ using namespace KIPIPlugins;
 namespace KIPIWikiMediaPlugin
 {
 
-class WMWindow : public KPToolDialog
+class WMWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

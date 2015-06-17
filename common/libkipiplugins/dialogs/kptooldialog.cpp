@@ -151,13 +151,13 @@ void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
 
 // -----------------------------------------------------------------------------------
 
-KPToolDialog::KPToolDialog(QWidget* const parent)
+KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
     : KDialog(parent), KPDialogBase(this)
 {
     setButtons(KDialog::Help | KDialog::Ok);
 }
 
-KPToolDialog::~KPToolDialog()
+KP4ToolDialog::~KP4ToolDialog()
 {
 }
 

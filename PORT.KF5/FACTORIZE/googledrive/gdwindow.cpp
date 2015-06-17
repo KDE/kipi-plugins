@@ -75,7 +75,7 @@ namespace KIPIGoogleDrivePlugin
 {
 
 GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KP4ToolDialog(0)
 {
     m_tmp         = tmpFolder;
     m_imagesCount = 0;

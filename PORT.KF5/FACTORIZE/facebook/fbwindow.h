@@ -64,7 +64,7 @@ class FbUser;
 class FbAlbum;
 class FbPhoto;
 
-class FbWindow : public KPToolDialog
+class FbWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

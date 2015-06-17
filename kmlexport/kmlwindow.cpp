@@ -67,7 +67,7 @@ namespace KIPIKMLExportPlugin
 KmlWindow::KmlWindow(QWidget* const parent,
                      bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
                      const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
-    : KPToolDialog(parent)
+    : KP4ToolDialog(parent)
     , m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
 {
     setButtons(Help | User1 | Cancel);

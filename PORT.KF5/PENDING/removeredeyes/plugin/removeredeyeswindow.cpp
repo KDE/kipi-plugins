@@ -153,7 +153,7 @@ const QString RemoveRedEyesWindow::Private::configLocatorDefaultType("HaarClassi
 // --------------------------------------------------------
 
 RemoveRedEyesWindow::RemoveRedEyesWindow()
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     setWindowTitle(i18n("Automatic Red-Eye Removal"));
     setButtons(Help|User1|User2|Close);

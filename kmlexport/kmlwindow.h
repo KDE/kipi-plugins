@@ -57,7 +57,7 @@ using namespace KIPIPlugins;
 namespace KIPIKMLExportPlugin
 {
 
-class KmlWindow : public KPToolDialog
+class KmlWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

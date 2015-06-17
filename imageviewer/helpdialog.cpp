@@ -38,7 +38,7 @@ namespace KIPIViewerPlugin
 {
 
 HelpDialog::HelpDialog()
-    : KPToolDialog(0)
+    : KP4ToolDialog(0)
 {
     setWindowIcon(QIcon::fromTheme("kipi-ogl"));
     setButtons(Help | Ok);

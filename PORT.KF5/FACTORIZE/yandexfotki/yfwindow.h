@@ -69,7 +69,7 @@ using namespace KIPIPlugins;
 namespace KIPIYandexFotkiPlugin
 {
 
-class YandexFotkiWindow : public KPToolDialog
+class YandexFotkiWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

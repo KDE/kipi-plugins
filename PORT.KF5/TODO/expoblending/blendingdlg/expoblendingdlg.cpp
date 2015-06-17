@@ -133,7 +133,7 @@ public:
 };
 
 ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
-    : KPToolDialog(parent), d(new ExpoBlendingDlgPriv)
+    : KP4ToolDialog(parent), d(new ExpoBlendingDlgPriv)
 {
     d->mngr = mngr;
 

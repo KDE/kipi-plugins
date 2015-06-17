@@ -62,7 +62,7 @@ class GDPhoto;
 class GDFolder;
 class GDNewAlbum;
 
-class GDWindow : public KPToolDialog
+class GDWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

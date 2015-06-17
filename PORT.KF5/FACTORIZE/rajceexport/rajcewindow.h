@@ -35,7 +35,7 @@ namespace KIPIRajceExportPlugin
 
 class RajceWidget;
 
-class RajceWindow : public KPToolDialog
+class RajceWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

@@ -90,7 +90,7 @@ public:
 };
 
 MetadataEditDialog::MetadataEditDialog(QWidget* const parent, const QUrl::List& urls)
-    : KPToolDialog(parent), d(new Private)
+    : KP4ToolDialog(parent), d(new Private)
 {
     d->urls     = urls;
     d->currItem = d->urls.begin();

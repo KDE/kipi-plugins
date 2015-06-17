@@ -50,7 +50,7 @@ using namespace KIPIPlugins;
 namespace KIPIVideoSlideShowPlugin
 {
 
-class ExportDialog : public KPToolDialog
+class ExportDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

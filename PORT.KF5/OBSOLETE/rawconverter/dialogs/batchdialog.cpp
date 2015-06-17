@@ -121,7 +121,7 @@ public:
 };
 
 BatchDialog::BatchDialog()
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     setButtons(Help | Default | Apply | Close );
     setDefaultButton(Close);

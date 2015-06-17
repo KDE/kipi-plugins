@@ -82,7 +82,7 @@ class GAlbum;
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-class FlickrWindow : public KPToolDialog
+class FlickrWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

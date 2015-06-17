@@ -95,7 +95,7 @@ enum ProcessState
 };
 
 BatchProcessImagesDialog::BatchProcessImagesDialog(const QUrl::List& urlList, const QString& caption, QWidget* const parent)
-    : KPToolDialog(parent),
+    : KP4ToolDialog(parent),
       m_listFile2Process_iterator(0),
       m_selectedImageFiles(urlList),
       m_ui(new Ui::BatchProcessImagesDialog())

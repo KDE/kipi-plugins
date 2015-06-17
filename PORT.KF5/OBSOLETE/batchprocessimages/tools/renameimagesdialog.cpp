@@ -46,7 +46,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RenameImagesDialog::RenameImagesDialog(const QUrl::List& images, QWidget* parent)
-    : KPToolDialog(parent)
+    : KP4ToolDialog(parent)
 {
     setCaption(i18n("Rename Images"));
     setModal(true);

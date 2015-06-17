@@ -108,7 +108,7 @@ private:
 
 // ------------------------------------------------------------------------------------------------
 
-class GPSSyncDialog : public KPToolDialog
+class GPSSyncDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

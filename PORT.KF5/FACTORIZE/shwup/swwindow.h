@@ -58,7 +58,7 @@ class SwLogin;
 class SwAlbum;
 class SwPhoto;
 
-class SwWindow : public KPToolDialog
+class SwWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

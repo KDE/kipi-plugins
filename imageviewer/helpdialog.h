@@ -32,7 +32,7 @@ using namespace KIPIPlugins;
 namespace KIPIViewerPlugin
 {
 
-class HelpDialog : public KPToolDialog
+class HelpDialog : public KP4ToolDialog
 {
 
 public:

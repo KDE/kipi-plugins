@@ -42,7 +42,7 @@ namespace KIPIRawConverterPlugin
 
 class ActionData;
 
-class BatchDialog : public KPToolDialog
+class BatchDialog : public KP4ToolDialog
 {
 
 Q_OBJECT

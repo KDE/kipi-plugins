@@ -47,7 +47,7 @@ namespace KIPIRawConverterPlugin
 
 class ActionData;
 
-class SingleDialog : public KPToolDialog
+class SingleDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

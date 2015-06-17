@@ -55,7 +55,7 @@ namespace KIPIKioExportPlugin
 {
 
 KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KP4ToolDialog(0)
 {
     m_importWidget = new KioImportWidget(this, iface());
     setMainWidget(m_importWidget);

@@ -122,7 +122,7 @@ public:
 };
 
 SingleDialog::SingleDialog(const QString& file)
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(Close);

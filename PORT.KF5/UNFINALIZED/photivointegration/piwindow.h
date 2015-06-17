@@ -55,7 +55,7 @@ namespace KIPIPhotivoIntegrationPlugin
 
 // ----------------------------------------------------------------------------
 
-class PIWindow : public KPToolDialog
+class PIWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

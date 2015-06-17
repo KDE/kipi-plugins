@@ -84,7 +84,7 @@ namespace KIPIVkontaktePlugin
 {
 
 VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
-    : KPToolDialog(parent)
+    : KP4ToolDialog(parent)
 {
     m_albumsBox = NULL;
     m_vkapi     = new Vkontakte::VkApi(this);

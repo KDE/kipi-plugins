@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 class BatchProcessImagesList;
 
-class BatchProcessImagesDialog : public KPToolDialog
+class BatchProcessImagesDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

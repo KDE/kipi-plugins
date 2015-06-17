@@ -54,7 +54,7 @@ class PicasawebWidget;
 class PicasawebTalker;
 //class FPhotoInfo;
 
-class PicasawebWindow : public KPToolDialog
+class PicasawebWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

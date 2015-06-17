@@ -49,7 +49,7 @@ namespace KIPIKioExportPlugin
 /**
  * Main dialog used for the kio import tool.
  */
-class KioImportWindow : public KPToolDialog
+class KioImportWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

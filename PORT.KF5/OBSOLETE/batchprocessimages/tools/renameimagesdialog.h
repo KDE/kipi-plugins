@@ -45,7 +45,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 class RenameImagesWidget;
 
-class RenameImagesDialog : public KPToolDialog
+class RenameImagesDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

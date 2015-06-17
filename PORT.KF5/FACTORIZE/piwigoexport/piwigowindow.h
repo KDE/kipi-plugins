@@ -49,7 +49,7 @@ namespace KIPIPiwigoExportPlugin
 class Piwigo;
 class GAlbum;
 
-class PiwigoWindow : public KPToolDialog
+class PiwigoWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

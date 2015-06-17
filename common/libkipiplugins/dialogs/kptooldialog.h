@@ -69,12 +69,12 @@ private:
 
 // -----------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog, public KPDialogBase
+class KIPIPLUGINS_EXPORT KP4ToolDialog : public KDialog, public KPDialogBase
 {
 public:
 
-    KPToolDialog(QWidget* const parent=0);
-    virtual ~KPToolDialog();
+    KP4ToolDialog(QWidget* const parent=0);
+    virtual ~KP4ToolDialog();
 };
 
 // -----------------------------------------------------------------------------------

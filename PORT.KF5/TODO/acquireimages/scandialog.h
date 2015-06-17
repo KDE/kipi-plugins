@@ -46,7 +46,7 @@ namespace KIPIAcquireImagesPlugin
 
 class ScanDialogAboutData;
 
-class ScanDialog : public KPToolDialog
+class ScanDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

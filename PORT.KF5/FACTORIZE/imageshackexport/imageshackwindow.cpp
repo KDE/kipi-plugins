@@ -73,7 +73,7 @@ namespace KIPIImageshackExportPlugin
 {
 
 ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imghack)
-    : KPToolDialog(parent)
+    : KP4ToolDialog(parent)
 {
     m_imageshack = imghack;
     m_widget     = new ImageshackWidget(this, imghack);

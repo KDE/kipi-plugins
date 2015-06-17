@@ -61,7 +61,7 @@ class DBPhoto;
 class DBFolder;
 class DBNewAlbum;
 
-class DBWindow : public KPToolDialog
+class DBWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

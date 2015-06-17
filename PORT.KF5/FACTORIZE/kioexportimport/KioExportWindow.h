@@ -50,7 +50,7 @@ namespace KIPIKioExportPlugin
  * Main window of the KIOExport Plugin.
  */
 
-class KioExportWindow: public KPToolDialog
+class KioExportWindow: public KP4ToolDialog
 {
     Q_OBJECT
 

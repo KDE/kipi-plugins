@@ -71,7 +71,7 @@ public:
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>& urls)
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     d->urls = urls;
 

@@ -96,7 +96,7 @@ public:
 };
 
 WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     d->tmpPath.clear();
     d->tmpDir    = tmpFolder;

@@ -66,7 +66,7 @@ namespace KIPIVkontaktePlugin
 class AlbumChooserWidget;
 class AuthInfoWidget;
 
-class VkontakteWindow : public KPToolDialog
+class VkontakteWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

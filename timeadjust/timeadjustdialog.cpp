@@ -98,7 +98,7 @@ public:
 };
 
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);

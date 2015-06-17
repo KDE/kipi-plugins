@@ -102,7 +102,7 @@ public:
 };
 
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
-    : KPToolDialog(0), d(new Private)
+    : KP4ToolDialog(0), d(new Private)
 {
     setWindowIcon(QIcon::fromTheme("kipi-dngconverter"));
     setButtons(Help | Default | User1 | Close);

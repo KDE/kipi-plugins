@@ -44,7 +44,7 @@ ImagePreview::ImagePreview(const QString& fileOrig,
                            const QString& EffectName,
                            const QString& FileName, 
                            QWidget* const parent)
-        : KPToolDialog(parent)
+        : KP4ToolDialog(parent)
 {
     setCaption(i18n("Batch Process Preview (%1 - %2)", EffectName, FileName));
     setModal(true);

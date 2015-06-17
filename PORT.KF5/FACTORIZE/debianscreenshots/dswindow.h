@@ -54,7 +54,7 @@ namespace KIPIDebianScreenshotsPlugin
 class DsTalker;
 class DsWidget;
 
-class DsWindow : public KPToolDialog
+class DsWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

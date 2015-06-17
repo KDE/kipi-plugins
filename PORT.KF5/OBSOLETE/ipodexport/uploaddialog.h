@@ -71,7 +71,7 @@ class IpodAlbumItem;
 class IpodPhotoItem;
 class IpodHeader;
 
-class UploadDialog : public KPToolDialog
+class UploadDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

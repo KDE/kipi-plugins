@@ -49,7 +49,7 @@ public:
 // public /////////////////////////////////////////////////////////////////////
 
 PIWindow::PIWindow(QWidget* const /*parent*/ /* = 0 */)
-    : KPToolDialog(0),
+    : KP4ToolDialog(0),
       d(new Private(this))
 {
     // window & widget settings

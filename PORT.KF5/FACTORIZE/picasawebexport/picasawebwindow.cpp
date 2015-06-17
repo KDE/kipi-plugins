@@ -77,7 +77,7 @@ namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebWindow::PicasawebWindow(const QString& tmpFolder, bool import, QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KP4ToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;

@@ -57,7 +57,7 @@ const QString KioExportWindow::HISTORY_URL_PROPERTY = "historyUrls";
 const QString KioExportWindow::CONFIG_GROUP         = "KioExport";
 
 KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0)
+    : KP4ToolDialog(0)
 {
     m_exportWidget = new KioExportWidget(this);
     setMainWidget(m_exportWidget);

@@ -53,7 +53,7 @@ class Imageshack;
 class ImageshackWidget;
 class ImageshackTalker;
 
-class ImageshackWindow : public KPToolDialog
+class ImageshackWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

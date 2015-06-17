@@ -54,7 +54,7 @@ namespace KIPIExpoBlendingPlugin
 class Manager;
 class ActionData;
 
-class ExpoBlendingDlg : public KPToolDialog
+class ExpoBlendingDlg : public KP4ToolDialog
 {
     Q_OBJECT
 

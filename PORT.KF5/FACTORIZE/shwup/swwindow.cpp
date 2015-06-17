@@ -72,7 +72,7 @@ namespace KIPIShwupPlugin
 {
 
 SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
-    : KPToolDialog(parent)
+    : KP4ToolDialog(parent)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;

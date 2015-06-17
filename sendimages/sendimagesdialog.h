@@ -40,7 +40,7 @@ using namespace KIPIPlugins;
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialog : public KPToolDialog
+class SendImagesDialog : public KP4ToolDialog
 {
     Q_OBJECT
 

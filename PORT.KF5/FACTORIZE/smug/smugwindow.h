@@ -55,7 +55,7 @@ class SmugTalker;
 class SmugWidget;
 class SmugNewAlbum;
 
-class SmugWindow : public KPToolDialog
+class SmugWindow : public KP4ToolDialog
 {
     Q_OBJECT
 

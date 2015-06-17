@@ -33,7 +33,7 @@ using namespace KIPIPlugins;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class ImagePreview : public KPToolDialog, private Ui_ImagePreview
+class ImagePreview : public KP4ToolDialog, private Ui_ImagePreview
 {
 
 public:

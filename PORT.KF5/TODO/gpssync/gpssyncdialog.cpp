@@ -275,7 +275,7 @@ public:
 };
 
 GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
-    : KPToolDialog(parent), d(new Private)
+    : KP4ToolDialog(parent), d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose, true);
     setButtons(0);

@@ -35,7 +35,7 @@
 
 using namespace KIPIPlugins;
 
-class ImageSelector : public KPToolDialog
+class ImageSelector : public KP4ToolDialog
 {
     Q_OBJECT
 

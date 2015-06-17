@@ -108,7 +108,7 @@ namespace KIPIYandexFotkiPlugin
 const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 
 YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
-    : KPToolDialog(parent)
+    : KP4ToolDialog(parent)
 {
     m_import    = import;
 
