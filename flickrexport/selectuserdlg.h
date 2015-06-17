@@ -27,10 +27,9 @@
 
 #include <QString>
 #include <QDialog>
+#include <QComboBox>
 
 class QLabel;
-
-class KComboBox;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -49,7 +48,7 @@ public:
 
 private:
 
-    KComboBox*   m_userComboBox;
+    QComboBox*   m_userComboBox;
     QLabel*      m_label;
     QPushButton* m_okButton;
 

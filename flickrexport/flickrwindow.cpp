@@ -40,15 +40,7 @@
 
 // KDE includes
 
-#include <kcombobox.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kparts/browserhostextension.h>
-#include <krun.h>
 #include <kconfig.h>
-#include <kdeversion.h>
-#include <kpushbutton.h>
-#include <kwallet.h>
 #include <kwindowconfig.h>
 
 // LibKIPI includes
@@ -110,7 +102,6 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
     m_widget                    = new FlickrWidget(this, serviceName);
-    m_photoView                 = m_widget->m_photoView;
     m_albumsListComboBox        = m_widget->m_albumsListComboBox;
     m_newAlbumBtn               = m_widget->m_newAlbumBtn;
     m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
@@ -152,13 +143,17 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
                                                      "Flickr / 23 / Zooomr web service."),
                                                ki18n("(c) 2005-2008, Vardhman Jain\n"
                                                      "(c) 2008-2015, Gilles Caulier\n"
-                                                     "(c) 2009, Luka Renko"));
+                                                     "(c) 2009, Luka Renko\n"
+                                                     "(c) 2015, Shourya Singh Gupta"));
     
     about->addAuthor(i18n("Vardhman Jain"), i18n("Author and maintainer"),
                      "Vardhman at gmail dot com");
 
     about->addAuthor(i18n("Gilles Caulier"), i18n("Developer"),
                      "caulier dot gilles at gmail dot com");
+    
+    about->addAuthor(i18n("Shourya Singh Gupta"), i18n("Developer"),
+                     "shouryasgupta at gmail dot com");
 
     about->setHandbookEntry("flickrexport");
     setAboutData(about);

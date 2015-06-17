@@ -33,6 +33,7 @@
 #include <QLinkedList>
 #include <QLineEdit>
 #include <QUrl>
+#include <QComboBox>
 
 // Libkipi includes
 
@@ -48,9 +49,6 @@ class QPushButton;
 class QSpinBox;
 class QCheckBox;
 class QUrl;
-
-class KHTMLPart;
-class KComboBox;
 
 namespace KIPI
 {
@@ -147,7 +145,7 @@ private:
     QPushButton*                           m_changeUserButton;
     QPushButton*                           m_removeAccount;
 
-    KComboBox*                             m_albumsListComboBox;
+    QComboBox*                             m_albumsListComboBox;
     QCheckBox*                             m_publicCheckBox;
     QCheckBox*                             m_familyCheckBox;
     QCheckBox*                             m_friendsCheckBox;
@@ -180,7 +178,6 @@ private:
     QList< QPair<QUrl, FPhotoInfo> >       m_uploadQueue;
 
 //  KWallet::Wallet*                       m_wallet;
-    KHTMLPart*                             m_photoView;
 
     QLineEdit*                             m_tagsLineEdit;
 

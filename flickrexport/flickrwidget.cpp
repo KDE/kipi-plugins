@@ -40,19 +40,13 @@
 #include <QStyle>
 #include <QDialog>
 
-// KDE includes
-
-#include <kconfiggroup.h>
-#include <kcombobox.h>
-#include <klocale.h>
-#include <kparts/browserhostextension.h>
-#include <khtml_part.h>
-#include <kseparator.h>
-#include <kiconloader.h>
-
 // LibKIPI includes
 
 #include <interface.h>
+
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
 
 // Local includes
 
@@ -70,8 +64,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     setObjectName("FlickrWidget");
 
     QVBoxLayout* const flickrWidgetLayout = new QVBoxLayout(this);
-    m_photoView                           = 0; //new KHTMLPart(splitter);
-    KSeparator* const line                = new KSeparator(Qt::Horizontal, this);
+    KDcrawIface::RLineWidget* const line  = new KDcrawIface::RLineWidget(Qt::Horizontal, this);
     m_tab                                 = new QTabWidget(this);
     QLabel* const headerLabel             = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
@@ -185,7 +178,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     m_changeUserButton           = new QPushButton(accountBox);
     m_removeAccount              = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
-    m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
+    m_changeUserButton->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
     m_changeUserButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     
     m_removeAccount->setText(i18n("Remove Account"));
@@ -196,7 +189,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
     m_reloadphotoset             = new QPushButton(accountBox);
     m_reloadphotoset->setText(i18n("&Reload"));
-    m_albumsListComboBox         = new KComboBox(settingsBox);
+    m_albumsListComboBox         = new QComboBox(settingsBox);
 
     accountLayout->addWidget(userNameLabel,          0, 0);
     accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);

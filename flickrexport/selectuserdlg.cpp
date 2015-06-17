@@ -32,7 +32,6 @@
 
 // KDE includes
 
-#include <kcombobox.h>
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -79,7 +78,7 @@ SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
     m_label = new QLabel(this);
     m_label->setText("Choose the " + m_serviceName + " account to use for exporting images: ");
 
-    m_userComboBox = new KComboBox(this);
+    m_userComboBox = new QComboBox(this);
 
     QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(m_label);

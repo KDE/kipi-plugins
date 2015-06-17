@@ -29,6 +29,7 @@
 #include <QWidget>
 #include <QTabWidget>
 #include <QLineEdit>
+#include <QComboBox>
 
 // Local includes
 
@@ -41,9 +42,6 @@ class QSpinBox;
 class QCheckBox;
 class QLabel;
 class QTreeWidgetItem;
-
-class KComboBox;
-class KHTMLPart;
 
 namespace KIPIPlugins
 {
@@ -103,8 +101,6 @@ private: // Data
 
     QTabWidget*                         m_tab;
 
-    KHTMLPart*                          m_photoView;
-
     QLabel*                             m_userNameDisplayLabel;
 
     QPushButton*                        m_changeUserButton;
@@ -114,7 +110,7 @@ private: // Data
     QPushButton*                        m_extendedTagsButton;
     QPushButton*                        m_extendedPublicationButton;
 
-    KComboBox*                          m_albumsListComboBox;
+    QComboBox*                          m_albumsListComboBox;
 
     QCheckBox*                          m_exportHostTagsCheckBox;
     QCheckBox*                          m_stripSpaceTagsCheckBox;

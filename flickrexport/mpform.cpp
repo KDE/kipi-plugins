@@ -36,10 +36,8 @@
 #include <QUrl>
 #include <QMimeDatabase>
 #include <QMimeType>
-
-// KDE includes
-
-#include <krandom.h>
+#include <QtGlobal>
+#include <QTime>
 
 // Local includes
 
@@ -51,11 +49,26 @@ namespace KIPIFlickrExportPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).toAscii();
+    m_boundary += randomString(42 + 13).toAscii();
 }
 
 MPForm::~MPForm()
 {
+}
+
+QString MPForm::randomString(const int& length)
+{
+   const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+
+   QString randomString;
+   for(int i=0; i<length; ++i)
+   {
+       qsrand((uint)QTime::currentTime().msec());
+       int index = qrand() % possibleCharacters.length();
+       QChar nextChar = possibleCharacters.at(index);
+       randomString.append(nextChar);
+   }
+   return randomString;
 }
 
 void MPForm::reset()
