@@ -44,7 +44,6 @@ extern "C"
 
 // KDE includes
 
-#include <kiconloader.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
 
@@ -67,8 +66,6 @@ Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantLi
     : Plugin(parent, "FlickrExport")
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_FlickrExport plugin loaded";
-
-    KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
 
     setUiBaseName("kipiplugin_flickrexportui.rc");
     setupXML();
