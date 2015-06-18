@@ -42,6 +42,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QToolButton>
+#include <QPushButton>
 
 // KDE includes
 
@@ -84,7 +85,7 @@ namespace KIPIVkontaktePlugin
 {
 
 VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
-    : KP4ToolDialog(parent)
+    : KPToolDialog(parent)
 {
     m_albumsBox = NULL;
     m_vkapi     = new Vkontakte::VkApi(this);
@@ -168,16 +169,15 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 
     setMainWidget(m_mainWidget);
     setWindowIcon(QIcon::fromTheme("kipi"));
-    setButtons(KDialog::Help | KDialog::User1 | KDialog::Close);
-    setDefaultButton(Close);
     setModal(false);
 
     if (!m_import)
     {
         setWindowTitle(i18nc("@title:window", "Export to VKontakte Web Service"));
-        setButtonGuiItem(KDialog::User1,
-                         KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                  i18n("Start upload to VKontakte service")));
+
+        KGuiItem::assign(startButton(), KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                                 i18n("Start upload to VKontakte service")));
+
         setMinimumSize(700, 520);
         uploadBox->hide();
     }
@@ -206,7 +206,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     /*
      * UI slots
      */
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked(bool)),
             this, SLOT(slotStartTransfer()));
 
     // for startReactivation()
@@ -267,18 +267,14 @@ void VkontakteWindow::updateBusyStatus(bool busy)
     if (!busy)
     {
         setCursor(Qt::ArrowCursor);
-        enableButton(User1, m_vkapi->isAuthenticated());
-        setButtonGuiItem(KDialog::Close,
-                         KGuiItem(i18n("Close"), "dialog-close",
-                                  i18n("Close window")));
+        startButton()->setEnabled(m_vkapi->isAuthenticated());
+        setRejectButtonMode(QDialogButtonBox::Close);
     }
     else
     {
         setCursor(Qt::WaitCursor);
-        enableButton(User1, false);
-        setButtonGuiItem(KDialog::Close,
-                         KGuiItem(i18n("Cancel"), "dialog-cancel",
-                                  i18n("Cancel current operation")));
+        startButton()->setEnabled(false);
+        setRejectButtonMode(QDialogButtonBox::Cancel);
     }
 }
 
@@ -339,24 +335,6 @@ void VkontakteWindow::slotFinished()
 {
     writeSettings();
     reset();
-}
-
-void VkontakteWindow::slotButtonClicked(int button)
-{
-    switch (button)
-    {
-        case KDialog::User1:
-            slotStartTransfer();
-            break;
-        case KDialog::Close:
-            // TODO: grab better code from picasawebexport/picasawebwindow.cpp:219
-            reset();
-            done(KDialog::Close);
-            break;
-        default:
-            KDialog::slotButtonClicked(button);
-            break;
-    }
 }
 
 void VkontakteWindow::authenticated()

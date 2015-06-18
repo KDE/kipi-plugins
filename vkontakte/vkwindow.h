@@ -66,7 +66,7 @@ namespace KIPIVkontaktePlugin
 class AlbumChooserWidget;
 class AuthInfoWidget;
 
-class VkontakteWindow : public KP4ToolDialog
+class VkontakteWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -91,8 +91,6 @@ protected Q_SLOTS:
     void slotPhotoUploadDone(KJob *kjob);
 
     void slotStartTransfer();
-
-    void slotButtonClicked(int button);
 
     void slotFinished();
 
