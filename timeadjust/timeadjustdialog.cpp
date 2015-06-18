@@ -101,7 +101,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     : KPToolDialog(0), d(new Private)
 {
     setButtons(Help | User1 | Close);
-    setDefaultButton(User1);
+    setDefaultButton(Close);
     setCaption(i18n("Adjust Time & Date"));
     setModal(false);
     setMinimumSize(900, 500);
