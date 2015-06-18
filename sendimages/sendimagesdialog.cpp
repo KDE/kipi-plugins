@@ -212,7 +212,7 @@ void SendImagesDialog::saveSettings()
 
 void SendImagesDialog::slotImagesCountChanged()
 {
-   enableButtonOk(!d->imagesList->imagesList().isEmpty());
+   enableButton(User1, !d->imagesList->imagesList().isEmpty());
 }
 
 }  // namespace KIPISendimagesPlugin
