@@ -216,6 +216,7 @@ void EncoderDecoder::encodeVideo(const QString& destination, const QString& audi
     catch(QGlib::Error e)
     {
         Q_EMIT encoderError(e.message());
+        return;
     }
 
     if(!m_pipeline)
