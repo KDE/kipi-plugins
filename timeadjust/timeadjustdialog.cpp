@@ -55,6 +55,7 @@
 #include <kstandarddirs.h>
 #include <kwindowconfig.h>
 #include <kstandardguiitem.h>
+#include <kpushbutton.h>
 
 // Local includes
 
@@ -99,11 +100,15 @@ public:
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     : KPToolDialog(0), d(new Private)
 {
-    setButtons(Help | Apply | Close);
-    setDefaultButton(Apply);
+    setButtons(Help | User1 | Close);
+    setDefaultButton(User1);
     setCaption(i18n("Adjust Time & Date"));
     setModal(false);
     setMinimumSize(900, 500);
+
+    button(User1)->setText(i18nc("@action:button", "&Apply"));
+    button(User1)->setToolTip(i18nc("@info:tooltip", "Write the corrected date and time for each image"));
+    button(User1)->setIcon(KIcon("dialog-ok-apply"));
 
     setMainWidget(new QWidget(this));
     QGridLayout* const mainLayout = new QGridLayout(mainWidget());
@@ -171,7 +176,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // -- Dialog Slots/Signals -----------------------------------------------
 
-    connect(this, SIGNAL(applyClicked()),
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotApplyClicked()));
 
     connect(this, SIGNAL(signalMyCloseClicked()),
@@ -388,7 +393,7 @@ void TimeAdjustDialog::slotApplyClicked()
             d->thread->start();
         }
 
-        enableButton(Apply, false);
+        enableButton(User1, false);
         setBusy(true);
     }
     else
@@ -413,8 +418,8 @@ void TimeAdjustDialog::slotButtonClicked(int button)
 
     switch (button)
     {
-        case Apply:
-            emit applyClicked();
+        case User1:
+            emit user1Clicked();
             break;
         case Close:
             emit signalMyCloseClicked();
@@ -432,7 +437,7 @@ void TimeAdjustDialog::setBusy(bool busy)
                    this, SLOT(slotCloseClicked()));
 
         setButtonGuiItem(Close, KStandardGuiItem::cancel());
-        enableButton(Apply, false);
+        enableButton(User1, false);
 
         connect(this, SIGNAL(signalMyCloseClicked()),
                 this, SLOT(slotCancelThread()));
@@ -443,7 +448,7 @@ void TimeAdjustDialog::setBusy(bool busy)
                    this, SLOT(slotCancelThread()));
 
         setButtonGuiItem(Close, KStandardGuiItem::close());
-        enableButton(Apply, true);
+        enableButton(User1, true);
 
         connect(this, SIGNAL(signalMyCloseClicked()),
                 this, SLOT(slotCloseClicked()));
@@ -474,7 +479,7 @@ void TimeAdjustDialog::slotThreadFinished()
     setBusy(false);
     d->progressBar->hide();
     d->progressBar->progressCompleted();
-    enableButton(Apply, true);
+    enableButton(User1, true);
     saveSettings();
 }
 
