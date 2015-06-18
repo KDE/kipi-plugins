@@ -79,6 +79,41 @@ public:
 
 // -----------------------------------------------------------------------------------
 
+class KIPIPLUGINS_EXPORT KPToolDialog : public QDialog, public KPDialogBase
+{
+    Q_OBJECT
+
+public:
+
+    KPToolDialog(QWidget* const parent = 0);
+    virtual ~KPToolDialog();
+
+    void setMainWidget(QWidget* widget);
+
+    void setRejectButtonMode(QDialogButtonBox::StandardButton button);
+
+    QPushButton* startButton();
+
+private Q_SLOTS:
+
+    void slotCloseClicked();
+
+Q_SIGNALS:
+
+    void cancelClicked();
+
+private:
+
+    QPushButton* helpButton();
+
+    friend class KPDialogBase;
+
+    class Private;
+    Private* const d;
+};
+
+// -----------------------------------------------------------------------------------
+
 class KIPIPLUGINS_EXPORT KPWizardDialog : public KAssistantDialog, public KPDialogBase
 {
 public:

@@ -28,10 +28,10 @@
 #include <QAction>
 #include <QDialog>
 #include <QMenu>
+#include <QVBoxLayout>
 
 // KDE includes
 
-#include <kdialog.h>
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
@@ -46,6 +46,7 @@
 
 #include "kpaboutdata.h"
 #include "kpoutputdialog.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIPlugins
 {
@@ -127,6 +128,15 @@ QPushButton* KPDialogBase::getHelpButton()
         }
     }
 
+    {
+        KPToolDialog* const dlg = dynamic_cast<KPToolDialog*>(d->dialog);
+
+        if (dlg)
+        {
+            return dlg->helpButton();
+        }
+    }
+
     return nullptr;
 }
 
@@ -159,6 +169,112 @@ KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
 
 KP4ToolDialog::~KP4ToolDialog()
 {
+}
+
+// -----------------------------------------------------------------------------------
+
+class KPToolDialog::Private
+{
+public:
+    Private()
+        : buttonBox(nullptr)
+        , startButton(nullptr)
+        , mainWidget(nullptr)
+        , propagateReject(true)
+    {
+    }
+
+    QDialogButtonBox* buttonBox;
+    QPushButton* startButton;
+    QWidget* mainWidget;
+
+    bool propagateReject;
+};
+
+KPToolDialog::KPToolDialog(QWidget* const parent)
+    : QDialog(parent), KPDialogBase(this), d(new Private)
+{
+    d->buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Close | QDialogButtonBox::Help, this);
+    d->startButton = new QPushButton(i18nc("@action:button", "&Start"), this);
+    d->buttonBox->addButton(d->startButton, QDialogButtonBox::ActionRole);
+
+    d->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
+
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(d->buttonBox);
+    setLayout(mainLayout);
+
+    connect(d->buttonBox, &QDialogButtonBox::rejected,
+            this, &KPToolDialog::slotCloseClicked);
+}
+
+KPToolDialog::~KPToolDialog()
+{
+}
+
+void KPToolDialog::setMainWidget(QWidget* widget)
+{
+    if (d->mainWidget == widget)
+    {
+        return;
+    }
+
+    layout()->removeWidget(d->buttonBox);
+    if (d->mainWidget)
+    {
+        // Replace existing widget
+        layout()->removeWidget(d->mainWidget);
+        delete d->mainWidget;
+    }
+
+    d->mainWidget = widget;
+    layout()->addWidget(d->mainWidget);
+    layout()->addWidget(d->buttonBox);
+}
+
+void KPToolDialog::setRejectButtonMode(QDialogButtonBox::StandardButton button)
+{
+    if (button == QDialogButtonBox::Close)
+    {
+        KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Close),
+                         KGuiItem(i18n("Close"), "dialog-close",
+                                  i18n("Close window")));
+        d->propagateReject = true;
+    }
+    else if (button == QDialogButtonBox::Cancel)
+    {
+        KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Close),
+                         KGuiItem(i18n("Cancel"), "dialog-cancel",
+                                  i18n("Cancel current operation")));
+        d->propagateReject = false;
+    }
+    else
+    {
+        qCDebug(KIPIPLUGINS_LOG) << "Unexpected button mode passed";
+    }
+}
+
+QPushButton* KPToolDialog::startButton()
+{
+    return d->startButton;
+}
+
+QPushButton* KPToolDialog::helpButton()
+{
+    return d->buttonBox->button(QDialogButtonBox::Help);
+}
+
+void KPToolDialog::slotCloseClicked()
+{
+    if (d->propagateReject)
+    {
+        reject();
+    }
+    else
+    {
+        emit cancelClicked();
+    }
 }
 
 // -----------------------------------------------------------------------------------
