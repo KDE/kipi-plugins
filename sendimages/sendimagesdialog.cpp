@@ -66,6 +66,8 @@ public:
 
     MyImageList*    imagesList;
     SettingsWidget* settingsWidget;
+
+    EmailSettings acceptedEmailSettings;
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>& urls)
@@ -118,8 +120,8 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
 
     // ------------------------------------------------------------
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotSubmit()));
@@ -139,30 +141,34 @@ SendImagesDialog::~SendImagesDialog()
 
 void SendImagesDialog::closeEvent(QCloseEvent *e)
 {
-    if (!e) return;
-    saveSettings();
-    d->imagesList->listView()->clear();
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
     e->accept();
 }
 
-void SendImagesDialog::slotClose()
+void SendImagesDialog::slotFinished()
 {
     saveSettings();
     d->imagesList->listView()->clear();
-    reject();
 }
 
 void SendImagesDialog::slotSubmit()
 {
-    saveSettings();
+    // Prepare acceptedEmailSettings here because the image list
+    // will be cleared by slotFinished() on accepting the dialog.
+    d->acceptedEmailSettings = d->settingsWidget->emailSettings();
+    d->acceptedEmailSettings.itemsList = d->imagesList->imagesList();
+
     accept();
 }
 
 EmailSettings SendImagesDialog::emailSettings() const
 {
-    EmailSettings settings = d->settingsWidget->emailSettings(); 
-    settings.itemsList     = d->imagesList->imagesList();
-    return settings;
+    return d->acceptedEmailSettings;
 }
 
 void SendImagesDialog::readSettings()

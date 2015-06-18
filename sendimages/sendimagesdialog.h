@@ -58,7 +58,7 @@ protected:
 private Q_SLOTS:
 
     void slotSubmit();
-    void slotClose();
+    void slotFinished();
     void slotImagesCountChanged();
 
 private:
