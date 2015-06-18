@@ -92,7 +92,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     // read settings from file
     readSettings();
 
-    connect(this, SIGNAL(finished()),
+    connect(this, SIGNAL(finished(int)),
             this, SLOT(slotFinished()));
 
     m_import                      = import;
@@ -323,6 +323,17 @@ void VkontakteWindow::writeSettings()
 }
 
 //---------------------------------------------------------------------------
+
+void VkontakteWindow::closeEvent(QCloseEvent* event)
+{
+    if (!event)
+    {
+        return;
+    }
+
+    slotFinished();
+    event->accept();
+}
 
 void VkontakteWindow::slotFinished()
 {

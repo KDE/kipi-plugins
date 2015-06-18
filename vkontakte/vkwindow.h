@@ -114,6 +114,8 @@ protected:
 
     void handleVkError(KJob* kjob);
 
+    void closeEvent(QCloseEvent* event);
+
 protected:
 
     /// Plugin
