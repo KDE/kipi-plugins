@@ -74,9 +74,12 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
     d->urls = urls;
 
     setCaption(i18n("Email Images Options"));
-    setButtons(Help|Ok|Cancel);
-    setDefaultButton(Ok);
+    setButtons(Help | User1 | Close);
+    setDefaultButton(User1);
     setModal(false);
+
+    button(User1)->setText(i18nc("@action:button", "&Send"));
+    button(User1)->setIcon(KIcon("mail-send"));
 
     // ---------------------------------------------------------------
 
@@ -115,11 +118,11 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
 
     // ------------------------------------------------------------
 
-    connect(this, SIGNAL(cancelClicked()),
-            this, SLOT(slotCancel()));
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
 
-    connect(this, SIGNAL(okClicked()),
-            this, SLOT(slotOk()));
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotSubmit()));
 
     connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImagesCountChanged()));
@@ -142,14 +145,14 @@ void SendImagesDialog::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-void SendImagesDialog::slotCancel()
+void SendImagesDialog::slotClose()
 {
     saveSettings();
     d->imagesList->listView()->clear();
     reject();
 }
 
-void SendImagesDialog::slotOk()
+void SendImagesDialog::slotSubmit()
 {
     saveSettings();
     accept();

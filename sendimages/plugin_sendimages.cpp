@@ -136,7 +136,7 @@ void Plugin_SendImages::slotActivate()
     d->dialog = new SendImagesDialog(QApplication::activeWindow(), images.images());
     d->dialog->show();
 
-    connect(d->dialog, SIGNAL(okClicked()),
+    connect(d->dialog, SIGNAL(accepted()),
             this, SLOT(slotPrepareEmail()));
 }
 
