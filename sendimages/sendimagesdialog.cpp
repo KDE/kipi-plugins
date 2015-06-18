@@ -82,7 +82,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
 
     setCaption(i18n("Email Images Options"));
     setButtons(Help | User1 | Close);
-    setDefaultButton(User1);
+    setDefaultButton(Close);
     setModal(false);
 
     button(User1)->setText(i18nc("@action:button", "&Send"));
