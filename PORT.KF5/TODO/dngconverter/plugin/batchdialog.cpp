@@ -391,8 +391,6 @@ void BatchDialog::slotThreadFinished()
 void BatchDialog::busy(bool busy)
 {
     d->busy = busy;
-    enableButton(User1, !d->busy);
-    enableButton(User2, !d->busy);
 
     if (d->busy)
     {
