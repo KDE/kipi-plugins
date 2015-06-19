@@ -50,7 +50,6 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
 #include <kwindowconfig.h>
@@ -108,7 +107,7 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     button(User1)->setText(i18nc("@action:button", "&Apply"));
     button(User1)->setToolTip(i18nc("@info:tooltip", "Write the corrected date and time for each image"));
-    button(User1)->setIcon(KIcon("dialog-ok-apply"));
+    button(User1)->setIcon(QIcon::fromTheme("dialog-ok-apply"));
 
     setMainWidget(new QWidget(this));
     QGridLayout* const mainLayout = new QGridLayout(mainWidget());

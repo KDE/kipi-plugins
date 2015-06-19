@@ -81,7 +81,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
     setModal(false);
 
     button(User1)->setText(i18nc("@action:button", "&Send"));
-    button(User1)->setIcon(KIcon("mail-send"));
+    button(User1)->setIcon(QIcon::fromTheme("mail-send"));
 
     // ---------------------------------------------------------------
 
