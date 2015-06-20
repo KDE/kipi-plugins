@@ -103,7 +103,7 @@ void ActionThread::preProcessFiles(const QList<QUrl>& urlList, ItemUrlsMap& preP
 {
     QString prefix = QDir::tempPath() +
                      QChar::fromLatin1('/') +
-                     QString::fromUtf8("kipi-panorama-tmp-") +
+                     QLatin1String("kipi-panorama-tmp-") +
                      QString::number(QDateTime::currentDateTime().toTime_t());
 
     d->preprocessingTmpDir = QSharedPointer<QTemporaryDir>(new QTemporaryDir(prefix));

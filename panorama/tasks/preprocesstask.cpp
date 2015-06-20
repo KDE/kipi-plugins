@@ -96,7 +96,7 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
     QUrl& outUrl = preProcessedUrl.previewUrl;
 
     QFileInfo fi(inUrl.toLocalFile());
-    outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QString::fromUtf8("."), QString::fromUtf8("_")) + QString::fromUtf8("-preview.jpg")));
+    outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QLatin1String("-preview.jpg")));
 
     QImage img;
 
@@ -163,7 +163,7 @@ bool PreProcessTask::convertRaw()
 
         KPMetadata metaIn, metaOut;
         metaIn.load(inUrl.toLocalFile());
-        KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList(QString::fromUtf8("Photo")), true);
+        KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList(QStringLiteral("Photo")), true);
         KPMetadata::MetaDataMap::iterator it;
 
         for (it = m.begin(); it != m.end(); ++it)
@@ -172,7 +172,7 @@ bool PreProcessTask::convertRaw()
         }
 
         metaOut.setData(metaIn.data());
-        metaOut.setImageProgramId(QString::fromUtf8("Kipi-plugins"), QString::fromUtf8(kipiplugins_version));
+        metaOut.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
         metaOut.setImageDimensions(QSize(width, height));
         metaOut.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
         metaOut.setXmpTagString("Xmp.tiff.Make",  metaOut.getExifTagString("Exif.Image.Make"));
@@ -185,7 +185,7 @@ bool PreProcessTask::convertRaw()
         wImageIface.setCancel(&isAbortedFlag);
         wImageIface.setImageData(imageData, width, height, true, false, prof, metaOut);
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QString::fromUtf8("."), QString::fromUtf8("_")) + QString::fromUtf8(".tif")));
+        outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QLatin1String(".tif")));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
         {

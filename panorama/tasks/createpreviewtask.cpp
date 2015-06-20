@@ -104,10 +104,10 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     // Add two commented line for a JPEG output
     data.lastComments.clear();
-    data.lastComments << QString::fromUtf8("#hugin_outputImageType jpg");
-    data.lastComments << QString::fromUtf8("#hugin_outputJPEGQuality 90");
+    data.lastComments << QStringLiteral("#hugin_outputImageType jpg");
+    data.lastComments << QStringLiteral("#hugin_outputJPEGQuality 90");
 
-    previewPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("preview.pto")));
+    previewPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QLatin1String("preview.pto")));
     data.createFile(previewPtoUrl.toLocalFile());
 
     qCDebug(KIPIPLUGINS_LOG) << "Preview PTO File created: " << previewPtoUrl.fileName();

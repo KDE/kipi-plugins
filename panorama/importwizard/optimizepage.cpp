@@ -71,7 +71,7 @@ struct OptimizePage::OptimizePagePriv
           detailsBtn(0),
           mngr(0)
     {
-        progressPix = KPixmapSequence(QString::fromUtf8("process-working"), KIconLoader::SizeSmallMedium);
+        progressPix = KPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;
@@ -107,8 +107,8 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     d->title->setWordWrap(true);
     vbox->addWidget(d->title);
 
-    KConfig config(QString::fromUtf8("kipirc"));
-    KConfigGroup group              = config.group(QString::fromUtf8("Panorama Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group              = config.group(QLatin1String("Panorama Settings"));
 
     d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), this);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
@@ -169,7 +169,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 
     resetTitle();
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->progressTimer, SIGNAL(timeout()),
@@ -181,8 +181,8 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 
 OptimizePage::~OptimizePage()
 {
-    KConfig config(QString::fromUtf8("kipirc"));
-    KConfigGroup group = config.group(QString::fromUtf8("Panorama Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("Panorama Settings"));
     group.writeEntry("Horizon", d->horizonCheckbox->isChecked());
 //     group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
     config.sync();

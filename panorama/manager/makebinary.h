@@ -38,14 +38,14 @@ class MakeBinary : public KPBinaryIface
 public:
 
     MakeBinary()
-        : KPBinaryIface(QString::fromUtf8("make"),
-                        QString::fromUtf8("3.80"),
-                        QString::fromUtf8("GNU Make "),
+        : KPBinaryIface(QStringLiteral("make"),
+                        QStringLiteral("3.80"),
+                        QStringLiteral("GNU Make "),
                         0,
-                        QString::fromUtf8("GNU"),
-                        QString::fromUtf8("http://www.gnu.org/software/make/"),
-                        QString::fromUtf8("Panorama"),
-                        QStringList(QString::fromUtf8("-v"))
+                        QStringLiteral("GNU"),
+                        QStringLiteral("http://www.gnu.org/software/make/"),
+                        QStringLiteral("Panorama"),
+                        QStringList(QStringLiteral("-v"))
                        )
         {
             setup();

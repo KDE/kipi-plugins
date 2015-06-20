@@ -38,13 +38,13 @@ class AutoOptimiserBinary : public KPBinaryIface
 public:
 
     AutoOptimiserBinary()
-        : KPBinaryIface(QString::fromUtf8("autooptimiser"), 
-                        QString::fromUtf8("2010.4"), 
-                        QString::fromUtf8("autooptimiser version "),
+        : KPBinaryIface(QStringLiteral("autooptimiser"), 
+                        QStringLiteral("2010.4"), 
+                        QStringLiteral("autooptimiser version "),
                         1, 
-                        QString::fromUtf8("Hugin"), 
-                        QString::fromUtf8("http://hugin.sourceforge.net"), 
-                        QString::fromUtf8("Panorama")
+                        QStringLiteral("Hugin"), 
+                        QStringLiteral("http://hugin.sourceforge.net"), 
+                        QStringLiteral("Panorama")
                        )
         { 
             setup();

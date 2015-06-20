@@ -44,15 +44,15 @@ OptimisationTask::~OptimisationTask()
 
 void OptimisationTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    autoOptimiserPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("auto_op_pano.pto")));
+    autoOptimiserPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QLatin1String("auto_op_pano.pto")));
 
     QStringList args;
-    args << QString::fromUtf8("-am");
+    args << QStringLiteral("-am");
     if (levelHorizon)
-        args << QString::fromUtf8("-l");
+        args << QStringLiteral("-l");
     if (!buildGPano)
-       args << QString::fromUtf8("-s");
-    args << QString::fromUtf8("-o");
+       args << QStringLiteral("-s");
+    args << QStringLiteral("-o");
     args << autoOptimiserPtoUrl.toLocalFile();
     args << ptoUrl.toLocalFile();
 

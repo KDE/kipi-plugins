@@ -38,14 +38,14 @@ class PanoModifyBinary : public KPBinaryIface
 public:
 
     PanoModifyBinary()
-        : KPBinaryIface(QString::fromUtf8("pano_modify"),
-                        QString::fromUtf8("2012.0"),
-                        QString::fromUtf8("pano_modify version "),
+        : KPBinaryIface(QStringLiteral("pano_modify"),
+                        QStringLiteral("2012.0"),
+                        QStringLiteral("pano_modify version "),
                         1, 
-                        QString::fromUtf8("Hugin"),
-                        QString::fromUtf8("http://hugin.sourceforge.net"),
-                        QString::fromUtf8("Panorama"), 
-                        QStringList(QString::fromUtf8("-h"))
+                        QStringLiteral("Hugin"),
+                        QStringLiteral("http://hugin.sourceforge.net"),
+                        QStringLiteral("Panorama"), 
+                        QStringList(QStringLiteral("-h"))
                        )
         { 
             setup();

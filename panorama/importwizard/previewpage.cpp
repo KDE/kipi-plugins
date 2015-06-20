@@ -110,7 +110,7 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setLayout(vbox);
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->postProcessing, SIGNAL(signalProgressCanceled()),
@@ -252,7 +252,7 @@ void PreviewPage::startStitching()
 
     d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
-    d->postProcessing->progressScheduled(i18nc("@title:group", "Panorama Post-Processing"), QIcon::fromTheme(QString::fromUtf8("kipi-panorama")).pixmap(22, 22));
+    d->postProcessing->progressScheduled(i18nc("@title:group", "Panorama Post-Processing"), QIcon::fromTheme(QStringLiteral("kipi-panorama")).pixmap(22, 22));
     d->postProcessing->show();
 
     d->mngr->resetPanoPto();
@@ -311,7 +311,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
-                    QString errorString(xi18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>", Qt::escape(ad.message).replace(QString::fromUtf8("\n"), QString::fromUtf8("</p><p>"))));
+                    QString errorString(xi18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>", Qt::escape(ad.message).replace(QLatin1String("\n"), QLatin1String("</p><p>"))));
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
 
@@ -522,14 +522,18 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         switch (ad.action)
         {
             case CREATEPREVIEWPTO:
+            case CREATEMKPREVIEW:
             case NONAFILEPREVIEW:
             case STITCHPREVIEW:
+            case CREATEFINALPTO:
+            case CREATEMK:
             {
                 // Nothing to do...
                 break;
             }
             case NONAFILE:
             {
+                qCDebug(KIPIPLUGINS_LOG) << "Start" << ad.id;
                 QString message = i18nc("Compilation started for image file number %1 out of %2", "Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
                 d->postProcessing->addedAction(message, StartingMessage);
                 break;

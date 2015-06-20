@@ -55,9 +55,9 @@ int main(int argc, char* argv[])
 
     QCommandLineParser parser;
     parser.addHelpOption();
-    parser.addPositionalArgument(QString::fromUtf8("files"), i18n("File(s) to open"), QString::fromUtf8("+[file(s)]"));
+    parser.addPositionalArgument(QStringLiteral("files"), i18n("File(s) to open"), QStringLiteral("+[file(s)]"));
     aboutData.setupCommandLine(&parser);
-    aboutData.setProgramLogo(QIcon::fromTheme(QString::fromUtf8("kipi-panorama")));
+    aboutData.setProgramLogo(QIcon::fromTheme(QStringLiteral("kipi-panorama")));
 
     parser.process(app);
     aboutData.processCommandLine(&parser);

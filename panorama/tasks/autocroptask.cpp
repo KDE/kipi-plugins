@@ -43,14 +43,14 @@ AutoCropTask::~AutoCropTask()
 
 void AutoCropTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    viewCropPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("view_crop_pano.pto")));
+    viewCropPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QStringLiteral("view_crop_pano.pto")));
 
     QStringList args;
-    args << QString::fromUtf8("-c");               // Center the panorama
-    args << QString::fromUtf8("-s");               // Straighten the panorama
-    args << QString::fromUtf8("--canvas=AUTO");    // Automatic size
-    args << QString::fromUtf8("--crop=AUTO");      // Automatic crop
-    args << QString::fromUtf8("-o");
+    args << QStringLiteral("-c");               // Center the panorama
+    args << QStringLiteral("-s");               // Straighten the panorama
+    args << QStringLiteral("--canvas=AUTO");    // Automatic size
+    args << QStringLiteral("--crop=AUTO");      // Automatic crop
+    args << QStringLiteral("-o");
     args << viewCropPtoUrl.toLocalFile();
     args << autoOptimiserPtoUrl.toLocalFile();
 

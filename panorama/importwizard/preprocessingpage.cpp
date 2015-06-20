@@ -77,7 +77,7 @@ struct PreProcessingPage::PreProcessingPagePriv
           detailsBtn(0),
           mngr(0)
     {
-        progressPix = KIconLoader::global()->loadPixmapSequence(QString::fromUtf8("process-working"), KIconLoader::SizeSmallMedium);
+        progressPix = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;
@@ -114,8 +114,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     d->title->setOpenExternalLinks(true);
     vbox->addWidget(d->title);
 
-    KConfig config(QString::fromUtf8("kipirc"));
-    KConfigGroup group  = config.group(QString::fromUtf8("Panorama Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group  = config.group(QLatin1String("Panorama Settings"));
 
     d->celesteCheckBox  = new QCheckBox(i18nc("@option:check", "Detect moving skies"), this);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
@@ -155,7 +155,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
     resetTitle();
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-preprocessing.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-preprocessing.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->progressTimer, SIGNAL(timeout()),
@@ -167,8 +167,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
 PreProcessingPage::~PreProcessingPage()
 {
-    KConfig config(QString::fromUtf8("kipirc"));
-    KConfigGroup group = config.group(QString::fromUtf8("Panorama Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("Panorama Settings"));
     group.writeEntry("Celeste", d->celesteCheckBox->isChecked());
     config.sync();
 

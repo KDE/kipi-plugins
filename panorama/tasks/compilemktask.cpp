@@ -46,10 +46,10 @@ CompileMKTask::~CompileMKTask()
 void CompileMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     QStringList args;
-    args << QString::fromUtf8("-f");
+    args << QStringLiteral("-f");
     args << mkUrl.toLocalFile();
-    args << QString::fromUtf8("ENBLEND='%1'").arg(enblendPath);
-    args << QString::fromUtf8("NONA='%1'").arg(nonaPath);
+    args << QStringLiteral("ENBLEND='%1'").arg(enblendPath);
+    args << QStringLiteral("NONA='%1'").arg(nonaPath);
 
     runProcess(args);
 

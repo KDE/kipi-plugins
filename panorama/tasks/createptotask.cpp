@@ -53,7 +53,7 @@ CreatePtoTask::~CreatePtoTask()
 
 void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    ptoUrl = tmpDir.resolved(QUrl::fromLocalFile(QString::fromUtf8("pano_base.pto")));
+    ptoUrl = tmpDir.resolved(QUrl::fromLocalFile(QLatin1String("pano_base.pto")));
 
     QFile pto(ptoUrl.toLocalFile());
     if (pto.exists())
@@ -191,12 +191,12 @@ void CreatePtoTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     switch (fileType)
     {
         case TIFF:
-            panoBase.lastComments << QString::fromUtf8("#hugin_outputImageType tif");
-            panoBase.lastComments << QString::fromUtf8("#hugin_outputImageTypeCompression LZW");
+            panoBase.lastComments << QStringLiteral("#hugin_outputImageType tif");
+            panoBase.lastComments << QStringLiteral("#hugin_outputImageTypeCompression LZW");
             break;
         case JPEG:
-            panoBase.lastComments << QString::fromUtf8("#hugin_outputImageType jpg");
-            panoBase.lastComments << QString::fromUtf8("#hugin_outputJPEGQuality 90");
+            panoBase.lastComments << QStringLiteral("#hugin_outputImageType jpg");
+            panoBase.lastComments << QStringLiteral("#hugin_outputJPEGQuality 90");
             break;
         case HDR:
             // TODO: HDR

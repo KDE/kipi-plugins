@@ -78,8 +78,8 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
      : KPWizardPage(dlg, i18nc("@title:window", "<b>Panorama Stitched</b>")),
        d(new Private)
 {
-    KConfig config(QString::fromUtf8("kipirc"));
-    KConfigGroup group        = config.group(QString::fromUtf8("Panorama Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group        = config.group(QLatin1String("Panorama Settings"));
 
     d->mngr                   = mngr;
 
@@ -99,7 +99,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
     QLabel *fileTemplateLabel = new QLabel(i18nc("@label:textbox", "File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
 
-    d->fileTemplateKLineEdit  = new QLineEdit(QString::fromUtf8("panorama"), d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit  = new QLineEdit(QStringLiteral("panorama"), d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18nc("@info:tooltip", "Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18nc("@info:whatsthis", "<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
@@ -132,7 +132,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setLayout(vbox);
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-hugin.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->fileTemplateKLineEdit, SIGNAL(textChanged(QString)),
@@ -144,8 +144,8 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
 LastPage::~LastPage()
 {
-    KConfig config(QString::fromUtf8("kipirc"));
-    KConfigGroup group = config.group(QString::fromUtf8("Panorama Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("Panorama Settings"));
     group.writeEntry("Save PTO", d->savePtoCheckBox->isChecked());
     config.sync();
 
@@ -156,7 +156,7 @@ void LastPage::resetTitle()
 {
     QString first = d->mngr->itemsList().front().fileName();
     QString last = d->mngr->itemsList().back().fileName();
-    QString file = QString::fromUtf8("%1-%2").arg(first.left(first.lastIndexOf(QString::fromUtf8(".")))).arg(last.left(last.lastIndexOf(QString::fromUtf8("."))));
+    QString file = QStringLiteral("%1-%2").arg(first.left(first.lastIndexOf(QLatin1String(".")))).arg(last.left(last.lastIndexOf(QLatin1String("."))));
     d->fileTemplateKLineEdit->setText(file);
 
     slotTemplateChanged(d->fileTemplateKLineEdit->text());
@@ -256,9 +256,9 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
     {
         default:
         case JPEG:
-            return fileTemplate + QString::fromUtf8(".jpg");
+            return fileTemplate + QLatin1String(".jpg");
         case TIFF:
-            return fileTemplate + QString::fromUtf8(".tif");
+            return fileTemplate + QLatin1String(".tif");
     }
 }
 
@@ -266,7 +266,7 @@ void LastPage::checkFiles()
 {
     QString dir = d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename);
     QUrl panoUrl(dir + panoFileName(d->fileTemplateKLineEdit->text()));
-    QUrl ptoUrl(dir + d->fileTemplateKLineEdit->text() + QString::fromUtf8(".pto"));
+    QUrl ptoUrl(dir + d->fileTemplateKLineEdit->text() + QLatin1String(".pto"));
     QFile panoFile(panoUrl.toString(QUrl::PreferLocalFile));
     QFile ptoFile(ptoUrl.toString(QUrl::PreferLocalFile));
 

@@ -68,8 +68,8 @@ struct Manager::Private
       iface(0),
       thread(0),
       wizard(0),
-      config(QString::fromUtf8("kipirc")),
-      group(config.group(QString::fromUtf8("Panorama Settings")))
+      config(QStringLiteral("kipirc")),
+      group(config.group(QLatin1String("Panorama Settings")))
     {
         gPano    = group.readEntry("GPano", false);
 //         hdr      = group.readEntry("HDR", false);

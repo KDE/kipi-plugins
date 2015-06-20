@@ -38,14 +38,14 @@ class NonaBinary : public KPBinaryIface
 public:
 
     NonaBinary()
-        : KPBinaryIface(QString::fromUtf8("nona"), 
-                        QString::fromUtf8("2010.4"),
-                        QString::fromUtf8("nona version "),
+        : KPBinaryIface(QStringLiteral("nona"), 
+                        QStringLiteral("2010.4"),
+                        QStringLiteral("nona version "),
                         2, 
-                        QString::fromUtf8("Hugin"), 
-                        QString::fromUtf8("http://hugin.sourceforge.net"),
-                        QString::fromUtf8("Panorama"), 
-                        QStringList(QString::fromUtf8("-h"))
+                        QStringLiteral("Hugin"), 
+                        QStringLiteral("http://hugin.sourceforge.net"),
+                        QStringLiteral("Panorama"), 
+                        QStringList(QStringLiteral("-h"))
                        )
         { 
             setup(); 

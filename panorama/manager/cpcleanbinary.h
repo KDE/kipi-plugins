@@ -38,14 +38,14 @@ class CPCleanBinary : public KPBinaryIface
 public:
 
     CPCleanBinary()
-        : KPBinaryIface(QString::fromUtf8("cpclean"),
-                        QString::fromUtf8("2010.4"),
-                        QString::fromUtf8("cpclean version "),
+        : KPBinaryIface(QStringLiteral("cpclean"),
+                        QStringLiteral("2010.4"),
+                        QStringLiteral("cpclean version "),
                         1, 
-                        QString::fromUtf8("Hugin"),
-                        QString::fromUtf8("http://hugin.sourceforge.net"),
-                        QString::fromUtf8("Panorama"),
-                        QStringList(QString::fromUtf8("-h"))
+                        QStringLiteral("Hugin"),
+                        QStringLiteral("http://hugin.sourceforge.net"),
+                        QStringLiteral("Panorama"),
+                        QStringList(QStringLiteral("-h"))
                        )
         { 
             setup();

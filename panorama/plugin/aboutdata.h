@@ -45,13 +45,13 @@ public:
     {
          addAuthor(i18n("Benjamin Girault"),
                    i18n("Author"),
-                   QString::fromUtf8("benjamin dot girault at gmail dot com"));
+                   QStringLiteral("benjamin dot girault at gmail dot com"));
 
          addAuthor(i18n("Gilles Caulier"),
                    i18n("Developer"),
-                   QString::fromUtf8("caulier dot gilles at gmail dot com"));
+                   QStringLiteral("caulier dot gilles at gmail dot com"));
 
-         setHandbookEntry(QString::fromUtf8("panorama"));
+         setHandbookEntry(QStringLiteral("panorama"));
     }
 
     ~PanoramaAboutData()

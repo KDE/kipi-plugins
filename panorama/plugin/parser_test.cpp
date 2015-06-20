@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     QString ptoFile(QString::fromLocal8Bit(argv[1]));
 
-    PTOFile file(QString::fromUtf8("2014.0"));
+    PTOFile file(QStringLiteral("2014.0"));
     file.openFile(ptoFile);
 
     PTOType* ptoData = file.getPTO();

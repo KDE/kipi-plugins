@@ -53,7 +53,7 @@ bool PTOType::createFile(const QString& filepath)
 
     // First, the pano line
     if (project.previousComments.size() > 0)
-        out << project.previousComments.join(QString::fromUtf8("\n")) << endl;
+        out << project.previousComments.join(QLatin1String("\n")) << endl;
     out << "p";
     out << " f" << project.projection;
     if (project.size.width() > 0)
@@ -126,11 +126,11 @@ bool PTOType::createFile(const QString& filepath)
             return false;
     }
     out << "\"";
-    out << project.unmatchedParameters.join(QString::fromUtf8(" ")) << endl;
+    out << project.unmatchedParameters.join(QLatin1String(" ")) << endl;
 
     // Second, the stitcher line
     if (stitcher.previousComments.size() > 0)
-        out << stitcher.previousComments.join(QString::fromUtf8("\n")) << endl;
+        out << stitcher.previousComments.join(QLatin1String("\n")) << endl;
     out << "m";
     out << " g" << stitcher.gamma;
     out << " i" << (int) stitcher.interpolator;
@@ -140,7 +140,7 @@ bool PTOType::createFile(const QString& filepath)
     }
     out << " m" << stitcher.huberSigma;
     out << " p" << stitcher.photometricHuberSigma;
-    out << stitcher.unmatchedParameters.join(QString::fromUtf8(" ")) << endl;
+    out << stitcher.unmatchedParameters.join(QLatin1String(" ")) << endl;
 
     // Third, the images
     // Note: the order is very important here
@@ -149,7 +149,7 @@ bool PTOType::createFile(const QString& filepath)
         const Image &image = images[id];
 
         if (image.previousComments.size() > 0)
-            out << image.previousComments.join(QString::fromUtf8("\n")) << endl;
+            out << image.previousComments.join(QLatin1String("\n")) << endl;
         out << "i";
         out << " w" << image.size.width();
         out << " h" << image.size.height();
@@ -199,7 +199,7 @@ bool PTOType::createFile(const QString& filepath)
         out << " Vx" << image.vignettingOffsetX;
         out << " Vy" << image.vignettingOffsetY;
         out << " Vm" << image.vignettingMode;
-        out << image.unmatchedParameters.join(QString::fromUtf8(" "));
+        out << image.unmatchedParameters.join(QLatin1String(" "));
         out << " n\"" << image.fileName << "\"";
         out << endl;
     }
@@ -212,7 +212,7 @@ bool PTOType::createFile(const QString& filepath)
         foreach (Optimisation optim, image.optimisationParameters)
         {
             if (optim.previousComments.size() > 0)
-                out << optim.previousComments.join(QString::fromUtf8("\n")) << endl;
+                out << optim.previousComments.join(QLatin1String("\n")) << endl;
             out << "v ";
             switch (optim.parameter)
             {
@@ -303,7 +303,7 @@ bool PTOType::createFile(const QString& filepath)
         foreach (Mask mask, image.masks)
         {
             if (mask.previousComments.size() > 0)
-                out << mask.previousComments.join(QString::fromUtf8("\n")) << endl;
+                out << mask.previousComments.join(QLatin1String("\n")) << endl;
             out << "k i" << id;
             out << " t" << (int) mask.type;
             out << " p\"";
@@ -320,7 +320,7 @@ bool PTOType::createFile(const QString& filepath)
     foreach (ControlPoint cp, controlPoints)
     {
         if (cp.previousComments.size() > 0)
-            out << cp.previousComments.join(QString::fromUtf8("\n")) << endl;
+            out << cp.previousComments.join(QLatin1String("\n")) << endl;
         out << "c n" << cp.image1Id;
         out << " N" << cp.image2Id;
         out << " x" << cp.p1_x;
@@ -332,7 +332,7 @@ bool PTOType::createFile(const QString& filepath)
     }
 
     // Finally the ending comments
-    out << lastComments.join(QString::fromUtf8("\n")) << endl;
+    out << lastComments.join(QLatin1String("\n")) << endl;
 
     file.close();
     return true;

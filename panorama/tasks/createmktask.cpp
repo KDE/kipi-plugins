@@ -49,25 +49,25 @@ CreateMKTask::~CreateMKTask()
 void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     QFileInfo fi(ptoUrl.toLocalFile());
-    mkUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".mk")));
+    mkUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".mk")));
 
     switch (fileType)
     {
         case JPEG:
-            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".jpg")));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".jpg")));
             break;
         case TIFF:
-            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".tif")));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".tif")));
             break;
         case HDR:
-            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".hdr")));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".hdr")));
             break;
     }
 
     QStringList args;
-    args << QString::fromUtf8("-o");
+    args << QStringLiteral("-o");
     args << mkUrl.toLocalFile();
-    args << QString::fromUtf8("-p");
+    args << QStringLiteral("-p");
     args << fi.completeBaseName();
     args << ptoUrl.toLocalFile();
 

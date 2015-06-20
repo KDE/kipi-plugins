@@ -100,13 +100,13 @@ void Plugin_Panorama::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18nc("@action", "Stitch images into a panorama..."));
-    m_action->setIcon(QIcon::fromTheme(QString::fromUtf8("kipi-panorama")));
+    m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-panorama")));
     m_action->setEnabled(false);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(QString::fromUtf8("panorama"), m_action);
+    addAction(QStringLiteral("panorama"), m_action);
 }
 
 void Plugin_Panorama::slotActivate()

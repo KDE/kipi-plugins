@@ -85,7 +85,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setLayout(vbox);
 
-    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_panorama/pics/assistant-stack.png")));
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->list, SIGNAL(signalImageListChanged()),

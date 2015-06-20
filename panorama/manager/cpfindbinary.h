@@ -38,16 +38,16 @@ class CPFindBinary : public KPBinaryIface
 public:
 
     CPFindBinary()
-        : KPBinaryIface(QString::fromUtf8("cpfind"),
-                        QString::fromUtf8("2010.4"),
+        : KPBinaryIface(QStringLiteral("cpfind"),
+                        QStringLiteral("2010.4"),
                         QString(),
                         0,
-                        QString::fromUtf8("Hugin"),
-                        QString::fromUtf8("http://hugin.sourceforge.net"),
-                        QString::fromUtf8("Panorama"),
-                        QStringList(QString::fromUtf8("--version"))
+                        QStringLiteral("Hugin"),
+                        QStringLiteral("http://hugin.sourceforge.net"),
+                        QStringLiteral("Panorama"),
+                        QStringList(QStringLiteral("--version"))
                        ),
-          headerRegExp(QString::fromUtf8("^Hugin'?s cpfind( Pre-Release)? (\\d+\\.\\d+(\\.\\d+)?)(\\D.*)?$"))
+          headerRegExp(QLatin1String("^Hugin'?s cpfind( Pre-Release)? (\\d+\\.\\d+(\\.\\d+)?)(\\D.*)?$"))
         {
             setup();
         }

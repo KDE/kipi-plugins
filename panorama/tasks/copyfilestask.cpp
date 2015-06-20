@@ -63,7 +63,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 
     QFileInfo fi(finalPanoUrl.toLocalFile());
     QUrl      finalPTOUrl = finalPanoUrl.adjusted(QUrl::RemoveFilename)
-                                        .resolved(QUrl::fromLocalFile(fi.completeBaseName() + QString::fromUtf8(".pto")));
+                                        .resolved(QUrl::fromLocalFile(fi.completeBaseName() + QStringLiteral(".pto")));
 
     QFile     ptoFile(ptoUrl.toLocalFile());
     QFile     finalPTOFile(finalPTOUrl.toLocalFile());
@@ -135,7 +135,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     QString filesList;
 
     for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
-        filesList.append(i.key().fileName() + QString::fromUtf8(" ; "));
+        filesList.append(i.key().fileName() + QLatin1String(" ; "));
 
     filesList.truncate(filesList.length()-3);
 
@@ -146,10 +146,10 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     if (addGPlusMetadata)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Adding PhotoSphere metadata...";
-        metaDst.registerXmpNameSpace(QString::fromUtf8("http://ns.google.com/photos/1.0/panorama/"), QString::fromUtf8("GPano"));
-        metaDst.setXmpTagString("Xmp.GPano.UsePanoramaViewer", QString::fromUtf8("True"));
-        metaDst.setXmpTagString("Xmp.GPano.StitchingSoftware", QString::fromUtf8("Panorama Kipi Plugin with Hugin"));
-        metaDst.setXmpTagString("Xmp.GPano.ProjectionType",    QString::fromUtf8("equirectangular"));
+        metaDst.registerXmpNameSpace(QStringLiteral("http://ns.google.com/photos/1.0/panorama/"), QStringLiteral("GPano"));
+        metaDst.setXmpTagString("Xmp.GPano.UsePanoramaViewer", QStringLiteral("True"));
+        metaDst.setXmpTagString("Xmp.GPano.StitchingSoftware", QStringLiteral("Panorama Kipi Plugin with Hugin"));
+        metaDst.setXmpTagString("Xmp.GPano.ProjectionType",    QStringLiteral("equirectangular"));
     }
 
     metaDst.applyChanges();
