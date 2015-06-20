@@ -56,7 +56,7 @@ class GoogleDriveWidget : public QWidget
 
 public:
 
-    GoogleDriveWidget(QWidget* const parent);
+    GoogleDriveWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName);
     ~GoogleDriveWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString());
@@ -76,11 +76,13 @@ private Q_SLOTS:
 private:
 
     KIPIPlugins::KPImagesList*     m_imgList;
-    //KIPI::UploadWidget*          m_uploadWidget;
+    KIPI::UploadWidget*            m_uploadWidget;
+    QString                        m_serviceName;
 
     QLabel*                        m_headerLbl;
     QLabel*                        m_userNameDisplayLbl;
     KPushButton*                   m_changeUserBtn;
+    KComboBox*                     m_dlDimensionCoB;
 
     KComboBox*                     m_albumsCoB;
     KPushButton*                   m_newAlbumBtn;

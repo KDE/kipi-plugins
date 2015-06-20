@@ -68,7 +68,7 @@ class GDWindow : public KPToolDialog
 
 public:
 
-    GDWindow(const QString& tmpFolder, QWidget* const parent);
+    GDWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName);
     ~GDWindow();
 
     void reactivate();
@@ -111,6 +111,7 @@ private:
     unsigned int                  m_imagesCount;
     unsigned int                  m_imagesTotal;
 
+    QString                       m_serviceName;
     QString                       m_tmp;
     QString                       refresh_token;
 

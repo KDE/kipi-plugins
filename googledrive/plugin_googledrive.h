@@ -59,7 +59,9 @@ public:
 
 public Q_SLOTS:
 
-    void slotExport();
+    void slotGDriveExport();
+    void slotPicasaExport();
+    void slotPicasaImport();
 
 private:
 
@@ -67,8 +69,13 @@ private:
 
 private:
 
-    KAction*  m_actionExport;
-    GDWindow* m_dlgExport;
+    KAction*  m_actionGDriveExport;
+    KAction*  m_actionPicasaExport;
+    KAction*  m_actionPicasaImport;
+    
+    GDWindow* m_dlgGDriveExport;
+    GDWindow* m_dlgPicasaExport;
+    GDWindow* m_dlgPicasaImport;
 };
 
 } // namespace KIPIGoogleDrivePlugin

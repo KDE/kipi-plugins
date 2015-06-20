@@ -63,7 +63,7 @@ K_EXPORT_PLUGIN(GoogleDriveFactory("kipiplugin_googledrive"))
 Plugin_GoogleDrive::Plugin_GoogleDrive(QObject* const parent,const QVariantList& /*args*/)
     : Plugin(GoogleDriveFactory::componentData(), parent, "Google Drive Export")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive Plugin Loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive/PicasaWeb Plugin Loaded";
 
     KIconLoader::global()->addAppDir("kipiplugin_googledrive");
     setUiBaseName("kipiplugin_googledriveui.rc");
@@ -76,7 +76,9 @@ Plugin_GoogleDrive::~Plugin_GoogleDrive()
 
 void Plugin_GoogleDrive::setup(QWidget* const widget)
 {
-    m_dlgExport = 0;
+    m_dlgGDriveExport = 0;
+    m_dlgPicasaExport = 0;
+    m_dlgPicasaImport = 0;
 
     Plugin::setup(widget);
 
@@ -92,37 +94,101 @@ void Plugin_GoogleDrive::setup(QWidget* const widget)
 void Plugin_GoogleDrive::setupActions()
 {
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
-    m_actionExport = new KAction(this);
-    m_actionExport->setText(i18n("Export to &Google Drive..."));
-    m_actionExport->setIcon(KIcon("kipi-googledrive"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_G));
+    m_actionGDriveExport = new KAction(this);
+    m_actionGDriveExport->setText(i18n("Export to &Google Drive..."));
+    m_actionGDriveExport->setIcon(KIcon("kipi-googledrive"));
+    m_actionGDriveExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_G));
 
-    connect(m_actionExport,SIGNAL(triggered(bool)),
-            this,SLOT(slotExport()));
+    connect(m_actionGDriveExport,SIGNAL(triggered(bool)),
+            this,SLOT(slotGDriveExport()));
 
-    addAction("googledriveexport",m_actionExport);
+    addAction("googledriveexport",m_actionGDriveExport);
+    
+    m_actionPicasaExport = new KAction(this);
+    m_actionPicasaExport->setText(i18n("Export to &PicasaWeb..."));
+    m_actionPicasaExport->setIcon(KIcon("kipi-picasa"));
+    m_actionPicasaExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
+
+    connect(m_actionPicasaExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotPicasaExport()));
+
+    addAction("picasawebexport", m_actionPicasaExport);
+
+    m_actionPicasaImport = new KAction(this);
+    m_actionPicasaImport->setText(i18n("Import from &PicasaWeb..."));
+    m_actionPicasaImport->setIcon(KIcon("kipi-picasa"));
+    m_actionPicasaImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
+
+    connect(m_actionPicasaImport, SIGNAL(triggered(bool)),
+            this, SLOT(slotPicasaImport()) );
+
+    addAction("picasawebimport", m_actionPicasaImport, ImportPlugin);
 }
 
-void Plugin_GoogleDrive::slotExport()
+void Plugin_GoogleDrive::slotGDriveExport()
 {
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp",QString("kipi-gd-") + QString::number(getpid()) + QString("/"));
 
-    if(!m_dlgExport)
+    if(!m_dlgGDriveExport)
     {
-        m_dlgExport = new GDWindow(tmp,kapp->activeWindow());
+        m_dlgGDriveExport = new GDWindow(tmp,kapp->activeWindow(),QString("googledriveexport"));
     }
     else
     {
-        if(m_dlgExport->isMinimized())
+        if(m_dlgGDriveExport->isMinimized())
         {
-            KWindowSystem::unminimizeWindow(m_dlgExport->winId());
+            KWindowSystem::unminimizeWindow(m_dlgGDriveExport->winId());
         }
 
-        KWindowSystem::activateWindow(m_dlgExport->winId());
+        KWindowSystem::activateWindow(m_dlgGDriveExport->winId());
     }
 
-    m_dlgExport->reactivate();
+    m_dlgGDriveExport->reactivate();
+}
+
+void Plugin_GoogleDrive::slotPicasaExport()
+{
+    KStandardDirs dir;
+    QString tmp = dir.saveLocation("tmp",QString("kipi-gd-") + QString::number(getpid()) + QString("/"));
+
+    if(!m_dlgPicasaExport)
+    {
+        m_dlgPicasaExport = new GDWindow(tmp,kapp->activeWindow(),QString("picasawebexport"));
+    }
+    else
+    {
+        if(m_dlgPicasaExport->isMinimized())
+        {
+            KWindowSystem::unminimizeWindow(m_dlgPicasaExport->winId());
+        }
+
+        KWindowSystem::activateWindow(m_dlgPicasaExport->winId());
+    }
+
+    m_dlgPicasaExport->reactivate();
+}
+
+void Plugin_GoogleDrive::slotPicasaImport()
+{
+    KStandardDirs dir;
+    QString tmp = dir.saveLocation("tmp",QString("kipi-gd-") + QString::number(getpid()) + QString("/"));
+
+    if(!m_dlgPicasaImport)
+    {
+        m_dlgPicasaImport = new GDWindow(tmp,kapp->activeWindow(),QString("picasawebimport"));
+    }
+    else
+    {
+        if(m_dlgPicasaImport->isMinimized())
+        {
+            KWindowSystem::unminimizeWindow(m_dlgPicasaImport->winId());
+        }
+
+        KWindowSystem::activateWindow(m_dlgPicasaImport->winId());
+    }
+
+    m_dlgPicasaImport->reactivate();
 }
 
 } // namespace KIPIGoogleDrivePlugin

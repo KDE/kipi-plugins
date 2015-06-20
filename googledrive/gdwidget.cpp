@@ -55,8 +55,9 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent)
+GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName):QWidget(parent)
 {
+    m_serviceName = serviceName;
     setObjectName("Google Drive Widget");
 
     QHBoxLayout* const mainLayout =new QHBoxLayout(this);
@@ -114,6 +115,29 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent)
     albumsBoxLayout->addWidget(m_albumsCoB,       0, 1, 1, 4);
     albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
     albumsBoxLayout->addWidget(m_reloadAlbumsBtn, 1, 4, 1, 1);
+    
+    //----------------------------------------------------------
+    
+    QGroupBox* const sizeBox         = new QGroupBox(i18n("Max Dimension"), settingsBox);
+    sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
+    QVBoxLayout* const sizeBoxLayout = new QVBoxLayout(sizeBox);
+    m_dlDimensionCoB                 = new KComboBox(sizeBox);
+    m_dlDimensionCoB->addItem(i18n("Original Size"), "d");
+    m_dlDimensionCoB->addItem(i18n("1600 px"), "1600");
+    m_dlDimensionCoB->addItem(i18n("1440 px"), "1440");
+    m_dlDimensionCoB->addItem(i18n("1280 px"), "1280");
+    m_dlDimensionCoB->addItem(i18n("1152 px"), "1152");
+    m_dlDimensionCoB->addItem(i18n("1024 px"), "1024");
+    m_dlDimensionCoB->setCurrentIndex(0);
+    sizeBoxLayout->addWidget(m_dlDimensionCoB);
+    
+    // ------------------------------------------------------------------------
+
+    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    uploadBox->setWhatsThis(i18n("This is the location where Picasaweb images will be downloaded."));
+    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
+    m_uploadWidget                     = iface->uploadWidget(uploadBox);
+    uploadBoxLayout->addWidget(m_uploadWidget);
 
     //-----------------------------------------------------------
 
@@ -161,6 +185,8 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent)
 
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
+    settingsBoxLayout->addWidget(sizeBox);
+    settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(albBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
@@ -183,6 +209,17 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent):QWidget(parent)
 
     //connect(m_imgList,SIGNAL(signalImageListChanged()),
             //this,SLOT(slotImageListChanged()));
+    if (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0)
+    {
+        m_imgList->hide();
+        m_newAlbumBtn->hide();
+        optionsBox->hide();
+    }
+    else
+    {
+        uploadBox->hide();
+        sizeBox->hide();
+    }
 }
 
 GoogleDriveWidget::~GoogleDriveWidget()
@@ -191,14 +228,24 @@ GoogleDriveWidget::~GoogleDriveWidget()
 
 void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
 {
-    QString web("http://www.drive.google.com");
 
-    if (!url.isEmpty())
-        web = url;
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        QString web("http://www.drive.google.com");
 
-    m_headerLbl->setText(QString("<b><h2><a href='%1'>"
-                                 "<font color=\"#9ACD32\">Google Drive</font>"
-                                 "</a></h2></b>").arg(web));
+        if (!url.isEmpty())
+            web = url;
+
+        m_headerLbl->setText(QString("<b><h2><a href='%1'>"
+                                     "<font color=\"#9ACD32\">Google Drive</font>"
+                                     "</a></h2></b>").arg(web));
+    }
+    else
+    {
+        m_headerLbl->setText(QString("<b><h2><a href='http://picasaweb.google.com/%1'>"
+                             "<font color=\"#9ACD32\">Picasaweb</font>"
+                             "</a></h2></b>").arg(name));                                //TODO Change this from name to unique username because in URL it needs unique username and not name.
+    }
 
 
     if (name.isEmpty())

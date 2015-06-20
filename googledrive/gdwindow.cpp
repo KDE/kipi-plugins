@@ -73,22 +73,44 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/)
+GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
     : KPToolDialog(0)
 {
+    m_serviceName = serviceName;
     m_tmp         = tmpFolder;
     m_imagesCount = 0;
     m_imagesTotal = 0;
 
-    m_widget      = new GoogleDriveWidget(this);
+    m_widget      = new GoogleDriveWidget(this, iface(), m_serviceName);
+    
     setMainWidget(m_widget);
-    setWindowIcon(KIcon("kipi-googledrive"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
-    setWindowTitle(i18n("Export to Google Drive"));
-    setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Drive")));
-    m_widget->setMinimumSize(700,500);
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        setWindowIcon(KIcon("kipi-googledrive"));
+        setWindowTitle(i18n("Export to Google Drive"));
+        setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Drive")));
+        m_widget->setMinimumSize(700,500);
+    }
+    else
+    {
+        setWindowIcon(KIcon("kipi-picasa"));
+        if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+        {
+            setWindowTitle(i18n("Export to Picasa Web Service"));
+            setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Picasa Web Service")));
+            m_widget->setMinimumSize(700,500);
+        }
+        else
+        {
+            setWindowTitle(i18n("Import from Picasa Web Service"));
+            setButtonGuiItem(User1,KGuiItem(i18n("Start Download"),"network-workgroup",i18n("Start download from Picasaweb service")));
+            m_widget->setMinimumSize(300, 400);
+        }
+    }
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
