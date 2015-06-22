@@ -9,7 +9,8 @@ subdirs(icons)
 include_directories(${QJSON_INCLUDE_DIR})
 
 set(kipiplugin_googledrive_PART_SRCS
-    mpform.cpp
+    authorize.cpp
+    mpform_gdrive.cpp
     plugin_googledrive.cpp
     gdwidget.cpp
     gdwindow.cpp

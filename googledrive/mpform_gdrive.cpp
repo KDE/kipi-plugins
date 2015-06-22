@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "mpform.h"
+#include "mpform_gdrive.h"
 
 // C++ includes
 
@@ -44,22 +44,22 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-MPForm::MPForm()
+MPForm_GDrive::MPForm_GDrive()
 {
     m_boundary = KRandom::randomString(42+13).toAscii();
     reset();
 }
 
-MPForm::~MPForm()
+MPForm_GDrive::~MPForm_GDrive()
 {
 }
 
-void MPForm::reset()
+void MPForm_GDrive::reset()
 {
     m_buffer.resize(0);
 }
 
-void MPForm::finish()
+void MPForm_GDrive::finish()
 {
     kDebug() << "in finish";
     QString str;
@@ -70,7 +70,7 @@ void MPForm::finish()
     kDebug() << "finish:" << m_buffer;
 }
 
-void MPForm::addPair(const QString& name, const QString& description, const QString& path,const QString& id)
+void MPForm_GDrive::addPair(const QString& name, const QString& description, const QString& path,const QString& id)
 {
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
@@ -111,7 +111,7 @@ void MPForm::addPair(const QString& name, const QString& description, const QStr
     m_buffer.append(str);
 }
 
-bool MPForm::addFile(const QString &path)
+bool MPForm_GDrive::addFile(const QString &path)
 {
     QString str;
     kDebug() << "in addfile" << path;
@@ -144,22 +144,22 @@ bool MPForm::addFile(const QString &path)
     return true;
 }
 
-QByteArray MPForm::formData() const
+QByteArray MPForm_GDrive::formData() const
 {
     return m_buffer;
 }
 
-QString MPForm::boundary() const
+QString MPForm_GDrive::boundary() const
 {
     return m_boundary;
 }
 
-QString MPForm::contentType() const
+QString MPForm_GDrive::contentType() const
 {
     return QString("Content-Type: multipart/related;boundary="+m_boundary);
 }
 
-QString MPForm::getFileSize() const
+QString MPForm_GDrive::getFileSize() const
 {
     return m_file_size;
 }

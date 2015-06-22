@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef MPFORM_H
-#define MPFORM_H
+#ifndef MPFORM_GDRIVE_H
+#define MPFORM_GDRIVE_H
 
 // Qt includes
 
@@ -31,12 +31,12 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-class MPForm
+class MPForm_GDrive
 {
 public:
 
-    MPForm();
-    ~MPForm();
+    MPForm_GDrive();
+    ~MPForm_GDrive();
 
     void finish();
     void reset();
@@ -58,4 +58,4 @@ private:
 
 } // namespace KIPIGoogleDrivePlugin
 
-#endif /* MPFORM_H */
+#endif /* MPFORM_GDRIVE_H */

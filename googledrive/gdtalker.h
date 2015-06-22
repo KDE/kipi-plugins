@@ -37,11 +37,12 @@
 //local includes
 
 #include "gditem.h"
+#include "authorize.h"
 
 namespace KIPIGoogleDrivePlugin
 {
 
-class GDTalker : public QObject
+class GDTalker : public Authorize
 {
     Q_OBJECT
 
@@ -52,9 +53,6 @@ public:
 
 Q_SIGNALS:
 
-    void signalBusy(bool val);
-    void signalAccessTokenFailed(int errCode,const QString& errMsg);
-    void signalAccessTokenObtained();
     void signalListAlbumsFailed(const QString& msg);
     void signalListAlbumsDone(const QList<QPair<QString,QString> >& list);
     void signalCreateFolderFailed(const QString& msg);
@@ -62,79 +60,42 @@ Q_SIGNALS:
     void signalAddPhotoFailed(const QString& msg);
     void signalAddPhotoSucceeded();
     void signalSetUserName(const QString& msg);
-    void signalTextBoxEmpty();
-    void signalRefreshTokenObtained(const QString& msg);
 
 private Q_SLOTS:
-
-    void data(KIO::Job* job,const QByteArray& data);
+  
     void slotResult(KJob* job);
 
 public:
 
-    void doOAuth();
-    void getAccessToken();
-    void getAccessTokenFromRefreshToken(const QString& msg);
     void getUserName();
     void listFolders();
     void createFolder(const QString& title,const QString& id);
     bool addPhoto(const QString& imgPath,const GDPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality);
-    bool authenticated();
     void cancel();
-
-    QString getValue(const QString &,const QString &);
-    QStringList getParams(const QString &,const QStringList &,const QString &);
-    QString getToken(const QString &,const QString &,const QString &);
-    int getTokenEnd(const QString &,int);
 
 private:
 
-    void parseResponseAccessToken(const QByteArray& data);
     void parseResponseListFolders(const QByteArray& data);
     void parseResponseCreateFolder(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseUserName(const QByteArray& data);
-    void parseResponseRefreshToken(const QByteArray& data);
 
 private:
 
     enum State
     {
-        GD_LISTFOLDERS=0,
+        GD_LISTFOLDERS=2,
         GD_CREATEFOLDER,
         GD_ADDPHOTO,
-        GD_ACCESSTOKEN,
         GD_USERNAME,
-        GD_REFRESHTOKEN
     };
 
 private:
 
-    QWidget*     m_parent;
-
-    QString      m_scope;
-    QString      m_redirect_uri;
-    QString      m_response_type;
-    QString      m_client_id;
-    QString      m_client_secret;
-    QString      m_access_token;
-    QString      m_refresh_token;
-    QString      m_code;
-
-    QString      m_token_uri;
-
-    QString      m_bearer_access_token;
-    QByteArray   m_buffer;
-
-    KIO::Job*    m_job;
-
-    State        m_state;
-    int          continuePos;
-
     QString      m_rootid;
     QString      m_rootfoldername;
-
     QString      m_username;
+    State        m_state;
 };
 
 } // namespace KIPIGoogleDrivePlugin
