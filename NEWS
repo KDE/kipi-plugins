@@ -7,4 +7,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 321446 - Export to Imgur just hang on 'loading' animation eternally.
 002 ==> 349208 - Cmake can't find external libkvkontakte.
-003 ==> 
+003 ==> 277898 - Does not compile, presumably because of missing directory in include path.
+004 ==> 
