@@ -31,7 +31,7 @@ namespace KIPIPanoramaPlugin
 
 bool CPFindBinary::parseHeader(const QString& output)
 {
-    QStringList lines    = output.split(QLatin1String("\n"));
+    QStringList lines    = output.split(QChar::fromLatin1('\n'));
     m_developmentVersion = false;
 
     foreach(QString line, lines)

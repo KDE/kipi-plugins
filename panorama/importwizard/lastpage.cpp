@@ -156,7 +156,9 @@ void LastPage::resetTitle()
 {
     QString first = d->mngr->itemsList().front().fileName();
     QString last = d->mngr->itemsList().back().fileName();
-    QString file = QStringLiteral("%1-%2").arg(first.left(first.lastIndexOf(QLatin1String(".")))).arg(last.left(last.lastIndexOf(QLatin1String("."))));
+    QString file = QStringLiteral("%1-%2")
+        .arg(first.left(first.lastIndexOf(QChar::fromLatin1('.'))))
+        .arg(last.left(last.lastIndexOf(QChar::fromLatin1('.'))));
     d->fileTemplateKLineEdit->setText(file);
 
     slotTemplateChanged(d->fileTemplateKLineEdit->text());

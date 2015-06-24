@@ -53,7 +53,7 @@ bool PTOType::createFile(const QString& filepath)
 
     // First, the pano line
     if (project.previousComments.size() > 0)
-        out << project.previousComments.join(QLatin1String("\n")) << endl;
+        out << project.previousComments.join(QChar::fromLatin1('\n')) << endl;
     out << "p";
     out << " f" << project.projection;
     if (project.size.width() > 0)
@@ -126,11 +126,11 @@ bool PTOType::createFile(const QString& filepath)
             return false;
     }
     out << "\"";
-    out << project.unmatchedParameters.join(QLatin1String(" ")) << endl;
+    out << project.unmatchedParameters.join(QChar::fromLatin1(' ')) << endl;
 
     // Second, the stitcher line
     if (stitcher.previousComments.size() > 0)
-        out << stitcher.previousComments.join(QLatin1String("\n")) << endl;
+        out << stitcher.previousComments.join(QChar::fromLatin1('\n')) << endl;
     out << "m";
     out << " g" << stitcher.gamma;
     out << " i" << (int) stitcher.interpolator;
@@ -140,7 +140,7 @@ bool PTOType::createFile(const QString& filepath)
     }
     out << " m" << stitcher.huberSigma;
     out << " p" << stitcher.photometricHuberSigma;
-    out << stitcher.unmatchedParameters.join(QLatin1String(" ")) << endl;
+    out << stitcher.unmatchedParameters.join(QChar::fromLatin1(' ')) << endl;
 
     // Third, the images
     // Note: the order is very important here
@@ -149,7 +149,7 @@ bool PTOType::createFile(const QString& filepath)
         const Image &image = images[id];
 
         if (image.previousComments.size() > 0)
-            out << image.previousComments.join(QLatin1String("\n")) << endl;
+            out << image.previousComments.join(QChar::fromLatin1('\n')) << endl;
         out << "i";
         out << " w" << image.size.width();
         out << " h" << image.size.height();
@@ -212,7 +212,7 @@ bool PTOType::createFile(const QString& filepath)
         foreach (Optimisation optim, image.optimisationParameters)
         {
             if (optim.previousComments.size() > 0)
-                out << optim.previousComments.join(QLatin1String("\n")) << endl;
+                out << optim.previousComments.join(QChar::fromLatin1('\n')) << endl;
             out << "v ";
             switch (optim.parameter)
             {
@@ -303,7 +303,7 @@ bool PTOType::createFile(const QString& filepath)
         foreach (Mask mask, image.masks)
         {
             if (mask.previousComments.size() > 0)
-                out << mask.previousComments.join(QLatin1String("\n")) << endl;
+                out << mask.previousComments.join(QChar::fromLatin1('\n')) << endl;
             out << "k i" << id;
             out << " t" << (int) mask.type;
             out << " p\"";
@@ -320,7 +320,7 @@ bool PTOType::createFile(const QString& filepath)
     foreach (ControlPoint cp, controlPoints)
     {
         if (cp.previousComments.size() > 0)
-            out << cp.previousComments.join(QLatin1String("\n")) << endl;
+            out << cp.previousComments.join(QChar::fromLatin1('\n')) << endl;
         out << "c n" << cp.image1Id;
         out << " N" << cp.image2Id;
         out << " x" << cp.p1_x;
@@ -332,7 +332,7 @@ bool PTOType::createFile(const QString& filepath)
     }
 
     // Finally the ending comments
-    out << lastComments.join(QLatin1String("\n")) << endl;
+    out << lastComments.join(QChar::fromLatin1('\n')) << endl;
 
     file.close();
     return true;

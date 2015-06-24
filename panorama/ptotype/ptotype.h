@@ -249,7 +249,7 @@ struct PTOType
 
             PTOType() : version(PRE_V2014) {}
             PTOType(const QString& version)
-                : version(version.split(QLatin1String("."))[0].toInt() >= 2014 ? V2014 : PRE_V2014) {}
+                : version(version.split(QChar::fromLatin1('.'))[0].toInt() >= 2014 ? V2014 : PRE_V2014) {}
     bool    createFile(const QString& filepath);
 
     /* NOTE: Work in progress
