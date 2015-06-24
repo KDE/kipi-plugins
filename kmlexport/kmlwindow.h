@@ -42,6 +42,7 @@ class QLineEdit;
 class QRadioButton;
 class QSpacerItem;
 class QComboBox;
+class QCloseEvent;
 
 class KColorButton;
 class KUrlRequester;
@@ -57,7 +58,7 @@ using namespace KIPIPlugins;
 namespace KIPIKMLExportPlugin
 {
 
-class KmlWindow : public KP4ToolDialog
+class KmlWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -121,8 +122,11 @@ protected:
 
 protected Q_SLOTS:
 
-    void slotCancel();
+    void slotFinished();
     void slotKMLGenerate();
+
+private:
+    void closeEvent(QCloseEvent* e);
 
 protected:
 

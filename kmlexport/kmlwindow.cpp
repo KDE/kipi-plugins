@@ -29,14 +29,13 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QLabel>
-#include <QLayout>
+#include <QGridLayout>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QRadioButton>
-#include <QMenu>
 #include <QComboBox>
-#include <QApplication>
 #include <QLineEdit>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -44,10 +43,7 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
-#include <kstandarddirs.h>
 #include <kurlrequester.h>
-#include <KGuiItem>
-#include <KStandardGuiItem>
 
 // Libkdcraw includes
 
@@ -67,15 +63,13 @@ namespace KIPIKMLExportPlugin
 KmlWindow::KmlWindow(QWidget* const parent,
                      bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
                      const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
-    : KP4ToolDialog(parent)
+    : KPToolDialog(parent)
     , m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
 {
-    setButtons(Help | User1 | Cancel);
-    setDefaultButton(Cancel);
-    setCaption(i18n("KML Export"));
+    setWindowTitle(i18n("KML Export"));
     setModal(true);
 
-    button(KDialog::User1)->setText(i18nc("@action:button", "&Export"));
+    startButton()->setText(i18nc("@action:button", "&Export"));
 
     QWidget* const page = new QWidget( this );
     setMainWidget( page );
@@ -101,7 +95,6 @@ KmlWindow::KmlWindow(QWidget* const parent,
     buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_,     0, 0, 1, 1);
     buttonGroupTargetTypeLayout->addWidget( GoogleMapTargetRadioButton_, 1, 0, 1, 1);
     buttonGroupTargetTypeLayout->setAlignment( Qt::AlignTop );
-    buttonGroupTargetTypeLayout->setSpacing(spacingHint());
     buttonGroupTargetTypeLayout->setMargin(0);
 
     // --------------------------------------------------------------
@@ -144,7 +137,6 @@ KmlWindow::KmlWindow(QWidget* const parent,
     TargetPreferenceGroupBoxLayout->addWidget(FileNameLabel_,             5, 0, 1, 1);
     TargetPreferenceGroupBoxLayout->addWidget(FileName_,                  5, 1, 1, 4);
     TargetPreferenceGroupBoxLayout->setAlignment(Qt::AlignTop);
-    TargetPreferenceGroupBoxLayout->setSpacing(spacingHint());
     TargetPreferenceGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
@@ -165,7 +157,6 @@ KmlWindow::KmlWindow(QWidget* const parent,
     SizeGroupBoxLayout->addWidget(ImageSizeLabel,  0, 2, 1, 1);
     SizeGroupBoxLayout->addWidget(ImageSizeInput_, 0, 3, 1, 1);
     SizeGroupBoxLayout->setAlignment(Qt::AlignTop);
-    SizeGroupBoxLayout->setSpacing(spacingHint());
     SizeGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
@@ -259,7 +250,6 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXTracksGroupBoxLayout->addWidget( GPXAltitudeLabel_,      5, 0, 1, 1);
     GPXTracksGroupBoxLayout->addWidget( GPXAltitudeCB_,         5, 1, 1, 3);
     GPXTracksGroupBoxLayout->setAlignment( Qt::AlignTop );
-    GPXTracksGroupBoxLayout->setSpacing(spacingHint());
     GPXTracksGroupBoxLayout->setMargin(0);
 
     // --------------------------------------------------------------
@@ -267,16 +257,15 @@ KmlWindow::KmlWindow(QWidget* const parent,
     KMLExportConfigLayout->addWidget( TargetPreferenceGroupBox, 0, 0);
     KMLExportConfigLayout->addWidget( SizeGroupBox,             1, 0);
     KMLExportConfigLayout->addWidget( GPXTracksGroupBox,        2, 0);
-    KMLExportConfigLayout->setSpacing(spacingHint());
     KMLExportConfigLayout->setMargin(0);
 
     // --------------------------------------------------------------
 
-    connect(this, SIGNAL(cancelClicked()),
-            this, SLOT(slotCancel()));
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotKMLGenerate()));
+    connect(startButton(), &QPushButton::clicked,
+            this, &KmlWindow::slotKMLGenerate);
 
     connect(GoogleMapTargetRadioButton_, SIGNAL(toggled(bool)),
             this, SLOT(slotGoogleMapTargetRadioButtonToggled(bool)));
@@ -326,16 +315,26 @@ KmlWindow::~KmlWindow()
 {
 }
 
-void KmlWindow::slotCancel()
+void KmlWindow::closeEvent(QCloseEvent* e)
+{
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
+    e->accept();
+}
+
+void KmlWindow::slotFinished()
 {
     saveSettings();
-    done(Close);
 }
 
 void KmlWindow::slotKMLGenerate()
 {
-    button(KDialog::User1)->setEnabled(false);
-    KGuiItem::assign(button(KDialog::Cancel), KStandardGuiItem::close());
+    startButton()->setEnabled(false);
+    setRejectButtonMode(QDialogButtonBox::Close);
 
     saveSettings();
 
