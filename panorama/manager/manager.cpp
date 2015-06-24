@@ -69,7 +69,7 @@ struct Manager::Private
       thread(0),
       wizard(0),
       config(QStringLiteral("kipirc")),
-      group(config.group(QLatin1String("Panorama Settings")))
+      group(config.group("Panorama Settings"))
     {
         gPano    = group.readEntry("GPano", false);
 //         hdr      = group.readEntry("HDR", false);

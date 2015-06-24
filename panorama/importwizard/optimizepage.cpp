@@ -108,7 +108,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     vbox->addWidget(d->title);
 
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group              = config.group(QLatin1String("Panorama Settings"));
+    KConfigGroup group              = config.group("Panorama Settings");
 
     d->horizonCheckbox              = new QCheckBox(i18nc("@option:check", "Level horizon"), this);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
@@ -182,7 +182,7 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 OptimizePage::~OptimizePage()
 {
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group = config.group(QLatin1String("Panorama Settings"));
+    KConfigGroup group = config.group("Panorama Settings");
     group.writeEntry("Horizon", d->horizonCheckbox->isChecked());
 //     group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
     config.sync();

@@ -79,7 +79,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
        d(new Private)
 {
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group        = config.group(QLatin1String("Panorama Settings"));
+    KConfigGroup group        = config.group("Panorama Settings");
 
     d->mngr                   = mngr;
 
@@ -145,7 +145,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 LastPage::~LastPage()
 {
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group = config.group(QLatin1String("Panorama Settings"));
+    KConfigGroup group = config.group("Panorama Settings");
     group.writeEntry("Save PTO", d->savePtoCheckBox->isChecked());
     config.sync();
 

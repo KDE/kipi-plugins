@@ -97,7 +97,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
     // ---------------------------------------------------------------
 
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group = config.group(QLatin1String("Panorama Dialog"));
+    KConfigGroup group = config.group("Panorama Dialog");
 
     if (group.exists())
     {
@@ -144,7 +144,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
 ImportWizardDlg::~ImportWizardDlg()
 {
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group = config.group(QLatin1String("Panorama Dialog"));
+    KConfigGroup group = config.group("Panorama Dialog");
     KWindowConfig::saveWindowSize(windowHandle(), group);
     config.sync();
 

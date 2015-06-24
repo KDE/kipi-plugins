@@ -115,7 +115,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     vbox->addWidget(d->title);
 
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group  = config.group(QLatin1String("Panorama Settings"));
+    KConfigGroup group  = config.group("Panorama Settings");
 
     d->celesteCheckBox  = new QCheckBox(i18nc("@option:check", "Detect moving skies"), this);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
@@ -168,7 +168,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 PreProcessingPage::~PreProcessingPage()
 {
     KConfig config(QStringLiteral("kipirc"));
-    KConfigGroup group = config.group(QLatin1String("Panorama Settings"));
+    KConfigGroup group = config.group("Panorama Settings");
     group.writeEntry("Celeste", d->celesteCheckBox->isChecked());
     config.sync();
 
