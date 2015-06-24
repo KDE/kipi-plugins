@@ -162,9 +162,6 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
 
     vbox->addStretch(10);
 
-    vbox->setSpacing(KDialog::spacingHint());
-    vbox->setMargin(KDialog::spacingHint());
-
     setLayout(vbox);
 
     resetTitle();

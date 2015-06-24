@@ -105,9 +105,6 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->postProcessing->hide();
     vbox->addWidget(d->postProcessing);
 
-    vbox->setSpacing(KDialog::spacingHint());
-    vbox->setMargin(KDialog::spacingHint());
-
     setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));

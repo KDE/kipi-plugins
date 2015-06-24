@@ -148,9 +148,6 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
     vbox->addStretch(10);
 
-    vbox->setSpacing(KDialog::spacingHint());
-    vbox->setMargin(KDialog::spacingHint());
-
     setLayout(vbox);
 
     resetTitle();
