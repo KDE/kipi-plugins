@@ -49,18 +49,18 @@ CreateMKTask::~CreateMKTask()
 void CreateMKTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     QFileInfo fi(ptoUrl.toLocalFile());
-    mkUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".mk")));
+    mkUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QStringLiteral(".mk")));
 
     switch (fileType)
     {
         case JPEG:
-            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".jpg")));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QStringLiteral(".jpg")));
             break;
         case TIFF:
-            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".tif")));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QStringLiteral(".tif")));
             break;
         case HDR:
-            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QLatin1String(".hdr")));
+            panoUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName() + QStringLiteral(".hdr")));
             break;
     }
 

@@ -41,7 +41,7 @@ CpCleanTask::~CpCleanTask()
 
 void CpCleanTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
-    cpCleanPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QLatin1String("cp_pano_clean.pto")));
+    cpCleanPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QStringLiteral("cp_pano_clean.pto")));
 
     QStringList args;
     args << QStringLiteral("-o");

@@ -96,7 +96,7 @@ bool PreProcessTask::computePreview(const QUrl& inUrl)
     QUrl& outUrl = preProcessedUrl.previewUrl;
 
     QFileInfo fi(inUrl.toLocalFile());
-    outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QLatin1String("-preview.jpg")));
+    outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QStringLiteral("-preview.jpg")));
 
     QImage img;
 
@@ -185,7 +185,7 @@ bool PreProcessTask::convertRaw()
         wImageIface.setCancel(&isAbortedFlag);
         wImageIface.setImageData(imageData, width, height, true, false, prof, metaOut);
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QLatin1String(".tif")));
+        outUrl = tmpDir.resolved(QUrl::fromLocalFile(fi.completeBaseName().replace(QLatin1String("."), QLatin1String("_")) + QStringLiteral(".tif")));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
         {

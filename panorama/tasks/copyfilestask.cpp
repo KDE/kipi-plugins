@@ -135,7 +135,7 @@ void CopyFilesTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     QString filesList;
 
     for (ItemUrlsMap::const_iterator i = urlList->constBegin(); i != urlList->constEnd(); ++i)
-        filesList.append(i.key().fileName() + QLatin1String(" ; "));
+        filesList.append(i.key().fileName() + QStringLiteral(" ; "));
 
     filesList.truncate(filesList.length()-3);
 

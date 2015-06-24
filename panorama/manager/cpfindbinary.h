@@ -47,7 +47,7 @@ public:
                         QStringLiteral("Panorama"),
                         QStringList(QStringLiteral("--version"))
                        ),
-          headerRegExp(QLatin1String("^Hugin'?s cpfind( Pre-Release)? (\\d+\\.\\d+(\\.\\d+)?)(\\D.*)?$"))
+          headerRegExp(QStringLiteral("^Hugin'?s cpfind( Pre-Release)? (\\d+\\.\\d+(\\.\\d+)?)(\\D.*)?$"))
         {
             setup();
         }

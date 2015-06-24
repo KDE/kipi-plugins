@@ -256,9 +256,9 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
     {
         default:
         case JPEG:
-            return fileTemplate + QLatin1String(".jpg");
+            return fileTemplate + QStringLiteral(".jpg");
         case TIFF:
-            return fileTemplate + QLatin1String(".tif");
+            return fileTemplate + QStringLiteral(".tif");
     }
 }
 
@@ -266,7 +266,7 @@ void LastPage::checkFiles()
 {
     QString dir = d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename);
     QUrl panoUrl(dir + panoFileName(d->fileTemplateKLineEdit->text()));
-    QUrl ptoUrl(dir + d->fileTemplateKLineEdit->text() + QLatin1String(".pto"));
+    QUrl ptoUrl(dir + d->fileTemplateKLineEdit->text() + QStringLiteral(".pto"));
     QFile panoFile(panoUrl.toString(QUrl::PreferLocalFile));
     QFile ptoFile(ptoUrl.toString(QUrl::PreferLocalFile));
 

@@ -41,7 +41,7 @@ Task::Task(Action action, const QString& workDirPath)
     : action(action),
       successFlag(false),
       isAbortedFlag(false),
-      tmpDir(QUrl::fromLocalFile(workDirPath + QLatin1String("/")))
+      tmpDir(QUrl::fromLocalFile(workDirPath + QStringLiteral("/")))
 {
 }
 

@@ -107,7 +107,7 @@ void CreatePreviewTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
     data.lastComments << QStringLiteral("#hugin_outputImageType jpg");
     data.lastComments << QStringLiteral("#hugin_outputJPEGQuality 90");
 
-    previewPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QLatin1String("preview.pto")));
+    previewPtoUrl = tmpDir.resolved(QUrl::fromLocalFile(QStringLiteral("preview.pto")));
     data.createFile(previewPtoUrl.toLocalFile());
 
     qCDebug(KIPIPLUGINS_LOG) << "Preview PTO File created: " << previewPtoUrl.fileName();
