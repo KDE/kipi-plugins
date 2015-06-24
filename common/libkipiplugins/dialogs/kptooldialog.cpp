@@ -21,6 +21,7 @@
  * ============================================================ */
 
 #include "kptooldialog.h"
+#include "kp4tooldialog.h"
 
 // Qt includes
 
@@ -36,6 +37,7 @@
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
+#include <kdialog.h>
 
 // Libkipi includes
 

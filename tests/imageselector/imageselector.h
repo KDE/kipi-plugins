@@ -31,7 +31,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 
 using namespace KIPIPlugins;
 

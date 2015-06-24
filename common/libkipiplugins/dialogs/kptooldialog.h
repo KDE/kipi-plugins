@@ -25,7 +25,6 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kpagedialog.h>
 #include <kassistantdialog.h>
 
@@ -65,16 +64,6 @@ private:
 
     class Private;
     Private* const d;
-};
-
-// -----------------------------------------------------------------------------------
-
-class KIPIPLUGINS_EXPORT KP4ToolDialog : public KDialog, public KPDialogBase
-{
-public:
-
-    KP4ToolDialog(QWidget* const parent=0);
-    virtual ~KP4ToolDialog();
 };
 
 // -----------------------------------------------------------------------------------

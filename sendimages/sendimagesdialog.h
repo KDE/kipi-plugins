@@ -31,7 +31,7 @@
 // Local includes
 
 #include "emailsettings.h"
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 
 class QCloseEvent;
 

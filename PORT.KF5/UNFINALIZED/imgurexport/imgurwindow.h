@@ -35,7 +35,7 @@
 
 #include "kpimageslist.h"
 #include "imgurwidget.h"
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "imgurtalker.h"
 
 #ifdef OAUTH_ENABLED

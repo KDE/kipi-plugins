@@ -28,7 +28,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 
 class QCloseEvent;
 

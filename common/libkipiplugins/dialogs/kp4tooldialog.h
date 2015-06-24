@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-04-04
- * Description : a kipi plugin to show image using an OpenGL interface.
+ * Date        : 2015-06-25
+ * Description : Tool dialog (KDELibs4 compatibility version)
  *
- * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * (c) 2015  Alexander Potashev <aspotashev@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -15,32 +15,34 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#ifndef HELPDIALOG_H
-#define HELPDIALOG_H
+#ifndef KP4TOOLDIALOG_H
+#define KP4TOOLDIALOG_H
+
+// KDE includes
+
+#include <kdialog.h>
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
+#include "kipiplugins_export.h"
 
-using namespace KIPIPlugins;
-
-namespace KIPIViewerPlugin
+namespace KIPIPlugins
 {
 
-class HelpDialog : public KP4ToolDialog
+class KIPIPLUGINS_EXPORT KP4ToolDialog : public KDialog, public KPDialogBase
 {
-
 public:
 
-    HelpDialog();
-    ~HelpDialog();
+    KP4ToolDialog(QWidget* const parent=0);
+    virtual ~KP4ToolDialog();
 };
 
-} // namespace KIPIViewerPlugin
+} // namespace KIPIPlugins
 
-#endif /* HELPDIALOG_H */
+#endif /* KP4TOOLDIALOG_H */

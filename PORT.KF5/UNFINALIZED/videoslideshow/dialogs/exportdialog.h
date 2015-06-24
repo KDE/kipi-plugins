@@ -39,7 +39,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "myimagelist.h"
 #include "actions.h"
 

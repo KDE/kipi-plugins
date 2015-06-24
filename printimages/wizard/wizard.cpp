@@ -56,6 +56,7 @@
 #include <kdeprintdialog.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdesktopfile.h>
 #include <klocalizedstring.h>
 #include <kglobal.h>

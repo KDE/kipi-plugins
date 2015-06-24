@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "ui_imagepreview.h"
 
 using namespace KIPIPlugins;

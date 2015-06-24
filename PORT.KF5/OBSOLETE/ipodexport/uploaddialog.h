@@ -41,7 +41,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 
 #endif // KIPI_PLUGIN
 

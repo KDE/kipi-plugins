@@ -34,7 +34,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "logindialog.h"
 #include "yftalker.h"
 

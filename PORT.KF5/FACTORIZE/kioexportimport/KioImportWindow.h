@@ -32,7 +32,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "KioImportWidget.h"
 
 namespace KIPI

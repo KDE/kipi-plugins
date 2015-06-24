@@ -38,7 +38,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "batchprocessimagesitem.h"
 
 class QFileInfo;

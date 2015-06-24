@@ -41,7 +41,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 #include "comboboxintermediate.h"
 
 class QProgressDialog;

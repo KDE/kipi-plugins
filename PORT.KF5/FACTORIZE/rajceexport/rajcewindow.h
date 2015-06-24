@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "kptooldialog.h"
+#include "kp4tooldialog.h"
 
 using namespace KIPI;
 using namespace KIPIPlugins;
