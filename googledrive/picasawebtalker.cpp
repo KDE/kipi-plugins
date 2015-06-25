@@ -66,12 +66,10 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-// LibQJson
-
-#include <qjson/parser.h>
-
 // Local includes
 
+#include "kpversion.h"
+#include "kpmetadata.h"
 #include "mpform_picasa.h"
 
 namespace KIPIGoogleDrivePlugin
@@ -142,7 +140,7 @@ void PicasawebTalker::listPhotos(const QString& albumId,
         m_job->kill();
         m_job = 0;
     }
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    KUrl url("https://picasaweb.google.com/data/feed/api");
     url.addPath("/user/default");
     url.addPath("/albumid/" + albumId);
     url.addQueryItem("thumbsize", "200");
@@ -156,8 +154,8 @@ void PicasawebTalker::listPhotos(const QString& albumId,
 
     if (!m_access_token.isEmpty())
     {
-        QString auth_string = "GoogleLogin auth=" + m_access_token;
-        job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
+        QString auth_string = "Authorization: " + m_bearer_access_token.toAscii();
+        job->addMetaData("customHTTPHeader", auth_string.toAscii() );
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -225,14 +223,14 @@ void PicasawebTalker::createAlbum(const GDFolder& album)
     QByteArray buffer;
     buffer.append(docMeta.toString().toUtf8());
 
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    KUrl url("https://picasaweb.google.com/data/feed/api");
     url.addPath("/user/default");
-    QString auth_string = "GoogleLogin auth=" + m_access_token;
+    QString auth_string = "Authorization: " + m_bearer_access_token.toAscii();
     KIO::TransferJob* const job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/atom+xml");
     job->addMetaData("content-length", QString("Content-Length: %1").arg(buffer.length()));
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string ); 
+    job->addMetaData("customHTTPHeader", auth_string.toAscii() ); 
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -246,8 +244,7 @@ void PicasawebTalker::createAlbum(const GDFolder& album)
     emit signalBusy(true);
 }
 
-bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info,
-                               const QString& albumId)
+bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality)
 {
     if (m_job)
     {
@@ -255,11 +252,45 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info,
         m_job = 0;
     }
 
-    KUrl url("http://picasaweb.google.com/data/feed/api");
+    KUrl url("https://picasaweb.google.com/data/feed/api");
     url.addPath("/user/default");
     url.addPath("/albumid/" + albumId);
-    QString     auth_string = "GoogleLogin auth=" + m_access_token;
+    QString     auth_string = "Authorization: " + m_bearer_access_token.toAscii();
     MPForm_Picasa      form;
+    
+    QString path = photoPath;
+    QImage image;
+
+    if(KIPIPlugins::KPMetadata::isRawFile(photoPath))
+    {
+        KDcrawIface::KDcraw::loadRawPreview(image,photoPath);
+    }
+    else
+    {
+        image.load(photoPath);
+    }
+
+    if(image.isNull())
+    {
+        return false;
+    }
+
+    path = KStandardDirs::locateLocal("tmp",QFileInfo(photoPath).baseName().trimmed()+".jpg");
+
+    if(rescale && (image.width() > maxDim || image.height() > maxDim)){
+        image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    }
+
+    image.save(path,"JPEG",imageQuality);
+
+    KIPIPlugins::KPMetadata meta;
+
+    if(meta.load(photoPath))
+    {
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins",kipiplugins_version);
+        meta.save(path);
+    }
 
     //Create the Body in atom-xml
     QDomDocument docMeta;
@@ -301,7 +332,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info,
 
     form.addPair("descr", docMeta.toString(), "application/atom+xml");
 
-    if (!form.addFile("photo", photoPath))
+    if (!form.addFile("photo", path))
         return false;
 
     form.finish();
@@ -310,7 +341,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info,
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string + "\nMIME-version: 1.0" );
+    job->addMetaData("customHTTPHeader", auth_string.toAscii() + "\nMIME-version: 1.0" );
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -548,11 +579,11 @@ void PicasawebTalker::slotResult(KJob *job)
             parseResponseAddPhoto(m_buffer);
             break;
         case(FE_UPDATEPHOTO):
-            emit signalAddPhotoDone(0, "");
+            emit signalAddPhotoDone(1, "");
             break;
         case(FE_GETPHOTO):
             // all we get is data of the image
-            emit signalGetPhotoDone(0, QString(), m_buffer);
+            emit signalGetPhotoDone(1, QString(), m_buffer);
             break;
     }
 }
@@ -633,7 +664,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
     QDomDocument doc( "feed" );
     if ( !doc.setContent( data ) )
     {
-        emit signalListPhotosDone(1, i18n("Failed to fetch photo-set list"), QList<GDPhoto>());
+        emit signalListPhotosDone(0, i18n("Failed to fetch photo-set list"), QList<GDPhoto>());
         return;
     }
 
@@ -748,7 +779,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    emit signalListPhotosDone(0, "", photoList);
+    emit signalListPhotosDone(1, "", photoList);
 }
 
 void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -759,7 +790,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     if ( !doc.setContent( data ) )
     {
-        signalCreateAlbumDone(1, i18n("Failed to create album"), "-1");
+        signalCreateAlbumDone(0, i18n("Failed to create album"), "-1");
         return;
     }
 
@@ -801,10 +832,10 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if ( !doc.setContent( data ) )
     {
-        emit signalAddPhotoDone(1, i18n("Failed to upload photo"));
+        emit signalAddPhotoDone(0, i18n("Failed to upload photo"));
         return;
     }
-
+    
     // parse the new album name
     QDomElement docElem = doc.documentElement();
     QString photoId("");
@@ -826,7 +857,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         }
     }
 
-    emit signalAddPhotoDone(0, "");
+    emit signalAddPhotoDone(1, "");
 }
 
 } // KIPIGoogleDrivePlugin

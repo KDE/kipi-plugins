@@ -7,7 +7,8 @@
  * Description : a kipi plugin to export images to Google-Drive web service
  *
  * Copyright (C) 2013 by Pankaj Kumar <me at panks dot me>
- *
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
+ * 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -102,6 +103,7 @@ private Q_SLOTS:
     void slotRefreshTokenObtained(const QString& msg);
     void slotSetUserName(const QString& msg);
     void slotListAlbumsDone(int,const QString&,const QList <GDFolder>&);
+    void slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList);
     void slotCreateFolderDone(int,const QString& msg, const QString& = QString("-1"));
     void slotAddPhotoDone(int,const QString& msg);
     void slotTransferCancel();

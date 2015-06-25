@@ -74,7 +74,7 @@ public:
     void listPhotos(const QString& albumId,
                     const QString& imgmax=QString());
     void createAlbum(const GDFolder& newAlbum);
-    bool addPhoto(const QString& photoPath, GDPhoto& info, const QString& albumId);
+    bool addPhoto(const QString& photoPath, GDPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality);
     bool updatePhoto(const QString& photoPath, GDPhoto& info);
     void getPhoto(const QString& imgPath);
 

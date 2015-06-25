@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Google-Drive web service
  *
  * Copyright (C) 2013 by Pankaj Kumar <me at panks dot me>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -90,9 +91,26 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);  
+    KPAboutData* about;
     
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
+        about = new KPAboutData(ki18n("Google Drive Export"),0,
+                                       KAboutData::License_GPL,
+                                       ki18n("A Kipi-plugin to export images "
+                                             "to Google Drive"),
+                                       ki18n("(c) 2013, Saurabh Patel\n"
+                                             "(c) 2015, Shourya Singh Gupta")); 
+
+        about->addAuthor(ki18n("Saurabh Patel"),ki18n("Author and maintainer"),
+                         "saurabhpatel7717 at gmail dot com");
+ 
+        about->addAuthor(ki18n( "Shourya Singh Gupta" ), ki18n("Developer"),
+                         "shouryasgupta at gmail dot com");
+
+        about->setHandbookEntry("googledrive");
+        setAboutData(about);
+
         setWindowIcon(KIcon("kipi-googledrive"));
         setWindowTitle(i18n("Export to Google Drive"));
         setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Drive")));
@@ -100,6 +118,35 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     }
     else
     {
+        about = new KPAboutData(ki18n("PicasaWeb Export"),
+                                       0,
+                                       KAboutData::License_GPL,
+                                       ki18n("A Kipi plugin to export image collections to "
+                                             "PicasaWeb web service."),
+                                       ki18n( "(c) 2007-2009, Vardhman Jain\n"
+                                              "(c) 2008-2013, Gilles Caulier\n"
+                                              "(c) 2009, Luka Renko\n"
+                                              "(c) 2010, Jens Mueller\n"
+                                              "(c) 2015, Shourya Singh Gupta"));
+
+        about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
+                         "Vardhman at gmail dot com");
+
+        about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
+                         "caulier dot gilles at gmail dot com");
+
+        about->addAuthor(ki18n( "Luka Renko" ), ki18n("Developer"),
+                         "lure at kubuntu dot org");
+
+        about->addAuthor(ki18n( "Jens Mueller" ), ki18n("Developer"),
+                         "tschenser at gmx dot de");
+       
+        about->addAuthor(ki18n( "Shourya Singh Gupta" ), ki18n("Developer"),
+                         "shouryasgupta at gmail dot com");
+
+        about->setHandbookEntry("picasawebexport");
+        setAboutData(about);
+
         setWindowIcon(KIcon("kipi-picasa"));
         if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
         {
@@ -132,17 +179,6 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotCloseClicked()));  
-    
-    KPAboutData* const about = new KPAboutData(ki18n("Google Drive Export"),0,
-                                               KAboutData::License_GPL,
-                                               ki18n("A Kipi-plugin to export images "
-                                                     "to Google Drive"),
-                                               ki18n("(c) 2013, Saurabh Patel"));
-
-    about->addAuthor(ki18n("Saurabh Patel"),ki18n("Author and maintainer"),
-                     "saurabhpatel7717 at gmail dot com");
-    about->setHandbookEntry("googledrive");
-    setAboutData(about);
 
     //-------------------------------------------------------------------------
 
@@ -218,7 +254,10 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
         connect(m_picsasa_talker,SIGNAL(signalAddPhotoDone(int,QString)),
                 this,SLOT(slotAddPhotoDone(int,QString)));
-	
+
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
+               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
+
         readSettings();
         buttonStateChange(false);
 
@@ -339,6 +378,11 @@ void GDWindow::slotSetUserName(const QString& msg)
     m_widget->updateLabels(msg,"");
 }
 
+void GDWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
+{
+    
+}
+
 void GDWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <GDFolder>& list)
 {
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
@@ -436,19 +480,38 @@ void GDWindow::slotStartTransfer()
 
         return;
     }
-
-    if(!(m_talker->authenticated()))
+ 
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
-            == KMessageBox::Continue)
+        if(!(m_talker->authenticated()))
         {
-            m_talker->doOAuth();
-            return;
-        }
-        else
+            if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
+                == KMessageBox::Continue)
+            {
+                m_talker->doOAuth();
+                return;
+            }
+            else
+            {
+                return;
+            }
+        }  
+    }
+    else
+    {
+        if(!(m_picsasa_talker->authenticated()))
         {
-            return;
-        }
+            if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
+                == KMessageBox::Continue)
+            {
+                m_picsasa_talker->doOAuth();
+                return;
+            }
+            else
+            {
+                return;
+            }
+        }      
     }
 
     typedef QPair<KUrl, GDPhoto> Pair;
@@ -458,8 +521,16 @@ void GDWindow::slotStartTransfer()
         KPImageInfo info(m_widget->m_imgList->imageUrls().value(i));
         GDPhoto temp;
         kDebug() << "in start transfer info " <<info.title() << info.description();
-        temp.title          = info.title();
+        
+        if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+            temp.title      = info.title();
+        else
+            temp.title      = info.name();
+        
         temp.description    = info.description().section("\n",0,0);
+        temp.gpsLat.setNum(info.latitude());
+        temp.gpsLon.setNum(info.longitude());
+        temp.tags = info.tagsPath();
 
         m_transferQueue.append(Pair(m_widget->m_imgList->imageUrls().value(i),temp));
     }
@@ -492,12 +563,84 @@ void GDWindow::uploadNextPhoto()
     typedef QPair<KUrl,GDPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
     GDPhoto info      = pathComments.second;
+    bool res;
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
+                                 m_widget->m_resizeChB->isChecked(),
+                                 m_widget->m_dimensionSpB->value(),
+                                 m_widget->m_imageQualitySpB->value());
+      
+    }
+    else
+    {
+        //adjust tags according to radio button clicked
+        switch (m_widget->m_tagsBGrp->checkedId())
+        {
+            case PwTagLeaf:
+            {
+                QStringList newTags;
+                QStringList::const_iterator itT;
 
-    bool res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                  m_widget->m_resizeChB->isChecked(),
-                                  m_widget->m_dimensionSpB->value(),
-                                  m_widget->m_imageQualitySpB->value());
+                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                {
+                    QString strTmp = *itT;
+                    int idx        = strTmp.lastIndexOf("/");
 
+                    if (idx > 0)
+                    {
+                        strTmp.remove(0, idx + 1);
+                    }
+
+                    newTags.append(strTmp);
+                }
+
+                info.tags = newTags;
+                break;
+            }
+
+            case PwTagSplit:
+            {
+                QSet<QString> newTagsSet;
+                QStringList::const_iterator itT;
+
+                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                {
+                    QStringList strListTmp = itT->split('/');
+                    QStringList::const_iterator itT2;
+
+                    for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
+                    {
+                        if (!newTagsSet.contains(*itT2))
+                        {
+                            newTagsSet.insert(*itT2);
+                        }
+                    }
+                }
+
+                info.tags.clear();
+                QSet<QString>::const_iterator itT3;
+
+                for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
+                {
+                    info.tags.append(*itT3);
+                }
+
+                break;
+            }
+
+            case PwTagCombined:
+            default:
+                break;
+        }
+        
+        res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
+                                         m_widget->m_resizeChB->isChecked(),
+                                         m_widget->m_dimensionSpB->value(),
+                                         m_widget->m_imageQualitySpB->value());  
+    }
+    
     if (!res)
     {
         slotAddPhotoDone(0,"");
@@ -509,20 +652,40 @@ void GDWindow::slotAddPhotoDone(int err, const QString& msg)
 {
     if(err == 0)
     {
-            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
-            != KMessageBox::Continue)
+        if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
         {
-            m_transferQueue.clear();
-            m_widget->progressBar()->hide();
+            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
+                != KMessageBox::Continue)
+            {
+                m_transferQueue.clear();
+                m_widget->progressBar()->hide();
+            }
+            else
+            {
+                m_transferQueue.pop_front();
+                m_imagesTotal--;
+                m_widget->progressBar()->setMaximum(m_imagesTotal);
+                m_widget->progressBar()->setValue(m_imagesCount);
+                uploadNextPhoto();
+            }  
         }
         else
         {
-            m_transferQueue.pop_front();
-            m_imagesTotal--;
-            m_widget->progressBar()->setMaximum(m_imagesTotal);
-            m_widget->progressBar()->setValue(m_imagesCount);
-            uploadNextPhoto();
-        }    
+            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Picasaweb.\n%1\nDo you want to continue?",msg))
+                != KMessageBox::Continue)
+            {
+                m_transferQueue.clear();
+                m_widget->progressBar()->hide();
+            }
+            else
+            {
+                m_transferQueue.pop_front();
+                m_imagesTotal--;
+                m_widget->progressBar()->setMaximum(m_imagesTotal);
+                m_widget->progressBar()->setValue(m_imagesCount);
+                uploadNextPhoto();
+            }   
+        }  
     }
     else
     {
@@ -614,7 +777,7 @@ void GDWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
     else
     {
         if(code == 0)
-            KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
+            KMessageBox::error(this, i18n("Picasaweb call failed:\n%1", msg));
         else
             m_currentAlbumId = albumId;
             m_picsasa_talker->listAlbums();
