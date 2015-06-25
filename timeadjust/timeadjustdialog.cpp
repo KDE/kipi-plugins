@@ -392,7 +392,6 @@ void TimeAdjustDialog::slotApplyClicked()
             d->thread->start();
         }
 
-        enableButton(User1, false);
         setBusy(true);
     }
     else
@@ -478,7 +477,6 @@ void TimeAdjustDialog::slotThreadFinished()
     setBusy(false);
     d->progressBar->hide();
     d->progressBar->progressCompleted();
-    enableButton(User1, true);
     saveSettings();
 }
 
