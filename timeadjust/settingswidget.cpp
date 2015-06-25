@@ -44,7 +44,6 @@
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 #include <kconfiggroup.h>
 
 // libKdcraw includes

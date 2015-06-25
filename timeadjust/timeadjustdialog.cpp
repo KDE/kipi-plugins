@@ -51,15 +51,11 @@
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 #include <kwindowconfig.h>
-#include <kstandardguiitem.h>
-#include <kpushbutton.h>
 
 // Local includes
 
 #include "actionthread.h"
-#include "clockphotodialog.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"

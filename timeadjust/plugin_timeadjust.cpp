@@ -32,7 +32,7 @@
 
 #include <kactioncollection.h>
 #include <kconfig.h>
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 #include <kwindowsystem.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
