@@ -32,7 +32,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "timeadjustsettings.h"
 
 using namespace KIPIPlugins;
@@ -40,7 +40,7 @@ using namespace KIPIPlugins;
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialog : public KP4ToolDialog
+class TimeAdjustDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -63,10 +63,10 @@ protected:
 private Q_SLOTS:
 
     void slotApplyClicked();
-    void slotCloseClicked();
+    void slotDialogFinished();
+
     void slotThreadFinished();
     void slotCancelThread();
-    void slotButtonClicked(int);
     void slotProcessStarted(const QUrl&);
     void slotProcessEnded(const QUrl&, int);
     void setBusy(bool);

@@ -97,24 +97,23 @@ public:
 };
 
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
-    : KP4ToolDialog(0), d(new Private)
+    : KPToolDialog(0), d(new Private)
 {
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
-    setCaption(i18n("Adjust Time & Date"));
+    setWindowTitle(i18n("Adjust Time & Date"));
     setModal(false);
     setMinimumSize(900, 500);
 
-    button(User1)->setText(i18nc("@action:button", "&Apply"));
-    button(User1)->setToolTip(i18nc("@info:tooltip", "Write the corrected date and time for each image"));
-    button(User1)->setIcon(QIcon::fromTheme("dialog-ok-apply"));
+    startButton()->setText(i18nc("@action:button", "&Apply"));
+    startButton()->setToolTip(i18nc("@info:tooltip", "Write the corrected date and time for each image"));
+    startButton()->setIcon(QIcon::fromTheme("dialog-ok-apply"));
 
-    setMainWidget(new QWidget(this));
-    QGridLayout* const mainLayout = new QGridLayout(mainWidget());
-    d->listView                   = new MyImageList(mainWidget());
-    d->settingsView               = new SettingsWidget(mainWidget());
+    QWidget* mainWidget = new QWidget(this);
+    setMainWidget(mainWidget);
+    QGridLayout* const mainLayout = new QGridLayout(mainWidget);
+    d->listView                   = new MyImageList(mainWidget);
+    d->settingsView               = new SettingsWidget(mainWidget);
     d->settingsView->setImageList(d->listView);
-    d->progressBar                = new KPProgressWidget(mainWidget());
+    d->progressBar                = new KPProgressWidget(mainWidget);
     d->progressBar->reset();
     d->progressBar->hide();
 
@@ -126,7 +125,6 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(0, 10);
     mainLayout->setMargin(0);
-    mainLayout->setSpacing(spacingHint());
 
     // -- About data and help button ----------------------------------------
 
@@ -175,11 +173,14 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     // -- Dialog Slots/Signals -----------------------------------------------
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotApplyClicked()));
+    connect(startButton(), &QPushButton::clicked,
+            this, &TimeAdjustDialog::slotApplyClicked);
 
-    connect(this, SIGNAL(signalMyCloseClicked()),
-            this, SLOT(slotCloseClicked()));
+    connect(this, &KPToolDialog::cancelClicked,
+            this, &TimeAdjustDialog::slotCancelThread);
+
+    connect(this, &QDialog::finished,
+            this, &TimeAdjustDialog::slotDialogFinished);
 
     connect(d->settingsView, SIGNAL(signalSettingsChanged()),
             this, SLOT(slotReadTimestamps()));
@@ -197,10 +198,18 @@ TimeAdjustDialog::~TimeAdjustDialog()
 
 void TimeAdjustDialog::closeEvent(QCloseEvent* e)
 {
-    if (!e) return;
+    if (!e)
+    {
+        return;
+    }
 
-    saveSettings();
+    slotDialogFinished();
     e->accept();
+}
+
+void TimeAdjustDialog::slotDialogFinished()
+{
+    saveSettings();
 }
 
 void TimeAdjustDialog::readSettings()
@@ -410,53 +419,10 @@ void TimeAdjustDialog::slotCancelThread()
     }
 }
 
-void TimeAdjustDialog::slotButtonClicked(int button)
-{
-    emit buttonClicked(static_cast<KDialog::ButtonCode>(button));
-
-    switch (button)
-    {
-        case User1:
-            emit user1Clicked();
-            break;
-        case Close:
-            emit signalMyCloseClicked();
-            break;
-        default:
-            break;
-    }
-}
-
 void TimeAdjustDialog::setBusy(bool busy)
 {
-    if (busy)
-    {
-        disconnect(this, SIGNAL(signalMyCloseClicked()),
-                   this, SLOT(slotCloseClicked()));
-
-        setButtonGuiItem(Close, KStandardGuiItem::cancel());
-        enableButton(User1, false);
-
-        connect(this, SIGNAL(signalMyCloseClicked()),
-                this, SLOT(slotCancelThread()));
-    }
-    else
-    {
-        disconnect(this, SIGNAL(signalMyCloseClicked()),
-                   this, SLOT(slotCancelThread()));
-
-        setButtonGuiItem(Close, KStandardGuiItem::close());
-        enableButton(User1, true);
-
-        connect(this, SIGNAL(signalMyCloseClicked()),
-                this, SLOT(slotCloseClicked()));
-     }
-}
-
-void TimeAdjustDialog::slotCloseClicked()
-{
-    saveSettings();
-    done(Close);
+    setRejectButtonMode(busy ? QDialogButtonBox::Cancel : QDialogButtonBox::Close);
+    startButton()->setEnabled(!busy);
 }
 
 void TimeAdjustDialog::slotProcessStarted(const QUrl& url)
