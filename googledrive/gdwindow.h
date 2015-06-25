@@ -61,6 +61,8 @@ class GDTalker;
 class GDPhoto;
 class GDFolder;
 class GDNewAlbum;
+class PicasawebNewAlbum;
+class PicasawebTalker;
 
 class GDWindow : public KPToolDialog
 {
@@ -80,8 +82,8 @@ private:
 
     void uploadNextPhoto();
 
-    void    buttonStateChange(bool state);
-    void    closeEvent(QCloseEvent*);
+    void buttonStateChange(bool state);
+    void closeEvent(QCloseEvent*);
 
 private Q_SLOTS:
 
@@ -90,6 +92,7 @@ private Q_SLOTS:
     void slotNewAlbumRequest();
     void slotReloadAlbumsRequest();
     void slotStartTransfer();
+    void slotCloseClicked();
     //void slotChangeProgressBar();
 
     void slotBusy(bool);
@@ -98,12 +101,9 @@ private Q_SLOTS:
     void slotAccessTokenObtained();
     void slotRefreshTokenObtained(const QString& msg);
     void slotSetUserName(const QString& msg);
-    void slotListAlbumsFailed(const QString& msg);
-    void slotListAlbumsDone(const QList<QPair<QString,QString> >& list);
-    void slotCreateFolderFailed(const QString& msg);
-    void slotCreateFolderSucceeded();
-    void slotAddPhotoFailed(const QString& msg);
-    void slotAddPhotoSucceeded();
+    void slotListAlbumsDone(int,const QString&,const QList <GDFolder>&);
+    void slotCreateFolderDone(int,const QString& msg, const QString& = QString("-1"));
+    void slotAddPhotoDone(int,const QString& msg);
     void slotTransferCancel();
 
 private:
@@ -117,7 +117,10 @@ private:
 
     GoogleDriveWidget*            m_widget;
     GDNewAlbum*                   m_albumDlg;
+    PicasawebNewAlbum*            m_picasa_albumdlg;
+    
     GDTalker*                     m_talker;
+    PicasawebTalker*              m_picsasa_talker;
 
     KProgressDialog*              m_progressDlg;
 

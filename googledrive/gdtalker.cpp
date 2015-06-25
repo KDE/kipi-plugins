@@ -70,9 +70,14 @@
 
 namespace KIPIGoogleDrivePlugin
 {
+  
+static bool gdriveLessThan(GDFolder& p1, GDFolder& p2)
+{
+    return (p1.title.toLower() < p2.title.toLower());
+}  
 
 GDTalker::GDTalker(QWidget* const parent)
-    :Authorize(parent)
+    :Authorize(parent,QString("https://www.googleapis.com/auth/drive"))
 {
     m_rootid          = "root";
     m_rootfoldername  = "GoogleDrive Root";
@@ -333,13 +338,19 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     if(!ok)
     {
         emit signalBusy(false);
-        emit signalListAlbumsFailed(i18n("Failed to list folders"));
+        emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GDFolder>());
         return;
     }
 
     QVariantMap rMap = result.toMap();
     QList<QPair<QString,QString> > list;
     list.append(qMakePair(m_rootid,m_rootfoldername));
+    
+    QList<GDFolder> albumList;
+    GDFolder fps;
+    fps.id = m_rootid;
+    fps.title = m_rootfoldername;
+    albumList.append(fps);
 
     foreach(QVariant val,rMap)
     {
@@ -356,17 +367,21 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
                 if(keys[i] == "id")
                 {
                     temp = qwer[keys[i]].value<QString>();
+                    fps.id = qwer[keys[i]].value<QString>();
                 }
                 else if(keys[i] == "title")
                 {
+                    fps.title = qwer[keys[i]].value<QString>();
+                    albumList.append(fps);
                     list.append(qMakePair(temp,qwer[keys[i]].value<QString>()));
                 }
             }
         }
     }
 
+    qSort(albumList.begin(), albumList.end(), gdriveLessThan);
     emit signalBusy(false);
-    emit signalListAlbumsDone(list);
+    emit signalListAlbumsDone(1,QString(),albumList);
 }
 
 void GDTalker::parseResponseCreateFolder(const QByteArray& data)
@@ -394,11 +409,11 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 
     if(!success)
     {
-        emit signalCreateFolderFailed(i18n("Failed to create folder"));
+        emit signalCreateFolderDone(0,i18n("Failed to create folder"));
     }
     else
     {
-        emit signalCreateFolderSucceeded();
+        emit signalCreateFolderDone(1,QString());
     }
 }
 
@@ -426,11 +441,11 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if(!success)
     {
-        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
+        emit signalAddPhotoDone(0,i18n("Failed to upload photo"));
     }
     else
     {
-        emit signalAddPhotoSucceeded();
+        emit signalAddPhotoDone(1,QString());
     }
 }
 

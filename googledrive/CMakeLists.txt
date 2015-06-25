@@ -11,11 +11,14 @@ include_directories(${QJSON_INCLUDE_DIR})
 set(kipiplugin_googledrive_PART_SRCS
     authorize.cpp
     mpform_gdrive.cpp
+    mpform_picasa.cpp
     plugin_googledrive.cpp
     gdwidget.cpp
     gdwindow.cpp
+    picasawebalbum.cpp
     gdalbum.cpp
     gdtalker.cpp
+    picasawebtalker.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_googledrive ${kipiplugin_googledrive_PART_SRCS})

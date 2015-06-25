@@ -68,10 +68,10 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-Authorize::Authorize(QWidget* const parent)
+Authorize::Authorize(QWidget* const parent, const QString & scope)
 {
     m_parent          = parent;
-    m_scope           = "https://www.googleapis.com/auth/drive";
+    m_scope           = scope;
     m_redirect_uri    = "urn:ietf:wg:oauth:2.0:oob";
     m_response_type   = "code";
     m_client_id       = "735222197981-mrcgtaqf05914buqjkts7mk79blsquas.apps.googleusercontent.com";

@@ -49,6 +49,13 @@ namespace KIPIPlugins
 
 namespace KIPIGoogleDrivePlugin
 {
+  
+enum PicasawebTagsBehaviour
+{
+    PwTagLeaf = 0,
+    PwTagSplit,
+    PwTagCombined
+};
 
 class GoogleDriveWidget : public QWidget
 {
@@ -88,6 +95,7 @@ private:
     KPushButton*                   m_newAlbumBtn;
     KPushButton*                   m_reloadAlbumsBtn;
 
+    QButtonGroup*                  m_tagsBGrp;
     QCheckBox*                     m_resizeChB;
     QSpinBox*                      m_dimensionSpB;
     QSpinBox*                      m_imageQualitySpB;

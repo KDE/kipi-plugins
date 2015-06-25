@@ -37,10 +37,26 @@ public:
 
     GDPhoto()
     {
+        id         = QString("-1");
+        canComment = true;
+        gpsLon     = "";
+        gpsLat     = "";
     }
 
-    QString title;
-    QString description;
+    QString     id;
+    QString     title;
+    QString     timestamp;
+    QString     description;
+    QString     location;
+    QString     access;
+    bool        canComment;
+    QStringList tags;
+    QString     mimeType;
+    QString     gpsLon;
+    QString     gpsLat;
+    KUrl        originalURL;
+    KUrl        thumbURL;
+    KUrl        editUrl;
 };
 
 class GDFolder
@@ -49,9 +65,18 @@ class GDFolder
 public:
     GDFolder()
     {
+        id         = QString("-1");
+        canComment = true;
     }
 
-    QString title;
+    QString   id;
+    QString   title;
+    QString   timestamp;
+    QString   description;
+    QString   location;
+    QString   access;
+    bool      canComment;
+    QStringList tags;
 };
 
 } // namespace KIPIGoogleDrivePlugin

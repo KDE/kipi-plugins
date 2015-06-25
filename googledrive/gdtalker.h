@@ -53,12 +53,9 @@ public:
 
 Q_SIGNALS:
 
-    void signalListAlbumsFailed(const QString& msg);
-    void signalListAlbumsDone(const QList<QPair<QString,QString> >& list);
-    void signalCreateFolderFailed(const QString& msg);
-    void signalCreateFolderSucceeded();
-    void signalAddPhotoFailed(const QString& msg);
-    void signalAddPhotoSucceeded();
+    void signalListAlbumsDone(int, const QString&, const QList <GDFolder>&);
+    void signalCreateFolderDone(int,const QString& msg);
+    void signalAddPhotoDone(int,const QString& msg);
     void signalSetUserName(const QString& msg);
 
 private Q_SLOTS:

@@ -68,27 +68,46 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Google Drive account."));
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Google Drive account."));
+    else
+        m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Picasaweb account."));
 
     QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(this);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Google Drive in a browser."));
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Google Drive in a browser."));
+    else
+        m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Picasaweb in a browser."));
+    
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     //------------------------------------------------------------
 
     QGroupBox* const accountBox   = new QGroupBox(i18n("Account"),settingsBox);
-    accountBox->setWhatsThis(i18n("This is the Google Drive account that is currently logged in."));
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        accountBox->setWhatsThis(i18n("This is the Google Drive account that is currently logged in."));
+    else
+        accountBox->setWhatsThis(i18n("This is the Picasaweb account that is currently logged in."));
+    
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
     m_userNameDisplayLbl      = new QLabel(accountBox);
 
-    m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
-                                                         i18n("Change Google Drive account for transfer")), accountBox);
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
+                                                             i18n("Change Google Drive account for transfer")), accountBox);
+    else
+        m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
+                                                             i18n("Change Picasaweb account for transfer")), accountBox);
+      
 
     accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
@@ -99,15 +118,33 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     //-------------------------------------------------------------
 
     QGroupBox* const albBox            = new QGroupBox(i18n("Destination"),settingsBox);
-    albBox->setWhatsThis(i18n("This is the Google Drive folder to which selected photos will be uploaded."));
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        albBox->setWhatsThis(i18n("This is the Google Drive folder to which selected photos will be uploaded."));
+    }
+    else
+    {
+        albBox->setWhatsThis(i18n("This is the Picasaweb folder to which selected photos will be uploaded."));
+    }
+    
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Album:"),albBox);
     m_albumsCoB          = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
-    m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
-                                             i18n("Create new Google Drive folder")),accountBox);
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
+                                                 i18n("Create new Google Drive folder")),accountBox);
+    }
+    else
+    {
+        m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
+                                                 i18n("Create new Picasaweb folder")),accountBox);
+    }
+    
     m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("album list","Reload"),"view-refresh",
                                                  i18n("Reload album list")),accountBox);
 
@@ -167,12 +204,37 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
     QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),optionsBox);
-
+    
     optionsBoxLayout->addWidget(m_resizeChB,      0, 0, 1, 5);
     optionsBoxLayout->addWidget(imageQualityLbl,  1, 1, 1, 1);
     optionsBoxLayout->addWidget(m_imageQualitySpB,1, 2, 1, 1);
     optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,   2, 2, 1, 1);
+    
+    if((QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0) || (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0))
+    {
+        QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QLabel* const tagsLbl     = new QLabel(i18n("Tag path behavior :"), optionsBox);
+
+        QRadioButton* const leafTagsBtn     = new QRadioButton(i18n("Leaf tags only"), optionsBox);
+        leafTagsBtn->setWhatsThis(i18n("Export only the leaf tags of tag hierarchies"));
+        QRadioButton* const splitTagsBtn    = new QRadioButton(i18n("Split tags"), optionsBox);
+        splitTagsBtn->setWhatsThis(i18n("Export the leaf tag and all ancestors as single tags."));
+        QRadioButton* const combinedTagsBtn = new QRadioButton(i18n("Combined String"), optionsBox);
+        combinedTagsBtn->setWhatsThis(i18n("Build a combined tag string."));
+
+        m_tagsBGrp = new QButtonGroup(optionsBox);
+        m_tagsBGrp->addButton(leafTagsBtn, PwTagLeaf);
+        m_tagsBGrp->addButton(splitTagsBtn, PwTagSplit);
+        m_tagsBGrp->addButton(combinedTagsBtn, PwTagCombined);
+
+        optionsBoxLayout->addItem(spacer,             3, 1, 1, 1);
+        optionsBoxLayout->addWidget(tagsLbl,          4, 1, 1, 1);
+        optionsBoxLayout->addWidget(leafTagsBtn,      5, 1, 1, 1);
+        optionsBoxLayout->addWidget(splitTagsBtn,     6, 1, 1, 1);
+        optionsBoxLayout->addWidget(combinedTagsBtn,  7, 1, 1, 1);  
+    }
+    
     optionsBoxLayout->setRowStretch(3,10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
@@ -244,7 +306,7 @@ void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
     {
         m_headerLbl->setText(QString("<b><h2><a href='http://picasaweb.google.com/%1'>"
                              "<font color=\"#9ACD32\">Picasaweb</font>"
-                             "</a></h2></b>").arg(name));                                //TODO Change this from name to unique username because in URL it needs unique username and not name.
+                             "</a></h2></b>").arg(url));
     }
 
 

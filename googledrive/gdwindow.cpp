@@ -25,6 +25,7 @@
 // Qt includes
 
 #include <QPushButton>
+#include <QButtonGroup>
 #include <QProgressDialog>
 #include <QPixmap>
 #include <QCheckBox>
@@ -68,7 +69,9 @@
 #include "gdtalker.h"
 #include "gditem.h"
 #include "gdalbum.h"
+#include "picasawebalbum.h"
 #include "gdwidget.h"
+#include "picasawebtalker.h"
 
 namespace KIPIGoogleDrivePlugin
 {
@@ -86,7 +89,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     setMainWidget(m_widget);
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
-    setModal(false);
+    setModal(false);  
     
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
@@ -127,6 +130,9 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     connect(this,SIGNAL(user1Clicked()),
             this,SLOT(slotStartTransfer()));
 
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotCloseClicked()));  
+    
     KPAboutData* const about = new KPAboutData(ki18n("Google Drive Export"),0,
                                                KAboutData::License_GPL,
                                                ki18n("A Kipi-plugin to export images "
@@ -140,59 +146,92 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     //-------------------------------------------------------------------------
 
-    m_albumDlg = new GDNewAlbum(this);
-
-    //-------------------------------------------------------------------------
-
-    m_talker = new GDTalker(this);
-
-    connect(m_talker,SIGNAL(signalBusy(bool)),
-            this,SLOT(slotBusy(bool)));
-
-    connect(m_talker,SIGNAL(signalTextBoxEmpty()),
-            this,SLOT(slotTextBoxEmpty()));
-
-    connect(m_talker,SIGNAL(signalAccessTokenFailed(int,QString)),
-            this,SLOT(slotAccessTokenFailed(int,QString)));
-
-    connect(m_talker,SIGNAL(signalAccessTokenObtained()),
-            this,SLOT(slotAccessTokenObtained()));
-
-    connect(m_talker,SIGNAL(signalRefreshTokenObtained(QString)),
-            this,SLOT(slotRefreshTokenObtained(QString)));
-
-    connect(m_talker,SIGNAL(signalSetUserName(QString)),
-            this,SLOT(slotSetUserName(QString)));
-
-    connect(m_talker,SIGNAL(signalListAlbumsFailed(QString)),
-            this,SLOT(slotListAlbumsFailed(QString)));
-
-    connect(m_talker,SIGNAL(signalListAlbumsDone(QList<QPair<QString,QString> >)),
-            this,SLOT(slotListAlbumsDone(QList<QPair<QString,QString> >)));
-
-    connect(m_talker,SIGNAL(signalCreateFolderFailed(QString)),
-            this,SLOT(slotCreateFolderFailed(QString)));
-
-    connect(m_talker,SIGNAL(signalCreateFolderSucceeded()),
-            this,SLOT(slotCreateFolderSucceeded()));
-
-    connect(m_talker,SIGNAL(signalAddPhotoFailed(QString)),
-            this,SLOT(slotAddPhotoFailed(QString)));
-
-    connect(m_talker,SIGNAL(signalAddPhotoSucceeded()),
-            this,SLOT(slotAddPhotoSucceeded()));
-
-    readSettings();
-    buttonStateChange(false);
-
-    if(refresh_token.isEmpty())
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
-        m_talker->doOAuth();
+        m_albumDlg = new GDNewAlbum(this);
+        m_talker = new GDTalker(this);
+
+        connect(m_talker,SIGNAL(signalBusy(bool)),
+                this,SLOT(slotBusy(bool)));
+
+        connect(m_talker,SIGNAL(signalTextBoxEmpty()),
+                this,SLOT(slotTextBoxEmpty()));
+
+        connect(m_talker,SIGNAL(signalAccessTokenFailed(int,QString)),
+                this,SLOT(slotAccessTokenFailed(int,QString)));
+
+        connect(m_talker,SIGNAL(signalAccessTokenObtained()),
+                this,SLOT(slotAccessTokenObtained()));
+
+        connect(m_talker,SIGNAL(signalRefreshTokenObtained(QString)),
+                this,SLOT(slotRefreshTokenObtained(QString)));
+
+        connect(m_talker,SIGNAL(signalSetUserName(QString)),
+                this,SLOT(slotSetUserName(QString)));
+
+        connect(m_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GDFolder>)),
+                this,SLOT(slotListAlbumsDone(int,QString,QList<GDFolder>)));
+
+        connect(m_talker,SIGNAL(signalCreateFolderDone(int,QString)),
+                this,SLOT(slotCreateFolderDone(int,QString)));
+
+        connect(m_talker,SIGNAL(signalAddPhotoDone(int,QString)),
+                this,SLOT(slotAddPhotoDone(int,QString)));
+
+        readSettings();
+        buttonStateChange(false);
+
+        if(refresh_token.isEmpty())
+        {
+            m_talker->doOAuth();
+        }
+        else
+        {
+            m_talker->getAccessTokenFromRefreshToken(refresh_token);
+        }        
     }
     else
     {
-        m_talker->getAccessTokenFromRefreshToken(refresh_token);
+	m_picasa_albumdlg = new PicasawebNewAlbum(this);
+        m_picsasa_talker = new PicasawebTalker(this);
+        
+        connect(m_picsasa_talker,SIGNAL(signalBusy(bool)),
+                this,SLOT(slotBusy(bool)));
+
+        connect(m_picsasa_talker,SIGNAL(signalTextBoxEmpty()),
+                this,SLOT(slotTextBoxEmpty()));
+
+        connect(m_picsasa_talker,SIGNAL(signalAccessTokenFailed(int,QString)),
+                this,SLOT(slotAccessTokenFailed(int,QString)));
+
+        connect(m_picsasa_talker,SIGNAL(signalAccessTokenObtained()),
+                this,SLOT(slotAccessTokenObtained()));
+
+        connect(m_picsasa_talker,SIGNAL(signalRefreshTokenObtained(QString)),
+                this,SLOT(slotRefreshTokenObtained(QString)));
+
+        connect(m_picsasa_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GDFolder>)),
+                this,SLOT(slotListAlbumsDone(int,QString,QList<GDFolder>)));
+
+        connect(m_picsasa_talker,SIGNAL(signalCreateAlbumDone(int,QString,QString)),
+                this,SLOT(slotCreateFolderDone(int,QString,QString)));
+
+        connect(m_picsasa_talker,SIGNAL(signalAddPhotoDone(int,QString)),
+                this,SLOT(slotAddPhotoDone(int,QString)));
+	
+        readSettings();
+        buttonStateChange(false);
+
+        if(refresh_token.isEmpty())
+        {
+            m_picsasa_talker->doOAuth();
+        }
+        else
+        {
+            m_picsasa_talker->getAccessTokenFromRefreshToken(refresh_token);
+        }
     }
+
 }
 
 GDWindow::~GDWindow()
@@ -213,11 +252,16 @@ void GDWindow::reactivate()
 void GDWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("Google Drive Settings");
+    
+    KConfigGroup grp;
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        grp = config.group("Google Drive Settings");
+    else
+        grp = config.group("PicasawebExport Settings");
 
     m_currentAlbumId = grp.readEntry("Current Album",QString());
     refresh_token = grp.readEntry("refresh_token");
-
+    
     if (grp.readEntry("Resize", false))
     {
         m_widget->m_resizeChB->setChecked(true);
@@ -233,24 +277,60 @@ void GDWindow::readSettings()
 
     m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width",    1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
+    
+   if((QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0) || (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0))
+       m_widget->m_tagsBGrp->button(grp.readEntry("Tag Paths", 0))->setChecked(true);
 
-    KConfigGroup dialogGroup = config.group("Google Drive Export Dialog");
+    KConfigGroup dialogGroup;
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        dialogGroup = config.group("Google Drive Export Dialog");
+    }
+    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    {
+        dialogGroup = config.group("Picasaweb Export Dialog"); 
+    }
+    else
+    {
+        dialogGroup = config.group("Picasaweb Import Dialog");
+    }
     restoreDialogSize(dialogGroup);
 }
 
 void GDWindow::writeSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("Google Drive Settings");
+    
+    KConfigGroup grp;
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        grp = config.group("Google Drive Settings");
+    else
+        grp = config.group("PicasawebExport Settings");
+    
     grp.writeEntry("refresh_token",refresh_token);
     grp.writeEntry("Current Album",m_currentAlbumId);
     grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
+    
+   if((QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0) || (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0))
+       grp.writeEntry("Tag Paths",     m_widget->m_tagsBGrp->checkedId());
 
-    KConfigGroup dialogGroup = config.group("Google Drive Export Dialog");
-    saveDialogSize(dialogGroup);
-
+    KConfigGroup dialogGroup;
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        dialogGroup = config.group("Google Drive Export Dialog");
+    }
+    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    {
+        dialogGroup = config.group("Picasaweb Export Dialog"); 
+    }
+    else
+    {
+        dialogGroup = config.group("Picasaweb Import Dialog");
+    }
+    
+    saveDialogSize(dialogGroup);  
     config.sync();
 }
 
@@ -259,24 +339,63 @@ void GDWindow::slotSetUserName(const QString& msg)
     m_widget->updateLabels(msg,"");
 }
 
-void GDWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
+void GDWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <GDFolder>& list)
 {
-    m_widget->m_albumsCoB->clear();
-    kDebug() << "slotListAlbumsDone1:" << list.size();
-
-    for(int i=0;i<list.size();i++)
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
-        m_widget->m_albumsCoB->addItem(KIcon("system-users"),list.value(i).second,
-                                       list.value(i).first);
-
-        if (m_currentAlbumId == list.value(i).first)
+        if(code == 0)
         {
-            m_widget->m_albumsCoB->setCurrentIndex(i);
+            KMessageBox::error(this, i18n("Google Drive call failed:\n%1", errMsg));
+            return;   
+        }
+    
+        m_widget->m_albumsCoB->clear();
+        kDebug() << "slotListAlbumsDone1:" << list.size();
+
+        for(int i=0;i<list.size();i++)
+        {
+            m_widget->m_albumsCoB->addItem(KIcon("system-users"),list.value(i).title,
+                                           list.value(i).id);
+
+            if (m_currentAlbumId == list.value(i).id)
+            {
+                m_widget->m_albumsCoB->setCurrentIndex(i);
+            }
+        }
+
+        buttonStateChange(true);
+        m_talker->getUserName();              
+    }
+    else
+    {
+        if(code == 0)
+        {
+            KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+            return;
+        }
+            
+        m_widget->updateLabels(m_picsasa_talker->getLoginName(), m_picsasa_talker->getUserName());
+        m_widget->m_albumsCoB->clear();
+
+        for (int i = 0; i < list.size(); ++i)
+        {
+            QString albumIcon;
+
+            if (list.at(i).access == "public")
+                albumIcon = "folder-image";
+            else if (list.at(i).access == "protected")
+                albumIcon = "folder-locked";
+            else
+                albumIcon = "folder";
+
+            m_widget->m_albumsCoB->addItem(KIcon(albumIcon), list.at(i).title, list.at(i).id);
+
+            if (m_currentAlbumId == list.at(i).id)
+                m_widget->m_albumsCoB->setCurrentIndex(i);
+            
+            buttonStateChange(true);  
         }
     }
-
-    buttonStateChange(true);
-    m_talker->getUserName();
 }
 
 void GDWindow::slotBusy(bool val)
@@ -381,39 +500,41 @@ void GDWindow::uploadNextPhoto()
 
     if (!res)
     {
-        slotAddPhotoFailed("");
+        slotAddPhotoDone(0,"");
         return;
     }
 }
 
-void GDWindow::slotAddPhotoFailed(const QString& msg)
+void GDWindow::slotAddPhotoDone(int err, const QString& msg)
 {
-    if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
-        != KMessageBox::Continue)
+    if(err == 0)
     {
-        m_transferQueue.clear();
-        m_widget->progressBar()->hide();
+            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
+            != KMessageBox::Continue)
+        {
+            m_transferQueue.clear();
+            m_widget->progressBar()->hide();
+        }
+        else
+        {
+            m_transferQueue.pop_front();
+            m_imagesTotal--;
+            m_widget->progressBar()->setMaximum(m_imagesTotal);
+            m_widget->progressBar()->setValue(m_imagesCount);
+            uploadNextPhoto();
+        }    
     }
     else
     {
+        // Remove photo uploaded from the list
+        m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
         m_transferQueue.pop_front();
-        m_imagesTotal--;
+        m_imagesCount++;
+        kDebug() << "In slotAddPhotoSucceeded" << m_imagesCount;
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(m_imagesCount);
         uploadNextPhoto();
     }
-}
-
-void GDWindow::slotAddPhotoSucceeded()
-{
-    // Remove photo uploaded from the list
-    m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
-    m_transferQueue.pop_front();
-    m_imagesCount++;
-    kDebug() << "In slotAddPhotoSucceeded" << m_imagesCount;
-    m_widget->progressBar()->setMaximum(m_imagesTotal);
-    m_widget->progressBar()->setValue(m_imagesCount);
-    uploadNextPhoto();
 }
 
 void GDWindow::slotImageListChanged()
@@ -423,18 +544,33 @@ void GDWindow::slotImageListChanged()
 
 void GDWindow::slotNewAlbumRequest()
 {
-    if (m_albumDlg->exec() == QDialog::Accepted)
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
-        GDFolder newFolder;
-        m_albumDlg->getAlbumTitle(newFolder);
-        m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
-        m_talker->createFolder(newFolder.title,m_currentAlbumId);
+        if (m_albumDlg->exec() == QDialog::Accepted)
+        {
+            GDFolder newFolder;
+            m_albumDlg->getAlbumTitle(newFolder);
+            m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+            m_talker->createFolder(newFolder.title,m_currentAlbumId);
+        }
+    }
+    else
+    {        
+        if (m_picasa_albumdlg->exec() == QDialog::Accepted)
+        {
+            GDFolder newFolder;
+            m_picasa_albumdlg->getAlbumProperties(newFolder);
+            m_picsasa_talker->createAlbum(newFolder);
+        }
     }
 }
 
 void GDWindow::slotReloadAlbumsRequest()
 {
-    m_talker->listFolders();
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_talker->listFolders();
+    else
+        m_picsasa_talker->listAlbums();
 }
 
 void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
@@ -446,29 +582,44 @@ void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
 
 void GDWindow::slotAccessTokenObtained()
 {
-    m_talker->listFolders();
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_talker->listFolders();
+    else
+        m_picsasa_talker->listAlbums();
 }
 
 void GDWindow::slotRefreshTokenObtained(const QString& msg)
 {
-    refresh_token = msg;
-    m_talker->listFolders();
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        refresh_token = msg;
+        m_talker->listFolders();        
+    }
+    else
+    {
+        refresh_token = msg;
+        m_picsasa_talker->listAlbums(); 
+    }
 }
 
-void GDWindow::slotListAlbumsFailed(const QString& msg)
+void GDWindow::slotCreateFolderDone(int code, const QString& msg, const QString& albumId)
 {
-    KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
-    return;
-}
-
-void GDWindow::slotCreateFolderFailed(const QString& msg)
-{
-    KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
-}
-
-void GDWindow::slotCreateFolderSucceeded()
-{
-    m_talker->listFolders();
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        if(code == 0)
+            KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
+        else
+            m_talker->listFolders();        
+    }
+    else
+    {
+        if(code == 0)
+            KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
+        else
+            m_currentAlbumId = albumId;
+            m_picsasa_talker->listAlbums();
+    }
+    
 }
 
 void GDWindow::slotTransferCancel()
@@ -488,7 +639,10 @@ void GDWindow::slotUserChangeRequest()
         == KMessageBox::Continue)
     {
         refresh_token = "";
-        m_talker->doOAuth();
+        if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+            m_talker->doOAuth();
+        else
+            m_picsasa_talker->doOAuth();
     }
 }
 
@@ -497,6 +651,12 @@ void GDWindow::buttonStateChange(bool state)
     m_widget->m_newAlbumBtn->setEnabled(state);
     m_widget->m_reloadAlbumsBtn->setEnabled(state);
     enableButton(User1, state);
+}
+
+void GDWindow::slotCloseClicked()
+{
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();   
 }
 
 void GDWindow::closeEvent(QCloseEvent* e)

@@ -43,7 +43,7 @@ class Authorize : public QObject
 
 public:
 
-    Authorize(QWidget* const parent);
+    Authorize(QWidget* const parent, const QString & scope);
     ~Authorize();
 
 Q_SIGNALS:
