@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef PICASAWEBALBUM_H
-#define PICASAWEBALBUM_H
+#ifndef NEWALBUMDLG_H
+#define NEWALBUMDLG_H
 
 // Qt includes
 
@@ -43,14 +43,14 @@ namespace KIPIGoogleDrivePlugin
 
 class GDFolder;
 
-class PicasawebNewAlbum : public KDialog
+class NewAlbumDlg : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    PicasawebNewAlbum(QWidget* const parent);
-    ~PicasawebNewAlbum();
+    NewAlbumDlg(QWidget* const parent, const QString& serviceName);
+    ~NewAlbumDlg();
 
     void getAlbumProperties(GDFolder& album);
 
@@ -61,6 +61,7 @@ private:
     KLineEdit*     m_locEdt;
     QDateTimeEdit* m_dtEdt;
 
+    QString        m_serviceName;
     QRadioButton*  m_publicRBtn;
     QRadioButton*  m_unlistedRBtn;
     QRadioButton*  m_protectedRBtn;
@@ -68,4 +69,4 @@ private:
 
 } // namespace KIPIGoogleDrivePlugin
 
-#endif // PICASAWEBALBUM_H
+#endif // NEWALBUMDLG_H

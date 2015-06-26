@@ -61,8 +61,7 @@ class GoogleDriveWidget;
 class GDTalker;
 class GDPhoto;
 class GDFolder;
-class GDNewAlbum;
-class PicasawebNewAlbum;
+class NewAlbumDlg;
 class PicasawebTalker;
 
 class GDWindow : public KPToolDialog
@@ -124,8 +123,8 @@ private:
     QString                       refresh_token;
 
     GoogleDriveWidget*            m_widget;
-    GDNewAlbum*                   m_albumDlg;
-    PicasawebNewAlbum*            m_picasa_albumdlg;
+    NewAlbumDlg*                  m_albumDlg;
+    NewAlbumDlg*                  m_picasa_albumdlg;
     
     GDTalker*                     m_talker;
     PicasawebTalker*              m_picsasa_talker;

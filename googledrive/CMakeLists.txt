@@ -16,8 +16,7 @@ set(kipiplugin_googledrive_PART_SRCS
     plugin_googledrive.cpp
     gdwidget.cpp
     gdwindow.cpp
-    picasawebalbum.cpp
-    gdalbum.cpp
+    newalbumdlg.cpp
     gdtalker.cpp
     picasawebtalker.cpp
    )

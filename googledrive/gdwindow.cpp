@@ -69,8 +69,7 @@
 #include "kpprogresswidget.h"
 #include "gdtalker.h"
 #include "gditem.h"
-#include "gdalbum.h"
-#include "picasawebalbum.h"
+#include "newalbumdlg.h"
 #include "gdwidget.h"
 #include "picasawebtalker.h"
 #include "replacedialog.h"
@@ -199,7 +198,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     if(m_gdrive)
     {
-        m_albumDlg = new GDNewAlbum(this);
+        m_albumDlg = new NewAlbumDlg(this,m_serviceName);
         m_talker = new GDTalker(this);
 
         connect(m_talker,SIGNAL(signalBusy(bool)),
@@ -243,7 +242,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     }
     else
     {
-	m_picasa_albumdlg = new PicasawebNewAlbum(this);
+	m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName);
         m_picsasa_talker = new PicasawebTalker(this);
         
         connect(m_picsasa_talker,SIGNAL(signalBusy(bool)),
@@ -897,7 +896,7 @@ void GDWindow::slotNewAlbumRequest()
         if (m_albumDlg->exec() == QDialog::Accepted)
         {
             GDFolder newFolder;
-            m_albumDlg->getAlbumTitle(newFolder);
+            m_albumDlg->getAlbumProperties(newFolder);
             m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
             m_talker->createFolder(newFolder.title,m_currentAlbumId);
         }

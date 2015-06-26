@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "picasawebalbum.moc"
+#include "newalbumdlg.moc"
 
 // Qt includes
 
@@ -45,11 +45,15 @@
 namespace KIPIGoogleDrivePlugin
 {
 
-PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
+NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     : KDialog(parent)
 {
-    QString header(i18n("Picasaweb New Album"));
-    setWindowTitle(header);
+    m_serviceName = serviceName;
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        setWindowTitle(QString("Google Drive New Album"));
+    else
+        setWindowTitle(QString("Picasaweb New Album"));
+
     setButtons(Ok|Cancel);
     setDefaultButton(Cancel);
     setModal(false);
@@ -57,13 +61,26 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
     QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 400);
-
-    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
-    albumBox->setWhatsThis(
-        i18n("These are basic settings for the new Picasaweb album."));
+    QFormLayout* const albumBoxLayout  = new QFormLayout;
 
     m_titleEdt          = new KLineEdit;
     m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
+
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        m_titleEdt->setWhatsThis(i18n("This is the title of the folder that will be created."));
+        albumBoxLayout->addRow(i18nc("folder edit","Title:"),m_titleEdt);
+        albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+        albumBoxLayout->setSpacing(KDialog::spacingHint());
+        albumBoxLayout->setMargin(KDialog::spacingHint());
+        mainWidget->setMinimumSize(300,0);
+        mainWidget->setLayout(albumBoxLayout);
+        return;
+    }
+    
+    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
+    albumBox->setWhatsThis(
+        i18n("These are basic settings for the new Picasaweb album."));
 
     m_dtEdt             = new QDateTimeEdit(QDateTime::currentDateTime());
     m_dtEdt->setDisplayFormat("dd.MM.yyyy HH:mm");
@@ -75,7 +92,6 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
     m_locEdt            = new KLineEdit;
     m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));    
 
-    QFormLayout* const albumBoxLayout  = new QFormLayout;
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Title:"), m_titleEdt);
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Date & Time:"), m_dtEdt);
     albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Description:"), m_descEdt);
@@ -119,12 +135,17 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* const parent)
     mainWidget->setLayout(mainLayout);
 }
 
-PicasawebNewAlbum::~PicasawebNewAlbum()
+NewAlbumDlg::~NewAlbumDlg()
 {
 }
 
-void PicasawebNewAlbum::getAlbumProperties(GDFolder& album)
+void NewAlbumDlg::getAlbumProperties(GDFolder& album)
 {
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        album.title       = m_titleEdt->text();
+        return;
+    }
     album.title       = m_titleEdt->text();
     album.description = m_descEdt->toPlainText();
     album.location    = m_locEdt->text();
