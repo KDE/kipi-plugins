@@ -426,6 +426,7 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     QVariant result = parser.parse(data, &ok);
     QVariantMap rMap = result.toMap();
     QList<QString> keys = rMap.uniqueKeys();
+    QString photoId("");
     kDebug() << "in parse folder" << rMap.size();
 
     for(int i=0;i<rMap.size();i++)
@@ -433,19 +434,20 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
         if(keys[i]  == "alternateLink")
         {
             success = true;
-            break;
         }
+        if(keys[i] == "id")
+            photoId = rMap[keys[i]].value<QString>();
     }
 
     emit signalBusy(false);
 
     if(!success)
     {
-        emit signalAddPhotoDone(0,i18n("Failed to upload photo"));
+        emit signalAddPhotoDone(0,i18n("Failed to upload photo"),"-1");
     }
     else
     {
-        emit signalAddPhotoDone(1,QString());
+        emit signalAddPhotoDone(1,QString(),photoId);
     }
 }
 

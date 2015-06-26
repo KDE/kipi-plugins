@@ -10,6 +10,7 @@ include_directories(${QJSON_INCLUDE_DIR})
 
 set(kipiplugin_googledrive_PART_SRCS
     authorize.cpp
+    replacedialog.cpp
     mpform_gdrive.cpp
     mpform_picasa.cpp
     plugin_googledrive.cpp

@@ -85,6 +85,7 @@ private:
 
     void buttonStateChange(bool state);
     void closeEvent(QCloseEvent*);
+    void picasaTransferHandler();
 
 private Q_SLOTS:
 
@@ -104,16 +105,21 @@ private Q_SLOTS:
     void slotSetUserName(const QString& msg);
     void slotListAlbumsDone(int,const QString&,const QList <GDFolder>&);
     void slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList);
+    void slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList);
     void slotCreateFolderDone(int,const QString& msg, const QString& = QString("-1"));
-    void slotAddPhotoDone(int,const QString& msg);
+    void slotAddPhotoDone(int,const QString& msg, const QString&);
     void slotTransferCancel();
 
 private:
 
     unsigned int                  m_imagesCount;
     unsigned int                  m_imagesTotal;
+    int                           m_renamingOpt;
 
     QString                       m_serviceName;
+    bool                          m_picasaExport;
+    bool                          m_picasaImport;
+    bool                          m_gdrive;
     QString                       m_tmp;
     QString                       refresh_token;
 

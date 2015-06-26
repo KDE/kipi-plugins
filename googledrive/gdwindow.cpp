@@ -73,6 +73,7 @@
 #include "picasawebalbum.h"
 #include "gdwidget.h"
 #include "picasawebtalker.h"
+#include "replacedialog.h"
 
 namespace KIPIGoogleDrivePlugin
 {
@@ -81,9 +82,23 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
+    m_gdrive = false;
+    m_picasaExport = false;
+    m_picasaImport = false;
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_gdrive = true;
+    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+        m_picasaExport = true;
+    else
+        m_picasaImport = true;
+    
+    kDebug()<<"GDrive is "<<m_gdrive<<" Picasa Export is "<<m_picasaExport<<" Picasa Import is "<<m_picasaImport;
+    
     m_tmp         = tmpFolder;
     m_imagesCount = 0;
     m_imagesTotal = 0;
+    m_renamingOpt = 0;
 
     m_widget      = new GoogleDriveWidget(this, iface(), m_serviceName);
     
@@ -93,7 +108,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     setModal(false);  
     KPAboutData* about;
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         about = new KPAboutData(ki18n("Google Drive Export"),0,
                                        KAboutData::License_GPL,
@@ -148,7 +163,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         setAboutData(about);
 
         setWindowIcon(KIcon("kipi-picasa"));
-        if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+        if(m_picasaExport)
         {
             setWindowTitle(i18n("Export to Picasa Web Service"));
             setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Picasa Web Service")));
@@ -182,7 +197,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     //-------------------------------------------------------------------------
 
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         m_albumDlg = new GDNewAlbum(this);
         m_talker = new GDTalker(this);
@@ -211,8 +226,8 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         connect(m_talker,SIGNAL(signalCreateFolderDone(int,QString)),
                 this,SLOT(slotCreateFolderDone(int,QString)));
 
-        connect(m_talker,SIGNAL(signalAddPhotoDone(int,QString)),
-                this,SLOT(slotAddPhotoDone(int,QString)));
+        connect(m_talker,SIGNAL(signalAddPhotoDone(int,QString,QString)),
+                this,SLOT(slotAddPhotoDone(int,QString,QString)));
 
         readSettings();
         buttonStateChange(false);
@@ -252,8 +267,8 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         connect(m_picsasa_talker,SIGNAL(signalCreateAlbumDone(int,QString,QString)),
                 this,SLOT(slotCreateFolderDone(int,QString,QString)));
 
-        connect(m_picsasa_talker,SIGNAL(signalAddPhotoDone(int,QString)),
-                this,SLOT(slotAddPhotoDone(int,QString)));
+        connect(m_picsasa_talker,SIGNAL(signalAddPhotoDone(int,QString,QString)),
+                this,SLOT(slotAddPhotoDone(int,QString,QString)));
 
         connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
@@ -293,7 +308,7 @@ void GDWindow::readSettings()
     KConfig config("kipirc");
     
     KConfigGroup grp;
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         grp = config.group("Google Drive Settings");
     else
         grp = config.group("PicasawebExport Settings");
@@ -317,15 +332,15 @@ void GDWindow::readSettings()
     m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width",    1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
     
-   if((QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0) || (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0))
+   if(m_picasaImport || m_picasaExport)
        m_widget->m_tagsBGrp->button(grp.readEntry("Tag Paths", 0))->setChecked(true);
 
     KConfigGroup dialogGroup;
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         dialogGroup = config.group("Google Drive Export Dialog");
     }
-    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if(m_picasaExport)
     {
         dialogGroup = config.group("Picasaweb Export Dialog"); 
     }
@@ -341,7 +356,7 @@ void GDWindow::writeSettings()
     KConfig config("kipirc");
     
     KConfigGroup grp;
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         grp = config.group("Google Drive Settings");
     else
         grp = config.group("PicasawebExport Settings");
@@ -352,15 +367,15 @@ void GDWindow::writeSettings()
     grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
     
-   if((QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0) || (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0))
+   if(m_picasaExport || m_picasaImport)
        grp.writeEntry("Tag Paths",     m_widget->m_tagsBGrp->checkedId());
 
     KConfigGroup dialogGroup;
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         dialogGroup = config.group("Google Drive Export Dialog");
     }
-    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if(m_picasaExport)
     {
         dialogGroup = config.group("Picasaweb Export Dialog"); 
     }
@@ -380,12 +395,93 @@ void GDWindow::slotSetUserName(const QString& msg)
 
 void GDWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
 {
-    
+
+}
+
+void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
+{
+    kDebug()<< "err Code is "<< errCode <<" Err Message is "<< errMsg;
+    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
+               this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GDPhoto>)));
+
+    if (errCode == 0)
+    {
+        KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+        return;
+    }
+
+    typedef QPair<KUrl,GDPhoto> Pair;
+
+    m_transferQueue.clear();
+
+    KUrl::List urlList = m_widget->m_imgList->imageUrls(true);
+
+    if (urlList.isEmpty())
+        return;
+
+    for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    {
+        KPImageInfo info(*it);
+        GDPhoto temp;
+        temp.title = info.name();
+
+        // Picasa doesn't support image titles. Include it in descriptions if needed.
+        QStringList descriptions = QStringList() << info.title() << info.description();
+        descriptions.removeAll("");
+        temp.description         = descriptions.join("\n\n");
+
+        // check for existing items
+        QString localId;
+        KPMetadata meta;
+
+        if (meta.load((*it).toLocalFile()))
+        {
+            localId = meta.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
+        }
+
+        QList<GDPhoto>::const_iterator itPWP;
+
+        for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
+        {
+            if ((*itPWP).id == localId)
+            {
+                temp.id       = localId;
+                temp.editUrl  = (*itPWP).editUrl;
+                temp.thumbURL = (*itPWP).thumbURL;
+                break;
+            }
+        }
+
+        //Tags from the database
+        temp.gpsLat.setNum(info.latitude());
+        temp.gpsLon.setNum(info.longitude());
+
+        temp.tags = info.tagsPath();
+        m_transferQueue.append( Pair( (*it), temp) );
+    }
+
+    if (m_transferQueue.isEmpty())
+        return;
+
+    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_imagesTotal    = m_transferQueue.count();
+    m_imagesCount    = 0;
+
+    m_widget->progressBar()->setFormat(i18n("%v / %m"));
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(0);
+    m_widget->progressBar()->show();
+    m_widget->progressBar()->progressScheduled(i18n("Picasa Export"), true, true);
+    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+
+    m_renamingOpt = 0;
+
+    uploadNextPhoto();
 }
 
 void GDWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <GDFolder>& list)
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         if(code == 0)
         {
@@ -458,6 +554,31 @@ void GDWindow::slotBusy(bool val)
     }
 }
 
+void GDWindow::picasaTransferHandler()
+{
+    kDebug() << "Picasa Transfer invoked";
+
+    if(m_picasaImport)
+    {
+        // list photos of the album, then start download
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
+                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
+
+        m_picsasa_talker->listPhotos(m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString(),
+                                     m_widget->m_dlDimensionCoB->itemData(m_widget->m_dlDimensionCoB->currentIndex()).toString());
+
+    }
+    else
+    {
+        // list photos of the album, then start upload with add/update items
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
+                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GDPhoto>)));
+
+        m_picsasa_talker->listPhotos(m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
+
+    }    
+}
+
 void GDWindow::slotTextBoxEmpty()
 {
     kDebug() << "in slotTextBoxEmpty";
@@ -481,7 +602,7 @@ void GDWindow::slotStartTransfer()
         return;
     }
  
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         if(!(m_talker->authenticated()))
         {
@@ -513,6 +634,12 @@ void GDWindow::slotStartTransfer()
             }
         }      
     }
+    
+    if(m_picasaExport || m_picasaImport)
+    {
+        picasaTransferHandler();
+	return;
+    }
 
     typedef QPair<KUrl, GDPhoto> Pair;
 
@@ -522,7 +649,7 @@ void GDWindow::slotStartTransfer()
         GDPhoto temp;
         kDebug() << "in start transfer info " <<info.title() << info.description();
         
-        if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        if(m_gdrive)
             temp.title      = info.title();
         else
             temp.title      = info.name();
@@ -565,7 +692,7 @@ void GDWindow::uploadNextPhoto()
     GDPhoto info      = pathComments.second;
     bool res;
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
                                  m_widget->m_resizeChB->isChecked(),
@@ -575,6 +702,45 @@ void GDWindow::uploadNextPhoto()
     }
     else
     {
+        bool bCancel = false;
+        bool bAdd    = true;
+
+        if (!info.id.isEmpty() && !info.editUrl.isEmpty())
+        {
+            switch(m_renamingOpt)
+            {
+                case PWR_ADD_ALL:
+                    bAdd = true;
+                    break;
+                case PWR_REPLACE_ALL:
+                    bAdd = false;
+                    break;
+                default:
+                    {
+                        ReplaceDialog dlg(this, "", iface(), pathComments.first.toLocalFile(), info.thumbURL);
+
+                        switch(dlg.exec())
+                        {
+                            case PWR_ADD_ALL:
+                                m_renamingOpt = PWR_ADD_ALL;
+                            case PWR_ADD:
+                                bAdd = true;
+                                break;
+                            case PWR_REPLACE_ALL:
+                                m_renamingOpt = PWR_REPLACE_ALL;
+                            case PWR_REPLACE:
+                                bAdd = false;
+                                break;
+                            case PWR_CANCEL:
+                            default:
+                                bCancel = true;
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+        
         //adjust tags according to radio button clicked
         switch (m_widget->m_tagsBGrp->checkedId())
         {
@@ -635,24 +801,33 @@ void GDWindow::uploadNextPhoto()
                 break;
         }
         
-        res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                         m_widget->m_resizeChB->isChecked(),
-                                         m_widget->m_dimensionSpB->value(),
-                                         m_widget->m_imageQualitySpB->value());  
+        if(bAdd)
+        {
+            res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
+                                             m_widget->m_resizeChB->isChecked(),
+                                             m_widget->m_dimensionSpB->value(),
+                                             m_widget->m_imageQualitySpB->value());     
+        }
+        else
+        {
+            res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info);
+        }
+
+        
     }
     
     if (!res)
     {
-        slotAddPhotoDone(0,"");
+        slotAddPhotoDone(0,"","-1");
         return;
     }
 }
 
-void GDWindow::slotAddPhotoDone(int err, const QString& msg)
+void GDWindow::slotAddPhotoDone(int err, const QString& msg, const QString& photoId)
 {
     if(err == 0)
     {
-        if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        if(m_gdrive)
         {
             if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
                 != KMessageBox::Continue)
@@ -689,6 +864,16 @@ void GDWindow::slotAddPhotoDone(int err, const QString& msg)
     }
     else
     {
+        KPMetadata meta;
+        bool bRet        = false;
+        QString fileName = m_transferQueue.first().first.path();
+
+        if (!photoId.isEmpty() && meta.supportXmp() && meta.canWriteXmp(fileName) && meta.load(fileName))
+        {
+            bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
+            bRet = meta.save(fileName);
+        }
+        kDebug() << "bRet : " << bRet;
         // Remove photo uploaded from the list
         m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
         m_transferQueue.pop_front();
@@ -707,7 +892,7 @@ void GDWindow::slotImageListChanged()
 
 void GDWindow::slotNewAlbumRequest()
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         if (m_albumDlg->exec() == QDialog::Accepted)
         {
@@ -730,7 +915,7 @@ void GDWindow::slotNewAlbumRequest()
 
 void GDWindow::slotReloadAlbumsRequest()
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         m_talker->listFolders();
     else
         m_picsasa_talker->listAlbums();
@@ -745,7 +930,7 @@ void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
 
 void GDWindow::slotAccessTokenObtained()
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         m_talker->listFolders();
     else
         m_picsasa_talker->listAlbums();
@@ -753,7 +938,7 @@ void GDWindow::slotAccessTokenObtained()
 
 void GDWindow::slotRefreshTokenObtained(const QString& msg)
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         refresh_token = msg;
         m_talker->listFolders();        
@@ -767,7 +952,7 @@ void GDWindow::slotRefreshTokenObtained(const QString& msg)
 
 void GDWindow::slotCreateFolderDone(int code, const QString& msg, const QString& albumId)
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         if(code == 0)
             KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
@@ -802,7 +987,7 @@ void GDWindow::slotUserChangeRequest()
         == KMessageBox::Continue)
     {
         refresh_token = "";
-        if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        if(m_gdrive)
             m_talker->doOAuth();
         else
             m_picsasa_talker->doOAuth();

@@ -94,7 +94,7 @@ Q_SIGNALS:
     void signalListAlbumsDone(int, const QString&, const QList <GDFolder>&);
     void signalListPhotosDone(int, const QString&, const QList <GDPhoto>&);
     void signalCreateAlbumDone(int, const QString&, const QString&);
-    void signalAddPhotoDone(int, const QString&);
+    void signalAddPhotoDone(int, const QString&, const QString&);
     void signalGetPhotoDone(int errCode, const QString& errMsg,
                             const QByteArray& photoData);
 

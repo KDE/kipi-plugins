@@ -411,12 +411,12 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GDPhoto& info)
 
     form.finish();
 
-    QString auth_string = "GoogleLogin auth=" + m_access_token;
+    QString auth_string = "Authorization: " + m_bearer_access_token.toAscii();
     KIO::TransferJob* const job = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string + "\nIf-Match: *");
+    job->addMetaData("customHTTPHeader", auth_string.toAscii() + "\nIf-Match: *");
 
     m_jobData.insert(job, form.formData());
 
@@ -554,7 +554,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoDone(job->error(), job->errorText());
+            emit signalAddPhotoDone(job->error(), job->errorText(),"-1");
         }
         else
         {
@@ -579,7 +579,7 @@ void PicasawebTalker::slotResult(KJob *job)
             parseResponseAddPhoto(m_buffer);
             break;
         case(FE_UPDATEPHOTO):
-            emit signalAddPhotoDone(1, "");
+            emit signalAddPhotoDone(1, "", "");
             break;
         case(FE_GETPHOTO):
             // all we get is data of the image
@@ -832,7 +832,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if ( !doc.setContent( data ) )
     {
-        emit signalAddPhotoDone(0, i18n("Failed to upload photo"));
+        emit signalAddPhotoDone(0, i18n("Failed to upload photo"),"-1");
         return;
     }
     
@@ -857,7 +857,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         }
     }
 
-    emit signalAddPhotoDone(1, "");
+    emit signalAddPhotoDone(1, "",photoId);
 }
 
 } // KIPIGoogleDrivePlugin

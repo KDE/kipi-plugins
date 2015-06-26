@@ -117,16 +117,20 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
 
     //-------------------------------------------------------------
 
-    QGroupBox* const albBox            = new QGroupBox(i18n("Destination"),settingsBox);
+    QGroupBox* const albBox            = new QGroupBox(i18n("Album"),settingsBox);
     
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
         albBox->setWhatsThis(i18n("This is the Google Drive folder to which selected photos will be uploaded."));
     }
-    else
+    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
     {
         albBox->setWhatsThis(i18n("This is the Picasaweb folder to which selected photos will be uploaded."));
     }
+    else
+    {
+        albBox->setWhatsThis(i18n("This is the Picasaweb folder from which selected photos will be downloaded."));
+    }      
     
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
@@ -248,8 +252,8 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addWidget(sizeBox);
-    settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(albBox);
+    settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
