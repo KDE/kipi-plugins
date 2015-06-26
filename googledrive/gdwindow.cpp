@@ -32,6 +32,7 @@
 #include <QCheckBox>
 #include <QStringList>
 #include <QSpinBox>
+#include <QFileInfo>
 #include <QPointer>
 
 // KDE includes
@@ -53,6 +54,7 @@
 #include <kwallet.h>
 #include <kpushbutton.h>
 #include <kurl.h>
+#include <kio/renamedialog.h>
 #include <ktoolinvocation.h>
 
 // LibKIPI includes
@@ -268,9 +270,9 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
         connect(m_picsasa_talker,SIGNAL(signalAddPhotoDone(int,QString,QString)),
                 this,SLOT(slotAddPhotoDone(int,QString,QString)));
-
-        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
-               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
+        
+        connect(m_picsasa_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
+                this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
 
         readSettings();
         buttonStateChange(false);
@@ -394,7 +396,38 @@ void GDWindow::slotSetUserName(const QString& msg)
 
 void GDWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
 {
+    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
+               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
 
+    if (errCode == 0)
+    {
+        KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+        return;
+    }
+
+    typedef QPair<KUrl,GDPhoto> Pair;
+    m_transferQueue.clear();
+    QList<GDPhoto>::const_iterator itPWP;
+
+    for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
+    {
+        m_transferQueue.push_back(Pair((*itPWP).originalURL, (*itPWP)));
+    }
+
+    if (m_transferQueue.isEmpty())
+        return;
+
+    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_imagesTotal    = m_transferQueue.count();
+    m_imagesCount    = 0;
+
+    m_widget->progressBar()->setFormat(i18n("%v / %m"));
+    m_widget->progressBar()->show();
+
+    m_renamingOpt = 0;
+
+    // start download with first photo in queue
+    downloadNextPhoto();
 }
 
 void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
@@ -800,16 +833,24 @@ void GDWindow::uploadNextPhoto()
                 break;
         }
         
-        if(bAdd)
+        if (bCancel)
         {
-            res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                             m_widget->m_resizeChB->isChecked(),
-                                             m_widget->m_dimensionSpB->value(),
-                                             m_widget->m_imageQualitySpB->value());     
+            slotTransferCancel();
+            res = true;
         }
         else
         {
-            res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info);
+            if(bAdd)
+            {
+                res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
+                                                 m_widget->m_resizeChB->isChecked(),
+                                                 m_widget->m_dimensionSpB->value(),
+                                                 m_widget->m_imageQualitySpB->value());     
+            }
+            else
+            {
+                res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info);
+            }
         }
 
         
@@ -820,6 +861,200 @@ void GDWindow::uploadNextPhoto()
         slotAddPhotoDone(0,"","-1");
         return;
     }
+}
+
+void GDWindow::downloadNextPhoto()
+{
+    if (m_transferQueue.isEmpty())
+    {
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
+        return;
+    }
+
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
+
+    QString imgPath = m_transferQueue.first().first.url();
+
+    m_picsasa_talker->getPhoto(imgPath);
+}
+
+void GDWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
+{
+    GDPhoto item = m_transferQueue.first().second;
+    KUrl tmpUrl         = QString(m_tmp + item.title);
+
+    if (item.mimeType == "video/mpeg4")
+    {
+        tmpUrl.setFileName(item.title + ".mp4");
+    }
+
+    if (errCode == 1)
+    {
+        QString errText;
+        QFile imgFile(tmpUrl.toLocalFile());
+
+        if (!imgFile.open(QIODevice::WriteOnly))
+        {
+            errText = imgFile.errorString();
+        }
+        else if (imgFile.write(photoData) != photoData.size())
+        {
+            errText = imgFile.errorString();
+        }
+        else
+        {
+            imgFile.close();
+        }
+
+        if (errText.isEmpty())
+        {
+            KPMetadata meta;
+            bool bRet = false;
+            if (meta.load(tmpUrl.toLocalFile()))
+            {
+                if (meta.supportXmp() && meta.canWriteXmp(tmpUrl.toLocalFile()))
+                {
+                    bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
+                    bRet = meta.setXmpKeywords(item.tags, false);
+                }
+
+
+                if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
+                {
+                    bRet = meta.setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble(), false);
+                }
+
+                bRet = meta.save(tmpUrl.toLocalFile());
+            }
+
+            kDebug() << "bRet : " << bRet;
+
+            m_transferQueue.pop_front();
+            m_imagesCount++;
+        }
+        else
+        {
+            if (KMessageBox::warningContinueCancel(this,
+                             i18n("Failed to save photo: %1\n"
+                                  "Do you want to continue?", errText))
+                             != KMessageBox::Continue)
+            {
+                slotTransferCancel();
+                return;
+            }
+        }
+    }
+    else
+    {
+        if (KMessageBox::warningContinueCancel(this,
+                         i18n("Failed to download photo: %1\n"
+                              "Do you want to continue?", errMsg))
+                         != KMessageBox::Continue)
+        {
+            slotTransferCancel();
+            return;
+        }
+    }
+
+    KUrl newUrl = QString(m_widget->getDestinationPath() + tmpUrl.fileName());
+    bool bSkip  = false;
+
+    QFileInfo targetInfo(newUrl.toLocalFile());
+
+    if (targetInfo.exists())
+    {
+        switch (m_renamingOpt)
+        {
+            case KIO::R_AUTO_SKIP:
+                bSkip = true;
+                break;
+
+            case KIO::R_OVERWRITE_ALL:
+                break;
+
+            default:
+            {
+                KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
+                        "exists. Are you sure you want "
+                        "to overwrite it?",
+                        newUrl.fileName()),
+                        tmpUrl, newUrl,
+                        KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
+
+                switch (dlg.exec())
+                {
+                    case KIO::R_CANCEL:
+                        m_transferQueue.clear();
+                        bSkip = true;
+                        break;
+
+                    case KIO::R_AUTO_SKIP:
+                        m_renamingOpt = KIO::R_AUTO_SKIP;
+                    case KIO::R_SKIP:
+                        bSkip = true;
+                        break;
+
+                    case KIO::R_RENAME:
+                        newUrl = dlg.newDestUrl();
+                        break;
+
+                    case KIO::R_OVERWRITE_ALL:
+                        m_renamingOpt = KIO::R_OVERWRITE_ALL;
+                    case KIO::R_OVERWRITE:
+                    default:    // Overwrite.
+                        break;
+                }
+                break;
+            }
+        }
+    }
+
+    if (bSkip == true)
+    {
+        QFile::remove(tmpUrl.toLocalFile());
+    }
+    else
+    {
+        if (QFile::exists(newUrl.toLocalFile()))
+        {
+            QFile::remove(newUrl.toLocalFile());
+        }
+        //jmueller: rename from tmpDir to home does not work for me
+        /*
+        int ret;
+#if KDE_IS_VERSION(4,2,85)
+        // KDE 4.3.0
+        // KDE::rename() takes care of QString -> bytestring encoding
+        ret = KDE::rename(tmpUrl.toLocalFile(),
+                          newUrl.toLocalFile());
+#else
+        // KDE 4.2.x or 4.1.x
+        ret = KDE_rename(QFile::encodeName(tmpUrl.toLocalFile()),
+                         newUrl.toLocalFile());
+#endif
+        if (ret != 0)
+        */
+        if (QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()) == false)
+        {
+            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
+        }
+        else
+        {
+            KPImageInfo info(newUrl);
+            info.setName(item.description);
+            info.setTagsPath(item.tags);
+
+            if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
+            {
+                info.setLatitude(item.gpsLat.toDouble());
+                info.setLongitude(item.gpsLon.toDouble());
+            }
+        }
+    }
+
+    downloadNextPhoto();
 }
 
 void GDWindow::slotAddPhotoDone(int err, const QString& msg, const QString& photoId)
@@ -973,7 +1208,10 @@ void GDWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
     m_progressDlg->hide();
-    m_talker->cancel();
+    if(m_gdrive)
+        m_talker->cancel();
+    else
+        m_picsasa_talker->cancel();
 }
 
 void GDWindow::slotUserChangeRequest()

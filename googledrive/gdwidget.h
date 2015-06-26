@@ -67,6 +67,7 @@ public:
     ~GoogleDriveWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString());
+    QString getDestinationPath()    const;
 
     KIPIPlugins::KPImagesList*     imagesList()  const;
     KIPIPlugins::KPProgressWidget* progressBar() const;

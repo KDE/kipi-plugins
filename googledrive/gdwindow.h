@@ -81,6 +81,7 @@ private:
     void writeSettings();
 
     void uploadNextPhoto();
+    void downloadNextPhoto();
 
     void buttonStateChange(bool state);
     void closeEvent(QCloseEvent*);
@@ -107,6 +108,7 @@ private Q_SLOTS:
     void slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList);
     void slotCreateFolderDone(int,const QString& msg, const QString& = QString("-1"));
     void slotAddPhotoDone(int,const QString& msg, const QString&);
+    void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
     void slotTransferCancel();
 
 private:

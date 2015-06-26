@@ -337,6 +337,11 @@ void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
     }
 }
 
+QString GoogleDriveWidget::getDestinationPath() const
+{
+    return m_uploadWidget->selectedImageCollection().uploadPath().path();
+}
+
 KIPIPlugins::KPImagesList* GoogleDriveWidget::imagesList() const
 {
     return m_imgList;
