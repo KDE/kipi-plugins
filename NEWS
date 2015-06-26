@@ -8,4 +8,6 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 001 ==> 321446 - Export to Imgur just hang on 'loading' animation eternally.
 002 ==> 349208 - Cmake can't find external libkvkontakte.
 003 ==> 277898 - Does not compile, presumably because of missing directory in include path.
-004 ==> 
+004 ==> 315580 - digiKam crashed after I changed the DLNA implementation from "HUPnP API" to "miniDLNA".
+005 ==> 316126 - digiKam crashed when choosing dlna export.
+006 ==> 
