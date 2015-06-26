@@ -58,6 +58,19 @@ namespace KIPIGoogleDrivePlugin
 GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName):QWidget(parent)
 {
     m_serviceName = serviceName;
+
+    m_gdrive = false;
+    m_picasaExport = false;
+    m_picasaImport = false;
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_gdrive = true;
+    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+        m_picasaExport = true;
+    else
+        m_picasaImport = true;
+
+    
     setObjectName("Google Drive Widget");
 
     QHBoxLayout* const mainLayout =new QHBoxLayout(this);
@@ -69,7 +82,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Google Drive account."));
     else
         m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Picasaweb account."));
@@ -79,7 +92,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
 
     m_headerLbl = new QLabel(this);
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Google Drive in a browser."));
     else
         m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Picasaweb in a browser."));
@@ -91,7 +104,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
 
     QGroupBox* const accountBox   = new QGroupBox(i18n("Account"),settingsBox);
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         accountBox->setWhatsThis(i18n("This is the Google Drive account that is currently logged in."));
     else
         accountBox->setWhatsThis(i18n("This is the Picasaweb account that is currently logged in."));
@@ -101,7 +114,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
     m_userNameDisplayLbl      = new QLabel(accountBox);
 
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
         m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
                                                              i18n("Change Google Drive account for transfer")), accountBox);
     else
@@ -119,11 +132,11 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
 
     QGroupBox* const albBox            = new QGroupBox(i18n("Album"),settingsBox);
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         albBox->setWhatsThis(i18n("This is the Google Drive folder to which selected photos will be uploaded."));
     }
-    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if(m_picasaExport)
     {
         albBox->setWhatsThis(i18n("This is the Picasaweb folder to which selected photos will be uploaded."));
     }
@@ -138,7 +151,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     m_albumsCoB          = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
                                                  i18n("Create new Google Drive folder")),accountBox);
@@ -215,7 +228,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,   2, 2, 1, 1);
     
-    if((QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0) || (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0))
+    if(m_picasaExport || m_picasaImport)
     {
         QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         QLabel* const tagsLbl     = new QLabel(i18n("Tag path behavior :"), optionsBox);
@@ -275,7 +288,7 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
 
     //connect(m_imgList,SIGNAL(signalImageListChanged()),
             //this,SLOT(slotImageListChanged()));
-    if (QString::compare(m_serviceName, QString("picasawebimport"), Qt::CaseInsensitive) == 0)
+    if (m_picasaImport)
     {
         m_imgList->hide();
         m_newAlbumBtn->hide();
@@ -295,7 +308,7 @@ GoogleDriveWidget::~GoogleDriveWidget()
 void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
 {
 
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(m_gdrive)
     {
         QString web("http://www.drive.google.com");
 

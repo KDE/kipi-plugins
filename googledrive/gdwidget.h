@@ -81,6 +81,10 @@ private Q_SLOTS:
     //void slotImageListChanged();
 
 private:
+  
+    bool                       m_picasaExport;
+    bool                           m_picasaImport;
+    bool                           m_gdrive;
 
     KIPIPlugins::KPImagesList*     m_imgList;
     KIPI::UploadWidget*            m_uploadWidget;
