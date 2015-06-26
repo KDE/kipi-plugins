@@ -82,7 +82,7 @@ private Q_SLOTS:
 
 private:
   
-    bool                       m_picasaExport;
+    bool                           m_picasaExport;
     bool                           m_picasaImport;
     bool                           m_gdrive;
 
