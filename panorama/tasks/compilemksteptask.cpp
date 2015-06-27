@@ -50,7 +50,7 @@ void CompileMKStepTask::run(ThreadWeaver::JobPointer, ThreadWeaver::Thread*)
 {
     QFileInfo fi(mkUrl.toLocalFile());
 
-    QString mkFile = fi.completeBaseName() + (id >= 10 ? (id >= 100 ? QStringLiteral("0") : QStringLiteral("00")) : QStringLiteral("000")) + QString::number(id) + QStringLiteral(".tif");
+    QString mkFile = fi.completeBaseName() + QString::number(id).rightJustified(4, QChar::fromLatin1('0')) + QStringLiteral(".tif");
     QStringList args;
     args << QStringLiteral("-f");
     args << mkUrl.toLocalFile();
