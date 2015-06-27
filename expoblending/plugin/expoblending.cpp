@@ -7,7 +7,7 @@
  * Description : stand alone Expo Blending.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,15 +22,18 @@
  *
  * ============================================================ */
 
+// Qt includes
+
+#include <QApplication>
+#include <QCommandLineParser>
+#include <QUrl>
+#include <QIcon>
+
 // KDE includes
 
 #include <kmessagebox.h>
-#include <QApplication>
-#include <kcmdlineargs.h>
 #include <klocale.h>
-#include <QUrl>
-#include <QIcon>
-#include <kconfig.h>
+#include <KConfig>
 #include <kglobal.h>
 
 // Local includes
@@ -45,28 +48,29 @@ using namespace KIPIPlugins;
 
 int main(int argc, char* argv[])
 {
-    ExpoBlendingAboutData* aboutData = new ExpoBlendingAboutData;
-    aboutData->setAppName("expoblending");
-    aboutData->setCatalogName("kipiplugin_expoblending");
+    KLocalizedString::setApplicationDomain("kipiplugin_expoblending");
+    QApplication app(argc, argv);
 
-    KCmdLineArgs::init(argc, argv, aboutData);
+    ExpoBlendingAboutData aboutData;
 
-    KCmdLineOptions options;
-    options.add("+[file(s)]", ki18n("File(s) to open"));
-    KCmdLineArgs::addCmdLineOptions( options );
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addPositionalArgument("files", i18n("File(s) to open"), "+[file(s)]");
+    aboutData.setupCommandLine(&parser);
+    aboutData.setProgramLogo(QIcon::fromTheme("kipi-expoblending"));
+
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     KPMetadata::initializeExiv2();
 
-    KApplication app;
-    aboutData->setProgramLogo(QIcon::fromTheme("kipi-expoblending"));
+    QList<QUrl> urlList;
+    const QStringList args = parser.positionalArguments();
 
-    QUrl::List urlList;
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    for(int i = 0; i < args->count(); ++i)
+    for (auto& arg: args)
     {
-        urlList.append(args->url(i));
+        urlList.append(QUrl(arg));
     }
-    args->clear();
 
     Manager mngr;
 

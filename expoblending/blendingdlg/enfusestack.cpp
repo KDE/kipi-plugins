@@ -7,6 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "enfusestack.moc"
+#include "enfusestack.h"
 
 // Qt includes
 
@@ -35,7 +36,6 @@
 
 #include <QMenu>
 #include <QAction>
-#include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kio/previewjob.h>
@@ -90,7 +90,7 @@ EnfuseSettings EnfuseStackItem::enfuseSettings() const
     return d->settings;
 }
 
-QUrl EnfuseStackItem::url() const
+KUrl EnfuseStackItem::url() const
 {
     return d->settings.previewUrl;
 }
@@ -148,7 +148,8 @@ public:
     EnfuseStackListPriv()
     {
         outputFormat = KPSaveSettingsWidget::OUTPUT_PNG;
-        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+//         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix   = KIconLoader::global()->loadPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;
         processItem   = 0;
@@ -266,20 +267,20 @@ void EnfuseStackList::clearSelected()
         delete item;
 }
 
-void EnfuseStackList::setOnItem(const QUrl& url, bool on)
+void EnfuseStackList::setOnItem(const KUrl& url, bool on)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)
         item->setOn(on);
 }
 
-void EnfuseStackList::removeItem(const QUrl& url)
+void EnfuseStackList::removeItem(const KUrl& url)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     delete item;
 }
 
-void EnfuseStackList::addItem(const QUrl& url, const EnfuseSettings& settings)
+void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
 {
     if (!url.isValid())
         return;
@@ -301,7 +302,7 @@ void EnfuseStackList::addItem(const QUrl& url, const EnfuseSettings& settings)
     }
 }
 
-void EnfuseStackList::setThumbnail(const QUrl& url, const QImage& img)
+void EnfuseStackList::setThumbnail(const KUrl& url, const QImage& img)
 {
     if (img.isNull()) return;
 
@@ -327,7 +328,7 @@ void EnfuseStackList::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
-EnfuseStackItem* EnfuseStackList::findItemByUrl(const QUrl& url)
+EnfuseStackItem* EnfuseStackList::findItemByUrl(const KUrl& url)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -341,7 +342,7 @@ EnfuseStackItem* EnfuseStackList::findItemByUrl(const QUrl& url)
     return 0;
 }
 
-void EnfuseStackList::processingItem(const QUrl& url, bool run)
+void EnfuseStackList::processingItem(const KUrl& url, bool run)
 {
     d->processItem = findItemByUrl(url);
     if (d->processItem)
@@ -360,7 +361,7 @@ void EnfuseStackList::processingItem(const QUrl& url, bool run)
     }
 }
 
-void EnfuseStackList::processedItem(const QUrl& url, bool success)
+void EnfuseStackList::processedItem(const KUrl& url, bool success)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)

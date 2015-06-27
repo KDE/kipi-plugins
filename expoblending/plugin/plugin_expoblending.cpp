@@ -7,7 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,15 +22,17 @@
  *
  * ============================================================ */
 
-#include "plugin_expoblending.moc"
+#include "plugin_expoblending.h"
+
+// Qt includes
+
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <QApplication>
-#include <kconfig.h>
-#include <kdebug.h>
+#include <KConfig>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klibloader.h>
@@ -45,6 +47,7 @@
 
 // Local includes
 
+#include <kipiplugins_debug.h>
 #include "manager.h"
 #include "aboutdata.h"
 
@@ -52,17 +55,17 @@ namespace KIPIExpoBlendingPlugin
 {
 
 K_PLUGIN_FACTORY( ExpoBlendingFactory, registerPlugin<Plugin_ExpoBlending>(); )
-K_EXPORT_PLUGIN ( ExpoBlendingFactory("kipiplugin_expoblending") )
+// K_EXPORT_PLUGIN ( ExpoBlendingFactory("kipiplugin_expoblending") )
 
 Plugin_ExpoBlending::Plugin_ExpoBlending(QObject* const parent, const QVariantList&)
-    : Plugin(ExpoBlendingFactory::componentData(), parent, "ExpoBlending")
+    : Plugin(/*ExpoBlendingFactory::componentData(),*/ parent, "ExpoBlending")
 {
     m_interface    = 0;
     m_action       = 0;
     m_parentWidget = 0;
     m_manager      = 0;
 
-    kDebug(AREA_CODE_LOADING) << "Plugin_ExpoBlending plugin loaded";
+//     kDebug(AREA_CODE_LOADING) << "Plugin_ExpoBlending plugin loaded";
 
     setUiBaseName("kipiplugin_expoblendingui.rc");
     setupXML();
@@ -126,3 +129,5 @@ void Plugin_ExpoBlending::slotActivate()
 }
 
 } // namespace KIPIExpoBlendingPlugin
+
+#include "plugin_expoblending.moc"

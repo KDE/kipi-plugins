@@ -7,6 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "bracketstack.moc"
+#include "bracketstack.h"
 
 // Qt includes
 
@@ -31,7 +32,6 @@
 // KDE includes
 
 #include <kdeversion.h>
-#include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kio/previewjob.h>
@@ -61,13 +61,13 @@ BracketStackItem::~BracketStackItem()
 {
 }
 
-void BracketStackItem::setUrl(const QUrl& url)
+void BracketStackItem::setUrl(const KUrl& url)
 {
     m_url = url;
     setText(1, m_url.fileName());
 }
 
-QUrl BracketStackItem::url() const
+KUrl BracketStackItem::url() const
 {
     return m_url;
 }
@@ -145,14 +145,14 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
-                this, SLOT(slotThumbnail(QUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(QUrl,QImage)),
-            this, SLOT(slotRawThumb(QUrl,QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
+            this, SLOT(slotRawThumb(KUrl,QImage)));
 
     sortItems(2, Qt::DescendingOrder);
 }
@@ -162,9 +162,9 @@ BracketStackList::~BracketStackList()
     delete d;
 }
 
-QUrl::List BracketStackList::urls()
+KUrl::List BracketStackList::urls()
 {
-    QUrl::List list;
+    KUrl::List list;
 
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -179,7 +179,7 @@ QUrl::List BracketStackList::urls()
     return list;
 }
 
-BracketStackItem* BracketStackList::findItem(const QUrl& url)
+BracketStackItem* BracketStackList::findItem(const KUrl& url)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -194,16 +194,16 @@ BracketStackItem* BracketStackList::findItem(const QUrl& url)
     return 0;
 }
 
-void BracketStackList::addItems(const QUrl::List& list)
+void BracketStackList::addItems(const KUrl::List& list)
 {
     if (list.count() == 0)
         return;
 
-    QUrl::List urls;
+    KUrl::List urls;
 
-    for ( QUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
+    for ( KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
     {
-        QUrl imageUrl = *it;
+        KUrl imageUrl = *it;
 
         // Check if the new item already exist in the list.
         bool found = false;
@@ -236,7 +236,7 @@ void BracketStackList::addItems(const QUrl::List& list)
     {
 #if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
-        foreach (const QUrl& url, urls)
+        foreach (const KUrl& url, urls)
         {
             if (url.isValid())
                 items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
@@ -268,12 +268,12 @@ void BracketStackList::slotKDEPreviewFailed(const KFileItem& item)
     d->loadRawThumb->getRawThumb(item.url());
 }
 
-void BracketStackList::slotRawThumb(const QUrl& url, const QImage& img)
+void BracketStackList::slotRawThumb(const KUrl& url, const QImage& img)
 {
     slotThumbnail(url, QPixmap::fromImage(img));
 }
 
-void BracketStackList::slotThumbnail(const QUrl& url, const QPixmap& pix)
+void BracketStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)

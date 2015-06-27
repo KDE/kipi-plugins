@@ -7,6 +7,7 @@
  * Description : a plugin to blend bracketed images.
  *
  * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "itemspage.moc"
+#include "itemspage.h"
 
 // Qt includes
 
@@ -34,7 +35,6 @@
 #include <kstandarddirs.h>
 #include <kdialog.h>
 #include <kvbox.h>
-#include <kdebug.h>
 #include <klocale.h>
 #include <QApplication>
 
@@ -44,6 +44,7 @@
 
 // Local includes
 
+#include <kipiplugins_debug.h>
 #include "kpimageslist.h"
 #include "manager.h"
 #include "actionthread.h"
@@ -96,8 +97,8 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
     connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->list, SIGNAL(signalAddItems(QUrl::List)),
-            this, SLOT(slotAddItems(QUrl::List)));
+    connect(d->list, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -115,7 +116,7 @@ void ItemsPage::slotSetupList()
     slotAddItems(d->mngr->itemsList());
 }
 
-void ItemsPage::slotAddItems(const QUrl::List& urls)
+void ItemsPage::slotAddItems(const KUrl::List& urls)
 {
     if (!urls.empty())
     {
@@ -127,14 +128,14 @@ void ItemsPage::slotAddItems(const QUrl::List& urls)
     slotImageListChanged();
 }
 
-QUrl::List ItemsPage::itemUrls() const
+KUrl::List ItemsPage::itemUrls() const
 {
     return d->list->imageUrls();
 }
 
-void ItemsPage::setIdentity(const QUrl& url, const QString& identity)
+void ItemsPage::setIdentity(const KUrl& url, const QString& identity)
 {
-    KPImagesListViewItem* item = d->list->listView()->findItem(url);
+    KPImagesListViewItem* item = d->list->listView()->findItem(QUrl::fromLocalFile(url.toLocalFile()));
     if (item)
         item->setText(KPImagesListView::User1, identity);
 }

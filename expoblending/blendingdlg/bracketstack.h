@@ -54,8 +54,8 @@ public:
     explicit BracketStackItem(QTreeWidget* const parent);
     virtual ~BracketStackItem();
 
-    void setUrl(const QUrl& url);
-    QUrl url() const;
+    void setUrl(const KUrl& url);
+    KUrl url() const;
 
     void setOn(bool b);
     bool isOn() const;
@@ -69,7 +69,7 @@ private:
 
 private:
 
-    QUrl m_url;
+    KUrl m_url;
 };
 
 // ---------------------------------------------------------------------
@@ -83,21 +83,21 @@ public:
     BracketStackList(Interface* iface, QWidget* parent);
     virtual ~BracketStackList();
 
-    void addItems(const QUrl::List& list);
+    void addItems(const KUrl::List& list);
 
-    QUrl::List urls();
-    BracketStackItem* findItem(const QUrl& url);
+    KUrl::List urls();
+    BracketStackItem* findItem(const KUrl& url);
 
 Q_SIGNALS:
 
-    void signalAddItems(const QUrl::List&);
+    void signalAddItems(const KUrl::List&);
 
 private Q_SLOTS:
 
     void slotKDEPreview(const KFileItem&, const QPixmap&);
     void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const QUrl&, const QImage&);
-    void slotThumbnail(const QUrl& url, const QPixmap& pix);
+    void slotRawThumb(const KUrl&, const QImage&);
+    void slotThumbnail(const KUrl& url, const QPixmap& pix);
 
 private:
 

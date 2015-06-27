@@ -7,6 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "expoblendingdlg.moc"
+#include "expoblendingdlg.h"
 
 // C ANSI includes
 
@@ -51,10 +52,9 @@ extern "C"
 
 #include <klineedit.h>
 #include <QApplication>
-#include <kconfig.h>
+#include <KConfig>
 #include <kvbox.h>
 #include <kcursor.h>
-#include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <QMenu>
@@ -72,11 +72,12 @@ extern "C"
 
 // libKdcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <rexpanderbox.h>
 
 // Local includes
 
+#include <kipiplugins_debug.h>
 #include "aboutdata.h"
 #include "actionthread.h"
 #include "bracketstack.h"
@@ -228,14 +229,14 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->bracketStack, SIGNAL(signalAddItems(QUrl::List)),
-            this, SLOT(slotAddItems(QUrl::List)));
+    connect(d->bracketStack, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->previewWidget, SIGNAL(signalButtonClicked()),
             this, SLOT(slotPreviewButtonClicked()));
 
-    connect(d->enfuseStack, SIGNAL(signalItemClicked(QUrl)),
-            this, SLOT(slotLoadProcessed(QUrl)));
+    connect(d->enfuseStack, SIGNAL(signalItemClicked(KUrl)),
+            this, SLOT(slotLoadProcessed(KUrl)));
 
     connect(d->templateFileName, SIGNAL(textChanged(QString)),
             this, SLOT(slotFileFormatChanged()));
@@ -286,13 +287,13 @@ void ExpoBlendingDlg::slotPreviewButtonClicked()
     dlg.exec();
 }
 
-void ExpoBlendingDlg::loadItems(const QUrl::List& urls)
+void ExpoBlendingDlg::loadItems(const KUrl::List& urls)
 {
     d->bracketStack->clear();
     d->bracketStack->addItems(urls);
 }
 
-void ExpoBlendingDlg::slotAddItems(const QUrl::List& urls)
+void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
 {
     if (!urls.empty())
     {
@@ -302,14 +303,14 @@ void ExpoBlendingDlg::slotAddItems(const QUrl::List& urls)
     }
 }
 
-void ExpoBlendingDlg::slotLoadProcessed(const QUrl& url)
+void ExpoBlendingDlg::slotLoadProcessed(const KUrl& url)
 {
     d->mngr->thread()->loadProcessed(url);
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
 
-void ExpoBlendingDlg::setIdentity(const QUrl& url, const QString& identity)
+void ExpoBlendingDlg::setIdentity(const KUrl& url, const QString& identity)
 {
     BracketStackItem* item = d->bracketStack->findItem(url);
     if (item)
@@ -379,13 +380,13 @@ void ExpoBlendingDlg::saveSettings()
 
 void ExpoBlendingDlg::slotPreview()
 {
-    QUrl::List selectedUrl = d->bracketStack->urls();
+    KUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
-    QUrl::List preprocessedList;
+    KUrl::List preprocessedList;
 
-    foreach(const QUrl& url, selectedUrl)
+    foreach(const KUrl& url, selectedUrl)
     {
         ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
         preprocessedList.append(preprocessedUrls.previewUrl);
@@ -405,13 +406,13 @@ void ExpoBlendingDlg::slotProcess()
     if (list.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
-    QUrl::List preprocessedList;
+    KUrl::List preprocessedList;
 
     foreach(const EnfuseSettings& settings, list)
     {
         preprocessedList.clear();
         
-        foreach(const QUrl& url, settings.inputUrls)
+        foreach(const KUrl& url, settings.inputUrls)
         {
             ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
             preprocessedList.append(preprocessedUrls.preprocessedUrl);
@@ -423,9 +424,9 @@ void ExpoBlendingDlg::slotProcess()
     }
 }
 
-void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
+void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
 {
-    QUrl newUrl = temp;
+    KUrl newUrl = temp;
     newUrl.setFileName(settings.targetFileName);
     QFileInfo fi(newUrl.toLocalFile());
 
@@ -433,12 +434,11 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
     {
         if (fi.exists())
         {
-            KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
-                                                "exists. Are you sure you want "
-                                                "to overwrite it?",
-                                                newUrl.fileName()),
-                                    temp, newUrl,
-                                    KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
+            KIO::RenameDialog dlg(this,
+                                  i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", newUrl.fileName()),
+                                  temp,
+                                  newUrl,
+                                  KIO::RenameDialog_Mode(KIO::M_OVERWRITE | KIO::M_SKIP));
 
             switch (dlg.exec())
             {

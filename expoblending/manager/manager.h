@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QObject>
+#include <QUrl>
 
 // KDE includes
 

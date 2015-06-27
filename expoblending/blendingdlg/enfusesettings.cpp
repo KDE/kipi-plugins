@@ -7,6 +7,7 @@
  * Description : a plugin to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,13 +21,17 @@
  *
  * ============================================================ */
 
-#include "enfusesettings.moc"
+#include "enfusesettings.h"
 
 // Qt includes
 
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QLabel>
+#include <QStyle>
+#include <QApplication>
+
+#include <QDoubleSpinBox>
 
 // KDE includes
 
@@ -91,9 +96,8 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
     d->autoLevelsCB->setWhatsThis( i18n("Set automatic level selection (maximized) for pyramid blending."));
 
     d->levelsLabel  = new QLabel(i18nc("enfuse settings", "Levels:"));
-    d->levelsInput  = new RIntNumInput();
+    d->levelsInput  = new RIntNumInput(this);
     d->levelsInput->setRange(1, 29, 1);
-    d->levelsInput->setSliderEnabled(true);
     d->levelsInput->setDefaultValue(20);
     d->levelsInput->setWhatsThis(i18n("Set the number of levels for pyramid blending. "
                                       "A low number trades off quality of results for faster "
@@ -106,30 +110,29 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
                                      "improves sharpness at the expense of increased noise."));
 
     d->exposureLabel = new QLabel(i18nc("enfuse settings", "Exposure:"));
-    d->exposureInput = new RDoubleNumInput();
-    d->exposureInput->setDecimals(2);
-    d->exposureInput->input()->setRange(0.0, 1.0, 0.01, true);
+    d->exposureInput = new RDoubleNumInput(this);
+    d->exposureInput->setRange(0.0, 1.0, 0.01);
     d->exposureInput->setDefaultValue(1.0);
     d->exposureInput->setWhatsThis( i18n("Set the exposure contribution for the blending process. "
                                          "Higher values will favor well-exposed pixels."));
 
     d->saturationLabel = new QLabel(i18nc("enfuse settings", "Saturation:"));
-    d->saturationInput = new RDoubleNumInput();
+    d->saturationInput = new RDoubleNumInput(this);
     d->saturationInput->setDecimals(2);
-    d->saturationInput->input()->setRange(0.0, 1.0, 0.01, true);
+    d->saturationInput->setRange(0.0, 1.0, 0.01);
     d->saturationInput->setDefaultValue(0.2);
     d->saturationInput->setWhatsThis( i18n("Increasing this value makes pixels with high "
                                            "saturation contribute more to the final output."));
 
     d->contrastLabel = new QLabel(i18nc("enfuse settings", "Contrast:"));
-    d->contrastInput = new RDoubleNumInput();
+    d->contrastInput = new RDoubleNumInput(this);
     d->contrastInput->setDecimals(2);
-    d->contrastInput->input()->setRange(0.0, 1.0, 0.01, true);
+    d->contrastInput->setRange(0.0, 1.0, 0.01);
     d->contrastInput->setDefaultValue(0.0);
     d->contrastInput->setWhatsThis(i18n("Sets the relative weight of high-contrast pixels. "
                                         "Increasing this weight makes pixels with neighboring differently colored "
                                         "pixels contribute more to the final output. Particularly useful for focus stacks."));
-
+    
     d->ciecam02CB = new QCheckBox(i18n("Use Color Appearance Modelling"), this);
     d->ciecam02CB->setWhatsThis(i18n("Use Color Appearance Modelling (CIECAM02) to render detailed colors. "
                                      "Your input files should have embedded ICC profiles. If no ICC profile is present, "
