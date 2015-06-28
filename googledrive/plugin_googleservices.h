@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_GOOGLEDRIVE_H
-#define PLUGIN_GOOGLEDRIVE_H
+#ifndef PLUGIN_GOOGLESERVICES_H
+#define PLUGIN_GOOGLESERVICES_H
 
 // Qt includes
 
@@ -33,26 +33,26 @@
 
 class KAction;
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
-    class GDWindow;
+    class GSWindow;
 }
 
 class KJob;
 
 using namespace KIPI;
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-class Plugin_GoogleDrive:public Plugin
+class Plugin_GoogleServices:public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_GoogleDrive(QObject* const parent, const QVariantList& args);
-    ~Plugin_GoogleDrive();
+    Plugin_GoogleServices(QObject* const parent, const QVariantList& args);
+    ~Plugin_GoogleServices();
 
     void setup(QWidget* const);
     //virtual KJob* exportFiles(const QString& album);
@@ -73,11 +73,11 @@ private:
     KAction*  m_actionPicasaExport;
     KAction*  m_actionPicasaImport;
     
-    GDWindow* m_dlgGDriveExport;
-    GDWindow* m_dlgPicasaExport;
-    GDWindow* m_dlgPicasaImport;
+    GSWindow* m_dlgGDriveExport;
+    GSWindow* m_dlgPicasaExport;
+    GSWindow* m_dlgPicasaImport;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
-#endif /* PLUGIN_GOOGLEDRIVE_H */
+#endif /* PLUGIN_GOOGLESERVICES_H */

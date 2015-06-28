@@ -38,10 +38,10 @@
 
 // Local includes
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-class GDFolder;
+class GSFolder;
 
 class NewAlbumDlg : public KDialog
 {
@@ -52,7 +52,7 @@ public:
     NewAlbumDlg(QWidget* const parent, const QString& serviceName);
     ~NewAlbumDlg();
 
-    void getAlbumProperties(GDFolder& album);
+    void getAlbumProperties(GSFolder& album);
 
 private:
 
@@ -67,6 +67,6 @@ private:
     QRadioButton*  m_protectedRBtn;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif // NEWALBUMDLG_H

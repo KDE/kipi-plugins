@@ -72,10 +72,10 @@
 #include "kpmetadata.h"
 #include "mpform_picasa.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-static bool picasaLessThan(GDFolder& p1, GDFolder& p2)
+static bool picasaLessThan(GSFolder& p1, GSFolder& p2)
 {
     return (p1.title.toLower() < p2.title.toLower());
 }
@@ -170,7 +170,7 @@ void PicasawebTalker::listPhotos(const QString& albumId,
     emit signalBusy( true );
 }
 
-void PicasawebTalker::createAlbum(const GDFolder& album)
+void PicasawebTalker::createAlbum(const GSFolder& album)
 {
     if (m_job)
     {
@@ -244,7 +244,7 @@ void PicasawebTalker::createAlbum(const GDFolder& album)
     emit signalBusy(true);
 }
 
-bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality)
+bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality)
 {
     if (m_job)
     {
@@ -356,7 +356,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GDPhoto& info, const QS
     return true;
 }
 
-bool PicasawebTalker::updatePhoto(const QString& photoPath, GDPhoto& info)
+bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info)
 {
     if (m_job)
     {
@@ -598,7 +598,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
     if ( !doc.setContent( data, false, &err, &line, &columns ) )
     {
         kDebug()<<"error is "<<err<< " at line "<<line<<" at columns "<<columns;
-        emit signalListAlbumsDone(0, i18n("Failed to fetch photo-set list"), QList<GDFolder>());
+        emit signalListAlbumsDone(0, i18n("Failed to fetch photo-set list"), QList<GSFolder>());
         return;
     }
 
@@ -606,7 +606,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
     QDomNode node = docElem.firstChild();
     QDomElement e;
 
-    QList<GDFolder> albumList;
+    QList<GSFolder> albumList;
 
     while(!node.isNull())
     {
@@ -625,7 +625,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
         {
             e = node.toElement();
             QDomNode details=e.firstChild();
-            GDFolder fps;
+            GSFolder fps;
             QDomNode detailsNode = details;
 
             while(!detailsNode.isNull())
@@ -664,21 +664,21 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
     QDomDocument doc( "feed" );
     if ( !doc.setContent( data ) )
     {
-        emit signalListPhotosDone(0, i18n("Failed to fetch photo-set list"), QList<GDPhoto>());
+        emit signalListPhotosDone(0, i18n("Failed to fetch photo-set list"), QList<GSPhoto>());
         return;
     }
 
     QDomElement docElem = doc.documentElement();
     QDomNode node       = docElem.firstChild();
 
-    QList<GDPhoto> photoList;
+    QList<GSPhoto> photoList;
 
     while(!node.isNull())
     {
         if (node.isElement() && node.nodeName() == "entry")
         {
             QDomNode details     = node.firstChild();
-            GDPhoto fps;
+            GSPhoto fps;
             QDomNode detailsNode = details;
 
             while(!detailsNode.isNull())
@@ -860,4 +860,4 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
     emit signalAddPhotoDone(1, "",photoId);
 }
 
-} // KIPIGoogleDrivePlugin
+} // KIPIGoogleServicesPlugin

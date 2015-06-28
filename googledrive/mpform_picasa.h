@@ -29,7 +29,7 @@
 #include <QByteArray>
 #include <QString>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 class MPForm_Picasa
@@ -56,6 +56,6 @@ private:
     QByteArray  m_boundary;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif /* MPFORM_PICASA_H */

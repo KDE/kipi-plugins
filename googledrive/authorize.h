@@ -34,7 +34,7 @@
 
 #include <kio/job.h>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 class Authorize : public QObject
@@ -111,6 +111,6 @@ protected:
     int          continuePos;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif /* AUTHORIZE_H */

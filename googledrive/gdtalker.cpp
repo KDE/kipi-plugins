@@ -64,14 +64,14 @@
 
 #include "kpversion.h"
 #include "kpmetadata.h"
-#include "gdwindow.h"
-#include "gditem.h"
+#include "gswindow.h"
+#include "gsitem.h"
 #include "mpform_gdrive.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
   
-static bool gdriveLessThan(GDFolder& p1, GDFolder& p2)
+static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
 {
     return (p1.title.toLower() < p2.title.toLower());
 }  
@@ -178,7 +178,7 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     emit signalBusy(true);
 }
 
-bool GDTalker::addPhoto(const QString& imgPath,const GDPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality)
+bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality)
 {
     if(m_job)
     {
@@ -338,7 +338,7 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     if(!ok)
     {
         emit signalBusy(false);
-        emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GDFolder>());
+        emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
         return;
     }
 
@@ -346,8 +346,8 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     QList<QPair<QString,QString> > list;
     list.append(qMakePair(m_rootid,m_rootfoldername));
     
-    QList<GDFolder> albumList;
-    GDFolder fps;
+    QList<GSFolder> albumList;
+    GSFolder fps;
     fps.id = m_rootid;
     fps.title = m_rootfoldername;
     albumList.append(fps);
@@ -462,4 +462,4 @@ void GDTalker::cancel()
     emit signalBusy(false);
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef GDWINDOW_H
-#define GDWINDOW_H
+#ifndef GSWINDOW_H
+#define GSWINDOW_H
 
 // Qt includes
 
@@ -55,23 +55,23 @@ namespace KIPIPlugins
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
-class GoogleDriveWidget;
+class GoogleServicesWidget;
 class GDTalker;
-class GDPhoto;
-class GDFolder;
+class GSPhoto;
+class GSFolder;
 class NewAlbumDlg;
 class PicasawebTalker;
 
-class GDWindow : public KPToolDialog
+class GSWindow : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    GDWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName);
-    ~GDWindow();
+    GSWindow(const QString& tmpFolder, QWidget* const parent, const QString& serviceName);
+    ~GSWindow();
 
     void reactivate();
 
@@ -103,9 +103,9 @@ private Q_SLOTS:
     void slotAccessTokenObtained();
     void slotRefreshTokenObtained(const QString& msg);
     void slotSetUserName(const QString& msg);
-    void slotListAlbumsDone(int,const QString&,const QList <GDFolder>&);
-    void slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList);
-    void slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList);
+    void slotListAlbumsDone(int,const QString&,const QList <GSFolder>&);
+    void slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList);
+    void slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList);
     void slotCreateFolderDone(int,const QString& msg, const QString& = QString("-1"));
     void slotAddPhotoDone(int,const QString& msg, const QString&);
     void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
@@ -124,7 +124,7 @@ private:
     QString                       m_tmp;
     QString                       refresh_token;
 
-    GoogleDriveWidget*            m_widget;
+    GoogleServicesWidget*         m_widget;
     NewAlbumDlg*                  m_albumDlg;
     NewAlbumDlg*                  m_picasa_albumdlg;
     
@@ -135,9 +135,9 @@ private:
 
     QString                       m_currentAlbumId;
 
-    QList< QPair<KUrl, GDPhoto> > m_transferQueue;
+    QList< QPair<KUrl, GSPhoto> > m_transferQueue;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
-#endif /* GDWINDOW_H */
+#endif /* GSWINDOW_H */

@@ -37,7 +37,7 @@
 #include <ksqueezedtextlabel.h>
 #include <kpixmapsequence.h>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 class ReplaceDialog::Private
@@ -289,4 +289,4 @@ void ReplaceDialog::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

@@ -40,9 +40,9 @@
 
 // local includes
 
-#include <gditem.h>
+#include <gsitem.h>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
@@ -139,7 +139,7 @@ NewAlbumDlg::~NewAlbumDlg()
 {
 }
 
-void NewAlbumDlg::getAlbumProperties(GDFolder& album)
+void NewAlbumDlg::getAlbumProperties(GSFolder& album)
 {
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
@@ -161,4 +161,4 @@ void NewAlbumDlg::getAlbumProperties(GDFolder& album)
     album.timestamp     = QString("%1").arg(timestamp * 1000);
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

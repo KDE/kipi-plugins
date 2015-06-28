@@ -36,10 +36,10 @@
 
 //local includes
 
-#include "gditem.h"
+#include "gsitem.h"
 #include "authorize.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 class GDTalker : public Authorize
@@ -53,7 +53,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalListAlbumsDone(int, const QString&, const QList <GDFolder>&);
+    void signalListAlbumsDone(int, const QString&, const QList <GSFolder>&);
     void signalCreateFolderDone(int,const QString& msg);
     void signalAddPhotoDone(int,const QString& msg, const QString&);
     void signalSetUserName(const QString& msg);
@@ -67,7 +67,7 @@ public:
     void getUserName();
     void listFolders();
     void createFolder(const QString& title,const QString& id);
-    bool addPhoto(const QString& imgPath,const GDPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality);
+    bool addPhoto(const QString& imgPath,const GSPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality);
     void cancel();
 
 private:
@@ -95,6 +95,6 @@ private:
     State        m_state;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif /* GD_TALKER_H */

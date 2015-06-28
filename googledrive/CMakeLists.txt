@@ -13,9 +13,9 @@ set(kipiplugin_googledrive_PART_SRCS
     replacedialog.cpp
     mpform_gdrive.cpp
     mpform_picasa.cpp
-    plugin_googledrive.cpp
-    gdwidget.cpp
-    gdwindow.cpp
+    plugin_googleservices.cpp
+    gswidget.cpp
+    gswindow.cpp
     newalbumdlg.cpp
     gdtalker.cpp
     picasawebtalker.cpp

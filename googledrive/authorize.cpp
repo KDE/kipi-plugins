@@ -65,7 +65,7 @@
 
 #include "mpform_gdrive.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 Authorize::Authorize(QWidget* const parent, const QString & scope)
@@ -376,4 +376,4 @@ int Authorize::getTokenEnd(const QString& object, int beginPos)
     return endDividerPos + 1;
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

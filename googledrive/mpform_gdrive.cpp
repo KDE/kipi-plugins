@@ -41,7 +41,7 @@
 
 #include <qjson/serializer.h>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_GDrive::MPForm_GDrive()
@@ -164,4 +164,4 @@ QString MPForm_GDrive::getFileSize() const
     return m_file_size;
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

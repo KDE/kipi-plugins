@@ -41,7 +41,7 @@
 #include <krandom.h>
 #include <kurl.h>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_Picasa::MPForm_Picasa()
@@ -167,4 +167,4 @@ QByteArray MPForm_Picasa::formData() const
     return m_buffer;
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

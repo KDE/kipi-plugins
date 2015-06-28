@@ -20,22 +20,22 @@
  *
  * ============================================================ */
 
-#ifndef GDITEM_H
-#define GDITEM_H
+#ifndef GSITEM_H
+#define GSITEM_H
 
 // Qt includes
 
 #include <QString>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-class GDPhoto
+class GSPhoto
 {
 
 public:
 
-    GDPhoto()
+    GSPhoto()
     {
         id         = QString("-1");
         canComment = true;
@@ -59,11 +59,11 @@ public:
     KUrl        editUrl;
 };
 
-class GDFolder
+class GSFolder
 {
 
 public:
-    GDFolder()
+    GSFolder()
     {
         id         = QString("-1");
         canComment = true;
@@ -79,6 +79,6 @@ public:
     QStringList tags;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
-#endif /* GDITEM_H */
+#endif /* GSITEM_H */

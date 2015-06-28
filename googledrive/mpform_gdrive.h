@@ -28,7 +28,7 @@
 #include <QByteArray>
 #include <QString>
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 class MPForm_GDrive
@@ -56,6 +56,6 @@ private:
     QString m_file_size;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif /* MPFORM_GDRIVE_H */

@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef GDWIDGET_H
-#define GDWIDGET_H
+#ifndef GSWIDGET_H
+#define GSWIDGET_H
 
 //Qt includes
 
@@ -47,7 +47,7 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
   
 enum PicasawebTagsBehaviour
@@ -57,14 +57,14 @@ enum PicasawebTagsBehaviour
     PwTagCombined
 };
 
-class GoogleDriveWidget : public QWidget
+class GoogleServicesWidget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    GoogleDriveWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName);
-    ~GoogleDriveWidget();
+    GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName);
+    ~GoogleServicesWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString());
     QString getDestinationPath()    const;
@@ -107,9 +107,9 @@ private:
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
-    friend class GDWindow;
+    friend class GSWindow;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
-#endif /* GDWIDGET_H */
+#endif /* GSWIDGET_H */

@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "gdwindow.moc"
+#include "gswindow.moc"
 
 // Qt includes
 
@@ -70,16 +70,16 @@
 #include "kpversion.h"
 #include "kpprogresswidget.h"
 #include "gdtalker.h"
-#include "gditem.h"
+#include "gsitem.h"
 #include "newalbumdlg.h"
-#include "gdwidget.h"
+#include "gswidget.h"
 #include "picasawebtalker.h"
 #include "replacedialog.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
+GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
     : KPToolDialog(0)
 {
     m_serviceName = serviceName;
@@ -101,7 +101,7 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_imagesTotal = 0;
     m_renamingOpt = 0;
 
-    m_widget      = new GoogleDriveWidget(this, iface(), m_serviceName);
+    m_widget      = new GoogleServicesWidget(this, iface(), m_serviceName);
     
     setMainWidget(m_widget);
     setButtons(Help | User1 | Close);
@@ -221,8 +221,8 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         connect(m_talker,SIGNAL(signalSetUserName(QString)),
                 this,SLOT(slotSetUserName(QString)));
 
-        connect(m_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GDFolder>)),
-                this,SLOT(slotListAlbumsDone(int,QString,QList<GDFolder>)));
+        connect(m_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GSFolder>)),
+                this,SLOT(slotListAlbumsDone(int,QString,QList<GSFolder>)));
 
         connect(m_talker,SIGNAL(signalCreateFolderDone(int,QString)),
                 this,SLOT(slotCreateFolderDone(int,QString)));
@@ -262,8 +262,8 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         connect(m_picsasa_talker,SIGNAL(signalRefreshTokenObtained(QString)),
                 this,SLOT(slotRefreshTokenObtained(QString)));
 
-        connect(m_picsasa_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GDFolder>)),
-                this,SLOT(slotListAlbumsDone(int,QString,QList<GDFolder>)));
+        connect(m_picsasa_talker,SIGNAL(signalListAlbumsDone(int,QString,QList<GSFolder>)),
+                this,SLOT(slotListAlbumsDone(int,QString,QList<GSFolder>)));
 
         connect(m_picsasa_talker,SIGNAL(signalCreateAlbumDone(int,QString,QString)),
                 this,SLOT(slotCreateFolderDone(int,QString,QString)));
@@ -289,14 +289,14 @@ GDWindow::GDWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
 }
 
-GDWindow::~GDWindow()
+GSWindow::~GSWindow()
 {
     delete m_widget;
     delete m_albumDlg;
     delete m_talker;
 }
 
-void GDWindow::reactivate()
+void GSWindow::reactivate()
 {
     m_widget->imagesList()->loadImagesFromCurrentSelection();
     m_widget->progressBar()->hide();
@@ -304,7 +304,7 @@ void GDWindow::reactivate()
     show();
 }
 
-void GDWindow::readSettings()
+void GSWindow::readSettings()
 {
     KConfig config("kipirc");
     
@@ -352,7 +352,7 @@ void GDWindow::readSettings()
     restoreDialogSize(dialogGroup);
 }
 
-void GDWindow::writeSettings()
+void GSWindow::writeSettings()
 {
     KConfig config("kipirc");
     
@@ -389,15 +389,15 @@ void GDWindow::writeSettings()
     config.sync();
 }
 
-void GDWindow::slotSetUserName(const QString& msg)
+void GSWindow::slotSetUserName(const QString& msg)
 {
     m_widget->updateLabels(msg,"");
 }
 
-void GDWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
+void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList)
 {
-    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
-               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
+    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
 
     if (errCode == 0)
     {
@@ -405,9 +405,9 @@ void GDWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
         return;
     }
 
-    typedef QPair<KUrl,GDPhoto> Pair;
+    typedef QPair<KUrl,GSPhoto> Pair;
     m_transferQueue.clear();
-    QList<GDPhoto>::const_iterator itPWP;
+    QList<GSPhoto>::const_iterator itPWP;
 
     for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
     {
@@ -430,11 +430,11 @@ void GDWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
     downloadNextPhoto();
 }
 
-void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GDPhoto>& photosList)
+void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList)
 {
     kDebug()<< "err Code is "<< errCode <<" Err Message is "<< errMsg;
-    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
-               this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GDPhoto>)));
+    disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+               this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
 
     if (errCode == 0)
     {
@@ -442,7 +442,7 @@ void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
         return;
     }
 
-    typedef QPair<KUrl,GDPhoto> Pair;
+    typedef QPair<KUrl,GSPhoto> Pair;
 
     m_transferQueue.clear();
 
@@ -454,7 +454,7 @@ void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
     for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         KPImageInfo info(*it);
-        GDPhoto temp;
+        GSPhoto temp;
         temp.title = info.name();
 
         // Picasa doesn't support image titles. Include it in descriptions if needed.
@@ -471,7 +471,7 @@ void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
             localId = meta.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
         }
 
-        QList<GDPhoto>::const_iterator itPWP;
+        QList<GSPhoto>::const_iterator itPWP;
 
         for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
         {
@@ -511,7 +511,7 @@ void GDWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
     uploadNextPhoto();
 }
 
-void GDWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <GDFolder>& list)
+void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <GSFolder>& list)
 {
     if(m_gdrive)
     {
@@ -570,7 +570,7 @@ void GDWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
     }
 }
 
-void GDWindow::slotBusy(bool val)
+void GSWindow::slotBusy(bool val)
 {
     if (val)
     {
@@ -586,15 +586,15 @@ void GDWindow::slotBusy(bool val)
     }
 }
 
-void GDWindow::picasaTransferHandler()
+void GSWindow::picasaTransferHandler()
 {
     kDebug() << "Picasa Transfer invoked";
 
     if(m_picasaImport)
     {
         // list photos of the album, then start download
-        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
-                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GDPhoto>)));
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
 
         m_picsasa_talker->listPhotos(m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString(),
                                      m_widget->m_dlDimensionCoB->itemData(m_widget->m_dlDimensionCoB->currentIndex()).toString());
@@ -603,15 +603,15 @@ void GDWindow::picasaTransferHandler()
     else
     {
         // list photos of the album, then start upload with add/update items
-        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GDPhoto>)),
-                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GDPhoto>)));
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
 
         m_picsasa_talker->listPhotos(m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
 
     }    
 }
 
-void GDWindow::slotTextBoxEmpty()
+void GSWindow::slotTextBoxEmpty()
 {
     kDebug() << "in slotTextBoxEmpty";
     KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
@@ -619,7 +619,7 @@ void GDWindow::slotTextBoxEmpty()
                                   "or \"Start Upload\" to authenticate again."));
 }
 
-void GDWindow::slotStartTransfer()
+void GSWindow::slotStartTransfer()
 {
     m_widget->m_imgList->clearProcessedStatus();
 
@@ -673,12 +673,12 @@ void GDWindow::slotStartTransfer()
 	return;
     }
 
-    typedef QPair<KUrl, GDPhoto> Pair;
+    typedef QPair<KUrl, GSPhoto> Pair;
 
     for(int i=0 ;i < (m_widget->m_imgList->imageUrls().size()) ; i++)
     {
         KPImageInfo info(m_widget->m_imgList->imageUrls().value(i));
-        GDPhoto temp;
+        GSPhoto temp;
         kDebug() << "in start transfer info " <<info.title() << info.description();
         
         if(m_gdrive)
@@ -708,7 +708,7 @@ void GDWindow::slotStartTransfer()
     uploadNextPhoto();
 }
 
-void GDWindow::uploadNextPhoto()
+void GSWindow::uploadNextPhoto()
 {
     kDebug() << "in upload nextphoto " << m_transferQueue.count();
 
@@ -719,9 +719,9 @@ void GDWindow::uploadNextPhoto()
         return;
     }
 
-    typedef QPair<KUrl,GDPhoto> Pair;
+    typedef QPair<KUrl,GSPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
-    GDPhoto info      = pathComments.second;
+    GSPhoto info      = pathComments.second;
     bool res;
     
     if(m_gdrive)
@@ -863,7 +863,7 @@ void GDWindow::uploadNextPhoto()
     }
 }
 
-void GDWindow::downloadNextPhoto()
+void GSWindow::downloadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
@@ -880,9 +880,9 @@ void GDWindow::downloadNextPhoto()
     m_picsasa_talker->getPhoto(imgPath);
 }
 
-void GDWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
+void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
 {
-    GDPhoto item = m_transferQueue.first().second;
+    GSPhoto item = m_transferQueue.first().second;
     KUrl tmpUrl         = QString(m_tmp + item.title);
 
     if (item.mimeType == "video/mpeg4")
@@ -1057,7 +1057,7 @@ void GDWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     downloadNextPhoto();
 }
 
-void GDWindow::slotAddPhotoDone(int err, const QString& msg, const QString& photoId)
+void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& photoId)
 {
     if(err == 0)
     {
@@ -1119,18 +1119,18 @@ void GDWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
     }
 }
 
-void GDWindow::slotImageListChanged()
+void GSWindow::slotImageListChanged()
 {
     enableButton(User1, !(m_widget->m_imgList->imageUrls().isEmpty()));
 }
 
-void GDWindow::slotNewAlbumRequest()
+void GSWindow::slotNewAlbumRequest()
 {
     if(m_gdrive)
     {
         if (m_albumDlg->exec() == QDialog::Accepted)
         {
-            GDFolder newFolder;
+            GSFolder newFolder;
             m_albumDlg->getAlbumProperties(newFolder);
             m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
             m_talker->createFolder(newFolder.title,m_currentAlbumId);
@@ -1140,14 +1140,14 @@ void GDWindow::slotNewAlbumRequest()
     {        
         if (m_picasa_albumdlg->exec() == QDialog::Accepted)
         {
-            GDFolder newFolder;
+            GSFolder newFolder;
             m_picasa_albumdlg->getAlbumProperties(newFolder);
             m_picsasa_talker->createAlbum(newFolder);
         }
     }
 }
 
-void GDWindow::slotReloadAlbumsRequest()
+void GSWindow::slotReloadAlbumsRequest()
 {
     if(m_gdrive)
         m_talker->listFolders();
@@ -1155,14 +1155,14 @@ void GDWindow::slotReloadAlbumsRequest()
         m_picsasa_talker->listAlbums();
 }
 
-void GDWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
+void GSWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
 {
     KMessageBox::error(this, i18nc("%1 is the error string, %2 is the error code",
                                    "An authentication error occurred: %1 (%2)",errMsg,errCode));
     return;
 }
 
-void GDWindow::slotAccessTokenObtained()
+void GSWindow::slotAccessTokenObtained()
 {
     if(m_gdrive)
         m_talker->listFolders();
@@ -1170,7 +1170,7 @@ void GDWindow::slotAccessTokenObtained()
         m_picsasa_talker->listAlbums();
 }
 
-void GDWindow::slotRefreshTokenObtained(const QString& msg)
+void GSWindow::slotRefreshTokenObtained(const QString& msg)
 {
     if(m_gdrive)
     {
@@ -1184,7 +1184,7 @@ void GDWindow::slotRefreshTokenObtained(const QString& msg)
     }
 }
 
-void GDWindow::slotCreateFolderDone(int code, const QString& msg, const QString& albumId)
+void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString& albumId)
 {
     if(m_gdrive)
     {
@@ -1204,7 +1204,7 @@ void GDWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
     
 }
 
-void GDWindow::slotTransferCancel()
+void GSWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
     m_progressDlg->hide();
@@ -1214,7 +1214,7 @@ void GDWindow::slotTransferCancel()
         m_picsasa_talker->cancel();
 }
 
-void GDWindow::slotUserChangeRequest()
+void GSWindow::slotUserChangeRequest()
 {
     KUrl url("https://accounts.google.com/logout");
     KToolInvocation::invokeBrowser(url.url());
@@ -1231,20 +1231,20 @@ void GDWindow::slotUserChangeRequest()
     }
 }
 
-void GDWindow::buttonStateChange(bool state)
+void GSWindow::buttonStateChange(bool state)
 {
     m_widget->m_newAlbumBtn->setEnabled(state);
     m_widget->m_reloadAlbumsBtn->setEnabled(state);
     enableButton(User1, state);
 }
 
-void GDWindow::slotCloseClicked()
+void GSWindow::slotCloseClicked()
 {
     writeSettings();
     m_widget->imagesList()->listView()->clear();   
 }
 
-void GDWindow::closeEvent(QCloseEvent* e)
+void GSWindow::closeEvent(QCloseEvent* e)
 {
     if (!e)
         return;
@@ -1254,4 +1254,4 @@ void GDWindow::closeEvent(QCloseEvent* e)
     e->accept();
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

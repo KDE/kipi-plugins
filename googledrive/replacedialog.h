@@ -34,7 +34,7 @@
 
 using namespace KIPI;
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 enum ReplaceDialog_Result
@@ -81,6 +81,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif // REPLACEDIALOG_H

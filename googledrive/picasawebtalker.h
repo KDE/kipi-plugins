@@ -39,14 +39,14 @@
 //local includes
 
 #include "authorize.h"
-#include "gditem.h"
+#include "gsitem.h"
 
 namespace KIO
 {
     class Job;
 }
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
 class PicasawebTalker : public Authorize
@@ -73,9 +73,9 @@ public:
     void listAlbums();
     void listPhotos(const QString& albumId,
                     const QString& imgmax=QString());
-    void createAlbum(const GDFolder& newAlbum);
-    bool addPhoto(const QString& photoPath, GDPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality);
-    bool updatePhoto(const QString& photoPath, GDPhoto& info);
+    void createAlbum(const GSFolder& newAlbum);
+    bool addPhoto(const QString& photoPath, GSPhoto& info, const QString& albumId,bool rescale,int maxDim,int imageQuality);
+    bool updatePhoto(const QString& photoPath, GSPhoto& info);
     void getPhoto(const QString& imgPath);
 
     QString getLoginName()   const;
@@ -91,8 +91,8 @@ public:
 Q_SIGNALS:
 
     void signalError(const QString& msg);
-    void signalListAlbumsDone(int, const QString&, const QList <GDFolder>&);
-    void signalListPhotosDone(int, const QString&, const QList <GDPhoto>&);
+    void signalListAlbumsDone(int, const QString&, const QList <GSFolder>&);
+    void signalListPhotosDone(int, const QString&, const QList <GSPhoto>&);
     void signalCreateAlbumDone(int, const QString&, const QString&);
     void signalAddPhotoDone(int, const QString&, const QString&);
     void signalGetPhotoDone(int errCode, const QString& errMsg,
@@ -125,6 +125,6 @@ private:
     State                       m_state;
 };
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
 
 #endif /* PICASAWEBTALKER_H */

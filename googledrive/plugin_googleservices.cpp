@@ -25,7 +25,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_googledrive.moc"
+#include "plugin_googleservices.moc"
 
 // C ANSI includes
 
@@ -52,15 +52,15 @@ extern "C"
 
 // Local includes
 
-#include "gdwindow.h"
+#include "gswindow.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleDrive>(); )
+K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleServices>(); )
 K_EXPORT_PLUGIN(GoogleDriveFactory("kipiplugin_googledrive"))
 
-Plugin_GoogleDrive::Plugin_GoogleDrive(QObject* const parent,const QVariantList& /*args*/)
+Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent,const QVariantList& /*args*/)
     : Plugin(GoogleDriveFactory::componentData(), parent, "Google Drive Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive/PicasaWeb Plugin Loaded";
@@ -70,11 +70,11 @@ Plugin_GoogleDrive::Plugin_GoogleDrive(QObject* const parent,const QVariantList&
     setupXML();
 }
 
-Plugin_GoogleDrive::~Plugin_GoogleDrive()
+Plugin_GoogleServices::~Plugin_GoogleServices()
 {
 }
 
-void Plugin_GoogleDrive::setup(QWidget* const widget)
+void Plugin_GoogleServices::setup(QWidget* const widget)
 {
     m_dlgGDriveExport = 0;
     m_dlgPicasaExport = 0;
@@ -91,7 +91,7 @@ void Plugin_GoogleDrive::setup(QWidget* const widget)
     setupActions();
 }
 
-void Plugin_GoogleDrive::setupActions()
+void Plugin_GoogleServices::setupActions()
 {
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionGDriveExport = new KAction(this);
@@ -125,14 +125,14 @@ void Plugin_GoogleDrive::setupActions()
     addAction("picasawebimport", m_actionPicasaImport, ImportPlugin);
 }
 
-void Plugin_GoogleDrive::slotGDriveExport()
+void Plugin_GoogleServices::slotGDriveExport()
 {
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp",QString("kipi-gd-") + QString::number(getpid()) + QString("/"));
 
     if(!m_dlgGDriveExport)
     {
-        m_dlgGDriveExport = new GDWindow(tmp,kapp->activeWindow(),QString("googledriveexport"));
+        m_dlgGDriveExport = new GSWindow(tmp,kapp->activeWindow(),QString("googledriveexport"));
     }
     else
     {
@@ -147,14 +147,14 @@ void Plugin_GoogleDrive::slotGDriveExport()
     m_dlgGDriveExport->reactivate();
 }
 
-void Plugin_GoogleDrive::slotPicasaExport()
+void Plugin_GoogleServices::slotPicasaExport()
 {
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp",QString("kipi-gd-") + QString::number(getpid()) + QString("/"));
 
     if(!m_dlgPicasaExport)
     {
-        m_dlgPicasaExport = new GDWindow(tmp,kapp->activeWindow(),QString("picasawebexport"));
+        m_dlgPicasaExport = new GSWindow(tmp,kapp->activeWindow(),QString("picasawebexport"));
     }
     else
     {
@@ -169,14 +169,14 @@ void Plugin_GoogleDrive::slotPicasaExport()
     m_dlgPicasaExport->reactivate();
 }
 
-void Plugin_GoogleDrive::slotPicasaImport()
+void Plugin_GoogleServices::slotPicasaImport()
 {
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp",QString("kipi-gd-") + QString::number(getpid()) + QString("/"));
 
     if(!m_dlgPicasaImport)
     {
-        m_dlgPicasaImport = new GDWindow(tmp,kapp->activeWindow(),QString("picasawebimport"));
+        m_dlgPicasaImport = new GSWindow(tmp,kapp->activeWindow(),QString("picasawebimport"));
     }
     else
     {
@@ -191,4 +191,4 @@ void Plugin_GoogleDrive::slotPicasaImport()
     m_dlgPicasaImport->reactivate();
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin

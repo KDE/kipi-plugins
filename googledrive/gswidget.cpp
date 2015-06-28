@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "gdwidget.moc"
+#include "gswidget.moc"
 
 // Qt includes
 
@@ -52,10 +52,10 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 
-namespace KIPIGoogleDrivePlugin
+namespace KIPIGoogleServicesPlugin
 {
 
-GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName):QWidget(parent)
+GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName):QWidget(parent)
 {
     m_serviceName = serviceName;
 
@@ -301,11 +301,11 @@ GoogleDriveWidget::GoogleDriveWidget(QWidget* const parent, KIPI::Interface* con
     }
 }
 
-GoogleDriveWidget::~GoogleDriveWidget()
+GoogleServicesWidget::~GoogleServicesWidget()
 {
 }
 
-void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
+void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
 {
 
     if(m_gdrive)
@@ -337,25 +337,25 @@ void GoogleDriveWidget::updateLabels(const QString& name, const QString& url)
     }
 }
 
-QString GoogleDriveWidget::getDestinationPath() const
+QString GoogleServicesWidget::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
 
-KIPIPlugins::KPImagesList* GoogleDriveWidget::imagesList() const
+KIPIPlugins::KPImagesList* GoogleServicesWidget::imagesList() const
 {
     return m_imgList;
 }
 
-void GoogleDriveWidget::slotResizeChecked()
+void GoogleServicesWidget::slotResizeChecked()
 {
     m_dimensionSpB->setEnabled(m_resizeChB->isChecked());
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
-KIPIPlugins::KPProgressWidget* GoogleDriveWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* GoogleServicesWidget::progressBar() const
 {
     return m_progressBar;
 }
 
-} // namespace KIPIGoogleDrivePlugin
+} // namespace KIPIGoogleServicesPlugin
