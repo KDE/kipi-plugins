@@ -29,6 +29,7 @@
 #include <QCloseEvent>
 #include <QGridLayout>
 #include <QMenu>
+#include <QPushButton>
 
 // KDE includes
 
@@ -71,31 +72,28 @@ public:
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>& urls)
-    : KP4ToolDialog(0), d(new Private)
+    : KPToolDialog(0), d(new Private)
 {
     d->urls = urls;
 
-    setCaption(i18n("Email Images Options"));
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
+    setWindowTitle(i18n("Email Images Options"));
     setModal(false);
 
-    button(User1)->setText(i18nc("@action:button", "&Send"));
-    button(User1)->setIcon(QIcon::fromTheme("mail-send"));
+    startButton()->setText(i18nc("@action:button", "&Send"));
+    startButton()->setIcon(QIcon::fromTheme("mail-send"));
 
     // ---------------------------------------------------------------
 
-    setMainWidget(new QWidget(this));
-    QGridLayout* mainLayout = new QGridLayout(mainWidget());
-    d->imagesList           = new MyImageList(mainWidget());
-    d->settingsWidget       = new SettingsWidget(mainWidget());
+    QWidget* mainWidget = new QWidget(this);
+    setMainWidget(mainWidget);
+    QGridLayout* mainLayout = new QGridLayout(mainWidget);
+    d->imagesList           = new MyImageList(mainWidget);
+    d->settingsWidget       = new SettingsWidget(mainWidget);
     d->imagesList->slotAddImages(urls);
 
     mainLayout->addWidget(d->imagesList,     0, 0, 1, 1);
     mainLayout->addWidget(d->settingsWidget, 0, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(spacingHint());
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -123,8 +121,8 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const QList<QUrl>&
     connect(this, SIGNAL(finished(int)),
             this, SLOT(slotFinished()));
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotSubmit()));
+    connect(startButton(), &QPushButton::clicked,
+            this, &SendImagesDialog::slotSubmit);
 
     connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImagesCountChanged()));
@@ -211,7 +209,7 @@ void SendImagesDialog::saveSettings()
 
 void SendImagesDialog::slotImagesCountChanged()
 {
-   enableButton(User1, !d->imagesList->imagesList().isEmpty());
+    startButton()->setEnabled(!d->imagesList->imagesList().isEmpty());
 }
 
 }  // namespace KIPISendimagesPlugin

@@ -31,7 +31,7 @@
 // Local includes
 
 #include "emailsettings.h"
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -40,7 +40,7 @@ using namespace KIPIPlugins;
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialog : public KP4ToolDialog
+class SendImagesDialog : public KPToolDialog
 {
     Q_OBJECT
 
