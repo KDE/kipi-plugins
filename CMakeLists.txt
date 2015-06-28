@@ -360,7 +360,7 @@ if(KF5Kipi_FOUND)
          add_subdirectory(timeadjust)
          add_subdirectory(flashexport)
 #         add_subdirectory(metadataedit)
-#         add_subdirectory(expoblending)
+        add_subdirectory(expoblending)
 #
 #         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
 #             add_subdirectory(dlnaexport)
