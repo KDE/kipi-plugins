@@ -228,6 +228,8 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,   2, 2, 1, 1);
     
+    m_tagsBGrp = new QButtonGroup(optionsBox);
+    
     if(m_picasaExport || m_picasaImport)
     {
         QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -240,7 +242,6 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
         QRadioButton* const combinedTagsBtn = new QRadioButton(i18n("Combined String"), optionsBox);
         combinedTagsBtn->setWhatsThis(i18n("Build a combined tag string."));
 
-        m_tagsBGrp = new QButtonGroup(optionsBox);
         m_tagsBGrp->addButton(leafTagsBtn, PwTagLeaf);
         m_tagsBGrp->addButton(splitTagsBtn, PwTagSplit);
         m_tagsBGrp->addButton(combinedTagsBtn, PwTagCombined);

@@ -81,7 +81,7 @@ static bool picasaLessThan(GSFolder& p1, GSFolder& p2)
 }
 
 PicasawebTalker::PicasawebTalker(QWidget* const parent)
-    :Authorize(parent,QString("https://picasaweb.google.com/data/")),  m_job(0)
+    :Authorize(parent,QString("https://picasaweb.google.com/data/")),  m_job(0), m_state(FE_LOGOUT)
 {
     connect(this, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
@@ -566,6 +566,8 @@ void PicasawebTalker::slotResult(KJob *job)
 
     switch(m_state)
     {
+        case(FE_LOGOUT):
+            break;        
         case(FE_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;

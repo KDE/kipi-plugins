@@ -81,7 +81,8 @@ private:
 
     enum State
     {
-        GD_LISTFOLDERS=2,
+        GD_LOGOUT = -1,
+        GD_LISTFOLDERS = 0,
         GD_CREATEFOLDER,
         GD_ADDPHOTO,
         GD_USERNAME,

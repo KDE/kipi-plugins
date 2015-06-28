@@ -77,7 +77,7 @@ static bool gdriveLessThan(GSFolder& p1, GSFolder& p2)
 }  
 
 GDTalker::GDTalker(QWidget* const parent)
-    :Authorize(parent,QString("https://www.googleapis.com/auth/drive"))
+    :Authorize(parent,QString("https://www.googleapis.com/auth/drive")), m_state(GD_LOGOUT)
 {
     m_rootid          = "root";
     m_rootfoldername  = "GoogleDrive Root";
@@ -267,6 +267,8 @@ void GDTalker::slotResult(KJob* kjob)
 
     switch(m_state)
     {
+        case(GD_LOGOUT):
+            break;
         case (GD_LISTFOLDERS):
             kDebug() << "In GD_LISTFOLDERS";
             parseResponseListFolders(m_buffer);

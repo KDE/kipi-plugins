@@ -1198,8 +1198,10 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
         if(code == 0)
             KMessageBox::error(this, i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
         else
+        {
             m_currentAlbumId = albumId;
-            m_picsasa_talker->listAlbums();
+            m_picsasa_talker->listAlbums();            
+        }
     }
     
 }

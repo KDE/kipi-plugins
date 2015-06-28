@@ -66,17 +66,12 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     m_titleEdt          = new KLineEdit;
     m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
-    {
-        m_titleEdt->setWhatsThis(i18n("This is the title of the folder that will be created."));
-        albumBoxLayout->addRow(i18nc("folder edit","Title:"),m_titleEdt);
-        albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-        albumBoxLayout->setSpacing(KDialog::spacingHint());
-        albumBoxLayout->setMargin(KDialog::spacingHint());
-        mainWidget->setMinimumSize(300,0);
-        mainWidget->setLayout(albumBoxLayout);
-        return;
-    }
+//     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+//     {
+//         m_titleEdt->setWhatsThis(i18n("This is the title of the folder that will be created."));
+//         albumBoxLayout->addRow(i18nc("folder edit","Title:"),m_titleEdt);
+//         mainWidget->setMinimumSize(300,0);
+//     }
     
     QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
@@ -90,12 +85,22 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     m_descEdt->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
     m_locEdt            = new KLineEdit;
-    m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));    
-
-    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Title:"), m_titleEdt);
-    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Date & Time:"), m_dtEdt);
-    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Description:"), m_descEdt);
-    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Location:"), m_locEdt);
+    m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));  
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        m_titleEdt->setWhatsThis(i18n("This is the title of the folder that will be created."));
+        albumBoxLayout->addRow(i18nc("folder edit","Title:"),m_titleEdt);
+        mainWidget->setMinimumSize(300,0);
+    }
+    else
+    {
+        albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Title:"), m_titleEdt);
+        albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Date & Time:"), m_dtEdt);
+        albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Description:"), m_descEdt);
+        albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Location:"), m_locEdt);        
+    }
+    
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
@@ -133,6 +138,11 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
     mainWidget->setLayout(mainLayout);
+    
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
+        privBox->hide();
+    }
 }
 
 NewAlbumDlg::~NewAlbumDlg()

@@ -57,7 +57,8 @@ public:
 
     enum State
     {
-        FE_LISTALBUMS,
+        FE_LOGOUT = -1,
+        FE_LISTALBUMS = 0,
         FE_LISTPHOTOS,
         FE_ADDPHOTO,
         FE_UPDATEPHOTO,
