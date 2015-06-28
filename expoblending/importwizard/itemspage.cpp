@@ -32,7 +32,6 @@
 
 // KDE includes
 
-#include <kvbox.h>
 #include <KLocalizedString>
 
 // Libkipi includes
@@ -66,8 +65,10 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
       d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
-    KVBox* vbox    = new KVBox(this);
-    QLabel* label1 = new QLabel(vbox);
+
+    QVBoxLayout* const vbox = new QVBoxLayout(this);
+
+    QLabel* label1 = new QLabel(this);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
                          "<p>Set here the list of your bracketed images to fuse. Please follow these conditions:</p>"
@@ -75,12 +76,14 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
                          "<li>Do not mix images with different color depth.</li>"
                          "<li>All images must have the same dimensions.</li></ul>"
                          "</qt>"));
+    vbox->addWidget(label1);
 
-    d->list = new KPImagesList(vbox);
+    d->list = new KPImagesList(this);
     d->list->listView()->setColumn(KPImagesListView::User1, i18nc("@title:column", "Exposure (EV)"), true);
     d->list->slotAddImages(d->mngr->itemsList());
+    vbox->addWidget(d->list);
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

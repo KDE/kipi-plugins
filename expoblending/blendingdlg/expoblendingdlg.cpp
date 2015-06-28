@@ -62,7 +62,6 @@ extern "C"
 #include <kpushbutton.h>
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
-#include <kde_file.h>
 #include <KWindowConfig>
 
 // Libkipi includes
@@ -158,46 +157,65 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     // ---------------------------------------------------------------
 
-    QWidget* page     = new QWidget(this);
-    QGridLayout* grid = new QGridLayout(page);
+    QWidget* page                   = new QWidget(this);
+    QGridLayout* grid               = new QGridLayout(page);
     setMainWidget(page);
 
-    d->previewWidget  = new KPPreviewManager(page);
+    d->previewWidget                = new KPPreviewManager(page);
     d->previewWidget->setButtonText(i18nc("@action:button", "Details..."));
 
     // ---------------------------------------------------------------
 
-    QScrollArea* sv      = new QScrollArea(page);
-    KVBox* panel         = new KVBox(sv->viewport());
-    sv->setWidget(panel);
-    sv->setWidgetResizable(true);
+    QScrollArea* rightColumn        = new QScrollArea(page);
+    rightColumn->setWidgetResizable(true);
+    QVBoxLayout* const panel        = new QVBoxLayout();
 
-    d->bracketStack      = new BracketStackList(d->mngr->iface(), panel);
+    d->bracketStack                 = new BracketStackList(d->mngr->iface(), rightColumn->viewport());
+    panel->addWidget(d->bracketStack, 1);
 
-    d->settingsExpander  = new RExpanderBox(panel);
+    d->settingsExpander             = new RExpanderBox(rightColumn->viewport());
+    d->settingsExpander->setAlignment(Qt::AlignTop);
     d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
+    panel->addWidget(d->settingsExpander, 1);
 
-    d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
-    d->saveSettingsBox   = new KPSaveSettingsWidget(d->settingsExpander);
+    d->enfuseSettingsBox            = new EnfuseSettingsWidget(d->settingsExpander);
 
-    KHBox* hbox          = new KHBox(d->saveSettingsBox);
-    QLabel* customLabel  = new QLabel(hbox);
-    d->templateFileName  = new KLineEdit(hbox);
-    d->templateFileName->setClearButtonShown(true);
+    QWidget* dummySaveWidget        = new QWidget(d->settingsExpander);
+    QVBoxLayout* const saveVBox     = new QVBoxLayout();
+
+    d->saveSettingsBox              = new KPSaveSettingsWidget(dummySaveWidget);
+    saveVBox->addWidget(d->saveSettingsBox);
+
+    QHBoxLayout* const hbox         = new QHBoxLayout();
+
+    QLabel* customLabel             = new QLabel(dummySaveWidget);
     customLabel->setText(i18nc("@label:textbox", "File Name Template: "));
-    d->saveSettingsBox->setCustomSettingsWidget(hbox);
+    hbox->addWidget(customLabel);
 
-    d->enfuseStack       = new EnfuseStackList(panel);
+    d->templateFileName             = new KLineEdit(dummySaveWidget);
+    d->templateFileName->setClearButtonShown(true);
+    hbox->addWidget(d->templateFileName);
+
+    d->saveSettingsBox->setCustomSettingsWidget(d->saveSettingsBox);
+    saveVBox->addLayout(hbox);
+
+    dummySaveWidget->setLayout(saveVBox);
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18nc("@title:group", "Enfuse Settings"), QString("expoblending"), true);
-    d->settingsExpander->addItem(d->saveSettingsBox,   i18nc("@title:group", "Save Settings"),   QString("savesettings"), true);
+    d->settingsExpander->addItem(dummySaveWidget,      i18nc("@title:group", "Save Settings"),   QString("savesettings"), true);
     d->settingsExpander->setItemIcon(0, SmallIcon("kipi-expoblending"));
     d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
+    d->settingsExpander->addStretch();
+
+    d->enfuseStack                  = new EnfuseStackList(rightColumn->viewport());
+    panel->addWidget(d->enfuseStack, 1);
+
+    rightColumn->setLayout(panel);
 
     // ---------------------------------------------------------------
 
     grid->addWidget(d->previewWidget, 0, 0, 3, 1);
-    grid->addWidget(sv,               0, 1, 3, 1);
+    grid->addWidget(rightColumn,      0, 1, 3, 1);
     grid->setMargin(0);
     grid->setSpacing(spacingHint());
     grid->setColumnStretch(0, 10);
@@ -462,7 +480,7 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
 
     if (!newUrl.isEmpty())
     {
-        if (KDE::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
+        if (QFile::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image to %1.", newUrl.toLocalFile()));
             d->enfuseStack->setOnItem(settings.previewUrl, false);

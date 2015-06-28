@@ -31,7 +31,6 @@
 
 // KDE includes
 
-#include <kvbox.h>
 #include <KLocalizedString>
 
 // Local includes
@@ -59,8 +58,10 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
           d(new Private)
 {
     d->mngr             = mngr;
-    KVBox* const vbox   = new KVBox(this);
-    QLabel* const title = new QLabel(vbox);
+
+    QVBoxLayout* const vbox = new QVBoxLayout(this);
+
+    QLabel* const title = new QLabel(this);
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
@@ -73,11 +74,11 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
                         "</qt>",
                         QDir::toNativeSeparators(d->mngr->enfuseBinary().path()),
                         d->mngr->enfuseBinary().url().url()));
+    vbox->addWidget(title);
 
-    QLabel* const space = new QLabel(vbox);
-    vbox->setStretchFactor(space, 10);
+    vbox->addStretch(10);
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-enfuse.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

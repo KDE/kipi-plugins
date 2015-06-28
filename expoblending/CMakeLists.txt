@@ -43,8 +43,6 @@ foreach(_currentfile ${expoblending_common_SRCS})
         set_source_files_properties(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
     endif()
 endforeach()
-# TODO: remove the following line after migration to QT5 
-set_source_files_properties(${expoblending_common_SRCS} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fPIC")
 
 add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 
@@ -65,8 +63,6 @@ target_link_libraries(libexpoblending
 # ExpoBlending plugin
 
 set(kipiplugin_expoblending_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp)
-# TODO: remove the following line after migration to QT5 
-set_source_files_properties(${kipiplugin_expoblending_PART_SRCS} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fPIC")
 
 add_library(kipiplugin_expoblending MODULE ${kipiplugin_expoblending_PART_SRCS})
 
@@ -82,8 +78,6 @@ install(FILES   plugin/kipiplugin_expoblendingui.rc                             
 # Stand alone version of ExpoBlending plugin
 
 set(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
-# TODO: remove the following line after migration to QT5 
-set_source_files_properties(${expoblending_SRCS} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations -fPIC")
 
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./icons/hi*-apps-kipi-expoblending.png")
 ecm_add_app_icon(expoblending_SRCS ICONS ${ICONS_SRCS})

@@ -237,7 +237,9 @@ void BracketStackList::addItems(const QList<QUrl>& list)
         for (const QUrl& url: urls)
         {
             if (url.isValid())
-                items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
+            {
+                items.append(KFileItem(url));
+            }
         }
         KIO::PreviewJob* job = KIO::filePreview(items, iconSize());
 #else

@@ -37,7 +37,6 @@
 
 // KDE includes
 
-#include <kvbox.h>
 #include <KLocalizedString>
 #include <kiconloader.h>
 #include <KConfig>
@@ -100,36 +99,45 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
       d(new Private)
 {
     d->mngr           = mngr;
+
     d->progressTimer  = new QTimer(this);
-    KVBox* const vbox = new KVBox(this);
-    d->title          = new QLabel(vbox);
+
+    QVBoxLayout* const vbox = new QVBoxLayout(this);
+
+    d->title          = new QLabel(this);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
-    d->alignCheckBox  = new QCheckBox(i18nc("@option:check", "Align bracketed images"), vbox);
+    vbox->addWidget(d->title);
+
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    d->alignCheckBox  = new QCheckBox(i18nc("@option:check", "Align bracketed images"), this);
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
+    vbox->addWidget(d->alignCheckBox);
 
-    QLabel* const space1 = new QLabel(vbox);
-    KHBox* const hbox    = new KHBox(vbox);
-    d->detailsBtn        = new QPushButton(hbox);
+    vbox->addStretch(2);
+
+    QHBoxLayout* const hbox = new QHBoxLayout();
+
+    d->detailsBtn     = new QPushButton(this);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
-    QLabel* const space2 = new QLabel(hbox);
-    hbox->setStretchFactor(space2, 10);
+    hbox->addWidget(d->detailsBtn);
 
-    QLabel* const space3   = new QLabel(vbox);
-    d->progressLabel       = new QLabel(vbox);
+    hbox->addStretch(10);
+    vbox->addLayout(hbox);
+    vbox->addStretch(2);
+
+    d->progressLabel       = new QLabel(this);
     d->progressLabel->setAlignment(Qt::AlignCenter);
-    QLabel* const space4   = new QLabel(vbox);
+    vbox->addWidget(d->progressLabel);
 
-    vbox->setStretchFactor(space1, 2);
-    vbox->setStretchFactor(space3, 2);
-    vbox->setStretchFactor(space4, 10);
+    vbox->addStretch(10);
+
     vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     resetTitle();
 

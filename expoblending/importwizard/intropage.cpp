@@ -31,7 +31,6 @@
 
 // KDE includes
 
-#include <kvbox.h>
 #include <KLocalizedString>
 
 // local includes
@@ -61,8 +60,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {
-    KVBox *vbox   = new KVBox(this);
-    QLabel *title = new QLabel(vbox);
+    QVBoxLayout* const vbox     = new QVBoxLayout();
+
+    QLabel *title               = new QLabel(this);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
@@ -78,8 +78,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
                         "<p>For more information, please take a look at "
                         "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
+    vbox->addWidget(title);
 
-    QGroupBox* binaryBox        = new QGroupBox(vbox);
+    QGroupBox* binaryBox        = new QGroupBox(this);
     QGridLayout* binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18nc("@title:group", "Exposure Blending Binaries"));
@@ -91,13 +92,14 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->binariesWidget->addDirectory("/opt/local/bin");                    // Std Macports install
     d->binariesWidget->addDirectory("/opt/digikam/bin");                  // digiKam Bundle PKG install
 #endif
+    vbox->addWidget(binaryBox);
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
             this, SIGNAL(signalIntroPageIsValid(bool)));
 
     emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
 
-    setPageWidget(vbox);
+    setLayout(vbox);
 
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
