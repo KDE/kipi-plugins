@@ -53,10 +53,11 @@
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
 #include <QTemporaryDir>
+#include <QProcess>
 
 // KDE includes
 
-#include <klocale.h>
+// #include <klocale.h>
 
 // LibKDcraw includes
 
@@ -76,9 +77,7 @@ struct ActionThread::Private
     Private()
         : cancel(false),
           align(false),
-          enfuseVersion4x(true),
-          enfuseProcess(0),
-          alignProcess(0)
+          enfuseVersion4x(true)
     {}
 
     struct Task
@@ -103,8 +102,8 @@ struct ActionThread::Private
 
     QList<Task*>                    todo;
 
-    KProcess*                       enfuseProcess;
-    KProcess*                       alignProcess;
+    QSharedPointer<QProcess>        enfuseProcess;
+    QSharedPointer<QProcess>        alignProcess;
 
     /**
      * A list of all running raw instances. Only access this variable via
@@ -549,23 +548,22 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
     {
         // Re-align images
 
-        d->alignProcess = new KProcess;
-        d->alignProcess->clearProgram();
+        d->alignProcess.reset(new QProcess());
         d->alignProcess->setWorkingDirectory(d->preprocessingTmpDir->path());
-        d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
+        d->alignProcess->setProcessChannelMode(QProcess::MergedChannels);
+        d->alignProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
         QStringList args;
-        args << alignPath;
         args << "-v";
         args << "-a";
         args << "aligned";
-
         for (const QUrl& url: d->mixedUrls)
         {
             args << url.toLocalFile();
         }
 
-        d->alignProcess->setProgram(args);
+        d->alignProcess->setProgram(alignPath);
+        d->alignProcess->setArguments(args);
 
         qCDebug(KIPIPLUGINS_LOG) << "Align command line: " << d->alignProcess->program();
 
@@ -573,11 +571,10 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
 
         if (!d->alignProcess->waitForFinished(-1))
         {
-            errors = getProcessError(d->alignProcess);
+            errors = getProcessError(*(d->alignProcess));
             qCDebug(KIPIPLUGINS_LOG) << "align_image_stack error: " << errors;
             return false;
         }
-        qCDebug(KIPIPLUGINS_LOG) << "OK";
 
         uint    i=0;
         QString temp;
@@ -593,9 +590,10 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
                 + QString::number(i).rightJustified(4, QChar::fromLatin1('0'))
                 + QString(".tif"));
 
-            qCDebug(KIPIPLUGINS_LOG) << previewUrl << "=>" << alignedUrl;
             if (!computePreview(alignedUrl, previewUrl))
+            {
                 return false;
+            }
 
             d->preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(alignedUrl, previewUrl));
             i++;
@@ -613,7 +611,9 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
         qCDebug(KIPIPLUGINS_LOG) << "Align exit code      : " << d->alignProcess->exitCode();
 
         if (d->alignProcess->exitStatus() != QProcess::NormalExit)
+        {
             return false;
+        }
 
         if (d->alignProcess->exitCode() == 0)
         {
@@ -621,7 +621,7 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
             return true;
         }
 
-        errors = getProcessError(d->alignProcess);
+        errors = getProcessError(*(d->alignProcess));
         return false;
     }
     else
@@ -642,7 +642,6 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
 bool ActionThread::computePreview(const QUrl& inUrl, QUrl& outUrl)
 {
     outUrl = QUrl::fromLocalFile(d->preprocessingTmpDir->path() + QChar::fromLatin1('/') + QChar::fromLatin1('.') + inUrl.fileName().replace('.', '_') + QString("-preview.jpg"));
-    qCDebug(KIPIPLUGINS_LOG) << "ComputePreview:" << inUrl << "=>" << outUrl;
 
     QImage img;
 
@@ -747,24 +746,25 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
 
     outUrl.setPath(outUrl.adjusted(QUrl::RemoveFilename).path() + QString(".kipi-expoblending-tmp-") + QString::number(QDateTime::currentDateTime().toTime_t()) + ext);
 
-    d->enfuseProcess = new KProcess;
-    d->enfuseProcess->clearProgram();
-    d->enfuseProcess->setOutputChannelMode(KProcess::MergedChannels);
-    QStringList args;
-    args << enfusePath;
+    d->enfuseProcess.reset(new QProcess());
+    d->enfuseProcess->setWorkingDirectory(d->preprocessingTmpDir->path());
+    d->enfuseProcess->setProcessChannelMode(QProcess::MergedChannels);
+    d->enfuseProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
+    QStringList args;
     if (!settings.autoLevels)
     {
         args << "-l";
         args << QString::number(settings.levels);
     }
-
     if (settings.ciecam02)
+    {
         args << "-c";
-
+    }
     if (!comp.isEmpty())
+    {
         args << comp;
-
+    }
     if (settings.hardMask)
     {
         if (d->enfuseVersion4x)
@@ -772,7 +772,6 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
         else
             args << "--HardMask";
     }
-
     if (d->enfuseVersion4x)
     {
         args << QString("--exposure-weight=%1").arg(settings.exposure);
@@ -785,7 +784,6 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
         args << QString("--wSaturation=%1").arg(settings.saturation);
         args << QString("--wContrast=%1").arg(settings.contrast);
     }
-
     args << "-v";
     args << "-o";
     args << outUrl.toLocalFile();
@@ -795,7 +793,8 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
         args << url.toLocalFile();
     }
 
-    d->enfuseProcess->setProgram(args);
+    d->enfuseProcess->setProgram(enfusePath);
+    d->enfuseProcess->setArguments(args);
 
     qCDebug(KIPIPLUGINS_LOG) << "Enfuse command line: " << d->enfuseProcess->program();
 
@@ -803,7 +802,7 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
 
     if (!d->enfuseProcess->waitForFinished(-1))
     {
-        errors = getProcessError(d->enfuseProcess);
+        errors = getProcessError(*(d->enfuseProcess));
         return false;
     }
 
@@ -812,7 +811,9 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
     qCDebug(KIPIPLUGINS_LOG) << "Enfuse exit code:   " << d->enfuseProcess->exitCode();
 
     if (d->enfuseProcess->exitStatus() != QProcess::NormalExit)
+    {
         return false;
+    }
 
     if (d->enfuseProcess->exitCode() == 0)
     {
@@ -820,16 +821,14 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
         return true;
     }
 
-    errors = getProcessError(d->enfuseProcess);
+    errors = getProcessError(*(d->enfuseProcess));
     return false;
 }
 
-QString ActionThread::getProcessError(KProcess* const proc) const
+QString ActionThread::getProcessError(QProcess& proc) const
 {
-    if (!proc) return QString();
-
-    QString std = proc->readAll();
-    return (i18n("Cannot run %1:\n\n %2", proc->program()[0], std));
+    QString std = QString::fromLocal8Bit(proc.readAll());
+    return (i18n("Cannot run %1:\n\n %2", proc.program(), std));
 }
 
 /**

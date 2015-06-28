@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <kprocess.h>
+// #include <kprocess.h>
 
 // LibKDcraw includes
 
@@ -45,6 +45,8 @@
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
+
+class QProcess;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -98,7 +100,7 @@ private:
                         const EnfuseSettings& settings,
                         const QString& enfusePath, QString& errors);
 
-    QString getProcessError(KProcess* const proc) const;
+    QString getProcessError(QProcess& proc) const;
 
     float   getAverageSceneLuminance(const QUrl& url);
     bool    getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta);
