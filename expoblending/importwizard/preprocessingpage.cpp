@@ -33,14 +33,12 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QStyle>
+#include <QApplication>
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kdialog.h>
 #include <kvbox.h>
 #include <klocale.h>
-#include <QApplication>
 #include <kiconloader.h>
 #include <KConfig>
 #include <kpixmapsequence.h>
@@ -135,7 +133,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
     resetTitle();
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-preprocessing.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-preprocessing.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIExpoBlendingPlugin::ActionData)),

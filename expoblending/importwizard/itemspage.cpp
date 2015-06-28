@@ -32,11 +32,8 @@
 
 // KDE includes
 
-#include <kstandarddirs.h>
-#include <kdialog.h>
 #include <kvbox.h>
 #include <klocale.h>
-#include <QApplication>
 
 // Libkipi includes
 
@@ -85,7 +82,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-stack.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIExpoBlendingPlugin::ActionData)),

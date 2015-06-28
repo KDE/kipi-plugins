@@ -31,7 +31,6 @@
 
 // KDE includes
 
-#include <kstandarddirs.h>
 #include <kvbox.h>
 #include <klocale.h>
 
@@ -100,7 +99,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-tripod.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-stack.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 }
 

@@ -31,7 +31,6 @@
 
 // KDE includes
 
-#include <kstandarddirs.h>
 #include <kvbox.h>
 #include <klocale.h>
 
@@ -80,7 +79,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     setPageWidget(vbox);
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-enfuse.png");
+    QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromUtf8("kipiplugin_expoblending/pics/assistant-enfuse.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 }
 

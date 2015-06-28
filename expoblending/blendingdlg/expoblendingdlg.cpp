@@ -60,7 +60,6 @@ extern "C"
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
 #include <kde_file.h>

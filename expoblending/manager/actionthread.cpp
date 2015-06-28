@@ -57,7 +57,6 @@
 // KDE includes
 
 #include <klocale.h>
-#include <kstandarddirs.h>
 
 // LibKDcraw includes
 
