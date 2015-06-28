@@ -105,7 +105,7 @@ void Plugin_GoogleServices::setupActions()
     addAction("googledriveexport",m_actionGDriveExport);
     
     m_actionPicasaExport = new KAction(this);
-    m_actionPicasaExport->setText(i18n("Export to &PicasaWeb..."));
+    m_actionPicasaExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
     m_actionPicasaExport->setIcon(KIcon("kipi-picasa"));
     m_actionPicasaExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
 
@@ -115,7 +115,7 @@ void Plugin_GoogleServices::setupActions()
     addAction("picasawebexport", m_actionPicasaExport);
 
     m_actionPicasaImport = new KAction(this);
-    m_actionPicasaImport->setText(i18n("Import from &PicasaWeb..."));
+    m_actionPicasaImport->setText(i18n("Import from &Google Photos/PicasaWeb..."));
     m_actionPicasaImport->setIcon(KIcon("kipi-picasa"));
     m_actionPicasaImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
 
