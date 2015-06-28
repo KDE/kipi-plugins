@@ -7,7 +7,7 @@
  * Description : Autodetect align_image_stack binary program and version
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,14 +39,14 @@ class AlignBinary : public KPBinaryIface
 public:
 
     AlignBinary()
-        : KPBinaryIface(QString("align_image_stack"), 
-                        QString("0.8"), 
-                        QString("align_image_stack version "),
+        : KPBinaryIface(QStringLiteral("align_image_stack"),
+                        QStringLiteral("0.8"),
+                        QStringLiteral("align_image_stack version "),
                         1, 
-                        QString("Hugin"), 
-                        QString("http://hugin.sourceforge.net"),
-                        QString("ExpoBlending"), 
-                        QStringList("-h")
+                        QStringLiteral("Hugin"),
+                        QStringLiteral("http://hugin.sourceforge.net"),
+                        QStringLiteral("ExpoBlending"),
+                        QStringList(QStringLiteral("-h"))
                        )
         {
             setup();

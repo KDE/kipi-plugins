@@ -5,7 +5,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_expoblending\")
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_expoblending\" -DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
+remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
 
 add_subdirectory(icons)
 
@@ -48,7 +49,6 @@ add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 
 target_link_libraries(libexpoblending
                       KF5::Parts
-                      KF5::KDELibs4Support
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw

@@ -296,7 +296,7 @@ void ActionThread::run()
                     ActionData ad;
                     ad.action  = t->action;
                     ad.inUrls  = t->urls;
-                    ad.message = avLum.isEmpty() ? i18n("unknown") : avLum;
+                    ad.message = avLum.isEmpty() ? i18nc("average scene luminance value unknown", "unknown") : avLum;
                     ad.success = avLum.isEmpty();
                     emit finished(ad);
                     break;
@@ -411,7 +411,7 @@ void ActionThread::run()
                     KPMetadata meta;
                     meta.load(t->urls[0].toLocalFile());
                     result = result & meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
-                    result = result & meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace('\n', " ; "), false);
+                    result = result & meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace(QChar::fromLatin1('\n'), QLatin1String(" ; ")), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
 
                     if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
@@ -550,9 +550,9 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
         d->alignProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
         QStringList args;
-        args << "-v";
-        args << "-a";
-        args << "aligned";
+        args << QStringLiteral("-v");
+        args << QStringLiteral("-a");
+        args << QStringLiteral("aligned");
         for (const QUrl& url: d->mixedUrls)
         {
             args << url.toLocalFile();
@@ -582,9 +582,9 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
             QUrl alignedUrl = QUrl::fromLocalFile(
                 d->preprocessingTmpDir->path()
                 + QChar::fromLatin1('/')
-                + QString("aligned")
+                + QStringLiteral("aligned")
                 + QString::number(i).rightJustified(4, QChar::fromLatin1('0'))
-                + QString(".tif"));
+                + QStringLiteral(".tif"));
 
             if (!computePreview(alignedUrl, previewUrl))
             {
@@ -637,7 +637,12 @@ bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
 
 bool ActionThread::computePreview(const QUrl& inUrl, QUrl& outUrl)
 {
-    outUrl = QUrl::fromLocalFile(d->preprocessingTmpDir->path() + QChar::fromLatin1('/') + QChar::fromLatin1('.') + inUrl.fileName().replace('.', '_') + QString("-preview.jpg"));
+    outUrl = QUrl::fromLocalFile(
+        d->preprocessingTmpDir->path()
+        + QChar::fromLatin1('/')
+        + QChar::fromLatin1('.')
+        + inUrl.fileName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
+        + QStringLiteral("-preview.jpg"));
 
     QImage img;
 
@@ -702,7 +707,7 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecoding
 
         KPMetadata meta;
         meta.load(inUrl.toLocalFile());
-        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), QString::fromUtf8(kipiplugins_version));
         meta.setImageDimensions(QSize(width, height));
         meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
         meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
@@ -715,7 +720,12 @@ bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecoding
         wImageIface.setCancel(&d->cancel);
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl = QUrl::fromLocalFile(d->preprocessingTmpDir->path() + QChar::fromLatin1('/') + QString(".") + fi.completeBaseName().replace('.', '_') + QString(".tif"));
+        outUrl = QUrl::fromLocalFile(
+            d->preprocessingTmpDir->path()
+            + QChar::fromLatin1('/')
+            + QChar::fromLatin1('.')
+            + fi.completeBaseName().replace(QChar::fromLatin1('.'), QChar::fromLatin1('_'))
+            + QStringLiteral(".tif"));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
@@ -737,10 +747,12 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
     QString comp;
     QString ext = KPSaveSettingsWidget::extensionForFormat(settings.outputFormat);
 
-    if (ext == QString(".tif"))
-        comp = QString("--compression=DEFLATE");
+    if (ext == QStringLiteral(".tif"))
+    {
+        comp = QStringLiteral("--compression=DEFLATE");
+    }
 
-    outUrl.setPath(outUrl.adjusted(QUrl::RemoveFilename).path() + QString(".kipi-expoblending-tmp-") + QString::number(QDateTime::currentDateTime().toTime_t()) + ext);
+    outUrl.setPath(outUrl.adjusted(QUrl::RemoveFilename).path() + QStringLiteral(".kipi-expoblending-tmp-") + QString::number(QDateTime::currentDateTime().toTime_t()) + ext);
 
     d->enfuseProcess.reset(new QProcess());
     d->enfuseProcess->setWorkingDirectory(d->preprocessingTmpDir->path());
@@ -750,12 +762,12 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
     QStringList args;
     if (!settings.autoLevels)
     {
-        args << "-l";
+        args << QStringLiteral("-l");
         args << QString::number(settings.levels);
     }
     if (settings.ciecam02)
     {
-        args << "-c";
+        args << QStringLiteral("-c");
     }
     if (!comp.isEmpty())
     {
@@ -764,24 +776,24 @@ bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
     if (settings.hardMask)
     {
         if (d->enfuseVersion4x)
-            args << "--hard-mask";
+            args << QStringLiteral("--hard-mask");
         else
-            args << "--HardMask";
+            args << QStringLiteral("--HardMask");
     }
     if (d->enfuseVersion4x)
     {
-        args << QString("--exposure-weight=%1").arg(settings.exposure);
-        args << QString("--saturation-weight=%1").arg(settings.saturation);
-        args << QString("--contrast-weight=%1").arg(settings.contrast);
+        args << QStringLiteral("--exposure-weight=%1").arg(settings.exposure);
+        args << QStringLiteral("--saturation-weight=%1").arg(settings.saturation);
+        args << QStringLiteral("--contrast-weight=%1").arg(settings.contrast);
     }
     else
     {
-        args << QString("--wExposure=%1").arg(settings.exposure);
-        args << QString("--wSaturation=%1").arg(settings.saturation);
-        args << QString("--wContrast=%1").arg(settings.contrast);
+        args << QStringLiteral("--wExposure=%1").arg(settings.exposure);
+        args << QStringLiteral("--wSaturation=%1").arg(settings.saturation);
+        args << QStringLiteral("--wContrast=%1").arg(settings.contrast);
     }
-    args << "-v";
-    args << "-o";
+    args << QStringLiteral("-v");
+    args << QStringLiteral("-o");
     args << outUrl.toLocalFile();
 
     for (const QUrl& url: inUrls)

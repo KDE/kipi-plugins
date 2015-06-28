@@ -65,7 +65,7 @@ EnfuseStackItem::EnfuseStackItem(QTreeWidget* const parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
-    setThumbnail(SmallIcon("image-x-generic", treeWidget()->iconSize().width(), KIconLoader::DisabledState));
+    setThumbnail(SmallIcon(QStringLiteral("image-x-generic"), treeWidget()->iconSize().width(), KIconLoader::DisabledState));
     d->asValidThumb = false;
 }
 
@@ -80,7 +80,7 @@ void EnfuseStackItem::setEnfuseSettings(const EnfuseSettings& settings)
     setText(1, d->settings.targetFileName);
     setText(2, d->settings.inputImagesList());
     setToolTip(1, d->settings.asCommentString());
-    setToolTip(2, d->settings.inputImagesList().replace(" ; ", "\n"));
+    setToolTip(2, d->settings.inputImagesList().replace(QLatin1String(" ; "), QChar::fromLatin1('\n')));
 }
 
 EnfuseSettings EnfuseStackItem::enfuseSettings() const
@@ -145,7 +145,7 @@ struct EnfuseStackList::EnfuseStackListPriv
         : outputFormat(KPSaveSettingsWidget::OUTPUT_PNG),
           progressCount(0),
           progressTimer(0),
-          progressPix(KIconLoader::global()->loadPixmapSequence("process-working", KIconLoader::SizeSmallMedium)),
+          progressPix(KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium)),
           processItem(0)
     {}
 
@@ -205,14 +205,14 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
     EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
     if (item)
     {
-        QAction * rmItem = new QAction(QIcon::fromTheme("dialog-close"), i18nc("@item:inmenu", "Remove item"), this);
+        QAction * rmItem = new QAction(QIcon::fromTheme(QStringLiteral("dialog-close")), i18nc("@item:inmenu", "Remove item"), this);
         connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
-    QAction * rmAll = new QAction(QIcon::fromTheme("edit-delete-shred"), i18nc("@item:inmenu", "Clear all"), this);
+    QAction * rmAll = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete-shred")), i18nc("@item:inmenu", "Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 
@@ -360,7 +360,7 @@ void EnfuseStackList::processedItem(const QUrl& url, bool success)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)
-        item->setProcessedIcon(SmallIcon(success ? "dialog-ok" : "dialog-cancel"));
+        item->setProcessedIcon(SmallIcon(success ? QStringLiteral("dialog-ok") : QStringLiteral("dialog-cancel")));
 }
 
 void EnfuseStackList::setTemplateFileName(KPSaveSettingsWidget::OutputFormat frm, const QString& string)

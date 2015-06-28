@@ -96,12 +96,12 @@ void Plugin_ExpoBlending::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18nc("@action", "Blend Bracketed or Focus Stack Images..."));
-    m_action->setIcon(QIcon::fromTheme("kipi-expoblending"));
+    m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-expoblending")));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("expoblending", m_action);
+    addAction(QStringLiteral("expoblending"), m_action);
 }
 
 void Plugin_ExpoBlending::slotActivate()

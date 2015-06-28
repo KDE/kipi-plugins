@@ -39,16 +39,16 @@ bool EnfuseBinary::parseHeader(const QString& output)
 {
     // Work around Enfuse <= 3.2
     // The output look like this : ==== enfuse, version 3.2 ====
-    QString headerStartsOld("==== enfuse, version ");
-    QString firstLine = output.section('\n', m_headerLine, m_headerLine);
+    QString headerStartsOld = QStringLiteral("==== enfuse, version ");
+    QString firstLine = output.section(QChar::fromLatin1('\n'), m_headerLine, m_headerLine);
 
     qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
     if (firstLine.startsWith(m_headerStarts))
     {
         setVersion(firstLine.remove(0, m_headerStarts.length()));
-        QStringList versionList = version().split('.');
+        QStringList versionList = version().split(QChar::fromLatin1('.'));
         versionList.pop_back();
-        versionDouble = versionList.join(QString(".")).toDouble();
+        versionDouble = versionList.join(QChar::fromLatin1('.')).toDouble();
         emit signalEnfuseVersion(versionDouble);
         qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
         return true;
@@ -56,9 +56,9 @@ bool EnfuseBinary::parseHeader(const QString& output)
     else if (firstLine.startsWith(headerStartsOld))
     {
         setVersion(firstLine.remove(0, headerStartsOld.length()));
-        QStringList versionList = version().split('.');
+        QStringList versionList = version().split(QChar::fromLatin1('.'));
         versionList.pop_back();
-        versionDouble = versionList.join(QString(".")).toDouble();
+        versionDouble = versionList.join(QChar::fromLatin1('.')).toDouble();
         emit signalEnfuseVersion(versionDouble);
         qCDebug(KIPIPLUGINS_LOG) << "Found " << path() << " version: " << version();
         return true;

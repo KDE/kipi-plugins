@@ -40,14 +40,14 @@ class EnfuseBinary : public KPBinaryIface
 public:
 
     EnfuseBinary()
-    : KPBinaryIface(QString("enfuse"), 
-                    QString("3.2"), 
-                    QString("enfuse "),
+    : KPBinaryIface(QStringLiteral("enfuse"),
+                    QStringLiteral("3.2"),
+                    QStringLiteral("enfuse "),
                     0, 
-                    QString("Enblend"), 
-                    QString("http://enblend.sourceforge.net"),
-                    QString("ExpoBlending"), 
-                    QStringList("-V")),
+                    QStringLiteral("Enblend"),
+                    QStringLiteral("http://enblend.sourceforge.net"),
+                    QStringLiteral("ExpoBlending"),
+                    QStringList(QStringLiteral("-V"))),
       versionDouble(0)
         {
             setup();

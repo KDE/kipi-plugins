@@ -66,7 +66,7 @@ public:
 
     Private()
     {
-        progressPix   = KIconLoader::global()->loadPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix   = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
 //         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;
@@ -109,8 +109,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     d->title->setOpenExternalLinks(true);
     vbox->addWidget(d->title);
 
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group("ExpoBlending Settings");
     d->alignCheckBox  = new QCheckBox(i18nc("@option:check", "Align bracketed images"), this);
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
     vbox->addWidget(d->alignCheckBox);
@@ -156,8 +156,8 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
 
 PreProcessingPage::~PreProcessingPage()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group("ExpoBlending Settings");
     group.writeEntry("Auto Alignment", d->alignCheckBox->isChecked());
     config.sync();
 

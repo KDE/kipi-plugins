@@ -141,15 +141,15 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     setButtonText(   User1, i18nc("@action:button", "&Save"));
     setButtonToolTip(User1, i18nc("@info:tooltip", "Process and save selected items."));
-    setButtonIcon(   User1, QIcon::fromTheme("document-save"));
+    setButtonIcon(   User1, QIcon::fromTheme(QStringLiteral("document-save")));
 
     setButtonText(   User2, i18nc("@action:button", "&Preview"));
     setButtonToolTip(User2, i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings."));
-    setButtonIcon(   User2, QIcon::fromTheme("system-run"));
+    setButtonIcon(   User2, QIcon::fromTheme(QStringLiteral("system-run")));
 
     setButtonText(   User3, i18nc("@action:button", "&Abort"));
     setButtonToolTip(User3, i18nc("@info:tooltip", "Abort current process"));
-    setButtonIcon(   User3, QIcon::fromTheme("dialog-cancel"));
+    setButtonIcon(   User3, QIcon::fromTheme(QStringLiteral("dialog-cancel")));
 
     setButtonToolTip(Close, i18nc("@info:tooltip", "Close this tool"));
     setModal(false);
@@ -175,7 +175,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     d->settingsExpander             = new RExpanderBox(rightColumn->viewport());
     d->settingsExpander->setAlignment(Qt::AlignTop);
-    d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
+    d->settingsExpander->setObjectName(QStringLiteral("Exposure Blending Settings Expander"));
     panel->addWidget(d->settingsExpander, 1);
 
     d->enfuseSettingsBox            = new EnfuseSettingsWidget(d->settingsExpander);
@@ -201,10 +201,10 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     dummySaveWidget->setLayout(saveVBox);
 
-    d->settingsExpander->addItem(d->enfuseSettingsBox, i18nc("@title:group", "Enfuse Settings"), QString("expoblending"), true);
-    d->settingsExpander->addItem(dummySaveWidget,      i18nc("@title:group", "Save Settings"),   QString("savesettings"), true);
-    d->settingsExpander->setItemIcon(0, SmallIcon("kipi-expoblending"));
-    d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
+    d->settingsExpander->addItem(d->enfuseSettingsBox, i18nc("@title:group", "Enfuse Settings"), QStringLiteral("expoblending"), true);
+    d->settingsExpander->addItem(dummySaveWidget,      i18nc("@title:group", "Save Settings"),   QStringLiteral("savesettings"), true);
+    d->settingsExpander->setItemIcon(0, SmallIcon(QStringLiteral("kipi-expoblending")));
+    d->settingsExpander->setItemIcon(1, SmallIcon(QStringLiteral("document-save")));
     d->settingsExpander->addStretch();
 
     d->enfuseStack                  = new EnfuseStackList(rightColumn->viewport());
@@ -349,13 +349,13 @@ void ExpoBlendingDlg::slotDefault()
 {
     d->enfuseSettingsBox->resetToDefault();
     d->saveSettingsBox->resetToDefault();
-    d->templateFileName->setText("enfuse");
+    d->templateFileName->setText(QStringLiteral("enfuse"));
 }
 
 void ExpoBlendingDlg::readSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group("ExpoBlending Settings");
 
     d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
@@ -366,16 +366,16 @@ void ExpoBlendingDlg::readSettings()
     d->settingsExpander->readSettings();
 #endif
 
-    d->templateFileName->setText(group.readEntry("Template File Name", QString("enfuse")));
+    d->templateFileName->setText(group.readEntry("Template File Name", QStringLiteral("enfuse")));
 
-    KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
+    KConfigGroup group2 = config.group("ExpoBlending Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void ExpoBlendingDlg::saveSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group("ExpoBlending Settings");
 
     d->enfuseSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
@@ -388,7 +388,7 @@ void ExpoBlendingDlg::saveSettings()
 
     group.writeEntry("Template File Name", d->templateFileName->text());
 
-    KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
+    KConfigGroup group2 = config.group("ExpoBlending Dialog");
     KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }

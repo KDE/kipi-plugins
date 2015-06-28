@@ -46,17 +46,17 @@ public:
     {
          addAuthor(i18n("Gilles Caulier"),
                    i18n("Author"),
-                   "caulier dot gilles at gmail dot com");
+                   QStringLiteral("caulier dot gilles at gmail dot com"));
 
          addAuthor(i18n("Johannes Wienke"),
                    i18n("Developer"),
-                   "languitar at semipol dot de");
+                   QStringLiteral("languitar at semipol dot de"));
 
          addAuthor(i18n("Benjamin Girault"),
                    i18n("Developer"),
-                   "benjamin dot girault at gmail dot com");
+                   QStringLiteral("benjamin dot girault at gmail dot com"));
 
-         setHandbookEntry("expoblending");
+         setHandbookEntry(QStringLiteral("expoblending"));
     }
 
     ~ExpoBlendingAboutData()
