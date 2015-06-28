@@ -61,9 +61,9 @@ K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleServices>(); )
 K_EXPORT_PLUGIN(GoogleDriveFactory("kipiplugin_googleservices"))
 
 Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent,const QVariantList& /*args*/)
-    : Plugin(GoogleDriveFactory::componentData(), parent, "Google Drive Export")
+    : Plugin(GoogleDriveFactory::componentData(), parent, "Google Services Export")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive/PicasaWeb Plugin Loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive/PicasaWeb(Google Photos) Plugin Loaded";
 
     KIconLoader::global()->addAppDir("kipiplugin_googleservices");
     setUiBaseName("kipiplugin_googleservicesui.rc");
