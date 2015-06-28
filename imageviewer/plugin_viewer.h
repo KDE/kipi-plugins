@@ -24,20 +24,18 @@
 #ifndef PLUGIN_VIEWER_H
 #define PLUGIN_VIEWER_H
 
-// Qt includes
-
-#include <QVariant>
-
 // Libkipi includes
-
 #include <plugin.h>
+
+// Qt includes
+#include <QVariant>
 
 using namespace KIPI;
 
 namespace KIPIViewerPlugin
 {
 
-class Plugin_viewer :public Plugin
+class Plugin_viewer : public Plugin
 {
     Q_OBJECT
 

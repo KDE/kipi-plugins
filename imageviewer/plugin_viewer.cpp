@@ -23,23 +23,23 @@
 
 #include "plugin_viewer.h"
 
-// KDE includes
-
-#include <QAction>
-#include <kactioncollection.h>
-#include "kipiplugins_debug.h"
-#include <kgenericfactory.h>
-#include <kmessagebox.h>
-#include <QUrl>
+// Local includes
+#include "viewerwidget.h"
 
 // Libkipi includes
 
 #include <interface.h>
 #include <imagecollection.h>
+#include <kipiplugins_debug.h>
 
-// Local includes
+// KDE includes
+#include <KPluginFactory>
+#include <KMessageBox>
+#include <KLocalizedString>
 
-#include "viewerwidget.h"
+// Qt includes
+#include <QUrl>
+#include <QAction>
 
 namespace KIPIViewerPlugin
 {

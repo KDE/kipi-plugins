@@ -23,33 +23,31 @@
 
 #include "viewerwidget.h"
 
-// Qt includes
+// Local includes
+#include "timer.h"
+#include "texture.h"
+#include "helpdialog.h"
 
-#include <QDesktopWidget>
-#include <QPointer>
-#include <QtCore/QUrl>
-#include <QtCore/QList>
-#include <QtCore/QDir>
+// Libkipi includes
+#include <imagecollection.h>
+#include <interface.h>
+#include <pluginloader.h>
 
 // KDE includes
-
 #include "kipiplugins_debug.h"
 #include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
-// Libkipi includes
-
-#include <imagecollection.h>
-#include <interface.h>
-#include <pluginloader.h>
-
-// Local includes
-
-#include "timer.h"
-#include "texture.h"
-#include "helpdialog.h"
+// Qt includes
+#include <QDesktopWidget>
+#include <QPointer>
+#include <QtCore/QUrl>
+#include <QtCore/QList>
+#include <QtCore/QDir>
+#include <QtCore/QMimeDatabase>
+#include <QtCore/QMimeType>
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5
@@ -197,14 +195,14 @@ ViewerWidget::ViewerWidget()
         }
 
         // only add images to d->files
-        KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(s));
-        bool isImage        = type->name().contains("image", Qt::CaseInsensitive);
+        QString mimeTypeName = QMimeDatabase().mimeTypeForUrl(QUrl::fromLocalFile(s)).name();
+        bool isImage        = mimeTypeName.contains("image", Qt::CaseInsensitive);
 
         if ( isImage )
         {
             d->files.append(s);
             foundNumber++;  //counter for searching the start image in case one image is selected
-            qCDebug(KIPIPLUGINS_LOG) << s << " type=" << type->name() ;
+            qCDebug(KIPIPLUGINS_LOG) << s << " type=" << mimeTypeName;
         }
     }
 

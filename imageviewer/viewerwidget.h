@@ -24,24 +24,18 @@
 #ifndef VIEWERWIDGET_H
 #define VIEWERWIDGET_H
 
-// Qt includes
+// Local includes
+#include "texture.h"
+#include "global.h"
 
+// Qt includes
 #include <QCursor>
 #include <QDir>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QTimer>
 #include <QWheelEvent>
-
-// KDE includes
-
 #include <QUrl>
-#include <kmimetype.h>
-
-// Local includes
-
-#include "texture.h"
-#include "global.h"
 
 using namespace KIPI;
 
