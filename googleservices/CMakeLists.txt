@@ -8,7 +8,7 @@ subdirs(icons)
 
 include_directories(${QJSON_INCLUDE_DIR})
 
-set(kipiplugin_googledrive_PART_SRCS
+set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
     replacedialog.cpp
     mpform_gdrive.cpp
@@ -21,9 +21,9 @@ set(kipiplugin_googledrive_PART_SRCS
     picasawebtalker.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_googledrive ${kipiplugin_googledrive_PART_SRCS})
+KDE4_ADD_PLUGIN(kipiplugin_googleservices ${kipiplugin_googleservices_PART_SRCS})
 
-target_link_libraries(kipiplugin_googledrive
+target_link_libraries(kipiplugin_googleservices
                       ${KDCRAW_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -33,8 +33,8 @@ target_link_libraries(kipiplugin_googledrive
                       kipiplugins
                      )
 
-configure_file(kipiplugin_googledrive.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googledrive.desktop)
+configure_file(kipiplugin_googleservices.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop)
 
-install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googledrive.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(TARGETS kipiplugin_googledrive                                     DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kipiplugin_googledriveui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_googleservices                                     DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   kipiplugin_googleservicesui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
