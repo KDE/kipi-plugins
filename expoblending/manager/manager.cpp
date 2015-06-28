@@ -23,8 +23,6 @@
 
 #include "manager.h"
 
-#include <kurl.h>
-
 // Libkipi includes
 
 #include <interface.h>
@@ -45,14 +43,13 @@ class Manager::ManagerPriv
 public:
 
     ManagerPriv()
-    {
-        iface  = 0;
-        thread = 0;
-        wizard = 0;
-        dlg    = 0;
-    }
+        : iface(0),
+          thread(0),
+          wizard(0),
+          dlg(0)
+    {}
 
-    KUrl::List             inputUrls;
+    QList<QUrl>            inputUrls;
 
     ItemUrlsMap            preProcessedUrlsMap;
 
@@ -70,7 +67,8 @@ public:
 };
 
 Manager::Manager(QObject* const parent)
-       : QObject(parent), d(new ManagerPriv)
+    : QObject(parent),
+      d(new ManagerPriv)
 {
     d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
@@ -123,12 +121,12 @@ Interface* Manager::iface() const
     return d->iface;
 }
 
-void Manager::setItemsList(const KUrl::List& urls)
+void Manager::setItemsList(const QList<QUrl>& urls)
 {
     d->inputUrls = urls;
 }
 
-KUrl::List Manager::itemsList() const
+QList<QUrl>& Manager::itemsList() const
 {
     return d->inputUrls;
 }
@@ -148,7 +146,7 @@ void Manager::setPreProcessedMap(const ItemUrlsMap& urls)
     d->preProcessedUrlsMap = urls;
 }
 
-ItemUrlsMap Manager::preProcessedMap() const
+ItemUrlsMap& Manager::preProcessedMap() const
 {
     return d->preProcessedUrlsMap;
 }

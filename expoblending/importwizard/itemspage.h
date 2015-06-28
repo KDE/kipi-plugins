@@ -7,6 +7,7 @@
  * Description : a plugin to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,10 +27,6 @@
 // Local includes
 
 #include "kpwizardpage.h"
-
-// KDE includes
-
-#include <kurl.h>
 
 // Local includes
 
@@ -51,7 +48,7 @@ public:
     ItemsPage(Manager* const mngr, KAssistantDialog* const dlg);
     ~ItemsPage();
 
-    KUrl::List itemUrls() const;
+    QList<QUrl> itemUrls() const;
 
 Q_SIGNALS:
 
@@ -59,13 +56,13 @@ Q_SIGNALS:
 
 private:
 
-    void setIdentity(const KUrl& url, const QString& identity);
+    void setIdentity(const QUrl& url, const QString& identity);
 
 private Q_SLOTS:
 
     void slotSetupList();
     void slotImageListChanged();
-    void slotAddItems(const KUrl::List&);
+    void slotAddItems(const QList<QUrl>&);
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
 
 private:

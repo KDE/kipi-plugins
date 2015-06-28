@@ -52,15 +52,12 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class ItemsPage::ItemsPagePriv
+struct ItemsPage::ItemsPagePriv
 {
-public:
-
     ItemsPagePriv()
-    {
-        list = 0;
-        mngr = 0;
-    }
+        : list(0),
+          mngr(0)
+    {}
 
     KPImagesList* list;
 
@@ -68,8 +65,8 @@ public:
 };
 
 ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
-         : KPWizardPage(dlg, i18n("<b>Set Bracketed Images</b>")),
-           d(new ItemsPagePriv)
+    : KPWizardPage(dlg, i18n("<b>Set Bracketed Images</b>")),
+      d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
     KVBox* vbox    = new KVBox(this);
@@ -97,8 +94,8 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
     connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->list, SIGNAL(signalAddItems(KUrl::List)),
-            this, SLOT(slotAddItems(KUrl::List)));
+    connect(d->list, SIGNAL(signalAddItems(const QList<QUrl>&)),
+            this, SLOT(slotAddItems(const QList<QUrl>&)));
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -116,7 +113,7 @@ void ItemsPage::slotSetupList()
     slotAddItems(d->mngr->itemsList());
 }
 
-void ItemsPage::slotAddItems(const KUrl::List& urls)
+void ItemsPage::slotAddItems(const QList<QUrl>& urls)
 {
     if (!urls.empty())
     {
@@ -128,21 +125,23 @@ void ItemsPage::slotAddItems(const KUrl::List& urls)
     slotImageListChanged();
 }
 
-KUrl::List ItemsPage::itemUrls() const
+QList<QUrl> ItemsPage::itemUrls() const
 {
     return d->list->imageUrls();
 }
 
-void ItemsPage::setIdentity(const KUrl& url, const QString& identity)
+void ItemsPage::setIdentity(const QUrl& url, const QString& identity)
 {
-    KPImagesListViewItem* item = d->list->listView()->findItem(QUrl::fromLocalFile(url.toLocalFile()));
+    KPImagesListViewItem* item = d->list->listView()->findItem(url);
     if (item)
+    {
         item->setText(KPImagesListView::User1, identity);
+    }
 }
 
 void ItemsPage::slotImageListChanged()
 {
-    emit signalItemsPageIsValid( d->list->imageUrls().count() > 1 );
+    emit signalItemsPageIsValid(d->list->imageUrls().count() > 1);
 }
 
 void ItemsPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)

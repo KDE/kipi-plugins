@@ -50,18 +50,15 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class ImportWizardDlg::ImportWizardDlgPriv
+struct ImportWizardDlg::ImportWizardDlgPriv
 {
-public:
-
     ImportWizardDlgPriv()
-    {
-        mngr              = 0;
-        introPage         = 0;
-        itemsPage         = 0;
-        preProcessingPage = 0;
-        lastPage          = 0;
-    }
+        : mngr(0),
+          introPage(0),
+          itemsPage(0),
+          preProcessingPage(0),
+          lastPage(0)
+    {}
 
     Manager*           mngr;
 
@@ -72,7 +69,8 @@ public:
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
-    : KPWizardDialog(parent), d(new ImportWizardDlgPriv)
+    : KPWizardDialog(parent),
+      d(new ImportWizardDlgPriv)
 {
     setModal(false);
     setWindowTitle(i18n("Exposure Blending Import Wizard"));
@@ -116,7 +114,7 @@ Manager* ImportWizardDlg::manager() const
     return d->mngr;
 }
 
-KUrl::List ImportWizardDlg::itemUrls() const
+QList<QUrl> ImportWizardDlg::itemUrls() const
 {
     return d->itemsPage->itemUrls();
 }

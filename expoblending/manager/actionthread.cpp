@@ -42,6 +42,7 @@
 
 // Qt includes
 
+#include <QPair>
 #include <QMutex>
 #include <QMutexLocker>
 #include <QWaitCondition>
@@ -51,12 +52,12 @@
 #include <QPointer>
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
+#include <QTemporaryDir>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <ktempdir.h>
 
 // LibKDcraw includes
 
@@ -71,87 +72,72 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class ActionThread::Private
+struct ActionThread::Private
 {
-public:
-
     Private()
-    {
-        align               = true;
-        cancel              = false;
-        enfuseVersion4x     = true;
-        enfuseProcess       = 0;
-        alignProcess        = 0;
-        preprocessingTmpDir = 0;
-    }
+        : cancel(false),
+          align(false),
+          enfuseVersion4x(true),
+          enfuseProcess(0),
+          alignProcess(0)
+    {}
 
-    class Task
+    struct Task
     {
-        public:
-
-            bool                align;
-            KUrl::List          urls;
-            KUrl                outputUrl;
-            QString             binaryPath;
-            Action              action;
-            RawDecodingSettings rawDecodingSettings;
-            EnfuseSettings      enfuseSettings;
+        bool                        align;
+        QList<QUrl>                 urls;
+        QUrl                        outputUrl;
+        QString                     binaryPath;
+        Action                      action;
+        RawDecodingSettings         rawDecodingSettings;
+        EnfuseSettings              enfuseSettings;
     };
 
-    bool                             cancel;
-    bool                             align;
-    bool                             enfuseVersion4x;
+    bool                            cancel;
+    bool                            align;
+    bool                            enfuseVersion4x;
 
-    QMutex                           mutex;
-    QMutex                           lock;
+    QMutex                          mutex;
+    QMutex                          lock;
 
-    QWaitCondition                   condVar;
+    QWaitCondition                  condVar;
 
-    QList<Task*>                     todo;
+    QList<Task*>                    todo;
 
-    KProcess*                        enfuseProcess;
-    KProcess*                        alignProcess;
+    KProcess*                       enfuseProcess;
+    KProcess*                       alignProcess;
 
     /**
      * A list of all running raw instances. Only access this variable via
      * <code>mutex</code>.
      */
-    QList<QPointer<KDcraw> >         rawProcesses;
+    QList<QPointer<KDcraw> >        rawProcesses;
 
-    KTempDir*                        preprocessingTmpDir;
+    QSharedPointer<QTemporaryDir>   preprocessingTmpDir;
 
     /**
      * List of results files produced by enfuse that may need cleaning.
      * Only access this through the provided mutex.
      */
-    KUrl::List                       enfuseTmpUrls;
-    QMutex                           enfuseTmpUrlsMutex;
+    QList<QUrl>                     enfuseTmpUrls;
+    QMutex                          enfuseTmpUrlsMutex;
 
-    RawDecodingSettings              rawDecodingSettings;
+    RawDecodingSettings             rawDecodingSettings;
 
     // Preprocessing
-    KUrl::List                       mixedUrls;     // Original non-RAW + Raw converted urls to align.
-    ItemUrlsMap                      preProcessedUrlsMap;
-    void cleanAlignTmpDir()
-    {
-        if (preprocessingTmpDir)
-        {
-            preprocessingTmpDir->unlink();
-            delete preprocessingTmpDir;
-            preprocessingTmpDir = 0;
-        }
-    }
+    QList<QUrl>                     mixedUrls;     // Original non-RAW + Raw converted urls to align.
+    ItemUrlsMap                     preProcessedUrlsMap;
 };
 
 ActionThread::ActionThread(QObject* const parent)
-            : QThread(parent), d(new Private)
+    : QThread(parent),
+      d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }
 
 ActionThread::~ActionThread()
 {
-
     qCDebug(KIPIPLUGINS_LOG) << "ActionThread shutting down."
              << "Canceling all actions and waiting for them";
 
@@ -161,8 +147,6 @@ ActionThread::~ActionThread()
     wait();
 
     qCDebug(KIPIPLUGINS_LOG) << "Thread finished";
-
-    d->cleanAlignTmpDir();
 
     cleanUpResultFiles();
 
@@ -178,10 +162,10 @@ void ActionThread::cleanUpResultFiles()
 {
     // Cleanup all tmp files created by Enfuse process.
     QMutexLocker(&d->enfuseTmpUrlsMutex);
-    foreach(const KUrl& url, d->enfuseTmpUrls)
+    for (QUrl& url: d->enfuseTmpUrls)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Removing temp file " << url.toLocalFile();
-        KTempDir::removeDir(url.toLocalFile());
+        QFile(url.toLocalFile()).remove();
     }
     d->enfuseTmpUrls.clear();
 }
@@ -192,9 +176,9 @@ void ActionThread::setPreProcessingSettings(bool align, const RawDecodingSetting
     d->rawDecodingSettings = settings;
 }
 
-void ActionThread::identifyFiles(const KUrl::List& urlList)
+void ActionThread::identifyFiles(const QList<QUrl>& urlList)
 {
-    foreach(const KUrl& url, urlList)
+    for (const QUrl& url: urlList)
     {
         Private::Task* const t = new Private::Task;
         t->action              = IDENTIFY;
@@ -206,7 +190,7 @@ void ActionThread::identifyFiles(const KUrl::List& urlList)
     }
 }
 
-void ActionThread::loadProcessed(const KUrl& url)
+void ActionThread::loadProcessed(const QUrl& url)
 {
     Private::Task* const t = new Private::Task;
     t->action              = LOAD;
@@ -217,7 +201,7 @@ void ActionThread::loadProcessed(const KUrl& url)
     d->condVar.wakeAll();
 }
 
-void ActionThread::preProcessFiles(const KUrl::List& urlList, const QString& alignPath)
+void ActionThread::preProcessFiles(const QList<QUrl>& urlList, const QString& alignPath)
 {
     Private::Task* const t = new Private::Task;
     t->action              = PREPROCESSING;
@@ -231,7 +215,7 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList, const QString& ali
     d->condVar.wakeAll();
 }
 
-void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+void ActionThread::enfusePreview(const QList<QUrl>& alignedUrls, const QUrl& outputUrl,
                                  const EnfuseSettings& settings, const QString& enfusePath)
 {
     Private::Task* const t = new Private::Task;
@@ -246,7 +230,7 @@ void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outp
     d->condVar.wakeAll();
 }
 
-void ActionThread::enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+void ActionThread::enfuseFinal(const QList<QUrl>& alignedUrls, const QUrl& outputUrl,
                                const EnfuseSettings& settings, const QString& enfusePath)
 {
     Private::Task* const t = new Private::Task;
@@ -273,7 +257,7 @@ void ActionThread::cancel()
     if (d->alignProcess)
         d->alignProcess->kill();
 
-    foreach(QPointer<KDcraw> rawProcess, d->rawProcesses)
+    for (QPointer<KDcraw>& rawProcess: d->rawProcesses)
     {
         if (rawProcess)
         {
@@ -310,7 +294,7 @@ void ActionThread::run()
 
                     if (!t->urls.isEmpty())
                     {
-                        float val = getAverageSceneLuminance(t->urls[0].toLocalFile());
+                        float val = getAverageSceneLuminance(t->urls[0]);
                         if (val != -1)
                             avLum.setNum(log2f(val), 'g', 2);
                     }
@@ -383,7 +367,7 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QString errors;
-                    KUrl    destUrl         = t->outputUrl;
+                    QUrl    destUrl         = t->outputUrl;
                     EnfuseSettings settings = t->enfuseSettings;
                     settings.outputFormat   = KPSaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
                     bool result             = startEnfuse(t->urls, destUrl, settings, t->binaryPath, errors);
@@ -406,7 +390,7 @@ void ActionThread::run()
                     ActionData ad2;
                     ad2.action         = ENFUSEPREVIEW;
                     ad2.inUrls         = t->urls;
-                    ad2.outUrls        = KUrl::List() << destUrl;
+                    ad2.outUrls        = QList<QUrl>() << destUrl;
                     ad2.success        = result;
                     ad2.message        = errors;
                     ad2.enfuseSettings = t->enfuseSettings;
@@ -423,7 +407,7 @@ void ActionThread::run()
                     ad1.enfuseSettings = t->enfuseSettings;
                     emit starting(ad1);
 
-                    KUrl    destUrl = t->outputUrl;
+                    QUrl    destUrl = t->outputUrl;
                     bool    result  = false;
                     QString errors;
 
@@ -453,7 +437,7 @@ void ActionThread::run()
                     ActionData ad2;
                     ad2.action         = ENFUSEFINAL;
                     ad2.inUrls         = t->urls;
-                    ad2.outUrls        = KUrl::List() << destUrl;
+                    ad2.outUrls        = QList<QUrl>() << destUrl;
                     ad2.success        = result;
                     ad2.message        = errors;
                     ad2.enfuseSettings = t->enfuseSettings;
@@ -473,7 +457,7 @@ void ActionThread::run()
     }
 }
 
-void ActionThread::preProcessingMultithreaded(const KUrl& url, volatile bool& error, const RawDecodingSettings& settings)
+void ActionThread::preProcessingMultithreaded(const QUrl& url, volatile bool& error, const RawDecodingSettings& settings)
 {
     if (error)
     {
@@ -482,7 +466,7 @@ void ActionThread::preProcessingMultithreaded(const KUrl& url, volatile bool& er
 
     if (KPMetadata::isRawFile(QUrl::fromLocalFile(url.toLocalFile())))
     {
-        KUrl preprocessedUrl, previewUrl;
+        QUrl preprocessedUrl, previewUrl;
 
         if (!convertRaw(url, preprocessedUrl, settings))
         {
@@ -505,7 +489,7 @@ void ActionThread::preProcessingMultithreaded(const KUrl& url, volatile bool& er
     else
     {
         // NOTE: in this case, preprocessed Url is original file Url.
-        KUrl previewUrl;
+        QUrl previewUrl;
 
         if (!computePreview(url, previewUrl))
         {
@@ -521,16 +505,16 @@ void ActionThread::preProcessingMultithreaded(const KUrl& url, volatile bool& er
     }
 }
 
-bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
+bool ActionThread::startPreProcessing(const QList<QUrl>& inUrls,
                                       bool align, const RawDecodingSettings& settings,
                                       const QString& alignPath, QString& errors)
 {
-    QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-preprocessing-tmp-") +
-                                                       QString::number(QDateTime::currentDateTime().toTime_t()));
+    QString prefix = QDir::tempPath() +
+                     QChar::fromLatin1('/') +
+                     QString::fromUtf8("kipi-expoblending-tmp-") +
+                     QString::number(QDateTime::currentDateTime().toTime_t());
 
-    d->cleanAlignTmpDir();
-
-    d->preprocessingTmpDir = new KTempDir(prefix);
+    d->preprocessingTmpDir = QSharedPointer<QTemporaryDir>(new QTemporaryDir(prefix));
 
     // Pre-process RAW files if necessary. Parallelized with OpemMP if available.
     d->mixedUrls.clear();
@@ -542,7 +526,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
 
     for (int i = 0; i < inUrls.size(); ++i)
     {
-        KUrl url = inUrls.at(i);
+        QUrl url = inUrls.at(i);
 
         tasks.append(QtConcurrent::run(this,
                                        &ActionThread::preProcessingMultithreaded,
@@ -552,8 +536,10 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
                                       ));
     }
 
-    foreach(QFuture<void> t, tasks)
+    for (QFuture<void>& t: tasks)
+    {
         t.waitForFinished();
+    }
 
     if (error)
     {
@@ -566,7 +552,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
 
         d->alignProcess = new KProcess;
         d->alignProcess->clearProgram();
-        d->alignProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
+        d->alignProcess->setWorkingDirectory(d->preprocessingTmpDir->path());
         d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
         QStringList args;
@@ -575,7 +561,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
         args << "-a";
         args << "aligned";
 
-        foreach(const KUrl& url, d->mixedUrls)
+        for (const QUrl& url: d->mixedUrls)
         {
             args << url.toLocalFile();
         }
@@ -589,18 +575,26 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
         if (!d->alignProcess->waitForFinished(-1))
         {
             errors = getProcessError(d->alignProcess);
+            qCDebug(KIPIPLUGINS_LOG) << "align_image_stack error: " << errors;
             return false;
         }
+        qCDebug(KIPIPLUGINS_LOG) << "OK";
 
         uint    i=0;
         QString temp;
         d->preProcessedUrlsMap.clear();
 
-        foreach(const KUrl& url, inUrls)
+        for (const QUrl& url: inUrls)
         {
-            KUrl previewUrl;
-            KUrl alignedUrl = KUrl(d->preprocessingTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif"));
+            QUrl previewUrl;
+            QUrl alignedUrl = QUrl::fromLocalFile(
+                d->preprocessingTmpDir->path()
+                + QChar::fromLatin1('/')
+                + QString("aligned")
+                + QString::number(i).rightJustified(4, QChar::fromLatin1('0'))
+                + QString(".tif"));
 
+            qCDebug(KIPIPLUGINS_LOG) << previewUrl << "=>" << alignedUrl;
             if (!computePreview(alignedUrl, previewUrl))
                 return false;
 
@@ -608,11 +602,12 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
             i++;
         }
 
-        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = d->preProcessedUrlsMap.constBegin() ; it != d->preProcessedUrlsMap.constEnd(); ++it)
+        for (const QUrl& inputUrl: d->preProcessedUrlsMap.keys())
         {
-            qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: " << it.key() << " , "
-                                                          << it.value().preprocessedUrl << " , "
-                                                          << it.value().previewUrl << " ; ";
+            qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: "
+                                     << inputUrl << "=>"
+                                     << d->preProcessedUrlsMap[inputUrl].preprocessedUrl << ","
+                                     << d->preProcessedUrlsMap[inputUrl].previewUrl << ";";
         }
 
         qCDebug(KIPIPLUGINS_LOG) << "Align exit status    : " << d->alignProcess->exitStatus();
@@ -632,11 +627,12 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
     }
     else
     {
-        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = d->preProcessedUrlsMap.constBegin() ; it != d->preProcessedUrlsMap.constEnd(); ++it)
+        for (const QUrl& inputUrl: d->preProcessedUrlsMap.keys())
         {
-            qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: " << it.key() << " , "
-                                                          << it.value().preprocessedUrl << " , "
-                                                          << it.value().previewUrl << " ; ";
+            qCDebug(KIPIPLUGINS_LOG) << "Pre-processed output urls map: "
+                                     << inputUrl << "=>"
+                                     << d->preProcessedUrlsMap[inputUrl].preprocessedUrl << ","
+                                     << d->preProcessedUrlsMap[inputUrl].previewUrl << ";";
         }
 
         qCDebug(KIPIPLUGINS_LOG) << "Alignment not performed.";
@@ -644,11 +640,10 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls,
     }
 }
 
-bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
+bool ActionThread::computePreview(const QUrl& inUrl, QUrl& outUrl)
 {
-    outUrl = d->preprocessingTmpDir->name();
-    QFileInfo fi(inUrl.toLocalFile());
-    outUrl.setFileName(QString(".") + fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
+    outUrl = QUrl::fromLocalFile(d->preprocessingTmpDir->path() + QChar::fromLatin1('/') + QChar::fromLatin1('.') + inUrl.fileName().replace('.', '_') + QString("-preview.jpg"));
+    qCDebug(KIPIPLUGINS_LOG) << "ComputePreview:" << inUrl << "=>" << outUrl;
 
     QImage img;
 
@@ -670,11 +665,12 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
         qCDebug(KIPIPLUGINS_LOG) << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
     }
+    qCDebug(KIPIPLUGINS_LOG) << "Input image not loaded:" << inUrl;
 
     return false;
 }
 
-bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings)
+bool ActionThread::convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecodingSettings& settings)
 {
     int        width, height, rgbmax;
     QByteArray imageData;
@@ -724,9 +720,8 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         KPWriteImage wImageIface;
         wImageIface.setCancel(&d->cancel);
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
-        outUrl = d->preprocessingTmpDir->name();
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl.setFileName(QString(".") + fi.completeBaseName().replace('.', '_') + QString(".tif"));
+        outUrl = QUrl::fromLocalFile(d->preprocessingTmpDir->path() + QChar::fromLatin1('/') + QString(".") + fi.completeBaseName().replace('.', '_') + QString(".tif"));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
@@ -741,7 +736,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
     return true;
 }
 
-bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
+bool ActionThread::startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
                                const EnfuseSettings& settings,
                                const QString& enfusePath, QString& errors)
 {
@@ -751,7 +746,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     if (ext == QString(".tif"))
         comp = QString("--compression=DEFLATE");
 
-    outUrl.setFileName(QString(".kipi-expoblending-tmp-") + QString::number(QDateTime::currentDateTime().toTime_t()) + ext);
+    outUrl.setPath(outUrl.adjusted(QUrl::RemoveFilename).path() + QString(".kipi-expoblending-tmp-") + QString::number(QDateTime::currentDateTime().toTime_t()) + ext);
 
     d->enfuseProcess = new KProcess;
     d->enfuseProcess->clearProgram();
@@ -796,8 +791,10 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     args << "-o";
     args << outUrl.toLocalFile();
 
-    foreach(const KUrl& url, inUrls)
+    for (const QUrl& url: inUrls)
+    {
         args << url.toLocalFile();
+    }
 
     d->enfuseProcess->setProgram(args);
 
@@ -858,7 +855,7 @@ QString ActionThread::getProcessError(KProcess* const proc) const
  *
  * F-number and shutter speed are mandatory in exif data for EV calculation, iso is not.
  */
-float ActionThread::getAverageSceneLuminance(const KUrl& url)
+float ActionThread::getAverageSceneLuminance(const QUrl& url)
 {
     KPMetadata meta;
     meta.load(url.toLocalFile());

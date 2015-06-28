@@ -48,14 +48,11 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseStackItem::EnfuseStackItemPriv
+struct EnfuseStackItem::EnfuseStackItemPriv
 {
-public:
-
     EnfuseStackItemPriv()
-    {
-        asValidThumb = false;
-    }
+        : asValidThumb(false)
+    {}
 
     bool           asValidThumb;
     QPixmap        thumb;
@@ -63,7 +60,8 @@ public:
 };
 
 EnfuseStackItem::EnfuseStackItem(QTreeWidget* const parent)
-    : QTreeWidgetItem(parent), d(new EnfuseStackItemPriv)
+    : QTreeWidgetItem(parent),
+      d(new EnfuseStackItemPriv)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
@@ -90,7 +88,7 @@ EnfuseSettings EnfuseStackItem::enfuseSettings() const
     return d->settings;
 }
 
-KUrl EnfuseStackItem::url() const
+const QUrl& EnfuseStackItem::url() const
 {
     return d->settings.previewUrl;
 }
@@ -141,32 +139,29 @@ void EnfuseStackItem::setOn(bool b)
 
 // -------------------------------------------------------------------------
 
-class EnfuseStackList::EnfuseStackListPriv
+struct EnfuseStackList::EnfuseStackListPriv
 {
-public:
-
     EnfuseStackListPriv()
-    {
-        outputFormat = KPSaveSettingsWidget::OUTPUT_PNG;
-//         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
-        progressPix   = KIconLoader::global()->loadPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
-        progressCount = 0;
-        progressTimer = 0;
-        processItem   = 0;
-    }
+        : outputFormat(KPSaveSettingsWidget::OUTPUT_PNG),
+          progressCount(0),
+          progressTimer(0),
+          progressPix(KIconLoader::global()->loadPixmapSequence("process-working", KIconLoader::SizeSmallMedium)),
+          processItem(0)
+    {}
 
-    KPSaveSettingsWidget::OutputFormat outputFormat;
+    KPSaveSettingsWidget::OutputFormat  outputFormat;
 
-    QString                          templateFileName;
+    QString                             templateFileName;
 
-    int                              progressCount;
-    QTimer*                          progressTimer;
-    KPixmapSequence                  progressPix;
-    EnfuseStackItem*                 processItem;
+    int                                 progressCount;
+    QTimer*                             progressTimer;
+    KPixmapSequence                     progressPix;
+    EnfuseStackItem*                    processItem;
 };
 
 EnfuseStackList::EnfuseStackList(QWidget* const parent)
-    : QTreeWidget(parent), d(new EnfuseStackListPriv)
+    : QTreeWidget(parent),
+      d(new EnfuseStackListPriv)
 {
     d->progressTimer = new QTimer(this);
 
@@ -267,20 +262,20 @@ void EnfuseStackList::clearSelected()
         delete item;
 }
 
-void EnfuseStackList::setOnItem(const KUrl& url, bool on)
+void EnfuseStackList::setOnItem(const QUrl& url, bool on)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)
         item->setOn(on);
 }
 
-void EnfuseStackList::removeItem(const KUrl& url)
+void EnfuseStackList::removeItem(const QUrl& url)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     delete item;
 }
 
-void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
+void EnfuseStackList::addItem(const QUrl& url, const EnfuseSettings& settings)
 {
     if (!url.isValid())
         return;
@@ -302,7 +297,7 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
     }
 }
 
-void EnfuseStackList::setThumbnail(const KUrl& url, const QImage& img)
+void EnfuseStackList::setThumbnail(const QUrl& url, const QImage& img)
 {
     if (img.isNull()) return;
 
@@ -328,7 +323,7 @@ void EnfuseStackList::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
-EnfuseStackItem* EnfuseStackList::findItemByUrl(const KUrl& url)
+EnfuseStackItem* EnfuseStackList::findItemByUrl(const QUrl& url)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -342,7 +337,7 @@ EnfuseStackItem* EnfuseStackList::findItemByUrl(const KUrl& url)
     return 0;
 }
 
-void EnfuseStackList::processingItem(const KUrl& url, bool run)
+void EnfuseStackList::processingItem(const QUrl& url, bool run)
 {
     d->processItem = findItemByUrl(url);
     if (d->processItem)
@@ -361,7 +356,7 @@ void EnfuseStackList::processingItem(const KUrl& url, bool run)
     }
 }
 
-void EnfuseStackList::processedItem(const KUrl& url, bool success)
+void EnfuseStackList::processedItem(const QUrl& url, bool success)
 {
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)

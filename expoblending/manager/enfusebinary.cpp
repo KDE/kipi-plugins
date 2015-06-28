@@ -23,14 +23,6 @@
 
 #include "enfusebinary.h"
 
-// Qt includes
-
-#include <QProcess>
-
-// KDE includes
-
-#include <kglobal.h>
-
 // Local includes
 
 #include <kipiplugins_debug.h>
@@ -50,9 +42,9 @@ bool EnfuseBinary::parseHeader(const QString& output)
     QString headerStartsOld("==== enfuse, version ");
     QString firstLine = output.section('\n', m_headerLine, m_headerLine);
 
+    qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
     if (firstLine.startsWith(m_headerStarts))
     {
-        qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, m_headerStarts.length()));
         QStringList versionList = version().split('.');
         versionList.pop_back();
@@ -63,7 +55,6 @@ bool EnfuseBinary::parseHeader(const QString& output)
     }
     else if (firstLine.startsWith(headerStartsOld))
     {
-        qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, headerStartsOld.length()));
         QStringList versionList = version().split('.');
         versionList.pop_back();

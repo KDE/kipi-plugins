@@ -50,7 +50,7 @@ namespace KIPIExpoBlendingPlugin
 {
 
 BracketStackItem::BracketStackItem(QTreeWidget* const parent)
-                : QTreeWidgetItem(parent)
+    : QTreeWidgetItem(parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
@@ -61,13 +61,13 @@ BracketStackItem::~BracketStackItem()
 {
 }
 
-void BracketStackItem::setUrl(const KUrl& url)
+void BracketStackItem::setUrl(const QUrl& url)
 {
     m_url = url;
     setText(1, m_url.fileName());
 }
 
-KUrl BracketStackItem::url() const
+const QUrl& BracketStackItem::url() const
 {
     return m_url;
 }
@@ -107,22 +107,20 @@ bool BracketStackItem::operator< (const QTreeWidgetItem& other) const
 
 // -------------------------------------------------------------------------
 
-class BracketStackList::BracketStackListPriv
+struct BracketStackList::BracketStackListPriv
 {
-public:
-
     BracketStackListPriv()
-    {
-        iface        = 0;
-        loadRawThumb = 0;
-    }
+        : iface(0),
+          loadRawThumb(0)
+    {}
 
     Interface*        iface;
     KPRawThumbThread* loadRawThumb;
 };
 
 BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
-                : QTreeWidget(parent), d(new BracketStackListPriv)
+    : QTreeWidget(parent),
+      d(new BracketStackListPriv)
 {
     d->iface = iface;
 
@@ -145,14 +143,14 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(QUrl, QPixmap)),
+                this, SLOT(slotThumbnail(QUrl, QPixmap)));
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
-            this, SLOT(slotRawThumb(KUrl,QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(QUrl, QImage)),
+            this, SLOT(slotRawThumb(QUrl, QImage)));
 
     sortItems(2, Qt::DescendingOrder);
 }
@@ -162,9 +160,9 @@ BracketStackList::~BracketStackList()
     delete d;
 }
 
-KUrl::List BracketStackList::urls()
+QList<QUrl> BracketStackList::urls()
 {
-    KUrl::List list;
+    QList<QUrl> list;
 
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -179,7 +177,7 @@ KUrl::List BracketStackList::urls()
     return list;
 }
 
-BracketStackItem* BracketStackList::findItem(const KUrl& url)
+BracketStackItem* BracketStackList::findItem(const QUrl& url)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)
@@ -194,17 +192,15 @@ BracketStackItem* BracketStackList::findItem(const KUrl& url)
     return 0;
 }
 
-void BracketStackList::addItems(const KUrl::List& list)
+void BracketStackList::addItems(const QList<QUrl>& list)
 {
     if (list.count() == 0)
         return;
 
-    KUrl::List urls;
+    QList<QUrl> urls;
 
-    for ( KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
+    for (const QUrl& imageUrl: list)
     {
-        KUrl imageUrl = *it;
-
         // Check if the new item already exist in the list.
         bool found = false;
 
@@ -214,7 +210,9 @@ void BracketStackList::addItems(const KUrl::List& list)
             BracketStackItem* item = dynamic_cast<BracketStackItem*>(*iter);
 
             if (item->url() == imageUrl)
+            {
                 found = true;
+            }
 
             ++iter;
         }
@@ -236,7 +234,7 @@ void BracketStackList::addItems(const KUrl::List& list)
     {
 #if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
-        foreach (const KUrl& url, urls)
+        for (const QUrl& url: urls)
         {
             if (url.isValid())
                 items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
@@ -268,12 +266,12 @@ void BracketStackList::slotKDEPreviewFailed(const KFileItem& item)
     d->loadRawThumb->getRawThumb(item.url());
 }
 
-void BracketStackList::slotRawThumb(const KUrl& url, const QImage& img)
+void BracketStackList::slotRawThumb(const QUrl& url, const QImage& img)
 {
     slotThumbnail(url, QPixmap::fromImage(img));
 }
 
-void BracketStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void BracketStackList::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     QTreeWidgetItemIterator it(this);
     while (*it)

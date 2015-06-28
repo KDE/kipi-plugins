@@ -48,24 +48,21 @@ using namespace KDcrawIface;
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseSettingsWidget::EnfuseSettingsWidgetPriv
+struct EnfuseSettingsWidget::EnfuseSettingsWidgetPriv
 {
-public:
-
     EnfuseSettingsWidgetPriv()
-    {
-        autoLevelsCB    = 0;
-        levelsLabel     = 0;
-        levelsInput     = 0;
-        hardMaskCB      = 0;
-        exposureLabel   = 0;
-        exposureInput   = 0;
-        saturationLabel = 0;
-        saturationInput = 0;
-        contrastLabel   = 0;
-        contrastInput   = 0;
-        ciecam02CB      = 0;
-    }
+        : autoLevelsCB(0),
+          hardMaskCB(0),
+          ciecam02CB(0),
+          levelsLabel(0),
+          exposureLabel(0),
+          saturationLabel(0),
+          contrastLabel(0),
+          levelsInput(0),
+          exposureInput(0),
+          saturationInput(0),
+          contrastInput(0)
+    {}
 
     QCheckBox*       autoLevelsCB;
     QCheckBox*       hardMaskCB;
@@ -84,7 +81,8 @@ public:
 };
 
 EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
-    : QWidget(parent), d(new EnfuseSettingsWidgetPriv)
+    : QWidget(parent),
+      d(new EnfuseSettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 

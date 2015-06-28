@@ -26,13 +26,13 @@
 
 // Qt includes
 
+#include <QUrl>
 #include <QWidget>
 
 // KDE includes
 
 #include <KConfig>
 #include <klocalizedstring.h>
-#include <kurl.h>
 
 // Locale includes
 
@@ -43,25 +43,21 @@ using namespace KIPIPlugins;
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseSettings
+struct EnfuseSettings
 {
-public:
-
     EnfuseSettings()
-    {
-        hardMask        = false;
-        autoLevels      = true;
-        ciecam02        = false;
-        levels          = 20;
-        exposure        = 1.0;
-        saturation      = 0.2;
-        contrast        = 0.0;
-        outputFormat    = KPSaveSettingsWidget::OUTPUT_PNG;
-    }
+        : autoLevels(true),
+          hardMask(false),
+          ciecam02(false),
+          levels(20),
+          exposure(1.0),
+          saturation(0.2),
+          contrast(0.0),
+          outputFormat(KPSaveSettingsWidget::OUTPUT_PNG)
+    {}
 
     ~EnfuseSettings()
-    {
-    }
+    {}
 
     QString asCommentString() const
     {
@@ -86,8 +82,10 @@ public:
     {
         QString ret;
 
-        foreach(const KUrl url, inputUrls)
+        for (const QUrl& url: inputUrls)
+        {
             ret.append(url.fileName() + " ; ");
+        }
 
         ret.truncate(ret.length()-3);
         return ret;
@@ -105,8 +103,8 @@ public:
 
     QString                            targetFileName;
 
-    KUrl::List                         inputUrls;
-    KUrl                               previewUrl;
+    QList<QUrl>                        inputUrls;
+    QUrl                               previewUrl;
 
     KPSaveSettingsWidget::OutputFormat outputFormat;
 };

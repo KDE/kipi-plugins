@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2009-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
- * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,7 +31,6 @@
 
 // KDE includes
 
-#include <kurl.h>
 #include <kprocess.h>
 
 // LibKDcraw includes
@@ -63,13 +62,13 @@ public:
 
     void setEnfuseVersion(const double version);
     void setPreProcessingSettings(bool align, const RawDecodingSettings& settings);
-    void loadProcessed(const KUrl& url);
-    void identifyFiles(const KUrl::List& urlList);
-    void convertRawFiles(const KUrl::List& urlList);
-    void preProcessFiles(const KUrl::List& urlList, const QString& alignPath);
-    void enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+    void loadProcessed(const QUrl& url);
+    void identifyFiles(const QList<QUrl>& urlList);
+    void convertRawFiles(const QList<QUrl>& urlList);
+    void preProcessFiles(const QList<QUrl>& urlList, const QString& alignPath);
+    void enfusePreview(const QList<QUrl>& alignedUrls, const QUrl& outputUrl,
                        const EnfuseSettings& settings, const QString& enfusePath);
-    void enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+    void enfuseFinal(const QList<QUrl>& alignedUrls, const QUrl& outputUrl,
                      const EnfuseSettings& settings, const QString& enfusePath);
 
     void cancel();
@@ -88,20 +87,20 @@ private:
 
     void    run();
 
-    void    preProcessingMultithreaded(const KUrl& url, volatile bool& error, const RawDecodingSettings& settings);
-    bool    startPreProcessing(const KUrl::List& inUrls,
+    void    preProcessingMultithreaded(const QUrl& url, volatile bool& error, const RawDecodingSettings& settings);
+    bool    startPreProcessing(const QList<QUrl>& inUrls,
                                bool  align, const RawDecodingSettings& settings,
                                const QString& alignPath, QString& errors);
-    bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
-    bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
+    bool    computePreview(const QUrl& inUrl, QUrl& outUrl);
+    bool    convertRaw(const QUrl& inUrl, QUrl& outUrl, const RawDecodingSettings& settings);
 
-    bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
+    bool    startEnfuse(const QList<QUrl>& inUrls, QUrl& outUrl,
                         const EnfuseSettings& settings,
                         const QString& enfusePath, QString& errors);
 
     QString getProcessError(KProcess* const proc) const;
 
-    float   getAverageSceneLuminance(const KUrl& url);
+    float   getAverageSceneLuminance(const QUrl& url);
     bool    getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta);
 
 private:

@@ -7,6 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,7 +33,6 @@
 
 // KDE includes
 
-#include <kurl.h>
 #include <kfileitem.h>
 
 namespace KIPI
@@ -54,8 +54,8 @@ public:
     explicit BracketStackItem(QTreeWidget* const parent);
     virtual ~BracketStackItem();
 
-    void setUrl(const KUrl& url);
-    KUrl url() const;
+    void setUrl(const QUrl& url);
+    const QUrl& url() const;
 
     void setOn(bool b);
     bool isOn() const;
@@ -69,7 +69,7 @@ private:
 
 private:
 
-    KUrl m_url;
+    QUrl m_url;
 };
 
 // ---------------------------------------------------------------------
@@ -83,21 +83,21 @@ public:
     BracketStackList(Interface* iface, QWidget* parent);
     virtual ~BracketStackList();
 
-    void addItems(const KUrl::List& list);
+    void addItems(const QList<QUrl>& list);
 
-    KUrl::List urls();
-    BracketStackItem* findItem(const KUrl& url);
+    QList<QUrl> urls();
+    BracketStackItem* findItem(const QUrl& url);
 
 Q_SIGNALS:
 
-    void signalAddItems(const KUrl::List&);
+    void signalAddItems(const QList<QUrl>&);
 
 private Q_SLOTS:
 
     void slotKDEPreview(const KFileItem&, const QPixmap&);
     void slotKDEPreviewFailed(const KFileItem&);
-    void slotRawThumb(const KUrl&, const QImage&);
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    void slotRawThumb(const QUrl&, const QImage&);
+    void slotThumbnail(const QUrl& url, const QPixmap& pix);
 
 private:
 

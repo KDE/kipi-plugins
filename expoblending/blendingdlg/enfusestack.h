@@ -7,6 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,7 +36,6 @@
 
 // KDE includes
 
-#include <kurl.h>
 #include <kfileitem.h>
 
 // Local includes
@@ -62,7 +62,7 @@ public:
 
     /** Return the preview image url assigned to item.
      */
-    KUrl url() const;
+    const QUrl& url() const;
 
     void setEnfuseSettings(const EnfuseSettings& settings);
     EnfuseSettings enfuseSettings() const;
@@ -94,23 +94,23 @@ public:
 
     void setTemplateFileName(KPSaveSettingsWidget::OutputFormat, const QString&);
 
-    void setThumbnail(const KUrl& url, const QImage& img);
-    void setOnItem(const KUrl& url, bool on);
-    void removeItem(const KUrl& url);
+    void setThumbnail(const QUrl& url, const QImage& img);
+    void setOnItem(const QUrl& url, bool on);
+    void removeItem(const QUrl& url);
     void clearSelected();
-    void addItem(const KUrl& url, const EnfuseSettings& settings);
-    void processingItem(const KUrl& url, bool run);
-    void processedItem(const KUrl& url, bool success);
+    void addItem(const QUrl& url, const EnfuseSettings& settings);
+    void processingItem(const QUrl& url, bool run);
+    void processedItem(const QUrl& url, bool success);
 
     QList<EnfuseSettings> settingsList();
 
 Q_SIGNALS:
 
-    void signalItemClicked(const KUrl&);
+    void signalItemClicked(const QUrl&);
 
 private:
 
-    EnfuseStackItem* findItemByUrl(const KUrl& url);
+    EnfuseStackItem* findItemByUrl(const QUrl& url);
 
 private Q_SLOTS:
 

@@ -7,6 +7,7 @@
  * Description : a tool to blend bracketed images.
  *
  * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,10 +29,6 @@
 
 #include <QString>
 #include <QPixmap>
-
-// KDE includes
-
-#include <kurl.h>
 
 // Local includes
 
@@ -63,7 +60,7 @@ public:
     explicit ExpoBlendingDlg(Manager* const mngr, QWidget* const parent=0);
     ~ExpoBlendingDlg();
 
-    void loadItems(const KUrl::List& urls);
+    void loadItems(const QList<QUrl>& urls);
 
 private:
 
@@ -73,9 +70,9 @@ private:
     void saveSettings();
 
     void busy(bool busy);
-    void saveItem(const KUrl& temp, const EnfuseSettings& settings);
+    void saveItem(const QUrl& temp, const EnfuseSettings& settings);
 
-    void setIdentity(const KUrl& url, const QString& identity);
+    void setIdentity(const QUrl& url, const QString& identity);
 
 private Q_SLOTS:
 
@@ -85,9 +82,9 @@ private Q_SLOTS:
     void slotProcess();
     void slotAbort();
 
-    void slotLoadProcessed(const KUrl&);
+    void slotLoadProcessed(const QUrl&);
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
-    void slotAddItems(const KUrl::List& urls);
+    void slotAddItems(const QList<QUrl>& urls);
 
     void slotPreviewButtonClicked();
     void slotFileFormatChanged();
