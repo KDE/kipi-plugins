@@ -134,11 +134,11 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     }
     else
     {
-        about = new KPAboutData(ki18n("PicasaWeb Export"),
+        about = new KPAboutData(ki18n("Google Photos/PicasaWeb Export"),
                                        0,
                                        KAboutData::License_GPL,
                                        ki18n("A Kipi plugin to export image collections to "
-                                             "PicasaWeb web service."),
+                                             "Google Photos/Picasa web service."),
                                        ki18n( "(c) 2007-2009, Vardhman Jain\n"
                                               "(c) 2008-2013, Gilles Caulier\n"
                                               "(c) 2009, Luka Renko\n"
@@ -166,14 +166,14 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         setWindowIcon(KIcon("kipi-picasa"));
         if(m_picasaExport)
         {
-            setWindowTitle(i18n("Export to Picasa Web Service"));
-            setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Picasa Web Service")));
+            setWindowTitle(i18n("Export to Google Photos/PicasaWeb Service"));
+            setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Photos/PicasaWeb Service")));
             m_widget->setMinimumSize(700,500);
         }
         else
         {
-            setWindowTitle(i18n("Import from Picasa Web Service"));
-            setButtonGuiItem(User1,KGuiItem(i18n("Start Download"),"network-workgroup",i18n("Start download from Picasaweb service")));
+            setWindowTitle(i18n("Import from Google Photos/PicasaWeb Service"));
+            setButtonGuiItem(User1,KGuiItem(i18n("Start Download"),"network-workgroup",i18n("Start download from Google Photos/PicasaWeb service")));
             m_widget->setMinimumSize(300, 400);
         }
     }
@@ -401,7 +401,7 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
 
     if (errCode == 0)
     {
-        KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+        KMessageBox::error(this, i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -438,7 +438,7 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
     if (errCode == 0)
     {
-        KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+        KMessageBox::error(this, i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -542,7 +542,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
     {
         if(code == 0)
         {
-            KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+            KMessageBox::error(this, i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
             return;
         }
             
@@ -1080,7 +1080,7 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
         }
         else
         {
-            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Picasaweb.\n%1\nDo you want to continue?",msg))
+            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Photos/PicasaWeb.\n%1\nDo you want to continue?",msg))
                 != KMessageBox::Continue)
             {
                 m_transferQueue.clear();
@@ -1196,7 +1196,7 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
     else
     {
         if(code == 0)
-            KMessageBox::error(this, i18n("Picasaweb call failed:\n%1", msg));
+            KMessageBox::error(this, i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
         else
             m_currentAlbumId = albumId;
             m_picsasa_talker->listAlbums();

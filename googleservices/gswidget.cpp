@@ -85,7 +85,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     if(m_gdrive)
         m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Google Drive account."));
     else
-        m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Picasaweb account."));
+        m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Google Photos/PicasaWeb account."));
 
     QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
@@ -95,7 +95,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     if(m_gdrive)
         m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Google Drive in a browser."));
     else
-        m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Picasaweb in a browser."));
+        m_headerLbl->setWhatsThis(i18n("This is a clickable link to open Google Photos/PicasaWeb in a browser."));
     
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
@@ -107,7 +107,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     if(m_gdrive)
         accountBox->setWhatsThis(i18n("This is the Google Drive account that is currently logged in."));
     else
-        accountBox->setWhatsThis(i18n("This is the Picasaweb account that is currently logged in."));
+        accountBox->setWhatsThis(i18n("This is the Google Photos/PicasaWeb account that is currently logged in."));
     
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
@@ -119,7 +119,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
                                                              i18n("Change Google Drive account for transfer")), accountBox);
     else
         m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
-                                                             i18n("Change Picasaweb account for transfer")), accountBox);
+                                                             i18n("Change Google Photos/PicasaWeb account for transfer")), accountBox);
       
 
     accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
@@ -138,11 +138,11 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     }
     else if(m_picasaExport)
     {
-        albBox->setWhatsThis(i18n("This is the Picasaweb folder to which selected photos will be uploaded."));
+        albBox->setWhatsThis(i18n("This is the Google Photos/PicasaWeb folder to which selected photos will be uploaded."));
     }
     else
     {
-        albBox->setWhatsThis(i18n("This is the Picasaweb folder from which selected photos will be downloaded."));
+        albBox->setWhatsThis(i18n("This is the Google Photos/PicasaWeb folder from which selected photos will be downloaded."));
     }      
     
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
@@ -159,7 +159,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     else
     {
         m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
-                                                 i18n("Create new Picasaweb folder")),accountBox);
+                                                 i18n("Create new Google Photos/PicasaWeb folder")),accountBox);
     }
     
     m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("album list","Reload"),"view-refresh",
@@ -188,7 +188,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     // ------------------------------------------------------------------------
 
     QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(i18n("This is the location where Picasaweb images will be downloaded."));
+    uploadBox->setWhatsThis(i18n("This is the location where Google Photos/PicasaWeb images will be downloaded."));
     QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget                     = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
@@ -322,7 +322,7 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
     else
     {
         m_headerLbl->setText(QString("<b><h2><a href='http://picasaweb.google.com/%1'>"
-                             "<font color=\"#9ACD32\">Picasaweb</font>"
+                             "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
                              "</a></h2></b>").arg(url));
     }
 

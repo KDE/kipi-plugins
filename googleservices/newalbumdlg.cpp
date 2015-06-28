@@ -52,7 +52,7 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
         setWindowTitle(QString("Google Drive New Album"));
     else
-        setWindowTitle(QString("Picasaweb New Album"));
+        setWindowTitle(QString("Google Photos/PicasaWeb New Album"));
 
     setButtons(Ok|Cancel);
     setDefaultButton(Cancel);
@@ -80,7 +80,7 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     
     QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
-        i18n("These are basic settings for the new Picasaweb album."));
+        i18n("These are basic settings for the new Google Photos/Picasaweb album."));
 
     m_dtEdt             = new QDateTimeEdit(QDateTime::currentDateTime());
     m_dtEdt->setDisplayFormat("dd.MM.yyyy HH:mm");
@@ -92,10 +92,10 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     m_locEdt            = new KLineEdit;
     m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));    
 
-    albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Title:"), m_titleEdt);
-    albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Date & Time:"), m_dtEdt);
-    albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Description:"), m_descEdt);
-    albumBoxLayout->addRow(i18nc("new picasaweb album dialog", "Location:"), m_locEdt);
+    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Title:"), m_titleEdt);
+    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Date & Time:"), m_dtEdt);
+    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Description:"), m_descEdt);
+    albumBoxLayout->addRow(i18nc("new google photos/picasaweb album dialog", "Location:"), m_locEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
@@ -104,14 +104,14 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     // ------------------------------------------------------------------------
 
     QGroupBox* const privBox = new QGroupBox(i18n("Access Level"), mainWidget);
-    privBox->setWhatsThis(i18n("These are security and privacy settings for the new Picasaweb album."));
+    privBox->setWhatsThis(i18n("These are security and privacy settings for the new Google Photos/PicasaWeb album."));
 
-    m_publicRBtn        = new QRadioButton(i18nc("picasaweb album privacy", "Public"));
+    m_publicRBtn        = new QRadioButton(i18nc("google photos/picasaweb album privacy", "Public"));
     m_publicRBtn->setChecked(true);
-    m_publicRBtn->setWhatsThis(i18n("Public album is listed on your public Picasaweb page."));
-    m_unlistedRBtn      = new QRadioButton(i18nc("picasaweb album privacy", "Unlisted / Private"));
+    m_publicRBtn->setWhatsThis(i18n("Public album is listed on your public Google Photos/PicasaWeb page."));
+    m_unlistedRBtn      = new QRadioButton(i18nc("google photos/picasaweb album privacy", "Unlisted / Private"));
     m_unlistedRBtn->setWhatsThis(i18n("Unlisted album is only accessible via URL."));
-    m_protectedRBtn     = new QRadioButton(i18nc("picasaweb album privacy", "Sign-In Required to View"));
+    m_protectedRBtn     = new QRadioButton(i18nc("google photos/picasaweb album privacy", "Sign-In Required to View"));
     m_protectedRBtn->setWhatsThis(i18n("Unlisted album require Sign-In to View"));
 
     QVBoxLayout* const radioLayout = new QVBoxLayout;
