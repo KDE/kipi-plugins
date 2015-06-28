@@ -25,14 +25,14 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIViewerPlugin
 {
 
-class HelpDialog : public KP4ToolDialog
+class HelpDialog : public KPToolDialog
 {
 
 public:

@@ -25,6 +25,7 @@
 // Qt includes
 
 #include <QTextBrowser>
+#include <QPushButton>
 
 // KDE includes
 
@@ -38,12 +39,11 @@ namespace KIPIViewerPlugin
 {
 
 HelpDialog::HelpDialog()
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     setWindowIcon(QIcon::fromTheme("kipi-ogl"));
-    setButtons(Help | Ok);
-    setDefaultButton(Ok);
-    setCaption(i18n("Usage of OpenGL Image Viewer"));
+    setWindowTitle(i18n("Usage of OpenGL Image Viewer"));
+    startButton()->setVisible(false);
 
     KPAboutData* about = new KPAboutData(ki18n("OpenGL Image Viewer"), 0,
                                          KAboutLicense::GPL,
