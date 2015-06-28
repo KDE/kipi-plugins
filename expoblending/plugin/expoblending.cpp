@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KConfig>
 #include <kglobal.h>
 

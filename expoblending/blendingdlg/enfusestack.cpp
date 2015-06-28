@@ -31,12 +31,12 @@
 #include <QFileInfo>
 #include <QList>
 #include <QTimer>
+#include <QMenu>
+#include <QAction>
 
 // KDE includes
 
-#include <QMenu>
-#include <QAction>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <kio/previewjob.h>
 #include <kpixmapsequence.h>
@@ -178,9 +178,9 @@ EnfuseStackList::EnfuseStackList(QWidget* const parent)
     header()->setResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
-    labels.append( i18n("To Save") );
-    labels.append( i18n("Target") );
-    labels.append( i18n("Inputs") );
+    labels.append( i18nc("@title:column Saving checkbox", "Include during Saving") );
+    labels.append( i18nc("@title:column Output file name", "Output") );
+    labels.append( i18nc("@title:column Source file names", "Selected Inputs") );
     setHeaderLabels(labels);
 
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
@@ -205,14 +205,14 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
     EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
     if (item)
     {
-        QAction * rmItem = new QAction(QIcon::fromTheme("dialog-close"), i18n("Remove item"), this);
+        QAction * rmItem = new QAction(QIcon::fromTheme("dialog-close"), i18nc("@item:inmenu", "Remove item"), this);
         connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
-    QAction * rmAll = new QAction(QIcon::fromTheme("edit-delete-shred"), i18n("Clear all"), this);
+    QAction * rmAll = new QAction(QIcon::fromTheme("edit-delete-shred"), i18nc("@item:inmenu", "Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 

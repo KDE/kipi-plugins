@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kdeversion.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <kio/previewjob.h>
 
@@ -136,9 +136,9 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
     header()->setResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
-    labels.append( i18n("To process") );
-    labels.append( i18n("File Name") );
-    labels.append( i18n("Exposure (EV)") );
+    labels.append( i18nc("@title:column Processing checkbox", "Include for Enfuse") );
+    labels.append( i18nc("@title:column Input file name", "File Name") );
+    labels.append( i18nc("@title:column Input image exposure", "Exposure (EV)") );
     setHeaderLabels(labels);
 
     if (d->iface)

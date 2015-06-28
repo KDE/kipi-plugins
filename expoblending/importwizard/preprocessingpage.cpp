@@ -38,7 +38,7 @@
 // KDE includes
 
 #include <kvbox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <KConfig>
 #include <kpixmapsequence.h>
@@ -96,7 +96,7 @@ public:
 };
 
 PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Pre-Processing Bracketed Images</b>")),
       d(new Private)
 {
     d->mngr           = mngr;
@@ -105,7 +105,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     d->title          = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
-    d->alignCheckBox  = new QCheckBox(i18n("Align bracketed images"), vbox);
+    d->alignCheckBox  = new QCheckBox(i18nc("@option:check", "Align bracketed images"), vbox);
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("ExpoBlending Settings"));
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
@@ -113,7 +113,7 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     QLabel* const space1 = new QLabel(vbox);
     KHBox* const hbox    = new KHBox(vbox);
     d->detailsBtn        = new QPushButton(hbox);
-    d->detailsBtn->setText(i18n("Details..."));
+    d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     QLabel* const space2 = new QLabel(hbox);
     hbox->setStretchFactor(space2, 10);
@@ -221,7 +221,7 @@ void PreProcessingPage::slotProgressTimerDone()
 void PreProcessingPage::slotShowDetails()
 {
     KPOutputDialog dlg(QApplication::activeWindow(),
-                       i18n("Pre-Processing Messages"),
+                       i18nc("@title:window", "Pre-Processing Messages"),
                        d->output);
 
     dlg.setAboutData(new ExpoBlendingAboutData());

@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kpushbutton.h>
 
 // Libkipi includes
@@ -73,7 +73,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* const mngr, QWidget* const parent)
       d(new ImportWizardDlgPriv)
 {
     setModal(false);
-    setWindowTitle(i18n("Exposure Blending Import Wizard"));
+    setWindowTitle(i18nc("@title:window", "Exposure Blending Import Wizard"));
     setAboutData(new ExpoBlendingAboutData());
 
     d->mngr              = mngr;

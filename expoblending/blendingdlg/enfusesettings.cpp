@@ -36,8 +36,9 @@
 // KDE includes
 
 #include <kdialog.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kseparator.h>
+#include <KConfig>
 
 // Libkdcraw includes
 
@@ -47,6 +48,38 @@ using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
+
+QString EnfuseSettings::asCommentString() const
+{
+    QString ret;
+
+    ret.append(i18n("Hardmask: %1",   hardMask ? i18n("enabled") : i18n("disabled")));
+    ret.append("\n");
+    ret.append(i18n("CIECAM02: %1",   ciecam02 ? i18n("enabled") : i18n("disabled")));
+    ret.append("\n");
+    ret.append(i18n("Levels: %1",     autoLevels ? i18n("auto") : QString::number(levels)));
+    ret.append("\n");
+    ret.append(i18n("Exposure: %1",   QString::number(exposure)));
+    ret.append("\n");
+    ret.append(i18n("Saturation: %1", QString::number(saturation)));
+    ret.append("\n");
+    ret.append(i18n("Contrast: %1",   QString::number(contrast)));
+
+    return ret;
+}
+
+QString EnfuseSettings::inputImagesList() const
+{
+    QString ret;
+
+    for (const QUrl& url: inputUrls)
+    {
+        ret.append(url.fileName() + " ; ");
+    }
+
+    ret.truncate(ret.length()-3);
+    return ret;
+}
 
 struct EnfuseSettingsWidget::EnfuseSettingsWidgetPriv
 {
@@ -90,53 +123,76 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    d->autoLevelsCB = new QCheckBox(i18nc("enfuse settings", "Auto Levels"), this);
-    d->autoLevelsCB->setWhatsThis( i18n("Set automatic level selection (maximized) for pyramid blending."));
+    d->autoLevelsCB = new QCheckBox(i18nc("@option:check Enfuse setting", "Automatic Local/Global Image Features Balance (Levels)"), this);
+    d->autoLevelsCB->setToolTip(i18nc("@info:tooltip",
+                                      "Optimise image features (contrast, saturation, . . .) to be as global as possible."));
+    d->autoLevelsCB->setWhatsThis(i18nc("@info:whatsthis",
+                                        "Set automatic level selection (maximized) for pyramid blending, "
+                                        "i.e. optimise image features (contrast, saturation, . . .) to be as global as possible."));
 
-    d->levelsLabel  = new QLabel(i18nc("enfuse settings", "Levels:"));
+    d->levelsLabel  = new QLabel(i18nc("@label:slider Enfuse settings", "Image Features Balance:"));
     d->levelsInput  = new RIntNumInput(this);
     d->levelsInput->setRange(1, 29, 1);
     d->levelsInput->setDefaultValue(20);
-    d->levelsInput->setWhatsThis(i18n("Set the number of levels for pyramid blending. "
-                                      "A low number trades off quality of results for faster "
-                                      "execution time and lower memory usage."));
+    d->levelsInput->setToolTip(i18nc("@info:tooltip",
+                                     "Balances between local features (small number) or global features (high number)."));
+    d->levelsInput->setWhatsThis(i18nc("@info:whatsthis",
+                                       "Set the number of levels for pyramid blending. "
+                                       "Balances towards local features (small number) or global features (high number). "
+                                       "Additionnally, a low number trades off quality of results for faster "
+                                       "execution time and lower memory usage."));
 
-    d->hardMaskCB = new QCheckBox(i18n("Hard Mask"), this);
-    d->hardMaskCB->setWhatsThis(i18n("Force hard blend masks and no averaging on finest "
-                                     "scale. This is especially useful for focus "
-                                     "stacks with thin and high contrast features, "
-                                     "improves sharpness at the expense of increased noise."));
+    d->hardMaskCB = new QCheckBox(i18nc("@option:check", "Hard Mask"), this);
+    d->hardMaskCB->setToolTip(i18nc("@info:tooltip",
+                                    "Useful only for focus stack to improve sharpness."));
+    d->hardMaskCB->setWhatsThis(i18nc("@info:whatsthis", 
+                                      "Force hard blend masks without averaging on finest "
+                                      "scale. This is only useful for focus "
+                                      "stacks with thin and high contrast features. "
+                                      "It improves sharpness at the expense of increased noise."));
 
-    d->exposureLabel = new QLabel(i18nc("enfuse settings", "Exposure:"));
+    d->exposureLabel = new QLabel(i18nc("@label:slider Enfuse settings", "Well-Exposedness Contribution:"));
     d->exposureInput = new RDoubleNumInput(this);
     d->exposureInput->setRange(0.0, 1.0, 0.01);
     d->exposureInput->setDefaultValue(1.0);
-    d->exposureInput->setWhatsThis( i18n("Set the exposure contribution for the blending process. "
+    d->exposureInput->setToolTip(i18nc("@info:tooltip",
+                                       "Contribution of well exposed pixels to the blending process."));
+    d->exposureInput->setWhatsThis(i18nc("@info:whatsthis",
+                                         "Set the well-exposedness criterion contribution for the blending process. "
                                          "Higher values will favor well-exposed pixels."));
 
-    d->saturationLabel = new QLabel(i18nc("enfuse settings", "Saturation:"));
+    d->saturationLabel = new QLabel(i18nc("@label:slider enfuse settings", "High-Saturation Contribution:"));
     d->saturationInput = new RDoubleNumInput(this);
     d->saturationInput->setDecimals(2);
     d->saturationInput->setRange(0.0, 1.0, 0.01);
     d->saturationInput->setDefaultValue(0.2);
-    d->saturationInput->setWhatsThis( i18n("Increasing this value makes pixels with high "
+    d->saturationInput->setToolTip(i18nc("@info:tooltip",
+                                         "Contribution of highly saturated pixels to the blending process."));
+    d->saturationInput->setWhatsThis(i18nc("@info:whatsthis",
+                                           "Increasing this value makes pixels with high "
                                            "saturation contribute more to the final output."));
 
-    d->contrastLabel = new QLabel(i18nc("enfuse settings", "Contrast:"));
+    d->contrastLabel = new QLabel(i18nc("@label:slider enfuse settings", "High-Contrast Contribution:"));
     d->contrastInput = new RDoubleNumInput(this);
     d->contrastInput->setDecimals(2);
     d->contrastInput->setRange(0.0, 1.0, 0.01);
     d->contrastInput->setDefaultValue(0.0);
-    d->contrastInput->setWhatsThis(i18n("Sets the relative weight of high-contrast pixels. "
-                                        "Increasing this weight makes pixels with neighboring differently colored "
-                                        "pixels contribute more to the final output. Particularly useful for focus stacks."));
-    
-    d->ciecam02CB = new QCheckBox(i18n("Use Color Appearance Modelling"), this);
-    d->ciecam02CB->setWhatsThis(i18n("Use Color Appearance Modelling (CIECAM02) to render detailed colors. "
-                                     "Your input files should have embedded ICC profiles. If no ICC profile is present, "
-                                     "sRGB color space will be used instead. The difference between using this option "
-                                     "and default color blending algorithm is very slight, and will be most noticeable "
-                                     "when you need to blend areas of different primary colors together."));
+    d->contrastInput->setToolTip(i18nc("@info:tooltip",
+                                       "Contribution of highly constrated pixels to the blending process."));
+    d->contrastInput->setWhatsThis(i18nc("@info:whatsthis",
+                                         "Sets the relative weight of high-contrast pixels. "
+                                         "Increasing this weight makes pixels with neighboring differently colored "
+                                         "pixels contribute more to the final output. Particularly useful for focus stacks."));
+
+    d->ciecam02CB = new QCheckBox(i18nc("@option:check", "Use Color Appearance Model (CIECAM02)"), this);
+    d->ciecam02CB->setToolTip(i18nc("@info:tooltip",
+                                    "Convert to CIECAM02 color appearance model during the blending process instead of RGB."));
+    d->ciecam02CB->setWhatsThis(i18nc("@info:whatsthis",
+                                      "Use Color Appearance Modelling (CIECAM02) to render detailed colors. "
+                                      "Your input files should have embedded ICC profiles. If no ICC profile is present, "
+                                      "sRGB color space will be assumed. The difference between using this option "
+                                      "and default color blending algorithm is very slight, and will be most noticeable "
+                                      "when you need to blend areas of different primary colors together."));
 
     // ------------------------------------------------------------------------
 

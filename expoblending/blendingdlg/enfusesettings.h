@@ -29,16 +29,13 @@
 #include <QUrl>
 #include <QWidget>
 
-// KDE includes
-
-#include <KConfig>
-#include <klocalizedstring.h>
-
 // Locale includes
 
 #include "kpsavesettingswidget.h"
 
 using namespace KIPIPlugins;
+
+class KConfigGroup;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -59,37 +56,9 @@ struct EnfuseSettings
     ~EnfuseSettings()
     {}
 
-    QString asCommentString() const
-    {
-        QString ret;
+    QString asCommentString() const;
 
-        ret.append(i18n("Hardmask: %1",   hardMask ? i18n("enabled") : i18n("disabled")));
-        ret.append("\n");
-        ret.append(i18n("CIECAM02: %1",   ciecam02 ? i18n("enabled") : i18n("disabled")));
-        ret.append("\n");
-        ret.append(i18n("Levels: %1",     autoLevels ? i18n("auto") : QString::number(levels)));
-        ret.append("\n");
-        ret.append(i18n("Exposure: %1",   QString::number(exposure)));
-        ret.append("\n");
-        ret.append(i18n("Saturation: %1", QString::number(saturation)));
-        ret.append("\n");
-        ret.append(i18n("Contrast: %1",   QString::number(contrast)));
-
-        return ret;
-    }
-
-    QString inputImagesList() const
-    {
-        QString ret;
-
-        for (const QUrl& url: inputUrls)
-        {
-            ret.append(url.fileName() + " ; ");
-        }
-
-        ret.truncate(ret.length()-3);
-        return ret;
-    }
+    QString inputImagesList() const;
 
     bool                               autoLevels;
     bool                               hardMask;

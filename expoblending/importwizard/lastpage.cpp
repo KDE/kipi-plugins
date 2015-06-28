@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kvbox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // Local includes
 
@@ -55,7 +55,7 @@ public:
 };
 
 LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
-        : KPWizardPage(dlg, i18n("Pre-Processing is Complete")),
+        : KPWizardPage(dlg, i18nc("@title:window", "Pre-Processing is Complete")),
           d(new Private)
 {
     d->mngr             = mngr;

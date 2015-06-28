@@ -27,9 +27,6 @@
 // Local includes
 
 #include "kpwizardpage.h"
-
-// Local includes
-
 #include "actions.h"
 
 using namespace KIPIPlugins;

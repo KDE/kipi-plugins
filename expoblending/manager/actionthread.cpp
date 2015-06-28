@@ -55,10 +55,6 @@
 #include <QTemporaryDir>
 #include <QProcess>
 
-// KDE includes
-
-// #include <klocale.h>
-
 // LibKDcraw includes
 
 #include <kdcraw.h>

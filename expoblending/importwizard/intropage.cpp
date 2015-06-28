@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kvbox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // local includes
 
@@ -58,7 +58,7 @@ public:
 };
 
 IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("Welcome to Exposure Blending Tool")),
+    : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {
     KVBox *vbox   = new KVBox(this);
@@ -82,7 +82,7 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     QGroupBox* binaryBox        = new QGroupBox(vbox);
     QGridLayout* binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
-    binaryBox->setTitle(i18n("Exposure Blending Binaries"));
+    binaryBox->setTitle(i18nc("@title:group", "Exposure Blending Binaries"));
     d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());

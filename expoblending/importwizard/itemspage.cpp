@@ -33,7 +33,7 @@
 // KDE includes
 
 #include <kvbox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // Libkipi includes
 
@@ -62,7 +62,7 @@ struct ItemsPage::ItemsPagePriv
 };
 
 ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KPWizardPage(dlg, i18n("<b>Set Bracketed Images</b>")),
+    : KPWizardPage(dlg, i18nc("@title:window", "<b>Set Bracketed Images</b>")),
       d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
@@ -77,7 +77,7 @@ ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
                          "</qt>"));
 
     d->list = new KPImagesList(vbox);
-    d->list->listView()->setColumn(KPImagesListView::User1, i18n("Exposure (EV)"), true);
+    d->list->listView()->setColumn(KPImagesListView::User1, i18nc("@title:column", "Exposure (EV)"), true);
     d->list->slotAddImages(d->mngr->itemsList());
 
     setPageWidget(vbox);

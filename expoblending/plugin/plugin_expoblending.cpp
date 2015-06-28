@@ -36,7 +36,7 @@
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kwindowsystem.h>
 
@@ -95,7 +95,7 @@ void Plugin_ExpoBlending::setupActions()
     setDefaultCategory(ToolsPlugin);
 
     m_action = new QAction(this);
-    m_action->setText(i18n("Blend Bracketed Images..."));
+    m_action->setText(i18nc("@action", "Blend Bracketed or Focus Stack Images..."));
     m_action->setIcon(QIcon::fromTheme("kipi-expoblending"));
 
     connect(m_action, SIGNAL(triggered(bool)),

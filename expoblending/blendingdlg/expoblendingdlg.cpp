@@ -47,17 +47,17 @@ extern "C"
 #include <QGridLayout>
 #include <QPushButton>
 #include <QScrollArea>
+#include <QApplication>
+#include <QMenu>
 
 // KDE includes
 
 #include <klineedit.h>
-#include <QApplication>
 #include <KConfig>
 #include <kvbox.h>
 #include <kcursor.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <QMenu>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kfiledialog.h>
@@ -140,19 +140,19 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     setDefaultButton(Close);
     setCaption(i18n("Exposure Blending"));
 
-    setButtonText(   User1, i18n("&Save"));
-    setButtonToolTip(User1, i18n("Process and save selected processed items."));
+    setButtonText(   User1, i18nc("@action:button", "&Save"));
+    setButtonToolTip(User1, i18nc("@info:tooltip", "Process and save selected items."));
     setButtonIcon(   User1, QIcon::fromTheme("document-save"));
 
-    setButtonText(   User2, i18n("&Preview"));
-    setButtonToolTip(User2, i18n("Process a preview of bracketed images stack with current settings."));
+    setButtonText(   User2, i18nc("@action:button", "&Preview"));
+    setButtonToolTip(User2, i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings."));
     setButtonIcon(   User2, QIcon::fromTheme("system-run"));
 
-    setButtonText(   User3, i18n("&Abort"));
-    setButtonToolTip(User3, i18n("Abort current process"));
+    setButtonText(   User3, i18nc("@action:button", "&Abort"));
+    setButtonToolTip(User3, i18nc("@info:tooltip", "Abort current process"));
     setButtonIcon(   User3, QIcon::fromTheme("dialog-cancel"));
 
-    setButtonToolTip(Close, i18n("Exit this tool"));
+    setButtonToolTip(Close, i18nc("@info:tooltip", "Close this tool"));
     setModal(false);
     setAboutData(new ExpoBlendingAboutData());
 
@@ -163,7 +163,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     setMainWidget(page);
 
     d->previewWidget  = new KPPreviewManager(page);
-    d->previewWidget->setButtonText(i18n("Details..."));
+    d->previewWidget->setButtonText(i18nc("@action:button", "Details..."));
 
     // ---------------------------------------------------------------
 
@@ -184,13 +184,13 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     QLabel* customLabel  = new QLabel(hbox);
     d->templateFileName  = new KLineEdit(hbox);
     d->templateFileName->setClearButtonShown(true);
-    customLabel->setText(i18n("File Name Template: "));
+    customLabel->setText(i18nc("@label:textbox", "File Name Template: "));
     d->saveSettingsBox->setCustomSettingsWidget(hbox);
 
     d->enfuseStack       = new EnfuseStackList(panel);
 
-    d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
-    d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);
+    d->settingsExpander->addItem(d->enfuseSettingsBox, i18nc("@title:group", "Enfuse Settings"), QString("expoblending"), true);
+    d->settingsExpander->addItem(d->saveSettingsBox,   i18nc("@title:group", "Save Settings"),   QString("savesettings"), true);
     d->settingsExpander->setItemIcon(0, SmallIcon("kipi-expoblending"));
     d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
 
@@ -277,7 +277,7 @@ void ExpoBlendingDlg::slotFileFormatChanged()
 void ExpoBlendingDlg::slotPreviewButtonClicked()
 {
     KPOutputDialog dlg(QApplication::activeWindow(),
-                       i18n("Enfuse Processing Messages"),
+                       i18nc("@title:window", "Enfuse Processing Messages"),
                        d->output);
 
     dlg.setAboutData(new ExpoBlendingAboutData());
@@ -464,7 +464,7 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
     {
         if (KDE::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
+            KMessageBox::error(this, i18n("Failed to save image to %1.", newUrl.toLocalFile()));
             d->enfuseStack->setOnItem(settings.previewUrl, false);
             d->enfuseStack->processedItem(settings.previewUrl, false);
             return;
@@ -514,7 +514,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
             case(ENFUSEFINAL):
             {
                 busy(true);
-                d->previewWidget->setBusy(true, i18n("Processing targets of bracketed images..."));
+                d->previewWidget->setBusy(true, i18n("Processing output of bracketed images..."));
                 d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, true);
                 break;
             }
@@ -539,7 +539,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(LOAD):
                 {
-                    d->previewWidget->setText(i18n("Failed to load processed image"), Qt::red);
+                    d->previewWidget->setText(i18n("Failed to load processed image."), Qt::red);
                     busy(false);
                     break;
                 }
@@ -548,7 +548,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewWidget->setButtonVisible(true);
-                    d->previewWidget->setText(i18n("Failed to process preview of bracketed images"), Qt::red);
+                    d->previewWidget->setText(i18n("Failed to process preview of bracketed images."), Qt::red);
                     busy(false);
                     break;
                 }
@@ -558,7 +558,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewWidget->setButtonVisible(true);
-                    d->previewWidget->setText(i18n("Failed to process targets of bracketed images"), Qt::red);
+                    d->previewWidget->setText(i18n("Failed to process output of bracketed images."), Qt::red);
                     d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, false);
                     d->enfuseStack->setOnItem(ad.enfuseSettings.previewUrl, false);
                     busy(false);
