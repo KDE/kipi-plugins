@@ -429,7 +429,7 @@ if(KIPI_FOUND)
             add_subdirectory(debianscreenshots)
             add_subdirectory(facebook)
             add_subdirectory(imgurexport)
-            add_subdirectory(googledrive)
+            add_subdirectory(googleservices)
             add_subdirectory(dropbox)
         endif()
 
