@@ -30,4 +30,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 021 ==> 172427 - digiKam crashed with kipi plugins.
 022 ==> 164908 - private albums are not listed (and then not usable) with picasa export plugin.
 023 ==> 200091 - "remove EXIF data" crashes digikam, gwenview.
-024 ==> 
+024 ==> 265630 - Gallery export uploads to wrong directory.
+025 ==> 
