@@ -27,3 +27,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 018 ==> 306165 - Crash while starting photo upload to picasa.
 019 ==> 308701 - digikam crash while export again the same image to picasaweb with kipi plugin.
 020 ==> 321251 - Gwenview crashs if close it while sending images to picasa.
+021 ==> 172427 - digiKam crashed with kipi plugins.
+022 ==> 
