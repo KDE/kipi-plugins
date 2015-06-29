@@ -28,4 +28,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 019 ==> 308701 - digikam crash while export again the same image to picasaweb with kipi plugin.
 020 ==> 321251 - Gwenview crashs if close it while sending images to picasa.
 021 ==> 172427 - digiKam crashed with kipi plugins.
-022 ==> 
+022 ==> 164908 - private albums are not listed (and then not usable) with picasa export plugin.
+023 ==> 
