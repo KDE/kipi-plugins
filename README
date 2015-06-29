@@ -11,7 +11,6 @@ to use a plugin architecture for additional functionalities.
 
 Notes:
 
-Most of the Kipi-plugins have previously been DigikamPlugins.
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Current plugins ported to Qt4/KDE4:
@@ -27,7 +26,7 @@ HTMLExport         : A tool to export images collections into a static XHTML pag
 ImageViewer        : A tool to preview images using OpenGL.
 JpegLossLess       : A tool to rotate/flip images without losing quality.
 MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
-PicasaWebExport    : A tool to export images to a remote Picasa web service (http://www.picasaweb.com).
+GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
 RawConverter       : A tool to convert Raw Image to JPEG/PNG/TIFF.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.

@@ -105,7 +105,7 @@ if(KIPI_FOUND)
     MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
     MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
     MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
-    MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
+    MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleServices, Dropbox and Imgur.
     MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
     MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)                                   # For Mediawiki.
     MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte)                               # For VKontakte.
@@ -274,7 +274,7 @@ if(KIPI_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
-    PRINT_COMPONENT_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("GoogleServices"     QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          LIBKVKONTAKTE_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
