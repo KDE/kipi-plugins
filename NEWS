@@ -31,4 +31,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 022 ==> 164908 - private albums are not listed (and then not usable) with picasa export plugin.
 023 ==> 200091 - "remove EXIF data" crashes digikam, gwenview.
 024 ==> 265630 - Gallery export uploads to wrong directory.
-025 ==> 
+025 ==> 249842 - Blend bracketed images tool says it failed to save the blended image, but actually saves it.
+026 ==> 
