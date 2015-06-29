@@ -1,4 +1,4 @@
-KIPI-PLUGINS PROJECT (http://www.digikam.org)
+KIPIPLUGINS PROJECT (http://www.digikam.org)
 
 -- AUTHORS ------------------------------------------------------------
 
@@ -11,7 +11,6 @@ to use a plugin architecture for additional functionalities.
 
 Notes:
 
-Most of the Kipi-plugins have previously been DigikamPlugins.
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Current plugins ported to Qt4/KDE4:
@@ -27,7 +26,7 @@ HTMLExport         : A tool to export images collections into a static XHTML pag
 ImageViewer        : A tool to preview images using OpenGL.
 JpegLossLess       : A tool to rotate/flip images without losing quality.
 MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
-PicasaWebExport    : A tool to export images to a remote Picasa web service (http://www.picasaweb.com).
+GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
 RawConverter       : A tool to convert Raw Image to JPEG/PNG/TIFF.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.
@@ -57,16 +56,15 @@ WallPaper          : A tool to set image as background on your desktop.
 
 -- DEPENDENCIES -------------------------------------------------------
 
-CMake           >= 3.0.0                        http://www.cmake.org
-ECM             >= 1.1.0                        https://projects.kde.org/projects/kdesupport/extra-cmake-modules
-libqt           >= 5.1.0                        http://qt-project.org
-libkde          >= 5.1.0                        http://www.kde.org
-libkipi         >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
-libkexiv2       >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
-libkdcraw       >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
+CMake           >= 2.4.5                        http://www.cmake.org
+libqt           >= 4.3.0                        http://www.qtsoftware.com
+libkde          >= 4.3.0                        http://www.kde.org
 libtiff         >= 3.8.2                        http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.0                        http://www.libpng.org/pub/png/libpng.html
+libkipi         >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
+libkexiv2       >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
+libkdcraw       >= 2.2.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
@@ -85,10 +83,10 @@ libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.ht
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
-libksane        >= 5.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
-libkgeomap      >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
-libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
-libkvkontakte   >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
+libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
+libkgeomap      >= 3.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
+libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
+libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libimagemagick  >= 5.5.4                        http://www.imagemagick.org
 libqtgstreamer  >= 0.9.0                        http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 libhupnp        >= 2.0.0                        http://www.herqq.org                                               If no external libray is found, internal version is used instead.
@@ -123,33 +121,50 @@ Imgur              : libqtkoauth.
 ImgurExport        : kqoauth for Imgur.com's authenticated API.
 Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 
--- INSTALL ------------------------------------------------------------
-
-Usual CMake options:
-
--DCMAKE_INSTALL_PREFIX : decide where the program will be install on your computer.
--DCMAKE_BUILD_TYPE     : decide which type of build you want. You can chose between "debug", "profile", "relwithdebinfo" and "release". The default is "relwithdebinfo" (-O2 -g).
-
-Note: To know KDE install path on your computer, use 'kf5-config --prefix' command line like this (with debug object enabled):
-
-"cmake . -DCMAKE_BUILD_TYPE=debug -DCMAKE_INSTALL_PREFIX=`kf5-config --prefix`"
-
 -- CONTACT ------------------------------------------------------------
 
 If you have questions, comments, suggestions to make send an email to :
 
 kde-imaging@kde.org
 
-IRC channel from irc.freenode.org server: #digikam
+IRC channel from irc.freenode.org server: #kde-imaging
+                                          #digikam
 
-IMPORTANT : the bugreports and the wishlist are hosted by the KDE bugs report
-system who can be contacted by the standard Kde help menu of the plugins dialog.
-A mail will be automatically sent to the digiKam devel mailing list.
-There is no need to contact directly the digiKam mailing list for a bug report
+IMPORTANT : the bugreports and wishlist are hosted by the KDE bugs report 
+system who can be contacted by the standard Kde help menu of plugins dialog. 
+A mail will be automaticly sent to the Kipi mailing list.
+There is no need to contact directly the Kipi mailing list for a bug report 
 or a devel wish.
 
-The current digiKam bugs and devel wish reported to the Kde bugs report can be seen 
-at this url:
+The current Kipi bugs and devel wishes reported to the Kde bugs report can be
+seen at this url :
 
 http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
 
+-- INSTALL ------------------------------------------------------------
+
+In order to compile, especially when QT3/Qt4 are installed at the same time, 
+just use something like that:
+
+# export VERBOSE=1
+# export QTDIR=/usr/lib/qt4/  
+# export PATH=$QTDIR/bin:$PATH 
+# cmake .
+# make
+# sudo make install
+
+Usual CMake options :
+
+-DCMAKE_INSTALL_PREFIX : decide where the program will be install on your computer.
+-DCMAKE_BUILD_TYPE     : decide which type of build you want. You can chose between "debugfull", "debug", "profile", "relwithdebinfo" and "release". The default is "relwithdebinfo" (-O2 -g).
+
+Compared to old KDE3 autoconf options:
+
+"cmake . -DCMAKE_BUILD_TYPE=debugfull" is equivalent to "./configure --enable-debug=full"
+"cmake . -DCMAKE_INSTALL_PREFIX=/usr"  is equivalent to "./configure --prefix=/usr"
+
+More details can be found at this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
+
+Note: To know KDE install path on your computer, use 'kde-config --prefix' command line like this (with full debug object enabled):
+
+"cmake . -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix`"
