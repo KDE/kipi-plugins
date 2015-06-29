@@ -30,10 +30,9 @@
 #include <QTreeWidget>
 #include <QString>
 #include <QPixmap>
+#include <QUrl>
 
-// KDE includes
-
-#include <kfileitem.h>
+class KFileItem;
 
 namespace KIPI
 {

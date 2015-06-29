@@ -31,10 +31,10 @@
 
 // KDE includes
 
-#include <kdeversion.h>
 #include <KLocalizedString>
 #include <kiconloader.h>
 #include <kio/previewjob.h>
+#include <kfileitem.h>
 
 // Libkipi includes
 
@@ -195,7 +195,9 @@ BracketStackItem* BracketStackList::findItem(const QUrl& url)
 void BracketStackList::addItems(const QList<QUrl>& list)
 {
     if (list.count() == 0)
+    {
         return;
+    }
 
     QList<QUrl> urls;
 
@@ -232,7 +234,6 @@ void BracketStackList::addItems(const QList<QUrl>& list)
     }
     else
     {
-#if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
         for (const QUrl& url: urls)
         {
@@ -242,12 +243,9 @@ void BracketStackList::addItems(const QList<QUrl>& list)
             }
         }
         KIO::PreviewJob* job = KIO::filePreview(items, iconSize());
-#else
-        KIO::PreviewJob *job = KIO::filePreview(urls, iconSize().width());
-#endif
 
-        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
-                this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
+        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
+                this, SLOT(slotKDEPreview(KFileItem, QPixmap)));
 
         connect(job, SIGNAL(failed(KFileItem)),
                 this, SLOT(slotKDEPreviewFailed(KFileItem)));
@@ -260,7 +258,9 @@ void BracketStackList::addItems(const QList<QUrl>& list)
 void BracketStackList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
 {
     if (!pix.isNull())
+    {
         slotThumbnail(item.url(), pix);
+    }
 }
 
 void BracketStackList::slotKDEPreviewFailed(const KFileItem& item)

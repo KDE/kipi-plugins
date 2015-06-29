@@ -32,7 +32,6 @@
 // KDE includes
 
 #include <KLocalizedString>
-#include <kpushbutton.h>
 
 // Libkipi includes
 

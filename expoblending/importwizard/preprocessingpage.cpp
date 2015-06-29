@@ -38,8 +38,8 @@
 // KDE includes
 
 #include <KLocalizedString>
-#include <kiconloader.h>
 #include <KConfig>
+#include <kiconloader.h>
 #include <kpixmapsequence.h>
 
 // Libkipi includes
@@ -67,7 +67,6 @@ public:
     Private()
     {
         progressPix   = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
-//         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0,

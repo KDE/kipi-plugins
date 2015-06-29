@@ -34,10 +34,6 @@
 #include <QList>
 #include <QIcon>
 
-// KDE includes
-
-#include <kfileitem.h>
-
 // Local includes
 
 #include "enfusesettings.h"

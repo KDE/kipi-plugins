@@ -54,12 +54,9 @@ extern "C"
 
 #include <klineedit.h>
 #include <KConfig>
-#include <kvbox.h>
-#include <kcursor.h>
 #include <kiconloader.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
 #include <KWindowConfig>
@@ -110,7 +107,7 @@ struct ExpoBlendingDlg::ExpoBlendingDlgPriv
     QString               inputFileName;
     QString               output;
 
-    KLineEdit*            templateFileName;
+    QLineEdit*            templateFileName;
 
     KPPreviewManager*     previewWidget;
 
@@ -192,8 +189,8 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     customLabel->setText(i18nc("@label:textbox", "File Name Template: "));
     hbox->addWidget(customLabel);
 
-    d->templateFileName             = new KLineEdit(dummySaveWidget);
-    d->templateFileName->setClearButtonShown(true);
+    d->templateFileName             = new QLineEdit(dummySaveWidget);
+    d->templateFileName->setClearButtonEnabled(true);
     hbox->addWidget(d->templateFileName);
 
     d->saveSettingsBox->setCustomSettingsWidget(d->saveSettingsBox);
@@ -349,7 +346,7 @@ void ExpoBlendingDlg::slotDefault()
 {
     d->enfuseSettingsBox->resetToDefault();
     d->saveSettingsBox->resetToDefault();
-    d->templateFileName->setText(QStringLiteral("enfuse"));
+    d->templateFileName->insert(QStringLiteral("enfuse"));
 }
 
 void ExpoBlendingDlg::readSettings()
@@ -366,7 +363,7 @@ void ExpoBlendingDlg::readSettings()
     d->settingsExpander->readSettings();
 #endif
 
-    d->templateFileName->setText(group.readEntry("Template File Name", QStringLiteral("enfuse")));
+    d->templateFileName->insert(group.readEntry("Template File Name", QStringLiteral("enfuse")));
 
     KConfigGroup group2 = config.group("ExpoBlending Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group2);

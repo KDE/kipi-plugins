@@ -35,10 +35,9 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <KLocalizedString>
-#include <kseparator.h>
 #include <KConfig>
+#include <KConfigGroup>
 
 // Libkdcraw includes
 

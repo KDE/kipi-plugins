@@ -31,14 +31,9 @@
 
 // KDE includes
 
-#include <kactioncollection.h>
 #include <KConfig>
-#include <kgenericfactory.h>
-#include <kiconloader.h>
-#include <klibloader.h>
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kwindowsystem.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 

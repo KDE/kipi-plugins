@@ -29,10 +29,6 @@
 
 #include <QThread>
 
-// KDE includes
-
-// #include <kprocess.h>
-
 // LibKDcraw includes
 
 #include <rawdecodingsettings.h>

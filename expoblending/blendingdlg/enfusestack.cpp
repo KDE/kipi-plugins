@@ -38,7 +38,6 @@
 
 #include <KLocalizedString>
 #include <kiconloader.h>
-#include <kio/previewjob.h>
 #include <kpixmapsequence.h>
 
 // Libkipi includes
