@@ -39,6 +39,7 @@ extern "C"
 #include <QStandardPaths>
 #include <QApplication>
 #include <QMessageBox>
+#include <QIODevice>
 
 // KDE includes
 
