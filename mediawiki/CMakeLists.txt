@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -15,14 +15,12 @@ set(kipiplugin_wikimedia_PART_SRCS
     wmwindow.cpp
     wmwidget.cpp
     wikimediajob.cpp
-    wmwidget.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_wikimedia ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
 
 target_link_libraries(kipiplugin_wikimedia
                       kipiplugins
-                      mediawiki
                       ${MEDIAWIKI_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
