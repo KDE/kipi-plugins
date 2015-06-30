@@ -24,6 +24,7 @@
 #define GPSDATACONTAINER_H
 
 #include <QStringList>
+#include <QMetaType>
 
 namespace KIPIKMLExportPlugin
 {
