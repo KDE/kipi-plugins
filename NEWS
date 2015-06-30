@@ -29,4 +29,8 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 020 ==> 321251 - Gwenview crashs if close it while sending images to picasa.
 021 ==> 172427 - digiKam crashed with kipi plugins.
 022 ==> 164908 - private albums are not listed (and then not usable) with picasa export plugin.
-023 ==> 
+023 ==> 200091 - "remove EXIF data" crashes digikam, gwenview.
+024 ==> 265630 - Gallery export uploads to wrong directory.
+025 ==> 249842 - Blend bracketed images tool says it failed to save the blended image, but actually saves it.
+026 ==> 320749 - Panorama tool fails systematically when file names contain ':'.
+027 ==> 
