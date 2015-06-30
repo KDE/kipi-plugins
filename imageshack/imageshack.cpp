@@ -25,16 +25,19 @@
 // Qt includes
 
 #include <QString>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 
-namespace KIPIImageshackExportPlugin
+// Locla includes
+
+#include "kipiplugins_debug.h"
+
+namespace KIPIImageshackPlugin
 {
 
 Imageshack::Imageshack()
@@ -118,4 +121,4 @@ void Imageshack::saveSettings()
     config.sync();
 }
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin

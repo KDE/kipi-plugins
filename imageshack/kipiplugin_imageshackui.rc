@@ -1,11 +1,11 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <!-- NOTE: don't forget to increase version ID when this file is modified -->
-<gui version="1" name="kipiplugin_imageshackexport" >
+<gui version="1" name="kipiplugin_imageshack" >
 
     <MenuBar>
 
         <Menu name="Export"><text>&amp;Export</text>
-            <Action name="imageshackexport" group="kipi_export_group" />
+            <Action name="imageshack" group="kipi_export_group" />
         </Menu>
 
     </MenuBar>

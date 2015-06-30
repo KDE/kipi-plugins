@@ -23,7 +23,7 @@
 #ifndef IMAGESHACKITEM_H
 #define IMAGESHACKITEM_H
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class ImageshackGallery
@@ -58,7 +58,6 @@ public:
     QString m_bucket;
 };
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin
 
 #endif // IMAGESHACKITEM_H
-

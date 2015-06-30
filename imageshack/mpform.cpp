@@ -30,14 +30,18 @@
 // Qt includes
 
 #include <QFile>
+#include <QUrl>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kmimetype.h>
 #include <krandom.h>
 
-namespace KIPIImageshackExportPlugin
+// Local includes
+
+#include "kipiplugins_debug.h"
+
+namespace KIPIImageshackPlugin
 {
 
 MPForm::MPForm()
@@ -91,7 +95,7 @@ void MPForm::addPair(const QString& name, const QString& value)
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(path);
+    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
     QString mime       = ptr->name();
     if (mime.isEmpty())
         return false;
@@ -140,4 +144,4 @@ QByteArray MPForm::formData() const
     return m_buffer;
 }
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin

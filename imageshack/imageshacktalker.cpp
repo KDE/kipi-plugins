@@ -20,7 +20,7 @@
 *
 * ============================================================ */
 
-#include "imageshacktalker.moc"
+#include "imageshacktalker.h"
 
 // Qt includes
 
@@ -30,11 +30,10 @@
 #include <QDomElement>
 #include <QDomNode>
 #include <QXmlStreamReader>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
-#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <ktoolinvocation.h>
 #include <kio/jobuidelegate.h>
@@ -45,13 +44,16 @@
 #include "kpversion.h"
 #include "imageshack.h"
 #include "mpform.h"
+#include "kipiplugins_debug.h"
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 ImageshackTalker::ImageshackTalker(Imageshack* imghack)
-    : m_imageshack(imghack), m_loginInProgress(false), m_job(0),
-    m_state(IMGHCK_DONOTHING)
+    : m_imageshack(imghack),
+      m_loginInProgress(false),
+      m_job(0),
+      m_state(IMGHCK_DONOTHING)
 {
     m_userAgent   = QString("KIPI-Plugin-Imageshack/%1").arg(kipiplugins_version);
     m_photoApiUrl = QUrl("http://www.imageshack.us/upload_api.php");
@@ -367,7 +369,7 @@ void ImageshackTalker::cancelLogIn()
 
 QString ImageshackTalker::mimeType(const QString& path)
 {
-    KMimeType::Ptr mimePtr = KMimeType::findByUrl(path);
+    KMimeType::Ptr mimePtr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
     return mimePtr->name();
 }
 
@@ -594,4 +596,4 @@ void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
     }
 }
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin

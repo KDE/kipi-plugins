@@ -28,7 +28,7 @@
 #include <QByteArray>
 #include <QString>
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class MPForm
@@ -55,6 +55,6 @@ private:
     QByteArray m_boundary;
 };
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin
 
 #endif /* MPFORM_H */

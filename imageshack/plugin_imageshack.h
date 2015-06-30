@@ -20,8 +20,8 @@
 *
 * ============================================================ */
 
-#ifndef PLUGIN_IMAGESHACKEXPORT_H
-#define PLUGIN_IMAGESHACKEXPORT_H
+#ifndef PLUGIN_IMAGESHACK_H
+#define PLUGIN_IMAGESHACK_H
 
 // Qt includes
 
@@ -29,23 +29,23 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 class QAction;
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class Imageshack;
 
-class Plugin_ImageshackExport : public KIPI::Plugin
+class Plugin_Imageshack : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_ImageshackExport(QObject* const parent, const QVariantList& args);
-    ~Plugin_ImageshackExport();
+    Plugin_Imageshack(QObject* const parent, const QVariantList& args);
+    ~Plugin_Imageshack();
 
     void setup(QWidget* const);
 
@@ -63,6 +63,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin
 
-#endif /* PLUGIN_IMAGESHACKEXPORT_H */
+#endif /* PLUGIN_IMAGESHACK_H */

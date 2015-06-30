@@ -20,7 +20,7 @@
 *
 * ============================================================ */
 
-#include "imageshackwindow.moc"
+#include "imageshackwindow.h"
 
 // Qt includes
 
@@ -38,30 +38,31 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QVBoxLayout>
+#include <QApplication>
+#include <QIcon>
+#include <QMenu>
+#include <QComboBox>
+#include <QTimer>
 
 // KDE includes
 
 #include <kaboutdata.h>
-#include <QApplication>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
-#include <QIcon>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <krun.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>
-#include <QComboBox>
 #include <KWindowConfig>
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "imageshack.h"
 #include "imageshackwidget.h"
 #include "imageshacktalker.h"
@@ -69,7 +70,7 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imghack)
@@ -95,13 +96,14 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
             this, SLOT(slotImageListChanged()));
 
     // About data
-    KPAboutData* about = new KPAboutData(ki18n("Imageshack Export"),
-                                         0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A kipi plugin to export images to Imageshack web service."),
-                                         ki18n("(c) 2012, Dodon Victor\n"));
+    KPAboutData* const about = new KPAboutData(ki18n("Imageshack Export"),
+                                   0,
+                                   KAboutLicense::GPL,
+                                   ki18n("A kipi plugin to export images to Imageshack web service."),
+                                   ki18n("(c) 2012, Dodon Victor\n"));
 
-    about->addAuthor(ki18n("Dodon Victor"), ki18n("Author"),
+    about->addAuthor(ki18n("Dodon Victor").toString(),
+                     ki18n("Author").toString(),
                      "dodonvictor at gmail dot com");
 
     about->setHandbookEntry("imageshackexport");
@@ -508,4 +510,4 @@ void ImageshackWindow::slotGetGalleries()
     m_talker->getGalleries();
 }
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin

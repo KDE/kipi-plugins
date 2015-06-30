@@ -42,7 +42,7 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class Imageshack;
@@ -118,6 +118,6 @@ private:
 
 }; // class ImageshackWidget
 
-}  // namespace KIPIImageshackExportPlugin
+}  // namespace KIPIImageshackPlugin
 
 #endif // IMAGESHACKWIDGET_H

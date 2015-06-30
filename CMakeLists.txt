@@ -409,7 +409,7 @@ if(KF5Kipi_FOUND)
 #         add_subdirectory(picasawebexport)
 #         add_subdirectory(smug)
 #         add_subdirectory(rajceexport)
-#         add_subdirectory(imageshackexport)
+        add_subdirectory(imageshack)
 #
 #         if(QCA2_FOUND)
 #             add_subdirectory(shwup)

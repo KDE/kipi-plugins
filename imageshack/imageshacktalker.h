@@ -36,7 +36,7 @@
 class QDomElement;
 class QByteArray;
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class Imageshack;
@@ -137,6 +137,6 @@ private:
     State       m_state;
 };
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin
 
 #endif // IMAGESHACKTALKER_H

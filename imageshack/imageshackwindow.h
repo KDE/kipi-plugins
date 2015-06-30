@@ -46,7 +46,7 @@ namespace KIPIPlugins
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class Imageshack;
@@ -107,13 +107,13 @@ private:
     unsigned int      m_imagesCount;
     unsigned int      m_imagesTotal;
 
-    QUrl::List        m_transferQueue;
+    QList<QUrl>        m_transferQueue;
 
     Imageshack*       m_imageshack;
     ImageshackWidget* m_widget;
     ImageshackTalker* m_talker;
 };
 
-} // namespace KIPIImageshackExportPlugin
+} // namespace KIPIImageshackPlugin
 
 #endif // IMAGESHACKWINDOW_H

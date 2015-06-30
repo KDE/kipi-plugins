@@ -20,7 +20,7 @@
 *
 * ============================================================ */
 
-#include "imageshackwidget.moc"
+#include "imageshackwidget.h"
 
 // Qt includes
 
@@ -34,34 +34,36 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QComboBox>
+#include <QApplication>
 
 // KDE includes
 
+#include <kmimetype.h>
 #include <kpushbutton.h>
-#include <QComboBox>
 #include <klocalizedstring.h>
 #include <kdialog.h>
-#include "kipiplugins_debug.h"
 
 // Libkipi includes
 
-#include <uploadwidget.h>
-#include <imagecollection.h>
+#include <KIPI/UploadWidget>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "imageshack.h"
 #include "kpprogresswidget.h"
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imageshack)
-    : QWidget(parent), m_imageshack(imageshack)
+    : QWidget(parent),
+      m_imageshack(imageshack)
 {
     setObjectName("ImageshackWidget");
-
 
     QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
@@ -267,7 +269,7 @@ ImageshackWidget::~ImageshackWidget()
 
 void ImageshackWidget::removeVideosFromList()
 {
-    QUrl::List urls = m_imgList->imageUrls();
+    QList<QUrl> urls = m_imgList->imageUrls();
 
     for (int i = 0; i < urls.size(); ++i)
     {
@@ -363,4 +365,4 @@ void ImageshackWidget::slotReloadGalleries()
     emit signalReloadGalleries();
 }
 
-}  // namespace KIPIImageshackExportPlugin
+}  // namespace KIPIImageshackPlugin

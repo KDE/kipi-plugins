@@ -27,7 +27,7 @@
 
 #include <QString>
 
-namespace KIPIImageshackExportPlugin
+namespace KIPIImageshackPlugin
 {
 
 class Imageshack
@@ -71,6 +71,6 @@ private:
 
 }; // Imageshack class
 
-} // KIPIImageshackExportPlugin
+} // KIPIImageshackPlugin
 
 #endif // IMAGESHACK_H
