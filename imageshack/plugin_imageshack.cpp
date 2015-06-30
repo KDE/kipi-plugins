@@ -74,7 +74,7 @@ Plugin_Imageshack::Plugin_Imageshack(QObject* const parent, const QVariantList&)
 
     d->imageshack = new Imageshack();
 
-    setUiBaseName("kipiplugin_imageshackexportui.rc");
+    setUiBaseName("kipiplugin_imageshackui.rc");
     setupXML();
 }
 
