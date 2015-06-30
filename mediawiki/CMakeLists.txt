@@ -6,6 +6,9 @@
 
 subdirs(icons)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_mediawiki\")
+
+
 include_directories(${LIBMEDIAWIKI_INCLUDES})
 
 ki18n_wrap_ui(ui_src wmwindow.ui)
@@ -21,12 +24,12 @@ add_library(kipiplugin_wikimedia MODULE ${kipiplugin_wikimedia_PART_SRCS} ${ui_s
 
 target_link_libraries(kipiplugin_wikimedia
                       KF5kipiplugins
+
                       ${LIBMEDIAWIKI_LIBRARIES}
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
                       KF5::KIOCore
-                      
                      )
 
 configure_file(kipiplugin_wikimedia.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)
