@@ -1,29 +1,27 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 subdirs(icons)
 
-include_directories(${MEDIAWIKI_INCLUDE_DIR})
+include_directories(${LIBMEDIAWIKI_INCLUDES})
 
 ki18n_wrap_ui(ui_src wmwindow.ui)
 
 set(kipiplugin_wikimedia_PART_SRCS
     plugin_wikimedia.cpp
-    wmwindow.cpp
     wmwidget.cpp
     wikimediajob.cpp
-    wmwidget.cpp
+    wmwindow.cpp
    )
 
 add_library(kipiplugin_wikimedia MODULE ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})
 
 target_link_libraries(kipiplugin_wikimedia
                       KF5kipiplugins
-                      mediawiki
-                      ${MEDIAWIKI_LIBRARIES}
+                      ${LIBMEDIAWIKI_LIBRARIES}
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw

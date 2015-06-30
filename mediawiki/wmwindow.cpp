@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "wmwindow.moc"
+#include "wmwindow.h"
 
 // Qt includes
 
@@ -31,33 +31,33 @@
 #include <QCloseEvent>
 #include <QFileInfo>
 #include <QFile>
+#include <QMenu>
+#include <QUrl>
+#include <QComboBox>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <QMenu>
-#include <QUrl>
 #include <klineedit.h>
-#include <QComboBox>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <KWindowConfig>
 
 // MediaWiki includes
 
-#include <libmediawiki/login.h>
-#include <libmediawiki/mediawiki.h>
-#include <libmediawiki/version.h>
+#include <MediaWiki/Login>
+#include <MediaWiki/MediaWiki>
+#include <mediawiki_version.h>
 
 // KIPI includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
@@ -96,7 +96,8 @@ public:
 };
 
 WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KP4ToolDialog(0), d(new Private)
+    : KP4ToolDialog(0),
+      d(new Private)
 {
     d->tmpPath.clear();
     d->tmpDir    = tmpFolder;
@@ -117,23 +118,28 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->widget->setMinimumSize(700, 500);
     d->widget->installEventFilter(this);
 
-    KPAboutData* const about = new KPAboutData(ki18n("MediaWiki export"), 0,
-                                               KAboutData::License_GPL,
+    KPAboutData* const about = new KPAboutData(ki18n("MediaWiki export"),
+                                               0,
+                                               KAboutLicense::GPL,
                                                ki18n("A Kipi plugin to export image collection "
                                                      "to a MediaWiki installation.\n"
-                                                     "Using libmediawiki version %1").subs(QString(mediawiki_version)),
+                                                     "Using libmediawiki version %1").subs(QLatin1String(MEDIAWIKI_VERSION_STRING)),
                                                ki18n("(c) 2011, Alexandre Mendes"));
 
-    about->addAuthor(ki18n("Alexandre Mendes"), ki18n("Author"),
+    about->addAuthor(ki18n("Alexandre Mendes").toString(),
+                     ki18n("Author").toString(),
                      "alex dot mendes1988 at gmail dot com");
 
-    about->addAuthor(ki18n("Guillaume Hormiere"), ki18n("Developer"),
+    about->addAuthor(ki18n("Guillaume Hormiere").toString(),
+                     ki18n("Developer").toString(),
                      "hormiere dot guillaume at gmail dot com");
 
-    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+    about->addAuthor(ki18n("Gilles Caulier").toString(),
+                     ki18n("Developer").toString(),
                      "caulier dot gilles at gmail dot com");
 
-    about->addAuthor(ki18n("Peter Potrowl"), ki18n("Developer"),
+    about->addAuthor(ki18n("Peter Potrowl").toString(),
+                     ki18n("Developer").toString(),
                      "peter dot potrowl at gmail dot com");
 
     about->setHandbookEntry("wikimedia");
@@ -283,7 +289,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    QUrl::List urls = d->widget->imagesList()->imageUrls(false);
+    QList<QUrl> urls = d->widget->imagesList()->imageUrls(false);
     QMap <QString, QMap <QString, QString> > imagesDesc = d->widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)

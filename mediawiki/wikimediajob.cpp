@@ -24,10 +24,11 @@
  *
  * ============================================================ */
 
-#include "wikimediajob.moc"
+#include "wikimediajob.h"
 
 // Qt includes
 
+#include <QApplication>
 #include <QMessageBox>
 #include <QFile>
 #include <QTimer>
@@ -35,18 +36,20 @@
 
 // KDE includes
 
-#include <kmessagebox.h>
 #include <klocalizedstring.h>
-#include "kipiplugins_debug.h"
 
 // MediaWiki includes
 
-#include <libmediawiki/upload.h>
-#include <libmediawiki/mediawiki.h>
+#include <MediaWiki/Upload>
+#include <MediaWiki/MediaWiki>
 
 // KIPI includes
 
-#include <interface.h>
+#include <KIPI/Interface>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIWikiMediaPlugin
 {
@@ -61,7 +64,7 @@ public:
         mediawiki = 0;
     }
 
-    QUrl::List                               urls;
+    QList<QUrl>                              urls;
     Interface*                               interface;
     MediaWiki*                               mediawiki;
     QString                                  error;
@@ -70,7 +73,8 @@ public:
 };
 
 WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent)
-    : KJob(parent), d(new Private)
+    : KJob(parent),
+      d(new Private)
 {
     d->interface = interface;
     d->mediawiki = mediawiki;
@@ -174,7 +178,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
 
         if(d->error.size() > 0)
         {
-            KMessageBox::error(0,d->error);
+            QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), d->error);
         }
         else
         {

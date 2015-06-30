@@ -31,11 +31,11 @@
 #include <QWidget>
 #include <QStringList>
 #include <QTreeWidgetItem>
+#include <QUrl>
 
 //KDE includes
 
 #include <kconfig.h>
-#include <QUrl>
 
 namespace KIPIPlugins
 {
@@ -96,7 +96,7 @@ public:
     void readSettings(KConfigGroup& group);
     void saveSettings(KConfigGroup& group);
     void loadImageInfoFirstLoad();
-    void loadImageInfo(const KUrl& url);
+    void loadImageInfo(const QUrl& url);
     void clearEditFields();
 
 Q_SIGNALS:
@@ -113,7 +113,7 @@ private Q_SLOTS:
     void slotNewWikiClicked();
     void slotAddWikiClicked();
     void slotLoadImagesDesc(QTreeWidgetItem* item);
-    void slotRemoveImagesDesc(const QUrl::List urls);
+    void slotRemoveImagesDesc(const QList<QUrl> urls);
     void slotRestoreExtension();
     void slotApplyTitle();
     void slotApplyDate();

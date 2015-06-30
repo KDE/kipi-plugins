@@ -21,12 +21,12 @@
  *
  * ============================================================ */
 
+#include "plugin_wikimedia.h"
+
 // To disable warnings under MSVC2008 about getpid().
 #ifdef _MSC_VER
 #pragma warning(disable : 4996)
 #endif
-
-#include "plugin_wikimedia.moc"
 
 // C ANSI includes
 
@@ -35,31 +35,33 @@ extern "C"
 #include <unistd.h>
 }
 
+// Qt includes
+
+#include <QAction>
+
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <KConfig>
 #include <KApplication>
-#include <QAction>
 #include <KActionCollection>
 #include <KGenericFactory>
 #include <KLibLoader>
-#include <KStandardDirs>
+#include <kstandarddirs.h>
 #include <kwindowsystem.h>
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "wmwindow.h"
 
 namespace KIPIWikiMediaPlugin
 {
 
 K_PLUGIN_FACTORY( WikiMediaFactory, registerPlugin<Plugin_WikiMedia>(); )
-K_EXPORT_PLUGIN ( WikiMediaFactory("kipiplugin_wikimedia") )
 
 class Plugin_WikiMedia::Private
 {
@@ -76,10 +78,10 @@ public:
 };
 
 Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(WikiMediaFactory::componentData(), parent, "MediaWiki export"),
+    : Plugin(parent, "MediaWiki export"),
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_MediaWiki plugin loaded";
+    //kDebug(AREA_CODE_LOADING) << "Plugin_MediaWiki plugin loaded";
 
     setUiBaseName("kipiplugin_wikimediaui.rc");
     setupXML();
@@ -93,10 +95,8 @@ Plugin_WikiMedia::~Plugin_WikiMedia()
 void Plugin_WikiMedia::setup(QWidget* const widget)
 {
     d->dlgExport = 0;
+
     Plugin::setup(widget);
-
-    KIconLoader::global()->addAppDir("kipiplugin_wikimedia");
-
     setupActions();
 
     if (!interface())
@@ -143,3 +143,5 @@ void Plugin_WikiMedia::slotExport()
 }
 
 } // namespace KIPIWikiMediaPlugin
+
+#include "plugin_wikimedia.moc"

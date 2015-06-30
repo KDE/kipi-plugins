@@ -34,7 +34,6 @@
 #include <kconfig.h>
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -62,12 +61,12 @@ public:
         dialog          = 0;
     }
 
-    QAction *          actionTimeAjust;
+    QAction *         actionTimeAjust;
     TimeAdjustDialog* dialog;
 };
 
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
-    : Plugin(/*TimeAdjustFactory::componentData(),*/ parent, "TimeAdjust"),
+    : Plugin(parent, "TimeAdjust"),
       d(new Private)
 {
     //kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";

@@ -30,12 +30,12 @@
 
 // KIPI includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 // MediaWiki includes
 
-#include <libmediawiki/login.h>
-#include <libmediawiki/mediawiki.h>
+#include <MediaWiki/Login>
+#include <MediaWiki/MediaWiki>
 
 class QAction;
 

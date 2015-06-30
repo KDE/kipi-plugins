@@ -258,3 +258,43 @@ macro(DETECT_LIBKVKONTAKTE MIN_VERSION)
     message(STATUS "libkvkontakte includes   : ${LIBKVKONTAKTE_INCLUDES}")
 
 endmacro()
+
+###########################################################################################################################################"
+
+macro(DETECT_LIBMEDIAWIKI MIN_VERSION)
+
+    if (NOT DIGIKAMSC_COMPILE_LIBMEDIAWIKI)
+
+        message(STATUS "libmediawiki : search system based library")
+        find_package(KF5MediaWiki ${MIN_VERSION})
+
+        if(KF5MediaWiki_FOUND)
+            set(LIBMEDIAWIKI_LIBRARIES KF5::MediaWiki)
+            get_target_property(LIBMEDIAWIKI_INCLUDES KF5::MediaWiki INTERFACE_INCLUDE_DIRECTORIES)
+            set(KF5MediaWiki_FOUND TRUE)
+        else()
+            set(KF5MediaWiki_FOUND FALSE)
+        endif()
+
+    else()
+
+        message(STATUS "libmediawiki : use local library from ${CMAKE_SOURCE_DIR}/extra/libmediawiki/")
+        find_file(KF5MediaWiki_FOUND CMakeLists.txt PATHS ${CMAKE_SOURCE_DIR}/extra/libmediawiki/)
+
+        if(NOT KF5MediaWiki_FOUND)
+            message(ERROR "libmediawiki : local library not found")
+            set(KF5MediaWiki_FOUND FALSE)
+        else()
+            set(KF5MediaWiki_FOUND TRUE)
+        endif()
+
+        set(LIBMEDIAWIKI_INCLUDES ${CMAKE_SOURCE_DIR}/extra/libmediawiki/ ${CMAKE_BINARY_DIR}/extra/libmediawiki)
+        set(LIBMEDIAWIKI_LIBRARIES KF5MediaWiki)
+
+    endif()
+
+    message(STATUS "libmediawiki found      : ${KF5MediaWiki_FOUND}")
+    message(STATUS "libmediawiki library    : ${LIBMEDIAWIKI_LIBRARIES}")
+    message(STATUS "libmediawiki includes   : ${LIBMEDIAWIKI_INCLUDES}")
+
+endmacro()

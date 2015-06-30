@@ -25,7 +25,7 @@
  *
  * ============================================================ */
 
-#include "wmwidget.moc"
+#include "wmwidget.h"
 
 // Qt includes
 
@@ -43,12 +43,12 @@
 #include <QSpinBox>
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QComboBox>
+#include <QApplication>
 
 // KDE includes
 
-#include <QComboBox>
 #include <kconfiggroup.h>
-#include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <klineedit.h>
 #include <klocalizedstring.h>
@@ -56,23 +56,25 @@
 #include <kpushbutton.h>
 #include <ktextedit.h>
 #include <kvbox.h>
+#include <kiconloader.h>
 
 // Libkipi includes
 
-#include <uploadwidget.h>
-#include <interface.h>
+#include <KIPI/UploadWidget>
+#include <KIPI/Interface>
 
 // libKdcraw includes
 
-#include <rexpanderbox.h>
-#include <version.h>
-#include <squeezedcombobox.h>
+#include <KDCRAW/RExpanderBox>
+#include <KDCRAW/SqueezedComboBox>
+#include <libkdcraw_version.h>
 
 // Local includes
 
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPI;
 using namespace KDcrawIface;
@@ -596,8 +598,8 @@ WmWidget::WmWidget(QWidget* const parent)
     connect(d->imgList, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SLOT(slotLoadImagesDesc(QTreeWidgetItem*)));
 
-    connect(d->imgList, SIGNAL(signalRemovedItems(QUrl::List)),
-            this, SLOT(slotRemoveImagesDesc(QUrl::List)));
+    connect(d->imgList, SIGNAL(signalRemovedItems(QList<QUrl>)),
+            this, SLOT(slotRemoveImagesDesc(QList<QUrl>)));
 }
 
 WmWidget::~WmWidget()
@@ -771,7 +773,7 @@ void WmWidget::slotAddWikiClicked()
 
 void WmWidget::loadImageInfoFirstLoad()
 {
-    QUrl::List urls = d->imgList->imageUrls(false);
+    QList<QUrl> urls = d->imgList->imageUrls(false);
 
     d->imagesDescInfo.clear();
 
@@ -781,9 +783,9 @@ void WmWidget::loadImageInfoFirstLoad()
     }
 }
 
-void WmWidget::loadImageInfo(const KUrl& url)
+void WmWidget::loadImageInfo(const QUrl& url)
 {
-    KPImageInfo info(url.path());
+    KPImageInfo info(url);
     QStringList keywar        = info.keywords();
     QString date              = info.date().toString(Qt::ISODate).replace("T", " ", Qt::CaseSensitive);
     QString title             = info.name();
@@ -860,9 +862,9 @@ void WmWidget::slotLoadImagesDesc(QTreeWidgetItem* item)
     }
 }
 
-void WmWidget::slotRemoveImagesDesc(const QUrl::List urls)
+void WmWidget::slotRemoveImagesDesc(const QList<QUrl> urls)
 {
-    for (QUrl::List::const_iterator it = urls.begin(); it != urls.end(); ++it)
+    for (QList<QUrl>::const_iterator it = urls.begin(); it != urls.end(); ++it)
     {
         QString path = (*it).path();
         d->imagesDescInfo.remove(path);
@@ -877,7 +879,7 @@ void WmWidget::slotRestoreExtension()
     QString imageTitle;
     QString originalExtension;
     QString currentExtension;
-    QUrl::List urls;
+    QList<QUrl> urls;
     QMap<QString, QString> imageMetaData;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
@@ -916,7 +918,7 @@ void WmWidget::slotApplyTitle()
     QString givenTitle = title();
     QString imageTitle;
     QString number;
-    QUrl::List urls;
+    QList<QUrl> urls;
     QMap<QString, QString> imageMetaData;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
     QStringList parts;
@@ -958,7 +960,7 @@ void WmWidget::slotApplyTitle()
 
 void WmWidget::slotApplyDate()
 {
-    QUrl::List urls;
+    QList<QUrl> urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -978,7 +980,7 @@ void WmWidget::slotApplyDate()
 
 void WmWidget::slotApplyCategories()
 {
-    QUrl::List urls;
+    QList<QUrl> urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -998,7 +1000,7 @@ void WmWidget::slotApplyCategories()
 
 void WmWidget::slotApplyDescription()
 {
-    QUrl::List urls;
+    QList<QUrl> urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -1019,7 +1021,7 @@ void WmWidget::slotApplyDescription()
 void WmWidget::slotApplyLatitude()
 {
 
-    QUrl::List urls;
+    QList<QUrl> urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -1039,7 +1041,7 @@ void WmWidget::slotApplyLatitude()
 
 void WmWidget::slotApplyLongitude()
 {
-    QUrl::List urls;
+    QList<QUrl> urls;
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
 
     for (int i = 0; i < selectedItems.size(); ++i)
@@ -1059,7 +1061,7 @@ void WmWidget::slotApplyLongitude()
 
 QMap <QString,QMap <QString,QString> > WmWidget::allImagesDesc()
 {
-    QUrl::List urls = d->imgList->imageUrls(false);
+    QList<QUrl> urls = d->imgList->imageUrls(false);
 
     for (int i = 0; i < urls.size(); ++i)
     {
