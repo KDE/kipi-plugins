@@ -106,7 +106,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
                      ki18n("Author").toString(),
                      "dodonvictor at gmail dot com");
 
-    about->setHandbookEntry("imageshackexport");
+    about->setHandbookEntry("imageshack");
     setAboutData(about);
 
     // -----------------------------------------------------------
