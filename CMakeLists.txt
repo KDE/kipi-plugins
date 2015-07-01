@@ -121,10 +121,6 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                     # For Htmlexport.
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
-#     MACRO_OPTIONAL_FIND_PACKAGE(Ipod)                                        # For ipodexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(Gdk)                                         # For ipodexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)                                       # For ipodexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(GObject)                                     # For ipodexport.
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
 #     MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
@@ -186,7 +182,6 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libgpod"        "http://www.gtkpod.org/libgpod.html"                              "(version >= 0.7.0)"                  "Kipi-plugins will be compiled without libgpod support."        IPOD_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libgdk"         "http://library.gnome.org/devel/gdk-pixbuf"                       "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libgdk support."         GDK_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 0.3.0)"                  "Kipi-plugins will be compiled without libksane support."       KSANE_FOUND)
@@ -247,7 +242,6 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("IpodExport"         IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
