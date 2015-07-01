@@ -381,9 +381,6 @@ if(KIPI_FOUND)
         add_subdirectory(photolayoutseditor)
         add_subdirectory(jalbumexport)
 
-        # Plugin not yet ready for production
-        #add_subdirectory(photivointegration)
-
         # Plugins which are optional dependencies.
 
         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
