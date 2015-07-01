@@ -41,13 +41,13 @@
 
 // local includes
 
-#include <smugitem.h>
+#include "smugitem.h"
 
 namespace KIPISmugPlugin
 {
 
 SmugNewAlbum::SmugNewAlbum(QWidget* parent)
-            : KDialog(parent)
+    : KDialog(parent)
 {
     QString header(i18n("SmugMug New Album"));
     setWindowTitle(header);
