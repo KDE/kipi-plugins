@@ -52,7 +52,6 @@ ImageShackExport   : A tool to export images to ImageShack web service (http://i
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
 DLNAExport         : A tool to export collection on DLNA network service (http://www.dlna.org).
 Panorama           : A tool to assemble panoramic photo automatically.
-WallPaper          : A tool to set image as background on your desktop.
 
 -- DEPENDENCIES -------------------------------------------------------
 
@@ -103,7 +102,6 @@ DngConverter       : libexpat.
 AcquireImages      : libksane.
 HtmlExport         : libxslt and libxml2.
 JpegLossless       : imagemagick (runtime dependency).
-WallPaper          : kdebase (runtime dependency).
 RemoveRedEyes      : libopencv.
 IpodExport         : libgpod and libgdk.
 Calendar           : libkdepimlibs.
