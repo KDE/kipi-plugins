@@ -33,4 +33,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 024 ==> 265630 - Gallery export uploads to wrong directory.
 025 ==> 249842 - Blend bracketed images tool says it failed to save the blended image, but actually saves it.
 026 ==> 320749 - Panorama tool fails systematically when file names contain ':'.
-027 ==> 
+027 ==> 277994 - missing dot in filename in "batch raw converter".
+028 ==> 
