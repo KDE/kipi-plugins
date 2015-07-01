@@ -115,8 +115,7 @@ Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 DLNAExport         : libhupnp and libqtsoap.
 VideoSlideshow     : libimagemagick and libqtgstreamer
-Imgur              : libqtkoauth.
-ImgurExport        : kqoauth for Imgur.com's authenticated API.
+Imgur              : libqtkoauth and kqoauth for Imgur.com's authenticated API.
 Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 
 -- CONTACT ------------------------------------------------------------
