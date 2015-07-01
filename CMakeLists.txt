@@ -235,21 +235,6 @@ if(KF5Kipi_FOUND)
          endif()
      endif()
 
-#     # Decide if wallpaper plugin can be built
-#     # NOTE: See relevant patch which must be applied to KDE Plasma API :
-#     # https://git.reviewboard.kde.org/r/105319/
-#     # Relevant Bugzilla entry :
-#     # https://bugs.kde.org/show_bug.cgi?id=217950
-#     set(WALLPAPER_KDE_REQ_VER "5.0.0")
-# 
-#     if(KDE_VERSION)
-#         if(${KDE_VERSION} VERSION_LESS ${WALLPAPER_KDE_REQ_VER})
-#             set(BUILD_WALLPAPER FALSE)
-#         else()
-#             set(BUILD_WALLPAPER TRUE)
-#         endif()
-#     endif()
-# 
 #     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
 #     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KSANE_FOUND)
@@ -268,7 +253,6 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
 # 
 # 
 #     # Set QtGStreamer API version --------------------------------------------------------------------------
