@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2008-09-25
- * Description : a tool to convert RAW file to DNG
+ * Date        : 2006-09-24
+ * Description : DNG converter plugin action descriptions
  *
  * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,32 +20,59 @@
  *
  * ============================================================ */
 
-#include "dngwriterhost.h"
+#ifndef ACTIONS_H
+#define ACTIONS_H
 
-// KDE includes
+// Qt includes
 
-#include <kdebug.h>
+#include <QString>
+#include <QImage>
+#include <QMetaType>
+#include <QUrl>
 
-namespace DNGIface
+// Local includes
+
+#include "dngwriter.h"
+
+using namespace DNGIface;
+
+namespace KIPIDNGConverterPlugin
 {
 
-DNGWriterHost::DNGWriterHost(DNGWriter::Private* const priv, dng_memory_allocator* const allocator)
-    : dng_host(allocator), m_priv(priv)
+enum Action
 {
-}
+    NONE = 0,
+    IDENTIFY,
+    PROCESS
+};
 
-DNGWriterHost::~DNGWriterHost()
+class ActionData
 {
-}
 
-void DNGWriterHost::SniffForAbort()
-{
-    if (m_priv->cancel)
+public:
+
+    ActionData()
     {
-        qCDebug(KIPIPLUGINS_LOG) << "DNGWriter: Canceled by user..." ;
-        m_priv->cleanup();
-        ThrowUserCanceled();
+        starting = false;
+        result   = DNGWriter::PROCESSCOMPLETE;
+        action   = NONE;
     }
-}
 
-}  // namespace DNGIface
+    bool    starting;
+    int     result;
+
+    QString destPath;
+    QString message;
+
+    QImage  image;
+
+    QUrl    fileUrl;
+
+    Action  action;
+};
+
+}  // namespace KIPIDNGConverterPlugin
+
+Q_DECLARE_METATYPE(KIPIDNGConverterPlugin::ActionData)
+
+#endif /* ACTIONS_H */

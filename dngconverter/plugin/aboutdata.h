@@ -28,8 +28,8 @@
 
 // LibKDcraw includes
 
-#include <version.h>
-#include <kdcraw.h>
+#include <libkdcraw_version.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 
@@ -50,7 +50,7 @@ public:
     DNGConverterAboutData()
         : KPAboutData(ki18n("DNG Image Converter"), 
                       0,
-                      KAboutData::License_GPL,
+                      KAboutLicense::GPL,
                       ki18n("A tool to batch convert RAW camera images to DNG\n"
                             "Using LibRaw %1\n"
                             "Using LibKdcraw %2\n"
@@ -63,16 +63,16 @@ public:
                             "(c) 2010-2011, Jens Mueller\n"
                             "(c) 2012, Smit Mehta"))
     {
-         addAuthor(ki18n("Gilles Caulier"),
-                   ki18n("Author"),
+         addAuthor(ki18n("Gilles Caulier").toString(),
+                   ki18n("Author").toString(),
                    "caulier dot gilles at gmail dot com");
 
-         addAuthor(ki18n("Jens Mueller"),
-                   ki18n("Developer"),
+         addAuthor(ki18n("Jens Mueller").toString(),
+                   ki18n("Developer").toString(),
                    "tschenser at gmx dot de");
 
-         addAuthor(ki18n("Smit Mehta"),
-                   ki18n("Developer"),
+         addAuthor(ki18n("Smit Mehta").toString(),
+                   ki18n("Developer").toString(),
                    "smit dot meh at gmail dot com");
 
         setHandbookEntry("dngconverter");

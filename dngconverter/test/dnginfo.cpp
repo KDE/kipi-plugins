@@ -82,7 +82,7 @@ int main(int argc, char** argv)
 
         dng_xmp_sdk::InitializeSDK();
 
-        dng_file_stream stream(QFile::encodeName(dngFileInfo.absoluteFilePath()));
+        dng_file_stream stream(QFile::encodeName(dngFileInfo.absoluteFilePath()).constData());
         dng_host        host;
         host.SetKeepOriginalFile(true);
 

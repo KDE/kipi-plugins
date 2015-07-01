@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : file list view and items.
  *
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011      by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "myimagelist.moc"
+#include "myimagelist.h"
 
 // Qt includes
 
@@ -29,13 +29,13 @@
 
 // KDE includes
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-// LibKDcraw includes
+// Local includes
 
 #include "kpmetadata.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIDNGConverterPlugin
 {
@@ -54,7 +54,7 @@ MyImageList::~MyImageList()
 {
 }
 
-void MyImageList::slotAddImages(const QUrl::List& list)
+void MyImageList::slotAddImages(const QList<QUrl>& list)
 {
     /* Replaces the KPImagesList::slotAddImages method, so that
      * MyImageListViewItems can be added instead of ImagesListViewItems */
@@ -63,7 +63,7 @@ void MyImageList::slotAddImages(const QUrl::List& list)
     // of them already exist.
     bool found = false;
 
-    for (QUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
         QUrl imageUrl = *it;
         found         = false;
@@ -156,7 +156,7 @@ void MyImageListViewItem::setStatus(const QString& str)
 
 QString MyImageListViewItem::destPath() const
 {
-    QString path = url().directory() + QString("/") + destFileName();
+    QString path = url().adjusted(QUrl::RemoveFilename).path() + QString("/") + destFileName();
     return path;
 }
 

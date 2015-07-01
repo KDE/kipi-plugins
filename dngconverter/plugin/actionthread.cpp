@@ -7,7 +7,7 @@
  * Description : a class to manage plugin actions using threads
  *
  * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,24 +21,22 @@
  *
  * ============================================================ */
 
-#include "actionthread.moc"
+#include "actionthread.h"
 
 // KDE includes
 
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // LibKDcraw includes
 
-#include <dcrawinfocontainer.h>
-#include <kdcraw.h>
+#include <KDCRAW/DcrawInfoContainer>
+#include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
@@ -70,7 +68,8 @@ public:
 };
 
 ActionThread::ActionThread(QObject* const parent)
-    : RActionThreadBase(parent), d(new Private)
+    : RActionThreadBase(parent),
+      d(new Private)
 {
     qRegisterMetaType<ActionData>();
 }
@@ -107,25 +106,25 @@ void ActionThread::setPreviewMode(int mode)
 
 void ActionThread::processRawFile(const QUrl& url)
 {
-    QUrl::List oneFile;
+    QList<QUrl> oneFile;
     oneFile.append(url);
     processRawFiles(oneFile);
 }
 
 void ActionThread::identifyRawFile(const QUrl& url)
 {
-    QUrl::List oneFile;
+    QList<QUrl> oneFile;
     oneFile.append(url);
     identifyRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFiles(const QUrl::List& urlList)
+void ActionThread::identifyRawFiles(const QList<QUrl>& urlList)
 {
-    JobCollection* const collection = new JobCollection();
+    RJobCollection collection;
 
-    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* const t = new Task(this, *it, IDENTIFY);
+        Task* const t = new Task(*it, IDENTIFY);
         t->setBackupOriginalRawFile(d->backupOriginalRawFile);
         t->setCompressLossLess(d->compressLossLess);
         t->setUpdateFileDate(d->updateFileDate);
@@ -140,19 +139,19 @@ void ActionThread::identifyRawFiles(const QUrl::List& urlList)
         connect(this, SIGNAL(signalCancelTask()),
                 t, SLOT(slotCancel()), Qt::QueuedConnection);
 
-        collection->addJob(t);
+        collection.insert(t, 0);
     }
 
-    appendJob(collection);
+    appendJobs(collection);
 }
 
-void ActionThread::processRawFiles(const QUrl::List& urlList)
+void ActionThread::processRawFiles(const QList<QUrl>& urlList)
 {
-    JobCollection* const collection = new JobCollection();
+    RJobCollection collection;
 
-    for (QUrl::List::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        Task* const t = new Task(this, *it, PROCESS);
+        Task* const t = new Task(*it, PROCESS);
         t->setBackupOriginalRawFile(d->backupOriginalRawFile);
         t->setCompressLossLess(d->compressLossLess);
         t->setUpdateFileDate(d->updateFileDate);
@@ -167,10 +166,10 @@ void ActionThread::processRawFiles(const QUrl::List& urlList)
         connect(this, SIGNAL(signalCancelTask()),
                 t, SLOT(slotCancel()), Qt::QueuedConnection);
 
-        collection->addJob(t);
+        collection.insert(t, 0);
     }
 
-    appendJob(collection);
+    appendJobs(collection);
 }
 
 void ActionThread::cancel()

@@ -4,6 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_dngconverter\")
+
 # =======================================================
 # DNG SDK and XMP SDK use C++ exceptions
 
@@ -11,7 +13,6 @@ kde_enable_exceptions()
 
 # =======================================================
 # XMP SDK source code.
-
 
 include_directories(${EXPAT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5
@@ -231,7 +232,7 @@ endif()
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter )
 
 set(libdngwriter_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriterhost.cpp
    )
@@ -242,9 +243,9 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/plugin )
 
 set(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/task.cpp
-                             ${CMAKE_CURRENT_SOURCE_DIR}/plugin/batchdialog.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/settingswidget.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/plugin/myimagelist.cpp
+                             ${CMAKE_CURRENT_SOURCE_DIR}/plugin/batchdialog.cpp
                              ${libdngwriter_SRCS}
    )
 

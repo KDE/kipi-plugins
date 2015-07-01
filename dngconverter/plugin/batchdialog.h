@@ -52,7 +52,7 @@ public:
     BatchDialog(DNGConverterAboutData* const about);
     ~BatchDialog();
 
-   void addItems(const QUrl::List& itemList);
+   void addItems(const QList<QUrl>& itemList);
 
 protected:
 

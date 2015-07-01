@@ -22,7 +22,6 @@ target_link_libraries(dngconverter
                       KF5::KIOCore
                       KF5::Kipi
                       KF5::KExiv2
-                      KF5::ThreadWeaver
                       KF5::KDcraw
                       ${CMAKE_THREAD_LIBS_INIT}
                       KF5kipiplugins
@@ -43,7 +42,6 @@ target_link_libraries(kipiplugin_dngconverter
                       KF5::Parts
                       KF5::Kipi
                       KF5::KExiv2
-                      KF5::ThreadWeaver
                       KF5::KDcraw
                       ${CMAKE_THREAD_LIBS_INIT}
                       KF5kipiplugins

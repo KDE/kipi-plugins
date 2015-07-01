@@ -20,15 +20,17 @@
  *
  * ============================================================ */
 
-#include "plugin_dngconverter.moc"
+#include "plugin_dngconverter.h"
+
+// Qt includes
+
+#include <QApplication>
+#include <QAction>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <QApplication>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -37,24 +39,24 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
 #include "aboutdata.h"
 #include "batchdialog.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIDNGConverterPlugin
 {
 
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_DNGConverter>(); )
-K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_dngconverter") )
 
 Plugin_DNGConverter::Plugin_DNGConverter(QObject* const parent, const QVariantList&)
-    : Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
+    : Plugin(parent, "DNGConverter")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_DNGConverter plugin loaded" ;
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_DNGConverter plugin loaded" ;
 
     setUiBaseName("kipiplugin_dngconverterui.rc");
     setupXML();
@@ -126,3 +128,5 @@ void Plugin_DNGConverter::slotActivate()
 }
 
 } // namespace KIPIDNGConverterPlugin
+
+#include "plugin_dngconverter.moc"

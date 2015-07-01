@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 // Local includes
 
@@ -61,7 +61,7 @@ void DNGWriter::Private::reset()
 
 void DNGWriter::Private::cleanup()
 {
-    if (::remove(QFile::encodeName(outputFile)) != 0)
+    if (::remove(QFile::encodeName(outputFile).constData()) != 0)
         qCDebug(KIPIPLUGINS_LOG) << "Cannot remove " << outputFile;
 }
 

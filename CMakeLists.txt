@@ -116,8 +116,8 @@ if(KF5Kipi_FOUND)
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
-#     MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
-#     MACRO_OPTIONAL_FIND_PACKAGE(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
+    find_package(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
+    find_package(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
 #     MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
 #     MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                     # For Htmlexport.
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
@@ -229,10 +229,20 @@ if(KF5Kipi_FOUND)
          endif()
      endif()
 
+     
+     # Rules about DNGConverter
+     if(EXPAT_FOUND)
+         if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
+              set(BUILD_DNGCONVERTER TRUE)
+         else()
+              set(BUILD_DNGCONVERTER FALSE)
+         endif()
+     endif()
+
 #     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
 #     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KSANE_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("DNGConverter"       EXPAT_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("DNGConverter"       BUILD_DNGCONVERTER)
 #     PRINT_COMPONENT_COMPILE_STATUS("DLNAExport"         (HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
 #     PRINT_COMPONENT_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
@@ -360,20 +370,18 @@ if(KF5Kipi_FOUND)
             add_subdirectory(imageviewer)
         endif()
 
-#         if(EXPAT_FOUND)
-#             if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-#                 add_subdirectory(dngconverter)
-#             endif()
-#         endif()
-#
+        if(BUILD_DNGCONVERTER)
+            add_subdirectory(dngconverter)
+        endif()
+
 #         if(KGEOMAP_FOUND)
 #             add_subdirectory(gpssync)
 #         endif()
-#
+
         if(FLEX_FOUND AND BISON_FOUND)
             add_subdirectory(panorama)
         endif()
-#
+
 #         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #             add_subdirectory(videoslideshow)
 #         endif()

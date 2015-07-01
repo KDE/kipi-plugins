@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "batchdialog.moc"
+#include "batchdialog.h"
 
 // Qt includes
 
@@ -35,19 +35,18 @@
 #include <QPushButton>
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
+#include <QApplication>
+#include <QMenu>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
 #include <kcursor.h>
-#include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
 #include <kde_file.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
@@ -56,6 +55,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "aboutdata.h"
 #include "actions.h"
 #include "actionthread.h"
@@ -289,7 +289,7 @@ void BatchDialog::slotStartStop()
     }
 }
 
-void BatchDialog::addItems(const QUrl::List& itemList)
+void BatchDialog::addItems(const QList<QUrl>& itemList)
 {
     d->listView->slotAddImages(itemList);
 }
@@ -303,9 +303,9 @@ void BatchDialog::slotAborted()
 
 void BatchDialog::slotIdentify()
 {
-    QUrl::List urlList = d->listView->imageUrls(true);
+    QList<QUrl> urlList = d->listView->imageUrls(true);
 
-    for (QUrl::List::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator  it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         QFileInfo fi((*it).path());
 
@@ -423,7 +423,7 @@ void BatchDialog::processed(const QUrl& url, const QString& tmpFile)
     {
         struct stat statBuf;
 
-        if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
+        if (::stat(QFile::encodeName(destFile).constData(), &statBuf) == 0)
         {
             item->setStatus(QString("Failed to save image"));
         }

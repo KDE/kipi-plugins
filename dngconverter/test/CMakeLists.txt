@@ -36,16 +36,17 @@ target_link_libraries(dnginfo
 
 set(raw2dng_SRCS raw2dng.cpp)
 
-add_executable(raw2dng
+add_executable(raw2dng 
+               ${libdngwriter_SRCS}
+               ${raw2dng_SRCS}
+              )
+
 ecm_mark_nongui_executable(raw2dng)
-                    ${libdngwriter_SRCS}
-                    ${raw2dng_SRCS}
-                   )
 
 target_link_libraries(raw2dng
                       KF5::KDELibs4Support
                       KF5::KIOCore
- 
+
                       ${QT_LIBRARIES}
                       KF5::KExiv2
                       KF5::KDcraw

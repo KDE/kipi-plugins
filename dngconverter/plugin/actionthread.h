@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2012-12-24
+ * Date        : 2008-09-24
  * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,63 +21,66 @@
  *
  * ============================================================ */
 
-#ifndef TASK_H
-#define TASK_H
+#ifndef ACTIONTHREAD_H
+#define ACTIONTHREAD_H
 
-// KDE includes
+// Qt includes
 
-#include <kurl.h>
-#include <threadweaver/Job.h>
+#include <QUrl>
 
 // Libkdcraw includes
 
-#include <ractionthreadbase.h>
+#include <KDCRAW/RActionThreadBase>
 
 // Local includes
 
 #include "settingswidget.h"
 #include "actions.h"
 
-using namespace ThreadWeaver;
 using namespace KDcrawIface;
 
 namespace KIPIDNGConverterPlugin
 {
 
-class Task : public Job
+class ActionData;
+
+class ActionThread : public RActionThreadBase
 {
     Q_OBJECT
 
 public:
 
-    Task(QObject* const parent, const QUrl& url, const Action& action);
-    ~Task();
+    ActionThread(QObject* const parent);
+    ~ActionThread();
 
     void setBackupOriginalRawFile(bool b);
     void setCompressLossLess(bool b);
     void setUpdateFileDate(bool b);
     void setPreviewMode(int mode);
 
+    void identifyRawFile(const QUrl& url);
+    void identifyRawFiles(const QList<QUrl>& urlList);
+
+    void processRawFile(const QUrl& url);
+    void processRawFiles(const QList<QUrl>& urlList);
+
+    void cancel();
+
 Q_SIGNALS:
 
     void signalStarting(const KIPIDNGConverterPlugin::ActionData& ad);
     void signalFinished(const KIPIDNGConverterPlugin::ActionData& ad);
 
-public Q_SLOTS:
+    /** Signal to emit to sub-tasks to cancel processing.
+     */
+    void signalCancelTask();
 
-    void slotCancel();
-
-protected:
-
-    void run();
 
 private:
 
     class Private;
     Private* const d;
 };
-
 }  // namespace KIPIDNGConverterPlugin
 
-#endif /* TASK_H */
-
+#endif /* ACTIONTHREAD_H */

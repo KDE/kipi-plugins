@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "task.moc"
+#include "task.h"
 
 // Qt includes
 
@@ -28,24 +28,22 @@
 
 // KDE includes
 
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
-#include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 
 // LibKDcraw includes
 
-#include <dcrawinfocontainer.h>
-#include <kdcraw.h>
+#include <KDCRAW/DcrawInfoContainer>
+#include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "actions.h"
 #include "kpmetadata.h"
 
@@ -91,8 +89,9 @@ public:
 };
 
 
-Task::Task(QObject* const parent, const QUrl& fileUrl, const Action& action)
-    : Job(parent), d(new Private)
+Task::Task(const QUrl& fileUrl, const Action& action)
+    : RActionJob(),
+      d(new Private)
 {
     d->url    = fileUrl;
     d->action = action;
@@ -138,7 +137,7 @@ void Task::run()
             // Identify Camera model.
             DcrawInfoContainer info;
             {
-                 KPFileReadLocker(d->iface, d->url.toLocalFile());
+                 KPFileReadLocker(d->iface, d->url);
                  KDcraw::rawFileIdentify(info, d->url.toLocalFile());
             }
 
@@ -170,7 +169,7 @@ void Task::run()
             QString destPath;
 
             {
-                KPFileReadLocker(d->iface, d->url.toLocalFile());
+                KPFileReadLocker(d->iface, d->url);
                 QFileInfo fi(d->url.toLocalFile());
                 destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-" +
                            QString::number(QDateTime::currentDateTime().toTime_t()) + QString(d->url.fileName());
@@ -209,4 +208,3 @@ void Task::slotCancel()
 }
 
 }  // namespace KIPIDNGConverterPlugin
-

@@ -25,9 +25,12 @@
 // KDE includes
 
 #include <QApplication>
-#include <kcmdlineargs.h>
-#include <klocale.h>
 #include <QIcon>
+#include <QCommandLineParser>
+
+// KDE includes
+
+#include <klocale.h>
 #include <kconfig.h>
 #include <kglobal.h>
 
@@ -44,32 +47,29 @@ using namespace KIPIPlugins;
 
 int main(int argc, char* argv[])
 {
-    DNGConverterAboutData* const aboutData = new DNGConverterAboutData;
-    aboutData->setAppName("dngconverter");
-    aboutData->setCatalogName("kipiplugin_dngconverter");
+    QApplication app(argc, argv);
 
-    KCmdLineArgs::init(argc, argv, aboutData);
-
-    KCmdLineOptions options;
-    options.add("+[file(s)]", ki18n("File(s) to convert"));
-    KCmdLineArgs::addCmdLineOptions(options);
+    DNGConverterAboutData aboutData;
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addPositionalArgument(QStringLiteral("files"), i18n("File(s) to convert"), QStringLiteral("+[file(s)]"));
+    aboutData.setupCommandLine(&parser);
+    aboutData.setProgramLogo(QIcon::fromTheme(QStringLiteral("kipi-dngconverter")));
+    
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     KPMetadata::initializeExiv2();
 
-    KApplication app;
+    BatchDialog* const converter = new BatchDialog(&aboutData);
 
-    BatchDialog* const converter = new BatchDialog(aboutData);
-    app.setTopWidget(converter);
+    QList<QUrl>    urls;
+    const QStringList args = parser.positionalArguments();
 
-    QUrl::List    urls;
-    KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
-
-    for(int i = 0; i < args->count(); ++i)
+    for (auto& arg : args)
     {
-        urls.append(args->url(i));
+        urls.append(QUrl::fromLocalFile(arg));
     }
-
-    args->clear();
 
     converter->addItems(urls);
     converter->show();

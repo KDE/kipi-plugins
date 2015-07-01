@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "settingswidget.moc"
+#include "settingswidget.h"
 
 // Qt includes
 
@@ -30,10 +30,11 @@
 #include <QLabel>
 #include <QRadioButton>
 #include <QVBoxLayout>
+#include <QComboBox>
+#include <QApplication>
 
 // KDE includes
 
-#include <QComboBox>
 #include <kdialog.h>
 #include <klocale.h>
 #include <kseparator.h>
@@ -43,12 +44,12 @@
 
 // Libkdcraw includes
 
-#include <rcombobox.h>
+#include <KDCRAW/RComboBox>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 
