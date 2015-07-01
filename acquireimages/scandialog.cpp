@@ -6,7 +6,7 @@
  * Date        : 2007-09-09
  * Description : scanner dialog
  *
- * Copyright (C) 2007-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "scandialog.moc"
+#include "scandialog.h"
 
 // Qt includes
 
@@ -28,37 +28,37 @@
 #include <QPushButton>
 #include <QPointer>
 #include <QDir>
+#include <QUrl>
+#include <QMenu>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <kfiledialog.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kimageio.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <QUrl>
 #include <KWindowConfig>
 
 // LibKSane includes
 
-#include <libksane/ksane.h>
+#include <ksane.h>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
-#include "aboutdata.h"
+#include "kipiplugins_debug.h"
+#include "kpaboutdata.h"
 #include "kpversion.h"
 #include "saveimgthread.h"
 
@@ -80,8 +80,9 @@ public:
     KSaneWidget*   saneWidget;
 };
 
-ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/, ScanDialogAboutData* const about)
-    : KP4ToolDialog(0), d(new Private)
+ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/)
+    : KP4ToolDialog(0),
+      d(new Private)
 {
     d->saneWidget = saneWidget;
     d->saveThread = new SaveImgThread(this);
@@ -89,6 +90,26 @@ ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/,
     setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
     setModal(false);
+    
+    KPAboutData* const about = new KPAboutData(ki18n("Acquire images"),
+                                   0,
+                                   KAboutLicense::GPL,
+                                   ki18n("A tool to acquire images using a flat scanner"),
+                                   ki18n("(c) 2003-2015, Gilles Caulier\n"));
+
+    about->addAuthor(ki18n("Gilles Caulier").toString(),
+                     ki18n("Author").toString(),
+                     "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Kare Sars").toString(),
+                     ki18n("Developer").toString(),
+                     "kare dot sars at kolumbus dot fi");
+
+    about->addAuthor(ki18n("Angelo Naselli").toString(),
+                     ki18n("Developer").toString(),
+                     "anaselli at linux dot it");
+
+    about->setHandbookEntry("acquireimages");
     setAboutData(about);
 
     setMainWidget(d->saneWidget);
@@ -161,15 +182,15 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     QString place = QDir::homePath();
 
     if (iface())
-        place = iface()->currentAlbum().uploadPath().path();
+        place = iface()->currentAlbum().uploadUrl().toLocalFile();
 
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(place, QString(), 0);
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(QUrl::fromLocalFile(place), QString(), 0);
 
     imageFileSaveDialog->setModal(false);
     imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
     imageFileSaveDialog->setMode(KFile::File);
     imageFileSaveDialog->setSelection(defaultFileName);
-    imageFileSaveDialog->setCaption(i18n("New Image File Name"));
+    imageFileSaveDialog->setWindowTitle(i18n("New Image File Name"));
     imageFileSaveDialog->setMimeFilter(writableMimetypes, defaultMimeType);
 
     // Start dialog and check if canceled.
@@ -262,7 +283,7 @@ void ScanDialog::slotThreadDone(const QUrl& url, bool success)
         KMessageBox::error(0, i18n("Cannot save \"%1\" file", url.fileName()));
 
     if (iface())
-        iface()->refreshImages( QUrl::List(url) );
+        iface()->refreshImages( QList<QUrl>() << url );
 
     unsetCursor();
     setEnabled(true);

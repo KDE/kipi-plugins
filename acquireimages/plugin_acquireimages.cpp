@@ -6,7 +6,7 @@
  * Date        : 2003-05-16
  * Description : a plugin to acquire image using flat scanner.
  *
- * Copyright (C) 2003-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,17 +20,18 @@
  *
  * ============================================================ */
 
-#include "plugin_acquireimages.moc"
+#include "plugin_acquireimages.h"
+
+// Qt includes
+
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <QApplication>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
-#include <kiconloader.h>
 #include <klibloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
@@ -38,32 +39,31 @@
 
 // LibKSane includes
 
-#include <libksane/ksane.h>
+#include <ksane.h>
 
 // Libkipi includes
 
-#include <imagecollection.h>
-#include <interface.h>
+#include <KIPI/ImageCollection>
+#include <KIPI/Interface>
 
 // Local includes
 
-#include "aboutdata.h"
+#include "kipiplugins_debug.h"
 #include "scandialog.h"
 
 namespace KIPIAcquireImagesPlugin
 {
 
 K_PLUGIN_FACTORY(AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>();)
-K_EXPORT_PLUGIN(AcquireImagesFactory("kipiplugin_acquireimages"))
 
 Plugin_AcquireImages::Plugin_AcquireImages(QObject* const parent, const QVariantList&)
-    : Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
+    : Plugin(parent, "AcquireImages")
 {
     m_action_scanimages = 0;
     m_parentWidget      = 0;
     m_saneWidget        = 0;
     m_scanDlg           = 0;
-    kDebug(AREA_CODE_LOADING) << "Plugin_AcquireImages plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_AcquireImages plugin loaded";
 
     setUiBaseName("kipiplugin_acquireimagesui.rc");
     setupXML();
@@ -129,7 +129,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (!m_scanDlg)
     {
-        m_scanDlg = new ScanDialog(m_saneWidget, QApplication::activeWindow(), new ScanDialogAboutData);
+        m_scanDlg = new ScanDialog(m_saneWidget, QApplication::activeWindow());
     }
     else
     {
@@ -145,3 +145,5 @@ void Plugin_AcquireImages::slotActivate()
 }
 
 }  // namespace KIPIAcquireImagesPlugin
+
+#include "plugin_acquireimages.moc"

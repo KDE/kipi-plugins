@@ -52,7 +52,7 @@ class ScanDialog : public KP4ToolDialog
 
 public:
 
-    ScanDialog(KSaneWidget* const saneWidget, QWidget* const parent, ScanDialogAboutData* const about);
+    ScanDialog(KSaneWidget* const saneWidget, QWidget* const parent);
     ~ScanDialog();
 
 protected:

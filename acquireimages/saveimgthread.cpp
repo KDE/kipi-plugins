@@ -20,23 +20,20 @@
  *
  * ============================================================ */
 
-#include "saveimgthread.moc"
+#include "saveimgthread.h"
 
 // Qt includes
 
 #include <QImage>
 #include <QDateTime>
 
-// KDE includes
-
-#include "kipiplugins_debug.h"
-
 // LibKSane includes
 
-#include <libksane/ksane.h>
+#include <ksane.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpwriteimage.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
