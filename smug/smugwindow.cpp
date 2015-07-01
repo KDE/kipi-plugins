@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "smugwindow.moc"
+#include "smugwindow.h"
 
 // Qt includes
 
@@ -32,15 +32,14 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QCloseEvent>
+#include <QMenu>
+#include <QComboBox>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <khelpmenu.h>
-#include <QComboBox>
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
@@ -50,16 +49,17 @@
 
 // LibKDcraw includes
 
-#include <version.h>
-#include <kdcraw.h>
+#include <libkdcraw_version.h>
+#include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <uploadwidget.h>
+#include <KIPI/Interface>
+#include <KIPI/UploadWidget>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "kpmetadata.h"
 #include "kpaboutdata.h"
@@ -125,15 +125,16 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Smug Import/Export"), 0,
-                             KAboutData::License_GPL,
-                             ki18n("A Kipi plugin to import/export image collections "
-                                   "from/to the SmugMug web service."),
-                             ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                   "(c) 2008-2012, Gilles Caulier\n"
-                                   "(c) 2008-2009, Luka Renko"));
+    KPAboutData* const about = new KPAboutData(ki18n("Smug Import/Export"), 0,
+                                   KAboutLicense::GPL,
+                                   ki18n("A Kipi plugin to import/export image collections "
+                                         "from/to the SmugMug web service."),
+                                   ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                         "(c) 2008-2012, Gilles Caulier\n"
+                                         "(c) 2008-2009, Luka Renko"));
 
-    about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Luka Renko").toString(),
+                     ki18n("Author and maintainer").toString(),
                      "lure at kubuntu dot org");
 
     about->setHandbookEntry("smug");
@@ -444,9 +445,10 @@ void SmugWindow::slotListPhotosDone(int errCode, const QString &errMsg,
     }
 
     m_transferQueue.clear();
+
     for (int i = 0; i < photosList.size(); ++i)
     {
-        m_transferQueue.push_back(photosList.at(i).originalURL);
+        m_transferQueue.push_back(QUrl::fromLocalFile(photosList.at(i).originalURL));
     }
 
     if (m_transferQueue.isEmpty())
@@ -755,7 +757,7 @@ void SmugWindow::uploadNextPhoto()
 
     m_widget->m_imgList->processing(m_transferQueue.first());
 
-    QString imgPath = m_transferQueue.first().path();
+    QUrl imgPath = m_transferQueue.first();
     KPImageInfo info(imgPath);
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
@@ -765,19 +767,21 @@ void SmugWindow::uploadNextPhoto()
 
     // check if we have to RAW file -> use preview image then
     bool isRAW = KPMetadata::isRawFile(imgPath);
+
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
-        if (!prepareImageForUpload(imgPath, isRAW))
+        if (!prepareImageForUpload(imgPath.toLocalFile(), isRAW))
         {
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;
         }
+
         res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID, m_currentAlbumKey, info.description());
     }
     else
     {
         m_tmpPath.clear();
-        res = m_talker->addPhoto(imgPath, m_currentAlbumID, m_currentAlbumKey, info.description());
+        res = m_talker->addPhoto(imgPath.toLocalFile(), m_currentAlbumID, m_currentAlbumKey, info.description());
     }
 
     if (!res)

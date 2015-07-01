@@ -101,7 +101,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(path);
+    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
     QString mime       = ptr->name();
     if (mime.isEmpty())
     {

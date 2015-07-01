@@ -387,11 +387,9 @@ if(KF5Kipi_FOUND)
 
 # Plugins to re-factoring.
         add_subdirectory(flickrexport)
-#         add_subdirectory(galleryexport)
 #         add_subdirectory(piwigoexport)
 #         add_subdirectory(kioexportimport)
-#         add_subdirectory(picasawebexport)
-#         add_subdirectory(smug)
+         add_subdirectory(smug)
 #         add_subdirectory(rajceexport)
         add_subdirectory(imageshack)
 #
@@ -404,7 +402,6 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(debianscreenshots)
 #             add_subdirectory(facebook)
 #             add_subdirectory(imgurexport)
-#             add_subdirectory(googledrive)
 #             add_subdirectory(dropbox)
 #         endif()
 

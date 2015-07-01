@@ -1,18 +1,20 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 subdirs(icons)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_smug\")
+
 set(kipiplugin_smug_PART_SRCS
     plugin_smug.cpp
-    smugwindow.cpp
-    smugwidget.cpp
-    smugalbum.cpp
-    smugtalker.cpp
     mpform.cpp
+    smugtalker.cpp
+    smugalbum.cpp
+    smugwidget.cpp
+    smugwindow.cpp
    )
 
 add_library(kipiplugin_smug MODULE ${kipiplugin_smug_PART_SRCS})

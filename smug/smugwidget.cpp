@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "smugwidget.moc"
+#include "smugwidget.h"
 
 // Qt includes
 
@@ -33,20 +33,21 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QComboBox>
+#include <QApplication>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <QComboBox>
 #include <kpushbutton.h>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <uploadwidget.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/UploadWidget>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
@@ -295,7 +296,7 @@ QString SmugWidget::getAlbumPassword() const
 
 QString SmugWidget::getDestinationPath() const
 {
-    return m_uploadWidget->selectedImageCollection().uploadPath().path();
+    return m_uploadWidget->selectedImageCollection().uploadUrl().toLocalFile();
 }
 
 void SmugWidget::setNickName(const QString& nick)

@@ -8,7 +8,7 @@
  *               SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -23,12 +23,12 @@
  *
  * ============================================================ */
 
+#include "plugin_smug.h"
+
 // To disable warnings under MSVC2008 about POSIX methods().
 #ifdef _MSC_VER
 #pragma warning(disable : 4996)
 #endif
-
-#include "plugin_smug.moc"
 
 // C ANSI includes
 
@@ -37,12 +37,14 @@ extern "C"
 #include <unistd.h>
 }
 
-// KDE includes
+// Qt includes
 
-#include "kipiplugins_debug.h"
-#include <kconfig.h>
 #include <QApplication>
 #include <QAction>
+
+// KDE includes
+
+#include <kconfig.h>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -51,22 +53,22 @@ extern "C"
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "smugwindow.h"
 
 namespace KIPISmugPlugin
 {
 
 K_PLUGIN_FACTORY( SmugFactory, registerPlugin<Plugin_Smug>(); )
-K_EXPORT_PLUGIN ( SmugFactory("kipiplugin_smug") )
 
 Plugin_Smug::Plugin_Smug(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(SmugFactory::componentData(), parent, "Smug")
+    : Plugin(parent, "Smug")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_Smug plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Smug plugin loaded";
 
     m_dlgImport    = 0;
     m_dlgExport    = 0;
@@ -84,8 +86,6 @@ Plugin_Smug::~Plugin_Smug()
 void Plugin_Smug::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
-
-    KIconLoader::global()->addAppDir("kipiplugin_smug");
 
     setupActions();
 
@@ -106,7 +106,7 @@ void Plugin_Smug::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &SmugMug..."));
     m_actionExport->setIcon(QIcon::fromTheme("kipi-smugmug"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
+    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_S));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
@@ -117,7 +117,7 @@ void Plugin_Smug::setupActions()
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &SmugMug..."));
     m_actionImport->setIcon(QIcon::fromTheme("kipi-smugmug"));
-    m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
+    m_actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
@@ -169,3 +169,5 @@ void Plugin_Smug::slotImport()
 }
 
 } // namespace KIPISmugPlugin
+
+#include "plugin_smug.moc"

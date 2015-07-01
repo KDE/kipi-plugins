@@ -130,7 +130,7 @@ private:
 
     KPasswordDialog* m_loginDlg;
 
-    QUrl::List       m_transferQueue;
+    QList<QUrl>      m_transferQueue;
 
     SmugTalker*      m_talker;
     SmugWidget*      m_widget;

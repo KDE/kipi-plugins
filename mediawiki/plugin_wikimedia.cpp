@@ -81,7 +81,7 @@ Plugin_WikiMedia::Plugin_WikiMedia(QObject* const parent, const QVariantList& /*
     : Plugin(parent, "MediaWiki export"),
       d(new Private)
 {
-    //kDebug(AREA_CODE_LOADING) << "Plugin_MediaWiki plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_MediaWiki plugin loaded";
 
     setUiBaseName("kipiplugin_wikimediaui.rc");
     setupXML();

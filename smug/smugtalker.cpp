@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "smugtalker.moc"
+#include "smugtalker.h"
 
 // Qt includes
 
@@ -34,13 +34,14 @@
 
 // KDE includes
 
-#include <kcodecs.h>
-#include "kipiplugins_debug.h"
+#include <kmd5.h>
+#include <kjobwidgets.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
 #include "mpform.h"
 #include "smugitem.h"
@@ -459,7 +460,7 @@ void SmugTalker::getPhoto(const QString& imgPath)
 
     emit signalBusy(true);
 
-    KIO::TransferJob* const job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -537,7 +538,7 @@ void SmugTalker::slotResult(KJob* kjob)
         else
         {
             emit signalBusy(false);
-            job->ui()->setWindow(m_parent);
+            KJobWidgets::setWindow(job, m_parent);
             job->ui()->showErrorMessage();
         }
 
