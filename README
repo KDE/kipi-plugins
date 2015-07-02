@@ -35,7 +35,7 @@ TimeAdjust         : A tool to adjust date and time.
 KIOExport          : A tool to export images to remote computer using network protocol (FTP, SSH, SAMBA, etc...).
 Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
-PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
+Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
 YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
 MediaWiki          : A tool to export images to Mediawiki based web service (http://www.mediawiki.org).

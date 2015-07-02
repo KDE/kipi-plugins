@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde at colin dot guthr dot ie>
- * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  * Copyright (C) 2010-2014 by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "piwigoconfig.moc"
+#include "piwigoconfig.h"
 
 // Qt includes
 
@@ -35,16 +35,16 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 
 // Libkipi includes
 
-#include <version.h>
-#include <interface.h>
+#include <libkipi_version.h>
+#include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "piwigos.h"
 
 namespace KIPIPiwigoExportPlugin

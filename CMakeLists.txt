@@ -389,7 +389,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(flickrexport)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
-#         add_subdirectory(piwigoexport)
+        add_subdirectory(piwigo)
 #         add_subdirectory(kioexportimport)
 #         add_subdirectory(rajceexport)
 #

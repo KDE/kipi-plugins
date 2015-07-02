@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde at colin dot guthr dot ie>
- * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  * Copyright (C) 2010-2014 by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
@@ -24,11 +24,10 @@
  *
  * ============================================================ */
 
-#include "piwigowindow.moc"
+#include "piwigowindow.h"
 
 // Qt includes
 
-#include <Qt>
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
@@ -42,18 +41,15 @@
 #include <QTextStream>
 #include <QFile>
 #include <QProgressDialog>
+#include <QApplication>
+#include <QIcon>
+#include <QMenu>
 
 // KDE includes
 
-#include <kaboutdata.h>
-#include <QApplication>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
-#include <QIcon>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <krun.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
@@ -61,11 +57,12 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "piwigos.h"
 #include "piwigoconfig.h"
 #include "piwigoitem.h"
@@ -125,7 +122,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     logo = new KUrlLabel;
     logo->setText(QString());
     logo->setUrl("http://piwigo.org");
-    logo->setPixmap(QPixmap(KStandardDirs::locate("data", "kipiplugin_piwigoexport/pics/piwigo_logo.png")));
+    logo->setPixmap(QPixmap(KStandardDirs::locate("data", "kipiplugin_piwigo/pics/piwigo_logo.png")));
     logo->setAlignment(Qt::AlignLeft);
 
     // ---------------------------------------------------------------------------
@@ -231,34 +228,39 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
     // About data.
     KPAboutData* about = new KPAboutData(ki18n("Piwigo Export"),
                                          0,
-                                         KAboutData::License_GPL,
+                                         KAboutLicense::GPL,
                                          ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
                                          ki18n("(c) 2003-2005, Renchi Raju\n"
                                                "(c) 2006-2007, Colin Guthrie\n"
-                                               "(c) 2006-2013, Gilles Caulier\n"
+                                               "(c) 2006-2015, Gilles Caulier\n"
                                                "(c) 2008, Andrea Diamantini\n"
                                                "(c) 2010-2014, Frédéric Coiffier\n"));
 
-    about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
+    about->addAuthor(ki18n("Renchi Raju").toString(),
+                     ki18n("Developer").toString(),
                      "renchi dot raju at gmail dot com");
 
-    about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
+    about->addAuthor(ki18n("Colin Guthrie").toString(),
+                     ki18n("Developer").toString(),
                      "kde at colin dot guthr dot ie");
 
-    about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
+    about->addAuthor(ki18n("Andrea Diamantini").toString(),
+                     ki18n("Developer").toString(),
                      "adjam7 at gmail dot com");
 
-    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+    about->addAuthor(ki18n("Gilles Caulier").toString(),
+                     ki18n("Developer").toString(),
                      "caulier dot gilles at gmail dot com");
 
-    about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
+    about->addAuthor(ki18n("Frédéric Coiffier").toString(),
+                     ki18n("Developer").toString(),
                      "frederic dot coiffier at free dot com");
 
-    about->setHandbookEntry("piwigoexport");
+    about->setHandbookEntry("piwigo");
     setAboutData(about);
 
     // User1 Button : to upload selected photos
-    KPushButton* const addPhotoBtn = button( User1 );
+    QPushButton* const addPhotoBtn = button( User1 );
     addPhotoBtn->setText( i18n("Start Upload") );
     addPhotoBtn->setIcon( QIcon::fromTheme("network-workgroup") );
     addPhotoBtn->setEnabled(false);
@@ -375,9 +377,9 @@ void PiwigoWindow::slotDoLogin()
 {
     QUrl url(d->pPiwigo->url());
 
-    if (url.protocol().isEmpty())
+    if (url.scheme().isEmpty())
     {
-        url.setProtocol("http");
+        url.setScheme("http");
         url.setHost(d->pPiwigo->url());
     }
 
@@ -388,7 +390,7 @@ void PiwigoWindow::slotDoLogin()
         d->pPiwigo->save();
     }
 
-    d->talker->login(url.url(), d->pPiwigo->username(), d->pPiwigo->password());
+    d->talker->login(url, d->pPiwigo->username(), d->pPiwigo->password());
 }
 
 void PiwigoWindow::slotLoginFailed(const QString& msg)
@@ -533,7 +535,7 @@ void PiwigoWindow::slotAlbumSelected()
 
 void PiwigoWindow::slotAddPhoto()
 {
-    const QUrl::List urls(iface()->currentSelection().images());
+    const QList<QUrl> urls(iface()->currentSelection().images());
 
     if ( urls.isEmpty())
     {
@@ -541,7 +543,7 @@ void PiwigoWindow::slotAddPhoto()
         return;
     }
 
-    for (QUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
         d->pUploadList->append( (*it).path() );
     }

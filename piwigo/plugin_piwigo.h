@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde at colin dot guthr dot ie>
- * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  * Copyright (C) 2010-2014 by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
@@ -24,54 +24,51 @@
  *
  * ============================================================ */
 
-#ifndef PIWIGOS_H
-#define PIWIGOS_H
+#ifndef PLUGIN_PIWIGOEXPORT_H
+#define PLUGIN_PIWIGOEXPORT_H
 
 // Qt includes
 
-#include <QString>
+#include <QVariantList>
 
-namespace KWallet
-{
-    class Wallet;
-}
+// Libkipi includes
+
+#include <KIPI/Plugin>
+
+class QAction;
+
+using namespace KIPI;
 
 namespace KIPIPiwigoExportPlugin
 {
 
-class Piwigo
+class Piwigo;
+
+class Plugin_PiwigoExport : public Plugin
 {
+    Q_OBJECT
 
 public:
 
-    Piwigo();
-    ~Piwigo();
+    Plugin_PiwigoExport(QObject* const parent, const QVariantList& args);
+    ~Plugin_PiwigoExport();
 
-    QString url()      const;
-    QString username() const;
-    QString password() const;
+    void setup(QWidget* const);
 
-    void setUrl(const QString& url);
-    void setUsername(const QString& username);
-    void setPassword(const QString& password);
+public Q_SLOTS:
 
-public:
-
-    void save();
+    void slotSync();
 
 private:
 
-    void load();
+    void setupActions();
 
 private:
 
-    QString          mUrl;
-    QString          mUsername;
-    QString          mPassword;
-
-    KWallet::Wallet* mpWallet;
+    QAction * m_action;
+    Piwigo*  m_pPiwigo;
 };
 
 } // namespace KIPIPiwigoExportPlugin
 
-#endif /* PIWIGOS_H */
+#endif /* PLUGIN_PIWIGOEXPORT_H */

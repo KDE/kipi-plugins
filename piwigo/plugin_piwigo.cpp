@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006      by Colin Guthrie <kde at colin dot guthr dot ie>
- * Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  * Copyright (C) 2010-2014 by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
@@ -24,18 +24,17 @@
  *
  * ============================================================ */
 
-#include "plugin_piwigoexport.moc"
+#include "plugin_piwigo.h"
 
 // Qt includes
 
 #include <QPointer>
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <QApplication>
-#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
@@ -43,11 +42,11 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <plugin.h>
+#include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "piwigos.h"
 #include "piwigoconfig.h"
 #include "piwigowindow.h"
@@ -56,15 +55,15 @@ namespace KIPIPiwigoExportPlugin
 {
 
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_PiwigoExport>();)
-K_EXPORT_PLUGIN(Factory("kipiplugin_piwigoexport"))
 
 Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantList&)
-    : Plugin(Factory::componentData(), parent, "PiwigoExport"),
-      m_action(0), m_pPiwigo(0)
+    : Plugin(parent, "Piwigo"),
+      m_action(0),
+      m_pPiwigo(0)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_PiwigoExport plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Piwigo plugin loaded";
 
-    setUiBaseName("kipiplugin_piwigoexportui.rc");
+    setUiBaseName("kipiplugin_piwigoui.rc");
     setupXML();
 }
 
@@ -75,8 +74,6 @@ Plugin_PiwigoExport::~Plugin_PiwigoExport()
 
 void Plugin_PiwigoExport::setup(QWidget* const widget)
 {
-    KIconLoader::global()->addAppDir("kipiplugin_piwigoexport");
-
     m_pPiwigo = new Piwigo();
 
     Plugin::setup(widget);
@@ -127,3 +124,5 @@ void Plugin_PiwigoExport::slotSync()
 }
 
 } // namespace KIPIPiwigoExportPlugin
+
+#include "plugin_piwigo.moc"

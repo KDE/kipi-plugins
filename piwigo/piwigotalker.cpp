@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006      by Colin Guthrie <kde at colin dot guthr dot ie>
-* Copyright (C) 2006-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 * Copyright (C) 2010-2014 by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
@@ -24,7 +24,7 @@
 *
 * ============================================================ */
 
-#include "piwigotalker.moc"
+#include "piwigotalker.h"
 
 // Qt includes
 
@@ -38,18 +38,19 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
+#include <kjobwidgets.h>
 #include <kio/jobuidelegate.h>
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
 // LibKDcraw includes
 
-#include <version.h>
-#include <kdcraw.h>
+#include <libkdcraw_version.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "piwigoitem.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
@@ -116,16 +117,16 @@ void PiwigoTalker::login(const QUrl& url, const QString& name, const QString& pa
     // Add the page to the URL
     if (!m_url.url().endsWith(QLatin1String(".php")))
     {
-        m_url.addPath("/ws.php");
+        m_url.setPath(m_url.path() + QLatin1Char('/') + QLatin1String("ws.php"));
     }
 
     s_authToken  = QUuid::createUuid().toByteArray().toBase64();
 
     QStringList qsl;
-    qsl.append("password=" + passwd.toUtf8().toPercentEncoding());
-    qsl.append("method=pwg.session.login");
-    qsl.append("username=" + name.toUtf8().toPercentEncoding());
-    QString dataParameters = qsl.join("&");
+    qsl.append(QLatin1String("password=") + passwd.toUtf8().toPercentEncoding());
+    qsl.append(QLatin1String("method=pwg.session.login"));
+    qsl.append(QLatin1String("username=") + name.toUtf8().toPercentEncoding());
+    QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
@@ -190,15 +191,18 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
     if (mediaPath.endsWith(".mp4") || mediaPath.endsWith(".MP4") ||
         mediaPath.endsWith(".ogg") || mediaPath.endsWith(".OGG") ||
-        mediaPath.endsWith(".webm") || mediaPath.endsWith(".WEBM")) {
+        mediaPath.endsWith(".webm") || mediaPath.endsWith(".WEBM"))
+    {
         // Video management
         // Nothing to do
-    } else {
+    }
+    else
+    {
         // Image management
         QImage image;
 
         // Check if RAW file.
-        if (KPMetadata::isRawFile(mediaPath))
+        if (KPMetadata::isRawFile(QUrl::fromLocalFile(mediaPath)))
             KDcrawIface::KDcraw::loadRawPreview(image, mediaPath);
         else
             image.load(mediaPath);
@@ -212,7 +216,9 @@ bool PiwigoTalker::addPhoto(int   albumId,
         if (!rescale)
         {
             qCDebug(KIPIPLUGINS_LOG) << "Upload the original version: " << m_path;
-        } else {
+        }
+        else
+        {
             // Rescale the image
             if (image.width() > maxWidth || image.height() > maxHeight)
             {
@@ -227,6 +233,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
             // Restore all metadata with EXIF
             // in the resized version
             KPMetadata meta;
+
             if (meta.load(mediaPath))
             {
                 meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
@@ -270,9 +277,9 @@ bool PiwigoTalker::addPhoto(int   albumId,
     qCDebug(KIPIPLUGINS_LOG) << "Date: " << m_date;
 
     QStringList qsl;
-    qsl.append("method=pwg.images.exist");
-    qsl.append("md5sum_list=" + m_md5sum.toHex());
-    QString dataParameters = qsl.join("&");
+    qsl.append(QLatin1String("method=pwg.images.exist"));
+    qsl.append(QLatin1String("md5sum_list=") + m_md5sum.toHex());
+    QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
@@ -330,7 +337,7 @@ void PiwigoTalker::slotResult(KJob* job)
         }
         else
         {
-            tempjob->ui()->setWindow(m_parent);
+            KJobWidgets::setWindow(tempjob, m_parent);
             tempjob->ui()->showErrorMessage();
         }
 
@@ -728,10 +735,10 @@ void PiwigoTalker::parseResponseGetInfo(const QByteArray& data)
     }
 
     QStringList qsl;
-    qsl.append("method=pwg.images.setInfo");
-    qsl.append("image_id=" + QString::number(m_photoId));
-    qsl.append("categories=" + qsl_cat.join(";").toUtf8().toPercentEncoding());
-    QString dataParameters = qsl.join("&");
+    qsl.append(QLatin1String("method=pwg.images.setInfo"));
+    qsl.append(QLatin1String("image_id=") + QString::number(m_photoId));
+    qsl.append(QLatin1String("categories=") + qsl_cat.join(QLatin1String(";")).toUtf8().toPercentEncoding());
+    QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
@@ -804,12 +811,12 @@ void PiwigoTalker::addNextChunk()
 
     m_talker_buffer.resize(0);
     QStringList qsl;
-    qsl.append("method=pwg.images.addChunk");
-    qsl.append("original_sum=" + m_md5sum.toHex());
-    qsl.append("position=" + QString::number(m_chunkId));
-    qsl.append("type=file");
-    qsl.append("data=" + imagefile.read(CHUNK_MAX_SIZE).toBase64().toPercentEncoding());
-    QString dataParameters = qsl.join("&");
+    qsl.append(QLatin1String("method=pwg.images.addChunk"));
+    qsl.append(QLatin1String("original_sum=") + m_md5sum.toHex());
+    qsl.append(QLatin1String("position=") + QString::number(m_chunkId));
+    qsl.append(QLatin1String("type=file"));
+    qsl.append(QLatin1String("data=") + imagefile.read(CHUNK_MAX_SIZE).toBase64().toPercentEncoding());
+    QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
@@ -875,17 +882,17 @@ void PiwigoTalker::addPhotoSummary()
     m_talker_buffer.resize(0);
 
     QStringList qsl;
-    qsl.append("method=pwg.images.add");
-    qsl.append("original_sum=" + m_md5sum.toHex());
-    qsl.append("original_filename=" + QUrl(m_path).fileName().toUtf8().toPercentEncoding());
-    qsl.append("name=" + m_title.toUtf8().toPercentEncoding());
-    if (!m_author.isEmpty()) qsl.append("author=" + m_author.toUtf8().toPercentEncoding());
-    if (!m_comment.isEmpty()) qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
-    qsl.append("categories=" + QString::number(m_albumId));
-    qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
-    qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd hh:mm:ss").toUtf8().toPercentEncoding());
+    qsl.append(QLatin1String("method=pwg.images.add"));
+    qsl.append(QLatin1String("original_sum=") + m_md5sum.toHex());
+    qsl.append(QLatin1String("original_filename=") + QUrl(m_path).fileName().toUtf8().toPercentEncoding());
+    qsl.append(QLatin1String("name=") + m_title.toUtf8().toPercentEncoding());
+    if (!m_author.isEmpty()) qsl.append(QLatin1String("author=") + m_author.toUtf8().toPercentEncoding());
+    if (!m_comment.isEmpty()) qsl.append(QLatin1String("comment=") + m_comment.toUtf8().toPercentEncoding());
+    qsl.append(QLatin1String("categories=") + QString::number(m_albumId));
+    qsl.append(QLatin1String("file_sum=") + computeMD5Sum(m_path).toHex());
+    qsl.append(QLatin1String("date_creation=") + m_date.toString(QLatin1String("yyyy-MM-dd hh:mm:ss")).toUtf8().toPercentEncoding());
     //qsl.append("tag_ids="); // TODO Implement this function
-    QString dataParameters = qsl.join("&");
+    QString dataParameters = qsl.join(QLatin1String("&"));
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
 
