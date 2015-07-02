@@ -1,10 +1,12 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 subdirs(icons)
+
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
@@ -16,12 +18,14 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            dialogs/advanceddialog.cpp
                                            dialogs/maindialog.cpp
                                            dialogs/slideshowconfig.cpp
+
                                            widgets/playbackwidget.cpp
                                            widgets/slideplaybackwidget.cpp
                                            widgets/listsounditems.cpp
                                            widgets/slideshow.cpp
                                            widgets/slideshowgl.cpp
                                            widgets/slideshowkb.cpp
+
                                            plugin/commoncontainer.cpp
                                            plugin/screenproperties.cpp
                                            plugin/slideshowloader.cpp
@@ -31,19 +35,19 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
    )
 
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
-                  ui/maindialog.ui
-                  ui/captiondialog.ui
-                  ui/advanceddialog.ui
-                  ui/soundtrackdialog.ui
-                  ui/slideplaybackwidget.ui
-                  ui/playbackwidget.ui
-                 )
+              ui/maindialog.ui
+              ui/captiondialog.ui
+              ui/advanceddialog.ui
+              ui/soundtrackdialog.ui
+              ui/slideplaybackwidget.ui
+              ui/playbackwidget.ui
+             )
 
 add_library(kipiplugin_advancedslideshow MODULE ${kipiplugin_advancedslideshow_PART_SRCS})
 
 target_link_libraries(kipiplugin_advancedslideshow
                       KF5::Parts
-                      
+
                       Qt5::OpenGL
                       ${OPENGL_LIBRARIES}
                       KF5::Kipi

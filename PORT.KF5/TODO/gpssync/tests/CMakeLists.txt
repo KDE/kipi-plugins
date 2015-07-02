@@ -1,29 +1,29 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 add_executable(gpssync_test_correlator
-                    test_correlator.cpp
-                    ../track_correlator.cpp
-                    ../track_correlator_thread.cpp
-                   )
+               test_correlator.cpp
+               ../track_correlator.cpp
+               ../track_correlator_thread.cpp
+              )
 
 target_link_libraries(gpssync_test_correlator
-                        KF5::KDELibs4Support
-                        Qt5::Test
-                        Qt5::Gui
-                        Qt5::Xml
-                        ${KGEOMAP_LIBRARIES}
-                        KF5kipiplugins
+                      KF5::KDELibs4Support
+                      Qt5::Test
+                      Qt5::Gui
+                      Qt5::Xml
+                      ${KGEOMAP_LIBRARIES}
+                      KF5kipiplugins
                      )
 
 if(NOT WIN32)
 
     add_executable(gpssync_test_rgparsing
-               test_rgparsing.cpp
-               )
+                   test_rgparsing.cpp
+                  )
 
     target_link_libraries(gpssync_test_rgparsing
                           KF5::KDELibs4Support
@@ -36,11 +36,11 @@ if(NOT WIN32)
 endif()
 
 add_executable(gpssync_test_rgtagmodel
-                    test_rgtagmodel.cpp
-                    simpletreemodel/simpletreemodel.cpp
-                    ../borrowed/modeltest.cpp
-                    ../rgtagmodel.cpp
-                    )
+               test_rgtagmodel.cpp
+               simpletreemodel/simpletreemodel.cpp
+               ../borrowed/modeltest.cpp
+               ../rgtagmodel.cpp
+              )
 
 target_link_libraries(gpssync_test_rgtagmodel
                       KF5::KDELibs4Support
@@ -48,18 +48,18 @@ target_link_libraries(gpssync_test_rgtagmodel
                       Qt5::Gui
                       ${KGEOMAP_LIBRARIES}
                       KF5kipiplugins
-                    )
+                     )
 
 add_executable(gpssync_test_kipiimageitem
-                    test_kipiimageitem.cpp
-                    ../kipiimageitem.cpp
-                    ../kipiimagemodel.cpp
-                    ${borrowed_future_SRCS}
-                   )
+               test_kipiimageitem.cpp
+               ../kipiimageitem.cpp
+               ../kipiimagemodel.cpp
+               ${borrowed_future_SRCS}
+              )
 
 target_link_libraries(gpssync_test_kipiimageitem
                       KF5::KDELibs4Support
-                      
+
                       Qt5::Test
                       Qt5::Gui
                       KF5::KExiv2
