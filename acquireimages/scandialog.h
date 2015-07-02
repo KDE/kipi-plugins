@@ -29,7 +29,7 @@
 
 // local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QWidget;
 
@@ -46,7 +46,7 @@ namespace KIPIAcquireImagesPlugin
 
 class ScanDialogAboutData;
 
-class ScanDialog : public KP4ToolDialog
+class ScanDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -63,7 +63,7 @@ private Q_SLOTS:
 
     void slotSaveImage(QByteArray&, int, int, int, int);
     void slotThreadDone(const QUrl&, bool);
-    void slotCloseClicked();
+    void slotDialogFinished();
 
 private:
 

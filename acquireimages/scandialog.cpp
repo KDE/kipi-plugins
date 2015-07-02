@@ -81,14 +81,14 @@ public:
 };
 
 ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/)
-    : KP4ToolDialog(0),
+    : KPToolDialog(0),
       d(new Private)
 {
     d->saneWidget = saneWidget;
     d->saveThread = new SaveImgThread(this);
 
-    setButtons(Help|Close);
-    setCaption(i18n("Scan Image"));
+    startButton()->hide();
+    setWindowTitle(i18n("Scan Image"));
     setModal(false);
     
     KPAboutData* const about = new KPAboutData(ki18n("Acquire images"),
@@ -126,8 +126,8 @@ ScanDialog::ScanDialog(KSaneWidget* const saneWidget, QWidget* const /*parent*/)
     connect(d->saveThread, SIGNAL(signalComplete(QUrl,bool)),
             this, SLOT(slotThreadDone(QUrl,bool)));
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotCloseClicked()));
+    connect(this, &QDialog::finished,
+            this, &ScanDialog::slotDialogFinished);
 }
 
 ScanDialog::~ScanDialog()
@@ -152,12 +152,16 @@ void ScanDialog::saveSettings()
 
 void ScanDialog::closeEvent(QCloseEvent *e)
 {
-    d->saneWidget->closeDevice();
-    saveSettings();
+    if (!e)
+    {
+        return;
+    }
+
+    slotDialogFinished();
     e->accept();
 }
 
-void ScanDialog::slotCloseClicked()
+void ScanDialog::slotDialogFinished()
 {
     d->saneWidget->closeDevice();
     saveSettings();
