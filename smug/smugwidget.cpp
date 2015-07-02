@@ -35,13 +35,13 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QApplication>
+#include <QPushButton>
+#include <QLineEdit>
 
 // KDE includes
 
-#include <klocalizedstring.h>
-#include <kdialog.h>
-#include <klineedit.h>
-#include <kpushbutton.h>
+#include <KLocalizedString>
+#include <KGuiItem>
 
 // Libkipi includes
 
@@ -101,9 +101,10 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_userName          = new QLabel(accountBox);
     m_emailLbl          = new QLabel(i18nc("smug account settings", "Email:"), accountBox);
     m_email             = new QLabel(accountBox);
-    m_changeUserBtn     = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                          i18n("Change SmugMug Account used to authenticate")),
-                                           accountBox);
+    m_changeUserBtn     = new QPushButton(accountBox);
+    KGuiItem::assign(m_changeUserBtn,
+                     KGuiItem(i18n("Change Account"), "system-switch-user",
+                              i18n("Change SmugMug Account used to authenticate")));
 
     accountBoxLayout->addWidget(m_anonymousRBtn,        0, 0, 1, 2);
     accountBoxLayout->addWidget(m_accountRBtn,          1, 0, 1, 2);
@@ -124,22 +125,26 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_albumsCoB         = new QComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
     m_nickNameLbl       = new QLabel(i18n("Nickname:"), albumsBox);
-    m_nickNameEdt       = new KLineEdit(albumsBox);
+    m_nickNameEdt       = new QLineEdit(albumsBox);
     m_nickNameEdt->setWhatsThis(
         i18n("Nickname of SmugMug user to list albums."));
     m_sitePasswordLbl   = new QLabel(i18n("Site Password:"), albumsBox);
-    m_sitePasswordEdt   = new KLineEdit(albumsBox);
+    m_sitePasswordEdt   = new QLineEdit(albumsBox);
     m_sitePasswordEdt->setWhatsThis(
         i18n("Site-wide password for specified SmugMug nick/user."));
     m_albumPasswordLbl  = new QLabel(i18n("Album Password:"), albumsBox);
-    m_albumPasswordEdt  = new KLineEdit(albumsBox);
+    m_albumPasswordEdt  = new QLineEdit(albumsBox);
     m_albumPasswordEdt->setWhatsThis(
         i18n("Password for SmugMug album."));
 
-    m_newAlbumBtn       = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                          i18n("Create new SmugMug album")), accountBox);
-    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
-                                          i18n("Reload album list")), accountBox);
+    m_newAlbumBtn = new QPushButton(accountBox);
+    KGuiItem::assign(m_newAlbumBtn,
+                     KGuiItem(i18n("New Album"), "list-add",
+                              i18n("Create new SmugMug album")));
+    m_reloadAlbumsBtn = new QPushButton(accountBox);
+    KGuiItem::assign(m_reloadAlbumsBtn,
+                     KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
+                              i18n("Reload album list")));
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_nickNameLbl,       1, 0, 1, 1);

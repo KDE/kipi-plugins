@@ -36,7 +36,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "smugitem.h"
 
 class QCloseEvent;
@@ -55,7 +55,7 @@ class SmugTalker;
 class SmugWidget;
 class SmugNewAlbum;
 
-class SmugWindow : public KP4ToolDialog
+class SmugWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -91,10 +91,13 @@ private Q_SLOTS:
     void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
+
     void slotStartTransfer();
+    void slotCancelClicked();
     void slotStopAndCloseProgressBar();
+    void slotDialogFinished();
+
     void slotImageListChanged();
-    void slotButtonClicked(int button);
     void slotTemplateSelectionChanged(int index);
     void slotCategorySelectionChanged(int index);
 
@@ -110,6 +113,7 @@ private:
     void authenticate(const QString& email = QString(), const QString& password = QString());
 
     void buttonStateChange(bool state);
+    void setUiInProgressState(bool inProgress);
 
 private:
 

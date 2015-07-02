@@ -32,9 +32,9 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QRadioButton;
-class KPushButton;
+class QPushButton;
 class QComboBox;
-class KLineEdit;
+class QLineEdit;
 
 namespace KIPI
 {
@@ -108,13 +108,13 @@ private:
 
     QComboBox*                 m_albumsCoB;
 
-    KPushButton*               m_newAlbumBtn;
-    KPushButton*               m_reloadAlbumsBtn;
-    KPushButton*               m_changeUserBtn;
+    QPushButton*               m_newAlbumBtn;
+    QPushButton*               m_reloadAlbumsBtn;
+    QPushButton*               m_changeUserBtn;
 
-    KLineEdit*                 m_albumPasswordEdt;
-    KLineEdit*                 m_nickNameEdt;
-    KLineEdit*                 m_sitePasswordEdt;
+    QLineEdit*                 m_albumPasswordEdt;
+    QLineEdit*                 m_nickNameEdt;
+    QLineEdit*                 m_sitePasswordEdt;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
     KIPIPlugins::KPImagesList* m_imgList;
