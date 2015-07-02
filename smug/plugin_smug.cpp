@@ -44,12 +44,10 @@ extern "C"
 
 // KDE includes
 
-#include <kconfig.h>
-#include <kactioncollection.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kstandarddirs.h>
-#include <kwindowsystem.h>
+#include <KWindowSystem>
+#include <KPluginFactory>
+#include <KLocalizedString>
 
 // Libkipi includes
 
