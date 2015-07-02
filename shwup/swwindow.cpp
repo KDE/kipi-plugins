@@ -135,7 +135,6 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
             this, SLOT(slotShwupKipiBlackListed()),
             Qt::QueuedConnection);
 
-    //FIXME: this slot doesn't exist
     connect(m_connector, SIGNAL(signalShwupSignatureError()),
             this, SLOT(slotShwupSignatureError()),
             Qt::QueuedConnection);
@@ -286,6 +285,10 @@ void SwWindow::authenticate()
 void SwWindow::slotShwupKipiBlackListed()
 {
     KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service."));
+}
+
+void SwWindow::slotShwupSignatureError()
+{
 }
 
 void SwWindow::slotShwupInvalidCredentials()

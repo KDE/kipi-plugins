@@ -76,6 +76,7 @@ public:
 private Q_SLOTS:
 
     void slotBusy(bool val);
+    void slotShwupSignatureError();
     void slotShwupKipiBlackListed();
     void slotShwupInvalidCredentials();
 
