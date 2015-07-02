@@ -111,7 +111,7 @@ void Plugin_Imageshack::setupActions()
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction("imageshack", d->actionExport);
+    addAction("imageshackexport", d->actionExport);
 }
 
 void Plugin_Imageshack::slotExport()
