@@ -116,25 +116,25 @@ if(KF5Kipi_FOUND)
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
-    find_package(EXPAT)                                       # For DNGConverter: XMP SDK need Expat library to compile.
-    find_package(Threads)                                     # For DNGConverter: DNG SDK need native threads support.
+    DETECT_LIBMEDIAWIKI(5.1.0)                                                 # For Mediawiki.
+    DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
+    DETECT_LIBKSANE(5.1.0)                                                     # For AcquireImages.
+    find_package(EXPAT)                                                        # For DNGConverter: XMP SDK need Expat library to compile.
+    find_package(Threads)                                                      # For DNGConverter: DNG SDK need native threads support.
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
-    DETECT_LIBMEDIAWIKI(5.5.0)                                                 # For Mediawiki.
-    DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
-    DETECT_LIBKSANE(5.5.0)                                                     # For AcquireImages.
-#     MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                     # For Htmlexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                     # For Htmlexport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
-#     MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
-#     MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
-#     MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
-#     MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                       # For DlnaExport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(QtSoap)                                      # For DlnaExport.
-#     MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)   # For VideoSlideshow.
-#     MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                 # For VideoSlideshow.
-#     MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                    # For Imgur Auhtenticated API
+#    find_package(Qca-qt5)                                                      # For Shwup and YandexFotki.
+#    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
+#    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
+#    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
+#    MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                         # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
+#    MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                       # For GPSSync.
+#    MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                         # For DlnaExport.
+#    MACRO_OPTIONAL_FIND_PACKAGE(QtSoap)                                        # For DlnaExport.
+#    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
+#    MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                   # For VideoSlideshow.
+#    MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                      # For Imgur Auhtenticated API
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
 
@@ -173,13 +173,13 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.5.0)"                   "Kipi-plugins will be compiled without libmediawiki support."   KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 5.5.0)"                   "Kipi-plugins will be compiled without libksane support."       KF5Sane_FOUND)
+#     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.6.0)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"  "http://pim.kde.org"                                              "(version >= 4.3.0)"                  "Kipi-plugins will be compiled without libkdepimlibs support."  KDEPIMLIBS_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.0.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
