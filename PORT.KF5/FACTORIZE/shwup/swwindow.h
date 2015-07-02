@@ -77,6 +77,7 @@ private Q_SLOTS:
 
     void slotBusy(bool val);
     void slotShwupKipiBlackListed();
+    void slotShwupSignatureError();
     void slotShwupInvalidCredentials();
 
     void slotRequestRestURLDone(int errCode, const QString& errMsg);

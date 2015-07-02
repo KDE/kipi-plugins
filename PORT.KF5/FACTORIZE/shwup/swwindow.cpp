@@ -289,6 +289,10 @@ void SwWindow::slotShwupKipiBlackListed()
     KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service."));
 }
 
+void SwWindow::slotShwupSignatureError()
+{
+}
+
 void SwWindow::slotShwupInvalidCredentials()
 {
     authenticate();
