@@ -338,15 +338,13 @@ if(KF5Kipi_FOUND)
             add_subdirectory(tests)
         endif()
 
-# Plugins to port to KF5 imediatly
-
         add_subdirectory(printimages)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
         add_subdirectory(timeadjust)
         add_subdirectory(flashexport)
         add_subdirectory(expoblending)
-#         add_subdirectory(metadataedit)
+        add_subdirectory(metadataedit)
 #
 #         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
 #             add_subdirectory(dlnaexport)
