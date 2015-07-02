@@ -36,12 +36,11 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QPushButton>
+#include <QLineEdit>
 
 // KDE includes
 
-#include <klocalizedstring.h>
-#include <kdialog.h>
-#include <klineedit.h>
+#include <KLocalizedString>
 #include <KGuiItem>
 
 // Libkipi includes
@@ -126,15 +125,15 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_albumsCoB         = new QComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
     m_nickNameLbl       = new QLabel(i18n("Nickname:"), albumsBox);
-    m_nickNameEdt       = new KLineEdit(albumsBox);
+    m_nickNameEdt       = new QLineEdit(albumsBox);
     m_nickNameEdt->setWhatsThis(
         i18n("Nickname of SmugMug user to list albums."));
     m_sitePasswordLbl   = new QLabel(i18n("Site Password:"), albumsBox);
-    m_sitePasswordEdt   = new KLineEdit(albumsBox);
+    m_sitePasswordEdt   = new QLineEdit(albumsBox);
     m_sitePasswordEdt->setWhatsThis(
         i18n("Site-wide password for specified SmugMug nick/user."));
     m_albumPasswordLbl  = new QLabel(i18n("Album Password:"), albumsBox);
-    m_albumPasswordEdt  = new KLineEdit(albumsBox);
+    m_albumPasswordEdt  = new QLineEdit(albumsBox);
     m_albumPasswordEdt->setWhatsThis(
         i18n("Password for SmugMug album."));
 
