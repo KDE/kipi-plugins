@@ -32,7 +32,7 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QRadioButton;
-class KPushButton;
+class QPushButton;
 class QComboBox;
 class KLineEdit;
 
@@ -108,9 +108,9 @@ private:
 
     QComboBox*                 m_albumsCoB;
 
-    KPushButton*               m_newAlbumBtn;
-    KPushButton*               m_reloadAlbumsBtn;
-    KPushButton*               m_changeUserBtn;
+    QPushButton*               m_newAlbumBtn;
+    QPushButton*               m_reloadAlbumsBtn;
+    QPushButton*               m_changeUserBtn;
 
     KLineEdit*                 m_albumPasswordEdt;
     KLineEdit*                 m_nickNameEdt;
