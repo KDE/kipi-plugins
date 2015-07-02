@@ -7,7 +7,7 @@
  * Description : A tool for importing images via KIO
  *
  * Copyright (C) 2009      by Johannes Wienke <languitar at semipol dot de>
- * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,37 +21,37 @@
  *
  * ============================================================ */
 
-#include "KioImportWindow.moc"
+#include "KioImportWindow.h"
 
 // Qt includes
 
-#include <qaction.h>
+#include <QAction>
+#include <QMenu>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <khelpmenu.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <uploadwidget.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/UploadWidget>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "KioImportWidget.h"
 #include "kpaboutdata.h"
 #include "kpimageslist.h"
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
@@ -61,7 +61,7 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
     setMainWidget(m_importWidget);
 
     // window setup
-    setWindowTitle(i18n("Import from Remote Computer"));
+    setWindowTitle(i18n("Import from Remote Storage"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
@@ -84,14 +84,14 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
 
     // about data and help button
 
-    KPAboutData* about = new KPAboutData(ki18n("Import from remote computer"),
+    KPAboutData* const about = new KPAboutData(ki18n("Import from remote storage"),
                              0,
-                             KAboutData::License_GPL,
+                             KAboutLicense::GPL,
                              ki18n("A Kipi plugin to import images over network using KIO-Slave"),
                              ki18n("(c) 2009, Johannes Wienke"));
 
-    about->addAuthor(ki18n("Johannes Wienke"),
-                     ki18n("Developer and maintainer"),
+    about->addAuthor(ki18n("Johannes Wienke").toString(),
+                     ki18n("Developer and maintainer").toString(),
                      "languitar at semipol dot de");
 
     about->setHandbookEntry("kioexport");
@@ -110,8 +110,8 @@ void KioImportWindow::slotImport()
 
     // start copying and react on signals
     setEnabled(false);
-    KIO::CopyJob *copyJob = KIO::copy(m_importWidget->imagesList()->imageUrls(),
-                            m_importWidget->uploadWidget()->selectedImageCollection().uploadPath());
+    KIO::CopyJob* const copyJob = KIO::copy(m_importWidget->imagesList()->imageUrls(),
+                                  m_importWidget->uploadWidget()->selectedImageCollection().uploadUrl());
 
     connect(copyJob, SIGNAL(copyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)),
             this, SLOT(slotCopyingDone(KIO::Job*,QUrl,QUrl,time_t,bool,bool)));
@@ -129,7 +129,7 @@ void KioImportWindow::slotCopyingDone(KIO::Job* job, const QUrl& from,
     Q_UNUSED(directory);
     Q_UNUSED(renamed);
 
-    qCDebug(KIPIPLUGINS_LOG) << "copied " << to.prettyUrl();
+    qCDebug(KIPIPLUGINS_LOG) << "copied " << to.toDisplayString();
 
     m_importWidget->imagesList()->removeItemByUrl(from);
 }
@@ -153,7 +153,7 @@ void KioImportWindow::slotCopyingFinished(KJob* job)
 void KioImportWindow::slotSourceAndTargetUpdated()
 {
     bool hasUrlToImport = !m_importWidget->sourceUrls().empty();
-    bool hasTarget      = m_importWidget->uploadWidget()->selectedImageCollection().uploadPath().isValid();
+    bool hasTarget      = m_importWidget->uploadWidget()->selectedImageCollection().uploadUrl().isValid();
 
     qCDebug(KIPIPLUGINS_LOG) << "switching import button activity with: hasUrlToImport = "
                   << hasUrlToImport << ", hasTarget = " << hasTarget;
@@ -161,4 +161,4 @@ void KioImportWindow::slotSourceAndTargetUpdated()
     enableButton(User1, hasUrlToImport && hasTarget);
 }
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin

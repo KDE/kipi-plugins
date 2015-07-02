@@ -1,15 +1,15 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <!-- NOTE: don't forget to increase version ID when this file is modified -->
-<gui version="1" name="kipiplugin_kioimportexport" >
+<gui version="1" name="kipiplugin_remotestorage" >
 
     <MenuBar>
 
         <Menu name="Import"><text>&amp;Import</text>
-            <Action name="kioimport" group="kipi_import_group" />
+            <Action name="remotestorageimport" group="kipi_import_group" />
         </Menu>
 
         <Menu name="Export"><text>&amp;Export</text>
-            <Action name="kioexport" group="kipi_export_group" />
+            <Action name="remotestorageexport" group="kipi_export_group" />
         </Menu>
 
     </MenuBar>

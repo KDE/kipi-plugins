@@ -21,17 +21,17 @@
  *
  * ============================================================ */
 
-// Local includes
+#include "plugin_remotestorage.h"
 
-#include "plugin_kioexportimport.moc"
+// Qt includes
+
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
 #include <kactioncollection.h>
-#include <QAction>
-#include <QApplication>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocalizedstring.h>
@@ -40,34 +40,34 @@
 
 // LibKipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "KioExportWindow.h"
 #include "KioImportWindow.h"
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
-K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExportImport>(); )
-K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexportimport") )
+K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_RemoteStorage>(); )
 
-Plugin_KioExportImport::Plugin_KioExportImport(QObject* const parent, const QVariantList&)
-    : Plugin(KioFactory::componentData(), parent, "KioExportImport")
+Plugin_RemoteStorage::Plugin_RemoteStorage(QObject* const parent, const QVariantList&)
+    : Plugin(parent, "RemoteStorage")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_KioExportImport plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_RemoteStorage plugin loaded";
 
-    setUiBaseName("kipiplugin_kioexportimportui.rc");
+    setUiBaseName("kipiplugin_remotestorageui.rc");
     setupXML();
 }
 
-Plugin_KioExportImport::~Plugin_KioExportImport()
+Plugin_RemoteStorage::~Plugin_RemoteStorage()
 {
 }
 
-void Plugin_KioExportImport::setup(QWidget* const widget)
+void Plugin_RemoteStorage::setup(QWidget* const widget)
 {
     m_dlgExport = 0;
     m_dlgImport = 0;
@@ -86,37 +86,37 @@ void Plugin_KioExportImport::setup(QWidget* const widget)
     m_actionImport->setEnabled(true);
 }
 
-void Plugin_KioExportImport::setupActions()
+void Plugin_RemoteStorage::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
     m_actionExport = new QAction(this);
-    m_actionExport->setText(i18n("Export to remote computer..."));
+    m_actionExport->setText(i18n("Export to remote storage..."));
     m_actionExport->setIcon(QIcon::fromTheme("folder-remote"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K));
+    m_actionExport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_K));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateExport()));
 
-    addAction("kioexport", m_actionExport);
+    addAction("remotestorageexport", m_actionExport);
 
     // import
     m_actionImport = new QAction(this);
-    m_actionImport->setText(i18n("Import from remote computer..."));
+    m_actionImport->setText(i18n("Import from remote storage..."));
     m_actionImport->setIcon(QIcon::fromTheme("folder-remote"));
-    m_actionImport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I));
+    m_actionImport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_I));
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));
 
-    addAction("kioimport", m_actionImport, ImportPlugin);
+    addAction("remotestorageimport", m_actionImport, ImportPlugin);
 }
 
-void Plugin_KioExportImport::slotActivateExport()
+void Plugin_RemoteStorage::slotActivateExport()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Starting KIO export";
+    qCDebug(KIPIPLUGINS_LOG) << "Starting Remote Storage export";
 
     if (!m_dlgExport)
     {
@@ -134,9 +134,9 @@ void Plugin_KioExportImport::slotActivateExport()
     m_dlgExport->reactivate();
 }
 
-void Plugin_KioExportImport::slotActivateImport()
+void Plugin_RemoteStorage::slotActivateImport()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Starting KIO import";
+    qCDebug(KIPIPLUGINS_LOG) << "Starting Remote Storage import";
 
     if (!m_dlgImport)
     {
@@ -154,4 +154,6 @@ void Plugin_KioExportImport::slotActivateImport()
     m_dlgImport->show();
 }
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin
+
+#include "plugin_remotestorage.moc"

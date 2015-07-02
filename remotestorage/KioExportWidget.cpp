@@ -21,28 +21,29 @@
  *
  * ============================================================ */
 
-#include "KioExportWidget.moc"
+#include "KioExportWidget.h"
 
 // Qt includes
 
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QApplication>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
 #include <kfiledialog.h>
-#include "kipiplugins_debug.h"
 #include <khbox.h>
 #include <ktoolinvocation.h>
-#include <QComboBox>
+#include <kcombobox.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 KioExportWidget::KioExportWidget(QWidget* const parent)
@@ -52,7 +53,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
 
     KHBox* const hbox   = new KHBox(this);
     QLabel* const label = new QLabel(hbox);
-    m_targetLabel       = new QUrlComboRequester(hbox);
+    m_targetLabel       = new KUrlComboRequester(hbox);
     m_targetDialog      = 0;
 
     if(m_targetLabel->button())
@@ -107,17 +108,17 @@ QUrl KioExportWidget::targetUrl() const
     return m_targetUrl;
 }
 
-QUrl::List KioExportWidget::history() const
+QList<QUrl> KioExportWidget::history() const
 {
-    QUrl::List urls;
+    QList<QUrl> urls;
 
     for (int i=0; i <= m_targetLabel->comboBox()->count(); i++)
-        urls << m_targetLabel->comboBox()->itemText(i);
+        urls << QUrl(m_targetLabel->comboBox()->itemText(i));
 
     return urls;
 }
 
-void KioExportWidget::setHistory(const QUrl::List& urls)
+void KioExportWidget::setHistory(const QList<QUrl>& urls)
 {
     m_targetLabel->comboBox()->clear();
 
@@ -154,15 +155,15 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 void KioExportWidget::updateTargetLabel()
 {
     qCDebug(KIPIPLUGINS_LOG) << "Call for url "
-             << m_targetUrl.prettyUrl() << ", valid = "
+             << m_targetUrl.toDisplayString() << ", valid = "
              << m_targetUrl.isValid();
 
     QString urlString = '<' + i18n("not selected") + '>';
 
     if (m_targetUrl.isValid())
     {
-        urlString = m_targetUrl.prettyUrl();
-        m_targetLabel->setUrl(urlString);
+        urlString = m_targetUrl.toDisplayString();
+        m_targetLabel->setUrl(QUrl(urlString));
     }
 }
 
@@ -177,4 +178,4 @@ void KioExportWidget::slotLabelUrlChanged()
     emit signalTargetUrlChanged(m_targetUrl);
 }
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin

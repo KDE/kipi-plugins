@@ -28,12 +28,12 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QUrl>
 
 // KDE includes
 
 #include <kfiledialog.h>
 #include <kpushbutton.h>
-#include <QUrl>
 #include <kurlrequester.h>
 
 class QComboBox;
@@ -45,7 +45,7 @@ namespace KIPIPlugins
 
 using namespace KIPIPlugins;
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 class KioExportWidget: public QWidget
@@ -81,8 +81,8 @@ public:
      */
     void setTargetUrl(const QUrl& url);
 
-    QUrl::List history() const;
-    void setHistory(const QUrl::List& urls);
+    QList<QUrl> history() const;
+    void setHistory(const QList<QUrl>& urls);
 
 private Q_SLOTS:
 
@@ -99,13 +99,13 @@ private:
 
 private:
 
-    QUrlComboRequester* m_targetLabel;
+    KUrlComboRequester* m_targetLabel;
     KFileDialog*        m_targetDialog;
     KPushButton*        m_targetSearchButton;
     QUrl                m_targetUrl;
     KPImagesList*       m_imageList;
 };
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin
 
 #endif /* KIOEXPORTWIDGET_H */

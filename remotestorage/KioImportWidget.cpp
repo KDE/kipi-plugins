@@ -20,11 +20,12 @@
  *
  * ============================================================ */
 
-#include "KioImportWidget.moc"
+#include "KioImportWidget.h"
 
 // Qt includes
 
-#include <qboxlayout.h>
+#include <QBoxLayout>
+#include <QApplication>
 
 // KDE includes
 
@@ -35,14 +36,14 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <uploadwidget.h>
+#include <KIPI/Interface>
+#include <KIPI/UploadWidget>
 
 // Local includes
 
 #include "kpimageslist.h"
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 KioImportWidget::KioImportWidget(QWidget* const parent, Interface* const interface)
@@ -81,9 +82,9 @@ UploadWidget* KioImportWidget::uploadWidget() const
     return m_uploadWidget;
 }
 
-QUrl::List KioImportWidget::sourceUrls() const
+QList<QUrl> KioImportWidget::sourceUrls() const
 {
     return m_imageList->imageUrls();
 }
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin

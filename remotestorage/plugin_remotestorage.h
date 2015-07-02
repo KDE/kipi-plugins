@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_KIOEXPORT_H
-#define PLUGIN_KIOEXPORT_H
+#ifndef PLUGIN_REMOTESTORAGE_H
+#define PLUGIN_REMOTESTORAGE_H
 
 // Qt includes
 
@@ -30,26 +30,26 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 class QAction;
 
 using namespace KIPI;
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 class KioExportWindow;
 class KioImportWindow;
 
-class Plugin_KioExportImport: public Plugin
+class Plugin_RemoteStorage: public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_KioExportImport(QObject* const parent, const QVariantList& args);
-    ~Plugin_KioExportImport();
+    Plugin_RemoteStorage(QObject* const parent, const QVariantList& args);
+    ~Plugin_RemoteStorage();
 
     void setup(QWidget* const widget);
 
@@ -71,13 +71,13 @@ private:
 
 private:
 
-    QAction *         m_actionExport;
-    QAction *         m_actionImport;
+    QAction *        m_actionExport;
+    QAction *        m_actionImport;
 
     KioExportWindow* m_dlgExport;
     KioImportWindow* m_dlgImport;
 };
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin
 
-#endif //PLUGIN_KIOEXPORT_H
+#endif // PLUGIN_REMOTESTORAGE_H

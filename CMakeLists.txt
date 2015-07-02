@@ -390,7 +390,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
         add_subdirectory(piwigo)
-#         add_subdirectory(kioexportimport)
+        add_subdirectory(remotestorage)
 #         add_subdirectory(rajceexport)
 #
 #         if(QCA2_FOUND)

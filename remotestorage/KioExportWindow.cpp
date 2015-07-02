@@ -8,7 +8,7 @@
  *               location
  *
  * Copyright (C) 2006-2009 by Johannes Wienke <languitar at semipol dot de>
- * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,34 +22,34 @@
  *
  * ============================================================ */
 
-#include "KioExportWindow.moc"
+#include "KioExportWindow.h"
 
 // Qt includes
 
 #include <QCloseEvent>
+#include <QUrl>
+#include <QMenu>
 
 // KDE includes
 
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <khelpmenu.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
-#include <QUrl>
 #include <KWindowConfig>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "kpimageslist.h"
 #include "KioExportWidget.h"
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 const QString KioExportWindow::TARGET_URL_PROPERTY  = "targetUrl";
@@ -64,7 +64,7 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
 
     // -- Window setup ------------------------------------------------------
 
-    setWindowTitle(i18n("Export to Remote Computer"));
+    setWindowTitle(i18n("Export to Remote Storage"));
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
@@ -86,14 +86,14 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
 
     // -- About data and help button ----------------------------------------
 
-    KPAboutData* about = new KPAboutData(ki18n("Export to remote computer"),
+    KPAboutData* const about = new KPAboutData(ki18n("Export to remote storage"),
                    0,
-                   KAboutData::License_GPL,
+                   KAboutLicense::GPL,
                    ki18n("A Kipi plugin to export images over network using KIO-Slave"),
                    ki18n("(c) 2009, Johannes Wienke"));
 
-    about->addAuthor(ki18n("Johannes Wienke"),
-                     ki18n("Developer and maintainer"),
+    about->addAuthor(ki18n("Johannes Wienke").toString(),
+                     ki18n("Developer and maintainer").toString(),
                      "languitar at semipol dot de");
 
     about->setHandbookEntry("kioexport");
@@ -136,7 +136,7 @@ void KioExportWindow::restoreSettings()
     qCDebug(KIPIPLUGINS_LOG) <<  "pass here";
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
-    m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QStringList()));
+    m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QList<QUrl>()));
     m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, QUrl()));
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
@@ -148,7 +148,7 @@ void KioExportWindow::saveSettings()
     qCDebug(KIPIPLUGINS_LOG) <<  "pass here";
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
-    group.writeEntry(HISTORY_URL_PROPERTY, m_exportWidget->history().toStringList());
+    group.writeEntry(HISTORY_URL_PROPERTY, m_exportWidget->history());
     group.writeEntry(TARGET_URL_PROPERTY,  m_exportWidget->targetUrl().url());
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
@@ -186,7 +186,7 @@ void KioExportWindow::slotCopyingDone(KIO::Job *job, const QUrl& from,
     Q_UNUSED(directory);
     Q_UNUSED(renamed);
 
-    qCDebug(KIPIPLUGINS_LOG) << "copied " << to.prettyUrl();
+    qCDebug(KIPIPLUGINS_LOG) << "copied " << to.toDisplayString();
 
     m_exportWidget->imagesList()->removeItemByUrl(from);
 }
@@ -223,4 +223,4 @@ void KioExportWindow::slotUpload()
             this, SLOT(slotCopyingFinished(KJob*)));
 }
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin

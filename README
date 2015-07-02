@@ -28,11 +28,11 @@ GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.
 SendImages         : A tool to send images by e-mail.
-SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
+FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 TimeAdjust         : A tool to adjust date and time.
-KIOExport          : A tool to export images to remote computer using network protocol (FTP, SSH, SAMBA, etc...).
+RemoteStorage      : A tool to export images to remote storage using network protocol (FTP, SSH, SAMBA, etc...).
 Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).

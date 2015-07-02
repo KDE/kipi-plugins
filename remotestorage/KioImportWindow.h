@@ -43,7 +43,7 @@ namespace KIPI
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 /**
@@ -97,6 +97,6 @@ private:
     KioImportWidget* m_importWidget;
 };
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin
 
 #endif /* KIOIMPORTWINDOW_H */

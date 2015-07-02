@@ -46,7 +46,7 @@ namespace KIPIPlugins
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIKioExportPlugin
+namespace KIPIRemoteStoragePlugin
 {
 
 /**
@@ -77,7 +77,7 @@ public:
      *
      * @return list of urls, potentially from remote system
      */
-    QUrl::List sourceUrls() const;
+    QList<QUrl> sourceUrls() const;
 
     /**
      * Returns the image list used to manage images to import.
@@ -99,6 +99,6 @@ private:
     UploadWidget* m_uploadWidget;
 };
 
-} // namespace KIPIKioExportPlugin
+} // namespace KIPIRemoteStoragePlugin
 
 #endif /* KIOIMPORTWIDGET_H */
