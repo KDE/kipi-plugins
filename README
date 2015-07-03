@@ -92,7 +92,6 @@ SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 DngConverter       : libexpat.
 AcquireImages      : libksane.
-YandexFotki        : libqca.
 FaceBook           : libqjson.
 ExpoBlending       : Hugin command line tools (runtime dependency).
 Geolocator         : libkgeomap.

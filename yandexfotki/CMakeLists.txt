@@ -8,10 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_yandexfotki\")
 
-include_directories(${Qca-qt5_INCLUDE_DIR})
-
-add_definitions(${Qca-qt5_DEFINITIONS})
-
 set(kipiplugin_yandexfotki_PART_SRCS
     plugin_yandexfotki.cpp
     logindialog.cpp
@@ -30,8 +26,6 @@ target_link_libraries(kipiplugin_yandexfotki
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2
-                      ${Qca-qt5_LIBRARIES}
-
                       KF5::KIOCore
                       KF5kipiplugins
                      )

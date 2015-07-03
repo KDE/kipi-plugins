@@ -28,11 +28,12 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include "kipiplugins_debug.h"
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
@@ -41,6 +42,7 @@
 // Local includes
 
 #include "yfalbum.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIYandexFotkiPlugin
 {

@@ -149,13 +149,13 @@ void YandexFotkiTalker::getToken()
     // prepare params
     QStringList paramList;
 
-    paramList.append("request_id=" + m_sessionId);
+    paramList.append(QLatin1String("request_id=") + m_sessionId);
 
-    paramList.append("credentials=" + QUrl::toPercentEncoding(credentials));
+    paramList.append(QLatin1String("credentials=") + QUrl::toPercentEncoding(credentials));
 
     QString params = paramList.join("&");
 
-    KIO::TransferJob* const job = KIO::http_post(TOKEN_URL, params.toUtf8(),
+    KIO::TransferJob* const job = KIO::http_post(QUrl(TOKEN_URL), params.toUtf8(),
                                            KIO::HideProgressInfo);
 
     job->addMetaData("content-type",
@@ -188,7 +188,7 @@ void YandexFotkiTalker::listAlbumsNext()
 {
     qCDebug(KIPIPLUGINS_LOG) << "listAlbumsNext";
 
-    KIO::TransferJob* const job = KIO::get(m_albumsNextUrl,
+    KIO::TransferJob* const job = KIO::get(QUrl(m_albumsNextUrl),
                                   KIO::NoReload, KIO::HideProgressInfo);
 
     job->addMetaData("content-type", "Content-Type: application/atom+xml; "
@@ -225,7 +225,7 @@ void YandexFotkiTalker::listPhotosNext()
 {
     qCDebug(KIPIPLUGINS_LOG) << "listPhotosNext";
 
-    KIO::TransferJob* const job = KIO::get(m_photosNextUrl,
+    KIO::TransferJob* const job = KIO::get(QUrl(m_photosNextUrl),
                                   KIO::NoReload, KIO::HideProgressInfo);
 
     job->addMetaData("content-type", "Content-Type: application/atom+xml; "
@@ -288,15 +288,15 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
         return;
     }
 
-    KIO::TransferJob* const job = KIO::http_post(m_lastPhotosUrl, imageFile.readAll());
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_lastPhotosUrl), imageFile.readAll());
     //job->ui()->setWindow(m_parent);
     job->addMetaData("content-type",
                      "Content-Type: image/jpeg");
     job->addMetaData("customHTTPHeader",
                      QString("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
-    job->addMetaData("slug", "Slug: " +
-                     QUrl::toPercentEncoding(photo.title()) + ".jpg");
+    job->addMetaData(QLatin1String("slug"), QLatin1String("Slug: ") +
+                     QUrl::toPercentEncoding(photo.title()) + QLatin1String(".jpg"));
 
     m_state     = STATE_UPDATEPHOTO_FILE;
     m_lastPhoto = &photo;
@@ -376,7 +376,7 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
      * KIO::put uses dataReq slot for getting data
      * It's really unsuable, but anyway...
      */
-    KIO::TransferJob* const job = KIO::put(photo.m_apiEditUrl, -1/*, KIO::HideProgressInfo*/);
+    KIO::TransferJob* const job = KIO::put(QUrl(photo.m_apiEditUrl), -1/*, KIO::HideProgressInfo*/);
     job->addMetaData("customHTTPHeader",
                      QString("Authorization: FimpToken realm=\"%1\", token=\"%2\"")
                      .arg(AUTH_REALM).arg(m_token));
@@ -439,7 +439,7 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
     qCDebug(KIPIPLUGINS_LOG) << "Prepared data: " << postData;
     qCDebug(KIPIPLUGINS_LOG) << "Url" << m_apiAlbumsUrl;
 
-    KIO::TransferJob* const job = KIO::http_post(m_apiAlbumsUrl, postData,
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiAlbumsUrl), postData,
                                   KIO::HideProgressInfo);
     job->addMetaData("content-type", "Content-Type: application/atom+xml; "
                      "charset=utf-8; type=entry");

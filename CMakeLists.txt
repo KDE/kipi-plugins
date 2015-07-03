@@ -179,8 +179,8 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libksane support."       KF5Sane_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
 
+#     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
@@ -248,7 +248,6 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
-    PRINT_COMPONENT_COMPILE_STATUS("YandexFotki"        Qca-qt5_FOUND)
 
 #     PRINT_COMPONENT_COMPILE_STATUS("Shwup"              QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
@@ -378,6 +377,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(imageshack)
         add_subdirectory(piwigo)
         add_subdirectory(remotestorage)
+            add_subdirectory(yandexfotki)
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
@@ -387,17 +387,12 @@ if(KF5Kipi_FOUND)
             add_subdirectory(mediawiki)
         endif()
 
-        if(Qca-qt5_FOUND)
-#            add_subdirectory(yandexfotki)
-        endif()
-
 # Plugins in pending state
 
 #         add_subdirectory(rajceexport)
 #
-#         if(QCA2_FOUND)
+#         if(Qca-qt5_FOUND)
 #             add_subdirectory(shwup)
-#             add_subdirectory(yandexfotki)
 #         endif()
 #
 #         if(QJSON_FOUND)

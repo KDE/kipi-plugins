@@ -102,7 +102,6 @@ void Plugin_YandexFotki::setupActions()
 /*
 void Plugin_YandexFotki::slotImport()
 {
-
 }
 */
 
@@ -127,4 +126,4 @@ void Plugin_YandexFotki::slotExport()
 
 } // namespace KIPIYandexFotkiPlugin
 
-#include "plugin_yandexfotki.h"
+#include "plugin_yandexfotki.moc"

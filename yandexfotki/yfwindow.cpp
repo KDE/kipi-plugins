@@ -54,12 +54,13 @@ extern "C"
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QVBoxLayout>
+#include <QMenu>
+#include <QComboBox>
+#include <QApplication>
 
 // KDE includes
 
-#include <QComboBox>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <kde_file.h>
 #include <kdeversion.h>
 #include <kdialog.h>
@@ -67,7 +68,6 @@ extern "C"
 #include <kio/renamedialog.h>
 #include <klineedit.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kprogressdialog.h>
@@ -77,13 +77,13 @@ extern "C"
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
-#include <uploadwidget.h>
+#include <KIPI/UploadWidget>
 #include <KIPI/ImageCollection>
 
 // Local includes
@@ -96,6 +96,7 @@ extern "C"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
 #include "logindialog.h"
+#include "kipiplugins_debug.h"
 
 using namespace KDcrawIface;
 
@@ -242,7 +243,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     policyRadio4->setWhatsThis(i18n("Add photo as new"));
 
     QLabel* const accessLabel = new QLabel(i18n("Privacy settings:"), optionsBox);
-    m_accessCombo             = new QComboBox(false, optionsBox);
+    m_accessCombo             = new QComboBox(optionsBox);
     m_accessCombo->addItem(QIcon::fromTheme("folder"), i18n("Public access"),         YandexFotkiPhoto::ACCESS_PUBLIC);
     m_accessCombo->addItem(QIcon::fromTheme("folder-red"), i18n("Friends access"),    YandexFotkiPhoto::ACCESS_FRIENDS);
     m_accessCombo->addItem(QIcon::fromTheme("folder-locked"), i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
@@ -327,15 +328,16 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     KPAboutData* const about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
                                                0,
-                                               KAboutData::License_GPL,
+                                               KAboutLicense::GPL,
                                                ki18n("A Kipi plugin to export image collections to "
                                                      "Yandex.Fotki web service."),
                                                ki18n("(c) 2007-2009, Vardhman Jain\n"
-                                                     "(c) 2008-2012, Gilles Caulier\n"
+                                                     "(c) 2008-2015, Gilles Caulier\n"
                                                      "(c) 2009, Luka Renko\n"
                                                      "(c) 2010, Roman Tsisyk"));
 
-    about->addAuthor(ki18n( "Roman Tsisyk" ), ki18n("Author"),
+    about->addAuthor(ki18n( "Roman Tsisyk" ).toString(),
+                     ki18n("Author").toString(),
                      "roman at tsisyk dot com");
 
     about->setHandbookEntry("YandexFotki");
@@ -508,7 +510,7 @@ void YandexFotkiWindow::writeSettings()
 
 QString YandexFotkiWindow::getDestinationPath() const
 {
-    return m_uploadWidget->selectedImageCollection().uploadPath().path();
+    return m_uploadWidget->selectedImageCollection().uploadUrl().toLocalFile();
 }
 
 void YandexFotkiWindow::slotChangeUserClicked()
@@ -759,7 +761,7 @@ void YandexFotkiWindow::updateNextPhoto()
             QImage image;
 
             // check if we have to RAW file -> use preview image then
-            bool isRAW = KPMetadata::isRawFile(photo.originalUrl());
+            bool isRAW = KPMetadata::isRawFile(QUrl::fromLocalFile(photo.originalUrl()));
 
             if (isRAW)
             {

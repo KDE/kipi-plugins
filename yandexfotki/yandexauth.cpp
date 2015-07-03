@@ -29,7 +29,12 @@
 // Qt includes
 
 #include <QString>
-#include <QtCrypto> // Base64
+
+/*
+// Qca includes
+
+#include <QtCrypto/QtCrypto> // Base64
+*/
 
 // Local includes
 
@@ -64,11 +69,16 @@ QString makeCredentials(const QString& publicKey, const QString& login, const QS
     }
 
     // encode with base64
+
+    QByteArray ba;
+    ba.append(encrypted);
+    return QString(ba.toBase64());
+    
+/*    
     QCA::Initializer init;
     QCA::Base64 base64Encoder;
-
-    // return result
     return QString(base64Encoder.encode(encrypted).toByteArray());
+*/
 }
 
 } // namespace YandexAuth
