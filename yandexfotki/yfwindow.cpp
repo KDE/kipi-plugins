@@ -109,7 +109,7 @@ namespace KIPIYandexFotkiPlugin
 const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 
 YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
-    : KP4ToolDialog(parent)
+    : KPToolDialog(parent)
 {
     m_import    = import;
 
@@ -305,14 +305,12 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     setMainWidget(m_mainWidget);
     setWindowIcon(QIcon::fromTheme("yandexfotki"));
-    setButtons(KDialog::Help|KDialog::User1|KDialog::Close);
-    setDefaultButton(Close);
     setModal(false);
 
     if (!m_import)
     {
         setWindowTitle(i18n("Export to Yandex.Fotki Web Service"));
-        setButtonGuiItem(KDialog::User1,
+        KGuiItem::assign(startButton(),
                          KGuiItem(i18n("Start Upload"), "network-workgroup",
                                   i18n("Start upload to Yandex.Fotki service")));
         setMinimumSize(700, 520);
@@ -345,8 +343,14 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     // -- UI slots -----------------------------------------------------------------------
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotStartTransfer()) );
+    connect(startButton(), &QPushButton::clicked,
+            this, &YandexFotkiWindow::slotStartTransfer);
+
+    connect(this, &KPToolDialog::cancelClicked,
+            this, &YandexFotkiWindow::slotCancelClicked);
+
+    connect(this, &QDialog::finished,
+            this, &YandexFotkiWindow::slotFinished);
 
     // -- Talker slots -------------------------------------------------------------------
 
@@ -406,31 +410,27 @@ void YandexFotkiWindow::updateControls(bool val)
         if (m_talker.isAuthenticated())
         {
             m_albumsBox->setEnabled(true);
-            enableButton(User1, true);
+            startButton()->setEnabled(true);
         }
         else
         {
             m_albumsBox->setEnabled(false);
-            enableButton(User1, false);
+            startButton()->setEnabled(false);
         }
 
         m_changeUserButton->setEnabled(true);
         setCursor(Qt::ArrowCursor);
 
-        setButtonGuiItem(KDialog::Close,
-                         KGuiItem(i18n("Close"), "dialog-close",
-                                  i18n("Close window")));
+        setRejectButtonMode(QDialogButtonBox::Close);
     }
     else
     {
         setCursor(Qt::WaitCursor);
         m_albumsBox->setEnabled(false);
         m_changeUserButton->setEnabled(false);
-        enableButton(User1, false);
+        startButton()->setEnabled(false);
 
-        setButtonGuiItem(KDialog::Close,
-                         KGuiItem(i18n("Cancel"), "dialog-cancel",
-                                  i18n("Cancel current operation")));
+        setRejectButtonMode(QDialogButtonBox::Cancel);
     }
 }
 
@@ -519,31 +519,27 @@ void YandexFotkiWindow::slotChangeUserClicked()
     authenticate(true);
 }
 
-void YandexFotkiWindow::closeEvent(QCloseEvent* event)
+void YandexFotkiWindow::closeEvent(QCloseEvent* e)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "closeEvent";
-    writeSettings();
-    reset();
-    event->accept();
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
+    e->accept();
 }
 
-void YandexFotkiWindow::slotButtonClicked(int button)
+void YandexFotkiWindow::slotFinished()
 {
-    switch (button)
-    {
-        case KDialog::User1:
-            slotStartTransfer();
-            break;
-        case KDialog::Close:
-            if (!isButtonEnabled(KDialog::User1))
-            {
-                m_talker.cancel();
-                updateControls(true);
-            }
-            break;
-        default:
-            KDialog::slotButtonClicked(button);
-    }
+    writeSettings();
+    reset();
+}
+
+void YandexFotkiWindow::slotCancelClicked()
+{
+    m_talker.cancel();
+    updateControls(true);
 }
 
 void YandexFotkiWindow::slotResizeChecked()

@@ -34,7 +34,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "logindialog.h"
 #include "yftalker.h"
 
@@ -69,7 +69,7 @@ using namespace KIPIPlugins;
 namespace KIPIYandexFotkiPlugin
 {
 
-class YandexFotkiWindow : public KP4ToolDialog
+class YandexFotkiWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -108,8 +108,8 @@ protected Q_SLOTS:
     void slotReloadAlbumsRequest();
 
     void slotStartTransfer();
-
-    void slotButtonClicked(int button);
+    void slotCancelClicked();
+    void slotFinished();
 
 protected:
 
