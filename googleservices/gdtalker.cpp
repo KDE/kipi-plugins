@@ -39,17 +39,13 @@
 #include <QVariantMap>
 #include <QPair>
 #include <QFileInfo>
+#include <QDebug>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kcodecs.h>
-#include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <ktoolinvocation.h>
-#include <kstandarddirs.h>
 
 // LibKDcraw includes
 
@@ -66,6 +62,7 @@
 #include "gswindow.h"
 #include "gsitem.h"
 #include "mpform_gdrive.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -91,9 +88,11 @@ GDTalker::~GDTalker()
  */
 void GDTalker::getUserName()
 {
-    KUrl url("https://www.googleapis.com/drive/v2/about");
-    url.addQueryItem("scope", m_scope);
-    url.addQueryItem("access_token", m_access_token);
+    QUrl url("https://www.googleapis.com/drive/v2/about");
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("scope", m_scope);
+    urlQuery.addQueryItem("access_token", m_access_token);
+    url.setQuery(urlQuery);
     QString auth = QString("Authorization: ") + m_bearer_access_token.toAscii();
 
     KIO::TransferJob* job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
@@ -116,9 +115,9 @@ void GDTalker::getUserName()
  */
 void GDTalker::listFolders()
 {
-    KUrl url("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'");
+    QUrl url("https://www.googleapis.com/drive/v2/files?q=mimeType = 'application/vnd.google-apps.folder'");
     QString auth = QString("Authorization: ") + m_bearer_access_token.toAscii();
-    kDebug() << auth;
+    qCDebug(KIPIPLUGINS_LOG) << auth;
     KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
     job->addMetaData("content-type","Content-Type: application/json");
     job->addMetaData("customHTTPHeader",auth.toAscii());
@@ -145,7 +144,7 @@ void GDTalker::createFolder(const QString& title,const QString& id)
         m_job = 0;
     }
 
-    KUrl url("https://www.googleapis.com/drive/v2/files");
+    QUrl url("https://www.googleapis.com/drive/v2/files");
     QByteArray data;
     data += "{\"title\":\"";
     data += title.toAscii();
@@ -159,7 +158,7 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     data += "\"application/vnd.google-apps.folder\"";
     data += "}\r\n";
 
-    kDebug() << "data:" << data;
+    qCDebug(KIPIPLUGINS_LOG) << "data:" << data;
     QString auth = QString("Authorization: ") + m_bearer_access_token.toAscii();
     KIO::TransferJob* const job = KIO::http_post(url,data,KIO::HideProgressInfo);
     job->addMetaData("content-type","Content-Type: application/json");
@@ -186,7 +185,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     }
     emit signalBusy(true);
     MPForm_GDrive form;
-    form.addPair(KUrl(imgPath).fileName(),info.description,imgPath,id);
+    form.addPair(QUrl::fromLocalFile(imgPath).fileName(),info.description,imgPath,id);
     QString path = imgPath;
     QImage image;
 
@@ -204,7 +203,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
         return false;
     }
 
-    path = KStandardDirs::locateLocal("tmp",QFileInfo(imgPath).baseName().trimmed()+".jpg");
+    path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString("/") + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
 
     if(rescale && (image.width() > maxDim || image.height() > maxDim)){
         image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
@@ -230,7 +229,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     form.finish();
 
     QString auth = QString("Authorization: ") + m_bearer_access_token.toAscii();
-    KUrl url("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart");
+    QUrl url("https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart");
     KIO::TransferJob* job = KIO::http_post(url,form.formData(),KIO::HideProgressInfo);
     job->addMetaData("content-type",form.contentType());
     job->addMetaData("content-length","Content-Length:"+form.getFileSize());
@@ -243,7 +242,7 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     connect(job,SIGNAL(result(KJob*)),
             this,SLOT(slotResult(KJob*)));
 
-    kDebug() << "In add photo";
+    qCDebug(KIPIPLUGINS_LOG) << "In add photo";
     m_state = GD_ADDPHOTO;
     m_job   = job;
     m_buffer.resize(0);
@@ -270,19 +269,19 @@ void GDTalker::slotResult(KJob* kjob)
         case(GD_LOGOUT):
             break;
         case (GD_LISTFOLDERS):
-            kDebug() << "In GD_LISTFOLDERS";
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_LISTFOLDERS";
             parseResponseListFolders(m_buffer);
             break;
         case (GD_CREATEFOLDER):
-            kDebug() << "In GD_CREATEFOLDER";
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_CREATEFOLDER";
             parseResponseCreateFolder(m_buffer);
             break;
         case (GD_ADDPHOTO):
-            kDebug() << "In GD_ADDPHOTO";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_ADDPHOTO";// << m_buffer;
             parseResponseAddPhoto(m_buffer);
             break;
         case (GD_USERNAME):
-            kDebug() << "In GD_USERNAME";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_USERNAME";// << m_buffer;
             parseResponseUserName(m_buffer);
             break;
         default:
@@ -304,9 +303,9 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
         return;
     }
 
-    kDebug() << "in parseResponseUserName";
+    qCDebug(KIPIPLUGINS_LOG) << "in parseResponseUserName";
     QVariantMap rlist = result.toMap();
-    kDebug() << "size " << rlist.size();
+    qCDebug(KIPIPLUGINS_LOG) << "size " << rlist.size();
     QList<QString> keys = rlist.uniqueKeys();
 
     QString temp;
@@ -315,13 +314,13 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
     {
         if(keys[i] == "name")
         {
-            kDebug() << "username:" << rlist[keys[i]].value<QString>();
+            qCDebug(KIPIPLUGINS_LOG) << "username:" << rlist[keys[i]].value<QString>();
             temp = rlist[keys[i]].value<QString>();
             //break;
         }
         if(keys[i] == "user")
         {
-            kDebug() << "USername:" << rlist[keys[i]];
+            qCDebug(KIPIPLUGINS_LOG) << "USername:" << rlist[keys[i]];
             //temp = rlist[keys[i]].value<QString>();
             break;
         }
@@ -396,7 +395,7 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
     QVariantMap rMap    = result.toMap();
     QList<QString> keys = rMap.uniqueKeys();
 
-    kDebug() << "in parse folder" << rMap.size();
+    qCDebug(KIPIPLUGINS_LOG) << "in parse folder" << rMap.size();
 
     for(int i=0;i<rMap.size();i++)
     {
@@ -429,7 +428,7 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
     QVariantMap rMap = result.toMap();
     QList<QString> keys = rMap.uniqueKeys();
     QString photoId("");
-    kDebug() << "in parse folder" << rMap.size();
+    qCDebug(KIPIPLUGINS_LOG) << "in parse folder" << rMap.size();
 
     for(int i=0;i<rMap.size();i++)
     {

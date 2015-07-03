@@ -46,11 +46,11 @@
 #include <QUrl>
 #include <QPointer>
 #include <QtAlgorithms>
+#include <QDebug>
 // KDE includes
 
 #include <kapplication.h>
 #include <kcodecs.h>
-#include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
@@ -70,6 +70,7 @@
 #include "kpversion.h"
 #include "kpmetadata.h"
 #include "mpform_picasa.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -603,7 +604,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 
     if ( !doc.setContent( data, false, &err, &line, &columns ) )
     {
-        kDebug()<<"error is "<<err<< " at line "<<line<<" at columns "<<columns;
+        qCCritical(KIPIPLUGINS_LOG)<<"error is "<<err<< " at line "<<line<<" at columns "<<columns;
         emit signalListAlbumsDone(0, i18n("Failed to fetch photo-set list"), QList<GSFolder>());
         return;
     }

@@ -34,6 +34,7 @@
 #include <QSpinBox>
 #include <QFileInfo>
 #include <QPointer>
+#include <QDebug>
 
 // KDE includes
 
@@ -46,7 +47,6 @@
 #include <kiconloader.h>
 #include <ktabwidget.h>
 #include <krun.h>
-#include <kdebug.h>
 #include <kdialog.h>
 #include <kconfig.h>
 #include <kdeversion.h>
@@ -74,6 +74,7 @@
 #include "gswidget.h"
 #include "picasawebtalker.h"
 #include "replacedialog.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -93,7 +94,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     else
         m_picasaImport = true;
     
-    kDebug()<<"GDrive is "<<m_gdrive<<" Picasa Export is "<<m_picasaExport<<" Picasa Import is "<<m_picasaImport;
+    qCDebug(KIPIPLUGINS_LOG)<<"GDrive is "<<m_gdrive<<" Picasa Export is "<<m_picasaExport<<" Picasa Import is "<<m_picasaImport;
     
     m_tmp         = tmpFolder;
     m_imagesCount = 0;
@@ -431,7 +432,7 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
 
 void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList)
 {
-    kDebug()<< "err Code is "<< errCode <<" Err Message is "<< errMsg;
+    qCCritical(KIPIPLUGINS_LOG)<< "err Code is "<< errCode <<" Err Message is "<< errMsg;
     disconnect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
 
@@ -521,7 +522,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
         }
     
         m_widget->m_albumsCoB->clear();
-        kDebug() << "slotListAlbumsDone1:" << list.size();
+        qCDebug(KIPIPLUGINS_LOG) << "slotListAlbumsDone1:" << list.size();
 
         for(int i=0;i<list.size();i++)
         {
@@ -587,7 +588,7 @@ void GSWindow::slotBusy(bool val)
 
 void GSWindow::picasaTransferHandler()
 {
-    kDebug() << "Picasa Transfer invoked";
+    qCDebug(KIPIPLUGINS_LOG) << "Picasa Transfer invoked";
 
     if(m_picasaImport)
     {
@@ -612,7 +613,7 @@ void GSWindow::picasaTransferHandler()
 
 void GSWindow::slotTextBoxEmpty()
 {
-    kDebug() << "in slotTextBoxEmpty";
+    qCDebug(KIPIPLUGINS_LOG) << "in slotTextBoxEmpty";
     KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
                                   "To complete the authentication click \"Change Account\", "
                                   "or \"Start Upload\" to authenticate again."));
@@ -678,7 +679,7 @@ void GSWindow::slotStartTransfer()
     {
         KPImageInfo info(m_widget->m_imgList->imageUrls().value(i));
         GSPhoto temp;
-        kDebug() << "in start transfer info " <<info.title() << info.description();
+        qCDebug(KIPIPLUGINS_LOG) << "in start transfer info " <<info.title() << info.description();
         
         if(m_gdrive)
             temp.title      = info.title();
@@ -709,7 +710,7 @@ void GSWindow::slotStartTransfer()
 
 void GSWindow::uploadNextPhoto()
 {
-    kDebug() << "in upload nextphoto " << m_transferQueue.count();
+    qCDebug(KIPIPLUGINS_LOG) << "in upload nextphoto " << m_transferQueue.count();
 
     if(m_transferQueue.isEmpty())
     {
@@ -928,7 +929,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                 bRet = meta.save(tmpUrl.toLocalFile());
             }
 
-            kDebug() << "bRet : " << bRet;
+            qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
 
             m_transferQueue.pop_front();
             m_imagesCount++;
@@ -1106,12 +1107,12 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
             bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
             bRet = meta.save(fileName);
         }
-        kDebug() << "bRet : " << bRet;
+        qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
         // Remove photo uploaded from the list
         m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
         m_transferQueue.pop_front();
         m_imagesCount++;
-        kDebug() << "In slotAddPhotoSucceeded" << m_imagesCount;
+        qCDebug(KIPIPLUGINS_LOG) << "In slotAddPhotoSucceeded" << m_imagesCount;
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(m_imagesCount);
         uploadNextPhoto();

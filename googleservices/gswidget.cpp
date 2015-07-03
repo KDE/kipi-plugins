@@ -33,13 +33,13 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QPushButton>
+#include <QApplication>
+#include <QComboBox>
 
 // KDE includes
 
 #include <klocale.h>
-#include <kdialog.h>
-#include <kcombobox.h>
-#include <kpushbutton.h>
 
 // LibKIPI includes
 
@@ -115,18 +115,26 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     m_userNameDisplayLbl      = new QLabel(accountBox);
 
     if(m_gdrive)
-        m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
-                                                             i18n("Change Google Drive account for transfer")), accountBox);
+    {
+        m_changeUserBtn           = new QPushButton(accountBox);
+        m_changeUserBtn->setText(i18n("Change Account"));
+        m_changeUserBtn->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
+        m_changeUserBtn->setToolTip(i18n("Change Google Drive account for transfer"));
+    }
     else
-        m_changeUserBtn           = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
-                                                             i18n("Change Google Photos/PicasaWeb account for transfer")), accountBox);
+    {
+        m_changeUserBtn           = new QPushButton(accountBox);
+        m_changeUserBtn->setText(i18n("Change Account"));
+        m_changeUserBtn->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
+        m_changeUserBtn->setToolTip(i18n("Change Google Photos/PicasaWeb account for transfer"));
+    }
       
 
     accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
     accountBoxLayout->addWidget(m_changeUserBtn,      1,0,1,4);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //-------------------------------------------------------------
 
@@ -148,22 +156,28 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Album:"),albBox);
-    m_albumsCoB          = new KComboBox(albBox);
+    m_albumsCoB          = new QComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
     if(m_gdrive)
     {
-        m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
-                                                 i18n("Create new Google Drive folder")),accountBox);
+        m_newAlbumBtn = new QPushButton(accountBox);
+        m_newAlbumBtn->setText(i18n("New Album"));
+        m_newAlbumBtn->setIcon(QIcon::fromTheme("list-add").pixmap(16));
+        m_newAlbumBtn->setToolTip(i18n("Create new Google Drive folder"));
     }
     else
     {
-        m_newAlbumBtn = new KPushButton(KGuiItem(i18n("New Album"),"list-add",
-                                                 i18n("Create new Google Photos/PicasaWeb folder")),accountBox);
+        m_newAlbumBtn = new QPushButton(accountBox);
+        m_newAlbumBtn->setText(i18n("New Album"));
+        m_newAlbumBtn->setIcon(QIcon::fromTheme("list-add").pixmap(16));
+        m_newAlbumBtn->setToolTip(i18n("Create new Google Photos/PicasaWeb folder"));
     }
     
-    m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("album list","Reload"),"view-refresh",
-                                                 i18n("Reload album list")),accountBox);
+    m_reloadAlbumsBtn = new QPushButton(accountBox);
+    m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
+    m_reloadAlbumsBtn->setIcon(QIcon::fromTheme("view-refresh").pixmap(16));
+    m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
 
     albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
     albumsBoxLayout->addWidget(m_albumsCoB,       0, 1, 1, 4);
@@ -175,7 +189,7 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     QGroupBox* const sizeBox         = new QGroupBox(i18n("Max Dimension"), settingsBox);
     sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
     QVBoxLayout* const sizeBoxLayout = new QVBoxLayout(sizeBox);
-    m_dlDimensionCoB                 = new KComboBox(sizeBox);
+    m_dlDimensionCoB                 = new QComboBox(sizeBox);
     m_dlDimensionCoB->addItem(i18n("Original Size"), "d");
     m_dlDimensionCoB->addItem(i18n("1600 px"), "1600");
     m_dlDimensionCoB->addItem(i18n("1440 px"), "1440");
@@ -254,8 +268,8 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     }
     
     optionsBoxLayout->setRowStretch(3,10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -270,14 +284,14 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //--------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
     updateLabels();

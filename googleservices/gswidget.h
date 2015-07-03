@@ -31,9 +31,8 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
-
-class KComboBox;
-class KPushButton;
+class QComboBox;
+class QPushButton;
 
 namespace KIPI
 {
@@ -93,12 +92,12 @@ private:
 
     QLabel*                        m_headerLbl;
     QLabel*                        m_userNameDisplayLbl;
-    KPushButton*                   m_changeUserBtn;
-    KComboBox*                     m_dlDimensionCoB;
+    QPushButton*                   m_changeUserBtn;
+    QComboBox*                     m_dlDimensionCoB;
 
-    KComboBox*                     m_albumsCoB;
-    KPushButton*                   m_newAlbumBtn;
-    KPushButton*                   m_reloadAlbumsBtn;
+    QComboBox*                     m_albumsCoB;
+    QPushButton*                   m_newAlbumBtn;
+    QPushButton*                   m_reloadAlbumsBtn;
 
     QButtonGroup*                  m_tagsBGrp;
     QCheckBox*                     m_resizeChB;

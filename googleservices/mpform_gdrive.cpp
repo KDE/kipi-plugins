@@ -33,15 +33,19 @@
 #include <QFile>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QDebug>
 
 // KDE includes
 
-#include <kdebug.h>
 #include <krandom.h>
 
 // LibQJson
 
 #include <qjson/serializer.h>
+
+// local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -63,13 +67,13 @@ void MPForm_GDrive::reset()
 
 void MPForm_GDrive::finish()
 {
-    kDebug() << "in finish";
+    qCDebug(KIPIPLUGINS_LOG) << "in finish";
     QString str;
     str += "--";
     str += m_boundary;
     str += "--";
     m_buffer.append(str.toAscii());
-    kDebug() << "finish:" << m_buffer;
+    qCDebug(KIPIPLUGINS_LOG) << "finish:" << m_buffer;
 }
 
 void MPForm_GDrive::addPair(const QString& name, const QString& description, const QString& path,const QString& id)
@@ -77,7 +81,7 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
     QString mime  = ptr.name();
-    kDebug() << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
+    qCDebug(KIPIPLUGINS_LOG) << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
 
     // Generate JSON
     QVariantMap photoInfo;
@@ -99,7 +103,7 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
 
     if (!ok)
     {
-        kError() << "Failed to serialize to JSON:" << photoInfo;
+        qCCritical(KIPIPLUGINS_LOG) << "Failed to serialize to JSON:" << photoInfo;
         return;
     }
 
@@ -117,7 +121,7 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
 bool MPForm_GDrive::addFile(const QString &path)
 {
     QString str;
-    kDebug() << "in addfile" << path;
+    qCDebug(KIPIPLUGINS_LOG) << "in addfile" << path;
 
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));

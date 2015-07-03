@@ -39,20 +39,18 @@
 #include <QVariantMap>
 #include <QPair>
 #include <QFileInfo>
+#include <QDebug>
+#include <QApplication>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QDesktopServices>
+#include <QUrlQuery>
 
 // KDE includes
 
-#include <kcodecs.h>
-#include <kdebug.h>
+#include <klocale.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <ktoolinvocation.h>
-#include <kstandarddirs.h>
-#include <kdialog.h>
-#include <kurl.h>
-#include <KLocalizedString>
 
 // LibKDcraw includes
 
@@ -61,10 +59,12 @@
 // LibQJson
 
 #include <qjson/parser.h>
+#include <KConfigGroup>
 
 // local includes
 
 #include "mpform_gdrive.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -104,43 +104,56 @@ bool Authorize::authenticated()
  */
 void Authorize::doOAuth()
 {
-    KUrl url("https://accounts.google.com/o/oauth2/auth");
-    url.addQueryItem("scope",m_scope);
-    url.addQueryItem("redirect_uri",m_redirect_uri);
-    url.addQueryItem("response_type",m_response_type);
-    url.addQueryItem("client_id",m_client_id);
-    url.addQueryItem("access_type","offline");
-    kDebug() << "OAuth URL: " << url;
-    KToolInvocation::invokeBrowser(url.url());
+    QUrl url("https://accounts.google.com/o/oauth2/auth");
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("scope",m_scope);
+    urlQuery.addQueryItem("redirect_uri",m_redirect_uri);
+    urlQuery.addQueryItem("response_type",m_response_type);
+    urlQuery.addQueryItem("client_id",m_client_id);
+    urlQuery.addQueryItem("access_type","offline");
+    url.setQuery(urlQuery);
+    qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
+    QDesktopServices::openUrl(url);
 
     emit signalBusy(false);
 
-    KDialog* const window         = new KDialog(kapp->activeWindow(),0);
+    window = new QDialog(QApplication::activeWindow(),0);
     window->setModal(true);
     window->setWindowTitle(i18n("Google Drive Authorization"));
-    window->setButtons(KDialog::Ok | KDialog::Cancel);
-    QWidget* const main           = new QWidget(window,0);
+    
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    
+    window->connect(buttonBox, SIGNAL(accepted()), 
+                    this, SLOT(slotAccept()));
+    
+    window->connect(buttonBox, SIGNAL(rejected()), 
+                    this, SLOT(slotReject()));
+    
     QLineEdit* const textbox      = new QLineEdit();
     QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser. "
                                                             "After logging in and authorizing the application, "
                                                             "copy the code from the browser, paste it in the "
                                                             "textbox below, and click OK."));
+    QVBoxLayout *layout = new QVBoxLayout;
+    window->setLayout(layout);
     infobox->setReadOnly(true);
-    QVBoxLayout* const layout = new QVBoxLayout;
     layout->addWidget(infobox);
     layout->addWidget(textbox);
-    main->setLayout(layout);
-    window->setMainWidget(main);
-
-    if(window->exec() == QDialog::Accepted && !(textbox->text().isEmpty()))
+    layout->addWidget(buttonBox);
+    
+    window->exec();
+    
+    if(window->result() == QDialog::Accepted && !(textbox->text().isEmpty()))
     {
-        kDebug() << "1";
+        qCDebug(KIPIPLUGINS_LOG) << "1";
         m_code = textbox->text();
     }
 
     if(textbox->text().isEmpty())
     {
-        kDebug() << "3";
+        qCDebug(KIPIPLUGINS_LOG) << "3";
         emit signalTextBoxEmpty();
     }
 
@@ -148,16 +161,31 @@ void Authorize::doOAuth()
     {
         getAccessToken();
     }
+
+}
+
+void Authorize::slotAccept()
+{
+    window->close();
+    window->setResult(QDialog::Accepted); 
+}
+
+void Authorize::slotReject()
+{
+    window->close();   
+    window->setResult(QDialog::Rejected);
 }
 
 /** Gets access token from googledrive after authentication by user
  */
 void Authorize::getAccessToken()
 {
-    KUrl url("https://accounts.google.com/o/oauth2/token?");
-    url.addQueryItem("scope",m_scope.toAscii());
-    url.addQueryItem("response_type",m_response_type.toAscii());
-    url.addQueryItem("token_uri",m_token_uri.toAscii());
+    QUrl url("https://accounts.google.com/o/oauth2/token?");
+    QUrlQuery urlQuery;
+    urlQuery.addQueryItem("scope",m_scope.toAscii());
+    urlQuery.addQueryItem("response_type",m_response_type.toAscii());
+    urlQuery.addQueryItem("token_uri",m_token_uri.toAscii());
+    url.setQuery(urlQuery);
     QByteArray postData;
     postData = "code=";
     postData += m_code.toAscii();
@@ -188,7 +216,7 @@ void Authorize::getAccessToken()
  */
 void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
 {
-    KUrl url("https://accounts.google.com/o/oauth2/token");
+    QUrl url("https://accounts.google.com/o/oauth2/token");
 
     QByteArray postData;
     postData = "&client_id=";
@@ -252,11 +280,11 @@ void Authorize::slotAuthResult(KJob* kjob)
     switch(m_Authstate)
     {
         case (GD_ACCESSTOKEN):
-            kDebug() << "In GD_ACCESSTOKEN";// << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_ACCESSTOKEN";// << m_buffer;
             parseResponseAccessToken(m_buffer);
             break;
         case (GD_REFRESHTOKEN):
-            kDebug() << "In GD_REFRESHTOKEN" << m_buffer;
+            qCDebug(KIPIPLUGINS_LOG) << "In GD_REFRESHTOKEN" << m_buffer;
             parseResponseRefreshToken(m_buffer);
             break;
         default:
@@ -276,7 +304,7 @@ void Authorize::parseResponseAccessToken(const QByteArray& data)
     }
 
     m_bearer_access_token = "Bearer " + m_access_token;
-    kDebug() << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
+    qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
     //emit signalAccessTokenObtained();
     emit signalRefreshTokenObtained(m_refresh_token);
 }
@@ -292,7 +320,7 @@ void Authorize::parseResponseRefreshToken(const QByteArray& data)
     }
 
     m_bearer_access_token = "Bearer " + m_access_token;
-    kDebug() << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
+    qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
     emit signalAccessTokenObtained();
 }
 

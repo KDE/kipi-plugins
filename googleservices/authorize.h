@@ -29,6 +29,7 @@
 #include <QString>
 #include <QObject>
 #include <QStringList>
+#include <QDialog>
 
 //KDE includes
 
@@ -61,6 +62,8 @@ protected Q_SLOTS:
 private Q_SLOTS:
   
     void slotAuthResult(KJob* job);
+    void slotAccept();
+    void slotReject();
 
 public:
 
@@ -86,6 +89,10 @@ private:
         GD_ACCESSTOKEN=0,
         GD_REFRESHTOKEN
     };
+    
+private:
+
+    QDialog*     window;    
 
 protected:
 
