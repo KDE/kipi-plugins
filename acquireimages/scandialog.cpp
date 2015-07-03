@@ -31,11 +31,12 @@
 #include <QUrl>
 #include <QMenu>
 #include <QApplication>
+#include <QFileDialog>
+#include <QImageWriter>
 
 // KDE includes
 
 #include <kconfig.h>
-#include <kfiledialog.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kimageio.h>
@@ -169,7 +170,12 @@ void ScanDialog::slotDialogFinished()
 
 void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, int bytes_per_line, int ksaneformat)
 {
-    QStringList writableMimetypes = KImageIO::mimeTypes(KImageIO::Writing);
+    QStringList writableMimetypes;
+    QList<QByteArray> supported = QImageWriter::supportedMimeTypes();
+    foreach (QByteArray mimeType, supported) {
+        writableMimetypes.append(QString::fromLatin1(mimeType));
+    }
+
     // Put first class citizens at first place
     writableMimetypes.removeAll("image/jpeg");
     writableMimetypes.removeAll("image/tiff");
@@ -182,55 +188,54 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
 
     QString defaultMimeType("image/png");
     QString defaultFileName("image.png");
-    QString format("PNG");
     QString place = QDir::homePath();
 
     if (iface())
         place = iface()->currentAlbum().uploadUrl().toLocalFile();
 
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(QUrl::fromLocalFile(place), QString(), 0);
-
-    imageFileSaveDialog->setModal(false);
-    imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
-    imageFileSaveDialog->setMode(KFile::File);
-    imageFileSaveDialog->setSelection(defaultFileName);
-    imageFileSaveDialog->setWindowTitle(i18n("New Image File Name"));
-    imageFileSaveDialog->setMimeFilter(writableMimetypes, defaultMimeType);
+    QPointer<QFileDialog> imageFileSaveDialog = new QFileDialog(this, i18n("New Image File Name"), place);
+    imageFileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+    imageFileSaveDialog->setMimeTypeFilters(writableMimetypes);
+    imageFileSaveDialog->selectMimeTypeFilter(defaultMimeType);
+    imageFileSaveDialog->selectFile(defaultFileName);
 
     // Start dialog and check if canceled.
-    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted )
+    if (imageFileSaveDialog->exec() != QDialog::Accepted)
     {
         delete imageFileSaveDialog;
         return;
     }
 
-    QUrl newURL = imageFileSaveDialog->selectedUrl();
+    QUrl newURL = imageFileSaveDialog->selectedUrls().at(0);
     QFileInfo fi(newURL.toLocalFile());
 
-    // Check if target image format have been selected from Combo List of dialog.
-
-    const QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog->currentMimeFilter());
-    if (!mimes.isEmpty())
+    // Parse name filter and extract file extension
+    QString selectedFilterString = imageFileSaveDialog->selectedNameFilter();
+    QLatin1String triggerString("*.");
+    int triggerPos = selectedFilterString.lastIndexOf(triggerString);
+    QByteArray format;
+    if (triggerPos != -1)
     {
-        format = mimes.first().toUpper();
+        QString formatStr = selectedFilterString.mid(triggerPos + triggerString.size());
+        formatStr = formatStr.left(formatStr.size() - 1);
+        format = formatStr.toUpper().toLatin1();
     }
-    else
+
+    // If name filter was selected, we guess image type using file extension.
+    if (format.isEmpty())
     {
-        // Else, check if target image format have been add to target image file name using extension.
+        format = fi.suffix().toUpper().toLatin1();
 
-        format = fi.suffix().toUpper();
-
-        // Check if format from file name extension is include on file mime type list.
-
-        QStringList imgExtList = KImageIO::types(KImageIO::Writing);
+        QList<QByteArray> imgExtList = QImageWriter::supportedImageFormats();
         imgExtList << "TIF";
         imgExtList << "TIFF";
         imgExtList << "JPG";
         imgExtList << "JPE";
 
-        if ( !imgExtList.contains( format ) )
+        if (!imgExtList.contains(format))
         {
-            KMessageBox::error(0, i18n("The target image file format \"%1\" is unsupported.", format));
+            KMessageBox::error(0, i18n("The target image file format \"%1\" is unsupported.",
+                                       QLatin1String(format)));
             qCWarning(KIPIPLUGINS_LOG) << "target image file format " << format << " is unsupported!";
 	    delete imageFileSaveDialog;
             return;
