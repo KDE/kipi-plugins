@@ -27,7 +27,7 @@
 #include <QDialog>
 
 class QLabel;
-class KLineEdit;
+class QLineEdit;
 
 namespace KIPIYandexFotkiPlugin
 {
@@ -56,8 +56,8 @@ protected Q_SLOTS:
 protected:
 
     QLabel*    m_headerLabel;
-    KLineEdit* m_loginEdit;
-    KLineEdit* m_passwordEdit;
+    QLineEdit* m_loginEdit;
+    QLineEdit* m_passwordEdit;
 };
 
 } // namespace KIPIYandexFotkiPlugin

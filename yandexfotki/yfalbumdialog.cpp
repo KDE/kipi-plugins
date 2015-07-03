@@ -30,12 +30,12 @@
 #include <QGroupBox>
 #include <QApplication>
 #include <QStyle>
+#include <QLineEdit>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
-#include <klineedit.h>
 #include <ktextedit.h>
 #include <kmessagebox.h>
 
@@ -61,13 +61,13 @@ YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotk
     QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(i18n("These are basic settings for the new Yandex album."));
 
-    m_titleEdit    = new KLineEdit(album.title());
+    m_titleEdit    = new QLineEdit(album.title());
     m_titleEdit->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
     m_summaryEdit  = new KTextEdit(album.summary());
     m_summaryEdit->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
-    m_passwordEdit = new KLineEdit();
+    m_passwordEdit = new QLineEdit();
     m_passwordEdit->setWhatsThis(i18n("Password for the album (optional)."));
 
     QFormLayout* const albumBoxLayout  = new QFormLayout;

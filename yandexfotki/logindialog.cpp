@@ -31,13 +31,13 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPushButton>
+#include <QLineEdit>
 
 // KDE includes
 
 #include <kurllabel.h>
 #include <ktoolinvocation.h>
 #include <kmessagebox.h>
-#include <klineedit.h>
 #include <klocalizedstring.h>
 
 // Local includes
@@ -74,9 +74,9 @@ LoginDialog::LoginDialog(QWidget* const parent, const QString& login, const QStr
 
     QGridLayout* const centerLayout = new QGridLayout();
 
-    m_loginEdit    = new KLineEdit(this);
-    m_passwordEdit = new KLineEdit(this);
-    m_passwordEdit->setEchoMode(KLineEdit::Password);
+    m_loginEdit    = new QLineEdit(this);
+    m_passwordEdit = new QLineEdit(this);
+    m_passwordEdit->setEchoMode(QLineEdit::Password);
 
     QLabel* const loginLabel    = new QLabel(this);
     loginLabel->setText(i18n( "Login:" ));

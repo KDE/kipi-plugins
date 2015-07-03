@@ -56,9 +56,9 @@ protected Q_SLOTS:
 
 protected:
 
-    KLineEdit*        m_titleEdit;
+    QLineEdit*        m_titleEdit;
     KTextEdit*        m_summaryEdit;
-    KLineEdit*        m_passwordEdit;
+    QLineEdit*        m_passwordEdit;
 
     YandexFotkiAlbum& m_album;
 };
