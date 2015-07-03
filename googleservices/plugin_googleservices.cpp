@@ -56,10 +56,10 @@ namespace KIPIGoogleServicesPlugin
 
 K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleServices>(); )
 
-Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent,const QVariantList& /*args*/)
-    : Plugin(parent, "Google Services Export")
+Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(parent, "Google Services")
 {
-    qCDebug(KIPIPLUGINS_LOG)<<"Plugin_GoogleDrive/PicasaWeb(Google Photos) Plugin Loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_GoogleDrive/PicasaWeb(Google Photos) Plugin Loaded";
 
     setUiBaseName("kipiplugin_googleservicesui.rc");
     setupXML();
@@ -79,7 +79,7 @@ void Plugin_GoogleServices::setup(QWidget* const widget)
 
     if(!interface())
     {
-       qCCritical(KIPIPLUGINS_LOG) << "kipi interface is null";
+        qCCritical(KIPIPLUGINS_LOG) << "kipi interface is null";
         return;
     }
 
@@ -94,11 +94,11 @@ void Plugin_GoogleServices::setupActions()
     m_actionGDriveExport->setIcon(QIcon::fromTheme("kipi-googledrive"));
     m_actionGDriveExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_G));
 
-    connect(m_actionGDriveExport,SIGNAL(triggered(bool)),
+    connect(m_actionGDriveExport, SIGNAL(triggered(bool)),
             this,SLOT(slotGDriveExport()));
 
-    addAction("googledriveexport",m_actionGDriveExport);
-    
+    addAction("googledriveexport", m_actionGDriveExport);
+
     m_actionPicasaExport = new QAction(this);
     m_actionPicasaExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
     m_actionPicasaExport->setIcon(QIcon::fromTheme("kipi-picasa"));
