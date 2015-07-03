@@ -388,7 +388,7 @@ if(KF5Kipi_FOUND)
         endif()
 
         if(Qca-qt5_FOUND)
-            add_subdirectory(yandexfotki)
+#            add_subdirectory(yandexfotki)
         endif()
 
 # Plugins in pending state
