@@ -84,9 +84,9 @@
 
 // Libkgeomap includes
 
-#include <libkgeomap/kgeomap_widget.h>
-#include <libkgeomap/itemmarkertiler.h>
-#include <libkgeomap/tracks.h>
+#include <KGeoMap/KGeoMap_Widget>
+#include <KGeoMap/ItemMarkerTiler>
+#include <KGeoMap/Tracks>
 
 // Local includes
 

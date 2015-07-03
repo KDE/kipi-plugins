@@ -42,9 +42,9 @@
 
 // Libkgeomap includes
 
-#include <libkgeomap/kgeomap_primitives.h>
-#include <libkgeomap/modelhelper.h>
-#include <libkgeomap/tracks.h>
+#include <KGeoMap/KGeomap_Primitives>
+#include <KGeoMap/ModelHelper>
+#include <KGeoMap/Tracks>
 
 // Libkipi includes
 

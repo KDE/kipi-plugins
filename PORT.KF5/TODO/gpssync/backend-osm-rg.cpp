@@ -32,15 +32,15 @@
 #include <QMap>
 #include <QPointer>
 #include <QTimer>
+#include <QUrl>
 
 //KDE includes
 
-#include <QUrl>
 #include "kipiplugins_debug.h"
-#include <kio/job.h>
 
 //local includes
 
+#include <kio/job.h>
 #include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin

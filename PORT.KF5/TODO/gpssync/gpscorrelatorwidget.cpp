@@ -39,19 +39,20 @@
 #include <QRadioButton>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QUrl>
+#include <QApplication>
+#include <QComboBox>
+#include <QMenu>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <QApplication>
-#include <QComboBox>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kpushbutton.h>
@@ -59,11 +60,10 @@
 #include <ksqueezedtextlabel.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <QUrl>
-#include <QStandardPaths>
 
 // local includes
 
+#include "kipiplugins_debug.h"
 #include "kipiimagemodel.h"
 #include "kipiimageitem.h"
 #include "gpsundocommand.h"

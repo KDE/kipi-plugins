@@ -27,16 +27,15 @@
 // Qt includes
 
 #include <QDateTime>
+#include <QUrl>
 
 // KDE includes
 
 #include <qtest_kde.h>
-#include <kdebug.h>
-#include <QUrl>
 
 // libkgeomap includes
 
-#include <libkgeomap/track_reader.h>
+#include <KGeoMap/Track_Reader>
 
 // local includes
 

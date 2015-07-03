@@ -29,7 +29,7 @@
 
 // libkgeomap includes
 
-#include <libkgeomap/tracks.h>
+#include <KGeoMap/Tracks>
 
 namespace KIPIGPSSyncPlugin
 {

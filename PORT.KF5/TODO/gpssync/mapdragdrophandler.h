@@ -32,7 +32,7 @@
 
 // Libkgeomap includes
 
-#include <libkgeomap/dragdrophandler.h>
+#include <KGeoMap/DragDropHandler>
 
 namespace KIPIGPSSyncPlugin
 {

@@ -31,7 +31,7 @@
 
 // libkgeomap includes
 
-#include <libkgeomap/lookup_altitude.h>
+#include <KGeoMap/Lookup_Altitude>
 
 // local includes:
 

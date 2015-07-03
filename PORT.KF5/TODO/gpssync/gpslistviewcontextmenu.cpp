@@ -32,17 +32,17 @@
 #include <QApplication>
 #include <QDomDocument>
 #include <QPointer>
+#include <QAction>
+#include <QMenu>
 
 // KDE includes
 
-#include <QAction>
-#include <QMenu>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 
 // libkgeomap includes
 
-#include <libkgeomap/lookup_factory.h>
+#include <KGeoMap/Lookup_Factory>
 
 // Libkipi includes
 

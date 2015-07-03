@@ -30,7 +30,7 @@
 
 // libkgeomap includes
 
-#include <libkgeomap/tracks.h>
+#include <KGeoMap/Tracks>
 
 // Boost includes
 
