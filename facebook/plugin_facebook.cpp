@@ -54,7 +54,6 @@ extern "C"
 // Local includes
 
 #include "fbwindow.h"
-#include "facebookjob.h"
 
 namespace KIPIFacebookPlugin
 {
