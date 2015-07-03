@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "yftalker.moc"
+#include "yftalker.h"
 
 // Qt includes
 
@@ -35,15 +35,15 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
-#include "yandexauth.h" // authentication
+#include "yandexauth.h"
 #include "yfalbum.h"
 
 class YandexFotkiLogin;
@@ -77,7 +77,7 @@ YandexFotkiTalker::~YandexFotkiTalker()
 void YandexFotkiTalker::getService()
 {
     m_state                     = STATE_GETSERVICE;
-    KIO::TransferJob* const job = KIO::get(SERVICE_URL.arg(m_login),
+    KIO::TransferJob* const job = KIO::get(QUrl(SERVICE_URL.arg(m_login)),
                                   KIO::NoReload, KIO::HideProgressInfo);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -120,7 +120,7 @@ void YandexFotkiTalker::getSession()
     if (m_state != STATE_GETSERVICE_DONE)
         return;
 
-    KIO::TransferJob* const job = KIO::get(SESSION_URL,
+    KIO::TransferJob* const job = KIO::get(QUrl(SESSION_URL),
                                   KIO::NoReload, KIO::HideProgressInfo);
 
     //job->ui()->setWindow(m_parent);

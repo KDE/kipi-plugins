@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "logindialog.moc"
+#include "logindialog.h"
 
 // Qt includes
 
@@ -33,12 +33,16 @@
 #include <QPushButton>
 
 // KDE includes
+
 #include <kurllabel.h>
-#include <ktoolinvocation.h> // for URLs
+#include <ktoolinvocation.h>
 #include <kmessagebox.h>
-#include "kipiplugins_debug.h"
 #include <klineedit.h>
 #include <klocalizedstring.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIYandexFotkiPlugin
 {

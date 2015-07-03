@@ -30,7 +30,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "yfwindow.moc"
+#include "yfwindow.h"
 
 // C ANSI includes
 

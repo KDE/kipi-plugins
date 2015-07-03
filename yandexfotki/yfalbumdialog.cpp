@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "yfalbumdialog.moc"
+#include "yfalbumdialog.h"
 
 // Qt includes
 

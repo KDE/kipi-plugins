@@ -110,8 +110,8 @@ bool Plugin_Geolocator::checkSidecarSettings()
 {
     KPHostSettings hset;
     
-    if (   (hset.metadataSettings().metadataWritingMode!=KExiv2Iface::KExiv2::WRITETOIMAGEONLY)
-        && (!hset.metadataSettings().useXMPSidecar4Reading) )
+    if ( (hset.metadataSettings().metadataWritingMode != KExiv2Iface::KExiv2::WRITETOIMAGEONLY) &&
+         (!hset.metadataSettings().useXMPSidecar4Reading) )
     {
         const int result = KMessageBox::warningContinueCancel(
                 QApplication::activeWindow(),
