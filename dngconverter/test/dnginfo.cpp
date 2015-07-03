@@ -27,6 +27,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
+#include <QDataStream>
 
 // DNG SDK includes
 
