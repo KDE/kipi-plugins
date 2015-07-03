@@ -57,7 +57,6 @@ extern "C"
 
 #include "kipiplugins_debug.h"
 #include "fbwindow.h"
-#include "facebookjob.h"
 
 namespace KIPIFacebookPlugin
 {
