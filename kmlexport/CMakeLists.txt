@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -18,7 +18,7 @@ add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})
 target_link_libraries(kipiplugin_kmlexport
                       KF5::Parts
                       KF5::KDELibs4Support
-                      
+
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
                       ${KF5KDcraw_LIBRARIES}

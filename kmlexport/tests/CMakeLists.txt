@@ -1,11 +1,11 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 add_executable(test_kmlexport_gpxparsing
-                    test_kmlexport_gpxparsing.cpp
+               test_kmlexport_gpxparsing.cpp
 )
 
 target_link_libraries(test_kmlexport_gpxparsing
