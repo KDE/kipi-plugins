@@ -69,7 +69,7 @@ private:
     QAction*  m_actionGDriveExport;
     QAction*  m_actionPicasaExport;
     QAction*  m_actionPicasaImport;
-    
+
     GSWindow* m_dlgGDriveExport;
     GSWindow* m_dlgPicasaExport;
     GSWindow* m_dlgPicasaImport;

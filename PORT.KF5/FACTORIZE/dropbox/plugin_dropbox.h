@@ -55,7 +55,6 @@ public:
     ~Plugin_Dropbox();
 
     void setup(QWidget* const);
-    //virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
 
