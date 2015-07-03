@@ -61,18 +61,9 @@ extern "C"
 // KDE includes
 
 #include <kconfig.h>
-#include <kde_file.h>
-#include <kdeversion.h>
-#include <kdialog.h>
-#include <khelpmenu.h>
-#include <kio/renamedialog.h>
-#include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kpassworddialog.h>
-#include <kprogressdialog.h>
 #include <kstandarddirs.h>
-#include <ktoolinvocation.h>
 
 // LibKDcraw includes
 

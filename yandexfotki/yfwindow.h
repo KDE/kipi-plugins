@@ -45,12 +45,7 @@ class QGroupBox;
 class QButtonGroup;
 class QCloseEvent;
 class QProgressBar;
-
-class QUrl;
-class KProgressDialog;
-class KPasswordDialog;
 class QComboBox;
-class KLineEdit;
 
 namespace KIPI
 {
