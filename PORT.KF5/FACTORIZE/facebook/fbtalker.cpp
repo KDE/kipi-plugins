@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "fbtalker.moc"
+#include "fbtalker.h"
 
 // C++ includes
 
@@ -37,20 +37,23 @@
 #include <QLineEdit>
 #include <QPlainTextEdit>
 #include <QList>
-#include <qjson/parser.h>
+#include <QApplication>
 
 // KDE includes
 
 #include <kcodecs.h>
-#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 
+// QJson includes
+
+#include <qjson/parser.h>
+
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
 #include "fbitem.h"
 #include "mpform.h"

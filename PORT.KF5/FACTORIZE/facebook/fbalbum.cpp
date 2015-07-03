@@ -20,11 +20,12 @@
  *
  * ============================================================ */
 
-#include "fbalbum.moc"
+#include "fbalbum.h"
 
 // Qt includes
 
 #include <QFormLayout>
+#include <QComboBox>
 
 // KDE includes
 
@@ -32,7 +33,6 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <QComboBox>
 
 // local includes
 

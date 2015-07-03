@@ -22,10 +22,12 @@
  *
  * ============================================================ */
 
-#include "fbwindow.moc"
+#include "fbwindow.h"
 
 // Qt includes
 
+#include <QComboBox>
+#include <QMenu>
 #include <QFileInfo>
 #include <QCheckBox>
 #include <QCloseEvent>
@@ -33,9 +35,6 @@
 
 // KDE includes
 
-#include <QComboBox>
-#include <QMenu>
-#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
@@ -44,7 +43,7 @@
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Libkipi includes
@@ -53,6 +52,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
@@ -120,14 +120,15 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
     // ------------------------------------------------------------------------
 
     KPAboutData* about = new KPAboutData(ki18n("Facebook Import/Export"), 0,
-                                         KAboutData::License_GPL,
+                                         KAboutLicense::GPL,
                                          ki18n("A Kipi plugin to import/export image collection "
                                                "to/from Facebook web service."),
                                          ki18n("(c) 2005-2008, Vardhman Jain\n"
                                                "(c) 2008-2012, Gilles Caulier\n"
                                                "(c) 2008-2009, Luka Renko"));
 
-    about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Luka Renko").toString(),
+                     ki18n("Author and maintainer").toString(),
                      "lure at kubuntu dot org");
 
     about->setHandbookEntry("facebook");

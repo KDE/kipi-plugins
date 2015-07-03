@@ -24,6 +24,7 @@
 #define FBITEM_H
 
 // Qt includes
+
 #include <QString>
 
 namespace KIPIFacebookPlugin

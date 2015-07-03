@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "fbwidget.moc"
+#include "fbwidget.h"
 
 // Qt includes
 
@@ -33,18 +33,18 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QComboBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
-#include <QComboBox>
 #include <kpushbutton.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
-#include <uploadwidget.h>
+#include <KIPI/UploadWidget>
 #include <KIPI/ImageCollection>
 
 // Local includes

@@ -57,7 +57,6 @@ public:
     ~Plugin_Facebook();
 
     void setup(QWidget* const);
-    virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
 
@@ -70,8 +69,8 @@ private:
 
 private:
 
-    QAction *   m_actionImport;
-    QAction *   m_actionExport;
+    QAction*   m_actionImport;
+    QAction*   m_actionExport;
 
     FbWindow*  m_dlgImport;
     FbWindow*  m_dlgExport;
