@@ -31,7 +31,7 @@
 
 // LibKIPI includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // KDE includes
 

@@ -30,7 +30,7 @@
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 #include <pluginloader.h>
 
 // LibKDcraw includes

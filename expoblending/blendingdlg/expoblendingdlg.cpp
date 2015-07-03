@@ -63,7 +63,7 @@ extern "C"
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // libKdcraw includes
 

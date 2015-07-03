@@ -28,8 +28,8 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 #include <kipiplugins_debug.h>
 
 // KDE includes

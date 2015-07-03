@@ -60,7 +60,7 @@ extern "C"
 // Libkipi includes
 
 #include <uploadwidget.h>
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 
 // Local includes
 

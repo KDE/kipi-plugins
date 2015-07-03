@@ -32,7 +32,7 @@
 // Libkipi includes
 
 #include <libkipi_version.h>
-#include <interface.h>
+#include <KIPI/Interface>
 #include <imageinfo.h>
 #include <pluginloader.h>
 

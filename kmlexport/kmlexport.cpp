@@ -50,9 +50,9 @@ extern "C"
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 #include <plugin.h>
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 
 // Local includes
 

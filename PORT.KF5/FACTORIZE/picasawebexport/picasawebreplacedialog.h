@@ -30,7 +30,7 @@
 #include <kio/global.h>
 #include <kio/job.h>
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 using namespace KIPI;
 

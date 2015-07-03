@@ -44,9 +44,9 @@
 
 // libkipi includes
 
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 #include <imagecollectionselector.h>
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 

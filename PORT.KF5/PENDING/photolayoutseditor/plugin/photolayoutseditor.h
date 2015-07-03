@@ -35,7 +35,7 @@
 #include <QUrl>
 
 // LibKIPI
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local
 #include "CanvasSize.h"

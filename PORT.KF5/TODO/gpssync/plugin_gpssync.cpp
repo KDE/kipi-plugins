@@ -24,20 +24,19 @@
  *
  * ============================================================ */
 
-#include "plugin_gpssync.moc"
+#include "plugin_gpssync.h"
 
 // Qt includes
 
 #include <QPointer>
+#include <QApplication>
+#include <QAction>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <QApplication>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocalizedstring.h>
@@ -45,22 +44,22 @@
 
 // Libkipi includes
 
-#include <imagecollection.h>
-#include <interface.h>
+#include <KIPI/ImageCollection>
+#include <KIPI/Interface>
 
 // Local includes
 
-#include <common/libkipiplugins/tools/kphostsettings.h>
+#include "kphostsettings.h"
+#include "kipiplugins_debug.h"
 #include "gpssyncdialog.h"
 
 namespace KIPIGPSSyncPlugin
 {
 
 K_PLUGIN_FACTORY( GPSSyncFactory, registerPlugin<Plugin_GPSSync>(); )
-K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 
 Plugin_GPSSync::Plugin_GPSSync(QObject* const parent, const QVariantList&)
-    : Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
+    : Plugin(parent, "GPSSync")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
 
@@ -157,3 +156,5 @@ void Plugin_GPSSync::slotGPSSync()
 }
 
 } // namespace KIPIGPSSyncPlugin
+
+#include "plugin_gpssync.moc"

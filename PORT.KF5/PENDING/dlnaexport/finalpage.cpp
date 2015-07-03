@@ -47,7 +47,7 @@
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 #include <uploadwidget.h>
 
 // Local includes

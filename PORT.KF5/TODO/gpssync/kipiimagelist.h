@@ -32,7 +32,7 @@
 
 // libKIPI includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // local includes
 

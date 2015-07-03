@@ -42,7 +42,7 @@ extern "C"
 
 // LibKipi includes
 
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 
 // Local includes
 

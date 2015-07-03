@@ -30,7 +30,7 @@
 // Libkipi includes
 
 #include <libkipi_version.h>
-#include <interface.h>
+#include <KIPI/Interface>
 #include <pluginloader.h>
 
 using namespace KIPI;
