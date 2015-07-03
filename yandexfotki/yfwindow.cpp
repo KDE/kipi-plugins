@@ -71,7 +71,6 @@ extern "C"
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kprogressdialog.h>
-#include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
@@ -148,8 +147,10 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     loginDescLabel->setWhatsThis(i18n("Your Yandex login"));
 
     m_loginLabel       = new QLabel(m_accountBox);
-    m_changeUserButton = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                         i18n("Change Yandex account used to authenticate")), m_accountBox);
+    m_changeUserButton = new QPushButton(m_accountBox);
+    KGuiItem::assign(m_changeUserButton,
+                     KGuiItem(i18n("Change Account"), "system-switch-user",
+                              i18n("Change Yandex account used to authenticate")));
 
     accountBoxLayout->addWidget(loginDescLabel, 0, 0);
     accountBoxLayout->addWidget(m_loginLabel, 0, 1);
@@ -170,10 +171,14 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_albumsCombo        = new QComboBox(m_albumsBox);
     m_albumsCombo->setEditable(false);
 
-    m_newAlbumButton     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                           i18n("Create new Yandex.Fotki album")), m_albumsBox);
-    m_reloadAlbumsButton = new KPushButton(KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
-                                             i18n("Reload albums list")), m_albumsBox);
+    m_newAlbumButton = new QPushButton(m_albumsBox);
+    KGuiItem::assign(m_newAlbumButton,
+                     KGuiItem(i18n("New Album"), "list-add",
+                              i18n("Create new Yandex.Fotki album")));
+    m_reloadAlbumsButton = new QPushButton(m_albumsBox);
+    KGuiItem::assign(m_reloadAlbumsButton,
+                     KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
+                              i18n("Reload albums list")));
 
     albumsBoxLayout->addWidget(m_albumsCombo,        0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_newAlbumButton,     1, 3, 1, 1);

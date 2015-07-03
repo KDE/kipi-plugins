@@ -50,7 +50,6 @@ class QUrl;
 class KProgressDialog;
 class KPasswordDialog;
 class QComboBox;
-class KPushButton;
 class KLineEdit;
 
 namespace KIPI
@@ -150,12 +149,12 @@ protected:
     QGroupBox*               m_accountBox;
     QLabel*                  m_loginLabel;
     QLabel*                  m_headerLabel;
-    KPushButton*             m_changeUserButton;
+    QPushButton*             m_changeUserButton;
 
     // albums
     QGroupBox*               m_albumsBox;
-    KPushButton*             m_newAlbumButton;
-    KPushButton*             m_reloadAlbumsButton;
+    QPushButton*             m_newAlbumButton;
+    QPushButton*             m_reloadAlbumsButton;
     QComboBox*               m_albumsCombo;
 
     // upload settings
