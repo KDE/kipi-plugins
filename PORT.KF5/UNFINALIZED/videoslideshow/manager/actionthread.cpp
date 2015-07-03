@@ -34,7 +34,7 @@
 
 // libkdcraw
 
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 

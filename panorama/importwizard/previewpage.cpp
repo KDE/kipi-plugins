@@ -38,7 +38,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "kptooldialog.h"
 #include "kppreviewmanager.h"
 #include "kpbatchprogressdialog.h"

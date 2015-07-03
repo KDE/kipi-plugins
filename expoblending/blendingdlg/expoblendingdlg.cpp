@@ -68,11 +68,11 @@ extern "C"
 // libKdcraw includes
 
 #include <libkdcraw_version.h>
-#include <rexpanderbox.h>
+#include <KDCRAW/RExpanderBox>
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "aboutdata.h"
 #include "actionthread.h"
 #include "bracketstack.h"

@@ -40,7 +40,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "manager.h"
 #include "actionthread.h"

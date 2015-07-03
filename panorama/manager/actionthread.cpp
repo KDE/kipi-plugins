@@ -41,7 +41,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "tasks.h"
 
 using namespace ThreadWeaver;

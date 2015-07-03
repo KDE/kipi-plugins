@@ -27,19 +27,16 @@
 
 #include <QMatrix>
 #include <QFileInfo>
-#include <QtCore/QUrl>
-
-// KDE includes
-
-#include "kipiplugins_debug.h"
+#include <QUrl>
 
 // LibKDcraw includes
 
 #include <libkdcraw_version.h>
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageinfo.h"
 #include "timer.h"
 

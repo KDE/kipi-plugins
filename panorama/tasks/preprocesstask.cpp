@@ -32,7 +32,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "kpmetadata.h"
 #include "kpversion.h"
 #include "kpwriteimage.h"

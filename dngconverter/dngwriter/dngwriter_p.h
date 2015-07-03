@@ -30,7 +30,7 @@
 
 // Libkdcraw includes
 
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // DNG SDK includes
 

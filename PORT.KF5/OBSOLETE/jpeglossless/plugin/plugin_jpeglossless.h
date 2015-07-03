@@ -31,7 +31,7 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 #include <KIPI/ImageCollection>
 
 // Local includes

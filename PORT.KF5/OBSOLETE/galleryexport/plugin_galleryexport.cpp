@@ -43,7 +43,7 @@
 // Libkipi includes
 
 #include <KIPI/Interface>
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 // Local includes
 

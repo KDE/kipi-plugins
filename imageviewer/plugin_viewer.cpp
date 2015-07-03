@@ -30,7 +30,7 @@
 
 #include <KIPI/Interface>
 #include <KIPI/ImageCollection>
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 
 // KDE includes
 #include <KPluginFactory>

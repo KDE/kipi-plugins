@@ -53,7 +53,7 @@ extern "C"
 
 #include <KIPI/ImageCollection>
 #include <KIPI/Interface>
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 // Local includes
 

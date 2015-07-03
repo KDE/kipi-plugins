@@ -25,7 +25,7 @@
 #define PLUGIN_VIEWER_H
 
 // Libkipi includes
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 // Qt includes
 #include <QVariant>

@@ -46,7 +46,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "aboutdata.h"
 #include "kpoutputdialog.h"
 #include "autooptimiserbinary.h"

@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 
 namespace KIPIExpoBlendingPlugin
 {

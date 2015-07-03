@@ -44,7 +44,7 @@
 
 #include <dcrawinfocontainer.h>
 #include <version.h>
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 

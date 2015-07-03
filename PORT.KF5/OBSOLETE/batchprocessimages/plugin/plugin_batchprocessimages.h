@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 class QAction;
 

@@ -33,7 +33,7 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 class QWidget;
 

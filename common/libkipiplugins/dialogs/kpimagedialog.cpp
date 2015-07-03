@@ -43,7 +43,7 @@
 
 #include <libkdcraw_version.h>
 #include <dcrawinfocontainer.h>
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Libkipi includes
 

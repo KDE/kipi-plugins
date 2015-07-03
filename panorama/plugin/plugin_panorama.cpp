@@ -43,7 +43,7 @@
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "manager/manager.h"
 #include "aboutdata.h"
 

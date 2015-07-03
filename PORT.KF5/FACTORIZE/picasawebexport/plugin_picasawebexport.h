@@ -26,7 +26,7 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 // Local includes
 
