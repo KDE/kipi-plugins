@@ -98,4 +98,4 @@ void KLinkItemSelectionModelPrivate::sourceSelectionChanged(const QItemSelection
     q->QItemSelectionModel::select(mappedSelection, QItemSelectionModel::Select);
 }
 
-#include "klinkitemselectionmodel.moc"
+#include "klinkitemselectionmodel.h"

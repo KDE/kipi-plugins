@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "searchwidget.moc"
+#include "searchwidget.h"
 
 // Qt includes
 

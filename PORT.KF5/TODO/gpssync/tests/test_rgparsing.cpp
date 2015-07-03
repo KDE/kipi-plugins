@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "test_rgparsing.moc"
+#include "test_rgparsing.h"
 
 // Qt includes
 

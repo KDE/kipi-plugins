@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "gpsreversegeocodingwidget.moc"
+#include "gpsreversegeocodingwidget.h"
 
 // Qt includes
 

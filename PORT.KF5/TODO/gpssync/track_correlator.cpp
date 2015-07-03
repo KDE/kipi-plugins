@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "track_correlator.moc"
+#include "track_correlator.h"
 
 // KDE includes
 

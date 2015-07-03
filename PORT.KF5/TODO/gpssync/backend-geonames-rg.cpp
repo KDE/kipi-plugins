@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "backend-geonames-rg.moc"
+#include "backend-geonames-rg.h"
 
 //Qt includes
 

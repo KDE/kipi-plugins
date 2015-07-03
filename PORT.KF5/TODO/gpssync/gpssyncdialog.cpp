@@ -29,7 +29,7 @@
  * ============================================================ */
 
 #include "gpssync_common.h"
-#include "gpssyncdialog.moc"
+#include "gpssyncdialog.h"
 
 // Qt includes
 

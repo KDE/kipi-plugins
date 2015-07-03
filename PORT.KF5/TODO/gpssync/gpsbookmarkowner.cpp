@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "gpsbookmarkowner.moc"
+#include "gpsbookmarkowner.h"
 
 // Qt includes
 

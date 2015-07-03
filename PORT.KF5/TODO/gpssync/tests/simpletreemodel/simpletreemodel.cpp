@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "simpletreemodel.moc"
+#include "simpletreemodel.h"
 
 class SimpleTreeModelPrivate
 {

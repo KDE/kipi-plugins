@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kipiimagemodel.moc"
+#include "kipiimagemodel.h"
 
 // KDE includes
 

@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "rgtagmodel.moc"
+#include "rgtagmodel.h"
 
 // Qt includes
 

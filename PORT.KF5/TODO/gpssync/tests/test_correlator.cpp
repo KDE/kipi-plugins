@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "test_correlator.moc"
+#include "test_correlator.h"
 
 // Qt includes
 

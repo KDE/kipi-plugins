@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "gpslistviewcontextmenu.moc"
+#include "gpslistviewcontextmenu.h"
 
 // Qt includes:
 

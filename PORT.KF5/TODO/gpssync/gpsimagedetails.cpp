@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "gpsimagedetails.moc"
+#include "gpsimagedetails.h"
 
 // C++ includes
 
@@ -37,10 +37,10 @@
 #include <QIntValidator>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QComboBox>
 
 // KDE includes
 
-#include <QComboBox>
 #include <kconfiggroup.h>
 #include <kglobal.h>
 #include <klineedit.h>

@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "gpsimagelistdragdrophandler.moc"
+#include "gpsimagelistdragdrophandler.h"
 
 namespace KIPIGPSSyncPlugin
 {

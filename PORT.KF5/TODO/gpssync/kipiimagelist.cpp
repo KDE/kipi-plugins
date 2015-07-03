@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kipiimagelist.moc"
+#include "kipiimagelist.h"
 
 // Qt includes
 
@@ -31,18 +31,21 @@
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QWheelEvent>
+#include <QMenu>
+#include <QAction>
 
 // KDE includes
 
-#include <QAction>
 #include <kconfiggroup.h>
-#include "kipiplugins_debug.h"
 #include <kiconloader.h>
-#include <QMenu>
 
 // libKIPI includes
 
 #include <KIPI/Interface>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIGPSSyncPlugin
 {

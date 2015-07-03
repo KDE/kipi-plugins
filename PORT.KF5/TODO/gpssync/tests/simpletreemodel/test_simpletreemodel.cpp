@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "test_simpletreemodel.moc"
+#include "test_simpletreemodel.h"
 
 // KDE includes
 

@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "gpscorrelatorwidget.moc"
+#include "gpscorrelatorwidget.h"
 
 // Qt includes
 

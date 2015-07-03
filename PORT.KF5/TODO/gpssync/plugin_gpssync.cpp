@@ -157,4 +157,4 @@ void Plugin_GPSSync::slotGPSSync()
 
 } // namespace KIPIGPSSyncPlugin
 
-#include "plugin_gpssync.moc"
+#include "plugin_gpssync.h"

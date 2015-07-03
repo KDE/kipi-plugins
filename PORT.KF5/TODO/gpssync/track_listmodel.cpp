@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "track_listmodel.moc"
+#include "track_listmodel.h"
 
 // KDE includes
 

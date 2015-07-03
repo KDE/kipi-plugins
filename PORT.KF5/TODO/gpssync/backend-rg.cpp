@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "backend-rg.moc"
+#include "backend-rg.h"
 
 namespace KIPIGPSSyncPlugin
 {

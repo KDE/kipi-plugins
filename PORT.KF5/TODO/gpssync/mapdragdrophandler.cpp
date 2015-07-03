@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "mapdragdrophandler.moc"
+#include "mapdragdrophandler.h"
 
 // Qt includes
 

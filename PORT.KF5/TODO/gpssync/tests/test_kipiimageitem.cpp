@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "test_kipiimageitem.moc"
+#include "test_kipiimageitem.h"
 
 // Qt includes
 

@@ -248,4 +248,4 @@ QItemSelection KModelIndexProxyMapper::mapSelectionRightToLeft(const QItemSelect
   return seekSelection;
 }
 
-#include "kmodelindexproxymapper.moc"
+#include "kmodelindexproxymapper.h"

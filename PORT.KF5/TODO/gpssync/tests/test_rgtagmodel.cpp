@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "test_rgtagmodel.moc"
+#include "test_rgtagmodel.h"
 
 // KDE includes
 

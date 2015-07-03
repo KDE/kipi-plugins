@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "searchbackend.moc"
+#include "searchbackend.h"
 
 // Qt includes
 
