@@ -34,7 +34,7 @@
 
 // Libkipi includes
 
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 
 // qJson include
 

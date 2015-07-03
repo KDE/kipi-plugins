@@ -29,9 +29,9 @@
 #include "helpdialog.h"
 
 // Libkipi includes
-#include <imagecollection.h>
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/ImageCollection>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // KDE includes
 #include "kipiplugins_debug.h"

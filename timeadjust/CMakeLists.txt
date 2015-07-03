@@ -8,7 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_timeadjust\")
 
-
 set(kipiplugin_timeadjust_PART_SRCS myimagelist.cpp
                                     plugin_timeadjust.cpp
                                     timeadjustdialog.cpp

@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
  *
@@ -48,11 +48,11 @@
 // LibKDcraw includes
 
 #include <version.h>
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 
@@ -287,6 +287,10 @@ void SwWindow::authenticate()
 void SwWindow::slotShwupKipiBlackListed()
 {
     KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service."));
+}
+
+void SwWindow::slotShwupSignatureError()
+{
 }
 
 void SwWindow::slotShwupInvalidCredentials()

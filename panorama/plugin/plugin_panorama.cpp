@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2015 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,12 +38,12 @@
 
 // Libkipi includes
 
-#include <imagecollection.h>
-#include <interface.h>
+#include <KIPI/ImageCollection>
+#include <KIPI/Interface>
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "manager/manager.h"
 #include "aboutdata.h"
 

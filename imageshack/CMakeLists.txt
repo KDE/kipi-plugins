@@ -8,7 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_imageshack\")
 
-
 set(kipiplugin_imageshack_PART_SRCS
     imageshack.cpp
     mpform.cpp

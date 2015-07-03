@@ -30,7 +30,7 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 class QSignalMapper;
 class QAction;

@@ -31,7 +31,7 @@
 
 // LibKIPI includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 using namespace KIPI;
 

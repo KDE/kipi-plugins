@@ -32,9 +32,9 @@
 // Libkipi includes
 
 #include <libkipi_version.h>
-#include <interface.h>
-#include <imageinfo.h>
-#include <pluginloader.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageInfo>
+#include <KIPI/PluginLoader>
 
 // Local includes
 

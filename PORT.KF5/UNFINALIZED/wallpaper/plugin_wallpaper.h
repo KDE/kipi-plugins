@@ -7,7 +7,7 @@
  * Description : Wall Paper kipi-plugin
  *
  * Copyright (C) 2004      by Gregory Kokanosky <gregory dot kokanosky at free.fr>
- * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Varun Herale <varun dot herale at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -31,7 +31,7 @@
 
 // Libkipi includes
 
-#include <plugin.h>
+#include <KIPI/Plugin>
 
 class QAction;
 

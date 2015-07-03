@@ -44,7 +44,7 @@
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 

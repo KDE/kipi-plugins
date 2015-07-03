@@ -134,6 +134,10 @@ if(KF5Kipi_FOUND)
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
+#    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
+#    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
+#    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
+#    MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                         # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
 #    MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                         # For DlnaExport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtSoap)                                        # For DlnaExport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.

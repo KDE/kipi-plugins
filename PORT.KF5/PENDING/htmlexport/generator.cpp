@@ -49,7 +49,7 @@
 
 // KIPI
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // libxslt
 

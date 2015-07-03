@@ -57,11 +57,11 @@
 
 // LibKDcraw includes
 
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "kpwriteimage.h"
 #include "kpversion.h"
 

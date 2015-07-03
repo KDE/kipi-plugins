@@ -50,8 +50,8 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // Local includes
 

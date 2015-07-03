@@ -10,7 +10,7 @@
  *
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010      by Roman Tsisyk <roman at tsisyk dot com>
  *
@@ -68,9 +68,9 @@
 
 // LibKIPI includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 #include <uploadwidget.h>
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 
 // Local includes
 

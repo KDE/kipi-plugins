@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2015      by Benjamin Girault, <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -63,16 +63,16 @@ extern "C"
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // libKdcraw includes
 
 #include <libkdcraw_version.h>
-#include <rexpanderbox.h>
+#include <KDCRAW/RExpanderBox>
 
 // Local includes
 
-#include <kipiplugins_debug.h>
+#include "kipiplugins_debug.h"
 #include "aboutdata.h"
 #include "actionthread.h"
 #include "bracketstack.h"

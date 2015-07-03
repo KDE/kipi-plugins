@@ -55,13 +55,13 @@
 
 // Libkipi includes
 
-#include <imagecollection.h>
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/ImageCollection>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 // LibKDcraw includes
 
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 

@@ -37,12 +37,12 @@
 
 // LibKDcraw includes
 
-#include <kdcraw.h>
+#include <KDCRAW/KDcraw>
 
 // LibKipi includes
 
-#include <interface.h>
-#include <pluginloader.h>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
 
 using namespace KDcrawIface;
 

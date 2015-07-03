@@ -1,0 +1,70 @@
+#
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
+subdirs(icons)
+
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_metadataedit\")
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/exif
+                    ${CMAKE_CURRENT_SOURCE_DIR}/iptc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/xmp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                   )
+
+set(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
+                                      plugin/metadatacheckbox.cpp
+                                      plugin/timezonecombobox.cpp
+                                      plugin/altlangstringedit.cpp
+                                      plugin/multistringsedit.cpp
+                                      plugin/multivaluesedit.cpp
+                                      plugin/objectattributesedit.cpp
+                                      plugin/metadataedit.cpp
+
+                                      exif/exifeditwidget.cpp
+                                      exif/exifcaption.cpp
+                                      exif/exifdatetime.cpp
+                                      exif/exifadjust.cpp
+                                      exif/exiflens.cpp
+                                      exif/exifdevice.cpp
+                                      exif/exiflight.cpp
+
+                                      iptc/iptceditwidget.cpp
+                                      iptc/iptccontent.cpp
+                                      iptc/iptcsubjects.cpp
+                                      iptc/iptckeywords.cpp
+                                      iptc/iptccategories.cpp
+                                      iptc/iptccredits.cpp
+                                      iptc/iptcproperties.cpp
+                                      iptc/iptcstatus.cpp
+                                      iptc/iptcorigin.cpp
+                                      iptc/iptcenvelope.cpp
+
+                                      xmp/xmpeditwidget.cpp
+                                      xmp/xmpcontent.cpp
+                                      xmp/xmpkeywords.cpp
+                                      xmp/xmpcategories.cpp
+                                      xmp/xmpsubjects.cpp
+                                      xmp/xmporigin.cpp
+                                      xmp/xmpcredits.cpp
+                                      xmp/xmpstatus.cpp
+                                      xmp/xmpproperties.cpp
+   )
+
+add_library(kipiplugin_metadataedit MODULE ${kipiplugin_metadataedit_PART_SRCS})
+
+target_link_libraries(kipiplugin_metadataedit
+                      KF5::Parts
+                      KF5::Kipi
+                      KF5::KExiv2
+                      KF5::KDcraw
+                      KF5kipiplugins
+                     )
+
+configure_file(plugin/kipiplugin_metadataedit.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop)
+
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kipiplugin_metadataedit                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES   plugin/kipiplugin_metadataeditui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
