@@ -1,6 +1,6 @@
 [Desktop Entry]
-UntranslatedGenericName=Google Services Export
-Name=Google Services Export
+UntranslatedGenericName=Google Services
+Name=Google Services
 Name[ca]=Exportador a Google Services
 Name[cs]=Export služeb Google
 Name[de]=„Google Services“-Export
@@ -12,7 +12,7 @@ Name[pt_BR]=Exportar para os Serviços do Google
 Name[sv]=Export till Google-tjänster
 Name[uk]=Експорт до служб Google
 Name[x-test]=xxGoogle Services Exportxx
-Comment=A tool to export images to a remote Google Services web service
+Comment=A tool to manage images with a remote Google web service
 Comment[ca]=Una eina per exportar imatges al servei web remot Google Services
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Google Services
 Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten „Google Services“-Webdienst zu exportieren.
@@ -28,6 +28,6 @@ Type=Service
 Icon=kipi-googledrive
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_googleservices
-X-KIPI-PluginCategories=Export
+X-KIPI-PluginCategories=Export,Import
 X-KIPI-BinaryVersion=${KIPI_SO_VERSION}
 author=Saurabh Patel, saurabhpatel7717 at gmail dot com

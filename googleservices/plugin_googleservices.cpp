@@ -61,7 +61,7 @@ K_PLUGIN_FACTORY(GoogleDriveFactory, registerPlugin<Plugin_GoogleServices>(); )
 K_EXPORT_PLUGIN(GoogleDriveFactory("kipiplugin_googleservices"))
 
 Plugin_GoogleServices::Plugin_GoogleServices(QObject* const parent,const QVariantList& /*args*/)
-    : Plugin(GoogleDriveFactory::componentData(), parent, "Google Services Export")
+    : Plugin(GoogleDriveFactory::componentData(), parent, "Google Services")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GoogleDrive/PicasaWeb(Google Photos) Plugin Loaded";
 
@@ -103,7 +103,7 @@ void Plugin_GoogleServices::setupActions()
             this,SLOT(slotGDriveExport()));
 
     addAction("googledriveexport",m_actionGDriveExport);
-    
+
     m_actionPicasaExport = new KAction(this);
     m_actionPicasaExport->setText(i18n("Export to &Google Photos/PicasaWeb..."));
     m_actionPicasaExport->setIcon(KIcon("kipi-picasa"));
