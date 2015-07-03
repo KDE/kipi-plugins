@@ -57,7 +57,6 @@ public:
     ~Plugin_Facebook();
 
     void setup(QWidget* const);
-    virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
 

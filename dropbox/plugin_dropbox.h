@@ -55,7 +55,6 @@ public:
     ~Plugin_Dropbox();
 
     void setup(QWidget* const);
-    //virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
 
@@ -69,7 +68,6 @@ private:
 
     KAction*  m_actionExport;
     DBWindow* m_dlgExport;
-
 };
 
 } // namespace KIPIDropboxPlugin

@@ -55,7 +55,6 @@ public:
     ~Plugin_GoogleServices();
 
     void setup(QWidget* const);
-    //virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
 
@@ -72,7 +71,7 @@ private:
     KAction*  m_actionGDriveExport;
     KAction*  m_actionPicasaExport;
     KAction*  m_actionPicasaImport;
-    
+
     GSWindow* m_dlgGDriveExport;
     GSWindow* m_dlgPicasaExport;
     GSWindow* m_dlgPicasaImport;
