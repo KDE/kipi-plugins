@@ -28,14 +28,13 @@
 
 #include <QFileInfo>
 #include <QFont>
+#include <QIcon>
+#include <QMenu>
 
 // KDE includes
 
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
-#include <QIcon>
 #include <kiconloader.h>
-#include <QMenu>
 #include <kpushbutton.h>
 
 // Libkipi includes
@@ -45,6 +44,7 @@
 
 // local includes
 
+#include "kipiplugins_debug.h"
 #include "kpaboutdata.h"
 #include "commoncontainer.h"
 #include "maindialog.h"
@@ -71,7 +71,8 @@ public:
 };
 
 SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const sharedData)
-    : KPPageDialog(parent), d(new Private)
+    : KPPageDialog(parent),
+      d(new Private)
 {
     setObjectName("Advanced Slideshow Settings");
     setWindowTitle(i18n("Advanced Slideshow"));

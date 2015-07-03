@@ -1,0 +1,16 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<!-- NOTE: don't forget to increase version ID when this file is modified -->
+<gui version="1" name="kipiplugin_geolocator" >
+
+    <MenuBar>
+
+        <Menu name="Image"><text>&amp;Image</text>
+            <Action name="geolocator" group="kipi_image_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>

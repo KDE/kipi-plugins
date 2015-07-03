@@ -46,7 +46,7 @@ public:
     KMLGPSDataParser();
     ~KMLGPSDataParser();
 
-    /*! KIPIGPSSyncPlugin::KMLGPSDataParser::lineString()
+    /*! KMLGPSDataParser::KMLGPSDataParser::lineString()
      *  @return the string containing the time ordered point (lon,lat,alt)
      */
     QString lineString();

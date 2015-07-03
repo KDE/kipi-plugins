@@ -13,14 +13,12 @@ Notes:
 
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
-Current plugins ported to Qt4/KDE4:
-
 AcquireImages      : A tool to acquire images using flat scanner.
 Calendar           : A tool to create calendars.
 DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
 FlickrExport       : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
-GPSSync            : A tool to geolocalize pictures.
+Geolocator         : A tool to geolocalize pictures.
 HTMLExport         : A tool to export images collections into a static XHTML page.
 ImageViewer        : A tool to preview images using OpenGL.
 MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
@@ -94,21 +92,21 @@ SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 DngConverter       : libexpat.
 AcquireImages      : libksane.
+YandexFotki        : libqca.
+FaceBook           : libqjson.
+ExpoBlending       : Hugin command line tools (runtime dependency).
+Geolocator         : libkgeomap.
+Mediawiki          : libmediawiki.
+Vkontakte          : libkvkontakte.
+Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 HtmlExport         : libxslt and libxml2.
+DLNAExport         : libhupnp and libqtsoap.
+Imgur              : libqtkoauth and kqoauth for Imgur.com's authenticated API.
+VideoSlideshow     : libimagemagick and libqtgstreamer
+DebianScreenshots  : libqjson.
 RemoveRedEyes      : libopencv.
 Calendar           : libkdepimlibs.
 Shwup              : libqca.
-YandexFotki        : libqca.
-DebianScreenshots  : libqjson.
-FaceBook           : libqjson.
-ExpoBlending       : Hugin command line tools (runtime dependency).
-GPSSync            : libkgeomap.
-Mediawiki          : libmediawiki.
-Vkontakte          : libkvkontakte.
-DLNAExport         : libhupnp and libqtsoap.
-VideoSlideshow     : libimagemagick and libqtgstreamer
-Imgur              : libqtkoauth and kqoauth for Imgur.com's authenticated API.
-Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 
 -- CONTACT ------------------------------------------------------------
 
@@ -132,12 +130,12 @@ http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_s
 
 -- INSTALL ------------------------------------------------------------
 
-In order to compile, especially when QT3/Qt4 are installed at the same time, 
+In order to compile, especially when QT4/Qt5 are installed at the same time,
 just use something like that:
 
 # export VERBOSE=1
-# export QTDIR=/usr/lib/qt4/  
-# export PATH=$QTDIR/bin:$PATH 
+# export QTDIR=/usr/lib/qt5/
+# export PATH=$QTDIR/bin:$PATH
 # cmake .
 # make
 # sudo make install
@@ -147,13 +145,13 @@ Usual CMake options :
 -DCMAKE_INSTALL_PREFIX : decide where the program will be install on your computer.
 -DCMAKE_BUILD_TYPE     : decide which type of build you want. You can chose between "debugfull", "debug", "profile", "relwithdebinfo" and "release". The default is "relwithdebinfo" (-O2 -g).
 
-Compared to old KDE3 autoconf options:
+Compared to old autoconf options:
 
 "cmake . -DCMAKE_BUILD_TYPE=debugfull" is equivalent to "./configure --enable-debug=full"
 "cmake . -DCMAKE_INSTALL_PREFIX=/usr"  is equivalent to "./configure --prefix=/usr"
 
 More details can be found at this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
 
-Note: To know KDE install path on your computer, use 'kde-config --prefix' command line like this (with full debug object enabled):
+Note: To know KDE install path on your computer, use 'kf5-config --prefix' command line like this (with full debug object enabled):
 
-"cmake . -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix`"
+"cmake . -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=`kf54-config --prefix`"
