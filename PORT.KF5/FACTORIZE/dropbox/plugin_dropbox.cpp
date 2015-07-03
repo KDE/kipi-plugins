@@ -25,7 +25,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_dropbox.moc"
+#include "plugin_dropbox.h"
 
 // C ANSI includes
 
@@ -34,12 +34,14 @@ extern "C"
 #include <unistd.h>
 }
 
-// KDE includes
+// Qt includes
 
-#include "kipiplugins_debug.h"
-#include <kconfig.h>
 #include <QApplication>
 #include <QAction>
+
+// KDE includes
+
+#include <kconfig.h>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -52,20 +54,19 @@ extern "C"
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "dbwindow.h"
 
 namespace KIPIDropboxPlugin
 {
 
 K_PLUGIN_FACTORY(DropboxFactory, registerPlugin<Plugin_Dropbox>(); )
-K_EXPORT_PLUGIN(DropboxFactory("kipiplugin_dropbox"))
 
 Plugin_Dropbox::Plugin_Dropbox(QObject* const parent,const QVariantList& /*args*/)
-    : Plugin(DropboxFactory::componentData(),parent,"Dropbox Export")
+    : Plugin(parent, "Dropbox")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_Dropbox Plugin Loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Dropbox Plugin Loaded";
 
-    KIconLoader::global()->addAppDir("kipiplugin_dropbox");
     setUiBaseName("kipiplugin_dropboxui.rc");
     setupXML();
 }
@@ -82,7 +83,7 @@ void Plugin_Dropbox::setup(QWidget* const widget)
 
     if(!interface())
     {
-        qCDebug(KIPIPLUGINS_LOG) << "kipi interface is null";
+        qCCritical(KIPIPLUGINS_LOG) << "kipi interface is null";
         return;
     }
 
@@ -95,7 +96,7 @@ void Plugin_Dropbox::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Dropbox..."));
     m_actionExport->setIcon(QIcon::fromTheme("kipi-dropbox"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));
+    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));
 
     connect(m_actionExport,SIGNAL(triggered(bool)),
             this,SLOT(slotExport()));
@@ -126,3 +127,5 @@ void Plugin_Dropbox::slotExport()
 }
 
 } // namespace KIPIDropboxPlugin
+
+#include "plugin_dropbox.moc"

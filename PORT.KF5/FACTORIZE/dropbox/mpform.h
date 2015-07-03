@@ -19,6 +19,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef MPFORM_H
 #define MPFORM_H
 

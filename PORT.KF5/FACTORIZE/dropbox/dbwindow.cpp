@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "dbwindow.moc"
+#include "dbwindow.h"
 
 // Qt includes
 
@@ -31,26 +31,25 @@
 #include <QStringList>
 #include <QSpinBox>
 #include <QPointer>
+#include <QComboBox>
+#include <QMenu>
+#include <QApplication>
+#include <QUrl>
 
 // KDE includes
 
-#include <QComboBox>
 #include <klineedit.h>
-#include <QMenu>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <QApplication>
 #include <kiconloader.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <ktabwidget.h>
 #include <krun.h>
-#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
-#include <QUrl>
 #include <ktoolinvocation.h>
 #include <KWindowConfig>
 
@@ -60,6 +59,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
@@ -106,13 +106,15 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
             this,SLOT(slotStartTransfer()));
 
     KPAboutData* const about = new KPAboutData(ki18n("Dropbox Export"),0,
-                                               KAboutData::License_GPL,
+                                               KAboutLicense::GPL,
                                                ki18n("A Kipi-plugin to export images "
                                                      "to Dropbox"),
                                                ki18n("(c) 2013, Saurabh Patel"));
 
-    about->addAuthor(ki18n("Saurabh Patel"),ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Saurabh Patel").toString(),
+                     ki18n("Author").toString(),
                      "saurabhpatel7717 at gmail dot com");
+
     about->setHandbookEntry("dropbox");
     setAboutData(about);
 

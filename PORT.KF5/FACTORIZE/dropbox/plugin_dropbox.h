@@ -69,7 +69,6 @@ private:
 
     QAction *  m_actionExport;
     DBWindow* m_dlgExport;
-
 };
 
 } // namespace KIPIDropboxPlugin

@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "dbalbum.moc"
+#include "dbalbum.h"
 
 // Qt includes
 
@@ -31,10 +31,10 @@
 #include <klocalizedstring.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include "kipiplugins_debug.h"
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "dbitem.h"
 
 namespace KIPIDropboxPlugin

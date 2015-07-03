@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include <dbtalker.moc>
+#include <dbtalker.h>
 
 // C++ includes
 
@@ -41,14 +41,13 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QWidget>
+#include <QApplication>
 
 // KDE includes
 
 #include <kcodecs.h>
-#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
@@ -56,7 +55,7 @@
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // LibQJSon
@@ -65,6 +64,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
 #include "dbwindow.h"
