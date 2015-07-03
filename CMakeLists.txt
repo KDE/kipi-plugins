@@ -126,7 +126,7 @@ if(KF5Kipi_FOUND)
 #     MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                  # For Calendar (libkcal).
 #     MACRO_OPTIONAL_FIND_PACKAGE(QCA2)                                        # For Shwup and YandexFotki.
 #     MACRO_OPTIONAL_FIND_PACKAGE(KSane)                                       # For AcquireImages.
-#     MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                       # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
+    find_package(QJSON)                                                        # For Debian Screenshots Facebook, Google Services, Dropbox and Imgur.
 #     MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)                                     # For GPSSync.
     DETECT_LIBMEDIAWIKI(5.5.0)                                                 # For Mediawiki.
     DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
@@ -174,7 +174,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.6.0)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.8.1)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"  "http://pim.kde.org"                                              "(version >= 4.3.0)"                  "Kipi-plugins will be compiled without libkdepimlibs support."  KDEPIMLIBS_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.0.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
@@ -248,7 +248,7 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("GoogleServices"        QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
@@ -399,12 +399,13 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(yandexfotki)
 #         endif()
 #
-#         if(QJSON_FOUND)
+         if(QJSON_FOUND)
 #             add_subdirectory(debianscreenshots)
 #             add_subdirectory(facebook)
 #             add_subdirectory(imgurexport)
+              add_subdirectory(googleservices)
 #             add_subdirectory(dropbox)
-#         endif()
+         endif()
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)

@@ -1,0 +1,24 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<!-- NOTE: don't forget to increase version ID when this file is modified -->
+<gui version="1" name="kipiplugin_googleservices" >
+
+    <MenuBar>
+
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="googledriveexport" group="kipi_export_group" />
+        </Menu>
+
+        <Menu name="Import"><text>&amp;Import</text>
+            <Action name="picasawebimport" group="kipi_import_group" />
+        </Menu>
+
+        <Menu name="Export"><text>&amp;Export</text>
+            <Action name="picasawebexport" group="kipi_export_group" />
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+    </ToolBar>
+
+</gui>
