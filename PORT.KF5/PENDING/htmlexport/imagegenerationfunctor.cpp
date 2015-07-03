@@ -42,7 +42,7 @@
 
 // LibKDcraw includes
 
-#include <dcrawinfocontainer.h>
+#include <KDCRAW/DcrawInfoContainer>
 #include <version.h>
 #include <KDCRAW/KDcraw>
 

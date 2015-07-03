@@ -45,7 +45,7 @@
 
 #include <KIPI/Interface>
 #include <KIPI/ImageCollection>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 namespace KIPIWallPaperPlugin
 {

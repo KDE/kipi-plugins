@@ -31,7 +31,7 @@
 
 #include <libkipi_version.h>
 #include <KIPI/Interface>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 using namespace KIPI;
 

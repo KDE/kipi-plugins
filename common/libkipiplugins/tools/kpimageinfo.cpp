@@ -33,8 +33,8 @@
 
 #include <libkipi_version.h>
 #include <KIPI/Interface>
-#include <imageinfo.h>
-#include <pluginloader.h>
+#include <KIPI/ImageInfo>
+#include <KIPI/PluginLoader>
 
 // Local includes
 

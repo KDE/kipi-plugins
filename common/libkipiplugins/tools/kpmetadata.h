@@ -34,8 +34,8 @@
 // NOTE: all file included here will be used into plugins as well, to prevent files to include from libkexiv2.
 //       developpers just need to include kpmetadata.h, that all...
 #include <libkexiv2_version.h>
-#include <kexiv2.h>
-#include <rotationmatrix.h>
+#include <KExiv2/KExiv2>
+#include <KExiv2/RotationMatrix>
 
 // LibKipi includes
 

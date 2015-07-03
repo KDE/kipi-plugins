@@ -57,7 +57,7 @@
 
 #include <KIPI/ImageCollection>
 #include <KIPI/Interface>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 // LibKDcraw includes
 

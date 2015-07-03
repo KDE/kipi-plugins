@@ -31,7 +31,7 @@
 // Libkipi includes
 #include <KIPI/ImageCollection>
 #include <KIPI/Interface>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 // KDE includes
 #include "kipiplugins_debug.h"

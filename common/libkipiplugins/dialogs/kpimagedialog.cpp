@@ -42,14 +42,14 @@
 // LibKDcraw includes
 
 #include <libkdcraw_version.h>
-#include <dcrawinfocontainer.h>
+#include <KDCRAW/DcrawInfoContainer>
 #include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
 #include <KIPI/ImageCollection>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 // Local includes
 

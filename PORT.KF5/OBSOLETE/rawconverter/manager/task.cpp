@@ -31,11 +31,11 @@
 // Libkipi includes
 
 #include <KIPI/Interface>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 // LibKDcraw includes
 
-#include <dcrawinfocontainer.h>
+#include <KDCRAW/DcrawInfoContainer>
 
 // Local includes
 

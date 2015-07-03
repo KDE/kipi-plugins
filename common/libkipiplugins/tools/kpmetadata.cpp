@@ -42,7 +42,7 @@
 // LibKipi includes
 
 #include <KIPI/Interface>
-#include <pluginloader.h>
+#include <KIPI/PluginLoader>
 
 using namespace KDcrawIface;
 
