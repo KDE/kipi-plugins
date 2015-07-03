@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideshowgl.moc"
+#include "slideshowgl.h"
 
 // C++ includes
 
@@ -53,7 +53,7 @@
 #include <QApplication>
 #include <kconfiggroup.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 #include <klocalizedstring.h>

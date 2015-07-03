@@ -51,7 +51,7 @@ class SoundtrackPreview : public KDialog
 
 public :
 
-    SoundtrackPreview(QWidget* const, QUrl::List&, SharedContainer* const);
+    SoundtrackPreview(QWidget* const, QList<QUrl>&, SharedContainer* const);
     ~SoundtrackPreview();
 
 private :
@@ -75,14 +75,14 @@ public:
 
 private:
 
-    void addItems(const QUrl::List& fileList);
+    void addItems(const QList<QUrl>& fileList);
     void updateTracksNumber();
     void updateFileList();
     void compareTimes();
 
 private Q_SLOTS:
 
-    void slotAddDropItems(const QUrl::List& filesUrl);
+    void slotAddDropItems(const QList<QUrl>& filesUrl);
     void slotSoundFilesButtonAdd();
     void slotSoundFilesButtonDelete();
     void slotSoundFilesButtonUp();
@@ -97,7 +97,7 @@ private Q_SLOTS:
 
 private:
 
-    QUrl::List              m_urlList;
+    QList<QUrl>              m_urlList;
     SharedContainer*        m_sharedData;
     QTime                   m_totalTime;
     QTime                   m_imageTime;

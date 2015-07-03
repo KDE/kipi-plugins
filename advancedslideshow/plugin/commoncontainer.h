@@ -27,20 +27,20 @@
 
 #include <QString>
 #include <QFont>
+#include <QUrl>
 
 // KDE includes
 
-#include <QUrl>
 #include <kpagedialog.h>
 #include <kpagewidgetmodel.h>
 
 // Phonon includes
 
-#include <Phonon/VolumeSlider>
+#include <phonon/volumeslider.h>
 
 // libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -68,7 +68,7 @@ public:
     int                  delayMsLineStep;
 
     bool                 ImagesHasComments;
-    QUrl::List           urlList;
+    QList<QUrl>           urlList;
 
     MainDialog*          mainPage;
     CaptionDialog*       captionPage;
@@ -108,7 +108,7 @@ public:
     bool                 soundtrackRememberPlaylist;
     bool                 soundtrackPlayListNeedsUpdate;
     QUrl                 soundtrackPath;
-    QUrl::List           soundtrackUrls;
+    QList<QUrl>           soundtrackUrls;
 
     // --> Advanced page
     bool                 useMilliseconds;

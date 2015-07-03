@@ -3,12 +3,12 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2008-09-09
+ * Date        : 2003-01-31
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,50 +22,61 @@
  *
  * ============================================================ */
 
-#ifndef SLIDESHOWCONFIG_H
-#define SLIDESHOWCONFIG_H
+#ifndef PLUGIN_ADVANCEDSLIDESHOW_H
+#define PLUGIN_ADVANCEDSLIDESHOW_H
 
 // KDE includes
 
-#include "kptooldialog.h"
+#include <QUrl>
 
-using namespace KIPIPlugins;
+// Libkipi includes
+
+#include <plugin.h>
+
+class QAction;
+
+namespace KIPI
+{
+    class Interface;
+}
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 class SharedContainer;
 
-class SlideShowConfig : public KPPageDialog
+class Plugin_AdvancedSlideshow : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    SlideShowConfig(QWidget* const parent, SharedContainer* const sharedData);
-    ~SlideShowConfig();
+    Plugin_AdvancedSlideshow(QObject* const parent, const QVariantList& args);
+    ~Plugin_AdvancedSlideshow();
 
-Q_SIGNALS:
+    void setup(QWidget* const);
 
-     // Signal needed by plugin_slideshow class
-    void buttonStartClicked();
+public Q_SLOTS:
 
-private:
-
-    void readSettings();
-    void saveSettings();
+    void slotActivate();
 
 private Q_SLOTS:
 
-    void slotStartClicked();
-    void slotClose();
+    void slotAlbumChanged(bool anyAlbum);
+    void slotSlideShow();
 
 private:
 
-    class Private;
-    Private* const d;
+    void setupActions();
+
+private:
+
+    QAction *         m_actionSlideShow;
+    KIPI::Interface* m_interface;
+    QList<QUrl>       m_urlList;
+    SharedContainer* m_sharedData;
 };
 
-} // namespace KIPIAdvancedSlideshowPlugin
+}  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif //SLIDESHOWCONFIG_H
+#endif  // PLUGIN_ADVANCEDSLIDESHOW_H

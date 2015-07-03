@@ -23,7 +23,7 @@
 
 #define ICONSIZE 256
 
-#include "maindialog.moc"
+#include "maindialog.h"
 
 // Qt includes
 
@@ -37,22 +37,22 @@
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QSvgRenderer>
+#include <QUrl>
+#include <QIcon>
 
 // KDE includes
 
-#include <kdebug.h>
-#include <QIcon>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <QUrl>
 #include <kstandarddirs.h>
 
 // Libkipi includes
 
-#include <imagecollection.h>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "commoncontainer.h"
 #include "advanceddialog.h"
 #include "slideshow.h"
@@ -325,7 +325,7 @@ bool MainDialog::updateUrlList()
             return false;
         }
 
-        m_sharedData->urlList.append(url);  // Input images files.
+        m_sharedData->urlList.append(QUrl::fromLocalFile(url));  // Input images files.
         ++it;
     }
 
@@ -363,12 +363,12 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     }
 }
 
-void MainDialog::addItems(const QUrl::List& fileList)
+void MainDialog::addItems(const QList<QUrl>& fileList)
 {
     if (fileList.isEmpty())
         return;
 
-    QUrl::List files = fileList;
+    QList<QUrl> files = fileList;
 
     m_ImagesFilesListBox->slotAddImages(files);
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
@@ -432,7 +432,7 @@ void MainDialog::slotUseMillisecondsToggled()
 
 void MainDialog::slotSelection()
 {
-    QUrl::List urlList;
+    QList<QUrl> urlList;
 
     if (m_selectedFilesButton->isChecked())
     {
@@ -441,7 +441,7 @@ void MainDialog::slotSelection()
     }
     else if (m_allFilesButton->isChecked())
     {
-        QUrl currentPath = m_sharedData->iface()->currentAlbum().path();
+        QUrl currentPath = m_sharedData->iface()->currentAlbum().url();
         QList<KIPI::ImageCollection> albumList;
         albumList        = m_sharedData->iface()->allAlbums();
 
@@ -452,7 +452,7 @@ void MainDialog::slotSelection()
 
         for (it = albumList.begin(); it != albumList.end(); ++it)
         {
-            if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
+            if (currentPath.isParentOf((*it).url()) && !((*it).url() == currentPath))
             {
                 urlList += (*it).images();
             }

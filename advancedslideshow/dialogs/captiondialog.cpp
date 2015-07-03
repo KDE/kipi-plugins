@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "captiondialog.moc"
+#include "captiondialog.h"
 
 // Qt includes
 

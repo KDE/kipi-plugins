@@ -30,10 +30,10 @@
 
 // Phonon includes
 
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
-#include <Phonon/Global>
-#include <Phonon/VolumeSlider>
+#include <phonon/mediaobject.h>
+#include <phonon/audiooutput.h>
+#include <phonon/globalconfig.h>
+#include <phonon/volumeslider.h>
 
 // KDE includes
 
@@ -54,10 +54,10 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 
 public:
 
-    PlaybackWidget(QWidget* const, QUrl::List&, SharedContainer* const sharedData);
+    PlaybackWidget(QWidget* const, QList<QUrl>&, SharedContainer* const sharedData);
     ~PlaybackWidget();
 
-    void enqueue(const QUrl::List&);
+    void enqueue(const QList<QUrl>&);
     bool canHide() const;
     bool isPaused() const;
     void setPaused(bool);
@@ -88,7 +88,7 @@ private:
 private:
 
     SharedContainer*     m_sharedData;
-    QUrl::List           m_urlList;
+    QList<QUrl>           m_urlList;
     int                  m_currIndex;
     bool                 m_stopCalled;
     bool                 m_isZeroTime;

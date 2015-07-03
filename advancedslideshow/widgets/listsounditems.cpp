@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "listsounditems.moc"
+#include "listsounditems.h"
 
 // Qt includes
 
@@ -33,10 +33,11 @@
 #include <QDragEnterEvent>
 #include <QIcon>
 #include <QBrush>
+#include <QMimeData>
+#include <QUrl>
 
 // KDE includes
 
-#include <QUrl>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
@@ -153,7 +154,7 @@ void ListSoundItems::dragMoveEvent(QDragMoveEvent* e)
 void ListSoundItems::dropEvent(QDropEvent* e)
 {
     QList<QUrl> list = e->mimeData()->urls();
-    QUrl::List urls;
+    QList<QUrl> urls;
 
     foreach(const QUrl &url, list)
     {
@@ -169,9 +170,9 @@ void ListSoundItems::dropEvent(QDropEvent* e)
         emit signalAddedDropItems(urls);
 }
 
-QUrl::List ListSoundItems::fileUrls()
+QList<QUrl> ListSoundItems::fileUrls()
 {
-    QUrl::List files;
+    QList<QUrl> files;
 
     for (int i = 0; i < count(); ++i)
     {

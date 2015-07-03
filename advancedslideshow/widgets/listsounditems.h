@@ -37,8 +37,8 @@
 
 // Phonon includes
 
-#include <Phonon/Global>
-#include <Phonon/MediaObject>
+#include <phonon/globalconfig.h>
+#include <phonon/mediaobject.h>
 
 // KDE includes
 
@@ -91,11 +91,11 @@ public:
 
 public:
 
-    QUrl::List fileUrls();
+    QList<QUrl> fileUrls();
 
 Q_SIGNALS:
 
-    void signalAddedDropItems(const QUrl::List& filesUrl);
+    void signalAddedDropItems(const QList<QUrl>& filesUrl);
 
 protected:
 

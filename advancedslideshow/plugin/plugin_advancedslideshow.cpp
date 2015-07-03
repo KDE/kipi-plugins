@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "plugin_advancedslideshow.moc"
+#include "plugin_advancedslideshow.h"
 
 // C ANSI includes
 
@@ -40,26 +40,27 @@ extern "C"
 #include <QList>
 #include <QPair>
 #include <QStringList>
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <QAction>
-#include <QApplication>
 #include <kgenericfactory.h>
 #include <kactioncollection.h>
 #include <klibloader.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include <kconfiggroup.h>
 #include <kmessagebox.h>
 
 // Libkipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "slideshowconfig.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
@@ -71,13 +72,11 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 K_PLUGIN_FACTORY( AdvancedSlideshowFactory, registerPlugin<Plugin_AdvancedSlideshow>(); )
-K_EXPORT_PLUGIN ( AdvancedSlideshowFactory("kipiplugin_advancedslideshow") )
 
 Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* const parent, const QVariantList &/*args*/)
-    : KIPI::Plugin(AdvancedSlideshowFactory::componentData(),
-                   parent, "AdvancedSlideshow")
+    : KIPI::Plugin(parent, "AdvancedSlideshow")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_AdvancedSlideshow plugin loaded" ;
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_AdvancedSlideshow plugin loaded" ;
     m_sharedData = 0;
     m_interface  = 0;
 
@@ -102,7 +101,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
         return;
     }
 
-    m_urlList = QUrl::List();
+    m_urlList = QList<QUrl>();
 
     connect(m_interface, SIGNAL(currentAlbumChanged(bool)),
             this, SLOT(slotAlbumChanged(bool)));
@@ -117,7 +116,7 @@ void Plugin_AdvancedSlideshow::setupActions()
     m_actionSlideShow = new QAction(this);
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(QIcon::fromTheme("kipi-slideshow"));
-    m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
+    m_actionSlideShow->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
     m_actionSlideShow->setEnabled(false);
 
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
@@ -210,7 +209,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     FileList                     fileList;
     QStringList                  commentsList;
 
-    for (QUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
+    for (QList<QUrl>::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
     {
         fileList.append(FileAnglePair((*urlIt).toLocalFile(), 0));
         commentsList.append(QString());
@@ -277,3 +276,5 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin
+
+#include "plugin_advancedslideshow.moc"

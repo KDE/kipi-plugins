@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideshow.moc"
+#include "slideshow.h"
 
 // C++ includes
 
@@ -55,7 +55,7 @@
 
 // libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 #include <QApplication>
 #include <QDesktopWidget>
 

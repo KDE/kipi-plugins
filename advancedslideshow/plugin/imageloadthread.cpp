@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "imageloadthread.moc"
+#include "imageloadthread.h"
 
 // Qt includes
 
@@ -33,15 +33,15 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdebug.h>
 
 // LibKDcraw includes
 
-#include <version.h>
-#include <kdcraw.h>
+#include <libkdcraw_version.h>
+#include <KDCRAW/KDcraw>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "slideshowkb.h"
 #include "kpmetadata.h"
 
@@ -167,7 +167,7 @@ bool ImageLoadThread::loadImage()
     QImage              image;
 
     // check if it's a RAW file.
-    if (KPMetadata::isRawFile(path))
+    if (KPMetadata::isRawFile(QUrl::fromLocalFile(path)))
     {
         // it's a RAW file, use the libkdcraw loader
         KDcraw::loadRawPreview(image, path);

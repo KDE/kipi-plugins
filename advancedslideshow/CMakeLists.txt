@@ -49,6 +49,7 @@ target_link_libraries(kipiplugin_advancedslideshow
                       KF5::Parts
 
                       Qt5::OpenGL
+                      Qt5::Svg
                       ${OPENGL_LIBRARIES}
                       KF5::Kipi
                       KF5::KExiv2

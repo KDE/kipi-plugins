@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideplaybackwidget.moc"
+#include "slideplaybackwidget.h"
 
 // Qt includes
 
@@ -30,13 +30,17 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QPixmap>
+#include <QApplication>
+#include <QIcon>
 
 // KDE includes
 
-#include <QApplication>
-#include <QIcon>
+#include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <kdebug.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {

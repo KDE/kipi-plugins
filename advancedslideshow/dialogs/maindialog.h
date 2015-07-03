@@ -87,7 +87,7 @@ private:
     void loadEffectNames();
     void loadEffectNamesGL();
     void showNumberImages();
-    void addItems(const QUrl::List& fileList);
+    void addItems(const QList<QUrl>& fileList);
 
 private:
 

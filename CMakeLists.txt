@@ -89,6 +89,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Gui
              Xml
              Test
+             Svg
              OPTIONAL_COMPONENTS OpenGL
 )
 
@@ -124,6 +125,7 @@ if(KF5Kipi_FOUND)
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
+    find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
 #    find_package(Qca-qt5)                                                      # For Shwup and YandexFotki.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
@@ -173,21 +175,22 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.5.0)"                   "Kipi-plugins will be compiled without libmediawiki support."   KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                  "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 5.5.0)"                   "Kipi-plugins will be compiled without libksane support."       KF5Sane_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
+
+#     PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         QCA2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.6.0)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"  "http://pim.kde.org"                                              "(version >= 4.3.0)"                  "Kipi-plugins will be compiled without libkdepimlibs support."  KDEPIMLIBS_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KGEOMAP_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libhupnp"       "http://www.herqq.org"                                            "(version >= 2.0.0)"                  "Internal version used instead"                                 HUPNP_FOUND AND HUPNPAV_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtsoap"      "https://github.com/commontk/QtSOAP"                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libqtsoap support."      QTSOAP_FOUND)
-#
-#     PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
+
+    PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
 
@@ -244,17 +247,17 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KF5Sane_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
+    PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
+#     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
+#     PRINT_COMPONENT_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
+#     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
+#     PRINT_COMPONENT_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
+#     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
+#     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
+#     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("DLNAExport"         (HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
 #     PRINT_COMPONENT_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("GoogleDrive"        QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("GPSSync"            KGEOMAP_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #
 #
 #     # Set QtGStreamer API version --------------------------------------------------------------------------
@@ -345,25 +348,13 @@ if(KF5Kipi_FOUND)
         add_subdirectory(flashexport)
         add_subdirectory(expoblending)
         add_subdirectory(metadataedit)
-#
-#         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
-#             add_subdirectory(dlnaexport)
-#         endif()
-#
-#         if(KDEPIMLIBS_FOUND)
-#             add_subdirectory(calendar)
-#         endif()
-#
-#         if(OpenCV_FOUND)
-#             add_subdirectory(removeredeyes)
-#         endif()
 
         if(KF5Sane_FOUND)
             add_subdirectory(acquireimages)
         endif()
 
         if(BUILD_VIEWERS)
-#             add_subdirectory(advancedslideshow)
+            add_subdirectory(advancedslideshow)
             add_subdirectory(imageviewer)
         endif()
 
@@ -379,11 +370,6 @@ if(KF5Kipi_FOUND)
             add_subdirectory(panorama)
         endif()
 
-#         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-#             add_subdirectory(videoslideshow)
-#         endif()
-
-# Plugins to re-factoring.
         add_subdirectory(flickrexport)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
@@ -397,9 +383,7 @@ if(KF5Kipi_FOUND)
 #         endif()
 #
 #         if(QJSON_FOUND)
-#             add_subdirectory(debianscreenshots)
 #             add_subdirectory(facebook)
-#             add_subdirectory(imgurexport)
 #             add_subdirectory(dropbox)
 #         endif()
 
@@ -412,6 +396,7 @@ if(KF5Kipi_FOUND)
         endif()
 
 # Plugins in pending state
+#
 #         # Currently the cmake module distributed w/ cmake uses a different variable
 #         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
 #         # distributed w/ kdelibs LIBEXSLT_LIBRARIES.
@@ -424,6 +409,27 @@ if(KF5Kipi_FOUND)
 #         endif()
 #
 #         add_subdirectory(photolayoutseditor)
+#
+#         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+#             add_subdirectory(videoslideshow)
+#         endif()
+#
+#         if(QJSON_FOUND)
+#             add_subdirectory(debianscreenshots)
+#             add_subdirectory(imgurexport)
+#         endif()
+#
+#         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
+#             add_subdirectory(dlnaexport)
+#         endif()
+#
+#         if(KDEPIMLIBS_FOUND)
+#             add_subdirectory(calendar)
+#         endif()
+#
+#         if(OpenCV_FOUND)
+#             add_subdirectory(removeredeyes)
+#         endif()
 
     endif()
 

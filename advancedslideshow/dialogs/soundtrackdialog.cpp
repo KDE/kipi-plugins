@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "soundtrackdialog.moc"
+#include "soundtrackdialog.h"
 
 #ifdef HAVE_X11
 #include <fixx11h.h>
@@ -30,21 +30,20 @@
 
 #include <QPointer>
 #include <QTime>
+#include <QIcon>
 
 // KDE includes
 
-#include <kdebug.h>
 #include <kfile.h>
 #include <kfiledialog.h>
-#include <QIcon>
 #include <kmessagebox.h>
 #include <kpagewidget.h>
 
 // Phonon includes
 
-#include <Phonon/AudioOutput>
-#include <Phonon/BackendCapabilities>
-#include <Phonon/MediaObject>
+#include <phonon/audiooutput.h>
+#include <phonon/backendcapabilities.h>
+#include <phonon/mediaobject.h>
 
 // Local includes
 
@@ -55,7 +54,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview(QWidget* const parent, QUrl::List& urls, SharedContainer* const sharedData)
+SoundtrackPreview::SoundtrackPreview(QWidget* const parent, QList<QUrl>& urls, SharedContainer* const sharedData)
     : KDialog(parent)
 {
     setModal(true);
@@ -121,8 +120,8 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
     connect( m_SoundFilesListBox, SIGNAL(currentRowChanged(int)),
              this, SLOT(slotSoundFilesSelected(int)) );
 
-    connect( m_SoundFilesListBox, SIGNAL(signalAddedDropItems(QUrl::List)),
-             this, SLOT(slotAddDropItems(QUrl::List)));
+    connect( m_SoundFilesListBox, SIGNAL(signalAddedDropItems(QList<QUrl>)),
+             this, SLOT(slotAddDropItems(QList<QUrl>)));
 
     connect( m_SoundFilesButtonAdd, SIGNAL(clicked()),
              this, SLOT(slotSoundFilesButtonAdd()) );
@@ -183,14 +182,14 @@ void SoundtrackDialog::saveSettings()
     m_sharedData->soundtrackUrls             = m_urlList;
 }
 
-void SoundtrackDialog::addItems(const QUrl::List& fileList)
+void SoundtrackDialog::addItems(const QList<QUrl>& fileList)
 {
     if (fileList.isEmpty())
         return;
 
-    QUrl::List Files = fileList;
+    QList<QUrl> Files = fileList;
 
-    for (QUrl::List::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
     {
         QUrl currentFile             = *it;
         QUrl path                    = QUrl(currentFile.path().section('/', 0, -1));
@@ -251,7 +250,7 @@ void SoundtrackDialog::updateTracksNumber()
 
 void SoundtrackDialog::updateFileList()
 {
-    QUrl::List files = m_SoundFilesListBox->fileUrls();
+    QList<QUrl> files = m_SoundFilesListBox->fileUrls();
     m_urlList        = files;
 
     m_SoundFilesButtonUp->setEnabled(!files.isEmpty());
@@ -322,7 +321,7 @@ void SoundtrackDialog::slotSoundFilesSelected( int row )
     }
 }
 
-void SoundtrackDialog::slotAddDropItems(const QUrl::List& filesUrl)
+void SoundtrackDialog::slotAddDropItems(const QList<QUrl>& filesUrl)
 {
     if (!filesUrl.isEmpty())
     {
@@ -342,7 +341,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd()
     dlg->setWindowTitle(i18n("Select sound files"));
     dlg->exec();
 
-    QUrl::List urls = dlg->selectedUrls();
+    QList<QUrl> urls = dlg->selectedUrls();
 
     if (!urls.isEmpty())
     {
@@ -442,7 +441,7 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
 
 void SoundtrackDialog::slotSoundFilesButtonLoad()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
+    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), this);
     dlg->setOperationMode(KFileDialog::Opening);
     dlg->setMode(KFile::File);
     dlg->setFilter(i18n("*.m3u|Playlist (*.m3u)"));
@@ -463,7 +462,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
         if (file.open(QIODevice::ReadOnly|QIODevice::Text))
         {
             QTextStream in(&file);
-            QUrl::List playlistFiles;
+            QList<QUrl> playlistFiles;
 
             while (!in.atEnd())
             {
@@ -498,7 +497,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
 
 void SoundtrackDialog::slotSoundFilesButtonSave()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
+    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), this);
     dlg->setOperationMode(KFileDialog::Saving);
     dlg->setMode(KFile::File);
     dlg->setFilter(i18n("*.m3u|Playlist (*.m3u)"));
@@ -519,7 +518,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
         if (file.open(QIODevice::WriteOnly|QIODevice::Text))
         {
             QTextStream out(&file);
-            QUrl::List playlistFiles = m_SoundFilesListBox->fileUrls();
+            QList<QUrl> playlistFiles = m_SoundFilesListBox->fileUrls();
 
             for (int i = 0; i < playlistFiles.count(); ++i)
             {
@@ -548,7 +547,7 @@ void SoundtrackDialog::slotSoundFilesButtonReset()
 
 void SoundtrackDialog::slotPreviewButtonClicked()
 {
-    QUrl::List urlList;
+    QList<QUrl> urlList;
 
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {
@@ -561,7 +560,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
             return;
         }
 
-        urlList.append(path);  // Input sound files.
+        urlList.append(QUrl::fromLocalFile(path));  // Input sound files.
     }
 
     if ( urlList.isEmpty() )

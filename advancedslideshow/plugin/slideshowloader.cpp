@@ -33,16 +33,16 @@
 
 // KDE includes
 
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 
 // LibKDcraw includes
 
-#include <version.h>
-#include <kdcraw.h>
+#include <libkdcraw_version.h>
+#include <KDCRAW/KDcraw>
 
 // Libkipi includes
 
-#include <interface.h>
+#include <KIPI/Interface>
 
 // Local includes
 
@@ -185,20 +185,20 @@ void SlideShowLoader::next()
 
     m_threadLock->lock();
 
-    LoadThread* const oldThread = m_loadingThreads->value(m_pathList[victim].first);
+    LoadThread* const oldThread = m_loadingThreads->value(QUrl::fromLocalFile(m_pathList[victim].first));
 
     if (oldThread)
         oldThread->wait();
 
     delete oldThread;
 
-    m_loadingThreads->remove(m_pathList[victim].first);
+    m_loadingThreads->remove(QUrl::fromLocalFile(m_pathList[victim].first));
     m_imageLock->lock();
-    m_loadedImages->remove(m_pathList[victim].first);
+    m_loadedImages->remove(QUrl::fromLocalFile(m_pathList[victim].first));
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    QUrl filePath                            = QUrl(m_pathList[newBorn].first);
+    QUrl filePath                            = QUrl::fromLocalFile((m_pathList[newBorn].first));
     KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
@@ -226,20 +226,20 @@ void SlideShowLoader::prev()
     m_threadLock->lock();
     m_imageLock->lock();
 
-    LoadThread* const oldThread = m_loadingThreads->value(m_pathList[victim].first);
+    LoadThread* const oldThread = m_loadingThreads->value(QUrl::fromLocalFile(m_pathList[victim].first));
 
     if (oldThread)
         oldThread->wait();
 
     delete oldThread;
 
-    m_loadingThreads->remove(m_pathList[victim].first);
-    m_loadedImages->remove(m_pathList[victim].first);
+    m_loadingThreads->remove(QUrl::fromLocalFile(m_pathList[victim].first));
+    m_loadedImages->remove(QUrl::fromLocalFile(m_pathList[victim].first));
 
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    QUrl filePath                            = QUrl(m_pathList[newBorn].first);
+    QUrl filePath                            = QUrl::fromLocalFile(m_pathList[newBorn].first);
     KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
@@ -257,7 +257,7 @@ QImage SlideShowLoader::getCurrent()
 {
     checkIsIn(m_currIndex);
     m_imageLock->lock();
-    QImage returned = (*m_loadedImages)[m_pathList[m_currIndex].first];
+    QImage returned = (*m_loadedImages)[QUrl::fromLocalFile(m_pathList[m_currIndex].first)];
     m_imageLock->unlock();
 
     return returned;
@@ -265,22 +265,22 @@ QImage SlideShowLoader::getCurrent()
 
 QString SlideShowLoader::currFileName() const
 {
-    return QUrl(m_pathList[m_currIndex].first).fileName();
+    return QUrl::fromLocalFile(m_pathList[m_currIndex].first).fileName();
 }
 
 QUrl SlideShowLoader::currPath() const
 {
-    return QUrl(m_pathList[m_currIndex].first);
+    return QUrl::fromLocalFile(m_pathList[m_currIndex].first);
 }
 
 void SlideShowLoader::checkIsIn(int index)
 {
     m_threadLock->lock();
 
-    if (m_loadingThreads->contains(m_pathList[index].first))
+    if (m_loadingThreads->contains(QUrl::fromLocalFile(m_pathList[index].first)))
     {
-        if ((*m_loadingThreads)[m_pathList[index].first]->isRunning())
-            (*m_loadingThreads)[m_pathList[index].first]->wait();
+        if ((*m_loadingThreads)[QUrl::fromLocalFile(m_pathList[index].first)]->isRunning())
+            (*m_loadingThreads)[QUrl::fromLocalFile(m_pathList[index].first)]->wait();
 
         m_threadLock->unlock();
     }
@@ -292,9 +292,9 @@ void SlideShowLoader::checkIsIn(int index)
 
         LoadThread* const newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
 
-        m_loadingThreads->insert(m_pathList[index].first, newThread);
+        m_loadingThreads->insert(QUrl::fromLocalFile(m_pathList[index].first), newThread);
         newThread->start();
-        (*m_loadingThreads)[m_pathList[index].first]->wait();
+        (*m_loadingThreads)[QUrl::fromLocalFile(m_pathList[index].first)]->wait();
         m_threadLock->unlock();
     }
 }

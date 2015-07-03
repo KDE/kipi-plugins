@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "slideshowconfig.moc"
+#include "slideshowconfig.h"
 
 // Qt includes
 
@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <QIcon>
 #include <kiconloader.h>
 #include <QMenu>
@@ -40,8 +40,8 @@
 
 // Libkipi includes
 
-#include <interface.h>
-#include <imagecollection.h>
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
 
 // local includes
 
@@ -79,10 +79,10 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     d->config     = new KConfig("kipirc");
     d->sharedData = sharedData;
 
-    setButtons(Help | Close | User1);
-    setDefaultButton(User1);
-    setButtonIcon(User1, QIcon::fromTheme("system-run"));
-    setButtonText(User1, i18n("Start Slideshow"));
+    setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Ok | QDialogButtonBox::Apply);
+    button(QDialogButtonBox::Apply)->setDefault(true);
+    button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme("system-run"));
+    button(QDialogButtonBox::Apply)->setText(i18n("Start Slideshow"));
     setFaceType(List);
     setModal(true);
 
@@ -110,17 +110,19 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     // --- About --
 
-    KPAboutData* about = new KPAboutData(ki18n("Advanced Slideshow"),
-                                         0,
-                                         KAboutData::License_GPL,
-                                         ki18n("A Kipi plugin for image slideshows"),
-                                         ki18n("(c) 2003-2004, Renchi Raju\n"
-                                               "(c) 2006-2009, Valerio Fuoglio"));
+    KPAboutData* const about = new KPAboutData(ki18n("Advanced Slideshow"),
+                                               0,
+                                               KAboutLicense::GPL,
+                                               ki18n("A Kipi plugin to slide images with special effects"),
+                                               ki18n("(c) 2003-2004, Renchi Raju\n"
+                                                     "(c) 2006-2009, Valerio Fuoglio"));
 
-    about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
+    about->addAuthor(ki18n("Renchi Raju").toString(),
+                     ki18n("Developper").toString(),
                      "renchi dot raju at gmail dot com");
 
-    about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Valerio Fuoglio").toString(),
+                     ki18n("Developper").toString(),
                      "valerio dot fuoglio at gmail dot com");
 
     about->setHandbookEntry("slideshow");
@@ -128,11 +130,8 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     // Slot connections
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotStartClicked()));
-
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(buttonBox()->button(QDialogButtonBox::Apply), &QPushButton::clicked,
+            this, &SlideShowConfig::slotStartClicked);
 
     readSettings();
 }
@@ -199,13 +198,13 @@ void SlideShowConfig::readSettings()
 
     if (d->sharedData->soundtrackRememberPlaylist)
     {
-        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().path().toLocalFile());
+        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().url().toLocalFile());
         KConfigGroup soundGrp = d->config->group(groupName);
 
         // load and check playlist files, if valid, add to tracklist widget
-        QStringList playlistFiles = soundGrp.readEntry("Tracks", QStringList());
+        QList<QUrl> playlistFiles = soundGrp.readEntry("Tracks", QList<QUrl>());
 
-        foreach(const QString& playlistFile, playlistFiles)
+        foreach(const QUrl& playlistFile, playlistFiles)
         {
             QUrl file(playlistFile);
             QFileInfo fi(file.toLocalFile());
@@ -278,9 +277,9 @@ void SlideShowConfig::saveSettings()
     // of older track entries
     if (d->sharedData->soundtrackRememberPlaylist && d->sharedData->soundtrackPlayListNeedsUpdate)
     {
-        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().path().toLocalFile());
+        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().url().toLocalFile());
         KConfigGroup soundGrp = d->config->group(groupName);
-        soundGrp.writeEntry("Tracks", d->sharedData->soundtrackUrls.toStringList());
+        soundGrp.writeEntry("Tracks", d->sharedData->soundtrackUrls);
     }
 
     d->config->sync();
@@ -296,10 +295,10 @@ void SlideShowConfig::slotStartClicked()
     return;
 }
 
-void SlideShowConfig::slotClose()
+void SlideShowConfig::closeEvent(QCloseEvent* e)
 {
     saveSettings();
-    close();
+    e->accept();
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

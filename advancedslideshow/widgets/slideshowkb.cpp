@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-#include "slideshowkb.moc"
+#include "slideshowkb.h"
 
 // C++ includes
 
@@ -49,7 +49,7 @@
 #include <kconfiggroup.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
-#include <kdebug.h>
+#include "kipiplugins_debug.h"
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 #include <QDesktopWidget>
