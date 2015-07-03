@@ -43,7 +43,6 @@
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <KWindowConfig>
 

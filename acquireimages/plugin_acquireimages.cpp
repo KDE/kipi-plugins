@@ -29,13 +29,10 @@
 
 // KDE includes
 
-#include <kactioncollection.h>
-#include <kconfig.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-#include <kwindowsystem.h>
+#include <KPluginFactory>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KWindowSystem>
 
 // LibKSane includes
 
