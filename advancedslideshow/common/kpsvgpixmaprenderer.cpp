@@ -21,8 +21,7 @@
 
 #include "kpsvgpixmaprenderer.h"
 
-#include <kstandarddirs.h>
-
+#include <QStandardPaths>
 #include <QPainter>
 #include <QSvgRenderer>
 
@@ -33,7 +32,7 @@ KPSvgPixmapRenderer::KPSvgPixmapRenderer(int width, int height, const QString& f
 {
     if (m_filename.isEmpty())
     {
-        m_filename = KStandardDirs::locate("data", "kf5/kipi/pics/kipi-icon.svg");
+        m_filename = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kf5/kipi/pics/kipi-icon.svg");
     }
 }
 
