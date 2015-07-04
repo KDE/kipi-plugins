@@ -24,4 +24,7 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 009 ==> 206114 - Connection to remote gallery hangs.
 010 ==> 148521 - Gallery export does not see deep directories.
 011 ==> 202284 - Export problem using port 990.
-012 ==> 
+012 ==> 332430 - Gwenview crashes when accidentally converting to black and white.
+013 ==> 120501 - Smart rotation (first keystroke 90°, second keystroke 180°).
+014 ==> 315489 - Gwenview crash.
+015 ==> 
