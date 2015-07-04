@@ -31,5 +31,18 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 016 ==> 333734 - Improve image filters preview.
 017 ==> 107541 - Add a process console and scripting support.
 018 ==> 264075 - Usability issues in batch resizing dialog.
-019 ==> 
+019 ==> 345198 - Batch rename is *extremely* slow.
+020 ==> 252181 - Resizing images: "Start" button hidden after non-existent folder has been selected.
+021 ==> 308019 - Gwenview crash after using Plugins->Collections->Border images.
+022 ==> 125039 - Rename Images cancel button do not cancel but stop.
+023 ==> 126113 - schema of renaming images: resetting counter.
+024 ==> 302714 - Crash when selecting Tools->Image Effects.
+025 ==> 144528 - in a batch process the resize images in 2d produces black images
+026 ==> 152210 - Metadata lost when converting from png to jpeg (IPTC thumbnail too big).
+027 ==> 152905 - Batch processes does not work properly if target directory is outside Album Library Path.
+028 ==> 203379 - Error while converting RAW images to JPEG.
+029 ==> 161347 - kipi-plugins doesn't clean properly ~/tmp/kde-username.
+030 ==> 177175 - Kipi resize image prepare to print 9x13 results in wrong 
+031 ==> 213172 - kipi convert images: png conversion not deterministic.
+032 ==> 
 
