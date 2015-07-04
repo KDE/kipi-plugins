@@ -44,7 +44,6 @@
 
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
 
 // Libkipi includes
 
@@ -60,6 +59,7 @@
 #include "slideshowkb.h"
 #include "kpimagedialog.h"
 #include "kpimageslist.h"
+#include "common/kpsvgpixmaprenderer.h"
 
 using namespace KIPIPlugins;
 
@@ -68,6 +68,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
     : QWidget(parent)
+    , m_noPreviewPixmap(ICONSIZE, ICONSIZE)
 {
     setupUi(this);
 
@@ -89,16 +90,6 @@ MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
 
     m_previewLabel->setMinimumWidth(ICONSIZE);
     m_previewLabel->setMinimumHeight(ICONSIZE);
-
-    // --------------------------------------------------------
-
-    // Prepare a preview pixmap (KIPI logo) for no image selection
-    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-icon.svg") );
-    m_noPreviewPixmap = QPixmap(ICONSIZE, ICONSIZE);
-    m_noPreviewPixmap.fill(Qt::transparent);
-    QPaintDevice* pdp = &m_noPreviewPixmap;
-    QPainter painter(pdp);
-    svgRenderer.render(&painter);
 }
 
 MainDialog::~MainDialog()
@@ -337,7 +328,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     if (!item || m_ImagesFilesListBox->imageUrls().isEmpty())
     {
         m_label7->setText("");
-        m_previewLabel->setPixmap(m_noPreviewPixmap);
+        m_previewLabel->setPixmap(m_noPreviewPixmap.getPixmap());
         return;
     }
 

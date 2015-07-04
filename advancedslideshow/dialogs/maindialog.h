@@ -36,6 +36,7 @@
 // Local includes
 
 #include "ui_maindialog.h"
+#include "common/kpsvgpixmaprenderer.h"
 
 class QTreeWidgetItem;
 
@@ -94,7 +95,7 @@ private:
     SharedContainer*           m_sharedData;
     KIO::PreviewJob*           m_thumbJob;
     QTime                      m_totalTime;
-    QPixmap                    m_noPreviewPixmap;
+    KPSvgPixmapRenderer        m_noPreviewPixmap;
     KIPIPlugins::KPImagesList* m_ImagesFilesListBox;
 };
 

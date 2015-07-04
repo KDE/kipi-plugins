@@ -51,7 +51,6 @@
 #include <QApplication>
 #include <kglobalsettings.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 
 // libkipi includes
 
@@ -66,6 +65,7 @@
 #include "slideshowloader.h"
 #include "playbackwidget.h"
 #include "kpimageinfo.h"
+#include "common/kpsvgpixmaprenderer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -1316,13 +1316,7 @@ void SlideShow::paintEvent( QPaintEvent* )
         p.drawText( 100, 100, i18n( "Slideshow Completed" ) );
         p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click to Exit..." ) );
 
-        QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-icon.svg") );
-        QPixmap kipiLogoPixmap = QPixmap( width()/6, width()/6 );
-        kipiLogoPixmap.fill( Qt::black );
-        QPaintDevice* pdp = &kipiLogoPixmap;
-        QPainter painter( pdp );
-        svgRenderer.render( &painter );
-
+        QPixmap kipiLogoPixmap = KPSvgPixmapRenderer(width() / 6, width() / 6).getPixmap();
         p.drawPixmap( width()-( width()/12 )-kipiLogoPixmap.width(),
                       height()-( height()/12 )-kipiLogoPixmap.height(),
                       kipiLogoPixmap );

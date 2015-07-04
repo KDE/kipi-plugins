@@ -32,6 +32,8 @@ set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            plugin/kbeffect.cpp
                                            plugin/imageloadthread.cpp
                                            plugin/plugin_advancedslideshow.cpp
+
+                                           common/kpsvgpixmaprenderer.cpp
    )
 
 ki18n_wrap_ui(kipiplugin_advancedslideshow_PART_SRCS
