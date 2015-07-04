@@ -9,4 +9,14 @@ General : plugin obsolete/unmaintained and removed : BatchProcessImages, JPEGLos
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 348340 - Progress halts when finished resizing images.
-002 ==> 
+002 ==> 225409 - Gallery tool should save multiples gallery settings.
+003 ==> 229341 - Add export support for Gallery3.
+004 ==> 257166 - Unable to create a new album or upload photos when gallery use https.
+005 ==> 195136 - Hard coded GALLERYSID cookie name breaks compatability with other G2 API compatible backends.
+006 ==> 257184 - When browsing twice an album, images list contains duplicates.
+007 ==> 094496 - Support for gallery photo addition order override.
+008 ==> 206121 - digiKam export to gallery fails "Failed to login into remote gallery".
+009 ==> 206114 - Connection to remote gallery hangs.
+010 ==> 148521 - Gallery export does not see deep directories.
+011 ==> 202284 - Export problem using port 990.
+012 ==> 
