@@ -44,5 +44,9 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 029 ==> 161347 - kipi-plugins doesn't clean properly ~/tmp/kde-username.
 030 ==> 177175 - Kipi resize image prepare to print 9x13 results in wrong 
 031 ==> 213172 - kipi convert images: png conversion not deterministic.
-032 ==> 
+032 ==> 289181 - Raw processor rotates images without Orientation EXIF tag.
+033 ==> 211524 - Raw batch converter kipi can't get rid of scroll bar.
+034 ==> 215037 - Batch RAW converter crashed after open with NEF file.
+035 ==> 246437 - digiKam crashes when loading a raw file.
+036 ==> 
 
