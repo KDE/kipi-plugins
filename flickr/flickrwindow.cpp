@@ -64,7 +64,7 @@
 #include "ui_flickralbumdialog.h"
 #include "kipiplugins_debug.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* const dlg)
@@ -917,4 +917,4 @@ void FlickrWindow::slotReloadPhotoSetRequest()
     m_talker->listPhotoSets();
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

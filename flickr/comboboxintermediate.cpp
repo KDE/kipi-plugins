@@ -28,7 +28,7 @@
 #include <QString>
 #include <QVariant>
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 ComboBoxIntermediate::ComboBoxIntermediate(QWidget* const parent, const QString& text)
@@ -81,4 +81,4 @@ void ComboBoxIntermediate::slotIndexChanged(int)
     }
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

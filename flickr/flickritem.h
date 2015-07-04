@@ -32,7 +32,7 @@
 
 #include "flickrlist.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class GPhoto
@@ -152,6 +152,6 @@ public:
     QString description;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif /* FLICKRITEM_H */

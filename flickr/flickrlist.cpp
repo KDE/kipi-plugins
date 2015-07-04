@@ -38,7 +38,7 @@
 #include "kipiplugins_debug.h"
 #include "comboboxdelegate.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 FlickrList::FlickrList(QWidget* const parent, bool is_23)
@@ -599,4 +599,4 @@ FlickrList::ContentType FlickrListViewItem::contentType() const
     return m_contentType;
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

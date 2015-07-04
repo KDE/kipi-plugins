@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2005-07-07
+ * Date        : 2015-16-05
  * Description : a kipi plugin to export images to Flickr web service
  *
- * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,42 +20,47 @@
  *
  * ============================================================ */
 
-#ifndef MPFORM_H
-#define MPFORM_H
+#ifndef SELECTUSERDLG_H
+#define SELECTUSERDLG_H
 
 // Qt includes
 
-#include <QByteArray>
 #include <QString>
+#include <QDialog>
+#include <QComboBox>
 
-namespace KIPIFlickrExportPlugin
+class QLabel;
+
+namespace KIPIFlickrPlugin
 {
 
-class MPForm
+class SelectUserDlg : public QDialog
 {
-
+    Q_OBJECT
 public:
 
-    MPForm();
-    ~MPForm();
+    SelectUserDlg(QWidget* const parent, const QString& serviceName);
+    ~SelectUserDlg();
 
-    void finish();
-    void reset();
-
-    bool addPair(const QString& name, const QString& value, const QString& type);
-    bool addFile(const QString& name, const QString& path);
-    
-    QString    randomString(const int& length);
-    QString    contentType() const;
-    QByteArray formData()    const;
-    QString    boundary()    const;
+    void           reactivate();
+    QString        getUname() const;
+    SelectUserDlg* getDlg();
 
 private:
 
-    QByteArray m_buffer;
-    QByteArray m_boundary;
+    QComboBox*   m_userComboBox;
+    QLabel*      m_label;
+    QPushButton* m_okButton;
+
+    QString      m_uname;
+    QString      m_serviceName;
+
+protected Q_SLOTS:
+
+    void slotOkClicked();
+    void slotNewAccountClicked();
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
-#endif /* MPFORM_H */
+#endif // SELECTUSERDLG_H

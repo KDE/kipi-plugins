@@ -43,7 +43,7 @@
 
 #include "kipiplugins_debug.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 MPForm::MPForm()
@@ -184,4 +184,4 @@ QByteArray MPForm::formData() const
     return m_buffer;
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

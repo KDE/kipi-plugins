@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_FLICKREXPORT_H
-#define PLUGIN_FLICKREXPORT_H
+#ifndef PLUGIN_FLICKR_H
+#define PLUGIN_FLICKR_H
 
 // Qt includes
 
@@ -35,20 +35,20 @@
 
 using namespace KIPI;
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class FlickrWindow;
 class SelectUserDlg;
 
-class Plugin_FlickrExport : public Plugin
+class Plugin_Flickr : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_FlickrExport(QObject* const parent, const QVariantList& args);
-    ~Plugin_FlickrExport();
+    Plugin_Flickr(QObject* const parent, const QVariantList& args);
+    ~Plugin_Flickr();
 
     void setup(QWidget* const);
 
@@ -77,6 +77,6 @@ private:
     SelectUserDlg* selectZoomr;
 };
 
-} //namespace KIPIFlickrExportPlugin
+} //namespace KIPIFlickrPlugin
 
-#endif // PLUGIN_FLICKREXPORT_H
+#endif // PLUGIN_FLICKR_H

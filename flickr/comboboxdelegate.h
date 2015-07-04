@@ -41,7 +41,7 @@
 
 using namespace KIPIPlugins;
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class ComboBoxDelegate : public QAbstractItemDelegate
@@ -83,6 +83,6 @@ private:
     QSize              m_size;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif /* COMBOBOXDELEGATE_H */

@@ -36,7 +36,7 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 SelectUserDlg::SelectUserDlg(QWidget* const parent, const QString& serviceName)
@@ -149,4 +149,4 @@ SelectUserDlg* SelectUserDlg::getDlg()
     return this;
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

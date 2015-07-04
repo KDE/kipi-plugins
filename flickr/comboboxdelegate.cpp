@@ -37,7 +37,7 @@
 
 #include "kipiplugins_debug.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 ComboBoxDelegate::ComboBoxDelegate(KPImagesList* const parent, const QMap<int, QString>& items)
@@ -185,4 +185,4 @@ void ComboBoxDelegate::slotResetEditedState(QObject*)
     m_rowEdited = -1;
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

@@ -68,7 +68,7 @@ namespace KWallet
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 class SelectUserDlg;
 class FlickrWidget;
@@ -192,6 +192,6 @@ private:
     SelectUserDlg*                         m_select;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif /* FLICKRWINDOW_H */

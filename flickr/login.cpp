@@ -40,7 +40,7 @@
 #include <klocalizedstring.h>
 #include <kconfiggroup.h>
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 FlickrLogin::FlickrLogin(QWidget* const parent, const QString& header,
@@ -114,4 +114,4 @@ QString FlickrLogin::password() const
     return m_passwdEdit->text();
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

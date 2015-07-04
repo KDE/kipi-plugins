@@ -48,7 +48,7 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class FlickrList;
@@ -133,12 +133,12 @@ private: // Data
     QSpinBox*                           m_dimensionSpinBox;
     QSpinBox*                           m_imageQualitySpinBox;
 
-    KIPIFlickrExportPlugin::FlickrList* m_imglst;
+    KIPIFlickrPlugin::FlickrList* m_imglst;
     KIPIPlugins::KPProgressWidget*      m_progressBar;
 
     friend class FlickrWindow;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif // FLICKRWIDGET_H

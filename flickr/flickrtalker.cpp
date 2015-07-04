@@ -67,7 +67,7 @@
 
 using namespace KIPIPlugins;
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
@@ -1573,4 +1573,4 @@ void FlickrTalker::parseResponseAddPhotoToPhotoSet(const QByteArray& data)
     emit signalAddPhotoSucceeded();
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

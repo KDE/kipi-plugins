@@ -44,7 +44,7 @@
 
 class QProgressDialog;
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class GAlbum;
@@ -170,6 +170,6 @@ private:
     State      m_state;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif /* FLICKRTALKER_H */

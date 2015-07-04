@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2015-16-05
+ * Date        : 2005-07-07
  * Description : a kipi plugin to export images to Flickr web service
  *
- * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,47 +21,42 @@
  *
  * ============================================================ */
 
-#ifndef SELECTUSERDLG_H
-#define SELECTUSERDLG_H
+#ifndef MPFORM_H
+#define MPFORM_H
 
 // Qt includes
 
+#include <QByteArray>
 #include <QString>
-#include <QDialog>
-#include <QComboBox>
 
-class QLabel;
-
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
-class SelectUserDlg : public QDialog
+class MPForm
 {
-    Q_OBJECT
+
 public:
 
-    SelectUserDlg(QWidget* const parent, const QString& serviceName);
-    ~SelectUserDlg();
+    MPForm();
+    ~MPForm();
 
-    void           reactivate();
-    QString        getUname() const;
-    SelectUserDlg* getDlg();
+    void finish();
+    void reset();
+
+    bool addPair(const QString& name, const QString& value, const QString& type);
+    bool addFile(const QString& name, const QString& path);
+    
+    QString    randomString(const int& length);
+    QString    contentType() const;
+    QByteArray formData()    const;
+    QString    boundary()    const;
 
 private:
 
-    QComboBox*   m_userComboBox;
-    QLabel*      m_label;
-    QPushButton* m_okButton;
-
-    QString      m_uname;
-    QString      m_serviceName;
-
-protected Q_SLOTS:
-
-    void slotOkClicked();
-    void slotNewAccountClicked();
+    QByteArray m_buffer;
+    QByteArray m_boundary;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
-#endif // SELECTUSERDLG_H
+#endif /* MPFORM_H */

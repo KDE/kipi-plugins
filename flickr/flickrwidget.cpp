@@ -55,7 +55,7 @@
 #include "flickrlist.h"
 #include "kpprogresswidget.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
@@ -657,4 +657,4 @@ void FlickrWidget::showEvent(QShowEvent*)
     slotOriginalChecked();
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin

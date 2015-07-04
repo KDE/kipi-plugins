@@ -27,7 +27,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_flickrexport.h"
+#include "plugin_flickr.h"
 
 // C ANSI includes
 
@@ -57,25 +57,25 @@ extern "C"
 #include "selectuserdlg.h"
 #include "kipiplugins_debug.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
-K_PLUGIN_FACTORY(FlickrExportFactory, registerPlugin<Plugin_FlickrExport>();)
+K_PLUGIN_FACTORY(FlickrExportFactory, registerPlugin<Plugin_Flickr>();)
 
-Plugin_FlickrExport::Plugin_FlickrExport(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(parent, "FlickrExport")
+Plugin_Flickr::Plugin_Flickr(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(parent, "Flickr")
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Plugin_FlickrExport plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Flickr plugin loaded";
 
-    setUiBaseName("kipiplugin_flickrexportui.rc");
+    setUiBaseName("kipiplugin_flickrui.rc");
     setupXML();
 }
 
-Plugin_FlickrExport::~Plugin_FlickrExport()
+Plugin_Flickr::~Plugin_Flickr()
 {
 }
 
-void Plugin_FlickrExport::setup(QWidget* const widget)
+void Plugin_Flickr::setup(QWidget* const widget)
 {
     m_dlgFlickr = 0;
     m_dlg23     = 0;
@@ -92,7 +92,7 @@ void Plugin_FlickrExport::setup(QWidget* const widget)
     setupActions();
 }
 
-void Plugin_FlickrExport::setupActions()
+void Plugin_Flickr::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
@@ -133,7 +133,7 @@ void Plugin_FlickrExport::setupActions()
     addAction("Zooomrexport", m_actionZooomr);
 }
 
-void Plugin_FlickrExport::slotActivateFlickr()
+void Plugin_Flickr::slotActivateFlickr()
 {
     selectFlickr->reactivate();
     QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/");
@@ -157,7 +157,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
     m_dlgFlickr->reactivate();
 }
 
-void Plugin_FlickrExport::slotActivate23()
+void Plugin_Flickr::slotActivate23()
 {
     select23->reactivate();
     QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/");
@@ -181,7 +181,7 @@ void Plugin_FlickrExport::slotActivate23()
     m_dlg23->reactivate();
 }
 
-void Plugin_FlickrExport::slotActivateZooomr()
+void Plugin_Flickr::slotActivateZooomr()
 {
     selectZoomr->reactivate();
     QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/");
@@ -205,6 +205,6 @@ void Plugin_FlickrExport::slotActivateZooomr()
     m_dlgZooomr->reactivate();
 }
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
-#include "plugin_flickrexport.moc"
+#include "plugin_flickr.moc"

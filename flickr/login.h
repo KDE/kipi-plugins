@@ -32,7 +32,7 @@
 #include <QLineEdit>
 #include <QDialog>
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class FlickrLogin : public QDialog
@@ -56,6 +56,6 @@ private:
     QLineEdit* m_passwdEdit;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif // FLICKRLOGIN_H

@@ -39,7 +39,7 @@
 
 #include <klocalizedstring.h>
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class ComboBoxIntermediate : public QComboBox
@@ -69,6 +69,6 @@ private:
     QString m_intermediateText;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif /* COMBOBOXINTERMEDIATE_H */

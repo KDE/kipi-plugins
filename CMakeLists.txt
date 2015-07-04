@@ -129,8 +129,8 @@ if(KF5Kipi_FOUND)
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
-    find_package(Qca-qt5)                                                      # For Shwup and YandexFotki.
     find_package(QJSON)                                                        # For Debian Screenshots Facebook, Google Services, Dropbox and Imgur.
+#    find_package(Qca-qt5)                                                      # For Shwup.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
@@ -218,7 +218,6 @@ if(KF5Kipi_FOUND)
          message(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
          set(KIPIPLUGINS_CAN_BE_COMPILED false)
      endif()
-
 
      # decide if AdvancedSlideshow and ImageViewer can be built
      if(NOT WIN32 AND NOT APPLE)
@@ -376,12 +375,12 @@ if(KF5Kipi_FOUND)
             add_subdirectory(panorama)
         endif()
 
-        add_subdirectory(flickrexport)
+        add_subdirectory(flickr)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
         add_subdirectory(piwigo)
         add_subdirectory(remotestorage)
-            add_subdirectory(yandexfotki)
+        add_subdirectory(yandexfotki)
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)

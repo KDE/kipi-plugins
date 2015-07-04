@@ -35,7 +35,7 @@
 
 using namespace KIPIPlugins;
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class FlickrList : public KPImagesList
@@ -177,6 +177,6 @@ private:
     QLineEdit*              m_tagLineEdit;
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif /* FLICKRLIST_H */

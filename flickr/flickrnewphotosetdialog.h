@@ -32,7 +32,7 @@
 
 #include "ui_flickralbumdialog.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIFlickrPlugin
 {
 
 class FlickrNewPhotoSetDialog : public QDialog, public Ui::FlickrAlbumDialog
@@ -46,6 +46,6 @@ public:
     }
 };
 
-} // namespace KIPIFlickrExportPlugin
+} // namespace KIPIFlickrPlugin
 
 #endif // NEWALBUMDIALOG_H
