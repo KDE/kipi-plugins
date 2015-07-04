@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "calwidget.moc"
+#include "calwidget.h"
 
 // Libkipi includes
 
@@ -34,6 +34,7 @@
 #include "calpainter.h"
 #include "kpimageinfo.h"
 #include "calsettings.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
 

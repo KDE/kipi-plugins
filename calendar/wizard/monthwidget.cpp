@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "monthwidget.moc"
+#include "monthwidget.h"
 
 // Qt includes
 
@@ -35,15 +35,14 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPixmap>
+#include <QUrl>
 
 // KDE includes
 
 #include <kcalendarsystem.h>
-#include <kdebug.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <QUrl>
 
 // Libkipi includes
 
@@ -51,7 +50,7 @@
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Local includes
@@ -59,6 +58,7 @@
 #include "calsettings.h"
 #include "kpimagedialog.h"
 #include "kpmetadata.h"
+#include "kipiplugins_debug.h"
 
 using namespace KIPIPlugins;
 
@@ -66,12 +66,14 @@ namespace KIPICalendarPlugin
 {
 
 MonthWidget::MonthWidget(Interface* const interface, QWidget* const parent, int month)
-    : QPushButton(parent), thumbSize(64, 64), interface_(interface)
+    : QPushButton(parent),
+      thumbSize(64, 64),
+      interface_(interface)
 {
     setAcceptDrops(true);
     setFixedSize(QSize(74, 94));
     month_     = month;
-    imagePath_ = QString("");
+    imagePath_ = QUrl();
     setThumb(QPixmap(SmallIcon("image-x-generic",
                                KIconLoader::SizeMedium,
                                KIconLoader::DisabledState)));
@@ -151,7 +153,7 @@ void MonthWidget::setImage(const QUrl& url)
         // Check if image can be loaded by native Qt loader.
         if (QImageReader::imageFormat(url.path()).isEmpty())
         {
-            kWarning(AREA_CODE_LOADING) << "Unknown image format for: " << url.prettyUrl();
+            qCDebug(KIPIPLUGINS_LOG) << "Unknown image format for: " << url.toDisplayString();
             return;
         }
     }
@@ -164,7 +166,7 @@ void MonthWidget::setImage(const QUrl& url)
 
 void MonthWidget::dropEvent(QDropEvent* event)
 {
-    QUrl::List srcURLs = QUrl::List::fromMimeData(event->mimeData());
+    QList<QUrl> srcURLs = event->mimeData()->urls();
 
     if (srcURLs.isEmpty())
     {
@@ -204,7 +206,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
     }
     else if (event->button() == Qt::RightButton)
     {
-        imagePath_ = QString("");
+        imagePath_ = QUrl();
         CalSettings::instance()->setImage(month_, imagePath_);
         setThumb(QPixmap(SmallIcon("image-x-generic",
                                    KIconLoader::SizeMedium,

@@ -23,11 +23,10 @@
  *
  * ============================================================ */
 
-#include "calsettings.moc"
+#include "calsettings.h"
 
 // KDE includes
 
-#include <kdebug.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
 #include <kcalendarsystem.h>
@@ -37,6 +36,10 @@
 #include <kcalcore/icalformat.h>
 #include <kcalcore/filestorage.h>
 #include <kcalcore/memorycalendar.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPICalendarPlugin
 {

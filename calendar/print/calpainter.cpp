@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "calpainter.moc"
+#include "calpainter.h"
 
 // Qt includes
 
@@ -36,18 +36,18 @@
 // KDE includes
 
 #include <kcalendarsystem.h>
-#include <kdebug.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Local includes
 
 #include "calsettings.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPICalendarPlugin
 {

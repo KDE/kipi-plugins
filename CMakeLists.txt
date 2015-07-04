@@ -130,10 +130,11 @@ if(KF5Kipi_FOUND)
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
     find_package(QJSON)                                                        # For Debian Screenshots Facebook, Google Services, Dropbox and Imgur.
+    find_package(KF5 COMPONENTS CalendarCore)                                  # For Calendar (KCalCore).
+
 #    find_package(Qca-qt5)                                                      # For Shwup.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
-#    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
 #    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                   # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                      # For Imgur Auhtenticated API
@@ -176,6 +177,7 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libksane support."       KF5Sane_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"    "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."    KF5CalendarCore_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.8.1)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 
@@ -183,7 +185,6 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libkdepimlibs"  "http://pim.kde.org"                                              "(version >= 4.3.0)"                  "Kipi-plugins will be compiled without libkdepimlibs support."  KDEPIMLIBS_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
@@ -244,12 +245,12 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("GoogleServices"     QJSON_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
 
 #     PRINT_COMPONENT_COMPILE_STATUS("Shwup"              QCA2_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
@@ -382,19 +383,29 @@ if(KF5Kipi_FOUND)
             add_subdirectory(mediawiki)
         endif()
 
-# Plugins in pending state
+        if(QJSON_FOUND)
+            add_subdirectory(googleservices)
+        endif()
 
+        if(KF5CalendarCore_FOUND)
+            add_subdirectory(calendar)
+        endif()
+
+# Plugins in pending state
+#
 #         add_subdirectory(rajceexport)
+#         add_subdirectory(photolayoutseditor)
 #
 #         if(Qca-qt5_FOUND)
 #             add_subdirectory(shwup)
 #         endif()
 #
-        if(QJSON_FOUND)
-            add_subdirectory(googleservices)
+#         if(QJSON_FOUND)
 #             add_subdirectory(facebook)
 #             add_subdirectory(dropbox)
-        endif()
+#             add_subdirectory(debianscreenshots)
+#             add_subdirectory(imgurexport)
+#         endif()
 #
 #         # Currently the cmake module distributed w/ cmake uses a different variable
 #         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 
@@ -407,19 +418,8 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(htmlexport)
 #         endif()
 #
-#         add_subdirectory(photolayoutseditor)
-#
 #         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #             add_subdirectory(videoslideshow)
-#         endif()
-#
-#         if(QJSON_FOUND)
-#             add_subdirectory(debianscreenshots)
-#             add_subdirectory(imgurexport)
-#         endif()
-#
-#         if(KDEPIMLIBS_FOUND)
-#             add_subdirectory(calendar)
 #         endif()
 #
 #         if(OpenCV_FOUND)

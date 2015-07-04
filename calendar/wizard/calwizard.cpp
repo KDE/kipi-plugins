@@ -25,7 +25,7 @@
  *
  * ============================================================ */
 
-#include "calwizard.moc"
+#include "calwizard.h"
 
 // Qt includes
 
@@ -33,6 +33,7 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QStringList>
+#include <QMenu>
 
 // KDE includes
 
@@ -41,7 +42,6 @@
 #include <kdeprintdialog.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 
 // Libkipi includes
 
@@ -53,6 +53,7 @@
 #include "calsettings.h"
 #include "caltemplate.h"
 #include "kpaboutdata.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPICalendarPlugin
 {
@@ -60,6 +61,7 @@ namespace KIPICalendarPlugin
 CalWizard::CalWizard(QWidget* const parent)
     : KPWizardDialog(parent)
 {
+    setWindowTitle(i18n("Create Calendar"));
     setMaximumSize(800, 600);
     cSettings_   = CalSettings::instance(this);
 
@@ -100,13 +102,16 @@ CalWizard::CalWizard(QWidget* const parent)
                                                      "(c) 2006 Tom Albers\n"
                                                      "(c) 2007-2008 Orgad Shaneh"));
 
-    about->addAuthor(ki18n("Orgad Shaneh"), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Orgad Shaneh").toString(),
+                     ki18n("Developer").toString(),
                      "orgads@gmail.com");
 
-    about->addAuthor(ki18n("Tom Albers"), ki18n("Former author and maintainer"),
+    about->addAuthor(ki18n("Tom Albers").toString(),
+                     ki18n("Developer").toString(),
                      "tomalbers@kde.nl");
 
-    about->addAuthor(ki18n("Renchi Raju"), ki18n("Former author and maintainer"),
+    about->addAuthor(ki18n("Renchi Raju").toString(),
+                     ki18n("Author").toString(),
                      "renchi dot raju at gmail dot com");
 
     about->setHandbookEntry("calendar");
@@ -119,8 +124,6 @@ CalWizard::CalWizard(QWidget* const parent)
 
     connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
             this, SLOT(slotPageSelected(KPageWidgetItem*,KPageWidgetItem*)));
-
-    setCaption(i18n("Create Calendar"));
 }
 
 CalWizard::~CalWizard()
@@ -196,8 +199,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         calProgressUI.currentProgress->reset();
         calProgressUI.totalProgress->reset();
 
-        enableButton(KDialog::User3, false); // disable 'Back' button
-        enableButton(KDialog::User1, false); // disable 'Finish' button
+        backButton()->setEnabled(false);
+        nextButton()->setEnabled(false);
 
         // Set printer settings ---------------------------------------
 
@@ -221,6 +224,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         }
 
         qCDebug(KIPIPLUGINS_LOG) << "printing...";
+
         // PageSize
         printer_->setPageSize(params.pageSize);
         QPrintDialog* printDialog = KdePrint::createPrintDialog(printer_, this);
@@ -232,7 +236,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         else
         {
             calProgressUI.finishLabel->setText(i18n("Printing Cancelled"));
-            enableButton(KDialog::User3, true); // enable 'Back' button
+            backButton()->setEnabled(true);
         }
 
         delete printDialog;
@@ -297,8 +301,8 @@ void CalWizard::updatePage(int page)
 void CalWizard::printComplete()
 {
     calProgressUI.totalProgress->progressCompleted();
-    enableButton(KDialog::User3, true); // enable 'Back' button
-    enableButton(KDialog::User1, true); // enable 'Finish' button
+    backButton()->setEnabled(true);
+    nextButton()->setEnabled(true);
     calProgressUI.finishLabel->setText(i18n("Printing Complete"));
 }
 

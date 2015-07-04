@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -17,8 +17,8 @@ set(kipiplugin_calendar_PART_SRCS plugin/plugin_calendar.cpp
    )
 
 ki18n_wrap_ui(kipiplugin_calendar_PART_SRCS ui/caltemplate.ui
-                                                ui/calevents.ui
-                                                ui/calprogress.ui
+                                            ui/calevents.ui
+                                            ui/calprogress.ui
                  )
 
 add_library(kipiplugin_calendar MODULE ${kipiplugin_calendar_PART_SRCS})
@@ -30,8 +30,7 @@ include_directories(${KDEPIMLIBS_INCLUDE_DIR}
                    )
 
 target_link_libraries(kipiplugin_calendar 
-                      KF5::Parts 
-                       
+                      KF5::Parts                       
                       KF5::Kipi 
                       KF5::KExiv2 
                       KF5::KDcraw 

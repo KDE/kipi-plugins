@@ -62,6 +62,11 @@ Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
+libkcalcore     >= 4.4.0                        https://projects.kde.org/projects/kde/pim/kcalcore
+libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
+libkgeomap      >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
+libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
+libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libxslt         >= 1.1.0                        http://xmlsoft.org/XSLT
 libxml2         >= 2.7.0                        http://xmlsoft.org
 libX11          >= 1.1.5                        http://www.x11.org
@@ -69,15 +74,8 @@ libexpat        >= 2.0.0                        http://expat.sourceforge.net
 libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
 libopencv       >= 2.4.9                        http://opencv.willowgarage.com
-libkdepimlibs   >= 4.4.0                        http://pim.kde.org
-libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
-libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.1.0                        http://delta.affinix.com/qca
 libqjson        >= 0.8.1                        http://qjson.sourceforge.net
-libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
-libkgeomap      >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
-libmediawiki    >= 5.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
-libkvkontakte   >= 4.70.0                       https://projects.kde.org/projects/extragear/libs/libkvkontakte
 libimagemagick  >= 5.5.4                        http://www.imagemagick.org
 libqtgstreamer  >= 0.9.0                        http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 libqtkoauth     >= 0.97                         http://gitorious.org/kqoauth
@@ -90,6 +88,7 @@ SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 DngConverter       : libexpat.
 AcquireImages      : libksane.
+Calendar           : libkcalcore.
 FaceBook           : libqjson.
 ExpoBlending       : Hugin command line tools (runtime dependency).
 Geolocator         : libkgeomap.
@@ -101,7 +100,6 @@ Imgur              : libqtkoauth and kqoauth for Imgur.com's authenticated API.
 VideoSlideshow     : libimagemagick and libqtgstreamer
 DebianScreenshots  : libqjson.
 RemoveRedEyes      : libopencv.
-Calendar           : libkdepimlibs.
 HtmlExport         : libxslt and libxml2.
 Shwup              : libqca.
 

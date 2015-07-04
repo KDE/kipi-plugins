@@ -21,14 +21,16 @@
  *
  * ============================================================ */
 
-#include "plugin_calendar.moc"
+#include "plugin_calendar.h"
+
+// Qt includes
+
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <QApplication>
-#include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 
@@ -39,17 +41,17 @@
 // Local includes
 
 #include "calwizard.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPICalendarPlugin
 {
 
 K_PLUGIN_FACTORY(CalendarFactory, registerPlugin<Plugin_Calendar>();)
-K_EXPORT_PLUGIN(CalendarFactory("kipiplugin_calendar"))
 
 Plugin_Calendar::Plugin_Calendar(QObject* const parent, const QVariantList&)
-    : Plugin(CalendarFactory::componentData(), parent, "Calendar")
+    : Plugin(parent, "Calendar")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Calendar plugin loaded";
 
 
     setUiBaseName("kipiplugin_calendarui.rc");
@@ -96,3 +98,5 @@ void Plugin_Calendar::slotActivate()
 }
 
 }  // NameSpace KIPICalendarPlugin
+
+#include "plugin_calendar.moc"

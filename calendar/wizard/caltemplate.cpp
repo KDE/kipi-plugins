@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "caltemplate.moc"
+#include "caltemplate.h"
 
 // KDE includes
 
@@ -43,6 +43,7 @@
 #include "calsettings.h"
 #include "monthwidget.h"
 #include "calpainter.h"
+#include "kipiplugins_debug.h"
 
 #define MAX_MONTHS (13)
 
@@ -72,7 +73,7 @@ CalTemplate::CalTemplate(KIPI::Interface* const interface, QWidget* const parent
     const KCalendarSystem* const cal = KLocale::global()->calendar();
     int currentYear                  = cal->year(QDate::currentDate());
 
-    QUrl::List urlList;
+    QList<QUrl> urlList;
     KIPI::ImageCollection images = interface->currentSelection();
 
     if (images.isValid() && !images.images().isEmpty())
