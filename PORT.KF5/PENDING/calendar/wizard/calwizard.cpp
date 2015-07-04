@@ -94,7 +94,7 @@ CalWizard::CalWizard(QWidget* const parent)
 
     KPAboutData* const about = new KPAboutData(ki18n("Calendar"),
                                                0,
-                                               KAboutData::License_GPL,
+                                               KAboutLicense::GPL,
                                                ki18n("A Kipi plugin to create a calendar"),
                                                ki18n("(c) 2003-2005, Renchi Raju\n"
                                                      "(c) 2006 Tom Albers\n"

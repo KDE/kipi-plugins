@@ -128,7 +128,7 @@ JAlbumWindow::JAlbumWindow(QWidget* const parent, JAlbum* const pJAlbum)
 
     KPAboutData* const about = new KPAboutData(ki18n("jAlbum Export"),
                                                0,
-                                               KAboutData::License_GPL,
+                                               KAboutLicense::GPL,
                                                ki18n("A Kipi plugin to launch jAlbum using selected images."),
                                                ki18n("(c) 2013, Andrew Goodbody\n"));
 

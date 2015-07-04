@@ -182,7 +182,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
 
     KPAboutData* const about = new KPAboutData(ki18n("Remove Red-Eye"),
                                    0,
-                                   KAboutData::License_GPL,
+                                   KAboutLicense::GPL,
                                    ki18n("A plugin to automatically "
                                          "detect and remove red-eye effect."),
                                    ki18n("(c) 2008-2013, Andi Clemens"));

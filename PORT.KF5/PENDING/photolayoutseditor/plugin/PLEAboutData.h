@@ -38,7 +38,7 @@ class PLEAboutData : public KIPIPlugins::KPAboutData
         PLEAboutData() :
             KPAboutData(ki18n("Photo Layouts Editor"),
                        0,
-                       KAboutData::License_GPL,
+                       KAboutLicense::GPL,
                        ki18n("A tool to create photo layouts by fusion of several images"),
                        ki18n("(c) 2011, Lukasz Spas"))
         {

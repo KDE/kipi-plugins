@@ -52,7 +52,8 @@ struct KPBinarySearch::Private
 };
 
 KPBinarySearch::KPBinarySearch(QWidget* const parent)
-    : QTreeWidget(parent), d(new Private)
+    : QTreeWidget(parent),
+      d(new Private)
 {
     setIconSize(QSize(16, 16));
     setAlternatingRowColors(true);
@@ -184,9 +185,9 @@ bool KPBinarySearch::allBinariesFound()
 
 void KPBinarySearch::slotAreBinariesFound()
 {
-    qCDebug(KIPIPLUGINS_LOG) << "new binary found!!";
     bool allFound = allBinariesFound();
     emit signalBinariesFound(allFound);
+    qCDebug(KIPIPLUGINS_LOG) << "All Binaries Found : " << allFound;
 }
 
 } // namespace KIPIPlugins

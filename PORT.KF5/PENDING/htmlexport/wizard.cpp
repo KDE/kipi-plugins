@@ -236,7 +236,7 @@ Wizard::Wizard(QWidget* const parent, GalleryInfo* const info)
     KPAboutData* about = new KPAboutData(
                                 ki18n("HTML Export"),
                                 QByteArray(),
-                                KAboutData::License_GPL,
+                                KAboutLicense::GPL,
                                 ki18n("A KIPI plugin to export image collections to HTML pages"),
                                 ki18n("(c) 2006-2009, Aurelien Gateau\n"
                                       "(c) 2010, Gianluca Urgese"));

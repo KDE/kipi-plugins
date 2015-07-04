@@ -129,7 +129,7 @@ ExportDialog::ExportDialog(const ImageCollection& images)
 
     KPAboutData* const about = new KPAboutData(ki18n("Video Slide Show"),
                                    0,
-                                   KAboutData::License_GPL,
+                                   KAboutLicense::GPL,
                                    ki18n("A Kipi plugin to export images as video slideshow"),
                                    ki18n("(c) 2012, A Janardhan Reddy\n"));
 

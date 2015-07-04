@@ -194,13 +194,13 @@ public:
 };
 
 KPToolDialog::KPToolDialog(QWidget* const parent)
-    : QDialog(parent), KPDialogBase(this), d(new Private)
+    : QDialog(parent),
+      KPDialogBase(this),
+      d(new Private)
 {
-    d->buttonBox = new QDialogButtonBox(
-        QDialogButtonBox::Close | QDialogButtonBox::Help, this);
+    d->buttonBox = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help, this);
     d->startButton = new QPushButton(i18nc("@action:button", "&Start"), this);
     d->buttonBox->addButton(d->startButton, QDialogButtonBox::ActionRole);
-
     d->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
 
     QVBoxLayout* const mainLayout = new QVBoxLayout(this);
@@ -282,8 +282,10 @@ void KPToolDialog::slotCloseClicked()
 // -----------------------------------------------------------------------------------
 
 KPWizardDialog::KPWizardDialog(QWidget* const parent)
-    : KAssistantDialog(parent), KPDialogBase(this)
+    : KAssistantDialog(parent),
+      KPDialogBase(this)
 {
+    buttonBox()->addButton(QDialogButtonBox::Help);
 }
 
 KPWizardDialog::~KPWizardDialog()
@@ -293,7 +295,8 @@ KPWizardDialog::~KPWizardDialog()
 // -----------------------------------------------------------------------------------
 
 KPPageDialog::KPPageDialog(QWidget* const parent)
-    : KPageDialog(parent), KPDialogBase(this)
+    : KPageDialog(parent),
+      KPDialogBase(this)
 {
     setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Ok);
 }

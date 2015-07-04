@@ -112,7 +112,7 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
     // ------------------------------------------------------------------------
 
     KPAboutData* const about = new KPAboutData(ki18n("Shwup Export"), 0,
-                                   KAboutData::License_GPL,
+                                   KAboutLicense::GPL,
                                    ki18n("A Kipi plugin to export images "
                                          "to Shwup web service."),
                                    ki18n("(c) 2009, Timothée Groleau"));

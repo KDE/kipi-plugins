@@ -63,7 +63,7 @@
 
 // Libkipi includes
 
-#include <imagecollectionselector.h>
+#include <KIPI/ImageCollectionSelector>
 #include <KIPI/Interface>
 
 // Local includes
@@ -105,6 +105,7 @@ public:
     {
         return mAssistant;
     }
+
 private:
 
     KAssistantDialog* mAssistant;
@@ -150,7 +151,8 @@ struct Wizard::Private
 };
 
 Wizard::Wizard(QWidget* const parent)
-    : KPWizardDialog(parent), d(new Private)
+    : KPWizardDialog(parent),
+      d(new Private)
 {
     //d->m_printDialog = NULL;
     d->m_pDlg        = NULL;
@@ -168,13 +170,16 @@ Wizard::Wizard(QWidget* const parent)
                                                ki18n("(c) 2003-2004, Todd Shoemaker\n"
                                                "(c) 2007-2013, Angelo Naselli"));
 
-    about->addAuthor(ki18n("Todd Shoemaker").toString(), ki18n("Author").toString(),
+    about->addAuthor(ki18n("Todd Shoemaker").toString(),
+                     ki18n("Author").toString(),
                      "todd@theshoemakers.net");
 
-    about->addAuthor(ki18n("Angelo Naselli").toString(), ki18n("Developer and maintainer").toString(),
+    about->addAuthor(ki18n("Angelo Naselli").toString(),
+                     ki18n("Developer").toString(),
                      "anaselli@linux.it");
 
-    about->addAuthor(ki18n("Andreas Trink").toString(), ki18n("Contributor").toString(),
+    about->addAuthor(ki18n("Andreas Trink").toString(),
+                     ki18n("Contributor").toString(),
                      "atrink@nociaro.org");
 
     about->setHandbookEntry("printwizard");

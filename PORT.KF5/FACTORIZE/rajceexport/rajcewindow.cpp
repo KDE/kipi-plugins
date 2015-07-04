@@ -70,7 +70,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
 
     KPAboutData* const about = new KPAboutData(ki18n("Rajce.net Export"),
                                    0,
-                                   KAboutData::License_GPL,
+                                   KAboutLicense::GPL,
                                    ki18n("A Kipi plugin to export image collections to "
                                    "Rajce.net."),
                                    ki18n( "(c) 2011-2013, Lukas Krejci" ));

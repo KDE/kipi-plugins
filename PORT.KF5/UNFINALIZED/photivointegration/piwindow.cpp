@@ -68,7 +68,7 @@ PIWindow::PIWindow(QWidget* const /*parent*/ /* = 0 */)
     // About data and help button.
     KPAboutData* about = new KPAboutData(ki18n("Photivo Integration"),
                              0,
-                             KAboutData::License_GPL,
+                             KAboutLicense::GPL,
                              ki18n("A tool to integrate Photivo, a RAW processor"),
                              ki18n("(c) 2012, Dominic Lyons"));
 

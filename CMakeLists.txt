@@ -138,8 +138,6 @@ if(KF5Kipi_FOUND)
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
 #    MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                         # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
-#    MACRO_OPTIONAL_FIND_PACKAGE(Hupnp)                                         # For DlnaExport.
-#    MACRO_OPTIONAL_FIND_PACKAGE(QtSoap)                                        # For DlnaExport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                   # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                      # For Imgur Auhtenticated API
@@ -193,8 +191,6 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "http://gitorious.org/kqoauth"                                    "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libhupnp"       "http://www.herqq.org"                                            "(version >= 2.0.0)"                  "Internal version used instead"                                 HUPNP_FOUND AND HUPNPAV_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libqtsoap"      "https://github.com/commontk/QtSOAP"                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libqtsoap support."      QTSOAP_FOUND)
 
     PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
@@ -260,7 +256,6 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KDEPIMLIBS_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("DLNAExport"         (HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
 #     PRINT_COMPONENT_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 #
@@ -381,6 +376,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(piwigo)
         add_subdirectory(remotestorage)
         add_subdirectory(yandexfotki)
+        add_subdirectory(dlnaexport)
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
@@ -424,10 +420,6 @@ if(KF5Kipi_FOUND)
 #         if(QJSON_FOUND)
 #             add_subdirectory(debianscreenshots)
 #             add_subdirectory(imgurexport)
-#         endif()
-#
-#         if((HUPNP_FOUND AND HUPNPAV_FOUND) OR (NOT (HUPNP_FOUND AND HUPNPAV_FOUND) AND QTSOAP_FOUND))
-#             add_subdirectory(dlnaexport)
 #         endif()
 #
 #         if(KDEPIMLIBS_FOUND)
