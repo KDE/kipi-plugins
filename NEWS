@@ -3,7 +3,12 @@ Kipi-plugins 5.0.0-beta1 - Release date: 2015/07/05
 
 NEW FEATURES:
 
-General : plugin obsolete/unmaintained and removed : BatchProcessImages, JPEGLossLess, Kopete, IpodExport, GalleryExport, RawConverter
+General : Plugins obsolete/unmaintained and removed : BatchProcessImages, JPEGLossLess, Kopete, IpodExport, GalleryExport, RawConverter
+General : KIOExportImport plugin renamed as RemoteStorage.
+General : FlickrExport plugin renamed as Flickr.
+General : ImageShackExport plugin renamed as ImageShack.
+General : PiwigoExport plugin renamed as Piwigo.
+General : GPSSync plugin renamed as Geolocator.
 
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
