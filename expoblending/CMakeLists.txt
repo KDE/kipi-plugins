@@ -79,7 +79,7 @@ install(FILES   plugin/kipiplugin_expoblendingui.rc                             
 
 set(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
 
-file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./icons/hi*-apps-kipi-expoblending.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/./icons/*-apps-kipi-expoblending.png")
 ecm_add_app_icon(expoblending_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(expoblending ${expoblending_SRCS})
