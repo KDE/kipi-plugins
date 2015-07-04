@@ -33,7 +33,7 @@ KPSvgPixmapRenderer::KPSvgPixmapRenderer(int width, int height, const QString& f
 {
     if (m_filename.isEmpty())
     {
-        m_filename = KStandardDirs::locate("data", "kipi/data/kipi-icon.svg");
+        m_filename = KStandardDirs::locate("data", "kf5/kipi/pics/kipi-icon.svg");
     }
 }
 
