@@ -40,8 +40,9 @@
 
 // KDE includes
 
-#include <kconfig.h>
-#include <kwindowconfig.h>
+#include <KConfig>
+#include <KWindowConfig>
+#include <KGuiItem>
 
 // LibKIPI includes
 
@@ -67,12 +68,10 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, const QString& serviceName, SelectUserDlg* const dlg)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
     setModal(false);
 
     if (serviceName == QString("23"))
@@ -124,7 +123,8 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_userNameDisplayLabel      = m_widget->m_userNameDisplayLabel;
     m_imglst                    = m_widget->m_imglst;
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), QIcon::fromTheme("network-workgroup")));
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Start Uploading"), QIcon::fromTheme("network-workgroup")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
@@ -232,11 +232,14 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     
     // --------------------------------------------------------------------------
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(this, &QDialog::finished,
+            this, &FlickrWindow::slotFinished);
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotUser1()));
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancelClicked()));
+
+    connect(startButton(), &QPushButton::clicked,
+            this, &FlickrWindow::slotUser1);
 }
 
 FlickrWindow::~FlickrWindow()
@@ -249,22 +252,43 @@ FlickrWindow::~FlickrWindow()
     delete m_widget;
 }
 
-void FlickrWindow::slotClose()
+void FlickrWindow::closeEvent(QCloseEvent* e)
 {
-    if (m_widget->progressBar()->isHidden())
+    if (!e)
     {
-        writeSettings();
-        m_imglst->listView()->clear();
-        m_widget->progressBar()->progressCompleted();
-        done(Close);
+        return;
     }
-    else // cancel login/transfer
+
+    slotFinished();
+    e->accept();
+}
+
+void FlickrWindow::slotFinished()
+{
+    writeSettings();
+    m_imglst->listView()->clear();
+}
+
+void FlickrWindow::setUiInProgressState(bool inProgress)
+{
+    setRejectButtonMode(inProgress ? QDialogButtonBox::Cancel : QDialogButtonBox::Close);
+
+    if (inProgress)
     {
-        m_talker->cancel();
-        m_uploadQueue.clear();
+        m_widget->progressBar()->show();
+    }
+    else
+    {
         m_widget->progressBar()->hide();
         m_widget->progressBar()->progressCompleted();
     }
+}
+
+void FlickrWindow::slotCancelClicked()
+{
+    m_talker->cancel();
+    m_uploadQueue.clear();
+    setUiInProgressState(false);
 }
 
 void FlickrWindow::slotAddPhotoCancelAndClose()
@@ -273,25 +297,12 @@ void FlickrWindow::slotAddPhotoCancelAndClose()
     m_imglst->listView()->clear();
     m_uploadQueue.clear();
     m_widget->progressBar()->reset();
-    m_widget->progressBar()->hide();
-    m_widget->progressBar()->progressCompleted();
+    setUiInProgressState(false);
     m_talker->cancel();
-    done(Close);
+    reject();
 
     // refresh the thumbnails
     //slotTagSelected();
-}
-
-void FlickrWindow::closeEvent(QCloseEvent* e)
-{
-    if (!e)
-    {
-        return;
-    }
-
-    writeSettings();
-    m_imglst->listView()->clear();
-    e->accept();
 }
 
 void FlickrWindow::reactivate()
@@ -775,8 +786,7 @@ void FlickrWindow::slotAddPhotoNext()
     if (m_uploadQueue.isEmpty())
     {
         m_widget->progressBar()->reset();
-        m_widget->progressBar()->hide();
-        m_widget->progressBar()->progressCompleted();
+        setUiInProgressState(false);
         //slotAlbumSelected();
         return;
     }
@@ -837,7 +847,7 @@ void FlickrWindow::slotAddPhotoNext()
 
         if (m_widget->progressBar()->isHidden())
         {
-            m_widget->progressBar()->show();
+            setUiInProgressState(true);
             m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
             m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
         }   
@@ -874,8 +884,7 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
     {
         m_uploadQueue.clear();
         m_widget->progressBar()->reset();
-        m_widget->progressBar()->hide();
-        m_widget->progressBar()->progressCompleted();
+        setUiInProgressState(false);
         // refresh the thumbnails
         //slotTagSelected();
     }
@@ -900,7 +909,7 @@ void FlickrWindow::slotAddPhotoSetSucceeded()
 
 void FlickrWindow::slotImageListChanged()
 {
-    enableButton(User1, !(m_widget->m_imglst->imageUrls().isEmpty()));
+    startButton()->setEnabled(!(m_widget->m_imglst->imageUrls().isEmpty()));
 }
 
 void FlickrWindow::slotReloadPhotoSetRequest()

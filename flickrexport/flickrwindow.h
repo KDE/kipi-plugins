@@ -41,7 +41,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "comboboxintermediate.h"
 
 class QProgressDialog;
@@ -82,7 +82,7 @@ class GAlbum;
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-class FlickrWindow : public KP4ToolDialog
+class FlickrWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -110,6 +110,10 @@ private Q_SLOTS:
     //  void slotTagSelected();
     //  void slotOpenPhoto( const KUrl &url );
 
+    void slotFinished();
+    void slotUser1();
+    void slotCancelClicked();
+
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
     void slotRemoveAccount();
@@ -121,8 +125,6 @@ private Q_SLOTS:
     void slotListPhotoSetsFailed(const QString& msg);
     void slotAddPhotoCancelAndClose();
     void slotAuthCancel();
-    void slotClose();
-    void slotUser1();
     void slotImageListChanged();
     void slotReloadPhotoSetRequest();
 
@@ -133,6 +135,8 @@ private:
     void closeEvent(QCloseEvent*);
     void readSettings(QString uname);
     void writeSettings();
+
+    void setUiInProgressState(bool inProgress);
 
 private:
 
