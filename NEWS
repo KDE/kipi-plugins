@@ -27,4 +27,9 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 012 ==> 332430 - Gwenview crashes when accidentally converting to black and white.
 013 ==> 120501 - Smart rotation (first keystroke 90°, second keystroke 180°).
 014 ==> 315489 - Gwenview crash.
-015 ==> 
+015 ==> 107723 - Allow to tune batch process priority.
+016 ==> 333734 - Improve image filters preview.
+017 ==> 107541 - Add a process console and scripting support.
+018 ==> 264075 - Usability issues in batch resizing dialog.
+019 ==> 
+
