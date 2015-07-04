@@ -18,7 +18,7 @@ set(KIPIPLUGINS_MINOR_VERSION "0")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2015-07-05")
+set(KIPIPLUGINS_RELEASE_DATE "2015-09-06")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -134,10 +134,6 @@ if(KF5Kipi_FOUND)
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
-#    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
-#    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
-#    MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)                                    # For Calendar (libkcal).
-#    MACRO_OPTIONAL_FIND_PACKAGE(QJSON)                                         # For Debian Screenshots Facebook, GoogleDrive, Dropbox and Imgur.
 #    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                   # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                      # For Imgur Auhtenticated API
