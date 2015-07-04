@@ -3,6 +3,9 @@ Kipi-plugins 5.0.0-beta1 - Release date: 2015/07/05
 
 NEW FEATURES:
 
+General : plugin obsolete/unmaintained and removed : BatchProcessImages, JPEGLossLess, Kopete, IpodExport, GalleryExport, RawConverter
+
+
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
 001 ==> 348340 - Progress halts when finished resizing images.
