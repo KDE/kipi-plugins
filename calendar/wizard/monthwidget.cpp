@@ -103,7 +103,7 @@ void MonthWidget::paintEvent(QPaintEvent* event)
 
     cr = contentsRect();
     cr.setBottom(70);
-    painter.drawPixmap(cr.width() / 2 - thumb_.width() / 2,
+    painter.drawPixmap(cr.width()  / 2 - thumb_.width() / 2,
                        cr.height() / 2 - thumb_.height() / 2,
                        thumb_);
 
@@ -151,7 +151,7 @@ void MonthWidget::setImage(const KUrl& url)
         // Check if image can be loaded by native Qt loader.
         if (QImageReader::imageFormat(url.path()).isEmpty())
         {
-            kWarning(AREA_CODE_LOADING) << "Unknown image format for: " << url.prettyUrl();
+            kWarning() << "Unknown image format for: " << url.prettyUrl();
             return;
         }
     }
