@@ -1,7 +1,25 @@
 [Desktop Entry]
 UntranslatedGenericName=Google Services
 Name=Google Services
+Name[ca]=Google Services
+Name[de]=Google Services
+Name[nl]=Google Services
+Name[pl]=Usługi Google
+Name[pt]=Serviços do Google
+Name[pt_BR]=Serviços do Google
+Name[sv]=Google-tjänster
+Name[uk]=Служби Google
+Name[x-test]=xxGoogle Servicesxx
 Comment=A tool to manage images with a remote Google web service
+Comment[ca]=Una eina per gestionar imatges amb el servei web remot de Google
+Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten Google-Webdienst zu verwalten.
+Comment[nl]=Een hulpmiddel om afbeeldingen met een Google Services-webservice te beheren
+Comment[pl]=Narzędzie do zarządzania obrazami przy użyciu zdalnej usługi sieciowej Google
+Comment[pt]=Uma ferramenta para gerir imagens com um dos serviços Web remotos da Google
+Comment[pt_BR]=Ferramenta para gerenciar imagens com os serviços do Google
+Comment[sv]=Ett verktyg för att hantera bilder med en Google webbtjänst
+Comment[uk]=Інструмент для керування зображеннями за допомогою віддаленої служби Google
+Comment[x-test]=xxA tool to manage images with a remote Google web servicexx
 Type=Service
 Icon=kipi-googledrive
 ServiceTypes=KIPI/Plugin
