@@ -34,4 +34,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 025 ==> 249842 - Blend bracketed images tool says it failed to save the blended image, but actually saves it.
 026 ==> 320749 - Panorama tool fails systematically when file names contain ':'.
 027 ==> 277994 - missing dot in filename in "batch raw converter".
-028 ==> 
+028 ==> 167286 - gps tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
+029 ==> 
