@@ -27,23 +27,16 @@
 
 #include <QWidget>
 
-// Local includes
-
-#include "wizard.h"
-
 namespace KIPIDLNAExportPlugin
 {
 
 class WelcomePage : public QWidget
 {
-    Q_OBJECT
 
 public:
 
-    explicit WelcomePage(Wizard* const wizard);
+    explicit WelcomePage(QWidget* const parent);
     ~WelcomePage();
-
-    QString getMinidlnaBinaryPath() const;
 
 private:
 

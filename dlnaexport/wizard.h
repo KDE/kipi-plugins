@@ -44,10 +44,6 @@ public:
 
     void next();
 
-public Q_SLOTS:
-
-    void slotBinariesFound(bool flag);
-
 private Q_SLOTS:
 
     void updateCollectionSelectorPageValidity();
@@ -55,7 +51,7 @@ private Q_SLOTS:
     void getDirectoriesFromCollection();
     void changeBackButtonState(bool state);
     void deleteDlnaObjects();
-    
+
 private:
 
     class Private;

@@ -51,10 +51,7 @@ public:
     void setCollectionMap(const QMap<QString, QList<QUrl>>&);
     void setDirectories (const QStringList&);
     void clearImages();
-    void setMinidlnaBinaryPath(const QString&);
-
     void startHupnpMediaServer();
-    void startMinidlnaMediaServer();
 
 Q_SIGNALS:
 

@@ -29,28 +29,34 @@
 #include <QtGlobal>
 #include <QMap>
 #include <QProcess>
-#include <QUrl>
 
 // KDE includes
 
+#include "kipiplugins_debug.h"
+#include <QUrl>
+
+// libHUpnp includes
+
+#include <HUpnpCore/HUpnpInfo>
+#include <HUpnpAv/HUpnpAvInfo>
 #include <kassistantdialog.h>
 #include <kdialog.h>
 
 // libkipi includes
 
 #include <KIPI/ImageCollection>
-#include <KIPI/ImageCollectionSelector>
+#include <imagecollectionselector.h>
 #include <KIPI/Interface>
 
 // Local includes
 
-#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "finalpage.h"
 #include "welcomepage.h"
 
 using namespace KIPI;
+using namespace Herqq;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -92,11 +98,15 @@ Wizard::Wizard(QWidget* const parent)
     KPAboutData* const about = new KPAboutData(ki18n("DLNA Export"),
                                    0,
                                    KAboutLicense::GPL,
-                                   ki18n("A Kipi plugin to export image collections via DLNA"),
+                                   ki18n("A Kipi plugin to export image collections via DLNA\n"
+                                         "Using LibHUpnp %1\n"
+                                         "Using LibHUpnpAv %2\n")
+                                         .subs(Upnp::hupnpCoreVersion())
+                                         .subs(Upnp::Av::hupnpAvVersion()),
                                    ki18n("(c) 2012-2013, Smit Mehta"));
 
-    about->addAuthor(ki18n("Smit Mehta").toString(),
-                     ki18n("Author").toString(),
+    about->addAuthor(ki18n( "Smit Mehta" ).toString(),
+                     ki18n("Author and maintainer").toString(),
                      "smit dot meh at gmail dot com");
 
     about->addAuthor(ki18n("Marcel Wiesweg").toString(),
@@ -114,10 +124,7 @@ Wizard::Wizard(QWidget* const parent)
 
     d->welcomePage                = new WelcomePage(this);
     d->welcomePageItem            = addPage(d->welcomePage, "");
-    setValid(d->welcomePageItem, false);
-
     d->collectionSelector         = iface()->imageCollectionSelector(this);
-    d->collectionSelector->enableVirtualCollections(false);
     d->collectionSelectorPageItem = addPage(d->collectionSelector, i18n("Select the required collections"));
 
     setValid(d->collectionSelectorPageItem, false);
@@ -153,12 +160,6 @@ void Wizard::deleteDlnaObjects()
     d->finalPage->turnOff();
 }
 
-void Wizard::slotBinariesFound(bool flag)
-{
-    setValid(d->welcomePageItem, flag);
-    qCDebug(KIPIPLUGINS_LOG) << flag;
-}
-
 void Wizard::changeBackButtonState(bool state)
 {
     backButton()->setEnabled(!state);
@@ -169,8 +170,7 @@ void Wizard::next()
 {
     if (currentPage() == d->welcomePageItem)
     {
-        d->finalPage->setMinidlnaBinaryPath(d->welcomePage->getMinidlnaBinaryPath());
-
+        d->collectionSelector->enableVirtualCollections(true);
         d->finalPage->clearImages();
         KAssistantDialog::next();
     }

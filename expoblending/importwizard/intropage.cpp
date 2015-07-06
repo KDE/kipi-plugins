@@ -60,9 +60,9 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {
-    QVBoxLayout* const vbox     = new QVBoxLayout();
+    QVBoxLayout* const vbox = new QVBoxLayout();
 
-    QLabel *title               = new QLabel(this);
+    QLabel* const title     = new QLabel(this);
     title->setWordWrap(true);
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"

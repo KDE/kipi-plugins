@@ -28,10 +28,8 @@
 #include <QPixmap>
 #include <QVBoxLayout>
 #include <QGroupBox>
-#include <QGridLayout>
 #include <QApplication>
 #include <QStyle>
-#include <QComboBox>
 
 // KDE includes
 
@@ -43,10 +41,6 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "minidlnabinary.h"
-#include "kpbinarysearch.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIDLNAExportPlugin
 {
@@ -60,26 +54,20 @@ public:
         iconLbl                 = 0;
         titleLbl                = 0;
         headerLbl               = 0;
-        binariesWidget          = 0;
-        binariesLbl             = 0;
+        descLbl                 = 0;
     }
 
     QLabel*         iconLbl;
     QLabel*         titleLbl;
     QLabel*         headerLbl;
-    QLabel*         binariesLbl;
-
-    KPBinarySearch* binariesWidget;
-    MinidlnaBinary  minidlnaBinary;
+    QLabel*         descLbl;
 };
 
-WelcomePage::WelcomePage(Wizard* const wizard)
-    : QWidget(wizard),
+WelcomePage::WelcomePage(QWidget* const parent)
+    : QWidget(parent),
       d(new Private)
 {
-    QGridLayout* const mainLayout        = new QGridLayout(this);
-    QWidget* const settingsBox           = new QWidget(this);
-    QGridLayout* const settingsBoxLayout = new QGridLayout(settingsBox);
+    QGridLayout* const mainLayout = new QGridLayout(this);
 
     d->iconLbl  = new QLabel(this);
     d->iconLbl->setPixmap(KIconLoader::global()->loadIcon("kipi-dlna", KIconLoader::NoGroup, 64));
@@ -91,34 +79,30 @@ WelcomePage::WelcomePage(Wizard* const wizard)
                               "<font color=\"#9ACD32\">DLNA Export</font>"
                               "</a></h2></b>"));
 
-    d->binariesLbl    = new QLabel(i18n("<b>DLNAExport Binaries' requirement</b>"), settingsBox);
-    d->binariesWidget = new KPBinarySearch(settingsBox);
-    d->binariesWidget->addBinary(d->minidlnaBinary);
-
-    settingsBoxLayout->addWidget(d->binariesLbl,             1, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->binariesWidget,          2, 0, 1, 2);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
+    d->descLbl  = new QLabel(this);
+    d->descLbl->setWordWrap(true);
+    d->descLbl->setOpenExternalLinks(true);
+    d->descLbl->setText(i18n("<qt>"
+                        "<p><h1><b>Welcome to DLNA export tool</b></h1></p>"
+                        "<p>This tool will export your collections collections over the network using "
+                        "<a href='https://en.wikipedia.org/wiki/Universal_Plug_and_Play'>Universal Plug and Play</a> protocol.</p>"
+                        "<p>It will permit you to browse shared collections through a tablet or cellular with a DLNA compatible application, "
+                        "or with a DLNA certified device as a game console Media player, or TV screen.</p>"
+                        "<p>This assistant will help you to configure how to export collection. It must still open while sharing items.</p>"
+                        "<p>For more information, please take a look at "
+                        "<a href='https://en.wikipedia.org/wiki/Digital_Living_Network_Alliance'>this page</a></p>"
+                        "</qt>"));
+    
     mainLayout->addWidget(d->iconLbl,                        1, 0, 1, 2, Qt::AlignCenter);
     mainLayout->addWidget(d->titleLbl,                       2, 0, 1, 2, Qt::AlignCenter);
-    mainLayout->addWidget(settingsBox,                       3, 0, 5, 2);
+    mainLayout->addWidget(d->descLbl,                        3, 0, 5, 2);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
-
-    connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
-            wizard, SLOT(slotBinariesFound(bool)));
-    
-    d->minidlnaBinary.setup();
 }
 
 WelcomePage::~WelcomePage()
 {
     delete d;
-}
-
-QString WelcomePage::getMinidlnaBinaryPath() const
-{
-    return d->minidlnaBinary.path();
 }
 
 }   // namespace KIPIDLNAExportPlugin

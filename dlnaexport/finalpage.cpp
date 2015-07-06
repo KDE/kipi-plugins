@@ -54,8 +54,8 @@
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "hupnpmediaserver.h"
 #include "welcomepage.h"
-#include "minidlnamediaserver.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 
@@ -71,14 +71,14 @@ public:
 
     Private()
     {
-        Mdlna          = 0;
+        Hdlna          = 0;
         imgList        = 0;
         progressBar    = 0;
         startButton    = 0;
         stopButton     = 0;
     }
 
-    MinidlnaServer*                      Mdlna;
+    MediaServer*                         Hdlna;
     KPImagesList*                        imgList;
     KPProgressWidget*                    progressBar;
     KPushButton*                         startButton;
@@ -124,12 +124,9 @@ void FinalPage::turnOff()
     // Image sharing stopped.
     emit sharing(false);
     
-    if (d->Mdlna)
-    {
-        delete d->Mdlna;
-        d->Mdlna = 0;
-    }
-
+    delete d->Hdlna;
+    d->Hdlna = 0;
+    
     d->startButton->setEnabled(true);
     d->stopButton->setEnabled(false);
 }
@@ -139,8 +136,8 @@ void FinalPage::turnOn()
     // Image sharing started.
     emit sharing(true);
 
-    startMinidlnaMediaServer();
-
+    startHupnpMediaServer();
+    
     d->startButton->setEnabled(false);
     d->stopButton->setEnabled(true);
 }
@@ -167,28 +164,15 @@ void FinalPage::clearImages()
     d->imgList->listView()->clear();
 }
 
-void FinalPage::startMinidlnaMediaServer()
+void FinalPage::startHupnpMediaServer()
 {
-    d->Mdlna = new MinidlnaServer(this);
-    d->Mdlna->setDirectories(d->directories);
-    d->Mdlna->generateConfigFile();
-    d->Mdlna->startMinidlnaServer();
+    d->Hdlna = new MediaServer();
+    d->Hdlna->addImagesOnServer(d->collectionMap);
 }
 
 void FinalPage::setDirectories(const QStringList& directories)
 {
     d->directories = directories;
-}
-
-void FinalPage::setMinidlnaBinaryPath(const QString& path)
-{
-    if (!d->Mdlna)
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "d->Mdlna is null";
-        return;
-    }
-
-    d->Mdlna->setBinaryPath(path);
 }
 
 } // namespace KIPIDLNAExportPlugin

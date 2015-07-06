@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "hupnpmediaserver.moc"
+#include "hupnpmediaserver.h"
 
 // KDE includes
 

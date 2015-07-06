@@ -5,26 +5,39 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 add_subdirectory(icons)
+add_subdirectory(data)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_dlnaexport\")
+
+include_directories(extra/hupnp/include)
+include_directories(extra/hupnp_av/include)
+
+add_subdirectory(extra)
 
 set(kipiplugin_dlnaexport_PART_SRCS
     finalpage.cpp
     plugin_dlnaexport.cpp
+    hupnpmediaserver.cpp
     wizard.cpp
     welcomepage.cpp
-    minidlnamediaserver.cpp
    )
 
 add_library(kipiplugin_dlnaexport MODULE ${kipiplugin_dlnaexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_dlnaexport
-                      Qt5::Core
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2
+                      KF5::I18n
                       KF5::KIOCore
+                      Qt5::Core
+                      Qt5::Xml
                       KF5kipiplugins
+                     )
+
+target_link_libraries(kipiplugin_dlnaexport
+                      HUpnp
+                      HUpnpAv
                      )
 
 configure_file(kipiplugin_dlnaexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dlnaexport.desktop)
