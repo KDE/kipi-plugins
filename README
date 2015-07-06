@@ -42,7 +42,7 @@ Vkontakte          : A tool to export images to VKontakte web service (http://ww
 PhotoLayoutEditor  : A tool to assemble images together.
 ImageShack         : A tool to export images to ImageShack web service (http://imageshack.us)
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
-DLNAExport         : A tool to export collection on DLNA network service (http://www.dlna.org).
+DLNAExport         : A tool to export collection on DLNA compatible device over the network (http://www.dlna.org).
 Panorama           : A tool to assemble panoramic photo automatically.
 WallPaper          : A tool to set image as background on your desktop.
 
@@ -95,7 +95,6 @@ Geolocator         : libkgeomap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 Panorama           : Hugin command line tools, flex, bison (runtime dependency).
-DLNAExport         : minidlna (runtime dependency).
 Imgur              : libqtkoauth and kqoauth for Imgur.com's authenticated API.
 VideoSlideshow     : libimagemagick and libqtgstreamer
 DebianScreenshots  : libqjson.

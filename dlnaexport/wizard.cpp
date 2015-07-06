@@ -67,23 +67,23 @@ public:
 
     Private()
     {
-        finalPage                    = 0;
-        collectionSelector           = 0;
-        welcomePage                  = 0;
-        finalPageItem                = 0;
-        welcomePageItem              = 0;
-        collectionSelectorPageItem   = 0;
+        finalPage                   = 0;
+        collectionSelector          = 0;
+        welcomePage                 = 0;
+        finalPageItem               = 0;
+        welcomePageItem             = 0;
+        collectionSelectorPageItem  = 0;
     }
 
-    FinalPage*                           finalPage;
-    ImageCollectionSelector*             collectionSelector;
-    WelcomePage*                         welcomePage;
-    KPageWidgetItem*                     finalPageItem;
-    KPageWidgetItem*                     collectionSelectorPageItem;
-    KPageWidgetItem*                     welcomePageItem;
-    QList<QUrl>                          imageList;
-    QMap<QString, QList<QUrl>>           collectionMap;
-    QStringList                          directories;
+    FinalPage*                 finalPage;
+    ImageCollectionSelector*   collectionSelector;
+    WelcomePage*               welcomePage;
+    KPageWidgetItem*           finalPageItem;
+    KPageWidgetItem*           collectionSelectorPageItem;
+    KPageWidgetItem*           welcomePageItem;
+    QList<QUrl>                imageList;
+    QMap<QString, QList<QUrl>> collectionMap;
+    QStringList                directories;
 };
 
 Wizard::Wizard(QWidget* const parent)
@@ -98,7 +98,7 @@ Wizard::Wizard(QWidget* const parent)
     KPAboutData* const about = new KPAboutData(ki18n("DLNA Export"),
                                    0,
                                    KAboutLicense::GPL,
-                                   ki18n("A Kipi plugin to export image collections via DLNA\n"
+                                   ki18n("A Kipi plugin to export image collections to a DLNA compatible device\n"
                                          "Using LibHUpnp %1\n"
                                          "Using LibHUpnpAv %2\n")
                                          .subs(Upnp::hupnpCoreVersion())

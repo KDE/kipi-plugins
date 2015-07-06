@@ -8,7 +8,6 @@
 #add_definitions(-DQT_NO_CAST_FROM_ASCII)
 #add_definitions(-DQT_NO_CAST_TO_ASCII)
 
-remove_definitions(-DQT_DEPRECATED_SINCE(5,0))
 remove_definitions(-DQT_STRICT_ITERATORS)
 remove_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
