@@ -23,11 +23,15 @@
 
 #include "hupnpmediaserver.h"
 
+// Qt includes
+
+#include <QList>
+#include <QUrl>
+#include <QFile>
+
 // KDE includes
 
 #include <kstandarddirs.h>
-#include "kipiplugins_debug.h"
-#include <QUrl>
 
 // libHUpnp includes
 
@@ -45,10 +49,9 @@
 #include <HUpnpAv/HFileSystemDataSource>
 #include <HUpnpAv/HContentDirectoryServiceConfiguration>
 
-// Qt includes
+// Local includes
 
-#include <QList>
-#include <QFile>
+#include "kipiplugins_debug.h"
 
 using namespace Herqq::Upnp;
 using namespace Herqq::Upnp::Av;
@@ -71,7 +74,8 @@ public:
 };
 
 MediaServer::MediaServer(QObject* const parent)
-    : QObject(parent), d(new Private)
+    : QObject(parent),
+      d(new Private)
 {
     // Configure a data source
     HFileSystemDataSourceConfiguration datasourceConfig;

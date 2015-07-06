@@ -183,5 +183,3 @@ target_link_libraries(HUpnpAv HUpnp Qt5::Core)
 if(NOT MSVC)
     set_target_properties(HUpnpAv PROPERTIES COMPILE_FLAGS "-fPIC")
 endif()
-
-#install(TARGETS HUpnpAv ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})

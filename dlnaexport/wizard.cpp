@@ -29,27 +29,27 @@
 #include <QtGlobal>
 #include <QMap>
 #include <QProcess>
+#include <QUrl>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
-#include <QUrl>
+#include <kassistantdialog.h>
+#include <kdialog.h>
 
 // libHUpnp includes
 
 #include <HUpnpCore/HUpnpInfo>
 #include <HUpnpAv/HUpnpAvInfo>
-#include <kassistantdialog.h>
-#include <kdialog.h>
 
 // libkipi includes
 
 #include <KIPI/ImageCollection>
-#include <imagecollectionselector.h>
+#include <KIPI/ImageCollectionSelector>
 #include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "finalpage.h"

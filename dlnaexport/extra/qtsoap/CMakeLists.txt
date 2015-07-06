@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}
@@ -22,5 +27,3 @@ if(NOT MSVC)
 endif(NOT MSVC)
 
 target_link_libraries(QtSoap Qt5::Xml Qt5::Network)
-
-#INSTALL(TARGETS QtSoap ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})

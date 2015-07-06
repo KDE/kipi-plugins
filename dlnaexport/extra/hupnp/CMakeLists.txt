@@ -6,9 +6,9 @@
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}/src
-                    src
                     ${CMAKE_CURRENT_SOURCE_DIR}/include
                     ${CMAKE_CURRENT_BINARY_DIR}/include
+                    src
                     ../qtsoap
                    )
 
@@ -125,5 +125,3 @@ target_link_libraries(HUpnp QtSoap Qt5::Core)
 if(NOT MSVC)
     set_target_properties(HUpnp PROPERTIES COMPILE_FLAGS "-fPIC")
 endif()
-
-#install(TARGETS HUpnp ARCHIVE DESTINATION lib ${INSTALL_TARGETS_DEFAULT_ARGS})
