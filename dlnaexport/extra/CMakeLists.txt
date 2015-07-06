@@ -11,7 +11,6 @@
 remove_definitions(-DQT_STRICT_ITERATORS)
 remove_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
-remove_definitions(-DQT_NO_CAST_TO_ASCII)
 remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 remove_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 remove_definitions(-DQT_USE_QSTRINGBUILDER)
