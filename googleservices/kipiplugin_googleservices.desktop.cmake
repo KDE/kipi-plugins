@@ -3,6 +3,7 @@ UntranslatedGenericName=Google Services
 Name=Google Services
 Name[ca]=Google Services
 Name[de]=Google Services
+Name[fi]=Google Services
 Name[nl]=Google Services
 Name[pl]=Usługi Google
 Name[pt]=Serviços do Google
