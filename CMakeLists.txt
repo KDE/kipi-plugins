@@ -103,6 +103,7 @@ find_package(KF5 REQUIRED COMPONENTS
              ItemModels
              ThreadWeaver
              I18n
+             OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 
 # Dependencies detection required by all plugins
@@ -130,7 +131,6 @@ if(KF5Kipi_FOUND)
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
     find_package(QJSON)                                                        # For Debian Screenshots Facebook, Google Services, Dropbox and Imgur.
-    find_package(KF5 COMPONENTS CalendarCore)                                  # For Calendar (KCalCore).
 
 #    find_package(Qca-qt5)                                                      # For Shwup.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
