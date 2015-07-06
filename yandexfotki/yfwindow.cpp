@@ -540,8 +540,10 @@ void YandexFotkiWindow::slotButtonClicked(int button)
             }
             break;
         default:
-            KDialog::slotButtonClicked(button);
+            break;
     }
+
+    KDialog::slotButtonClicked(button);
 }
 
 void YandexFotkiWindow::slotResizeChecked()
