@@ -78,10 +78,8 @@ class GPSCorrelatorWidget::Private
 {
 public:
 
-    Private(const int pMarginHint, const int pSpacingHint)
-      : marginHint(pMarginHint),
-        spacingHint(pSpacingHint),
-        gpxLoadFilesButton(0),
+    Private()
+      : gpxLoadFilesButton(0),
         gpxFileList(0),
         maxTimeLabel(0),
         timeZoneGroup(0),
@@ -109,9 +107,6 @@ public:
         correlationUndoCommand(0)
     {
     }
-
-    int                     marginHint;
-    int                     spacingHint;
 
     QUrl                    gpxFileOpenLastDirectory;
     QPushButton*            gpxLoadFilesButton;
@@ -148,8 +143,8 @@ public:
     GPSUndoCommand*         correlationUndoCommand;
 };
 
-GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, KGeoMap::TrackManager* const trackManager, const int marginHint, const int spacingHint)
-    : QWidget(parent), d(new Private(marginHint, spacingHint))
+GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, KGeoMap::TrackManager* const trackManager)
+    : QWidget(parent), d(new Private())
 {
     d->imageModel = imageModel;
     d->trackManager = trackManager;
@@ -281,8 +276,6 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     offsetLayout->addWidget(d->offsetSign, 0, 0, 1, 1);
     offsetLayout->addWidget(d->offsetMin, 0, 1, 1, 1);
     offsetLayout->addWidget(d->offsetSec, 0, 2, 1, 1);
-    offsetLayout->setSpacing(d->spacingHint);
-    offsetLayout->setMargin(d->marginHint);
 
     // interpolation options
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), this);
@@ -334,8 +327,6 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     settingsLayout->addWidget(d->maxTimeInput,       row, 1, 1, 1);
     row++;
     settingsLayout->addWidget(d->correlateButton,    row, 0, 1, 1);
-    settingsLayout->setSpacing(d->spacingHint);
-    settingsLayout->setMargin(d->marginHint);
 
     settingsLayout->setRowStretch(row, 100);
 

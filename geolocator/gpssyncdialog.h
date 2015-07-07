@@ -35,6 +35,7 @@
 
 #include <QModelIndex>
 #include <QWidget>
+#include <QDialog>
 
 // KDE includes
 
@@ -52,7 +53,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 namespace KGeoMap
 {
@@ -108,7 +109,7 @@ private:
 
 // ------------------------------------------------------------------------------------------------
 
-class GPSSyncDialog : public KP4ToolDialog
+class GPSSyncDialog : public QDialog, public KPDialogBase
 {
     Q_OBJECT
 
