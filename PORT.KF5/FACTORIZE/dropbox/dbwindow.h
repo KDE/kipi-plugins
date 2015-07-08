@@ -117,7 +117,7 @@ private:
 
     QString              m_currentAlbumName;
 
-    QUrl::List           m_transferQueue;
+    QList<QUrl>          m_transferQueue;
 
     QString              m_accToken;
     QString              m_accTokenSecret;

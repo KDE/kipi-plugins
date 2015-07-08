@@ -559,7 +559,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoDone(job->error(), job->errorText(),"-1");
+            emit signalAddPhotoDone(job->error(), job->errorText(), "-1");
         }
         else
         {

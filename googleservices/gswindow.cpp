@@ -35,6 +35,7 @@
 #include <QFileInfo>
 #include <QPointer>
 #include <QDebug>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -54,7 +55,6 @@
 #include <kpushbutton.h>
 #include <kurl.h>
 #include <kio/renamedialog.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -1219,7 +1219,7 @@ void GSWindow::slotTransferCancel()
 void GSWindow::slotUserChangeRequest()
 {
     KUrl url("https://accounts.google.com/logout");
-    KToolInvocation::invokeBrowser(url.url());
+    QDesktopServices::openUrl(url);
 
     if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser, "
                                                       "click \"Continue\" to authenticate for another account"))

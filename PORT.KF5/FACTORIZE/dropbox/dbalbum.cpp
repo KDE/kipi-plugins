@@ -25,6 +25,8 @@
 // Qt includes
 
 #include <QFormLayout>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 

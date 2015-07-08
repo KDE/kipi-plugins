@@ -190,7 +190,7 @@ void Plugin_Flickr::slotActivateZooomr()
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), "Zooomr",selectZoomr);
+        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), "Zooomr", selectZoomr);
     }
     else
     {

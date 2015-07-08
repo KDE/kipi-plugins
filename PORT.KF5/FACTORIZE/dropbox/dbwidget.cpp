@@ -35,6 +35,8 @@
 #include <QVBoxLayout>
 #include <QPixmap>
 #include <QComboBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
@@ -87,8 +89,9 @@ DropboxWidget::DropboxWidget(QWidget* const parent):QWidget(parent)
     QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
     m_userNameDisplayLbl      = new QLabel(accountBox);
 
-    m_changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"),"switch-system-user",i18n("Change Dropbox "
-                                                                                                "account for transfer")),accountBox);
+    m_changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"), "switch-system-user",
+                                               i18n("Change Dropbox account for transfer")),
+                                      accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);

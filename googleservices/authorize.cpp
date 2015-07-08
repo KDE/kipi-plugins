@@ -51,6 +51,7 @@
 #include <klocale.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
+#include <kjobwidgets.h>
 
 // LibKDcraw includes
 
@@ -270,7 +271,7 @@ void Authorize::slotAuthResult(KJob* kjob)
         {
             emit signalBusy(false);
             KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-            job_ui->setWindow(m_parent);
+            KJobWidgets::setWindow(job, m_parent);
             job_ui->showErrorMessage();
         }
 

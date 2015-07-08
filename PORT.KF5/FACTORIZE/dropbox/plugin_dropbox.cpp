@@ -38,6 +38,8 @@ extern "C"
 
 #include <QApplication>
 #include <QAction>
+#include <QStandardPaths>
+#include <QDir>
 
 // KDE includes
 
@@ -45,7 +47,6 @@ extern "C"
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
-#include <kstandarddirs.h>
 #include <kwindowsystem.h>
 
 // Libkipi includes
@@ -106,16 +107,16 @@ void Plugin_Dropbox::setupActions()
 
 void Plugin_Dropbox::slotExport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp",QString("kipi-db-") + QString::number(getpid()) + QString("/"));
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-dropboxplugin-") + QString::number(getpid()) + QString("/");
+    QDir().mkpath(tmp);
 
-    if(!m_dlgExport)
+    if (!m_dlgExport)
     {
-        m_dlgExport = new DBWindow(tmp,QApplication::activeWindow());
+        m_dlgExport = new DBWindow(tmp, QApplication::activeWindow());
     }
     else
     {
-        if(m_dlgExport->isMinimized())
+        if (m_dlgExport->isMinimized())
         {
             KWindowSystem::unminimizeWindow(m_dlgExport->winId());
         }

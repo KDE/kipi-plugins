@@ -35,6 +35,7 @@
 #include <QMenu>
 #include <QApplication>
 #include <QUrl>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -42,8 +43,6 @@
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
-#include <khtml_part.h>
-#include <khtmlview.h>
 #include <ktabwidget.h>
 #include <krun.h>
 #include <kconfig.h>

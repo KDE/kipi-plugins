@@ -38,6 +38,7 @@
 #include <QPlainTextEdit>
 #include <QList>
 #include <QApplication>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -45,7 +46,6 @@
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 
 // QJson includes
 
@@ -264,7 +264,7 @@ void FbTalker::doOAuth()
     url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,offline_access");
     url.addQueryItem("response_type", "token");
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
-    KToolInvocation::invokeBrowser(url.url());
+    QDesktopServices::openUrl(url);
 
     emit signalBusy(false);
 
@@ -472,7 +472,7 @@ void FbTalker::changePerm()
     url.addQueryItem("redirect_uri", "http://www.facebook.com/apps/application.php?id=107648075065");
     url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
     qCDebug(KIPIPLUGINS_LOG) << "Change Perm URL: " << url;
-    KToolInvocation::invokeBrowser(url.url());
+    QDesktopServices::openUrl(url);
 
     emit signalBusy(false);
 
@@ -953,7 +953,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("auth_token", m_authToken);
     qCDebug(KIPIPLUGINS_LOG) << "Login URL: " << url;
-    KToolInvocation::invokeBrowser(url.url());
+    QDesktopServices::openUrl(url);
 
     emit signalBusy(false);
     int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),

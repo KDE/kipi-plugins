@@ -50,6 +50,7 @@
 
 // KDE includes
 
+#include <kjobwidgets.h>
 #include <kio/jobuidelegate.h>
 
 // LibKDcraw includes
@@ -911,8 +912,8 @@ void FlickrTalker::slotResult(KJob* kjob)
         else
         {
             KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
-                                               job_ui->setWindow(m_parent);
-                                               job_ui->showErrorMessage();
+            KJobWidgets::setWindow(job, m_parent);
+            job_ui->showErrorMessage();
         }
 
         return;

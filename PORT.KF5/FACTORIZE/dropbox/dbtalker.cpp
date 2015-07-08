@@ -42,16 +42,18 @@
 #include <QDateTime>
 #include <QWidget>
 #include <QApplication>
+#include <QDesktopServices>
+#include <QPushButton>
+#include <QDialog>
 
 // KDE includes
 
 #include <kcodecs.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
+#include <kjobwidgets.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 #include <kstandarddirs.h>
-#include <kdialog.h>
 
 // LibKDcraw includes
 
@@ -165,32 +167,26 @@ void DBTalker::doOAuth()
     url.addQueryItem("oauth_token",m_oauthToken);
 
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
-    KToolInvocation::invokeBrowser(url.url());
+    QDesktopServices::openUrl(url);
 
     emit signalBusy(false);
 
-    KDialog* const dialog = new KDialog(QApplication::activeWindow(),0);
+    QDialog* const dialog = new QDialog(QApplication::activeWindow(),0);
     dialog->setModal(true);
     dialog->setWindowTitle(i18n("Authorize Dropbox"));
-    dialog->setButtons(KDialog::Ok | KDialog::Cancel);
-    //dialog->setButtonText(0x00000004,"Authorize");
-
-    QWidget* const mainWidget = new QWidget(dialog,0);
-
-    QPlainTextEdit* const infobox = new QPlainTextEdit( i18n(
-          "Please follow the instructions in the browser. "
-           "After logging in and authorizing the application, press OK."
-                                                           ));
-
+    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
+    buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    
+    QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser. "
+                                                            "After logging in and authorizing the application, press OK."));
     infobox->setReadOnly(true);
-    QVBoxLayout* const layout = new QVBoxLayout;
-    layout->addWidget(infobox);
-    mainWidget->setLayout(layout);
 
-    dialog->setMainWidget(mainWidget);
+    QVBoxLayout* const vbx = new QVBoxLayout(dialog);
+    vbx->addWidget(infobox);
+    vbx->addWidget(buttons);
+    dialog->setLayout(vbx);
 
-
-    if(dialog->exec() == QDialog::Accepted)
+    if (dialog->exec() == QDialog::Accepted)
     {
         getAccessToken();
     }
@@ -332,9 +328,9 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     QString path = imgPath;
     QImage image;
 
-    if(KPMetadata::isRawFile(imgPath))
+    if(KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath)))
     {
-        KDcrawIface::KDcraw::loadRawPreview(image,imgPath);
+        KDcrawIface::KDcraw::loadRawPreview(image, imgPath);
     }
     else
     {
@@ -426,9 +422,9 @@ void DBTalker::slotResult(KJob* kjob)
     m_job = 0;
     KIO::Job* const job = static_cast<KIO::Job*>(kjob);
 
-    if(job->error())
+    if (job->error())
     {
-        if(m_state ==  DB_REQ_TOKEN)
+        if (m_state ==  DB_REQ_TOKEN)
         {
             emit signalBusy(false);
             emit signalRequestTokenFailed(job->error(),job->errorText());
@@ -436,7 +432,7 @@ void DBTalker::slotResult(KJob* kjob)
         else
         {
             emit signalBusy(false);
-            job->ui()->setWindow(m_parent);
+            KJobWidgets::setWindow(job, m_parent);
             job->ui()->showErrorMessage();
         }
         return;
