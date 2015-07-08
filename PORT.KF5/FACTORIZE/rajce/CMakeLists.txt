@@ -20,7 +20,7 @@ set(kipiplugin_rajce_PART_SRCS
     rajcewindow.cpp
    )
 
-add_library(kipiplugin_rajce MODULE ${kipiplugin_rajceexport_PART_SRCS})
+add_library(kipiplugin_rajce MODULE ${kipiplugin_rajce_PART_SRCS})
 
 target_link_libraries(kipiplugin_rajce
                       KF5::KDcraw
