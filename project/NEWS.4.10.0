@@ -1,0 +1,9 @@
+Kipi-plugins 4.10.0 - Release date: 2015/05/10
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 280189 - SmugMug Call Failed: Invalid user/nick/password.
+002 ==> 334593 - Kipiplugins fails with invalid method reading folders from Smug Mug.

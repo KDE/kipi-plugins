@@ -1,0 +1,50 @@
+Kipi-plugins 4.11.0 - Release date: 2015-06-14
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 274029 - Edit Metadata dialog doesn't honour settings for XMP sidecar [patch].
+002 ==> 345358 - digiKam crash when vkontakte plugin failed to upload images.
+003 ==> 320308 - "Failed to upload photo into Flickr" every time after first use.
+004 ==> 327069 - Kipiplugins missing translations.
+005 ==> 243106 - Flickr uploader uploads with wrong date.
+006 ==> 291449 - To check the file size and report to the user if the file size exceeds limits set by flickr.
+007 ==> 228010 - Let flickr export progress bar show progress of each image.
+008 ==> 240147 - Allow to change Advanced Slideshow delay with mouse as with keyboard.
+009 ==> 261862 - Advanced slideshow controls not visible during a slideshow.
+010 ==> 134525 - Impossible to use both transitions in slideshow.
+011 ==> 182345 - Missing slideshow effects with control by hand.
+012 ==> 238601 - Slideshow should support reordering pictures.
+013 ==> 144007 - Allow to drag and drop location link over map.
+014 ==> 280215 - Can't add geolocation info to videos.
+015 ==> 210458 - Allow to use NMEA format as imported track file.
+016 ==> 273520 - Geolocation not working reliably.
+017 ==> 319657 - Unable to save geotags in *.CR2 and *.DNG.
+018 ==> 304760 - OpenStreetMap shows only tiles from cache and does not download missing ones.
+019 ==> 328943 - Description EXIF information.
+020 ==> 274869 - Images without filename extension will not print.
+021 ==> 215705 - Save multiple account frobs, so we don't have to sign out and reauth each time.
+022 ==> 193890 - Allow to update "Modified" date from image.
+023 ==> 318661 - Export plugin does not convert to sRGB and strips existing ICC profile.
+024 ==> 233675 - Shared binary programs dngconverter and scangui do not provide man pages.
+025 ==> 316310 - Tools - resize images doesn' work.
+026 ==> 300458 - Imgur export is unusable from ksnapshot.
+027 ==> 339572 - Too much required information.
+028 ==> 264351 - KDE Global shortcuts do not work when using Advanced Slideshow.
+029 ==> 227978 - Problem with "image resize" when german umlaute in pathname.
+030 ==> 154076 - Corrupted image when use image viewer tool.
+031 ==> 264045 - Export to remote computer does not work with fish:// urls.
+032 ==> 160893 - Use UPNP server as image database.
+033 ==> 340847 - MediaWiki: {{Coord}} template does not exist on Commons.
+034 ==> 335493 - Fix issues when metadata are loaded by MediaWiki tool [patch].
+035 ==> 300629 - Print Assistant does not follow system localization.
+036 ==> 303167 - DNGConverter fails if folder of raw files contains special characters like german umlauts.
+037 ==> 122284 - Using mouse button to switch between next/previous item do not work with all effects.
+038 ==> 317920 - Time zone data of IPTC metadata Date Created is unavailable and deleted in MetadataEdit [patch].
+039 ==> 342687 - Panorama file time-stamps should be the same than the stitched pictures.
+040 ==> 311689 - Reverse Geocoding tags are sometimes not saved.
+041 ==> 292482 - FACTORING : permit to fill image list with current selected album when no item are selected [patch].
+042 ==> 348278 - Export to GDrive fails when photo description contains double quotes.
+043 ==> 330919 - Previews of dng images converted from dark cr2 images are too bright.
