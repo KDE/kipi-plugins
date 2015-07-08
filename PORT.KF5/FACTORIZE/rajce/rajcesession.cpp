@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "rajcesession.moc"
+#include "rajcesession.h"
 
 // Qt includes
 
@@ -29,11 +29,10 @@
 #include <QXmlQuery>
 #include <QXmlResultItems>
 #include <QFileInfo>
+#include <QUrl>
 
 // KDE includes
 
-#include <QUrl>
-#include "kipiplugins_debug.h"
 #include <krandom.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
@@ -44,6 +43,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "mpform.h"
 #include "kpversion.h"
 #include "kpmetadata.h"

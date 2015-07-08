@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
-#define KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
+#ifndef NEWALBUMDIALOG_H
+#define NEWALBUMDIALOG_H
 
 // KDE includes
 
@@ -54,4 +54,4 @@ private:
 
 } // namespace KIPIRajcePlugin
 
-#endif // KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
+#endif // NEWALBUMDIALOG_H

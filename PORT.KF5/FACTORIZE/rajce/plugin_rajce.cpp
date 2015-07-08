@@ -25,7 +25,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_rajceexport.moc"
+#include "plugin_rajceexport.h"
 
 // C ANSI includes
 

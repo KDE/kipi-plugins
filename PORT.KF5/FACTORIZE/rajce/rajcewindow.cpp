@@ -20,16 +20,16 @@
  *
  * ============================================================ */
 
-#include "rajcewindow.moc"
+#include "rajcewindow.h"
 
 // Qt includes
 
 #include <QAction>
+#include <QMenu>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kpushbutton.h>
 
 // Local includes

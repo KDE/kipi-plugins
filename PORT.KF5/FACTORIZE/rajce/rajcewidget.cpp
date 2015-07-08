@@ -35,13 +35,13 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDialog>
+#include <QComboBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <QComboBox>
 #include <kpushbutton.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
@@ -49,7 +49,7 @@
 // Libkipi includes
 
 #include <KIPI/Interface>
-#include <uploadwidget.h>
+#include <KIPI/UploadWidget>
 
 // Local includes
 

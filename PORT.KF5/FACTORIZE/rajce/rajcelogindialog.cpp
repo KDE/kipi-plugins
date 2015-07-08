@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "rajcelogindialog.moc"
+#include "rajcelogindialog.h"
 
 // Qt includes
 
@@ -33,9 +33,12 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <klineedit.h>
 #include <klocalizedstring.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIRajcePlugin
 {

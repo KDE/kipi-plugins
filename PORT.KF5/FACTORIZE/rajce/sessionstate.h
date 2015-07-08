@@ -20,20 +20,17 @@
  *
  * ============================================================ */
 
-#ifndef KIPIRAJCEEXPORTPLUGIN_SESSIONSTATE_H
-#define KIPIRAJCEEXPORTPLUGIN_SESSIONSTATE_H
+#ifndef SESSIONSTATE_H
+#define SESSIONSTATE_H
 
 // Qt includes
 
 #include <QString>
 #include <QVector>
 
-// KDE includes
-
-#include "kipiplugins_debug.h"
-
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "album.h"
 
 namespace KIPIRajcePlugin
@@ -239,4 +236,4 @@ private:
 
 QDebug operator<<(QDebug d, const KIPIRajcePlugin::SessionState& s);
 
-#endif // KIPIRAJCEEXPORTPLUGIN_SESSIONSTATE_H
+#endif // SESSIONSTATE_H

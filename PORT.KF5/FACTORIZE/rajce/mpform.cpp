@@ -32,14 +32,17 @@
 
 #include <QByteArray>
 #include <QFile>
+#include <QUrl>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
-#include "kipiplugins_debug.h"
 #include <kmimetype.h>
 #include <krandom.h>
-#include <QUrl>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIRajcePlugin
 {

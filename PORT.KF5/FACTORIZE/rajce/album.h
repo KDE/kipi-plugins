@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPIRAJCEEXPORTPLUGIN_ALBUM_H
-#define KIPIRAJCEEXPORTPLUGIN_ALBUM_H
+#ifndef ALBUM_H
+#define ALBUM_H
 
 // Qt includes
 
@@ -68,4 +68,4 @@ QDebug operator<<(QDebug d, const KIPIRajcePlugin::Album& a);
 
 Q_DECLARE_METATYPE(KIPIRajcePlugin::Album)
 
-#endif // KIPIRAJCEEXPORTPLUGIN_ALBUMLISTCOMMAND_H
+#endif // ALBUMLISTCOMMAND_H

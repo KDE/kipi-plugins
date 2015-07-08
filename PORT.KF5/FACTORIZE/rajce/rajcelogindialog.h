@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H
-#define KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H
+#ifndef RAJCELOGINDIALOG_H
+#define RAJCELOGINDIALOG_H
 
 // Qt includes
 
@@ -56,4 +56,4 @@ private:
 
 } // namespace KIPIRajcePlugin
 
-#endif // KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H
+#endif // RAJCELOGINDIALOG_H

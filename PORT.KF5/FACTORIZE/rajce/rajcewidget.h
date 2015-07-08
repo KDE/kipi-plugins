@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H
-#define KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H
+#ifndef RAJCEWIDGET_H
+#define RAJCEWIDGET_H
 
 // Qt includes
 
@@ -134,4 +134,4 @@ private:
 
 } // namespace KIPIRajcePlugin
 
-#endif // KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H
+#endif // RAJCEWIDGET_H
