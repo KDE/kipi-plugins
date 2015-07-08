@@ -31,11 +31,11 @@
 // Local includes
 
 #include "kpaboutdata.h"
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 using namespace KIPIPlugins;
 
-class ImageSelector : public KP4ToolDialog
+class ImageSelector : public KPToolDialog
 {
     Q_OBJECT
 

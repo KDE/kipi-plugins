@@ -60,11 +60,9 @@ public:
 };
 
 ImageSelector::ImageSelector(KPAboutData* const about)
-    : KP4ToolDialog(0), d(new Private)
+    : KPToolDialog(0), d(new Private)
 {
-    setButtons(Help | Apply | Close);
-    setButtonText(Apply, i18n("Rotate Items"));
-    setDefaultButton(Close);
+    startButton()->setText(i18n("Rotate Items"));
     setModal(false);
     setAboutData(about);
 
@@ -81,12 +79,10 @@ ImageSelector::ImageSelector(KPAboutData* const about)
     mainLayout->addWidget(d->listView,    0, 0, 1, 1);
     mainLayout->addWidget(d->progressBar, 1, 0, 1, 1);
     mainLayout->setRowStretch(0, 10);
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(spacingHint());
 
     d->thread = new ActionThread(this);
 
-    connect(this, &ImageSelector::applyClicked,
+    connect(startButton(), &QPushButton::clicked,
             this, &ImageSelector::slotStart);
 
     connect(d->thread, &ActionThread::starting,
@@ -112,7 +108,7 @@ void ImageSelector::slotStart()
     qDebug() << selectedImages;
     d->progressBar->setMaximum(selectedImages.count());
     d->progressBar->setValue(0);
-    button(Apply)->setDisabled(true);
+    startButton()->setEnabled(false);
 
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
