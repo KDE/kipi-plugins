@@ -88,6 +88,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Widgets
              Gui
              Xml
+             XmlPatterns
              Test
              Svg
              Concurrent
@@ -390,8 +391,6 @@ if(KF5Kipi_FOUND)
         if(KF5CalendarCore_FOUND)
             add_subdirectory(calendar)
         endif()
-
-        add_subdirectory(PORT.KF5/FACTORIZE/rajceexport)
 
 # Plugins in pending state
 #
