@@ -495,7 +495,7 @@ void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QLis
 
     for (int i = 0; i < photosList.size(); ++i)
     {
-        m_transferQueue.push_back(photosList.at(i).originalURL);
+        m_transferQueue.push_back(QUrl::fromLocalFile(photosList.at(i).originalURL));
     }
 
     if (m_transferQueue.isEmpty())
@@ -654,7 +654,7 @@ void FbWindow::setProfileAID(long long userID)
 
 QString FbWindow::getImageCaption(const QString& fileName)
 {
-    KPImageInfo info(fileName);
+    KPImageInfo info(QUrl::fromLocalFile(fileName));
     // Facebook doesn't support image titles. Include it in descriptions if needed.
     QStringList descriptions = QStringList() << info.title() << info.description();
     descriptions.removeAll("");
@@ -731,7 +731,7 @@ void FbWindow::uploadNextPhoto()
     m_widget->progressBar()->setValue(m_imagesCount);
 
     // check if we have to RAW file -> use preview image then
-    bool    isRAW = KPMetadata::isRawFile(imgPath);
+    bool    isRAW = KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath));
     QString caption;
     bool    res;
 

@@ -34,6 +34,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
@@ -284,7 +286,7 @@ KIPIPlugins::KPProgressWidget* FbWidget::progressBar() const
 
 QString FbWidget::getDestinationPath() const
 {
-    return m_uploadWidget->selectedImageCollection().uploadPath().toLocalFile();
+    return m_uploadWidget->selectedImageCollection().uploadUrl().toLocalFile();
 }
 
 void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPerm)

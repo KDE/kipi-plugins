@@ -201,15 +201,15 @@ void DBTalker::doOAuth()
 void DBTalker::getAccessToken()
 {
     QUrl url("https://api.dropbox.com/1/oauth/access_token");
-    url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
+    url.addQueryItem("oauth_consumer_key", m_oauth_consumer_key);
     url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature",m_access_oauth_signature);
-    url.addQueryItem("oauth_signature_method",m_oauth_signature_method);
+    url.addQueryItem("oauth_signature", m_access_oauth_signature);
+    url.addQueryItem("oauth_signature_method", m_oauth_signature_method);
     url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version",m_oauth_version);
-    url.addQueryItem("oauth_token",m_oauthToken);
+    url.addQueryItem("oauth_version", m_oauth_version);
+    url.addQueryItem("oauth_token", m_oauthToken);
 
-    KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(url, "", KIO::HideProgressInfo);
     job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
@@ -367,7 +367,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     }
 
     QString uploadPath = uploadFolder + QUrl(imgPath).fileName();
-    QString m_url = QString("https://api-content.dropbox.com/1/files_put/dropbox/") + "/" +uploadPath;
+    QString m_url = QString("https://api-content.dropbox.com/1/files_put/dropbox/") + "/" + uploadPath;
     QUrl url(m_url);
     url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
     url.addQueryItem("oauth_nonce", nonce);

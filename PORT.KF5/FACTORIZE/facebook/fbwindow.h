@@ -139,7 +139,7 @@ private:
     unsigned int m_sessionExpires;
     QString      m_accessToken;            // OAuth access token
 
-    QUrl::List   m_transferQueue;
+    QList<QUrl>  m_transferQueue;
 
     FbTalker*    m_talker;
     FbWidget*    m_widget;

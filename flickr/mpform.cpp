@@ -62,12 +62,14 @@ QString MPForm::randomString(const int& length)
 
    QString randomString;
    qsrand((uint)QTime::currentTime().msec());
+
    for(int i=0; i<length; ++i)
    {
        int index = qrand() % possibleCharacters.length();
        QChar nextChar = possibleCharacters.at(index);
        randomString.append(nextChar);
    }
+
    return randomString;
 }
 

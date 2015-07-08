@@ -39,12 +39,17 @@
 #include <QList>
 #include <QApplication>
 #include <QDesktopServices>
+#include <QDialog>
+#include <QPushButton>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
 #include <kcodecs.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
+#include <kjobwidgets.h>
 #include <kmessagebox.h>
 
 // QJson includes
@@ -268,25 +273,24 @@ void FbTalker::doOAuth()
 
     emit signalBusy(false);
 
-    KDialog* const window         = new KDialog(QApplication::activeWindow(), 0);
-    window->setModal(true);
-    window->setWindowTitle( i18n("Facebook Application Authorization") );
-    window->setButtons(KDialog::Ok | KDialog::Cancel);
-    QWidget* const main           = new QWidget(window, 0);
-    QLineEdit* const textbox      = new QLineEdit( );
-    QPlainTextEdit* const infobox = new QPlainTextEdit( i18n(
-        "Please follow the instructions in the browser window. "
-        "When done, copy the Internet address from your browser into the textbox below and press \"OK\"."
-    ) );
-
+    QDialog* const dialog = new QDialog(QApplication::activeWindow(), 0);
+    dialog->setModal(true);
+    dialog->setWindowTitle(i18n("Facebook Application Authorization"));
+    QLineEdit* const textbox        = new QLineEdit();
+    QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
+    buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    
+    QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser window. "
+                                                            "When done, copy the Internet address from your browser into the textbox below and press \"OK\"."));
     infobox->setReadOnly(true);
-    QVBoxLayout* layout = new QVBoxLayout;
-    layout->addWidget(infobox);
-    layout->addWidget(textbox);
-    main->setLayout(layout);
-    window->setMainWidget(main);
 
-    if( window->exec()  == QDialog::Accepted )
+    QVBoxLayout* const vbx = new QVBoxLayout(dialog);
+    vbx->addWidget(infobox);
+    vbx->addWidget(textbox);
+    vbx->addWidget(buttons);
+    dialog->setLayout(vbx);
+    
+    if( dialog->exec()  == QDialog::Accepted )
     {
         // Error code and reason from the Facebook service
         QString errorReason;
@@ -361,13 +365,13 @@ void FbTalker::getLoggedInUser()
     args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"users.getLoggedInUser"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("users.getLoggedInUser")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
+            this, SLOT(data(KIO::Job*, QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -402,7 +406,7 @@ void FbTalker::getUserInfo(const QString& userIDs)
     args["fields"]       = "name,profile_url";
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"users.getInfo"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("users.getInfo")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -445,7 +449,7 @@ void FbTalker::getUploadPermission()
     args["ext_perm"]     = "photo_upload";
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"users.hasAppPermission"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("users.hasAppPermission")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -499,7 +503,7 @@ void FbTalker::logout()
     args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"auth.expireSession"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("auth.expireSession")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -530,7 +534,7 @@ void FbTalker::listFriends()
     args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"friends.get"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("friends.get")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -566,7 +570,7 @@ void FbTalker::listAlbums(long long userID)
         args["uid"]      = QString::number(m_user.id);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.getAlbums"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.getAlbums")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -603,7 +607,7 @@ void FbTalker::listPhotos(long long userID, const QString &albumID)
         args["subj_id"]  = QString::number(m_user.id);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.get"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.get")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -663,7 +667,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
     }
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.createAlbum"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.createAlbum")), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -720,7 +724,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     qCDebug(KIPIPLUGINS_LOG) << "FORM: " << endl << form.formData();
 
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL,"photos.upload"), form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.upload")), form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent",    m_userAgent);
     job->addMetaData("content-type", form.contentType());
 
@@ -746,7 +750,7 @@ void FbTalker::getPhoto(const QString& imgPath)
 
     emit signalBusy(true);
 
-    KIO::TransferJob* const job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -833,7 +837,7 @@ void FbTalker::slotResult(KJob* kjob)
         else
         {
             emit signalBusy(false);
-            job->ui()->setWindow(m_parent);
+            KJobWidgets::setWindow(job, m_parent);
             job->ui()->showErrorMessage();
         }
         return;

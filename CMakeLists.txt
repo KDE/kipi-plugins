@@ -385,6 +385,7 @@ if(KF5Kipi_FOUND)
 
         if(QJSON_FOUND)
             add_subdirectory(googleservices)
+            add_subdirectory(PORT.KF5/FACTORIZE/facebook)
         endif()
 
         if(KF5CalendarCore_FOUND)

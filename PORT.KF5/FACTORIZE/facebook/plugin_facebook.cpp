@@ -64,7 +64,7 @@ namespace KIPIFacebookPlugin
 K_PLUGIN_FACTORY( FacebookFactory, registerPlugin<Plugin_Facebook>(); )
 
 Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(FacebookFactory::componentData(), parent, "Facebook")
+    : Plugin(parent, "Facebook")
 {
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Facebook plugin loaded";
     

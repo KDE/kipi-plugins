@@ -32,12 +32,18 @@
 // Qt includes
 
 #include <QFile>
+#include <QMimeDatabase>
+#include <QMimeType>
+#include <QUrl>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kmimetype.h>
 #include <krandom.h>
+
+// Local includes
+
+#include "kipiplugins_debug.h"
 
 namespace KIPIFacebookPlugin
 {
@@ -95,9 +101,10 @@ void MPForm::addPair(const QString& name, const QString& value)
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(path);
-    QString mime       = ptr->name();
-
+    QMimeDatabase db;
+    QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
+    QString mime  = ptr.name();    
+    
     if (mime.isEmpty())
         return false;
 
