@@ -31,16 +31,14 @@
 
 #include <KIPI/Plugin>
 
-// Local includes
-
-#include "rajcewindow.h"
+class QAction;
 
 using namespace KIPI;
 
-class QAction;
-
 namespace KIPIRajcePlugin
 {
+
+class RajceWindow;
 
 class Plugin_Rajce : public Plugin
 {
@@ -63,7 +61,7 @@ private:
 
 private:
 
-    QAction *    m_actionExport;
+    QAction*     m_actionExport;
     RajceWindow* m_dlgExport;
 };
 

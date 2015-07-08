@@ -25,7 +25,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_rajceexport.h"
+#include "plugin_rajce.h"
 
 // C ANSI includes
 
@@ -34,17 +34,19 @@ extern "C"
 #include <unistd.h>
 }
 
+// Qt includes
+
 #include <QAction>
 #include <QApplication>
+#include <QKeySequence>
 
 // KDE includes
 
-#include <klibloader.h>
 #include <klocalizedstring.h>
-#include <kshortcut.h>
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
+#include <kgenericfactory.h>
 
 // Libkipi includes
 
@@ -53,18 +55,19 @@ extern "C"
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "rajcewindow.h"
 
 namespace KIPIRajcePlugin
 {
 
-K_PLUGIN_FACTORY( RajceFactory, registerPlugin<Plugin_Rajce(); )
+K_PLUGIN_FACTORY( RajceFactory, registerPlugin<Plugin_Rajce>(); )
 
 Plugin_Rajce::Plugin_Rajce(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "Rajce"),
       m_actionExport(0),
       m_dlgExport(0)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_Rajce plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Rajce plugin loaded";
 
     setUiBaseName("kipiplugin_rajceui.rc");
     setupXML();
@@ -96,7 +99,7 @@ void Plugin_Rajce::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
     m_actionExport->setIcon(QIcon::fromTheme("kipi-rajce"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_J));
+    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_J));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
@@ -129,3 +132,5 @@ void Plugin_Rajce::slotExport()
 }
 
 } // namespace KIPIRajcePlugin
+
+#include "plugin_rajce.moc"

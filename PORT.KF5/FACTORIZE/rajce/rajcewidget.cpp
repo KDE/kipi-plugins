@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "rajcewidget.moc"
+#include "rajcewidget.h"
 
 // Qt includes
 
@@ -36,6 +36,8 @@
 #include <QVBoxLayout>
 #include <QDialog>
 #include <QComboBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 

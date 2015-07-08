@@ -75,7 +75,8 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
                                    "Rajce.net."),
                                    ki18n( "(c) 2011-2013, Lukas Krejci" ));
 
-    about->addAuthor(ki18n( "Lukas Krejci" ), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n( "Lukas Krejci" ).toString(),
+                     ki18n("Author and maintainer").toString(),
                      "metlosh at gmail dot com");
 
     about->setHandbookEntry("rajceexport");

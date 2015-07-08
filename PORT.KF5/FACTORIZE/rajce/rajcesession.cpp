@@ -26,8 +26,8 @@
 
 #include <QWidget>
 #include <QCryptographicHash>
-#include <QXmlQuery>
 #include <QXmlResultItems>
+#include <QXmlQuery>
 #include <QFileInfo>
 #include <QUrl>
 
@@ -36,6 +36,7 @@
 #include <krandom.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
+#include <kjobwidgets.h>
 
 // Libkdcraw includes
 
@@ -558,7 +559,7 @@ AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, uns
       m_imagePath(path),
       m_form(0)
 {
-    bool isRaw = KPMetadata::isRawFile(path);
+    bool isRaw = KPMetadata::isRawFile(QUrl::fromLocalFile(path));
 
     if (isRaw)
     {
@@ -710,7 +711,7 @@ void RajceSession::_startJob(RajceCommand* command)
 
     QByteArray data             = command->encode();
     KIO::TransferJob* const job = KIO::http_post(RAJCE_URL, data, KIO::HideProgressInfo);
-    job->ui()->setWindow(static_cast<QWidget*>(parent()));
+    KJobWidgets::setWindow(job, static_cast<QWidget*>(parent()));
     job->addMetaData("content-type", command->contentType());
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),

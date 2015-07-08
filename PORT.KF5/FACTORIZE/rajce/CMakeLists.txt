@@ -29,6 +29,7 @@ target_link_libraries(kipiplugin_rajce
                       KF5::KIOCore
                       Qt5::Core
                       Qt5::Xml
+                      Qt5::XmlPatterns
                       KF5kipiplugins
                      )
 
