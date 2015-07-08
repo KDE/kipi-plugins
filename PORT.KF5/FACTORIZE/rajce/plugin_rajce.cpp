@@ -34,48 +34,49 @@ extern "C"
 #include <unistd.h>
 }
 
+#include <QAction>
+#include <QApplication>
+
 // KDE includes
 
-#include <QAction>
 #include <klibloader.h>
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 #include <kshortcut.h>
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
-#include <QApplication>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
 
-namespace KIPIRajceExportPlugin
+// Local includes
+
+#include "kipiplugins_debug.h"
+
+namespace KIPIRajcePlugin
 {
 
-K_PLUGIN_FACTORY( RajceExportFactory, registerPlugin<Plugin_RajceExport>(); )
-K_EXPORT_PLUGIN ( RajceExportFactory("kipiplugin_rajceexport") )
+K_PLUGIN_FACTORY( RajceFactory, registerPlugin<Plugin_Rajce(); )
 
-Plugin_RajceExport::Plugin_RajceExport(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(RajceExportFactory::componentData(), parent, "RajceExport"),
+Plugin_Rajce::Plugin_Rajce(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(parent, "Rajce"),
       m_actionExport(0),
       m_dlgExport(0)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_RajceExport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_Rajce plugin loaded";
 
-    setUiBaseName("kipiplugin_rajceexportui.rc");
+    setUiBaseName("kipiplugin_rajceui.rc");
     setupXML();
 }
 
-Plugin_RajceExport::~Plugin_RajceExport()
+Plugin_Rajce::~Plugin_Rajce()
 {
 }
 
-void Plugin_RajceExport::setup(QWidget* const widget)
+void Plugin_Rajce::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
-
-    KIconLoader::global()->addAppDir("kipiplugin_rajceexport");
 
     setupActions();
 
@@ -88,7 +89,7 @@ void Plugin_RajceExport::setup(QWidget* const widget)
     m_actionExport->setEnabled(true);
 }
 
-void Plugin_RajceExport::setupActions()
+void Plugin_Rajce::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
@@ -104,10 +105,10 @@ void Plugin_RajceExport::setupActions()
     addAction("rajceexport", m_actionExport);
 }
 
-void Plugin_RajceExport::slotExport()
+void Plugin_Rajce::slotExport()
 {
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-rajceexportplugin-" + QString::number(getpid()) + '/');
+    QString tmp = dir.saveLocation("tmp", "kipi-rajceplugin-" + QString::number(getpid()) + '/');
 
     if (!m_dlgExport)
     {
@@ -127,4 +128,4 @@ void Plugin_RajceExport::slotExport()
     m_dlgExport->reactivate();
 }
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin

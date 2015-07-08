@@ -20,42 +20,53 @@
  *
  * ============================================================ */
 
-#ifndef RAJCEWINDOW_H
-#define RAJCEWINDOW_H
+#ifndef PLUGIN_RAJCE_H
+#define PLUGIN_RAJCE_H
+
+// Qt includes
+
+#include <QVariant>
+
+// Libkipi includes
+
+#include <KIPI/Plugin>
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "rajcewindow.h"
 
 using namespace KIPI;
-using namespace KIPIPlugins;
 
-namespace KIPIRajceExportPlugin
+class QAction;
+
+namespace KIPIRajcePlugin
 {
 
-class RajceWidget;
-
-class RajceWindow : public KP4ToolDialog
+class Plugin_Rajce : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    explicit RajceWindow(const QString& tmpFolder, QWidget* const parent = 0, Qt::WFlags flags = 0);
-    ~RajceWindow();
+    Plugin_Rajce(QObject* const parent, const QVariantList& args);
+    ~Plugin_Rajce();
 
-    void reactivate();
+    void setup(QWidget* const);
 
-private Q_SLOTS:
+public Q_SLOTS:
 
-    void slotSetUploadButtonEnabled(bool);
-    void slotClose();
+    void slotExport();
 
 private:
 
-    RajceWidget* m_widget;
+    void setupActions();
+
+private:
+
+    QAction *    m_actionExport;
+    RajceWindow* m_dlgExport;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
-#endif // RAJCEWINDOW_H
+#endif // PLUGIN_RAJCE_H

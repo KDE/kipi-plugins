@@ -30,7 +30,7 @@
 #include <QDebug>
 #include <QMetaType>
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 struct Album
@@ -61,11 +61,11 @@ struct Album
     QDateTime validTo;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
-QTextStream& operator<<(QTextStream& str, const KIPIRajceExportPlugin::Album& a);
-QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::Album& a);
+QTextStream& operator<<(QTextStream& str, const KIPIRajcePlugin::Album& a);
+QDebug operator<<(QDebug d, const KIPIRajcePlugin::Album& a);
 
-Q_DECLARE_METATYPE(KIPIRajceExportPlugin::Album)
+Q_DECLARE_METATYPE(KIPIRajcePlugin::Album)
 
 #endif // KIPIRAJCEEXPORTPLUGIN_ALBUMLISTCOMMAND_H

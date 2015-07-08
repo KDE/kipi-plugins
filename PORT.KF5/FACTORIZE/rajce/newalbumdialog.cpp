@@ -33,7 +33,7 @@
 #include <klineedit.h>
 #include <ktextedit.h>
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
@@ -78,4 +78,4 @@ bool NewAlbumDialog::albumVisible() const
     return m_albumVisible->isChecked();
 }
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin

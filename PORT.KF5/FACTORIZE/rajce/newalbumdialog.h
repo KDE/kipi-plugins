@@ -20,53 +20,38 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_RAJCEEXPORT_H
-#define PLUGIN_RAJCEEXPORT_H
+#ifndef KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
+#define KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
 
-// Qt includes
+// KDE includes
 
-#include <QVariant>
+#include <KDialog>
 
-// Libkipi includes
+class QCheckBox;
 
-#include <KIPI/Plugin>
+class KLineEdit;
+class KTextEdit;
 
-// Local includes
-
-#include "rajcewindow.h"
-
-using namespace KIPI;
-
-class QAction;
-
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
-class Plugin_RajceExport : public Plugin
+class NewAlbumDialog : public KDialog
 {
-    Q_OBJECT
-
 public:
 
-    Plugin_RajceExport(QObject* const parent, const QVariantList& args);
-    ~Plugin_RajceExport();
+    explicit NewAlbumDialog(QWidget* const parent = 0);
 
-    void setup(QWidget* const);
-
-public Q_SLOTS:
-
-    void slotExport();
+    QString albumName()        const;
+    QString albumDescription() const;
+    bool    albumVisible()     const;
 
 private:
 
-    void setupActions();
-
-private:
-
-    QAction *     m_actionExport;
-    RajceWindow* m_dlgExport;
+    KLineEdit* m_albumName;
+    KTextEdit* m_albumDescription;
+    QCheckBox* m_albumVisible;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
-#endif // PLUGIN_RAJCEEXPORT_H
+#endif // KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H

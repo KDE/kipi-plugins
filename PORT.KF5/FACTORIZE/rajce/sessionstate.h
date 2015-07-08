@@ -36,7 +36,7 @@
 
 #include "album.h"
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 enum RajceCommandType
@@ -235,8 +235,8 @@ private:
     RajceCommandType m_lastCommand;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
-QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::SessionState& s);
+QDebug operator<<(QDebug d, const KIPIRajcePlugin::SessionState& s);
 
 #endif // KIPIRAJCEEXPORTPLUGIN_SESSIONSTATE_H

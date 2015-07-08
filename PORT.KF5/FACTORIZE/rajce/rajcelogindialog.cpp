@@ -37,7 +37,7 @@
 #include <klineedit.h>
 #include <klocalizedstring.h>
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 RajceLoginDialog::RajceLoginDialog(QWidget* const parent, const QString& _name, const QString& _passwd)
@@ -122,4 +122,4 @@ QString RajceLoginDialog::username() const
     return m_nameEdit->text();
 }
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin

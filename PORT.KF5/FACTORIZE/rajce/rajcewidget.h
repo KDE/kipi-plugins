@@ -50,7 +50,7 @@ namespace KIPIPlugins
     class KPImagesList;
 }
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 class RajceSession;
@@ -132,6 +132,6 @@ private:
     QString                    m_currentAlbumName;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H

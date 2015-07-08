@@ -41,7 +41,7 @@
 #include <krandom.h>
 #include <QUrl>
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 MPForm::MPForm()
@@ -169,4 +169,4 @@ QByteArray MPForm::formData() const
     return m_buffer;
 }
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin

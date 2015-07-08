@@ -22,7 +22,7 @@
 
 #include "sessionstate.h"
 
-QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::SessionState& s)
+QDebug operator<<(QDebug d, const KIPIRajcePlugin::SessionState& s)
 {
     QString     ss;
     QTextStream str(&ss);
@@ -39,7 +39,7 @@ QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::SessionState& s)
     str << ", imageQuality="      << s.imageQuality();
     str << ", albums=[";
 
-    KIPIRajceExportPlugin::Album a;
+    KIPIRajcePlugin::Album a;
 
     foreach(a, s.albums())
     {

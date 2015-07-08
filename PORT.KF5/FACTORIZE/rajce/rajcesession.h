@@ -46,7 +46,7 @@ namespace KIO
     class Job;
 }
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 class RajceCommand;
@@ -103,6 +103,6 @@ private:
     SessionState          m_state;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_RAJCESESSION_H

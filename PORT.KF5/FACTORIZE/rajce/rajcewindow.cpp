@@ -37,7 +37,7 @@
 #include "kpaboutdata.h"
 #include "rajcewidget.h"
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt::WFlags /*flags*/)
@@ -105,4 +105,4 @@ void RajceWindow::slotClose()
     m_widget->writeSettings();
 }
 
-} //namespace KIPIRajceExportPlugin
+} //namespace KIPIRajcePlugin

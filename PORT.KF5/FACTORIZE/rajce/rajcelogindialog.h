@@ -29,7 +29,7 @@
 
 class KLineEdit;
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 class RajceLoginDialog : public QDialog
@@ -54,6 +54,6 @@ private:
     KLineEdit* m_passwdEdit;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H

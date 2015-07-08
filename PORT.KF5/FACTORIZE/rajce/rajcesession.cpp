@@ -50,7 +50,7 @@
 
 using namespace KIPIPlugins;
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 const QUrl     RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
@@ -226,8 +226,8 @@ public:
 
 protected:
 
-    virtual void cleanUpOnError(KIPIRajceExportPlugin::SessionState& state);
-    virtual void parseResponse(QXmlQuery& query, KIPIRajceExportPlugin::SessionState& state);
+    virtual void cleanUpOnError(KIPIRajcePlugin::SessionState& state);
+    virtual void parseResponse(QXmlQuery& query, KIPIRajcePlugin::SessionState& state);
     virtual QString additionalXml() const;
 
 private:
@@ -587,11 +587,11 @@ AddPhotoCommand::~AddPhotoCommand()
     delete m_form;
 }
 
-void AddPhotoCommand::cleanUpOnError(KIPIRajceExportPlugin::SessionState&)
+void AddPhotoCommand::cleanUpOnError(KIPIRajcePlugin::SessionState&)
 {
 }
 
-void AddPhotoCommand::parseResponse(QXmlQuery&, KIPIRajceExportPlugin::SessionState&)
+void AddPhotoCommand::parseResponse(QXmlQuery&, KIPIRajcePlugin::SessionState&)
 {
 }
 
@@ -804,7 +804,7 @@ void RajceSession::logout()
     //TODO
 }
 
-void RajceSession::openAlbum(const KIPIRajceExportPlugin::Album& album)
+void RajceSession::openAlbum(const KIPIRajcePlugin::Album& album)
 {
     OpenAlbumCommand* const command = new OpenAlbumCommand(album.id, m_state);
     _enqueue(command);
@@ -874,9 +874,9 @@ void RajceSession::cancelCurrentCommand()
     }
 }
 
-void RajceSession::init(const KIPIRajceExportPlugin::SessionState& initialState)
+void RajceSession::init(const KIPIRajcePlugin::SessionState& initialState)
 {
     m_state = initialState;
 }
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin

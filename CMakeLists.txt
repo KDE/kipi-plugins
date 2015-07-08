@@ -391,6 +391,8 @@ if(KF5Kipi_FOUND)
             add_subdirectory(calendar)
         endif()
 
+        add_subdirectory(PORT.KF5/FACTORIZE/rajceexport)
+
 # Plugins in pending state
 #
 #         add_subdirectory(rajceexport)

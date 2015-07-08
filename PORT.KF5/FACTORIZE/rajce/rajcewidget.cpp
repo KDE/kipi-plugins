@@ -58,7 +58,7 @@
 #include "newalbumdialog.h"
 #include "kpimageslist.h"
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
@@ -607,4 +607,4 @@ void RajceWidget::writeSettings()
     grp.writeEntry("imageQuality", state.imageQuality());
 }
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin

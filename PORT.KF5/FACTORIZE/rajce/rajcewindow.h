@@ -20,38 +20,42 @@
  *
  * ============================================================ */
 
-#ifndef KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
-#define KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
+#ifndef RAJCEWINDOW_H
+#define RAJCEWINDOW_H
 
-// KDE includes
+// Local includes
 
-#include <KDialog>
+#include "kp4tooldialog.h"
 
-class QCheckBox;
+using namespace KIPI;
+using namespace KIPIPlugins;
 
-class KLineEdit;
-class KTextEdit;
-
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
-class NewAlbumDialog : public KDialog
+class RajceWidget;
+
+class RajceWindow : public KP4ToolDialog
 {
+    Q_OBJECT
+
 public:
 
-    explicit NewAlbumDialog(QWidget* const parent = 0);
+    explicit RajceWindow(const QString& tmpFolder, QWidget* const parent = 0, Qt::WFlags flags = 0);
+    ~RajceWindow();
 
-    QString albumName()        const;
-    QString albumDescription() const;
-    bool    albumVisible()     const;
+    void reactivate();
+
+private Q_SLOTS:
+
+    void slotSetUploadButtonEnabled(bool);
+    void slotClose();
 
 private:
 
-    KLineEdit* m_albumName;
-    KTextEdit* m_albumDescription;
-    QCheckBox* m_albumVisible;
+    RajceWidget* m_widget;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
-#endif // KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
+#endif // RAJCEWINDOW_H

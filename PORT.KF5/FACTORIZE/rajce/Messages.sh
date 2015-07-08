@@ -1,5 +1,5 @@
 #! /bin/sh
 $EXTRACTRC `find . -name "*.ui" -o -name "*.rc" -o -name "*.kcfg" ` >> rc.cpp
-$XGETTEXT `find . -name "*.cpp" -o -name "*.h"` -o $podir/kipiplugin_rajceexport.pot
+$XGETTEXT `find . -name "*.cpp" -o -name "*.h"` -o $podir/kipiplugin_rajce.pot
 rm -f rc.cpp
 

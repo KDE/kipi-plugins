@@ -22,7 +22,7 @@
 
 #include "album.h"
 
-QTextStream& operator << (QTextStream& str, const KIPIRajceExportPlugin::Album& a)
+QTextStream& operator << (QTextStream& str, const KIPIRajcePlugin::Album& a)
 {
     str << "Album[";
     str << "id=" << a.id;
@@ -43,7 +43,7 @@ QTextStream& operator << (QTextStream& str, const KIPIRajceExportPlugin::Album& 
     return str;
 }
 
-QDebug operator << (QDebug d, const KIPIRajceExportPlugin::Album& a)
+QDebug operator << (QDebug d, const KIPIRajcePlugin::Album& a)
 {
     QString     s;
     QTextStream str(&s);

@@ -29,7 +29,7 @@
 #include <QByteArray>
 #include <QString>
 
-namespace KIPIRajceExportPlugin
+namespace KIPIRajcePlugin
 {
 
 class MPForm
@@ -55,6 +55,6 @@ private:
     QByteArray m_boundary;
 };
 
-} // namespace KIPIRajceExportPlugin
+} // namespace KIPIRajcePlugin
 
 #endif /* MPFORM_H */
