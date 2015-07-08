@@ -53,7 +53,7 @@ class GPSCorrelatorWidget : public QWidget
 
 public:
 
-    GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, KGeoMap::TrackManager* const trackManager, const int marginHint, const int spacingHint);
+    GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, KGeoMap::TrackManager* const trackManager);
     ~GPSCorrelatorWidget();
 
     void setUIEnabledExternal(const bool state);

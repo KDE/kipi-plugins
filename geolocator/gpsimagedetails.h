@@ -51,7 +51,7 @@ class GPSImageDetails : public QWidget
 
 public:
 
-    GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint);
+    GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel);
     ~GPSImageDetails();
 
     void setUIEnabledExternal(const bool state);

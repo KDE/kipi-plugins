@@ -109,8 +109,7 @@ public:
     bool                         haveDelayedState;
 };
 
-GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel,
-                                 const int /*marginHint*/, const int /*spacingHint*/)
+GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel)
     : QWidget(parent), d(new Private())
 {
     d->imageModel = imageModel;

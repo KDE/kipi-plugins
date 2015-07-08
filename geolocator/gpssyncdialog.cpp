@@ -234,7 +234,7 @@ public:
     bool                                     fileIOCloseAfterSaving;
 
     // UI
-    KDialogButtonBox*                        buttonBox;
+    QDialogButtonBox*                        buttonBox;
     KTabWidget*                              tabWidget;
     QSplitter*                               VSplitter;
     QSplitter*                               HSplitter;
@@ -275,11 +275,10 @@ public:
 };
 
 GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
-    : KP4ToolDialog(parent), d(new Private)
+    : QDialog(parent), KPDialogBase(this), d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose, true);
-    setButtons(0);
-    setCaption(i18n("Geolocation"));
+    setWindowTitle(i18n("Geolocation"));
     setMinimumSize(300,400);
 //  setModal(true);
 
@@ -310,15 +309,17 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
 
-    KVBox* const vboxMain   = new KVBox(this);
-    setMainWidget(vboxMain);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
+    setLayout(mainLayout);
 
-    KHBox* const hboxMain   = new KHBox(vboxMain);
+    KHBox* const hboxMain   = new KHBox(this);
+    mainLayout->addWidget(hboxMain);
 
     d->HSplitter            = new QSplitter(Qt::Horizontal, hboxMain);
     d->HSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    KHBox* const hboxBottom = new KHBox(vboxMain);
+    KHBox* const hboxBottom = new KHBox(this);
+    mainLayout->addWidget(hboxBottom);
 
     d->progressBar          = new KPProgressWidget(hboxBottom);
     d->progressBar->setVisible(false);
@@ -334,11 +335,31 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     connect(d->progressCancelButton, SIGNAL(clicked()),
             this, SLOT(slotProgressCancelButtonClicked()));
 
-    d->buttonBox = new KDialogButtonBox(hboxBottom);
-    KPushButton* help = d->buttonBox->addButton(KStandardGuiItem::help(), QDialogButtonBox::HelpRole);
-    d->buttonBox->addButton(KStandardGuiItem::configure(),                QDialogButtonBox::ActionRole, this, SLOT(slotConfigureClicked()));
-    d->buttonBox->addButton(KStandardGuiItem::apply(),                    QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
-    d->buttonBox->addButton(KStandardGuiItem::close(),                    QDialogButtonBox::RejectRole, this, SLOT(close()));
+    d->buttonBox = new QDialogButtonBox(this);
+
+    QPushButton* help = new QPushButton(d->buttonBox);
+    KGuiItem::assign(help, KStandardGuiItem::help());
+    d->buttonBox->addButton(help, QDialogButtonBox::HelpRole);
+
+    QPushButton* configureButton = new QPushButton(d->buttonBox);
+    KGuiItem::assign(configureButton, KStandardGuiItem::configure());
+    d->buttonBox->addButton(configureButton, QDialogButtonBox::ActionRole);
+    connect(configureButton, &QPushButton::clicked,
+            this, &GPSSyncDialog::slotConfigureClicked);
+
+    QPushButton* applyButton = new QPushButton(d->buttonBox);
+    KGuiItem::assign(applyButton, KStandardGuiItem::apply());
+    d->buttonBox->addButton(applyButton, QDialogButtonBox::AcceptRole);
+    connect(applyButton, &QPushButton::clicked,
+            this, &GPSSyncDialog::slotApplyClicked);
+
+    QPushButton* closeButton = new QPushButton(d->buttonBox);
+    KGuiItem::assign(closeButton, KStandardGuiItem::close());
+    d->buttonBox->addButton(closeButton, QDialogButtonBox::RejectRole);
+    connect(closeButton, &QPushButton::clicked,
+            this, &GPSSyncDialog::close);
+
+    mainLayout->addWidget(d->buttonBox);
 
     // TODO: the code below does not seem to have any effect, slotApplyClicked is still triggered
     //       when 'Enter' is pressed...
@@ -359,8 +380,6 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
             }
         }
     }
-
-    setDefaultButton(NoDefault);
 
     d->VSplitter = new QSplitter(Qt::Vertical, d->HSplitter);
     d->HSplitter->addWidget(d->VSplitter);
@@ -425,10 +444,10 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 
     d->tabBar->installEventFilter(this);
 
-    d->detailsWidget = new GPSImageDetails(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
+    d->detailsWidget = new GPSImageDetails(d->stackedWidget, d->imageModel);
     d->stackedWidget->addWidget(d->detailsWidget);
 
-    d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, d->trackManager, marginHint(), spacingHint());
+    d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, d->trackManager);
     d->stackedWidget->addWidget(d->correlatorWidget);
 
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
@@ -521,9 +540,6 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 
     connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
-
-    connect(this, SIGNAL(applyClicked()),
-             this, SLOT(slotApplyClicked()));
 
     connect(d->tabBar, SIGNAL(currentChanged(int)),
             this, SLOT(slotCurrentTabChanged(int)));
