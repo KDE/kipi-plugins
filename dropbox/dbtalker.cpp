@@ -77,10 +77,10 @@ namespace KIPIDropboxPlugin
 DBTalker::DBTalker(QWidget* const parent)
 {
     m_parent                 = parent;
-    m_oauth_consumer_key     = "bznn0lmg4cv6fj9";
+    m_oauth_consumer_key     = "kn7kajkaqf6retw";
     m_oauth_signature_method = "PLAINTEXT";
     m_oauth_version          = "1.0";
-    m_oauth_signature        = "hsqe2d4eeg2ms0m&";
+    m_oauth_signature        = "t9w4c6j837ubstf&";
     nonce                    = generateNonce(8);
     timestamp                = QDateTime::currentMSecsSinceEpoch()/1000;
     m_root                   = "dropbox";
