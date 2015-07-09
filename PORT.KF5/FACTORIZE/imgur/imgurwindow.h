@@ -55,7 +55,7 @@ namespace KIPI
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurWindow : public KP4ToolDialog
@@ -101,6 +101,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
 #endif /* IMGURWINDOW_H */

@@ -32,16 +32,19 @@
 // Qt includes
 
 #include <QFile>
+#include <QApplication>
+#include <QUrl>
 
 // KDE includes
 
-#include <QApplication>
-#include "kipiplugins_debug.h"
 #include <kmimetype.h>
-#include <QUrl>
 #include <krandom.h>
 
-namespace KIPIImgurExportPlugin
+// Local includes
+
+#include "kipiplugins_debug.h"
+
+namespace KIPIImgurPlugin
 {
 
 MPForm::MPForm()
@@ -167,4 +170,4 @@ QByteArray MPForm::formData() const
     return m_buffer;
 }
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin

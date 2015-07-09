@@ -40,7 +40,7 @@
 
 using namespace KIPIPlugins;
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurWidget : public QWidget
@@ -91,6 +91,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
 #endif /* IMGURWIDGET_H */

@@ -3,9 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2010-02-04
+ * Date        : 2005-07-07
  * Description : a tool to export images to imgur.com
  *
+ * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
@@ -15,58 +17,46 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#ifndef PLUGIN_IMGUREXPORT_H
-#define PLUGIN_IMGUREXPORT_H
+#ifndef MPFORM_H
+#define MPFORM_H
 
 // Qt includes
 
-#include <QVariant>
+#include <QByteArray>
+#include <QString>
 
-// Libkipi includes
-
-#include <KIPI/Plugin>
-
-// Local includes
-
-#include "imgurwindow.h"
-
-using namespace KIPI;
-
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
-class Plugin_ImgurExport : public Plugin
+class MPForm
 {
-    Q_OBJECT
 
 public:
 
-    explicit Plugin_ImgurExport(QObject* const parent, const QVariantList& args);
-    ~Plugin_ImgurExport();
+    MPForm();
+    ~MPForm();
 
-    void setup(QWidget* const);
+    void finish();
+    void reset();
 
-    static QString name() { return "ImgurExport"; }
+    bool addPair(const QString& name, const QString& value, const QString& type);
+    bool addFile(const QString& name, const QString& path);
 
-public Q_SLOTS:
-
-    void slotActivate();
-
-private:
-
-    void setupActions();
+    QString    contentType() const;
+    QByteArray formData()    const;
+    QString    boundary()    const;
 
 private:
 
-    class Private;
-    Private* const d;
+    QByteArray m_buffer;
+    QByteArray m_boundary;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
-#endif // PLUGIN_IMGUREXPORT_H
+#endif /* MPFORM_H */

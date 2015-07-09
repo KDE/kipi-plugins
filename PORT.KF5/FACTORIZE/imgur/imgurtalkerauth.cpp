@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurtalkerauth.moc"
+#include "imgurtalkerauth.h"
 
 // QtKOAuth includes
 
@@ -34,16 +34,13 @@
 
 #include <qjson/parser.h>
 
-// KDE includes
-
-#include "kipiplugins_debug.h"
-
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
 #include "plugin_imgurexport.h"
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurTalkerAuth::Private
@@ -296,4 +293,4 @@ void ImgurTalkerAuth::slotContinueUpload(bool yes)
     return;
 }
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin

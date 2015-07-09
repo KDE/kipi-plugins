@@ -35,7 +35,7 @@
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurImagesList : public KPImagesList

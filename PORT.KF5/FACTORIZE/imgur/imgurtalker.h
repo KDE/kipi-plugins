@@ -48,7 +48,7 @@ namespace KIO
 
 using namespace KIPI;
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 // ----------------------------------------------------------------------
@@ -115,6 +115,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
 #endif // IMGURTALKER_H

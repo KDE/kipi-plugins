@@ -20,18 +20,20 @@
  *
  * ============================================================ */
 
-#include "plugin_imgurexport.moc"
+#include "plugin_imgurexport.h"
 
 // C++ includes
 
 #include <unistd.h>
 
+// Qt includes
+
+#include <QAction>
+#include <QApplication>
+
 // KDE includes
 
-#include "kipiplugins_debug.h"
-#include <QApplication>
 #include <klocalizedstring.h>
-#include <QAction>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -41,15 +43,18 @@
 
 #include <KIPI/Interface>
 
+// Local includes
+
+#include "kipiplugins_debug.h"
+
 using namespace KIPIPlugins;
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
-K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
-K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
+K_PLUGIN_FACTORY( ImgurFactory, registerPlugin<Plugin_Imgur>(); )
 
-class Plugin_ImgurExport::Private
+class Plugin_Imgur::Private
 {
 public:
 
@@ -59,29 +64,27 @@ public:
         winExport    = 0;
     }
 
-    QAction *     actionExport;
+    QAction*     actionExport;
     ImgurWindow* winExport;
 };
 
-Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList& args)
-    : Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport"),
+Plugin_Imgur::Plugin_Imgur(QObject* const parent, const QVariantList& args)
+    : Plugin(parent, "Imgur"),
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Imgur plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
 
-    KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
-
-    setUiBaseName("kipiplugin_imgurexportui.rc");
+    setUiBaseName("kipiplugin_imgurui.rc");
     setupXML();
 }
 
-Plugin_ImgurExport::~Plugin_ImgurExport()
+Plugin_Imgur::~Plugin_Imgur()
 {
     delete d;
 }
 
-void Plugin_ImgurExport::setup(QWidget* const widget)
+void Plugin_Imgur::setup(QWidget* const widget)
 {
     d->winExport = 0;
 
@@ -96,7 +99,7 @@ void Plugin_ImgurExport::setup(QWidget* const widget)
     setupActions();
 }
 
-void Plugin_ImgurExport::setupActions()
+void Plugin_Imgur::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
@@ -110,7 +113,7 @@ void Plugin_ImgurExport::setupActions()
     addAction("imgurexport", d->actionExport);
 }
 
-void Plugin_ImgurExport::slotActivate()
+void Plugin_Imgur::slotActivate()
 {
     if (!d->winExport)
     {
@@ -132,4 +135,7 @@ void Plugin_ImgurExport::slotActivate()
     qCDebug(KIPIPLUGINS_LOG) << "We have activated the imgur exporter!";
 }
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
+
+#include "plugin_imgurexport.moc"
+

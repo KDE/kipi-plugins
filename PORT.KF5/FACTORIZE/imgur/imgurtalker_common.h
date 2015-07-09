@@ -40,7 +40,7 @@
 
 #include <QUrl>
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurConnection
@@ -134,6 +134,6 @@ struct ImgurSuccess
     } links;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
 #endif // IMGURTALKER_COMMON_H

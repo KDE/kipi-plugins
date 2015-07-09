@@ -3,11 +3,9 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2005-07-07
+ * Date        : 2010-02-04
  * Description : a tool to export images to imgur.com
  *
- * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
@@ -17,46 +15,56 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-#ifndef MPFORM_H
-#define MPFORM_H
+#ifndef PLUGIN_IMGUR_H
+#define PLUGIN_IMGUR_H
 
 // Qt includes
 
-#include <QByteArray>
-#include <QString>
+#include <QVariant>
 
-namespace KIPIImgurExportPlugin
+// Libkipi includes
+
+#include <KIPI/Plugin>
+
+// Local includes
+
+#include "imgurwindow.h"
+
+using namespace KIPI;
+
+namespace KIPIImgurPlugin
 {
 
-class MPForm
+class Plugin_Imgur : public Plugin
 {
+    Q_OBJECT
 
 public:
 
-    MPForm();
-    ~MPForm();
+    explicit Plugin_Imgur(QObject* const parent, const QVariantList& args);
+    ~Plugin_Imgur();
 
-    void finish();
-    void reset();
+    void setup(QWidget* const);
 
-    bool addPair(const QString& name, const QString& value, const QString& type);
-    bool addFile(const QString& name, const QString& path);
+public Q_SLOTS:
 
-    QString    contentType() const;
-    QByteArray formData()    const;
-    QString    boundary()    const;
+    void slotActivate();
 
 private:
 
-    QByteArray m_buffer;
-    QByteArray m_boundary;
+    void setupActions();
+
+private:
+
+    class Private;
+    Private* const d;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
-#endif /* MPFORM_H */
+#endif // PLUGIN_IMGUREXPORT_H

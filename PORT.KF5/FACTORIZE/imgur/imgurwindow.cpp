@@ -20,11 +20,10 @@
  *
  * ============================================================ */
 
-#include "imgurwindow.moc"
+#include "imgurwindow.h"
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <klocalizedstring.h>
@@ -34,12 +33,13 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpmetadata.h"
 #include "kpimageinfo.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurWindow::Private
@@ -293,4 +293,4 @@ void ImgurWindow::saveSettings()
     config.sync();
 }
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin

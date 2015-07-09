@@ -52,7 +52,7 @@
 
 using namespace KIPI;
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 // QtOauth
@@ -96,6 +96,6 @@ private:
     Private* const d;
 };
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
 
 #endif // IMGURTALKERAUTH_H

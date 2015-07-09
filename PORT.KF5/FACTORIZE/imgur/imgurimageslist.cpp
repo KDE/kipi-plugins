@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "imgurimageslist.moc"
 #include "imgurimageslist.h"
 
 // Qt includes
@@ -30,14 +29,14 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpmetadata.h"
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 ImgurImagesList::ImgurImagesList(QWidget* const parent)
@@ -228,4 +227,4 @@ QString ImgurImageListViewItem::deleteUrl() const
     return m_deleteUrl;
 }
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin

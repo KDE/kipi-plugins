@@ -20,49 +20,49 @@
  *
  * ============================================================ */
 
-#include "imguruploadinformation.moc"
+#ifndef IMGURUPLOADINFORMATION_H
+#define IMGURUPLOADINFORMATION_H
 
-namespace KIPIImgurExportPlugin
+// Qt includes
+
+#include <QDialog>
+#include <QString>
+
+// KDE includes
+
+#include <QUrl>
+
+// Local includes
+
+#include "imgurtalker.h"
+
+namespace KIPIImgurPlugin
 {
 
-void ImgurUploadInformation::ImgurUploadInformation(QWidget* const parent = 0)
-    : QDialog(parent)
+class ImgurUploadInformation : public QDialog
 {
-}
+    Q_OBJECT
 
-void ImgurUploadInformation::~ImgurUploadInformation()
-{
+public:
 
-}
+    ImgurUploadInformation(QWidget* const parent = 0);
+    ~ImgurUploadInformation();
 
-void ImgurUploadInformation::setTitle(const QString& text)
-{
-    d.title = text;
-}
+    void setTitle(const QString& text);
+    QString title();
 
-QString ImgurUploadInformation::title()
-{
-    return d.title;
-}
+    void setCaption(const QString& text);
+    QString Caption();
 
-void ImgurUploadInformation::setCaption(const QString& text)
-{
-    d.caption = text;
-}
+    void setFileUrl(const QUrl& filePath);
+    QUrl fileUrl();
 
-QString ImgurUploadInformation::Caption ()
-{
-    return d.caption;
-}
+private:
 
-void ImgurUploadInformation::setFileUrl(const QUrl& filePath)
-{
-    d.fileUrl = filePath;
-}
+    ImgurUpload d;
+};
 
-QUrl ImgurUploadInformation::fileUrl()
-{
-    return d.fileUrl;
-}
+} // namespace KIPIImgurPlugin
 
-} // namespace KIPIImgurExportPlugin
+#endif /* IMGURUPLOADINFORMATION_H */
+

@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurtalker.moc"
+#include "imgurtalker.h"
 
 // Qt includes
 
@@ -28,7 +28,6 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kio/job.h>
 #include <klocalizedstring.h>
 
@@ -42,11 +41,12 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "mpform.h"
 #include "kpversion.h"
 #include "plugin_imgurexport.h"
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 typedef QMultiMap<QString, QString> KQOAuthParameters;
 
@@ -531,4 +531,4 @@ QUrl ImgurTalker::currentUrl() const
     return m_currentUrl;
 }
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin

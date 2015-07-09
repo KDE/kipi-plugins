@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurwidget.moc"
+#include "imgurwidget.h"
 
 // Qt includes
 
@@ -31,17 +31,18 @@
 
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
-#include "kipiplugins_debug.h"
+
+// Libkipi includes
 
 #include <KIPI/PluginLoader>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpmetadata.h"
-//#include "kplogindialog.h"
 #include "plugin_imgurexport.h"
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurPlugin
 {
 
 class ImgurWidget::Private
@@ -309,4 +310,4 @@ void ImgurWidget::slotLoadedNamePass(const QString& name, const QString& pass)
 }
 */
 
-} // namespace KIPIImgurExportPlugin
+} // namespace KIPIImgurPlugin
