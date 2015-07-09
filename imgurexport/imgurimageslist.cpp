@@ -21,7 +21,6 @@
  * ============================================================ */
 
 #include "imgurimageslist.moc"
-#include "imgurimageslist.h"
 
 // Qt includes
 

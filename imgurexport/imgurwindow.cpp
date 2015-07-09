@@ -62,9 +62,11 @@ public:
 };
 
 ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
-    : KPToolDialog(0), d(new Private)
+    : KPToolDialog(0),
+      d(new Private)
 {
     d->widget     = new ImgurWidget(this);
+
 #ifdef OAUTH_ENABLED
     d->webService = new ImgurTalkerAuth(iface(), this);
 #else
@@ -91,10 +93,12 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
                                    ki18n("A tool to export images to Imgur web service"),
                                    ki18n("(c) 2012-2013, Marius Orcsik"));
 
-    about->addAuthor(ki18n("Marius Orcsik"), ki18n("Author and Maintainer"),
+    about->addAuthor(ki18n("Marius Orcsik"),
+                     ki18n("Author"),
                      "marius at habarnam dot ro");
 
-    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
 
     about->setHandbookEntry("imgurexport");
@@ -141,10 +145,10 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 #ifdef OAUTH_ENABLED
     connect(d->widget, SIGNAL(signalClickedChangeUser()),
             d->webService, SLOT(slotOAuthLogin()));
-
-//    connect(d->webService, SIGNAL(signalAuthenticated(bool)),
-//            d->widget, SLOT(slotAuthenticated(bool)));
-
+/*
+    connect(d->webService, SIGNAL(signalAuthenticated(bool)),
+            d->widget, SLOT(slotAuthenticated(bool)));
+*/
     connect(d->webService, SIGNAL(signalAuthenticated(bool,QString)),
             d->widget, SLOT(slotAuthenticated(bool,QString)));
 
@@ -276,7 +280,7 @@ void ImgurWindow::closeEvent(QCloseEvent*)
 void ImgurWindow::readSettings()
 {
     KConfig config("kipirc");
-//    KConfigGroup group = config.group(QString("Imgur Settings"));
+    //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group(QString("Imgur Dialog"));
     restoreDialogSize(group2);
@@ -285,7 +289,7 @@ void ImgurWindow::readSettings()
 void ImgurWindow::saveSettings()
 {
     KConfig config("kipirc");
-//    KConfigGroup group = config.group(QString("Imgur Settings"));
+    //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group(QString("Imgur Dialog"));
     saveDialogSize(group2);

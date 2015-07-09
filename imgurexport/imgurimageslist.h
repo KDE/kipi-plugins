@@ -53,6 +53,8 @@ public:
         DeleteURL       = KPImagesListView::User3
     };
 
+public:
+
     ImgurImagesList(QWidget* const parent = 0);
     ~ImgurImagesList();
 

@@ -23,8 +23,6 @@
 #ifndef IMGURTALKERAUTH_H
 #define IMGURTALKERAUTH_H
 
-#include "imgurtalker_common.h"
-
 // Qt includes
 
 #include <QWidget>
@@ -48,6 +46,7 @@
 
 // Local includes
 
+#include "imgurtalker_common.h"
 #include "imgurtalker.h"
 
 using namespace KIPI;

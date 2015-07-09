@@ -48,6 +48,7 @@
 
 namespace KIPIImgurExportPlugin
 {
+
 typedef QMultiMap<QString, QString> KQOAuthParameters;
 
 class ImgurTalker::Private
@@ -90,14 +91,13 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
             this, SLOT(slotUploadDone(KUrl)));
 
     // -------------------------------------------------------------------------
-/**/
+
     ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
     {
         slotAddItems(images.images());
     }
-/**/
 }
 
 ImgurTalker::~ImgurTalker()
@@ -220,7 +220,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     QJson::Parser p;
     QVariant      r = p.parse(data, &ok);
 
-//    kDebug() << data;
+    //kDebug() << data;
+
     if (ok)
     {
         QMap<QString, QVariant> m = r.toMap();
@@ -278,6 +279,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
             }
 
             emit signalError(m_currentUrl, error); // p.errorString()
+
             kDebug() << "Imgur Error:" << p.errorString();
         }
 
@@ -362,6 +364,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                         }
                     }
                 }
+
                 if (it.key() == "links")
                 {
                     QMap<QString, QVariant> v = it.value().toMap();
@@ -431,7 +434,7 @@ void ImgurTalker::imageUpload (const KUrl& filePath)
     exportUrl.addQueryItem("key",   d->anonymousKey.data());
     exportUrl.addQueryItem("name",  filePath.fileName());
     exportUrl.addQueryItem("title", filePath.fileName()); // this should be replaced with something the user submits
-//    exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
+    //exportUrl.addQueryItem("caption", "");              // this should be replaced with something the user submits
 
     exportUrl.addQueryItem("type", "file");
 

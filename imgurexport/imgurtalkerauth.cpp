@@ -87,7 +87,6 @@ ImgurTalkerAuth::~ImgurTalkerAuth()
 
 const char* ImgurTalkerAuth::getAuthError(KQOAuthManager::KQOAuthError error)
 {
-    /**/
     switch (error)
     {
         case KQOAuthManager::NetworkError:               // Network error: timeout, cannot connect.
@@ -113,7 +112,6 @@ const char* ImgurTalkerAuth::getAuthError(KQOAuthManager::KQOAuthError error)
             return I18N_NOOP("No error");
             break;
     }
-    /**/
 }
 
 void ImgurTalkerAuth::cancel()
@@ -166,12 +164,13 @@ void ImgurTalkerAuth::imageUpload (const KUrl& filePath)
 
     d->OAuthRequest->setAdditionalParameters(params);
     d->OAuthService->executeRequest(d->OAuthRequest);
+/*
+    connect(d->OAuthService, SIGNAL(requestReady(QByteArray)),
+            this, SLOT(slotRequestReady(QByteArray)));
 
-//    connect(d->OAuthService, SIGNAL(requestReady(QByteArray)),
-//            this, SLOT(slotRequestReady(QByteArray)));
-
-//    connect(d->OAuthService, SIGNAL(authorizedRequestDone()),
-//            this, SLOT(slotAuthorizedRequestDone()));
+    connect(d->OAuthService, SIGNAL(authorizedRequestDone()),
+            this, SLOT(slotAuthorizedRequestDone()));
+*/
 }
 
 void ImgurTalkerAuth::slotOAuthLogin()
@@ -214,8 +213,8 @@ void ImgurTalkerAuth::slotTemporaryTokenReceived(const QString& token, const QSt
 
     if (d->OAuthService->lastError() != KQOAuthManager::NoError)
     {
-//        emit signalAuthenticated(false, getAuthError(d->OAuthService->lastError()));
-//        emit signalBusy(false);
+        //emit signalAuthenticated(false, getAuthError(d->OAuthService->lastError()));
+        //emit signalBusy(false);
         kDebug() << "Error :" << getAuthError(d->OAuthService->lastError());
     }
 }
@@ -259,11 +258,10 @@ void ImgurTalkerAuth::slotAuthorizedRequestDone()
 
 void ImgurTalkerAuth::slotRequestReady(const QByteArray& response)
 {
-//    kDebug() << "Authorized: " << d->OAuthService->isAuthorized();
-//    kDebug() << "Verified: " << d->OAuthService->isAuthorized();
-//    kDebug() << "End point: " << d->OAuthRequest->requestEndpoint();
-
-//    kDebug() << "Response from the service: " << response;
+    //kDebug() << "Authorized: " << d->OAuthService->isAuthorized();
+    //kDebug() << "Verified: " << d->OAuthService->isAuthorized();
+    //kDebug() << "End point: " << d->OAuthRequest->requestEndpoint();
+    //kDebug() << "Response from the service: " << response;
 
     if (d->OAuthService->isAuthorized() && d->OAuthService->isVerified() &&
         d->OAuthRequest->requestEndpoint() == QUrl(ImgurConnection::APIuploadURL())

@@ -65,9 +65,10 @@ Q_SIGNALS:
     void signalClickedChangeUser();
     void signalImageUploadSuccess(const KUrl& imgPath, const ImgurSuccess& success);
     void signalImageUploadError(const KUrl& imgPath, const ImgurError& error);
-//    void signalLoggedUserChanged(QString loggedUser);
-//    void signalCredentialsChanged(QString loggedUser, QString passwd);
-
+/*
+    void signalLoggedUserChanged(QString loggedUser);
+    void signalCredentialsChanged(QString loggedUser, QString passwd);
+*/
 public Q_SLOTS:
 
     void slotAddItems(const KUrl::List& list);
@@ -80,11 +81,12 @@ public Q_SLOTS:
 
     void slotAuthenticated (bool authenticated, const QString& message);
     void slotClickedChangeUser();
-//    void slotChangeUserDialog();
-//    void slotSetLoggedUser(bool ok);
-//    void slotCredentialsSet();
-//    void slotLoadedNamePass(const QString& name, const QString& pass);
-
+/*
+    void slotChangeUserDialog();
+    void slotSetLoggedUser(bool ok);
+    void slotCredentialsSet();
+    void slotLoadedNamePass(const QString& name, const QString& pass);
+*/
 private:
 
     class Private;
