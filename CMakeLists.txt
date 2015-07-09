@@ -134,7 +134,7 @@ if(KF5Kipi_FOUND)
     find_package(QJSON)                                                        # For Facebook, Google Services, Dropbox and Imgur.
 
 #    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
-    find_package(Qca-qt5)                                                      # For Muvee.
+#    find_package(Qca-qt5)                                                      # For Muvee.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
@@ -175,7 +175,7 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.8.1)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
+#    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
@@ -243,7 +243,7 @@ if(KF5Kipi_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
-    PRINT_COMPONENT_COMPILE_STATUS("Muvee"              Qca-qt5_FOUND)
+#    PRINT_COMPONENT_COMPILE_STATUS("Muvee"              Qca-qt5_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
 #
@@ -379,10 +379,6 @@ if(KF5Kipi_FOUND)
 
         if(KF5CalendarCore_FOUND)
             add_subdirectory(calendar)
-        endif()
-
-        if(Qca-qt5_FOUND)
-            add_subdirectory(PORT.KF5/FACTORIZE/muvee)
         endif()
 
 # Plugins in pending state
