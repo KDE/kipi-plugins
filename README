@@ -24,7 +24,6 @@ ImageViewer        : A tool to preview images using OpenGL.
 MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
 GoogleServices     : A tool to export images to Google web services.
 PrintImage         : A tool to print images in various format.
-RemoveRedEyes      : A tool to remove red eyes on image automatically.
 SendImages         : A tool to send images by e-mail.
 FlashExport        : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
@@ -34,7 +33,6 @@ RemoteStorage      : A tool to export images to remote storage using network pro
 Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
-DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
 YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
 MediaWiki          : A tool to export images to Mediawiki based web service (http://www.mediawiki.org).
 RajceExport        : A tool to export images to Rajce web service (http://www.rajce.idnes.cz).
@@ -44,7 +42,6 @@ ImageShack         : A tool to export images to ImageShack web service (http://i
 ImgurExport        : A tool to export images to ImgUr web service (http://imgur.com)
 DLNAExport         : A tool to export collection on DLNA compatible device over the network (http://www.dlna.org).
 Panorama           : A tool to assemble panoramic photo automatically.
-WallPaper          : A tool to set image as background on your desktop.
 
 -- DEPENDENCIES -------------------------------------------------------
 
@@ -73,7 +70,6 @@ libX11          >= 1.1.5                        http://www.x11.org
 libexpat        >= 2.0.0                        http://expat.sourceforge.net
 libqtopengl     >= 4.3.0                        http://www.qtsoftware.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
-libopencv       >= 2.4.9                        http://opencv.willowgarage.com
 libqca          >= 2.1.0                        http://delta.affinix.com/qca
 libqjson        >= 0.8.1                        http://qjson.sourceforge.net
 libimagemagick  >= 5.5.4                        http://www.imagemagick.org
@@ -98,7 +94,6 @@ Panorama           : Hugin command line tools, flex, bison (runtime dependency).
 Imgur              : libqtkoauth for Imgur.com's authenticated API.
 VideoSlideshow     : libimagemagick and libqtgstreamer
 DebianScreenshots  : libqjson.
-RemoveRedEyes      : libopencv.
 HtmlExport         : libxslt and libxml2.
 Shwup              : libqca.
 

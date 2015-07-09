@@ -131,27 +131,20 @@ if(KF5Kipi_FOUND)
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
-    find_package(QJSON)                                                        # For Debian Screenshots Facebook, Google Services, Dropbox and Imgur.
+    find_package(QJSON)                                                        # For Facebook, Google Services, Dropbox and Imgur.
 
+#    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
 #    find_package(Qca-qt5)                                                      # For Shwup.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)                                       # For Htmlexport.
 #    MACRO_OPTIONAL_FIND_PACKAGE(ImageMagick COMPONENTS MagickCore display)     # For VideoSlideshow.
 #    MACRO_OPTIONAL_FIND_PACKAGE(QtGStreamer)                                   # For VideoSlideshow.
-#    MACRO_OPTIONAL_FIND_PACKAGE(QtKOAuth)                                      # For Imgur Auhtenticated API
 
     # -- X11 check, LINUX Only -------------------------------------------------------------------------
 
     if(NOT WIN32 AND NOT APPLE)
         find_package(X11)                                                      # For AdvancedSlideshow and ImageViewer.
     endif()
-
-#     # -- OpenCV ----------------------------------------------------------------------------------------
-#
-#     include(MacroUtils)
-#     include(MacroOpenCV)
-#     set(OPENCV_MIN_VERSION "2.4.9")
-#     DETECT_OPENCV(${OPENCV_MIN_VERSION} core highgui objdetect contrib legacy imgproc)
 
     # ==================================================================================================
     # Log messages
@@ -185,7 +178,6 @@ if(KF5Kipi_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libxslt"        "http://xmlsoft.org/XSLT"                                         "(version >= 1.1.0)"                  "Kipi-plugins will be compiled without libxstl support."        LIBXSLT_FOUND)
-#     PRINT_OPTIONAL_LIBRARY_STATUS("libopencv"      "http://opencv.willowgarage.com"                                  "(version >= ${OPENCV_MIN_VERSION})"  "Kipi-plugins will be compiled without libopencv support."      OpenCV_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libimagemagick" "http://www.imagemagick.org"                                      "(version >= 5.5.4)"                  "Kipi-plugins will be compiled without libimagemagick support." ImageMagick_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
 #     PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
@@ -255,7 +247,6 @@ if(KF5Kipi_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #     PRINT_COMPONENT_COMPILE_STATUS("RemoveRedEyes"      OpenCV_FOUND)
-#     PRINT_COMPONENT_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 #
 #
 #     # Set QtGStreamer API version --------------------------------------------------------------------------
@@ -404,8 +395,7 @@ if(KF5Kipi_FOUND)
 #         if(QJSON_FOUND)
 #             add_subdirectory(facebook)
 #             add_subdirectory(dropbox)
-#             add_subdirectory(debianscreenshots)
-#             add_subdirectory(imgurexport)
+#             add_subdirectory(imgur)
 #         endif()
 #
 #         # Currently the cmake module distributed w/ cmake uses a different variable
@@ -421,10 +411,6 @@ if(KF5Kipi_FOUND)
 #
 #         if(ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #             add_subdirectory(videoslideshow)
-#         endif()
-#
-#         if(OpenCV_FOUND)
-#             add_subdirectory(removeredeyes)
 #         endif()
 
     endif()
