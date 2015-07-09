@@ -6,6 +6,8 @@
 
 subdirs(icons)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_imgur\")
+
 include_directories(${QJSON_INCLUDE_DIR})
 
 set(kipiplugin_imgur_PART_SRCS
