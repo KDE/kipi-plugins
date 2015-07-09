@@ -78,7 +78,7 @@ libqca          >= 2.1.0                        http://delta.affinix.com/qca
 libqjson        >= 0.8.1                        http://qjson.sourceforge.net
 libimagemagick  >= 5.5.4                        http://www.imagemagick.org
 libqtgstreamer  >= 0.9.0                        http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
-libqtkoauth     >= 0.97                         http://gitorious.org/kqoauth
+libqtkoauth     >= 0.97                         https://github.com/kypeli/kQOAuth
 flex            >= 2.5.0                        http://flex.sourceforge.net
 bison           >= 2.5.0                        http://www.gnu.org/software/bison/bison.html
 
@@ -95,7 +95,7 @@ Geolocator         : libkgeomap.
 Mediawiki          : libmediawiki.
 Vkontakte          : libkvkontakte.
 Panorama           : Hugin command line tools, flex, bison (runtime dependency).
-Imgur              : libqtkoauth and kqoauth for Imgur.com's authenticated API.
+Imgur              : libqtkoauth for Imgur.com's authenticated API.
 VideoSlideshow     : libimagemagick and libqtgstreamer
 DebianScreenshots  : libqjson.
 RemoveRedEyes      : libopencv.
