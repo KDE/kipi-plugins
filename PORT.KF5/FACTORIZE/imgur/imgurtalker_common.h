@@ -27,17 +27,14 @@
 #define _IMGUR_API_ANONYMOUS_KEY "2da1cc4923f33dc72885aa32adede5c3";
 
 #ifdef OAUTH_ENABLED
-    #define _IMGUR_API_CONSUMER_KEY "9ad9d48124b7137d9cc9e0397219f52004fcba12a";
-    #define _IMGUR_API_CONSUMER_SECRET "26b83f19f6d045006d769869b9c623e0";
+#   define _IMGUR_API_CONSUMER_KEY "9ad9d48124b7137d9cc9e0397219f52004fcba12a";
+#   define _IMGUR_API_CONSUMER_SECRET "26b83f19f6d045006d769869b9c623e0";
 #endif //OAUTH_ENABLED
 
 // Qt includes
 
 #include <QDateTime>
 #include <QString>
-
-// KDE includes
-
 #include <QUrl>
 
 namespace KIPIImgurPlugin
@@ -47,15 +44,15 @@ class ImgurConnection
 {
 public:
 
-    static QString APIuploadURL()               {return QString ("https://api.imgur.com/2/upload.json");}
-    static QString APIdeleteURL()               {return QString ("https://api.imgur.com/2/delete.json");}
+    static QString APIuploadURL()               {return QString ("https://api.imgur.com/2/upload.json");      }
+    static QString APIdeleteURL()               {return QString ("https://api.imgur.com/2/delete.json");      }
     static QString OAuthTokenEndPoint()         {return QString ("https://api.imgur.com/oauth/request_token");}
-    static QString OAuthAccessEndPoint()        {return QString ("https://api.imgur.com/oauth/access_token");}
-    static QString OAuthAuthorizationEndPoint() {return QString ("https://api.imgur.com/oauth/authorize");}
+    static QString OAuthAccessEndPoint()        {return QString ("https://api.imgur.com/oauth/access_token"); }
+    static QString OAuthAuthorizationEndPoint() {return QString ("https://api.imgur.com/oauth/authorize");    }
 
     static QUrl originalURL(QString imageHash)  { return QUrl ("http://i.imgur.com/" + imageHash + ".jpg"); } // this is wrong
-    static QUrl pageURL(QString imageHash)      { return QUrl ("http://imgur.com/" + imageHash);}
-    static QUrl deleteURL(QString deleteHash)   { return QUrl ("http://imgur.com/delete/" + deleteHash);}
+    static QUrl pageURL(QString imageHash)      { return QUrl ("http://imgur.com/" + imageHash);            }
+    static QUrl deleteURL(QString deleteHash)   { return QUrl ("http://imgur.com/delete/" + deleteHash);    }
 };
 
 /*

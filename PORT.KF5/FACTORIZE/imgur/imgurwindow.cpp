@@ -63,9 +63,11 @@ public:
 };
 
 ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
-    : KP4ToolDialog(0), d(new Private)
+    : KP4ToolDialog(0),
+      d(new Private)
 {
     d->widget     = new ImgurWidget(this);
+
 #ifdef OAUTH_ENABLED
     d->webService = new ImgurTalkerAuth(iface(), this);
 #else
@@ -92,13 +94,15 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
                                    ki18n("A tool to export images to Imgur web service"),
                                    ki18n("(c) 2012-2013, Marius Orcsik"));
 
-    about->addAuthor(ki18n("Marius Orcsik"), ki18n("Author and Maintainer"),
+    about->addAuthor(ki18n("Marius Orcsik").toString(),
+                     ki18n("Author").toString(),
                      "marius at habarnam dot ro");
 
-    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+    about->addAuthor(ki18n("Gilles Caulier").toString(),
+                     ki18n("Developer").toString(),
                      "caulier dot gilles at gmail dot com");
 
-    about->setHandbookEntry("imgurexport");
+    about->setHandbookEntry("imgur");
     setAboutData(about);
 
     // ------------------------------------------------------------
@@ -132,19 +136,19 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
             d->webService, SLOT(slotContinueUpload(bool)));
 
     // adding/removing items from the image list
-    connect(d->widget, SIGNAL(signalAddItems(QUrl::List)),
-            d->webService, SLOT(slotAddItems(QUrl::List)));
+    connect(d->widget, SIGNAL(signalAddItems(QList<QUrl>)),
+            d->webService, SLOT(slotAddItems(QList<QUrl>)));
 
-    connect(d->widget, SIGNAL(signalRemoveItems(QUrl::List)),
-            d->webService, SLOT(slotRemoveItems(QUrl::List)));
+    connect(d->widget, SIGNAL(signalRemoveItems(QList<QUrl>)),
+            d->webService, SLOT(slotRemoveItems(QList<QUrl>)));
 
    // ---------------------------------------------------------------
 #ifdef OAUTH_ENABLED
     connect(d->widget, SIGNAL(signalClickedChangeUser()),
             d->webService, SLOT(slotOAuthLogin()));
 
-//    connect(d->webService, SIGNAL(signalAuthenticated(bool)),
-//            d->widget, SLOT(slotAuthenticated(bool)));
+    //connect(d->webService, SIGNAL(signalAuthenticated(bool)),
+    //        d->widget, SLOT(slotAuthenticated(bool)));
 
     connect(d->webService, SIGNAL(signalAuthenticated(bool,QString)),
             d->widget, SLOT(slotAuthenticated(bool,QString)));
@@ -277,7 +281,7 @@ void ImgurWindow::closeEvent(QCloseEvent*)
 void ImgurWindow::readSettings()
 {
     KConfig config("kipirc");
-//    KConfigGroup group = config.group(QString("Imgur Settings"));
+    //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group(QString("Imgur Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
@@ -286,7 +290,7 @@ void ImgurWindow::readSettings()
 void ImgurWindow::saveSettings()
 {
     KConfig config("kipirc");
-//    KConfigGroup group = config.group(QString("Imgur Settings"));
+    //KConfigGroup group = config.group(QString("Imgur Settings"));
 
     KConfigGroup group2 = config.group(QString("Imgur Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group2);

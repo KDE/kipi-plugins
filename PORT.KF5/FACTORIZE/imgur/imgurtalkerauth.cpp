@@ -22,13 +22,13 @@
 
 #include "imgurtalkerauth.h"
 
-// QtKOAuth includes
-
-#include <QtKOAuth>
-
 // Qt includes
 
 #include <QImageReader>
+
+// QtKOAuth includes
+
+#include <QtKOAuth>
 
 // qJson include
 
@@ -71,7 +71,8 @@ public:
 };
 
 ImgurTalkerAuth::ImgurTalkerAuth (Interface* const interface, QWidget* const parent)
-    : ImgurTalker(interface, parent), d(new Private)
+    : ImgurTalker(interface, parent),
+      d(new Private)
 {
     d->OAuthRequest = new KQOAuthRequest();
     d->OAuthService = new KQOAuthManager(this);
@@ -84,7 +85,6 @@ ImgurTalkerAuth::~ImgurTalkerAuth()
 
 const char* ImgurTalkerAuth::getAuthError(KQOAuthManager::KQOAuthError error)
 {
-    /**/
     switch (error)
     {
         case KQOAuthManager::NetworkError:               // Network error: timeout, cannot connect.
@@ -110,7 +110,6 @@ const char* ImgurTalkerAuth::getAuthError(KQOAuthManager::KQOAuthError error)
             return I18N_NOOP("No error");
             break;
     }
-    /**/
 }
 
 void ImgurTalkerAuth::cancel()
@@ -163,12 +162,13 @@ void ImgurTalkerAuth::imageUpload (const QUrl& filePath)
 
     d->OAuthRequest->setAdditionalParameters(params);
     d->OAuthService->executeRequest(d->OAuthRequest);
+/*
+   connect(d->OAuthService, SIGNAL(requestReady(QByteArray)),
+           this, SLOT(slotRequestReady(QByteArray)));
 
-//    connect(d->OAuthService, SIGNAL(requestReady(QByteArray)),
-//            this, SLOT(slotRequestReady(QByteArray)));
-
-//    connect(d->OAuthService, SIGNAL(authorizedRequestDone()),
-//            this, SLOT(slotAuthorizedRequestDone()));
+   connect(d->OAuthService, SIGNAL(authorizedRequestDone()),
+           this, SLOT(slotAuthorizedRequestDone()));
+*/
 }
 
 void ImgurTalkerAuth::slotOAuthLogin()
@@ -211,8 +211,8 @@ void ImgurTalkerAuth::slotTemporaryTokenReceived(const QString& token, const QSt
 
     if (d->OAuthService->lastError() != KQOAuthManager::NoError)
     {
-//        emit signalAuthenticated(false, getAuthError(d->OAuthService->lastError()));
-//        emit signalBusy(false);
+        //emit signalAuthenticated(false, getAuthError(d->OAuthService->lastError()));
+        //emit signalBusy(false);
         qCDebug(KIPIPLUGINS_LOG) << "Error :" << getAuthError(d->OAuthService->lastError());
     }
 }
@@ -256,11 +256,10 @@ void ImgurTalkerAuth::slotAuthorizedRequestDone()
 
 void ImgurTalkerAuth::slotRequestReady(const QByteArray& response)
 {
-//    qCDebug(KIPIPLUGINS_LOG) << "Authorized: " << d->OAuthService->isAuthorized();
-//    qCDebug(KIPIPLUGINS_LOG) << "Verified: " << d->OAuthService->isAuthorized();
-//    qCDebug(KIPIPLUGINS_LOG) << "End point: " << d->OAuthRequest->requestEndpoint();
-
-//    qCDebug(KIPIPLUGINS_LOG) << "Response from the service: " << response;
+    //qCDebug(KIPIPLUGINS_LOG) << "Authorized: " << d->OAuthService->isAuthorized();
+    //qCDebug(KIPIPLUGINS_LOG) << "Verified: " << d->OAuthService->isAuthorized();
+    //qCDebug(KIPIPLUGINS_LOG) << "End point: " << d->OAuthRequest->requestEndpoint();
+    //qCDebug(KIPIPLUGINS_LOG) << "Response from the service: " << response;
 
     if (d->OAuthService->isAuthorized() && d->OAuthService->isVerified() &&
         d->OAuthRequest->requestEndpoint() == QUrl(ImgurConnection::APIuploadURL())

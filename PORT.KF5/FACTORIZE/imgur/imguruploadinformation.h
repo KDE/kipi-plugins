@@ -27,9 +27,6 @@
 
 #include <QDialog>
 #include <QString>
-
-// KDE includes
-
 #include <QUrl>
 
 // Local includes

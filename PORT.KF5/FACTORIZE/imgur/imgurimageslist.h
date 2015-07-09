@@ -64,7 +64,7 @@ public:
 
 public Q_SLOTS:
 
-    void slotAddImages(const QUrl::List& list);
+    void slotAddImages(const QList<QUrl>& list);
     void slotUploadSuccess(const QUrl& imageUrl, const ImgurSuccess& success);
     void slotUploadError(const QUrl& imageUrl, const ImgurError& error);
     void slotDoubleClick(QTreeWidgetItem* element, int i);
@@ -91,7 +91,7 @@ public:
     void setDeleteUrl(const QString& str);
     QString deleteUrl() const;
 
-//    QString destPath() const;
+    //QString destPath() const;
 
 private:
 

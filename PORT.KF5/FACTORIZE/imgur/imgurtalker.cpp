@@ -83,21 +83,20 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
     d->parent    = parent;
     d->interface = interface;
     d->job       = 0;
-    m_queue      = new QUrl::List();
+    m_queue      = new QList<QUrl>();
     m_state      = IR_LOGOUT;
 
     connect(this, SIGNAL(signalUploadDone(QUrl)),
             this, SLOT(slotUploadDone(QUrl)));
 
     // -------------------------------------------------------------------------
-/**/
+
     ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
     {
         slotAddItems(images.images());
     }
-/**/
 }
 
 ImgurTalker::~ImgurTalker()
@@ -220,7 +219,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     QJson::Parser p;
     QVariant      r = p.parse(data, &ok);
 
-//    qCDebug(KIPIPLUGINS_LOG) << data;
+    //qCDebug(KIPIPLUGINS_LOG) << data;
+
     if (ok)
     {
         QMap<QString, QVariant> m = r.toMap();
@@ -323,7 +323,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 
                         if (it.key() == "datetime")
                         {
-//                            success.image.datetime = QDateTime(value);
+                        //success.image.datetime = QDateTime(value);
                         }
 
                         if (it.key() == "type")
@@ -362,6 +362,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                         }
                     }
                 }
+
                 if (it.key() == "links")
                 {
                     QMap<QString, QVariant> v = it.value().toMap();
@@ -431,7 +432,7 @@ void ImgurTalker::imageUpload (const QUrl& filePath)
     exportUrl.addQueryItem("key",   d->anonymousKey.data());
     exportUrl.addQueryItem("name",  filePath.fileName());
     exportUrl.addQueryItem("title", filePath.fileName()); // this should be replaced with something the user submits
-//    exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
+    //exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
 
     exportUrl.addQueryItem("type", "file");
 
@@ -483,14 +484,14 @@ void ImgurTalker::cancel()
     emit signalBusy(false);
 }
 
-void ImgurTalker::slotAddItems(const QUrl::List& list)
+void ImgurTalker::slotAddItems(const QList<QUrl>& list)
 {
     if (list.isEmpty())
     {
         return;
     }
 
-    for( QUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
+    for( QList<QUrl>::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         if (!m_queue->contains(*it))
         {
@@ -501,14 +502,14 @@ void ImgurTalker::slotAddItems(const QUrl::List& list)
     emit signalQueueChanged();
 }
 
-void ImgurTalker::slotRemoveItems(const QUrl::List &list)
+void ImgurTalker::slotRemoveItems(const QList<QUrl> &list)
 {
     if (list.isEmpty())
     {
         return;
     }
 
-    for( QUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
+    for( QList<QUrl>::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         m_queue->removeAll(*it);
     }
@@ -521,7 +522,7 @@ void ImgurTalker::setCurrentUrl(const QUrl& url)
     m_currentUrl = url;
 }
 
-QUrl::List* ImgurTalker::imageQueue() const
+QList<QUrl>* ImgurTalker::imageQueue() const
 {
     return m_queue;
 }

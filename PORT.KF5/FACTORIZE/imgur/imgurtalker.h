@@ -23,23 +23,25 @@
 #ifndef IMGURTALKER_H
 #define IMGURTALKER_H
 
-#include "imgurtalker_common.h"
-
 // Qt includes
 
 #include <QWidget>
 #include <QObject>
 #include <QFileInfo>
 #include <QSettings>
+#include <QUrl>
 
 // KDE includes
 
-#include <QUrl>
 #include <kio/jobclasses.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
+
+// Local includes
+
+#include "imgurtalker_common.h"
 
 namespace KIO
 {
@@ -72,15 +74,16 @@ public:
     ImgurTalker(Interface* const iface, QWidget* const parent = 0);
     ~ImgurTalker();
 
-    QUrl        currentUrl() const;
-    void        setCurrentUrl(const QUrl& u);
-    void        cancel();
-    bool        imageRemove(const QString& hash);
-    QUrl::List* imageQueue() const;
-    void        imageUpload(const QUrl& filePath);
-    void        parseResponse(const QByteArray& result);
+    QUrl         currentUrl() const;
+    void         setCurrentUrl(const QUrl& u);
+    void         cancel();
+    bool         imageRemove(const QString& hash);
+    QList<QUrl>* imageQueue() const;
+    void         imageUpload(const QUrl& filePath);
+    void         parseResponse(const QByteArray& result);
 
 Q_SIGNALS:
+
     void signalUploadProgress(int);
     void signalBusy(bool busy);
     void signalUploadStart(const QUrl& currentFile);
@@ -98,16 +101,16 @@ protected Q_SLOTS:
 
     void slotResult(KJob* job);
     void slotData(KIO::Job* job, const QByteArray& data);
-    void slotAddItems(const QUrl::List& list);
-    void slotRemoveItems(const QUrl::List& list);
+    void slotAddItems(const QList<QUrl>& list);
+    void slotRemoveItems(const QList<QUrl>& list);
     void slotUploadDone(const QUrl& currentFile);
     void slotContinueUpload(bool yes);
 
 protected:
 
-    QUrl::List* m_queue;
-    QUrl        m_currentUrl;
-    State       m_state;
+    QList<QUrl>* m_queue;
+    QUrl         m_currentUrl;
+    State        m_state;
 
 private:
 

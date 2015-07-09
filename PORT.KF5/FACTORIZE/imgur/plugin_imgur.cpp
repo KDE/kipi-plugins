@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "plugin_imgurexport.h"
+#include "plugin_imgur.h"
 
 // C++ includes
 
@@ -72,8 +72,7 @@ Plugin_Imgur::Plugin_Imgur(QObject* const parent, const QVariantList& args)
     : Plugin(parent, "Imgur"),
       d(new Private)
 {
-    kDebug(AREA_CODE_LOADING) << "Imgur plugin loaded";
-    kDebug(AREA_CODE_LOADING) << args;
+    qCDebug(KIPIPLUGINS_LOG) << "Imgur plugin loaded";
 
     setUiBaseName("kipiplugin_imgurui.rc");
     setupXML();
@@ -137,5 +136,4 @@ void Plugin_Imgur::slotActivate()
 
 } // namespace KIPIImgurPlugin
 
-#include "plugin_imgurexport.moc"
-
+#include "plugin_imgur.moc"

@@ -75,7 +75,7 @@ void ImgurImagesList::updateItemWidgets()
     qCDebug(KIPIPLUGINS_LOG) << "update";
 }
 
-void ImgurImagesList::slotAddImages(const QUrl::List& list)
+void ImgurImagesList::slotAddImages(const QList<QUrl>& list)
 {
     /* Replaces the KPImagesList::slotAddImages method, so that
      * ImgurImageListViewItems can be added instead of ImagesListViewItems */
@@ -84,7 +84,7 @@ void ImgurImagesList::slotAddImages(const QUrl::List& list)
     // of them already exist.
     bool found;
 
-    for (QUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
     {
         QUrl imageUrl = *it;
         found         = false;

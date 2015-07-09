@@ -40,7 +40,7 @@
 
 #include "kipiplugins_debug.h"
 #include "kpmetadata.h"
-#include "plugin_imgurexport.h"
+#include "plugin_imgur.h"
 
 namespace KIPIImgurPlugin
 {
@@ -55,26 +55,25 @@ public:
         imagesList     = 0;
         progressBar    = 0;
         processedCount = 0;
+
 #ifdef OAUTH_ENABLED
         changeUserBtn  = 0;
 #endif //OAUTH_ENABLED
     }
 
     QLabel*           headerLbl;
+    ImgurImagesList*  imagesList;
+    KPProgressWidget* progressBar;
+    int               processedCount;
 
 #ifdef OAUTH_ENABLED
     KPushButton*      changeUserBtn;
 #endif //OAUTH_ENABLED
-
-//    QLabel*           textLbl;
-    ImgurImagesList*  imagesList;
-    KPProgressWidget* progressBar;
-
-    int               processedCount;
 };
 
 ImgurWidget::ImgurWidget(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     QGridLayout* const mainLayout = new QGridLayout(this);
     d->imagesList                 = new ImgurImagesList(this);
@@ -108,38 +107,37 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     // ------------------------------------------------------------------------
 
 #ifdef OAUTH_ENABLED
-//    d->dlg = new KPLoginDialog (this, Plugin_ImgurExport::name(), "Imgur authentication");
+    //d->dlg = new KPLoginDialog (this, Plugin_ImgurExport::name(), "Imgur authentication");
 
     QGroupBox* const accountBox         = new QGroupBox(i18n("Imgur authorization"), settingsBox);
     accountBox->setWhatsThis(i18n("Requesting Imgur for authorization to upload images with the KIPI Imgur Exporter plugin."));
     QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
-//    QLabel* userNameLbl             = new QLabel(i18nc("imgur account settings", "Name:"), accountBox);
-
-//    QLabel* userNameDisplayLbl    = new QLabel(d->loggedUser, accountBox);
+    //QLabel* userNameLbl             = new QLabel(i18nc("imgur account settings", "Name:"), accountBox);
+    //QLabel* userNameDisplayLbl    = new QLabel(d->loggedUser, accountBox);
 
     d->changeUserBtn = new KPushButton(KGuiItem(i18n("Request authorization"), "system-switch-user",
                                        i18n("Set permissions for the current application to upload images to Imgur.")),
                                        accountBox);
 
-//    accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
-//    accountBoxLayout->addWidget(userNameDisplayLbl,   0, 2, 1, 2);
+    //accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
+    //accountBoxLayout->addWidget(userNameDisplayLbl,     0, 2, 1, 2);
     accountBoxLayout->addWidget(d->changeUserBtn,        2, 0, 1, 2);
 
     accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+/*
+   connect(d->dlg, SIGNAL(signalWalletOpened(bool)),
+           this, SLOT(slotSetLoggedUser(bool)));
 
-//    connect(d->dlg, SIGNAL(signalWalletOpened(bool)),
-//            this, SLOT(slotSetLoggedUser(bool)));
-
-//    connect(this, SIGNAL(signalLoggedUserChanged(QString)),
-//            userNameDisplayLbl, SLOT(setText(QString)));
-
+   connect(this, SIGNAL(signalLoggedUserChanged(QString)),
+           userNameDisplayLbl, SLOT(setText(QString)));
+*/
 #endif //OAUTH_ENABLED
     // ------------------------------------------------------------------------
 
     settingsBoxLayout->addWidget(d->headerLbl);
-//    settingsBoxLayout->addWidget(d->textLbl);
+    //settingsBoxLayout->addWidget(d->textLbl);
 
 #ifdef OAUTH_ENABLED
     settingsBoxLayout->addWidget(accountBox);
@@ -148,7 +146,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 
     settingsBoxLayout->addWidget(d->progressBar);
     settingsBoxLayout->addStretch(10);
-//    settingsBoxLayout->setAlignment(d->textLbl, Qt::AlignTop);
+    //settingsBoxLayout->setAlignment(d->textLbl, Qt::AlignTop);
     settingsBoxLayout->setAlignment(d->progressBar, Qt::AlignBottom);
     settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -160,11 +158,11 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 
-    connect(d->imagesList, SIGNAL(signalAddItems(QUrl::List)),
-            this, SLOT(slotAddItems(QUrl::List)));
+    connect(d->imagesList, SIGNAL(signalAddItems(QList<QUrl>)),
+            this, SLOT(slotAddItems(QList<QUrl>)));
 
-    connect(d->imagesList, SIGNAL(signalRemovedItems(QUrl::List)),
-            this, SLOT(slotRemoveItems(QUrl::List)));
+    connect(d->imagesList, SIGNAL(signalRemovedItems(QList<QUrl>)),
+            this, SLOT(slotRemoveItems(QList<QUrl>)));
 
     connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -174,20 +172,21 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 
     connect(this, SIGNAL(signalImageUploadError(QUrl,ImgurError)),
             d->imagesList, SLOT(slotUploadError(QUrl,ImgurError)));
-
-//    connect(this, SIGNAL(signalImageUploadStart(QUrl)),
-//            d->imagesList, SLOT(processing(QUrl)));
-
+/*
+    connect(this, SIGNAL(signalImageUploadStart(QUrl)),
+            d->imagesList, SLOT(processing(QUrl)));
+*/
 #ifdef OAUTH_ENABLED
     connect(d->changeUserBtn, SIGNAL(clicked()),
             this, SLOT(slotClickedChangeUser()));
-
-//    connect(this, SIGNAL(signalEnableAuthentication(bool)),
-//            d->changeUserBtn , SLOT(setEnabled(bool)));
-//    connect(d->dlg, SIGNAL(accepted()),
-//            this, SLOT(slotCredentialsSet()));
-//    connect(d->dlg, SIGNAL(signalLoadedNamePass(QString,QString)),
-//            this, SLOT(slotLoadedNamePass(QString,QString)));
+/*
+   connect(this, SIGNAL(signalEnableAuthentication(bool)),
+           d->changeUserBtn , SLOT(setEnabled(bool)));
+   connect(d->dlg, SIGNAL(accepted()),
+           this, SLOT(slotCredentialsSet()));
+   connect(d->dlg, SIGNAL(signalLoadedNamePass(QString,QString)),
+           this, SLOT(slotLoadedNamePass(QString,QString)));
+*/
 #endif //OAUTH_ENABLED
 
 }
@@ -197,12 +196,12 @@ ImgurWidget::~ImgurWidget()
     delete d;
 }
 
-void ImgurWidget::slotAddItems(const QUrl::List& list)
+void ImgurWidget::slotAddItems(const QList<QUrl>& list)
 {
     emit signalAddItems(list);
 }
 
-void ImgurWidget::slotRemoveItems(const QUrl::List& list)
+void ImgurWidget::slotRemoveItems(const QList<QUrl>& list)
 {
     emit signalRemoveItems(list);
 }
@@ -218,7 +217,7 @@ void ImgurWidget::slotImageUploadStart(const QUrl& imgPath)
 {
     d->processedCount++;
     qCDebug(KIPIPLUGINS_LOG) << "Processing" << imgPath;
-//    imagesList()->clearProcessedStatus();
+    //imagesList()->clearProcessedStatus();
 
     imagesList()->processing(imgPath);
 
@@ -270,14 +269,14 @@ KPProgressWidget* ImgurWidget::progressBar() const
 void ImgurWidget::slotAuthenticated(bool authenticated, const QString& message)
 {
 #ifdef OAUTH_ENABLED
-//    kDebug () << "Disable the button.";
+    //kDebug() << "Disable the button.";
     if (authenticated)
     {
         d->changeUserBtn->setText(i18n("Authenticated"));
     }
 
     d->changeUserBtn->setEnabled(!authenticated);
-//    emit signalEnableAuthentication(!authenticated);
+    //emit signalEnableAuthentication(!authenticated);
 #else //OAUTH_ENABLED
     Q_UNUSED(authenticated);
     Q_UNUSED(message);

@@ -57,8 +57,8 @@ public:
 
 Q_SIGNALS:
 
-    void signalAddItems(const QUrl::List& list);
-    void signalRemoveItems(const QUrl::List& list);
+    void signalAddItems(const QList<QUrl>& list);
+    void signalRemoveItems(const QList<QUrl>& list);
     void signalImageListChanged();
 
     void signalEnableAuthentication(bool yes);
@@ -70,8 +70,8 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void slotAddItems(const QUrl::List& list);
-    void slotRemoveItems(const QUrl::List& list);
+    void slotAddItems(const QList<QUrl>& list);
+    void slotRemoveItems(const QList<QUrl>& list);
     void slotImageUploadStart(const QUrl& imgPath);
     void slotImageUploadSuccess(const QUrl& imgPath, const ImgurSuccess& success);
     void slotImageUploadError(const QUrl& imgPath, const ImgurError& error);
