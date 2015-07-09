@@ -8,17 +8,15 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_muvee\")
 
-include_directories(${QCA2_INCLUDE_DIR})
-
-add_definitions(${QCA2_DEFINITIONS})
+include_directories(${Qca-qt5_INCLUDEDIR})
 
 set(kipiplugin_muvee_PART_SRCS
     plugin_muvee.cpp
     swwindow.cpp
     swlogin.cpp
     swalbum.cpp
-    swconnector.cpp
     swwidget.cpp
+    swconnector.cpp
    )
 
 add_library(kipiplugin_muvee MODULE ${kipiplugin_muvee_PART_SRCS})
@@ -27,7 +25,7 @@ target_link_libraries(kipiplugin_muvee
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      ${QCA2_LIBRARIES}
+                      ${Qca-qt5_LIBRARY}
                       KF5::KIOCore
                       KF5kipiplugins
                      )

@@ -538,7 +538,7 @@ void SwWindow::uploadNextPhoto()
     bool    res;
 
     // check if we have to RAW file -> use preview image then
-    bool isRAW = KPMetadata::isRawFile(imgPath);
+    bool isRAW = KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath));
 
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
@@ -547,6 +547,7 @@ void SwWindow::uploadNextPhoto()
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;
         }
+
         res = m_connector->addPhoto(m_tmpPath, m_currentAlbumID, caption);
     }
     else

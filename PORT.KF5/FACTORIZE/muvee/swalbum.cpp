@@ -27,6 +27,8 @@
 
 #include <QFormLayout>
 #include <QComboBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 

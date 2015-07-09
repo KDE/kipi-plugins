@@ -37,12 +37,15 @@ extern "C"
 #include <unistd.h>
 }
 
-// KDE includes
+// Qt includes
 
-#include "kipiplugins_debug.h"
-#include <kconfig.h>
+#include <QKeySequence>
 #include <QApplication>
 #include <QAction>
+
+// KDE includes
+
+#include <kconfig.h>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -55,6 +58,7 @@ extern "C"
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "swwindow.h"
 
 namespace KIPIMuveePlugin
@@ -100,7 +104,7 @@ void Plugin_Muvee::setupActions()
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to Muvee Cloud..."));
     m_actionExport->setIcon(QIcon::fromTheme("kipi-muvee"));
-    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
+    m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_W));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),

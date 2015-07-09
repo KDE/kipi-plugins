@@ -35,6 +35,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
@@ -202,7 +204,7 @@ KIPIPlugins::KPImagesList* SwWidget::imagesList() const
 
 QString SwWidget::getDestinationPath() const
 {
-    return m_uploadWidget->selectedImageCollection().uploadPath().path();
+    return m_uploadWidget->selectedImageCollection().uploadUrl().toLocalFile();
 }
 
 void SwWidget::updateLabels(const QString& name, const QString& url)
