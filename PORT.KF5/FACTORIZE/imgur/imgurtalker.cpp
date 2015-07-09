@@ -44,7 +44,7 @@
 #include "kipiplugins_debug.h"
 #include "mpform.h"
 #include "kpversion.h"
-#include "plugin_imgurexport.h"
+#include "plugin_imgur.h"
 
 namespace KIPIImgurPlugin
 {
@@ -60,7 +60,7 @@ public:
         interface                 = 0;
         job                       = 0;
         continueUpload            = true;
-        userAgent                 = QString("KIPI-Plugins-" + Plugin_ImgurExport::name() + "/" + kipipluginsVersion());
+        userAgent                 = QLatin1String("KIPI-Plugins-ImgurExport") + QLatin1String("/") + kipipluginsVersion();
         const char _imgurApiKey[] = _IMGUR_API_ANONYMOUS_KEY;
         anonymousKey              = QByteArray( _imgurApiKey );
     }
@@ -183,7 +183,7 @@ void ImgurTalker::slotUploadDone(const QUrl& currentFile)
         emit signalQueueChanged();
     }
 
-    kDebug () << "Upload done for" << currentFile << "Queue has" << m_queue->length() << "items";
+    qCDebug(KIPIPLUGINS_LOG) << "Upload done for" << currentFile << "Queue has" << m_queue->length() << "items";
 }
 
 void ImgurTalker::slotContinueUpload(bool yes)
@@ -373,27 +373,27 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 
                         if (it.key() == "original")
                         {
-                            success.links.original = value;
+                            success.links.original = QUrl(value);
                         }
 
                         if (it.key() == "imgur_page")
                         {
-                            success.links.imgur_page = value;
+                            success.links.imgur_page = QUrl(value);
                         }
 
                         if (it.key() == "delete_page")
                         {
-                            success.links.delete_page = value;
+                            success.links.delete_page = QUrl(value);
                         }
 
                         if (it.key() == "small_square")
                         {
-                            success.links.small_square = value;
+                            success.links.small_square = QUrl(value);
                         }
 
                         if (it.key() == "largeThumbnail")
                         {
-                            success.links.large_thumbnail = value;
+                            success.links.large_thumbnail = QUrl(value);
                         }
                     }
                 }
@@ -457,7 +457,7 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
     MPForm form;
 
     QUrl removeUrl = QUrl(ImgurConnection::APIdeleteURL());
-    removeUrl.addPath(delete_hash + ".json");
+    removeUrl.setPath(removeUrl.path() + '/' + delete_hash + ".json");
 
     form.finish();
 

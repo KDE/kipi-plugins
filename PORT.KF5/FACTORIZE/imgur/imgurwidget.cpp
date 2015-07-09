@@ -26,6 +26,8 @@
 
 #include <QBoxLayout>
 #include <QGroupBox>
+#include <QApplication>
+#include <QStyle>
 
 // KDE includes
 
@@ -269,7 +271,7 @@ KPProgressWidget* ImgurWidget::progressBar() const
 void ImgurWidget::slotAuthenticated(bool authenticated, const QString& message)
 {
 #ifdef OAUTH_ENABLED
-    //kDebug() << "Disable the button.";
+    //qCDebug(KIPIPLUGINS_LOG) << "Disable the button.";
     if (authenticated)
     {
         d->changeUserBtn->setText(i18n("Authenticated"));
