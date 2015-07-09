@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
@@ -21,11 +21,12 @@
  *
  * ============================================================ */
 
-#include "swalbum.moc"
+#include "swalbum.h"
 
 // Qt includes
 
 #include <QFormLayout>
+#include <QComboBox>
 
 // KDE includes
 
@@ -33,19 +34,18 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <QComboBox>
 
 // local includes
 
 #include "switem.h"
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 SwNewAlbum::SwNewAlbum(QWidget* const parent)
     : KDialog(parent)
 {
-    QString header(i18n("Shwup New Album"));
+    QString header(i18n("Muvee Cloud New Album"));
     setWindowTitle(header);
     setButtons(Ok|Cancel);
     setDefaultButton(Cancel);
@@ -77,4 +77,4 @@ void SwNewAlbum::getAlbumProperties(SwAlbum& album)
     album.title = m_titleEdt->text();
 }
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin

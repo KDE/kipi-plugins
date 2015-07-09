@@ -1,11 +1,11 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <!-- NOTE: don't forget to increase version ID when this file is modified -->
-<gui version="1" name="kipiplugin_shwup" >
+<gui version="1" name="kipiplugin_muvee" >
 
     <MenuBar>
 
         <Menu name="Export"><text>&amp;Export</text>
-            <Action name="shwupexport" group="kipi_export_group" />
+            <Action name="muveeexport" group="kipi_export_group" />
         </Menu>
 
     </MenuBar>

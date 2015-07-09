@@ -30,7 +30,7 @@ SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 TimeAdjust         : A tool to adjust date and time.
 RemoteStorage      : A tool to export images to remote storage using network protocol (FTP, SSH, SAMBA, etc...).
-Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
+Muvee              : A tool to export images to Muvee Cloud web service (http://cloud.muvee.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 Piwigo             : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
@@ -95,7 +95,7 @@ Imgur              : libqtkoauth for Imgur.com's authenticated API.
 VideoSlideshow     : libimagemagick and libqtgstreamer
 DebianScreenshots  : libqjson.
 HtmlExport         : libxslt and libxml2.
-Shwup              : libqca.
+Muvee              : libqca.
 
 -- CONTACT ------------------------------------------------------------
 

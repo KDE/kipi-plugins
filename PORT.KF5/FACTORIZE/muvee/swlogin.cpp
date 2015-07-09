@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
  *
@@ -20,11 +20,12 @@
  *
  * ============================================================ */
 
-#include "swlogin.moc"
+#include "swlogin.h"
 
 // Qt includes
 
 #include <QFormLayout>
+#include <QComboBox>
 
 // KDE includes
 
@@ -32,19 +33,18 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
-#include <QComboBox>
 
 // local includes
 
 #include "switem.h"
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 SwLogin::SwLogin(QWidget* const parent)
     : KDialog(parent)
 {
-    QString header(i18n("Shwup Login"));
+    QString header(i18n("Muvee Cloud Login"));
     setWindowTitle(header);
     setButtons(Ok|Cancel);
     setDefaultButton(Cancel);
@@ -56,11 +56,11 @@ SwLogin::SwLogin(QWidget* const parent)
 
     // ------------------------------------------------------------------------
     m_emailEdt          = new KLineEdit;
-    m_emailEdt->setWhatsThis(i18n("Email of shwup account (required)."));
+    m_emailEdt->setWhatsThis(i18n("Email of Muvee account (required)."));
 
     m_passwordEdt       = new KLineEdit;
     m_passwordEdt->setEchoMode( QLineEdit::Password );
-    m_passwordEdt->setWhatsThis(i18n("Password of shwup account (required)."));
+    m_passwordEdt->setWhatsThis(i18n("Password of Muvee account (required)."));
 
     QFormLayout* const loginBoxLayout = new QFormLayout;
     loginBoxLayout->addRow(i18nc("login settings", "Email:"),    m_emailEdt);
@@ -81,4 +81,4 @@ void SwLogin::getUserProperties(SwUser &user)
     user.password = m_passwordEdt->text();
 }
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin

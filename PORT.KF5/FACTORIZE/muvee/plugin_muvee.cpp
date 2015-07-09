@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -28,7 +28,7 @@
 #pragma warning(disable : 4996)
 #endif
 
-#include "plugin_shwup.moc"
+#include "plugin_muvee.h"
 
 // C ANSI includes
 
@@ -57,33 +57,30 @@ extern "C"
 
 #include "swwindow.h"
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
-K_PLUGIN_FACTORY( ShwupFactory, registerPlugin<Plugin_Shwup>(); )
-K_EXPORT_PLUGIN ( ShwupFactory("kipiplugin_shwup") )
+K_PLUGIN_FACTORY( MuveeFactory, registerPlugin<Plugin_Muvee>(); )
 
-Plugin_Shwup::Plugin_Shwup(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(ShwupFactory::componentData(), parent, "Shwup Export")
+Plugin_Muvee::Plugin_Muvee(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(parent, "Muvee")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_Shwup plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_Muvee plugin loaded";
 
     m_dlgExport    = 0;
     m_actionExport = 0;
 
-    setUiBaseName("kipiplugin_shwupui.rc");
+    setUiBaseName("kipiplugin_muveeui.rc");
     setupXML();
 }
 
-Plugin_Shwup::~Plugin_Shwup()
+Plugin_Muvee::~Plugin_Muvee()
 {
 }
 
-void Plugin_Shwup::setup(QWidget* const widget)
+void Plugin_Muvee::setup(QWidget* const widget)
 {
     Plugin::setup(widget);
-
-    KIconLoader::global()->addAppDir("kipiplugin_shwup");
 
     setupActions();
 
@@ -96,26 +93,26 @@ void Plugin_Shwup::setup(QWidget* const widget)
     m_actionExport->setEnabled(true);
 }
 
-void Plugin_Shwup::setupActions()
+void Plugin_Muvee::setupActions()
 {
     setDefaultCategory(ExportPlugin);
 
     m_actionExport = new QAction(this);
-    m_actionExport->setText(i18n("Export to Shwup..."));
-    m_actionExport->setIcon(QIcon::fromTheme("kipi-shwup"));
+    m_actionExport->setText(i18n("Export to Muvee Cloud..."));
+    m_actionExport->setIcon(QIcon::fromTheme("kipi-muvee"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction("shwupexport", m_actionExport);
+    addAction("muveeexport", m_actionExport);
 }
 
-void Plugin_Shwup::slotExport()
+void Plugin_Muvee::slotExport()
 {
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-shwup-" + QString::number(getpid()) + '/');
+    QString tmp = dir.saveLocation("tmp", "kipi-muvee-" + QString::number(getpid()) + '/');
 
     if (!m_dlgExport)
     {
@@ -133,4 +130,6 @@ void Plugin_Shwup::slotExport()
     m_dlgExport->reactivate();
 }
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin
+
+#include "plugin_muvee.moc"

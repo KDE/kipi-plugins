@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
  *
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "swconnector.moc"
+#include "swconnector.h"
 
 // C++ includes
 
@@ -37,6 +37,7 @@
 #include <QFile>
 #include <QUrl>
 #include <QRegExp>
+#include <QApplication>
 
 // QCA includes
 
@@ -45,21 +46,19 @@
 // KDE includes
 
 #include <kcodecs.h>
-#include "kipiplugins_debug.h"
-#include <QUrl>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kmimetype.h>
-#include <QApplication>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpversion.h"
 #include "switem.h"
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 bool operator< (const SwAlbum& first, const SwAlbum& second)
@@ -76,7 +75,7 @@ SwConnector::SwConnector(QWidget* const parent)
     m_userAgent     = QString("KIPI-Plugin-Shwup/%1 (kde@timotheegroleau.com)").arg(kipiplugins_version);
     m_apiVersion    = "1.0";
 
-    m_apiStartURL   = "http://www.shwup.com/rest/v1/server"; // fixed to v1
+    m_apiStartURL   = "http://www.cloud.muvee.com/rest/v1/server"; // fixed to v1
     m_apiDomainURL  = "";
     m_apiRestPath   = "";
 
@@ -617,4 +616,4 @@ void SwConnector::addPhotoResultHandler(KIO::Job* const job, const QByteArray& d
     emit signalAddPhotoDone(0, "");
 }
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin

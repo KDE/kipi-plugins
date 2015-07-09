@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -48,7 +48,7 @@ namespace KIPIPlugins
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 class SwConnector;
@@ -126,13 +126,13 @@ private:
     KProgressDialog* m_progressDlg;
     SwLogin*         m_loginDlg;
 
-    QUrl::List       m_transferQueue;
+    QList<QUrl>      m_transferQueue;
 
     SwConnector*     m_connector;
     SwWidget*        m_widget;
     SwNewAlbum*      m_albumDlg;
 };
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin
 
 #endif /* SWWINDOW_H */

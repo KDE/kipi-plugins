@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
@@ -32,7 +32,7 @@ class KLineEdit;
 class KTextEdit;
 class QComboBox;
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 class SwAlbum;
@@ -55,6 +55,6 @@ private:
     friend class SwWindow;
 };
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin
 
 #endif // SWALBUM_H

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_SHWUP_H
-#define PLUGIN_SHWUP_H
+#ifndef PLUGIN_MUVEE_H
+#define PLUGIN_MUVEE_H
 
 // Qt includes
 
@@ -38,19 +38,19 @@ class QAction;
 
 using namespace KIPI;
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 class SwWindow;
 
-class Plugin_Shwup : public Plugin
+class Plugin_Muvee : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_Shwup(QObject* const parent, const QVariantList& args);
-    ~Plugin_Shwup();
+    Plugin_Muvee(QObject* const parent, const QVariantList& args);
+    ~Plugin_Muvee();
 
     void setup(QWidget* const);
 
@@ -68,6 +68,6 @@ private:
     SwWindow* m_dlgExport;
 };
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin
 
-#endif // PLUGIN_SHWUP_H
+#endif // PLUGIN_MUVEE_H

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "swwindow.moc"
+#include "swwindow.h"
 
 // Qt includes
 
@@ -31,15 +31,14 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QMenu>
+#include <QComboBox>
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <klineedit.h>
-#include <QComboBox>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <kprogressdialog.h>
@@ -47,7 +46,7 @@
 
 // LibKDcraw includes
 
-#include <version.h>
+#include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
 
 // Libkipi includes
@@ -56,6 +55,7 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpmetadata.h"
@@ -68,7 +68,7 @@
 
 using namespace KDcrawIface;
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
@@ -81,14 +81,14 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
     m_widget      = new SwWidget(this, iface());
 
     setMainWidget(m_widget);
-    setWindowIcon(QIcon::fromTheme("kipi-shwup"));
+    setWindowIcon(QIcon::fromTheme("kipi-muvee"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
 
-    setWindowTitle(i18n("Export to Shwup Web Service"));
+    setWindowTitle(i18n("Export to Muvee Web Service"));
     setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
-                            i18n("Start upload to Shwup web service")));
+                            i18n("Start upload to Muvee web service")));
      m_widget->setMinimumSize(700, 500);
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
@@ -111,16 +111,17 @@ SwWindow::SwWindow(const QString& tmpFolder, QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    KPAboutData* const about = new KPAboutData(ki18n("Shwup Export"), 0,
+    KPAboutData* const about = new KPAboutData(ki18n("Muvee Cloud Export"), 0,
                                    KAboutLicense::GPL,
                                    ki18n("A Kipi plugin to export images "
-                                         "to Shwup web service."),
+                                         "to cloud.muvee.com web service."),
                                    ki18n("(c) 2009, Timothée Groleau"));
 
-    about->addAuthor(ki18n("Timothée Groleau"), ki18n("Author and maintainer"),
+    about->addAuthor(ki18n("Timothée Groleau").toString(),
+                     ki18n("Author and maintainer").toString(),
                      "kde at timotheegroleau dot com");
 
-    about->setHandbookEntry("shwup");
+    about->setHandbookEntry("muvee");
     setAboutData(about);
 
     // ------------------------------------------------------------------------
@@ -199,7 +200,7 @@ void SwWindow::reactivate()
 void SwWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("Shwup Settings");
+    KConfigGroup grp = config.group("Muvee Settings");
 
     SwUser user;
     user.email       = grp.readEntry("User Email", "");
@@ -224,14 +225,14 @@ void SwWindow::readSettings()
     m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width",    1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
 
-    KConfigGroup dialogGroup = config.group("Shwup Export Dialog");
+    KConfigGroup dialogGroup = config.group("Muvee Export Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void SwWindow::writeSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("Shwup Settings");
+    KConfigGroup grp = config.group("Muvee Settings");
     SwUser user      = m_connector->getUser();
 
     grp.writeEntry("User Email",    user.email);
@@ -241,7 +242,7 @@ void SwWindow::writeSettings()
     grp.writeEntry("Maximum Width", m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality", m_widget->m_imageQualitySpB->value());
 
-    KConfigGroup dialogGroup = config.group("Shwup Export Dialog");
+    KConfigGroup dialogGroup = config.group("Muvee Export Dialog");
     KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
 
     config.sync();
@@ -256,7 +257,7 @@ void SwWindow::slotRequestRestURLDone(int errCode, const QString& /*errMessage*/
     else
     {
         // unable to contact service
-        KMessageBox::error(this, i18n("The shwup.com service does not seem to be available at this time, please try again later."));
+        KMessageBox::error(this, i18n("The cloud.muvee.com service does not seem to be available at this time, please try again later."));
     }
 }
 
@@ -286,7 +287,7 @@ void SwWindow::authenticate()
 
 void SwWindow::slotShwupKipiBlackListed()
 {
-    KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service."));
+    KMessageBox::error(this, i18n("This application has been blacklisted by the cloud.muvee.com service."));
 }
 
 void SwWindow::slotShwupSignatureError()
@@ -302,7 +303,7 @@ void SwWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("Shwup Call Failed: %1\n", errMsg));
+        KMessageBox::error(this, i18n("Muvee Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -592,7 +593,7 @@ void SwWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
         m_imagesTotal--;
 
         if (KMessageBox::warningContinueCancel(this,
-                         i18n("Failed to upload photo into Shwup: %1\n"
+                         i18n("Failed to upload photo into Muvee: %1\n"
                               "Do you want to continue?", errMsg))
                          != KMessageBox::Continue)
         {
@@ -616,7 +617,7 @@ void SwWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const SwA
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("Shwup Call Failed: %1", errMsg));
+        KMessageBox::error(this, i18n("Muvee Call Failed: %1", errMsg));
     }
     else
     {
@@ -632,4 +633,4 @@ void SwWindow::slotImageListChanged()
     enableButton(User1, !(m_widget->m_imgList->imageUrls().isEmpty()));
 }
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin

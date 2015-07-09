@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2009-10-23
- * Description : a kipi plugin to export images to shwup.com web service
+ * Description : a kipi plugin to export images to cloud.muvee.com web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009      by Timothée Groleau <kde at timotheegroleau dot com>
@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "swwidget.moc"
+#include "swwidget.h"
 
 // Qt includes
 
@@ -34,25 +34,25 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QComboBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
-#include <QComboBox>
 #include <kpushbutton.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
-#include <uploadwidget.h>
+#include <KIPI/UploadWidget>
 #include <KIPI/ImageCollection>
 
 // Local includes
 
 #include "kpimageslist.h"
 
-namespace KIPIShwupPlugin
+namespace KIPIMuveePlugin
 {
 
 SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
@@ -68,27 +68,27 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Shwup account."));
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Muvee account."));
 
     QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Shwup.com home page in a web browser."));
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the cloud.muvee.com home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* const accountBox = new QGroupBox(i18n("Account"), settingsBox);
-    accountBox->setWhatsThis(i18n("This is the Shwup account that is currently logged in."));
+    accountBox->setWhatsThis(i18n("This is the Muvee account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel* const userNameLbl   = new QLabel(i18nc("account settings", "Name:"), accountBox);
     m_userNameDisplayLbl        = new QLabel(accountBox);
 
     m_changeUserBtn             = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                                  i18n("Change Shwup Account used for transfer")),
+                                                  i18n("Change Muvee Account used for transfer")),
                                                   accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
@@ -100,7 +100,7 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     // ------------------------------------------------------------------------
 
     QGroupBox* const albBox            = new QGroupBox(i18n("Destination"), settingsBox);
-    albBox->setWhatsThis(i18n("This is the Shwup album to which selected photos will be uploaded."));
+    albBox->setWhatsThis(i18n("This is the Muvee album to which selected photos will be uploaded."));
     QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* const albLbl = new QLabel(i18n("Album:"), albBox);
@@ -108,7 +108,7 @@ SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn        = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                           i18n("Create new Shwup album")), accountBox);
+                                           i18n("Create new Muvee album")), accountBox);
     m_reloadAlbumsBtn    = new KPushButton(KGuiItem(i18nc("album list", "Reload"), "view-refresh",
                                            i18n("Reload album list")), accountBox);
 
@@ -207,13 +207,13 @@ QString SwWidget::getDestinationPath() const
 
 void SwWidget::updateLabels(const QString& name, const QString& url)
 {
-    QString web("http://www.shwup.com");
+    QString web("http://www.cloud.muvee.com");
 
     if (!url.isEmpty())
         web = url;
 
     m_headerLbl->setText(QString("<b><h2><a href='%1'>"
-                                 "<font color=\"#3B5998\">shwup.com</font>"
+                                 "<font color=\"#3B5998\">cloud.muvee.com</font>"
                                  "</a></h2></b>").arg(web));
     if (name.isEmpty())
     {
@@ -241,4 +241,4 @@ long long SwWidget::getAlbumID() const
     return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toLongLong();
 }
 
-} // namespace KIPIShwupPlugin
+} // namespace KIPIMuveePlugin
