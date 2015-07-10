@@ -32,6 +32,7 @@ target_link_libraries(kipiplugin_googleservices
                       KF5::KExiv2
                       KF5::WidgetsAddons
                       KF5::KIOCore
+                      KF5::Wallet
                       ${QJSON_LIBRARIES}
                       KF5kipiplugins
                      )
