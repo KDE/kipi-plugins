@@ -92,8 +92,6 @@ private:
     enum State
     {
         FB_GETLOGGEDINUSER = 0,
-        FB_GETUSERINFO,
-        FB_GETUSERINFO_FRIENDS,
         FB_LOGOUT,
         FB_LISTFRIENDS,
         FB_LISTALBUMS,
@@ -110,10 +108,7 @@ private:
     QString getCallString(const QMap<QString, QString>& args);
     void    authenticationDone(int errCode, const QString& errMsg);
     void    doOAuth();
-    //void    createToken();
-    //void    getSession();
     void    getLoggedInUser();
-    void    getUserInfo(const QString& userIDs = QString());
 
     QString errorToText(int errCode, const QString& errMsg);
     int parseErrorResponse(const QDomElement& e, QString& errMsg);
@@ -121,7 +116,6 @@ private:
     //void parseResponseGetSession(const QByteArray& data);
     void parseExchangeSession(const QByteArray& data);
     void parseResponseGetLoggedInUser(const QByteArray& data);
-    void parseResponseGetUserInfo(const QByteArray& data);
     void parseResponseLogout(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
