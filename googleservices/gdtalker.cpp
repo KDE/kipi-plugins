@@ -333,6 +333,7 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 
 void GDTalker::parseResponseListFolders(const QByteArray& data)
 {
+    kDebug()<<"DATA is"<<data;
     QJson::Parser parser;
     bool ok;
     QVariant result = parser.parse(data,&ok);
