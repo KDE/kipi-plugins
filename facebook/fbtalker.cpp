@@ -540,7 +540,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
     }
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.createAlbum"), tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/me/albums"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -964,39 +964,31 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
 
 void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
+    kDebug()<<"Parse Create album data is"<<data;
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc("createalbum");
-
-    if (!doc.setContent(data))
-        return;
-
-    kDebug() << "Parse Create Album response:" << endl << data;
-
     QString newAlbumID;
-    QDomElement docElem = doc.documentElement();
+    QJson::Parser parser;
+    bool ok;
+    QVariant result     = parser.parse(data,&ok);
+    QVariantMap rmap    = result.toMap();
+    QList<QString> keys = rmap.uniqueKeys();
+    QString temp;
 
-    if (docElem.tagName() == "photos_createAlbum_response")
+    for(int i=0;i<rmap.size();i++)
     {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
+        kDebug()<<"Keys is "<<keys[i];
+        if(keys[i] == "id")
         {
-            if (!node.isElement())
-                continue;
-
-            if (node.nodeName() == "aid")
-            {
-                newAlbumID = node.toElement().text();
-                kDebug() << "newAID: " << newAlbumID;
-            }
+            newAlbumID = rmap[keys[i]].value<QString>();
+            kDebug()<<"Id of album created is"<<newAlbumID;
+            errCode = 0;
         }
-
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
+        if(keys[i] == "error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
 
     emit signalBusy(false);
