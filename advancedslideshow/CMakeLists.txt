@@ -11,6 +11,8 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_advancedslideshow\")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${PHONON_INCLUDE_DIR}
+
                    )
 
 set(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
@@ -52,17 +54,17 @@ target_link_libraries(kipiplugin_advancedslideshow
 
                       Qt5::OpenGL
                       Qt5::Svg
-                      ${OPENGL_LIBRARIES}
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw
-                      Phonon::phonon4qt5
+                      KF5kipiplugins
+
+                      ${OPENGL_LIBRARIES}
+                      ${PHONON_LIBRARIES}
 
                       # For Linux only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
-
-                      KF5kipiplugins
                      )
 
 configure_file(plugin/kipiplugin_advancedslideshow.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_advancedslideshow.desktop)
