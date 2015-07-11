@@ -38,7 +38,7 @@
 
 #include "kipiplugins_debug.h"
 #include "kpversion.h"
-#include "plugin_imgurexport.h"
+#include "plugin_imgur.h"
 
 namespace KIPIImgurPlugin
 {
@@ -49,7 +49,7 @@ public:
 
     Private()
     {
-        userAgent                            = QString("KIPI-Plugins-" + Plugin_ImgurExport::name() + "/" + kipipluginsVersion());
+        userAgent                            = QString("KIPI-Plugins-ImgurExport" + QLatin1String("/") + kipipluginsVersion());
         const char _imgurApiConsumerKey[]    = _IMGUR_API_CONSUMER_KEY;
         consumerKey                          = QByteArray( _imgurApiConsumerKey );
         const char _imgurApiConsumerSecret[] = _IMGUR_API_CONSUMER_SECRET;
