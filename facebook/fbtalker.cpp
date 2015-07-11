@@ -573,10 +573,8 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
     args["access_token"] = m_accessToken;
     args["name"]         = KUrl(imgPath).fileName();
 
-    if (!albumID.isEmpty())
-        args["aid"]      = albumID;
     if (!caption.isEmpty())
-        args["caption"]  = caption;
+        args["message"]  = caption;
 
     MPForm form;
 
@@ -597,8 +595,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     kDebug() << "FORM: " << endl << form.formData();
 
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.upload"), form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("UserAgent",    m_userAgent);
+    KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/v2.4/"+QString(albumID)+QString("/photos")), form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -929,33 +926,29 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
 
 void FbTalker::parseResponseAddPhoto(const QByteArray& data)
 {
+    kDebug()<<"Parse Add Photo data is "<<data;
     int errCode = -1;
     QString errMsg;
+    QJson::Parser parser;
+    bool ok;
+    QVariant result     = parser.parse(data,&ok);
+    QVariantMap rmap    = result.toMap();
+    QList<QString> keys = rmap.uniqueKeys();
+    QString temp;
 
-    QDomDocument doc("addphoto");
-
-    if (!doc.setContent(data))
-        return;
-
-    kDebug() << "Parse Add Photo response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "photos_upload_response")
+    for(int i=0;i<rmap.size();i++)
     {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
+        kDebug()<<"Keys is "<<keys[i];
+        if(keys[i] == "id")
         {
-            if (!node.isElement())
-                continue;
+            kDebug()<<"Id of photo exported is"<<rmap[keys[i]].value<QString>();
+            errCode = 0;
         }
-
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
+        if(keys[i] == "error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
 
     emit signalBusy(false);
