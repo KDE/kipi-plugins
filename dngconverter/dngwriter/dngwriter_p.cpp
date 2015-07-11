@@ -77,4 +77,28 @@ dng_date_time DNGWriter::Private::dngDateTime(const QDateTime& qDT) const
     return dngDT;
 }
 
+bool DNGWriter::Private::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify) const
+{
+    QByteArray tmpData(rawData);
+    int height             = identify.outputSize.height();
+    int width              = identify.outputSize.width();
+    unsigned short* tmp    = reinterpret_cast<unsigned short*>(tmpData.data());
+    unsigned short* output = reinterpret_cast<unsigned short*>(rawData.data());
+
+    for (int row=0; row < height; ++row)
+    {
+        for (int col=0; col < width; ++col)
+        {
+            output[col * height + row] = tmp[row * width + col];
+        }
+    }
+
+    identify.orientation = DcrawInfoContainer::ORIENTATION_Mirror90CCW;
+    identify.outputSize  = QSize(height, width);
+
+    //TODO: rotate margins
+
+    return true;
+}
+
 }  // namespace DNGIface

@@ -91,6 +91,8 @@ public:
     void          cleanup();
     dng_date_time dngDateTime(const QDateTime& qDT) const;
 
+    bool fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify) const;
+
 public:
 
     bool    cancel;

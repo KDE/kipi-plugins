@@ -83,8 +83,6 @@ public:
     void cancel();
     void reset();
 
-    bool fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify) const;
-
 public:
 
     // Declared public because of DNGWriterHost class.
