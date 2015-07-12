@@ -12,11 +12,8 @@ if(NOT WIN32)
                        )
 
     set(testipp_SRCS testForIPP.cpp)
-
-    add_executable(testipp
-ecm_mark_nongui_executable(testipp)
-                        ${testipp_SRCS}
-                       )
+    add_executable(testipp ${testipp_SRCS})
+    ecm_mark_nongui_executable(testipp)
 
     target_link_libraries(testipp
                           ${OpenCV_LIBRARIES}

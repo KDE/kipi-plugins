@@ -52,15 +52,15 @@ set(widgets_SRCS
    )
 
 set(kipiplugin_removeredeyes_PART_SRCS
+    ${libcvblobs_SRCS}
+    ${locators_SRCS}
+    ${locators_haarclassifier_SRCS}
+    ${savemethods_SRCS}
+    ${widgets_SRCS}
     plugin/plugin_removeredeyes.cpp
     plugin/removeredeyeswindow.cpp
     plugin/workerthread.cpp
     plugin/workerthreaddata.cpp
-    ${savemethods_SRCS}
-    ${widgets_SRCS}
-    ${locators_SRCS}
-    ${locators_haarclassifier_SRCS}
-    ${libcvblobs_SRCS}
    )
 
 add_library(kipiplugin_removeredeyes MODULE ${kipiplugin_removeredeyes_PART_SRCS})
