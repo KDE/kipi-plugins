@@ -30,14 +30,13 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
+#include <QApplication>
+#include <QMenu>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
-#include <kdebug.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktabwidget.h>
@@ -65,6 +64,7 @@
 #include "unprocessedsettingsbox.h"
 #include "workerthread.h"
 #include "workerthreaddata.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -187,7 +187,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow()
                                          "detect and remove red-eye effect."),
                                    ki18n("(c) 2008-2013, Andi Clemens"));
 
-    about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
+    about->addAuthor(ki18n("Andi Clemens").toString(),
+                     ki18n("Author").toString(),
                      "andi dot clemens at googlemail dot com");
 
     about->setHandbookEntry("removeredeyes");
@@ -481,7 +482,7 @@ void RemoveRedEyesWindow::cancelCorrection()
     if (d->busy && d->thread->isRunning())
     {
         d->thread->cancel();
-        KApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     }
 }
 
@@ -704,7 +705,7 @@ void RemoveRedEyesWindow::threadFinished()
 {
     d->progress->hide();
     setBusy(false);
-    KApplication::restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
 
     switch (d->runtype)
     {

@@ -29,10 +29,6 @@
 #include <QMutex>
 #include <QUrl>
 
-// KDE includes
-
-#include <threadweaver/Job.h>
-
 // Libkdcraw includes
 
 #include <ractionthreadbase.h>
@@ -136,13 +132,13 @@ public:
 
 // --------------------------------------------------------------------------
 
-class Task : public Job
+class Task : public RActionJob
 {
     Q_OBJECT
 
 public:
 
-    explicit Task(const QUrl& url, QObject* const parent = 0, WorkerThread::Private* const d = 0);
+    explicit Task(const QUrl& url, WorkerThread::Private* const d = 0);
 
     const QUrl& url;
 

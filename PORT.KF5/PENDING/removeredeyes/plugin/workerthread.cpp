@@ -27,14 +27,9 @@
 
 #include <QString>
 
-// KDE includes
-
-#include <kdebug.h>
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
-
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "savemethodfactory.h"
 #include "haarsettings.h"
 #include "simplesettings.h"
@@ -46,8 +41,9 @@ using namespace KIPIPlugins;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-Task::Task(const QUrl& urli, QObject* const parent, WorkerThread::Private* const d)
-    : Job(parent), url(urli)
+Task::Task(const QUrl& urli, WorkerThread::Private* const d)
+    : RActionJob(),
+      url(urli)
 {
     this->ld = d;
 }
@@ -125,7 +121,8 @@ void Task::run()
 // ----------------------------------------------------------------------------------------------------
 
 WorkerThread::WorkerThread(QObject* const parent, bool updateFileTimeStamp)
-    : RActionThreadBase(parent), pd(new Private)
+    : RActionThreadBase(parent),
+      pd(new Private)
 {
     pd->updateFileTimeStamp = updateFileTimeStamp;
 }
@@ -167,20 +164,20 @@ void WorkerThread::loadSettings(const CommonSettings& newSettings)
 
 void WorkerThread::setImagesList(const QList<QUrl>& list)
 {
-    pd->urls                        = list;
-    JobCollection* const collection = new JobCollection(this);
+    pd->urls = list;
+    RJobCollection collection;
 
-    for (QList<QUrl>::const_iterator it = pd->urls.constBegin(); it != pd->urls.constEnd(); ++it)
+    foreach (QUrl url, pd->urls)
     {
-        Task* const t = new Task((QUrl&)(*it), this, pd);
+        Task* const t = new Task(url, pd);
 
         connect(t, SIGNAL(calculationFinished(WorkerThreadData*)),
                 this, SIGNAL(calculationFinished(WorkerThreadData*)));
 
-        collection->addJob(t);
+        collection.insert(t, 0);
     }
 
-    appendJob(collection);
+    appendJobs(collection);
     pd->cancel   = false;
     pd->progress = 0;
 }

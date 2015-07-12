@@ -72,7 +72,6 @@ target_link_libraries(kipiplugin_removeredeyes
                       KF5::Kipi
                       KF5::KDcraw
                       KF5::KExiv2
-                      KF5::ThreadWeaver
                       KF5::Parts
                       KF5::KDELibs4Support
                       KF5kipiplugins
