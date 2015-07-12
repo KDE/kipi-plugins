@@ -38,9 +38,8 @@ namespace KIPIRemoveRedEyesPlugin
 QString SaveSubfolder::savePath(const QString& path, const QString& extra) const
 {
     QFileInfo info(path);
-    QUrl savePath(info.path());
-
-    savePath.addPath(extra);
+    QUrl savePath = QUrl::fromLocalFile(info.path());
+    savePath.setPath(savePath.path() + '/' + extra);
 
     // check if subfolder exists
     if (!QDir(savePath.path()).exists())
@@ -48,7 +47,7 @@ QString SaveSubfolder::savePath(const QString& path, const QString& extra) const
         QDir(info.path()).mkdir(extra);
     }
 
-    savePath.addPath(info.fileName());
+    savePath.setPath(savePath.path() + '/' + info.fileName());
     return savePath.path();
 }
 
@@ -57,12 +56,12 @@ QString SaveSubfolder::savePath(const QString& path, const QString& extra) const
 QString SavePrefix::savePath(const QString& path, const QString& extra) const
 {
     QFileInfo info(path);
-    QUrl savePath(info.path());
+    QUrl savePath = QUrl::fromLocalFile(info.path());
 
     QString file = QString(extra);
     file.append(info.fileName());
 
-    savePath.addPath(file);
+    savePath.setPath(savePath.path() + '/' + file);
     return savePath.path();
 }
 
@@ -71,14 +70,14 @@ QString SavePrefix::savePath(const QString& path, const QString& extra) const
 QString SaveSuffix::savePath(const QString& path, const QString& extra) const
 {
     QFileInfo info(path);
-    QUrl savePath(info.path());
+    QUrl savePath = QUrl::fromLocalFile(info.path());
 
     QString file = info.completeBaseName();
     file.append(extra);
     file.append(".");
     file.append(info.suffix());
 
-    savePath.addPath(file);
+    savePath.setPath(savePath.path() + '/' + file);
     return savePath.path();
 }
 

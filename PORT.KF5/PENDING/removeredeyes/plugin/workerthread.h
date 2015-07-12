@@ -27,10 +27,10 @@
 // Qt includes
 
 #include <QMutex>
+#include <QUrl>
 
 // KDE includes
 
-#include <QUrl>
 #include <threadweaver/Job.h>
 
 // Libkdcraw includes
@@ -87,7 +87,7 @@ public:
     void setLocator(Locator* const locator);
 
     void loadSettings(const CommonSettings&);
-    void setImagesList(const QUrl::List&);
+    void setImagesList(const QList<QUrl>&);
     void setTempFile(const QString&, ImageType);
 
     void cancel();
@@ -126,7 +126,7 @@ public:
     SaveMethod*    saveMethod;
     Locator*       locator;
 
-    QUrl::List     urls;
+    QList<QUrl>     urls;
     QString        maskPreviewFile;
     QString        correctedPreviewFile;
     QString        originalPreviewFile;

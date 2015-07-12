@@ -93,7 +93,7 @@ private:
     void handleUnprocessedImages();
     void setBusy(bool);
     void showSummary();
-    void startWorkerThread(const QUrl::List& urls);
+    void startWorkerThread(const QList<QUrl>& urls);
     void initProgressBar(int max);
 
     void loadLocator(const QString& locator);

@@ -428,7 +428,7 @@ void RemoveRedEyesWindow::startCorrection()
     d->imageList->resetEyeCounterColumn();
     d->tabWidget->setCurrentIndex(FileList);
 
-    QUrl::List urls = d->imageList->imageUrls();
+    QList<QUrl> urls = d->imageList->imageUrls();
     startWorkerThread(urls);
 }
 
@@ -440,7 +440,7 @@ void RemoveRedEyesWindow::startTestrun()
     d->imageList->resetEyeCounterColumn();
     d->tabWidget->setCurrentIndex(FileList);
 
-    QUrl::List urls = d->imageList->imageUrls();
+    QList<QUrl> urls = d->imageList->imageUrls();
     startWorkerThread(urls);
 }
 
@@ -471,7 +471,7 @@ void RemoveRedEyesWindow::startPreview()
     d->previewWidget->setCurrentImage(item->url().path());
     d->runtype = WorkerThread::Preview;
 
-    QUrl::List oneFile;
+    QList<QUrl> oneFile;
     oneFile.append(item->url());
     startWorkerThread(oneFile);
 }
@@ -497,7 +497,7 @@ void RemoveRedEyesWindow::closeClicked()
     done(Close);
 }
 
-void RemoveRedEyesWindow::startWorkerThread(const QUrl::List& urls)
+void RemoveRedEyesWindow::startWorkerThread(const QList<QUrl>& urls)
 {
     if (urls.isEmpty())
     {

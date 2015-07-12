@@ -31,10 +31,7 @@
 #include <QPixmap>
 #include <QSvgRenderer>
 #include <QTimer>
-
-// KDE includes
-
-#include <kstandarddirs.h>
+#include <QStandardPaths>
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -64,7 +61,8 @@ struct ControlWidget::Private
 };
 
 ControlWidget::ControlWidget(QWidget* const parent, int w, int h)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     setMinimumSize(w, h);
     setMaximumSize(w, h);
@@ -72,8 +70,8 @@ ControlWidget::ControlWidget(QWidget* const parent, int w, int h)
     hide();
 
     d->mode     = Normal;
-    d->renderer = new QSvgRenderer(KGlobal::dirs()->findResource("data",
-                                   "kipiplugin_removeredeyes/controlwidget.svg"),
+    d->renderer = new QSvgRenderer(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                          "kipiplugin_removeredeyes/controlwidget.svg"),
                                    this);
 
     // ------------------------------------------

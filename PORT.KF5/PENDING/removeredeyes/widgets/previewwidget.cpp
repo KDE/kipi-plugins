@@ -315,9 +315,9 @@ void PreviewWidget::reset()
 
 void PreviewWidget::resetPreviews()
 {
-    d->originalLabel->setPixmap(0);
-    d->correctedLabel->setPixmap(0);
-    d->maskLabel->setPixmap(0);
+    d->originalLabel->setPixmap(QPixmap());
+    d->correctedLabel->setPixmap(QPixmap());
+    d->maskLabel->setPixmap(QPixmap());
     updateSettings();
 }
 

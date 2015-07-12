@@ -29,10 +29,10 @@
 #include <QPainter>
 #include <QPalette>
 #include <QTimer>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
 #include <kiconloader.h>
 
 namespace KIPIRemoveRedEyesPlugin
@@ -53,12 +53,13 @@ struct InfoMessageWidget::Private
 };
 
 InfoMessageWidget::InfoMessageWidget(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     setFocusPolicy(Qt::NoFocus);
 
     QPalette pal = palette();
-    pal.setColor(QPalette::Active, QPalette::Window, KApplication::palette().color(QPalette::Active, QPalette::Window));
+    pal.setColor(QPalette::Active, QPalette::Window, QApplication::palette().color(QPalette::Active, QPalette::Window));
     setPalette(pal);
 
     move(10, 10);

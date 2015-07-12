@@ -165,12 +165,12 @@ void WorkerThread::loadSettings(const CommonSettings& newSettings)
     //    d->settings.keywordName     = newSettings.keywordName;
 }
 
-void WorkerThread::setImagesList(const QUrl::List& list)
+void WorkerThread::setImagesList(const QList<QUrl>& list)
 {
     pd->urls                        = list;
     JobCollection* const collection = new JobCollection(this);
 
-    for (QUrl::List::const_iterator it = pd->urls.constBegin(); it != pd->urls.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = pd->urls.constBegin(); it != pd->urls.constEnd(); ++it)
     {
         Task* const t = new Task((QUrl&)(*it), this, pd);
 

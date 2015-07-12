@@ -66,16 +66,18 @@ set(kipiplugin_removeredeyes_PART_SRCS
 add_library(kipiplugin_removeredeyes MODULE ${kipiplugin_removeredeyes_PART_SRCS})
 
 target_link_libraries(kipiplugin_removeredeyes
+                      Qt5::Core
+                      Qt5::Svg
+
                       KF5::Kipi
                       KF5::KDcraw
                       KF5::KExiv2
                       KF5::ThreadWeaver
-                      
                       KF5::Parts
                       KF5::KDELibs4Support
-                      
-                      ${OpenCV_LIBRARIES}
                       KF5kipiplugins
+
+                      ${OpenCV_LIBRARIES}
                      )
 
 configure_file(plugin/kipiplugin_removeredeyes.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop)
