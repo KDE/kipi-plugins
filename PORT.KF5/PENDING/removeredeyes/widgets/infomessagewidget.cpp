@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "infomessagewidget.moc"
+#include "infomessagewidget.h"
 
 // Qt includes
 

@@ -27,17 +27,17 @@
 // Qt includes
 
 #include <QString>
+#include <QStandardPaths>
 
-// KDE includes
+// Local includes
 
-#include <kstandarddirs.h>
 #include "kipiplugins_debug.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-const QString STANDARD_CLASSIFIER = KGlobal::dirs()->findResource( "data",
-                                    "kipiplugin_removeredeyes/removeredeyes_classifier_eye_20_20.xml");
+const QString STANDARD_CLASSIFIER = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                           "kipiplugin_removeredeyes/removeredeyes_classifier_eye_20_20.xml");
 
 class HaarSettings
 {
@@ -59,16 +59,16 @@ public:
 
     void debug()
     {
-        kDebug() << "***************";
-        kDebug() << "HaarSettings";
-        kDebug() << "***************";
-        kDebug() << "useStandardClassifier = " << useStandardClassifier;
-        kDebug() << "minRoundness          = " << minRoundness;
-        kDebug() << "scaleFactor           = " << scaleFactor;
-        kDebug() << "minBlobsize           = " << minBlobsize;
-        kDebug() << "neighborGroups        = " << neighborGroups;
-        kDebug() << "simpleMode            = " << simpleMode;
-        kDebug() << "classifierFile        = " << classifierFile;
+        qCDebug(KIPIPLUGINS_LOG) << "***************";
+        qCDebug(KIPIPLUGINS_LOG) << "HaarSettings";
+        qCDebug(KIPIPLUGINS_LOG) << "***************";
+        qCDebug(KIPIPLUGINS_LOG) << "useStandardClassifier = " << useStandardClassifier;
+        qCDebug(KIPIPLUGINS_LOG) << "minRoundness          = " << minRoundness;
+        qCDebug(KIPIPLUGINS_LOG) << "scaleFactor           = " << scaleFactor;
+        qCDebug(KIPIPLUGINS_LOG) << "minBlobsize           = " << minBlobsize;
+        qCDebug(KIPIPLUGINS_LOG) << "neighborGroups        = " << neighborGroups;
+        qCDebug(KIPIPLUGINS_LOG) << "simpleMode            = " << simpleMode;
+        qCDebug(KIPIPLUGINS_LOG) << "classifierFile        = " << classifierFile;
     };
 
 public:

@@ -22,14 +22,16 @@
  *
  * ============================================================ */
 
-#include "plugin_removeredeyes.moc"
+#include "plugin_removeredeyes.h"
+
+// Qt includes
+
+#include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
-#include <QApplication>
-#include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocalizedstring.h>
@@ -41,19 +43,19 @@
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "removeredeyeswindow.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
 K_PLUGIN_FACTORY( RemoveRedEyesFactory, registerPlugin<Plugin_RemoveRedEyes>(); )
-K_EXPORT_PLUGIN ( RemoveRedEyesFactory("kipiplugin_removeredeyes") )
 
 Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* const parent, const QVariantList& /*args*/)
-    : Plugin(RemoveRedEyesFactory::componentData(), parent, "RemoveRedEyes"),
+    : Plugin(parent, "RemoveRedEyes"),
       m_action(0)
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
+    qCDebug(KIPIPLUGINS_LOG) << "Plugin_RemoveRedEyes plugin loaded";
 
     setUiBaseName("kipiplugin_removeredeyesui.rc");
     setupXML();
@@ -103,3 +105,5 @@ void Plugin_RemoveRedEyes::activate()
 }
 
 } // namespace KIPIRemoveRedEyesPlugin
+
+#include "plugin_removeredeyes.moc"

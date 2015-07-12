@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "blobsettingsbox.moc"
+#include "blobsettingsbox.h"
 
 // Qt includes
 

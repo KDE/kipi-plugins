@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "workerthread.moc"
+#include "workerthread.h"
 
 // Qt includes
 

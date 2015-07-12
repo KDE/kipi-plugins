@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "unprocessedsettingsbox.moc"
+#include "unprocessedsettingsbox.h"
 
 // Qt includes
 

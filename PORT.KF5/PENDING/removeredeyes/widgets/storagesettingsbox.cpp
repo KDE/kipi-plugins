@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "storagesettingsbox.moc"
+#include "storagesettingsbox.h"
 
 // Qt includes
 

@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "haarclassifierlocator.moc"
+#include "haarclassifierlocator.h"
 
 // Qt includes
 

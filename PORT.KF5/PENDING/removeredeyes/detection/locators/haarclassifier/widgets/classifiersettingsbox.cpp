@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "classifiersettingsbox.moc"
+#include "classifiersettingsbox.h"
 
 // Qt includes
 
@@ -138,12 +138,12 @@ void ClassifierSettingsBox::setScalingFactor(double value)
 
 QString ClassifierSettingsBox::classifierUrl() const
 {
-    return d->classifierUrlRequester->url().pathOrUrl();
+    return d->classifierUrlRequester->url().toDisplayString();
 }
 
 void ClassifierSettingsBox::setClassifierUrl(const QString& url)
 {
-    d->classifierUrlRequester->setUrl(url);
+    d->classifierUrlRequester->setUrl(QUrl(url));
 }
 
 } // namespace KIPIRemoveRedEyesPlugin
