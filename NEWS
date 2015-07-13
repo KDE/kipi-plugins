@@ -36,4 +36,6 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 027 ==> 277994 - Missing dot in filename in "batch raw converter".
 028 ==> 167286 - Gps tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
 029 ==> 350167 - The browser to authenticate the plugin with flickr at the first export is never started.
-030 ==> 
+030 ==> 297455 - Thumbnails not refreshed on file list.
+031 ==> 343668 - Gwenview crashed after upload movie to Rajce.net.
+032 ==> 
