@@ -511,15 +511,18 @@ void RajceWidget::closeAlbum()
 
 void RajceWidget::uploadNext()
 {
-    if (m_currentUploadImage != m_uploadQueue.begin())
+    QList<QString>::Iterator tmp = m_currentUploadImage;
+    
+    if(m_currentUploadImage == m_uploadQueue.end())
     {
-        m_imgList->processed(KUrl::fromLocalFile(*m_currentUploadImage), (m_session->state().lastErrorCode() == 0));
-    }
-
-    if (m_currentUploadImage == m_uploadQueue.end())
-    {
+        m_imgList->processed(KUrl::fromLocalFile(*(--tmp)), (m_session->state().lastErrorCode() == 0));
         cancelUpload();
         return;
+    }
+    
+    if (m_currentUploadImage != m_uploadQueue.begin())
+    {
+        m_imgList->processed(KUrl::fromLocalFile(*(--tmp)), (m_session->state().lastErrorCode() == 0));
     }
 
     m_imgList->processing(KUrl::fromLocalFile(*m_currentUploadImage));
