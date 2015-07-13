@@ -16,6 +16,7 @@ Comment=A tool to manage images with a remote Google web service
 Comment[ca]=Una eina per gestionar imatges amb el servei web remot de Google
 Comment[cs]=Nástroj pro správu obrázků vzdálené webové služby Google
 Comment[de]=Ein Werkzeug, um Bilder zu einem entfernten Google-Webdienst zu verwalten.
+Comment[fi]=Työkalu kuvien hallitsemiseen Googlen verkkopalvelulla
 Comment[nl]=Een hulpmiddel om afbeeldingen met een Google Services-webservice te beheren
 Comment[pl]=Narzędzie do zarządzania obrazami przy użyciu zdalnej usługi sieciowej Google
 Comment[pt]=Uma ferramenta para gerir imagens com um dos serviços Web remotos da Google
