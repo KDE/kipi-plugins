@@ -364,6 +364,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(remotestorage)
         add_subdirectory(yandexfotki)
         add_subdirectory(dlnaexport)
+        add_subdirectory(rajce)
 
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
@@ -383,7 +384,6 @@ if(KF5Kipi_FOUND)
 
 # Plugins in pending state
 #
-#         add_subdirectory(rajceexport)
 #         add_subdirectory(photolayoutseditor)
 #
 #         if(Qca-qt5_FOUND)
