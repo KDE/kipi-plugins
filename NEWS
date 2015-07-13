@@ -13,11 +13,11 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 004 ==> 315580 - digiKam crashed after I changed the DLNA implementation from "HUPnP API" to "miniDLNA".
 005 ==> 316126 - digiKam crashed when choosing dlna export.
 006 ==> 348519 - Auth Token 98 - Login failed - Picasa Import.
-007 ==> 215787 - picasaweb updating photo or movie does not work,duplicate instead of replace.
-008 ==> 217546 - picasaweb export does not point to the current album.
+007 ==> 215787 - Picasaweb updating photo or movie does not work,duplicate instead of replace.
+008 ==> 217546 - Picasaweb export does not point to the current album.
 009 ==> 223375 - PicasaWeb: videos won't be exported.
 010 ==> 272423 - [wish] picasaweb updating tags.
-011 ==> 272518 - picasaweb updating photo not marked as uploaded.
+011 ==> 272518 - Picasaweb updating photo not marked as uploaded.
 012 ==> 329350 - Exporting a second time mix two exports (test picasaweb).
 013 ==> 219773 - Attempted to use Picasaweb addon to upload an album of approximately 330 jpegs.
 014 ==> 221200 - Uploading photo to picasa web albums.
@@ -28,11 +28,12 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 019 ==> 308701 - digikam crash while export again the same image to picasaweb with kipi plugin.
 020 ==> 321251 - Gwenview crashs if close it while sending images to picasa.
 021 ==> 172427 - digiKam crashed with kipi plugins.
-022 ==> 164908 - private albums are not listed (and then not usable) with picasa export plugin.
+022 ==> 164908 - Private albums are not listed (and then not usable) with picasa export plugin.
 023 ==> 200091 - "remove EXIF data" crashes digikam, gwenview.
 024 ==> 265630 - Gallery export uploads to wrong directory.
 025 ==> 249842 - Blend bracketed images tool says it failed to save the blended image, but actually saves it.
 026 ==> 320749 - Panorama tool fails systematically when file names contain ':'.
-027 ==> 277994 - missing dot in filename in "batch raw converter".
-028 ==> 167286 - gps tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
-029 ==> 
+027 ==> 277994 - Missing dot in filename in "batch raw converter".
+028 ==> 167286 - Gps tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
+029 ==> 350167 - The browser to authenticate the plugin with flickr at the first export is never started.
+030 ==> 
