@@ -11,11 +11,11 @@ add_executable(gpssync_test_correlator
               )
 
 target_link_libraries(gpssync_test_correlator
-                      KF5::KDELibs4Support
-                      KF5::ItemModels
                       Qt5::Test
                       Qt5::Gui
                       Qt5::Xml
+                      KF5::KDELibs4Support
+                      KF5::ItemModels
                       KF5::KGeoMap
                       KF5kipiplugins
                      )
@@ -27,10 +27,10 @@ if(NOT WIN32)
                   )
 
     target_link_libraries(gpssync_test_rgparsing
-                          KF5::KDELibs4Support
-                          KF5::ItemModels
                           Qt5::Test
                           Qt5::Gui
+                          KF5::KDELibs4Support
+                          KF5::ItemModels
                           KF5::KGeoMap
                           KF5kipiplugins
                          )
@@ -45,10 +45,10 @@ add_executable(gpssync_test_rgtagmodel
               )
 
 target_link_libraries(gpssync_test_rgtagmodel
-                      KF5::KDELibs4Support
-                      KF5::ItemModels
                       Qt5::Test
                       Qt5::Gui
+                      KF5::KDELibs4Support
+                      KF5::ItemModels
                       KF5::KGeoMap
                       KF5kipiplugins
                      )
@@ -60,10 +60,10 @@ add_executable(gpssync_test_kipiimageitem
               )
 
 target_link_libraries(gpssync_test_kipiimageitem
-                      KF5::KDELibs4Support
-                      KF5::ItemModels
                       Qt5::Test
                       Qt5::Gui
+                      KF5::KDELibs4Support
+                      KF5::ItemModels
                       KF5::KExiv2
                       KF5::KGeoMap
                       KF5::Kipi

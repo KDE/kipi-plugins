@@ -92,6 +92,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Test
              Svg
              Concurrent
+             WebKitWidgets
              OPTIONAL_COMPONENTS OpenGL
 )
 
