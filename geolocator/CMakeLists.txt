@@ -9,7 +9,6 @@ subdirs(icons)
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_geolocator\")
 
 include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
-include_directories(${KGEOMAP_INCLUDE_DIR})
 
 set(kipiplugin_geolocator_PART_SRCS
     plugin_geolocator.cpp
@@ -49,23 +48,8 @@ if(BUILD_TESTING)
        )
 endif()
 
-if(NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
-    # these are borrowed from a new KDE trunk version
-    # and are needed for sorting of the view
-    include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future")
-    set(borrowed_future_SRCS
-        ${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future/klinkitemselectionmodel.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future/kmodelindexproxymapper.cpp
-       )
-    set(kipiplugin_geolocator_PART_SRCS
-        ${kipiplugin_geolocator_PART_SRCS}
-        ${borrowed_future_SRCS}
-       )
-endif()
-
 add_library(kipiplugin_geolocator MODULE ${kipiplugin_geolocator_PART_SRCS})
 
-# TODO: verify that the libkgeomap library is installed!
 target_link_libraries(kipiplugin_geolocator
                       KF5::Parts
                       KF5::KHtml
