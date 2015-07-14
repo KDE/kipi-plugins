@@ -92,7 +92,6 @@ private:
     enum State
     {
         FB_GETLOGGEDINUSER = 0,
-        FB_LOGOUT,
         FB_LISTFRIENDS,
         FB_LISTALBUMS,
         FB_LISTPHOTOS,
@@ -116,7 +115,6 @@ private:
     //void parseResponseGetSession(const QByteArray& data);
     void parseExchangeSession(const QByteArray& data);
     void parseResponseGetLoggedInUser(const QByteArray& data);
-    void parseResponseLogout(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
@@ -134,7 +132,6 @@ private:
 
     QByteArray   m_buffer;
 
-    QString      m_userAgent;
     KUrl         m_apiURL;
     QString      m_apiVersion;
     QString      m_secretKey;

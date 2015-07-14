@@ -76,9 +76,8 @@ FbTalker::FbTalker(QWidget* const parent)
     m_job             = 0;
     m_loginInProgress = 0;
     m_sessionExpires  = 0;
-    m_state           = FB_LOGOUT;
+    m_state           = FB_GETLOGGEDINUSER;
 
-    m_userAgent       = QString("KIPI-Plugin-Fb/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion      = "2.4";
     m_apiURL          = KUrl("https://graph.facebook.com");
     m_secretKey       = "5b0b5cd096e110cd4f4c72f517e2c544";
@@ -224,7 +223,6 @@ void FbTalker::exchangeSession(const QString& sessionKey)
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
@@ -379,27 +377,18 @@ void FbTalker::logout()
         m_job = 0;
     }
 
-    emit signalBusy(true);
-
     QMap<QString, QString> args;
+    args["next"] = QString("http://www.digikam.org");
     args["access_token"] = m_accessToken;
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"auth.expireSession"), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    m_state = FB_LOGOUT;
-    m_job   = job;
-    m_buffer.resize(0);
-
-    // logout is synchronous call
-    job->exec();
-    slotResult(job);
+    
+    KUrl url("https://www.facebook.com/logout.php");
+    url.addQueryItem("next",QString("http://www.digikam.org"));
+    url.addQueryItem("access_token",m_accessToken);
+    kDebug() << "Logout URL: " << url;
+    KToolInvocation::invokeBrowser(url.url());
+    
+    emit signalBusy(false);
+    
 }
 
 
@@ -459,7 +448,7 @@ void FbTalker::listAlbums(long long userID)
     m_buffer.resize(0);
 }
 
-
+//NOTE: Re-implement this method using current Graph API when import to facebook is implemented. This method is obsolete.
 void FbTalker::listPhotos(long long userID, const QString &albumID)
 {
     if (m_job)
@@ -481,7 +470,6 @@ void FbTalker::listPhotos(long long userID, const QString &albumID)
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.get"), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
@@ -541,7 +529,6 @@ void FbTalker::createAlbum(const FbAlbum& album)
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/me/albums"), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
@@ -621,7 +608,6 @@ void FbTalker::getPhoto(const QString& imgPath)
     emit signalBusy(true);
 
     KIO::TransferJob* const job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -720,9 +706,6 @@ void FbTalker::slotResult(KJob* kjob)
             break;
         case(FB_GETLOGGEDINUSER):
             parseResponseGetLoggedInUser(m_buffer);
-            break;
-        case(FB_LOGOUT):
-            parseResponseLogout(m_buffer);
             break;
         case(FB_LISTFRIENDS):
             parseResponseListFriends(m_buffer);
@@ -829,6 +812,8 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
 void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 {
     QJson::Parser parser;
+    int errCode = -1;
+    QString errMsg;
     bool ok;
     QVariant result     = parser.parse(data,&ok);
     QVariantMap rmap    = result.toMap();
@@ -841,6 +826,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
         if(keys[i] == "id")
         {
             m_user.id = (rmap[keys[i]].value<QString>()).toLongLong();
+            errCode = 0;
             kDebug()<<"User id is"<<m_user.id;
         }
         if(keys[i] == "name")
@@ -853,32 +839,14 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
             m_user.profileURL = rmap[keys[i]].value<QString>();
             kDebug()<<"Link is"<<m_user.profileURL;            
         }
+        if(keys[i] == "error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
-    
-//     int errCode = -1;
-//     QString errMsg;
-// 
-//     QDomDocument doc("getLoggedInUser");
-//     if (!doc.setContent(data))
-//         return;
-// 
-//     emit signalLoginProgress(4);
-// 
-//     kDebug() << "Parse GetLoggedInUser response:" << endl << data;
-// 
-//     QDomElement docElem = doc.documentElement();
-// 
-//     if (docElem.tagName() == "users_getLoggedInUser_response")
-//     {
-//         m_user.id = docElem.text().toLongLong();
-//         errCode   = 0;
-//     }
-//     else if (docElem.tagName() == "error_response")
-//     {
-//         errCode = parseErrorResponse(docElem, errMsg);
-//     }
 
-    if(!ok)
+    if(errCode!=0)
     {
         // it seems that session expired -> create new token and session
         m_accessToken.clear();
@@ -889,39 +857,6 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     }
     else
         authenticationDone(0,"");
-}
-
-void FbTalker::parseResponseLogout(const QByteArray& data)
-{
-    int errCode = -1;
-    QString errMsg;
-
-    QDomDocument doc("expireSession");
-
-    if (!doc.setContent(data))
-        return;
-
-    kDebug() << "Parse ExpireSession response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "auth_expireSession_response ")
-    {
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
-    }
-
-    kDebug() << "Error Code : " << errCode;
-
-    // consider we are logged out in any case
-    m_accessToken.clear();
-    m_sessionExpires = 0;
-    m_user.clear();
-
-    emit signalBusy(false);
 }
 
 void FbTalker::parseResponseAddPhoto(const QByteArray& data)
@@ -1094,6 +1029,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                               albumsList);
 }
 
+//NOTE: Re-implement this method using current Graph API when import to facebook is implemented. This method is obsolete.
 void FbTalker::parseResponseListPhotos(const QByteArray& data)
 {
     int errCode = -1;
