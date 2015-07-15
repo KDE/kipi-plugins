@@ -154,6 +154,7 @@ void Task::run()
             ad.message = identify;
             ad.result  = DNGWriter::PROCESSCOMPLETE;
             emit signalFinished(ad);
+            emit signalDone();
             break;
         }
 
@@ -190,6 +191,7 @@ void Task::run()
             ad2.destPath = destPath;
             ad2.result   = ret;
             emit signalFinished(ad2);
+            emit signalDone();
             break;
         }
 
