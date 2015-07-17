@@ -38,4 +38,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 029 ==> 350167 - The browser to authenticate the plugin with flickr at the first export is never started.
 030 ==> 297455 - Thumbnails not refreshed on file list.
 031 ==> 343668 - Gwenview crashed after upload movie to Rajce.net.
-032 ==> 
+032 ==> 341688 - Dropbox upload does not work due to developer API keys.
+033 ==> 
