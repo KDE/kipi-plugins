@@ -39,4 +39,5 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 030 ==> 297455 - Thumbnails not refreshed on file list.
 031 ==> 343668 - Gwenview crashed after upload movie to Rajce.net.
 032 ==> 341688 - Dropbox upload does not work due to developer API keys.
-033 ==> 
+033 ==> 337963 - Pictures moved from folders under copy.com sync control are re-downloaded again.
+034 ==> 
