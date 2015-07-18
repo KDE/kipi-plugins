@@ -28,6 +28,11 @@
 
 // Qt includes
 
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 #include <QByteArray>
 #include <QtAlgorithms>
 #include <QVBoxLayout>
@@ -51,10 +56,6 @@
 // LibKDcraw includes
 
 #include <KDCRAW/KDcraw>
-
-// LibQJson
-
-#include <qjson/parser.h>
 
 // local includes
 
@@ -292,40 +293,20 @@ void GDTalker::slotResult(KJob* kjob)
 
 void GDTalker::parseResponseUserName(const QByteArray& data)
 {
-    QJson::Parser parser;
-
-    bool ok;
-    // json is a QString containing the data to convert
-    QVariant result = parser.parse(data, &ok);
-
-    if(!ok)
+    QJsonParseError* err;
+    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    
+    if(err->error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
     }
+    
+    QJsonObject jsonObject = doc.object();
+    qCDebug(KIPIPLUGINS_LOG)<<"User Name is: " << jsonObject["name"].toString();
+    QString temp = jsonObject["name"].toString();
 
     qCDebug(KIPIPLUGINS_LOG) << "in parseResponseUserName";
-    QVariantMap rlist = result.toMap();
-    qCDebug(KIPIPLUGINS_LOG) << "size " << rlist.size();
-    QList<QString> keys = rlist.uniqueKeys();
-
-    QString temp;
-
-    for(int i=0;i<rlist.size();i++)
-    {
-        if(keys[i] == "name")
-        {
-            qCDebug(KIPIPLUGINS_LOG) << "username:" << rlist[keys[i]].value<QString>();
-            temp = rlist[keys[i]].value<QString>();
-            //break;
-        }
-        if(keys[i] == "user")
-        {
-            qCDebug(KIPIPLUGINS_LOG) << "USername:" << rlist[keys[i]];
-            //temp = rlist[keys[i]].value<QString>();
-            break;
-        }
-    }
 
     emit signalBusy(false);
     emit signalSetUserName(temp);
@@ -333,20 +314,19 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 
 void GDTalker::parseResponseListFolders(const QByteArray& data)
 {
-    QJson::Parser parser;
-    bool ok;
-    QVariant result = parser.parse(data,&ok);
-
-    if(!ok)
+    qCDebug(KIPIPLUGINS_LOG) << data;
+    QJsonParseError* err;
+    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    
+    if(err->error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
         return;
     }
-
-    QVariantMap rMap = result.toMap();
-    QList<QPair<QString,QString> > list;
-    list.append(qMakePair(m_rootid,m_rootfoldername));
+    
+    QJsonObject jsonObject = doc.object();
+    QJsonArray jsonArray = jsonObject["items"].toArray();
     
     QList<GSFolder> albumList;
     GSFolder fps;
@@ -354,31 +334,13 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
     fps.title = m_rootfoldername;
     albumList.append(fps);
 
-    foreach(QVariant val,rMap)
+    
+    foreach (const QJsonValue & value, jsonArray) 
     {
-        QVariantList abcd = val.toList();
-
-        foreach(QVariant abc,abcd)
-        {
-            QVariantMap qwer    = abc.toMap();
-            QList<QString> keys = qwer.uniqueKeys();
-            QString temp;
-
-            for(int i=0;i<qwer.size();i++)
-            {
-                if(keys[i] == "id")
-                {
-                    temp = qwer[keys[i]].value<QString>();
-                    fps.id = qwer[keys[i]].value<QString>();
-                }
-                else if(keys[i] == "title")
-                {
-                    fps.title = qwer[keys[i]].value<QString>();
-                    albumList.append(fps);
-                    list.append(qMakePair(temp,qwer[keys[i]].value<QString>()));
-                }
-            }
-        }
+        QJsonObject obj = value.toObject();
+        fps.id    = obj["id"].toString();
+        fps.title = obj["title"].toString();
+        albumList.append(fps);
     }
 
     qSort(albumList.begin(), albumList.end(), gdriveLessThan);
@@ -388,24 +350,14 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
 
 void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 {
-    QJson::Parser parser;
-
-    bool ok;
-    bool success        = false;
-    QVariant result     = parser.parse(data, &ok);
-    QVariantMap rMap    = result.toMap();
-    QList<QString> keys = rMap.uniqueKeys();
-
-    qCDebug(KIPIPLUGINS_LOG) << "in parse folder" << rMap.size();
-
-    for(int i=0;i<rMap.size();i++)
-    {
-        if(keys[i]  == "alternateLink")
-        {
-            success = true;
-            break;
-        }
-    }
+    QJsonParseError* err;
+    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonObject jsonObject = doc.object();
+    QString temp = jsonObject["alternateLink"].toString();
+    bool success        = false;    
+    
+    if(!(QString::compare(temp, QString(""), Qt::CaseInsensitive) == 0))
+        success = true;
 
     emit signalBusy(false);
 
@@ -421,25 +373,15 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 
 void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 {
-    QJson::Parser parser;
-
-    bool ok;
-    bool success = false;
-    QVariant result = parser.parse(data, &ok);
-    QVariantMap rMap = result.toMap();
-    QList<QString> keys = rMap.uniqueKeys();
-    QString photoId("");
-    qCDebug(KIPIPLUGINS_LOG) << "in parse folder" << rMap.size();
-
-    for(int i=0;i<rMap.size();i++)
-    {
-        if(keys[i]  == "alternateLink")
-        {
-            success = true;
-        }
-        if(keys[i] == "id")
-            photoId = rMap[keys[i]].value<QString>();
-    }
+    QJsonParseError* err;
+    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonObject jsonObject = doc.object();
+    QString altLink = jsonObject["alternateLink"].toString();
+    QString photoId = jsonObject["id"].toString();
+    bool success        = false;      
+    
+    if(!(QString::compare(altLink, QString(""), Qt::CaseInsensitive) == 0))
+        success = true;
 
     emit signalBusy(false);
 

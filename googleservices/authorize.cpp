@@ -56,10 +56,6 @@
 // LibKDcraw includes
 
 #include <KDCRAW/KDcraw>
-
-// LibQJson
-
-#include <qjson/parser.h>
 #include <KConfigGroup>
 
 // local includes
