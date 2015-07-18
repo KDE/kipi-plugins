@@ -15,7 +15,6 @@ kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 AcquireImages      : A tool to acquire images using flat scanner.
 Calendar           : A tool to create calendars.
-DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
 Flickr             : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
 Geolocator         : A tool to geolocalize pictures.
@@ -82,7 +81,6 @@ Plugin Specific Dependencies (for compiling and for running) :
 
 SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
 ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
-DngConverter       : libexpat.
 AcquireImages      : libksane.
 Calendar           : libkcalcore.
 FaceBook           : libqjson.

@@ -126,8 +126,6 @@ if(KF5Kipi_FOUND)
     DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
     DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
     DETECT_LIBKSANE(5.0.0)                                                     # For AcquireImages.
-    find_package(EXPAT)                                                        # For DNGConverter: XMP SDK need Expat library to compile.
-    find_package(Threads)                                                      # For DNGConverter: DNG SDK need native threads support.
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
@@ -173,7 +171,6 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libksane support."       KF5Sane_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"    "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."    KF5CalendarCore_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libexpat"       "http://expat.sourceforge.net"                                    "(version >= 2.0.0)"                  "Kipi-plugins will be compiled without libexpat support."       EXPAT_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.8.1)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
@@ -183,7 +180,6 @@ if(KF5Kipi_FOUND)
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libqtgstreamer" "http://gstreamer.freedesktop.org/modules/qt-gstreamer.html"      "(version >= 0.9.0)"                  "Kipi-plugins will be compiled without libqtgstreamer support." QTGSTREAMER_FOUND)
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libqtkoauth"    "https://github.com/kypeli/kQOAuth"                               "(version >= 0.97)"                   "Kipi-plugins will be compiled without libqtkoauth support."    QTKOAUTH_FOUND)
 
-    PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" "" "" "Kipi-plugins will be compiled without native threads support." CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     PRINT_OPTIONAL_LIBRARY_STATUS("native Opengl support"  "" "" "Kipi-plugins will be compiled without native OpenGL support."  OPENGL_FOUND AND OPENGL_GLU_FOUND)
     PRINT_OPTIONAL_QTMODULE_STATUS("Qt5 OpenGL"            Qt5OpenGL_FOUND)
 
@@ -221,17 +217,7 @@ if(KF5Kipi_FOUND)
          endif()
      endif()
 
-     # Rules about DNGConverter
-     if(EXPAT_FOUND)
-         if(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-              set(BUILD_DNGCONVERTER TRUE)
-         else()
-              set(BUILD_DNGCONVERTER FALSE)
-         endif()
-     endif()
-
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
-    PRINT_COMPONENT_COMPILE_STATUS("DNGConverter"       BUILD_DNGCONVERTER)
     PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Geolocator"         KF5KGeoMap_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AcquireImages"      KF5Sane_FOUND)
@@ -344,10 +330,6 @@ if(KF5Kipi_FOUND)
         if(BUILD_VIEWERS)
             add_subdirectory(advancedslideshow)
             add_subdirectory(imageviewer)
-        endif()
-
-        if(BUILD_DNGCONVERTER)
-            add_subdirectory(dngconverter)
         endif()
 
         if(KF5KGeoMap_FOUND)

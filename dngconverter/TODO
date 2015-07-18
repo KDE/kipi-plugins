@@ -1,9 +1,0 @@
-All:
-- Per channel black level offset (require API change in libkdcraw)
-- Use calibration matrixes if possible, user has to store them in specific folder
-  Question: are there others outside than Adobe ones (free?)
-- Add support of Linear DNG conversion
-
-
-
-
