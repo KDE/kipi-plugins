@@ -88,7 +88,6 @@ DBTalker::DBTalker(QWidget* const parent)
     m_job                    = 0;
     m_state                  = DB_REQ_TOKEN;
     auth                     = false;
-    list.append(qMakePair(QString("/"),QString("root")));
 }
 
 DBTalker::~DBTalker()
@@ -564,7 +563,6 @@ void DBTalker::parseResponseUserName(const QByteArray& data)
 
 void DBTalker::parseResponseListFolders(const QByteArray& data)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "TEST "<<data;
     //added root in list at constructor and call getfolderslist after calling list folders in dbwindow
     QJson::Parser parser;
     bool ok;
@@ -577,8 +575,9 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
         return;
     }
 
-    //QList<QPair<QString,QString> > list;
-    //list.append(qMakePair(QString("/"),QString("root")));
+    QList<QPair<QString, QString> > list;
+    list.clear();
+    list.append(qMakePair(QString("/"),QString("root")));
 
     QVariantMap rmap = result.toMap();
     QList<QString> a = rmap.uniqueKeys();
@@ -593,37 +592,35 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
             {
                 QVariantMap qwer = abc.toMap();
                 QList<QString> b = qwer.uniqueKeys();
+                QString path("");
+                QString isDir("");
+                int temp;
 
                 for(int i=0;i<qwer.size();i++)
                 {
-                    if((b[i] == "is_dir") || (b[i] == "path"))
+                    if(b[i] == "is_dir")
+                        isDir = qwer[b[i]].value<QString>();
+                    if(b[i] == "path")
                     {
-                        if(b[i] == "path" && i==4)
-                        {
-                            qCDebug(KIPIPLUGINS_LOG) << i << " " << b[i] << " : " << qwer[b[i]] << " " << qwer[b[i]].value<QString>() << endl;
-                            QString name = qwer[b[i]].value<QString>().section('/',-2);
-                            qCDebug(KIPIPLUGINS_LOG) << "str " << name;
-                            list.append(qMakePair(qwer[b[i]].value<QString>(),name));
-                            queue.enqueue(qwer[b[i]].value<QString>());
-                            //listFolders(qwer[b[i]].value<QString>());
-                            break;
-                        }
+                        path = qwer[b[i]].value<QString>();
+                        temp = i;
                     }
+                }
+                if(QString::compare(isDir, QString("true"), Qt::CaseInsensitive) == 0)
+                {
+                    qCDebug(KIPIPLUGINS_LOG) << temp << " " << b[temp] << " : " << qwer[b[temp]] << " " << qwer[b[temp]].value<QString>() << endl;
+                    QString name = qwer[b[temp]].value<QString>().section('/',-2);
+                    qCDebug(KIPIPLUGINS_LOG) << "str " << name;
+                    list.append(qMakePair(qwer[b[temp]].value<QString>(),name));
+                    queue.enqueue(qwer[b[temp]].value<QString>());
                 }
             }
         }
     }
 
-    if(!queue.isEmpty())
-    {
-        listFolders(queue.dequeue());
-    }
-    else
-    {
-        auth = true;
-        emit signalBusy(false);
-        emit signalListAlbumsDone(list);
-    }
+    auth = true;
+    emit signalBusy(false);
+    emit signalListAlbumsDone(list);
 }
 
 void DBTalker::parseResponseCreateFolder(const QByteArray& data)
