@@ -44,7 +44,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct HaarClassifierLocator::Private
+class HaarClassifierLocator::Private
 {
     Private() :
         aChannel(0),

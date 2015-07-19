@@ -37,7 +37,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct ClassifierSettingsBox::Private
+class ClassifierSettingsBox::Private
 {
     Private()
     {
@@ -55,7 +55,8 @@ struct ClassifierSettingsBox::Private
 };
 
 ClassifierSettingsBox::ClassifierSettingsBox(QWidget* const parent)
-    : QGroupBox(parent), d(new Private)
+    : QGroupBox(parent),
+      d(new Private)
 {
     setTitle(i18n("Classifier Settings"));
 

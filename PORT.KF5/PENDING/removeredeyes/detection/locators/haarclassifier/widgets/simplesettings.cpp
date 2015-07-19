@@ -42,7 +42,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SimpleSettings::Private
+class SimpleSettings::Private
 {
     Private()
     {
@@ -54,7 +54,8 @@ struct SimpleSettings::Private
 };
 
 SimpleSettings::SimpleSettings(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     d->settingsSlider = new QSlider(Qt::Vertical);
     d->settingsSlider->setRange(0, 2);

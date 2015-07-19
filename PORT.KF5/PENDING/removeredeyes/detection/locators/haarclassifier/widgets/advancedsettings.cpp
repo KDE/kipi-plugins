@@ -36,7 +36,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct AdvancedSettings::Private
+class AdvancedSettings::Private
 {
     Private()
     {
@@ -50,7 +50,8 @@ struct AdvancedSettings::Private
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     d->blobSettingsBox       = new BlobSettingsBox;
     d->classifierSettingsBox = new ClassifierSettingsBox;

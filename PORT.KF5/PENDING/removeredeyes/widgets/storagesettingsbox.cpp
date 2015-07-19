@@ -27,12 +27,12 @@
 
 #include <QGridLayout>
 #include <QCheckBox>
+#include <QComboBox>
 
 // KDE includes
 
 #include <klineedit.h>
 #include <klocalizedstring.h>
-#include <QComboBox>
 
 // Local includes
 
@@ -60,7 +60,8 @@ struct StorageSettingsBox::Private
 };
 
 StorageSettingsBox::StorageSettingsBox(QWidget* const parent)
-    : QGroupBox(parent), d(new Private)
+    : QGroupBox(parent),
+      d(new Private)
 {
     setTitle(i18n("Storage Settings"));
 

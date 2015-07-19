@@ -27,12 +27,12 @@
 
 #include <QGraphicsScene>
 #include <QStackedWidget>
+#include <QUrl>
 
 // KDE includes
 
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <QUrl>
 
 // Local includes
 

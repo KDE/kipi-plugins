@@ -35,7 +35,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct BlobSettingsBox::Private
+class BlobSettingsBox::Private
 {
     Private()
     {
@@ -48,7 +48,8 @@ struct BlobSettingsBox::Private
 };
 
 BlobSettingsBox::BlobSettingsBox(QWidget* parent)
-    : QGroupBox(parent), d(new Private)
+    : QGroupBox(parent),
+      d(new Private)
 {
     setTitle(i18n("Blob Extraction Settings"));
 
