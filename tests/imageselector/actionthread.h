@@ -33,7 +33,7 @@
 
 // Libkdcraw includes
 
-#include <ractionthreadbase.h>
+#include <KDCRAW/RActionThreadBase>
 
 using namespace KDcrawIface;
 
