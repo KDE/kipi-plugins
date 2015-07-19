@@ -29,6 +29,11 @@
 
 // Qt includes
 
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 #include <QUrl>
 #include <QFile>
 #include <QMimeDatabase>
@@ -38,10 +43,6 @@
 // KDE includes
 
 #include <krandom.h>
-
-// LibQJson
-
-#include <qjson/serializer.h>
 
 // local includes
 
@@ -84,28 +85,19 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
     qCDebug(KIPIPLUGINS_LOG) << "in add pair:" << name << " " << description << " " << path << " " << id << " " << mime;
 
     // Generate JSON
-    QVariantMap photoInfo;
-    photoInfo.insert("title", name);
-    photoInfo.insert("description", description);
-    photoInfo.insert("mimeType", mime);
-
+    QJsonObject photoInfo;
+    photoInfo.insert(QString("title"),QJsonValue(name)); 
+    photoInfo.insert(QString("description"),QJsonValue(description));
+    photoInfo.insert(QString("mimeType"),QJsonValue(mime));
+    
     QVariantMap parentId;
     parentId.insert("id", id);
-
     QVariantList parents;
     parents << parentId;
-
-    photoInfo.insert("parents", parents);
-
-    QJson::Serializer serializer;
-    bool ok = false;
-    QByteArray json = serializer.serialize(photoInfo, &ok);
-
-    if (!ok)
-    {
-        qCCritical(KIPIPLUGINS_LOG) << "Failed to serialize to JSON:" << photoInfo;
-        return;
-    }
+    photoInfo.insert(QString("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
+    
+    QJsonDocument doc(photoInfo);
+    QByteArray json = doc.toJson();
 
     // Append to the multipart
     QByteArray str;

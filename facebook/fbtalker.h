@@ -33,12 +33,14 @@
 // KDE includes
 
 #include <kio/job.h>
+#include <kurl.h>
 
 // local includes
 
 #include "fbitem.h"
 
 class QDomElement;
+class QDialog;
 
 namespace KIPIFacebookPlugin
 {
@@ -62,7 +64,6 @@ public:
     void    authenticate(const QString& accessToken,  unsigned int sessionExpires);
     //void    authenticate(const QString& accessToken);
     void    exchangeSession(const QString& sessionKey);
-    void    changePerm();
     void    logout();
 
     void    listFriends();
@@ -81,7 +82,6 @@ Q_SIGNALS:
     void signalBusy(bool val);
     void signalLoginProgress(int step, int maxStep = 0, const QString& label = QString());
     void signalLoginDone(int errCode, const QString& errMsg);
-    void signalChangePermDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
     void signalCreateAlbumDone(int errCode, const QString& errMsg, const QString &newAlbumID);
@@ -94,10 +94,6 @@ private:
     enum State
     {
         FB_GETLOGGEDINUSER = 0,
-        FB_GETUSERINFO,
-        FB_GETUSERINFO_FRIENDS,
-        FB_GETUPLOADPERM,
-        FB_LOGOUT,
         FB_LISTFRIENDS,
         FB_LISTALBUMS,
         FB_LISTPHOTOS,
@@ -113,11 +109,7 @@ private:
     QString getCallString(const QMap<QString, QString>& args);
     void    authenticationDone(int errCode, const QString& errMsg);
     void    doOAuth();
-    //void    createToken();
-    //void    getSession();
     void    getLoggedInUser();
-    void    getUserInfo(const QString& userIDs = QString());
-    void    getUploadPermission();
 
     QString errorToText(int errCode, const QString& errMsg);
     int parseErrorResponse(const QDomElement& e, QString& errMsg);
@@ -125,9 +117,6 @@ private:
     //void parseResponseGetSession(const QByteArray& data);
     void parseExchangeSession(const QByteArray& data);
     void parseResponseGetLoggedInUser(const QByteArray& data);
-    void parseResponseGetUserInfo(const QByteArray& data);
-    void parseResponseGetUploadPermission(const QByteArray& data);
-    void parseResponseLogout(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
@@ -138,15 +127,17 @@ private Q_SLOTS:
 
     void data(KIO::Job* job, const QByteArray& data);
     void slotResult(KJob* job);
+    void slotAccept();
+    void slotReject();    
 
 private:
 
+    QDialog*     dialog; 
     QWidget*     m_parent;
 
     QByteArray   m_buffer;
 
-    QString      m_userAgent;
-    QUrl         m_apiURL;
+    KUrl         m_apiURL;
     QString      m_apiVersion;
     QString      m_secretKey;
     QString      m_appID;

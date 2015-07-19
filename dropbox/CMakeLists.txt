@@ -30,7 +30,7 @@ target_link_libraries(kipiplugin_dropbox
                       KF5kipiplugins
                      )
 
-configure_file(kipiplugin_dropbox.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop)
+configure_file(kipiplugin_dropbox.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_dropbox.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_dropbox                                     DESTINATION ${PLUGIN_INSTALL_DIR})

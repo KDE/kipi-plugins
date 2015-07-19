@@ -30,6 +30,7 @@
 #include <QList>
 #include <QPair>
 #include <QQueue>
+#include <QDialog>
 
 // KDE includes
 
@@ -84,6 +85,8 @@ private Q_SLOTS:
 
     void data(KIO::Job* job, const QByteArray& data);
     void slotResult(KJob* job);
+    void slotAccept();
+    void slotReject();      
 
 private:
 
@@ -108,6 +111,7 @@ private:
 
 private:
 
+    QDialog*                        dialog;
     bool                            auth;
     long                            timestamp;
     QString                         nonce;

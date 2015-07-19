@@ -130,7 +130,7 @@ if(KF5Kipi_FOUND)
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
-    find_package(QJSON)                                                        # For Facebook, Google Services, Dropbox and Imgur.
+    find_package(QJSON)                                                        # For Facebook, Dropbox and Imgur.
 
 #    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
 #    find_package(Qca-qt5)                                                      # For Muvee.
@@ -224,12 +224,11 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
-    PRINT_COMPONENT_COMPILE_STATUS("GoogleServices"     QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
-
+    PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
+    PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
+    
 #    PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
-#    PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
-#    PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("Muvee"              Qca-qt5_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
@@ -348,17 +347,14 @@ if(KF5Kipi_FOUND)
         add_subdirectory(yandexfotki)
         add_subdirectory(dlnaexport)
         add_subdirectory(rajce)
-
+        add_subdirectory(googleservices)
+        
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
         endif()
 
         if(KF5MediaWiki_FOUND)
             add_subdirectory(mediawiki)
-        endif()
-
-        if(QJSON_FOUND)
-            add_subdirectory(googleservices)
         endif()
 
         if(KF5CalendarCore_FOUND)
@@ -373,11 +369,11 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(muvee)
 #         endif()
 #
-#         if(QJSON_FOUND)
-#             add_subdirectory(facebook)
-#             add_subdirectory(dropbox)
+         if(QJSON_FOUND)
+            add_subdirectory(facebook)
+            add_subdirectory(dropbox)
 #             add_subdirectory(imgur)
-#         endif()
+         endif()
 #
 #         # Currently the cmake module distributed w/ cmake uses a different variable
 #         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 

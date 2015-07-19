@@ -8,8 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_googleservices\")
 
-include_directories(${QJSON_INCLUDE_DIR})
-
 set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
     replacedialog.cpp
@@ -33,7 +31,6 @@ target_link_libraries(kipiplugin_googleservices
                       KF5::WidgetsAddons
                       KF5::KIOCore
                       KF5::Wallet
-                      ${QJSON_LIBRARIES}
                       KF5kipiplugins
                      )
 

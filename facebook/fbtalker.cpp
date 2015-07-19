@@ -37,31 +37,25 @@
 #include <QLineEdit>
 #include <QPlainTextEdit>
 #include <QList>
-#include <QApplication>
+#include <qjson/parser.h>
 #include <QDesktopServices>
-#include <QDialog>
-#include <QPushButton>
+#include <QDebug>
 #include <QApplication>
-#include <QStyle>
+#include <QPushButton>
 
 // KDE includes
 
 #include <kcodecs.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kjobwidgets.h>
 #include <kmessagebox.h>
-
-// QJson includes
-
-#include <qjson/parser.h>
 
 // Local includes
 
-#include "kipiplugins_debug.h"
 #include "kpversion.h"
 #include "fbitem.h"
 #include "mpform.h"
+#include "kipiplugins_debug.h"
 
 namespace KIPIFacebookPlugin
 {
@@ -84,13 +78,12 @@ FbTalker::FbTalker(QWidget* const parent)
     m_job             = 0;
     m_loginInProgress = 0;
     m_sessionExpires  = 0;
-    m_state           = FB_LOGOUT;
+    m_state           = FB_GETLOGGEDINUSER;
 
-    m_userAgent       = QString("KIPI-Plugin-Fb/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
-    m_apiVersion      = "1.0";
-    m_apiURL          = QUrl("https://api.facebook.com/method/");
-    m_secretKey       = "0434307e70dd12c414cc6d0928f132d8";
-    m_appID           = "107648075065";
+    m_apiVersion      = "2.4";
+    m_apiURL          = KUrl("https://graph.facebook.com");
+    m_secretKey       = "5b0b5cd096e110cd4f4c72f517e2c544";
+    m_appID           = "400589753481372";
 }
 
 FbTalker::~FbTalker()
@@ -231,8 +224,7 @@ void FbTalker::exchangeSession(const QString& sessionKey)
     args["sessions"]      = sessionKey;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
+    KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
@@ -262,23 +254,29 @@ void FbTalker::doOAuth()
     // Find out whether this signalBusy is used here appropriately.
     emit signalBusy(true);
 
-    QUrl url("https://www.facebook.com/dialog/oauth");
+    KUrl url("https://www.facebook.com/dialog/oauth");
     url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "https://www.facebook.com/connect/login_success.html");
     // TODO (Dirk): Check which of these permissions can be optional.
-    url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,offline_access");
+    url.addQueryItem("scope","user_photos,publish_actions,user_friends");
     url.addQueryItem("response_type", "token");
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     QDesktopServices::openUrl(url);
 
     emit signalBusy(false);
 
-    QDialog* const dialog = new QDialog(QApplication::activeWindow(), 0);
+    dialog = new QDialog(QApplication::activeWindow(), 0);
     dialog->setModal(true);
     dialog->setWindowTitle(i18n("Facebook Application Authorization"));
     QLineEdit* const textbox        = new QLineEdit();
     QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
     buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    
+    dialog->connect(buttons, SIGNAL(accepted()), 
+                    this, SLOT(slotAccept()));
+    
+    dialog->connect(buttons, SIGNAL(rejected()), 
+                    this, SLOT(slotReject()));    
     
     QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser window. "
                                                             "When done, copy the Internet address from your browser into the textbox below and press \"OK\"."));
@@ -290,13 +288,15 @@ void FbTalker::doOAuth()
     vbx->addWidget(buttons);
     dialog->setLayout(vbx);
     
-    if( dialog->exec()  == QDialog::Accepted )
+    dialog->exec();
+    
+    if( dialog->result()  == QDialog::Accepted )
     {
         // Error code and reason from the Facebook service
         QString errorReason;
         QString errorCode;
 
-        url                        = QUrl( textbox->text() );
+        url                        = KUrl( textbox->text() );
         QString fragment           = url.fragment();
         qCDebug(KIPIPLUGINS_LOG) << "Split out the fragment from the URL: " << fragment;
         QStringList params         = fragment.split('&');
@@ -360,18 +360,15 @@ void FbTalker::getLoggedInUser()
 
     emit signalBusy(true);
     emit signalLoginProgress(3);
+    
+    KUrl url("https://graph.facebook.com/me");
+    url.addQueryItem("access_token",m_accessToken); 
+    url.addQueryItem("fields","id,name,link");
+    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
+    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
 
-    QMap<QString, QString> args;
-    args["access_token"] = m_accessToken;
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("users.getLoggedInUser")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
-
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)),
-            this, SLOT(data(KIO::Job*, QByteArray)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -379,114 +376,6 @@ void FbTalker::getLoggedInUser()
     m_state = FB_GETLOGGEDINUSER;
     m_job   = job;
     m_buffer.resize(0);
-}
-
-void FbTalker::getUserInfo(const QString& userIDs)
-{
-    if (m_job)
-    {
-        m_job->kill();
-        m_job = 0;
-    }
-
-    if (userIDs.isEmpty())
-    {
-        emit signalBusy(true);
-        emit signalLoginProgress(6);
-    }
-
-    QMap<QString, QString> args;
-    args["access_token"] = m_accessToken;
-
-    if (userIDs.isEmpty())
-        args["uids"]     = QString::number(m_user.id);
-    else
-        args["uids"]     = userIDs;
-
-    args["fields"]       = "name,profile_url";
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("users.getInfo")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
-    if (userIDs.isEmpty())
-        m_state = FB_GETUSERINFO;
-    else
-        m_state = FB_GETUSERINFO_FRIENDS;
-
-    m_job = job;
-    m_buffer.resize(0);
-}
-
-/**
- * Request upload permission using OAuth
- *
- * TODO (Dirk) maybe this can go or be merged with a re-authentication function.
- */
-void FbTalker::getUploadPermission()
-{
-    if (m_job)
-    {
-        m_job->kill();
-        m_job = 0;
-    }
-
-    emit signalBusy(true);
-
-    if (m_loginInProgress)
-        emit signalLoginProgress(8);
-
-    QMap<QString, QString> args;
-    args["access_token"] = m_accessToken;
-    args["ext_perm"]     = "photo_upload";
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("users.hasAppPermission")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
-    m_state = FB_GETUPLOADPERM;
-    m_job   = job;
-    m_buffer.resize(0);
-}
-
-void FbTalker::changePerm()
-{
-    m_loginInProgress = false; // just in case
-
-    emit signalBusy(true);
-
-    QUrl url("https://graph.facebook.com/oauth/authorize");
-    url.addQueryItem("client_id", m_appID);
-    url.addQueryItem("redirect_uri", "http://www.facebook.com/apps/application.php?id=107648075065");
-    url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
-    qCDebug(KIPIPLUGINS_LOG) << "Change Perm URL: " << url;
-    QDesktopServices::openUrl(url);
-
-    emit signalBusy(false);
-
-    KMessageBox::information(QApplication::activeWindow(),
-                  i18n("Please follow the instructions in the browser window. "
-                       "Press \"OK\" when done."),
-                  i18n("Facebook Application Authorization"));
-
-    emit signalBusy(true);
-    getUploadPermission();
 }
 
 void FbTalker::logout()
@@ -497,29 +386,22 @@ void FbTalker::logout()
         m_job = 0;
     }
 
-    emit signalBusy(true);
-
     QMap<QString, QString> args;
+    args["next"] = QString("http://www.digikam.org");
     args["access_token"] = m_accessToken;
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("auth.expireSession")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    m_state = FB_LOGOUT;
-    m_job   = job;
-    m_buffer.resize(0);
-
-    // logout is synchronous call
-    job->exec();
-    slotResult(job);
+    
+    KUrl url("https://www.facebook.com/logout.php");
+    url.addQueryItem("next",QString("http://www.digikam.org"));
+    url.addQueryItem("access_token",m_accessToken);
+    qCDebug(KIPIPLUGINS_LOG) << "Logout URL: " << url;
+    QDesktopServices::openUrl(url);
+    
+    emit signalBusy(false);
+    
 }
 
+
+// NOTE: This function will only list the friends who also use digiKam app. This is mentioned in https://developers.facebook.com/docs/apps/changelog#v2_0
 void FbTalker::listFriends()
 {
     if (m_job)
@@ -530,14 +412,10 @@ void FbTalker::listFriends()
 
     emit signalBusy(true);
 
-    QMap<QString, QString> args;
-    args["access_token"] = m_accessToken;
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("friends.get")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
+    KUrl url("https://graph.facebook.com/me/friends");
+    url.addQueryItem("access_token",m_accessToken);
+    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
+    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -562,18 +440,11 @@ void FbTalker::listAlbums(long long userID)
 
     emit signalBusy(true);
 
-    QMap<QString, QString> args;
-    args["access_token"] = m_accessToken;
-    if (userID != 0)
-        args["uid"]      = QString::number(userID);
-    else
-        args["uid"]      = QString::number(m_user.id);
-
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.getAlbums")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
+    KUrl url("https://graph.facebook.com/me/albums");
+    url.addQueryItem("fields","id,name,description,privacy,link,location");
+    url.addQueryItem("access_token",m_accessToken);
+    KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
+    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -586,7 +457,7 @@ void FbTalker::listAlbums(long long userID)
     m_buffer.resize(0);
 }
 
-
+//NOTE: Re-implement this method using current Graph API when import to facebook is implemented. This method is obsolete.
 void FbTalker::listPhotos(long long userID, const QString &albumID)
 {
     if (m_job)
@@ -607,8 +478,7 @@ void FbTalker::listPhotos(long long userID, const QString &albumID)
         args["subj_id"]  = QString::number(m_user.id);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.get")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
+    KIO::TransferJob* const job = KIO::http_post(KUrl(m_apiURL,"photos.get"), tmp, KIO::HideProgressInfo);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
@@ -667,8 +537,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
     }
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.createAlbum")), tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
+    KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/me/albums"), tmp, KIO::HideProgressInfo);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
 
@@ -698,12 +567,10 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     QMap<QString, QString> args;
     args["access_token"] = m_accessToken;
-    args["name"]         = QUrl(imgPath).fileName();
+    args["name"]         = KUrl(imgPath).fileName();
 
-    if (!albumID.isEmpty())
-        args["aid"]      = albumID;
     if (!caption.isEmpty())
-        args["caption"]  = caption;
+        args["message"]  = caption;
 
     MPForm form;
 
@@ -724,8 +591,7 @@ bool FbTalker::addPhoto(const QString& imgPath, const QString& albumID, const QS
 
     qCDebug(KIPIPLUGINS_LOG) << "FORM: " << endl << form.formData();
 
-    KIO::TransferJob* const job = KIO::http_post(QUrl(m_apiURL).resolved(QUrl("photos.upload")), form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("UserAgent",    m_userAgent);
+    KIO::TransferJob* const job = KIO::http_post(KUrl("https://graph.facebook.com/v2.4/"+QString(albumID)+QString("/photos")), form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -751,7 +617,6 @@ void FbTalker::getPhoto(const QString& imgPath)
     emit signalBusy(true);
 
     KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
@@ -837,8 +702,9 @@ void FbTalker::slotResult(KJob* kjob)
         else
         {
             emit signalBusy(false);
-            KJobWidgets::setWindow(job, m_parent);
-            job->ui()->showErrorMessage();
+            KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
+            job_ui->setWindow(m_parent);
+            job_ui->showErrorMessage();
         }
         return;
     }
@@ -850,16 +716,6 @@ void FbTalker::slotResult(KJob* kjob)
             break;
         case(FB_GETLOGGEDINUSER):
             parseResponseGetLoggedInUser(m_buffer);
-            break;
-        case(FB_GETUSERINFO):
-        case(FB_GETUSERINFO_FRIENDS):
-            parseResponseGetUserInfo(m_buffer);
-            break;
-        case(FB_GETUPLOADPERM):
-            parseResponseGetUploadPermission(m_buffer);
-            break;
-        case(FB_LOGOUT):
-            parseResponseLogout(m_buffer);
             break;
         case(FB_LISTFRIENDS):
             parseResponseListFriends(m_buffer);
@@ -923,110 +779,6 @@ int FbTalker::parseErrorResponse(const QDomElement& e, QString& errMsg)
     return errCode;
 }
 
-/*
-void FbTalker::parseResponseCreateToken(const QByteArray& data)
-{
-    int errCode = -1;
-    QString errMsg;
-
-    QDomDocument doc("createToken");
-    if (!doc.setContent(data))
-        return;
-
-    emit signalLoginProgress(3);
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse CreateToken response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "auth_createToken_response")
-    {
-        m_authToken = docElem.text();
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-        errCode = parseErrorResponse(docElem, errMsg);
-
-    if (errCode != 0) // if login failed, reset user properties
-    {
-        authenticationDone(errCode, errorToText(errCode, errMsg));
-        return;
-    }
-
-    QUrl url("https://www.facebook.com/login.php");
-    url.addQueryItem("api_key", m_apiKey);
-    url.addQueryItem("v", m_apiVersion);
-    url.addQueryItem("auth_token", m_authToken);
-    qCDebug(KIPIPLUGINS_LOG) << "Login URL: " << url;
-    QDesktopServices::openUrl(url);
-
-    emit signalBusy(false);
-    int valueOk = KMessageBox::questionYesNo(QApplication::activeWindow(),
-                  i18n("Please follow the instructions in the browser window. "
-                       "Press \"Yes\" if you have authenticated and \"No\" if you failed."),
-                  i18n("Facebook Service Web Authorization"));
-
-    if (valueOk == KMessageBox::Yes)
-    {
-        emit signalBusy(true);
-        getSession();
-    }
-    else
-    {
-        authenticationDone(-1, i18n("Canceled by user."));
-    }
-}
-*/
-
-/*
-void FbTalker::parseResponseGetSession(const QByteArray& data)
-{
-    int errCode = -1;
-    QString errMsg;
-
-    QDomDocument doc("getSession");
-    if (!doc.setContent(data))
-        return;
-
-    emit signalLoginProgress(5);
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse GetSession response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "auth_getSession_response")
-    {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
-        {
-            if (!node.isElement())
-                continue;
-            if (node.nodeName() == "session_key")
-                m_sessionKey = node.toElement().text();
-            else if (node.nodeName() == "secret")
-                m_sessionSecret = node.toElement().text();
-            else if (node.nodeName() == "uid")
-                m_user.id = node.toElement().text().toLongLong();
-            else if (node.nodeName() == "expires")
-                m_sessionExpires = node.toElement().text().toInt();
-        }
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-        errCode = parseErrorResponse(docElem, errMsg);
-
-    if (errCode != 0) // if login failed, reset user properties
-    {
-        authenticationDone(errCode, errorToText(errCode, errMsg));
-        return;
-    }
-
-    // reset call_id counter
-    m_callID.start();
-
-    getUserInfo();
-}
-*/
-
 void FbTalker::parseExchangeSession(const QByteArray& data)
 {
     bool ok;
@@ -1069,35 +821,42 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
 
 void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 {
+    QJson::Parser parser;
     int errCode = -1;
     QString errMsg;
+    bool ok;
+    QVariant result     = parser.parse(data,&ok);
+    QVariantMap rmap    = result.toMap();
+    QList<QString> keys = rmap.uniqueKeys();
+    QString temp;
 
-    QDomDocument doc("getLoggedInUser");
-    if (!doc.setContent(data))
-        return;
-
-    emit signalLoginProgress(4);
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse GetLoggedInUser response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "users_getLoggedInUser_response")
+    for(int i=0;i<rmap.size();i++)
     {
-        m_user.id = docElem.text().toLongLong();
-        errCode   = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
+        qCDebug(KIPIPLUGINS_LOG) <<"Keys is "<<keys[i];
+        if(keys[i] == "id")
+        {
+            m_user.id = (rmap[keys[i]].value<QString>()).toLongLong();
+            errCode = 0;
+            qCDebug(KIPIPLUGINS_LOG) <<"User id is"<<m_user.id;
+        }
+        if(keys[i] == "name")
+        {
+            m_user.name = rmap[keys[i]].value<QString>();
+            qCDebug(KIPIPLUGINS_LOG) <<"User name is"<<m_user.name;
+        }
+        if(keys[i]=="link")
+        {
+            m_user.profileURL = rmap[keys[i]].value<QString>();
+            qCDebug(KIPIPLUGINS_LOG) <<"Link is"<<m_user.profileURL;            
+        }
+        if(keys[i] == "error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
 
-    if (errCode == 0)
-    {
-        // session is still valid -> get full user info
-        getUserInfo();
-    }
-    else
+    if(errCode!=0)
     {
         // it seems that session expired -> create new token and session
         m_accessToken.clear();
@@ -1106,192 +865,35 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 
         doOAuth();
     }
-}
-
-void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
-{
-    int errCode = -1;
-    QString errMsg;
-    QDomDocument doc("getUserInfo");
-
-    if (!doc.setContent(data))
-        return;
-
-    if (m_state == FB_GETUSERINFO) // during login
-        emit signalLoginProgress(7);
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse GetUserInfo response:" << endl << data;
-
-    QList<FbUser> friendsList;
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "users_getInfo_response")
-    {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
-        {
-            if (!node.isElement())
-                continue;
-
-            if (node.nodeName() == "user")
-            {
-                FbUser user;
-
-                for (QDomNode nodeU = node.toElement().firstChild();
-                     !nodeU.isNull();
-                     nodeU = nodeU.nextSibling())
-                {
-                    if (!nodeU.isElement())
-                        continue;
-
-                    if (nodeU.nodeName() == "uid")
-                        user.id = nodeU.toElement().text().toLongLong();
-                    else if (nodeU.nodeName() == "name")
-                        user.name = nodeU.toElement().text();
-                    else if (nodeU.nodeName() == "profile_url")
-                        user.profileURL = nodeU.toElement().text();
-                }
-
-                if (m_state == FB_GETUSERINFO)
-                {
-                    m_user.name = user.name;
-                    m_user.profileURL = user.profileURL;
-                }
-                else if (!user.name.isEmpty())
-                {
-                    friendsList.append(user);
-                }
-            }
-        }
-
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
-    }
-
-    if (m_state == FB_GETUSERINFO)
-    {
-        if (errCode != 0)
-        {
-            authenticationDone(errCode, errorToText(errCode, errMsg));
-            return;
-        }
-
-        getUploadPermission();
-    }
     else
-    {
-        qSort(friendsList.begin(), friendsList.end());
-
-        emit signalBusy(false);
-        emit signalListFriendsDone(errCode, errorToText(errCode, errMsg),
-                                   friendsList);
-    }
-}
-
-void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
-{
-    int errCode = -1;
-    QString errMsg;
-
-    QDomDocument doc("getUploadPerm");
-
-    if (!doc.setContent(data))
-        return;
-
-    if (m_loginInProgress)
-        emit signalLoginProgress(9);
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse HasAppPermission response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "users_hasAppPermission_response")
-    {
-        m_user.uploadPerm = docElem.text().toInt();
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
-    }
-
-    if (m_loginInProgress)
-    {
-        authenticationDone(errCode, errorToText(errCode, errMsg));
-    }
-    else
-    {
-        emit signalBusy(false);
-        emit signalChangePermDone(errCode, errorToText(errCode, errMsg));
-    }
-}
-
-void FbTalker::parseResponseLogout(const QByteArray& data)
-{
-    int errCode = -1;
-    QString errMsg;
-
-    QDomDocument doc("expireSession");
-
-    if (!doc.setContent(data))
-        return;
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse ExpireSession response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "auth_expireSession_response ")
-    {
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
-    }
-
-    qCDebug(KIPIPLUGINS_LOG) << "Error Code : " << errCode;
-
-    // consider we are logged out in any case
-    m_accessToken.clear();
-    m_sessionExpires = 0;
-    m_user.clear();
-
-    emit signalBusy(false);
+        authenticationDone(0,"");
 }
 
 void FbTalker::parseResponseAddPhoto(const QByteArray& data)
 {
+    qCDebug(KIPIPLUGINS_LOG) <<"Parse Add Photo data is "<<data;
     int errCode = -1;
     QString errMsg;
+    QJson::Parser parser;
+    bool ok;
+    QVariant result     = parser.parse(data,&ok);
+    QVariantMap rmap    = result.toMap();
+    QList<QString> keys = rmap.uniqueKeys();
+    QString temp;
 
-    QDomDocument doc("addphoto");
-
-    if (!doc.setContent(data))
-        return;
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Add Photo response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-
-    if (docElem.tagName() == "photos_upload_response")
+    for(int i=0;i<rmap.size();i++)
     {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
+        qCDebug(KIPIPLUGINS_LOG) <<"Keys is "<<keys[i];
+        if(keys[i] == "id")
         {
-            if (!node.isElement())
-                continue;
+            qCDebug(KIPIPLUGINS_LOG) <<"Id of photo exported is"<<rmap[keys[i]].value<QString>();
+            errCode = 0;
         }
-
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
+        if(keys[i] == "error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
 
     emit signalBusy(false);
@@ -1300,39 +902,31 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
 
 void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
+    qCDebug(KIPIPLUGINS_LOG) <<"Parse Create album data is"<<data;
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc("createalbum");
-
-    if (!doc.setContent(data))
-        return;
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Create Album response:" << endl << data;
-
     QString newAlbumID;
-    QDomElement docElem = doc.documentElement();
+    QJson::Parser parser;
+    bool ok;
+    QVariant result     = parser.parse(data,&ok);
+    QVariantMap rmap    = result.toMap();
+    QList<QString> keys = rmap.uniqueKeys();
+    QString temp;
 
-    if (docElem.tagName() == "photos_createAlbum_response")
+    for(int i=0;i<rmap.size();i++)
     {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
+        qCDebug(KIPIPLUGINS_LOG) <<"Keys is "<<keys[i];
+        if(keys[i] == "id")
         {
-            if (!node.isElement())
-                continue;
-
-            if (node.nodeName() == "aid")
-            {
-                newAlbumID = node.toElement().text();
-                qCDebug(KIPIPLUGINS_LOG) << "newAID: " << newAlbumID;
-            }
+            newAlbumID = rmap[keys[i]].value<QString>();
+            qCDebug(KIPIPLUGINS_LOG) <<"Id of album created is"<<newAlbumID;
+            errCode = 0;
         }
-
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
+        if(keys[i] == "error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
 
     emit signalBusy(false);
@@ -1340,128 +934,104 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
                                newAlbumID);
 }
 
+//TODO: Re-Write this method if needed. Parsing will return list of friends and also their info like id, name etc.
 void FbTalker::parseResponseListFriends(const QByteArray& data)
 {
-    int errCode = -1;
-    QString errMsg;
-    QDomDocument doc("getFriends");
-
-    if (!doc.setContent(data))
-        return;
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Friends response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
-    QString friendsUIDs;
-
-    if (docElem.tagName() == "friends_get_response")
-    {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
-        {
-            if (!node.isElement())
-                continue;
-
-            if (node.nodeName() == "uid")
-            {
-                if (!friendsUIDs.isEmpty())
-                    friendsUIDs.append(',');
-                friendsUIDs.append(node.toElement().text());
-            }
-        }
-        errCode = 0;
-    }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
-    }
-
-    if (friendsUIDs.isEmpty())
-    {
-        emit signalBusy(false);
-
-        QList<FbUser> noFriends;
-        emit signalListFriendsDone(errCode, errorToText(errCode, errMsg),
-                                   noFriends);
-    }
-    else
-    {
-        // get user info for those users
-        getUserInfo(friendsUIDs);
-    }
+//     int errCode = -1;
+//     QString errMsg;
+//     QDomDocument doc("getFriends");
+// 
+//     if (!doc.setContent(data))
+//         return;
+// 
+//     kDebug() << "Parse Friends response:" << endl << data;
+// 
+//     QDomElement docElem = doc.documentElement();
+//     QString friendsUIDs;
+// 
+//     if (docElem.tagName() == "friends_get_response")
+//     {
+//         for (QDomNode node = docElem.firstChild();
+//              !node.isNull();
+//              node = node.nextSibling())
+//         {
+//             if (!node.isElement())
+//                 continue;
+// 
+//             if (node.nodeName() == "uid")
+//             {
+//                 if (!friendsUIDs.isEmpty())
+//                     friendsUIDs.append(',');
+//                 friendsUIDs.append(node.toElement().text());
+//             }
+//         }
+//         errCode = 0;
+//     }
+//     else if (docElem.tagName() == "error_response")
+//     {
+//         errCode = parseErrorResponse(docElem, errMsg);
+//     }
+// 
+//     if (friendsUIDs.isEmpty())
+//     {
+//         emit signalBusy(false);
+// 
+//         QList<FbUser> noFriends;
+//         emit signalListFriendsDone(errCode, errorToText(errCode, errMsg),
+//                                    noFriends);
+//     }
+//     else
+//     {
+//         // get user info for those users
+//         //getUserInfo(friendsUIDs);
+//     }
 }
 
 void FbTalker::parseResponseListAlbums(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
-    QDomDocument doc("getAlbums");
-
-    if (!doc.setContent(data))
-        return;
-
-    qCDebug(KIPIPLUGINS_LOG) << "Parse Albums response:" << endl << data;
-
-    QDomElement docElem = doc.documentElement();
+    qCDebug(KIPIPLUGINS_LOG) <<"Albums data is "<<data;
+    QJson::Parser parser;
+    bool ok;
+    QVariant result     = parser.parse(data,&ok);
+    QVariantMap rmap    = result.toMap();
+    QList<QString> keys = rmap.uniqueKeys();
     QList <FbAlbum> albumsList;
 
-    if (docElem.tagName() == "photos_getAlbums_response")
+    for(int i=0;i<rmap.size();i++)
     {
-        for (QDomNode node = docElem.firstChild();
-             !node.isNull();
-             node = node.nextSibling())
+        if(keys[i]=="data")
         {
-            if (!node.isElement())
-                continue;
-
-            if (node.nodeName() == "album")
+            QVariantList res = rmap[keys[i]].value<QVariantList>();
+            foreach(QVariant record, res) 
             {
                 FbAlbum album;
+                QVariantMap map   = record.toMap();
+                album.id          = map.value("id").value<QString>();
+                album.title       = map.value("name").value<QString>();
+                album.location    = map.value("location").value<QString>();
+                album.url         = map.value("link").value<QString>();
+                album.description = map.value("description").value<QString>();
 
-                for (QDomNode nodeA = node.toElement().firstChild();
-                     !nodeA.isNull();
-                     nodeA = nodeA.nextSibling())
-                {
-                    if (!nodeA.isElement())
-                        continue;
-                    if (nodeA.nodeName() == "aid")
-                        album.id = nodeA.toElement().text().trimmed();
-                    else if (nodeA.nodeName() == "name")
-                        album.title = nodeA.toElement().text();
-                    else if (nodeA.nodeName() == "description")
-                        album.description = nodeA.toElement().text();
-                    else if (nodeA.nodeName() == "location")
-                        album.location = nodeA.toElement().text();
-                    else if (nodeA.nodeName() == "link")
-                        album.url = nodeA.toElement().text();
-                    else if (nodeA.nodeName() == "visible")
-                    {
-                        if (nodeA.toElement().text() == "friends")
-                            album.privacy = FB_FRIENDS;
-                        else if (nodeA.toElement().text() == "friends-of-friends")
-                            album.privacy = FB_FRIENDS_OF_FRIENDS;
-                        else if (nodeA.toElement().text() == "networks")
-                            album.privacy = FB_NETWORKS;
-                        else if (nodeA.toElement().text() == "everyone")
-                            album.privacy = FB_EVERYONE;
-                        else if (nodeA.toElement().text() == "everyone")
-                            album.privacy = FB_CUSTOM;
-                    }
-                }
-
-                qCDebug(KIPIPLUGINS_LOG) << "AID: " << album.id;
+                if (QString::compare(map.value("privacy").value<QString>(), QString("friends"), Qt::CaseInsensitive) == 0)
+                    album.privacy = FB_FRIENDS;
+                else if (QString::compare(map.value("privacy").value<QString>(), QString("custom"), Qt::CaseInsensitive) == 0)
+                    album.privacy = FB_CUSTOM;
+                else if (QString::compare(map.value("privacy").value<QString>(), QString("everyone"), Qt::CaseInsensitive) == 0)
+                    album.privacy = FB_EVERYONE;
+                
                 albumsList.append(album);
             }
+            errCode = 0;
         }
-
-        errCode = 0;
+        if(keys[i]=="error")
+        {
+            errCode = rmap[keys[i]].value<QVariant>().toMap().value("code").value<QString>().toLongLong();
+            errMsg  = rmap[keys[i]].value<QVariant>().toMap().value("message").value<QString>();
+        }
     }
-    else if (docElem.tagName() == "error_response")
-    {
-        errCode = parseErrorResponse(docElem, errMsg);
-    }
-
+    
     qSort(albumsList.begin(), albumsList.end());
 
     emit signalBusy(false);
@@ -1469,6 +1039,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                               albumsList);
 }
 
+//NOTE: Re-implement this method using current Graph API when import to facebook is implemented. This method is obsolete.
 void FbTalker::parseResponseListPhotos(const QByteArray& data)
 {
     int errCode = -1;
@@ -1529,6 +1100,18 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
     emit signalBusy(false);
     emit signalListPhotosDone(errCode, errorToText(errCode, errMsg),
                               photosList);
+}
+
+void FbTalker::slotAccept()
+{
+    dialog->close();
+    dialog->setResult(QDialog::Accepted); 
+}
+
+void FbTalker::slotReject()
+{
+    dialog->close();   
+    dialog->setResult(QDialog::Rejected);
 }
 
 } // namespace KIPIFacebookPlugin

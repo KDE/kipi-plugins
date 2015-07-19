@@ -24,7 +24,6 @@
 #define FBITEM_H
 
 // Qt includes
-
 #include <QString>
 
 namespace KIPIFacebookPlugin
@@ -44,8 +43,8 @@ public:
     {
         id         = 0;
         name.clear();
-        profileURL.clear();
-        uploadPerm = false;
+        profileURL = QString("https://www.facebook.com");
+        uploadPerm = true;
     }
 
     long long id;

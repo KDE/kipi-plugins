@@ -44,7 +44,6 @@
 #include <QApplication>
 #include <QDesktopServices>
 #include <QPushButton>
-#include <QDialog>
 
 // KDE includes
 
@@ -79,10 +78,10 @@ namespace KIPIDropboxPlugin
 DBTalker::DBTalker(QWidget* const parent)
 {
     m_parent                 = parent;
-    m_oauth_consumer_key     = "bznn0lmg4cv6fj9";
+    m_oauth_consumer_key     = "kn7kajkaqf6retw";
     m_oauth_signature_method = "PLAINTEXT";
     m_oauth_version          = "1.0";
-    m_oauth_signature        = "hsqe2d4eeg2ms0m&";
+    m_oauth_signature        = "t9w4c6j837ubstf&";
     nonce                    = generateNonce(8);
     timestamp                = QDateTime::currentMSecsSinceEpoch()/1000;
     m_root                   = "dropbox";
@@ -171,11 +170,17 @@ void DBTalker::doOAuth()
 
     emit signalBusy(false);
 
-    QDialog* const dialog = new QDialog(QApplication::activeWindow(),0);
+    dialog = new QDialog(QApplication::activeWindow(),0);
     dialog->setModal(true);
     dialog->setWindowTitle(i18n("Authorize Dropbox"));
     QDialogButtonBox* const buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
     buttons->button(QDialogButtonBox::Ok)->setDefault(true);
+    
+    dialog->connect(buttons, SIGNAL(accepted()), 
+                    this, SLOT(slotAccept()));
+    
+    dialog->connect(buttons, SIGNAL(rejected()), 
+                    this, SLOT(slotReject()));    
     
     QPlainTextEdit* const infobox = new QPlainTextEdit(i18n("Please follow the instructions in the browser. "
                                                             "After logging in and authorizing the application, press OK."));
@@ -186,7 +191,9 @@ void DBTalker::doOAuth()
     vbx->addWidget(buttons);
     dialog->setLayout(vbx);
 
-    if (dialog->exec() == QDialog::Accepted)
+    dialog->exec();
+    
+    if (dialog->result() == QDialog::Accepted)
     {
         getAccessToken();
     }
@@ -557,6 +564,7 @@ void DBTalker::parseResponseUserName(const QByteArray& data)
 
 void DBTalker::parseResponseListFolders(const QByteArray& data)
 {
+    qCDebug(KIPIPLUGINS_LOG) << "TEST "<<data;
     //added root in list at constructor and call getfolderslist after calling list folders in dbwindow
     QJson::Parser parser;
     bool ok;
@@ -644,6 +652,18 @@ void DBTalker::parseResponseCreateFolder(const QByteArray& data)
     {
         emit signalCreateFolderSucceeded();
     }
+}
+
+void DBTalker::slotAccept()
+{
+    dialog->close();
+    dialog->setResult(QDialog::Accepted); 
+}
+
+void DBTalker::slotReject()
+{
+    dialog->close();   
+    dialog->setResult(QDialog::Rejected);
 }
 
 } // namespace KIPIDropboxPlugin
