@@ -15,6 +15,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+                    ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${OpenCV_INCLUDE_DIR}
                    )
@@ -52,16 +53,20 @@ set(widgets_SRCS
     widgets/unprocessedsettingsbox.cpp
    )
 
+set(manager_SRCS
+    manager/workerthread.cpp
+    manager/workerthreaddata.cpp
+   )
+
 set(kipiplugin_removeredeyes_PART_SRCS
     ${libcvblobs_SRCS}
     ${locators_SRCS}
     ${locators_haarclassifier_SRCS}
     ${savemethods_SRCS}
     ${widgets_SRCS}
+    ${manager_SRCS}
     plugin/plugin_removeredeyes.cpp
     plugin/removeredeyeswindow.cpp
-    plugin/workerthread.cpp
-    plugin/workerthreaddata.cpp
    )
 
 add_library(kipiplugin_removeredeyes MODULE ${kipiplugin_removeredeyes_PART_SRCS})

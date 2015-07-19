@@ -30,10 +30,6 @@
 
 #include <climits>
 
-// OpenCV includes
-
-#include "libopencv.h"
-
 namespace KIPIRemoveRedEyesPlugin
 {
 
