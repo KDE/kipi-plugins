@@ -1,9 +1,10 @@
 #
-# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+add_subdirectory(data)
 add_subdirectory(test)
 
 kde_enable_exceptions()
@@ -84,4 +85,3 @@ configure_file(plugin/kipiplugin_removeredeyes.desktop.cmake.in ${CMAKE_CURRENT_
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_removeredeyes.desktop     DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_removeredeyes                                                DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES   plugin/kipiplugin_removeredeyesui.rc                                    DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
-install(FILES   widgets/controlwidget.svg plugin/removeredeyes_classifier_eye_20_20.xml DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
