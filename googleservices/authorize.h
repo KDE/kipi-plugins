@@ -37,11 +37,15 @@
 
 namespace KIPIGoogleServicesPlugin
 {
-
+    
+class YoutubeJobComposite;
+    
 class Authorize : public QObject
 {
     Q_OBJECT
-
+    
+    friend class YoutubeJobComposite;
+    
 public:
 
     Authorize(QWidget* const parent, const QString & scope);

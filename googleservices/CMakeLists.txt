@@ -8,8 +8,14 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_googleservices\")
 
+find_dependency(AccountsQt5 REQUIRED)
+include_directories(${ACCOUNTSQT_INCLUDE_DIRS})
+
 set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
+    job.cpp
+    youtubejob.cpp
+    youtubejobcomposite.cpp
     replacedialog.cpp
     mpform_gdrive.cpp
     mpform_picasa.cpp
@@ -31,6 +37,7 @@ target_link_libraries(kipiplugin_googleservices
                       KF5::WidgetsAddons
                       KF5::KIOCore
                       KF5::Wallet
+                      KAccounts
                       KF5kipiplugins
                      )
 

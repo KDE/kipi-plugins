@@ -75,6 +75,7 @@
 #include "picasawebtalker.h"
 #include "replacedialog.h"
 #include "kipiplugins_debug.h"
+#include "youtubejobcomposite.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -285,6 +286,13 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         {
             m_picsasa_talker->getAccessTokenFromRefreshToken(refresh_token);
         }
+    }
+    
+    //NOTE: THIS IS JUST FOR PROOF OF CONCEPT THAT INTEGRATION OF YOUTUBE IS POSSIBLE.
+    bool test_youtube = true;
+    if(test_youtube)
+    {
+        YoutubeJobComposite* you = new YoutubeJobComposite();
     }
 
 }
