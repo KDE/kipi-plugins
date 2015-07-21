@@ -108,8 +108,6 @@ find_package(KF5 REQUIRED COMPONENTS
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 
-find_package(KAccounts REQUIRED)
-
 # Dependencies detection required by all plugins
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
