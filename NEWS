@@ -3,7 +3,7 @@ Kipi-plugins 4.12.0 - Release date: 2015-07-26
 
 NEW FEATURES:
 
-001 ==> Implementations of PicasaWeb and Google Drive are now merged into one common Google Services tool. 
+Google Tools ==> Implementations of PicasaWeb and Google Drive are now merged into one common Google Services tool. 
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
@@ -40,4 +40,8 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 031 ==> 343668 - Gwenview crashed after upload movie to Rajce.net.
 032 ==> 341688 - Dropbox upload does not work due to developer API keys.
 033 ==> 337963 - Pictures moved from folders under copy.com sync control are re-downloaded again.
-034 ==> 
+034 ==> 347194 - Export to Facebook fails with "Facebook Call Failed".
+035 ==> 289256 - When an error occurs during session verification, the FB export dialog ends up in an unusable state.
+036 ==> 240254 - Using FB and Flickr tools at the same time, FB is completed but dialog cannot be closed until Flickr tool is done.
+037 ==> 319252 - FaceBook export doesn't work any more due to bad url given back to register to before photo uploading.
+038 ==> 
