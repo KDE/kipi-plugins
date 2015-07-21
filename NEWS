@@ -44,4 +44,18 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 035 ==> 289256 - When an error occurs during session verification, the FB export dialog ends up in an unusable state.
 036 ==> 240254 - Using FB and Flickr tools at the same time, FB is completed but dialog cannot be closed until Flickr tool is done.
 037 ==> 319252 - FaceBook export doesn't work any more due to bad url given back to register to before photo uploading.
-038 ==> 
+038 ==> 297162 - Application does not have permission for this action.
+039 ==> 202898 - New Facebook Import Gui Mockup.
+040 ==> 250564 - digiKam import corrupted pictures with facebook plugin (read html files).
+041 ==> 317228 - Kipi plugins Facebook app seems to be hacked/redirected to a Japanese site.
+042 ==> 305281 - Import to Facebook.
+043 ==> 289272 - File upload to facebook fails/ digikam kipi plugin.
+044 ==> 347117 - Crash when exporting pictures to facebook.
+045 ==> 297732 - digiKam crash when tried to export pics to facebook.
+046 ==> 223830 - digiKam crash on Export to Facebook.
+047 ==> 342300 - Export to facebook connect properly so i can post to my facebook account.
+048 ==> 346183 - Crash when exporting picture to facebook.
+049 ==> 328472 - Gwenview crash on quit during Facebook upload.
+050 ==> 306144 - Gwenview crashes with the kipi plugin Export to Facebook.
+051 ==> 299776 - Violation: Privacy Policy.
+052 ==> 
