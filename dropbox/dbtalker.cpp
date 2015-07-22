@@ -28,6 +28,11 @@
 
 // Qt includes
 
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 #include <QByteArray>
 #include <QtAlgorithms>
 #include <QVBoxLayout>
@@ -58,10 +63,6 @@
 
 #include <libkdcraw_version.h>
 #include <KDCRAW/KDcraw>
-
-// LibQJSon
-
-#include <qjson/parser.h>
 
 // Local includes
 
@@ -477,22 +478,9 @@ void DBTalker::slotResult(KJob* kjob)
 
 void DBTalker::parseResponseAddPhoto(const QByteArray& data)
 {
-    bool success        = false;
-    QJson::Parser parser;
-    bool ok;
-    QVariant result     = parser.parse(data, &ok);
-    QVariantMap rmap    = result.toMap();
-    QList<QString> keys = rmap.uniqueKeys();
-
-    for(int i=0;i<rmap.size();i++)
-    {
-        if(keys[i] == "bytes")
-        {
-            success = true;
-            break;
-        }
-    }
-
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject jsonObject = doc.object();
+    bool success = jsonObject.contains(QString("bytes"));
     emit signalBusy(false);
 
     if(!success)
@@ -542,20 +530,9 @@ void DBTalker::parseResponseAccessToken(const QByteArray& data)
 
 void DBTalker::parseResponseUserName(const QByteArray& data)
 {
-    QJson::Parser parser;
-    bool ok;
-    QVariant result     = parser.parse(data,&ok);
-    QVariantMap rmap    = result.toMap();
-    QList<QString> keys = rmap.uniqueKeys();
-    QString temp;
-
-    for(int i=0;i<rmap.size();i++)
-    {
-        if(keys[i] == "display_name")
-        {
-            temp = rmap[keys[i]].value<QString>();
-        }
-    }
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject jsonObject = doc.object();
+    QString temp = jsonObject["display_name"].toString();
 
     emit signalBusy(false);
     emit signalSetUserName(temp);
@@ -563,58 +540,40 @@ void DBTalker::parseResponseUserName(const QByteArray& data)
 
 void DBTalker::parseResponseListFolders(const QByteArray& data)
 {
-    //added root in list at constructor and call getfolderslist after calling list folders in dbwindow
-    QJson::Parser parser;
-    bool ok;
-    QVariant result = parser.parse(data,&ok);
-
-    if(!ok)
+    QJsonParseError* err;
+    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    
+    if(err->error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         emit signalListAlbumsFailed(i18n("Failed to list folders"));
         return;
     }
-
+    
+    QJsonObject jsonObject = doc.object();
+    QJsonArray jsonArray = jsonObject["contents"].toArray();
+    
     QList<QPair<QString, QString> > list;
     list.clear();
     list.append(qMakePair(QString("/"),QString("root")));
-
-    QVariantMap rmap = result.toMap();
-    QList<QString> a = rmap.uniqueKeys();
-
-    for(int i=0;i<rmap.size();i++)
+    
+    foreach (const QJsonValue & value, jsonArray) 
     {
-        if(a[i] == "contents")
+        QString path("");
+        bool isDir;
+        
+        QJsonObject obj = value.toObject();
+        path  = obj["path"].toString();
+        isDir = obj["is_dir"].toBool();
+        qCDebug(KIPIPLUGINS_LOG) << "Path is "<<path<<" Is Dir "<<isDir;
+        
+        if(isDir)
         {
-            QVariantList qwe = rmap[a[i]].toList();
-
-            foreach(QVariant abc, qwe)
-            {
-                QVariantMap qwer = abc.toMap();
-                QList<QString> b = qwer.uniqueKeys();
-                QString path("");
-                QString isDir("");
-                int temp;
-
-                for(int i=0;i<qwer.size();i++)
-                {
-                    if(b[i] == "is_dir")
-                        isDir = qwer[b[i]].value<QString>();
-                    if(b[i] == "path")
-                    {
-                        path = qwer[b[i]].value<QString>();
-                        temp = i;
-                    }
-                }
-                if(QString::compare(isDir, QString("true"), Qt::CaseInsensitive) == 0)
-                {
-                    qCDebug(KIPIPLUGINS_LOG) << temp << " " << b[temp] << " : " << qwer[b[temp]] << " " << qwer[b[temp]].value<QString>() << endl;
-                    QString name = qwer[b[temp]].value<QString>().section('/',-2);
-                    qCDebug(KIPIPLUGINS_LOG) << "str " << name;
-                    list.append(qMakePair(qwer[b[temp]].value<QString>(),name));
-                    queue.enqueue(qwer[b[temp]].value<QString>());
-                }
-            }
+            qCDebug(KIPIPLUGINS_LOG) << "Path is "<<path<<" Is Dir "<<isDir;
+            QString name = path.section('/',-2);
+            qCDebug(KIPIPLUGINS_LOG) << "str " << name;
+            list.append(qMakePair(path,name));
+            queue.enqueue(path);
         }
     }
 
@@ -625,29 +584,20 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
 
 void DBTalker::parseResponseCreateFolder(const QByteArray& data)
 {
-    bool success        = true;
-    QJson::Parser parser;
-    bool ok;
-    QVariant result     = parser.parse(data,&ok);
-    QVariantMap rmap    = result.toMap();
-    QList<QString> keys = rmap.uniqueKeys();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject jsonObject = doc.object();
+    bool fail = jsonObject.contains(QString("error"));
     QString temp;
-
-    for(int i=0;i<rmap.size();i++)
-    {
-        if(keys[i] == "error")
-        {
-            temp    = rmap[keys[i]].value<QString>();
-            success = false;
-            signalCreateFolderFailed(rmap[keys[i]].value<QString>());
-        }
-    }
-
+    
     emit signalBusy(false);
-
-    if(success)
+    
+    if(fail)
     {
-        emit signalCreateFolderSucceeded();
+        emit signalCreateFolderFailed(jsonObject["error"].toString());
+    }
+    else
+    {
+        emit signalCreateFolderSucceeded();   
     }
 }
 

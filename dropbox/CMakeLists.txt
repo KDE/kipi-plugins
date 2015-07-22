@@ -8,8 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_dropbox\")
 
-include_directories(${QJSON_INCLUDE_DIR})
-
 set(kipiplugin_dropbox_PART_SRCS
     mpform.cpp
     plugin_dropbox.cpp
@@ -27,7 +25,6 @@ target_link_libraries(kipiplugin_dropbox
                       KF5::KExiv2
                       KF5::KIOCore
                       KF5::Wallet
-                      ${QJSON_LIBRARIES}
                       KF5kipiplugins
                      )
 

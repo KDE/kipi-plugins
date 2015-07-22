@@ -130,7 +130,7 @@ if(KF5Kipi_FOUND)
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
-    find_package(QJSON)                                                        # For Facebook, Dropbox and Imgur.
+    find_package(QJSON)                                                        # For Facebook, and Imgur.
 
 #    find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
 #    find_package(Qca-qt5)                                                      # For Muvee.
@@ -225,7 +225,6 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
-    PRINT_COMPONENT_COMPILE_STATUS("Dropbox"            QJSON_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND)
     
 #    PRINT_COMPONENT_COMPILE_STATUS("Imgur"              QJSON_FOUND)
@@ -348,6 +347,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(dlnaexport)
         add_subdirectory(rajce)
         add_subdirectory(googleservices)
+        add_subdirectory(dropbox)
         
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
@@ -371,7 +371,6 @@ if(KF5Kipi_FOUND)
 #
          if(QJSON_FOUND)
             add_subdirectory(facebook)
-            add_subdirectory(dropbox)
 #             add_subdirectory(imgur)
          endif()
 #
