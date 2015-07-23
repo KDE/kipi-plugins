@@ -540,10 +540,10 @@ void DBTalker::parseResponseUserName(const QByteArray& data)
 
 void DBTalker::parseResponseListFolders(const QByteArray& data)
 {
-    QJsonParseError* err;
-    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err->error != QJsonParseError::NoError)
+    if(err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         emit signalListAlbumsFailed(i18n("Failed to list folders"));

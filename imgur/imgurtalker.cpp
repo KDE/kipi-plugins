@@ -217,9 +217,9 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
     if (data.isEmpty())
         return false;
 
-    QJsonParseError* err;
-    QJsonDocument doc = QJsonDocument::fromJson(data,err);
-    bool ok = (err->error == QJsonParseError::NoError);
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+    bool ok = (err.error == QJsonParseError::NoError);
     
     if(ok)
     {

@@ -293,10 +293,10 @@ void GDTalker::slotResult(KJob* kjob)
 
 void GDTalker::parseResponseUserName(const QByteArray& data)
 {
-    QJsonParseError* err;
-    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err->error != QJsonParseError::NoError)
+    if(err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         return;
@@ -315,10 +315,10 @@ void GDTalker::parseResponseUserName(const QByteArray& data)
 void GDTalker::parseResponseListFolders(const QByteArray& data)
 {
     qCDebug(KIPIPLUGINS_LOG) << data;
-    QJsonParseError* err;
-    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     
-    if(err->error != QJsonParseError::NoError)
+    if(err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
         emit signalListAlbumsDone(0,i18n("Failed to list folders"),QList<GSFolder>());
@@ -350,8 +350,8 @@ void GDTalker::parseResponseListFolders(const QByteArray& data)
 
 void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 {
-    QJsonParseError* err;
-    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     QJsonObject jsonObject = doc.object();
     QString temp = jsonObject["alternateLink"].toString();
     bool success        = false;    
@@ -373,8 +373,8 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 
 void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 {
-    QJsonParseError* err;
-    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
     QJsonObject jsonObject = doc.object();
     QString altLink = jsonObject["alternateLink"].toString();
     QString photoId = jsonObject["id"].toString();
