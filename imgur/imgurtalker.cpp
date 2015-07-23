@@ -25,6 +25,11 @@
 // Qt includes
 
 #include <QVariant>
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 
 // KDE includes
 
@@ -34,10 +39,6 @@
 // Libkipi includes
 
 #include <KIPI/ImageCollection>
-
-// qJson include
-
-#include <qjson/parser.h>
 
 // Local includes
 
@@ -211,206 +212,102 @@ bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
 
 bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 {
-    bool ok = false;
-
+    qCDebug(KIPIPLUGINS_LOG)<<"Upload Image data is "<<data;
+    
     if (data.isEmpty())
         return false;
 
-    QJson::Parser p;
-    QVariant      r = p.parse(data, &ok);
-
-    //qCDebug(KIPIPLUGINS_LOG) << data;
-
-    if (ok)
+    QJsonParseError* err;
+    QJsonDocument doc = QJsonDocument::fromJson(data,err);
+    bool ok = (err->error == QJsonParseError::NoError);
+    
+    if(ok)
     {
-        QMap<QString, QVariant> m = r.toMap();
-        QString responseType      = m.begin().key();
-
-        if (responseType == "error")
-        {
-            ImgurError error;
-            QMap<QString, QVariant> errData = m.begin().value().toMap();
-
-            for (QMap<QString,QVariant>::iterator it = errData.begin(); it != errData.end(); ++it)
-            {
-                QString v = it.value().toString();
-
-                if (it.key() == "message")
-                {
-                    error.message = v;
-                }
-
-                if (it.key() == "request")
-                {
-                    error.request = v;
-                }
-
-                if (it.key() == "method")
-                {
-                    if ( v == "get")
-                    {
-                        error.method = ImgurError::GET;
-                    }
-
-                    if ( v == "post")
-                    {
-                        error.method = ImgurError::POST;
-                    }
-                }
-
-                if (it.key() == "format")
-                {
-                    if ( v == "json")
-                    {
-                        error.format = ImgurError::JSON;
-                    }
-
-                    if ( v == "xml")
-                    {
-                        error.format = ImgurError::XML;
-                    }
-                }
-
-                if (it.key() == "parameters")
-                {
-                    error.parameters =  v;
-                }
-            }
-
-            emit signalError(m_currentUrl, error); // p.errorString()
-            qCDebug(KIPIPLUGINS_LOG) << "Imgur Error:" << p.errorString();
-        }
-
-        if (responseType == "upload" )
+        QJsonObject jsonObject = doc.object();
+        
+        if(jsonObject.contains(QString("upload")))
         {
             ImgurSuccess success;
-            QMap<QString, QVariant> successData = m.begin().value().toMap();
-
-            for (QMap<QString,QVariant>::iterator it = successData.begin(); it != successData.end(); ++it)
-            {
-                if (it.key() == "image")
-                {
-                    QMap<QString, QVariant> v = it.value().toMap();
-
-                    for (QMap<QString,QVariant>::iterator it = v.begin(); it != v.end(); ++it)
-                    {
-                        QString value = it.value().toString();
-
-                        if (it.key() == "name")
-                        {
-                            success.image.name = value;
-                        }
-
-                        if (it.key() == "title")
-                        {
-                            success.image.title = value;
-                        }
-
-                        if (it.key() == "caption")
-                        {
-                            success.image.caption = value;
-                        }
-
-                        if (it.key() == "hash")
-                        {
-                            success.image.hash = value;
-                        }
-
-                        if (it.key() == "deletehash")
-                        {
-                            success.image.deletehash = value;
-                        }
-
-                        if (it.key() == "datetime")
-                        {
-                        //success.image.datetime = QDateTime(value);
-                        }
-
-                        if (it.key() == "type")
-                        {
-                            success.image.type = value;
-                        }
-
-                        if (it.key() == "animated")
-                        {
-                            success.image.animated = (value == "true");
-                        }
-
-                        if (it.key() == "width")
-                        {
-                            success.image.width = value.toInt();
-                        }
-
-                        if (it.key() == "height")
-                        {
-                            success.image.height = value.toInt();
-                        }
-
-                        if (it.key() == "size")
-                        {
-                            success.image.size = value.toInt();
-                        }
-
-                        if (it.key() == "views")
-                        {
-                            success.image.views = value.toInt();
-                        }
-
-                        if (it.key() == "bandwidth")
-                        {
-                            success.image.bandwidth = value.toLongLong();
-                        }
-                    }
-                }
-
-                if (it.key() == "links")
-                {
-                    QMap<QString, QVariant> v = it.value().toMap();
-
-                    for (QMap<QString,QVariant>::iterator it = v.begin(); it != v.end(); ++it)
-                    {
-                        QString value = it.value().toString();
-
-                        if (it.key() == "original")
-                        {
-                            success.links.original = QUrl(value);
-                        }
-
-                        if (it.key() == "imgur_page")
-                        {
-                            success.links.imgur_page = QUrl(value);
-                        }
-
-                        if (it.key() == "delete_page")
-                        {
-                            success.links.delete_page = QUrl(value);
-                        }
-
-                        if (it.key() == "small_square")
-                        {
-                            success.links.small_square = QUrl(value);
-                        }
-
-                        if (it.key() == "largeThumbnail")
-                        {
-                            success.links.large_thumbnail = QUrl(value);
-                        }
-                    }
-                }
-            }
-
+            QJsonObject obj1 = jsonObject["upload"].toObject();
+            QJsonObject obj2 = obj1["image"].toObject();
+            QJsonObject obj3 = obj1["links"].toObject();
+            
+            success.image.name = obj2["name"].toString();
+            qCDebug(KIPIPLUGINS_LOG)<<"Name is "<<success.image.name;
+                    
+            success.image.title = obj2["title"].toString();
+                    
+            success.image.caption = obj2["caption"].toString();
+                    
+            success.image.hash = obj2["hash"].toString();
+                   
+            success.image.deletehash = obj2["deletehash"].toString();
+                   
+            success.image.type = obj2["type"].toString();
+                    
+            success.image.animated = (obj2["animated"].toString() == "true");
+                   
+            success.image.width = obj2["width"].toString().toInt();
+                    
+            success.image.height = obj2["height"].toString().toInt();
+                    
+            success.image.size = obj2["size"].toString().toInt();
+                    
+            success.image.views = obj2["views"].toString().toInt();
+                   
+            success.image.bandwidth = obj2["bandwidth"].toString().toLongLong();
+            
+            success.links.original = QUrl(obj3["original"].toString());
+            qCDebug(KIPIPLUGINS_LOG)<<"Link original is "<<success.links.original;
+                    
+            success.links.imgur_page = QUrl(obj3["imgur_page"].toString());
+                    
+            success.links.delete_page = QUrl(obj3["delete_page"].toString());
+                    
+            success.links.small_square = QUrl(obj3["small_square"].toString());
+                    
+            success.links.large_thumbnail = QUrl(obj3["largeThumbnail"].toString());        
+            
             emit signalSuccess(m_currentUrl, success);
+            
         }
+        
+        if(jsonObject.contains(QString("error")))
+        {
+            ImgurError error;
+            QJsonObject obj = jsonObject["error"].toObject();
+            
+            error.message   = obj["message"].toString();
+                
+            error.request = obj["request"].toString();
+                
+            error.parameters = obj["parameters"].toString();
+                
+            if((QString::compare(obj["method"].toString(), QString("get"), Qt::CaseInsensitive) == 0))
+                error.method = ImgurError::GET;
+                
+            if((QString::compare(obj["method"].toString(), QString("post"), Qt::CaseInsensitive) == 0))
+                error.method = ImgurError::POST;
+                
+            if((QString::compare(obj["format"].toString(), QString("json"), Qt::CaseInsensitive) == 0))
+                error.format = ImgurError::JSON;
+                
+            if((QString::compare(obj["format"].toString(), QString("xml"), Qt::CaseInsensitive) == 0))
+                error.format = ImgurError::XML;
+ 
+            emit signalError(m_currentUrl, error);
+            qCDebug(KIPIPLUGINS_LOG) << "Imgur Error:" << error.message;
+        }
+        
     }
     else
     {
         ImgurError error;
         error.message = i18n("Parse error");
-
         emit signalError (m_currentUrl, error);
-        qCDebug(KIPIPLUGINS_LOG) << "Parse Error:" << p.errorString();
+        qCDebug(KIPIPLUGINS_LOG) << "Parse Error";        
     }
-
+    
     return ok;
 }
 

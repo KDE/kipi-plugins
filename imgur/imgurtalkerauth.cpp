@@ -30,10 +30,6 @@
 
 #include <QtKOAuth>
 
-// qJson include
-
-#include <qjson/parser.h>
-
 // Local includes
 
 #include "kipiplugins_debug.h"

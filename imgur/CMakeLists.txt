@@ -8,8 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_imgur\")
 
-include_directories(${QJSON_INCLUDE_DIR})
-
 set(kipiplugin_imgur_PART_SRCS
     plugin_imgur.cpp
     imgurtalker.cpp
@@ -31,7 +29,6 @@ target_link_libraries(kipiplugin_imgur
                       KF5::Kipi
                       KF5::KIOCore
                       KF5::KExiv2
-                      ${QJSON_LIBRARIES}
                       KF5kipiplugins
                      )
 
@@ -39,7 +36,7 @@ if(QTKOAUTH_FOUND)
     target_link_libraries(kipiplugin_imgur ${QTKOAUTH_LIBRARIES})
 endif()
 
-configure_file(kipiplugin_imgur.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgur.desktop)
+configure_file(kipiplugin_imgur.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgur.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_imgur.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_imgur                                     DESTINATION ${PLUGIN_INSTALL_DIR})
