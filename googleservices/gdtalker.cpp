@@ -352,6 +352,13 @@ void GDTalker::parseResponseCreateFolder(const QByteArray& data)
 {
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+    
+    if(err.error != QJsonParseError::NoError)
+    {
+        emit signalBusy(false);
+        return;
+    }
+    
     QJsonObject jsonObject = doc.object();
     QString temp = jsonObject["alternateLink"].toString();
     bool success        = false;    
@@ -375,6 +382,13 @@ void GDTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     QJsonParseError err;
     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+    
+    if(err.error != QJsonParseError::NoError)
+    {
+        emit signalBusy(false);
+        return;
+    }    
+    
     QJsonObject jsonObject = doc.object();
     QString altLink = jsonObject["alternateLink"].toString();
     QString photoId = jsonObject["id"].toString();
