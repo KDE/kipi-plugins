@@ -130,7 +130,6 @@ if(KF5Kipi_FOUND)
     find_package(FLEX)                                                         # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(BISON)                                                        # For Panorama (must be found before KdepimLibs for MacOS).
     find_package(Phonon4Qt5)                                                   # For AdvancedSlideShow.
-    find_package(QJSON)                                                        # For Facebook.
     find_package(QtKOAuth)                                                     # For Imgur Auhtenticated API
 #    find_package(Qca-qt5)                                                      # For Muvee.
 #    MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)                                       # For Htmlexport.
@@ -170,7 +169,6 @@ if(KF5Kipi_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libksane"       "https://projects.kde.org/projects/kde/kdegraphics/libs/libksane" "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libksane support."       KF5Sane_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"    "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."    KF5CalendarCore_FOUND)
-    PRINT_OPTIONAL_LIBRARY_STATUS("libqjson"       "http://qjson.sourceforge.net"                                    "(version >= 0.8.1)"                  "Kipi-plugins will be compiled without libqjson support."       QJSON_FOUND)
 
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libqca"         "http://delta.affinix.com/qca"                                    "(version >= 2.1.0"                   "Kipi-plugins will be compiled without libqca support."         Qca-qt5_FOUND)
 #    PRINT_OPTIONAL_LIBRARY_STATUS("libxml2"        "http://xmlsoft.org"                                              "(version >= 2.7.0)"                  "Kipi-plugins will be compiled without libxml2 support."        LIBXML2_FOUND)
@@ -224,7 +222,6 @@ if(KF5Kipi_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("Calendar"           KF5CalendarCore_FOUND)
-    PRINT_COMPONENT_COMPILE_STATUS("Facebook"           QJSON_FOUND) 
 #    PRINT_COMPONENT_COMPILE_STATUS("Muvee"              Qca-qt5_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
 #    PRINT_COMPONENT_COMPILE_STATUS("HtmlExport"         LIBXML2_FOUND AND LIBXSLT_FOUND)
@@ -346,6 +343,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(googleservices)
         add_subdirectory(dropbox)
         add_subdirectory(imgur)
+        add_subdirectory(facebook)
         
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
@@ -367,9 +365,6 @@ if(KF5Kipi_FOUND)
 #             add_subdirectory(muvee)
 #         endif()
 #
-         if(QJSON_FOUND)
-            add_subdirectory(facebook)
-         endif()
 #
 #         # Currently the cmake module distributed w/ cmake uses a different variable
 #         # name LIBXLST_EXSLT_LIBRARIES for libxeslt than the cmake modeule 

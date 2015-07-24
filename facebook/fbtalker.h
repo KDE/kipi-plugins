@@ -29,11 +29,11 @@
 #include <QString>
 #include <QTime>
 #include <QObject>
+#include <QUrl>
 
 // KDE includes
 
 #include <kio/job.h>
-#include <kurl.h>
 
 // local includes
 
@@ -137,7 +137,7 @@ private:
 
     QByteArray   m_buffer;
 
-    KUrl         m_apiURL;
+    QUrl         m_apiURL;
     QString      m_apiVersion;
     QString      m_secretKey;
     QString      m_appID;

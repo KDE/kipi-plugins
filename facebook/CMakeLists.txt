@@ -8,8 +8,6 @@ subdirs(icons)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_facebook\")
 
-include_directories(${QJSON_INCLUDE_DIR})
-
 set(kipiplugin_facebook_PART_SRCS
     plugin_facebook.cpp
     fbwindow.cpp
@@ -27,7 +25,6 @@ target_link_libraries(kipiplugin_facebook
                       KF5::KExiv2
                       KF5::KDcraw
                       KF5::KIOCore
-                      ${QJSON_LIBRARIES}
                      )
 
 configure_file(kipiplugin_facebook.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_facebook.desktop)
