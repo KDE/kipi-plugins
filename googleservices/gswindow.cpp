@@ -25,6 +25,7 @@
 
 // Qt includes
 
+#include <QMessageBox>
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QProgressDialog>
@@ -39,20 +40,8 @@
 
 // KDE includes
 
-#include <kcombobox.h>
-#include <klineedit.h>
-#include <QMenu>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kapplication.h>
-#include <kiconloader.h>
-#include <ktabwidget.h>
-#include <krun.h>
-#include <kdialog.h>
 #include <kconfig.h>
-#include <kdeversion.h>
-#include <kwallet.h>
-#include <kpushbutton.h>
 #include <kurl.h>
 #include <kio/renamedialog.h>
 
@@ -400,7 +389,7 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
 
     if (errCode == 0)
     {
-        KMessageBox::error(this, i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
+        QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -437,7 +426,7 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
     if (errCode == 0)
     {
-        KMessageBox::error(this, i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
+        QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -516,7 +505,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
     {
         if(code == 0)
         {
-            KMessageBox::error(this, i18n("Google Drive call failed:\n%1", errMsg));
+            QMessageBox::critical(this, "Error", i18n("Google Drive Call Failed: %1\n", errMsg));
             return;   
         }
     
@@ -541,7 +530,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
     {
         if(code == 0)
         {
-            KMessageBox::error(this, i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
+            QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
             return;
         }
             
@@ -613,7 +602,7 @@ void GSWindow::picasaTransferHandler()
 void GSWindow::slotTextBoxEmpty()
 {
     qCDebug(KIPIPLUGINS_LOG) << "in slotTextBoxEmpty";
-    KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
+    QMessageBox::critical(this, "Error", i18n("The textbox is empty, please enter the code from the browser in the textbox. "
                                   "To complete the authentication click \"Change Account\", "
                                   "or \"Start Upload\" to authenticate again."));
 }
@@ -624,12 +613,7 @@ void GSWindow::slotStartTransfer()
 
     if(m_widget->m_imgList->imageUrls().isEmpty())
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("No image selected. Please select which images should be uploaded."))
-            == KMessageBox::Continue)
-        {
-             return;
-        }
-
+        QMessageBox::critical(this, "Error", i18n("No image selected. Please select which images should be uploaded."));
         return;
     }
  
@@ -637,8 +621,15 @@ void GSWindow::slotStartTransfer()
     {
         if(!(m_talker->authenticated()))
         {
-            if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
-                == KMessageBox::Continue)
+            QMessageBox warn(QMessageBox::Warning,
+                             i18n("Warning"),
+                             i18n("Authentication failed. Click \"Continue\" to authenticate."),
+                             QMessageBox::Yes | QMessageBox::No);
+    
+            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+            (warn.button(QMessageBox::No))->setText(i18n("Cancel"));
+            
+            if (warn.exec() == QMessageBox::Yes)
             {
                 m_talker->doOAuth();
                 return;
@@ -653,8 +644,15 @@ void GSWindow::slotStartTransfer()
     {
         if(!(m_picsasa_talker->authenticated()))
         {
-            if (KMessageBox::warningContinueCancel(this, i18n("Authentication failed. Click \"Continue\" to authenticate."))
-                == KMessageBox::Continue)
+            QMessageBox warn(QMessageBox::Warning,
+                             i18n("Warning"),
+                             i18n("Authentication failed. Click \"Continue\" to authenticate."),
+                             QMessageBox::Yes | QMessageBox::No);
+    
+            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+            (warn.button(QMessageBox::No))->setText(i18n("Cancel"));            
+            
+            if (warn.exec() == QMessageBox::Yes)
             {
                 m_picsasa_talker->doOAuth();
                 return;
@@ -935,10 +933,16 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         }
         else
         {
-            if (KMessageBox::warningContinueCancel(this,
+            QMessageBox warn(QMessageBox::Warning,
+                             i18n("Warning"),
                              i18n("Failed to save photo: %1\n"
-                                  "Do you want to continue?", errText))
-                             != KMessageBox::Continue)
+                                  "Do you want to continue?", errText),
+                             QMessageBox::Yes | QMessageBox::No);
+    
+            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+            (warn.button(QMessageBox::No))->setText(i18n("Cancel")); 
+            
+            if (warn.exec() != QMessageBox::Yes)
             {
                 slotTransferCancel();
                 return;
@@ -947,10 +951,16 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     }
     else
     {
-        if (KMessageBox::warningContinueCancel(this,
+        QMessageBox warn(QMessageBox::Warning,
+                         i18n("Warning"),
                          i18n("Failed to download photo: %1\n"
-                              "Do you want to continue?", errMsg))
-                         != KMessageBox::Continue)
+                              "Do you want to continue?", errMsg),
+                         QMessageBox::Yes | QMessageBox::No);
+    
+        (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+        (warn.button(QMessageBox::No))->setText(i18n("Cancel"));         
+        
+        if (warn.exec() != QMessageBox::Yes)
         {
             slotTransferCancel();
             return;
@@ -1037,7 +1047,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         */
         if (QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()) == false)
         {
-            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
+            QMessageBox::critical(this, "Error", i18n("Failed to save image to %1", newUrl.toLocalFile()));
         }
         else
         {
@@ -1062,8 +1072,15 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
     {
         if(m_gdrive)
         {
-            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg))
-                != KMessageBox::Continue)
+            QMessageBox warn(QMessageBox::Warning,
+                             i18n("Warning"),
+                             i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg),
+                             QMessageBox::Yes | QMessageBox::No);
+    
+            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+            (warn.button(QMessageBox::No))->setText(i18n("Cancel"));              
+            
+            if (warn.exec() != QMessageBox::Yes)
             {
                 m_transferQueue.clear();
                 m_widget->progressBar()->hide();
@@ -1079,8 +1096,15 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
         }
         else
         {
-            if (KMessageBox::warningContinueCancel(this, i18n("Failed to upload photo to Google Photos/PicasaWeb.\n%1\nDo you want to continue?",msg))
-                != KMessageBox::Continue)
+            QMessageBox warn(QMessageBox::Warning,
+                             i18n("Warning"),
+                             i18n("Failed to upload photo to Google Photos/PicasaWeb.\n%1\nDo you want to continue?",msg),
+                             QMessageBox::Yes | QMessageBox::No);
+    
+            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+            (warn.button(QMessageBox::No))->setText(i18n("Cancel"));              
+            
+            if (warn.exec() != QMessageBox::Yes)
             {
                 m_transferQueue.clear();
                 m_widget->progressBar()->hide();
@@ -1156,8 +1180,8 @@ void GSWindow::slotReloadAlbumsRequest()
 
 void GSWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
 {
-    KMessageBox::error(this, i18nc("%1 is the error string, %2 is the error code",
-                                   "An authentication error occurred: %1 (%2)",errMsg,errCode));
+    QMessageBox::critical(this, "Error", i18nc("%1 is the error string, %2 is the error code",
+                                               "An authentication error occurred: %1 (%2)",errMsg,errCode));
     return;
 }
 
@@ -1188,14 +1212,14 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
     if(m_gdrive)
     {
         if(code == 0)
-            KMessageBox::error(this, i18n("Google Drive call failed:\n%1", msg));
+            QMessageBox::critical(this, "Error", i18n("Google Drive call failed:\n%1", msg));
         else
             m_talker->listFolders();        
     }
     else
     {
         if(code == 0)
-            KMessageBox::error(this, i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
+            QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
         else
         {
             m_currentAlbumId = albumId;
@@ -1220,9 +1244,16 @@ void GSWindow::slotUserChangeRequest()
     KUrl url("https://accounts.google.com/logout");
     QDesktopServices::openUrl(url);
 
-    if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser, "
-                                                      "click \"Continue\" to authenticate for another account"))
-        == KMessageBox::Continue)
+    QMessageBox warn(QMessageBox::Warning,
+                     i18n("Warning"),
+                     i18n("After you have been logged out in the browser, "
+                          "click \"Continue\" to authenticate for another account"),
+                     QMessageBox::Yes | QMessageBox::No);
+    
+    (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+    (warn.button(QMessageBox::No))->setText(i18n("Cancel"));      
+    
+    if (warn.exec() == QMessageBox::Yes)
     {
         refresh_token = "";
         if(m_gdrive)
