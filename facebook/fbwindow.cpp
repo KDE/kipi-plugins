@@ -565,8 +565,15 @@ void FbWindow::slotUserChangeRequest()
     if (m_talker->loggedIn())
     {
         m_talker->logout();
-        m_accessToken.clear();
-        m_sessionExpires = 0;
+        if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser, "
+                                                          "click \"Continue\" to authenticate for another account"))
+            == KMessageBox::Continue)
+        {
+            m_accessToken.clear();
+            m_sessionExpires = 0;              
+        }
+        else
+            return;
     }
 
     authenticate();
