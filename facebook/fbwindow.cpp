@@ -564,8 +564,22 @@ void FbWindow::slotUserChangeRequest()
     if (m_talker->loggedIn())
     {
         m_talker->logout();
-        m_accessToken.clear();
-        m_sessionExpires = 0;
+        QMessageBox warn(QMessageBox::Warning,
+                     i18n("Warning"),
+                     i18n("After you have been logged out in the browser, "
+                          "click \"Continue\" to authenticate for another account"),
+                     QMessageBox::Yes | QMessageBox::No);
+    
+        (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+        (warn.button(QMessageBox::No))->setText(i18n("Cancel"));      
+    
+        if (warn.exec() == QMessageBox::Yes)
+        {
+            m_accessToken.clear();
+            m_sessionExpires = 0;
+        }
+        else
+            return;
     }
 
     authenticate();
