@@ -47,19 +47,16 @@
 #include <QPointer>
 #include <QtAlgorithms>
 #include <QDebug>
+#include <QApplication>
+#include <QDir>
+#include <QMessageBox>
+
 // KDE includes
 
-#include <kapplication.h>
-#include <kcodecs.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
-#include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kmimetype.h>
-#include <kstandarddirs.h>
-#include <kurl.h>
+#include <klocalizedstring.h>
 
 // LibKDcraw includes
 
@@ -107,9 +104,7 @@ void PicasawebTalker::listAlbums()
         m_job->kill();
         m_job = 0;
     }
-    KUrl url("https://picasaweb.google.com/data/feed/api");
-    // do not encode username to support email address
-    url.addPath("/user/default");
+    QUrl url("https://picasaweb.google.com/data/feed/api/user/default");
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
     job_ui->setWindow(m_parent);
@@ -141,9 +136,7 @@ void PicasawebTalker::listPhotos(const QString& albumId,
         m_job->kill();
         m_job = 0;
     }
-    KUrl url("https://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/default");
-    url.addPath("/albumid/" + albumId);
+    QUrl url("https://picasaweb.google.com/data/feed/api/user/default/albumid/"+albumId);
     url.addQueryItem("thumbsize", "200");
 
     if (!imgmax.isNull())
@@ -225,8 +218,7 @@ void PicasawebTalker::createAlbum(const GSFolder& album)
     QByteArray buffer;
     buffer.append(docMeta.toString().toUtf8());
 
-    KUrl url("https://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/default");
+    QUrl url("https://picasaweb.google.com/data/feed/api/user/default");
     QString auth_string = QString("Authorization: ") + m_bearer_access_token.toAscii();
     KIO::TransferJob* const job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
@@ -255,9 +247,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
         m_job = 0;
     }
 
-    KUrl url("https://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/default");
-    url.addPath("/albumid/" + albumId);
+    QUrl url("https://picasaweb.google.com/data/feed/api/user/default/albumid/"+ albumId);
     QString     auth_string = QString("Authorization: ") + m_bearer_access_token.toAscii();
     MPForm_Picasa      form;
     
@@ -277,8 +267,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     {
         return false;
     }
-
-    path = KStandardDirs::locateLocal("tmp",QFileInfo(photoPath).baseName().trimmed()+".jpg");
+    
+    path = QDir::tempPath() + QChar('/') + QFileInfo(photoPath).baseName().trimmed()+".jpg";
 
     if(rescale && (image.width() > maxDim || image.height() > maxDim)){
         image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
@@ -448,7 +438,7 @@ void PicasawebTalker::getPhoto(const QString& imgPath)
 
     emit signalBusy(true);
 
-    KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob* const job = KIO::get(QUrl(imgPath), KIO::Reload, KIO::HideProgressInfo);
     //job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -546,8 +536,8 @@ void PicasawebTalker::slotError(const QString & error)
         default:
             transError=i18n("Unknown error");
     };
-
-    KMessageBox::error(kapp->activeWindow(), i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
+    
+    QMessageBox::critical(QApplication::activeWindow(), "Error", i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
 }
 
 void PicasawebTalker::slotResult(KJob *job)
@@ -711,7 +701,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
                     if (detailsNode.nodeName() == "link" && detailsElem.attribute("rel") == "edit-media")
                     {
-                        fps.editUrl = detailsElem.attribute("href");
+                        fps.editUrl = QUrl(detailsElem.attribute("href"));
                     }
 
                     if(detailsNode.nodeName()=="georss:where")
@@ -741,7 +731,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
                         if (!thumbNode.isNull() && thumbNode.isElement())
                         {
-                            fps.thumbURL = thumbNode.toElement().attribute("url", "");
+                            fps.thumbURL = QUrl(thumbNode.toElement().attribute("url", ""));
                         }
 
                         QDomNode keywordNode = detailsElem.namedItem("media:keywords");
@@ -762,14 +752,14 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                                 if ((contentElem.attribute("medium") == "image") &&
                                     fps.originalURL.isEmpty())
                                 {
-                                    fps.originalURL = contentElem.attribute("url");
+                                    fps.originalURL = QUrl(contentElem.attribute("url"));
                                     fps.mimeType = contentElem.attribute("type");
                                 }
 
                                 if ((contentElem.attribute("medium") == "video") &&
                                     (contentElem.attribute("type") == "video/mpeg4"))
                                 {
-                                    fps.originalURL = contentElem.attribute("url");
+                                    fps.originalURL = QUrl(contentElem.attribute("url"));
                                     fps.mimeType = contentElem.attribute("type");
                                 }
                             }

@@ -30,10 +30,10 @@
 #include <QMap>
 #include <QHash>
 #include <QObject>
+#include <QUrl>
 
 // KDE includes
 
-#include <kurl.h>
 #include <kio/jobclasses.h>
 
 //local includes

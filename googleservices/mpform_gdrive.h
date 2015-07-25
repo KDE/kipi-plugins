@@ -44,6 +44,7 @@ public:
     void addPair(const QString& name,const QString& description,const QString& mimetype,const QString& id);
     bool addFile(const QString& path);
 
+    QString randomString(const int& length);
     QString contentType() const;
     QByteArray formData() const;
     QString boundary()    const;

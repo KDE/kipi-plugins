@@ -29,14 +29,14 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>
+#include <QDialogButtonBox>
+#include <QIcon>
+#include <QApplication>
+#include <QPushButton>
 
 // KDE includes
 
-#include <klocale.h>
-#include <kdialog.h>
-#include <kcombobox.h>
-#include <klineedit.h>
-#include <ktextedit.h>
+#include <klocalizedstring.h>
 
 // local includes
 
@@ -46,25 +46,32 @@ namespace KIPIGoogleServicesPlugin
 {
 
 NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
-    : KDialog(parent)
+    : QDialog(parent)
 {
     m_serviceName = serviceName;
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
         setWindowTitle(QString("Google Drive New Album"));
     else
         setWindowTitle(QString("Google Photos/PicasaWeb New Album"));
-
-    setButtons(Ok|Cancel);
-    setDefaultButton(Cancel);
+    
+    QDialogButtonBox* const buttonBox   = new QDialogButtonBox();
+    buttonBox->addButton(QDialogButtonBox::Ok);
+    buttonBox->addButton(QDialogButtonBox::Cancel);
+    buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);    
     setModal(false);
+    
+    connect(buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
+
+    connect(buttonBox, SIGNAL(rejected()),
+            this, SLOT(reject()));
 
     QWidget* const mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 400);
     QFormLayout* const albumBoxLayout  = new QFormLayout;
 
-    m_titleEdt          = new KLineEdit;
-    m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
+    m_titleEdt          = new QLineEdit;
+    m_titleEdt->setToolTip(i18n("Title of the album that will be created (required)."));
 
 //     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
 //     {
@@ -81,11 +88,11 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     m_dtEdt->setDisplayFormat("dd.MM.yyyy HH:mm");
     m_dtEdt->setWhatsThis(i18n("Date and Time of the album that will be created (optional)."));
 
-    m_descEdt           = new KTextEdit;
-    m_descEdt->setWhatsThis(i18n("Description of the album that will be created (optional)."));
+    m_descEdt           = new QTextEdit;
+    m_descEdt->setToolTip(i18n("Description of the album that will be created (optional)."));
 
-    m_locEdt            = new KLineEdit;
-    m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));  
+    m_locEdt            = new QLineEdit;
+    m_locEdt->setToolTip(i18n("Location of the album that will be created (optional).")); 
     
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
@@ -102,8 +109,8 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     }
     
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(KDialog::spacingHint());
-    albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     albumBox->setLayout(albumBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -126,8 +133,8 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
 
     QFormLayout* const privBoxLayout = new QFormLayout;
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
-    privBoxLayout->setSpacing(KDialog::spacingHint());
-    privBoxLayout->setMargin(KDialog::spacingHint());
+    privBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    privBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     privBox->setLayout(privBoxLayout);
 
     // ------------------------------------------------------------------------
@@ -135,7 +142,8 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
     QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(privBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
+    mainLayout->addWidget(buttonBox);
+    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
     mainWidget->setLayout(mainLayout);
     

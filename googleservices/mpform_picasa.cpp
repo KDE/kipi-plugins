@@ -35,12 +35,7 @@
 #include <QFile>
 #include <QMimeDatabase>
 #include <QMimeType>
-
-// KDE includes
-
-#include <kapplication.h>
-#include <krandom.h>
-#include <kurl.h>
+#include <QTime>
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -48,11 +43,28 @@ namespace KIPIGoogleServicesPlugin
 MPForm_Picasa::MPForm_Picasa()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).toAscii();
+    m_boundary += randomString(42 + 13).toAscii();
 }
 
 MPForm_Picasa::~MPForm_Picasa()
 {
+}
+
+QString MPForm_Picasa::randomString(const int& length)
+{
+   const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+
+   QString randomString;
+   qsrand((uint)QTime::currentTime().msec());
+
+   for(int i=0; i<length; ++i)
+   {
+       int index = qrand() % possibleCharacters.length();
+       QChar nextChar = possibleCharacters.at(index);
+       randomString.append(nextChar);
+   }
+
+   return randomString;
 }
 
 void MPForm_Picasa::reset()
@@ -133,7 +145,7 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
     str += name.toAscii();
     str += "\"; ";
     str += "filename=\"";
-    str += QFile::encodeName(KUrl(path).fileName());
+    str += QFile::encodeName(QUrl::fromLocalFile(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: " ;
     str +=  file_size.toAscii();

@@ -28,14 +28,18 @@
 #include <QtWidgets/QLayout>
 #include <QPainter>
 #include <QTimer>
+#include <QPushButton>
+#include <QDialogButtonBox>
 
 // KDE includes
 
-#include <kpushbutton.h>
-#include <klocale.h>
-#include <kseparator.h>
+#include <klocalizedstring.h>
 #include <ksqueezedtextlabel.h>
 #include <kpixmapsequence.h>
+
+// Libkdcraw includes
+
+#include <rwidgetutils.h>
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -47,7 +51,6 @@ public:
     Private()
     {
         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
-        bCancel       = 0;
         bAdd          = 0;
         bAddAll       = 0;
         bReplace      = 0;
@@ -58,12 +61,11 @@ public:
         progressCount = 0;
         progressTimer = 0;
     }
-
-    KPushButton*    bCancel;
-    KPushButton*    bAdd;
-    KPushButton*    bAddAll;
-    KPushButton*    bReplace;
-    KPushButton*    bReplaceAll;
+    
+    QPushButton*    bAdd;
+    QPushButton*    bAddAll;
+    QPushButton*    bReplace;
+    QPushButton*    bReplaceAll;
     QUrl            src;
     QUrl            dest;
     Interface*      iface;
@@ -87,30 +89,47 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     d->iface = _iface;
 
     setWindowTitle(_caption);
-
-    d->bCancel = new KPushButton(KStandardGuiItem::cancel(), this);
-    connect(d->bCancel, SIGNAL(clicked()),
+    
+    QDialogButtonBox* const buttonBox   = new QDialogButtonBox();
+    
+    buttonBox->addButton(QDialogButtonBox::Cancel);
+    connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
             this, SLOT(cancelPressed()));
-
-    d->bAdd = new KPushButton(i18n("&Add As New"), this);
+    
+    d->bAdd = new QPushButton(buttonBox);
+    d->bAdd->setText(i18n("Add As New"));
     d->bAdd->setToolTip(i18n("Item will be added alongside the linked version."));
     connect(d->bAdd, SIGNAL(clicked()),
             this, SLOT(addPressed()));
-
-    d->bAddAll = new KPushButton(i18n("&Add All"), this);
+    
+    d->bAddAll = new QPushButton(buttonBox);
+    d->bAddAll->setText(i18n("Add All"));
     d->bAddAll->setToolTip(i18n("Items will be added alongside the linked version. You will not be prompted again."));
     connect(d->bAddAll, SIGNAL(clicked()),
-            this, SLOT(addAllPressed()));
-
-    d->bReplace = new KPushButton(i18n("&Replace"), this);
+            this, SLOT(addAllPressed()));    
+    
+    d->bReplace = new QPushButton(buttonBox);
+    d->bReplace->setText(i18n("Replace"));
     d->bReplace->setToolTip(i18n("Item will be replacing the linked version."));
     connect(d->bReplace, SIGNAL(clicked()),
             this, SLOT(replacePressed()));
-
-    d->bReplaceAll = new KPushButton(i18n("&Replace All"), this);
+    
+    d->bReplaceAll = new QPushButton(buttonBox);
+    d->bReplaceAll->setText(i18n("Replace All"));
     d->bReplaceAll->setToolTip(i18n("Items will be replacing the linked version. You will not be prompted again."));
     connect(d->bReplaceAll, SIGNAL(clicked()),
             this, SLOT(replaceAllPressed()));
+    
+    buttonBox->addButton(d->bAdd, QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(d->bAddAll, QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(d->bReplace, QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(d->bReplaceAll, QDialogButtonBox::AcceptRole);
+    
+    connect(buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
+
+    connect(buttonBox, SIGNAL(rejected()),
+            this, SLOT(reject()));
 
     QVBoxLayout* const pLayout = new QVBoxLayout(this);
     pLayout->addStrut(360);	// makes dlg at least that wide
@@ -146,7 +165,7 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     QHBoxLayout* const layout2 = new QHBoxLayout();
     pLayout->addLayout(layout2);
 
-    KSeparator* const separator = new KSeparator(this);
+    KDcrawIface::RLineWidget* const separator = new KDcrawIface::RLineWidget(Qt::Horizontal,this);
     pLayout->addWidget(separator);
 
     QHBoxLayout* const layout = new QHBoxLayout();
@@ -154,20 +173,7 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
 
     layout->addStretch(1);
 
-    layout->addWidget(d->bAdd);
-    setTabOrder(d->bAdd, d->bCancel);
-
-    layout->addWidget(d->bAddAll);
-    setTabOrder(d->bAddAll, d->bCancel);
-
-    layout->addWidget(d->bReplace);
-    setTabOrder(d->bReplace, d->bCancel);
-
-    layout->addWidget(d->bReplaceAll);
-    setTabOrder(d->bReplaceAll, d->bCancel);
-
-    d->bCancel->setDefault(true);
-    layout->addWidget(d->bCancel);
+    layout->addWidget(buttonBox);
 
     d->progressTimer = new QTimer(this);
 

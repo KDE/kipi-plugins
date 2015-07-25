@@ -25,10 +25,8 @@
 
 // Qt includes
 
+#include <QUrl>
 #include <QString>
-
-//KDE includes
-#include <kurl.h>
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -57,9 +55,9 @@ public:
     QString     mimeType;
     QString     gpsLon;
     QString     gpsLat;
-    KUrl        originalURL;
-    KUrl        thumbURL;
-    KUrl        editUrl;
+    QUrl        originalURL;
+    QUrl        thumbURL;
+    QUrl        editUrl;
 };
 
 class GSFolder

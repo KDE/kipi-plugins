@@ -27,14 +27,11 @@
 
 #include <QRadioButton>
 #include <QDateTimeEdit>
-
-// KDE includes
-
-#include <klocale.h>
-#include <kdialog.h>
-#include <kcombobox.h>
-#include <klineedit.h>
-#include <ktextedit.h>
+#include <QDialog>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QComboBox>
+#include <QCloseEvent>
 
 // Local includes
 
@@ -43,7 +40,7 @@ namespace KIPIGoogleServicesPlugin
 
 class GSFolder;
 
-class NewAlbumDlg : public KDialog
+class NewAlbumDlg : public QDialog
 {
     Q_OBJECT
 
@@ -56,9 +53,9 @@ public:
 
 private:
 
-    KLineEdit*     m_titleEdt;
-    KTextEdit*     m_descEdt;
-    KLineEdit*     m_locEdt;
+    QLineEdit*     m_titleEdt;
+    QTextEdit*     m_descEdt;
+    QLineEdit*     m_locEdt;
     QDateTimeEdit* m_dtEdt;
 
     QString        m_serviceName;

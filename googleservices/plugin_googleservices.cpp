@@ -40,7 +40,7 @@ extern "C"
 
 #include <kpluginfactory.h>
 #include <kwindowsystem.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 // LibKIPI includes
 

@@ -37,12 +37,12 @@
 #include <QPointer>
 #include <QDebug>
 #include <QDesktopServices>
+#include <QUrl>
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kconfig.h>
-#include <kurl.h>
 #include <kio/renamedialog.h>
 
 // LibKIPI includes
@@ -393,7 +393,7 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
         return;
     }
 
-    typedef QPair<KUrl,GSPhoto> Pair;
+    typedef QPair<QUrl,GSPhoto> Pair;
     m_transferQueue.clear();
     QList<GSPhoto>::const_iterator itPWP;
 
@@ -430,16 +430,16 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
         return;
     }
 
-    typedef QPair<KUrl,GSPhoto> Pair;
+    typedef QPair<QUrl,GSPhoto> Pair;
 
     m_transferQueue.clear();
 
-    KUrl::List urlList = m_widget->m_imgList->imageUrls(true);
+    QList<QUrl> urlList = m_widget->m_imgList->imageUrls(true);
 
     if (urlList.isEmpty())
         return;
 
-    for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         KPImageInfo info(*it);
         GSPhoto temp;
@@ -670,7 +670,7 @@ void GSWindow::slotStartTransfer()
 	return;
     }
 
-    typedef QPair<KUrl, GSPhoto> Pair;
+    typedef QPair<QUrl, GSPhoto> Pair;
 
     for(int i=0 ;i < (m_widget->m_imgList->imageUrls().size()) ; i++)
     {
@@ -716,7 +716,7 @@ void GSWindow::uploadNextPhoto()
         return;
     }
 
-    typedef QPair<KUrl,GSPhoto> Pair;
+    typedef QPair<QUrl,GSPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
     GSPhoto info      = pathComments.second;
     bool res;
@@ -880,11 +880,12 @@ void GSWindow::downloadNextPhoto()
 void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
 {
     GSPhoto item = m_transferQueue.first().second;
-    KUrl tmpUrl         = QString(m_tmp + item.title);
+    QUrl tmpUrl = QUrl::fromLocalFile(QString(m_tmp + item.title));
 
     if (item.mimeType == "video/mpeg4")
     {
-        tmpUrl.setFileName(item.title + ".mp4");
+        tmpUrl = tmpUrl.adjusted(QUrl::RemoveFilename);
+        tmpUrl.setPath(tmpUrl.path() + item.title + ".mp4");
     }
 
     if (errCode == 1)
@@ -967,7 +968,7 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         }
     }
 
-    KUrl newUrl = QString(m_widget->getDestinationPath() + tmpUrl.fileName());
+    QUrl newUrl = QUrl::fromLocalFile(QString(m_widget->getDestinationPath() + tmpUrl.fileName()));
     bool bSkip  = false;
 
     QFileInfo targetInfo(newUrl.toLocalFile());
@@ -1241,7 +1242,7 @@ void GSWindow::slotTransferCancel()
 
 void GSWindow::slotUserChangeRequest()
 {
-    KUrl url("https://accounts.google.com/logout");
+    QUrl url("https://accounts.google.com/logout");
     QDesktopServices::openUrl(url);
 
     QMessageBox warn(QMessageBox::Warning,
