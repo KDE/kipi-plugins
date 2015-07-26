@@ -354,7 +354,7 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
 
 QString GoogleServicesWidget::getDestinationPath() const
 {
-    return m_uploadWidget->selectedImageCollection().url().path();
+    return m_uploadWidget->selectedImageCollection().uploadUrl().path();
 }
 
 KIPIPlugins::KPImagesList* GoogleServicesWidget::imagesList() const

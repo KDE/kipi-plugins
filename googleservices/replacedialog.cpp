@@ -35,11 +35,14 @@
 
 #include <klocalizedstring.h>
 #include <ksqueezedtextlabel.h>
-#include <kpixmapsequence.h>
 
 // Libkdcraw includes
 
 #include <rwidgetutils.h>
+
+//local includes
+
+#include "workingpixmap.h"
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -50,7 +53,7 @@ public:
 
     Private()
     {
-        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix   = WorkingPixmap();
         bAdd          = 0;
         bAddAll       = 0;
         bReplace      = 0;
@@ -73,7 +76,7 @@ public:
     QLabel*         lbDest;
     QByteArray      buffer;
     QPixmap         mimePix;
-    KPixmapSequence progressPix;
+    WorkingPixmap   progressPix;
     int             progressCount;
     QTimer*         progressTimer;
 };

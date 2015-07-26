@@ -67,7 +67,7 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName)
             this, SLOT(reject()));
 
     QWidget* const mainWidget = new QWidget(this);
-    mainWidget->setMinimumSize(400, 400);
+    mainWidget->setMinimumSize(500, 500);
     QFormLayout* const albumBoxLayout  = new QFormLayout;
 
     m_titleEdt          = new QLineEdit;

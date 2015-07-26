@@ -10,6 +10,7 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_googleservices\")
 
 set(kipiplugin_googleservices_PART_SRCS
     authorize.cpp
+    workingpixmap.cpp
     replacedialog.cpp
     mpform_gdrive.cpp
     mpform_picasa.cpp
