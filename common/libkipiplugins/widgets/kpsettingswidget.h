@@ -52,13 +52,6 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-  
-// enum PicasawebTagsBehaviour
-// {
-//     PwTagLeaf = 0,
-//     PwTagSplit,
-//     PwTagCombined
-// };
 
 class KIPIPLUGINS_EXPORT KPSettingsWidget : public QWidget
 {
@@ -75,20 +68,11 @@ public:
     KPImagesList*     imagesList()  const;
     KPProgressWidget* progressBar() const;
 
-Q_SIGNALS:
-
-    //void imageListChanged();
-
 protected Q_SLOTS:
 
     void slotResizeChecked();
-    //void slotImageListChanged();
 
 protected:
-  
-//     bool                           m_picasaExport;
-//     bool                           m_picasaImport;
-//     bool                           m_gdrive;
 
     KPImagesList*                  m_imgList;
     KIPI::UploadWidget*            m_uploadWidget;

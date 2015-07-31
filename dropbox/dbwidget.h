@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+// Local includes
+
+#include "kpsettingswidget.h"
+
 class QLabel;
 class QSpinBox;
 class QCheckBox;
@@ -41,50 +45,21 @@ namespace KIPI
     class UploadWidget;
 }
 
-namespace KIPIPlugins
-{
-    class KPImagesList;
-    class KPProgressWidget;
-}
+using namespace KIPIPlugins;
 
 namespace KIPIDropboxPlugin
 {
 
-class DropboxWidget : public QWidget
+class DropboxWidget : public KPSettingsWidget
 {
     Q_OBJECT
 
 public:
 
-    DropboxWidget(QWidget* const parent);
+    DropboxWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~DropboxWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString());
-
-    KIPIPlugins::KPImagesList*     imagesList()  const;
-    KIPIPlugins::KPProgressWidget* progressBar() const;
-
-private Q_SLOTS:
-
-    void slotResizeChecked();
-
-private:
-
-    KIPIPlugins::KPImagesList*     m_imgList;
-
-    QLabel*                        m_headerLbl;
-    QLabel*                        m_userNameDisplayLbl;
-    KPushButton*                   m_changeUserBtn;
-
-    QComboBox*                     m_albumsCoB;
-    KPushButton*                   m_newAlbumBtn;
-    KPushButton*                   m_reloadAlbumsBtn;
-
-    QCheckBox*                     m_resizeChB;
-    QSpinBox*                      m_dimensionSpB;
-    QSpinBox*                      m_imageQualitySpB;
-
-    KIPIPlugins::KPProgressWidget* m_progressBar;
+    virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
 
     friend class DBWindow;
 };

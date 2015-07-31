@@ -79,7 +79,7 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_imagesCount = 0;
     m_imagesTotal = 0;
 
-    m_widget      = new DropboxWidget(this);
+    m_widget      = new DropboxWidget(this, iface(),"Dropbox");
     setMainWidget(m_widget);
     setWindowIcon(QIcon::fromTheme("kipi-dropbox"));
     setButtons(Help | User1 | Close);
