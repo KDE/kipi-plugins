@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+// Local includes
+
+#include "kpsettingswidget.h"
+
 class QLabel;
 class QSpinBox;
 class QCheckBox;
@@ -40,11 +44,7 @@ namespace KIPI
     class UploadWidget;
 }
 
-namespace KIPIPlugins
-{
-    class KPImagesList;
-    class KPProgressWidget;
-}
+using namespace KIPIPlugins;
 
 namespace KIPIGoogleServicesPlugin
 {
@@ -56,55 +56,25 @@ enum PicasawebTagsBehaviour
     PwTagCombined
 };
 
-class GoogleServicesWidget : public QWidget
+class GoogleServicesWidget : public KPSettingsWidget
 {
     Q_OBJECT
 
 public:
 
-    GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName);
+    GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName, const QString& serviceName);
     ~GoogleServicesWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString());
-    QString getDestinationPath()    const;
-
-    KIPIPlugins::KPImagesList*     imagesList()  const;
-    KIPIPlugins::KPProgressWidget* progressBar() const;
-
-Q_SIGNALS:
-
-    //void imageListChanged();
-
-private Q_SLOTS:
-
-    void slotResizeChecked();
-    //void slotImageListChanged();
+    virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
 
 private:
   
     bool                           m_picasaExport;
     bool                           m_picasaImport;
     bool                           m_gdrive;
-
-    KIPIPlugins::KPImagesList*     m_imgList;
-    KIPI::UploadWidget*            m_uploadWidget;
+    
     QString                        m_serviceName;
-
-    QLabel*                        m_headerLbl;
-    QLabel*                        m_userNameDisplayLbl;
-    QPushButton*                   m_changeUserBtn;
-    QComboBox*                     m_dlDimensionCoB;
-
-    QComboBox*                     m_albumsCoB;
-    QPushButton*                   m_newAlbumBtn;
-    QPushButton*                   m_reloadAlbumsBtn;
-
     QButtonGroup*                  m_tagsBGrp;
-    QCheckBox*                     m_resizeChB;
-    QSpinBox*                      m_dimensionSpB;
-    QSpinBox*                      m_imageQualitySpB;
-
-    KIPIPlugins::KPProgressWidget* m_progressBar;
 
     friend class GSWindow;
 };

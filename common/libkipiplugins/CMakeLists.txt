@@ -27,6 +27,7 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpimagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpbatchprogressdialog.cpp

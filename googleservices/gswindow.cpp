@@ -90,7 +90,10 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_imagesTotal = 0;
     m_renamingOpt = 0;
 
-    m_widget      = new GoogleServicesWidget(this, iface(), m_serviceName);
+    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+        m_widget      = new GoogleServicesWidget(this, iface(), "Google Drive", m_serviceName);
+    else
+        m_widget      = new GoogleServicesWidget(this, iface(), "Google Photos/PicasaWeb", m_serviceName);
     
     setMainWidget(m_widget);
     setButtons(Help | User1 | Close);
@@ -379,7 +382,7 @@ void GSWindow::writeSettings()
 
 void GSWindow::slotSetUserName(const QString& msg)
 {
-    m_widget->updateLabels(msg,"");
+    m_widget->updateLabels(msg);
 }
 
 void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg, const QList <GSPhoto>& photosList)
