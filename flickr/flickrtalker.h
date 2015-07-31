@@ -99,7 +99,7 @@ public:
 
     void    addPhotoToPhotoSet(const QString& photoId, const QString& photoSetId);
     bool    addPhoto(const QString& photoPath, const FPhotoInfo& info,
-                     bool sendOriginal = false, bool rescale=false, int maxDim=600, int imageQuality=85);
+                     bool rescale=false, int maxDim=600, int imageQuality=85);
 
 public:
 

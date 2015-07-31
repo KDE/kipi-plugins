@@ -92,7 +92,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     if(grp.exists())
     {
         qCDebug(KIPIPLUGINS_LOG) << QString("%1Export Settings").arg(m_serviceName) << " exists, deleting it";
-    grp.deleteGroup();
+        grp.deleteGroup();
     }
 
     m_select                    = dlg;
@@ -100,16 +100,16 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
-    m_widget                    = new FlickrWidget(this, serviceName);
-    m_albumsListComboBox        = m_widget->m_albumsListComboBox;
+    m_widget                    = new FlickrWidget(this, iface(), serviceName);
+    m_albumsListComboBox        = m_widget->m_albumsCoB;
     m_newAlbumBtn               = m_widget->m_newAlbumBtn;
-    m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
-    m_resizeCheckBox            = m_widget->m_resizeCheckBox;
+    //m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
+    m_resizeCheckBox            = m_widget->m_resizeChB;
     m_publicCheckBox            = m_widget->m_publicCheckBox;
     m_familyCheckBox            = m_widget->m_familyCheckBox;
     m_friendsCheckBox           = m_widget->m_friendsCheckBox;
-    m_dimensionSpinBox          = m_widget->m_dimensionSpinBox;
-    m_imageQualitySpinBox       = m_widget->m_imageQualitySpinBox;
+    m_dimensionSpinBox          = m_widget->m_dimensionSpB;
+    m_imageQualitySpinBox       = m_widget->m_imageQualitySpB;
     m_extendedTagsButton        = m_widget->m_extendedTagsButton;
     m_addExtraTagsCheckBox      = m_widget->m_addExtraTagsCheckBox;
     m_extendedPublicationButton = m_widget->m_extendedPublicationButton;
@@ -118,15 +118,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_tagsLineEdit              = m_widget->m_tagsLineEdit;
     m_exportHostTagsCheckBox    = m_widget->m_exportHostTagsCheckBox;
     m_stripSpaceTagsCheckBox    = m_widget->m_stripSpaceTagsCheckBox;
-    m_changeUserButton          = m_widget->m_changeUserButton;
+    m_changeUserButton          = m_widget->m_changeUserBtn;
     m_removeAccount             = m_widget->m_removeAccount;
-    m_userNameDisplayLabel      = m_widget->m_userNameDisplayLabel;
+    m_userNameDisplayLabel      = m_widget->m_userNameDisplayLbl;
     m_imglst                    = m_widget->m_imglst;
 
     KGuiItem::assign(startButton(),
                      KGuiItem(i18n("Start Uploading"), QIcon::fromTheme("network-workgroup")));
     setMainWidget(m_widget);
-    m_widget->setMinimumSize(600, 400);
+    m_widget->setMinimumSize(800, 600);
 
     connect(m_imglst, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -189,7 +189,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotAddPhotoCancelAndClose()));
 
-    connect(m_widget->m_reloadphotoset, SIGNAL(clicked()),
+    connect(m_widget->m_reloadAlbumsBtn, SIGNAL(clicked()),
             this, SLOT(slotReloadPhotoSetRequest()));
 
     //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),
@@ -377,7 +377,7 @@ void FlickrWindow::readSettings(QString uname)
         m_dimensionSpinBox->setEnabled(false);
     }
 
-    m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
+    //m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
 
     m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width",       1600));
     m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality",    85));
@@ -414,7 +414,7 @@ void FlickrWindow::writeSettings()
     int contentType = m_contentTypeComboBox->itemData(m_contentTypeComboBox->currentIndex()).toInt();
     grp.writeEntry("Content Type",                      contentType);
     grp.writeEntry("Resize",                            m_resizeCheckBox->isChecked());
-    grp.writeEntry("Send original",                     m_sendOriginalCheckBox->isChecked());
+    //grp.writeEntry("Send original",                     m_sendOriginalCheckBox->isChecked());
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
@@ -681,7 +681,7 @@ void FlickrWindow::slotUser1()
 {
     qCDebug(KIPIPLUGINS_LOG) << "SlotUploadImages invoked";
 
-    m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
+    //m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
 
     if (m_imglst->imageUrls().isEmpty())
     {
@@ -834,7 +834,6 @@ void FlickrWindow::slotAddPhotoNext()
         qCDebug(KIPIPLUGINS_LOG) << "File size is within max allowed limit.";
         bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
-                                  m_sendOriginalCheckBox->isChecked(),
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
                                   m_imageQualitySpinBox->value());

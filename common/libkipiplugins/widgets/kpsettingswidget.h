@@ -43,6 +43,7 @@ class QPushButton;
 class QGroupBox;
 class QGridLayout;
 class QVBoxLayout;
+class QHBoxLayout;
 
 namespace KIPI
 {
@@ -62,7 +63,7 @@ public:
     KPSettingsWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~KPSettingsWidget();
 
-    virtual void updateLabels(const QString& name, const QString& url = QString()) = 0;
+    virtual void updateLabels(const QString& name = QString(), const QString& url = QString()) = 0;
     QString getDestinationPath()    const;
 
     KPImagesList*     imagesList()  const;
@@ -91,6 +92,14 @@ protected:
     QSpinBox*                      m_dimensionSpB;
     QSpinBox*                      m_imageQualitySpB;
     
+    QHBoxLayout*                   mainLayout;
+    
+    QWidget*                       m_settingsBox;
+    QVBoxLayout*                   m_settingsBoxLayout;
+    
+    QGroupBox*                     m_albBox;
+    QGridLayout*                   m_albumsBoxLayout;
+    
     QGroupBox*                     m_optionsBox;
     QGridLayout*                   m_optionsBoxLayout;
     
@@ -99,6 +108,9 @@ protected:
     
     QGroupBox*                     m_sizeBox;
     QVBoxLayout*                   m_sizeBoxLayout;
+    
+    QGroupBox*                     m_accountBox;
+    QGridLayout*                   m_accountBoxLayout;
 
     KPProgressWidget*              m_progressBar;
 };

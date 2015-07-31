@@ -37,6 +37,7 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QComboBox>
+#include <QScrollArea>
 
 // KDE includes
 
@@ -55,8 +56,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 {
     m_pluginName = pluginName;
     setObjectName(m_pluginName+" Widget");
-
-    QHBoxLayout* const mainLayout =new QHBoxLayout(this);
+    mainLayout =new QHBoxLayout(this);
 
     //----------------------------------------------------------
 
@@ -66,8 +66,12 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.",m_pluginName));
 
-    QWidget* const settingsBox           = new QWidget(this);
-    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QScrollArea* const settingsScrollArea = new QScrollArea(this);
+    m_settingsBox = new QWidget(settingsScrollArea);
+    m_settingsBoxLayout = new QVBoxLayout(m_settingsBox);
+    settingsScrollArea->setWidget(m_settingsBox);
+    settingsScrollArea->setWidgetResizable(true);
+    settingsScrollArea->setFrameShadow(QFrame::Plain);
 
     m_headerLbl = new QLabel(this);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open %1 in a browser.",m_pluginName));
@@ -76,51 +80,51 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //------------------------------------------------------------
 
-    QGroupBox* const accountBox   = new QGroupBox(i18n("Account"),settingsBox);
-    accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",m_pluginName));    
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
+    m_accountBox   = new QGroupBox(i18n("Account"),m_settingsBox);
+    m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",m_pluginName));    
+    m_accountBoxLayout = new QGridLayout(m_accountBox);
 
-    QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),accountBox);
-    m_userNameDisplayLbl      = new QLabel(accountBox);
-    m_changeUserBtn           = new QPushButton(accountBox);
+    QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),m_accountBox);
+    m_userNameDisplayLbl      = new QLabel(m_accountBox);
+    m_changeUserBtn           = new QPushButton(m_accountBox);
     m_changeUserBtn->setText(i18n("Change Account"));
     m_changeUserBtn->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
     m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",m_pluginName));
       
 
-    accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
-    accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
-    accountBoxLayout->addWidget(m_changeUserBtn,      1,0,1,4);
-    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    m_accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
+    m_accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
+    m_accountBoxLayout->addWidget(m_changeUserBtn,      1,0,1,4);
+    m_accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    m_accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //-------------------------------------------------------------
 
-    QGroupBox* const albBox            = new QGroupBox(i18n("Album"),settingsBox);
-    albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",m_pluginName)); 
-    QGridLayout* const albumsBoxLayout = new QGridLayout(albBox);
-    QLabel* const albLbl = new QLabel(i18n("Album:"),albBox);
-    m_albumsCoB          = new QComboBox(albBox);
+    m_albBox            = new QGroupBox(i18n("Album"),m_settingsBox);
+    m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",m_pluginName)); 
+    m_albumsBoxLayout = new QGridLayout(m_albBox);
+    QLabel* const albLbl = new QLabel(i18n("Album:"),m_albBox);
+    m_albumsCoB          = new QComboBox(m_albBox);
     m_albumsCoB->setEditable(false);
         
-    m_newAlbumBtn = new QPushButton(accountBox);
+    m_newAlbumBtn = new QPushButton(m_accountBox);
     m_newAlbumBtn->setText(i18n("New Album"));
     m_newAlbumBtn->setIcon(QIcon::fromTheme("list-add").pixmap(16));
     m_newAlbumBtn->setToolTip(i18n("Create new %1 folder",m_pluginName));
     
-    m_reloadAlbumsBtn = new QPushButton(accountBox);
+    m_reloadAlbumsBtn = new QPushButton(m_accountBox);
     m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
     m_reloadAlbumsBtn->setIcon(QIcon::fromTheme("view-refresh").pixmap(16));
     m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
 
-    albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
-    albumsBoxLayout->addWidget(m_albumsCoB,       0, 1, 1, 4);
-    albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
-    albumsBoxLayout->addWidget(m_reloadAlbumsBtn, 1, 4, 1, 1);
+    m_albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
+    m_albumsBoxLayout->addWidget(m_albumsCoB,       0, 1, 1, 4);
+    m_albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
+    m_albumsBoxLayout->addWidget(m_reloadAlbumsBtn, 1, 4, 1, 1);
     
     //----------------------------------------------------------
     
-    m_sizeBox         = new QGroupBox(i18n("Max Dimension"), settingsBox);
+    m_sizeBox         = new QGroupBox(i18n("Max Dimension"), m_settingsBox);
     m_sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
     m_sizeBoxLayout = new QVBoxLayout(m_sizeBox);
     m_dlDimensionCoB                 = new QComboBox(m_sizeBox);
@@ -135,7 +139,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     
     // ------------------------------------------------------------------------
 
-    m_uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    m_uploadBox         = new QGroupBox(i18n("Destination"), m_settingsBox);
     m_uploadBox->setWhatsThis(i18n("This is the location where %1 images will be downloaded.",m_pluginName));
     m_uploadBoxLayout = new QVBoxLayout(m_uploadBox);
     m_uploadWidget                     = iface->uploadWidget(m_uploadBox);
@@ -143,7 +147,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     //-----------------------------------------------------------
 
-    m_optionsBox         = new QGroupBox(i18n("Options"),settingsBox);
+    m_optionsBox         = new QGroupBox(i18n("Options"),m_settingsBox);
     m_optionsBox->setWhatsThis(i18n("These are the options that would be applied to photos before upload."));
     m_optionsBoxLayout = new QGridLayout(m_optionsBox);
 
@@ -179,26 +183,26 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     m_optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     m_optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    m_progressBar = new KPProgressWidget(settingsBox);
+    m_progressBar = new KPProgressWidget(m_settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
     //------------------------------------------------------
 
-    settingsBoxLayout->addWidget(m_headerLbl);
-    settingsBoxLayout->addWidget(accountBox);
-    settingsBoxLayout->addWidget(m_sizeBox);
-    settingsBoxLayout->addWidget(albBox);
-    settingsBoxLayout->addWidget(m_uploadBox);
-    settingsBoxLayout->addWidget(m_optionsBox);
-    settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    m_settingsBoxLayout->addWidget(m_headerLbl);
+    m_settingsBoxLayout->addWidget(m_accountBox);
+    m_settingsBoxLayout->addWidget(m_sizeBox);
+    m_settingsBoxLayout->addWidget(m_albBox);
+    m_settingsBoxLayout->addWidget(m_uploadBox);
+    m_settingsBoxLayout->addWidget(m_optionsBox);
+    m_settingsBoxLayout->addWidget(m_progressBar);  //Add progress bar in the widgets class that inherits this class, after all other widgets have been added in the sub class.
+    m_settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    m_settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //--------------------------------------------------------
 
     mainLayout->addWidget(m_imgList);
-    mainLayout->addWidget(settingsBox);
+    mainLayout->addWidget(settingsScrollArea);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
 

@@ -53,49 +53,23 @@
 #include "comboboxdelegate.h"
 #include "comboboxintermediate.h"
 #include "flickrlist.h"
-#include "kpprogresswidget.h"
 
 namespace KIPIFlickrPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
-    : QWidget(parent)
-{
-    setObjectName("FlickrWidget");
+FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& serviceName)
+    : KPSettingsWidget(parent,iface,serviceName)
+{    
+    m_serviceName = serviceName;
+    
+    //Adding Remove Account button
+    m_removeAccount              = new QPushButton(m_accountBox);
+    m_removeAccount->setText(i18n("Remove Account"));
+    m_accountBoxLayout->addWidget(m_removeAccount, 2,0,1,4);
 
-    QVBoxLayout* const flickrWidgetLayout = new QVBoxLayout(this);
-    KDcrawIface::RLineWidget* const line  = new KDcrawIface::RLineWidget(Qt::Horizontal, this);
-    m_tab                                 = new QTabWidget(this);
-    QLabel* const headerLabel             = new QLabel(this);
-    headerLabel->setOpenExternalLinks(true);
-    headerLabel->setFocusPolicy(Qt::NoFocus);
+    // -- The image list --------------------------------------------------
 
-    if (serviceName == QString("23"))
-        headerLabel->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
-                                  "<font color=\"#7CD164\">23</font></a>"
-                                  " Export"
-                                  "</h2></b>"));
-    else if (serviceName == QString("Zooomr"))
-        headerLabel->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
-                                  "<font color=\"#7CD164\">zooomr</font></a>"
-                                  " Export"
-                                  "</h2></b>"));
-    else
-        headerLabel->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
-                                  "<font color=\"#0065DE\">flick</font>"
-                                  "<font color=\"#FF0084\">r</font></a>"
-                                  " Export"
-                                  "</h2></b>"));
-
-    // -- The common progress bar  --------------------------------------------------
-
-    m_progressBar = new KIPIPlugins::KPProgressWidget(this);
-    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_progressBar->hide();
-
-    // -- The image list tab --------------------------------------------------
-
-    m_imglst               = new FlickrList(m_tab, (serviceName == "23"));
+    m_imglst               = new FlickrList(this, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
     QHeaderView* const hdr = m_imglst->listView()->header();
@@ -156,56 +130,9 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     hdr->setResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
     hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
 
-    // -- The upload options tab ----------------------------------------------
-
-    // Wrap everything in a scroll area, so that it can be resized without
-    // squeezing the contents.
-
-    QScrollArea* const settingsScrollArea = new QScrollArea(m_tab);
-    QWidget*     const settingsBox        = new QWidget;
-    QVBoxLayout* const settingsBoxLayout  = new QVBoxLayout(settingsBox);
-    settingsScrollArea->setWidget(settingsBox);
-    settingsScrollArea->setWidgetResizable(true);
-    settingsScrollArea->setFrameShadow(QFrame::Plain);
-
-    // -- Layout for account and album ----------------------------------------
-
-    QGroupBox*   const accountBox    = new QGroupBox(i18n("Account"), settingsBox);
-    QGridLayout* const accountLayout = new QGridLayout(accountBox);
-
-    QLabel* const userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
-    m_userNameDisplayLabel       = new QLabel(accountBox);
-    m_changeUserButton           = new QPushButton(accountBox);
-    m_removeAccount              = new QPushButton(accountBox);
-    m_changeUserButton->setText(i18n("Use a different account"));
-    m_changeUserButton->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
-    m_changeUserButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    
-    m_removeAccount->setText(i18n("Remove Account"));
-    m_removeAccount->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    
-    QLabel* const albumLabel     = new QLabel(i18n("PhotoSet:"), accountBox);
-    m_newAlbumBtn                = new QPushButton(accountBox);
-    m_newAlbumBtn->setText(i18n("&New PhotoSet"));
-    m_reloadphotoset             = new QPushButton(accountBox);
-    m_reloadphotoset->setText(i18n("&Reload"));
-    m_albumsListComboBox         = new QComboBox(settingsBox);
-
-    accountLayout->addWidget(userNameLabel,          0, 0);
-    accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);
-    accountLayout->addWidget(m_changeUserButton,     0, 2);
-    accountLayout->addWidget(m_removeAccount,        0, 3);
-    accountLayout->addWidget(albumLabel,             1, 0);
-    accountLayout->addWidget(m_albumsListComboBox,   1, 1);
-    accountLayout->addWidget(m_newAlbumBtn,          1, 2);
-    accountLayout->addWidget(m_reloadphotoset,       1, 3);
-    accountLayout->setColumnStretch(1, 10);
-    accountLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
     // -- Layout for the tags -------------------------------------------------
 
-    QGroupBox* const tagsBox         = new QGroupBox(i18n("Tag options"), settingsBox);
+    QGroupBox* const tagsBox         = new QGroupBox(i18n("Tag options"), m_settingsBox);
     QGridLayout* const tagsBoxLayout = new QGridLayout(tagsBox);
 
     m_exportHostTagsCheckBox         = new QCheckBox(tagsBox);
@@ -221,7 +148,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     m_extendedTagsButton->setSizePolicy(QSizePolicy::Maximum,
                                         QSizePolicy::Preferred);
 
-    m_extendedTagsBox               = new QGroupBox("", settingsBox);
+    m_extendedTagsBox               = new QGroupBox("", m_settingsBox);
     m_extendedTagsBox->setFlat(true);
     QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
@@ -247,7 +174,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
 
     // -- Layout for the publication options ----------------------------------
 
-    QGroupBox* const publicationBox         = new QGroupBox(i18n("Publication Options"), settingsBox);
+    QGroupBox* const publicationBox         = new QGroupBox(i18n("Publication Options"), m_settingsBox);
     QGridLayout* const publicationBoxLayout = new QGridLayout;
     publicationBox->setLayout(publicationBoxLayout);
 
@@ -299,77 +226,23 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     publicationBoxLayout->addWidget(m_extendedPublicationButton, 2, 1);
     publicationBoxLayout->addWidget(m_extendedPublicationBox,    3, 0, 1, 2);
 
-    // -- Layout for the resizing options -------------------------------------
+    // -- Add these extra widgets to settings box -------------------------------------------------
 
-    m_resizingBox                        = new QGroupBox(i18n("Resizing Options"), settingsBox);
-    QGridLayout* const resizingBoxLayout = new QGridLayout;
-    m_resizingBox->setLayout(resizingBoxLayout);
-
-    m_sendOriginalCheckBox = new QCheckBox(m_resizingBox);
-    m_sendOriginalCheckBox->setText(i18n("Send original file (no resizing)"));
-    m_sendOriginalCheckBox->setChecked(false);
-
-    m_resizeCheckBox   = new QCheckBox(m_resizingBox);
-    m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-    m_resizeCheckBox->setChecked(false);
-
-
-    m_dimensionSpinBox = new QSpinBox(m_resizingBox);
-    m_dimensionSpinBox->setMinimum(0);
-    m_dimensionSpinBox->setMaximum(5000);
-    m_dimensionSpinBox->setSingleStep(10);
-    m_dimensionSpinBox->setValue(600);
-    m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_dimensionSpinBox->setEnabled(false);
-
-    QLabel* const resizeLabel = new QLabel(i18n("Maximum dimension (pixels):"), m_resizingBox);
-    m_imageQualitySpinBox     = new QSpinBox(m_resizingBox);
-    m_imageQualitySpinBox->setMinimum(0);
-    m_imageQualitySpinBox->setMaximum(100);
-    m_imageQualitySpinBox->setSingleStep(1);
-    m_imageQualitySpinBox->setValue(85);
-    m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* const imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), m_resizingBox);
-
-    resizingBoxLayout->addWidget(imageQualityLabel,     0, 0, 1, 3);
-    resizingBoxLayout->addWidget(m_imageQualitySpinBox, 0, 3, 1, 1);
-    resizingBoxLayout->addWidget(m_resizeCheckBox,      1, 0, 1, 4);
-    resizingBoxLayout->addWidget(resizeLabel,           2, 1, 1, 2);
-    resizingBoxLayout->addWidget(m_dimensionSpinBox,    2, 3, 1, 1);
-    resizingBoxLayout->setColumnMinimumWidth(0, QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    resizingBoxLayout->setColumnStretch(1, 10);
-    resizingBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    resizingBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    // -- Put it all together -------------------------------------------------
-
-    settingsBoxLayout->addWidget(accountBox);
-    settingsBoxLayout->addWidget(tagsBox);
-    settingsBoxLayout->addWidget(publicationBox);
-    settingsBoxLayout->addWidget(m_sendOriginalCheckBox);
-    settingsBoxLayout->addWidget(m_resizingBox);
-    settingsBoxLayout->addStretch(10);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    flickrWidgetLayout->addWidget(headerLabel);
-    flickrWidgetLayout->addWidget(line);
-    flickrWidgetLayout->addWidget(m_tab, 5);
-    flickrWidgetLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    flickrWidgetLayout->addWidget(m_progressBar);
-    flickrWidgetLayout->setMargin(0);
-
-    m_tab->insertTab(FILELIST, m_imglst,           i18n("File List"));
-    m_tab->insertTab(UPLOAD,   settingsScrollArea, i18n("Upload Options"));
-
-    // ------------------------------------------------------------------------
-    connect(m_sendOriginalCheckBox, SIGNAL(clicked()),
-            this, SLOT(slotOriginalChecked()));
-
-    connect(m_resizeCheckBox, SIGNAL(clicked()),
-            this, SLOT(slotResizeChecked()));
+    m_settingsBoxLayout->addWidget(tagsBox);
+    m_settingsBoxLayout->addWidget(publicationBox);
+    m_settingsBoxLayout->removeWidget(m_progressBar); // NOTE: This is important because progress bar always has to be at the end of settings box layout. So we remove it and then add it back.
+    m_settingsBoxLayout->addWidget(m_progressBar);
+    
+    //hiding widgets not required.
+    m_uploadBox->hide();
+    m_sizeBox->hide();
+    
+    //Removing KPImageLists inherited from KPSettingsWidget and replacing it with more specific FlickrList
+    m_imgList->hide();           
+    mainLayout->removeWidget(m_imgList);
+    mainLayout->insertWidget(0,m_imglst);
+    
+    updateLabels();
 
     connect(m_imglst, SIGNAL(signalPermissionChanged(FlickrList::FieldType,Qt::CheckState)),
             this, SLOT(slotPermissionChanged(FlickrList::FieldType,Qt::CheckState)));
@@ -386,12 +259,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, const QString& serviceName)
     // Zooomr doesn't support explicit Photosets.
     if (serviceName == QString("Zooomr"))
     {
-        albumLabel->hide();
-        m_albumsListComboBox->hide();
-        m_newAlbumBtn->setEnabled(false);
-        m_newAlbumBtn->hide();
-        m_reloadphotoset->setEnabled(false);
-        m_reloadphotoset->hide();
+        m_albBox->hide();
     }
 
     // 23HQ doesn't support the Family and Friends concept.
@@ -440,19 +308,24 @@ FlickrWidget::~FlickrWidget()
 {
 }
 
-KIPIPlugins::KPProgressWidget* FlickrWidget::progressBar() const
+void FlickrWidget::updateLabels(const QString& name, const QString& url)
 {
-    return m_progressBar;
-}
-
-void FlickrWidget::slotOriginalChecked()
-{
-    m_resizingBox->setVisible(!m_sendOriginalCheckBox->isChecked());
-}
-
-void FlickrWidget::slotResizeChecked()
-{
-    m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
+    if (m_serviceName == QString("23"))
+        m_headerLbl->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
+                                  "<font color=\"#7CD164\">23</font></a>"
+                                  " Export"
+                                  "</h2></b>"));
+    else if (m_serviceName == QString("Zooomr"))
+        m_headerLbl->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
+                                  "<font color=\"#7CD164\">zooomr</font></a>"
+                                  " Export"
+                                  "</h2></b>"));
+    else
+        m_headerLbl->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
+                                  "<font color=\"#0065DE\">flick</font>"
+                                  "<font color=\"#FF0084\">r</font></a>"
+                                  " Export"
+                                  "</h2></b>"));    
 }
 
 void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox, Qt::CheckState state)
@@ -652,9 +525,9 @@ void FlickrWidget::slotAddExtraTagsToggled(bool status)
     }
 }
 
-void FlickrWidget::showEvent(QShowEvent*)
-{
-    slotOriginalChecked();
-}
+// void FlickrWidget::showEvent(QShowEvent*)
+// {
+//     slotOriginalChecked();
+// }
 
 } // namespace KIPIFlickrPlugin
