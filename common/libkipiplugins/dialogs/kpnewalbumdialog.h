@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2010-02-01
+ * Date        : 2015-08-01
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef NEWALBUMDLG_H
-#define NEWALBUMDLG_H
+#ifndef KPNEWALBUMDIALOG_H
+#define KPNEWALBUMDIALOG_H
 
 // Qt includes
 
@@ -32,37 +33,47 @@
 #include <QTextEdit>
 #include <QComboBox>
 #include <QCloseEvent>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
 // Local includes
 
-#include "kpnewalbumdialog.h"
+#include "kipiplugins_export.h"
 
-using namespace KIPIPlugins;
-
-namespace KIPIGoogleServicesPlugin
+namespace KIPIPlugins
 {
 
-class GSFolder;
-
-class NewAlbumDlg : public KPNewAlbumDialog
+class KIPIPLUGINS_EXPORT KPNewAlbumDialog : public QDialog
 {
     Q_OBJECT
 
 public:
 
-    NewAlbumDlg(QWidget* const parent, const QString& serviceName, const QString& pluginName);
-    ~NewAlbumDlg();
-
-    void getAlbumProperties(GSFolder& album);
+    KPNewAlbumDialog(QWidget* const parent, const QString& pluginName);
+    ~KPNewAlbumDialog();
+    
+    void hideDateTime();
+    void hideDesc();
+    void hideLocation();
+ 
+    QWidget*       getMainWidget();
+    QGroupBox*     getAlbumBox();
+    
+    QLineEdit*     getTitleEdit();
+    QTextEdit*     getDescEdit();
+    QLineEdit*     getLocEdit();
+    QDateTimeEdit* getDateTimeEdit();
+    
+    void addToMainLayout(QWidget* widget);
 
 private:
     
-    QString        m_serviceName;
-    QRadioButton*  m_publicRBtn;
-    QRadioButton*  m_unlistedRBtn;
-    QRadioButton*  m_protectedRBtn;
+    class Private;
+    Private* const d;
 };
 
-} // namespace KIPIGoogleServicesPlugin
+} // namespace KIPIPlugins
 
-#endif // NEWALBUMDLG_H
+#endif // KPNEWALBUMDIALOG_H

@@ -192,7 +192,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     if(m_gdrive)
     {
-        m_albumDlg = new NewAlbumDlg(this,m_serviceName);
+        m_albumDlg = new NewAlbumDlg(this,m_serviceName,"Google Drive");
         m_talker = new GDTalker(this);
 
         connect(m_talker,SIGNAL(signalBusy(bool)),
@@ -236,7 +236,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     }
     else
     {
-	m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName);
+	m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName,"Google Photos/PicasaWeb");
         m_picsasa_talker = new PicasawebTalker(this);
         
         connect(m_picsasa_talker,SIGNAL(signalBusy(bool)),

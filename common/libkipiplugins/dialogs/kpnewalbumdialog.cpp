@@ -1,0 +1,204 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.digikam.org
+ *
+ * Date        : 2015-08-01
+ * Description : a kipi plugin to export images to Picasa web service
+ *
+ * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#include "kpnewalbumdialog.h"
+
+// Qt includes
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QRadioButton>
+#include <QDialogButtonBox>
+#include <QIcon>
+#include <QApplication>
+#include <QPushButton>
+
+// KDE includes
+
+#include <klocalizedstring.h>
+
+namespace KIPIPlugins
+{
+    
+class KPNewAlbumDialog::Private
+{
+public:
+    Private(QWidget* widget, const QString& pluginName)
+    {
+        m_titleEdt     = new QLineEdit;
+        m_descEdt      = new QTextEdit;
+        m_locEdt       = new QLineEdit;
+        m_dtEdt        = new QDateTimeEdit(QDateTime::currentDateTime());
+        
+        mainWidget     = new QWidget(widget);
+        mainLayout     = new QVBoxLayout(mainWidget);
+        
+        albumBox       = new QGroupBox(i18n("Album"), mainWidget);
+        albumBoxLayout = new QGridLayout(albumBox);
+        
+        titleLabel     = new QLabel(i18n("Title: "), albumBox);
+        dateLabel      = new QLabel(i18n("Date & Time: "), albumBox);
+        descLabel      = new QLabel(i18n("Description: "), albumBox);
+        locLabel       = new QLabel(i18n("Location: "), albumBox);
+        
+        buttonBox      = new QDialogButtonBox();
+        
+        m_pluginName   = pluginName;
+        
+    }
+
+    QLineEdit*         m_titleEdt;
+    QTextEdit*         m_descEdt;
+    QLineEdit*         m_locEdt;
+    QDateTimeEdit*     m_dtEdt;
+    
+    QLabel*            titleLabel;
+    QLabel*            dateLabel;
+    QLabel*            descLabel;
+    QLabel*            locLabel;
+
+    QString            m_pluginName;
+    QDialogButtonBox*  buttonBox;
+    
+    QGridLayout*       albumBoxLayout;
+    QGroupBox*         albumBox;
+    
+    QVBoxLayout*       mainLayout;
+    QWidget*           mainWidget;
+};    
+
+KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginName)
+    : QDialog(parent), d(new Private(this,pluginName))
+{
+    d->m_pluginName = pluginName;
+    d->mainWidget->setMinimumSize(500, 500);
+    setWindowTitle(QString(d->m_pluginName+" New Album"));
+    
+    d->buttonBox->addButton(QDialogButtonBox::Ok);
+    d->buttonBox->addButton(QDialogButtonBox::Cancel);
+    d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);    
+    setModal(false);
+    
+    connect(d->buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
+
+    connect(d->buttonBox, SIGNAL(rejected()),
+            this, SLOT(reject()));
+
+    d->albumBox->setLayout(d->albumBoxLayout);
+    d->albumBox->setWhatsThis(
+        i18n("These are basic settings for the new %1 album.",d->m_pluginName));
+
+    d->m_titleEdt->setToolTip(i18n("Title of the album that will be created (required)."));
+
+    d->m_dtEdt->setDisplayFormat("dd.MM.yyyy HH:mm");
+    d->m_dtEdt->setWhatsThis(i18n("Date and Time of the album that will be created (optional)."));
+
+    d->m_descEdt->setToolTip(i18n("Description of the album that will be created (optional)."));
+
+    d->m_locEdt->setToolTip(i18n("Location of the album that will be created (optional).")); 
+    
+    d->albumBoxLayout->addWidget(d->titleLabel, 0, 0);
+    d->albumBoxLayout->addWidget(d->m_titleEdt, 0, 1);
+    d->albumBoxLayout->addWidget(d->dateLabel,  1, 0);
+    d->albumBoxLayout->addWidget(d->m_dtEdt,    1, 1);
+    d->albumBoxLayout->addWidget(d->descLabel,  2, 0);
+    d->albumBoxLayout->addWidget(d->m_descEdt,  2, 1);
+    d->albumBoxLayout->addWidget(d->locLabel,   3, 0);
+    d->albumBoxLayout->addWidget(d->m_locEdt,   3, 1);
+    d->albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    
+    d->mainLayout->addWidget(d->albumBox);
+    d->mainLayout->addWidget(d->buttonBox);
+    d->mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->mainLayout->setMargin(0);
+    d->mainWidget->setLayout(d->mainLayout);
+}
+
+KPNewAlbumDialog::~KPNewAlbumDialog()
+{
+    delete d;
+}
+
+void KPNewAlbumDialog::hideDateTime()
+{
+    d->m_dtEdt->hide();
+    d->dateLabel->hide();
+    d->albumBoxLayout->removeWidget(d->m_dtEdt);   
+    d->albumBoxLayout->removeWidget(d->dateLabel);
+}
+
+void KPNewAlbumDialog::hideDesc()
+{
+    d->m_descEdt->hide();
+    d->descLabel->hide();
+    d->albumBoxLayout->removeWidget(d->m_descEdt);   
+    d->albumBoxLayout->removeWidget(d->descLabel);        
+}
+void KPNewAlbumDialog::hideLocation()
+{
+    d->m_locEdt->hide();
+    d->locLabel->hide();
+    d->albumBoxLayout->removeWidget(d->m_locEdt);   
+    d->albumBoxLayout->removeWidget(d->locLabel);    
+}
+
+QWidget* KPNewAlbumDialog::getMainWidget()
+{
+    return d->mainWidget;
+}
+
+QGroupBox* KPNewAlbumDialog::getAlbumBox()
+{
+    return d->albumBox;
+}
+    
+QLineEdit* KPNewAlbumDialog::getTitleEdit()
+{
+    return d->m_titleEdt;
+}
+
+QTextEdit* KPNewAlbumDialog::getDescEdit()
+{
+    return d->m_descEdt;
+}
+
+QLineEdit* KPNewAlbumDialog::getLocEdit()
+{
+    return d->m_locEdt;
+}
+
+QDateTimeEdit* KPNewAlbumDialog::getDateTimeEdit()
+{
+    return d->m_dtEdt;
+}
+
+void KPNewAlbumDialog::addToMainLayout(QWidget* widget)
+{
+    d->mainLayout->addWidget(widget);
+    d->mainLayout->removeWidget(d->buttonBox);
+    d->mainLayout->addWidget(d->buttonBox);
+}
+
+} // namespace KIPIPlugins
