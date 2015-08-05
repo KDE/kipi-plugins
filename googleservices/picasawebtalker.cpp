@@ -725,7 +725,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
                     if(detailsNode.nodeName() == "title")
                     {
-                        fps.title = detailsElem.text();
+                        //fps.title = detailsElem.text();
                     }
 
                     if(detailsNode.nodeName()=="gphoto:access")
@@ -787,6 +787,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                                     fps.originalURL.isEmpty())
                                 {
                                     fps.originalURL = QUrl(contentElem.attribute("url"));
+                                    fps.title = fps.originalURL.fileName();
                                     fps.mimeType = contentElem.attribute("type");
                                 }
 
@@ -794,6 +795,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                                     (contentElem.attribute("type") == "video/mpeg4"))
                                 {
                                     fps.originalURL = QUrl(contentElem.attribute("url"));
+                                    fps.title = fps.originalURL.fileName();
                                     fps.mimeType = contentElem.attribute("type");
                                 }
                             }
