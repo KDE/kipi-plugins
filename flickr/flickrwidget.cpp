@@ -63,9 +63,9 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_serviceName = serviceName;
     
     //Adding Remove Account button
-    m_removeAccount              = new QPushButton(m_accountBox);
+    m_removeAccount              = new QPushButton(getAccountBox());
     m_removeAccount->setText(i18n("Remove Account"));
-    m_accountBoxLayout->addWidget(m_removeAccount, 2,0,1,4);
+    getAccountBoxLayout()->addWidget(m_removeAccount, 2,0,1,4);
 
     // -- The image list --------------------------------------------------
 
@@ -132,7 +132,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
 
     // -- Layout for the tags -------------------------------------------------
 
-    QGroupBox* const tagsBox         = new QGroupBox(i18n("Tag options"), m_settingsBox);
+    QGroupBox* const tagsBox         = new QGroupBox(i18n("Tag options"), getSettingsBox());
     QGridLayout* const tagsBoxLayout = new QGridLayout(tagsBox);
 
     m_exportHostTagsCheckBox         = new QCheckBox(tagsBox);
@@ -148,7 +148,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_extendedTagsButton->setSizePolicy(QSizePolicy::Maximum,
                                         QSizePolicy::Preferred);
 
-    m_extendedTagsBox               = new QGroupBox("", m_settingsBox);
+    m_extendedTagsBox               = new QGroupBox("", getSettingsBox());
     m_extendedTagsBox->setFlat(true);
     QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
@@ -174,7 +174,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
 
     // -- Layout for the publication options ----------------------------------
 
-    QGroupBox* const publicationBox         = new QGroupBox(i18n("Publication Options"), m_settingsBox);
+    QGroupBox* const publicationBox         = new QGroupBox(i18n("Publication Options"), getSettingsBox());
     QGridLayout* const publicationBoxLayout = new QGridLayout;
     publicationBox->setLayout(publicationBoxLayout);
 
@@ -227,20 +227,16 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     publicationBoxLayout->addWidget(m_extendedPublicationBox,    3, 0, 1, 2);
 
     // -- Add these extra widgets to settings box -------------------------------------------------
-
-    m_settingsBoxLayout->addWidget(tagsBox);
-    m_settingsBoxLayout->addWidget(publicationBox);
-    m_settingsBoxLayout->removeWidget(m_progressBar); // NOTE: This is important because progress bar always has to be at the end of settings box layout. So we remove it and then add it back.
-    m_settingsBoxLayout->addWidget(m_progressBar);
+    
+    addWidgetToSettingsBox(publicationBox);
+    addWidgetToSettingsBox(tagsBox);
     
     //hiding widgets not required.
-    m_uploadBox->hide();
-    m_sizeBox->hide();
+    getUploadBox()->hide();
+    getSizeBox()->hide();
     
     //Removing KPImageLists inherited from KPSettingsWidget and replacing it with more specific FlickrList
-    m_imgList->hide();           
-    mainLayout->removeWidget(m_imgList);
-    mainLayout->insertWidget(0,m_imglst);
+    replaceImageList(m_imglst);
     
     updateLabels();
 
@@ -259,7 +255,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     // Zooomr doesn't support explicit Photosets.
     if (serviceName == QString("Zooomr"))
     {
-        m_albBox->hide();
+        getAlbumBox()->hide();
     }
 
     // 23HQ doesn't support the Family and Friends concept.
@@ -311,17 +307,17 @@ FlickrWidget::~FlickrWidget()
 void FlickrWidget::updateLabels(const QString& name, const QString& url)
 {
     if (m_serviceName == QString("23"))
-        m_headerLbl->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
+        getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
     else if (m_serviceName == QString("Zooomr"))
-        m_headerLbl->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
+        getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
                                   "<font color=\"#7CD164\">zooomr</font></a>"
                                   " Export"
                                   "</h2></b>"));
     else
-        m_headerLbl->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
+        getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
                                   "<font color=\"#0065DE\">flick</font>"
                                   "<font color=\"#FF0084\">r</font></a>"
                                   " Export"

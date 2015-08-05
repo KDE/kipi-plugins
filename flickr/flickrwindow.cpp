@@ -101,15 +101,15 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
     m_widget                    = new FlickrWidget(this, iface(), serviceName);
-    m_albumsListComboBox        = m_widget->m_albumsCoB;
-    m_newAlbumBtn               = m_widget->m_newAlbumBtn;
+    m_albumsListComboBox        = m_widget->getAlbumsCoB();
+    m_newAlbumBtn               = m_widget->getNewAlbmBtn();
     //m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
-    m_resizeCheckBox            = m_widget->m_resizeChB;
+    m_resizeCheckBox            = m_widget->getResizeCheckBox();
     m_publicCheckBox            = m_widget->m_publicCheckBox;
     m_familyCheckBox            = m_widget->m_familyCheckBox;
     m_friendsCheckBox           = m_widget->m_friendsCheckBox;
-    m_dimensionSpinBox          = m_widget->m_dimensionSpB;
-    m_imageQualitySpinBox       = m_widget->m_imageQualitySpB;
+    m_dimensionSpinBox          = m_widget->getDimensionSpB();
+    m_imageQualitySpinBox       = m_widget->getImgQualitySpB();
     m_extendedTagsButton        = m_widget->m_extendedTagsButton;
     m_addExtraTagsCheckBox      = m_widget->m_addExtraTagsCheckBox;
     m_extendedPublicationButton = m_widget->m_extendedPublicationButton;
@@ -118,9 +118,9 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_tagsLineEdit              = m_widget->m_tagsLineEdit;
     m_exportHostTagsCheckBox    = m_widget->m_exportHostTagsCheckBox;
     m_stripSpaceTagsCheckBox    = m_widget->m_stripSpaceTagsCheckBox;
-    m_changeUserButton          = m_widget->m_changeUserBtn;
+    m_changeUserButton          = m_widget->getChangeUserBtn();
     m_removeAccount             = m_widget->m_removeAccount;
-    m_userNameDisplayLabel      = m_widget->m_userNameDisplayLbl;
+    m_userNameDisplayLabel      = m_widget->getUserNameLabel();
     m_imglst                    = m_widget->m_imglst;
 
     KGuiItem::assign(startButton(),
@@ -189,7 +189,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
             this, SLOT(slotAddPhotoCancelAndClose()));
 
-    connect(m_widget->m_reloadAlbumsBtn, SIGNAL(clicked()),
+    connect(m_widget->getReloadBtn(), SIGNAL(clicked()),
             this, SLOT(slotReloadPhotoSetRequest()));
 
     //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),

@@ -60,8 +60,8 @@ namespace KIPIDropboxPlugin
 
 DropboxWidget::DropboxWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName):KPSettingsWidget(parent,iface,pluginName)
 {
-    m_uploadBox->hide();
-    m_sizeBox->hide();
+    getUploadBox()->hide();
+    getSizeBox()->hide();
 }
 
 DropboxWidget::~DropboxWidget()
@@ -75,17 +75,17 @@ void DropboxWidget::updateLabels(const QString& name, const QString& url)
     if (!url.isEmpty())
         web = url;
 
-    m_headerLbl->setText(QString("<b><h2><a href='%1'>"
+    getHeaderLbl()->setText(QString("<b><h2><a href='%1'>"
                                  "<font color=\"#9ACD32\">Dropbox</font>"
                                  "</a></h2></b>").arg(web));
 
     if (name.isEmpty())
     {
-        m_userNameDisplayLbl->clear();
+        getUserNameLabel()->clear();
     }
     else
     {
-        m_userNameDisplayLbl->setText( QString("<b>%1</b>").arg(name) );
+        getUserNameLabel()->setText( QString("<b>%1</b>").arg(name) );
     }
 }
 

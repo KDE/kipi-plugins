@@ -52,189 +52,367 @@
 namespace KIPIPlugins
 {
 
-KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName):QWidget(parent)
+class KPSettingsWidget::Private
 {
-    m_pluginName = pluginName;
-    setObjectName(m_pluginName+" Widget");
-    mainLayout =new QHBoxLayout(this);
+public:
+    Private(QWidget* widget, KIPI::Interface* const iface, const QString& pluginName)
+    {
+        m_pluginName         = pluginName;
+        mainLayout           = new QHBoxLayout(widget);
+        m_imgList            = new KPImagesList(widget);  
+        settingsScrollArea   = new QScrollArea(widget);
+        m_settingsBox        = new QWidget(settingsScrollArea);
+        m_settingsBoxLayout  = new QVBoxLayout(m_settingsBox);
+        m_headerLbl          = new QLabel(widget);
+        m_accountBox         = new QGroupBox(i18n("Account"),m_settingsBox);
+        m_accountBoxLayout   = new QGridLayout(m_accountBox);
+        m_userNameDisplayLbl = new QLabel(m_accountBox);
+        m_changeUserBtn      = new QPushButton(m_accountBox);
+        m_albBox             = new QGroupBox(i18n("Album"),m_settingsBox);
+        m_albumsBoxLayout    = new QGridLayout(m_albBox);
+        m_albumsCoB          = new QComboBox(m_albBox);
+        m_newAlbumBtn        = new QPushButton(m_accountBox);
+        m_reloadAlbumsBtn    = new QPushButton(m_accountBox);
+        m_sizeBox            = new QGroupBox(i18n("Max Dimension"), m_settingsBox);
+        m_sizeBoxLayout      = new QVBoxLayout(m_sizeBox);
+        m_dlDimensionCoB     = new QComboBox(m_sizeBox);  
+        m_uploadBox          = new QGroupBox(i18n("Destination"), m_settingsBox);
+        m_uploadWidget       = iface->uploadWidget(m_uploadBox);
+        m_uploadBoxLayout    = new QVBoxLayout(m_uploadBox);
+        m_optionsBox         = new QGroupBox(i18n("Options"),m_settingsBox);
+        m_optionsBoxLayout   = new QGridLayout(m_optionsBox);    
+        m_resizeChB          = new QCheckBox(m_optionsBox);
+        m_dimensionSpB       = new QSpinBox(m_optionsBox);
+        m_imageQualitySpB    = new QSpinBox(m_optionsBox);
+        m_progressBar        = new KPProgressWidget(m_settingsBox);
+        
+    }
+
+    KPImagesList*                  m_imgList;
+    KIPI::UploadWidget*            m_uploadWidget;
+    QString                        m_pluginName;
+
+    QLabel*                        m_headerLbl;
+    QLabel*                        m_userNameDisplayLbl;
+    QPushButton*                   m_changeUserBtn;
+    QComboBox*                     m_dlDimensionCoB;
+    QScrollArea*                   settingsScrollArea;
+
+    QComboBox*                     m_albumsCoB;
+    QPushButton*                   m_newAlbumBtn;
+    QPushButton*                   m_reloadAlbumsBtn;
+
+    QCheckBox*                     m_resizeChB;
+    QSpinBox*                      m_dimensionSpB;
+    QSpinBox*                      m_imageQualitySpB;
+    
+    QHBoxLayout*                   mainLayout;
+    
+    QWidget*                       m_settingsBox;
+    QVBoxLayout*                   m_settingsBoxLayout;
+    
+    QGroupBox*                     m_albBox;
+    QGridLayout*                   m_albumsBoxLayout;
+    
+    QGroupBox*                     m_optionsBox;
+    QGridLayout*                   m_optionsBoxLayout;
+    
+    QGroupBox*                     m_uploadBox;
+    QVBoxLayout*                   m_uploadBoxLayout;
+    
+    QGroupBox*                     m_sizeBox;
+    QVBoxLayout*                   m_sizeBoxLayout;
+    
+    QGroupBox*                     m_accountBox;
+    QGridLayout*                   m_accountBoxLayout;
+
+    KPProgressWidget*              m_progressBar;
+};        
+    
+KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName)
+    :QWidget(parent), d(new Private(this,iface,pluginName))
+{
+    d->m_pluginName = pluginName;
+    setObjectName(d->m_pluginName+" Widget");
 
     //----------------------------------------------------------
 
-    m_imgList = new KPImagesList(this);
-    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
-    m_imgList->setAllowRAW(true);
-    m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.",m_pluginName));
+    d->m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+    d->m_imgList->setAllowRAW(true);
+    d->m_imgList->loadImagesFromCurrentSelection();
+    d->m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your %1 account.",d->m_pluginName));
 
-    QScrollArea* const settingsScrollArea = new QScrollArea(this);
-    m_settingsBox = new QWidget(settingsScrollArea);
-    m_settingsBoxLayout = new QVBoxLayout(m_settingsBox);
-    settingsScrollArea->setWidget(m_settingsBox);
-    settingsScrollArea->setWidgetResizable(true);
-    settingsScrollArea->setFrameShadow(QFrame::Plain);
+    d->settingsScrollArea->setWidget(d->m_settingsBox);
+    d->settingsScrollArea->setWidgetResizable(true);
+    d->settingsScrollArea->setFrameShadow(QFrame::Plain);
 
-    m_headerLbl = new QLabel(this);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open %1 in a browser.",m_pluginName));
-    m_headerLbl->setOpenExternalLinks(true);
-    m_headerLbl->setFocusPolicy(Qt::NoFocus);
+    d->m_headerLbl->setWhatsThis(i18n("This is a clickable link to open %1 in a browser.",d->m_pluginName));
+    d->m_headerLbl->setOpenExternalLinks(true);
+    d->m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     //------------------------------------------------------------
 
-    m_accountBox   = new QGroupBox(i18n("Account"),m_settingsBox);
-    m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",m_pluginName));    
-    m_accountBoxLayout = new QGridLayout(m_accountBox);
+    d->m_accountBox->setWhatsThis(i18n("This is the %1 account that is currently logged in.",d->m_pluginName));    
 
-    QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),m_accountBox);
-    m_userNameDisplayLbl      = new QLabel(m_accountBox);
-    m_changeUserBtn           = new QPushButton(m_accountBox);
-    m_changeUserBtn->setText(i18n("Change Account"));
-    m_changeUserBtn->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
-    m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",m_pluginName));
+    QLabel* const userNameLbl = new QLabel(i18nc("account settings","Name:"),d->m_accountBox);
+    d->m_changeUserBtn->setText(i18n("Change Account"));
+    d->m_changeUserBtn->setIcon(QIcon::fromTheme("system-switch-user").pixmap(16));
+    d->m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",d->m_pluginName));
       
 
-    m_accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
-    m_accountBoxLayout->addWidget(m_userNameDisplayLbl, 0,2,1,2);
-    m_accountBoxLayout->addWidget(m_changeUserBtn,      1,0,1,4);
-    m_accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    m_accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
+    d->m_accountBoxLayout->addWidget(d->m_userNameDisplayLbl, 0,2,1,2);
+    d->m_accountBoxLayout->addWidget(d->m_changeUserBtn,      1,0,1,4);
+    d->m_accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //-------------------------------------------------------------
 
-    m_albBox            = new QGroupBox(i18n("Album"),m_settingsBox);
-    m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",m_pluginName)); 
-    m_albumsBoxLayout = new QGridLayout(m_albBox);
-    QLabel* const albLbl = new QLabel(i18n("Album:"),m_albBox);
-    m_albumsCoB          = new QComboBox(m_albBox);
-    m_albumsCoB->setEditable(false);
-        
-    m_newAlbumBtn = new QPushButton(m_accountBox);
-    m_newAlbumBtn->setText(i18n("New Album"));
-    m_newAlbumBtn->setIcon(QIcon::fromTheme("list-add").pixmap(16));
-    m_newAlbumBtn->setToolTip(i18n("Create new %1 folder",m_pluginName));
+    d->m_albBox->setWhatsThis(i18n("This is the %1 folder to/from which selected photos will be uploaded/downloaded.",d->m_pluginName)); 
     
-    m_reloadAlbumsBtn = new QPushButton(m_accountBox);
-    m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
-    m_reloadAlbumsBtn->setIcon(QIcon::fromTheme("view-refresh").pixmap(16));
-    m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
+    QLabel* const albLbl = new QLabel(i18n("Album:"),d->m_albBox);
+    
+    d->m_albumsCoB->setEditable(false);
 
-    m_albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
-    m_albumsBoxLayout->addWidget(m_albumsCoB,       0, 1, 1, 4);
-    m_albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
-    m_albumsBoxLayout->addWidget(m_reloadAlbumsBtn, 1, 4, 1, 1);
+    d->m_newAlbumBtn->setText(i18n("New Album"));
+    d->m_newAlbumBtn->setIcon(QIcon::fromTheme("list-add").pixmap(16));
+    d->m_newAlbumBtn->setToolTip(i18n("Create new %1 folder",d->m_pluginName));
+
+    d->m_reloadAlbumsBtn->setText(i18nc("album list","Reload"));
+    d->m_reloadAlbumsBtn->setIcon(QIcon::fromTheme("view-refresh").pixmap(16));
+    d->m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
+
+    d->m_albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
+    d->m_albumsBoxLayout->addWidget(d->m_albumsCoB,       0, 1, 1, 4);
+    d->m_albumsBoxLayout->addWidget(d->m_newAlbumBtn,     1, 3, 1, 1);
+    d->m_albumsBoxLayout->addWidget(d->m_reloadAlbumsBtn, 1, 4, 1, 1);
     
     //----------------------------------------------------------
     
-    m_sizeBox         = new QGroupBox(i18n("Max Dimension"), m_settingsBox);
-    m_sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
-    m_sizeBoxLayout = new QVBoxLayout(m_sizeBox);
-    m_dlDimensionCoB                 = new QComboBox(m_sizeBox);
-    m_dlDimensionCoB->addItem(i18n("Original Size"), "d");
-    m_dlDimensionCoB->addItem(i18n("1600 px"), "1600");
-    m_dlDimensionCoB->addItem(i18n("1440 px"), "1440");
-    m_dlDimensionCoB->addItem(i18n("1280 px"), "1280");
-    m_dlDimensionCoB->addItem(i18n("1152 px"), "1152");
-    m_dlDimensionCoB->addItem(i18n("1024 px"), "1024");
-    m_dlDimensionCoB->setCurrentIndex(0);
-    m_sizeBoxLayout->addWidget(m_dlDimensionCoB);
+    d->m_sizeBox->setWhatsThis(i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
+    d->m_dlDimensionCoB->addItem(i18n("Original Size"), "d");
+    d->m_dlDimensionCoB->addItem(i18n("1600 px"), "1600");
+    d->m_dlDimensionCoB->addItem(i18n("1440 px"), "1440");
+    d->m_dlDimensionCoB->addItem(i18n("1280 px"), "1280");
+    d->m_dlDimensionCoB->addItem(i18n("1152 px"), "1152");
+    d->m_dlDimensionCoB->addItem(i18n("1024 px"), "1024");
+    d->m_dlDimensionCoB->setCurrentIndex(0);
+    d->m_sizeBoxLayout->addWidget(d->m_dlDimensionCoB);
     
     // ------------------------------------------------------------------------
 
-    m_uploadBox         = new QGroupBox(i18n("Destination"), m_settingsBox);
-    m_uploadBox->setWhatsThis(i18n("This is the location where %1 images will be downloaded.",m_pluginName));
-    m_uploadBoxLayout = new QVBoxLayout(m_uploadBox);
-    m_uploadWidget                     = iface->uploadWidget(m_uploadBox);
-    m_uploadBoxLayout->addWidget(m_uploadWidget);
+    d->m_uploadBox->setWhatsThis(i18n("This is the location where %1 images will be downloaded.",d->m_pluginName));
+    d->m_uploadBoxLayout->addWidget(d->m_uploadWidget);
 
     //-----------------------------------------------------------
 
-    m_optionsBox         = new QGroupBox(i18n("Options"),m_settingsBox);
-    m_optionsBox->setWhatsThis(i18n("These are the options that would be applied to photos before upload."));
-    m_optionsBoxLayout = new QGridLayout(m_optionsBox);
+    d->m_optionsBox->setWhatsThis(i18n("These are the options that would be applied to photos before upload."));
 
-    m_resizeChB = new QCheckBox(m_optionsBox);
-    m_resizeChB->setText(i18n("Resize photos before uploading"));
-    m_resizeChB->setChecked(false);
+    d->m_resizeChB->setText(i18n("Resize photos before uploading"));
+    d->m_resizeChB->setChecked(false);
 
-    m_dimensionSpB = new QSpinBox(m_optionsBox);
-    m_dimensionSpB->setMinimum(0);
-    m_dimensionSpB->setMaximum(5000);
-    m_dimensionSpB->setSingleStep(10);
-    m_dimensionSpB->setValue(1600);
-    m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    m_dimensionSpB->setEnabled(false);
+    d->m_dimensionSpB->setMinimum(0);
+    d->m_dimensionSpB->setMaximum(5000);
+    d->m_dimensionSpB->setSingleStep(10);
+    d->m_dimensionSpB->setValue(1600);
+    d->m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    d->m_dimensionSpB->setEnabled(false);
 
-    QLabel* const dimensionLbl = new QLabel(i18n("Maximum Dimension:"),m_optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum Dimension:"),d->m_optionsBox);
 
-    m_imageQualitySpB = new QSpinBox(m_optionsBox);
-    m_imageQualitySpB->setMinimum(0);
-    m_imageQualitySpB->setMaximum(100);
-    m_imageQualitySpB->setSingleStep(1);
-    m_imageQualitySpB->setValue(90);
-    m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    d->m_imageQualitySpB->setMinimum(0);
+    d->m_imageQualitySpB->setMaximum(100);
+    d->m_imageQualitySpB->setSingleStep(1);
+    d->m_imageQualitySpB->setValue(90);
+    d->m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
-    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),m_optionsBox);
+    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),d->m_optionsBox);
     
-    m_optionsBoxLayout->addWidget(m_resizeChB,      0, 0, 1, 5);
-    m_optionsBoxLayout->addWidget(imageQualityLbl,  1, 1, 1, 1);
-    m_optionsBoxLayout->addWidget(m_imageQualitySpB,1, 2, 1, 1);
-    m_optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
-    m_optionsBoxLayout->addWidget(m_dimensionSpB,   2, 2, 1, 1);
-    m_optionsBoxLayout->setRowStretch(3,10);
-    m_optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    m_optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_optionsBoxLayout->addWidget(d->m_resizeChB,      0, 0, 1, 5);
+    d->m_optionsBoxLayout->addWidget(imageQualityLbl,  1, 1, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_imageQualitySpB,1, 2, 1, 1);
+    d->m_optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_dimensionSpB,   2, 2, 1, 1);
+    d->m_optionsBoxLayout->setRowStretch(3,10);
+    d->m_optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    m_progressBar = new KPProgressWidget(m_settingsBox);
-    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_progressBar->hide();
+    d->m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    d->m_progressBar->hide();
 
     //------------------------------------------------------
 
-    m_settingsBoxLayout->addWidget(m_headerLbl);
-    m_settingsBoxLayout->addWidget(m_accountBox);
-    m_settingsBoxLayout->addWidget(m_sizeBox);
-    m_settingsBoxLayout->addWidget(m_albBox);
-    m_settingsBoxLayout->addWidget(m_uploadBox);
-    m_settingsBoxLayout->addWidget(m_optionsBox);
-    m_settingsBoxLayout->addWidget(m_progressBar);  //Add progress bar in the widgets class that inherits this class, after all other widgets have been added in the sub class.
-    m_settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    m_settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_settingsBoxLayout->addWidget(d->m_headerLbl);
+    d->m_settingsBoxLayout->addWidget(d->m_accountBox);
+    d->m_settingsBoxLayout->addWidget(d->m_sizeBox);
+    d->m_settingsBoxLayout->addWidget(d->m_albBox);
+    d->m_settingsBoxLayout->addWidget(d->m_uploadBox);
+    d->m_settingsBoxLayout->addWidget(d->m_optionsBox);
+    d->m_settingsBoxLayout->addWidget(d->m_progressBar);
+    d->m_settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->m_settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     //--------------------------------------------------------
 
-    mainLayout->addWidget(m_imgList);
-    mainLayout->addWidget(settingsScrollArea);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
+    d->mainLayout->addWidget(d->m_imgList);
+    d->mainLayout->addWidget(d->settingsScrollArea);
+    d->mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->mainLayout->setMargin(0);
 
     //-------------------------------------------------------
 
-    connect(m_resizeChB,SIGNAL(clicked()),
+    connect(d->m_resizeChB,SIGNAL(clicked()),
             this,SLOT(slotResizeChecked()));
 }
 
 KPSettingsWidget::~KPSettingsWidget()
 {
+    delete d;
 }
 
 QString KPSettingsWidget::getDestinationPath() const
 {
-    return m_uploadWidget->selectedImageCollection().uploadUrl().path();
+    return d->m_uploadWidget->selectedImageCollection().uploadUrl().path();
 }
 
 KPImagesList* KPSettingsWidget::imagesList() const
 {
-    return m_imgList;
+    return d->m_imgList;
 }
 
 void KPSettingsWidget::slotResizeChecked()
 {
-    m_dimensionSpB->setEnabled(m_resizeChB->isChecked());
-    m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
+    d->m_dimensionSpB->setEnabled(d->m_resizeChB->isChecked());
+    d->m_imageQualitySpB->setEnabled(d->m_resizeChB->isChecked());
 }
 
 KPProgressWidget* KPSettingsWidget::progressBar() const
 {
-    return m_progressBar;
+    return d->m_progressBar;
+}
+
+void KPSettingsWidget::addWidgetToSettingsBox(QWidget* widget)
+{
+    d->m_settingsBoxLayout->addWidget(widget);
+    d->m_settingsBoxLayout->removeWidget(d->m_progressBar); // NOTE: This is important because progress bar always has to be at the end of settings box layout. So we remove it and then add it back.
+    d->m_settingsBoxLayout->addWidget(d->m_progressBar);
+}
+
+void KPSettingsWidget::replaceImageList(QWidget* imgList)
+{
+    d->m_imgList->hide();           
+    d->mainLayout->removeWidget(d->m_imgList);
+    d->mainLayout->insertWidget(0,imgList);
+}
+
+QWidget* KPSettingsWidget::getSettingsBox()
+{
+    return d->m_settingsBox;
+}
+
+QVBoxLayout* KPSettingsWidget::getSettingsBoxLayout()
+{
+    return d->m_settingsBoxLayout;
+}
+
+QGroupBox* KPSettingsWidget::getAlbumBox()
+{
+    return d->m_albBox;
+}
+
+QGridLayout* KPSettingsWidget::getAlbumBoxLayout()
+{
+    return d->m_albumsBoxLayout;
+}
+
+QGroupBox* KPSettingsWidget::getOptionsBox()
+{
+    return d->m_optionsBox;
+}
+
+QGridLayout* KPSettingsWidget::getOptionsBoxLayout()
+{
+    return d->m_optionsBoxLayout;
+}
+
+QGroupBox* KPSettingsWidget::getUploadBox()
+{
+    return d->m_uploadBox;
+}
+
+QVBoxLayout* KPSettingsWidget::getUploadBoxLayout()
+{
+    return d->m_uploadBoxLayout;
+}
+
+QGroupBox* KPSettingsWidget::getSizeBox()
+{
+    return d->m_sizeBox;
+}
+
+QVBoxLayout* KPSettingsWidget::getSizeBoxLayout()
+{
+    return d->m_sizeBoxLayout;
+}
+
+QGroupBox* KPSettingsWidget::getAccountBox()
+{
+    return d->m_accountBox;
+}
+
+QGridLayout* KPSettingsWidget::getAccountBoxLayout()
+{
+    return d->m_accountBoxLayout;
+}
+    
+QLabel* KPSettingsWidget::getHeaderLbl()
+{
+    return d->m_headerLbl;
+}
+
+QLabel* KPSettingsWidget::getUserNameLabel()
+{
+    return d->m_userNameDisplayLbl;
+}
+
+QPushButton* KPSettingsWidget::getChangeUserBtn()
+{
+    return d->m_changeUserBtn;
+}
+
+QComboBox* KPSettingsWidget::getDimensionCoB()
+{
+    return d->m_dlDimensionCoB;
+}
+
+QPushButton* KPSettingsWidget::getNewAlbmBtn()
+{
+    return d->m_newAlbumBtn;
+}
+
+QPushButton* KPSettingsWidget::getReloadBtn()
+{
+    return d->m_reloadAlbumsBtn;
+}
+
+QCheckBox* KPSettingsWidget::getResizeCheckBox()
+{
+    return d->m_resizeChB;
+}
+
+QSpinBox* KPSettingsWidget::getDimensionSpB()
+{
+    return d->m_dimensionSpB;
+}
+
+QSpinBox* KPSettingsWidget::getImgQualitySpB()
+{
+    return d->m_imageQualitySpB;
+}
+
+QComboBox* KPSettingsWidget::getAlbumsCoB()
+{
+    return d->m_albumsCoB;
 }
 
 } // namespace KIPIPlugins

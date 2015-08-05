@@ -170,16 +170,16 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         }
     }
 
-    connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
+    connect(m_widget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    connect(m_widget->m_changeUserBtn,SIGNAL(clicked()),
+    connect(m_widget->getChangeUserBtn(),SIGNAL(clicked()),
             this,SLOT(slotUserChangeRequest()));
 
-    connect(m_widget->m_newAlbumBtn,SIGNAL(clicked()),
+    connect(m_widget->getNewAlbmBtn(),SIGNAL(clicked()),
             this,SLOT(slotNewAlbumRequest()));
 
-    connect(m_widget->m_reloadAlbumsBtn,SIGNAL(clicked()),
+    connect(m_widget->getReloadBtn(),SIGNAL(clicked()),
             this,SLOT(slotReloadAlbumsRequest()));
 
     connect(this,SIGNAL(user1Clicked()),
@@ -310,21 +310,21 @@ void GSWindow::readSettings()
     
     if (grp.readEntry("Resize", false))
     {
-        m_widget->m_resizeChB->setChecked(true);
-        m_widget->m_dimensionSpB->setEnabled(true);
-        m_widget->m_imageQualitySpB->setEnabled(true);
+        m_widget->getResizeCheckBox()->setChecked(true);
+        m_widget->getDimensionSpB()->setEnabled(true);
+        m_widget->getImgQualitySpB()->setEnabled(true);
     }
     else
     {
-        m_widget->m_resizeChB->setChecked(false);
-        m_widget->m_dimensionSpB->setEnabled(false);
-        m_widget->m_imageQualitySpB->setEnabled(false);
+        m_widget->getResizeCheckBox()->setChecked(false);
+        m_widget->getDimensionSpB()->setEnabled(false);
+        m_widget->getImgQualitySpB()->setEnabled(false);
     }
 
-    m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width",    1600));
-    m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
+    m_widget->getDimensionSpB()->setValue(grp.readEntry("Maximum Width",    1600));
+    m_widget->getImgQualitySpB()->setValue(grp.readEntry("Image Quality", 90));
     
-   if(m_picasaImport || m_picasaExport)
+   if(m_picasaExport)
        m_widget->m_tagsBGrp->button(grp.readEntry("Tag Paths", 0))->setChecked(true);
 
     KConfigGroup dialogGroup;
@@ -355,11 +355,11 @@ void GSWindow::writeSettings()
     
     grp.writeEntry("refresh_token",refresh_token);
     grp.writeEntry("Current Album",m_currentAlbumId);
-    grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
-    grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
-    grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
+    grp.writeEntry("Resize",          m_widget->getResizeCheckBox()->isChecked());
+    grp.writeEntry("Maximum Width",   m_widget->getDimensionSpB()->value());
+    grp.writeEntry("Image Quality",   m_widget->getImgQualitySpB()->value());
     
-   if(m_picasaExport || m_picasaImport)
+   if(m_picasaExport)
        grp.writeEntry("Tag Paths",     m_widget->m_tagsBGrp->checkedId());
 
     KConfigGroup dialogGroup;
@@ -408,7 +408,7 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
     if (m_transferQueue.isEmpty())
         return;
 
-    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_currentAlbumId = m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString();
     m_imagesTotal    = m_transferQueue.count();
     m_imagesCount    = 0;
 
@@ -437,7 +437,7 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
     m_transferQueue.clear();
 
-    QList<QUrl> urlList = m_widget->m_imgList->imageUrls(true);
+    QList<QUrl> urlList = m_widget->imagesList()->imageUrls(true);
 
     if (urlList.isEmpty())
         return;
@@ -486,7 +486,7 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
     if (m_transferQueue.isEmpty())
         return;
 
-    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_currentAlbumId = m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString();
     m_imagesTotal    = m_transferQueue.count();
     m_imagesCount    = 0;
 
@@ -512,17 +512,17 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             return;   
         }
     
-        m_widget->m_albumsCoB->clear();
+        m_widget->getAlbumsCoB()->clear();
         qCDebug(KIPIPLUGINS_LOG) << "slotListAlbumsDone1:" << list.size();
 
         for(int i=0;i<list.size();i++)
         {
-            m_widget->m_albumsCoB->addItem(QIcon::fromTheme("system-users"),list.value(i).title,
+            m_widget->getAlbumsCoB()->addItem(QIcon::fromTheme("system-users"),list.value(i).title,
                                            list.value(i).id);
 
             if (m_currentAlbumId == list.value(i).id)
             {
-                m_widget->m_albumsCoB->setCurrentIndex(i);
+                m_widget->getAlbumsCoB()->setCurrentIndex(i);
             }
         }
 
@@ -538,7 +538,7 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
         }
             
         m_widget->updateLabels(m_picsasa_talker->getLoginName(), m_picsasa_talker->getUserName());
-        m_widget->m_albumsCoB->clear();
+        m_widget->getAlbumsCoB()->clear();
 
         for (int i = 0; i < list.size(); ++i)
         {
@@ -551,10 +551,10 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             else
                 albumIcon = "folder";
 
-            m_widget->m_albumsCoB->addItem(QIcon::fromTheme(albumIcon), list.at(i).title, list.at(i).id);
+            m_widget->getAlbumsCoB()->addItem(QIcon::fromTheme(albumIcon), list.at(i).title, list.at(i).id);
 
             if (m_currentAlbumId == list.at(i).id)
-                m_widget->m_albumsCoB->setCurrentIndex(i);
+                m_widget->getAlbumsCoB()->setCurrentIndex(i);
             
             buttonStateChange(true);  
         }
@@ -566,13 +566,13 @@ void GSWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-        m_widget->m_changeUserBtn->setEnabled(false);
+        m_widget->getChangeUserBtn()->setEnabled(false);
         buttonStateChange(false);
     }
     else
     {
         setCursor(Qt::ArrowCursor);
-        m_widget->m_changeUserBtn->setEnabled(true);
+        m_widget->getChangeUserBtn()->setEnabled(true);
         buttonStateChange(true);
     }
 }
@@ -587,8 +587,8 @@ void GSWindow::picasaTransferHandler()
         connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
                 this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
 
-        m_picsasa_talker->listPhotos(m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString(),
-                                     m_widget->m_dlDimensionCoB->itemData(m_widget->m_dlDimensionCoB->currentIndex()).toString());
+        m_picsasa_talker->listPhotos(m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
+                                     m_widget->getDimensionCoB()->itemData(m_widget->getDimensionCoB()->currentIndex()).toString());
 
     }
     else
@@ -597,7 +597,7 @@ void GSWindow::picasaTransferHandler()
         connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
                 this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
 
-        m_picsasa_talker->listPhotos(m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
+        m_picsasa_talker->listPhotos(m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString());
 
     }    
 }
@@ -612,9 +612,9 @@ void GSWindow::slotTextBoxEmpty()
 
 void GSWindow::slotStartTransfer()
 {
-    m_widget->m_imgList->clearProcessedStatus();
+    m_widget->imagesList()->clearProcessedStatus();
 
-    if(m_widget->m_imgList->imageUrls().isEmpty())
+    if((m_gdrive || m_picasaExport) && m_widget->imagesList()->imageUrls().isEmpty())
     {
         QMessageBox::critical(this, "Error", i18n("No image selected. Please select which images should be uploaded."));
         return;
@@ -675,9 +675,9 @@ void GSWindow::slotStartTransfer()
 
     typedef QPair<QUrl, GSPhoto> Pair;
 
-    for(int i=0 ;i < (m_widget->m_imgList->imageUrls().size()) ; i++)
+    for(int i=0 ;i < (m_widget->imagesList()->imageUrls().size()) ; i++)
     {
-        KPImageInfo info(m_widget->m_imgList->imageUrls().value(i));
+        KPImageInfo info(m_widget->imagesList()->imageUrls().value(i));
         GSPhoto temp;
         qCDebug(KIPIPLUGINS_LOG) << "in start transfer info " <<info.title() << info.description();
         
@@ -691,10 +691,10 @@ void GSWindow::slotStartTransfer()
         temp.gpsLon.setNum(info.longitude());
         temp.tags = info.tagsPath();
 
-        m_transferQueue.append(Pair(m_widget->m_imgList->imageUrls().value(i),temp));
+        m_transferQueue.append(Pair(m_widget->imagesList()->imageUrls().value(i),temp));
     }
 
-    m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+    m_currentAlbumId = m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString();
     m_imagesTotal    = m_transferQueue.count();
     m_imagesCount    = 0;
 
@@ -727,9 +727,9 @@ void GSWindow::uploadNextPhoto()
     if(m_gdrive)
     {
         res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                 m_widget->m_resizeChB->isChecked(),
-                                 m_widget->m_dimensionSpB->value(),
-                                 m_widget->m_imageQualitySpB->value());
+                                 m_widget->getResizeCheckBox()->isChecked(),
+                                 m_widget->getDimensionSpB()->value(),
+                                 m_widget->getImgQualitySpB()->value());
       
     }
     else
@@ -749,17 +749,20 @@ void GSWindow::uploadNextPhoto()
                     break;
                 default:
                     {
-                        ReplaceDialog dlg(this, "", iface(), pathComments.first.toLocalFile(), info.thumbURL);
-
-                        switch(dlg.exec())
+                        ReplaceDialog dlg(this, "", iface(), pathComments.first, info.thumbURL);
+                        dlg.exec();
+                        
+                        switch(dlg.getResult())
                         {
                             case PWR_ADD_ALL:
                                 m_renamingOpt = PWR_ADD_ALL;
+                                break;
                             case PWR_ADD:
                                 bAdd = true;
                                 break;
                             case PWR_REPLACE_ALL:
                                 m_renamingOpt = PWR_REPLACE_ALL;
+                                break;
                             case PWR_REPLACE:
                                 bAdd = false;
                                 break;
@@ -843,13 +846,16 @@ void GSWindow::uploadNextPhoto()
             if(bAdd)
             {
                 res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                                 m_widget->m_resizeChB->isChecked(),
-                                                 m_widget->m_dimensionSpB->value(),
-                                                 m_widget->m_imageQualitySpB->value());     
+                                                 m_widget->getResizeCheckBox()->isChecked(),
+                                                 m_widget->getDimensionSpB()->value(),
+                                                 m_widget->getImgQualitySpB()->value());     
             }
             else
             {
-                res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info);
+                res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info,
+                                                    m_widget->getResizeCheckBox()->isChecked(),
+                                                    m_widget->getDimensionSpB()->value(),
+                                                    m_widget->getImgQualitySpB()->value());
             }
         }
 
@@ -1136,7 +1142,7 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
         }
         qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
         // Remove photo uploaded from the list
-        m_widget->m_imgList->removeItemByUrl(m_transferQueue.first().first);
+        m_widget->imagesList()->removeItemByUrl(m_transferQueue.first().first);
         m_transferQueue.pop_front();
         m_imagesCount++;
         qCDebug(KIPIPLUGINS_LOG) << "In slotAddPhotoSucceeded" << m_imagesCount;
@@ -1148,7 +1154,7 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
 
 void GSWindow::slotImageListChanged()
 {
-    enableButton(User1, !(m_widget->m_imgList->imageUrls().isEmpty()));
+    enableButton(User1, !(m_widget->imagesList()->imageUrls().isEmpty()));
 }
 
 void GSWindow::slotNewAlbumRequest()
@@ -1159,7 +1165,7 @@ void GSWindow::slotNewAlbumRequest()
         {
             GSFolder newFolder;
             m_albumDlg->getAlbumProperties(newFolder);
-            m_currentAlbumId = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
+            m_currentAlbumId = m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString();
             m_talker->createFolder(newFolder.title,m_currentAlbumId);
         }
     }
@@ -1236,7 +1242,7 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
 void GSWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
-    m_progressDlg->hide();
+    m_widget->progressBar()->hide();
     if(m_gdrive)
         m_talker->cancel();
     else
@@ -1269,8 +1275,8 @@ void GSWindow::slotUserChangeRequest()
 
 void GSWindow::buttonStateChange(bool state)
 {
-    m_widget->m_newAlbumBtn->setEnabled(state);
-    m_widget->m_reloadAlbumsBtn->setEnabled(state);
+    m_widget->getNewAlbmBtn()->setEnabled(state);
+    m_widget->getReloadBtn()->setEnabled(state);
     enableButton(User1, state);
 }
 

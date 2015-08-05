@@ -63,6 +63,7 @@ public:
         lbDest        = 0;
         progressCount = 0;
         progressTimer = 0;
+        result        =-1;
     }
     
     QPushButton*    bAdd;
@@ -79,10 +80,11 @@ public:
     WorkingPixmap   progressPix;
     int             progressCount;
     QTimer*         progressTimer;
+    int             result;
 };
 
 ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
-                                               Interface* const _iface, const KUrl& _src, const KUrl& _dest)
+                                               Interface* const _iface, const QUrl& _src, const QUrl& _dest)
                       : QDialog(parent), d(new Private)
 {
     setObjectName("ReplaceDialog");
@@ -188,10 +190,10 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     // get source thumbnail
     if (d->iface && d->src.isValid())
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
+                this, SLOT(slotThumbnail(QUrl,QPixmap)));
 
-        d->iface->thumbnail(d->src, KIconLoader::SizeLarge);
+        d->iface->thumbnail(d->src, 48);
     }
 
     // get dest thumbnail
@@ -238,7 +240,7 @@ void ReplaceDialog::slotData(KIO::Job* /*job*/, const QByteArray& data)
     memcpy(d->buffer.data()+oldSize, data.data(), data.size());
 }
 
-void ReplaceDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void ReplaceDialog::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     if (url == d->src)
     {
@@ -253,27 +255,32 @@ ReplaceDialog::~ReplaceDialog()
 
 void ReplaceDialog::cancelPressed()
 {
-    done(PWR_CANCEL);
+    close();
+    d->result = PWR_CANCEL;
 }
 
 void ReplaceDialog::addPressed()
 {
-    done(PWR_ADD);
+    close();
+    d->result = PWR_ADD;
 }
 
 void ReplaceDialog::addAllPressed()
 {
-    done(PWR_ADD_ALL);
+    close();
+    d->result = PWR_ADD_ALL;
 }
 
 void ReplaceDialog::replacePressed()
 {
-    done(PWR_REPLACE);
+    close();
+    d->result = PWR_REPLACE;
 }
 
 void ReplaceDialog::replaceAllPressed()
 {
-    done(PWR_REPLACE_ALL);
+    close();
+    d->result = PWR_REPLACE_ALL;
 }
 
 QPixmap ReplaceDialog::setProgressAnimation(const QPixmap& thumb, const QPixmap& pix)
@@ -296,6 +303,11 @@ void ReplaceDialog::slotProgressTimerDone()
         d->progressCount = 0;
 
     d->progressTimer->start(300);
+}
+
+int ReplaceDialog::getResult()
+{
+    return d->result;
 }
 
 } // namespace KIPIGoogleServicesPlugin

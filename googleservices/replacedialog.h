@@ -25,12 +25,11 @@
 
 #include <QDialog>
 #include <QString>
+#include <QUrl>
 
-#include <kurl.h>
 #include <kio/global.h>
 #include <kio/pixmaploader.h>
 #include <kio/job.h>
-#include <kiconloader.h>
 
 #include <KIPI/Interface>
 
@@ -41,11 +40,11 @@ namespace KIPIGoogleServicesPlugin
 
 enum ReplaceDialog_Result
 {
-    PWR_REPLACE     = 3,
-    PWR_REPLACE_ALL = 4,
+    PWR_CANCEL      = 0,
     PWR_ADD         = 1,
     PWR_ADD_ALL     = 2,
-    PWR_CANCEL      = 0
+    PWR_REPLACE     = 3,
+    PWR_REPLACE_ALL = 4
 };
 
 class ReplaceDialog : public QDialog
@@ -55,8 +54,10 @@ class ReplaceDialog : public QDialog
 public:
 
     ReplaceDialog(QWidget* const parent, const QString& caption,
-                           Interface* const iface, const KUrl& src, const KUrl& dest);
+                           Interface* const iface, const QUrl& src, const QUrl& dest);
     ~ReplaceDialog();
+    
+    int getResult();
 
 public Q_SLOTS:
 
@@ -70,7 +71,7 @@ private Q_SLOTS:
 
     void slotResult(KJob *job);
     void slotData(KIO::Job *job, const QByteArray& data);
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    void slotThumbnail(const QUrl& url, const QPixmap& pix);
     void slotProgressTimerDone();
 
 private:

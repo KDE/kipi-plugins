@@ -68,51 +68,47 @@ public:
 
     KPImagesList*     imagesList()  const;
     KPProgressWidget* progressBar() const;
-
+    void              replaceImageList(QWidget* widget);
+    
+    QWidget*          getSettingsBox();
+    QVBoxLayout*      getSettingsBoxLayout();
+    void              addWidgetToSettingsBox(QWidget* widget);
+    
+    QGroupBox*        getAlbumBox();
+    QGridLayout*      getAlbumBoxLayout();
+    
+    QGroupBox*        getOptionsBox();
+    QGridLayout*      getOptionsBoxLayout();
+    
+    QGroupBox*        getUploadBox();
+    QVBoxLayout*      getUploadBoxLayout();
+    
+    QGroupBox*        getSizeBox();
+    QVBoxLayout*      getSizeBoxLayout();
+    
+    QGroupBox*        getAccountBox();
+    QGridLayout*      getAccountBoxLayout();
+    
+    QLabel*           getHeaderLbl();
+    QLabel*           getUserNameLabel();
+    QPushButton*      getChangeUserBtn();
+    QComboBox*        getDimensionCoB();
+    QPushButton*      getNewAlbmBtn();
+    QPushButton*      getReloadBtn();
+    QCheckBox*        getResizeCheckBox();
+    QSpinBox*         getDimensionSpB();
+    QSpinBox*         getImgQualitySpB();
+    QComboBox*        getAlbumsCoB();
+    
+    
 protected Q_SLOTS:
 
     void slotResizeChecked();
 
-protected:
-
-    KPImagesList*                  m_imgList;
-    KIPI::UploadWidget*            m_uploadWidget;
-    QString                        m_pluginName;
-
-    QLabel*                        m_headerLbl;
-    QLabel*                        m_userNameDisplayLbl;
-    QPushButton*                   m_changeUserBtn;
-    QComboBox*                     m_dlDimensionCoB;
-
-    QComboBox*                     m_albumsCoB;
-    QPushButton*                   m_newAlbumBtn;
-    QPushButton*                   m_reloadAlbumsBtn;
-
-    QCheckBox*                     m_resizeChB;
-    QSpinBox*                      m_dimensionSpB;
-    QSpinBox*                      m_imageQualitySpB;
+private:
     
-    QHBoxLayout*                   mainLayout;
-    
-    QWidget*                       m_settingsBox;
-    QVBoxLayout*                   m_settingsBoxLayout;
-    
-    QGroupBox*                     m_albBox;
-    QGridLayout*                   m_albumsBoxLayout;
-    
-    QGroupBox*                     m_optionsBox;
-    QGridLayout*                   m_optionsBoxLayout;
-    
-    QGroupBox*                     m_uploadBox;
-    QVBoxLayout*                   m_uploadBoxLayout;
-    
-    QGroupBox*                     m_sizeBox;
-    QVBoxLayout*                   m_sizeBoxLayout;
-    
-    QGroupBox*                     m_accountBox;
-    QGridLayout*                   m_accountBoxLayout;
-
-    KPProgressWidget*              m_progressBar;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIPlugins

@@ -131,8 +131,6 @@ private:
     GDTalker*                     m_talker;
     PicasawebTalker*              m_picsasa_talker;
 
-    KProgressDialog*              m_progressDlg;
-
     QString                       m_currentAlbumId;
 
     QList< QPair<QUrl, GSPhoto> > m_transferQueue;
