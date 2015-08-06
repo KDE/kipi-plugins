@@ -4,6 +4,7 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+cmake_minimum_required(VERSION 2.8.9)
 project(kipi-plugins)
 
 message(STATUS "----------------------------------------------------------------------------------")
