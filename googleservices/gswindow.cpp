@@ -623,7 +623,7 @@ void GSWindow::slotStartTransfer()
 {
     m_widget->m_imgList->clearProcessedStatus();
 
-    if(m_widget->m_imgList->imageUrls().isEmpty())
+    if((m_gdrive || m_picasaExport) && m_widget->m_imgList->imageUrls().isEmpty())
     {
         if (KMessageBox::warningContinueCancel(this, i18n("No image selected. Please select which images should be uploaded."))
             == KMessageBox::Continue)

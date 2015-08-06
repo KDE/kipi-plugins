@@ -124,10 +124,13 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
                                                "to/from Facebook web service."),
                                          ki18n("(c) 2005-2008, Vardhman Jain\n"
                                                "(c) 2008-2012, Gilles Caulier\n"
-                                               "(c) 2008-2009, Luka Renko"));
+                                               "(c) 2008-2009, Luka Renko\n"
+                                               "(c) 2015 Shourya Singh Gupta"));
 
     about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                      "lure at kubuntu dot org");
+    about->addAuthor(ki18n("Shourya Singh Gupta"), ki18n("Developer"),
+                     "shouryasgupta at gmail dot com");
 
     about->setHandbookEntry("facebook");
     setAboutData(about);
@@ -562,8 +565,15 @@ void FbWindow::slotUserChangeRequest()
     if (m_talker->loggedIn())
     {
         m_talker->logout();
-        m_accessToken.clear();
-        m_sessionExpires = 0;
+        if (KMessageBox::warningContinueCancel(this, i18n("After you have been logged out in the browser, "
+                                                          "click \"Continue\" to authenticate for another account"))
+            == KMessageBox::Continue)
+        {
+            m_accessToken.clear();
+            m_sessionExpires = 0;              
+        }
+        else
+            return;
     }
 
     authenticate();

@@ -108,10 +108,13 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
                                                KAboutData::License_GPL,
                                                ki18n("A Kipi-plugin to export images "
                                                      "to Dropbox"),
-                                               ki18n("(c) 2013, Saurabh Patel"));
+                                               ki18n("(c) 2013, Saurabh Patel\n"
+                                                     "(c) 2015, Shourya Singh Gupta"));
 
     about->addAuthor(ki18n("Saurabh Patel"),ki18n("Author and maintainer"),
                      "saurabhpatel7717 at gmail dot com");
+        about->addAuthor(ki18n("Shourya Singh Gupta"),ki18n("Developer"),
+                     "shouryasgupta at gmail dot com");
     about->setHandbookEntry("dropbox");
     setAboutData(about);
 

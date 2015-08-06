@@ -127,7 +127,6 @@ private:
     KIO::Job*                       m_job;
     QByteArray                      m_buffer;
     QQueue<QString>                 queue;
-    QList<QPair<QString, QString> > list;
 };
 
 } // namespace KIPIDropboxPlugin
