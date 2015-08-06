@@ -591,7 +591,7 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
                 QList<QString> b = qwer.uniqueKeys();
                 QString path("");
                 QString isDir("");
-                int temp;
+                int temp = 0;
 
                 for(int i=0;i<qwer.size();i++)
                 {
