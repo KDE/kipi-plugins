@@ -58,4 +58,3 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 049 ==> 328472 - Gwenview crash on quit during Facebook upload.
 050 ==> 306144 - Gwenview crashes with the kipi plugin Export to Facebook.
 051 ==> 299776 - Violation: Privacy Policy.
-052 ==> 
