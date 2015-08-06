@@ -1,0 +1,60 @@
+Kipi-plugins 4.12.0 - Release date: 2015-07-26
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+Google Tools ==> Implementations of PicasaWeb and Google Drive are now merged into one common Google Services tool. 
+
+BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
+
+001 ==> 321446 - Export to Imgur just hang on 'loading' animation eternally.
+002 ==> 349208 - Cmake can't find external libkvkontakte.
+003 ==> 277898 - Does not compile, presumably because of missing directory in include path.
+004 ==> 315580 - digiKam crashed after I changed the DLNA implementation from "HUPnP API" to "miniDLNA".
+005 ==> 316126 - digiKam crashed when choosing dlna export.
+006 ==> 348519 - Auth Token 98 - Login failed - Picasa Import.
+007 ==> 215787 - Picasaweb updating photo or movie does not work,duplicate instead of replace.
+008 ==> 217546 - Picasaweb export does not point to the current album.
+009 ==> 223375 - PicasaWeb: videos won't be exported.
+010 ==> 272423 - [wish] picasaweb updating tags.
+011 ==> 272518 - Picasaweb updating photo not marked as uploaded.
+012 ==> 329350 - Exporting a second time mix two exports (test picasaweb).
+013 ==> 219773 - Attempted to use Picasaweb addon to upload an album of approximately 330 jpegs.
+014 ==> 221200 - Uploading photo to picasa web albums.
+015 ==> 221417 - Crash while export to Picasaweb.
+016 ==> 291701 - PicasaWeb Export removes deleted photos from album.
+017 ==> 304763 - Export of Picasaweb crashes Gwenview.
+018 ==> 306165 - Crash while starting photo upload to picasa.
+019 ==> 308701 - digikam crash while export again the same image to picasaweb with kipi plugin.
+020 ==> 321251 - Gwenview crashs if close it while sending images to picasa.
+021 ==> 172427 - digiKam crashed with kipi plugins.
+022 ==> 164908 - Private albums are not listed (and then not usable) with picasa export plugin.
+023 ==> 200091 - "remove EXIF data" crashes digikam, gwenview.
+024 ==> 265630 - Gallery export uploads to wrong directory.
+025 ==> 249842 - Blend bracketed images tool says it failed to save the blended image, but actually saves it.
+026 ==> 320749 - Panorama tool fails systematically when file names contain ':'.
+027 ==> 277994 - Missing dot in filename in "batch raw converter".
+028 ==> 167286 - Gps tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
+029 ==> 350167 - The browser to authenticate the plugin with flickr at the first export is never started.
+030 ==> 297455 - Thumbnails not refreshed on file list.
+031 ==> 343668 - Gwenview crashed after upload movie to Rajce.net.
+032 ==> 341688 - Dropbox upload does not work due to developer API keys.
+033 ==> 337963 - Pictures moved from folders under copy.com sync control are re-downloaded again.
+034 ==> 347194 - Export to Facebook fails with "Facebook Call Failed".
+035 ==> 289256 - When an error occurs during session verification, the FB export dialog ends up in an unusable state.
+036 ==> 240254 - Using FB and Flickr tools at the same time, FB is completed but dialog cannot be closed until Flickr tool is done.
+037 ==> 319252 - FaceBook export doesn't work any more due to bad url given back to register to before photo uploading.
+038 ==> 297162 - Application does not have permission for this action.
+039 ==> 202898 - New Facebook Import Gui Mockup.
+040 ==> 250564 - digiKam import corrupted pictures with facebook plugin (read html files).
+041 ==> 317228 - Kipi plugins Facebook app seems to be hacked/redirected to a Japanese site.
+042 ==> 305281 - Import to Facebook.
+043 ==> 289272 - File upload to facebook fails/ digikam kipi plugin.
+044 ==> 347117 - Crash when exporting pictures to facebook.
+045 ==> 297732 - digiKam crash when tried to export pics to facebook.
+046 ==> 223830 - digiKam crash on Export to Facebook.
+047 ==> 342300 - Export to facebook connect properly so i can post to my facebook account.
+048 ==> 346183 - Crash when exporting picture to facebook.
+049 ==> 328472 - Gwenview crash on quit during Facebook upload.
+050 ==> 306144 - Gwenview crashes with the kipi plugin Export to Facebook.
+051 ==> 299776 - Violation: Privacy Policy.
