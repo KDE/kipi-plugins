@@ -294,7 +294,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(info.title);
+    QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName()); // NOTE: Do not use info.title as arg here to set titleText because we change the format of image as .jpg before uploading.
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
