@@ -301,7 +301,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(info.title);
+    QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName()); // NOTE: Do not use info.title as arg here to set titleText because we change the format of image as .jpg before uploading.
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
@@ -696,7 +696,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 
                     if(detailsNode.nodeName() == "title")
                     {
-                        fps.title = detailsElem.text();
+                        //fps.title = detailsElem.text();
                     }
 
                     if(detailsNode.nodeName()=="gphoto:access")
@@ -758,6 +758,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                                     fps.originalURL.isEmpty())
                                 {
                                     fps.originalURL = contentElem.attribute("url");
+                                    fps.title = fps.originalURL.fileName();
                                     fps.mimeType = contentElem.attribute("type");
                                 }
 
@@ -765,6 +766,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                                     (contentElem.attribute("type") == "video/mpeg4"))
                                 {
                                     fps.originalURL = contentElem.attribute("url");
+                                    fps.title = fps.originalURL.fileName();
                                     fps.mimeType = contentElem.attribute("type");
                                 }
                             }
