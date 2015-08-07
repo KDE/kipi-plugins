@@ -403,7 +403,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(info.title);
+    QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName());
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
