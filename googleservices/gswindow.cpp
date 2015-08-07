@@ -849,7 +849,10 @@ void GSWindow::uploadNextPhoto()
             }
             else
             {
-                res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info);
+                res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info,
+                                                    m_widget->m_resizeChB->isChecked(),
+                                                    m_widget->m_dimensionSpB->value(),
+                                                    m_widget->m_imageQualitySpB->value());
             }
         }
 

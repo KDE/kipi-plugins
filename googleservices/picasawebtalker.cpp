@@ -356,7 +356,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     return true;
 }
 
-bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info)
+bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info,bool rescale,int maxDim,int imageQuality)
 {
     if (m_job)
     {
@@ -365,6 +365,40 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info)
     }
 
     MPForm_Picasa      form;
+    
+    QString path = photoPath;
+    QImage image;
+
+    if(KIPIPlugins::KPMetadata::isRawFile(photoPath))
+    {
+        KDcrawIface::KDcraw::loadRawPreview(image,photoPath);
+    }
+    else
+    {
+        image.load(photoPath);
+    }
+
+    if(image.isNull())
+    {
+        return false;
+    }
+
+    path = KStandardDirs::locateLocal("tmp",QFileInfo(photoPath).baseName().trimmed()+".jpg");
+
+    if(rescale && (image.width() > maxDim || image.height() > maxDim)){
+        image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    }
+
+    image.save(path,"JPEG",imageQuality);
+
+    KIPIPlugins::KPMetadata meta;
+
+    if(meta.load(photoPath))
+    {
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins",kipiplugins_version);
+        meta.save(path);
+    }    
 
     //Create the Body in atom-xml
     QDomDocument docMeta;
@@ -375,7 +409,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info)
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(info.title);
+    QDomText titleText = docMeta.createTextNode(QFileInfo(path).fileName());
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
@@ -406,7 +440,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info)
 
     form.addPair("descr", docMeta.toString(), "application/atom+xml");
 
-    if (!form.addFile("photo", photoPath))
+    if (!form.addFile("photo", path))
         return false;
 
     form.finish();
