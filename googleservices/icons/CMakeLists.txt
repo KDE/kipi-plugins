@@ -16,6 +16,6 @@ ecm_install_icons(
         32-apps-kipi-picasa.png
         48-apps-kipi-picasa.png
         sc-apps-kipi-picasa.svgz
-        process-working.png
+        22-apps-kipi-process-working.png
     DESTINATION ${ICON_INSTALL_DIR}
 )

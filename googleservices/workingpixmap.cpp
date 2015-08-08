@@ -38,7 +38,7 @@ namespace KIPIGoogleServicesPlugin
 
 WorkingPixmap::WorkingPixmap()
 {
-    QPixmap pix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("googleservices/icons/process-working.png")));
+    QPixmap pix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("googleservices/icons/22-apps-kipi-process-working.png")));
     QSize   size(22, 22);
     
     if (pix.isNull())
