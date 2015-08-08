@@ -19,9 +19,8 @@ set(kipiplugin_flickr_PART_SRCS
     comboboxintermediate.cpp
     mpform.cpp
     selectuserdlg.cpp
+    newalbum.cpp
    )
-
-ki18n_wrap_ui(kipiplugin_flickr_PART_SRCS flickralbumdialog.ui)
 
 add_library(kipiplugin_flickr MODULE ${kipiplugin_flickr_PART_SRCS})
 

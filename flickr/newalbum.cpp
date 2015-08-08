@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2013-11-18
- * Description : a kipi plugin to export images to Dropbox web service
+ * Date        : 2015-08-07
+ * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2013 by Pankaj Kumar <me at panks dot me>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "dbalbum.h"
+#include "newalbum.h"
 
 // Qt includes
 
@@ -31,32 +32,34 @@
 // KDE includes
 
 #include <klocalizedstring.h>
+#include <kdialog.h>
+#include <klineedit.h>
 
 // Local includes
 
 #include "kipiplugins_debug.h"
-#include "dbitem.h"
+#include "flickritem.h"
 
-namespace KIPIDropboxPlugin
+namespace KIPIFlickrPlugin
 {
 
-DBNewAlbum::DBNewAlbum(QWidget* const parent, const QString& pluginName)
+NewAlbum::NewAlbum(QWidget* const parent, const QString& pluginName)
     : KPNewAlbumDialog(parent,pluginName)
 {
         hideDateTime();
-        hideDesc();
         hideLocation();
-        getMainWidget()->setMinimumSize(300,0);
+        getMainWidget()->setMinimumSize(350,0);
 }
 
-DBNewAlbum::~DBNewAlbum()
+NewAlbum::~NewAlbum()
 {
 }
 
-void DBNewAlbum::getFolderTitle(DBFolder& folder)
+void NewAlbum::getFolderProperties(FPhotoSet& folder)
 {
-    folder.title = QString("/") + getTitleEdit()->text();
-    qCDebug(KIPIPLUGINS_LOG) << "getFolderTitle " << folder.title;
+    folder.title       = getTitleEdit()->text();
+    folder.description = getDescEdit()->toPlainText();
+    qCDebug(KIPIPLUGINS_LOG) << "Folder Title " << folder.title<<" Folder Description "<<folder.description;
 }
 
-} // namespace KIPIDropboxPlugin
+} // namespace KIPIFlickrPlugin

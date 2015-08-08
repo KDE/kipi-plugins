@@ -58,11 +58,11 @@
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrlist.h"
-#include "flickrnewphotosetdialog.h"
 #include "flickrwidget.h"
 #include "selectuserdlg.h"
 #include "ui_flickralbumdialog.h"
 #include "kipiplugins_debug.h"
+#include "newalbum.h"
 
 namespace KIPIFlickrPlugin
 {
@@ -101,6 +101,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
     m_widget                    = new FlickrWidget(this, iface(), serviceName);
+    m_albumDlg                  = new NewAlbum(this,"Flickr");
     m_albumsListComboBox        = m_widget->getAlbumsCoB();
     m_newAlbumBtn               = m_widget->getNewAlbmBtn();
     //m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
@@ -571,17 +572,11 @@ QString FlickrWindow::guessSensibleSetName(const QList<QUrl>& urlList)
  */
 void FlickrWindow::slotCreateNewPhotoSet()
 {
-    // Call the dialog
-    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(QApplication::activeWindow());
-    dlg->titleEdit->setText(guessSensibleSetName(m_imglst->imageUrls()));
-    int resp                              = dlg->exec();
-
-    if ((resp == QDialog::Accepted) && (!dlg->titleEdit->text().isEmpty()))
+    if (m_albumDlg->exec() == QDialog::Accepted)
     {
-        // Create a new photoset with title and description from the dialog.
         FPhotoSet fps;
-        fps.title       = dlg->titleEdit->text();
-        fps.description = dlg->descriptionEdit->toPlainText();
+        m_albumDlg->getFolderProperties(fps);
+        qCDebug(KIPIPLUGINS_LOG) << "in slotCreateNewPhotoSet() " << fps.title;
 
         // Lets find an UNDEFINED_ style id that isn't taken yet.s
         QString id;
@@ -616,8 +611,6 @@ void FlickrWindow::slotCreateNewPhotoSet()
     {
         qCDebug(KIPIPLUGINS_LOG) << "New Photoset creation aborted ";
     }
-
-    delete dlg;
 }
 
 void FlickrWindow::slotAuthCancel()

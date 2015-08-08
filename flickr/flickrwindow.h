@@ -77,6 +77,7 @@ class FlickrList;
 class FPhotoInfo;
 class GPhoto;
 class GAlbum;
+class NewAlbum;
 //class GAlbumViewItem;
 
 using namespace KIPI;
@@ -190,6 +191,7 @@ private:
 
     FlickrList*                            m_imglst;
     SelectUserDlg*                         m_select;
+    NewAlbum*                              m_albumDlg;
 };
 
 } // namespace KIPIFlickrPlugin

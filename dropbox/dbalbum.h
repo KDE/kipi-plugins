@@ -23,17 +23,11 @@
 #ifndef DBALBUM_H
 #define DBALBUM_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Local includes
 
 #include "kpnewalbumdialog.h"
 
 using namespace KIPIPlugins;
-
-class KLineEdit;
 
 namespace KIPIDropboxPlugin
 {

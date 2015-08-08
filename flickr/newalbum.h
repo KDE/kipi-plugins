@@ -3,11 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2008-10-27
- * Description : a kipi plugin to export images to Picasa web service
+ * Date        : 2015-08-07
+ * Description : a kipi plugin to export images to Flickr web service
  *
- * Copyright (C) 2008      by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2013 by Pankaj Kumar <me at panks dot me>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,31 +21,31 @@
  *
  * ============================================================ */
 
-#ifndef NEWPHOTOSETDIALOG_H
-#define NEWPHOTOSETDIALOG_H
-
-// Qt includes
-
-#include <QDialog>
+#ifndef NEWALBUM_H
+#define NEWALBUM_H
 
 // Local includes
 
-#include "ui_flickralbumdialog.h"
+#include "kpnewalbumdialog.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlickrPlugin
 {
+class FPhotoSet;
 
-class FlickrNewPhotoSetDialog : public QDialog, public Ui::FlickrAlbumDialog
+class NewAlbum : public KPNewAlbumDialog
 {
+    Q_OBJECT
+
 public:
 
-    explicit FlickrNewPhotoSetDialog(QWidget* const parent)
-        : QDialog(parent)
-    {
-        setupUi(this);
-    }
+    NewAlbum(QWidget* const parent, const QString& pluginName);
+    ~NewAlbum();
+
+    void getFolderProperties(FPhotoSet& folder);
 };
 
-} // namespace KIPIFlickrPlugin
+} //namespace KIPIFlickrPlugin
 
-#endif // NEWALBUMDIALOG_H
+#endif /*NEWALBUM_H*/
