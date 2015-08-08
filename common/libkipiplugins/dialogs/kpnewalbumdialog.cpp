@@ -96,7 +96,9 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
     
     d->buttonBox->addButton(QDialogButtonBox::Ok);
     d->buttonBox->addButton(QDialogButtonBox::Cancel);
-    d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);    
+    d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
+    d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled( false );  
+    connect(d->m_titleEdt, SIGNAL(textChanged(QString)), this, SLOT(slotTextChanged(QString)));
     setModal(false);
     
     connect(d->buttonBox, SIGNAL(accepted()),
@@ -139,6 +141,14 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
 KPNewAlbumDialog::~KPNewAlbumDialog()
 {
     delete d;
+}
+
+void KPNewAlbumDialog::slotTextChanged(const QString &text)
+{
+    if(QString::compare(getTitleEdit()->text(), QString(""), Qt::CaseInsensitive) == 0)
+        d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled(false);
+    else
+        d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled(true);
 }
 
 void KPNewAlbumDialog::hideDateTime()

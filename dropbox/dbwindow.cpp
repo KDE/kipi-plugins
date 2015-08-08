@@ -119,7 +119,7 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     //-------------------------------------------------------------------------
 
-    m_albumDlg = new DBNewAlbum(this);
+    m_albumDlg = new DBNewAlbum(this,"Dropbox");
 
     //-------------------------------------------------------------------------
 

@@ -42,46 +42,22 @@
 namespace KIPIDropboxPlugin
 {
 
-DBNewAlbum::DBNewAlbum(QWidget* const parent)
-    : KDialog(parent)
+DBNewAlbum::DBNewAlbum(QWidget* const parent, const QString& pluginName)
+    : KPNewAlbumDialog(parent,pluginName)
 {
-    QString header(i18n("Dropbox New Folder"));
-    setWindowTitle(header);
-    setButtons(Ok|Cancel);
-    setDefaultButton(Cancel);
-    setModal(false);
-
-    QWidget* const mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
-    mainWidget->setMinimumSize(300,0);
-
-    //---------------------------------------------------------
-
-    m_titleEdt = new KLineEdit;
-    m_titleEdt->setWhatsThis(i18n("The name of the folder that will be created"));
-    enableButtonOk(false);
-
-    QFormLayout* const albumBoxLayout = new QFormLayout;
-    albumBoxLayout->addRow(i18nc("album edit","Title:"),m_titleEdt);
-    albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainWidget->setLayout(albumBoxLayout);
-    connect(m_titleEdt, SIGNAL(textChanged(QString)), this, SLOT(slotTextChanged(QString)));
+        hideDateTime();
+        hideDesc();
+        hideLocation();
+        getMainWidget()->setMinimumSize(300,0);
 }
 
 DBNewAlbum::~DBNewAlbum()
 {
 }
 
-void DBNewAlbum::slotTextChanged(const QString &text)
-{
-    enableButtonOk(!text.isEmpty());
-}
-
 void DBNewAlbum::getFolderTitle(DBFolder& folder)
 {
-    folder.title = QString("/") + m_titleEdt->text();
+    folder.title = QString("/") + getTitleEdit()->text();
     qCDebug(KIPIPLUGINS_LOG) << "getFolderTitle " << folder.title;
 }
 

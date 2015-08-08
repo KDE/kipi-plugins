@@ -67,6 +67,9 @@ public:
     QDateTimeEdit* getDateTimeEdit();
     
     void addToMainLayout(QWidget* widget);
+    
+private Q_SLOTS:
+    void slotTextChanged(const QString &text);    
 
 private:
     
