@@ -1062,7 +1062,8 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         else
         {
             KPImageInfo info(newUrl);
-            info.setName(item.description);
+            info.setName(item.title);
+            info.setDescription(item.description);
             info.setTagsPath(item.tags);
 
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
