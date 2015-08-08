@@ -732,6 +732,11 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                     {
                         //fps.title = detailsElem.text();
                     }
+                    
+                    if(detailsNode.nodeName() == "summary")
+                    {
+                        fps.description = detailsElem.text();
+                    }
 
                     if(detailsNode.nodeName()=="gphoto:access")
                     {
