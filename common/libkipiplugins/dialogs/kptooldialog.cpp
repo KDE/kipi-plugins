@@ -96,7 +96,7 @@ Interface* KPDialogBase::iface() const
     return d->iface;
 }
 
-QPushButton* KPDialogBase::getHelpButton()
+QPushButton* KPDialogBase::getHelpButton() const
 {
     if (!d->dialog)
     {
@@ -164,7 +164,8 @@ void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
 // -----------------------------------------------------------------------------------
 
 KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
-    : KDialog(parent), KPDialogBase(this)
+    : KDialog(parent),
+      KPDialogBase(this)
 {
     setButtons(KDialog::Help | KDialog::Ok);
 }
@@ -179,18 +180,18 @@ class KPToolDialog::Private
 {
 public:
     Private()
-        : buttonBox(nullptr)
-        , startButton(nullptr)
-        , mainWidget(nullptr)
-        , propagateReject(true)
+        : buttonBox(0),
+          startButton(0),
+          mainWidget(0),
+         propagateReject(true)
     {
     }
 
     QDialogButtonBox* buttonBox;
-    QPushButton* startButton;
-    QWidget* mainWidget;
+    QPushButton*      startButton;
+    QWidget*          mainWidget;
 
-    bool propagateReject;
+    bool              propagateReject;
 };
 
 KPToolDialog::KPToolDialog(QWidget* const parent)
@@ -198,7 +199,7 @@ KPToolDialog::KPToolDialog(QWidget* const parent)
       KPDialogBase(this),
       d(new Private)
 {
-    d->buttonBox = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help, this);
+    d->buttonBox   = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help, this);
     d->startButton = new QPushButton(i18nc("@action:button", "&Start"), this);
     d->buttonBox->addButton(d->startButton, QDialogButtonBox::ActionRole);
     d->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
@@ -215,7 +216,7 @@ KPToolDialog::~KPToolDialog()
 {
 }
 
-void KPToolDialog::setMainWidget(QWidget* widget)
+void KPToolDialog::setMainWidget(QWidget* const widget)
 {
     if (d->mainWidget == widget)
     {
@@ -223,6 +224,7 @@ void KPToolDialog::setMainWidget(QWidget* widget)
     }
 
     layout()->removeWidget(d->buttonBox);
+
     if (d->mainWidget)
     {
         // Replace existing widget
@@ -257,12 +259,12 @@ void KPToolDialog::setRejectButtonMode(QDialogButtonBox::StandardButton button)
     }
 }
 
-QPushButton* KPToolDialog::startButton()
+QPushButton* KPToolDialog::startButton() const
 {
     return d->startButton;
 }
 
-QPushButton* KPToolDialog::helpButton()
+QPushButton* KPToolDialog::helpButton() const
 {
     return d->buttonBox->button(QDialogButtonBox::Help);
 }

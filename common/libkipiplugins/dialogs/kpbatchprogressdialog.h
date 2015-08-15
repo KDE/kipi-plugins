@@ -20,15 +20,13 @@
  *
  * ============================================================ */
 
-/** @file batchprogressdialog.h */
-
 #ifndef KPBATCHPROGRESSDIALOG_H
 #define KPBATCHPROGRESSDIALOG_H
 
 // Qt includes
 
 #include <QCloseEvent>
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 // Libkdcraw includes
 
@@ -105,7 +103,7 @@ public:
     explicit KPBatchProgressDialog(QWidget* const parent=0, const QString& caption=QString());
     ~KPBatchProgressDialog();
 
-    KPBatchProgressWidget* progressWidget();
+    KPBatchProgressWidget* progressWidget() const;
 
     void setButtonClose();
 

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2015-08-01
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : new album creation dialog.
  *
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
@@ -58,18 +58,19 @@ public:
     void hideDesc();
     void hideLocation();
  
-    QWidget*       getMainWidget();
-    QGroupBox*     getAlbumBox();
+    QWidget*       getMainWidget() const;
+    QGroupBox*     getAlbumBox() const;
     
-    QLineEdit*     getTitleEdit();
-    QTextEdit*     getDescEdit();
-    QLineEdit*     getLocEdit();
-    QDateTimeEdit* getDateTimeEdit();
+    QLineEdit*     getTitleEdit() const;
+    QTextEdit*     getDescEdit() const;
+    QLineEdit*     getLocEdit() const;
+    QDateTimeEdit* getDateTimeEdit() const;
     
-    void addToMainLayout(QWidget* widget);
+    void addToMainLayout(QWidget* const widget);
     
 private Q_SLOTS:
-    void slotTextChanged(const QString &text);    
+
+    void slotTextChanged(const QString& text);    
 
 private:
     

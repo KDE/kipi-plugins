@@ -66,7 +66,8 @@ public:
 };
 
 KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
-    : QScrollArea(dlg), d(new Private)
+    : QScrollArea(dlg),
+      d(new Private)
 {
     QWidget* const panel = new QWidget(viewport());
     setWidget(panel);

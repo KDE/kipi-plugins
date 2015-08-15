@@ -70,7 +70,8 @@ public:
 };
 
 KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -93,12 +94,12 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
                                          "losing quality. Image is not compressed.</p>"));
     slotPopulateImageFormat(false);
 
-    d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
-    QWidget* conflictBox   = new QWidget(this);
-    QVBoxLayout* vlay      = new QVBoxLayout(conflictBox);
-    d->conflictButtonGroup = new QButtonGroup(conflictBox);
-    d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
-    d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), conflictBox);
+    d->conflictLabel           = new QLabel(i18n("If Target File Exists:"), this);
+    QWidget* const conflictBox = new QWidget(this);
+    QVBoxLayout* const vlay    = new QVBoxLayout(conflictBox);
+    d->conflictButtonGroup     = new QButtonGroup(conflictBox);
+    d->overwriteButton         = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
+    d->promptButton            = new QRadioButton(i18n("Open rename-file dialog"), conflictBox);
     d->conflictButtonGroup->addButton(d->overwriteButton, OVERWRITE);
     d->conflictButtonGroup->addButton(d->promptButton,    ASKTOUSER);
     d->conflictButtonGroup->setExclusive(true);
@@ -117,9 +118,11 @@ KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* const parent)
     d->grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     d->grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
-    connect(d->formatComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &KPSaveSettingsWidget::signalSaveFormatChanged);
+    connect(d->formatComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+            this, &KPSaveSettingsWidget::signalSaveFormatChanged);
 
-    connect(d->conflictButtonGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &KPSaveSettingsWidget::signalConflictButtonChanged);
+    connect(d->conflictButtonGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+            this, &KPSaveSettingsWidget::signalConflictButtonChanged);
 }
 
 KPSaveSettingsWidget::~KPSaveSettingsWidget()

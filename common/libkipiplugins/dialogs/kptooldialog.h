@@ -60,7 +60,9 @@ public:
 
 private:
 
-    QPushButton* getHelpButton();
+    QPushButton* getHelpButton() const;
+
+private:
 
     class Private;
     Private* const d;
@@ -77,11 +79,11 @@ public:
     KPToolDialog(QWidget* const parent = 0);
     virtual ~KPToolDialog();
 
-    void setMainWidget(QWidget* widget);
+    void setMainWidget(QWidget* const widget);
 
     void setRejectButtonMode(QDialogButtonBox::StandardButton button);
 
-    QPushButton* startButton();
+    QPushButton* startButton() const;
 
 private Q_SLOTS:
 
@@ -93,7 +95,9 @@ Q_SIGNALS:
 
 private:
 
-    QPushButton* helpButton();
+    QPushButton* helpButton() const;
+
+private:
 
     friend class KPDialogBase;
 

@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <KLocalizedString>
+#include <klocalizedstring.h>
 
 // Local includes
 
@@ -49,13 +49,15 @@ public:
         debugView = 0;
     }
 
-    QTextBrowser* debugView;
+    QTextBrowser*     debugView;
     QDialogButtonBox* buttonBox;
 };
 
 KPOutputDialog::KPOutputDialog(QWidget* const parent, const QString& caption,
                                const QString& messages, const QString& header)
-    : QDialog(parent), KPDialogBase(this), d(new Private)
+    : QDialog(parent),
+      KPDialogBase(this),
+      d(new Private)
 {
     setModal(true);
     setWindowTitle(caption);
@@ -64,7 +66,7 @@ KPOutputDialog::KPOutputDialog(QWidget* const parent, const QString& caption,
     d->buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Help, this);
     d->buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 
-    QPushButton* copyButton = new QPushButton(QIcon::fromTheme("edit-copy"), i18n("Copy to Clip&board"));
+    QPushButton* const copyButton = new QPushButton(QIcon::fromTheme("edit-copy"), i18n("Copy to Clip&board"));
     d->buttonBox->addButton(copyButton, QDialogButtonBox::ActionRole);
 
     // Create dialog contents
@@ -79,8 +81,11 @@ KPOutputDialog::KPOutputDialog(QWidget* const parent, const QString& caption,
     mainLayout->addWidget(d->debugView);
     mainLayout->addWidget(d->buttonBox);
 
-    connect(d->buttonBox, &QDialogButtonBox::accepted, this, &KPOutputDialog::accept);
-    connect(copyButton, &QPushButton::clicked, this, &KPOutputDialog::slotCopyToCliboard);
+    connect(d->buttonBox, &QDialogButtonBox::accepted,
+            this, &KPOutputDialog::accept);
+
+    connect(copyButton, &QPushButton::clicked,
+            this, &KPOutputDialog::slotCopyToCliboard);
 
     resize(600, 400);
 }

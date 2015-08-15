@@ -68,37 +68,37 @@ public:
 
     KPImagesList*     imagesList()  const;
     KPProgressWidget* progressBar() const;
-    void              replaceImageList(QWidget* widget);
+    void              replaceImageList(QWidget* const widget);
     
-    QWidget*          getSettingsBox();
-    QVBoxLayout*      getSettingsBoxLayout();
-    void              addWidgetToSettingsBox(QWidget* widget);
+    QWidget*          getSettingsBox() const;
+    QVBoxLayout*      getSettingsBoxLayout() const;
+    void              addWidgetToSettingsBox(QWidget* const widget);
     
-    QGroupBox*        getAlbumBox();
-    QGridLayout*      getAlbumBoxLayout();
+    QGroupBox*        getAlbumBox() const;
+    QGridLayout*      getAlbumBoxLayout() const;
     
-    QGroupBox*        getOptionsBox();
-    QGridLayout*      getOptionsBoxLayout();
+    QGroupBox*        getOptionsBox() const;
+    QGridLayout*      getOptionsBoxLayout() const;
     
-    QGroupBox*        getUploadBox();
-    QVBoxLayout*      getUploadBoxLayout();
+    QGroupBox*        getUploadBox() const;
+    QVBoxLayout*      getUploadBoxLayout() const;
     
-    QGroupBox*        getSizeBox();
-    QVBoxLayout*      getSizeBoxLayout();
+    QGroupBox*        getSizeBox() const;
+    QVBoxLayout*      getSizeBoxLayout() const;
     
-    QGroupBox*        getAccountBox();
-    QGridLayout*      getAccountBoxLayout();
+    QGroupBox*        getAccountBox() const;
+    QGridLayout*      getAccountBoxLayout() const;
     
-    QLabel*           getHeaderLbl();
-    QLabel*           getUserNameLabel();
-    QPushButton*      getChangeUserBtn();
-    QComboBox*        getDimensionCoB();
-    QPushButton*      getNewAlbmBtn();
-    QPushButton*      getReloadBtn();
-    QCheckBox*        getResizeCheckBox();
-    QSpinBox*         getDimensionSpB();
-    QSpinBox*         getImgQualitySpB();
-    QComboBox*        getAlbumsCoB();
+    QLabel*           getHeaderLbl() const;
+    QLabel*           getUserNameLabel() const;
+    QPushButton*      getChangeUserBtn() const;
+    QComboBox*        getDimensionCoB() const;
+    QPushButton*      getNewAlbmBtn() const;
+    QPushButton*      getReloadBtn() const;
+    QCheckBox*        getResizeCheckBox() const;
+    QSpinBox*         getDimensionSpB() const;
+    QSpinBox*         getImgQualitySpB() const;
+    QComboBox*        getAlbumsCoB() const;
     
     
 protected Q_SLOTS:

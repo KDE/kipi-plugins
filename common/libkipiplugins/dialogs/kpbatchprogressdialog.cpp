@@ -34,14 +34,14 @@
 #include <QMenu>
 #include <QAction>
 #include <QIcon>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QPushButton>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <KGuiItem>
-#include <KStandardGuiItem>
+#include <kguiitem.h>
+#include <kstandardguiitem.h>
 
 // Local includes
 
@@ -104,7 +104,8 @@ public:
 };
 
 KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
-   : RVBox(parent), d(new Private)
+   : RVBox(parent),
+     d(new Private)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     layout()->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -122,9 +123,11 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 
     //---------------------------------------------
 
-    connect(this, &KPBatchProgressWidget::customContextMenuRequested, this, &KPBatchProgressWidget::slotContextMenu);
+    connect(this, &KPBatchProgressWidget::customContextMenuRequested,
+            this, &KPBatchProgressWidget::slotContextMenu);
 
-    connect(d->progress, &KPProgressWidget::signalProgressCanceled, this, &KPBatchProgressWidget::signalProgressCanceled);
+    connect(d->progress, &KPProgressWidget::signalProgressCanceled,
+            this, &KPBatchProgressWidget::signalProgressCanceled);
 }
 
 KPBatchProgressWidget::~KPBatchProgressWidget()
@@ -185,9 +188,10 @@ void KPBatchProgressWidget::setProgress(int current)
 void KPBatchProgressWidget::slotContextMenu()
 {
     QMenu popmenu(this);
-    QAction * const action = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy to Clipboard"), this);
+    QAction* const action = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy to Clipboard"), this);
 
-    connect(action, &QAction::triggered, this, &KPBatchProgressWidget::slotCopy2ClipBoard);
+    connect(action, &QAction::triggered,
+            this, &KPBatchProgressWidget::slotCopy2ClipBoard);
 
     popmenu.addAction(action);
     popmenu.exec(QCursor::pos());
@@ -215,18 +219,18 @@ class KPBatchProgressDialog::Private
 public:
 
     Private()
-        : progressWidget(nullptr)
-        , buttonBox(nullptr)
+        : progressWidget(0),
+          buttonBox(0)
     {
     }
 
     KPBatchProgressWidget* progressWidget;
-    QDialogButtonBox* buttonBox;
+    QDialogButtonBox*      buttonBox;
 };
 
 KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
-   : QDialog(0)
-   , d(new Private)
+   : QDialog(0),
+     d(new Private)
 {
     setModal(false);
     setWindowTitle(caption);
@@ -257,7 +261,7 @@ KPBatchProgressDialog::~KPBatchProgressDialog()
 {
 }
 
-KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
+KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
 {
     return d->progressWidget;
 }

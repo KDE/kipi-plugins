@@ -101,7 +101,8 @@ public:
 };
 
 KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const QUrl& url)
-    : QTreeWidgetItem(view), d(new Private)
+    : QTreeWidgetItem(view),
+      d(new Private)
 {
     qCDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << url
                              << " for list view " << view;
@@ -533,7 +534,8 @@ public:
 };
 
 KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
     if (iconSize != -1)  // default = ICONSIZE
     {

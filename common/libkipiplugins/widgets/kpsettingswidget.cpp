@@ -55,7 +55,8 @@ namespace KIPIPlugins
 class KPSettingsWidget::Private
 {
 public:
-    Private(QWidget* widget, KIPI::Interface* const iface, const QString& pluginName)
+
+    Private(QWidget* const widget, KIPI::Interface* const iface, const QString& pluginName)
     {
         m_pluginName         = pluginName;
         mainLayout           = new QHBoxLayout(widget);
@@ -130,7 +131,8 @@ public:
 };        
     
 KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName)
-    :QWidget(parent), d(new Private(this,iface,pluginName))
+    : QWidget(parent),
+      d(new Private(this,iface,pluginName))
 {
     d->m_pluginName = pluginName;
     setObjectName(d->m_pluginName+" Widget");
@@ -160,9 +162,9 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_changeUserBtn->setToolTip(i18n("Change %1 account for transfer",d->m_pluginName));
       
 
-    d->m_accountBoxLayout->addWidget(userNameLbl,          0,0,1,2);
-    d->m_accountBoxLayout->addWidget(d->m_userNameDisplayLbl, 0,2,1,2);
-    d->m_accountBoxLayout->addWidget(d->m_changeUserBtn,      1,0,1,4);
+    d->m_accountBoxLayout->addWidget(userNameLbl,             0, 0, 1, 2);
+    d->m_accountBoxLayout->addWidget(d->m_userNameDisplayLbl, 0, 2, 1, 2);
+    d->m_accountBoxLayout->addWidget(d->m_changeUserBtn,      1, 0, 1, 4);
     d->m_accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     d->m_accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
@@ -182,7 +184,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_reloadAlbumsBtn->setIcon(QIcon::fromTheme("view-refresh").pixmap(16));
     d->m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));    
 
-    d->m_albumsBoxLayout->addWidget(albLbl,            0, 0, 1, 1);
+    d->m_albumsBoxLayout->addWidget(albLbl,               0, 0, 1, 1);
     d->m_albumsBoxLayout->addWidget(d->m_albumsCoB,       0, 1, 1, 4);
     d->m_albumsBoxLayout->addWidget(d->m_newAlbumBtn,     1, 3, 1, 1);
     d->m_albumsBoxLayout->addWidget(d->m_reloadAlbumsBtn, 1, 4, 1, 1);
@@ -228,11 +230,11 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),d->m_optionsBox);
     
-    d->m_optionsBoxLayout->addWidget(d->m_resizeChB,      0, 0, 1, 5);
-    d->m_optionsBoxLayout->addWidget(imageQualityLbl,  1, 1, 1, 1);
-    d->m_optionsBoxLayout->addWidget(d->m_imageQualitySpB,1, 2, 1, 1);
-    d->m_optionsBoxLayout->addWidget(dimensionLbl,     2, 1, 1, 1);
-    d->m_optionsBoxLayout->addWidget(d->m_dimensionSpB,   2, 2, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_resizeChB,       0, 0, 1, 5);
+    d->m_optionsBoxLayout->addWidget(imageQualityLbl,      1, 1, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_imageQualitySpB, 1, 2, 1, 1);
+    d->m_optionsBoxLayout->addWidget(dimensionLbl,         2, 1, 1, 1);
+    d->m_optionsBoxLayout->addWidget(d->m_dimensionSpB,    2, 2, 1, 1);
     d->m_optionsBoxLayout->setRowStretch(3,10);
     d->m_optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     d->m_optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -291,126 +293,126 @@ KPProgressWidget* KPSettingsWidget::progressBar() const
     return d->m_progressBar;
 }
 
-void KPSettingsWidget::addWidgetToSettingsBox(QWidget* widget)
+void KPSettingsWidget::addWidgetToSettingsBox(QWidget* const widget)
 {
     d->m_settingsBoxLayout->addWidget(widget);
     d->m_settingsBoxLayout->removeWidget(d->m_progressBar); // NOTE: This is important because progress bar always has to be at the end of settings box layout. So we remove it and then add it back.
     d->m_settingsBoxLayout->addWidget(d->m_progressBar);
 }
 
-void KPSettingsWidget::replaceImageList(QWidget* imgList)
+void KPSettingsWidget::replaceImageList(QWidget* const imgList)
 {
     d->m_imgList->hide();           
     d->mainLayout->removeWidget(d->m_imgList);
-    d->mainLayout->insertWidget(0,imgList);
+    d->mainLayout->insertWidget(0, imgList);
 }
 
-QWidget* KPSettingsWidget::getSettingsBox()
+QWidget* KPSettingsWidget::getSettingsBox() const
 {
     return d->m_settingsBox;
 }
 
-QVBoxLayout* KPSettingsWidget::getSettingsBoxLayout()
+QVBoxLayout* KPSettingsWidget::getSettingsBoxLayout() const
 {
     return d->m_settingsBoxLayout;
 }
 
-QGroupBox* KPSettingsWidget::getAlbumBox()
+QGroupBox* KPSettingsWidget::getAlbumBox() const
 {
     return d->m_albBox;
 }
 
-QGridLayout* KPSettingsWidget::getAlbumBoxLayout()
+QGridLayout* KPSettingsWidget::getAlbumBoxLayout() const
 {
     return d->m_albumsBoxLayout;
 }
 
-QGroupBox* KPSettingsWidget::getOptionsBox()
+QGroupBox* KPSettingsWidget::getOptionsBox() const
 {
     return d->m_optionsBox;
 }
 
-QGridLayout* KPSettingsWidget::getOptionsBoxLayout()
+QGridLayout* KPSettingsWidget::getOptionsBoxLayout() const
 {
     return d->m_optionsBoxLayout;
 }
 
-QGroupBox* KPSettingsWidget::getUploadBox()
+QGroupBox* KPSettingsWidget::getUploadBox() const
 {
     return d->m_uploadBox;
 }
 
-QVBoxLayout* KPSettingsWidget::getUploadBoxLayout()
+QVBoxLayout* KPSettingsWidget::getUploadBoxLayout() const
 {
     return d->m_uploadBoxLayout;
 }
 
-QGroupBox* KPSettingsWidget::getSizeBox()
+QGroupBox* KPSettingsWidget::getSizeBox() const
 {
     return d->m_sizeBox;
 }
 
-QVBoxLayout* KPSettingsWidget::getSizeBoxLayout()
+QVBoxLayout* KPSettingsWidget::getSizeBoxLayout() const
 {
     return d->m_sizeBoxLayout;
 }
 
-QGroupBox* KPSettingsWidget::getAccountBox()
+QGroupBox* KPSettingsWidget::getAccountBox() const
 {
     return d->m_accountBox;
 }
 
-QGridLayout* KPSettingsWidget::getAccountBoxLayout()
+QGridLayout* KPSettingsWidget::getAccountBoxLayout() const
 {
     return d->m_accountBoxLayout;
 }
     
-QLabel* KPSettingsWidget::getHeaderLbl()
+QLabel* KPSettingsWidget::getHeaderLbl() const
 {
     return d->m_headerLbl;
 }
 
-QLabel* KPSettingsWidget::getUserNameLabel()
+QLabel* KPSettingsWidget::getUserNameLabel() const
 {
     return d->m_userNameDisplayLbl;
 }
 
-QPushButton* KPSettingsWidget::getChangeUserBtn()
+QPushButton* KPSettingsWidget::getChangeUserBtn() const
 {
     return d->m_changeUserBtn;
 }
 
-QComboBox* KPSettingsWidget::getDimensionCoB()
+QComboBox* KPSettingsWidget::getDimensionCoB() const
 {
     return d->m_dlDimensionCoB;
 }
 
-QPushButton* KPSettingsWidget::getNewAlbmBtn()
+QPushButton* KPSettingsWidget::getNewAlbmBtn() const
 {
     return d->m_newAlbumBtn;
 }
 
-QPushButton* KPSettingsWidget::getReloadBtn()
+QPushButton* KPSettingsWidget::getReloadBtn() const
 {
     return d->m_reloadAlbumsBtn;
 }
 
-QCheckBox* KPSettingsWidget::getResizeCheckBox()
+QCheckBox* KPSettingsWidget::getResizeCheckBox() const
 {
     return d->m_resizeChB;
 }
 
-QSpinBox* KPSettingsWidget::getDimensionSpB()
+QSpinBox* KPSettingsWidget::getDimensionSpB() const
 {
     return d->m_dimensionSpB;
 }
 
-QSpinBox* KPSettingsWidget::getImgQualitySpB()
+QSpinBox* KPSettingsWidget::getImgQualitySpB() const
 {
     return d->m_imageQualitySpB;
 }
 
-QComboBox* KPSettingsWidget::getAlbumsCoB()
+QComboBox* KPSettingsWidget::getAlbumsCoB() const
 {
     return d->m_albumsCoB;
 }

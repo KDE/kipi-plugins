@@ -79,7 +79,8 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
 }
 
 KPAboutData::KPAboutData(const KPAboutData& other)
-    : QObject((QObject*)(&other)), KAboutData(other)
+    : QObject((QObject*)(&other)),
+      KAboutData(other)
 {
      setHandbookEntry(other.m_handbookEntry);
 }

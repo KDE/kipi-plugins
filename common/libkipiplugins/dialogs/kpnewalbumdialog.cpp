@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2015-08-01
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : new album creation dialog.
  *
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
@@ -43,7 +43,8 @@ namespace KIPIPlugins
 class KPNewAlbumDialog::Private
 {
 public:
-    Private(QWidget* widget, const QString& pluginName)
+
+    Private(QWidget* const widget, const QString& pluginName)
     {
         m_titleEdt     = new QLineEdit;
         m_descEdt      = new QTextEdit;
@@ -57,7 +58,7 @@ public:
         albumBoxLayout = new QGridLayout(albumBox);
         
         titleLabel     = new QLabel(i18n("Title: "), albumBox);
-        dateLabel      = new QLabel(i18n("Date & Time: "), albumBox);
+        dateLabel      = new QLabel(i18n("Time Stamp: "), albumBox);
         descLabel      = new QLabel(i18n("Description: "), albumBox);
         locLabel       = new QLabel(i18n("Location: "), albumBox);
         
@@ -88,18 +89,21 @@ public:
 };    
 
 KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginName)
-    : QDialog(parent), d(new Private(this,pluginName))
+    : QDialog(parent),
+      d(new Private(this,pluginName))
 {
     d->m_pluginName = pluginName;
     d->mainWidget->setMinimumSize(500, 500);
     setWindowTitle(QString(d->m_pluginName+" New Album"));
+    setModal(false);
     
     d->buttonBox->addButton(QDialogButtonBox::Ok);
     d->buttonBox->addButton(QDialogButtonBox::Cancel);
     d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
-    d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled( false );  
-    connect(d->m_titleEdt, SIGNAL(textChanged(QString)), this, SLOT(slotTextChanged(QString)));
-    setModal(false);
+    d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled( false ); 
+
+    connect(d->m_titleEdt, SIGNAL(textChanged(QString)),
+            this, SLOT(slotTextChanged(QString)));
     
     connect(d->buttonBox, SIGNAL(accepted()),
             this, SLOT(accept()));
@@ -108,8 +112,7 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
             this, SLOT(reject()));
 
     d->albumBox->setLayout(d->albumBoxLayout);
-    d->albumBox->setWhatsThis(
-        i18n("These are basic settings for the new %1 album.",d->m_pluginName));
+    d->albumBox->setWhatsThis(i18n("These are basic settings for the new %1 album.",d->m_pluginName));
 
     d->m_titleEdt->setToolTip(i18n("Title of the album that will be created (required)."));
 
@@ -145,7 +148,7 @@ KPNewAlbumDialog::~KPNewAlbumDialog()
 
 void KPNewAlbumDialog::slotTextChanged(const QString &text)
 {
-    if(QString::compare(getTitleEdit()->text(), QString(""), Qt::CaseInsensitive) == 0)
+    if (QString::compare(getTitleEdit()->text(), QLatin1String(""), Qt::CaseInsensitive) == 0)
         d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled(false);
     else
         d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled(true);
@@ -174,37 +177,37 @@ void KPNewAlbumDialog::hideLocation()
     d->albumBoxLayout->removeWidget(d->locLabel);    
 }
 
-QWidget* KPNewAlbumDialog::getMainWidget()
+QWidget* KPNewAlbumDialog::getMainWidget() const
 {
     return d->mainWidget;
 }
 
-QGroupBox* KPNewAlbumDialog::getAlbumBox()
+QGroupBox* KPNewAlbumDialog::getAlbumBox() const
 {
     return d->albumBox;
 }
     
-QLineEdit* KPNewAlbumDialog::getTitleEdit()
+QLineEdit* KPNewAlbumDialog::getTitleEdit() const
 {
     return d->m_titleEdt;
 }
 
-QTextEdit* KPNewAlbumDialog::getDescEdit()
+QTextEdit* KPNewAlbumDialog::getDescEdit() const
 {
     return d->m_descEdt;
 }
 
-QLineEdit* KPNewAlbumDialog::getLocEdit()
+QLineEdit* KPNewAlbumDialog::getLocEdit() const
 {
     return d->m_locEdt;
 }
 
-QDateTimeEdit* KPNewAlbumDialog::getDateTimeEdit()
+QDateTimeEdit* KPNewAlbumDialog::getDateTimeEdit() const
 {
     return d->m_dtEdt;
 }
 
-void KPNewAlbumDialog::addToMainLayout(QWidget* widget)
+void KPNewAlbumDialog::addToMainLayout(QWidget* const widget)
 {
     d->mainLayout->addWidget(widget);
     d->mainLayout->removeWidget(d->buttonBox);

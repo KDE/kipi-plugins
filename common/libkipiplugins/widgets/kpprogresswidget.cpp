@@ -58,9 +58,11 @@ public:
 };
 
 KPProgressWidget::KPProgressWidget(QWidget* const parent)
-    : QProgressBar(parent), d(new Private)
+    : QProgressBar(parent),
+      d(new Private)
 {
-    connect(this, &KPProgressWidget::valueChanged, this, &KPProgressWidget::slotValueChanged);
+    connect(this, &KPProgressWidget::valueChanged,
+            this, &KPProgressWidget::slotValueChanged);
 }
 
 KPProgressWidget::~KPProgressWidget()
