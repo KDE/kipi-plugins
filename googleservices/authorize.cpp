@@ -52,11 +52,11 @@
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
+#include <kconfiggroup.h>
 
 // LibKDcraw includes
 
 #include <KDCRAW/KDcraw>
-#include <KConfigGroup>
 
 // local includes
 

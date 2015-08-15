@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include "kipiplugins_debug.h"
 
 // Libkipi includes
 
@@ -42,12 +41,13 @@
 
 // LibKDcraw includes
 
+#include <libkdcraw_version.h>
 #include <KDCRAW/DcrawInfoContainer>
-#include <version.h>
 #include <KDCRAW/KDcraw>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "galleryinfo.h"
 #include "generator.h"
 #include "imageelement.h"
