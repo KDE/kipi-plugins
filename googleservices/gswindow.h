@@ -118,6 +118,7 @@ private:
     int                           m_renamingOpt;
 
     QString                       m_serviceName;
+    QString                       m_pluginName;
     bool                          m_picasaExport;
     bool                          m_picasaImport;
     bool                          m_gdrive;

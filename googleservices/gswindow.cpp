@@ -77,11 +77,20 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_picasaImport = false;
     
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    {
         m_gdrive = true;
+        m_pluginName = QString("Google Drive");
+    }
     else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    {
         m_picasaExport = true;
+        m_pluginName = QString("Google Photos/PicasaWeb");
+    }
     else
+    {
         m_picasaImport = true;
+        m_pluginName = QString("Google Photos/PicasaWeb");
+    }
     
     qCDebug(KIPIPLUGINS_LOG)<<"GDrive is "<<m_gdrive<<" Picasa Export is "<<m_picasaExport<<" Picasa Import is "<<m_picasaImport;
     
@@ -91,9 +100,9 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_renamingOpt = 0;
 
     if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
-        m_widget      = new GoogleServicesWidget(this, iface(), "Google Drive", m_serviceName);
+        m_widget      = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
     else
-        m_widget      = new GoogleServicesWidget(this, iface(), "Google Photos/PicasaWeb", m_serviceName);
+        m_widget      = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
     
     setMainWidget(m_widget);
     setButtons(Help | User1 | Close);
@@ -192,7 +201,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
     if(m_gdrive)
     {
-        m_albumDlg = new NewAlbumDlg(this,m_serviceName,"Google Drive");
+        m_albumDlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
         m_talker = new GDTalker(this);
 
         connect(m_talker,SIGNAL(signalBusy(bool)),
@@ -236,7 +245,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     }
     else
     {
-	m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName,"Google Photos/PicasaWeb");
+	m_picasa_albumdlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
         m_picsasa_talker = new PicasawebTalker(this);
         
         connect(m_picsasa_talker,SIGNAL(signalBusy(bool)),
@@ -722,6 +731,7 @@ void GSWindow::uploadNextPhoto()
     typedef QPair<QUrl,GSPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
     GSPhoto info      = pathComments.second;
+    m_widget->imagesList()->processing(pathComments.first);
     bool res;
     
     if(m_gdrive)
@@ -1081,54 +1091,29 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
 {
     if(err == 0)
     {
-        if(m_gdrive)
-        {
-            QMessageBox warn(QMessageBox::Warning,
-                             i18n("Warning"),
-                             i18n("Failed to upload photo to Google Drive.\n%1\nDo you want to continue?",msg),
-                             QMessageBox::Yes | QMessageBox::No);
+        m_widget->imagesList()->processed(m_transferQueue.first().first,false);
+        
+        QMessageBox warn(QMessageBox::Warning,
+                         i18n("Warning"),
+                         i18n("Failed to upload photo to %1.\n%2\nDo you want to continue?",m_pluginName,msg),
+                         QMessageBox::Yes | QMessageBox::No);
     
-            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
-            (warn.button(QMessageBox::No))->setText(i18n("Cancel"));              
+        (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
+        (warn.button(QMessageBox::No))->setText(i18n("Cancel"));              
             
-            if (warn.exec() != QMessageBox::Yes)
-            {
-                m_transferQueue.clear();
-                m_widget->progressBar()->hide();
-            }
-            else
-            {
-                m_transferQueue.pop_front();
-                m_imagesTotal--;
-                m_widget->progressBar()->setMaximum(m_imagesTotal);
-                m_widget->progressBar()->setValue(m_imagesCount);
-                uploadNextPhoto();
-            }  
+        if (warn.exec() != QMessageBox::Yes)
+        {
+            m_transferQueue.clear();
+            m_widget->progressBar()->hide();
         }
         else
         {
-            QMessageBox warn(QMessageBox::Warning,
-                             i18n("Warning"),
-                             i18n("Failed to upload photo to Google Photos/PicasaWeb.\n%1\nDo you want to continue?",msg),
-                             QMessageBox::Yes | QMessageBox::No);
-    
-            (warn.button(QMessageBox::Yes))->setText(i18n("Continue"));
-            (warn.button(QMessageBox::No))->setText(i18n("Cancel"));              
-            
-            if (warn.exec() != QMessageBox::Yes)
-            {
-                m_transferQueue.clear();
-                m_widget->progressBar()->hide();
-            }
-            else
-            {
-                m_transferQueue.pop_front();
-                m_imagesTotal--;
-                m_widget->progressBar()->setMaximum(m_imagesTotal);
-                m_widget->progressBar()->setValue(m_imagesCount);
-                uploadNextPhoto();
-            }   
-        }  
+            m_transferQueue.pop_front();
+            m_imagesTotal--;
+            m_widget->progressBar()->setMaximum(m_imagesTotal);
+            m_widget->progressBar()->setValue(m_imagesCount);
+            uploadNextPhoto();
+        }
     }
     else
     {
