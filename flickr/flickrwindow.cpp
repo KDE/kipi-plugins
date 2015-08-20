@@ -60,7 +60,6 @@
 #include "flickrlist.h"
 #include "flickrwidget.h"
 #include "selectuserdlg.h"
-#include "ui_flickralbumdialog.h"
 #include "kipiplugins_debug.h"
 #include "newalbum.h"
 
