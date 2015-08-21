@@ -705,7 +705,7 @@ const QImage & PhotoItem::image() const
 
 void PhotoItem::setImage(const QImage & image)
 {
-    qDebug() << "setImage();";
+    qCDebug(KIPIPLUGINS_LOG) << "setImage();";
     if (image.isNull())
         return;
     PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image Change"));

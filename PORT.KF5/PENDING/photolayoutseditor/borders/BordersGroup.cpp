@@ -59,7 +59,7 @@ BordersGroup::BordersGroup(AbstractPhoto * photo) :
 
 BordersGroup::~BordersGroup()
 {
-    qDebug() << "PhotoEffectsGroup delete";
+    qCDebug(KIPIPLUGINS_LOG) << "PhotoEffectsGroup delete";
     delete d;
 }
 

@@ -442,10 +442,10 @@ void AbstractListToolViewDelegate::editorCancelled()
 
 void AbstractListToolViewDelegate::editorAccepted()
 {
-    qDebug() << "isAccepted sent" << m_object << m_model;
+    qCDebug(KIPIPLUGINS_LOG) << "isAccepted sent" << m_object << m_model;
     if (!m_object || !m_model)
         return;
-    qDebug() << "isAccepted sent";
+    qCDebug(KIPIPLUGINS_LOG) << "isAccepted sent";
     ItemCreatedCommand * command = new ItemCreatedCommand(m_object, m_index.row(), m_model);
     PLE_PostUndoCommand(command);
     emit editorClosed();

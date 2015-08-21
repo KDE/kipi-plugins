@@ -119,7 +119,7 @@ void CanvasSavingThread::run()
             break;
         default:
             j = "px";
-            qDebug() << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+            qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
             break;
     }
     svg.setAttribute("width", QString::number(m_canvas->d->m_size.size().width()) + j);
@@ -183,7 +183,7 @@ void CanvasSavingThread::run()
 
 void CanvasSavingThread::bytesWritten(qint64 b)
 {
-    qDebug() << "writen" << b;
+    qCDebug(KIPIPLUGINS_LOG) << "writen" << b;
 }
 
 void CanvasSavingThread::sendProgressUpdate(double v)

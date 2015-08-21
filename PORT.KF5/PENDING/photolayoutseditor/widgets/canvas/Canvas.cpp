@@ -245,7 +245,7 @@ void Canvas::preparePrinter(QPrinter * printer)
     default:
         printer->setPaperSize(cs, QPrinter::DevicePixel);
         setResolution = false;
-        qDebug() << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+        qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
     }
     if (setResolution)
     {
@@ -371,7 +371,7 @@ void Canvas::moveSelectedRowsUp()
     if (!selectedIndexes.count())
     {
         #ifdef  QT_DEBUG
-        qDebug() << "No items selected to move!" << selectedIndexes;
+        qCDebug(KIPIPLUGINS_LOG) << "No items selected to move!" << selectedIndexes;
         #endif
         return;
     }
@@ -390,14 +390,14 @@ void Canvas::moveSelectedRowsUp()
             if (startIndex.parent() != it->parent())
             {
                 #ifdef  QT_DEBUG
-                qDebug() << "Different parents of items!\n" << selectedIndexes;
+                qCDebug(KIPIPLUGINS_LOG) << "Different parents of items!\n" << selectedIndexes;
                 #endif
                 return;
             }
             else if (!it->isValid())
             {
                 #ifdef  QT_DEBUG
-                qDebug() << "Invalid items!\n" << selectedIndexes;
+                qCDebug(KIPIPLUGINS_LOG) << "Invalid items!\n" << selectedIndexes;
                 #endif
                 return;
             }
@@ -413,7 +413,7 @@ void Canvas::moveSelectedRowsUp()
         if ((((minRow+maxRow)*(maxRow-minRow+1))/2.0) != sumRows)
         {
             #ifdef  QT_DEBUG
-            qDebug() << "Unordered items!\n" << selectedIndexes;
+            qCDebug(KIPIPLUGINS_LOG) << "Unordered items!\n" << selectedIndexes;
             #endif
             return;
         }
@@ -432,7 +432,7 @@ void Canvas::moveSelectedRowsDown()
     if (!selectedIndexes.count())
     {
         #ifdef  QT_DEBUG
-        qDebug() << "No items selected to move!" << selectedIndexes;
+        qCDebug(KIPIPLUGINS_LOG) << "No items selected to move!" << selectedIndexes;
         #endif
         return;
     }
@@ -451,14 +451,14 @@ void Canvas::moveSelectedRowsDown()
             if (startIndex.parent() != it->parent())
             {
                 #ifdef  QT_DEBUG
-                qDebug() << "Different parents of items!\n" << selectedIndexes;
+                qCDebug(KIPIPLUGINS_LOG) << "Different parents of items!\n" << selectedIndexes;
                 #endif
                 return;
             }
             else if (!it->isValid())
             {
                 #ifdef  QT_DEBUG
-                qDebug() << "Invalid items!\n" << selectedIndexes;
+                qCDebug(KIPIPLUGINS_LOG) << "Invalid items!\n" << selectedIndexes;
                 #endif
                 return;
             }
@@ -474,7 +474,7 @@ void Canvas::moveSelectedRowsDown()
         if ((((minRow+maxRow)*(maxRow-minRow+1))/2.0) != sumRows)
         {
             #ifdef  QT_DEBUG
-            qDebug() << "Unordered items!\n" << selectedIndexes;
+            qCDebug(KIPIPLUGINS_LOG) << "Unordered items!\n" << selectedIndexes;
             #endif
             return;
         }
@@ -818,7 +818,7 @@ QDomDocument Canvas::toSvg() const
         default:
             svg.setAttribute("width", svg.attribute("width") + "px");
             svg.setAttribute("height", svg.attribute("height") + "px");
-            qDebug() << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+            qCDebug(KIPIPLUGINS_LOG) << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
     }
     QDomElement resolution = result.createElementNS(KIPIPhotoLayoutsEditor::uri(), "page");
     resolution.setAttribute("width", QString::number(d->m_size.resolution().width()));
@@ -846,7 +846,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
             QString xResolution = pageElement.attribute("width");
             QString yResolution = pageElement.attribute("height");
             QString resUnit = pageElement.attribute("unit");
-            qDebug() << pageElement.namespaceURI() << KIPIPhotoLayoutsEditor::templateUri();
+            qCDebug(KIPIPLUGINS_LOG) << pageElement.namespaceURI() << KIPIPhotoLayoutsEditor::templateUri();
 
             // Canvas size validation
             QRegExp sizeRegExp("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))");

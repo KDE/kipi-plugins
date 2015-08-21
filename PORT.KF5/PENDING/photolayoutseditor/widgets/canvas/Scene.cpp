@@ -500,7 +500,7 @@ public:
     CropItemsCommand(const QPainterPath & path, const QList<AbstractPhoto*> & items, QUndoCommand * parent = 0) :
         QUndoCommand(i18np("Crop item", "Crop items", items.count()), parent)
     {
-        qDebug() << "scene crop shape" << path.boundingRect();
+        qCDebug(KIPIPLUGINS_LOG) << "scene crop shape" << path.boundingRect();
         foreach(AbstractPhoto* item, items)
             data.insert(item, item->mapFromScene(path));
     }
@@ -936,7 +936,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
             // Post move command to QUndoStack
             if ((m_interaction_mode & Moving) && d->wasMoved())
             {
-                qDebug() << "move command from scene";
+                qCDebug(KIPIPLUGINS_LOG) << "move command from scene";
                 QUndoCommand * command = new MoveItemsCommand(d->m_selected_items, this);
                 PLE_PostUndoCommand(command);
             }

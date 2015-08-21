@@ -141,7 +141,7 @@ void LayersModelItem::setPhoto(AbstractPhoto * photo)
         int newZValue = this->parent()->childCount()-this->parent()->childItems.indexOf(this);
         #ifdef QT_DEBUG
                 if (photo->zValue() != newZValue)
-                    qDebug() << "ZValue changed!" << (QGraphicsItem*)photo << "Current:" << photo->zValue() << "New:" << newZValue;
+                    qCDebug(KIPIPLUGINS_LOG) << "ZValue changed!" << (QGraphicsItem*)photo << "Current:" << photo->zValue() << "New:" << newZValue;
         #endif
         photo->setZValue(newZValue);
         connect(photo, SIGNAL(changed()), this, SLOT(updateData()));

@@ -93,9 +93,9 @@ void PhotoItemLoader::run()
                                                      m21.toDouble(), m22.toDouble(), 0,
                                                      m31.toDouble(), m32.toDouble(), 1);
         }
-        qDebug() << item->d->m_brush_transform;
+        qCDebug(KIPIPLUGINS_LOG) << item->d->m_brush_transform;
     }
-    qDebug() << item->d->m_brush_transform;
+    qCDebug(KIPIPLUGINS_LOG) << item->d->m_brush_transform;
 
     // m_pixmap_original
     if (observer)

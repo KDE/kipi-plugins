@@ -51,14 +51,14 @@ class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
         }
         virtual void redo()
         {
-            qDebug() << "BorderChangeCommand redo";
+            qCDebug(KIPIPLUGINS_LOG) << "BorderChangeCommand redo";
             QVariant temp = drawer->propertyValue(propertyName);
             drawer->setPropertyValue(propertyName, value);
             value = temp;
         }
         virtual void undo()
         {
-            qDebug() << "BorderChangeCommand undo";
+            qCDebug(KIPIPLUGINS_LOG) << "BorderChangeCommand undo";
             QVariant temp = drawer->propertyValue(propertyName);
             drawer->setPropertyValue(propertyName, value);
             value = temp;

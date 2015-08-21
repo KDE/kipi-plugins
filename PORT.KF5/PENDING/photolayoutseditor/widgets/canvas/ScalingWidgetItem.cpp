@@ -56,7 +56,7 @@ public:
     {
         if (done)
             return;
-        qDebug() << done << "redo MoveItemCommand";
+        qCDebug(KIPIPLUGINS_LOG) << done << "redo MoveItemCommand";
         m_item->moveBy(m_translation.x(), m_translation.y());
         done = true;
     }
@@ -64,7 +64,7 @@ public:
     {
         if (!done)
             return;
-        qDebug() << done << "undo MoveItemCommand";
+        qCDebug(KIPIPLUGINS_LOG) << done << "undo MoveItemCommand";
         m_item->moveBy(-m_translation.x(), -m_translation.y());
         done = false;
     }

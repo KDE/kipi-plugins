@@ -198,7 +198,7 @@ CanvasEditTool::~CanvasEditTool()
 
 void CanvasEditTool::backgroundTypeChanged(const QString & typeName)
 {
-    qDebug() << typeName;
+    qCDebug(KIPIPLUGINS_LOG) << typeName;
     CanvasEditToolPrivate::BackgroundType bt = d->background_types.value(typeName);
     switch (bt)
     {
@@ -655,7 +655,7 @@ void CanvasEditTool::setupGUI()
 
 void CanvasEditTool::readMousePosition(const QPointF & scenePos)
 {
-    qDebug() << scenePos;
+    qCDebug(KIPIPLUGINS_LOG) << scenePos;
 }
 
 void CanvasEditTool::updateWidgets()

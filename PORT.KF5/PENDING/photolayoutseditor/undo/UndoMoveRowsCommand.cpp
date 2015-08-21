@@ -62,12 +62,12 @@ UndoMoveRowsCommand::UndoMoveRowsCommand(int startingRow, int rowsCount, const Q
         m_rows_count = 0;
         m_destination_row = 0;
 #ifdef QT_DEBUG
-        qDebug() << "Can't create UndoMoveRowsCommand [NO MODEL!]:";
-        qDebug() << "\tStarting Row =" << startingRow;
-        qDebug() << "\tRows count =" << rowsCount;
-        qDebug() << "\tDestination Row =" << destinationRow;
-        qDebug() << "\tSource Parent =" << sourceParent;
-        qDebug() << "\tDestination Parent =" << destinationParent;
+        qCDebug(KIPIPLUGINS_LOG) << "Can't create UndoMoveRowsCommand [NO MODEL!]:";
+        qCDebug(KIPIPLUGINS_LOG) << "\tStarting Row =" << startingRow;
+        qCDebug(KIPIPLUGINS_LOG) << "\tRows count =" << rowsCount;
+        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Row =" << destinationRow;
+        qCDebug(KIPIPLUGINS_LOG) << "\tSource Parent =" << sourceParent;
+        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Parent =" << destinationParent;
 #endif
     }
 }
@@ -82,14 +82,14 @@ void UndoMoveRowsCommand::redo()
 #ifdef QT_DEBUG
     else
     {
-        qDebug() << "Can't redo from UndoMoveRowsCommand:";
-        qDebug() << "\tStarting Row =" << m_starting_row;
-        qDebug() << "\tRows count =" << m_rows_count;
-        qDebug() << "\tDestination Row =" << m_destination_row;
+        qCDebug(KIPIPLUGINS_LOG) << "Can't redo from UndoMoveRowsCommand:";
+        qCDebug(KIPIPLUGINS_LOG) << "\tStarting Row =" << m_starting_row;
+        qCDebug(KIPIPLUGINS_LOG) << "\tRows count =" << m_rows_count;
+        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Row =" << m_destination_row;
         if (m_model)
         {
-            qDebug() << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
-            qDebug() << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+            qCDebug(KIPIPLUGINS_LOG) << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
+            qCDebug(KIPIPLUGINS_LOG) << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
         }
     }
 #endif
@@ -105,14 +105,14 @@ void UndoMoveRowsCommand::undo()
 #ifdef QT_DEBUG
     else
     {
-        qDebug() << "Can't undo from UndoMoveRowsCommand:";
-        qDebug() << "\tStarting Row =" << m_starting_row;
-        qDebug() << "\tRows count =" << m_rows_count;
-        qDebug() << "\tDestination Row =" << m_destination_row;
+        qCDebug(KIPIPLUGINS_LOG) << "Can't undo from UndoMoveRowsCommand:";
+        qCDebug(KIPIPLUGINS_LOG) << "\tStarting Row =" << m_starting_row;
+        qCDebug(KIPIPLUGINS_LOG) << "\tRows count =" << m_rows_count;
+        qCDebug(KIPIPLUGINS_LOG) << "\tDestination Row =" << m_destination_row;
         if (m_model)
         {
-            qDebug() << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
-            qDebug() << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+            qCDebug(KIPIPLUGINS_LOG) << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
+            qCDebug(KIPIPLUGINS_LOG) << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
         }
     }
 #endif

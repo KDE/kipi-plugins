@@ -182,7 +182,7 @@ void PhotoLayoutsEditor::addUndoCommand(QUndoCommand * command)
     if (command)
     {
 #ifdef QT_DEBUG
-        qDebug() << command->text();
+        qCDebug(KIPIPLUGINS_LOG) << command->text();
 #endif
         if (m_canvas)
             m_canvas->undoStack()->push(command);
@@ -527,7 +527,7 @@ void PhotoLayoutsEditor::open(const QUrl & fileUrl)
 
 void PhotoLayoutsEditor::save()
 {
-    qDebug() << !m_canvas->file().isValid() <<  m_canvas->file().fileName().isEmpty() << m_canvas->isTemplate();
+    qCDebug(KIPIPLUGINS_LOG) << !m_canvas->file().isValid() <<  m_canvas->file().fileName().isEmpty() << m_canvas->isTemplate();
     if (!m_canvas)
         return;
     if (!m_canvas->file().isValid() || m_canvas->file().fileName().isEmpty() || m_canvas->isTemplate())

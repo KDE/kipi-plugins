@@ -122,7 +122,7 @@ void PLEConfigViewWidget::setupGUI()
     gridLayout->addRow(i18n("Vertical distance"), d->yGrid);
 
 //    KConfigDialog * dialog = KConfigDialog::exists( "settings" );
-//    qDebug() << dialog;
+//    qCDebug(KIPIPLUGINS_LOG) << dialog;
 //    if (dialog)
 //    {
 //        connect(d->antialiasing, SIGNAL(stateChanged(int)), dialog, SLOT(updateButtons()));
