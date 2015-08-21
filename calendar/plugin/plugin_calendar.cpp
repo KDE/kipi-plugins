@@ -51,6 +51,8 @@ K_PLUGIN_FACTORY(CalendarFactory, registerPlugin<Plugin_Calendar>();)
 Plugin_Calendar::Plugin_Calendar(QObject* const parent, const QVariantList&)
     : Plugin(parent, "Calendar")
 {
+    m_actionCalendar = 0;
+
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Calendar plugin loaded";
 
 
