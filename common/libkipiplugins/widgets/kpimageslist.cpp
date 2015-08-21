@@ -61,6 +61,7 @@
 
 // LibKDcraw includes
 
+#include <KDCRAW/RWidgetUtils>
 #include <KDCRAW/KDcraw>
 
 // Local includes
@@ -500,7 +501,7 @@ public:
         progressCount         = 0;
         progressTimer         = 0;
         loadRawThumb          = 0;
-        progressPix           = KPixmapSequence("process-working", 22);
+        progressPix           = KDcrawIface::WorkingPixmap();
 
         PluginLoader* const pl = PluginLoader::instance();
 
@@ -510,27 +511,27 @@ public:
         }
     }
 
-    bool              allowRAW;
-    bool              allowDuplicate;
-    bool              controlButtonsEnabled;
-    int               iconSize;
+    bool                           allowRAW;
+    bool                           allowDuplicate;
+    bool                           controlButtonsEnabled;
+    int                            iconSize;
 
-    CtrlButton*       addButton;
-    CtrlButton*       removeButton;
-    CtrlButton*       moveUpButton;
-    CtrlButton*       moveDownButton;
-    CtrlButton*       clearButton;
-    CtrlButton*       loadButton;
-    CtrlButton*       saveButton;
+    CtrlButton*                    addButton;
+    CtrlButton*                    removeButton;
+    CtrlButton*                    moveUpButton;
+    CtrlButton*                    moveDownButton;
+    CtrlButton*                    clearButton;
+    CtrlButton*                    loadButton;
+    CtrlButton*                    saveButton;
 
-    QList<QUrl>       processItems;
-    KPixmapSequence   progressPix;
-    int               progressCount;
-    QTimer*           progressTimer;
+    QList<QUrl>                    processItems;
+    KDcrawIface::WorkingPixmap     progressPix;
+    int                            progressCount;
+    QTimer*                        progressTimer;
 
-    KPImagesListView* listView;
-    Interface*        iface;
-    KPRawThumbThread* loadRawThumb;
+    KPImagesListView*              listView;
+    Interface*                     iface;
+    KPRawThumbThread*              loadRawThumb;
 };
 
 KPImagesList::KPImagesList(QWidget* const parent, int iconSize)

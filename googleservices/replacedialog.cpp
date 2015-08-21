@@ -40,10 +40,6 @@
 
 #include <KDCRAW/RWidgetUtils>
 
-//local includes
-
-#include "workingpixmap.h"
-
 namespace KIPIGoogleServicesPlugin
 {
 
@@ -53,7 +49,7 @@ public:
 
     Private()
     {
-        progressPix   = WorkingPixmap();
+        progressPix   = KDcrawIface::WorkingPixmap();
         bAdd          = 0;
         bAddAll       = 0;
         bReplace      = 0;
@@ -66,21 +62,21 @@ public:
         result        =-1;
     }
     
-    QPushButton*    bAdd;
-    QPushButton*    bAddAll;
-    QPushButton*    bReplace;
-    QPushButton*    bReplaceAll;
-    QUrl            src;
-    QUrl            dest;
-    Interface*      iface;
-    QLabel*         lbSrc;
-    QLabel*         lbDest;
-    QByteArray      buffer;
-    QPixmap         mimePix;
-    WorkingPixmap   progressPix;
-    int             progressCount;
-    QTimer*         progressTimer;
-    int             result;
+    QPushButton*                 bAdd;
+    QPushButton*                 bAddAll;
+    QPushButton*                 bReplace;
+    QPushButton*                 bReplaceAll;
+    QUrl                         src;
+    QUrl                         dest;
+    Interface*                   iface;
+    QLabel*                      lbSrc;
+    QLabel*                      lbDest;
+    QByteArray                   buffer;
+    QPixmap                      mimePix;
+    KDcrawIface::WorkingPixmap   progressPix;
+    int                          progressCount;
+    QTimer*                      progressTimer;
+    int                          result;
 };
 
 ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
