@@ -360,7 +360,7 @@ Wizard::~Wizard()
 // create a MxN grid of photos, fitting on the page
 void createPhotoGrid(TPhotoSize* p, int pageWidth, int pageHeight, int rows, int columns, TemplateIcon* iconpreview)
 {
-    int MARGIN      = (int)((pageWidth + pageHeight) / 2 * 0.04 + 0.5);
+    int MARGIN      = (int)(((double)pageWidth + (double)pageHeight) / 2.0 * 0.04 + 0.5);
     int GAP         = MARGIN / 4;
     int photoWidth  = (pageWidth - (MARGIN * 2) - ((columns - 1) * GAP)) / columns;
     int photoHeight = (pageHeight - (MARGIN * 2) - ((rows - 1) * GAP)) / rows;
