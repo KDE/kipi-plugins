@@ -49,8 +49,9 @@ K_EXPORT_PLUGIN(CalendarFactory("kipiplugin_calendar"))
 Plugin_Calendar::Plugin_Calendar(QObject* const parent, const QVariantList&)
     : Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
+    m_actionCalendar = 0;
 
+    kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
 
     setUiBaseName("kipiplugin_calendarui.rc");
     setupXML();
