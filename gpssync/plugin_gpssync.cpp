@@ -62,6 +62,9 @@ K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 Plugin_GPSSync::Plugin_GPSSync(QObject* const parent, const QVariantList&)
     : Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
+    m_action_geolocation = 0;
+    m_interface          = 0;
+
     kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
 
     setUiBaseName("kipiplugin_gpssyncui.rc");
@@ -110,9 +113,9 @@ void Plugin_GPSSync::setupActions()
 bool Plugin_GPSSync::checkSidecarSettings()
 {
     KPHostSettings hset;
-    
-    if (   (hset.metadataSettings().metadataWritingMode!=KExiv2Iface::KExiv2::WRITETOIMAGEONLY)
-        && (!hset.metadataSettings().useXMPSidecar4Reading) )
+
+    if ( (hset.metadataSettings().metadataWritingMode!=KExiv2Iface::KExiv2::WRITETOIMAGEONLY) &&
+         (!hset.metadataSettings().useXMPSidecar4Reading) )
     {
         const int result = KMessageBox::warningContinueCancel(
                 kapp->activeWindow(),
@@ -128,13 +131,13 @@ bool Plugin_GPSSync::checkSidecarSettings()
                 QString(),
                 KMessageBox::Dangerous
             );
-        
+
         if (result!=KMessageBox::Continue)
         {
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -143,7 +146,9 @@ void Plugin_GPSSync::slotGPSSync()
     ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
+    {
         return;
+    }
 
     if (!checkSidecarSettings())
     {
