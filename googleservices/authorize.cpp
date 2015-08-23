@@ -79,6 +79,7 @@ Authorize::Authorize(QWidget* const parent, const QString & scope)
     m_job             = 0;
     continuePos       = 0;
     m_Authstate       = GD_ACCESSTOKEN;
+    window            = 0;
 }
 
 Authorize::~Authorize()
