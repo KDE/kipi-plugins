@@ -848,7 +848,7 @@ void KPImagesList::slotAddImages(const QList<QUrl>& list)
         {
             KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*iter);
 
-            if (item->url() == imageUrl)
+            if (item && item->url() == imageUrl)
             {
                 found = true;
             }
