@@ -70,6 +70,11 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
     
     setUiBaseName("kipiplugin_facebookui.rc");
     setupXML();
+    
+    m_actionImport = 0;
+    m_actionExport = 0;
+    m_dlgImport    = 0;
+    m_dlgExport    = 0;
 }
 
 Plugin_Facebook::~Plugin_Facebook()
