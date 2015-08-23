@@ -207,7 +207,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     m_effect      = 0;
     m_step        = 1.0 / ((float) (m_delay * frameRate));
-    m_zoomIn      = rand() < RAND_MAX / 2;
+    m_zoomIn      = qrand() < RAND_MAX / 2;
     m_initialized = false;
     m_haveImages  = true;
 

@@ -408,7 +408,7 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
     tmpMap.remove("None");
     QStringList t = tmpMap.keys();
     int count     = t.count();
-    int i         = (int)((float)(count) * rand() / (RAND_MAX + 1.0));
+    int i         = (int)((float)(count) * qrand() / (RAND_MAX + 1.0));
     QString key   = t[i];
 
     return tmpMap[key];
@@ -965,7 +965,7 @@ void SlideShowGL::effectRotate()
     }
 
     if (m_i == 0)
-        m_dir = (int)((2.0 * rand() / (RAND_MAX + 1.0)));
+        m_dir = (int)((2.0 * qrand() / (RAND_MAX + 1.0)));
 
     int a = (m_curr == 0) ? 1 : 0;
     int b =  m_curr;
@@ -1032,7 +1032,7 @@ void SlideShowGL::effectBend()
     }
 
     if (m_i == 0)
-        m_dir = (int)((2.0 * rand() / (RAND_MAX + 1.0)));
+        m_dir = (int)((2.0 * qrand() / (RAND_MAX + 1.0)));
 
     int a = (m_curr == 0) ? 1 : 0;
     int b =  m_curr;
@@ -1102,7 +1102,7 @@ void SlideShowGL::effectInOut()
 
     if (m_i == 0)
     {
-        m_dir = 1 + (int) ((4.0 * rand() / (RAND_MAX + 1.0)));
+        m_dir = 1 + (int) ((4.0 * qrand() / (RAND_MAX + 1.0)));
     }
 
     int a;
@@ -1165,7 +1165,7 @@ void SlideShowGL::effectSlide()
     }
 
     if (m_i == 0)
-        m_dir = 1 + (int)((4.0 * rand() / (RAND_MAX + 1.0)));
+        m_dir = 1 + (int)((4.0 * qrand() / (RAND_MAX + 1.0)));
 
     int a      = (m_curr == 0) ? 1 : 0;
     int b      =  m_curr;
