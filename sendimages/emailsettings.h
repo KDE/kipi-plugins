@@ -149,6 +149,7 @@ public:
                 return (*it).emailUrl;
             }
         }
+
         return QUrl();
     };
 
@@ -165,7 +166,7 @@ public:
 
     int              imageCompression;
 
-    int              attachmentLimitInMbytes;
+    qint64           attachmentLimitInMbytes;
 
     QString          tempPath;
     QString          tempFolderName;
