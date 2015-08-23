@@ -928,25 +928,22 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         if (errText.isEmpty())
         {
             KPMetadata meta;
-            bool bRet = false;
             if (meta.load(tmpUrl.toLocalFile()))
             {
                 if (meta.supportXmp() && meta.canWriteXmp(tmpUrl.toLocalFile()))
                 {
-                    bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
-                    bRet = meta.setXmpKeywords(item.tags, false);
+                    meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
+                    meta.setXmpKeywords(item.tags, false);
                 }
 
 
                 if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
                 {
-                    bRet = meta.setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble(), false);
+                    meta.setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble(), false);
                 }
 
-                bRet = meta.save(tmpUrl.toLocalFile());
+                meta.save(tmpUrl.toLocalFile());
             }
-
-            qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
 
             m_transferQueue.pop_front();
             m_imagesCount++;
@@ -1118,15 +1115,13 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
     else
     {
         KPMetadata meta;
-        bool bRet        = false;
         QString fileName = m_transferQueue.first().first.path();
 
         if (!photoId.isEmpty() && meta.supportXmp() && meta.canWriteXmp(fileName) && meta.load(fileName))
         {
-            bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
-            bRet = meta.save(fileName);
+            meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
+            meta.save(fileName);
         }
-        qCDebug(KIPIPLUGINS_LOG) << "bRet : " << bRet;
         // Remove photo uploaded from the list
         m_widget->imagesList()->removeItemByUrl(m_transferQueue.first().first);
         m_transferQueue.pop_front();
