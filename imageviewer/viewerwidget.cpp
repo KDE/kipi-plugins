@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
- * Copyright (C) 2008-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -442,6 +442,7 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
         // zoom	in
         case Qt::Key_Plus:
             middlepoint = QPoint(width()/2,height()/2);
+
             if (d->texture->setSize( d->zoomsize ))
                 downloadTexture(d->texture); //load full resolution image
 
@@ -451,6 +452,7 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
         // zoom out
         case Qt::Key_Minus:
             middlepoint = QPoint(width()/2,height()/2);
+
             if (d->texture->setSize( d->zoomsize ))
                 downloadTexture(d->texture); //load full resolution image
 
@@ -500,10 +502,12 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
             if (!e->isAutoRepeat())
             {
                 unsetCursor();
+
                 if (d->texture->setSize(QSize(0, 0)))
                 {
                     downloadTexture(d->texture); //load full resolution image
                 }
+
                 updateGL();
             }
             else
@@ -513,12 +517,17 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
             break;
 
         case Qt::Key_Control:
+
             if (d->wheelAction == ViewerWidget::Private::zoomImage)
+            {
                 d->wheelAction = ViewerWidget::Private::changeImage;
+            }
             else
+            {
                 d->wheelAction = ViewerWidget::Private::zoomImage;
                 unsetCursor();
                 d->timerMouseMove.start(2000);
+            }
             break;
 
         default:
