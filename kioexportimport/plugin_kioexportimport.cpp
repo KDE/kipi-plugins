@@ -57,6 +57,11 @@ K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexportimport") )
 Plugin_KioExportImport::Plugin_KioExportImport(QObject* const parent, const QVariantList&)
     : Plugin(KioFactory::componentData(), parent, "KioExportImport")
 {
+    m_actionExport = 0;
+    m_actionImport = 0;
+    m_dlgExport    = 0;
+    m_dlgImport    = 0;
+
     kDebug(AREA_CODE_LOADING) << "Plugin_KioExportImport plugin loaded";
 
     setUiBaseName("kipiplugin_kioexportimportui.rc");
