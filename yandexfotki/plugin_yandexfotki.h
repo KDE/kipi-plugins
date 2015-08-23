@@ -54,7 +54,6 @@ public:
 public Q_SLOTS:
 
     void slotExport();
-//    void slotImport();
 
 private:
 
@@ -64,9 +63,6 @@ private:
 
     KAction*           m_actionExport;
     YandexFotkiWindow* m_dlgExport;
-
-//    KAction*           m_actionImport;
-//    YandexFotkiWindow* m_dlgImport;
 };
 
 } // namespace KIPIYandexFotkiPlugin
