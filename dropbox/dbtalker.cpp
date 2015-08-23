@@ -89,6 +89,7 @@ DBTalker::DBTalker(QWidget* const parent)
     m_job                    = 0;
     m_state                  = DB_REQ_TOKEN;
     auth                     = false;
+    dialog                   = 0;
 }
 
 DBTalker::~DBTalker()
