@@ -1072,7 +1072,7 @@ void KPImagesList::slotSaveItems()
 
     while (*it)
     {
-        KPImagesListViewItem* lvItem = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const lvItem = dynamic_cast<KPImagesListViewItem*>(*it);
 
         if (lvItem)
         {
@@ -1085,6 +1085,7 @@ void KPImagesList::slotSaveItems()
 
             xmlWriter.writeEndElement(); //Image
         }
+
         ++it;
     }
 
@@ -1138,10 +1139,13 @@ QList<QUrl> KPImagesList::imageUrls(bool onlyUnprocessed) const
     while (*it)
     {
         KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
-
-        if ((onlyUnprocessed == false) || (item->state() != KPImagesListViewItem::Success))
+        
+        if (item)
         {
-            list.append(item->url());
+            if ((onlyUnprocessed == false) || (item->state() != KPImagesListViewItem::Success))
+            {
+                list.append(item->url());
+            }
         }
 
         ++it;
@@ -1157,7 +1161,8 @@ void KPImagesList::slotProgressTimerDone()
         foreach(const QUrl& url, d->processItems)
         {
             KPImagesListViewItem* const item = listView()->findItem(url);
-            if (item) item->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
+            if (item)
+                item->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
         }
 
         d->progressCount++;
