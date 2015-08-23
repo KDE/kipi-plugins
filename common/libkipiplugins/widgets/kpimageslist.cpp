@@ -1127,11 +1127,14 @@ KUrl::List KPImagesList::imageUrls(bool onlyUnprocessed) const
 
     while (*it)
     {
-        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        if ((onlyUnprocessed == false) || (item->state() != KPImagesListViewItem::Success))
+        if (item)
         {
-            list.append(item->url());
+            if ((onlyUnprocessed == false) || (item->state() != KPImagesListViewItem::Success))
+            {
+                list.append(item->url());
+            }
         }
 
         ++it;
