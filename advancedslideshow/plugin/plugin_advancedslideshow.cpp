@@ -78,8 +78,9 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* const parent, const 
                    parent, "AdvancedSlideshow")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_AdvancedSlideshow plugin loaded" ;
-    m_sharedData = 0;
-    m_interface  = 0;
+    m_actionSlideShow = 0;
+    m_sharedData      = 0;
+    m_interface       = 0;
 
     setUiBaseName("kipiplugin_advancedslideshowui.rc");
     setupXML();
