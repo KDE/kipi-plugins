@@ -59,6 +59,7 @@ struct LastPage::Private
           fileTemplateKLineEdit(0),
           savePtoCheckBox(0),
           warningLabel(0),
+          errorLabel(0),
           mngr(0)
     {
     }
