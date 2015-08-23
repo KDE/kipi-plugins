@@ -840,6 +840,9 @@ void WmWidget::slotLoadImagesDesc(QTreeWidgetItem* item)
 {
     QList<QTreeWidgetItem*> selectedItems = d->imgList->listView()->selectedItems();
     KPImagesListViewItem* const l_item    = dynamic_cast<KPImagesListViewItem*>(item);
+    
+    if (!l_item)
+        return;
 
     QMap<QString, QString> imageMetaData;
 
@@ -887,7 +890,9 @@ void WmWidget::slotRestoreExtension()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+        
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
@@ -899,7 +904,7 @@ void WmWidget::slotRestoreExtension()
         currentExtension  = imageTitle.split('.').last();
         originalExtension = urls.at(i).path().split('.').last();
 
-        if(QString::compare(currentExtension, originalExtension, Qt::CaseInsensitive) != 0)
+        if (QString::compare(currentExtension, originalExtension, Qt::CaseInsensitive) != 0)
         {
             imageTitle.append(".").append(originalExtension);
             d->titleEdit->setText(imageTitle);
@@ -929,7 +934,9 @@ void WmWidget::slotApplyTitle()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+        
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
@@ -966,7 +973,9 @@ void WmWidget::slotApplyDate()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
@@ -986,7 +995,9 @@ void WmWidget::slotApplyCategories()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+        
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
@@ -1006,7 +1017,9 @@ void WmWidget::slotApplyDescription()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+        
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
@@ -1027,7 +1040,9 @@ void WmWidget::slotApplyLatitude()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+        
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
@@ -1047,7 +1062,9 @@ void WmWidget::slotApplyLongitude()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+        
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
