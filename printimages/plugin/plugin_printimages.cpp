@@ -67,6 +67,10 @@ K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantList& /*args*/ )
     : Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
 {
+    m_printImagesAction    = 0;
+    m_printAssistantAction = 0;
+    m_interface            = 0;
+
     kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
 
     setUiBaseName("kipiplugin_printimagesui.rc");
