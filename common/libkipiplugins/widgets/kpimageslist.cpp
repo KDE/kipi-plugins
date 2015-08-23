@@ -955,10 +955,14 @@ void KPImagesList::slotMoveDownItems()
         return;
     }
 
-    QTreeWidgetItem* temp = listView()->takeTopLevelItem(belowIndex.row());
+    QTreeWidgetItem* const temp = listView()->takeTopLevelItem(belowIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
-    // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
-    dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(temp)->updateItemWidgets();
+
+    // This is a quick fix. We can loose extra tags in uploader, but at least we don't get a crash
+    KIPIPlugins::KPImagesListViewItem* const uw = dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(temp);
+
+    if (uw)
+        uw->updateItemWidgets();
 
     emit signalImageListChanged();
     emit signalMoveDownItem();
