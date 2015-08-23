@@ -69,6 +69,18 @@ Plugin_Flickr::Plugin_Flickr(QObject* const parent, const QVariantList& /*args*/
 
     setUiBaseName("kipiplugin_flickrui.rc");
     setupXML();
+    
+    m_actionFlickr = 0;
+    m_action23     = 0;
+    m_actionZooomr = 0;
+
+    m_dlgFlickr    = 0;
+    m_dlg23        = 0;      
+    m_dlgZooomr    = 0;
+    
+    selectFlickr   = 0;
+    select23       = 0;
+    selectZoomr    = 0;    
 }
 
 Plugin_Flickr::~Plugin_Flickr()
