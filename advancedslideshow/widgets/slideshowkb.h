@@ -109,12 +109,12 @@ private:
 
     double rnd() const
     {
-        return (double)rand() / (double)RAND_MAX;
+        return (double)qrand() / (double)RAND_MAX;
     };
 
     double rndSign() const
     {
-        return (rand() < RAND_MAX / 2) ? 1.0 : -1.0;
+        return (qrand() < RAND_MAX / 2) ? 1.0 : -1.0;
     };
 
 private:

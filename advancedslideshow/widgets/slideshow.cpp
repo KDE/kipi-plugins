@@ -540,7 +540,7 @@ SlideShow::EffectMethod SlideShow::getRandomEffect()
     effs.removeAt( effs.indexOf( "None" ) );
 
     int count    = effs.count();
-    int i        = rand() % count;
+    int i        = qrand() % count;
     QString key  = effs[i];
     m_effectName = key;
 
@@ -752,7 +752,7 @@ int SlideShow::effectMeltdown( bool aInit )
 
         m_pdone = false;
 
-        if (( rand()&15 ) < 6 )
+        if (( qrand()&15 ) < 6 )
             continue;
 
         bufferPainter.drawPixmap(x, y + m_dy, m_buffer, x, y, m_dx, m_h - y - m_dy);
@@ -782,7 +782,7 @@ int SlideShow::effectSweep( bool aInit )
     {
         // subtype: 0=sweep right to left, 1=sweep left to right
         //          2=sweep bottom to top, 3=sweep top to bottom
-        m_subType = rand() % 4;
+        m_subType = qrand() % 4;
         m_w       = width();
         m_h       = height();
         m_dx      = ( m_subType == 1 ? 16 : -16 );
@@ -883,10 +883,10 @@ int SlideShow::effectMosaic( bool aInit )
 
     QPainter bufferPainter( &m_buffer );
 
-    for ( int x=0; x<w; x+=( rand()%margin )+dim )
+    for ( int x=0; x<w; x+=( qrand()%margin )+dim )
     {
 
-        for ( int y=0; y<h; y+=( rand()%margin )+dim )
+        for ( int y=0; y<h; y+=( qrand()%margin )+dim )
         {
             if ( m_pixelMatrix[x][y] == true )
             {
@@ -933,16 +933,16 @@ int SlideShow::effectCubism( bool aInit )
     QPainterPath painterPath;
     QPainter bufferPainter( &m_buffer );
 
-    m_x   = rand() % m_w;
-    m_y   = rand() % m_h;
-    int r = ( rand()%100 )+100;
+    m_x   = qrand() % m_w;
+    m_y   = qrand() % m_h;
+    int r = ( qrand()%100 )+100;
     m_px  = m_x - r;
     m_py  = m_y - r;
     m_psx = r;
     m_psy = r;
 
     QMatrix matrix;
-    matrix.rotate(( rand()%20 )-10 );
+    matrix.rotate(( qrand()%20 )-10 );
     QRect rect( m_px, m_py, m_psx, m_psy );
     bufferPainter.setMatrix( matrix );
     bufferPainter.fillRect( rect, QBrush( m_currImage ) );
@@ -1084,7 +1084,7 @@ int SlideShow::effectMultiCircleOut( bool aInit )
         m_pa.setPoint( 0, m_w >> 1, m_h >> 1 );
         m_pa.setPoint( 3, m_w >> 1, m_h >> 1 );
         m_fy    = sqrt(( double )m_w * m_w + m_h * m_h ) / 2;
-        m_i     = rand() % 15 + 2;
+        m_i     = qrand() % 15 + 2;
         m_fd    = M_PI * 2 / m_i;
         m_alpha = m_fd;
         m_wait  = 10 * m_i;
@@ -1256,9 +1256,9 @@ int SlideShow::effectBlobs( bool aInit )
         return -1;
     }
 
-    m_x   = rand() % m_w;
-    m_y   = rand() % m_h;
-    r     = ( rand() % 200 ) + 50;
+    m_x   = qrand() % m_w;
+    m_y   = qrand() % m_h;
+    r     = ( qrand() % 200 ) + 50;
     m_px  = m_x - r;
     m_py  = m_y - r;
     m_psx = r;

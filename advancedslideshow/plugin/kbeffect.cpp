@@ -78,7 +78,7 @@ KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
 
     do
     {
-        type = (rand() < RAND_MAX / 2) ? KBEffect::Fade : KBEffect::Blend;
+        type = (qrand() < RAND_MAX / 2) ? KBEffect::Fade : KBEffect::Blend;
     }
     while ((type == oldType) && (m_numKBEffectRepeated >= 1));
 
