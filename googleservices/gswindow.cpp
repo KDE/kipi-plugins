@@ -99,10 +99,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_imagesTotal = 0;
     m_renamingOpt = 0;
 
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
-        m_widget      = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
-    else
-        m_widget      = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
+    m_widget = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
     
     setMainWidget(m_widget);
     setButtons(Help | User1 | Close);
