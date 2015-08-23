@@ -1092,9 +1092,9 @@ void KPImagesList::removeItemByUrl(const KUrl& url)
 
         while (*it)
         {
-            KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+            KPImagesListViewItem* const item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-            if (item->url() == url)
+            if (item && item->url() == url)
             {
                 emit signalRemovingItem(item);
 
