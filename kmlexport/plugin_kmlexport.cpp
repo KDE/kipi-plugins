@@ -63,6 +63,9 @@ K_EXPORT_PLUGIN ( KMLExportFactory("kipiplugin_kmlexport") )
 Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     : Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
 {
+    m_actionKMLExport = 0;
+    m_interface       = 0;
+
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
 
     setUiBaseName("kipiplugin_kmlexportui.rc");
