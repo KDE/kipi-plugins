@@ -57,6 +57,11 @@ K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_RemoteStorage>(); )
 Plugin_RemoteStorage::Plugin_RemoteStorage(QObject* const parent, const QVariantList&)
     : Plugin(parent, "RemoteStorage")
 {
+    m_actionExport = 0;
+    m_actionImport = 0;
+    m_dlgExport    = 0;
+    m_dlgImport    = 0;
+
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_RemoteStorage plugin loaded";
 
     setUiBaseName("kipiplugin_remotestorageui.rc");
@@ -69,9 +74,6 @@ Plugin_RemoteStorage::~Plugin_RemoteStorage()
 
 void Plugin_RemoteStorage::setup(QWidget* const widget)
 {
-    m_dlgExport = 0;
-    m_dlgImport = 0;
-
     Plugin::setup(widget);
 
     setupActions();
