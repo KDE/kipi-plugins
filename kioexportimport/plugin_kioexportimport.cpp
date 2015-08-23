@@ -74,9 +74,6 @@ Plugin_KioExportImport::~Plugin_KioExportImport()
 
 void Plugin_KioExportImport::setup(QWidget* const widget)
 {
-    m_dlgExport = 0;
-    m_dlgImport = 0;
-
     Plugin::setup(widget);
 
     setupActions();
