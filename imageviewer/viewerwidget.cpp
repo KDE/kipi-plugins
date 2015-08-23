@@ -24,16 +24,19 @@
 #include "viewerwidget.h"
 
 // Local includes
+
 #include "timer.h"
 #include "texture.h"
 #include "helpdialog.h"
 
 // Libkipi includes
+
 #include <KIPI/ImageCollection>
 #include <KIPI/Interface>
 #include <KIPI/PluginLoader>
 
 // KDE includes
+
 #include "kipiplugins_debug.h"
 #include <kiconloader.h>
 #include <klocalizedstring.h>
@@ -41,6 +44,7 @@
 #include <kstandarddirs.h>
 
 // Qt includes
+
 #include <QDesktopWidget>
 #include <QPointer>
 #include <QtCore/QUrl>
@@ -442,6 +446,7 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
         // zoom	in
         case Qt::Key_Plus:
             middlepoint = QPoint(width()/2,height()/2);
+
             if (d->texture->setSize( d->zoomsize ))
                 downloadTexture(d->texture); //load full resolution image
 
@@ -451,6 +456,7 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
         // zoom out
         case Qt::Key_Minus:
             middlepoint = QPoint(width()/2,height()/2);
+
             if (d->texture->setSize( d->zoomsize ))
                 downloadTexture(d->texture); //load full resolution image
 
@@ -500,10 +506,12 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
             if (!e->isAutoRepeat())
             {
                 unsetCursor();
+
                 if (d->texture->setSize(QSize(0, 0)))
                 {
                     downloadTexture(d->texture); //load full resolution image
                 }
+
                 updateGL();
             }
             else
@@ -514,11 +522,15 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
 
         case Qt::Key_Control:
             if (d->wheelAction == ViewerWidget::Private::zoomImage)
+            {
                 d->wheelAction = ViewerWidget::Private::changeImage;
+            }
             else
+            {
                 d->wheelAction = ViewerWidget::Private::zoomImage;
                 unsetCursor();
                 d->timerMouseMove.start(2000);
+            }
             break;
 
         default:
