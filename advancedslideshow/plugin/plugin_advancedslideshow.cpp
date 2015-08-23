@@ -97,7 +97,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* const widget)
 
     m_interface = interface();
 
-    if(!m_interface)
+    if (!m_interface)
     {
         kError() << "KIPI interface is null!";
         return;
@@ -238,7 +238,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
         for (uint i = 0; i < (uint) fileList.size(); ++i)
         {
-            int inc = (int) (float(fileList.count()) * rand() / (RAND_MAX + 1.0));
+            int inc = (int) (float(fileList.count()) * qrand() / (RAND_MAX + 1.0));
 
             it1  = fileList.begin();
             it1 += inc;
@@ -259,8 +259,10 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     else
     {
         if (!QGLFormat::hasOpenGL())
+        {
             KMessageBox::error(kapp->activeWindow(),
                                i18n("OpenGL support is not available on your system."));
+        }
         else
         {
             if (wantKB)
