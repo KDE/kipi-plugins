@@ -70,6 +70,9 @@ Plugin_Dropbox::Plugin_Dropbox(QObject* const parent,const QVariantList& /*args*
 
     setUiBaseName("kipiplugin_dropboxui.rc");
     setupXML();
+    
+    m_actionExport = 0;
+    m_dlgExport    = 0;
 }
 
 Plugin_Dropbox::~Plugin_Dropbox()
