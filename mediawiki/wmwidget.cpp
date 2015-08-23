@@ -964,7 +964,9 @@ void WmWidget::slotApplyDate()
     for (int i = 0; i < selectedItems.size(); ++i)
     {
         KPImagesListViewItem* const l_item = dynamic_cast<KPImagesListViewItem*>(selectedItems.at(i));
-        urls.append(l_item->url());
+
+        if (l_item)
+            urls.append(l_item->url());
     }
 
     for (int i = 0; i < urls.size(); ++i)
