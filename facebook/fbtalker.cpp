@@ -89,6 +89,7 @@ FbTalker::FbTalker(QWidget* const parent)
     m_apiURL          = QUrl("https://graph.facebook.com");
     m_secretKey       = "5b0b5cd096e110cd4f4c72f517e2c544";
     m_appID           = "400589753481372";
+    dialog            = 0;
 }
 
 FbTalker::~FbTalker()
