@@ -462,7 +462,7 @@ void Texture::zoomToOriginal()
     float zoomfactorToOriginal;
     reset();
 
-    if (d->qimage.width()/d->qimage.height() > float(d->display_x)/float(d->display_y))
+    if (float(d->qimage.width())/float(d->qimage.height()) > float(d->display_x)/float(d->display_y))
     {
         //image touches right and left edge of window
         zoomfactorToOriginal = float(d->display_x)/d->qimage.width();
