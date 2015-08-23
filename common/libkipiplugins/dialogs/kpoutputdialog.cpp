@@ -47,6 +47,7 @@ public:
     Private()
     {
         debugView = 0;
+        buttonBox = 0;
     }
 
     QTextBrowser*     debugView;
