@@ -61,6 +61,9 @@ K_PLUGIN_FACTORY( GeolocatorFactory, registerPlugin<Plugin_Geolocator>(); )
 Plugin_Geolocator::Plugin_Geolocator(QObject* const parent, const QVariantList&)
     : Plugin(parent, "Geolocator")
 {
+    m_action_geolocation = 0;
+    m_interface          = 0;
+
     qCDebug(KIPIPLUGINS_LOG) << "Plugin_Geolocator plugin loaded" ;
 
     setUiBaseName("kipiplugin_geolocatorui.rc");
@@ -142,7 +145,9 @@ void Plugin_Geolocator::slotGeolocator()
     ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
+    {
         return;
+    }
 
     if (!checkSidecarSettings())
     {

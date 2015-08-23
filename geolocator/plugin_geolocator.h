@@ -69,7 +69,7 @@ private:
 
 private:
 
-    QAction *   m_action_geolocation;
+    QAction*   m_action_geolocation;
     Interface* m_interface;
 };
 
