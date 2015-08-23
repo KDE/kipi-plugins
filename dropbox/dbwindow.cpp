@@ -35,6 +35,7 @@
 #include <QMenu>
 #include <QApplication>
 #include <QUrl>
+#include <QMessageBox>
 #include <QCloseEvent>
 
 // KDE includes
@@ -290,11 +291,7 @@ void DBWindow::slotStartTransfer()
 
     if(m_widget->imagesList()->imageUrls().isEmpty())
     {
-        if (KMessageBox::warningContinueCancel(this, i18n("No image selected. Please select which images should be uploaded."))
-            == KMessageBox::Continue)
-        {
-             return;
-        }
+        QMessageBox::critical(this, "Error", i18n("No image selected. Please select which images should be uploaded."));
         return;
     }
 
