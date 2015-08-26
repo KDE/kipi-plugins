@@ -246,8 +246,8 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
 
     d->m_settingsBoxLayout->addWidget(d->m_headerLbl);
     d->m_settingsBoxLayout->addWidget(d->m_accountBox);
-    d->m_settingsBoxLayout->addWidget(d->m_sizeBox);
     d->m_settingsBoxLayout->addWidget(d->m_albBox);
+    d->m_settingsBoxLayout->addWidget(d->m_sizeBox);
     d->m_settingsBoxLayout->addWidget(d->m_uploadBox);
     d->m_settingsBoxLayout->addWidget(d->m_optionsBox);
     d->m_settingsBoxLayout->addWidget(d->m_progressBar);
