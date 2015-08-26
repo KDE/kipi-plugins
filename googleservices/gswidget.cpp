@@ -265,8 +265,8 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
 
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
-    settingsBoxLayout->addWidget(sizeBox);
     settingsBoxLayout->addWidget(albBox);
+    settingsBoxLayout->addWidget(sizeBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
