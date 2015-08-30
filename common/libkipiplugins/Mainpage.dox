@@ -4,4 +4,24 @@ Libkipiplugins is an internal library to prevent binary compatibility between li
 
 This library include many common dialogs, utils, and widgets usable by plugins.
 
- */
+@subpage KPNewAlbumDialog
+
+KPNewAlbumDialog is the common class in libkipiplugins containing the code for common GUI elements of most of the New Album Dialogs of the web import/export kipi-plugins. The New Album Dialog is basically used to create a new album/folder in the web service for which the plugin is made.
+
+KPNewAlbumDialog was created to factorize the code in kipi-plugins for New Album Dialog. This class contains the following widgets :
+
+<ul>
+    <li>Title text box : Of type QLineEdit </li>
+    <li>Description text box : Of type QTextEdit</li>
+    <li>Location text box : Of type QLineEdit</li>
+    <li>Date and Time : Of type QDateTimeEdit</li>
+    <li>Labels : in front of each of the above elements, of type QLabel</li>
+</ul>
+
+To use the KPNewAlbumDialog to factorize the New Album Dialog of any plugin, firstly make the New Album Dialog of the plugin inherit KPNewAlbumDialog. This will make the above mentioned GUI elements available in your New Album Dialog. Then, if you do not require certain GUI elements in your New Album GUI, simply call their respective hide functions. For example, if you want to hide Description box (and also its respective QLabel), just call the hideDesc() function in the constructor of the class. You can hide all the GUI elements mentioned above, except the Title box(and also its respective QLabel) because atleast the user should specify the name of the new album that he/she wants to create.
+
+If you want to add a new widget, apart from what is already available, you can that add that widget to the GUI of the New Album Dialog by calling the addToMainLayout() function and passing the widget to add as the parameter. For example, suppose you want to add a new QLineEdit widget for adding “Tags” to album and also its respective QLabel. So what you can do is that, you can create a new QGroupBox, add QGridLayout to it and then add the label to one column it and the Tag QlineEdit to the other column of the layout. Then call addToMainLayout() with the QGroupbox object as the parameter. This will add the “Tags” QLineEdit widget and the label to the GUI.
+
+To access the data entered by the user to create the new album, you can call the respective getter functions of the widgets. For example, to retrieve the “Title” text that the user has entered to create the new album can be retrieved calling the getTitleEdit() function.
+
+*/
