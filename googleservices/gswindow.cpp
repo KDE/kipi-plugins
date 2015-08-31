@@ -44,6 +44,7 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kio/renamedialog.h>
+#include <KWindowConfig>
 
 // LibKIPI includes
 
@@ -69,7 +70,7 @@ namespace KIPIGoogleServicesPlugin
 {
 
 GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QString& serviceName)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_serviceName = serviceName;
     m_gdrive = false;
@@ -102,8 +103,6 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_widget = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
     
     setMainWidget(m_widget);
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
     setModal(false);  
     KPAboutData* about;
     
@@ -127,7 +126,8 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
         setWindowIcon(QIcon::fromTheme("kipi-googledrive"));
         setWindowTitle(i18n("Export to Google Drive"));
-        setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Drive")));
+        KGuiItem::assign(startButton(), KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                                 i18n("Start upload to Google Drive")));
         m_widget->setMinimumSize(700,500);
     }
     else
@@ -165,13 +165,15 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
         if(m_picasaExport)
         {
             setWindowTitle(i18n("Export to Google Photos/PicasaWeb Service"));
-            setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Google Photos/PicasaWeb Service")));
+            KGuiItem::assign(startButton(), KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                                     i18n("Start upload to Google Photos/PicasaWeb Service")));
             m_widget->setMinimumSize(700,500);
         }
         else
         {
             setWindowTitle(i18n("Import from Google Photos/PicasaWeb Service"));
-            setButtonGuiItem(User1,KGuiItem(i18n("Start Download"),"network-workgroup",i18n("Start download from Google Photos/PicasaWeb service")));
+            KGuiItem::assign(startButton(), KGuiItem(i18n("Start Download"), "network-workgroup",
+                                                     i18n("Start download from Google Photos/PicasaWeb service")));
             m_widget->setMinimumSize(300, 400);
         }
     }
@@ -188,11 +190,11 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     connect(m_widget->getReloadBtn(),SIGNAL(clicked()),
             this,SLOT(slotReloadAlbumsRequest()));
 
-    connect(this,SIGNAL(user1Clicked()),
-            this,SLOT(slotStartTransfer()));
+    connect(startButton(), SIGNAL(clicked()),
+            this, SLOT(slotStartTransfer()));
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotCloseClicked()));  
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
     //-------------------------------------------------------------------------
 
@@ -346,7 +348,8 @@ void GSWindow::readSettings()
     {
         dialogGroup = config.group("Picasaweb Import Dialog");
     }
-    restoreDialogSize(dialogGroup);
+
+    KWindowConfig::restoreWindowSize(windowHandle(), dialogGroup);
 }
 
 void GSWindow::writeSettings()
@@ -381,8 +384,8 @@ void GSWindow::writeSettings()
     {
         dialogGroup = config.group("Picasaweb Import Dialog");
     }
-    
-    saveDialogSize(dialogGroup);  
+
+    KWindowConfig::saveWindowSize(windowHandle(), dialogGroup);
     config.sync();
 }
 
@@ -1132,7 +1135,7 @@ void GSWindow::slotAddPhotoDone(int err, const QString& msg, const QString& phot
 
 void GSWindow::slotImageListChanged()
 {
-    enableButton(User1, !(m_widget->imagesList()->imageUrls().isEmpty()));
+    startButton()->setEnabled(!(m_widget->imagesList()->imageUrls().isEmpty()));
 }
 
 void GSWindow::slotNewAlbumRequest()
@@ -1255,22 +1258,23 @@ void GSWindow::buttonStateChange(bool state)
 {
     m_widget->getNewAlbmBtn()->setEnabled(state);
     m_widget->getReloadBtn()->setEnabled(state);
-    enableButton(User1, state);
+    startButton()->setEnabled(state);
 }
 
-void GSWindow::slotCloseClicked()
+void GSWindow::slotFinished()
 {
     writeSettings();
-    m_widget->imagesList()->listView()->clear();   
+    m_widget->imagesList()->listView()->clear();
 }
 
 void GSWindow::closeEvent(QCloseEvent* e)
 {
     if (!e)
+    {
         return;
+    }
 
-    writeSettings();
-    m_widget->imagesList()->listView()->clear();
+    slotFinished();
     e->accept();
 }
 

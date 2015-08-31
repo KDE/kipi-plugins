@@ -36,7 +36,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -64,7 +64,7 @@ class GSFolder;
 class NewAlbumDlg;
 class PicasawebTalker;
 
-class GSWindow : public KP4ToolDialog
+class GSWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -94,7 +94,7 @@ private Q_SLOTS:
     void slotNewAlbumRequest();
     void slotReloadAlbumsRequest();
     void slotStartTransfer();
-    void slotCloseClicked();
+    void slotFinished();
     //void slotChangeProgressBar();
 
     void slotBusy(bool);
