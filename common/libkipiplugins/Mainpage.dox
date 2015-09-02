@@ -4,18 +4,21 @@ Libkipiplugins is an internal library to prevent binary compatibility between li
 
 This library include many common dialogs, utils, and widgets usable by plugins.
 
-@subpage KPNewAlbumDialog
+@section CommonDialogs Common Dialogs
+
+
+@subsection KPNewAlbumDialog KPNewAlbumDialog
 
 KPNewAlbumDialog is the common class in libkipiplugins containing the code for common GUI elements of most of the New Album Dialogs of the web import/export kipi-plugins. The New Album Dialog is basically used to create a new album/folder in the web service for which the plugin is made.
 
 KPNewAlbumDialog was created to factorize the code in kipi-plugins for New Album Dialog. This class contains the following widgets :
 
 <ul>
-    <li>Title text box : Of type QLineEdit </li>
-    <li>Description text box : Of type QTextEdit</li>
-    <li>Location text box : Of type QLineEdit</li>
-    <li>Date and Time : Of type QDateTimeEdit</li>
-    <li>Labels : in front of each of the above elements, of type QLabel</li>
+    <li><b>Title text box</b> : Of type QLineEdit </li>
+    <li><b>Description text box</b> : Of type QTextEdit</li>
+    <li><b>Location text box</b> : Of type QLineEdit</li>
+    <li><b>Date and Time</b> : Of type QDateTimeEdit</li>
+    <li><b>Labels</b> : in front of each of the above elements, of type QLabel</li>
 </ul>
 
 To use the KPNewAlbumDialog to factorize the New Album Dialog of any plugin, firstly make the New Album Dialog of the plugin inherit KPNewAlbumDialog. This will make the above mentioned GUI elements available in your New Album Dialog. Then, if you do not require certain GUI elements in your New Album GUI, simply call their respective hide functions. For example, if you want to hide Description box (and also its respective QLabel), just call the hideDesc() function in the constructor of the class. You can hide all the GUI elements mentioned above, except the Title box(and also its respective QLabel) because atleast the user should specify the name of the new album that he/she wants to create.
@@ -23,5 +26,65 @@ To use the KPNewAlbumDialog to factorize the New Album Dialog of any plugin, fir
 If you want to add a new widget, apart from what is already available, you can that add that widget to the GUI of the New Album Dialog by calling the addToMainLayout() function and passing the widget to add as the parameter. For example, suppose you want to add a new QLineEdit widget for adding “Tags” to album and also its respective QLabel. So what you can do is that, you can create a new QGroupBox, add QGridLayout to it and then add the label to one column it and the Tag QlineEdit to the other column of the layout. Then call addToMainLayout() with the QGroupbox object as the parameter. This will add the “Tags” QLineEdit widget and the label to the GUI.
 
 To access the data entered by the user to create the new album, you can call the respective getter functions of the widgets. For example, to retrieve the “Title” text that the user has entered to create the new album can be retrieved calling the getTitleEdit() function.
+
+@section CommonWidgets Common Widgets
+
+@subsection KPSettingsWidget KPSettingsWidget
+
+KPSettingsWidget is the common class in libkipiplugins containing the common widgets that most of the web import/export plugins’ GUI have. So basically KPSettingsWidget was created to remove redundant code for GUI implementation of plugins.
+
+KPSettingsWidget contains the following GUI elements :
+
+<ul>
+    <li><b>KPImageList</b> : By default the standard KPImageList is added to the GUI of the plugin. But, if you want to replace it with a more specific image list,  one should call replaceImageList() function with that image list widget as parameter. For example, Flickr uses a specific image list. So you can refer to flickrwidget.cpp of Flickr to see how to replace the default KPImageList. </li>
+
+    <li><b>Settings Box</b> (Of type QWidget) : This widget contains the following QGroupBoxes, which in turn contain GUI widgets.
+        <ul>
+            <li><b>Account Box</b> contains : 
+                <ul>
+                    <li> <b>Username Display Label</b> : Displays the name of the user currently logged-in </li>
+                    <li> <b>Change User Button</b> : Button to switch to another user account.</li>
+                    <li> <b>QLabels</b> : Labels to provide information about the widgets. </li>
+                </ul>
+            </li> 
+            <li><b>Album Box</b> contains :
+               <ul>
+                   <li><b>List of albums Combo Box</b> : Shows the list of albums in the user’s web service.</li>
+                   <li><b>Reload Album Button</b> : Reloads the list of albums.</li>
+                   <li><b>New Album Button</b> : Creates a new album in web service.</li>
+                   <li><b>QLabels</b> : Labels to provide information about the widgets. </li>
+               </ul>
+            </li>
+            <li><b>Options Box</b> contains :
+               <ul>
+                   <li><b>Resize Image Check Box</b> : If checked, then the image will be resized and modified before uploading.</li>
+                   <li><b>Image Quality Spin Box</b> : If Resize Image check box is checked then,  this spin box sets the new image quality value of JPEG image to be uploaded.</li>
+                   <li><b>Maximum dimension Spin Box</b> : If Resize Image check box is checked then, this spin box sets the maximum dimension of the image. If size of image is larger than than the maximum image dimension specified, the the image is scaled down to the maximum allowed image dimension.</li>
+                   <li><b>QLabels</b> : Labels to provide information about the widgets.</li>
+               </ul>
+            </li>
+            <li><b>Size Box</b> contains :
+               <ul>
+                   <li><b>Dimensions Combo Box</b> : Sets maximum image dimension of the downloaded image. So if the image downloaded exceeds the maximum value specified using the Dimensions Combo Box, then the image is scaled down to that maximum value.</li>
+               </ul>
+            </li>
+            <li><b>Upload Box</b> contains :
+               <ul>
+                   <li><b>KIPI::UploadWidget object </b>: Used to select the directory where to save the image downloaded from the web service of the import plugin.</li>
+               </ul>
+            </li>
+            <li><b>KPProgressWidget</b></li>
+            <li><b>QLabels</b> : Labels to provide information about the widgets.</li>
+        </ul>
+    </li>
+</ul>
+
+To use the KPSettingsWidget class to factorize the GUI if the plugin, firstly the class defining all the widgets of the plugin should inherit this class. This will make the above mentioned GUI elements available for you to add. To access the GUI elements, respective getter functions have been provided. For example, to get the pointer to Change User QButton, you should call the getChangeUserBtn().
+
+Now, if you do not require certain GUI elements, you can hide those widgets. For example, if you do not require the “Album Box” QGroupBox, you can hide it by calling the hide() function on the QGroupBox object used to define Album Box. 
+
+To add a new widget to the “Settings Box”, call addWidgetToSettingsBox() with the widget to add as parameter. For example, suppose you want to add a new QLineEdit widget for adding “Tags” to images and also its respective QLabel. So what you can do is that, you can create a new QGroupBox, add QGridLayout to it and then add the label to one column of it and the Tag QlineEdit to the other column of the layout. Then call addWidgetToSettingsBox() with the QGroupbox object as the parameter. This will add the “Tags” QLineEdit widget and the label to the GUI.
+
+Now, suppose you want to add a widget to one of the QGroupBoxes inside of “Settings Box”. To facilitate this, getter functions are available of the QGroupBoxes and their respective Layouts. For example, to add “Remove Account QButton” in Account Box (as it is done in Flickr Plugin), call the getAlbumBox() and getAlbumBoxLayout() functions to get the Album Box QGroupBox and its Layout. Then simply add that button in the Album Box QGroupBox using them. 
 
 */
