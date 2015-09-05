@@ -1,10 +1,11 @@
-Kipi-plugins 4.13.0 - Release date: 2015-08-30
+Kipi-plugins 4.14.0 - Release date: 2015-09-27
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
+General : Add support of OpenCV 3.x
+
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 280058 - No coordinates shown in GPSSync window when using sidecar files.
-002 ==> 
+001 ==> 
  
