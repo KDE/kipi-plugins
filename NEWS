@@ -7,5 +7,6 @@ General : Add support of OpenCV 3.x
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
-001 ==> 
+001 ==> 306442 - Digikam 2.8 crash when opening geolocation plugin.
+002 ==> 
  
