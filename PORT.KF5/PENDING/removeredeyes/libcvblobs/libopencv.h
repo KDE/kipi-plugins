@@ -53,12 +53,13 @@
 
 #define OPENCV_MAKE_VERSION(major,minor,patch) (((major) << 16) | ((minor) << 8) | (patch))
 #define OPENCV_VERSION                         OPENCV_MAKE_VERSION(CV_MAJOR_VERSION,CV_MINOR_VERSION,CV_SUBMINOR_VERSION)
-#define OPENCV_TEST_VERSION(major,minor,patch) ( OPENCV_VERSION >= OPENCV_MAKE_VERSION(major,minor,patch) )
+#define OPENCV_TEST_VERSION(major,minor,patch) ( OPENCV_VERSION < OPENCV_MAKE_VERSION(major,minor,patch) )
 
-#if OPENCV_TEST_VERSION(2,3,0)
+#include <opencv2/core/core_c.h>
+
+#if OPENCV_TEST_VERSION(2,5,0)
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui_c.h>
-#include <opencv2/core/core_c.h>
 #include <opencv2/legacy/compat.hpp>
 #include <opencv/cvaux.h>
 #else

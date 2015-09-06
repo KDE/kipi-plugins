@@ -90,6 +90,15 @@ const QString HaarClassifierLocator::Private::configClassifierEntry("Classifier"
 
 // --------------------------------------------------------
 
+#if !(OPENCV_TEST_VERSION(2,5,0))
+
+static void cvFillImage(CvArr* const mat, double color)
+{
+    cvSet(mat, cvColorToScalar(color, cvGetElemType(mat)), 0);
+}
+
+#endif
+
 int HaarClassifierLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile)
 {
     // eyes sequence will reside in the storage
