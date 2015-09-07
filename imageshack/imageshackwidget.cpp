@@ -128,7 +128,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     QLabel* const galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
     m_galleriesCob       = new QComboBox(m_galleriesWidget);
-    m_galleriesCob->addItem(i18n("Create new gallery"), "--new-gallery--");
+    m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"), "--new-gallery--");
     m_galleriesCob->setEditable(false);
 
     QLabel* const gallNameLbl = new QLabel(m_galleriesWidget);
@@ -346,7 +346,7 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
 {
     m_galleriesCob->clear();
 
-    m_galleriesCob->addItem(i18n("Create new gallery."), "--new-gallery--");
+    m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"), "--new-gallery--");
 
     // TODO check if the lists have the same size
     for (int i = 0; i < gTexts.size(); ++i)
