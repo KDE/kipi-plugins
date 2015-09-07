@@ -31,7 +31,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 namespace KIPI
 {
@@ -53,7 +53,7 @@ class Imageshack;
 class ImageshackWidget;
 class ImageshackTalker;
 
-class ImageshackWindow : public KP4ToolDialog
+class ImageshackWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -73,8 +73,9 @@ private Q_SLOTS:
     void slotImageListChanged();
     void slotStartTransfer();
     void slotBusy(bool val);
+    void slotFinished();
+    void slotCancelClicked();
 
-    void slotButtonClicked(int button);
     void slotNeedRegistrationCode();
     void slotJobInProgress(int step, int, const QString& format);
     void slotLoginDone(int errCode, const QString& errMsg);

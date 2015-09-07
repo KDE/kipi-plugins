@@ -54,7 +54,9 @@
 #include <krun.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>
+#include <kdialog.h>
 #include <KWindowConfig>
+#include <KGuiItem>
 
 // Libkipi includes
 
@@ -74,7 +76,7 @@ namespace KIPIImageshackPlugin
 {
 
 ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imghack)
-    : KP4ToolDialog(parent)
+    : KPToolDialog(parent)
 {
     m_imageshack = imghack;
     m_widget     = new ImageshackWidget(this, imghack);
@@ -86,11 +88,10 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotChangeRegistrantionCode()));
 
-    setButtons(KDialog::Close | KDialog::User1 | KDialog::Help);
-    setButtonGuiItem(User1,
+    KGuiItem::assign(startButton(),
                      KGuiItem(i18n("Upload"), "network-workgroup",
                               i18n("Start upload to Imageshack web service")));
-    enableButton(User1, false);
+    startButton()->setEnabled(false);
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -140,8 +141,14 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     connect(m_widget, SIGNAL(signalReloadGalleries()),
             this, SLOT(slotGetGalleries()));
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotStartTransfer()));
+
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancelClicked()));
 
     readSettings();
 
@@ -154,7 +161,14 @@ ImageshackWindow::~ImageshackWindow()
 
 void ImageshackWindow::slotImageListChanged()
 {
-    enableButton(User1, !m_widget->m_imgList->imageUrls().isEmpty());
+    startButton()->setEnabled(!m_widget->m_imgList->imageUrls().isEmpty());
+}
+
+void ImageshackWindow::slotFinished()
+{
+    saveSettings();
+    m_widget->m_progressBar->progressCompleted();
+    m_widget->m_imgList->listView()->clear();
 }
 
 void ImageshackWindow::closeEvent(QCloseEvent* e)
@@ -163,8 +177,8 @@ void ImageshackWindow::closeEvent(QCloseEvent* e)
     {
         return;
     }
-    saveSettings();
-    m_widget->m_imgList->listView()->clear();
+
+    slotFinished();
     e->accept();
 }
 
@@ -260,36 +274,13 @@ void ImageshackWindow::slotStartTransfer()
     uploadNextItem();
 }
 
-void ImageshackWindow::slotButtonClicked(int button)
+void ImageshackWindow::slotCancelClicked()
 {
-    switch (button)
-    {
-        case Close:
-            if (m_widget->progressBar()->isVisible())
-            {
-                // Must cancel the transfer
-                m_talker->cancel();
-                m_transferQueue.clear();
-                m_widget->m_imgList->cancelProcess();
-                m_widget->m_progressBar->setVisible(false);
-                m_widget->m_progressBar->progressCompleted();
-            }
-            else
-            {
-                // close the dialog
-                saveSettings();
-                m_widget->m_progressBar->progressCompleted();
-                m_widget->m_imgList->listView()->clear();
-                done(Close);
-            }
-            break;
-        case User1:
-            slotStartTransfer();
-            break;
-        default:
-            KDialog::slotButtonClicked(button);
-            break;
-    }
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    m_widget->m_progressBar->setVisible(false);
+    m_widget->m_progressBar->progressCompleted();
 }
 
 void ImageshackWindow::slotChangeRegistrantionCode()
@@ -356,13 +347,16 @@ void ImageshackWindow::slotBusy(bool val)
     {
         setCursor(Qt::WaitCursor);
         m_widget->m_chgRegCodeBtn->setEnabled(false);
-        enableButton(User1, false);
+        startButton()->setEnabled(false);
+        setRejectButtonMode(QDialogButtonBox::Cancel);
     }
     else
     {
         setCursor(Qt::ArrowCursor);
         m_widget->m_chgRegCodeBtn->setEnabled(true);
-        enableButton(User1, m_imageshack->loggedIn() && !m_widget->imagesList()->imageUrls().isEmpty());
+        startButton()->setEnabled(m_imageshack->loggedIn() &&
+                                  !m_widget->imagesList()->imageUrls().isEmpty());
+        setRejectButtonMode(QDialogButtonBox::Close);
     }
 }
 
@@ -387,13 +381,13 @@ void ImageshackWindow::slotLoginDone(int errCode, const QString& errMsg)
     if (!errCode && m_imageshack->loggedIn())
     {
         m_imageshack->saveSettings();
-        enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
+        startButton()->setEnabled(!m_widget->imagesList()->imageUrls().isEmpty());
         m_talker->getGalleries();
     }
     else
     {
         KMessageBox::error(this, i18n("Login failed: %1\n", errMsg));
-        enableButton(User1, false);
+        startButton()->setEnabled(false);
         m_widget->m_progressBar->setVisible(false);
         slotBusy(false);
     }
