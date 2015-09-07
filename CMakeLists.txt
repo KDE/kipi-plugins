@@ -18,7 +18,7 @@ set(KIPIPLUGINS_MINOR_VERSION "0")
 set(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-set(KIPIPLUGINS_RELEASE_DATE "2015-09-06")
+set(KIPIPLUGINS_RELEASE_DATE "2015-10-18")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -344,7 +344,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(dropbox)
         add_subdirectory(imgur)
         add_subdirectory(facebook)
-        
+
         if(KF5Vkontakte_FOUND)
             add_subdirectory(vkontakte)
         endif()
