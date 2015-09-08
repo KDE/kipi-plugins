@@ -53,7 +53,6 @@
 #include <krun.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>
-#include <kdialog.h>
 #include <KWindowConfig>
 #include <KGuiItem>
 
@@ -306,21 +305,28 @@ void ImageshackWindow::authenticate()
 
 void ImageshackWindow::askRegistrationCode()
 {
-    KDialog* window = new KDialog(this, 0);
+    QDialog* window = new QDialog(this, 0);
     window->setModal(true);
     window->setWindowTitle(i18n("Imageshack authorization"));
-    window->setButtons(KDialog::Ok | KDialog::Cancel);
-    QWidget* mainWidget = new QWidget(window, 0);
+
     QLineEdit* codeField = new QLineEdit();
     QPlainTextEdit* infoText = new QPlainTextEdit(
         i18n( "Please paste the registration code for your ImageShack account"
               " into the textbox below and press \"OK\"."
     ));
     infoText->setReadOnly(true);
-    QVBoxLayout* layout = new QVBoxLayout(mainWidget);
+
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, window);
+    connect(buttonBox, &QDialogButtonBox::accepted, window, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, window, &QDialog::reject);
+
+    QVBoxLayout* layout = new QVBoxLayout(window);
     layout->addWidget(infoText);
     layout->addWidget(codeField);
-    window->setMainWidget(mainWidget);
+    layout->addWidget(buttonBox);
+    window->setLayout(layout);
+
     if (window->exec() == QDialog::Accepted)
     {
         QString code = codeField->text();
