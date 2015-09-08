@@ -67,7 +67,7 @@ namespace KIPIFacebookPlugin
 {
 
 FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*parent*/)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -78,14 +78,12 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
 
     setMainWidget(m_widget);
     setWindowIcon(QIcon::fromTheme("kipi-facebook"));
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
     setModal(false);
 
     if (import)
     {
         setWindowTitle(i18n("Import from Facebook Web Service"));
-        setButtonGuiItem(User1,
+        KGuiItem::assign(startButton(),
                          KGuiItem(i18n("Start Download"), "network-workgroup",
                                   i18n("Start download from Facebook web service")));
         m_widget->setMinimumSize(400, 600);
@@ -93,7 +91,7 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
     else
     {
         setWindowTitle(i18n("Export to Facebook Web Service"));
-        setButtonGuiItem(User1,
+        KGuiItem::assign(startButton(),
                          KGuiItem(i18n("Start Upload"), "network-workgroup",
                                   i18n("Start upload to Facebook web service")));
         m_widget->setMinimumSize(700, 500);
@@ -113,8 +111,14 @@ FbWindow::FbWindow(const QString& tmpFolder, bool import, QWidget* const /*paren
     connect(m_widget, SIGNAL(reloadAlbums(long long)),
             this, SLOT(slotReloadAlbumsRequest(long long)));
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotStartTransfer()));
+
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancelClicked()));
 
     // ------------------------------------------------------------------------
 
@@ -186,46 +190,31 @@ FbWindow::~FbWindow()
 
 void FbWindow::slotStopAndCloseProgressBar()
 {
-    m_talker->cancel();
-    m_transferQueue.clear();
-    m_widget->m_imgList->cancelProcess();
+    // Cancel the operation
+    slotCancelClicked();
+
+    // Write settings and tidy up
+    slotFinished();
+
+    // Close the dialog
+    reject();
+}
+
+void FbWindow::slotFinished()
+{
     writeSettings();
     m_widget->imagesList()->listView()->clear();
-    done(Close);
     m_widget->progressBar()->progressCompleted();
 }
 
-void FbWindow::slotButtonClicked(int button)
+void FbWindow::slotCancelClicked()
 {
-    switch (button)
-    {
-        case Close:
-            if (m_widget->progressBar()->isHidden())
-            {
-                writeSettings();
-                m_widget->imagesList()->listView()->clear();
-                m_widget->progressBar()->progressCompleted();
-                done(Close);
-            }
-            else // cancel login/transfer
-            {
-                m_talker->cancel();
-                m_transferQueue.clear();
-                m_widget->m_imgList->cancelProcess();
-                m_widget->progressBar()->hide();
-                m_widget->progressBar()->progressCompleted();
-            }
-
-            break;
-
-        case User1:
-            slotStartTransfer();
-            break;
-
-        default:
-            KDialog::slotButtonClicked(button);
-            break;
-    }
+    setRejectButtonMode(QDialogButtonBox::Close);
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    m_widget->progressBar()->hide();
+    m_widget->progressBar()->progressCompleted();
 }
 
 void FbWindow::reactivate()
@@ -241,8 +230,7 @@ void FbWindow::closeEvent(QCloseEvent* e)
         return;
     }
 
-    writeSettings();
-    m_widget->imagesList()->listView()->clear();
+    slotFinished();
     e->accept();
 }
 
@@ -339,6 +327,7 @@ void FbWindow::writeSettings()
 
 void FbWindow::authenticate()
 {
+    setRejectButtonMode(QDialogButtonBox::Cancel);
     m_widget->progressBar()->show();
     m_widget->progressBar()->setFormat("");
 
@@ -374,6 +363,7 @@ void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
 
 void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
 {
+    setRejectButtonMode(QDialogButtonBox::Close);
     m_widget->progressBar()->hide();
 
     buttonStateChange(m_talker->loggedIn());
@@ -537,7 +527,7 @@ void FbWindow::buttonStateChange(bool state)
 {
     m_widget->m_newAlbumBtn->setEnabled(state);
     m_widget->m_reloadAlbumsBtn->setEnabled(state);
-    enableButton(User1, state);
+    startButton()->setEnabled(state);
 }
 
 void FbWindow::slotBusy(bool val)
@@ -620,6 +610,7 @@ void FbWindow::slotStartTransfer()
 
     if (m_import)
     {
+        setRejectButtonMode(QDialogButtonBox::Cancel);
         m_widget->progressBar()->setFormat(i18n("%v / %m"));
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
@@ -645,6 +636,7 @@ void FbWindow::slotStartTransfer()
         m_imagesTotal    = m_transferQueue.count();
         m_imagesCount    = 0;
 
+        setRejectButtonMode(QDialogButtonBox::Cancel);
         m_widget->progressBar()->setFormat(i18n("%v / %m"));
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
@@ -732,6 +724,7 @@ void FbWindow::uploadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
+        setRejectButtonMode(QDialogButtonBox::Close);
         m_widget->progressBar()->hide();
         m_widget->progressBar()->progressCompleted();
         return;
@@ -795,6 +788,7 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
                                                     "Do you want to continue?", errMsg))
             != KMessageBox::Continue)
         {
+            setRejectButtonMode(QDialogButtonBox::Close);
             m_widget->progressBar()->hide();
             m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
@@ -809,6 +803,7 @@ void FbWindow::downloadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
+        setRejectButtonMode(QDialogButtonBox::Close);
         m_widget->progressBar()->hide();
         m_widget->progressBar()->progressCompleted();
         return;
@@ -857,6 +852,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                                                         "Do you want to continue?", errText))
                 != KMessageBox::Continue)
             {
+                setRejectButtonMode(QDialogButtonBox::Close);
                 m_widget->progressBar()->hide();
                 m_widget->progressBar()->progressCompleted();
                 m_transferQueue.clear();
@@ -871,6 +867,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                                                     "Do you want to continue?", errMsg))
             != KMessageBox::Continue)
         {
+            setRejectButtonMode(QDialogButtonBox::Close);
             m_widget->progressBar()->hide();
             m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
@@ -896,7 +893,7 @@ void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const QSt
 
 void FbWindow::slotImageListChanged()
 {
-    enableButton(User1, !(m_widget->m_imgList->imageUrls().isEmpty()));
+    startButton()->setEnabled(!(m_widget->m_imgList->imageUrls().isEmpty()));
 }
 
 } // namespace KIPIFacebookPlugin

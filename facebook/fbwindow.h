@@ -35,7 +35,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -64,7 +64,7 @@ class FbUser;
 class FbAlbum;
 class FbPhoto;
 
-class FbWindow : public KP4ToolDialog
+class FbWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -101,8 +101,10 @@ private Q_SLOTS:
     void slotNewAlbumRequest();
     void slotStartTransfer();
     void slotImageListChanged();
-    void slotButtonClicked(int button);
     void slotStopAndCloseProgressBar();
+
+    void slotFinished();
+    void slotCancelClicked();
 
 private:
 
