@@ -385,7 +385,7 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
 
     if (!m_import)
     {
-        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), QString());
+        m_widget->m_albumsCoB->addItem(i18n("<auto create>"), QString());
     }
 
     m_accessToken    = m_talker->getAccessToken();
@@ -437,7 +437,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
     }
     else
     {
-        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), QString());
+        m_widget->m_albumsCoB->addItem(i18n("<auto create>"), QString());
     }
 
     for (int i = 0; i < albumsList.size(); ++i)
