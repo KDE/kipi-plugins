@@ -50,7 +50,6 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <krun.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>

@@ -36,11 +36,11 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QApplication>
+#include <QPushButton>
 
 // KDE includes
 
 #include <kmimetype.h>
-#include <kpushbutton.h>
 #include <klocalizedstring.h>
 #include <kdialog.h>
 
@@ -96,9 +96,10 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     m_accountNameLbl  = new QLabel(accountBox);
     m_accountEmailLbl = new QLabel(accountBox);
-    m_chgRegCodeBtn   = new KPushButton(KGuiItem(i18n("Change account"), "system-switch-user",
-                                                 i18n("Change the registration code for the Imageshack account used to upload images")),
-                                        accountBox);
+    m_chgRegCodeBtn   = new QPushButton(accountBox);
+    KGuiItem::assign(m_chgRegCodeBtn,
+                     KGuiItem(i18n("Change account"), "system-switch-user",
+                              i18n("Change the registration code for the Imageshack account used to upload images")));
 
     accountBoxLayout->addWidget(accountName,          0, 0, 1, 1);
     accountBoxLayout->addWidget(m_accountNameLbl,     0, 1, 1, 2);
@@ -135,8 +136,10 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     gallNameLbl->setText(i18n("Name:"));
 
     m_newGalleryName          = new QLineEdit(m_galleriesWidget);
-    m_reloadGalleriesBtn      = new KPushButton(KGuiItem(i18nc("ImageShack galleries list", "Reload"),
-                                                         "view-refresh", i18n("Reload ImageShack galleries list")), m_galleriesWidget);
+    m_reloadGalleriesBtn      = new QPushButton(m_galleriesWidget);
+    KGuiItem::assign(m_reloadGalleriesBtn,
+                     KGuiItem(i18nc("ImageShack galleries list", "Reload"), "view-refresh",
+                              i18n("Reload ImageShack galleries list")));
 
     galleriesBoxLayout->addWidget(m_useGalleriesChb,    0, 0, 1, 5);
     galleriesBoxLayout->addWidget(m_galleriesWidget,    1, 0, 5, 5);
