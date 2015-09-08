@@ -37,7 +37,6 @@
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <KWindowConfig>
 

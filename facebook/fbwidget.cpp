@@ -41,7 +41,6 @@
 
 #include <klocalizedstring.h>
 #include <kdialog.h>
-#include <kpushbutton.h>
 
 // Libkipi includes
 
@@ -92,9 +91,10 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     permissionLbl->setWhatsThis(i18n("Permission of KIPI Plugin application to upload photos directly. "
                                      "If not, user will need to manually approve uploaded photos in Facebook."));
     m_permissionLbl         = new QLabel(accountBox);
-    m_changeUserBtn         = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                              i18n("Logout and change Facebook Account used for transfer")),
-                                              accountBox);
+    m_changeUserBtn         = new QPushButton(accountBox);
+    KGuiItem::assign(m_changeUserBtn,
+                     KGuiItem(i18n("Change Account"), "system-switch-user",
+                              i18n("Logout and change Facebook Account used for transfer")));
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
@@ -144,10 +144,14 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_albumsCoB          = new QComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
-    m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                        i18n("Create new Facebook album")), accountBox);
-    m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("facebook album list", "Reload"),
-                                        "view-refresh", i18n("Reload album list")), accountBox);
+    m_newAlbumBtn     = new QPushButton(accountBox);
+    KGuiItem::assign(m_newAlbumBtn, KGuiItem(i18n("New Album"), "list-add",
+                                             i18n("Create new Facebook album")));
+
+    m_reloadAlbumsBtn = new QPushButton(accountBox);
+    KGuiItem::assign(m_reloadAlbumsBtn,
+                     KGuiItem(i18nc("facebook album list", "Reload"), "view-refresh",
+                              i18n("Reload album list")));
 
     albumsBoxLayout->addWidget(albMeRBtn,           0, 0, 1, 2);
     albumsBoxLayout->addWidget(albFrRBtn,           1, 0, 1, 2);
