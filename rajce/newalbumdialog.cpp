@@ -26,6 +26,9 @@
 
 #include <QCheckBox>
 #include <QFormLayout>
+#include <QGridLayout>
+#include <QLabel>
+#include <QGroupBox>
 
 // KDE includes
 
@@ -37,40 +40,35 @@ namespace KIPIRajcePlugin
 {
 
 NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
-    : KDialog(parent)
-{
-    setCaption(i18n("New Album"));
-    setButtons(Ok | Cancel);
-    setDefaultButton(Cancel);
-    setModal(false);
-
-    QWidget* const mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
-
-    m_albumName         = new KLineEdit;
-    m_albumDescription  = new KTextEdit;
-    m_albumVisible      = new QCheckBox;
-
+    : KPNewAlbumDialog(parent,QString("Rajce.net"))
+{    
+    getLocEdit()->hide();
+    getDateTimeEdit()->hide();
+    
+    QGroupBox* const privBox = new QGroupBox(i18n("Visiblity"), getMainWidget());
+    privBox->setWhatsThis(i18n("Set the visiblity of the album"));   
+    
+    QLabel* const lbl     = new QLabel(i18n("Public"), privBox);
+    
+    m_albumVisible = new QCheckBox;
     m_albumVisible->setChecked(true);
-
-    QFormLayout* const layout = new QFormLayout();
-    layout->setMargin(10);
-    layout->setRowWrapPolicy(QFormLayout::WrapLongRows);
-    layout->addRow(i18n("Name"),        m_albumName);
-    layout->addRow(i18n("Description"), m_albumDescription);
-    layout->addRow(i18n("Public"),      m_albumVisible);
-
-    mainWidget->setLayout(layout);
+    
+    QGridLayout* layout = new QGridLayout(privBox);
+    
+    layout->addWidget(lbl,             0, 0, 1, 1);
+    layout->addWidget(m_albumVisible,  0, 1, 1, 1);
+    
+    addToMainLayout(privBox);
 }
 
 QString NewAlbumDialog::albumDescription() const
 {
-    return m_albumDescription->toPlainText();
+    return getDescEdit()->toPlainText();
 }
 
 QString NewAlbumDialog::albumName() const
 {
-    return m_albumName->text();
+    return getTitleEdit()->text();
 }
 
 bool NewAlbumDialog::albumVisible() const

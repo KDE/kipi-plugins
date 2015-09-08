@@ -27,15 +27,21 @@
 
 #include <KDialog>
 
+//local includes
+
+#include "kpnewalbumdialog.h"
+
 class QCheckBox;
 
 class KLineEdit;
 class KTextEdit;
 
+using namespace KIPIPlugins;
+
 namespace KIPIRajcePlugin
 {
 
-class NewAlbumDialog : public KDialog
+class NewAlbumDialog : public KPNewAlbumDialog
 {
 public:
 
@@ -46,9 +52,7 @@ public:
     bool    albumVisible()     const;
 
 private:
-
-    KLineEdit* m_albumName;
-    KTextEdit* m_albumDescription;
+    
     QCheckBox* m_albumVisible;
 };
 

@@ -30,14 +30,14 @@
 // Local includes
 
 #include "sessionstate.h"
+#include "kpsettingswidget.h"
 
 class QLabel;
 class QRadioButton;
 class QSpinBox;
 class QProgressBar;
-
 class QComboBox;
-class KPushButton;
+class QPushButton;
 
 namespace KIPI
 {
@@ -50,12 +50,14 @@ namespace KIPIPlugins
     class KPImagesList;
 }
 
+using namespace KIPIPlugins;
+
 namespace KIPIRajcePlugin
 {
 
 class RajceSession;
 
-class RajceWidget : public QWidget
+class RajceWidget : public KPSettingsWidget
 {
     Q_OBJECT
 
@@ -69,7 +71,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void update();
+    virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
     void reactivate();
 
     void startUpload();
@@ -105,17 +107,14 @@ private:
     QLabel*                    m_userNameLbl;
     QLabel*                    m_userName;
 
-    QRadioButton*              m_anonymousRBtn;
-    QRadioButton*              m_accountRBtn;
-
     QSpinBox*                  m_dimensionSpB;
     QSpinBox*                  m_imageQualitySpB;
 
     QComboBox*                 m_albumsCoB;
 
-    KPushButton*               m_newAlbumBtn;
-    KPushButton*               m_reloadAlbumsBtn;
-    KPushButton*               m_changeUserBtn;
+    QPushButton*               m_newAlbumBtn;
+    QPushButton*               m_reloadAlbumsBtn;
+    QPushButton*               m_changeUserBtn;
 
     KIPIPlugins::KPImagesList* m_imgList;
     KIPI::UploadWidget*        m_uploadWidget;
