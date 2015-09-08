@@ -57,7 +57,7 @@ const QString KioExportWindow::HISTORY_URL_PROPERTY = "historyUrls";
 const QString KioExportWindow::CONFIG_GROUP         = "KioExport";
 
 KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_exportWidget = new KioExportWidget(this);
     setMainWidget(m_exportWidget);
@@ -65,18 +65,17 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
     // -- Window setup ------------------------------------------------------
 
     setWindowTitle(i18n("Export to Remote Storage"));
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
     setModal(false);
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start export"), "network-workgroup",
-                     i18n("Start export to the specified target")));
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Start export"), "network-workgroup",
+                              i18n("Start export to the specified target")));
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotUpload()));
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
     connect(m_exportWidget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
@@ -109,20 +108,21 @@ KioExportWindow::~KioExportWindow()
 {
 }
 
-void KioExportWindow::closeEvent(QCloseEvent* e)
+void KioExportWindow::slotFinished()
 {
-    if (!e) return;
-
     saveSettings();
     m_exportWidget->imagesList()->listView()->clear();
-    e->accept();
 }
 
-void KioExportWindow::slotClose()
+void KioExportWindow::closeEvent(QCloseEvent* e)
 {
-    saveSettings();
-    m_exportWidget->imagesList()->listView()->clear();
-    done(Close);
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
+    e->accept();
 }
 
 void KioExportWindow::reactivate()
@@ -170,7 +170,7 @@ void KioExportWindow::slotTargetUrlChanged(const QUrl & target)
 void KioExportWindow::updateUploadButton()
 {
     bool listNotEmpty = !m_exportWidget->imagesList()->imageUrls().empty();
-    enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
+    startButton()->setEnabled(listNotEmpty && m_exportWidget->targetUrl().isValid());
 
     qCDebug(KIPIPLUGINS_LOG) << "Updated upload button with listNotEmpty = "
              << listNotEmpty << ", targetUrl().isValid() = "

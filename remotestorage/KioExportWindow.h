@@ -32,7 +32,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "KioExportWidget.h"
 
 namespace KIPI
@@ -50,7 +50,7 @@ namespace KIPIRemoteStoragePlugin
  * Main window of the KIOExport Plugin.
  */
 
-class KioExportWindow: public KP4ToolDialog
+class KioExportWindow: public KPToolDialog
 {
     Q_OBJECT
 
@@ -103,10 +103,7 @@ private Q_SLOTS:
      */
     void slotCopyingFinished(KJob* job);
 
-    /**
-     * Handle Close button.
-     */
-    void slotClose();
+    void slotFinished();
 
 protected:
 
