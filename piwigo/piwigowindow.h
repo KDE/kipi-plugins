@@ -33,7 +33,7 @@
 
 // local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 namespace KIPI
 {
@@ -49,7 +49,7 @@ namespace KIPIPiwigoExportPlugin
 class Piwigo;
 class GAlbum;
 
-class PiwigoWindow : public KP4ToolDialog
+class PiwigoWindow : public KPToolDialog
 {
     Q_OBJECT
 

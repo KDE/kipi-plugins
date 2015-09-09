@@ -180,16 +180,12 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     glay->addWidget(heightSpinBox, 1, 1);
     glay->addWidget(qualityLabel, 2, 0);
     glay->addWidget(qualitySpinBox, 2, 1);
-    glay->setSpacing(spacingHint());
-    glay->setMargin(spacingHint());
 
     // ---------------------------------------------------------------------------
 
     vlay2->addWidget(resizeCheckBox);
     vlay2->addLayout(glay);
     vlay2->addStretch(0);
-    vlay2->setSpacing(spacingHint());
-    vlay2->setMargin(spacingHint());
 
     optionsBox->setLayout(vlay2);
 
@@ -197,8 +193,6 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     vlay->addWidget(confButton);
     vlay->addWidget(optionsBox);
-    vlay->setSpacing(spacingHint());
-    vlay->setMargin(spacingHint());
 
     optionFrame->setLayout(vlay);
 
@@ -207,8 +201,6 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     hlay->addWidget(logo);
     hlay->addWidget(albumView);
     hlay->addWidget(optionFrame);
-    hlay->setSpacing(spacingHint());
-    hlay->setMargin(spacingHint());
 
     widget->setLayout(hlay);
 }
@@ -216,13 +208,12 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
-    : KP4ToolDialog(parent),
+    : KPToolDialog(parent),
       d(new Private(this))
 {
     d->pPiwigo = pPiwigo;
 
     setWindowTitle( i18n("Piwigo Export") );
-    setButtons(Close | User1 | Help);
     setModal(false);
 
     // About data.
@@ -259,13 +250,12 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
     about->setHandbookEntry("piwigo");
     setAboutData(about);
 
-    // User1 Button : to upload selected photos
-    QPushButton* const addPhotoBtn = button( User1 );
-    addPhotoBtn->setText( i18n("Start Upload") );
-    addPhotoBtn->setIcon( QIcon::fromTheme("network-workgroup") );
-    addPhotoBtn->setEnabled(false);
+    // "Start Upload" button
+    startButton()->setText( i18n("Start Upload") );
+    startButton()->setIcon( QIcon::fromTheme("network-workgroup") );
+    startButton()->setEnabled(false);
 
-    connect(addPhotoBtn, SIGNAL(clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotAddPhoto()));
 
     // we need to let d->talker work..
@@ -422,13 +412,13 @@ void PiwigoWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-        button( User1 )->setEnabled(false);
+        startButton()->setEnabled(false);
     }
     else
     {
         setCursor(Qt::ArrowCursor);
         bool loggedIn = d->talker->loggedIn();
-        button( User1 )->setEnabled(loggedIn && d->albumView->currentItem());
+        startButton()->setEnabled(loggedIn && d->albumView->currentItem());
     }
 }
 
@@ -513,7 +503,7 @@ void PiwigoWindow::slotAlbumSelected()
 
     if (!item)
     {
-        button( User1 )->setEnabled(false);
+        startButton()->setEnabled(false);
     }
     else
     {
@@ -524,11 +514,11 @@ void PiwigoWindow::slotAlbumSelected()
 
         if (d->talker->loggedIn() && albumId )
         {
-            button( User1 )->setEnabled(true);
+            startButton()->setEnabled(true);
         }
         else
         {
-            button( User1 )->setEnabled(false);
+            startButton()->setEnabled(false);
         }
     }
 }
