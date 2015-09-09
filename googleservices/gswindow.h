@@ -64,6 +64,13 @@ class GSFolder;
 class NewAlbumDlg;
 class PicasawebTalker;
 
+enum PluginName
+{
+    GDrive = 1,
+    PicasaExport,
+    PicasaImport
+};    
+
 class GSWindow : public KPToolDialog
 {
     Q_OBJECT
@@ -119,9 +126,7 @@ private:
 
     QString                       m_serviceName;
     QString                       m_pluginName;
-    bool                          m_picasaExport;
-    bool                          m_picasaImport;
-    bool                          m_gdrive;
+    PluginName                    name;
     QString                       m_tmp;
     QString                       refresh_token;
 
