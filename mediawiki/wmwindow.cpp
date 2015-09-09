@@ -43,6 +43,7 @@
 #include <kpushbutton.h>
 #include <kmessagebox.h>
 #include <KWindowConfig>
+#include <KWidgetsAddons/KGuiItem>
 
 // MediaWiki includes
 
@@ -96,7 +97,7 @@ public:
 };
 
 WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KP4ToolDialog(0),
+    : KPToolDialog(0),
       d(new Private)
 {
     d->tmpPath.clear();
@@ -108,13 +109,14 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     setMainWidget(d->widget);
     setWindowIcon(QIcon::fromTheme("kipi-wikimedia"));
-    setButtons(Help|User1|Close);
-    setDefaultButton(Close);
     setModal(false);
     setWindowTitle(i18n("Export to MediaWiki"));
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                     i18n("Start upload to MediaWiki")));
-    enableButton(User1, false);
+
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Start Upload"), "network-workgroup",
+                              i18n("Start upload to MediaWiki")));
+    startButton()->setEnabled(false);
+
     d->widget->setMinimumSize(700, 500);
     d->widget->installEventFilter(this);
 
@@ -145,11 +147,11 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     about->setHandbookEntry("wikimedia");
     setAboutData(about);
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotStartTransfer()));
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
     connect(d->widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
@@ -158,7 +160,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
             this, SLOT(slotDoLogin(QString,QString,QString,QUrl)));
 
     connect(d->widget->progressBar(), SIGNAL(signalProgressCanceled()),
-            this, SLOT(slotClose()));
+            this, SLOT(slotProgressCanceled()));
 
     readSettings();
     reactivate();
@@ -171,8 +173,12 @@ WMWindow::~WMWindow()
 
 void WMWindow::closeEvent(QCloseEvent* e)
 {
-    if (!e) return;
-    saveSettings();
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
     e->accept();
 }
 
@@ -211,11 +217,16 @@ void WMWindow::saveSettings()
     config.sync();
 }
 
-void WMWindow::slotClose()
+void WMWindow::slotFinished()
 {
     d->widget->progressBar()->progressCompleted();
     saveSettings();
-    done(Close);
+}
+
+void WMWindow::slotProgressCanceled()
+{
+    slotFinished();
+    reject();
 }
 
 bool WMWindow::prepareImageForUpload(const QString& imgPath)
@@ -322,7 +333,7 @@ void WMWindow::slotStartTransfer()
 
 void WMWindow::slotChangeUserClicked()
 {
-    enableButton(User1, false);
+    startButton()->setEnabled(false);
     d->widget->invertAccountLoginBox();
 }
 
@@ -356,7 +367,7 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
     else
     {
         d->uploadJob = new WikiMediaJob(iface(), d->mediawiki, this);
-        enableButton(User1, true);
+        startButton()->setEnabled(true);
         d->widget->invertAccountLoginBox();
         d->widget->updateLabels(d->login, d->wikiName, d->wikiUrl.toString());
     }

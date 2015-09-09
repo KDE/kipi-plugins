@@ -28,7 +28,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -39,7 +39,7 @@ using namespace KIPIPlugins;
 namespace KIPIWikiMediaPlugin
 {
 
-class WMWindow : public KP4ToolDialog
+class WMWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -53,7 +53,8 @@ public:
 
 private Q_SLOTS:
 
-    void slotClose();
+    void slotFinished();
+    void slotProgressCanceled();
     void slotStartTransfer();
     void slotChangeUserClicked();
     void slotDoLogin(const QString& login, const QString& pass, const QString& wikiName, const QUrl& wikiUrl);
