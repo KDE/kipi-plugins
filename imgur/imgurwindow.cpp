@@ -22,6 +22,10 @@
 
 #include "imgurwindow.h"
 
+// Qt includes
+
+#include <QCloseEvent>
+
 // KDE includes
 
 #include <kmessagebox.h>
@@ -63,7 +67,7 @@ public:
 };
 
 ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
-    : KP4ToolDialog(0),
+    : KPToolDialog(0),
       d(new Private)
 {
     d->widget     = new ImgurWidget(this);
@@ -79,11 +83,11 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
 
-    setButtons(Help | Close | User1);
-    setButtonGuiItem(User1, KGuiItem(i18n("Upload"), "network-workgroup", i18n("Start upload to Imgur")));
-    setDefaultButton(Close);
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Upload"), "network-workgroup",
+                              i18n("Start upload to Imgur")));
 
-    enableButton(User1, !d->webService->imageQueue()->isEmpty());
+    startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -107,8 +111,14 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 
     // ------------------------------------------------------------
 
-    connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
-            this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
+    connect(startButton(), SIGNAL(clicked()),
+            this, SLOT(slotStartUpload()));
+
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
 
     connect(d->webService, SIGNAL(signalQueueChanged()),
             this, SLOT(slotImageQueueChanged()));
@@ -165,31 +175,45 @@ ImgurWindow::~ImgurWindow()
     delete d;
 }
 
-void ImgurWindow::slotButtonClicked(KDialog::ButtonCode button)
+void ImgurWindow::setContinueUpload(bool state)
 {
-    switch (button)
+    setRejectButtonMode(state ? QDialogButtonBox::Cancel : QDialogButtonBox::Close);
+
+    emit signalContinueUpload(state);
+}
+
+void ImgurWindow::slotCancel()
+{
+    setContinueUpload(false);
+    // Must cancel the transfer
+    d->webService->cancel();
+    d->webService->imageQueue()->clear();
+
+    d->widget->imagesList()->cancelProcess();
+    d->widget->progressBar()->setVisible(false);
+    d->widget->progressBar()->progressCompleted();
+}
+
+void ImgurWindow::slotFinished()
+{
+    d->widget->imagesList()->listView()->clear();
+    saveSettings();
+}
+
+void ImgurWindow::closeEvent(QCloseEvent* e)
+{
+    if (!e)
     {
-        case KDialog::User1:
-            emit signalContinueUpload(true);
-            break;
-        case KDialog::Close:
-            emit signalContinueUpload(false);
-            // Must cancel the transfer
-            d->webService->cancel();
-            d->webService->imageQueue()->clear();
-
-            d->widget->imagesList()->cancelProcess();
-            d->widget->progressBar()->setVisible(false);
-            d->widget->progressBar()->progressCompleted();
-
-            // close the dialog
-            d->widget->imagesList()->listView()->clear();
-
-            done(Close);
-            break;
-        default:
-            break;
+        return;
     }
+
+    slotFinished();
+    e->accept();
+}
+
+void ImgurWindow::slotStartUpload()
+{
+    setContinueUpload(true);
 }
 
 void ImgurWindow::reactivate()
@@ -200,7 +224,7 @@ void ImgurWindow::reactivate()
 
 void ImgurWindow::slotImageQueueChanged()
 {
-    enableButton(User1, !d->webService->imageQueue()->isEmpty());
+    startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
 }
 
 void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurError& error)
@@ -212,11 +236,11 @@ void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurErr
                                                     "Do you want to continue?", error.message))
             == KMessageBox::Continue)
         {
-            emit signalContinueUpload(true);
+            setContinueUpload(true);
         }
         else
         {
-            emit signalContinueUpload(false);
+            setContinueUpload(false);
         }
 
     }
@@ -230,7 +254,7 @@ void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurErr
 
 void ImgurWindow::slotAddPhotoSuccess(const QUrl& /*currentImage*/, const ImgurSuccess& /*success*/)
 {
-   emit signalContinueUpload(true);
+   setContinueUpload(true);
 }
 
 void ImgurWindow::slotAuthenticated(bool yes, const QString& message)
@@ -250,12 +274,12 @@ void ImgurWindow::slotAuthenticated(bool yes, const QString& message)
 
     if (yes)
     {
-        enableButton(User1, yes);
+        startButton()->setEnabled(yes);
     }
     else if (KMessageBox::warningContinueCancel(this, err)
                == KMessageBox::Continue)
     {
-        enableButton(User1, true);
+        startButton()->setEnabled(true);
     }
 }
 
@@ -264,18 +288,13 @@ void ImgurWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-        enableButton(User1, false);
+        startButton()->setEnabled(false);
     }
     else
     {
         setCursor(Qt::ArrowCursor);
-        enableButton(User1, !d->webService->imageQueue()->isEmpty());
+        startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
     }
-}
-
-void ImgurWindow::closeEvent(QCloseEvent*)
-{
-    saveSettings();
 }
 
 void ImgurWindow::readSettings()
