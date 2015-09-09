@@ -21,7 +21,6 @@
  * ============================================================ */
 
 #include "kptooldialog.h"
-#include "kp4tooldialog.h"
 
 // Qt includes
 
@@ -30,14 +29,22 @@
 #include <QDialog>
 #include <QMenu>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 // KDE includes
 
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 #include <ktoolinvocation.h>
+#include <kguiitem.h>
+
+//#define PUREQT5
+
+#ifndef PUREQT5
+#include "kp4tooldialog.h"
+#include <kpushbutton.h>
 #include <kdialog.h>
+#endif
 
 // Libkipi includes
 
@@ -103,6 +110,7 @@ QPushButton* KPDialogBase::getHelpButton() const
         return nullptr;
     }
 
+#ifndef PUREQT5 
     {
         KDialog* const dlg = dynamic_cast<KDialog*>(d->dialog);
 
@@ -111,6 +119,7 @@ QPushButton* KPDialogBase::getHelpButton() const
             return dlg->button(KDialog::Help);
         }
     }
+#endif
 
     {
         KPageDialog* const dlg = dynamic_cast<KPageDialog*>(d->dialog);
@@ -163,6 +172,7 @@ void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
 
 // -----------------------------------------------------------------------------------
 
+#ifndef PUREQT5 
 KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
     : KDialog(parent),
       KPDialogBase(this)
@@ -173,6 +183,7 @@ KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
 KP4ToolDialog::~KP4ToolDialog()
 {
 }
+#endif
 
 // -----------------------------------------------------------------------------------
 
