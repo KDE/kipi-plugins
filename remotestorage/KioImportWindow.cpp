@@ -55,25 +55,24 @@ namespace KIPIRemoteStoragePlugin
 {
 
 KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_importWidget = new KioImportWidget(this, iface());
     setMainWidget(m_importWidget);
 
     // window setup
     setWindowTitle(i18n("Import from Remote Storage"));
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
     setModal(false);
-    enableButton(User1, false);
+    startButton()->setEnabled(false);
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start import"), "network-workgroup",
-                     i18n("Start importing the specified images "
-                          "into the currently selected album.")));
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Start import"), "network-workgroup",
+                              i18n("Start importing the specified images "
+                                   "into the currently selected album.")));
 
     // connections
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotImport()));
 
     connect(m_importWidget->imagesList(), SIGNAL(signalImageListChanged()),
@@ -158,7 +157,7 @@ void KioImportWindow::slotSourceAndTargetUpdated()
     qCDebug(KIPIPLUGINS_LOG) << "switching import button activity with: hasUrlToImport = "
                   << hasUrlToImport << ", hasTarget = " << hasTarget;
 
-    enableButton(User1, hasUrlToImport && hasTarget);
+    startButton()->setEnabled(hasUrlToImport && hasTarget);
 }
 
 } // namespace KIPIRemoteStoragePlugin

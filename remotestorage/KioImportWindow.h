@@ -32,7 +32,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "KioImportWidget.h"
 
 namespace KIPI
@@ -49,7 +49,7 @@ namespace KIPIRemoteStoragePlugin
 /**
  * Main dialog used for the kio import tool.
  */
-class KioImportWindow : public KP4ToolDialog
+class KioImportWindow : public KPToolDialog
 {
     Q_OBJECT
 
