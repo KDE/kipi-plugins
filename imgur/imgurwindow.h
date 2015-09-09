@@ -35,7 +35,7 @@
 
 #include "kpimageslist.h"
 #include "imgurwidget.h"
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 #include "imgurtalker.h"
 
 #ifdef OAUTH_ENABLED
@@ -58,7 +58,7 @@ using namespace KIPIPlugins;
 namespace KIPIImgurPlugin
 {
 
-class ImgurWindow : public KP4ToolDialog
+class ImgurWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -67,8 +67,6 @@ public:
     ImgurWindow(QWidget* const parent = 0);
     ~ImgurWindow();
 
-    using KDialog::slotButtonClicked;
-
     void reactivate();
 
 public Q_SLOTS:
@@ -76,11 +74,14 @@ public Q_SLOTS:
     void slotImageQueueChanged();
     void slotBusy(bool val);
 
-    void slotButtonClicked(KDialog::ButtonCode button);
     void slotAddPhotoSuccess(const QUrl& currentImage, const ImgurSuccess& success);
     void slotAddPhotoError(const QUrl& currentImage, const ImgurError& error);
 //    void slotAuthenticated(bool yes);
     void slotAuthenticated(bool yes, const QString& message = "");
+
+    void slotStartUpload();
+    void slotFinished();
+    void slotCancel();
 
 Q_SIGNALS:
 
@@ -91,6 +92,7 @@ Q_SIGNALS:
 
 private:
 
+    void setContinueUpload(bool state);
     void closeEvent(QCloseEvent* e);
     void readSettings();
     void saveSettings();

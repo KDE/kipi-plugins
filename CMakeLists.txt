@@ -325,7 +325,7 @@ if(KF5Kipi_FOUND)
         add_subdirectory(timeadjust)
         add_subdirectory(flashexport)
         add_subdirectory(expoblending)
-        add_subdirectory(metadataedit)
+	#add_subdirectory(metadataedit)
 
         if(KF5Sane_FOUND)
             add_subdirectory(acquireimages)
