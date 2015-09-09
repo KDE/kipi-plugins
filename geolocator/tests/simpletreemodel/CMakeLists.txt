@@ -18,7 +18,6 @@ target_link_libraries(gpssync_test_simpletreemodel
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(gpssync_test_simpletreemodel
-                          PUBLIC
                           KF5::KDELibs4Support
     )
 endif()

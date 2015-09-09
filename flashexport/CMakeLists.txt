@@ -40,7 +40,6 @@ target_link_libraries(kipiplugin_flashexport
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_flashexport
-                          PUBLIC
                           KF5::KDELibs4Support
     )
 endif()

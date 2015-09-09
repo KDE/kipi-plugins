@@ -48,7 +48,6 @@ target_link_libraries(kipiplugin_htmlexport
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_htmlexport
-                          PUBLIC
                           KF5::KDELibs4Support
     )
 endif()

@@ -35,7 +35,6 @@ target_link_libraries(kipiplugin_googleservices
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_googleservices
-                          PUBLIC
                           KF5::KDELibs4Support
     )
 endif()

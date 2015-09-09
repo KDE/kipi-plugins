@@ -28,7 +28,6 @@ target_link_libraries(kipiplugin_sendimages
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_sendimages
-                          PUBLIC
                           KF5::KDELibs4Support
     )
 endif()

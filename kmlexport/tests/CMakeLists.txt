@@ -15,7 +15,6 @@ target_link_libraries(test_kmlexport_gpxparsing
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(test_kmlexport_gpxparsing
-                          PUBLIC
                           KF5::KDELibs4Support
     )
 endif()
