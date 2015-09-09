@@ -9,7 +9,7 @@ project(kipi-plugins)
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 
-option(ENABLE_PUREQT5 "Experimental: Build kipi-plugins without KDE4Support (default=OFF)" ON)
+option(ENABLE_PUREQT5 "Experimental: Build kipi-plugins without KDE4Support (default=OFF)" OFF)
 
 # =======================================================
 # Information to update before to release this package.
