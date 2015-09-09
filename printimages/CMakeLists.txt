@@ -41,6 +41,7 @@ add_library(kipiplugin_printimages MODULE ${kipiplugin_printimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_printimages
                       Qt5::Core
+                      Qt5::PrintSupport
                       Qt5::Gui
                       KF5::KIOCore
                       KF5::Kipi

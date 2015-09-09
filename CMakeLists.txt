@@ -9,7 +9,7 @@ project(kipi-plugins)
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 
-option(ENABLE_PUREQT5 "Experimental: Build kipi-plugins without KDE4Support (default=OFF)" OFF)
+option(ENABLE_PUREQT5 "Experimental: Build kipi-plugins without KDE4Support (default=OFF)" ON)
 
 # =======================================================
 # Information to update before to release this package.
@@ -88,6 +88,7 @@ include(MacroLocalLibs)
 find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
              Core
              Widgets
+             PrintSupport
              Gui
              Xml
              XmlPatterns
