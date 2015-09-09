@@ -146,7 +146,7 @@ KPNewAlbumDialog::~KPNewAlbumDialog()
     delete d;
 }
 
-void KPNewAlbumDialog::slotTextChanged(const QString &text)
+void KPNewAlbumDialog::slotTextChanged(const QString& /*text*/)
 {
     if (QString::compare(getTitleEdit()->text(), QLatin1String(""), Qt::CaseInsensitive) == 0)
         d->buttonBox->button( QDialogButtonBox::Ok )->setEnabled(false);
