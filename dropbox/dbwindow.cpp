@@ -74,7 +74,7 @@ namespace KIPIDropboxPlugin
 {
 
 DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_tmp         = tmpFolder;
     m_imagesCount = 0;
@@ -83,27 +83,29 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_widget      = new DropboxWidget(this, iface(),"Dropbox");
     setMainWidget(m_widget);
     setWindowIcon(QIcon::fromTheme("kipi-dropbox"));
-    setButtons(Help | User1 | Close);
-    setDefaultButton(Close);
     setModal(false);
     setWindowTitle(i18n("Export to Dropbox"));
-    setButtonGuiItem(User1,KGuiItem(i18n("Start Upload"),"network-workgroup",i18n("Start upload to Dropbox")));
-    m_widget->setMinimumSize(700,500);
+
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Start Upload"), "network-workgroup",
+                              i18n("Start upload to Dropbox")));
+
+    m_widget->setMinimumSize(700, 500);
 
     connect(m_widget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    connect(m_widget->getChangeUserBtn(),SIGNAL(clicked()),
-            this,SLOT(slotUserChangeRequest()));
+    connect(m_widget->getChangeUserBtn(), SIGNAL(clicked()),
+            this, SLOT(slotUserChangeRequest()));
 
-    connect(m_widget->getNewAlbmBtn(),SIGNAL(clicked()),
-            this,SLOT(slotNewAlbumRequest()));
+    connect(m_widget->getNewAlbmBtn(), SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()));
 
-    connect(m_widget->getReloadBtn(),SIGNAL(clicked()),
-            this,SLOT(slotReloadAlbumsRequest()));
+    connect(m_widget->getReloadBtn(), SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()));
 
-    connect(this,SIGNAL(user1Clicked()),
-            this,SLOT(slotStartTransfer()));
+    connect(startButton(), SIGNAL(clicked()),
+            this, SLOT(slotStartTransfer()));
 
     KPAboutData* const about = new KPAboutData(ki18n("Dropbox Export"),0,
                                                KAboutLicense::GPL,
@@ -158,6 +160,9 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     connect(m_talker,SIGNAL(signalAddPhotoSucceeded()),
             this,SLOT(slotAddPhotoSucceeded()));
+
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
     readSettings();
     buttonStateChange(false);
@@ -389,7 +394,7 @@ void DBWindow::slotAddPhotoSucceeded()
 
 void DBWindow::slotImageListChanged()
 {
-    enableButton(User1, !(m_widget->imagesList()->imageUrls().isEmpty()));
+    startButton()->setEnabled(!(m_widget->imagesList()->imageUrls().isEmpty()));
 }
 
 void DBWindow::slotNewAlbumRequest()
@@ -470,15 +475,23 @@ void DBWindow::buttonStateChange(bool state)
 {
     m_widget->getNewAlbmBtn()->setEnabled(state);
     m_widget->getReloadBtn()->setEnabled(state);
-    enableButton(User1, state);
+    startButton()->setEnabled(state);
+}
+
+void DBWindow::slotFinished()
+{
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
 }
 
 void DBWindow::closeEvent(QCloseEvent* e)
 {
-    if (!e) return;
+    if (!e)
+    {
+        return;
+    }
 
-    writeSettings();
-    m_widget->imagesList()->listView()->clear();
+    slotFinished();
     e->accept();
 }
 

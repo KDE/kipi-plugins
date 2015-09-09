@@ -34,7 +34,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -61,7 +61,7 @@ class DBPhoto;
 class DBFolder;
 class DBNewAlbum;
 
-class DBWindow : public KP4ToolDialog
+class DBWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -79,8 +79,8 @@ private:
 
     void uploadNextPhoto();
 
-    void    buttonStateChange(bool state);
-    void    closeEvent(QCloseEvent*);
+    void buttonStateChange(bool state);
+    void closeEvent(QCloseEvent*);
 
 private Q_SLOTS:
 
@@ -103,6 +103,8 @@ private Q_SLOTS:
     void slotAddPhotoSucceeded();
     void slotTransferCancel();
     void slotTextBoxEmpty();
+
+    void slotFinished();
 
 private:
 
