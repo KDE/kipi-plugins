@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -35,7 +35,7 @@ namespace KIPIRajcePlugin
 
 class RajceWidget;
 
-class RajceWindow : public KP4ToolDialog
+class RajceWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -46,10 +46,13 @@ public:
 
     void reactivate();
 
+protected:
+    void closeEvent(QCloseEvent* e);
+
 private Q_SLOTS:
 
     void slotSetUploadButtonEnabled(bool);
-    void slotClose();
+    void slotFinished();
 
 private:
 

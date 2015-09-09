@@ -26,6 +26,7 @@
 
 #include <QAction>
 #include <QMenu>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -41,27 +42,26 @@ namespace KIPIRajcePlugin
 {
 
 RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt::WFlags /*flags*/)
-    : KP4ToolDialog(0)
+    : KPToolDialog(0)
 {
     m_widget = new RajceWidget(iface(), tmpFolder, this);
     m_widget->readSettings();
 
     setMainWidget(m_widget);
     setWindowIcon(QIcon::fromTheme("kipi-rajce"));
-    setButtons(Help|User1|Close);
-    setDefaultButton(Close);
     setModal(false);
 
     setWindowTitle(i18n("Export to Rajce.net"));
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                     i18n("Start upload to Rajce.net")));
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18n("Start Upload"), "network-workgroup",
+                              i18n("Start upload to Rajce.net")));
     m_widget->setMinimumSize(700, 500);
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             m_widget, SLOT(startUpload()));
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
     connect(m_widget, SIGNAL(loginStatusChanged(bool)),
             this, SLOT(slotSetUploadButtonEnabled(bool)));
@@ -82,7 +82,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
     about->setHandbookEntry("rajceexport");
     setAboutData(about);
 
-    button(User1)->setEnabled(false);
+    startButton()->setEnabled(false);
 }
 
 RajceWindow::~RajceWindow()
@@ -97,13 +97,24 @@ void RajceWindow::reactivate()
 
 void RajceWindow::slotSetUploadButtonEnabled(bool enabled)
 {
-    button(User1)->setEnabled(enabled);
+    startButton()->setEnabled(enabled);
 }
 
-void RajceWindow::slotClose()
+void RajceWindow::slotFinished()
 {
     m_widget->cancelUpload();
     m_widget->writeSettings();
+}
+
+void RajceWindow::closeEvent(QCloseEvent* e)
+{
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
+    e->accept();
 }
 
 } //namespace KIPIRajcePlugin
