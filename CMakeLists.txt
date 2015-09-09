@@ -338,7 +338,6 @@ if(KF5Kipi_FOUND)
         add_subdirectory(piwigo)
         add_subdirectory(remotestorage)
         add_subdirectory(yandexfotki)
-        add_subdirectory(dlnaexport)
         add_subdirectory(rajce)
         add_subdirectory(googleservices)
         add_subdirectory(dropbox)
@@ -359,6 +358,7 @@ if(KF5Kipi_FOUND)
 
 # Plugins in pending state
 #
+#         add_subdirectory(dlnaexport)
 #         add_subdirectory(photolayoutseditor)
 #
 #         if(Qca-qt5_FOUND)
