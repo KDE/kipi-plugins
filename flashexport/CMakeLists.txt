@@ -30,7 +30,6 @@ target_link_libraries(kipiplugin_flashexport
                       KF5::KIOCore
                       KF5::Archive
                       KF5::JobWidgets
-                      KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
@@ -39,6 +38,12 @@ target_link_libraries(kipiplugin_flashexport
                       KF5kipiplugins
 )
 
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_flashexport
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 configure_file(kipiplugin_flashexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)
 

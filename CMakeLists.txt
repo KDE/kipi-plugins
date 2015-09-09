@@ -9,6 +9,8 @@ project(kipi-plugins)
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 
+option(ENABLE_PUREQT5 "Experimental: Build kipi-plugins without KDE4Support (default=OFF)" OFF)
+
 # =======================================================
 # Information to update before to release this package.
 
@@ -97,9 +99,6 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
 )
 
 find_package(KF5 REQUIRED COMPONENTS
-
-             KDELibs4Support
-
              WidgetsAddons
              Parts
              Wallet
@@ -110,6 +109,15 @@ find_package(KF5 REQUIRED COMPONENTS
              I18n
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
+
+if(NOT ENABLE_PUREQT5)
+    find_package(KF5 REQUIRED COMPONENTS
+                 KDELibs4Support
+    )
+else()
+    message(STATUS "Try to compile as pure Qt5")
+    add_definitions(-DENABLE_PUREQT5)
+endif()
 
 # Dependencies detection required by all plugins
 

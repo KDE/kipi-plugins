@@ -38,9 +38,7 @@
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
-//#define PUREQT5
-
-#ifndef PUREQT5
+#ifndef ENABLE_PUREQT5
 #include "kp4tooldialog.h"
 #include <kpushbutton.h>
 #include <kdialog.h>
@@ -110,7 +108,7 @@ QPushButton* KPDialogBase::getHelpButton() const
         return nullptr;
     }
 
-#ifndef PUREQT5 
+#ifndef ENABLE_PUREQT5 
     {
         KDialog* const dlg = dynamic_cast<KDialog*>(d->dialog);
 
@@ -172,7 +170,7 @@ void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
 
 // -----------------------------------------------------------------------------------
 
-#ifndef PUREQT5 
+#ifndef ENABLE_PUREQT5 
 KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
     : KDialog(parent),
       KPDialogBase(this)

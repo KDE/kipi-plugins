@@ -18,7 +18,6 @@ add_library(kipiplugin_sendimages MODULE ${kipiplugin_sendimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_sendimages
                       KF5::Parts
-                      KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
@@ -26,6 +25,13 @@ target_link_libraries(kipiplugin_sendimages
 
                       KF5kipiplugins
 )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_sendimages
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 configure_file(kipiplugin_sendimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
 

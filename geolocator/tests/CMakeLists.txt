@@ -14,11 +14,17 @@ target_link_libraries(gpssync_test_correlator
                       Qt5::Test
                       Qt5::Gui
                       Qt5::Xml
-                      KF5::KDELibs4Support
                       KF5::ItemModels
                       KF5::KGeoMap
                       KF5kipiplugins
                      )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(gpssync_test_correlator
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 if(NOT WIN32)
 
@@ -29,11 +35,17 @@ if(NOT WIN32)
     target_link_libraries(gpssync_test_rgparsing
                           Qt5::Test
                           Qt5::Gui
-                          KF5::KDELibs4Support
                           KF5::ItemModels
                           KF5::KGeoMap
                           KF5kipiplugins
                          )
+
+    if(NOT ENABLE_PUREQT5)
+        target_link_libraries(gpssync_test_rgparsing
+                            PUBLIC
+                            KF5::KDELibs4Support
+        )
+    endif()
 
 endif()
 
@@ -47,11 +59,17 @@ add_executable(gpssync_test_rgtagmodel
 target_link_libraries(gpssync_test_rgtagmodel
                       Qt5::Test
                       Qt5::Gui
-                      KF5::KDELibs4Support
                       KF5::ItemModels
                       KF5::KGeoMap
                       KF5kipiplugins
                      )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(gpssync_test_rgtagmodel
+                        PUBLIC
+                        KF5::KDELibs4Support
+    )
+endif()
 
 add_executable(gpssync_test_kipiimageitem
                test_kipiimageitem.cpp
@@ -62,13 +80,19 @@ add_executable(gpssync_test_kipiimageitem
 target_link_libraries(gpssync_test_kipiimageitem
                       Qt5::Test
                       Qt5::Gui
-                      KF5::KDELibs4Support
                       KF5::ItemModels
                       KF5::KExiv2
                       KF5::KGeoMap
                       KF5::Kipi
                       KF5kipiplugins
                      )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(gpssync_test_kipiimageitem
+                        PUBLIC
+                        KF5::KDELibs4Support
+    )
+endif()
 
 add_test(gpssync_test_correlator       ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
 add_test(gpssync_test_gpsrgparsing     ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)

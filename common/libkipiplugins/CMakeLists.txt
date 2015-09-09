@@ -47,20 +47,24 @@ target_link_libraries(KF5kipiplugins
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
 
-                      KF5::WidgetsAddons
-
                       PUBLIC
                       Qt5::Gui
                       KF5::I18n
                       KF5::ConfigCore
                       KF5::KIOFileWidgets
-
-                      KF5::KDELibs4Support
+                      KF5::WidgetsAddons
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
                       ${KF5KDcraw_LIBRARIES}
 )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(KF5kipiplugins
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 set_target_properties(KF5kipiplugins PROPERTIES
                       VERSION     ${KIPIPLUGINS_LIB_SO_VERSION_STRING}

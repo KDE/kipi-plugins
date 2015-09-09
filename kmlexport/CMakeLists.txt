@@ -17,7 +17,6 @@ add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_kmlexport
                       KF5::Parts
-                      KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
@@ -25,6 +24,13 @@ target_link_libraries(kipiplugin_kmlexport
 
                       KF5kipiplugins
                      )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_kmlexport
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 configure_file(kipiplugin_kmlexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_kmlexport.desktop)
 

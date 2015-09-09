@@ -40,15 +40,21 @@ kconfig_add_kcfg_files(kipiplugin_printimages_PART_SRCS
 add_library(kipiplugin_printimages MODULE ${kipiplugin_printimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_printimages
-                      KF5::KDELibs4Support
-                      KF5::KIOCore
                       Qt5::Core
                       Qt5::Gui
+                      KF5::KIOCore
                       KF5::Kipi
                       KF5::KDcraw
                       KF5::KExiv2
                       KF5kipiplugins
                      )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_printimages
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 configure_file(plugin/kipiplugin_printimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
 

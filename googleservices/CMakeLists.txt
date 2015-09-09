@@ -24,7 +24,6 @@ set(kipiplugin_googleservices_PART_SRCS
 add_library(kipiplugin_googleservices MODULE ${kipiplugin_googleservices_PART_SRCS})
 
 target_link_libraries(kipiplugin_googleservices
-                      KF5::KDELibs4Support
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2
@@ -33,6 +32,13 @@ target_link_libraries(kipiplugin_googleservices
                       KF5::Wallet
                       KF5kipiplugins
                      )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_googleservices
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 configure_file(kipiplugin_googleservices.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop)
 

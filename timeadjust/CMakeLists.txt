@@ -21,7 +21,6 @@ add_library(kipiplugin_timeadjust MODULE ${kipiplugin_timeadjust_PART_SRCS})
 
 target_link_libraries(kipiplugin_timeadjust
                       KF5::Parts
-                      KF5::KDELibs4Support
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
@@ -29,6 +28,13 @@ target_link_libraries(kipiplugin_timeadjust
 
                       KF5kipiplugins
 )
+
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_timeadjust
+                          PUBLIC
+                          KF5::KDELibs4Support
+    )
+endif()
 
 configure_file(kipiplugin_timeadjust.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_timeadjust.desktop)
 
