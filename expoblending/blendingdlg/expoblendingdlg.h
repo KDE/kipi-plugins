@@ -51,7 +51,7 @@ namespace KIPIExpoBlendingPlugin
 class Manager;
 class ActionData;
 
-class ExpoBlendingDlg : public KP4ToolDialog
+class ExpoBlendingDlg : public KPToolDialog
 {
     Q_OBJECT
 
@@ -77,10 +77,10 @@ private:
 private Q_SLOTS:
 
     void slotDefault();
-    void slotClose();
     void slotPreview();
     void slotProcess();
-    void slotAbort();
+    void slotCancelClicked();
+    void slotFinished();
 
     void slotLoadProcessed(const QUrl&);
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
