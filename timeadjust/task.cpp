@@ -110,6 +110,7 @@ void Task::run()
         KPMetadata meta;
 
         ret &= meta.load(d->url.path());
+
         if (ret)
         {
             if (meta.canWriteExif(d->url.path()))
@@ -117,25 +118,25 @@ void Task::run()
                 if (d->settings.updEXIFModDate)
                 {
                     ret &= meta.setExifTagString("Exif.Image.DateTime",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                 }
 
                 if (d->settings.updEXIFOriDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeOriginal",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                 }
 
                 if (d->settings.updEXIFDigDate)
                 {
                     ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                 }
 
                 if (d->settings.updEXIFThmDate)
                 {
                     ret &= meta.setExifTagString("Exif.Image.PreviewDateTime",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                 }
             }
             else if (d->settings.updEXIFModDate || d->settings.updEXIFOriDate || 
@@ -164,17 +165,17 @@ void Task::run()
                 if (meta.supportXmp() && meta.canWriteXmp(d->url.path()))
                 {
                     ret &= meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                     ret &= meta.setXmpTagString("Xmp.photoshop.DateCreated",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                     ret &= meta.setXmpTagString("Xmp.tiff.DateTime",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                     ret &= meta.setXmpTagString("Xmp.xmp.CreateDate",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                     ret &= meta.setXmpTagString("Xmp.xmp.MetadataDate",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                     ret &= meta.setXmpTagString("Xmp.xmp.ModifyDate",
-                        dt.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                        dt.toString(QLatin1String("yyyy:MM:dd hh:mm:ss")));
                 }
                 else
                 {
@@ -221,7 +222,8 @@ void Task::run()
         bool ret    = true;
         QUrl newUrl = ActionThread::newUrl(d->url, dt);
 
-        if (QFile::rename(QFile::encodeName(d->url.toLocalFile()).constData(), QFile::encodeName(newUrl.toLocalFile()).constData()) != 0)
+        if (QFile::rename(QString::fromUtf8(QFile::encodeName(d->url.toLocalFile()).constData()),
+                          QString::fromUtf8(QFile::encodeName(newUrl.toLocalFile()).constData())) != 0)
             ret = false;
 
         ret &= KPMetadata::moveSidecar(d->url, newUrl);

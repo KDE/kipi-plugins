@@ -104,13 +104,13 @@ void Plugin_TimeAdjust::setupActions()
 
     d->actionTimeAjust = new QAction(this);
     d->actionTimeAjust->setText(i18n("Adjust Time && Date..."));
-    d->actionTimeAjust->setIcon(QIcon::fromTheme("kipi-timeadjust"));
+    d->actionTimeAjust->setIcon(QIcon::fromTheme(QLatin1String("kipi-timeadjust")));
     d->actionTimeAjust->setEnabled(false);
 
     connect(d->actionTimeAjust, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("timeadjust", d->actionTimeAjust);
+    addAction(QLatin1String("timeadjust"), d->actionTimeAjust);
 }
 
 void Plugin_TimeAdjust::slotActivate()

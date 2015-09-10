@@ -109,9 +109,9 @@ QUrl ActionThread::newUrl(const QUrl& url, const QDateTime& dt)
     QFileInfo fi(url.path());
 
     QString newFileName = fi.baseName();
-    newFileName += '-';
-    newFileName += dt.toString(QString("yyyyMMddThhmmss"));
-    newFileName += '.';
+    newFileName += QLatin1Char('-');
+    newFileName += dt.toString(QLatin1String("yyyyMMddThhmmss"));
+    newFileName += QLatin1Char('.');
     newFileName += fi.completeSuffix();
 
     QUrl newUrl = url;

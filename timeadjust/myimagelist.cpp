@@ -118,7 +118,7 @@ void MyImageList::setStatus(const QMap<QUrl, int>& status)
             }
             else
             {
-                item->setText(STATUS, errors.join(" | "));
+                item->setText(STATUS, errors.join(QLatin1String(" | ")));
             }
         }
     }

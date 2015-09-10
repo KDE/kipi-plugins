@@ -93,7 +93,7 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const QUrl& defaultUrl
     setMinimumWidth(500);
     setMinimumHeight(500);
     d->buttons->button(QDialogButtonBox::Apply)->setText(i18n("Load different photo"));
-    d->buttons->button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme("document-open"));
+    d->buttons->button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme(QLatin1String("document-open")));
 
     QWidget* const mainWidget = new QWidget(this);
     QVBoxLayout* const vBox   = new QVBoxLayout(mainWidget);
@@ -119,7 +119,7 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const QUrl& defaultUrl
     // might not get displayed.
     QLabel* const dtLabel    = new QLabel(i18n("The clock date and time:"));
     d->calendar              = new QDateTimeEdit();
-    d->calendar->setDisplayFormat("d MMMM yyyy, hh:mm:ss");
+    d->calendar->setDisplayFormat(QLatin1String("d MMMM yyyy, hh:mm:ss"));
     d->calendar->setCalendarPopup(true);
     d->calendar->setEnabled(false);
     QHBoxLayout* const hBox2 = new QHBoxLayout(mainWidget);
@@ -221,15 +221,15 @@ bool ClockPhotoDialog::setImage(const QUrl& imageFile)
 
 void ClockPhotoDialog::loadSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Clock Photo Dialog"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("Clock Photo Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
 }
 
 void ClockPhotoDialog::saveSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Clock Photo Dialog"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("Clock Photo Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group);
 }
 

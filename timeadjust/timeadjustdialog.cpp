@@ -101,9 +101,9 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     startButton()->setText(i18nc("@action:button", "&Apply"));
     startButton()->setToolTip(i18nc("@info:tooltip", "Write the corrected date and time for each image"));
-    startButton()->setIcon(QIcon::fromTheme("dialog-ok-apply"));
+    startButton()->setIcon(QIcon::fromTheme(QLatin1String("dialog-ok-apply")));
 
-    QWidget* mainWidget = new QWidget(this);
+    QWidget* const mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     QGridLayout* const mainLayout = new QGridLayout(mainWidget);
     d->listView                   = new MyImageList(mainWidget);
@@ -134,21 +134,21 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Jesper K. Pedersen").toString(),
                      ki18n("Author").toString(),
-                     "blackie at kde dot org");
+                     QLatin1String("blackie at kde dot org"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                     "caulier dot gilles at gmail dot com");
+                     QLatin1String("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(ki18n("Smit Mehta").toString(),
                      ki18n("Developer").toString(),
-                     "smit dot meh at gmail dot com");
+                     QLatin1String("smit dot meh at gmail dot com"));
 
     about->addAuthor(ki18n("Pieter Edelman").toString(),
                      ki18n("Developer").toString(),
-                     "p dot edelman at gmx dot net");
+                     QLatin1String("p dot edelman at gmx dot net"));
 
-    about->setHandbookEntry("timeadjust");
+    about->setHandbookEntry(QLatin1String("timeadjust"));
     setAboutData(about);
 
     // -- Thread Slots/Signals ----------------------------------------------
@@ -210,23 +210,23 @@ void TimeAdjustDialog::slotDialogFinished()
 
 void TimeAdjustDialog::readSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group   = config.group(QString("Time Adjust Settings"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group   = config.group(QLatin1String("Time Adjust Settings"));
 
     d->settingsView->readSettings(group);
 
-    KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
+    KConfigGroup group2 = config.group(QLatin1String("Time Adjust Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void TimeAdjustDialog::saveSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Time Adjust Settings"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("Time Adjust Settings"));
 
     d->settingsView->saveSettings(group);
 
-    KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
+    KConfigGroup group2 = config.group(QLatin1String("Time Adjust Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
@@ -347,15 +347,15 @@ void TimeAdjustDialog::readMetadataTimestamps()
                 break;
             case TimeAdjustSettings::EXIFCREATED:
                 curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Image.DateTime"),
-                                                         "yyyy:MM:dd hh:mm:ss");
+                                                         QLatin1String("yyyy:MM:dd hh:mm:ss"));
                 break;
             case TimeAdjustSettings::EXIFORIGINAL:
                 curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeOriginal"),
-                                                         "yyyy:MM:dd hh:mm:ss");
+                                                         QLatin1String("yyyy:MM:dd hh:mm:ss"));
                 break;
             case TimeAdjustSettings::EXIFDIGITIZED:
                 curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeDigitized"),
-                                                         "yyyy:MM:dd hh:mm:ss");
+                                                         QLatin1String("yyyy:MM:dd hh:mm:ss"));
                 break;
             case TimeAdjustSettings::IPTCCREATED:
                 // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
@@ -366,7 +366,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
                 break;
             case TimeAdjustSettings::XMPCREATED:
                 curImageDateTime = QDateTime::fromString(meta.getXmpTagString("Xmp.xmp.CreateDate"),
-                                                         "yyyy:MM:dd hh:mm:ss");
+                                                         QLatin1String("yyyy:MM:dd hh:mm:ss"));
                 break;
             default:
                 // curImageDateTime stays invalid
@@ -387,7 +387,7 @@ void TimeAdjustDialog::slotApplyClicked()
     {
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
-        d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+        d->progressBar->progressThumbnailChanged(QIcon::fromTheme(QLatin1String("kipi")).pixmap(22, 22));
         d->progressBar->setMaximum(d->itemsUsedMap.keys().size());
         d->thread->setSettings(prm);
         d->thread->setUpdatedDates(d->itemsUpdatedMap);

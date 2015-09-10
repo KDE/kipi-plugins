@@ -145,14 +145,15 @@ public:
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
-    : QScrollArea(parent), d(new Private)
+    : QScrollArea(parent),
+      d(new Private)
 {
     QWidget* const panel    = new QWidget(viewport());
     setWidget(panel);
     setWidgetResizable(true);
 
     d->settingsExpander     = new RExpanderBox(panel);
-    d->settingsExpander->setObjectName("Time Adjust Settings Expander");
+    d->settingsExpander->setObjectName(QLatin1String("Time Adjust Settings Expander"));
     QVBoxLayout* const vlay = new QVBoxLayout(panel);
     vlay->addWidget(d->settingsExpander);
 
@@ -186,12 +187,12 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     d->useCustomDateBtn       = new QRadioButton(d->useSettingsBox);
     d->useCustDateInput       = new QDateEdit(d->useSettingsBox);
-    d->useCustDateInput->setDisplayFormat("dd MMMM yyyy");
+    d->useCustDateInput->setDisplayFormat(QLatin1String("dd MMMM yyyy"));
     d->useCustDateInput->setCalendarPopup(true);
     d->useCustTimeInput       = new QTimeEdit(d->useSettingsBox);
-    d->useCustTimeInput->setDisplayFormat("hh:mm:ss");
+    d->useCustTimeInput->setDisplayFormat(QLatin1String("hh:mm:ss"));
     d->useCustomDateTodayBtn  = new QToolButton(d->useSettingsBox);
-    d->useCustomDateTodayBtn->setIcon(QIcon::fromTheme("go-jump-today"));
+    d->useCustomDateTodayBtn->setIcon(QIcon::fromTheme(QLatin1String("go-jump-today")));
     d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
 
     useGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -229,7 +230,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->adjDaysInput->setSingleStep(1);
     d->adjDaysLabel             = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustSettingsBox);
     d->adjTimeInput             = new QTimeEdit(d->adjustSettingsBox);
-    d->adjTimeInput->setDisplayFormat("hh:mm:ss");
+    d->adjTimeInput->setDisplayFormat(QLatin1String("hh:mm:ss"));
     d->adjDetByClockPhotoBtn    = new QPushButton(i18n("Determine difference from clock photo"));
 
     adjustGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -279,13 +280,13 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     // -----------------------------------------------------------------------
 
-    d->settingsExpander->addItem(d->useSettingsBox,    i18n("Timestamp Used"),        QString("timestampused"),        true);
-    d->settingsExpander->addItem(d->adjustSettingsBox, i18n("Timestamp Adjustments"), QString("timestampadjustments"), true);
-    d->settingsExpander->addItem(d->updateSettingsBox, i18n("Timestamp Updated"),     QString("timestampupdated"),     true);
+    d->settingsExpander->addItem(d->useSettingsBox,    i18n("Timestamp Used"),        QLatin1String("timestampused"),        true);
+    d->settingsExpander->addItem(d->adjustSettingsBox, i18n("Timestamp Adjustments"), QLatin1String("timestampadjustments"), true);
+    d->settingsExpander->addItem(d->updateSettingsBox, i18n("Timestamp Updated"),     QLatin1String("timestampupdated"),     true);
     d->settingsExpander->addStretch();
-    d->settingsExpander->setItemIcon(0, QIcon::fromTheme("document-import"));
-    d->settingsExpander->setItemIcon(1, QIcon::fromTheme("document-edit"));
-    d->settingsExpander->setItemIcon(2, QIcon::fromTheme("document-export"));
+    d->settingsExpander->setItemIcon(0, QIcon::fromTheme(QLatin1String("document-import")));
+    d->settingsExpander->setItemIcon(1, QIcon::fromTheme(QLatin1String("document-edit")));
+    d->settingsExpander->setItemIcon(2, QIcon::fromTheme(QLatin1String("document-export")));
 
     // -- Settings View Slots/Signals ----------------------------------------
 
