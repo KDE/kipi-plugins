@@ -34,7 +34,7 @@ namespace KIPIPlugins
 
 QDir makeTemporaryDir(const QString& prefix)
 {
-    QString subDir = QString("%1-%2").arg(prefix).arg(getpid());
+    QString subDir = QString(QStringLiteral("%1-%2")).arg(prefix).arg(getpid());
     QString path = QDir(QDir::tempPath()).filePath(subDir);
 
     QDir().mkpath(path);
