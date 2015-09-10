@@ -181,13 +181,13 @@ void KPSaveSettingsWidget::writeSettings(KConfigGroup& group)
 void KPSaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
 {
     d->formatComboBox->clear();
-    d->formatComboBox->insertItem( OUTPUT_PNG,  "PNG" );
-    d->formatComboBox->insertItem( OUTPUT_TIFF, "TIFF" );
+    d->formatComboBox->insertItem( OUTPUT_PNG,  QStringLiteral("PNG") );
+    d->formatComboBox->insertItem( OUTPUT_TIFF, QStringLiteral("TIFF") );
 
     if (!sixteenBits)
     {
-        d->formatComboBox->insertItem( OUTPUT_JPEG, "JPEG" );
-        d->formatComboBox->insertItem( OUTPUT_PPM,  "PPM" );
+        d->formatComboBox->insertItem( OUTPUT_JPEG, QStringLiteral("JPEG") );
+        d->formatComboBox->insertItem( OUTPUT_PPM,  QStringLiteral("PPM") );
     }
 
     emit signalSaveFormatChanged();
@@ -205,16 +205,16 @@ QString KPSaveSettingsWidget::typeMime() const
     switch(fileFormat())
     {
         case OUTPUT_JPEG:
-            mime = "image/jpeg";
+            mime = QStringLiteral("image/jpeg");
             break;
         case OUTPUT_TIFF:
-            mime = "image/tiff";
+            mime = QStringLiteral("image/tiff");
             break;
         case OUTPUT_PPM:
-            mime = "image/ppm";
+            mime = QStringLiteral("image/ppm");
             break;
         case OUTPUT_PNG:
-            mime = "image/png";
+            mime = QStringLiteral("image/png");
             break;
     }
 
@@ -228,16 +228,16 @@ QString KPSaveSettingsWidget::extensionForFormat(KPSaveSettingsWidget::OutputFor
     switch(format)
     {
         case OUTPUT_JPEG:
-            ext = ".jpg";
+            ext = QStringLiteral(".jpg");
             break;
         case OUTPUT_TIFF:
-            ext = ".tif";
+            ext = QStringLiteral(".tif");
             break;
         case OUTPUT_PPM:
-            ext = ".ppm";
+            ext = QStringLiteral(".ppm");
             break;
         case OUTPUT_PNG:
-            ext = ".png";
+            ext = QStringLiteral(".png");
             break;
     }
 
