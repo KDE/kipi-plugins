@@ -100,52 +100,52 @@ KPHostSettings::~KPHostSettings()
 
 QString KPHostSettings::fileExtensions() const
 {
-    return d->setting("FileExtensions").toString();
+    return d->setting(QLatin1String("FileExtensions")).toString();
 }
 
 bool KPHostSettings::hasFileExtensions() const
 {
-    return d->hasSetting("FileExtensions");
+    return d->hasSetting(QLatin1String("FileExtensions"));
 }
 
 QString KPHostSettings::imageExtensions() const
 {
-    return d->setting("ImagesExtensions").toString();
+    return d->setting(QLatin1String("ImagesExtensions")).toString();
 }
 
 bool KPHostSettings::hasImageExtensions() const
 {
-    return d->hasSetting("ImagesExtensions");
+    return d->hasSetting(QLatin1String("ImagesExtensions"));
 }
 
 QString KPHostSettings::rawExtensions() const
 {
-    return d->setting("RawExtensions").toString();
+    return d->setting(QLatin1String("RawExtensions")).toString();
 }
 
 bool KPHostSettings::hasRawExtensions() const
 {
-    return d->hasSetting("RawExtensions");
+    return d->hasSetting(QLatin1String("RawExtensions"));
 }
 
 QString KPHostSettings::videoExtensions() const
 {
-    return d->setting("VideoExtensions").toString();
+    return d->setting(QLatin1String("VideoExtensions")).toString();
 }
 
 bool KPHostSettings::hasVideoExtensions() const
 {
-    return d->hasSetting("VideoExtensions");
+    return d->hasSetting(QLatin1String("VideoExtensions"));
 }
 
 QString KPHostSettings::audioExtensions() const
 {
-    return d->setting("AudioExtensions").toString();
+    return d->setting(QLatin1String("AudioExtensions")).toString();
 }
 
 bool KPHostSettings::hasAudioExtensions() const
 {
-    return d->hasSetting("AudioExtensions");
+    return d->hasSetting(QLatin1String("AudioExtensions"));
 }
 
 KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
@@ -154,10 +154,10 @@ KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
 
     if (d->hasValidData())
     {
-        meta.writeRawFiles         = d->setting("WriteMetadataToRAW").toBool();
-        meta.updateFileTimeStamp   = d->setting("WriteMetadataUpdateFiletimeStamp").toBool();
-        meta.useXMPSidecar4Reading = d->setting("UseXMPSidecar4Reading").toBool();
-        meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
+        meta.writeRawFiles         = d->setting(QLatin1String("WriteMetadataToRAW")).toBool();
+        meta.updateFileTimeStamp   = d->setting(QLatin1String("WriteMetadataUpdateFiletimeStamp")).toBool();
+        meta.useXMPSidecar4Reading = d->setting(QLatin1String("UseXMPSidecar4Reading")).toBool();
+        meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting(QLatin1String("MetadataWritingMode")).toInt();
     }
 
     qCDebug(KIPIPLUGINS_LOG) << meta;

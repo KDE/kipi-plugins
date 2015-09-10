@@ -127,17 +127,17 @@ bool KPMetadata::moveSidecar(const QUrl& src, const QUrl& dst)
 {
     if (hasSidecar(src.toLocalFile()))
     {
-
-        if (QFile::rename((const char*)(QFile::encodeName(sidecarUrl(src).toLocalFile()).constData()),
-                          (const char*)(QFile::encodeName(sidecarUrl(dst).toLocalFile())).constData()) != 0)
+        if (QFile::rename(QString::fromUtf8(QFile::encodeName(sidecarUrl(src).toLocalFile())),
+                          QString::fromUtf8(QFile::encodeName(sidecarUrl(dst).toLocalFile()))) != 0)
             return false;
     }
+
     return true;
 }
 
 bool KPMetadata::isRawFile(const QUrl& url)
 {
-    QString   rawFilesExt(KDcraw::rawFiles());
+    QString   rawFilesExt(QLatin1String(KDcraw::rawFiles()));
     QFileInfo fileInfo(url.toLocalFile());
 
     return (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()));

@@ -138,7 +138,7 @@ void KPImageInfo::cloneData(const QUrl& destination)
 qlonglong KPImageInfo::fileSize() const
 {
     if (hasFileSize())
-        return d->attribute("filesize").toLongLong();
+        return d->attribute(QLatin1String("filesize")).toLongLong();
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -153,14 +153,14 @@ qlonglong KPImageInfo::fileSize() const
 
 bool KPImageInfo::hasFileSize() const
 {
-    return d->hasAttribute("filesize");
+    return d->hasAttribute(QLatin1String("filesize"));
 }
 
 void KPImageInfo::setDescription(const QString& desc)
 {
     if (d->iface)
     {
-        d->setAttribute("comment", desc);
+        d->setAttribute(QLatin1String("comment"), desc);
 
 #if KIPI_VERSION < 0x010500
         if (d->hasValidData())
@@ -193,7 +193,7 @@ QString KPImageInfo::description() const
 {
     if (d->iface)
     {
-        if (hasDescription()) return d->attribute("comment").toString();
+        if (hasDescription()) return d->attribute(QLatin1String("comment")).toString();
 
 #if KIPI_VERSION < 0x010500
         if (d->hasValidData())
@@ -228,14 +228,14 @@ QString KPImageInfo::description() const
 bool KPImageInfo::hasDescription() const
 {
     if (d->iface)
-        return d->hasAttribute("comment");
+        return d->hasAttribute(QLatin1String("comment"));
 
     return (!description().isNull());
 }
 
 void KPImageInfo::setDate(const QDateTime& date)
 {
-    d->setAttribute("date", date);
+    d->setAttribute(QLatin1String("date"), date);
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -248,7 +248,7 @@ void KPImageInfo::setDate(const QDateTime& date)
 
 QDateTime KPImageInfo::date() const
 {
-    if (hasDate()) return d->attribute("date").toDateTime();
+    if (hasDate()) return d->attribute(QLatin1String("date")).toDateTime();
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -263,13 +263,13 @@ QDateTime KPImageInfo::date() const
 
 bool KPImageInfo::hasDate() const
 {
-    return d->hasAttribute("date");
+    return d->hasAttribute(QLatin1String("date"));
 }
 
 bool KPImageInfo::isExactDate() const
 {
-    if (d->hasAttribute("isexactdate"))
-        return d->attribute("isexactdate").toBool();
+    if (d->hasAttribute(QLatin1String("isexactdate")))
+        return d->attribute(QLatin1String("isexactdate")).toBool();
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -284,7 +284,7 @@ bool KPImageInfo::isExactDate() const
 
 void KPImageInfo::setName(const QString& name)
 {
-    d->setAttribute("name", name);
+    d->setAttribute(QLatin1String("name"), name);
 
     if (d->hasValidData())
     {
@@ -300,7 +300,7 @@ void KPImageInfo::setName(const QString& name)
 
 QString KPImageInfo::name() const
 {
-    if (hasName()) return d->attribute("name").toString();
+    if (hasName()) return d->attribute(QLatin1String("name")).toString();
 
     if (d->hasValidData())
     {
@@ -317,13 +317,13 @@ QString KPImageInfo::name() const
 
 bool KPImageInfo::hasName() const
 {
-    return d->hasAttribute("name");
+    return d->hasAttribute(QLatin1String("name"));
 }
 
 void KPImageInfo::setOrientation(KPMetadata::ImageOrientation orientation)
 {
-    d->setAttribute("orientation", (int)orientation);
-    d->setAttribute("angle",       (int)orientation);     // NOTE: For compatibility.
+    d->setAttribute(QLatin1String("orientation"), (int)orientation);
+    d->setAttribute(QLatin1String("angle"),       (int)orientation);     // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -338,10 +338,10 @@ KPMetadata::ImageOrientation KPImageInfo::orientation() const
 {
     KPMetadata::ImageOrientation orientation = KPMetadata::ORIENTATION_UNSPECIFIED;
 
-    if (d->hasAttribute("orientation"))
-        orientation = (KPMetadata::ImageOrientation)(d->attribute("orientation").toInt());
-    else if (d->hasAttribute("angle"))
-        orientation = (KPMetadata::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
+    if (d->hasAttribute(QLatin1String("orientation")))
+        orientation = (KPMetadata::ImageOrientation)(d->attribute(QLatin1String("orientation")).toInt());
+    else if (d->hasAttribute(QLatin1String("angle")))
+        orientation = (KPMetadata::ImageOrientation)(d->attribute(QLatin1String("angle")).toInt());    // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -356,23 +356,23 @@ KPMetadata::ImageOrientation KPImageInfo::orientation() const
 
 bool KPImageInfo::hasOrientation() const
 {
-    return (d->hasAttribute("orientation") || 
-            d->hasAttribute("angle"));          // NOTE: For compatibility.
+    return (d->hasAttribute(QLatin1String("orientation")) || 
+            d->hasAttribute(QLatin1String("angle")));          // NOTE: For compatibility.
 }
 
 void KPImageInfo::setTitle(const QString& title)
 {
-    d->setAttribute("title", title);
+    d->setAttribute(QLatin1String("title"), title);
 }
 
 QString KPImageInfo::title() const
 {
-    return d->attribute("title").toString();
+    return d->attribute(QLatin1String("title")).toString();
 }
 
 bool KPImageInfo::hasTitle() const
 {
-    return d->hasAttribute("title");
+    return d->hasAttribute(QLatin1String("title"));
 }
 
 void KPImageInfo::setLatitude(double lat)
@@ -383,17 +383,17 @@ void KPImageInfo::setLatitude(double lat)
         return;
     }
 
-    d->setAttribute("latitude", lat);
+    d->setAttribute(QLatin1String("latitude"), lat);
 }
 
 bool KPImageInfo::hasLatitude() const
 {
-    return d->hasAttribute("latitude");
+    return d->hasAttribute(QLatin1String("latitude"));
 }
 
 double KPImageInfo::latitude() const
 {
-    return d->attribute("latitude").toDouble();
+    return d->attribute(QLatin1String("latitude")).toDouble();
 }
 
 void KPImageInfo::setLongitude(double lng)
@@ -404,42 +404,44 @@ void KPImageInfo::setLongitude(double lng)
         return;
     }
 
-    d->setAttribute("longitude", lng);
+    d->setAttribute(QLatin1String("longitude"), lng);
 }
 
 double KPImageInfo::longitude() const
 {
-    return d->attribute("longitude").toDouble();
+    return d->attribute(QLatin1String("longitude")).toDouble();
 }
 
 bool KPImageInfo::hasLongitude() const
 {
-    return d->hasAttribute("longitude");
+    return d->hasAttribute(QLatin1String("longitude"));
 }
 
 void KPImageInfo::setAltitude(double alt)
 {
-    d->setAttribute("altitude", alt);
+    d->setAttribute(QLatin1String("altitude"), alt);
 }
 
 double KPImageInfo::altitude() const
 {
-    return d->attribute("altitude").toDouble();
+    return d->attribute(QLatin1String("altitude")).toDouble();
 }
 
 bool KPImageInfo::hasAltitude() const
 {
-    return d->hasAttribute("altitude");
+    return d->hasAttribute(QLatin1String("altitude"));
 }
 
 bool KPImageInfo::hasGeolocationInfo() const
 {
-    return (d->hasAttribute("latitude") && d->hasAttribute("longitude") && d->hasAttribute("altitude"));
+    return (d->hasAttribute(QLatin1String("latitude"))  &&
+            d->hasAttribute(QLatin1String("longitude")) &&
+            d->hasAttribute(QLatin1String("altitude")));
 }
 
 void KPImageInfo::removeGeolocationInfo()
 {
-    d->removeAttribute("gpslocation");
+    d->removeAttribute(QLatin1String("gpslocation"));
 }
 
 void KPImageInfo::setRating(int r)
@@ -450,17 +452,17 @@ void KPImageInfo::setRating(int r)
         return;
     }
 
-    d->setAttribute("rating", r);
+    d->setAttribute(QLatin1String("rating"), r);
 }
 
 int KPImageInfo::rating() const
 {
-    return d->attribute("rating").toInt();
+    return d->attribute(QLatin1String("rating")).toInt();
 }
 
 bool KPImageInfo::hasRating() const
 {
-    return d->hasAttribute("rating");
+    return d->hasAttribute(QLatin1String("rating"));
 }
 
 void KPImageInfo::setColorLabel(int cl)
@@ -471,17 +473,17 @@ void KPImageInfo::setColorLabel(int cl)
         return;
     }
 
-    d->setAttribute("colorlabel", cl);
+    d->setAttribute(QLatin1String("colorlabel"), cl);
 }
 
 int KPImageInfo::colorLabel() const
 {
-    return d->attribute("colorlabel").toInt();
+    return d->attribute(QLatin1String("colorlabel")).toInt();
 }
 
 bool KPImageInfo::hasColorLabel() const
 {
-    return d->hasAttribute("colorlabel");
+    return d->hasAttribute(QLatin1String("colorlabel"));
 }
 
 void KPImageInfo::setPickLabel(int pl)
@@ -492,32 +494,32 @@ void KPImageInfo::setPickLabel(int pl)
         return;
     }
 
-    d->setAttribute("picklabel", pl);
+    d->setAttribute(QLatin1String("picklabel"), pl);
 }
 
 int KPImageInfo::pickLabel() const
 {
-    return d->attribute("picklabel").toInt();
+    return d->attribute(QLatin1String("picklabel")).toInt();
 }
 
 bool KPImageInfo::hasPickLabel() const
 {
-    return d->hasAttribute("picklabel");
+    return d->hasAttribute(QLatin1String("picklabel"));
 }
 
 void KPImageInfo::setTagsPath(const QStringList& tp)
 {
-    d->setAttribute("tagspath", tp);
+    d->setAttribute(QLatin1String("tagspath"), tp);
 }
 
 QStringList KPImageInfo::tagsPath() const
 {
-    return d->attribute("tagspath").toStringList();
+    return d->attribute(QLatin1String("tagspath")).toStringList();
 }
 
 bool KPImageInfo::hasTagsPath() const
 {
-    return d->hasAttribute("tagspath");
+    return d->hasAttribute(QLatin1String("tagspath"));
 }
 
 QStringList KPImageInfo::keywords() const
@@ -526,10 +528,10 @@ QStringList KPImageInfo::keywords() const
 
     if(d->iface)
     {
-        keywords = d->attribute("keywords").toStringList();
+        keywords = d->attribute(QLatin1String("keywords")).toStringList();
 
         if (keywords.isEmpty())
-            keywords = d->attribute("tags").toStringList();     // NOTE: For compatibility.
+            keywords = d->attribute(QLatin1String("tags")).toStringList();     // NOTE: For compatibility.
     }
     else
     {
@@ -554,8 +556,8 @@ bool KPImageInfo::hasKeywords() const
 {
     if(d->iface)
     {
-        return (d->hasAttribute("keywords") ||
-                d->hasAttribute("tags"));       // NOTE: For compatibility.
+        return (d->hasAttribute(QLatin1String("keywords")) ||
+                d->hasAttribute(QLatin1String("tags")));       // NOTE: For compatibility.
     }
     else
     {
@@ -578,62 +580,62 @@ bool KPImageInfo::hasKeywords() const
 
 void KPImageInfo::setCreators(const QStringList& list)
 {
-    d->setAttribute("creators", list);
+    d->setAttribute(QLatin1String("creators"), list);
 }
 
 QStringList KPImageInfo::creators() const
 {
-    return d->attribute("creators").toStringList();
+    return d->attribute(QLatin1String("creators")).toStringList();
 }
 
 bool KPImageInfo::hasCreators() const
 {
-    return d->hasAttribute("creators");
+    return d->hasAttribute(QLatin1String("creators"));
 }
 
 void KPImageInfo::setCredit(const QString& val)
 {
-    d->setAttribute("credit", val);
+    d->setAttribute(QLatin1String("credit"), val);
 }
 
 QString KPImageInfo::credit() const
 {
-    return d->attribute("credit").toString();
+    return d->attribute(QLatin1String("credit")).toString();
 }
 
 bool KPImageInfo::hasCredit() const
 {
-    return d->hasAttribute("credit");
+    return d->hasAttribute(QLatin1String("credit"));
 }
 
 void KPImageInfo::setRights(const QString& val)
 {
-    d->setAttribute("rights", val);
+    d->setAttribute(QLatin1String("rights"), val);
 }
 
 QString KPImageInfo::rights() const
 {
-    return d->attribute("rights").toString();
+    return d->attribute(QLatin1String("rights")).toString();
 }
 
 bool KPImageInfo::hasRights() const
 {
-    return d->hasAttribute("rights");
+    return d->hasAttribute(QLatin1String("rights"));
 }
 
 void KPImageInfo::setSource(const QString& val)
 {
-    d->setAttribute("source", val);
+    d->setAttribute(QLatin1String("source"), val);
 }
 
 QString KPImageInfo::source() const
 {
-    return d->attribute("source").toString();
+    return d->attribute(QLatin1String("source")).toString();
 }
 
 bool KPImageInfo::hasSource() const
 {
-    return d->hasAttribute("source");
+    return d->hasAttribute(QLatin1String("source"));
 }
 
 }  // namespace KIPIPlugins
