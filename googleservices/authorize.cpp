@@ -70,12 +70,12 @@ Authorize::Authorize(QWidget* const parent, const QString & scope)
 {
     m_parent          = parent;
     m_scope           = scope;
-    m_redirect_uri    = "urn:ietf:wg:oauth:2.0:oob";
-    m_response_type   = "code";
-    m_client_id       = "735222197981-mrcgtaqf05914buqjkts7mk79blsquas.apps.googleusercontent.com";
-    m_token_uri       = "https://accounts.google.com/o/oauth2/token";
-    m_client_secret   = "4MJOS0u1-_AUEKJ0ObA-j22U";
-    m_code            = "0";
+    m_redirect_uri    = QStringLiteral("urn:ietf:wg:oauth:2.0:oob");
+    m_response_type   = QStringLiteral("code");
+    m_client_id       = QStringLiteral("735222197981-mrcgtaqf05914buqjkts7mk79blsquas.apps.googleusercontent.com");
+    m_token_uri       = QStringLiteral("https://accounts.google.com/o/oauth2/token");
+    m_client_secret   = QStringLiteral("4MJOS0u1-_AUEKJ0ObA-j22U");
+    m_code            = QStringLiteral("0");
     m_job             = 0;
     continuePos       = 0;
     m_Authstate       = GD_ACCESSTOKEN;
@@ -102,13 +102,13 @@ bool Authorize::authenticated()
  */
 void Authorize::doOAuth()
 {
-    QUrl url("https://accounts.google.com/o/oauth2/auth");
+    QUrl url(QStringLiteral("https://accounts.google.com/o/oauth2/auth"));
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("scope",m_scope);
-    urlQuery.addQueryItem("redirect_uri",m_redirect_uri);
-    urlQuery.addQueryItem("response_type",m_response_type);
-    urlQuery.addQueryItem("client_id",m_client_id);
-    urlQuery.addQueryItem("access_type","offline");
+    urlQuery.addQueryItem(QStringLiteral("scope"), m_scope);
+    urlQuery.addQueryItem(QStringLiteral("redirect_uri"), m_redirect_uri);
+    urlQuery.addQueryItem(QStringLiteral("response_type"), m_response_type);
+    urlQuery.addQueryItem(QStringLiteral("client_id"), m_client_id);
+    urlQuery.addQueryItem(QStringLiteral("access_type"), QStringLiteral("offline"));
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     QDesktopServices::openUrl(url);
@@ -155,7 +155,7 @@ void Authorize::doOAuth()
         emit signalTextBoxEmpty();
     }
 
-    if(m_code != "0")
+    if(m_code != QStringLiteral("0"))
     {
         getAccessToken();
     }
@@ -178,11 +178,11 @@ void Authorize::slotReject()
  */
 void Authorize::getAccessToken()
 {
-    QUrl url("https://accounts.google.com/o/oauth2/token?");
+    QUrl url(QStringLiteral("https://accounts.google.com/o/oauth2/token?"));
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("scope",m_scope.toAscii());
-    urlQuery.addQueryItem("response_type",m_response_type.toAscii());
-    urlQuery.addQueryItem("token_uri",m_token_uri.toAscii());
+    urlQuery.addQueryItem(QStringLiteral("scope"), m_scope);
+    urlQuery.addQueryItem(QStringLiteral("response_type"), m_response_type);
+    urlQuery.addQueryItem(QStringLiteral("token_uri"), m_token_uri);
     url.setQuery(urlQuery);
     QByteArray postData;
     postData = "code=";
@@ -196,7 +196,8 @@ void Authorize::getAccessToken()
     postData += "&grant_type=authorization_code";
 
     KIO::TransferJob* const job = KIO::http_post(url,postData,KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type: application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -214,7 +215,7 @@ void Authorize::getAccessToken()
  */
 void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
 {
-    QUrl url("https://accounts.google.com/o/oauth2/token");
+    QUrl url(QStringLiteral("https://accounts.google.com/o/oauth2/token"));
 
     QByteArray postData;
     postData = "&client_id=";
@@ -226,7 +227,8 @@ void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
     postData += "&grant_type=refresh_token";
 
     KIO::TransferJob* const job = KIO::http_post(url,postData,KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type: application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -292,16 +294,17 @@ void Authorize::slotAuthResult(KJob* kjob)
 
 void Authorize::parseResponseAccessToken(const QByteArray& data)
 {
-    m_access_token  = getValue(data,"access_token");
-    m_refresh_token = getValue(data,"refresh_token");
+    m_access_token  = getValue(QString::fromUtf8(data), QStringLiteral("access_token"));
+    m_refresh_token = getValue(QString::fromUtf8(data), QStringLiteral("refresh_token"));
 
-    if(getValue(data,"error") == "invalid_request" || getValue(data,"error") == "invalid_grant")
+    if (getValue(QString::fromUtf8(data), QStringLiteral("error")) == QStringLiteral("invalid_request") ||
+        getValue(QString::fromUtf8(data), QStringLiteral("error")) == QStringLiteral("invalid_grant"))
     {
         doOAuth();
         return;
     }
 
-    m_bearer_access_token = "Bearer " + m_access_token;
+    m_bearer_access_token = QStringLiteral("Bearer ") + m_access_token;
     qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
     //emit signalAccessTokenObtained();
     emit signalRefreshTokenObtained(m_refresh_token);
@@ -309,26 +312,27 @@ void Authorize::parseResponseAccessToken(const QByteArray& data)
 
 void Authorize::parseResponseRefreshToken(const QByteArray& data)
 {
-    m_access_token = getValue(data,"access_token");
+    m_access_token = getValue(QString::fromUtf8(data), QStringLiteral("access_token"));
 
-    if(getValue(data,"error") == "invalid_request" || getValue(data,"error") == "invalid_grant")
+    if (getValue(QString::fromUtf8(data), QStringLiteral("error")) == QStringLiteral("invalid_request") ||
+        getValue(QString::fromUtf8(data), QStringLiteral("error")) == QStringLiteral("invalid_grant"))
     {
         doOAuth();
         return;
     }
 
-    m_bearer_access_token = "Bearer " + m_access_token;
+    m_bearer_access_token = QStringLiteral("Bearer ") + m_access_token;
     qCDebug(KIPIPLUGINS_LOG) << "In parse GD_ACCESSTOKEN" << m_bearer_access_token << "  " << data;
     emit signalAccessTokenObtained();
 }
 
 QString Authorize::getValue(const QString& jsonStr, const QString& key)
 {
-    QString token(getToken(jsonStr, key, QString(",")));
+    QString token(getToken(jsonStr, key, QStringLiteral(",")));
 
-    token.remove(QRegExp("[\"}]"));
+    token.remove(QRegExp(QStringLiteral("[\"}]")));
 
-    QStringList tokenValues(token.split(": "));
+    QStringList tokenValues(token.split(QStringLiteral(": ")));
     QString value;
 
     if (tokenValues.count() == 2) 
@@ -342,11 +346,11 @@ QStringList Authorize::getParams(const QString& jsonStr, const QStringList& path
     if(pathValues.count() == 0)
         return QStringList();
 
-    QString token(getToken(jsonStr, pathValues[0], QString("]")));
+    QString token(getToken(jsonStr, pathValues[0], QStringLiteral("]")));
 
     for(int i = 1; i < pathValues.count(); ++i)
     {
-        token = getToken(token, pathValues[i], QString("]"));
+        token = getToken(token, pathValues[i], QStringLiteral("]"));
     }
 
     QStringList tokens;
@@ -365,7 +369,7 @@ QStringList Authorize::getParams(const QString& jsonStr, const QStringList& path
 
 QString Authorize::getToken(const QString& object, const QString& key, const QString& endDivider)
 {
-    QString searchToken(QString("\"") + key + QString("\""));
+    QString searchToken(QStringLiteral("\"") + key + QStringLiteral("\""));
 
     int beginPos(object.indexOf(searchToken));
 
@@ -374,7 +378,7 @@ QString Authorize::getToken(const QString& object, const QString& key, const QSt
 
     int endPos;
 
-    if (endDivider == QString(","))
+    if (endDivider == QStringLiteral(","))
         endPos = object.indexOf(endDivider, beginPos);
     else
         endPos = getTokenEnd(object, beginPos);
@@ -392,13 +396,13 @@ QString Authorize::getToken(const QString& object, const QString& key, const QSt
 
 int Authorize::getTokenEnd(const QString& object, int beginPos)
 {
-    int beginDividerPos(object.indexOf(QString("["), beginPos ));
-    int endDividerPos(object.indexOf(QString("]"), beginPos + 1));
+    int beginDividerPos(object.indexOf(QStringLiteral("["), beginPos ));
+    int endDividerPos(object.indexOf(QStringLiteral("]"), beginPos + 1));
 
     while((beginDividerPos < endDividerPos) && beginDividerPos != -1)
     {
-        beginDividerPos = object.indexOf(QString("["), endDividerPos);
-        endDividerPos = object.indexOf(QString("]"), endDividerPos + 1);
+        beginDividerPos = object.indexOf(QStringLiteral("["), endDividerPos);
+        endDividerPos = object.indexOf(QStringLiteral("]"), endDividerPos + 1);
     }
 
     return endDividerPos + 1;

@@ -72,7 +72,7 @@ NewAlbumDlg::NewAlbumDlg(QWidget* const parent, const QString& serviceName, cons
     privBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     privBox->setLayout(privBoxLayout);
     
-    if(!(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0))
+    if(!(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0))
         addToMainLayout(privBox);
     else
     {
@@ -90,7 +90,7 @@ NewAlbumDlg::~NewAlbumDlg()
 
 void NewAlbumDlg::getAlbumProperties(GSFolder& album)
 {
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
         album.title       = getTitleEdit()->text();
         return;
@@ -100,14 +100,14 @@ void NewAlbumDlg::getAlbumProperties(GSFolder& album)
     album.location    = getLocEdit()->text();
 
     if (m_publicRBtn->isChecked())
-        album.access = QString("public");
+        album.access = QStringLiteral("public");
     else if (m_unlistedRBtn->isChecked())
-        album.access = QString("private");
+        album.access = QStringLiteral("private");
     else
-        album.access = QString("protected");
+        album.access = QStringLiteral("protected");
 
     long long timestamp = getDateTimeEdit()->dateTime().toTime_t();
-    album.timestamp     = QString("%1").arg(timestamp * 1000);
+    album.timestamp     = QString::number(timestamp * 1000);
 }
 
 } // namespace KIPIGoogleServicesPlugin

@@ -74,20 +74,20 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 {
     m_serviceName = serviceName;
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
     {
         name = PluginName::GDrive;
-        m_pluginName = QString("Google Drive");
+        m_pluginName = QStringLiteral("Google Drive");
     }
-    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if(QString::compare(m_serviceName, QStringLiteral("picasawebexport"), Qt::CaseInsensitive) == 0)
     {
         name = PluginName::PicasaExport;
-        m_pluginName = QString("Google Photos/PicasaWeb");
+        m_pluginName = QStringLiteral("Google Photos/PicasaWeb");
     }
     else
     {
         name = PluginName::PicasaImport;
-        m_pluginName = QString("Google Photos/PicasaWeb");
+        m_pluginName = QStringLiteral("Google Photos/PicasaWeb");
     }
     
     m_tmp         = tmpFolder;
@@ -113,18 +113,19 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                                                  "(c) 2015, Shourya Singh Gupta")); 
 
             about->addAuthor(i18n("Saurabh Patel"),i18n("Author and maintainer"),
-                             "saurabhpatel7717 at gmail dot com");
+                             QStringLiteral("saurabhpatel7717 at gmail dot com"));
  
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
-                             "shouryasgupta at gmail dot com");
+                             QStringLiteral("shouryasgupta at gmail dot com"));
 
-            about->setHandbookEntry("googledrive");
+            about->setHandbookEntry(QStringLiteral("googledrive"));
             setAboutData(about);
 
-            setWindowIcon(QIcon::fromTheme("kipi-googledrive"));
+            setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-googledrive")));
             setWindowTitle(i18n("Export to Google Drive"));
-            KGuiItem::assign(startButton(), KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                                     i18n("Start upload to Google Drive")));
+            KGuiItem::assign(startButton(),
+                             KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
+                                      i18n("Start upload to Google Drive")));
             m_widget->setMinimumSize(700,500);
             
             m_albumDlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
@@ -186,36 +187,38 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
                                                 "(c) 2015, Shourya Singh Gupta"));
 
             about->addAuthor(i18n( "Vardhman Jain" ), i18n("Author and maintainer"),
-                            "Vardhman at gmail dot com");
+                             QStringLiteral("Vardhman at gmail dot com"));
 
             about->addAuthor(i18n( "Gilles Caulier" ), i18n("Developer"),
-                            "caulier dot gilles at gmail dot com");
+                             QStringLiteral("caulier dot gilles at gmail dot com"));
 
             about->addAuthor(i18n( "Luka Renko" ), i18n("Developer"),
-                            "lure at kubuntu dot org");
+                             QStringLiteral("lure at kubuntu dot org"));
 
             about->addAuthor(i18n( "Jens Mueller" ), i18n("Developer"),
-                            "tschenser at gmx dot de");
+                             QStringLiteral("tschenser at gmx dot de"));
         
             about->addAuthor(i18n( "Shourya Singh Gupta" ), i18n("Developer"),
-                            "shouryasgupta at gmail dot com");
+                             QStringLiteral("shouryasgupta at gmail dot com"));
 
-            about->setHandbookEntry("picasawebexport");
+            about->setHandbookEntry(QStringLiteral("picasawebexport"));
             setAboutData(about);
 
-            setWindowIcon(QIcon::fromTheme("kipi-picasa"));
+            setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-picasa")));
             if(name == PluginName::PicasaExport)
             {
                 setWindowTitle(i18n("Export to Google Photos/PicasaWeb Service"));
-                KGuiItem::assign(startButton(), KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                                        i18n("Start upload to Google Photos/PicasaWeb Service")));
+                KGuiItem::assign(startButton(),
+                                 KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
+                                          i18n("Start upload to Google Photos/PicasaWeb Service")));
                 m_widget->setMinimumSize(700,500);
             }
             else
             {
                 setWindowTitle(i18n("Import from Google Photos/PicasaWeb Service"));
-                KGuiItem::assign(startButton(), KGuiItem(i18n("Start Download"), "network-workgroup",
-                                                        i18n("Start download from Google Photos/PicasaWeb service")));
+                KGuiItem::assign(startButton(),
+                                 KGuiItem(i18n("Start Download"), QStringLiteral("network-workgroup"),
+                                          i18n("Start download from Google Photos/PicasaWeb service")));
                 m_widget->setMinimumSize(300, 400);
             }
             
@@ -300,7 +303,7 @@ void GSWindow::reactivate()
 
 void GSWindow::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     
     KConfigGroup grp;
     
@@ -355,7 +358,7 @@ void GSWindow::readSettings()
 
 void GSWindow::writeSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     
     KConfigGroup grp;
     switch(name)
@@ -407,7 +410,8 @@ void GSWindow::slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
 
     if (errCode == 0)
     {
-        QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
+        QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                              i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -444,7 +448,8 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
     if (errCode == 0)
     {
-        QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
+        QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                              i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -465,8 +470,8 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
 
         // Picasa doesn't support image titles. Include it in descriptions if needed.
         QStringList descriptions = QStringList() << info.title() << info.description();
-        descriptions.removeAll("");
-        temp.description         = descriptions.join("\n\n");
+        descriptions.removeAll(QStringLiteral(""));
+        temp.description         = descriptions.join(QStringLiteral("\n\n"));
 
         // check for existing items
         QString localId;
@@ -510,7 +515,8 @@ void GSWindow::slotListPhotosDoneForUpload(int errCode, const QString& errMsg, c
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Picasa Export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(
+        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     m_renamingOpt = 0;
 
@@ -525,7 +531,8 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
         case PluginName::GDrive :
             if(code == 0)
             {
-                QMessageBox::critical(this, "Error", i18n("Google Drive Call Failed: %1\n", errMsg));
+                QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                                      i18n("Google Drive Call Failed: %1\n", errMsg));
                 return;   
             }
     
@@ -534,8 +541,9 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
 
             for(int i=0;i<list.size();i++)
             {
-                m_widget->getAlbumsCoB()->addItem(QIcon::fromTheme("system-users"),list.value(i).title,
-                                                 list.value(i).id);
+                m_widget->getAlbumsCoB()->addItem(
+                    QIcon::fromTheme(QStringLiteral("system-users")),
+                    list.value(i).title, list.value(i).id);
 
                 if (m_currentAlbumId == list.value(i).id)
                 {
@@ -550,7 +558,8 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
         default :
             if(code == 0)
             {
-                QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
+                QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                                      i18n("Google Photos/PicasaWeb Call Failed: %1\n", errMsg));
                 return;
             }
             
@@ -561,12 +570,12 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
             {
                 QString albumIcon;
 
-                if (list.at(i).access == "public")
-                    albumIcon = "folder-image";
-                else if (list.at(i).access == "protected")
-                    albumIcon = "folder-locked";
+                if (list.at(i).access == QStringLiteral("public"))
+                    albumIcon = QStringLiteral("folder-image");
+                else if (list.at(i).access == QStringLiteral("protected"))
+                    albumIcon = QStringLiteral("folder-locked");
                 else
-                    albumIcon = "folder";
+                    albumIcon = QStringLiteral("folder");
 
                 m_widget->getAlbumsCoB()->addItem(QIcon::fromTheme(albumIcon), list.at(i).title, list.at(i).id);
 
@@ -621,7 +630,8 @@ void GSWindow::picasaTransferHandler()
 void GSWindow::slotTextBoxEmpty()
 {
     qCDebug(KIPIPLUGINS_LOG) << "in slotTextBoxEmpty";
-    QMessageBox::critical(this, "Error", i18n("The textbox is empty, please enter the code from the browser in the textbox. "
+    QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                          i18n("The textbox is empty, please enter the code from the browser in the textbox. "
                                   "To complete the authentication click \"Change Account\", "
                                   "or \"Start Upload\" to authenticate again."));
 }
@@ -636,7 +646,8 @@ void GSWindow::slotStartTransfer()
         case PluginName::PicasaExport :
             if(m_widget->imagesList()->imageUrls().isEmpty())
             {
-                QMessageBox::critical(this, "Error", i18n("No image selected. Please select which images should be uploaded."));
+                QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                                      i18n("No image selected. Please select which images should be uploaded."));
                 return;                
             }   
             break;
@@ -708,7 +719,7 @@ void GSWindow::slotStartTransfer()
                 temp.title      = info.name();
         }
         
-        temp.description    = info.description().section("\n",0,0);
+        temp.description    = info.description().section(QStringLiteral("\n"), 0, 0);
         temp.gpsLat.setNum(info.latitude());
         temp.gpsLon.setNum(info.longitude());
         temp.tags = info.tagsPath();
@@ -725,7 +736,8 @@ void GSWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Google Drive export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(
+        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     uploadNextPhoto();
 }
@@ -772,7 +784,7 @@ void GSWindow::uploadNextPhoto()
                     break;
                 default:
                     {
-                        ReplaceDialog dlg(this, "", iface(), pathComments.first, info.thumbURL);
+                        ReplaceDialog dlg(this, QStringLiteral(""), iface(), pathComments.first, info.thumbURL);
                         dlg.exec();
                         
                         switch(dlg.getResult())
@@ -810,7 +822,7 @@ void GSWindow::uploadNextPhoto()
                 for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
                 {
                     QString strTmp = *itT;
-                    int idx        = strTmp.lastIndexOf("/");
+                    int idx        = strTmp.lastIndexOf(QStringLiteral("/"));
 
                     if (idx > 0)
                     {
@@ -831,7 +843,7 @@ void GSWindow::uploadNextPhoto()
 
                 for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
                 {
-                    QStringList strListTmp = itT->split('/');
+                    QStringList strListTmp = itT->split(QLatin1Char('/'));
                     QStringList::const_iterator itT2;
 
                     for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
@@ -887,7 +899,7 @@ void GSWindow::uploadNextPhoto()
     
     if (!res)
     {
-        slotAddPhotoDone(0,"","-1");
+        slotAddPhotoDone(0, QStringLiteral(""), QStringLiteral("-1"));
         return;
     }
 }
@@ -914,10 +926,10 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     GSPhoto item = m_transferQueue.first().second;
     QUrl tmpUrl = QUrl::fromLocalFile(QString(m_tmp + item.title));
 
-    if (item.mimeType == "video/mpeg4")
+    if (item.mimeType == QStringLiteral("video/mpeg4"))
     {
         tmpUrl = tmpUrl.adjusted(QUrl::RemoveFilename);
-        tmpUrl.setPath(tmpUrl.path() + item.title + ".mp4");
+        tmpUrl.setPath(tmpUrl.path() + item.title + QStringLiteral(".mp4"));
     }
 
     if (errCode == 1)
@@ -1077,7 +1089,8 @@ void GSWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
         */
         if (QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()) == false)
         {
-            QMessageBox::critical(this, "Error", i18n("Failed to save image to %1", newUrl.toLocalFile()));
+            QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                                  i18n("Failed to save image to %1", newUrl.toLocalFile()));
         }
         else
         {
@@ -1189,8 +1202,10 @@ void GSWindow::slotReloadAlbumsRequest()
 
 void GSWindow::slotAccessTokenFailed(int errCode,const QString& errMsg)
 {
-    QMessageBox::critical(this, "Error", i18nc("%1 is the error string, %2 is the error code",
-                                               "An authentication error occurred: %1 (%2)",errMsg,errCode));
+    QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                          i18nc("%1 is the error string, %2 is the error code",
+                                "An authentication error occurred: %1 (%2)",
+                                errMsg, errCode));
     return;
 }
 
@@ -1231,14 +1246,16 @@ void GSWindow::slotCreateFolderDone(int code, const QString& msg, const QString&
     {
         case PluginName::GDrive :
             if(code == 0)
-                QMessageBox::critical(this, "Error", i18n("Google Drive call failed:\n%1", msg));
+                QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                                      i18n("Google Drive call failed:\n%1", msg));
             else
                 m_talker->listFolders();
             break;
         case PluginName::PicasaImport :
         case PluginName::PicasaExport :
             if(code == 0)
-                QMessageBox::critical(this, "Error", i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
+                QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                                      i18n("Google Photos/PicasaWeb call failed:\n%1", msg));
             else
             {
                 m_currentAlbumId = albumId;
@@ -1268,11 +1285,11 @@ void GSWindow::slotTransferCancel()
 
 void GSWindow::slotUserChangeRequest()
 {
-    QUrl url("https://accounts.google.com/logout");
+    QUrl url(QStringLiteral("https://accounts.google.com/logout"));
     QDesktopServices::openUrl(url);
 
     QMessageBox warn(QMessageBox::Warning,
-                     i18n("Warning"),
+                     i18nc("@title:window", "Warning"),
                      i18n("After you have been logged out in the browser, "
                           "click \"Continue\" to authenticate for another account"),
                      QMessageBox::Yes | QMessageBox::No);
@@ -1282,7 +1299,7 @@ void GSWindow::slotUserChangeRequest()
     
     if (warn.exec() == QMessageBox::Yes)
     {
-        refresh_token = "";
+        refresh_token = QStringLiteral("");
         
         switch (name)
         {

@@ -38,10 +38,10 @@ public:
 
     GSPhoto()
     {
-        id         = QString("-1");
+        id         = QStringLiteral("-1");
         canComment = true;
-        gpsLon     = "";
-        gpsLat     = "";
+        gpsLon     = QStringLiteral("");
+        gpsLat     = QStringLiteral("");
     }
 
     QString     id;
@@ -66,7 +66,7 @@ class GSFolder
 public:
     GSFolder()
     {
-        id         = QString("-1");
+        id         = QStringLiteral("-1");
         canComment = true;
     }
 

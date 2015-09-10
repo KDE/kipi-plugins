@@ -41,26 +41,26 @@ namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_Picasa::MPForm_Picasa()
+    : m_boundary(QByteArray("----------") + randomString(42 + 13))
 {
-    m_boundary  = "----------";
-    m_boundary += randomString(42 + 13).toAscii();
 }
 
 MPForm_Picasa::~MPForm_Picasa()
 {
 }
 
-QString MPForm_Picasa::randomString(const int& length)
+QByteArray MPForm_Picasa::randomString(const int& length)
 {
-   const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+   const QLatin1String possibleCharacters(
+       QLatin1Literal("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
 
-   QString randomString;
+   QByteArray randomString;
    qsrand((uint)QTime::currentTime().msec());
 
    for(int i=0; i<length; ++i)
    {
-       int index = qrand() % possibleCharacters.length();
-       QChar nextChar = possibleCharacters.at(index);
+       int index = qrand() % possibleCharacters.size();
+       char nextChar = possibleCharacters.data()[index];
        randomString.append(nextChar);
    }
 
@@ -75,9 +75,9 @@ void MPForm_Picasa::reset()
 void MPForm_Picasa::finish()
 {
     QString str;
-    str += "--";
+    str += QStringLiteral("--");
     str += m_boundary;
-    str += "--";
+    str += QStringLiteral("--");
 
     m_buffer.append(str.toUtf8());
 }
@@ -85,9 +85,9 @@ void MPForm_Picasa::finish()
 bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
-    QString  content_length = QString("%1").arg(value.length());
+    QString content_length = QString::number(value.length());
     str += "--";
-    str += m_boundary;
+    str += QString(m_boundary).toUtf8();
     str += "\r\n";
 
     if (!name.isEmpty())
@@ -136,23 +136,21 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
     QByteArray imageData = imageFile.readAll();
 
     QString str;
-    QString file_size = QString("%1").arg(imageFile.size());
-
-    str += "--";
+    str += QStringLiteral("--");
     str += m_boundary;
-    str += "\r\n";
-    str += "Content-Disposition: form-data; name=\"";
-    str += name.toAscii();
-    str += "\"; ";
-    str += "filename=\"";
-    str += QFile::encodeName(QUrl::fromLocalFile(path).fileName());
-    str += "\"\r\n";
-    str += "Content-Length: " ;
-    str +=  file_size.toAscii();
-    str += "\r\n";
-    str += "Content-Type: ";
-    str +=  mime.toAscii();
-    str += "\r\n\r\n";
+    str += QStringLiteral("\r\n");
+    str += QStringLiteral("Content-Disposition: form-data; name=\"");
+    str += name;
+    str += QStringLiteral("\"; ");
+    str += QStringLiteral("filename=\"");
+    str += QUrl::fromLocalFile(path).fileName();
+    str += QStringLiteral("\"\r\n");
+    str += QStringLiteral("Content-Length: ");
+    str += QString::number(imageFile.size());
+    str += QStringLiteral("\r\n");
+    str += QStringLiteral("Content-Type: ");
+    str += mime;
+    str += QStringLiteral("\r\n\r\n");
 
     imageFile.close();
     m_buffer.append(str.toUtf8());
@@ -168,7 +166,7 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
 
 QString MPForm_Picasa::contentType() const
 {
-    return QString("Content-Type: multipart/related; boundary=" + m_boundary);
+    return QStringLiteral("Content-Type: multipart/related; boundary=") + m_boundary;
 }
 
 QString MPForm_Picasa::boundary() const

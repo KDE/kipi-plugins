@@ -52,14 +52,14 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
     m_picasaExport = false;
     m_picasaImport = false;
     
-    if(QString::compare(m_serviceName, QString("googledriveexport"), Qt::CaseInsensitive) == 0)
+    if(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
         m_gdrive = true;
-    else if(QString::compare(m_serviceName, QString("picasawebexport"), Qt::CaseInsensitive) == 0)
+    else if(QString::compare(m_serviceName, QStringLiteral("picasawebexport"), Qt::CaseInsensitive) == 0)
         m_picasaExport = true;
     else
         m_picasaImport = true;
     
-    QGroupBox* m_LeafBox = new QGroupBox("", getSettingsBox());
+    QGroupBox* m_LeafBox = new QGroupBox(QStringLiteral(""), getSettingsBox());
     QGridLayout* leafLayout = new QGridLayout(m_LeafBox);
     
     m_tagsBGrp = new QButtonGroup(m_LeafBox);
@@ -111,16 +111,18 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
 
     if(m_gdrive)
     {
-        QString web("http://www.drive.google.com");
-        getHeaderLbl()->setText(QString("<b><h2><a href='%1'>"
-                                     "<font color=\"#9ACD32\">Google Drive</font>"
-                                     "</a></h2></b>").arg(web));
+        QString web(QStringLiteral("http://www.drive.google.com"));
+        getHeaderLbl()->setText(QStringLiteral(
+            "<b><h2><a href='%1'>"
+            "<font color=\"#9ACD32\">Google Drive</font>"
+            "</a></h2></b>").arg(web));
     }
     else
     {
-        getHeaderLbl()->setText(QString("<b><h2><a href='http://picasaweb.google.com/%1'>"
-                             "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
-                             "</a></h2></b>").arg(url));
+        getHeaderLbl()->setText(QStringLiteral(
+            "<b><h2><a href='http://picasaweb.google.com/%1'>"
+            "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
+            "</a></h2></b>").arg(url));
     }
 
 
@@ -130,7 +132,7 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
     }
     else
     {
-        getUserNameLabel()->setText( QString("<b>%1</b>").arg(name));
+        getUserNameLabel()->setText(QStringLiteral("<b>%1</b>").arg(name));
     }
 }
 

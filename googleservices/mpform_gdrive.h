@@ -53,7 +53,7 @@ public:
 private:
 
     QByteArray m_buffer;
-    QString m_boundary;
+    QLatin1String m_boundary;
     QString m_file_size;
 };
 

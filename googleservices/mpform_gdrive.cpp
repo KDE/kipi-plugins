@@ -49,8 +49,8 @@ namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_GDrive::MPForm_GDrive()
+    : m_boundary(randomString(42+13).toAscii())
 {
-    m_boundary = randomString(42+13).toAscii();
     reset();
 }
 
@@ -60,7 +60,8 @@ MPForm_GDrive::~MPForm_GDrive()
 
 QString MPForm_GDrive::randomString(const int& length)
 {
-   const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+   const QString possibleCharacters(
+       QStringLiteral("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
 
    QString randomString;
    qsrand((uint)QTime::currentTime().msec());
@@ -84,9 +85,9 @@ void MPForm_GDrive::finish()
 {
     qCDebug(KIPIPLUGINS_LOG) << "in finish";
     QString str;
-    str += "--";
+    str += QStringLiteral("--");
     str += m_boundary;
-    str += "--";
+    str += QStringLiteral("--");
     m_buffer.append(str.toAscii());
     qCDebug(KIPIPLUGINS_LOG) << "finish:" << m_buffer;
 }
@@ -100,15 +101,15 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
 
     // Generate JSON
     QJsonObject photoInfo;
-    photoInfo.insert(QString("title"),QJsonValue(name)); 
-    photoInfo.insert(QString("description"),QJsonValue(description));
-    photoInfo.insert(QString("mimeType"),QJsonValue(mime));
-    
+    photoInfo.insert(QStringLiteral("title"),QJsonValue(name));
+    photoInfo.insert(QStringLiteral("description"),QJsonValue(description));
+    photoInfo.insert(QStringLiteral("mimeType"),QJsonValue(mime));
+
     QVariantMap parentId;
-    parentId.insert("id", id);
+    parentId.insert(QStringLiteral("id"), id);
     QVariantList parents;
     parents << parentId;
-    photoInfo.insert(QString("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
+    photoInfo.insert(QStringLiteral("parents"),QJsonValue(QJsonArray::fromVariantList(parents)));
     
     QJsonDocument doc(photoInfo);
     QByteArray json = doc.toJson();
@@ -116,7 +117,7 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
     // Append to the multipart
     QByteArray str;
     str += "--";
-    str += m_boundary.toAscii();
+    str += m_boundary.latin1();
     str += "\r\n";
     str += "Content-Type:application/json; charset=UTF-8\r\n\r\n";
     str += json;
@@ -132,12 +133,12 @@ bool MPForm_GDrive::addFile(const QString &path)
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
     QString mime = ptr.name();
-    str += "--";
+    str += QStringLiteral("--");
     str += m_boundary;
-    str += "\r\n";
-    str += "Content-Type: ";
-    str += mime.toAscii();
-    str += "\r\n\r\n";
+    str += QStringLiteral("\r\n");
+    str += QStringLiteral("Content-Type: ");
+    str += mime;
+    str += QStringLiteral("\r\n\r\n");
 
     QFile imageFile(path);
 
@@ -147,7 +148,7 @@ bool MPForm_GDrive::addFile(const QString &path)
     }
 
     QByteArray imageData = imageFile.readAll();
-    m_file_size          = QString("%1").arg(imageFile.size());
+    m_file_size          = QString::number(imageFile.size());
 
     imageFile.close();
 
@@ -170,7 +171,7 @@ QString MPForm_GDrive::boundary() const
 
 QString MPForm_GDrive::contentType() const
 {
-    return QString("Content-Type: multipart/related;boundary="+m_boundary);
+    return QStringLiteral("Content-Type: multipart/related;boundary=") + m_boundary;
 }
 
 QString MPForm_GDrive::getFileSize() const
