@@ -288,12 +288,12 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
         if (sensitivity.isEmpty()) sensitivity = unavailable;
         else sensitivity = i18n("%1 ISO", sensitivity);
 
-        QString identify("<qt><center>");
-        QString cellBeg("<tr><td><nobr><font size=-1>");
-        QString cellMid("</font></nobr></td><td><nobr><font size=-1>");
-        QString cellEnd("</font></nobr></td></tr>");
+        QString identify(QStringLiteral("<qt><center>"));
+        QString cellBeg(QStringLiteral("<tr><td><nobr><font size=-1>"));
+        QString cellMid(QStringLiteral("</font></nobr></td><td><nobr><font size=-1>"));
+        QString cellEnd(QStringLiteral("</font></nobr></td></tr>"));
 
-        identify += "<table cellspacing=0 cellpadding=0>";
+        identify += QStringLiteral("<table cellspacing=0 cellpadding=0>");
         identify += cellBeg + i18n("<i>Make:</i>")        + cellMid + make         + cellEnd;
         identify += cellBeg + i18n("<i>Model:</i>")       + cellMid + model        + cellEnd;
         identify += cellBeg + i18n("<i>Created:</i>")     + cellMid + dateTime     + cellEnd;
@@ -301,7 +301,7 @@ void KPImageDialogPreview::showPreview(const QUrl& url)
         identify += cellBeg + i18n("<i>Focal:</i>")       + cellMid + focalLength  + cellEnd;
         identify += cellBeg + i18n("<i>Exposure:</i>")    + cellMid + exposureTime + cellEnd;
         identify += cellBeg + i18n("<i>Sensitivity:</i>") + cellMid + sensitivity  + cellEnd;
-        identify += "</table></center></qt>";
+        identify += QStringLiteral("</table></center></qt>");
 
         d->infoLabel->setText(identify);
     }
@@ -395,22 +395,22 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
         // All Images from list must been always the first entry given by KDE API
         allPictures = patternList[0];
 
-        allPictures.insert(allPictures.indexOf("|"), QString(KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
+        allPictures.insert(allPictures.indexOf(QStringLiteral("|")), QString::fromLatin1(KDcraw::rawFiles()) + QStringLiteral(" *.JPE *.TIF"));
         patternList.removeAll(patternList[0]);
         patternList.prepend(allPictures);
     }
     else
     {
-        allPictures.insert(allPictures.indexOf("|"), QString(KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
+        allPictures.insert(allPictures.indexOf(QStringLiteral("|")), QString::fromLatin1(KDcraw::rawFiles()) + QStringLiteral(" *.JPE *.TIF"));
         patternList.prepend(allPictures);
     }
 
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
     // or unavailable(see file #121242 in bug).
-    patternList.append(i18n("\n%1|Camera RAW files", QString(KDcraw::rawFiles())));
+    patternList.append(i18n("\n%1|Camera RAW files", QString::fromLatin1(KDcraw::rawFiles())));
 
-    d->fileFormats = patternList.join("\n");
+    d->fileFormats = patternList.join(QStringLiteral("\n"));
 
     QString alternatePath         = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     QPointer<QFileDialog> dlg     = new QFileDialog(parent, QString(),

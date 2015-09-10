@@ -62,22 +62,22 @@ public:
         switch(messageType)
         {
             case StartingMessage:
-                setIcon(QIcon::fromTheme("system-run").pixmap(16, 16));
+                setIcon(QIcon::fromTheme(QStringLiteral("system-run")).pixmap(16, 16));
                 break;
             case SuccessMessage:
-                setIcon(QIcon::fromTheme("dialog-ok").pixmap(16, 16));
+                setIcon(QIcon::fromTheme(QStringLiteral("dialog-ok")).pixmap(16, 16));
                 break;
             case WarningMessage:
-                setIcon(QIcon::fromTheme("dialog-warning").pixmap(16, 16));
+                setIcon(QIcon::fromTheme(QStringLiteral("dialog-warning")).pixmap(16, 16));
                 setForeground(QBrush(Qt::darkYellow));
                 break;
             case ErrorMessage:
-                setIcon(QIcon::fromTheme("dialog-error").pixmap(16, 16));
+                setIcon(QIcon::fromTheme(QStringLiteral("dialog-error")).pixmap(16, 16));
                 setForeground(QBrush(Qt::red));
                 break;
             case ProgressMessage:
             default:
-                setIcon(QIcon::fromTheme("dialog-information").pixmap(16, 16));
+                setIcon(QIcon::fromTheme(QStringLiteral("dialog-information")).pixmap(16, 16));
                 break;
         }
 
@@ -188,7 +188,7 @@ void KPBatchProgressWidget::setProgress(int current)
 void KPBatchProgressWidget::slotContextMenu()
 {
     QMenu popmenu(this);
-    QAction* const action = new QAction(QIcon::fromTheme("edit-copy"), i18n("Copy to Clipboard"), this);
+    QAction* const action = new QAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy to Clipboard"), this);
 
     connect(action, &QAction::triggered,
             this, &KPBatchProgressWidget::slotCopy2ClipBoard);
@@ -204,7 +204,7 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
     for (int i=0 ; i < d->actionsList->count() ; ++i)
     {
         textInfo.append(d->actionsList->item(i)->text());
-        textInfo.append("\n");
+        textInfo.append(QStringLiteral("\n"));
     }
 
     QMimeData* const mimeData = new QMimeData();
@@ -239,7 +239,7 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QS
     d->buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
 
     d->progressWidget = new KPBatchProgressWidget(this);
-    d->progressWidget->progressScheduled(caption, QIcon::fromTheme("kipi").pixmap(22, 22));
+    d->progressWidget->progressScheduled(caption, QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(d->progressWidget);

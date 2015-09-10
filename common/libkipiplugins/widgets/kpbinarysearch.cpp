@@ -63,11 +63,11 @@ KPBinarySearch::KPBinarySearch(QWidget* const parent)
     setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setColumnCount(5);
-    setHeaderLabels(QStringList() << QLatin1String("")
+    setHeaderLabels(QStringList() << QStringLiteral("")
                                   << i18n("Binary")
                                   << i18n("Version")
-                                  << QLatin1String("")
-                                  << QLatin1String(""));
+                                  << QStringLiteral("")
+                                  << QStringLiteral(""));
 
     header()->setSectionResizeMode(Status,  QHeaderView::ResizeToContents);
     header()->setSectionResizeMode(Binary,  QHeaderView::Stretch);

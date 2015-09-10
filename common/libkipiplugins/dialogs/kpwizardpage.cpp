@@ -79,7 +79,7 @@ KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
     d->logo                    = new QLabel(vbox);
     d->logo->setAlignment(Qt::AlignTop);
     d->logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                      QString("kf5/kipi/pics/kipi-logo.svg")))
+                                                      QStringLiteral("kf5/kipi/pics/kipi-logo.svg")))
                                .scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel* const space = new QLabel(vbox);

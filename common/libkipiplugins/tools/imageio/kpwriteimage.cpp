@@ -598,7 +598,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     QString libtiffver(QStringLiteral(TIFFLIB_VERSION_STR));
     libtiffver.replace(QLatin1Char('\n'), QLatin1Char(' '));
     QString soft = d->kipipluginsVer;
-    soft.append(QString(QStringLiteral(" ( %1 )")).arg(libtiffver));
+    soft.append(QStringLiteral(" ( %1 )").arg(libtiffver));
     TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)soft.toLatin1().data());
 
     // Write ICC profile.

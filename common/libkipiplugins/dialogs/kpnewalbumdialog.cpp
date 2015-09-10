@@ -94,7 +94,7 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
 {
     d->m_pluginName = pluginName;
     d->mainWidget->setMinimumSize(500, 500);
-    setWindowTitle(QString(d->m_pluginName+" New Album"));
+    setWindowTitle(QString(d->m_pluginName + QStringLiteral(" New Album")));
     setModal(false);
     
     d->buttonBox->addButton(QDialogButtonBox::Ok);
@@ -116,7 +116,7 @@ KPNewAlbumDialog::KPNewAlbumDialog(QWidget* const parent, const QString& pluginN
 
     d->m_titleEdt->setToolTip(i18n("Title of the album that will be created (required)."));
 
-    d->m_dtEdt->setDisplayFormat("dd.MM.yyyy HH:mm");
+    d->m_dtEdt->setDisplayFormat(QStringLiteral("dd.MM.yyyy HH:mm"));
     d->m_dtEdt->setWhatsThis(i18n("Date and Time of the album that will be created (optional)."));
 
     d->m_descEdt->setToolTip(i18n("Description of the album that will be created (optional)."));

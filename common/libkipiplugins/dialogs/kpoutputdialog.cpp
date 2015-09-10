@@ -67,7 +67,7 @@ KPOutputDialog::KPOutputDialog(QWidget* const parent, const QString& caption,
     d->buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Help, this);
     d->buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 
-    QPushButton* const copyButton = new QPushButton(QIcon::fromTheme("edit-copy"), i18n("Copy to Clip&board"));
+    QPushButton* const copyButton = new QPushButton(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy to Clip&board"));
     d->buttonBox->addButton(copyButton, QDialogButtonBox::ActionRole);
 
     // Create dialog contents

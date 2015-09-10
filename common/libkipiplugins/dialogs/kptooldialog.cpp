@@ -219,14 +219,14 @@ void KPToolDialog::setRejectButtonMode(QDialogButtonBox::StandardButton button)
     if (button == QDialogButtonBox::Close)
     {
         KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Close),
-                         KGuiItem(i18n("Close"), "dialog-close",
+                         KGuiItem(i18n("Close"), QStringLiteral("dialog-close"),
                                   i18n("Close window")));
         d->propagateReject = true;
     }
     else if (button == QDialogButtonBox::Cancel)
     {
         KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Close),
-                         KGuiItem(i18n("Cancel"), "dialog-cancel",
+                         KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel"),
                                   i18n("Cancel current operation")));
         d->propagateReject = false;
     }
