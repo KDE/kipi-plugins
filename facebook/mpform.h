@@ -54,7 +54,7 @@ public:
 private:
 
     QByteArray m_buffer;
-    QByteArray m_boundary;
+    QLatin1String m_boundary;
 };
 
 } // namespace KIPIFacebookPlugin

@@ -59,7 +59,7 @@ namespace KIPIFacebookPlugin
 FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool import)
     : QWidget(parent)
 {
-    setObjectName("FbWidget");
+    setObjectName(QStringLiteral("FbWidget"));
 
     QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
@@ -93,7 +93,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_permissionLbl         = new QLabel(accountBox);
     m_changeUserBtn         = new QPushButton(accountBox);
     KGuiItem::assign(m_changeUserBtn,
-                     KGuiItem(i18n("Change Account"), "system-switch-user",
+                     KGuiItem(i18n("Change Account"), QStringLiteral("system-switch-user"),
                               i18n("Logout and change Facebook Account used for transfer")));
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
@@ -145,12 +145,12 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn     = new QPushButton(accountBox);
-    KGuiItem::assign(m_newAlbumBtn, KGuiItem(i18n("New Album"), "list-add",
+    KGuiItem::assign(m_newAlbumBtn, KGuiItem(i18n("New Album"), QStringLiteral("list-add"),
                                              i18n("Create new Facebook album")));
 
     m_reloadAlbumsBtn = new QPushButton(accountBox);
     KGuiItem::assign(m_reloadAlbumsBtn,
-                     KGuiItem(i18nc("facebook album list", "Reload"), "view-refresh",
+                     KGuiItem(i18nc("facebook album list", "Reload"), QStringLiteral("view-refresh"),
                               i18n("Reload album list")));
 
     albumsBoxLayout->addWidget(albMeRBtn,           0, 0, 1, 2);
@@ -295,14 +295,15 @@ QString FbWidget::getDestinationPath() const
 
 void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPerm)
 {
-    QString web("http://www.facebook.com");
+    QString web(QStringLiteral("http://www.facebook.com"));
 
     if (!url.isEmpty())
         web = url;
 
-    m_headerLbl->setText(QString("<b><h2><a href='%1'>"
-                                 "<font color=\"#3B5998\">facebook</font>"
-                                 "</a></h2></b>").arg(web));
+    m_headerLbl->setText(QStringLiteral(
+        "<b><h2><a href='%1'>"
+        "<font color=\"#3B5998\">facebook</font>"
+        "</a></h2></b>").arg(web));
     if (name.isEmpty())
     {
         m_userNameDisplayLbl->clear();
@@ -310,7 +311,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
     }
     else
     {
-        m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
+        m_userNameDisplayLbl->setText(QStringLiteral("<b>%1</b>").arg(name));
 
         if (uplPerm)
         {

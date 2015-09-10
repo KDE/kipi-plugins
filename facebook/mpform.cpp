@@ -35,6 +35,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QUrl>
+#include <QtCore/QString>
 
 // KDE includes
 
@@ -48,8 +49,8 @@ namespace KIPIFacebookPlugin
 {
 
 MPForm::MPForm()
+    : m_boundary(KRandom::randomString(42 + 13).toAscii())
 {
-    m_boundary = KRandom::randomString(42 + 13).toAscii();
     reset();
 }
 
@@ -71,7 +72,7 @@ void MPForm::finish()
 {
     QByteArray str;
     str += "--";
-    str += m_boundary;
+    str += m_boundary.latin1();
     str += "--";
     m_buffer.append(str);
 }
@@ -82,7 +83,7 @@ void MPForm::addPair(const QString& name, const QString& value)
     QString content_length = QString::number(value.length());
 
     str += "--";
-    str += m_boundary;
+    str += m_boundary.latin1();
     str += "\r\n";
 
     if (!name.isEmpty()) 
@@ -119,7 +120,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
     QByteArray str;
     str += "--";
-    str += m_boundary;
+    str += m_boundary.latin1();
     str += "\r\n";
     str += "Content-Disposition: form-data; filename=\"";
     str += QFile::encodeName(name);
@@ -140,7 +141,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
+    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + m_boundary;
 }
 
 QString MPForm::boundary() const
