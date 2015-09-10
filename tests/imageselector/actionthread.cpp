@@ -63,7 +63,7 @@ protected:
 
         if (!src.load(fileUrl.path()))
         {
-            errString = "Loading image failed. Aborted...";
+            errString = QLatin1String("Loading image failed. Aborted...");
             return;
         }
 
@@ -86,7 +86,7 @@ protected:
 
         if (!dst.save(fileUrl.path()))
         {
-            errString = "Saving image failed. Aborted...";
+            errString = QLatin1String("Saving image failed. Aborted...");
             return;
         }
 

@@ -46,11 +46,11 @@ int main(int argc, char* argv[])
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Author").toString(),
-                     "caulier dot gilles at gmail dot com");
+                     QLatin1String("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(ki18n("A Janardhan Reddy").toString(),
                      ki18n("Author").toString(),
-                     "annapareddyjanardhanreddy at gmail dot com");
+                     QLatin1String("annapareddyjanardhanreddy at gmail dot com"));
 
     QCommandLineParser parser;
     about->setupCommandLine(&parser);
