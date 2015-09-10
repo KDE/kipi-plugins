@@ -67,7 +67,7 @@ public:
         width          = 0;
         height         = 0;
         cancel         = 0;
-        kipipluginsVer = QString("Kipi-plugins v.%1").arg(kipiplugins_version);
+        kipipluginsVer = QStringLiteral("Kipi-plugins v.%1").arg(kipipluginsVersion());
     }
 
     bool*                cancel;
@@ -411,10 +411,10 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     }
 
     // Write Software info.
-    QString libpngver(PNG_HEADER_VERSION_STRING);
-    libpngver.replace('\n', ' ');
+    QString libpngver(QStringLiteral(PNG_HEADER_VERSION_STRING));
+    libpngver.replace(QLatin1Char('\n'), QLatin1Char(' '));
     QString soft     = d->kipipluginsVer;
-    soft.append(QString(" (%1)").arg(libpngver));
+    soft.append(QStringLiteral(" (%1)").arg(libpngver));
     QByteArray softAscii = soft.toLatin1();
     png_text text;
     text.key         = (png_charp)"Software";
@@ -595,10 +595,10 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->metadata, "Exif.Image.Artist");
     tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->metadata, "Exif.Image.Copyright");
 
-    QString libtiffver(TIFFLIB_VERSION_STR);
-    libtiffver.replace('\n', ' ');
+    QString libtiffver(QStringLiteral(TIFFLIB_VERSION_STR));
+    libtiffver.replace(QLatin1Char('\n'), QLatin1Char(' '));
     QString soft = d->kipipluginsVer;
-    soft.append(QString(" ( %1 )").arg(libtiffver));
+    soft.append(QString(QStringLiteral(" ( %1 )")).arg(libtiffver));
     TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)soft.toLatin1().data());
 
     // Write ICC profile.
@@ -779,28 +779,28 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
 QByteArray KPWriteImage::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
 {
-    QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("libkdcraw/profiles/"));
+    QString filePath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("libkdcraw/profiles/"));
 
     switch(colorSpace)
     {
         case RawDecodingSettings::SRGB:
         {
-            filePath.append("srgb.icm");
+            filePath.append(QStringLiteral("srgb.icm"));
             break;
         }
         case RawDecodingSettings::ADOBERGB:
         {
-            filePath.append("adobergb.icm");
+            filePath.append(QStringLiteral("adobergb.icm"));
             break;
         }
         case RawDecodingSettings::WIDEGAMMUT:
         {
-            filePath.append("widegamut.icm");
+            filePath.append(QStringLiteral("widegamut.icm"));
             break;
         }
         case RawDecodingSettings::PROPHOTO:
         {
-            filePath.append("prophoto.icm");
+            filePath.append(QStringLiteral("prophoto.icm"));
             break;
         }
         default:
