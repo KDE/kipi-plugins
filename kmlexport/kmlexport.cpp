@@ -101,7 +101,7 @@ QString KmlExport::webifyFileName(const QString& fileName) const
     QString webFileName = fileName.toLower();
 
     // Remove potentially troublesome chars
-    webFileName         = webFileName.replace(QRegExp("[^-0-9a-z]+"), "_");
+    webFileName         = webFileName.replace(QRegExp(QLatin1String("[^-0-9a-z]+")), QLatin1String("_"));
 
     return webFileName;
 }
@@ -179,7 +179,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     }
 
     QImageReader reader(&imageFile);
-    QString imageFormat = reader.format();
+    QString imageFormat = QString::fromUtf8(reader.format());
 
     if (imageFormat.isEmpty())
     {
@@ -228,7 +228,7 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
     QString baseFileName = webifyFileName(info.name());
     //baseFileName       = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
-    fullFileName         = baseFileName + '.' + imageFormat.toLower();
+    fullFileName         = baseFileName + QLatin1Char('.') + imageFormat.toLower();
     QString destPath     = m_imageDir.filePath(fullFileName);
 
     if (!image.save(destPath, imageFormat.toLatin1().constData(), 85))
@@ -255,39 +255,39 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
             meta.getGPSInfo(alt, lat, lng);
         }
 
-        QDomElement kmlPlacemark = addKmlElement(kmlAlbum, "Placemark");
-        addKmlTextElement(kmlPlacemark,"name",fullFileName);
+        QDomElement kmlPlacemark = addKmlElement(kmlAlbum, QLatin1String("Placemark"));
+        addKmlTextElement(kmlPlacemark, QLatin1String("name"), fullFileName);
         // location and altitude
-        QDomElement kmlGeometry  = addKmlElement(kmlPlacemark, "Point");
+        QDomElement kmlGeometry  = addKmlElement(kmlPlacemark, QLatin1String("Point"));
 
         if (alt)
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2,%3 ")
+            addKmlTextElement(kmlGeometry, QLatin1String("coordinates"), QString::fromUtf8("%1,%2,%3 ")
                 .arg(lng, 0, 'f', 8)
                 .arg(lat, 0, 'f', 8)
                 .arg(alt, 0, 'f', 8));
         }
         else
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2 ")
+            addKmlTextElement(kmlGeometry, QLatin1String("coordinates"), QString::fromUtf8("%1,%2 ")
                 .arg(lng, 0, 'f', 8)
                 .arg(lat, 0, 'f', 8));
         }
 
         if (m_altitudeMode == 2 )
         {
-            addKmlTextElement(kmlGeometry, "altitudeMode", "absolute");
+            addKmlTextElement(kmlGeometry, QLatin1String("altitudeMode"), QLatin1String("absolute"));
         }
         else if (m_altitudeMode == 1 )
         {
-            addKmlTextElement(kmlGeometry, "altitudeMode", "relativeToGround");
+            addKmlTextElement(kmlGeometry, QLatin1String("altitudeMode"), QLatin1String("relativeToGround"));
         }
         else
         {
-            addKmlTextElement(kmlGeometry, "altitudeMode", "clampToGround");
+            addKmlTextElement(kmlGeometry, QLatin1String("altitudeMode"), QLatin1String("clampToGround"));
         }
 
-        addKmlTextElement(kmlGeometry, "extrude", "1");
+        addKmlTextElement(kmlGeometry, QLatin1String("extrude"), QLatin1String("1"));
 
         // we try to load exif value if any otherwise, try the application db
         /** we need to take the DateTimeOriginal
@@ -311,36 +311,36 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
 
         if (datetime.isValid())
         {
-            QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
-            addKmlTextElement(kmlTimeStamp, "when", datetime.toString("yyyy-MM-ddThh:mm:ssZ"));
+            QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, QLatin1String("TimeStamp"));
+            addKmlTextElement(kmlTimeStamp, QLatin1String("when"), datetime.toString(QLatin1String("yyyy-MM-ddThh:mm:ssZ")));
         }
         else if (m_hostFeatureImagesHasTime)
         {
-            QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
-            addKmlTextElement(kmlTimeStamp, "when", (info.date()).toString("yyyy-MM-ddThh:mm:ssZ"));
+            QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, QLatin1String("TimeStamp"));
+            addKmlTextElement(kmlTimeStamp, QLatin1String("when"), (info.date()).toString(QLatin1String("yyyy-MM-ddThh:mm:ssZ")));
         }
 
         QString my_description;
 
         if (m_optimize_googlemap)
         {
-            my_description = "<img src=\"" + m_UrlDestDir + m_imageDirBasename + '/' + fullFileName + "\">";
+            my_description = QLatin1String("<img src=\"") + m_UrlDestDir + m_imageDirBasename + QLatin1Char('/') + fullFileName + QLatin1String("\">");
         }
         else
         {
-            my_description = "<img src=\"" + m_imageDirBasename + '/' + fullFileName + "\">";
+            my_description = QLatin1String("<img src=\"") + m_imageDirBasename + QLatin1Char('/') + fullFileName + QLatin1String("\">");
         }
 
         if (m_hostFeatureImagesHasComments)
         {
-            my_description += "<br/>" + info.description() ;
+            my_description += QLatin1String("<br/>") + info.description() ;
         }
 
-        addKmlTextElement(kmlPlacemark, "description", my_description);
+        addKmlTextElement(kmlPlacemark, QLatin1String("description"), my_description);
         logInfo(i18n("Creation of placemark '%1'", fullFileName));
 
         // Save icon
-        QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
+        QString iconFileName = QLatin1String("thumb_") + baseFileName + QLatin1Char('.') + imageFormat.toLower();
         QString destPath     = m_imageDir.filePath(iconFileName);
 
         if (!icon.save(destPath, imageFormat.toLatin1().constData(), 85))
@@ -351,27 +351,27 @@ void KmlExport::generateImagesthumb(const QUrl& imageURL, QDomElement& kmlAlbum 
         {
             //logInfo(i18n("Creation of icon '%1'").arg(iconFileName));
             // style et icon
-            QDomElement kmlStyle     = addKmlElement(kmlPlacemark, "Style");
-            QDomElement kmlIconStyle = addKmlElement(kmlStyle,     "IconStyle");
-            QDomElement kmlIcon      = addKmlElement(kmlIconStyle, "Icon");
+            QDomElement kmlStyle     = addKmlElement(kmlPlacemark, QLatin1String("Style"));
+            QDomElement kmlIconStyle = addKmlElement(kmlStyle,     QLatin1String("IconStyle"));
+            QDomElement kmlIcon      = addKmlElement(kmlIconStyle, QLatin1String("Icon"));
 
             if (m_optimize_googlemap)
             {
-                addKmlTextElement(kmlIcon, "href", m_UrlDestDir + m_imageDirBasename + '/' + iconFileName);
+                addKmlTextElement(kmlIcon, QLatin1String("href"), m_UrlDestDir + m_imageDirBasename + QLatin1Char('/') + iconFileName);
             }
             else
             {
-                addKmlTextElement(kmlIcon, "href", m_imageDirBasename + '/' + iconFileName);
+                addKmlTextElement(kmlIcon, QLatin1String("href"), m_imageDirBasename + QLatin1Char('/') + iconFileName);
             }
 
-            QDomElement kmlBallonStyle = addKmlElement(kmlStyle, "BalloonStyle");
-            addKmlTextElement(kmlBallonStyle, "text", "$[description]");
+            QDomElement kmlBallonStyle = addKmlElement(kmlStyle, QLatin1String("BalloonStyle"));
+            addKmlTextElement(kmlBallonStyle, QLatin1String("text"), QLatin1String("$[description]"));
         }
     }
 }
 
 /*!
-\fn KmlExport::addTrack(QDomElement &kmlAlbum)
+\fn KmlExport::addTrack(QDomElement& kmlAlbum)
  */
 void KmlExport::addTrack(QDomElement& kmlAlbum)
 {
@@ -382,7 +382,7 @@ void KmlExport::addTrack(QDomElement& kmlAlbum)
     }
 
     m_gpxParser.clear();
-    bool ret = m_gpxParser.loadGPXFile(QUrl(m_GPXFile));
+    bool ret = m_gpxParser.loadGPXFile(QUrl::fromLocalFile(m_GPXFile));
 
     if (!ret)
     {
@@ -398,35 +398,35 @@ void KmlExport::addTrack(QDomElement& kmlAlbum)
     }
 
     // create a folder that will contain tracks and points
-    QDomElement kmlFolder = addKmlElement(kmlAlbum, "Folder");
-    addKmlTextElement(kmlFolder, "name", i18n("Tracks"));
+    QDomElement kmlFolder = addKmlElement(kmlAlbum, QLatin1String("Folder"));
+    addKmlTextElement(kmlFolder, QLatin1String("name"), i18n("Tracks"));
 
     if (!m_optimize_googlemap)
     {
         // style of points and track
-        QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, "Style");
-        kmlTrackStyle.setAttribute("id","track");
-        QDomElement kmlIconStyle  = addKmlElement(kmlTrackStyle, "IconStyle");
-        QDomElement kmlIcon       = addKmlElement(kmlIconStyle, "Icon");
+        QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, QLatin1String("Style"));
+        kmlTrackStyle.setAttribute(QLatin1String("id"), QLatin1String("track"));
+        QDomElement kmlIconStyle  = addKmlElement(kmlTrackStyle, QLatin1String("IconStyle"));
+        QDomElement kmlIcon       = addKmlElement(kmlIconStyle, QLatin1String("Icon"));
         //! FIXME is there a way to be sure of the location of the icon?
-        addKmlTextElement(kmlIcon, "href", "http://maps.google.com/mapfiles/kml/pal4/icon60.png");
+        addKmlTextElement(kmlIcon, QLatin1String("href"), QLatin1String("http://maps.google.com/mapfiles/kml/pal4/icon60.png"));
 
         m_gpxParser.CreateTrackPoints(kmlFolder, *m_kmlDocument, m_TimeZone - 12, m_GPXAltitudeMode);
     }
 
     // linetrack style
-    QDomElement kmlLineTrackStyle = addKmlElement(kmlAlbum, "Style");
-    kmlLineTrackStyle.setAttribute("id","linetrack");
-    QDomElement kmlLineStyle      = addKmlElement(kmlLineTrackStyle, "LineStyle");
+    QDomElement kmlLineTrackStyle = addKmlElement(kmlAlbum, QLatin1String("Style"));
+    kmlLineTrackStyle.setAttribute(QLatin1String("id"), QLatin1String("linetrack"));
+    QDomElement kmlLineStyle      = addKmlElement(kmlLineTrackStyle, QLatin1String("LineStyle"));
 
     // the KML color is not #RRGGBB but AABBGGRR
-    QString KMLColorValue = QString("%1%2%3%4")
+    QString KMLColorValue = QString::fromUtf8("%1%2%3%4")
         .arg((int)m_GPXOpacity*256/100, 2, 16)
         .arg((&m_GPXColor)->blue(), 2, 16)
         .arg((&m_GPXColor)->green(), 2, 16)
         .arg((&m_GPXColor)->red(), 2, 16);
-    addKmlTextElement(kmlLineStyle, "color", KMLColorValue);
-    addKmlTextElement(kmlLineStyle, "width", QString("%1").arg(m_LineWidth) );
+    addKmlTextElement(kmlLineStyle, QLatin1String("color"), KMLColorValue);
+    addKmlTextElement(kmlLineStyle, QLatin1String("width"), QString::fromUtf8("%1").arg(m_LineWidth) );
 
     m_gpxParser.CreateTrackLine(kmlAlbum, *m_kmlDocument, m_GPXAltitudeMode);
 }
@@ -443,17 +443,17 @@ void KmlExport::generate()
     m_progressDialog->show();
 
     // create the document, and it's root
-    m_kmlDocument                   = new QDomDocument("");
+    m_kmlDocument                   = new QDomDocument(QLatin1String(""));
     QDomImplementation impl;
-    QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
+    QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction(QLatin1String("xml"), QLatin1String("version=\"1.0\" encoding=\"UTF-8\""));
     m_kmlDocument->appendChild(instr);
-    QDomElement kmlRoot             = m_kmlDocument->createElementNS("http://www.opengis.net/kml/2.2", "kml");
+    QDomElement kmlRoot             = m_kmlDocument->createElementNS(QLatin1String("http://www.opengis.net/kml/2.2"), QLatin1String("kml"));
     m_kmlDocument->appendChild( kmlRoot );
 
-    QDomElement kmlAlbum            = addKmlElement(kmlRoot, "Document");
-    QDomElement kmlName             = addKmlTextElement(kmlAlbum, "name", m_hostAlbumName);
-    QDomElement kmlDescription      = addKmlHtmlElement(kmlAlbum, "description",
-                                                        "Created with kmlexport <a href=\"http://www.digikam.org/\">kipi-plugin</a>");
+    QDomElement kmlAlbum            = addKmlElement(kmlRoot, QLatin1String("Document"));
+    QDomElement kmlName             = addKmlTextElement(kmlAlbum, QLatin1String("name"), m_hostAlbumName);
+    QDomElement kmlDescription      = addKmlHtmlElement(kmlAlbum, QLatin1String("description"),
+                                                        QLatin1String("Created with kmlexport <a href=\"http://www.digikam.org/\">kipi-plugin</a>"));
 
     if (m_GPXtracks)
     {
@@ -511,7 +511,7 @@ void KmlExport::generate()
     }
 
     /** @todo change to kml or kmz if compressed */
-    QFile file(m_tempDestDir.filePath(m_KMLFileName + ".kml"));
+    QFile file(m_tempDestDir.filePath(m_KMLFileName + QLatin1String(".kml")));
     /** @todo handle file opening problems */
     file.open( QIODevice::WriteOnly );
     QTextStream stream( &file ); // we will serialize the data into the file
@@ -531,32 +531,32 @@ void KmlExport::generate()
  */
 int KmlExport::getConfig()
 {
-    KConfig config("kipirc");
-    KConfigGroup group   = config.group("KMLExport Settings");
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group   = config.group(QLatin1String("KMLExport Settings"));
 
-    m_localTarget        = group.readEntry("localTarget", true);
-    m_optimize_googlemap = group.readEntry("optimize_googlemap", false);
-    m_iconSize           = group.readEntry("iconSize", 33);
-    //    googlemapSize    = group.readNumEntry("googlemapSize");
-    m_size               = group.readEntry("size", 320);
+    m_localTarget        = group.readEntry(QLatin1String("localTarget"), true);
+    m_optimize_googlemap = group.readEntry(QLatin1String("optimize_googlemap"), false);
+    m_iconSize           = group.readEntry(QLatin1String("iconSize"), 33);
+    //    googlemapSize    = group.readNumEntry(QLatin1String("googlemapSize"));
+    m_size               = group.readEntry(QLatin1String("size"), 320);
 
     // UrlDestDir have to have the trailing
-    m_baseDestDir        = group.readEntry("baseDestDir", QString("/tmp/"));
-    m_UrlDestDir         = group.readEntry("UrlDestDir", QString("http://www.example.com/"));
-    m_KMLFileName        = group.readEntry("KMLFileName", QString("kmldocument"));
-    m_altitudeMode       = group.readEntry("Altitude Mode", 0);
+    m_baseDestDir        = group.readEntry(QLatin1String("baseDestDir"),   QString::fromUtf8("/tmp/"));
+    m_UrlDestDir         = group.readEntry(QLatin1String("UrlDestDir"),    QString::fromUtf8("http://www.example.com/"));
+    m_KMLFileName        = group.readEntry(QLatin1String("KMLFileName"),   QString::fromUtf8("kmldocument"));
+    m_altitudeMode       = group.readEntry(QLatin1String("Altitude Mode"), 0);
 
-    m_GPXtracks          = group.readEntry("UseGPXTracks", false);
-    m_GPXFile            = group.readEntry("GPXFile", QString());
-    m_TimeZone           = group.readEntry("Time Zone", 12);
-    m_LineWidth          = group.readEntry("Line Width", 4);
-    m_GPXColor           = group.readEntry("Track Color", "#17eeee" );
-    m_GPXOpacity         = group.readEntry("Track Opacity", 64 );
-    m_GPXAltitudeMode    = group.readEntry("GPX Altitude Mode", 0);
+    m_GPXtracks          = group.readEntry(QLatin1String("UseGPXTracks"),      false);
+    m_GPXFile            = group.readEntry(QLatin1String("GPXFile"),           QString());
+    m_TimeZone           = group.readEntry(QLatin1String("Time Zone"),         12);
+    m_LineWidth          = group.readEntry(QLatin1String("Line Width"),        4);
+    m_GPXColor           = group.readEntry(QLatin1String("Track Color"),       QColor("#17eeee"));
+    m_GPXOpacity         = group.readEntry(QLatin1String("Track Opacity"),     64);
+    m_GPXAltitudeMode    = group.readEntry(QLatin1String("GPX Altitude Mode"), 0);
 
     m_tempDestDir        = QDir(QDir::temp().filePath(QStringLiteral("kipi-kmlrexportplugin-%1").arg(getpid())));
 
-    m_imageDirBasename   = QStringLiteral("images");
+    m_imageDirBasename   = QLatin1String("images");
     m_imageDir           = QDir(m_tempDestDir.filePath(m_imageDirBasename));
 
     m_googlemapSize      = 32;

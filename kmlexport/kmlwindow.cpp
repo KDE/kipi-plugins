@@ -172,7 +172,7 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXFileLabel_ = new QLabel(i18n("GPX file:"), GPXTracksGroupBox);
 
     GPXFileUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
-    GPXFileUrlRequester_->setFilter(i18n("%1|GPS Exchange Format",QString("*.gpx")));
+    GPXFileUrlRequester_->setFilter(i18n("%1|GPS Exchange Format", QLatin1String("*.gpx")));
     GPXFileUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
@@ -284,17 +284,17 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     about->addAuthor(ki18n("Stéphane Pontier").toString(),
                      ki18n("Developer and maintainer").toString(),
-                            "shadow dot walker at free dot fr");
+                           QLatin1String("shadow dot walker at free dot fr"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer and maintainer").toString(),
-                           "caulier dot gilles at gmail dot com");
+                           QLatin1String("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(ki18n("Michael G. Hansen").toString(),
                      ki18n("Maintainer").toString(),
-                           "mike at mghansen dot de");
+                           QLatin1String("mike at mghansen dot de"));
 
-    about->setHandbookEntry("kmlexport");
+    about->setHandbookEntry(QLatin1String("kmlexport"));
     setAboutData(about);
 
     // --------------------------------------------------------------
@@ -415,30 +415,30 @@ void KmlWindow::readSettings()
     int     GPXOpacity;
     int     GPXAltitudeMode;
 
-    KConfig config("kipirc");
-    KConfigGroup group  = config.group(QString("KMLExport Settings"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group  = config.group(QLatin1String("KMLExport Settings"));
 
-    localTarget	        = group.readEntry("localTarget", true);
-    optimize_googlemap  = group.readEntry("optimize_googlemap", false);
-    iconSize            = group.readEntry("iconSize", 33);
+    localTarget	        = group.readEntry(QLatin1String("localTarget"), true);
+    optimize_googlemap  = group.readEntry(QLatin1String("optimize_googlemap"), false);
+    iconSize            = group.readEntry(QLatin1String("iconSize"), 33);
     // not saving this size as it should not change
     //	googlemapSize = group.readNumEntry("googlemapSize", 32);
-    size                = group.readEntry("size", 320);
+    size                = group.readEntry(QLatin1String("size"), 320);
     // UrlDestDir have to have the trailing /
-    baseDestDir	        = group.readEntry("baseDestDir", "/tmp/");
-    UrlDestDir	        = group.readEntry("UrlDestDir", "http://www.example.com/");
-    KMLFileName         = group.readEntry("KMLFileName", "kmldocument");
-    AltitudeMode        = group.readEntry("Altitude Mode", 0);
+    baseDestDir	        = group.readEntry(QLatin1String("baseDestDir"), QString::fromUtf8("/tmp/"));
+    UrlDestDir	        = group.readEntry(QLatin1String("UrlDestDir"), QString::fromUtf8("http://www.example.com/"));
+    KMLFileName         = group.readEntry(QLatin1String("KMLFileName"), QString::fromUtf8("kmldocument"));
+    AltitudeMode        = group.readEntry(QLatin1String("Altitude Mode"), 0);
 
-    GPXtracks           = group.readEntry("UseGPXTracks", false);
-    GPXFile             = group.readEntry("GPXFile", QString());
-    TimeZone            = group.readEntry("Time Zone", 12);
-    LineWidth           = group.readEntry("Line Width", 4);
-    GPXColor            = group.readEntry("Track Color", "#17eeee" );
-    GPXOpacity          = group.readEntry("Track Opacity", 64 );
-    GPXAltitudeMode     = group.readEntry("GPX Altitude Mode", 0);
+    GPXtracks           = group.readEntry(QLatin1String("UseGPXTracks"), false);
+    GPXFile             = group.readEntry(QLatin1String("GPXFile"), QString());
+    TimeZone            = group.readEntry(QLatin1String("Time Zone"), 12);
+    LineWidth           = group.readEntry(QLatin1String("Line Width"), 4);
+    GPXColor            = group.readEntry(QLatin1String("Track Color"), QString::fromUtf8("#17eeee"));
+    GPXOpacity          = group.readEntry(QLatin1String("Track Opacity"), 64 );
+    GPXAltitudeMode     = group.readEntry(QLatin1String("GPX Altitude Mode"), 0);
 
-    KConfigGroup group2 = config.group(QString("KMLExport Dialog"));
+    KConfigGroup group2 = config.group(QLatin1String("KMLExport Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
 
     // -- Apply Settings to widgets ------------------------------
@@ -464,41 +464,41 @@ void KmlWindow::readSettings()
 
 void KmlWindow::saveSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("KMLExport Settings"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("KMLExport Settings"));
 
-    group.writeEntry("localTarget",        LocalTargetRadioButton_->isChecked());
-    group.writeEntry("optimize_googlemap", GoogleMapTargetRadioButton_->isChecked());
-    group.writeEntry("iconSize",           IconSizeInput_->value());
-    group.writeEntry("size",               ImageSizeInput_->value());
+    group.writeEntry(QLatin1String("localTarget"),        LocalTargetRadioButton_->isChecked());
+    group.writeEntry(QLatin1String("optimize_googlemap"), GoogleMapTargetRadioButton_->isChecked());
+    group.writeEntry(QLatin1String("iconSize"),           IconSizeInput_->value());
+    group.writeEntry(QLatin1String("size"),               ImageSizeInput_->value());
 
     QString destination = DestinationDirectory_->url().path();
 
-    if (!destination.endsWith('/'))
+    if (!destination.endsWith(QLatin1Char('/')))
     {
-        destination.append('/');
+        destination.append(QLatin1Char('/'));
     }
 
-    group.writeEntry("baseDestDir", destination);
+    group.writeEntry(QLatin1String("baseDestDir"), destination);
     QString url = DestinationUrl_->text();
 
-    if (!url.endsWith('/'))
+    if (!url.endsWith(QLatin1Char('/')))
     {
-        url.append('/');
+        url.append(QLatin1Char('/'));
     }
 
-    group.writeEntry("UrlDestDir",        url);
-    group.writeEntry("KMLFileName",       FileName_->text());
-    group.writeEntry("Altitude Mode",     AltitudeCB_->currentIndex() );
-    group.writeEntry("UseGPXTracks",      GPXTracksCheckBox_->isChecked());
-    group.writeEntry("GPXFile",           GPXFileUrlRequester_->text());
-    group.writeEntry("Time Zone",         timeZoneCB->currentIndex() );
-    group.writeEntry("Line Width",        GPXLineWidthInput_->value());
-    group.writeEntry("Track Color",   	  GPXTrackColor_->color().name () );
-    group.writeEntry("Track Opacity",     GPXTracksOpacityInput_->value() );
-    group.writeEntry("GPX Altitude Mode", GPXAltitudeCB_->currentIndex() );
+    group.writeEntry(QLatin1String("UrlDestDir"),        url);
+    group.writeEntry(QLatin1String("KMLFileName"),       FileName_->text());
+    group.writeEntry(QLatin1String("Altitude Mode"),     AltitudeCB_->currentIndex() );
+    group.writeEntry(QLatin1String("UseGPXTracks"),      GPXTracksCheckBox_->isChecked());
+    group.writeEntry(QLatin1String("GPXFile"),           GPXFileUrlRequester_->text());
+    group.writeEntry(QLatin1String("Time Zone"),         timeZoneCB->currentIndex() );
+    group.writeEntry(QLatin1String("Line Width"),        GPXLineWidthInput_->value());
+    group.writeEntry(QLatin1String("Track Color"),       GPXTrackColor_->color().name ());
+    group.writeEntry(QLatin1String("Track Opacity"),     GPXTracksOpacityInput_->value());
+    group.writeEntry(QLatin1String("GPX Altitude Mode"), GPXAltitudeCB_->currentIndex());
 
-    KConfigGroup group2 = config.group(QString("KMLExport Dialog"));
+    KConfigGroup group2 = config.group(QLatin1String("KMLExport Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group2);
 
     config.sync();

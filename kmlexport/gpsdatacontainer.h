@@ -99,7 +99,7 @@ public:
         // parse geo:-uri according to (only partially implemented):
         // http://tools.ietf.org/html/draft-ietf-geopriv-geo-uri-04
         // TODO: verify that we follow the spec fully!
-        if (!url.startsWith("geo:"))
+        if (!url.startsWith(QLatin1String("geo:")))
         {
             // TODO: error
             if (parsedOkay)
@@ -108,7 +108,7 @@ public:
             return GPSDataContainer();
         }
 
-        const QStringList parts = url.mid(4).split(',');
+        const QStringList parts = url.mid(4).split(QLatin1Char(','));
 
         GPSDataContainer position;
 

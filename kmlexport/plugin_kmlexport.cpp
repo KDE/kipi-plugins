@@ -95,13 +95,13 @@ void Plugin_KMLExport::setupActions()
 
     m_actionKMLExport = new QAction(this);
     m_actionKMLExport->setText(i18n("Export to KML..."));
-    m_actionKMLExport->setIcon(QIcon::fromTheme("applications-development-web"));
+    m_actionKMLExport->setIcon(QIcon::fromTheme(QLatin1String("applications-development-web")));
     m_actionKMLExport->setEnabled(false);
 
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
 
-    addAction("kmlexport", m_actionKMLExport);
+    addAction(QLatin1String("kmlexport"), m_actionKMLExport);
 }
 
 void Plugin_KMLExport::slotKMLExport()

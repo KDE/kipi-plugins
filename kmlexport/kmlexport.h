@@ -135,10 +135,10 @@ private:
     QColor           m_GPXColor;
 
     // Information received from the KIPI interface
-    bool m_hostFeatureImagesHasComments;
-    bool m_hostFeatureImagesHasTime;
-    QString m_hostAlbumName;
-    ImageCollection m_hostSelection;
+    bool             m_hostFeatureImagesHasComments;
+    bool             m_hostFeatureImagesHasTime;
+    QString          m_hostAlbumName;
+    ImageCollection  m_hostSelection;
 
 private:
 

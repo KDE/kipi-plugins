@@ -200,39 +200,39 @@ bool GPSDataParser::loadGPXFile(const QUrl& url)
     if (!gpxfile.open(QIODevice::ReadOnly))
         return false;
 
-    QDomDocument gpxDoc("gpx");
+    QDomDocument gpxDoc(QLatin1String("gpx"));
 
     if (!gpxDoc.setContent(&gpxfile))
         return false;
 
     QDomElement gpxDocElem = gpxDoc.documentElement();
 
-    if (gpxDocElem.tagName()!="gpx")
+    if (gpxDocElem.tagName() != QLatin1String("gpx"))
         return false;
 
     for (QDomNode nTrk = gpxDocElem.firstChild(); !nTrk.isNull(); nTrk = nTrk.nextSibling())
     {
         QDomElement trkElem = nTrk.toElement();
 
-        if (trkElem.isNull())           continue;
+        if (trkElem.isNull()) continue;
 
-        if (trkElem.tagName() != "trk") continue;
+        if (trkElem.tagName() != QLatin1String("trk")) continue;
 
         for (QDomNode nTrkseg = trkElem.firstChild(); !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling())
         {
             QDomElement trksegElem = nTrkseg.toElement();
 
-            if (trksegElem.isNull())              continue;
+            if (trksegElem.isNull()) continue;
 
-            if (trksegElem.tagName() != "trkseg") continue;
+            if (trksegElem.tagName() != QLatin1String("trkseg")) continue;
 
             for (QDomNode nTrkpt = trksegElem.firstChild(); !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling())
             {
                 QDomElement trkptElem = nTrkpt.toElement();
 
-                if (trkptElem.isNull())             continue;
+                if (trkptElem.isNull()) continue;
 
-                if (trkptElem.tagName() != "trkpt") continue;
+                if (trkptElem.tagName() != QLatin1String("trkpt")) continue;
 
                 QDateTime ptDateTime;
                 double    ptAltitude  = 0.0;
@@ -240,8 +240,8 @@ bool GPSDataParser::loadGPXFile(const QUrl& url)
                 double    ptLongitude = 0.0;
 
                 // Get GPS position. If not available continue to next point.
-                QString lat = trkptElem.attribute("lat");
-                QString lon = trkptElem.attribute("lon");
+                QString lat = trkptElem.attribute(QLatin1String("lat"));
+                QString lon = trkptElem.attribute(QLatin1String("lon"));
 
                 if (lat.isEmpty() || lon.isEmpty()) continue;
 
@@ -255,7 +255,7 @@ bool GPSDataParser::loadGPXFile(const QUrl& url)
 
                     if (trkptMetaElem.isNull()) continue;
 
-                    if (trkptMetaElem.tagName() == QString("time"))
+                    if (trkptMetaElem.tagName() == QLatin1String("time"))
                     {
                         // Get GPS point time stamp. If not available continue to next point.
                         const QString time = trkptMetaElem.text();
@@ -265,7 +265,7 @@ bool GPSDataParser::loadGPXFile(const QUrl& url)
                         ptDateTime = GPSDataParserParseTime(time);
                     }
 
-                    if (trkptMetaElem.tagName() == QString("ele"))
+                    if (trkptMetaElem.tagName() == QLatin1String("ele"))
                     {
                         // Get GPS point altitude. If not available continue to next point.
                         QString ele = trkptMetaElem.text();
@@ -284,9 +284,9 @@ bool GPSDataParser::loadGPXFile(const QUrl& url)
         }
     }
 
-    //kDebug(AREA_CODE_LOADING) << "GPX File " << url.fileName()
-    //                << " parsed with " << numPoints()
-    //                << " points extracted" ;
+    //qCDebug(KIPIPLUGINS_LOG) << "GPX File " << url.fileName()
+    //                         << " parsed with " << numPoints()
+    //                         << " points extracted" ;
     return true;
 }
 

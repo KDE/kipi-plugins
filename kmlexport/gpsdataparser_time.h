@@ -48,8 +48,8 @@ QDateTime GPSDataParserParseTime(QString timeString)
 
     // does the string contain a timezone offset?
     int timeZoneOffsetSeconds       = 0;
-    const int timeZonePlusPosition  = timeString.lastIndexOf("+");
-    const int timeZoneMinusPosition = timeString.lastIndexOf("-");
+    const int timeZonePlusPosition  = timeString.lastIndexOf(QLatin1String("+"));
+    const int timeZoneMinusPosition = timeString.lastIndexOf(QLatin1String("-"));
 
     if ( (timeZonePlusPosition  == timeZoneSignPosition)   ||
          (timeZoneMinusPosition == timeZoneSignPosition) )
@@ -59,7 +59,7 @@ QDateTime GPSDataParserParseTime(QString timeString)
         // cut off the last digits:
         const QString timeZoneString = timeString.right(6);
         timeString.chop(6);
-        timeString += 'Z';
+        timeString += QLatin1Char('Z');
 
         // determine the time zone offset:
         bool okayHour          = false;
