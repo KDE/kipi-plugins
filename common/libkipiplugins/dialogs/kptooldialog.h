@@ -32,6 +32,7 @@
 
 #include "kipiplugins_export.h"
 
+class QAbstractButton;
 class QPushButton;
 class QDialog;
 
@@ -84,6 +85,8 @@ public:
     void setRejectButtonMode(QDialogButtonBox::StandardButton button);
 
     QPushButton* startButton() const;
+
+    void addButton(QAbstractButton* button, QDialogButtonBox::ButtonRole role);
 
 private Q_SLOTS:
 

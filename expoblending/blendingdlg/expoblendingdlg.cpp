@@ -101,7 +101,8 @@ struct ExpoBlendingDlg::ExpoBlendingDlgPriv
           bracketStack(0),
           enfuseStack(0),
           mngr(0),
-          firstImageDisplayed(false)
+          firstImageDisplayed(false),
+          previewButton(0)
     {}
 
     QString               inputFileName;
@@ -123,32 +124,33 @@ struct ExpoBlendingDlg::ExpoBlendingDlgPriv
     Manager*              mngr;
 
     bool                  firstImageDisplayed;
+
+    QPushButton*          previewButton;
 };
 
 ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
-    : KP4ToolDialog(parent),
+    : KPToolDialog(parent),
       d(new ExpoBlendingDlgPriv)
 {
     d->mngr = mngr;
 
     setModal(false);
-    setButtons(Help | Default | User1 | User2 | User3 | Close);
-    setDefaultButton(Close);
-    setCaption(i18n("Exposure Blending"));
+    setWindowTitle(i18n("Exposure Blending"));
 
-    setButtonText(   User1, i18nc("@action:button", "&Save"));
-    setButtonToolTip(User1, i18nc("@info:tooltip", "Process and save selected items."));
-    setButtonIcon(   User1, QIcon::fromTheme(QStringLiteral("document-save")));
+    KGuiItem::assign(startButton(),
+                     KGuiItem(i18nc("@action:button", "&Save"), QStringLiteral("document-save"),
+                              i18nc("@info:tooltip", "Process and save selected items.")));
 
-    setButtonText(   User2, i18nc("@action:button", "&Preview"));
-    setButtonToolTip(User2, i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings."));
-    setButtonIcon(   User2, QIcon::fromTheme(QStringLiteral("system-run")));
+    d->previewButton = new QPushButton(this);
+    KGuiItem::assign(d->previewButton,
+                     KGuiItem(i18nc("@action:button", "&Preview"), QStringLiteral("system-run"),
+                              i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings.")));
+    addButton(d->previewButton, QDialogButtonBox::ActionRole);
 
-    setButtonText(   User3, i18nc("@action:button", "&Abort"));
-    setButtonToolTip(User3, i18nc("@info:tooltip", "Abort current process"));
-    setButtonIcon(   User3, QIcon::fromTheme(QStringLiteral("dialog-cancel")));
+    QPushButton* defaultButton = new QPushButton(this);
+    KGuiItem::assign(defaultButton, KStandardGuiItem::defaults());
+    addButton(defaultButton, QDialogButtonBox::ResetRole);
 
-    setButtonToolTip(Close, i18nc("@info:tooltip", "Close this tool"));
     setModal(false);
     setAboutData(new ExpoBlendingAboutData());
 
@@ -214,26 +216,25 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     grid->addWidget(d->previewWidget, 0, 0, 3, 1);
     grid->addWidget(rightColumn,      0, 1, 3, 1);
     grid->setMargin(0);
-    grid->setSpacing(spacingHint());
     grid->setColumnStretch(0, 10);
     grid->setColumnStretch(1, 5);
 
     // ---------------------------------------------------------------
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+    connect(this, SIGNAL(finished(int)),
+            this, SLOT(slotFinished()));
 
-    connect(this, SIGNAL(defaultClicked()),
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancelClicked()));
+
+    connect(defaultButton, SIGNAL(clicked()),
             this, SLOT(slotDefault()));
 
-    connect(this, SIGNAL(user1Clicked()),
+    connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotProcess()));
 
-    connect(this, SIGNAL(user2Clicked()),
+    connect(d->previewButton, SIGNAL(clicked()),
             this, SLOT(slotPreview()));
-
-    connect(this, SIGNAL(user3Clicked()),
-            this, SLOT(slotAbort()));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIExpoBlendingPlugin::ActionData)),
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
@@ -268,20 +269,27 @@ ExpoBlendingDlg::~ExpoBlendingDlg()
     delete d;
 }
 
-void ExpoBlendingDlg::closeEvent(QCloseEvent* e)
+void ExpoBlendingDlg::slotFinished()
 {
-    if (!e) return;
     d->mngr->thread()->cancel();
     d->mngr->cleanUp();
     saveSettings();
+}
+
+void ExpoBlendingDlg::closeEvent(QCloseEvent* e)
+{
+    if (!e)
+    {
+        return;
+    }
+
+    slotFinished();
     e->accept();
 }
 
-void ExpoBlendingDlg::slotClose()
+void ExpoBlendingDlg::slotCancelClicked()
 {
     d->mngr->thread()->cancel();
-    saveSettings();
-    done(Close);
 }
 
 void ExpoBlendingDlg::slotFileFormatChanged()
@@ -334,10 +342,11 @@ void ExpoBlendingDlg::busy(bool val)
     d->enfuseSettingsBox->setEnabled(!val);
     d->saveSettingsBox->setEnabled(!val);
     d->bracketStack->setEnabled(!val);
-    enableButton(User1, !val ? !d->enfuseStack->settingsList().isEmpty() : false);
-    enableButton(User2, !val);
-    enableButton(User3, val);
-    enableButton(Close, !val);
+
+    startButton()->setEnabled(!val ? !d->enfuseStack->settingsList().isEmpty() : false);
+    d->previewButton->setEnabled(!val);
+    setRejectButtonMode(val ? QDialogButtonBox::Cancel : QDialogButtonBox::Close);
+
     if (val)
         d->previewWidget->setButtonVisible(false);
 }
@@ -492,15 +501,10 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
 
     if (d->enfuseStack->settingsList().isEmpty())
     {
-        enableButton(User1, false);
+        startButton()->setEnabled(false);
         busy(false);
         d->previewWidget->setBusy(false);
     }
-}
-
-void ExpoBlendingDlg::slotAbort()
-{
-    d->mngr->thread()->cancel();
 }
 
 void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
@@ -569,7 +573,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(ENFUSEFINAL):
                 {
-                    slotAbort();
+                    slotCancelClicked();
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewWidget->setButtonVisible(true);

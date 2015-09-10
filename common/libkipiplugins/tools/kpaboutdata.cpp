@@ -53,7 +53,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     : QObject(),
       KAboutData(QString("kipiplugins"),  // Name without minus separator for KDE bug report.
                  pluginName.toString(),
-                 kipipluginsVersion().toAscii(),
+                 kipipluginsVersion().toLatin1(),
                  pluginDescription.toString(),
                  licenseType,
                  copyrightStatement.toString(),

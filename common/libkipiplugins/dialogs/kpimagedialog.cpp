@@ -33,6 +33,7 @@
 #include <QImageReader>
 #include <QFileDialog>
 #include <QLocale>
+#include <QStandardPaths>
 
 // KDE includes
 
@@ -411,7 +412,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool only
 
     d->fileFormats = patternList.join("\n");
 
-    QString alternatePath         = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+    QString alternatePath         = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     QPointer<QFileDialog> dlg     = new QFileDialog(parent, QString(),
                                                     d->iface ? d->iface->currentAlbum().url().path()
                                                              : alternatePath,

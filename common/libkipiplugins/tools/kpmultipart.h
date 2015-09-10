@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2015-06-25
- * Description : Tool dialog (KDELibs4 compatibility version)
+ * Date        : 2015-09-09
+ * Description : Kipi-Plugins shared library.
  *
- * (c) 2015  Alexander Potashev <aspotashev@gmail.com>
+ * Copyright (C) 2015 by Shourya Singh Gupta <shouryasgupta at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,29 +20,40 @@
  *
  * ============================================================ */
 
-#ifndef KP4TOOLDIALOG_H
-#define KP4TOOLDIALOG_H
+#ifndef KPMULTIPART_H
+#define KPMULTIPART_H
+
+// Qt includes
+#include <QtNetwork/QHttpMultiPart>
+#include <QString>
 
 // KDE includes
 
-#include <kdialog.h>
+#include <klocalizedstring.h>
 
 // Local includes
 
-#include "kptooldialog.h"
 #include "kipiplugins_export.h"
 
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT KP4ToolDialog : public KDialog, public KPDialogBase
+class KIPIPLUGINS_EXPORT KPMultiPart
 {
-public:
 
-    KP4ToolDialog(QWidget* const parent=0);
-    virtual ~KP4ToolDialog();
+public:
+    KPMultiPart();
+    ~KPMultiPart();
+    
+    QHttpMultiPart* multiPart();
+
+    bool appendFile(const QString &header, const QString &path);
+    bool appendPair(const QString& name, const QString& value, const QString& contentType);
+
+private:
+    QHttpMultiPart* m_multiPart;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* KP4TOOLDIALOG_H */
+#endif //KPMULTIPART_H

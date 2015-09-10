@@ -39,8 +39,6 @@
 #include <kguiitem.h>
 
 #ifndef ENABLE_PUREQT5
-#include "kp4tooldialog.h"
-#include <kpushbutton.h>
 #include <kdialog.h>
 #endif
 
@@ -170,21 +168,6 @@ void KPDialogBase::setAboutData(KPAboutData* const data, QPushButton* help)
 
 // -----------------------------------------------------------------------------------
 
-#ifndef ENABLE_PUREQT5 
-KP4ToolDialog::KP4ToolDialog(QWidget* const parent)
-    : KDialog(parent),
-      KPDialogBase(this)
-{
-    setButtons(KDialog::Help | KDialog::Ok);
-}
-
-KP4ToolDialog::~KP4ToolDialog()
-{
-}
-#endif
-
-// -----------------------------------------------------------------------------------
-
 class KPToolDialog::Private
 {
 public:
@@ -276,6 +259,11 @@ QPushButton* KPToolDialog::startButton() const
 QPushButton* KPToolDialog::helpButton() const
 {
     return d->buttonBox->button(QDialogButtonBox::Help);
+}
+
+void KPToolDialog::addButton(QAbstractButton* button, QDialogButtonBox::ButtonRole role)
+{
+    d->buttonBox->addButton(button, role);
 }
 
 void KPToolDialog::slotCloseClicked()

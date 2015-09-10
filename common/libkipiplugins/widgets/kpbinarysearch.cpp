@@ -69,11 +69,11 @@ KPBinarySearch::KPBinarySearch(QWidget* const parent)
                                   << QString("")
                                   << QString(""));
 
-    header()->setResizeMode(Status,  QHeaderView::ResizeToContents);
-    header()->setResizeMode(Binary,  QHeaderView::Stretch);
-    header()->setResizeMode(Version, QHeaderView::Stretch);
-    header()->setResizeMode(Button,  QHeaderView::Stretch);
-    header()->setResizeMode(Link,    QHeaderView::Stretch);
+    header()->setSectionResizeMode(Status,  QHeaderView::ResizeToContents);
+    header()->setSectionResizeMode(Binary,  QHeaderView::Stretch);
+    header()->setSectionResizeMode(Version, QHeaderView::Stretch);
+    header()->setSectionResizeMode(Button,  QHeaderView::Stretch);
+    header()->setSectionResizeMode(Link,    QHeaderView::Stretch);
 
     d->downloadLabel = new QLabel(parentWidget());
 
