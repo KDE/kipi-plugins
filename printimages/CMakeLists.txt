@@ -53,6 +53,7 @@ target_link_libraries(kipiplugin_printimages
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_printimages
+                          PRIVATE
                           KF5::KDELibs4Support
     )
 endif()

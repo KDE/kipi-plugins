@@ -33,6 +33,7 @@ target_link_libraries(kipiplugin_timeadjust
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_timeadjust
+                          PRIVATE
                           KF5::KDELibs4Support
     )
 endif()

@@ -25,6 +25,7 @@ target_link_libraries(imageselector
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(imageselector
+                          PRIVATE
                           KF5::KDELibs4Support
     )
 endif()

@@ -28,6 +28,7 @@ target_link_libraries(kipiplugin_kmlexport
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_kmlexport
+                          PRIVATE
                           KF5::KDELibs4Support
     )
 endif()
