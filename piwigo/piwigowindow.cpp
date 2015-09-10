@@ -53,7 +53,7 @@
 #include <krun.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
-#include <kstandarddirs.h>
+#include <KConfigGroup>
 
 // Libkipi includes
 
@@ -121,8 +121,9 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     logo = new KUrlLabel;
     logo->setText(QString());
-    logo->setUrl("http://piwigo.org");
-    logo->setPixmap(QPixmap(KStandardDirs::locate("data", "kipiplugin_piwigo/pics/piwigo_logo.png")));
+    logo->setUrl(QStringLiteral("http://piwigo.org"));
+    logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                   QStringLiteral("kipiplugin_piwigo/pics/piwigo_logo.png"))));
     logo->setAlignment(Qt::AlignLeft);
 
     // ---------------------------------------------------------------------------
@@ -139,7 +140,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     confButton = new QPushButton;
     confButton->setText(i18n("Change Account"));
-    confButton->setIcon(QIcon::fromTheme("system-switch-user"));
+    confButton->setIcon(QIcon::fromTheme(QStringLiteral("system-switch-user")));
     confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QGroupBox* const optionsBox = new QGroupBox(i18n("Options"));
@@ -229,25 +230,25 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
 
     about->addAuthor(ki18n("Renchi Raju").toString(),
                      ki18n("Developer").toString(),
-                     "renchi dot raju at gmail dot com");
+                     QStringLiteral("renchi dot raju at gmail dot com"));
 
     about->addAuthor(ki18n("Colin Guthrie").toString(),
                      ki18n("Developer").toString(),
-                     "kde at colin dot guthr dot ie");
+                     QStringLiteral("kde at colin dot guthr dot ie"));
 
     about->addAuthor(ki18n("Andrea Diamantini").toString(),
                      ki18n("Developer").toString(),
-                     "adjam7 at gmail dot com");
+                     QStringLiteral("adjam7 at gmail dot com"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                     "caulier dot gilles at gmail dot com");
+                     QStringLiteral("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(ki18n("Frédéric Coiffier").toString(),
                      ki18n("Developer").toString(),
-                     "frederic dot coiffier at free dot com");
+                     QStringLiteral("frederic dot coiffier at free dot com"));
 
-    about->setHandbookEntry("piwigo");
+    about->setHandbookEntry(QStringLiteral("piwigo"));
     setAboutData(about);
 
     // "Start Upload" button
@@ -279,7 +280,7 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
 PiwigoWindow::~PiwigoWindow()
 {
     // write config
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
@@ -340,7 +341,7 @@ void PiwigoWindow::slotProcessUrl(const QString& url)
 void PiwigoWindow::readSettings()
 {
     // read Config
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     if (group.readEntry("Resize", false))
@@ -368,7 +369,7 @@ void PiwigoWindow::slotDoLogin()
 
     if (url.scheme().isEmpty())
     {
-        url.setScheme("http");
+        url.setScheme(QStringLiteral("http"));
         url.setHost(d->pPiwigo->url());
     }
 
@@ -452,7 +453,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.name) );
-            item->setIcon(0, QIcon::fromTheme("inode-directory") );
+            item->setIcon(0, QIcon::fromTheme(QStringLiteral("inode-directory")) );
             item->setData(1, Qt::UserRole, QVariant(album.ref_num) );
             item->setText(2, i18n("Album") );
 
@@ -476,7 +477,7 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.name) );
-                    item->setIcon(0, QIcon::fromTheme("inode-directory") );
+                    item->setIcon(0, QIcon::fromTheme(QStringLiteral("inode-directory")) );
                     item->setData(1, Qt::UserRole, album.ref_num );
                     item->setText(2, i18n("Album") );
 
@@ -649,10 +650,10 @@ void PiwigoWindow::slotSettings()
 QString PiwigoWindow::cleanName(const QString& str) const
 {
     QString plain = str;
-    plain.replace("&lt;", "<");
-    plain.replace("&gt;", ">");
-    plain.replace("&quot;", "\"");
-    plain.replace("&amp;", "&");
+    plain.replace(QStringLiteral("&lt;"), QStringLiteral("<"));
+    plain.replace(QStringLiteral("&gt;"), QStringLiteral(">"));
+    plain.replace(QStringLiteral("&quot;"), QStringLiteral("\""));
+    plain.replace(QStringLiteral("&amp;"), QStringLiteral("&"));
 
     return plain;
 }

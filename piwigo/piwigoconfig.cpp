@@ -32,6 +32,7 @@
 #include <QFrame>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QtWidgets/QDialogButtonBox>
 
 // KDE includes
 
@@ -51,16 +52,15 @@ namespace KIPIPiwigoExportPlugin
 {
 
 PiwigoEdit::PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QString& title)
-        : KDialog(pParent, Qt::Dialog)
+        : QDialog(pParent, Qt::Dialog)
 {
     mpPiwigo = pPiwigo;
 
-    setCaption(title);
+    setWindowTitle(title);
 
     QFrame* const  page              = new QFrame(this);
     QGridLayout* const centerLayout = new QGridLayout();
     page->setMinimumSize(500, 128);
-    setMainWidget(page);
 
     mpUrlEdit = new KLineEdit(this);
     centerLayout->addWidget(mpUrlEdit, 1, 1);
@@ -95,8 +95,17 @@ PiwigoEdit::PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QStr
     mpUsernameEdit->setText(pPiwigo->username());
     mpPasswordEdit->setText(pPiwigo->password());
 
-    connect(this, SIGNAL(okClicked()),
-            this, SLOT(slotOk()));
+    //---------------------------------------------
+
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
+
+    QVBoxLayout* dialogLayout = new QVBoxLayout(this);
+    dialogLayout->addWidget(page);
+    dialogLayout->addWidget(buttonBox);
+
+    connect(this, SIGNAL(accepted()), this, SLOT(slotOk()));
+    connect(this, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
 PiwigoEdit::~PiwigoEdit()

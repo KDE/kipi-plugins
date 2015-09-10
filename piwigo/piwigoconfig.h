@@ -30,10 +30,10 @@
 // Qt includes
 
 #include <QString>
+#include <QtWidgets/QDialog>
 
 // KDE includes
 
-#include <kdialog.h>
 #include <klineedit.h>
 
 namespace KIPIPiwigoExportPlugin
@@ -41,7 +41,7 @@ namespace KIPIPiwigoExportPlugin
 
 class Piwigo;
 
-class PiwigoEdit : public KDialog
+class PiwigoEdit : public QDialog
 {
     Q_OBJECT
 

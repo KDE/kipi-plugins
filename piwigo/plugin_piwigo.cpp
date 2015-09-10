@@ -35,10 +35,11 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
+#include <KPluginFactory>
+#include <KConfig>
 
 // Libkipi includes
 
@@ -93,13 +94,13 @@ void Plugin_PiwigoExport::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Export to &Piwigo..."));
-    m_action->setIcon(QIcon::fromTheme("kipi-piwigo"));
+    m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-piwigo")));
     m_action->setEnabled(true);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotSync()));
 
-    addAction("piwigoexport", m_action);
+    addAction(QStringLiteral("piwigoexport"), m_action);
 }
 
 // this slot uses PiwigoWindow Class
@@ -108,7 +109,7 @@ void Plugin_PiwigoExport::slotSync()
     QPointer<PiwigoEdit>   configDlg;
     QPointer<PiwigoWindow> dlg;
 
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
 
     if (!config.hasGroup("Piwigo Settings") )
     {
