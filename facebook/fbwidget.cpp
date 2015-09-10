@@ -56,7 +56,7 @@
 namespace KIPIFacebookPlugin
 {
 
-FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool import)
+FbWidget::FbWidget(QWidget* const parent)
     : QWidget(parent)
 {
     setObjectName(QStringLiteral("FbWidget"));
@@ -108,37 +108,11 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     QGroupBox* const albBox    = new QGroupBox(settingsBox);
 
-    if (import)
-    {
-        albBox->setTitle(i18n("Download Selection"));
-        albBox->setWhatsThis(i18n("This is the selection of Facebook albums/photos to download."));
-    }
-    else
-    {
-        albBox->setTitle(i18n("Destination"));
-        albBox->setWhatsThis(i18n("This is the Facebook album to which selected photos will be uploaded."));
-    }
 
+    albBox->setTitle(i18n("Destination"));
+    albBox->setWhatsThis(i18n("This is the Facebook album to which selected photos will be uploaded."));
+        
     QGridLayout* const albumsBoxLayout  = new QGridLayout(albBox);
-
-    QRadioButton* const albMeRBtn = new QRadioButton(i18n("My &Album"), albBox);
-    albMeRBtn->setWhatsThis(i18n("Download complete album of currently logged in user."));
-    QRadioButton* const albFrRBtn = new QRadioButton(i18n("Album &of My Friend"), albBox);
-    albFrRBtn->setWhatsThis(i18n("Download complete album of selected friend."));
-    QRadioButton* const phMeRBtn  = new QRadioButton(i18n("Photos of &Me"), albBox);
-    phMeRBtn->setWhatsThis(i18n("Download all photos of currently logged in user."));
-    QRadioButton* const phFrRBtn  = new QRadioButton(i18n("Photos of My &Friend"), albBox);
-    phFrRBtn->setWhatsThis(i18n("Download all photos of selected friend."));
-
-    m_dlGrp = new QButtonGroup(albBox);
-    m_dlGrp->addButton(albMeRBtn, FbMyAlbum);
-    m_dlGrp->addButton(albFrRBtn, FbFriendAlbum);
-    m_dlGrp->addButton(phMeRBtn, FbPhotosMe);
-    m_dlGrp->addButton(phFrRBtn, FbPhotosFriend);
-
-    QLabel* const frLbl  = new QLabel(i18n("Friend:"), albBox);
-    m_friendsCoB         = new QComboBox(albBox);
-    m_friendsCoB->setEditable(false);
 
     QLabel* const albLbl = new QLabel(i18n("Album:"), albBox);
     m_albumsCoB          = new QComboBox(albBox);
@@ -153,24 +127,10 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
                      KGuiItem(i18nc("facebook album list", "Reload"), QStringLiteral("view-refresh"),
                               i18n("Reload album list")));
 
-    albumsBoxLayout->addWidget(albMeRBtn,           0, 0, 1, 2);
-    albumsBoxLayout->addWidget(albFrRBtn,           1, 0, 1, 2);
-    albumsBoxLayout->addWidget(phMeRBtn,            0, 3, 1, 2);
-    albumsBoxLayout->addWidget(phFrRBtn,            1, 3, 1, 2);
-    albumsBoxLayout->addWidget(frLbl,               2, 0, 1, 1);
-    albumsBoxLayout->addWidget(m_friendsCoB,        2, 1, 1, 4);
-    albumsBoxLayout->addWidget(albLbl,              3, 0, 1, 1);
-    albumsBoxLayout->addWidget(m_albumsCoB,         3, 1, 1, 4);
-    albumsBoxLayout->addWidget(m_newAlbumBtn,       4, 3, 1, 1);
-    albumsBoxLayout->addWidget(m_reloadAlbumsBtn,   4, 4, 1, 1);
-
-    // ------------------------------------------------------------------------
-
-    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(i18n("This is the location to which Facebook images will be downloaded."));
-    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget                     = iface->uploadWidget(uploadBox);
-    uploadBoxLayout->addWidget(m_uploadWidget);
+    albumsBoxLayout->addWidget(albLbl,              0, 0, 1, 1);
+    albumsBoxLayout->addWidget(m_albumsCoB,         0, 1, 1, 4);
+    albumsBoxLayout->addWidget(m_newAlbumBtn,       1, 3, 1, 1);
+    albumsBoxLayout->addWidget(m_reloadAlbumsBtn,   1, 4, 1, 1);
 
     // ------------------------------------------------------------------------
 
@@ -217,7 +177,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addWidget(albBox);
-    settingsBoxLayout->addWidget(uploadBox);
+//     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -234,44 +194,13 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     // ------------------------------------------------------------------------
 
-    connect(m_dlGrp, SIGNAL(buttonClicked(int)),
-            this, SLOT(slotDownloadTypeChanged(int)));
-
     connect(m_reloadAlbumsBtn, SIGNAL(clicked()),
             this, SLOT(slotReloadAlbumsRequest()));
-
-    connect(m_friendsCoB, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(slotFriendsIndexChanged(int)));
 
     connect(m_resizeChB, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
     // ------------------------------------------------------------------------
-
-    if (import)
-    {
-        m_imgList->hide();
-
-        permissionLbl->hide();
-        m_permissionLbl->hide();
-        m_newAlbumBtn->hide();
-
-        optionsBox->hide();
-
-        // set My Albums as default selection
-        albMeRBtn->setChecked(true);
-        m_friendsCoB->setEnabled(false);
-    }
-    else
-    {
-        phMeRBtn->hide();
-        phFrRBtn->hide();
-        albMeRBtn->hide();
-        albFrRBtn->hide();
-        frLbl->hide();
-        m_friendsCoB->hide();
-        uploadBox->hide();
-    }
 }
 
 FbWidget::~FbWidget()
@@ -327,45 +256,10 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
     }
 }
 
-void FbWidget::slotDownloadTypeChanged(int dlType)
-{
-    m_friendsCoB->setEnabled(dlType == FbPhotosFriend || dlType == FbFriendAlbum);
-    m_albumsCoB->setEnabled( dlType == FbMyAlbum      || dlType == FbFriendAlbum);
-
-    if (dlType == FbPhotosMe)
-    {
-        m_friendsCoB->setCurrentIndex(-1); // deselect friend
-        m_albumsCoB->setCurrentIndex(-1); // deselect friend
-    }
-
-    if (dlType == FbMyAlbum)
-    {
-        m_friendsCoB->setCurrentIndex(-1); // deselect friend
-        emit reloadAlbums(0);
-    }
-
-    if (dlType == FbFriendAlbum)
-        emit reloadAlbums(m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong());
-}
-
-void FbWidget::slotFriendsIndexChanged(int index)
-{
-    if (index < 0)
-        return;
-
-    if (m_dlGrp->checkedId() == FbFriendAlbum)
-        emit reloadAlbums(m_friendsCoB->itemData(index).toLongLong());
-}
-
 void FbWidget::slotReloadAlbumsRequest()
 {
-    // always list user's album, unless FriendAlbum is selected
-    long long usrID = 0;
 
-    if (m_dlGrp->checkedId() == FbFriendAlbum)
-        usrID = m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong();
-
-    emit reloadAlbums(usrID);
+    emit reloadAlbums(0);
 }
 
 void FbWidget::slotResizeChecked()
@@ -374,20 +268,9 @@ void FbWidget::slotResizeChecked()
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
-long long FbWidget::getFriendID() const
-{
-    if (m_dlGrp->checkedId() == FbPhotosFriend)
-        return m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong();
-
-    return 0;
-}
-
 QString FbWidget::getAlbumID() const
 {
-    if (m_dlGrp->checkedId() == FbMyAlbum || m_dlGrp->checkedId() == FbFriendAlbum)
-        return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toString();
-
-    return QString();
+    return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toString();
 }
 
 } // namespace KIPIFacebookPlugin

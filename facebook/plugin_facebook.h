@@ -60,7 +60,6 @@ public:
 
 public Q_SLOTS:
 
-    void slotImport();
     void slotExport();
 
 private:
@@ -69,10 +68,8 @@ private:
 
 private:
 
-    QAction*   m_actionImport;
     QAction*   m_actionExport;
 
-    FbWindow*  m_dlgImport;
     FbWindow*  m_dlgExport;
 };
 

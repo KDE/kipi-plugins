@@ -70,7 +70,7 @@ class FbWindow : public KPToolDialog
 
 public:
 
-    FbWindow(const QString& tmpFolder, bool import, QWidget* const parent);
+    FbWindow(const QString& tmpFolder, QWidget* const parent);
     ~FbWindow();
 
     /**
@@ -85,16 +85,10 @@ private Q_SLOTS:
     void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
-    void slotGetPhotoDone(int errCode, const QString& errMsg,
-                          const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg,
                              const QString &newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList<FbAlbum>& albumsList);
-    void slotListPhotosDone(int errCode, const QString& errMsg,
-                            const QList<FbPhoto>& photosList);
-    void slotListFriendsDone(int errCode, const QString& errMsg,
-                             const QList<FbUser>& friendsList);
 
     void slotUserChangeRequest();
     void slotReloadAlbumsRequest(long long userID);
@@ -113,7 +107,6 @@ private:
     bool    prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
 
     void    uploadNextPhoto();
-    void    downloadNextPhoto();
 
     void    readSettings();
     void    writeSettings();
@@ -126,7 +119,6 @@ private:
 
 private:
 
-    bool         m_import;
     unsigned int m_imagesCount;
     unsigned int m_imagesTotal;
     QString      m_tmpDir;

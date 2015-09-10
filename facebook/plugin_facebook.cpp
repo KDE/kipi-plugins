@@ -67,9 +67,7 @@ Plugin_Facebook::Plugin_Facebook(QObject* const parent, const QVariantList& /*ar
     setUiBaseName("kipiplugin_facebookui.rc");
     setupXML();
     
-    m_actionImport = 0;
     m_actionExport = 0;
-    m_dlgImport    = 0;
     m_dlgExport    = 0;
 }
 
@@ -79,7 +77,6 @@ Plugin_Facebook::~Plugin_Facebook()
 
 void Plugin_Facebook::setup(QWidget* const widget)
 {
-    m_dlgImport = 0;
     m_dlgExport = 0;
 
     Plugin::setup(widget);
@@ -106,16 +103,6 @@ void Plugin_Facebook::setupActions()
             this, SLOT(slotExport()) );
 
     addAction(QStringLiteral("facebookexport"), m_actionExport);
-
-    m_actionImport = new QAction(this);
-    m_actionImport->setText(i18n("Import from &Facebook..."));
-    m_actionImport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-facebook")));
-    m_actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));
-
-    connect(m_actionImport, SIGNAL(triggered(bool)),
-            this, SLOT(slotImport()) );
-
-    addAction(QStringLiteral("facebookimport"), m_actionImport, ImportPlugin);
 }
 
 void Plugin_Facebook::slotExport()
@@ -125,7 +112,7 @@ void Plugin_Facebook::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new FbWindow(tmp, false, QApplication::activeWindow());
+        m_dlgExport = new FbWindow(tmp, QApplication::activeWindow());
     }
     else
     {
@@ -136,26 +123,6 @@ void Plugin_Facebook::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-void Plugin_Facebook::slotImport()
-{
-    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QStringLiteral("/");
-
-    if (!m_dlgImport)
-    {
-        // We clean it up in the close button
-        m_dlgImport = new FbWindow(tmp, true, QApplication::activeWindow());
-    }
-    else
-    {
-        if (m_dlgImport->isMinimized())
-            KWindowSystem::unminimizeWindow(m_dlgImport->winId());
-
-        KWindowSystem::activateWindow(m_dlgImport->winId());
-    }
-
-    m_dlgImport->show();
 }
 
 } // namespace KIPIFacebookPlugin

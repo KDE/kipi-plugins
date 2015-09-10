@@ -49,7 +49,7 @@ namespace KIPIFacebookPlugin
 {
 
 MPForm::MPForm()
-    : m_boundary(KRandom::randomString(42 + 13).toAscii())
+    : m_boundary(KRandom::randomString(42 + 13).toLatin1())
 {
     reset();
 }
@@ -89,7 +89,7 @@ void MPForm::addPair(const QString& name, const QString& value)
     if (!name.isEmpty()) 
     { 
       	str += "Content-Disposition: form-data; name=\"";
-    	str += name.toAscii();
+    	str += name.toLatin1();
     	str += "\"\r\n";
     }
     str += "\r\n";
@@ -129,7 +129,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     //str += file_size.toAscii();
     //str += "\r\n";
     str += "Content-Type: ";
-    str += mime.toAscii();
+    str += mime.toLatin1();
     str += "\r\n\r\n";
 
     m_buffer.append(str);

@@ -49,26 +49,17 @@ namespace KIPIPlugins
 namespace KIPIFacebookPlugin
 {
 
-enum FbDownloadType
-{
-    FbMyAlbum = 0,
-    FbFriendAlbum,
-    FbPhotosMe,
-    FbPhotosFriend
-};
-
 class FbWidget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool import);
+    FbWidget(QWidget* const parent);
     ~FbWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString(), bool uplPerm = false);
 
-    long long getFriendID()        const;
     QString   getAlbumID()         const;
     QString   getDestinationPath() const;
 
@@ -82,8 +73,6 @@ Q_SIGNALS:
 private Q_SLOTS:
 
     void slotReloadAlbumsRequest();
-    void slotDownloadTypeChanged(int dlType);
-    void slotFriendsIndexChanged(int index);
     void slotResizeChecked();
 
 private:
@@ -97,7 +86,6 @@ private:
     QPushButton*                   m_changeUserBtn;
 
     QButtonGroup*                  m_dlGrp;
-    QComboBox*                     m_friendsCoB;
     QComboBox*                     m_albumsCoB;
     QPushButton*                   m_newAlbumBtn;
     QPushButton*                   m_reloadAlbumsBtn;
