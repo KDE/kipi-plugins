@@ -10,6 +10,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/templates/Doxyfile.cmake.
 include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
 set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kputil.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp

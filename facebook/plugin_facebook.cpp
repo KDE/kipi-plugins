@@ -29,13 +29,6 @@
 
 #include "plugin_facebook.h"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // Qt includes
 
 #include <QApplication>
@@ -58,6 +51,7 @@ extern "C"
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "fbwindow.h"
 
 namespace KIPIFacebookPlugin
@@ -124,19 +118,9 @@ void Plugin_Facebook::setupActions()
     addAction("facebookimport", m_actionImport, ImportPlugin);
 }
 
-QDir getTemporaryDir(const QString& prefix)
-{
-    QString subDir = QString("%1-%2").arg(prefix).arg(getpid());
-    QString path = QDir(QDir::tempPath()).filePath(subDir);
-
-    QDir().mkpath(path);
-
-    return QDir(path);
-}
-
 void Plugin_Facebook::slotExport()
 {
-    QString tmp = getTemporaryDir("kipi-fb").absolutePath() + QString("/");
+    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QString("/");
 
     if (!m_dlgExport)
     {
@@ -156,7 +140,7 @@ void Plugin_Facebook::slotExport()
 
 void Plugin_Facebook::slotImport()
 {
-    QString tmp = getTemporaryDir("kipi-fb").absolutePath() + QString("/");
+    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QString("/");
 
     if (!m_dlgImport)
     {
