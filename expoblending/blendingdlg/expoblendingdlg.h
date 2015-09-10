@@ -33,7 +33,7 @@
 // Local includes
 
 #include "actions.h"
-#include "kp4tooldialog.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
