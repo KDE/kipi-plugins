@@ -40,7 +40,7 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
+#include <KGuiItem>
 
 // Libkipi includes
 

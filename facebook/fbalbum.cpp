@@ -28,11 +28,12 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QStyle>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QPushButton>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
 
@@ -44,17 +45,17 @@ namespace KIPIFacebookPlugin
 {
 
 FbNewAlbum::FbNewAlbum(QWidget* const parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
     QString header(i18n("Facebook New Album"));
     setWindowTitle(header);
-    setButtons(Ok|Cancel);
-    setDefaultButton(Cancel);
-    setModal(false);
 
-    QWidget* const mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
-    mainWidget->setMinimumSize(400, 300);
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
+
+    setModal(false);
+    setMinimumSize(400, 300);
 
     // ------------------------------------------------------------------------
     m_titleEdt          = new KLineEdit;
@@ -76,7 +77,8 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent)
     m_privacyCoB->addItem(QIcon::fromTheme("applications-internet"), i18n("Everyone"),                FB_EVERYONE);
     m_privacyCoB->setCurrentIndex(1);
 
-    QFormLayout* const albumBoxLayout = new QFormLayout;
+    QWidget* const albumBoxWidget = new QWidget(this);
+    QFormLayout* const albumBoxLayout = new QFormLayout(albumBoxWidget);
     albumBoxLayout->addRow(i18nc("new facebook album", "Title:"),       m_titleEdt);
     albumBoxLayout->addRow(i18nc("new facebook album", "Location:"),    m_locEdt);
     albumBoxLayout->addRow(i18nc("new facebook album", "Description:"), m_descEdt);
@@ -84,7 +86,15 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent)
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainWidget->setLayout(albumBoxLayout);
+    albumBoxWidget->setLayout(albumBoxLayout);
+
+    QVBoxLayout* dialogLayout = new QVBoxLayout(this);
+    dialogLayout->addWidget(albumBoxWidget);
+    dialogLayout->addWidget(buttonBox);
+    setLayout(dialogLayout);
+
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &FbNewAlbum::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &FbNewAlbum::reject);
 }
 
 FbNewAlbum::~FbNewAlbum()
