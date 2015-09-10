@@ -31,7 +31,7 @@
 namespace KIPIPlugins
 {
 
-QDir KIPIPLUGINS_EXPORT makeTemporaryDir(const QString& prefix);
+QDir KIPIPLUGINS_EXPORT makeTemporaryDir(const char* prefix);
 
 } // namespace KIPIPlugins
 

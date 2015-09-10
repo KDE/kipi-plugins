@@ -120,7 +120,7 @@ void Plugin_Facebook::setupActions()
 
 void Plugin_Facebook::slotExport()
 {
-    QString tmp = makeTemporaryDir(QStringLiteral("kipi-fb")).absolutePath() + QStringLiteral("/");
+    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QStringLiteral("/");
 
     if (!m_dlgExport)
     {
@@ -140,7 +140,7 @@ void Plugin_Facebook::slotExport()
 
 void Plugin_Facebook::slotImport()
 {
-    QString tmp = makeTemporaryDir(QStringLiteral("kipi-fb")).absolutePath() + QStringLiteral("/");
+    QString tmp = makeTemporaryDir("kipi-fb").absolutePath() + QStringLiteral("/");
 
     if (!m_dlgImport)
     {

@@ -32,9 +32,9 @@ extern "C"
 namespace KIPIPlugins
 {
 
-QDir makeTemporaryDir(const QString& prefix)
+QDir makeTemporaryDir(const char* prefix)
 {
-    QString subDir = QStringLiteral("%1-%2").arg(prefix).arg(getpid());
+    QString subDir = QStringLiteral("%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
     QString path = QDir(QDir::tempPath()).filePath(subDir);
 
     QDir().mkpath(path);
