@@ -20,6 +20,7 @@ set(kipiplugin_timeadjust_PART_SRCS myimagelist.cpp
 add_library(kipiplugin_timeadjust MODULE ${kipiplugin_timeadjust_PART_SRCS})
 
 target_link_libraries(kipiplugin_timeadjust
+                      PRIVATE
                       KF5::Parts
                       KF5::WindowSystem
 

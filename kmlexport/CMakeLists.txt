@@ -16,6 +16,7 @@ set(kipiplugin_kmlexport_PART_SRCS plugin_kmlexport.cpp
 add_library(kipiplugin_kmlexport MODULE ${kipiplugin_kmlexport_PART_SRCS})
 
 target_link_libraries(kipiplugin_kmlexport
+                      PRIVATE
                       KF5::Parts
 
                       ${KF5Kipi_LIBRARIES}

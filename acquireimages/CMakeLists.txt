@@ -15,6 +15,7 @@ set(kipiplugin_acquireimages_PART_SRCS
 add_library(kipiplugin_acquireimages MODULE ${kipiplugin_acquireimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_acquireimages
+                      PRIVATE
                       KF5::Kipi
                       KF5::Sane
                       KF5::KExiv2

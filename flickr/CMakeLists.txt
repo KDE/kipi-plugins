@@ -25,6 +25,7 @@ set(kipiplugin_flickr_PART_SRCS
 add_library(kipiplugin_flickr MODULE ${kipiplugin_flickr_PART_SRCS})
 
 target_link_libraries(kipiplugin_flickr
+                      PRIVATE
                       KF5kipiplugins
                       KF5::Kipi
                       KF5::KExiv2

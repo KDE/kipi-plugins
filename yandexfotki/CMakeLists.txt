@@ -23,6 +23,7 @@ set(kipiplugin_yandexfotki_PART_SRCS
 add_library(kipiplugin_yandexfotki MODULE ${kipiplugin_yandexfotki_PART_SRCS})
 
 target_link_libraries(kipiplugin_yandexfotki
+                      PRIVATE
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2

@@ -12,6 +12,7 @@ set(imageselector_SRCS actionthread.cpp
 add_executable(imageselector ${imageselector_SRCS})
 
 target_link_libraries(imageselector
+                      PRIVATE
                       Qt5::Gui
                       Qt5::Core
 

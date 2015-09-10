@@ -19,7 +19,7 @@ set(${PLUGIN_NAME}_PART_SRCS
 add_library(${PLUGIN_NAME} MODULE ${${PLUGIN_NAME}_PART_SRCS})
 
 target_link_libraries(${PLUGIN_NAME}
-
+                      PRIVATE
                       KF5::Kipi
                       KF5::KIOCore
                       KF5kipiplugins

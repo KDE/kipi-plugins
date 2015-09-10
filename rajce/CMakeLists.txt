@@ -23,6 +23,7 @@ set(kipiplugin_rajce_PART_SRCS
 add_library(kipiplugin_rajce MODULE ${kipiplugin_rajce_PART_SRCS})
 
 target_link_libraries(kipiplugin_rajce
+                      PRIVATE
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2

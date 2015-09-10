@@ -20,6 +20,7 @@ set(kipiplugin_facebook_PART_SRCS
 add_library(kipiplugin_facebook MODULE ${kipiplugin_facebook_PART_SRCS})
 
 target_link_libraries(kipiplugin_facebook
+                      PRIVATE
                       KF5kipiplugins
                       KF5::Kipi
                       KF5::KExiv2

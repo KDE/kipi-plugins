@@ -40,6 +40,7 @@ kconfig_add_kcfg_files(kipiplugin_printimages_PART_SRCS
 add_library(kipiplugin_printimages MODULE ${kipiplugin_printimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_printimages
+                      PRIVATE
                       Qt5::Core
                       Qt5::PrintSupport
                       Qt5::Gui

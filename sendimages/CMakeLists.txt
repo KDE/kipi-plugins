@@ -17,6 +17,7 @@ set(kipiplugin_sendimages_PART_SRCS imageresize.cpp
 add_library(kipiplugin_sendimages MODULE ${kipiplugin_sendimages_PART_SRCS})
 
 target_link_libraries(kipiplugin_sendimages
+                      PRIVATE
                       KF5::Parts
 
                       ${KF5Kipi_LIBRARIES}

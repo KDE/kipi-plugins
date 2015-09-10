@@ -48,6 +48,7 @@ endforeach()
 add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 
 target_link_libraries(libexpoblending
+                      PRIVATE
                       KF5::Parts
                       KF5::Kipi
                       KF5::KExiv2

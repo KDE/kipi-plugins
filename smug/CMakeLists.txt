@@ -20,6 +20,7 @@ set(kipiplugin_smug_PART_SRCS
 add_library(kipiplugin_smug MODULE ${kipiplugin_smug_PART_SRCS})
 
 target_link_libraries(kipiplugin_smug
+                      PRIVATE
                       KF5::Kipi
                       KF5::KExiv2
                       KF5::KDcraw

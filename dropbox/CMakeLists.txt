@@ -20,6 +20,7 @@ set(kipiplugin_dropbox_PART_SRCS
 add_library(kipiplugin_dropbox MODULE ${kipiplugin_dropbox_PART_SRCS})
 
 target_link_libraries(kipiplugin_dropbox
+                      PRIVATE
                       KF5::KDcraw
                       KF5::Kipi
                       KF5::KExiv2

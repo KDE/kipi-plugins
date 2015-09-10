@@ -19,8 +19,8 @@ set(kipiplugin_imageviewer_PART_SRCS
 add_library(kipiplugin_imageviewer MODULE ${kipiplugin_imageviewer_PART_SRCS})
 
 target_link_libraries(kipiplugin_imageviewer
+                      PRIVATE
                       KF5::Parts
-
                       Qt5::OpenGL
                       ${OPENGL_LIBRARIES}
                       KF5::Kipi
