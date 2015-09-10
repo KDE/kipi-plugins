@@ -101,6 +101,7 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
 
 find_package(KF5 REQUIRED COMPONENTS
              WidgetsAddons
+             WindowSystem
              Parts
              Wallet
              KHtml
@@ -118,7 +119,7 @@ if(NOT ENABLE_PUREQT5)
 else()
     message(STATUS "Try to compile as pure Qt5")
     add_definitions(-DENABLE_PUREQT5)
-    add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
+#    add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
 endif()
 
 # Dependencies detection required by all plugins
