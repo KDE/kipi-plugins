@@ -108,12 +108,12 @@ void Plugin_SendImages::setupActions()
 
     d->action_sendimages = new QAction(this);
     d->action_sendimages->setText(i18n("Email Images..."));
-    d->action_sendimages->setIcon(QIcon::fromTheme("mail-send"));
+    d->action_sendimages->setIcon(QIcon::fromTheme(QLatin1String("mail-send")));
 
     connect(d->action_sendimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("sendimages", d->action_sendimages);
+    addAction(QLatin1String("sendimages"), d->action_sendimages);
 }
 
 void Plugin_SendImages::slotActivate()

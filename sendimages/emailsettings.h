@@ -63,7 +63,6 @@ public:
         BALSA,
         CLAWSMAIL,
         EVOLUTION,
-        GMAILAGENT,
         KMAIL,
         NETSCAPE,
         SYLPHEED,
@@ -123,9 +122,9 @@ public:
     QString format() const
     {
         if (imageFormat == JPEG)
-            return QString("JPEG");
+            return QLatin1String("JPEG");
 
-        return QString("PNG");
+        return QLatin1String("PNG");
     };
 
     void setEmailUrl(const QUrl& orgUrl, const QUrl& emailUrl)

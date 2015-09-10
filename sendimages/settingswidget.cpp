@@ -79,9 +79,10 @@ public:
 };
 
 SettingsWidget::SettingsWidget(QWidget* const parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent),
+      d(new Private)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* const grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
@@ -89,15 +90,14 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
 
     d->mailAgentName = new QComboBox(this);
     d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default mail agent", "Default"));
-    d->mailAgentName->insertItem(EmailSettings::BALSA,         "Balsa");
-    d->mailAgentName->insertItem(EmailSettings::CLAWSMAIL,     "Claws Mail");
-    d->mailAgentName->insertItem(EmailSettings::EVOLUTION,     "Evolution");
-    d->mailAgentName->insertItem(EmailSettings::GMAILAGENT,    "Gmail-Agent");
-    d->mailAgentName->insertItem(EmailSettings::KMAIL,         "KMail");
-    d->mailAgentName->insertItem(EmailSettings::NETSCAPE,      "Netscape");
-    d->mailAgentName->insertItem(EmailSettings::SYLPHEED,      "Sylpheed");
-    d->mailAgentName->insertItem(EmailSettings::SYLPHEEDCLAWS, "Sylpheed-Claws");
-    d->mailAgentName->insertItem(EmailSettings::THUNDERBIRD,   "Thunderbird");
+    d->mailAgentName->insertItem(EmailSettings::BALSA,         QLatin1String("Balsa"));
+    d->mailAgentName->insertItem(EmailSettings::CLAWSMAIL,     QLatin1String("Claws Mail"));
+    d->mailAgentName->insertItem(EmailSettings::EVOLUTION,     QLatin1String("Evolution"));
+    d->mailAgentName->insertItem(EmailSettings::KMAIL,         QLatin1String("KMail"));
+    d->mailAgentName->insertItem(EmailSettings::NETSCAPE,      QLatin1String("Netscape"));
+    d->mailAgentName->insertItem(EmailSettings::SYLPHEED,      QLatin1String("Sylpheed"));
+    d->mailAgentName->insertItem(EmailSettings::SYLPHEEDCLAWS, QLatin1String("Sylpheed-Claws"));
+    d->mailAgentName->insertItem(EmailSettings::THUNDERBIRD,   QLatin1String("Thunderbird"));
     d->mailAgentName->setCurrentIndex(EmailSettings::DEFAULT);
     d->mailAgentName->setWhatsThis(i18n("Select your preferred external email program here. "
                                         "<b>Default</b> is the current email program set in KDE "
@@ -166,8 +166,8 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     //---------------------------------------------
 
     d->imagesFormat = new QComboBox(groupBox);
-    d->imagesFormat->insertItem(EmailSettings::JPEG, "JPEG");
-    d->imagesFormat->insertItem(EmailSettings::PNG,  "PNG");
+    d->imagesFormat->insertItem(EmailSettings::JPEG, QLatin1String("JPEG"));
+    d->imagesFormat->insertItem(EmailSettings::PNG, QLatin1String("PNG"));
     d->imagesFormat->setCurrentIndex(EmailSettings::JPEG);
     whatsThis = i18n("<p>Select the file format of the image files to be sent.</p>");
     whatsThis = whatsThis + i18n("<p><b>JPEG</b>: The Joint Photographic Experts Group file format "

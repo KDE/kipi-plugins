@@ -271,7 +271,7 @@ void SendImages::buildPropertiesFile()
         foreach(const EmailItem& item, d->settings.itemsList)
         {
             QString comments  = item.comments;
-            QString tags      = item.tags.join(", ");
+            QString tags      = item.tags.join(QLatin1String(", "));
             QString rating    = QString::number(item.rating);
             QString orgFile   = item.orgUrl.fileName();
             QString emailFile = item.emailUrl.fileName();
@@ -293,7 +293,7 @@ void SendImages::buildPropertiesFile()
             if (d->iface->hasFeature(HostSupportsRating))
                 propertiesText.append(i18n("Rating: %1\n", rating));
 
-            propertiesText.append("\n");
+            propertiesText.append(QLatin1String("\n"));
         }
 
         QFile propertiesFile( d->settings.tempPath + i18n("properties.txt") );
@@ -301,7 +301,7 @@ void SendImages::buildPropertiesFile()
         stream.setCodec(QTextCodec::codecForName("UTF-8"));
         stream.setAutoDetectUnicode(true);
         propertiesFile.open(QIODevice::WriteOnly);
-        stream << propertiesText << "\n";
+        stream << propertiesText << QLatin1String("\n");
         propertiesFile.close();
         d->attachementFiles << QUrl(propertiesFile.fileName());
 
@@ -441,22 +441,22 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettings::BALSA:
                 {
-                    QString prog("balsa");
+                    QString prog = QLatin1String("balsa");
                     QStringList args;
 
 #ifdef _WIN32
-                    args.append("/c");
-                    args.append("start");
+                    args.append(QLatin1String("/c"));
+                    args.append(QLatin1String("start"));
                     args.append(prog);
-                    prog = QString("cmd");
+                    prog = QLatin1String("cmd");
 #endif
 
-                    args.append("-m");
-                    args.append("mailto:");
+                    args.append(QLatin1String("-m"));
+                    args.append(QLatin1String("mailto:"));
 
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
-                        args.append("-a");
+                        args.append(QLatin1String("-a"));
                         args.append((*it).path());
                     }
 
@@ -481,14 +481,14 @@ bool SendImages::invokeMailAgent()
                     QString     prog;
 
 #ifdef _WIN32
-                    args.append("/c");
-                    args.append("start");
+                    args.append(QLatin1String("/c"));
+                    args.append(QLatin1String("start"));
                     args.append(prog);
-                    prog = QString("cmd");
+                    prog = QLatin1String("cmd"));
 #endif
 
-                    args.append("--compose");
-                    args.append("--attach");
+                    args.append(QLatin1String("--compose"));
+                    args.append(QLatin1String("--attach"));
 
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
@@ -497,15 +497,15 @@ bool SendImages::invokeMailAgent()
 
                     if (d->settings.emailProgram == EmailSettings::CLAWSMAIL)
                     {
-                        prog = QString("claws-mail");
+                        prog = QLatin1String("claws-mail");
                     }
                     else if (d->settings.emailProgram == EmailSettings::SYLPHEED)
                     {
-                        prog = QString("sylpheed");
+                        prog = QLatin1String("sylpheed");
                     }
                     else
                     {
-                        prog = QString("sylpheed-claws");
+                        prog = QLatin1String("sylpheed-claws");
                     }
 
                     if (!QProcess::startDetached(prog, args))
@@ -523,21 +523,21 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettings::EVOLUTION:
                 {
-                    QString prog("evolution");
+                    QString prog = QLatin1String("evolution");
                     QStringList args;
 
 #ifdef _WIN32
-                    args.append("/c");
-                    args.append("start");
+                    args.append(QLatin1String("/c"));
+                    args.append(QLatin1String("start"));
                     args.append(prog);
-                    prog = QString("cmd");
+                    prog = QLatin1String("cmd");
 #endif
 
-                    QString tmp = "mailto:?subject=";
+                    QString tmp = QLatin1String("mailto:?subject=");
 
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
-                        tmp.append("&attach=");
+                        tmp.append(QLatin1String("&attach="));
                         tmp.append( (*it).path() );
                     }
 
@@ -558,19 +558,19 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettings::KMAIL:
                 {
-                    QString prog("kmail");
+                    QString prog = QLatin1String("kmail");
                     QStringList args;
 
 #ifdef _WIN32
-                    args.append("/c");
-                    args.append("start");
+                    args.append(QLatin1String("/c"));
+                    args.append(QLatin1String("start"));
                     args.append(prog);
-                    prog = QString("cmd");
+                    prog = QLatin1String("cmd");
 #endif
 
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
-                        args.append("--attach");
+                        args.append(QLatin1String("--attach"));
                         args.append((*it).path());
                     }
 
@@ -592,43 +592,38 @@ bool SendImages::invokeMailAgent()
 
                 case EmailSettings::NETSCAPE:
                 case EmailSettings::THUNDERBIRD:
-                case EmailSettings::GMAILAGENT:
                 {
                     QString prog;
 
                     if (d->settings.emailProgram == EmailSettings::NETSCAPE)
                     {
-                        prog = QString("netscape");
-                    }
-                    else if (d->settings.emailProgram == EmailSettings::THUNDERBIRD)
-                    {
-                        prog = QString("thunderbird");
+                        prog = QLatin1String("netscape");
                     }
                     else
                     {
-                        prog = QString("gmailagent");
+                        prog = QLatin1String("thunderbird");
                     }
 
                     QStringList args;
 
 #ifdef _WIN32
-                    args.append("/c");
-                    args.append("start");
+                    args.append(QLatin1String("/c"));
+                    args.append(QLatin1String("start"));
                     args.append(prog);
-                    prog = QString("cmd");
+                    prog = QLatin1String("cmd");
 #endif
-                    args.append("-compose");
-                    QString tmp = "attachment='";
+                    args.append(QLatin1String("-compose"));
+                    QString tmp = QLatin1String("attachment='");
 
                     for (QList<QUrl>::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
-                        tmp.append( "file://" );
+                        tmp.append(QLatin1String("file://"));
                         tmp.append((*it).path());
-                        tmp.append( "," );
+                        tmp.append(QLatin1String(","));
                     }
 
                     tmp.remove(tmp.length()-1, 1);
-                    tmp.append("'");
+                    tmp.append(QLatin1String("'"));
 
                     args.append(tmp);
 

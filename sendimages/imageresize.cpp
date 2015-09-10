@@ -173,10 +173,10 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
 
         KPMetadata meta;
         meta.load(orgUrl.path());
-        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        meta.setImageProgramId(QLatin1String("Kipi-plugins"), QLatin1String(kipiplugins_version));
         meta.setImageDimensions(img.size());
 
-        if (emailSettings.format() == QString("JPEG"))
+        if (emailSettings.format() == QLatin1String("JPEG"))
         {
             if ( !img.save(destPath,
                            emailSettings.format().toLatin1().constData(),
@@ -190,7 +190,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
                 meta.save(destPath);
             }
         }
-        else if (emailSettings.format() == QString("PNG"))
+        else if (emailSettings.format() == QLatin1String("PNG"))
         {
             QByteArray data((const char*)img.bits(), img.numBytes());
             KPWriteImage wImageIface;
