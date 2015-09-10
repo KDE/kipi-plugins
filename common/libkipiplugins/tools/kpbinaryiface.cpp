@@ -48,15 +48,15 @@ KPBinaryIface::KPBinaryIface(const QString& binaryName, const QString& minimalVe
     : m_headerStarts(header),
       m_headerLine(headerLine),
       m_minimalVersion(minimalVersion),
-      m_configGroup(pluginName + " Settings"), 
+      m_configGroup(pluginName + QLatin1String(" Settings")), 
       m_binaryBaseName(goodBaseName(binaryName)),
       m_binaryArguments(args), 
       m_projectName(projectName), 
       m_url(QUrl(url)),
       m_isFound(false), 
       m_developmentVersion(false),
-      m_version(""), 
-      m_pathDir(""),
+      m_version(QLatin1String("")), 
+      m_pathDir(QLatin1String("")),
       m_pathWidget(0),
       m_binaryLabel(0),
       m_versionLabel(0),
@@ -78,7 +78,7 @@ const QString& KPBinaryIface::version() const
 
 bool KPBinaryIface::versionIsRight() const
 {
-    QRegExp reg("^(\\d*[.]\\d*)");
+    QRegExp reg(QLatin1String("^(\\d*[.]\\d*)"));
     version().indexOf(reg);
     float floatVersion = reg.capturedTexts()[0].toFloat();
 
@@ -100,7 +100,7 @@ QString KPBinaryIface::findHeader(const QStringList& output, const QString& head
 
 bool KPBinaryIface::parseHeader(const QString& output)
 {
-    QString firstLine = output.section('\n', m_headerLine, m_headerLine);
+    QString firstLine = output.section(QLatin1Char('\n'), m_headerLine, m_headerLine);
     qCDebug(KIPIPLUGINS_LOG) << path() << " help header line: \n" << firstLine;
 
     if (firstLine.startsWith(m_headerStarts))
@@ -109,7 +109,7 @@ bool KPBinaryIface::parseHeader(const QString& output)
 
         if (version.startsWith(QLatin1String("Pre-Release ")))
         {
-            version.remove("Pre-Release ");            // Special case with Hugin beta.
+            version.remove(QLatin1String("Pre-Release "));            // Special case with Hugin beta.
             m_developmentVersion = true;
         }
 
@@ -122,7 +122,7 @@ bool KPBinaryIface::parseHeader(const QString& output)
 
 void KPBinaryIface::setVersion(QString& version)
 {
-    QRegExp versionRegExp("\\d*(\\.\\d+)*");
+    QRegExp versionRegExp(QLatin1String("\\d*(\\.\\d+)*"));
     version.indexOf(versionRegExp);
     m_version = versionRegExp.capturedTexts()[0];
 }
@@ -138,17 +138,17 @@ void KPBinaryIface::slotNavigateAndCheck()
     else
     {
 #if defined Q_OS_MAC
-        start = QUrl(QString("/Applications/"));
+        start = QUrl(QLatin1String("/Applications/"));
 #elif defined Q_OS_WIN
-        start = QUrl(QString("C:/Program Files/"));
+        start = QUrl(QLatin1String("C:/Program Files/"));
 #else
-        start = QUrl(QString("/usr/bin/"));
+        start = QUrl(QLatin1String("/usr/bin/"));
 #endif
     }
 
-    QString f = QFileDialog::getOpenFileName(0, QString(i18n("Navigate to %1", m_binaryBaseName)),
+    QString f = QFileDialog::getOpenFileName(0, i18n("Navigate to %1", m_binaryBaseName),
                                              start.path(),
-                                             QString(m_binaryBaseName));
+                                             m_binaryBaseName);
 
     QString dir = QUrl(f).adjusted(QUrl::RemoveFilename).path();
     m_searchPaths << dir;
@@ -180,16 +180,16 @@ void KPBinaryIface::slotAddSearchDirectory(const QString& dir)
 
 QString KPBinaryIface::readConfig()
 {
-    KConfig config("kipirc");
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group(m_configGroup);
-    return group.readPathEntry(QString("%1Binary").arg(m_binaryBaseName), "");
+    return group.readPathEntry(QString::fromUtf8("%1Binary").arg(m_binaryBaseName), QLatin1String(""));
 }
 
 void KPBinaryIface::writeConfig()
 {
-    KConfig config("kipirc");
+    KConfig config(QLatin1String("kipirc"));
     KConfigGroup group = config.group(m_configGroup);
-    group.writePathEntry(QString("%1Binary").arg(m_binaryBaseName), m_pathDir);
+    group.writePathEntry(QString::fromUtf8("%1Binary").arg(m_binaryBaseName), m_pathDir);
 }
 
 QString KPBinaryIface::path(const QString& dir) const
@@ -199,7 +199,7 @@ QString KPBinaryIface::path(const QString& dir) const
         return baseName();
     }
 
-    return QString("%1%2%3").arg(dir).arg('/').arg(baseName());
+    return QString::fromUtf8("%1%2%3").arg(dir).arg(QLatin1Char('/')).arg(baseName());
 }
 
 void KPBinaryIface::setup()
@@ -210,8 +210,8 @@ void KPBinaryIface::setup()
 
     if ((!previous_dir.isEmpty()) && !isValid())
     {
-        m_searchPaths << "";
-        checkDir("");
+        m_searchPaths << QLatin1String("");
+        checkDir(QLatin1String(""));
     }
 }
 
@@ -230,7 +230,7 @@ bool KPBinaryIface::checkDir(const QString& possibleDir)
     {
         m_isFound = true;
 
-        QString stdOut(process.readAllStandardOutput());
+        QString stdOut = QString::fromUtf8(process.readAllStandardOutput());
 
         if (parseHeader(stdOut))
         {
