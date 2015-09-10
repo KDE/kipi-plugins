@@ -35,7 +35,8 @@
 #include <klocalizedstring.h>
 #include <kjobwidgets.h>
 #include <kconfig.h>
-#include <kio/netaccess.h>
+#include <KIO/Job>
+#include <KConfigGroup>
 
 // Libkipi includes
 
@@ -218,7 +219,10 @@ void ImportWizardDlg::back()
 
 bool ImportWizardDlg::checkIfFolderExist()
 {
-    if(KIO::NetAccess::exists(d->settings->exportUrl, KIO::NetAccess::DestinationSide, QApplication::activeWindow()))
+    KIO::StatJob* job = KIO::stat(d->settings->exportUrl, KIO::StatJob::DestinationSide, 0);
+    KJobWidgets::setWindow(job, QApplication::activeWindow());
+    job->exec();
+    if (!job->error())
     {
         int ret = QMessageBox::warning(this, i18n("Target Directory Exists"),
                                        i18n("Target folder %1 already exists.\n"
@@ -264,16 +268,20 @@ bool ImportWizardDlg::checkIfPluginInstalled()
     switch(d->settings->plugType)
     {
         case 0:
-            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/simpleviewer/simpleviewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                            QStringLiteral("kipiplugin_flashexport/simpleviewer/simpleviewer.swf")).isEmpty();
             break;
         case 1:
-            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/autoviewer/autoviewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                            QStringLiteral("kipiplugin_flashexport/autoviewer/autoviewer.swf")).isEmpty();
             break;
         case 2:
-            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/tiltviewer/TiltViewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                            QStringLiteral("kipiplugin_flashexport/tiltviewer/TiltViewer.swf")).isEmpty();
             break;
         case 3:
-            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty();
+            return ! QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                            QStringLiteral("kipiplugin_flashexport/postcardviewer/viewer.swf")).isEmpty();
             break;
         default:
             qCDebug(KIPIPLUGINS_LOG) << "Unknown plugin type";
@@ -283,7 +291,7 @@ bool ImportWizardDlg::checkIfPluginInstalled()
 }
 void ImportWizardDlg::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("FlashExport Settings");
 
     d->settings->thumbnailRows        = group.readEntry("ThumbnailRows", 3);
@@ -292,7 +300,7 @@ void ImportWizardDlg::readSettings()
     d->settings->frameColor           = group.readEntry("FrameColor", QColor("#ffffff"));
     d->settings->frameWidth           = group.readEntry("FrameWidth", 1);
     d->settings->title                = group.readEntry("Title", QString());
-    d->settings->exportUrl            = group.readEntry("ExportUrl", QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/simpleviewer"));
+    d->settings->exportUrl            = group.readEntry("ExportUrl", QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QStringLiteral("/simpleviewer")));
     d->settings->resizeExportImages   = group.readEntry("ResizeExportImages", true);
     d->settings->imagesExportSize     = group.readEntry("ImagesExportSize", 640);
     d->settings->showComments         = group.readEntry("ShowComments", true);
@@ -333,7 +341,7 @@ void ImportWizardDlg::saveSettings()
     d->generalPage->settings(d->settings);
     d->lookPage->settings(d->settings);
 
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("FlashExport Settings");
 
     group.writeEntry("ThumbnailRows", d->settings->thumbnailRows);

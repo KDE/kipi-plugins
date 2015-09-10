@@ -105,7 +105,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
             this, SLOT(slotUrlSelected(QUrl)));
 
     setPageWidget(vbox);
-    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
 }
 
 FirstRunPage::~FirstRunPage()

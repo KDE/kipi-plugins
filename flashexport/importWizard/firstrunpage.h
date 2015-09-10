@@ -27,10 +27,6 @@
 
 #include <QUrl>
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Libkipi includes
 
 #include <KIPI/Interface>

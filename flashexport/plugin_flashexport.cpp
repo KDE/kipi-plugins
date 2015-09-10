@@ -31,8 +31,8 @@
 
 // KDE includes
 
-#include <klibloader.h>
 #include <klocalizedstring.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 
@@ -49,7 +49,6 @@ namespace KIPIFlashExportPlugin
 {
 
 K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
-K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
 Plugin_FlashExport::Plugin_FlashExport(QObject* const parent, const QVariantList&)
     : Plugin(parent, "FlashExport")
@@ -89,13 +88,13 @@ void Plugin_FlashExport::setupActions()
 
     m_action = new QAction(this);
     m_action->setText(i18n("Export to F&lash..."));
-    m_action->setIcon(QIcon::fromTheme("kipi-flash"));
+    m_action->setIcon(QIcon::fromTheme(QStringLiteral("kipi-flash")));
     m_action->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_L));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("flashexport", m_action);
+    addAction(QStringLiteral("flashexport"), m_action);
 }
 
 void Plugin_FlashExport::slotActivate()

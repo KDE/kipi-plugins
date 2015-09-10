@@ -129,10 +129,10 @@ public:
         switch(imgGetOption)
         {
             case COLLECTION:
-                return QString("Collections");
+                return QStringLiteral("Collections");
                 break;
             case IMAGEDIALOG:
-                return QString("Image Dialog");
+                return QStringLiteral("Image Dialog");
         }
     };
 
@@ -141,19 +141,19 @@ public:
         switch(plugType)
         {
             case SIMPLE:
-                return QString("SimpleViewer");
+                return QStringLiteral("SimpleViewer");
                 break;
 
             case AUTO:
-                return QString("AutoViewer");
+                return QStringLiteral("AutoViewer");
                 break;
 
             case TILT:
-                return QString("TiltViewer");
+                return QStringLiteral("TiltViewer");
                 break;
 
             case POSTCARD:
-                return QString("PostcardViewer");
+                return QStringLiteral("PostcardViewer");
         }
     };
 
@@ -162,19 +162,19 @@ public:
         switch(thumbnailPosition)
         {
             case RIGHT:
-                return QString("right");
+                return QStringLiteral("right");
                 break;
 
             case LEFT:
-                return QString("left");
+                return QStringLiteral("left");
                 break;
 
             case TOP:
-                return QString("top");
+                return QStringLiteral("top");
                 break;
 
             default: // BOTTOM
-                return QString("bottom");
+                return QStringLiteral("bottom");
                 break;
         }
     };
@@ -182,9 +182,9 @@ public:
     QString enableRightClickToOpen() const
     {
         if (enableRightClickOpen)
-            return QString("true");
+            return QStringLiteral("true");
 
-        return QString("false");
+        return QStringLiteral("false");
     };
 
 public:

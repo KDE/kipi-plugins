@@ -112,7 +112,7 @@ IntroPage::IntroPage(KAssistantDialog* const dlg)
 
 
     setPageWidget(vbox);
-    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
 }
 
 IntroPage::~IntroPage()

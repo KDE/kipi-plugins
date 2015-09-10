@@ -201,7 +201,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     // ------------------------------------------------------------------------
 
     setPageWidget(vbox);
-    setLeftBottomPix(QIcon::fromTheme("kipi-flash").pixmap(128));
+    setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
 }
 
 GeneralPage::~GeneralPage()
