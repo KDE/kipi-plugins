@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kmessagebox.h>
 
@@ -128,12 +127,12 @@ void SendImages::firstStage()
         d->threadImgResize->wait();
     }
 
-    QTemporaryDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"));
+    QTemporaryDir tmpDir(QDir::tempPath() + QLatin1Char('/') + QLatin1String("kipiplugin-sendimages"));
     tmpDir.setAutoRemove(false);
     d->settings.tempPath = tmpDir.path();
 
     QDir tmp(d->settings.tempPath);
-    QStringList folders = tmp.absolutePath().split('/', QString::SkipEmptyParts);
+    QStringList folders = tmp.absolutePath().split(QLatin1Char('/'), QString::SkipEmptyParts);
 
     if (!folders.isEmpty())
     {

@@ -37,7 +37,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 
 // LibKDcraw includes
 
@@ -239,10 +238,10 @@ void ImageResize::resize(const EmailSettings& settings)
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 
-        QTemporaryDir tmpDir(KStandardDirs::locateLocal("tmp", t->m_settings.tempFolderName + t->m_settings.tempPath));
+        QTemporaryDir tmpDir(QDir::tempPath() + QLatin1Char('/') + t->m_settings.tempFolderName + t->m_settings.tempPath);
         tmpDir.setAutoRemove(false);
         QFileInfo fi(t->m_orgUrl.fileName());
-        t->m_destName = tmpDir.path() + QString("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
+        t->m_destName = tmpDir.path() + QString::fromUtf8("%1.%2").arg(fi.baseName()).arg(t->m_settings.format().toLower());
 
         connect(t, SIGNAL(startingResize(QUrl)),
                 this, SIGNAL(startingResize(QUrl)));
