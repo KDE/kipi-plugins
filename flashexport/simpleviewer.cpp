@@ -40,9 +40,7 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <kfilemetainfo.h>
 #include <kio/copyjob.h>
-#include <kio/netaccess.h>
 #include <kio/job.h>
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
