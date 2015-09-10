@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kconfiggroup.h>
 
@@ -192,7 +191,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->useCustTimeInput       = new QTimeEdit(d->useSettingsBox);
     d->useCustTimeInput->setDisplayFormat("hh:mm:ss");
     d->useCustomDateTodayBtn  = new QToolButton(d->useSettingsBox);
-    d->useCustomDateTodayBtn->setIcon(SmallIcon("go-jump-today"));
+    d->useCustomDateTodayBtn->setIcon(QIcon::fromTheme("go-jump-today"));
     d->useCustomDateTodayBtn->setToolTip(i18n("Reset to current date"));
 
     useGBLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -284,9 +283,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->settingsExpander->addItem(d->adjustSettingsBox, i18n("Timestamp Adjustments"), QString("timestampadjustments"), true);
     d->settingsExpander->addItem(d->updateSettingsBox, i18n("Timestamp Updated"),     QString("timestampupdated"),     true);
     d->settingsExpander->addStretch();
-    d->settingsExpander->setItemIcon(0, SmallIcon("document-import"));
-    d->settingsExpander->setItemIcon(1, SmallIcon("document-edit"));
-    d->settingsExpander->setItemIcon(2, SmallIcon("document-export"));
+    d->settingsExpander->setItemIcon(0, QIcon::fromTheme("document-import"));
+    d->settingsExpander->setItemIcon(1, QIcon::fromTheme("document-edit"));
+    d->settingsExpander->setItemIcon(2, QIcon::fromTheme("document-export"));
 
     // -- Settings View Slots/Signals ----------------------------------------
 

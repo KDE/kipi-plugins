@@ -23,9 +23,12 @@
 
 #include "myimagelist.h"
 
+// Qt includes
+
+#include <QLocale>
+
 // KDE includes
 
-#include <klocale.h>
 #include <klocalizedstring.h>
 
 // Local includes
@@ -65,7 +68,7 @@ void MyImageList::setItemDates(const QMap<QUrl, QDateTime>& map, FieldType type,
 
             if (dt.isValid())
             {
-                item->setText(type, KLocale::global()->formatDateTime(dt, KLocale::ShortDate, true));
+                item->setText(type, QLocale().toString(dt, QLocale::ShortFormat));
             }
             else
             {

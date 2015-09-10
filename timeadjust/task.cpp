@@ -34,10 +34,7 @@ extern "C"
 // Qt includes
 
 #include <QFileInfo>
-
-// KDE includes
-
-#include <kde_file.h>
+#include <QFile>
 
 // Local includes
 
@@ -224,7 +221,7 @@ void Task::run()
         bool ret    = true;
         QUrl newUrl = ActionThread::newUrl(d->url, dt);
 
-        if (KDE_rename(QFile::encodeName(d->url.toLocalFile()).constData(), QFile::encodeName(newUrl.toLocalFile()).constData()) != 0)
+        if (QFile::rename(QFile::encodeName(d->url.toLocalFile()).constData(), QFile::encodeName(newUrl.toLocalFile()).constData()) != 0)
             ret = false;
 
         ret &= KPMetadata::moveSidecar(d->url, newUrl);

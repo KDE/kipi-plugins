@@ -35,12 +35,13 @@
 #include <QResizeEvent>
 #include <QSize>
 #include <QIcon>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 #include <kwindowconfig.h>
 
 // Local includes
@@ -62,12 +63,14 @@ public:
 
     Private()
     {
-        calendar      = 0;
-        imagePreview  = 0;
+        buttons      = 0;
+        calendar     = 0;
+        imagePreview = 0;
     }
 
     DeltaTime         deltaValues;
 
+    QDialogButtonBox* buttons;
     QDateTimeEdit*    calendar;
     QDateTime         photoDateTime;
 
@@ -75,22 +78,25 @@ public:
 };
 
 ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const QUrl& defaultUrl)
-    : KDialog(parent), d(new Private)
+    : QDialog(parent),
+      d(new Private)
 {
     // This dialog should be modal with three buttons: Ok, Cancel, and load
     // photo. For this third button, the User1 button from KDialog is used.
     // The Ok button is only enable when a photo is loaded.
-    setCaption(i18n("Determine time difference with clock photo"));
-    setButtons(User1 | Ok | Cancel);
+
+    setWindowTitle(i18n("Determine time difference with clock photo"));
+
+    d->buttons = new QDialogButtonBox(QDialogButtonBox::Apply | QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    d->buttons->button(QDialogButtonBox::Cancel)->setDefault(true);
+    d->buttons->button(QDialogButtonBox::Ok)->setEnabled(false);
     setMinimumWidth(500);
     setMinimumHeight(500);
-    button(User1)->setText(i18n("Load different photo"));
-    button(User1)->setIcon(QIcon::fromTheme("document-open"));
-    button(Ok)->setEnabled(false);
+    d->buttons->button(QDialogButtonBox::Apply)->setText(i18n("Load different photo"));
+    d->buttons->button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme("document-open"));
 
-    // Everything else is stacked in a vertical box.
-    setMainWidget(new QWidget(this));
-    QVBoxLayout* const vBox        = new QVBoxLayout(mainWidget());
+    QWidget* const mainWidget = new QWidget(this);
+    QVBoxLayout* const vBox   = new QVBoxLayout(mainWidget);
 
     // Some explanation.
     QLabel* const explanationLabel = new QLabel(i18n("If you have a photo in your set with a clock or "
@@ -116,21 +122,24 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent, const QUrl& defaultUrl
     d->calendar->setDisplayFormat("d MMMM yyyy, hh:mm:ss");
     d->calendar->setCalendarPopup(true);
     d->calendar->setEnabled(false);
-    QHBoxLayout* const hBox2 = new QHBoxLayout(mainWidget());
+    QHBoxLayout* const hBox2 = new QHBoxLayout(mainWidget);
     hBox2->addStretch();
     hBox2->addWidget(dtLabel);
     hBox2->addWidget(d->calendar);
     vBox->addLayout(hBox2);
 
-    // Setup the signals and slots.
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotLoadPhoto()));
+    vBox->addWidget(d->buttons);
+    setLayout(vBox);
 
-    connect(this, SIGNAL(okClicked()),
+    // Setup the signals and slots.
+    connect(d->buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(slotOk()));
 
-    connect(this, SIGNAL(cancelClicked()),
+    connect(d->buttons->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
             this, SLOT(slotCancel()));
+
+    connect(d->buttons->button(QDialogButtonBox::Apply), SIGNAL(clicked()),
+            this, SLOT(slotLoadPhoto()));
 
     // Show the window.
     loadSettings();
@@ -205,8 +214,8 @@ bool ClockPhotoDialog::setImage(const QUrl& imageFile)
     d->calendar->setEnabled(success);
 
     // enable the ok button if loading succeeded
-    button(Ok)->setEnabled(success);
-    
+    d->buttons->button(QDialogButtonBox::Ok)->setEnabled(success);
+
     return success;
 }
 

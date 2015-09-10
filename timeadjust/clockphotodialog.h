@@ -27,17 +27,14 @@
 // Qt includes
 
 #include <QUrl>
-
-// KDE includes
-
-#include <kdialog.h>
+#include <QDialog>
 
 namespace KIPITimeAdjustPlugin
 {
 
 class DeltaTime;
 
-class ClockPhotoDialog : public KDialog
+class ClockPhotoDialog : public QDialog
 {
     Q_OBJECT
 

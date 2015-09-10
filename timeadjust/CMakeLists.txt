@@ -21,6 +21,7 @@ add_library(kipiplugin_timeadjust MODULE ${kipiplugin_timeadjust_PART_SRCS})
 
 target_link_libraries(kipiplugin_timeadjust
                       KF5::Parts
+                      KF5::WindowSystem
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}
