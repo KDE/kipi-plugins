@@ -55,7 +55,7 @@ public:
 
     Private()
     {
-        progressPix   = KPixmapSequence("process-working", 22);
+        progressPix   = KPixmapSequence(QStringLiteral("process-working"), 22);
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0;
@@ -228,7 +228,7 @@ void KPPreviewManager::setSelectionArea(QRectF rectangle)
 
 void KPPreviewManager::setText(const QString& text, const QColor& color)
 {
-    d->textLabel->setText(QString("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));
+    d->textLabel->setText(QStringLiteral("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));
     setCurrentIndex(MessageMode);
 }
 
