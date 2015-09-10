@@ -25,10 +25,7 @@
 // Qt includes
 
 #include <QDateTime>
-
-// KDE includes
-
-#include <qtest_kde.h>
+#include <QtTest>
 
 // local includes
 
@@ -36,7 +33,7 @@
 
 using namespace KIPIKMLExportPlugin;
 
-QTEST_KDEMAIN_CORE(TestGPXParsing)
+QTEST_MAIN(TestGPXParsing)
 
 /**
  * @brief Test how well QDateTime deals with various string representations
