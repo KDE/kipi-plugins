@@ -57,7 +57,6 @@
 #include <kio/jobuidelegate.h>
 #include <kjobwidgets.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
 
 // LibKDcraw includes
 
@@ -68,6 +67,7 @@
 
 #include "kipiplugins_debug.h"
 #include "kpversion.h"
+#include "kputil.h"
 #include "kpmetadata.h"
 #include "dbwindow.h"
 #include "dbitem.h"
@@ -338,7 +338,6 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
 
     emit signalBusy(true);
     MPForm form;
-    QString path = imgPath;
     QImage image;
 
     if(KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath)))
@@ -355,7 +354,8 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
         return false;
     }
 
-    path = KStandardDirs::locateLocal("tmp", QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg"));
+    QDir tempDir = makeTemporaryDir("kipi-dropbox");
+    QString path = tempDir.filePath(QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg"));
 
     if(rescale && (image.width() > maxDim || image.height() > maxDim))
     {
