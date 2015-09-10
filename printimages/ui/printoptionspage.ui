@@ -234,7 +234,7 @@
              </widget>
             </item>
             <item>
-             <widget class="KComboBox" name="kcfg_PrintUnit">
+             <widget class="QComboBox" name="kcfg_PrintUnit">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -474,16 +474,9 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
  <includes>
-  <include location="local">kcombobox.h</include>
-  <include location="local">knuminput.h</include>
-  <include location="local">knuminput.h</include>
-  <include location="local">kcombobox.h</include>
  </includes>
  <resources/>
  <connections>

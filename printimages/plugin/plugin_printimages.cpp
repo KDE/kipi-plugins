@@ -45,9 +45,10 @@ extern "C"
 
 // KDE includes
 
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 
@@ -65,7 +66,6 @@ namespace KIPIPrintImagesPlugin
 {
 
 K_PLUGIN_FACTORY ( PrintImagesFactory, registerPlugin<Plugin_PrintImages>(); )
-K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 
 Plugin_PrintImages::Plugin_PrintImages ( QObject* const parent, const QVariantList& /*args*/ )
     : Plugin(parent, "PrintImages")

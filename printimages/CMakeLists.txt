@@ -20,10 +20,10 @@ set(kipiplugin_printimages_PART_SRCS
     tools/templateicon.cpp
     tools/layouttree.cpp
     wizard/cropframe.cpp
-    wizard/wizard.cpp
-    wizard/printoptionspage.cpp
     wizard/printhelper.cpp
     wizard/customdlg.cpp
+    wizard/printoptionspage.cpp
+    wizard/wizard.cpp
    )
 
 ki18n_wrap_ui(kipiplugin_printimages_PART_SRCS

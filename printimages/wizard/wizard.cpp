@@ -29,6 +29,7 @@
 // Qt includes
 
 #include <QFileInfo>
+#include <QFileDialog>
 #include <QPainter>
 #include <QPalette>
 #include <QtGlobal>
@@ -45,21 +46,17 @@
 #include <QStandardPaths>
 #include <QMenu>
 #include <QIcon>
+#include <QLocale>
 
 // KDE includes
 
 #include <kconfigdialogmanager.h>
-#include <kpushbutton.h>
 #include <kfile.h>
-#include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <kdeprintdialog.h>
-#include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdesktopfile.h>
 #include <klocalizedstring.h>
-#include <kglobal.h>
 
 // Libkipi includes
 
@@ -909,7 +906,7 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     // %l focal length
     format.replace("%f", fi.fileName());
     format.replace("%c", photo->metaIface()->getExifComment());
-    format.replace("%d", KLocale::global()->formatDateTime(photo->metaIface()->getImageDateTime()));
+    format.replace("%d", QLocale().toString(photo->metaIface()->getImageDateTime(), QLocale::ShortFormat));
     format.replace("%t", photo->metaIface()->getExifTagString("Exif.Photo.ExposureTime"));
     format.replace("%i", photo->metaIface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
     format.replace("%r", resolution);
@@ -2166,16 +2163,18 @@ void Wizard::BtnPreviewPageUp_clicked()
     d->m_currentPreviewPage++;
     previewPhotos();
 }
+
 void Wizard::BtnSaveAs_clicked()
 {
     qCDebug(KIPIPLUGINS_LOG) << "Save As Clicked";
     KConfig config ( "kipirc" );
-    KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
+    KConfigGroup group = config.group( QString ( "PrintAssistant" ) );
     QUrl outputPath; // force to get current directory as default
-    outputPath = QUrl(group.readPathEntry ( "OutputPath", outputPath.url() ));
-    QString filename=KFileDialog::getSaveFileName ( outputPath,QString ( ".jpeg" ) );
+    outputPath         = QUrl(group.readPathEntry( "OutputPath", outputPath.url() ));
+    QString filename   = QFileDialog::getSaveFileName(qApp->activeWindow(), i18n("Output Path"), QString(".jpeg") );
     d->m_cropPage->m_fileName->setText(filename);
 }
+
 void Wizard::saveSettings(const QString& pageName)
 {
     qCDebug(KIPIPLUGINS_LOG) << pageName;
@@ -2481,7 +2480,7 @@ void Wizard::accept()
 
         QPrinter::PaperSize paperSize =  d->m_printer->paperSize();
 
-        std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(d->m_printer, this));
+        QPrintDialog* const dialog          = new QPrintDialog(d->m_printer, this);
         dialog->setWindowTitle(i18n("Print assistant"));
 
         qCDebug(KIPIPLUGINS_LOG) << "(2) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);

@@ -34,8 +34,6 @@
 
 #include <kconfigdialogmanager.h>
 #include <kconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
 #include <kmessagebox.h>
 
 // Local includes
