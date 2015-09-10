@@ -45,9 +45,9 @@ extern "C"
 
 #include <kconfig.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kwindowsystem.h>
+#include <KPluginFactory>
+#include <KLocalizedString>
 
 // Libkipi includes
 
@@ -99,18 +99,18 @@ void Plugin_Dropbox::setupActions()
     setDefaultCategory(ExportPlugin);// uncomment if import feature is added to google drive
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Dropbox..."));
-    m_actionExport->setIcon(QIcon::fromTheme("kipi-dropbox"));
+    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-dropbox")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_D));
 
     connect(m_actionExport,SIGNAL(triggered(bool)),
             this,SLOT(slotExport()));
 
-    addAction("dropboxexport",m_actionExport);
+    addAction(QStringLiteral("dropboxexport"), m_actionExport);
 }
 
 void Plugin_Dropbox::slotExport()
 {
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-dropboxplugin-") + QString::number(getpid()) + QString("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QStringLiteral("/")+ QStringLiteral("kipi-dropboxplugin-") + QString::number(getpid()) + QStringLiteral("/");
     QDir().mkpath(tmp);
 
     if (!m_dlgExport)

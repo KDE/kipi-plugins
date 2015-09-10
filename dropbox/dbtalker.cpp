@@ -79,13 +79,13 @@ namespace KIPIDropboxPlugin
 DBTalker::DBTalker(QWidget* const parent)
 {
     m_parent                 = parent;
-    m_oauth_consumer_key     = "kn7kajkaqf6retw";
-    m_oauth_signature_method = "PLAINTEXT";
-    m_oauth_version          = "1.0";
-    m_oauth_signature        = "t9w4c6j837ubstf&";
+    m_oauth_consumer_key     = QStringLiteral("kn7kajkaqf6retw");
+    m_oauth_signature_method = QStringLiteral("PLAINTEXT");
+    m_oauth_version          = QStringLiteral("1.0");
+    m_oauth_signature        = QStringLiteral("t9w4c6j837ubstf&");
     nonce                    = generateNonce(8);
     timestamp                = QDateTime::currentMSecsSinceEpoch()/1000;
-    m_root                   = "dropbox";
+    m_root                   = QStringLiteral("dropbox");
     m_job                    = 0;
     m_state                  = DB_REQ_TOKEN;
     auth                     = false;
@@ -100,7 +100,7 @@ DBTalker::~DBTalker()
  */
 QString DBTalker::generateNonce(qint32 length)
 {
-    QString clng = "";
+    QString clng = QStringLiteral("");
 
     for(int i=0; i<length; ++i)
     {
@@ -114,16 +114,17 @@ QString DBTalker::generateNonce(qint32 length)
  */
 void DBTalker::obtain_req_token()
 {
-    QUrl url("https://api.dropbox.com/1/oauth/request_token");
-    url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
-    url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature",m_oauth_signature);
-    url.addQueryItem("oauth_signature_method",m_oauth_signature_method);
-    url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version",m_oauth_version);
+    QUrl url(QStringLiteral("https://api.dropbox.com/1/oauth/request_token"));
+    url.addQueryItem(QStringLiteral("oauth_consumer_key"), m_oauth_consumer_key);
+    url.addQueryItem(QStringLiteral("oauth_nonce"), nonce);
+    url.addQueryItem(QStringLiteral("oauth_signature"), m_oauth_signature);
+    url.addQueryItem(QStringLiteral("oauth_signature_method"), m_oauth_signature_method);
+    url.addQueryItem(QStringLiteral("oauth_timestamp"), QString::number(timestamp));
+    url.addQueryItem(QStringLiteral("oauth_version"), m_oauth_version);
 
     KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -162,9 +163,9 @@ void DBTalker::continueWithAccessToken(const QString& msg1, const QString& msg2,
  */
 void DBTalker::doOAuth()
 {
-    QUrl url("https://api.dropbox.com/1/oauth/authorize");
+    QUrl url(QStringLiteral("https://api.dropbox.com/1/oauth/authorize"));
     qCDebug(KIPIPLUGINS_LOG) << "in doOAuth()" << m_oauthToken;
-    url.addQueryItem("oauth_token",m_oauthToken);
+    url.addQueryItem(QStringLiteral("oauth_token"), m_oauthToken);
 
     qCDebug(KIPIPLUGINS_LOG) << "OAuth URL: " << url;
     QDesktopServices::openUrl(url);
@@ -208,17 +209,18 @@ void DBTalker::doOAuth()
  */
 void DBTalker::getAccessToken()
 {
-    QUrl url("https://api.dropbox.com/1/oauth/access_token");
-    url.addQueryItem("oauth_consumer_key", m_oauth_consumer_key);
-    url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature", m_access_oauth_signature);
-    url.addQueryItem("oauth_signature_method", m_oauth_signature_method);
-    url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version", m_oauth_version);
-    url.addQueryItem("oauth_token", m_oauthToken);
+    QUrl url(QStringLiteral("https://api.dropbox.com/1/oauth/access_token"));
+    url.addQueryItem(QStringLiteral("oauth_consumer_key"), m_oauth_consumer_key);
+    url.addQueryItem(QStringLiteral("oauth_nonce"), nonce);
+    url.addQueryItem(QStringLiteral("oauth_signature"), m_access_oauth_signature);
+    url.addQueryItem(QStringLiteral("oauth_signature_method"), m_oauth_signature_method);
+    url.addQueryItem(QStringLiteral("oauth_timestamp"), QString::number(timestamp));
+    url.addQueryItem(QStringLiteral("oauth_version"), m_oauth_version);
+    url.addQueryItem(QStringLiteral("oauth_token"), m_oauthToken);
 
     KIO::TransferJob* const job = KIO::http_post(url, "", KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -239,20 +241,21 @@ void DBTalker::createFolder(const QString& path)
     //path also has name of new folder so send path parameter accordingly
     qCDebug(KIPIPLUGINS_LOG) << "in cre fol " << path;
 
-    QUrl url("https://api.dropbox.com/1/fileops/create_folder");
-    url.addQueryItem("root",m_root);
-    url.addQueryItem("path",path);
+    QUrl url(QStringLiteral("https://api.dropbox.com/1/fileops/create_folder"));
+    url.addQueryItem(QStringLiteral("root"),m_root);
+    url.addQueryItem(QStringLiteral("path"),path);
 
-    url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
-    url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature",m_access_oauth_signature);
-    url.addQueryItem("oauth_signature_method",m_oauth_signature_method);
-    url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version",m_oauth_version);
-    url.addQueryItem("oauth_token",m_oauthToken);
+    url.addQueryItem(QStringLiteral("oauth_consumer_key"), m_oauth_consumer_key);
+    url.addQueryItem(QStringLiteral("oauth_nonce"), nonce);
+    url.addQueryItem(QStringLiteral("oauth_signature"), m_access_oauth_signature);
+    url.addQueryItem(QStringLiteral("oauth_signature_method"), m_oauth_signature_method);
+    url.addQueryItem(QStringLiteral("oauth_timestamp"), QString::number(timestamp));
+    url.addQueryItem(QStringLiteral("oauth_version"), m_oauth_version);
+    url.addQueryItem(QStringLiteral("oauth_token"), m_oauthToken);
 
     KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -270,17 +273,18 @@ void DBTalker::createFolder(const QString& path)
  */
 void DBTalker::getUserName()
 {
-    QUrl url("https://api.dropbox.com/1/account/info");
-    url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
-    url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature",m_access_oauth_signature);
-    url.addQueryItem("oauth_signature_method",m_oauth_signature_method);
-    url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version",m_oauth_version);
-    url.addQueryItem("oauth_token",m_oauthToken);
+    QUrl url(QStringLiteral("https://api.dropbox.com/1/account/info"));
+    url.addQueryItem(QStringLiteral("oauth_consumer_key"), m_oauth_consumer_key);
+    url.addQueryItem(QStringLiteral("oauth_nonce"), nonce);
+    url.addQueryItem(QStringLiteral("oauth_signature"), m_access_oauth_signature);
+    url.addQueryItem(QStringLiteral("oauth_signature_method"), m_oauth_signature_method);
+    url.addQueryItem(QStringLiteral("oauth_timestamp"), QString::number(timestamp));
+    url.addQueryItem(QStringLiteral("oauth_version"), m_oauth_version);
+    url.addQueryItem(QStringLiteral("oauth_token"), m_oauthToken);
 
     KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -298,18 +302,19 @@ void DBTalker::getUserName()
  */
 void DBTalker::listFolders(const QString& path)
 {
-    QString make_url = QString("https://api.dropbox.com/1/metadata/dropbox/") + path;
+    QString make_url = QStringLiteral("https://api.dropbox.com/1/metadata/dropbox/") + path;
     QUrl url(make_url);
-    url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
-    url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature",m_access_oauth_signature);
-    url.addQueryItem("oauth_signature_method",m_oauth_signature_method);
-    url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version",m_oauth_version);
-    url.addQueryItem("oauth_token",m_oauthToken);
+    url.addQueryItem(QStringLiteral("oauth_consumer_key"), m_oauth_consumer_key);
+    url.addQueryItem(QStringLiteral("oauth_nonce"), nonce);
+    url.addQueryItem(QStringLiteral("oauth_signature"), m_access_oauth_signature);
+    url.addQueryItem(QStringLiteral("oauth_signature_method"), m_oauth_signature_method);
+    url.addQueryItem(QStringLiteral("oauth_timestamp"), QString::number(timestamp));
+    url.addQueryItem(QStringLiteral("oauth_version"), m_oauth_version);
+    url.addQueryItem(QStringLiteral("oauth_token"), m_oauthToken);
 
     KIO::TransferJob* const job = KIO::get(url,KIO::NoReload,KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -350,7 +355,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
         return false;
     }
 
-    path = KStandardDirs::locateLocal("tmp",QFileInfo(imgPath).baseName().trimmed()+".jpg");
+    path = KStandardDirs::locateLocal("tmp", QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg"));
 
     if(rescale && (image.width() > maxDim || image.height() > maxDim))
     {
@@ -364,7 +369,7 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     if(meta.load(imgPath))
     {
         meta.setImageDimensions(image.size());
-        meta.setImageProgramId("Kipi-plugins",kipiplugins_version);
+        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
         meta.save(path);
     }
 
@@ -375,19 +380,20 @@ bool DBTalker::addPhoto(const QString& imgPath, const QString& uploadFolder, boo
     }
 
     QString uploadPath = uploadFolder + QUrl(imgPath).fileName();
-    QString m_url = QString("https://api-content.dropbox.com/1/files_put/dropbox/") + "/" + uploadPath;
+    QString m_url = QStringLiteral("https://api-content.dropbox.com/1/files_put/dropbox/") + QStringLiteral("/") + uploadPath;
     QUrl url(m_url);
-    url.addQueryItem("oauth_consumer_key",m_oauth_consumer_key);
-    url.addQueryItem("oauth_nonce", nonce);
-    url.addQueryItem("oauth_signature",m_access_oauth_signature);
-    url.addQueryItem("oauth_signature_method",m_oauth_signature_method);
-    url.addQueryItem("oauth_timestamp", QString::number(timestamp));
-    url.addQueryItem("oauth_version",m_oauth_version);
-    url.addQueryItem("oauth_token",m_oauthToken);
-    url.addQueryItem("overwrite","false");
+    url.addQueryItem(QStringLiteral("oauth_consumer_key"), m_oauth_consumer_key);
+    url.addQueryItem(QStringLiteral("oauth_nonce"), nonce);
+    url.addQueryItem(QStringLiteral("oauth_signature"), m_access_oauth_signature);
+    url.addQueryItem(QStringLiteral("oauth_signature_method"), m_oauth_signature_method);
+    url.addQueryItem(QStringLiteral("oauth_timestamp"), QString::number(timestamp));
+    url.addQueryItem(QStringLiteral("oauth_version"), m_oauth_version);
+    url.addQueryItem(QStringLiteral("oauth_token"), m_oauthToken);
+    url.addQueryItem(QStringLiteral("overwrite"), QStringLiteral("false"));
 
     KIO::TransferJob* const job = KIO::http_post(url,form.formData(),KIO::HideProgressInfo);
-    job->addMetaData("content-type","Content-Type : application/x-www-form-urlencoded");
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
 
     connect(job,SIGNAL(data(KIO::Job*,QByteArray)),
             this,SLOT(data(KIO::Job*,QByteArray)));
@@ -481,7 +487,7 @@ void DBTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = doc.object();
-    bool success = jsonObject.contains(QString("bytes"));
+    bool success = jsonObject.contains(QStringLiteral("bytes"));
     emit signalBusy(false);
 
     if(!success)
@@ -496,11 +502,11 @@ void DBTalker::parseResponseAddPhoto(const QByteArray& data)
 
 void DBTalker::parseResponseRequestToken(const QByteArray& data)
 {
-    QString temp(data);
-    QStringList split           = temp.split("&");
-    QStringList tokenSecretList = split.at(0).split("=");
+    QString temp = QString::fromUtf8(data);
+    QStringList split           = temp.split(QStringLiteral("&"));
+    QStringList tokenSecretList = split.at(0).split(QStringLiteral("="));
     m_oauthTokenSecret          = tokenSecretList.at(1);
-    QStringList tokenList       = split.at(1).split("=");
+    QStringList tokenList       = split.at(1).split(QStringLiteral("="));
     m_oauthToken                = tokenList.at(1);
     m_access_oauth_signature    = m_oauth_signature + m_oauthTokenSecret;
     doOAuth();
@@ -508,9 +514,9 @@ void DBTalker::parseResponseRequestToken(const QByteArray& data)
 
 void DBTalker::parseResponseAccessToken(const QByteArray& data)
 {
-    QString temp(data);
+    QString temp = QString::fromUtf8(data);
 
-    if(temp.contains("error"))
+    if(temp.contains(QStringLiteral("error")))
     {
         //doOAuth();
         emit signalBusy(false);
@@ -518,10 +524,10 @@ void DBTalker::parseResponseAccessToken(const QByteArray& data)
         return;
     }
 
-    QStringList split           = temp.split("&");
-    QStringList tokenSecretList = split.at(0).split("=");
+    QStringList split           = temp.split(QStringLiteral("&"));
+    QStringList tokenSecretList = split.at(0).split(QStringLiteral("="));
     m_oauthTokenSecret          = tokenSecretList.at(1);
-    QStringList tokenList       = split.at(1).split("=");
+    QStringList tokenList       = split.at(1).split(QStringLiteral("="));
     m_oauthToken                = tokenList.at(1);
     m_access_oauth_signature    = m_oauth_signature + m_oauthTokenSecret;
 
@@ -533,7 +539,7 @@ void DBTalker::parseResponseUserName(const QByteArray& data)
 {
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = doc.object();
-    QString temp = jsonObject["display_name"].toString();
+    QString temp = jsonObject[QStringLiteral("display_name")].toString();
 
     emit signalBusy(false);
     emit signalSetUserName(temp);
@@ -552,26 +558,26 @@ void DBTalker::parseResponseListFolders(const QByteArray& data)
     }
     
     QJsonObject jsonObject = doc.object();
-    QJsonArray jsonArray = jsonObject["contents"].toArray();
+    QJsonArray jsonArray = jsonObject[QStringLiteral("contents")].toArray();
     
     QList<QPair<QString, QString> > list;
     list.clear();
-    list.append(qMakePair(QString("/"),QString("root")));
-    
+    list.append(qMakePair(QStringLiteral("/"), QStringLiteral("root")));
+
     foreach (const QJsonValue & value, jsonArray) 
     {
-        QString path("");
+        QString path(QStringLiteral(""));
         bool isDir;
         
         QJsonObject obj = value.toObject();
-        path  = obj["path"].toString();
-        isDir = obj["is_dir"].toBool();
+        path  = obj[QStringLiteral("path")].toString();
+        isDir = obj[QStringLiteral("is_dir")].toBool();
         qCDebug(KIPIPLUGINS_LOG) << "Path is "<<path<<" Is Dir "<<isDir;
         
         if(isDir)
         {
             qCDebug(KIPIPLUGINS_LOG) << "Path is "<<path<<" Is Dir "<<isDir;
-            QString name = path.section('/',-2);
+            QString name = path.section(QLatin1Char('/'), -2);
             qCDebug(KIPIPLUGINS_LOG) << "str " << name;
             list.append(qMakePair(path,name));
             queue.enqueue(path);
@@ -587,14 +593,14 @@ void DBTalker::parseResponseCreateFolder(const QByteArray& data)
 {
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = doc.object();
-    bool fail = jsonObject.contains(QString("error"));
+    bool fail = jsonObject.contains(QStringLiteral("error"));
     QString temp;
     
     emit signalBusy(false);
     
     if(fail)
     {
-        emit signalCreateFolderFailed(jsonObject["error"].toString());
+        emit signalCreateFolderFailed(jsonObject[QStringLiteral("error")].toString());
     }
     else
     {

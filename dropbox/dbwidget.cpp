@@ -41,8 +41,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
-#include <kpushbutton.h>
 
 // Libkipi includes
 
@@ -70,14 +68,15 @@ DropboxWidget::~DropboxWidget()
 
 void DropboxWidget::updateLabels(const QString& name, const QString& url)
 {
-    QString web("https://www.dropbox.com/");
+    QString web(QStringLiteral("https://www.dropbox.com/"));
 
     if (!url.isEmpty())
         web = url;
 
-    getHeaderLbl()->setText(QString("<b><h2><a href='%1'>"
-                                 "<font color=\"#9ACD32\">Dropbox</font>"
-                                 "</a></h2></b>").arg(web));
+    getHeaderLbl()->setText(QStringLiteral(
+        "<b><h2><a href='%1'>"
+        "<font color=\"#9ACD32\">Dropbox</font>"
+        "</a></h2></b>").arg(web));
 
     if (name.isEmpty())
     {
@@ -85,7 +84,7 @@ void DropboxWidget::updateLabels(const QString& name, const QString& url)
     }
     else
     {
-        getUserNameLabel()->setText( QString("<b>%1</b>").arg(name) );
+        getUserNameLabel()->setText(QStringLiteral("<b>%1</b>").arg(name));
     }
 }
 

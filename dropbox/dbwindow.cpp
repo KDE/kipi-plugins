@@ -43,13 +43,10 @@
 #include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kiconloader.h>
-#include <ktabwidget.h>
 #include <krun.h>
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kwallet.h>
-#include <kpushbutton.h>
 #include <ktoolinvocation.h>
 #include <KWindowConfig>
 
@@ -80,14 +77,14 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     m_imagesCount = 0;
     m_imagesTotal = 0;
 
-    m_widget      = new DropboxWidget(this, iface(),"Dropbox");
+    m_widget      = new DropboxWidget(this, iface(), QStringLiteral("Dropbox"));
     setMainWidget(m_widget);
-    setWindowIcon(QIcon::fromTheme("kipi-dropbox"));
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-dropbox")));
     setModal(false);
     setWindowTitle(i18n("Export to Dropbox"));
 
     KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start Upload"), "network-workgroup",
+                     KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
                               i18n("Start upload to Dropbox")));
 
     m_widget->setMinimumSize(700, 500);
@@ -115,14 +112,14 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Saurabh Patel").toString(),
                      ki18n("Author").toString(),
-                     "saurabhpatel7717 at gmail dot com");
+                     QStringLiteral("saurabhpatel7717 at gmail dot com"));
 
-    about->setHandbookEntry("dropbox");
+    about->setHandbookEntry(QStringLiteral("dropbox"));
     setAboutData(about);
 
     //-------------------------------------------------------------------------
 
-    m_albumDlg = new DBNewAlbum(this,"Dropbox");
+    m_albumDlg = new DBNewAlbum(this, QStringLiteral("Dropbox"));
 
     //-------------------------------------------------------------------------
 
@@ -194,7 +191,7 @@ void DBWindow::reactivate()
 
 void DBWindow::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp   = config.group("Dropbox Settings");
 
     m_currentAlbumName = grp.readEntry("Current Album",QString());
@@ -224,7 +221,7 @@ void DBWindow::readSettings()
 
 void DBWindow::writeSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("Dropbox Settings");
 
     grp.writeEntry("Current Album",      m_currentAlbumName);
@@ -243,7 +240,7 @@ void DBWindow::writeSettings()
 
 void DBWindow::slotSetUserName(const QString& msg)
 {
-    m_widget->updateLabels(msg,"");
+    m_widget->updateLabels(msg, QStringLiteral(""));
 }
 
 void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
@@ -253,8 +250,9 @@ void DBWindow::slotListAlbumsDone(const QList<QPair<QString,QString> >& list)
     
     for(int i=0;i<list.size();i++)
     {
-        m_widget->getAlbumsCoB()->addItem(QIcon::fromTheme("system-users"),list.value(i).second,
-                                       list.value(i).first);
+        m_widget->getAlbumsCoB()->addItem(
+            QIcon::fromTheme(QStringLiteral("system-users")),
+            list.value(i).second, list.value(i).first);
 
         if (m_currentAlbumName == list.value(i).first)
         {
@@ -296,7 +294,8 @@ void DBWindow::slotStartTransfer()
 
     if(m_widget->imagesList()->imageUrls().isEmpty())
     {
-        QMessageBox::critical(this, "Error", i18n("No image selected. Please select which images should be uploaded."));
+        QMessageBox::critical(this, i18nc("@title:window", "Error"),
+                              i18n("No image selected. Please select which images should be uploaded."));
         return;
     }
 
@@ -331,7 +330,8 @@ void DBWindow::slotStartTransfer()
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
     m_widget->progressBar()->progressScheduled(i18n("Dropbox export"), true, true);
-    m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    m_widget->progressBar()->progressThumbnailChanged(
+        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     uploadNextPhoto();
 }
@@ -348,14 +348,14 @@ void DBWindow::uploadNextPhoto()
     }
 
     QString imgPath = m_transferQueue.first().path();
-    QString temp = m_currentAlbumName + QString("/");
+    QString temp = m_currentAlbumName + QStringLiteral("/");
 
     bool res = m_talker->addPhoto(imgPath,temp,m_widget->getResizeCheckBox()->isChecked(),m_widget->getDimensionSpB()->value(),
                                   m_widget->getImgQualitySpB()->value());
 
     if (!res)
     {
-        slotAddPhotoFailed("");
+        slotAddPhotoFailed(QStringLiteral(""));
         return;
     }
 }
@@ -412,7 +412,7 @@ void DBWindow::slotNewAlbumRequest()
 
 void DBWindow::slotReloadAlbumsRequest()
 {
-    m_talker->listFolders("/");
+    m_talker->listFolders(QStringLiteral("/"));
 }
 
 void DBWindow::slotAccessTokenFailed()
@@ -436,7 +436,7 @@ void DBWindow::slotAccessTokenObtained(const QString& msg1,const QString& msg2,c
     m_accTokenSecret = msg2;
     m_accoauthToken  = msg3;
 
-    m_talker->listFolders("/");
+    m_talker->listFolders(QStringLiteral("/"));
 }
 
 void DBWindow::slotListAlbumsFailed(const QString& msg)
@@ -453,7 +453,7 @@ void DBWindow::slotCreateFolderFailed(const QString& msg)
 
 void DBWindow::slotCreateFolderSucceeded()
 {
-    m_talker->listFolders("/");
+    m_talker->listFolders(QStringLiteral("/"));
 }
 
 void DBWindow::slotTransferCancel()
@@ -465,9 +465,9 @@ void DBWindow::slotTransferCancel()
 
 void DBWindow::slotUserChangeRequest()
 {
-    m_accToken = "";
-    m_accTokenSecret = "";
-    m_accoauthToken = "";
+    m_accToken = QStringLiteral("");
+    m_accTokenSecret = QStringLiteral("");
+    m_accoauthToken = QStringLiteral("");
     m_talker->obtain_req_token();
 }
 
