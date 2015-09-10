@@ -65,6 +65,7 @@ public:
     {
         mPositionFrame->setStyleSheet
         (
+            QLatin1String(
             "QFrame {"
             " background-color: palette(mid);"
             " border: 1px solid palette(dark);"
@@ -80,6 +81,7 @@ public:
             "QToolButton:checked {"
             " background-color: palette(highlight);"
             "}"
+            )
         );
 
         QGridLayout* const layout = new QGridLayout ( mPositionFrame );

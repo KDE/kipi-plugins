@@ -115,23 +115,23 @@ void Plugin_PrintImages::setupActions()
 
     m_printImagesAction = new QAction(this);
     m_printImagesAction->setText ( i18n ( "Print images" ) );
-    m_printImagesAction->setIcon ( QIcon::fromTheme( "document-print" ) );
+    m_printImagesAction->setIcon ( QIcon::fromTheme( QLatin1String("document-print")) );
     m_printImagesAction->setEnabled(false);
 
     connect ( m_printImagesAction, SIGNAL (triggered(bool)),
               this, SLOT (slotPrintImagesActivate()) );
 
-    addAction("printimages", m_printImagesAction);
+    addAction(QLatin1String("printimages"), m_printImagesAction);
 
     m_printAssistantAction = new QAction(this);
     m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
-    m_printAssistantAction->setIcon ( QIcon::fromTheme( "document-print" ) );
+    m_printAssistantAction->setIcon ( QIcon::fromTheme( QLatin1String("document-print") ) );
     m_printAssistantAction->setEnabled(false);
 
     connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
               this, SLOT (slotPrintAssistantActivate()) );
 
-    addAction("printassistant", m_printAssistantAction);
+    addAction(QLatin1String("printassistant"), m_printAssistantAction);
 }
 
 void Plugin_PrintImages::slotPrintImagesActivate()
@@ -174,7 +174,8 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
     QWidget* const parent = QApplication::activeWindow();
     Wizard printAssistant(parent);
 
-    QString tempPath        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "kipi-printassistantdplugin-" + QString::number(getpid()) + "/";
+    QString tempPath        = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + 
+                              QLatin1String("kipi-printassistantdplugin-") + QString::number(getpid()) + QLatin1String("/");
     QDir().mkpath(tempPath);
     printAssistant.print(fileList, tempPath);
 

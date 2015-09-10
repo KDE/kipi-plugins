@@ -107,10 +107,10 @@ public:
 
     CaptionInfo()
         : m_caption_type(NoCaptions),
-          m_caption_font("Sans Serif"),
+          m_caption_font(QLatin1String("Sans Serif")),
           m_caption_color(Qt::yellow),
           m_caption_size(2),
-          m_caption_text()
+          m_caption_text(QLatin1String(""))
     {
     }
 

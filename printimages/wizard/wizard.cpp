@@ -169,17 +169,17 @@ Wizard::Wizard(QWidget* const parent)
 
     about->addAuthor(ki18n("Todd Shoemaker").toString(),
                      ki18n("Author").toString(),
-                     "todd@theshoemakers.net");
+                     QLatin1String("todd@theshoemakers.net"));
 
     about->addAuthor(ki18n("Angelo Naselli").toString(),
                      ki18n("Developer").toString(),
-                     "anaselli@linux.it");
+                     QLatin1String("anaselli@linux.it"));
 
     about->addAuthor(ki18n("Andreas Trink").toString(),
                      ki18n("Contributor").toString(),
-                     "atrink@nociaro.org");
+                     QLatin1String("atrink@nociaro.org"));
 
-    about->setHandbookEntry("printwizard");
+    about->setHandbookEntry(QLatin1String("printwizard"));
     setAboutData(about);
 
     //d->m_photoPage  = new InfoPage ( this, i18n ( infoPageName ) );
@@ -292,8 +292,8 @@ Wizard::Wizard(QWidget* const parent)
     d->m_imagesFilesListBox->setControlButtonsPlacement(KPImagesList::ControlButtonsAbove);
     d->m_imagesFilesListBox->enableDragAndDrop(false);
 
-    d->m_cropPage->BtnCropRotateRight->setIcon(QIcon::fromTheme("object-rotate-right").pixmap(16, 16));
-    d->m_cropPage->BtnCropRotateLeft->setIcon(QIcon::fromTheme("object-rotate-left").pixmap(16, 16));
+    d->m_cropPage->BtnCropRotateRight->setIcon(QIcon::fromTheme(QLatin1String("object-rotate-right")).pixmap(16, 16));
+    d->m_cropPage->BtnCropRotateLeft->setIcon(QIcon::fromTheme(QLatin1String("object-rotate-left")).pixmap(16, 16));
 
     printListLayout->addWidget(d->m_imagesFilesListBox);
     d->m_photoPage->mPrintList->setLayout(printListLayout);
@@ -333,8 +333,8 @@ Wizard::Wizard(QWidget* const parent)
             this, SLOT(slotXMLCustomElement(QXmlStreamReader&)));
 
     // To get rid of icons that sometime are not shown
-    d->m_photoPage->BtnPreviewPageUp->setIcon(QIcon::fromTheme("arrow-right").pixmap(16, 16));
-    d->m_photoPage->BtnPreviewPageDown->setIcon(QIcon::fromTheme("arrow-left").pixmap(16, 16));
+    d->m_photoPage->BtnPreviewPageUp->setIcon(QIcon::fromTheme(QLatin1String("arrow-right")).pixmap(16, 16));
+    d->m_photoPage->BtnPreviewPageDown->setIcon(QIcon::fromTheme(QLatin1String("arrow-left")).pixmap(16, 16));
     //arrow-up-double
     d->m_currentPreviewPage = 0;
     d->m_currentCropPhoto   = 0;
@@ -407,7 +407,7 @@ void Wizard::print(const QList<QUrl>& fileList, const QString& tempPath)
 
 void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 {
-    QDomDocument doc("mydocument");
+    QDomDocument doc(QLatin1String("mydocument"));
     qCDebug(KIPIPLUGINS_LOG) << " XXX: " <<  fn;
 
     if (fn.isEmpty())
@@ -448,11 +448,12 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
         if (!e.isNull())
         {
-            if (e.tagName() == "paper")
+            if (e.tagName() == QLatin1String("paper"))
             {
-                size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
-                unit = e.attribute("unit", "mm");
-                qCDebug(KIPIPLUGINS_LOG) <<  e.tagName() << " name=" << e.attribute("name", "??")
+                size = QSizeF(e.attribute(QLatin1String("width"),  QLatin1String("0")).toFloat(),
+                              e.attribute(QLatin1String("height"), QLatin1String("0")).toFloat());
+                unit = e.attribute(QLatin1String("unit"), QLatin1String("mm"));
+                qCDebug(KIPIPLUGINS_LOG) <<  e.tagName() << QLatin1String(" name=") << e.attribute(QLatin1String("name"), QLatin1String("??"))
                          << " size= " << size
                          << " unit= " << unit;
 
@@ -462,16 +463,16 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                     n = n.nextSibling();
                     continue;
                 }
-                else if (unit != "mm" && size != QSizeF(0.0, 0.0)) // "cm", "inches" or "inch"
+                else if (unit != QLatin1String("mm") && size != QSizeF(0.0, 0.0)) // "cm", "inches" or "inch"
                 {
                     // convert to mm
-                    if (unit == "inches" ||  unit == "inch")
+                    if (unit == QLatin1String("inches") ||  unit == QLatin1String("inch"))
                     {
                         size *= 25.4;
                         scaleValue = 1000;
                         qCDebug(KIPIPLUGINS_LOG) << "template size " << size << " page size " << pageSize;
                     }
-                    else if (unit == "cm")
+                    else if (unit == QLatin1String("cm"))
                     {
                         size *= 10;
                         scaleValue = 100;
@@ -490,7 +491,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                 if (size == QSizeF(0, 0))
                 {
                     size = pageSize;
-                    unit = "mm";
+                    unit = QLatin1String("mm");
                 }
                 else if (pageSize     != QSizeF(0, 0) &&
                          (size.height() > (pageSize.height() + round_value) ||
@@ -512,7 +513,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
                     if (!ep.isNull())
                     {
-                        if (ep.tagName() == "template")
+                        if (ep.tagName() == QLatin1String("template"))
                         {
                             p = new TPhotoSize;
                             QSizeF sizeManaged;
@@ -522,7 +523,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             {
                                 sizeManaged = size * scaleValue;
                             }
-                            else if (unit == "inches" || unit == "inch")
+                            else if (unit == QLatin1String("inches") || unit == QLatin1String("inch"))
                             {
                                 sizeManaged = pageSize * scaleValue / 25.4;
                             }
@@ -537,8 +538,8 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             TemplateIcon iconpreview(80, sizeManaged.toSize());
                             iconpreview.begin();
 
-                            QString desktopFileName = QString("kipiplugin_printimages/templates/") +
-                                                      QString(ep.attribute("name", "XXX")) + ".desktop";
+                            QString desktopFileName = QLatin1String("kipiplugin_printimages/templates/") +
+                                                      ep.attribute(QLatin1String("name"), QLatin1String("XXX")) + QLatin1String(".desktop");
 
                             qCDebug(KIPIPLUGINS_LOG) <<  "template desktop file name" << desktopFileName;
 
@@ -552,12 +553,12 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                             }
                             else
                             {
-                                p->label = ep.attribute("name", "XXX");
+                                p->label = ep.attribute(QLatin1String("name"), QLatin1String("XXX"));
                                 qCWarning(KIPIPLUGINS_LOG) << "missed template translation " << desktopFileName;
                             }
 
-                            p->dpi        = ep.attribute("dpi", "0").toInt();
-                            p->autoRotate = (ep.attribute("autorotate", "false") == "true") ? true : false;
+                            p->dpi        = ep.attribute(QLatin1String("dpi"), QLatin1String("0")).toInt();
+                            p->autoRotate = (ep.attribute(QLatin1String("autorotate"), QLatin1String("false")) == QLatin1String("true")) ? true : false;
                             QDomNode nt   = ep.firstChild();
 
                             while (!nt.isNull())
@@ -566,25 +567,26 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
 
                                 if (!et.isNull())
                                 {
-                                    if (et.tagName() == "photo")
+                                    if (et.tagName() == QLatin1String("photo"))
                                     {
-                                        float value = et.attribute("width", "0").toFloat();
+                                        float value = et.attribute(QLatin1String("width"), QLatin1String("0")).toFloat();
                                         int width   = (int)((value == 0 ? size.width() : value) * scaleValue);
-                                        value       = et.attribute("height", "0").toFloat();
+                                        value       = et.attribute(QLatin1String("height"), QLatin1String("0")).toFloat();
                                         int height  = (int)((value == 0 ? size.height() : value) * scaleValue);
-                                        int photoX  = (int)((et.attribute("x", "0").toFloat() * scaleValue));
-                                        int photoY  = (int)((et.attribute("y", "0").toFloat() * scaleValue));
+                                        int photoX  = (int)((et.attribute(QLatin1String("x"), QLatin1String("0")).toFloat() * scaleValue));
+                                        int photoY  = (int)((et.attribute(QLatin1String("y"), QLatin1String("0")).toFloat() * scaleValue));
                                         p->layouts.append(new QRect(photoX, photoY, width, height));
                                         iconpreview.fillRect(photoX, photoY, width, height, Qt::color1);
                                     }
-                                    else if (et.tagName() == "photogrid")
+                                    else if (et.tagName() == QLatin1String("photogrid"))
                                     {
-                                        float value    = et.attribute("pageWidth", "0").toFloat();
+                                        float value    = et.attribute(QLatin1String("pageWidth"), QLatin1String("0")).toFloat();
                                         int pageWidth  = (int)((value == 0 ? size.width() : value) * scaleValue);
-                                        value          = et.attribute("pageHeight", "0").toFloat();
+                                        value          = et.attribute(QLatin1String("pageHeight"), QLatin1String("0")).toFloat();
                                         int pageHeight = (int)((value == 0 ? size.height() : value) * scaleValue);
-                                        int rows       = et.attribute("rows", "0").toInt();
-                                        int columns    = et.attribute("columns", "0").toInt();
+                                        int rows       = et.attribute(QLatin1String("rows"), QLatin1String("0")).toInt();
+                                        int columns    = et.attribute(QLatin1String("columns"), QLatin1String("0")).toInt();
+
                                         if (rows > 0 && columns > 0)
                                         {
                                             createPhotoGrid(p, pageWidth, pageHeight, rows, columns, &iconpreview);
@@ -609,7 +611,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
                         }
                         else
                         {
-                            qCDebug(KIPIPLUGINS_LOG) << "? " <<  ep.tagName() << " attr=" << ep.attribute("name", "??");
+                            qCDebug(KIPIPLUGINS_LOG) << "? " <<  ep.tagName() << " attr=" << ep.attribute(QLatin1String("name"), QLatin1String("??"));
                         }
                     }
 
@@ -618,7 +620,7 @@ void Wizard::parseTemplateFile(const QString& fn, const QSizeF& pageSize)
             }
             else
             {
-                qCDebug(KIPIPLUGINS_LOG) << "??" << e.tagName() << " name=" << e.attribute("name", "??");
+                qCDebug(KIPIPLUGINS_LOG) << "??" << e.tagName() << " name=" << e.attribute(QLatin1String("name"), QLatin1String("??"));
             }
         }
 
@@ -644,7 +646,7 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
     d->m_photoSizes.clear();
 
     // get template-files and parse them
-    const QStringList list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "kipiplugin_printimages/templates/*.xml");
+    const QStringList list = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("kipiplugin_printimages/templates/*.xml"));
 
     foreach(const QString& fn, list)
     {
@@ -686,6 +688,7 @@ void Wizard::initPhotoSizes(const QSizeF& pageSize)
             d->m_photoPage->ListPhotoSizes->addItem(pWItem);
         }
     }
+
     // Adding custom choice
     QListWidgetItem* const pWItem = new QListWidgetItem(i18n(customPageLayoutName));
 
@@ -799,7 +802,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* const photo, int captionW, int ca
 
         for (currIndex = captionIndex; currIndex < caption.length() && !breakLine; ++currIndex)
         {
-            if (caption[currIndex] == QChar('\n') || caption[currIndex].isSpace())
+            if (caption[currIndex] == QLatin1Char('\n') || caption[currIndex].isSpace())
                 breakLine = true;
         }
 
@@ -812,10 +815,10 @@ void Wizard::printCaption(QPainter& p, TPhoto* const photo, int captionW, int ca
              (currIndex <= captionIndex + captionLineLocalLength) && (currIndex < caption.length()) && !breakLine;
              ++currIndex)
         {
-            breakLine = (caption[currIndex] == QChar('\n')) ? true : false;
+            breakLine = (caption[currIndex] == QLatin1Char('\n')) ? true : false;
 
             if (breakLine)
-                newLine.append(' ');
+                newLine.append(QLatin1Char(' '));
             else
                 newLine.append(caption[currIndex]);
         }
@@ -824,7 +827,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* const photo, int captionW, int ca
 
         if (captionIndex != caption.length())
         {
-            while (!newLine.endsWith(' '))
+            while (!newLine.endsWith(QLatin1Char(' ')))
             {
                 newLine.truncate(newLine.length() - 1);
                 captionIndex--;
@@ -869,13 +872,13 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     switch (photo->pCaptionInfo->m_caption_type)
     {
         case CaptionInfo::FileNames:
-            format = "%f";
+            format = QLatin1String("%f");
             break;
         case CaptionInfo::ExifDateTime:
-            format = "%d";
+            format = QLatin1String("%d");
             break;
         case CaptionInfo::Comment:
-            format = "%c";
+            format = QLatin1String("%c");
             break;
         case CaptionInfo::Free:
             format =  photo->pCaptionInfo->m_caption_text;
@@ -891,10 +894,10 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
 
     if (imageSize.isValid())
     {
-        resolution = QString("%1x%2").arg(imageSize.width()).arg(imageSize.height());
+        resolution = QString::fromUtf8("%1x%2").arg(imageSize.width()).arg(imageSize.height());
     }
 
-    format.replace("\\n", "\n");
+    format.replace(QLatin1String("\\n"), QLatin1String("\n"));
 
     // %f filename
     // %c comment
@@ -904,14 +907,14 @@ QString Wizard::captionFormatter(TPhoto* const photo) const
     // %r resolution
     // %a aperture
     // %l focal length
-    format.replace("%f", fi.fileName());
-    format.replace("%c", photo->metaIface()->getExifComment());
-    format.replace("%d", QLocale().toString(photo->metaIface()->getImageDateTime(), QLocale::ShortFormat));
-    format.replace("%t", photo->metaIface()->getExifTagString("Exif.Photo.ExposureTime"));
-    format.replace("%i", photo->metaIface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
-    format.replace("%r", resolution);
-    format.replace("%a", photo->metaIface()->getExifTagString("Exif.Photo.FNumber"));
-    format.replace("%l", photo->metaIface()->getExifTagString("Exif.Photo.FocalLength"));
+    format.replace(QString::fromUtf8("%f"), fi.fileName());
+    format.replace(QString::fromUtf8("%c"), photo->metaIface()->getExifComment());
+    format.replace(QString::fromUtf8("%d"), QLocale().toString(photo->metaIface()->getImageDateTime(), QLocale::ShortFormat));
+    format.replace(QString::fromUtf8("%t"), photo->metaIface()->getExifTagString("Exif.Photo.ExposureTime"));
+    format.replace(QString::fromUtf8("%i"), photo->metaIface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
+    format.replace(QString::fromUtf8("%r"), resolution);
+    format.replace(QString::fromUtf8("%a"), photo->metaIface()->getExifTagString("Exif.Photo.FNumber"));
+    format.replace(QString::fromUtf8("%l"), photo->metaIface()->getExifTagString("Exif.Photo.FocalLength"));
 
     return format;
 }
@@ -1287,10 +1290,10 @@ void Wizard::infopage_setCaptionButtons()
 void Wizard::slotXMLCustomElement(QXmlStreamWriter& xmlWriter)
 {
     qCDebug(KIPIPLUGINS_LOG) << " invoked " ;
-    xmlWriter.writeStartElement("pa_layout");
-    xmlWriter.writeAttribute("Printer", d->m_photoPage->m_printer_choice->currentText());
-    xmlWriter.writeAttribute("PageSize", QString("%1").arg(d->m_printer->paperSize()));
-    xmlWriter.writeAttribute("PhotoSize", d->m_photoPage->ListPhotoSizes->currentItem()->text());
+    xmlWriter.writeStartElement(QLatin1String("pa_layout"));
+    xmlWriter.writeAttribute(QLatin1String("Printer"),   d->m_photoPage->m_printer_choice->currentText());
+    xmlWriter.writeAttribute(QLatin1String("PageSize"),  QString::fromUtf8("%1").arg(d->m_printer->paperSize()));
+    xmlWriter.writeAttribute(QLatin1String("PhotoSize"), d->m_photoPage->ListPhotoSizes->currentItem()->text());
     xmlWriter.writeEndElement(); // pa_layout
 }
 
@@ -1301,18 +1304,18 @@ void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::KPImagesL
         int itemIndex        = d->m_imagesFilesListBox->listView()->indexFromItem(item).row();
         TPhoto* const pPhoto = d->m_photos[itemIndex];
         // TODO anaselli: first and copies could be removed since they are not useful any more
-        xmlWriter.writeAttribute("first", QString("%1").arg(pPhoto->first));
-        xmlWriter.writeAttribute("copies", QString("%1").arg(pPhoto->first ? pPhoto->copies : 0));
+        xmlWriter.writeAttribute(QLatin1String("first"),  QString::fromUtf8("%1").arg(pPhoto->first));
+        xmlWriter.writeAttribute(QLatin1String("copies"), QString::fromUtf8("%1").arg(pPhoto->first ? pPhoto->copies : 0));
 
         // additional info (caption... etc)
         if (pPhoto->pCaptionInfo)
         {
-            xmlWriter.writeStartElement("pa_caption");
-            xmlWriter.writeAttribute("type",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_type));
-            xmlWriter.writeAttribute("font",  pPhoto->pCaptionInfo->m_caption_font.toString());
-            xmlWriter.writeAttribute("size",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_size));
-            xmlWriter.writeAttribute("color", pPhoto->pCaptionInfo->m_caption_color.name());
-            xmlWriter.writeAttribute("text",  pPhoto->pCaptionInfo->m_caption_text);
+            xmlWriter.writeStartElement(QLatin1String("pa_caption"));
+            xmlWriter.writeAttribute(QLatin1String("type"),  QString::fromUtf8("%1").arg(pPhoto->pCaptionInfo->m_caption_type));
+            xmlWriter.writeAttribute(QLatin1String("font"),  pPhoto->pCaptionInfo->m_caption_font.toString());
+            xmlWriter.writeAttribute(QLatin1String("size"),  QString::fromUtf8("%1").arg(pPhoto->pCaptionInfo->m_caption_size));
+            xmlWriter.writeAttribute(QLatin1String("color"), pPhoto->pCaptionInfo->m_caption_color.name());
+            xmlWriter.writeAttribute(QLatin1String("text"),  pPhoto->pCaptionInfo->m_caption_text);
             xmlWriter.writeEndElement(); // pa_caption
         }
     }
@@ -1324,12 +1327,12 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 
     while (!xmlReader.atEnd())
     {
-        if (xmlReader.isStartElement() && xmlReader.name() == "pa_layout")
+        if (xmlReader.isStartElement() && xmlReader.name() == QLatin1String("pa_layout"))
         {
             bool ok;
             QXmlStreamAttributes attrs = xmlReader.attributes();
             // get value of each attribute from QXmlStreamAttributes
-            QStringRef attr = attrs.value("Printer");
+            QStringRef attr = attrs.value(QLatin1String("Printer"));
 
             if (!attr.isEmpty())
             {
@@ -1344,7 +1347,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
                 outputChanged(d->m_photoPage->m_printer_choice->currentText());
             }
 
-            attr = attrs.value("PageSize");
+            attr = attrs.value(QLatin1String("PageSize"));
 
             if (!attr.isEmpty())
             {
@@ -1353,7 +1356,7 @@ void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
                 d->m_printer->setPaperSize(paperSize);
             }
 
-            attr = attrs.value("PhotoSize");
+            attr = attrs.value(QLatin1String("PhotoSize"));
 
             if (!attr.isEmpty())
             {
@@ -1395,7 +1398,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
         {
             qCDebug(KIPIPLUGINS_LOG) << pPhoto->filename << " " << xmlReader.name();
 
-            if (xmlReader.name() == "pa_caption")
+            if (xmlReader.name() == QLatin1String("pa_caption"))
             {
                 d->m_photoPage->m_sameCaption->blockSignals(true);
                 d->m_photoPage->m_sameCaption->setCheckState( Qt::Unchecked );
@@ -1409,7 +1412,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
                 // get all attributes and its value of a tag in attrs variable.
                 QXmlStreamAttributes attrs = xmlReader.attributes();
                 // get value of each attribute from QXmlStreamAttributes
-                QStringRef attr = attrs.value("type");
+                QStringRef attr = attrs.value(QLatin1String("type"));
                 bool ok;
 
                 if (!attr.isEmpty())
@@ -1418,7 +1421,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
                     pPhoto->pCaptionInfo->m_caption_type = (CaptionInfo::AvailableCaptions)attr.toString().toInt(&ok);
                 }
 
-                attr = attrs.value("font");
+                attr = attrs.value(QLatin1String("font"));
 
                 if (!attr.isEmpty())
                 {
@@ -1426,7 +1429,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
                     pPhoto->pCaptionInfo->m_caption_font.fromString(attr.toString());
                 }
 
-                attr = attrs.value("color");
+                attr = attrs.value(QLatin1String("color"));
 
                 if (!attr.isEmpty())
                 {
@@ -1434,7 +1437,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
                     pPhoto->pCaptionInfo->m_caption_color.setNamedColor(attr.toString());
                 }
 
-                attr = attrs.value("size");
+                attr = attrs.value(QLatin1String("size"));
 
                 if (!attr.isEmpty())
                 {
@@ -1442,7 +1445,7 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
                     pPhoto->pCaptionInfo->m_caption_size = attr.toString().toInt(&ok);
                 }
 
-                attr = attrs.value("text");
+                attr = attrs.value(QLatin1String("text"));
 
                 if (!attr.isEmpty())
                 {
@@ -2167,11 +2170,11 @@ void Wizard::BtnPreviewPageUp_clicked()
 void Wizard::BtnSaveAs_clicked()
 {
     qCDebug(KIPIPLUGINS_LOG) << "Save As Clicked";
-    KConfig config ( "kipirc" );
-    KConfigGroup group = config.group( QString ( "PrintAssistant" ) );
+    KConfig config ( QLatin1String("kipirc") );
+    KConfigGroup group = config.group( QLatin1String( "PrintAssistant" ) );
     QUrl outputPath; // force to get current directory as default
     outputPath         = QUrl(group.readPathEntry( "OutputPath", outputPath.url() ));
-    QString filename   = QFileDialog::getSaveFileName(qApp->activeWindow(), i18n("Output Path"), QString(".jpeg") );
+    QString filename   = QFileDialog::getSaveFileName(qApp->activeWindow(), i18n("Output Path"), QLatin1String(".jpeg") );
     d->m_cropPage->m_fileName->setText(filename);
 }
 
@@ -2180,17 +2183,17 @@ void Wizard::saveSettings(const QString& pageName)
     qCDebug(KIPIPLUGINS_LOG) << pageName;
 
     // Save the current settings
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("PrintAssistant"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("PrintAssistant"));
 
     if (pageName == i18n(photoPageName))
     {
-        group.writeEntry("Printer",   d->m_photoPage->m_printer_choice->currentText());
+        group.writeEntry(QLatin1String("Printer"),   d->m_photoPage->m_printer_choice->currentText());
         // PhotoPage
         // photo size
         d->m_savedPhotoSize = d->m_photoPage->ListPhotoSizes->currentItem()->text();
-        group.writeEntry("PhotoSize", d->m_savedPhotoSize);
-        group.writeEntry("IconSize",  d->m_photoPage->ListPhotoSizes->iconSize());
+        group.writeEntry(QLatin1String("PhotoSize"), d->m_savedPhotoSize);
+        group.writeEntry(QLatin1String("IconSize"),  d->m_photoPage->ListPhotoSizes->iconSize());
     }
     else if (pageName == i18n(cropPageName))
     {
@@ -2199,38 +2202,38 @@ void Wizard::saveSettings(const QString& pageName)
         {
             // output path
             QString outputPath = d->m_cropPage->m_fileName->originalText();
-            group.writePathEntry("OutputPath", outputPath);
+            group.writePathEntry(QLatin1String("OutputPath"), outputPath);
         }
     }
 }
 
 void Wizard::infopage_readCaptionSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("PrintAssistant"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("PrintAssistant"));
 
     // image captions
-    d->m_photoPage->m_captions->setCurrentIndex(group.readEntry("Captions", 0));
+    d->m_photoPage->m_captions->setCurrentIndex(group.readEntry(QLatin1String("Captions"), 0));
     // caption color
     QColor defColor(Qt::yellow);
-    QColor color = group.readEntry("CaptionColor", defColor);
+    QColor color = group.readEntry(QLatin1String("CaptionColor"), defColor);
     d->m_photoPage->m_font_color->setColor(color);
     // caption font
-    QFont defFont("Sans Serif");
-    QFont font = group.readEntry("CaptionFont", defFont);
+    QFont defFont(QLatin1String("Sans Serif"));
+    QFont font = group.readEntry(QLatin1String("CaptionFont"), defFont);
     d->m_photoPage->m_font_name->setCurrentFont(font.family());
     // caption size
-    int fontSize = group.readEntry("CaptionSize", 4);
+    int fontSize = group.readEntry(QLatin1String("CaptionSize"), 4);
     d->m_photoPage->m_font_size->setValue(fontSize);
     // free caption
-    QString captionTxt = group.readEntry("FreeCaption");
+    QString captionTxt = group.readEntry(QLatin1String("FreeCaption"));
     d->m_photoPage->m_FreeCaptionFormat->setText(captionTxt);
 }
 
 void Wizard::readSettings(const QString& pageName)
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("PrintAssistant"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("PrintAssistant"));
 
     qCDebug(KIPIPLUGINS_LOG) << pageName;
 
@@ -2349,7 +2352,7 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
         //int h = NINT(srcPage->height()  / 1000.0 * dpi);
         int w = NINT(srcPage->width());
         int h = NINT(srcPage->height());
-        
+
         QPixmap pixmap(w, h);
         QPainter painter;
         painter.begin(&pixmap);
@@ -2357,18 +2360,18 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
         // save this page out to file
         QFileInfo fi(baseFilename);
         QString ext  = fi.completeSuffix();  // ext = ".jpeg"
-        if (ext.isEmpty()) ext = ".jpeg";       
+        if (ext.isEmpty()) ext = QLatin1String(".jpeg");
         QString name = fi.baseName();
         QString path = fi.absolutePath();
-        
-        QString filename = path + "/" + name + "_" + QString::number(pageCount) + "." + ext;
+
+        QString filename = path + QLatin1String("/") + name + QLatin1String("_") + QString::number(pageCount) + QLatin1String(".") + ext;
         bool saveFile    = true;
 
         if (QFile::exists(filename))
         {
             int result = KMessageBox::warningYesNoCancel(this,
                                                          i18n("The following file will be overwritten. Are you sure you want to overwrite it?") +
-                                                         "\n\n" + filename);
+                                                         QLatin1String("\n\n") + filename);
             if (result == KMessageBox::No)
             {
                 saveFile = false;
@@ -2518,14 +2521,14 @@ void Wizard::accept()
         if (!checkTempPath(this, path))
             return;
 
-        path = path + "kipi_tmp_";
+        path = path + QLatin1String("kipi_tmp_");
 
         if (d->m_gimpFiles.count() > 0)
             removeGimpFiles();
 
         d->m_gimpFiles = printPhotosToFile(d->m_photos, path, s);
         QStringList args;
-        QString prog = "gimp-remote";
+        QString prog = QLatin1String("gimp-remote");
 
         for (QStringList::ConstIterator it = d->m_gimpFiles.constBegin(); it != d->m_gimpFiles.constEnd(); ++it)
             args << (*it);
@@ -2635,20 +2638,20 @@ void Wizard::infopage_blockCaptionButtons(bool block)
 void Wizard::saveCaptionSettings()
 {
     // Save the current settings
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("PrintAssistant"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("PrintAssistant"));
     // image captions
-    group.writeEntry("Captions",         d->m_photoPage->m_captions->currentIndex());
+    group.writeEntry(QLatin1String("Captions"),         d->m_photoPage->m_captions->currentIndex());
     // caption color
-    group.writeEntry("CaptionColor",     d->m_photoPage->m_font_color->color());
+    group.writeEntry(QLatin1String("CaptionColor"),     d->m_photoPage->m_font_color->color());
     // caption font
-    group.writeEntry("CaptionFont",      QFont(d->m_photoPage->m_font_name->currentFont()));
+    group.writeEntry(QLatin1String("CaptionFont"),      QFont(d->m_photoPage->m_font_name->currentFont()));
     // caption size
-    group.writeEntry("CaptionSize",      d->m_photoPage->m_font_size->value());
+    group.writeEntry(QLatin1String("CaptionSize"),      d->m_photoPage->m_font_size->value());
     // free caption
-    group.writeEntry("FreeCaption",      d->m_photoPage->m_FreeCaptionFormat->text());
+    group.writeEntry(QLatin1String("FreeCaption"),      d->m_photoPage->m_FreeCaptionFormat->text());
     // same to all
-    group.writeEntry("SameCaptionToAll", (d->m_photoPage->m_sameCaption->isChecked() ? 1 : 0));
+    group.writeEntry(QLatin1String("SameCaptionToAll"), (d->m_photoPage->m_sameCaption->isChecked() ? 1 : 0));
 }
 
 } // namespace KIPIPrintImagesPlugin
