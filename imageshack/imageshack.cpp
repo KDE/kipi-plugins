@@ -106,7 +106,7 @@ void Imageshack::readSettings()
     if (bLoaded) return;
     bLoaded = true;
 
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
 
     m_registrationCode = group.readEntry("RegistrationCode", QString());
@@ -114,10 +114,10 @@ void Imageshack::readSettings()
 
 void Imageshack::saveSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
 
-    group.writeEntry(QString("RegistrationCode"), registrationCode());
+    group.writeEntry(QStringLiteral("RegistrationCode"), registrationCode());
     config.sync();
 }
 

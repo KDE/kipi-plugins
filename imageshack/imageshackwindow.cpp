@@ -52,7 +52,6 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kurllabel.h>
-#include <kstandarddirs.h>
 #include <KWindowConfig>
 #include <KGuiItem>
 
@@ -87,7 +86,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
             this, SLOT(slotChangeRegistrantionCode()));
 
     KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Upload"), "network-workgroup",
+                     KGuiItem(i18n("Upload"), QStringLiteral("network-workgroup"),
                               i18n("Start upload to Imageshack web service")));
     startButton()->setEnabled(false);
 
@@ -103,9 +102,9 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
 
     about->addAuthor(ki18n("Dodon Victor").toString(),
                      ki18n("Author").toString(),
-                     "dodonvictor at gmail dot com");
+                     QStringLiteral("dodonvictor at gmail dot com"));
 
-    about->setHandbookEntry("imageshack");
+    about->setHandbookEntry(QStringLiteral("imageshack"));
     setAboutData(about);
 
     // -----------------------------------------------------------
@@ -182,7 +181,7 @@ void ImageshackWindow::closeEvent(QCloseEvent* e)
 
 void ImageshackWindow::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
     KWindowConfig::restoreWindowSize(windowHandle(), group);
 
@@ -192,11 +191,11 @@ void ImageshackWindow::readSettings()
     }
 
     QString resize = group.readEntry("Resize", QString());
-    if (resize == "No")
+    if (resize == QStringLiteral("No"))
     {
         m_widget->m_noResizeRdb->setChecked(true);
     }
-    else if (resize == "Template")
+    else if (resize == QStringLiteral("Template"))
     {
         m_widget->m_predefSizeRdb->setChecked(true);
         m_widget->m_resizeOptsCob->setCurrentIndex(group.readEntry("Template", 0));
@@ -220,7 +219,7 @@ void ImageshackWindow::readSettings()
 
 void ImageshackWindow::saveSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
     KWindowConfig::saveWindowSize(windowHandle(), group);
 
@@ -267,7 +266,8 @@ void ImageshackWindow::slotStartTransfer()
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setVisible(true);
     m_widget->m_progressBar->progressScheduled(i18n("Image Shack Export"), false, true);
-    m_widget->m_progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    m_widget->m_progressBar->progressThumbnailChanged(
+        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     uploadNextItem();
 }
@@ -428,25 +428,25 @@ void ImageshackWindow::uploadNextItem()
 
     if (m_widget->m_privateImagesChb->isChecked())
     {
-        opts["public"] = "no";
+        opts[QStringLiteral("public")] = QStringLiteral("no");
     }
 
     if (m_widget->m_remBarChb->isChecked())
     {
-        opts["rembar"] = "yes";
+        opts[QStringLiteral("rembar")] = QStringLiteral("yes");
     }
 
     if (m_widget->m_predefSizeRdb->isChecked())
     {
-        opts["optimage"] = "1";
-        opts["optsize"] = m_widget->m_resizeOptsCob->itemData(m_widget->m_resizeOptsCob->currentIndex()).toString();
+        opts[QStringLiteral("optimage")] = QStringLiteral("1");
+        opts[QStringLiteral("optsize")] = m_widget->m_resizeOptsCob->itemData(m_widget->m_resizeOptsCob->currentIndex()).toString();
     }
     else if (m_widget->m_customSizeRdb->isChecked())
     {
-        opts["optimage"] = "1";
-        QString dim =  "";
-        dim.append(QString("%1x%2").arg(m_widget->m_widthSpb->value()).arg(m_widget->m_heightSpb->value()));
-        opts["optsize"] = dim;
+        opts[QStringLiteral("optimage")] = QStringLiteral("1");
+        QString dim = QStringLiteral("");
+        dim.append(QStringLiteral("%1x%2").arg(m_widget->m_widthSpb->value()).arg(m_widget->m_heightSpb->value()));
+        opts[QStringLiteral("optsize")] = dim;
     }
 
     // tags
@@ -454,11 +454,11 @@ void ImageshackWindow::uploadNextItem()
     {
         QString str = m_widget->m_tagsFld->text();
         QStringList tagsList;
-        tagsList = str.split(QRegExp("\\W+"), QString::SkipEmptyParts);
-        opts["tags"] = tagsList.join(",");
+        tagsList = str.split(QRegExp(QStringLiteral("\\W+")), QString::SkipEmptyParts);
+        opts[QStringLiteral("tags")] = tagsList.join(QStringLiteral(","));
     }
 
-    opts["cookie"] = m_imageshack->registrationCode();
+    opts[QStringLiteral("cookie")] = m_imageshack->registrationCode();
 
     bool uploadToGalleries = m_widget->m_useGalleriesChb->isChecked();
 

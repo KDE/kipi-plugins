@@ -31,10 +31,11 @@
 
 #include <QFile>
 #include <QUrl>
+#include <QtCore/QMimeDatabase>
+#include <QtCore/QMimeType>
 
 // KDE includes
 
-#include <kmimetype.h>
 #include <krandom.h>
 
 // Local includes
@@ -95,8 +96,9 @@ void MPForm::addPair(const QString& name, const QString& value)
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
-    QString mime       = ptr->name();
+    QMimeDatabase db;
+    QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
+    QString mime = ptr.name();
     if (mime.isEmpty())
         return false;
 
@@ -131,12 +133,12 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
+    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const
 {
-    return m_boundary;
+    return QString::fromLatin1(m_boundary);
 }
 
 QByteArray MPForm::formData() const

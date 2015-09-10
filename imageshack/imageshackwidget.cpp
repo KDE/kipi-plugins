@@ -37,12 +37,13 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QPushButton>
+#include <QtCore/QMimeDatabase>
+#include <QtCore/QMimeType>
 
 // KDE includes
 
-#include <kmimetype.h>
 #include <klocalizedstring.h>
-#include <kdialog.h>
+#include <KGuiItem>
 
 // Libkipi includes
 
@@ -63,7 +64,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     : QWidget(parent),
       m_imageshack(imageshack)
 {
-    setObjectName("ImageshackWidget");
+    setObjectName(QStringLiteral("ImageshackWidget"));
 
     QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
@@ -81,7 +82,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imageshack home page in a web browser"));
-    m_headerLbl->setText(QString("<b><h2><a href='http://imageshack.us'>%1</a></h2></b>").arg(i18n("ImageShack")));
+    m_headerLbl->setText(QStringLiteral("<b><h2><a href='http://imageshack.us'>%1</a></h2></b>").arg(i18n("ImageShack")));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -98,7 +99,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_accountEmailLbl = new QLabel(accountBox);
     m_chgRegCodeBtn   = new QPushButton(accountBox);
     KGuiItem::assign(m_chgRegCodeBtn,
-                     KGuiItem(i18n("Change account"), "system-switch-user",
+                     KGuiItem(i18n("Change account"), QStringLiteral("system-switch-user"),
                               i18n("Change the registration code for the Imageshack account used to upload images")));
 
     accountBoxLayout->addWidget(accountName,          0, 0, 1, 1);
@@ -129,7 +130,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
 
     QLabel* const galLbl = new QLabel(i18n("Gallery:"), m_galleriesWidget);
     m_galleriesCob       = new QComboBox(m_galleriesWidget);
-    m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"), "--new-gallery--");
+    m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"),
+                            QStringLiteral("--new-gallery--"));
     m_galleriesCob->setEditable(false);
 
     QLabel* const gallNameLbl = new QLabel(m_galleriesWidget);
@@ -138,7 +140,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_newGalleryName          = new QLineEdit(m_galleriesWidget);
     m_reloadGalleriesBtn      = new QPushButton(m_galleriesWidget);
     KGuiItem::assign(m_reloadGalleriesBtn,
-                     KGuiItem(i18nc("ImageShack galleries list", "Reload"), "view-refresh",
+                     KGuiItem(i18nc("ImageShack galleries list", "Reload"),
+                              QStringLiteral("view-refresh"),
                               i18n("Reload ImageShack galleries list")));
 
     galleriesBoxLayout->addWidget(m_useGalleriesChb,    0, 0, 1, 5);
@@ -276,9 +279,11 @@ void ImageshackWidget::removeVideosFromList()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KMimeType::Ptr mimePtr = KMimeType::findByUrl(urls[i]);
+        QMimeDatabase db;
+        QMimeType ptr = db.mimeTypeForUrl(urls[i]);
+        QString mime = ptr.name();
 
-        if (mimePtr->name().startsWith(QLatin1String("video/")))
+        if (mime.startsWith(QLatin1String("video/")))
             m_imgList->removeItemByUrl(urls[i]);
     }
 }
@@ -311,8 +316,16 @@ void ImageshackWidget::updateResizeOpts()
 {
     QStringList titleList;
     QStringList valueList;
-    valueList << "100x75"<< "150x122"<< "320x240"<< "640x480"<< "800x600";
-    valueList << "1024x768"<< "1280x1024"<< "1600x1200"<< "resample";
+    valueList << QStringLiteral("100x75");
+    valueList << QStringLiteral("150x122");
+    valueList << QStringLiteral("320x240");
+    valueList << QStringLiteral("640x480");
+    valueList << QStringLiteral("800x600");
+    valueList << QStringLiteral("1024x768");
+    valueList << QStringLiteral("1280x1024");
+    valueList << QStringLiteral("1600x1200");
+    valueList << QStringLiteral("resample");
+
     titleList << i18n("100x75 (avatar)");
     titleList << i18n("150x122 (thumbnail)");
     titleList << i18n("320x240 (for websites and email)");
@@ -349,7 +362,8 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
 {
     m_galleriesCob->clear();
 
-    m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"), "--new-gallery--");
+    m_galleriesCob->addItem(i18nc("@item:inlistbox", "Create new gallery"),
+                            QStringLiteral("--new-gallery--"));
 
     // TODO check if the lists have the same size
     for (int i = 0; i < gTexts.size(); ++i)

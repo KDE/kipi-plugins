@@ -31,11 +31,11 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kxmlguiclient.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 
@@ -104,14 +104,14 @@ void Plugin_Imageshack::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to &Imageshack..."));
-    d->actionExport->setIcon(QIcon::fromTheme("kipi-imageshack"));
+    d->actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-imageshack")));
     d->actionExport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_M));
     d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction("imageshackexport", d->actionExport);
+    addAction(QStringLiteral("imageshackexport"), d->actionExport);
 }
 
 void Plugin_Imageshack::slotExport()
