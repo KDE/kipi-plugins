@@ -415,7 +415,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     libpngver.replace('\n', ' ');
     QString soft     = d->kipipluginsVer;
     soft.append(QString(" (%1)").arg(libpngver));
-    QByteArray softAscii = soft.toAscii();
+    QByteArray softAscii = soft.toLatin1();
     png_text text;
     text.key         = (png_charp)"Software";
     text.text        = softAscii.data();
@@ -599,7 +599,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     libtiffver.replace('\n', ' ');
     QString soft = d->kipipluginsVer;
     soft.append(QString(" ( %1 )").arg(libtiffver));
-    TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)soft.toAscii().data());
+    TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)soft.toLatin1().data());
 
     // Write ICC profile.
     if (!d->iccProfile.isEmpty())

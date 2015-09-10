@@ -305,12 +305,12 @@ void KPImagesListView::setup(int iconSize)
     hideColumn(User5);
     hideColumn(User6);
 
-    header()->setResizeMode(User1, QHeaderView::Interactive);
-    header()->setResizeMode(User2, QHeaderView::Interactive);
-    header()->setResizeMode(User3, QHeaderView::Interactive);
-    header()->setResizeMode(User4, QHeaderView::Interactive);
-    header()->setResizeMode(User5, QHeaderView::Interactive);
-    header()->setResizeMode(User6, QHeaderView::Stretch);
+    header()->setSectionResizeMode(User1, QHeaderView::Interactive);
+    header()->setSectionResizeMode(User2, QHeaderView::Interactive);
+    header()->setSectionResizeMode(User3, QHeaderView::Interactive);
+    header()->setSectionResizeMode(User4, QHeaderView::Interactive);
+    header()->setSectionResizeMode(User5, QHeaderView::Interactive);
+    header()->setSectionResizeMode(User6, QHeaderView::Stretch);
 
     connect(this, &KPImagesListView::itemClicked,
             this, &KPImagesListView::slotItemClicked);
