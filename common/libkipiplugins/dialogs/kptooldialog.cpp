@@ -278,6 +278,11 @@ QPushButton* KPToolDialog::helpButton() const
     return d->buttonBox->button(QDialogButtonBox::Help);
 }
 
+void KPToolDialog::addButton(QAbstractButton* button, QDialogButtonBox::ButtonRole role)
+{
+    d->buttonBox->addButton(button, role);
+}
+
 void KPToolDialog::slotCloseClicked()
 {
     if (d->propagateReject)
