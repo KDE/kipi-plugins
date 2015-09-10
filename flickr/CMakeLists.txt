@@ -32,6 +32,7 @@ target_link_libraries(kipiplugin_flickr
                       KF5::KIOCore
                       KF5::Wallet
                       KF5::KHtml
+                      KF5::WindowSystem
                      )
 
 configure_file(kipiplugin_flickr.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flickr.desktop)

@@ -110,51 +110,51 @@ void Plugin_Flickr::setupActions()
 
     m_actionFlickr = new QAction(this);
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
-    m_actionFlickr->setIcon(QIcon::fromTheme("kipi-flickr"));
+    m_actionFlickr->setIcon(QIcon::fromTheme(QStringLiteral("kipi-flickr")));
     m_actionFlickr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_R));
     
-    selectFlickr = new SelectUserDlg(0,"Flickr");
+    selectFlickr = new SelectUserDlg(0,QStringLiteral("Flickr"));
     
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
 
-    addAction("flickrexport", m_actionFlickr);
+    addAction(QStringLiteral("flickrexport"), m_actionFlickr);
 
     m_action23 = new QAction(this);
     m_action23->setText(i18n("Export to &23..."));
-    m_action23->setIcon(QIcon::fromTheme("kipi-hq"));
+    m_action23->setIcon(QIcon::fromTheme(QStringLiteral("kipi-hq")));
     m_action23->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_2));
 
-    select23 = new SelectUserDlg(0,"23");
+    select23 = new SelectUserDlg(0,QStringLiteral("23"));
     
     connect(m_action23, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate23()));
 
-    addAction("23export", m_action23);
+    addAction(QStringLiteral("23export"), m_action23);
 
     m_actionZooomr = new QAction(this);
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
-    m_actionZooomr->setIcon(QIcon::fromTheme("kipi-zooomr"));
+    m_actionZooomr->setIcon(QIcon::fromTheme(QStringLiteral("kipi-zooomr")));
     m_actionZooomr->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
 
-    selectZoomr = new SelectUserDlg(0,"Zooomr");
+    selectZoomr = new SelectUserDlg(0,QStringLiteral("Zooomr"));
     
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));
 
-    addAction("Zooomrexport", m_actionZooomr);
+    addAction(QStringLiteral("Zooomrexport"), m_actionZooomr);
 }
 
 void Plugin_Flickr::slotActivateFlickr()
 {
     selectFlickr->reactivate();
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QLatin1String("/")+ QLatin1String("kipi-flickrexportplugin-") + QString::number(getpid()) + QLatin1String("/");
     QDir().mkpath(tmp);
     
     if (!m_dlgFlickr)
     {
         // We clean it up in the close button
-        m_dlgFlickr = new FlickrWindow(tmp, QApplication::activeWindow(), "Flickr", selectFlickr);
+        m_dlgFlickr = new FlickrWindow(tmp, QApplication::activeWindow(), QStringLiteral("Flickr"), selectFlickr);
     }
     else
     {
@@ -172,13 +172,13 @@ void Plugin_Flickr::slotActivateFlickr()
 void Plugin_Flickr::slotActivate23()
 {
     select23->reactivate();
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QLatin1String("/")+ QLatin1String("kipi-23exportplugin-") + QString::number(getpid()) + QLatin1String("/");
     QDir().mkpath(tmp);
     
     if (!m_dlg23)
     {
         // We clean it up in the close button
-        m_dlg23 = new FlickrWindow(tmp, QApplication::activeWindow(), "23", select23);
+        m_dlg23 = new FlickrWindow(tmp, QApplication::activeWindow(), QStringLiteral("23"), select23);
     }
     else
     {
@@ -196,13 +196,13 @@ void Plugin_Flickr::slotActivate23()
 void Plugin_Flickr::slotActivateZooomr()
 {
     selectZoomr->reactivate();
-    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QString("/")+ QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/");
+    QString tmp = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+ QLatin1String("/")+ QLatin1String("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QLatin1String("/");
     QDir().mkpath(tmp);
     
     if (!m_dlgZooomr)
     {
         // We clean it up in the close button
-        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), "Zooomr", selectZoomr);
+        m_dlgZooomr = new FlickrWindow(tmp, QApplication::activeWindow(), QStringLiteral("Zooomr"), selectZoomr);
     }
     else
     {

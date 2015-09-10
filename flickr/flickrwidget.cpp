@@ -69,7 +69,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
 
     // -- The image list --------------------------------------------------
 
-    m_imglst               = new FlickrList(this, (serviceName == "23"));
+    m_imglst               = new FlickrList(this, (serviceName == QStringLiteral("23")));
 
     // For figuring out the width of the permission columns.
     QHeaderView* const hdr = m_imglst->listView()->header();
@@ -85,7 +85,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::TAGS),
                                     i18n("Extra tags"), true);
 
-    if (serviceName != QString("23"))
+    if (serviceName != QStringLiteral("23"))
     {
         int tmpWidth;
 
@@ -103,8 +103,8 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
                                         i18nc("photo permissions", "Family"), true);
         m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::FRIENDS),
                                         i18nc("photo permissions", "Friends"), true);
-        hdr->setResizeMode(FlickrList::FAMILY,  QHeaderView::Interactive);
-        hdr->setResizeMode(FlickrList::FRIENDS, QHeaderView::Interactive);
+        hdr->setSectionResizeMode(FlickrList::FAMILY,  QHeaderView::Interactive);
+        hdr->setSectionResizeMode(FlickrList::FRIENDS, QHeaderView::Interactive);
         hdr->resizeSection(FlickrList::FAMILY,  permColWidth);
         hdr->resizeSection(FlickrList::FRIENDS, permColWidth);
 
@@ -127,7 +127,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
 
     }
 
-    hdr->setResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
+    hdr->setSectionResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
     hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
 
     // -- Layout for the tags -------------------------------------------------
@@ -148,7 +148,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_extendedTagsButton->setSizePolicy(QSizePolicy::Maximum,
                                         QSizePolicy::Preferred);
 
-    m_extendedTagsBox               = new QGroupBox("", getSettingsBox());
+    m_extendedTagsBox               = new QGroupBox(QStringLiteral(""), getSettingsBox());
     m_extendedTagsBox->setFlat(true);
     QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
@@ -197,7 +197,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     m_extendedPublicationButton->setChecked(true);
     m_extendedPublicationButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
 
-    m_extendedPublicationBox                  = new QGroupBox("", publicationBox);
+    m_extendedPublicationBox                  = new QGroupBox(QStringLiteral(""), publicationBox);
     m_extendedPublicationBox->setFlat(true);
     QGridLayout* const extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
 
@@ -253,13 +253,13 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
             this, SLOT(slotAddExtraTagsToggled(bool)));
 
     // Zooomr doesn't support explicit Photosets.
-    if (serviceName == QString("Zooomr"))
+    if (serviceName == QStringLiteral("Zooomr"))
     {
         getAlbumBox()->hide();
     }
 
     // 23HQ doesn't support the Family and Friends concept.
-    if (serviceName != QString("23"))
+    if (serviceName != QStringLiteral("23"))
     {
         connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFamilyToggled(int)));
@@ -274,7 +274,7 @@ FlickrWidget::FlickrWidget(QWidget* const parent, KIPI::Interface* const iface, 
     }
 
     // 23HQ and Zooomr don't support the Safety Level and Content Type concept.
-    if ((serviceName != QString("23")) && (serviceName != QString("Zooomr")))
+    if ((serviceName != QStringLiteral("23")) && (serviceName != QStringLiteral("Zooomr")))
     {
         connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainSafetyLevelChanged(int)));
@@ -304,14 +304,14 @@ FlickrWidget::~FlickrWidget()
 {
 }
 
-void FlickrWidget::updateLabels(const QString& name, const QString& url)
+void FlickrWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
 {
-    if (m_serviceName == QString("23"))
+    if (m_serviceName == QStringLiteral("23"))
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
-    else if (m_serviceName == QString("Zooomr"))
+    else if (m_serviceName == QStringLiteral("Zooomr"))
         getHeaderLbl()->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
                                   "<font color=\"#7CD164\">zooomr</font></a>"
                                   " Export"
@@ -467,13 +467,15 @@ void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox, Qt::Che
 
 void FlickrWidget::slotMainSafetyLevelChanged(int index)
 {
-    int currValue = qVariantValue<int>(m_safetyLevelComboBox->itemData(index));
+    int currValue = (m_safetyLevelComboBox->itemData(index)).value<int>();
+//     int currValue = qVariantValue<int>(m_safetyLevelComboBox->itemData(index));
     m_imglst->setSafetyLevels(static_cast<FlickrList::SafetyLevel>(currValue));
 }
 
 void FlickrWidget::slotMainContentTypeChanged(int index)
 {
-    int currValue = qVariantValue<int>(m_contentTypeComboBox->itemData(index));
+    int currValue = (m_contentTypeComboBox->itemData(index)).value<int>();
+//     int currValue = qVariantValue<int>(m_contentTypeComboBox->itemData(index));
     m_imglst->setContentTypes(static_cast<FlickrList::ContentType>(currValue));
 }
 

@@ -140,7 +140,7 @@ public:
 
     FPhotoSet()
     {
-        id = "-1";
+        id = QStringLiteral("-1");
     }
 
     QString id;

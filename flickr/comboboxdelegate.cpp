@@ -94,7 +94,7 @@ void ComboBoxDelegate::paint(QPainter* painter,
     if (m_rowEdited != index.row())
     {
         // Get the currently selected index in the items list.
-        int currIndex = qVariantValue<int>(index.data());
+        int currIndex = (index.data()).value<int>();
 
         // PE: These values are found by trial and error. I don't have any idea
         // if it's actually correct, but it seems to work across all themes.

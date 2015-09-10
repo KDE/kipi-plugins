@@ -81,34 +81,34 @@ FlickrTalker::FlickrTalker(QWidget* const parent, const QString& serviceName)
 
     m_serviceName = serviceName;
 
-    if (serviceName == QString("23"))
+    if (serviceName == QStringLiteral("23"))
     {
-        m_apiUrl    = QString("http://www.23hq.com/services/rest/");
-        m_authUrl   = QString("http://www.23hq.com/services/auth/");
-        m_uploadUrl = QString("http://www.23hq.com/services/upload/");
+        m_apiUrl    = QStringLiteral("http://www.23hq.com/services/rest/");
+        m_authUrl   = QStringLiteral("http://www.23hq.com/services/auth/");
+        m_uploadUrl = QStringLiteral("http://www.23hq.com/services/upload/");
 
         // bshanks: do 23 and flickr really share API keys? or does 23 not need
         // one?
-        m_apikey    = "49d585bafa0758cb5c58ab67198bf632";
-        m_secret    = "34b39925e6273ffd";
+        m_apikey    = QStringLiteral("49d585bafa0758cb5c58ab67198bf632");
+        m_secret    = QStringLiteral("34b39925e6273ffd");
     }
-    else if (serviceName == QString("Zooomr"))
+    else if (serviceName == QStringLiteral("Zooomr"))
     {
-        m_apiUrl    = QString("http://api.zooomr.com/services/rest/");
-        m_authUrl   = QString("http://www.zooomr.com/services/auth/");
-        m_uploadUrl = QString("http://upload.zooomr.com/services/upload/");
+        m_apiUrl    = QStringLiteral("http://api.zooomr.com/services/rest/");
+        m_authUrl   = QStringLiteral("http://www.zooomr.com/services/auth/");
+        m_uploadUrl = QStringLiteral("http://upload.zooomr.com/services/upload/");
 
-        m_apikey    = "18c8db5ce9ed4e15a7b484136f5080c5";
-        m_secret    = "1ea4af14e3";
+        m_apikey    = QStringLiteral("18c8db5ce9ed4e15a7b484136f5080c5");
+        m_secret    = QStringLiteral("1ea4af14e3");
     }
     else
     {
-        m_apiUrl    = QString("https://www.flickr.com/services/rest/");
-        m_authUrl   = QString("https://www.flickr.com/services/auth/");
-        m_uploadUrl = QString("https://api.flickr.com/services/upload/");
+        m_apiUrl    = QStringLiteral("https://www.flickr.com/services/rest/");
+        m_authUrl   = QStringLiteral("https://www.flickr.com/services/auth/");
+        m_uploadUrl = QStringLiteral("https://api.flickr.com/services/upload/");
 
-        m_apikey    = "49d585bafa0758cb5c58ab67198bf632";
-        m_secret    = "34b39925e6273ffd";
+        m_apikey    = QStringLiteral("49d585bafa0758cb5c58ab67198bf632");
+        m_secret    = QStringLiteral("34b39925e6273ffd");
     }
 
     /* Initialize selected photo set as empty. */
@@ -155,7 +155,7 @@ QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
 
     QCryptographicHash context(QCryptographicHash::Md5);
     context.addData(compressed.toUtf8());
-    return context.result().toHex().data();
+    return QLatin1String(context.result().toHex().data());
 }
 
 QString FlickrTalker::getMaxAllowedFileSize()
@@ -173,18 +173,18 @@ void FlickrTalker::maxAllowedFileSize()
 
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("auth_token", m_token);
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("method", "flickr.people.getLimits");
+    urlQuery.addQueryItem(QStringLiteral("auth_token"), m_token);
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.people.getLimits"));
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get max file size url: " << url;
 
     KIO::TransferJob* job = 0;
     
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
         // the redirect.
@@ -194,7 +194,7 @@ void FlickrTalker::maxAllowedFileSize()
     {
         QByteArray tmp;
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -244,17 +244,17 @@ void FlickrTalker::getFrob()
 
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("method", "flickr.auth.getFrob");
-    urlQuery.addQueryItem("api_key", m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.auth.getFrob"));
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get frob url: " << url;
 
     KIO::TransferJob* job = 0;
 
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
         // the redirect.
@@ -264,7 +264,7 @@ void FlickrTalker::getFrob()
     {
         QByteArray tmp;
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -292,19 +292,19 @@ void FlickrTalker::checkToken(const QString& token)
 
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("method", "flickr.auth.checkToken");
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("auth_token", token);
+    urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.auth.checkToken"));
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("auth_token"), token);
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Check token url: " << url;
     QByteArray tmp;
 
     KIO::TransferJob* job = 0;
 
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow the
         // redirect
@@ -313,7 +313,7 @@ void FlickrTalker::checkToken(const QString& token)
     else
     {
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -341,12 +341,12 @@ void FlickrTalker::slotAuthenticate()
 
     QUrl url(m_authUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("frob", m_frob);
-    urlQuery.addQueryItem("perms", "write");
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("frob"), m_frob);
+    urlQuery.addQueryItem(QStringLiteral("perms"), QStringLiteral("write"));
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Authenticate url: " << url;
 
@@ -386,18 +386,18 @@ void FlickrTalker::getToken()
 
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("method", "flickr.auth.getToken");
-    urlQuery.addQueryItem("frob", m_frob);
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.auth.getToken"));
+    urlQuery.addQueryItem(QStringLiteral("frob"), m_frob);
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get token url: " << url;
 
     KIO::TransferJob* job = 0;
 
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
         // the redirect.
@@ -407,7 +407,7 @@ void FlickrTalker::getToken()
     {
         QByteArray tmp;
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -435,18 +435,18 @@ void FlickrTalker::listPhotoSets()
     qCDebug(KIPIPLUGINS_LOG) << "List photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("auth_token", m_token);
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("method", "flickr.photosets.getList");
+    urlQuery.addQueryItem(QStringLiteral("auth_token"), m_token);
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.photosets.getList"));
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "List photoset URL" << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
 
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
         // the redirect.
@@ -455,7 +455,7 @@ void FlickrTalker::listPhotoSets()
     else
     {
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -480,24 +480,24 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
 
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("method", method);
-    urlQuery.addQueryItem("frob", m_frob);
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("method"), method);
+    urlQuery.addQueryItem(QStringLiteral("frob"), m_frob);
 
     for (QStringList::const_iterator it = argList.constBegin(); it != argList.constEnd(); ++it)
     {
-        QStringList str = (*it).split('=', QString::SkipEmptyParts);
+        QStringList str = (*it).split(QLatin1Char('='), QString::SkipEmptyParts);
         urlQuery.addQueryItem(str[0], str[1]);
     }
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Get photo property url: " << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
 
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
         // the redirect.
@@ -506,7 +506,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     else
     {
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -541,21 +541,21 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     qCDebug(KIPIPLUGINS_LOG) << "create photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("auth_token", m_token);
-    urlQuery.addQueryItem("api_key", m_apikey);
-    urlQuery.addQueryItem("method", "flickr.photosets.create");
-    urlQuery.addQueryItem("title", albumTitle);
-    urlQuery.addQueryItem("description", albumDescription);
-    urlQuery.addQueryItem("primary_photo_id", primaryPhotoId);
+    urlQuery.addQueryItem(QStringLiteral("auth_token"), m_token);
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
+    urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.photosets.create"));
+    urlQuery.addQueryItem(QStringLiteral("title"), albumTitle);
+    urlQuery.addQueryItem(QStringLiteral("description"), albumDescription);
+    urlQuery.addQueryItem(QStringLiteral("primary_photo_id"), primaryPhotoId);
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
-    urlQuery.addQueryItem("api_sig", md5);
+    urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "List photo sets url: " << url;
     QByteArray tmp;
     KIO::TransferJob* job = 0;
 
-    if (m_serviceName == "Zooomr")
+    if (m_serviceName == QStringLiteral("Zooomr"))
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
         // the redirect (although this function should never get called when
@@ -565,7 +565,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     else
     {
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
     }
 
 
@@ -600,29 +600,29 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
      * is done in the set creation call to Flickr. */
     if (photoSetId.startsWith(QLatin1String("UNDEFINED_")))
     {
-        createPhotoSet("", m_selectedPhotoSet.title, m_selectedPhotoSet.description, photoId);
+        createPhotoSet(QStringLiteral(""), m_selectedPhotoSet.title, m_selectedPhotoSet.description, photoId);
     }
     else
     {
-        urlQuery.addQueryItem("auth_token", m_token);
+        urlQuery.addQueryItem(QStringLiteral("auth_token"), m_token);
 
-        urlQuery.addQueryItem("photoset_id", photoSetId);
+        urlQuery.addQueryItem(QStringLiteral("photoset_id"), photoSetId);
 
-        urlQuery.addQueryItem("api_key", m_apikey);
+        urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
 
-        urlQuery.addQueryItem("method", "flickr.photosets.addPhoto");
+        urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.photosets.addPhoto"));
 
-        urlQuery.addQueryItem("photo_id", photoId);
+        urlQuery.addQueryItem(QStringLiteral("photo_id"), photoId);
         
         url.setQuery(urlQuery);
         QString md5 = getApiSig(m_secret, url);
-        urlQuery.addQueryItem("api_sig", md5);
+        urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
         url.setQuery(urlQuery);
 
         QByteArray tmp;
         qCDebug(KIPIPLUGINS_LOG) << "Add photo to Photo set url: " << url;
         KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+        job->addMetaData(QStringLiteral("content-type"), QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
 
         connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
                 this, SLOT(slotData(KIO::Job*,QByteArray)));
@@ -649,60 +649,60 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     QUrl    url(m_uploadUrl);
 
     // We dont' want to modify url as such, we just used the KURL object for storing the query items.
-    QUrl  url2("");
+    QUrl  url2(QStringLiteral(""));
     QUrlQuery urlQuery;
     QString path = photoPath;
     MPForm  form;
 
-    form.addPair("auth_token", m_token, "text/plain");
-    urlQuery.addQueryItem("auth_token", m_token);
+    form.addPair(QStringLiteral("auth_token"), m_token, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("auth_token"), m_token);
 
-    form.addPair("api_key", m_apikey, "text/plain");
-    urlQuery.addQueryItem("api_key", m_apikey);
+    form.addPair(QStringLiteral("api_key"), m_apikey, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
 
-    QString ispublic = (info.is_public == 1) ? "1" : "0";
-    form.addPair("is_public", ispublic, "text/plain");
-    urlQuery.addQueryItem("is_public", ispublic);
+    QString ispublic = (info.is_public == 1) ? QStringLiteral("1") : QStringLiteral("0");
+    form.addPair(QStringLiteral("is_public"), ispublic, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("is_public"), ispublic);
 
-    QString isfamily = (info.is_family == 1) ? "1" : "0";
-    form.addPair("is_family", isfamily, "text/plain");
-    urlQuery.addQueryItem("is_family", isfamily);
+    QString isfamily = (info.is_family == 1) ? QStringLiteral("1") : QStringLiteral("0");
+    form.addPair(QStringLiteral("is_family"), isfamily, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("is_family"), isfamily);
 
-    QString isfriend = (info.is_friend == 1) ? "1" : "0";
-    form.addPair("is_friend", isfriend, "text/plain");
-    urlQuery.addQueryItem("is_friend", isfriend);
+    QString isfriend = (info.is_friend == 1) ? QStringLiteral("1") : QStringLiteral("0");
+    form.addPair(QStringLiteral("is_friend"), isfriend, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("is_friend"), isfriend);
 
     QString safetyLevel = QString::number(static_cast<int>(info.safety_level));
-    form.addPair("safety_level", safetyLevel, "text/plain");
-    urlQuery.addQueryItem("safety_level", safetyLevel);
+    form.addPair(QStringLiteral("safety_level"), safetyLevel, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("safety_level"), safetyLevel);
 
     QString contentType = QString::number(static_cast<int>(info.content_type));
-    form.addPair("content_type", contentType, "text/plain");
-    urlQuery.addQueryItem("content_type", contentType);
+    form.addPair(QStringLiteral("content_type"), contentType, QStringLiteral("text/plain"));
+    urlQuery.addQueryItem(QStringLiteral("content_type"), contentType);
 
-    QString tags = "\"" + info.tags.join("\" \"") + "\"";
+    QString tags = QStringLiteral("\"") + info.tags.join(QStringLiteral("\" \"")) + QStringLiteral("\"");
 
     if (tags.length() > 0)
     {
-        form.addPair("tags", tags, "text/plain");
-        urlQuery.addQueryItem("tags", tags);
+        form.addPair(QStringLiteral("tags"), tags, QStringLiteral("text/plain"));
+        urlQuery.addQueryItem(QStringLiteral("tags"), tags);
     }
 
     if (!info.title.isEmpty())
     {
-        form.addPair("title", info.title, "text/plain");
-        urlQuery.addQueryItem("title", info.title);
+        form.addPair(QStringLiteral("title"), info.title, QStringLiteral("text/plain"));
+        urlQuery.addQueryItem(QStringLiteral("title"), info.title);
     }
 
     if (!info.description.isEmpty())
     {
-        form.addPair("description", info.description, "text/plain");
-        urlQuery.addQueryItem("description", info.description);
+        form.addPair(QStringLiteral("description"), info.description, QStringLiteral("text/plain"));
+        urlQuery.addQueryItem(QStringLiteral("description"), info.description);
     }
     
     url2.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url2);
-    form.addPair("api_sig", md5, "text/plain");
+    form.addPair(QStringLiteral("api_sig"), md5, QStringLiteral("text/plain"));
     QImage image;
 
     // Check if RAW file.
@@ -717,7 +717,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     if (!image.isNull())
     {
-        path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QString("/") + QFileInfo(photoPath).baseName().trimmed() + ".jpg";
+        path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QStringLiteral("/") + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -736,7 +736,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
             //       As IPTC do not support UTF-8, we need to remove it.
             meta.removeIptcTag("Iptc.Application2.Keywords", false);
 
-            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
             meta.save(path);
         }
         else
@@ -747,7 +747,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path;
     }
 
-    if (!form.addFile("photo", path))
+    if (!form.addFile(QStringLiteral("photo"), path))
     {
         return false;
     }
@@ -755,7 +755,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     form.finish();
 
     KIO::TransferJob* const job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());
+    job->addMetaData(QStringLiteral("content-type"), form.contentType());
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotData(KIO::Job*,QByteArray)));
@@ -967,7 +967,7 @@ void FlickrTalker::slotResult(KJob* kjob)
 void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
 {
     QString errorString;
-    QDomDocument doc("mydocument");
+    QDomDocument doc(QStringLiteral("mydocument"));
 
     if (!doc.setContent(data))
     {
@@ -981,7 +981,7 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "person")
+        if (node.isElement() && node.nodeName() == QStringLiteral("person"))
         {
             e                = node.toElement();
             QDomNode details = e.firstChild();
@@ -992,9 +992,9 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
                 {
                     e = details.toElement();
 
-                    if (details.nodeName() == "photos")
+                    if (details.nodeName() == QStringLiteral("photos"))
                     {
-                        QDomAttr a = e.attributeNode("maxupload");
+                        QDomAttr a = e.attributeNode(QStringLiteral("maxupload"));
                         m_maxSize = a.value();
                         qCDebug(KIPIPLUGINS_LOG) << "Max upload size is"<<m_maxSize;
                     } 
@@ -1004,12 +1004,12 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
             }
         }
         
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            errorString = node.toElement().attribute("code");
+            errorString = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
         }
 
         node = node.nextSibling();
@@ -1020,7 +1020,7 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
 {
     bool success = false;
     QString errorString;
-    QDomDocument doc("mydocument");
+    QDomDocument doc(QStringLiteral("mydocument"));
 
     if (!doc.setContent(data))
     {
@@ -1032,7 +1032,7 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "frob")
+        if (node.isElement() && node.nodeName() == QStringLiteral("frob"))
         {
             QDomElement e = node.toElement();    // try to convert the node to an element.
             qCDebug(KIPIPLUGINS_LOG) << "Frob is" << e.text();
@@ -1040,12 +1040,12 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
             success       = true;
         }
 
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            errorString = node.toElement().attribute("code");
+            errorString = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
         }
 
         node = node.nextSibling();
@@ -1072,7 +1072,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
     QString      errorString;
     QString      username;
     QString      transReturn;
-    QDomDocument doc("checktoken");
+    QDomDocument doc(QStringLiteral("checktoken"));
 
     if (!doc.setContent(data))
     {
@@ -1085,7 +1085,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "auth")
+        if (node.isElement() && node.nodeName() == QStringLiteral("auth"))
         {
             e                = node.toElement(); // try to convert the node to an element.
             QDomNode details = e.firstChild();
@@ -1096,39 +1096,39 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
                 {
                     e = details.toElement();
 
-                    if (details.nodeName() == "token")
+                    if (details.nodeName() == QStringLiteral("token"))
                     {
                         qCDebug(KIPIPLUGINS_LOG) << "Token=" << e.text();
                         m_token = e.text();//this is what is obtained from data.
                     }
 
-                    if (details.nodeName() == "perms")
+                    if (details.nodeName() == QStringLiteral("perms"))
                     {
                         qCDebug(KIPIPLUGINS_LOG) << "Perms=" << e.text();
                         QString perms = e.text();//this is what is obtained from data.
 
-                        if (perms == "write")
+                        if (perms == QStringLiteral("write"))
                         {
                             transReturn = i18nc("As in the permission to", "write");
                         }
-                        else if (perms == "read")
+                        else if (perms == QStringLiteral("read"))
                         {
                             transReturn = i18nc("As in the permission to", "read");
                         }
-                        else if (perms == "delete")
+                        else if (perms == QStringLiteral("delete"))
                         {
                             transReturn = i18nc("As in the permission to", "delete");
                         }
                     }
 
-                    if (details.nodeName() == "user")
+                    if (details.nodeName() == QStringLiteral("user"))
                     {
-                        qCDebug(KIPIPLUGINS_LOG) << "nsid=" << e.attribute("nsid");
-                        m_userId   = e.attribute("nsid");
-                        username   = e.attribute("username");
+                        qCDebug(KIPIPLUGINS_LOG) << "nsid=" << e.attribute(QStringLiteral("nsid"));
+                        m_userId   = e.attribute(QStringLiteral("nsid"));
+                        username   = e.attribute(QStringLiteral("username"));
                         m_username = username;
-                        qCDebug(KIPIPLUGINS_LOG) << "username=" << e.attribute("username");
-                        qCDebug(KIPIPLUGINS_LOG) << "fullname=" << e.attribute("fullname");
+                        qCDebug(KIPIPLUGINS_LOG) << "username=" << e.attribute(QStringLiteral("username"));
+                        qCDebug(KIPIPLUGINS_LOG) << "fullname=" << e.attribute(QStringLiteral("fullname"));
                     }
                 }
 
@@ -1140,12 +1140,12 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
             success = true;
         }
 
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            errorString = node.toElement().attribute("code");
+            errorString = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
 
             int valueOk = QMessageBox::question(QApplication::activeWindow(),
 						i18n("Invalid Token"),
@@ -1179,7 +1179,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 {
     bool success = false;
     QString errorString;
-    QDomDocument doc("gettoken");
+    QDomDocument doc(QStringLiteral("gettoken"));
 
     if (!doc.setContent(data))
     {
@@ -1192,7 +1192,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "auth")
+        if (node.isElement() && node.nodeName() == QStringLiteral("auth"))
         {
             e                = node.toElement(); // try to convert the node to an element.
             QDomNode details = e.firstChild();
@@ -1203,24 +1203,24 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
                 {
                     e = details.toElement();
 
-                    if (details.nodeName() == "token")
+                    if (details.nodeName() == QStringLiteral("token"))
                     {
                         qCDebug(KIPIPLUGINS_LOG) << "Token=" << e.text();
                         m_token = e.text();      //this is what is obtained from data.
                     }
 
-                    if (details.nodeName() == "perms")
+                    if (details.nodeName() == QStringLiteral("perms"))
                     {
                         qCDebug(KIPIPLUGINS_LOG) << "Perms=" << e.text();
                     }
 
-                    if (details.nodeName() == "user")
+                    if (details.nodeName() == QStringLiteral("user"))
                     {
-                        qCDebug(KIPIPLUGINS_LOG) << "nsid=" << e.attribute("nsid");
-                        qCDebug(KIPIPLUGINS_LOG) << "username=" << e.attribute("username");
-                        qCDebug(KIPIPLUGINS_LOG) << "fullname=" << e.attribute("fullname");
-                        m_username = e.attribute("username");
-                        m_userId   = e.attribute("nsid");
+                        qCDebug(KIPIPLUGINS_LOG) << "nsid=" << e.attribute(QStringLiteral("nsid"));
+                        qCDebug(KIPIPLUGINS_LOG) << "username=" << e.attribute(QStringLiteral("username"));
+                        qCDebug(KIPIPLUGINS_LOG) << "fullname=" << e.attribute(QStringLiteral("fullname"));
+                        m_username = e.attribute(QStringLiteral("username"));
+                        m_userId   = e.attribute(QStringLiteral("nsid"));
                     }
                 }
 
@@ -1229,12 +1229,12 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 
             success = true;
         }
-        else if (node.isElement() && node.nodeName() == "err")
+        else if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            errorString = node.toElement().attribute("code");
+            errorString = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << errorString;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
             //emit signalError(code);
         }
 
@@ -1261,7 +1261,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
 
     //bool success = false;
 
-    QDomDocument doc("getListPhotoSets");
+    QDomDocument doc(QStringLiteral("getListPhotoSets"));
 
     if (!doc.setContent(data))
     {
@@ -1274,10 +1274,10 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "photoset")
+        if (node.isElement() && node.nodeName() == QStringLiteral("photoset"))
         {
             // Parse the id from the response.
-            QString new_id = node.toElement().attribute("id");
+            QString new_id = node.toElement().attribute(QStringLiteral("id"));
 
             // Set the new id in the photo sets list.
             QLinkedList<FPhotoSet>::iterator it = m_photoSetsList->begin();
@@ -1300,12 +1300,12 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
             emit signalAddPhotoSetSucceeded();
         }
 
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            QString code = node.toElement().attribute("code");
+            QString code = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
-            QString msg = node.toElement().attribute("msg");
+            QString msg = node.toElement().attribute(QStringLiteral("msg"));
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << msg;
             QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("PhotoSet creation failed: ") + msg);
         }
@@ -1318,7 +1318,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 {
     qCDebug(KIPIPLUGINS_LOG) << "parseResponseListPhotosets" << data;
     bool success = false;
-    QDomDocument doc("getListPhotoSets");
+    QDomDocument doc(QStringLiteral("getListPhotoSets"));
 
     if (!doc.setContent(data))
     {
@@ -1334,7 +1334,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "photosets")
+        if (node.isElement() && node.nodeName() == QStringLiteral("photosets"))
         {
             e                    = node.toElement();
             QDomNode details     = e.firstChild();
@@ -1347,10 +1347,10 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
                 {
                     e = detailsNode.toElement();
 
-                    if (detailsNode.nodeName() == "photoset")
+                    if (detailsNode.nodeName() == QStringLiteral("photoset"))
                     {
-                        qCDebug(KIPIPLUGINS_LOG) << "id=" << e.attribute("id");
-                        photoSet_id              = e.attribute("id");     // this is what is obtained from data.
+                        qCDebug(KIPIPLUGINS_LOG) << "id=" << e.attribute(QStringLiteral("id"));
+                        photoSet_id              = e.attribute(QStringLiteral("id"));     // this is what is obtained from data.
                         fps.id                   = photoSet_id;
                         QDomNode photoSetDetails = detailsNode.firstChild();
                         QDomElement e_detail;
@@ -1359,13 +1359,13 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
                         {
                             e_detail = photoSetDetails.toElement();
 
-                            if (photoSetDetails.nodeName() == "title")
+                            if (photoSetDetails.nodeName() == QStringLiteral("title"))
                             {
                                 qCDebug(KIPIPLUGINS_LOG) << "Title=" << e_detail.text();
                                 photoSet_title = e_detail.text();
                                 fps.title      = photoSet_title;
                             }
-                            else if (photoSetDetails.nodeName() == "description")
+                            else if (photoSetDetails.nodeName() == QStringLiteral("description"))
                             {
                                 qCDebug(KIPIPLUGINS_LOG) << "Description =" << e_detail.text();
                                 photoSet_description = e_detail.text();
@@ -1386,12 +1386,12 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
             success = true;
         }
 
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            QString code = node.toElement().attribute("code");
+            QString code = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
             emit signalError(code);
         }
 
@@ -1413,7 +1413,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
 void FlickrTalker::parseResponseListPhotos(const QByteArray& data)
 {
-    QDomDocument doc("getPhotosList");
+    QDomDocument doc(QStringLiteral("getPhotosList"));
 
     if (!doc.setContent(data))
     {
@@ -1428,7 +1428,7 @@ void FlickrTalker::parseResponseListPhotos(const QByteArray& data)
 
 void FlickrTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
-    QDomDocument doc("getCreateAlbum");
+    QDomDocument doc(QStringLiteral("getCreateAlbum"));
 
     if (!doc.setContent(data))
     {
@@ -1445,7 +1445,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     bool    success = false;
     QString line;
-    QDomDocument doc("AddPhoto Response");
+    QDomDocument doc(QStringLiteral("AddPhoto Response"));
 
     if (!doc.setContent(data))
     {
@@ -1459,7 +1459,7 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "photoid")
+        if (node.isElement() && node.nodeName() == QStringLiteral("photoid"))
         {
             e                = node.toElement();           // try to convert the node to an element.
             QDomNode details = e.firstChild();
@@ -1468,12 +1468,12 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
             success          = true;
         }
 
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            QString code = node.toElement().attribute("code");
+            QString code = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
             emit signalError(code);
         }
 
@@ -1488,14 +1488,14 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
     {
         QString photoSetId = m_selectedPhotoSet.id;
 
-        if (photoSetId == "-1")
+        if (photoSetId == QStringLiteral("-1"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "PhotoSet Id not set, not adding the photo to any photoset";
             emit signalAddPhotoSucceeded();
         }
         else
         {
-            if (m_serviceName == "Zooomr")
+            if (m_serviceName == QStringLiteral("Zooomr"))
             {
                 // addPhotoToPhotoSet not supported by Zooomr (Zooomr only has
                 // smart folder-type photosets); silently fail
@@ -1513,7 +1513,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
 {
     bool         success = false;
     QString      line;
-    QDomDocument doc("Photos Properties");
+    QDomDocument doc(QStringLiteral("Photos Properties"));
 
     if (!doc.setContent(data))
     {
@@ -1526,7 +1526,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
 
     while (!node.isNull())
     {
-        if (node.isElement() && node.nodeName() == "photoid")
+        if (node.isElement() && node.nodeName() == QStringLiteral("photoid"))
         {
             e       = node.toElement();                 // try to convert the node to an element.
             QDomNode details = e.firstChild();
@@ -1534,12 +1534,12 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
             success = true;
         }
 
-        if (node.isElement() && node.nodeName() == "err")
+        if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
-            QString code = node.toElement().attribute("code");
+            QString code = node.toElement().attribute(QStringLiteral("code"));
             qCDebug(KIPIPLUGINS_LOG) << "Error code=" << code;
-            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute("msg");
+            qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
             emit signalError(code);
         }
 

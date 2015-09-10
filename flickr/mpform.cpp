@@ -49,7 +49,7 @@ namespace KIPIFlickrPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += randomString(42 + 13).toAscii();
+    m_boundary += randomString(42 + 13).toLatin1();
 }
 
 MPForm::~MPForm()
@@ -58,7 +58,7 @@ MPForm::~MPForm()
 
 QString MPForm::randomString(const int& length)
 {
-   const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+   const QString possibleCharacters(QStringLiteral("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
 
    QString randomString;
    qsrand((uint)QTime::currentTime().msec());
@@ -90,7 +90,7 @@ void MPForm::finish()
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
-    QString content_length = QString("%1").arg(value.length());
+    QString content_length = QStringLiteral("%1").arg(value.length());
 
     str += "--";
     str += m_boundary;
@@ -99,20 +99,20 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     if (!name.isEmpty())
     {
         str += "Content-Disposition: form-data; name=\"";
-        str += name.toAscii();
+        str += name.toLatin1();
         str += "\"\r\n";
     }
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: " + QByteArray(contentType.toAscii());
+        str += "Content-Type: " + QByteArray(contentType.toLatin1());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
     }
 
     str += "Content-Length: ";
-    str += content_length.toAscii();
+    str += content_length.toLatin1();
     str += "\r\n\r\n";
     str += value.toUtf8();
 
@@ -144,23 +144,23 @@ bool MPForm::addFile(const QString& name, const QString& path)
     QByteArray imageData = imageFile.readAll();
 
     QByteArray str;
-    QString file_size = QString("%1").arg(imageFile.size());
+    QString file_size = QStringLiteral("%1").arg(imageFile.size());
     imageFile.close();
 
     str += "--";
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += name.toAscii();
+    str += name.toLatin1();
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(QUrl::fromLocalFile(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: ";
-    str += file_size.toAscii();
+    str += file_size.toLatin1();
     str += "\r\n";
     str += "Content-Type: ";
-    str +=  mime.toAscii();
+    str +=  mime.toLatin1();
     str += "\r\n\r\n";
 
     m_buffer.append(str);
@@ -173,12 +173,12 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
+    return QString(QStringLiteral("Content-Type: multipart/form-data; boundary=") + QLatin1String(m_boundary));
 }
 
 QString MPForm::boundary() const
 {
-    return m_boundary;
+    return QLatin1String(m_boundary);
 }
 
 QByteArray MPForm::formData() const
