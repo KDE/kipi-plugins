@@ -80,9 +80,10 @@ FbWindow::FbWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     setModal(false);
 
     setWindowTitle(i18n("Export to Facebook Web Service"));
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
-                              i18n("Start upload to Facebook web service")));
+
+    startButton()->setText(i18n("Start Upload"));
+    startButton()->setToolTip(i18n("Start upload to Facebook web service"));
+
     m_widget->setMinimumSize(700, 500);
     // ------------------------------------------------------------------------
 

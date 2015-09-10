@@ -123,9 +123,10 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
 
             setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-googledrive")));
             setWindowTitle(i18n("Export to Google Drive"));
-            KGuiItem::assign(startButton(),
-                             KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
-                                      i18n("Start upload to Google Drive")));
+
+            startButton()->setText(i18n("Start Upload"));
+            startButton()->setToolTip(i18n("Start upload to Google Drive"));
+
             m_widget->setMinimumSize(700,500);
             
             m_albumDlg = new NewAlbumDlg(this,m_serviceName,m_pluginName);
@@ -208,17 +209,19 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
             if(name == PluginName::PicasaExport)
             {
                 setWindowTitle(i18n("Export to Google Photos/PicasaWeb Service"));
-                KGuiItem::assign(startButton(),
-                                 KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
-                                          i18n("Start upload to Google Photos/PicasaWeb Service")));
-                m_widget->setMinimumSize(700,500);
+
+                startButton()->setText(i18n("Start Upload"));
+                startButton()->setToolTip(i18n("Start upload to Google Photos/PicasaWeb Service"));
+
+                m_widget->setMinimumSize(700, 500);
             }
             else
             {
                 setWindowTitle(i18n("Import from Google Photos/PicasaWeb Service"));
-                KGuiItem::assign(startButton(),
-                                 KGuiItem(i18n("Start Download"), QStringLiteral("network-workgroup"),
-                                          i18n("Start download from Google Photos/PicasaWeb service")));
+
+                startButton()->setText(i18n("Start Download"));
+                startButton()->setToolTip(i18n("Start download from Google Photos/PicasaWeb service"));
+
                 m_widget->setMinimumSize(300, 400);
             }
             

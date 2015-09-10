@@ -52,9 +52,10 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
     setModal(false);
 
     setWindowTitle(i18n("Export to Rajce.net"));
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start Upload"), "network-workgroup",
-                              i18n("Start upload to Rajce.net")));
+
+    startButton()->setText(i18n("Start Upload"));
+    startButton()->setToolTip(i18n("Start upload to Rajce.net"));
+
     m_widget->setMinimumSize(700, 500);
 
     connect(startButton(), SIGNAL(clicked()),

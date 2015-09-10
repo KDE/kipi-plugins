@@ -123,8 +123,9 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
     m_userNameDisplayLabel      = m_widget->getUserNameLabel();
     m_imglst                    = m_widget->m_imglst;
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start Uploading"), QIcon::fromTheme(QStringLiteral("network-workgroup"))));
+    startButton()->setText(i18n("Start Uploading"));
+    startButton()->setToolTip(QString());
+
     setMainWidget(m_widget);
     m_widget->setMinimumSize(800, 600);
 

@@ -175,8 +175,8 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
     {
         setWindowTitle(i18nc("@title:window", "Export to VKontakte Web Service"));
 
-        KGuiItem::assign(startButton(), KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                                 i18n("Start upload to VKontakte service")));
+        startButton()->setText(i18n("Start Upload"));
+        startButton()->setToolTip(i18n("Start upload to VKontakte service"));
 
         setMinimumSize(700, 520);
         uploadBox->hide();

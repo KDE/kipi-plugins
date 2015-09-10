@@ -252,7 +252,6 @@ PiwigoWindow::PiwigoWindow(QWidget* const parent, Piwigo* const pPiwigo)
 
     // "Start Upload" button
     startButton()->setText( i18n("Start Upload") );
-    startButton()->setIcon( QIcon::fromTheme("network-workgroup") );
     startButton()->setEnabled(false);
 
     connect(startButton(), SIGNAL(clicked()),

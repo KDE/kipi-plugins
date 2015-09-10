@@ -85,9 +85,9 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotChangeRegistrantionCode()));
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Upload"), QStringLiteral("network-workgroup"),
-                              i18n("Start upload to Imageshack web service")));
+    startButton()->setText(i18n("Upload"));
+    startButton()->setToolTip(i18n("Start upload to Imageshack web service"));
+
     startButton()->setEnabled(false);
 
     connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),

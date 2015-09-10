@@ -83,9 +83,8 @@ DBWindow::DBWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     setModal(false);
     setWindowTitle(i18n("Export to Dropbox"));
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start Upload"), QStringLiteral("network-workgroup"),
-                              i18n("Start upload to Dropbox")));
+    startButton()->setText(i18n("Start Upload"));
+    startButton()->setToolTip(i18n("Start upload to Dropbox"));
 
     m_widget->setMinimumSize(700, 500);
 

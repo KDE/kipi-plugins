@@ -92,17 +92,19 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
     if (import)
     {
         setWindowTitle(i18n("Import from SmugMug Web Service"));
-        KGuiItem::assign(startButton(),
-                         KGuiItem(i18n("Start Download"), "network-workgroup",
-                                  i18n("Start download from SmugMug web service")));
+
+        startButton()->setText(i18n("Start Download"));
+        startButton()->setToolTip(i18n("Start download from SmugMug web service"));
+
         m_widget->setMinimumSize(300, 400);
     }
     else
     {
         setWindowTitle(i18n("Export to SmugMug Web Service"));
-        KGuiItem::assign(startButton(),
-                         KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                  i18n("Start upload to SmugMug web service")));
+
+        startButton()->setText(i18n("Start Upload"));
+        startButton()->setToolTip(i18n("Start upload to SmugMug web service"));
+
         m_widget->setMinimumSize(700, 500);
     }
 

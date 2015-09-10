@@ -65,10 +65,9 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
     setModal(false);
     startButton()->setEnabled(false);
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start import"), "network-workgroup",
-                              i18n("Start importing the specified images "
-                                   "into the currently selected album.")));
+    startButton()->setText(i18n("Start import"));
+    startButton()->setToolTip(i18n("Start importing the specified images "
+                                   "into the currently selected album."));
 
     // connections
 

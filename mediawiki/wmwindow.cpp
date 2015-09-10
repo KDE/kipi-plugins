@@ -112,9 +112,9 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     setModal(false);
     setWindowTitle(i18n("Export to MediaWiki"));
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start Upload"), "network-workgroup",
-                              i18n("Start upload to MediaWiki")));
+    startButton()->setText(i18n("Start Upload"));
+    startButton()->setToolTip(i18n("Start upload to MediaWiki"));
+
     startButton()->setEnabled(false);
 
     d->widget->setMinimumSize(700, 500);

@@ -67,9 +67,8 @@ KioExportWindow::KioExportWindow(QWidget* const /*parent*/)
     setWindowTitle(i18n("Export to Remote Storage"));
     setModal(false);
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Start export"), "network-workgroup",
-                              i18n("Start export to the specified target")));
+    startButton()->setText(i18n("Start export"));
+    startButton()->setToolTip(i18n("Start export to the specified target"));
 
     connect(startButton(), SIGNAL(clicked()),
             this, SLOT(slotUpload()));

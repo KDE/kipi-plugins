@@ -178,6 +178,7 @@ KPToolDialog::KPToolDialog(QWidget* const parent)
 {
     d->buttonBox   = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help, this);
     d->startButton = new QPushButton(i18nc("@action:button", "&Start"), this);
+    d->startButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
     d->buttonBox->addButton(d->startButton, QDialogButtonBox::ActionRole);
     d->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
 

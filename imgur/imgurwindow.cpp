@@ -83,9 +83,8 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18n("Upload"), "network-workgroup",
-                              i18n("Start upload to Imgur")));
+    startButton()->setText(i18n("Upload"));
+    startButton()->setToolTip(i18n("Start upload to Imgur"));
 
     startButton()->setEnabled(!d->webService->imageQueue()->isEmpty());
 
