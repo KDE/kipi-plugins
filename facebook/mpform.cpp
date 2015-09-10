@@ -38,7 +38,6 @@
 
 // KDE includes
 
-#include <kmimetype.h>
 #include <krandom.h>
 
 // Local includes
