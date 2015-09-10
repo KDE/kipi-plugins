@@ -59,13 +59,6 @@ target_link_libraries(KF5kipiplugins
                       ${KF5KDcraw_LIBRARIES}
 )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(KF5kipiplugins
-                          PUBLIC
-                          KF5::KDELibs4Support
-    )
-endif()
-
 set_target_properties(KF5kipiplugins PROPERTIES
                       VERSION     ${KIPIPLUGINS_LIB_SO_VERSION_STRING}
                       SOVERSION   ${KIPIPLUGINS_LIB_SO_VERSION_STRING}

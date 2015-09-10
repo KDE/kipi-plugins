@@ -928,6 +928,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 //TODO: Re-Write this method if needed. Parsing will return list of friends and also their info like id, name etc.
 void FbTalker::parseResponseListFriends(const QByteArray& data)
 {
+    Q_UNUSED(data);
 //     int errCode = -1;
 //     QString errMsg;
 //     QDomDocument doc("getFriends");

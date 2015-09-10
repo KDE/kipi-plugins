@@ -40,13 +40,15 @@ extern "C"
 
 #include <QApplication>
 #include <QAction>
+#include <QtCore/QDir>
 
 // KDE includes
 
 #include <kactioncollection.h>
 #include <kstandarddirs.h>
 #include <kwindowsystem.h>
-#include <kgenericfactory.h>
+#include <KPluginFactory>
+#include <KLocalizedString>
 
 // Libkipi includes
 
@@ -122,10 +124,19 @@ void Plugin_Facebook::setupActions()
     addAction("facebookimport", m_actionImport, ImportPlugin);
 }
 
+QDir getTemporaryDir(const QString& prefix)
+{
+    QString subDir = QString("%1-%2").arg(prefix).arg(getpid());
+    QString path = QDir(QDir::tempPath()).filePath(subDir);
+
+    QDir().mkpath(path);
+
+    return QDir(path);
+}
+
 void Plugin_Facebook::slotExport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-fb-") + QString::number(getpid()) + QString("/"));
+    QString tmp = getTemporaryDir("kipi-fb").absolutePath() + QString("/");
 
     if (!m_dlgExport)
     {
@@ -145,8 +156,7 @@ void Plugin_Facebook::slotExport()
 
 void Plugin_Facebook::slotImport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-fb-") + QString::number(getpid()) + QString("/"));
+    QString tmp = getTemporaryDir("kipi-fb").absolutePath() + QString("/");
 
     if (!m_dlgImport)
     {

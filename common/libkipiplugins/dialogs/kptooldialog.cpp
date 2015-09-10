@@ -38,10 +38,6 @@
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
-#ifndef ENABLE_PUREQT5
-#include <kdialog.h>
-#endif
-
 // Libkipi includes
 
 #include <KIPI/Interface>
@@ -105,17 +101,6 @@ QPushButton* KPDialogBase::getHelpButton() const
     {
         return nullptr;
     }
-
-#ifndef ENABLE_PUREQT5 
-    {
-        KDialog* const dlg = dynamic_cast<KDialog*>(d->dialog);
-
-        if (dlg)
-        {
-            return dlg->button(KDialog::Help);
-        }
-    }
-#endif
 
     {
         KPageDialog* const dlg = dynamic_cast<KPageDialog*>(d->dialog);

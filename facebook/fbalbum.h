@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kdialog.h>
+#include <QtWidgets/QDialog>
 
 class KLineEdit;
 class KTextEdit;
@@ -36,7 +36,7 @@ namespace KIPIFacebookPlugin
 
 class FbAlbum;
 
-class FbNewAlbum : public KDialog
+class FbNewAlbum : public QDialog
 {
     Q_OBJECT
 
