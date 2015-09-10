@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+//local includes
+
+#include "kpsettingswidget.h"
+
 class QLabel;
 class QSpinBox;
 class QCheckBox;
@@ -46,25 +50,27 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
+using namespace KIPIPlugins;
+
 namespace KIPIFacebookPlugin
 {
 
-class FbWidget : public QWidget
+class FbWidget : public KPSettingsWidget
 {
     Q_OBJECT
 
 public:
 
-    FbWidget(QWidget* const parent);
+    FbWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName);
     ~FbWidget();
 
-    void updateLabels(const QString& name = QString(), const QString& url = QString(), bool uplPerm = false);
+    virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
 
-    QString   getAlbumID()         const;
-    QString   getDestinationPath() const;
-
+//     QString   getAlbumID()         const;
+//     QString   getDestinationPath() const;
+/*
     KIPIPlugins::KPImagesList* imagesList()      const;
-    KIPIPlugins::KPProgressWidget* progressBar() const;
+    KIPIPlugins::KPProgressWidget* progressBar() const;*/
 
 Q_SIGNALS:
 
@@ -73,28 +79,28 @@ Q_SIGNALS:
 private Q_SLOTS:
 
     void slotReloadAlbumsRequest();
-    void slotResizeChecked();
+//     void slotResizeChecked();
 
 private:
 
-    KIPIPlugins::KPImagesList*     m_imgList;
-    KIPI::UploadWidget*            m_uploadWidget;
+//     KIPIPlugins::KPImagesList*     m_imgList;
+//     KIPI::UploadWidget*            m_uploadWidget;
+// 
+//     QLabel*                        m_headerLbl;
+//     QLabel*                        m_userNameDisplayLbl;
+//     QLabel*                        m_permissionLbl;
+//     QPushButton*                   m_changeUserBtn;
+// 
+//     QButtonGroup*                  m_dlGrp;
+//     QComboBox*                     m_albumsCoB;
+//     QPushButton*                   m_newAlbumBtn;
+//     QPushButton*                   m_reloadAlbumsBtn;
+// 
+//     QCheckBox*                     m_resizeChB;
+//     QSpinBox*                      m_dimensionSpB;
+//     QSpinBox*                      m_imageQualitySpB;
 
-    QLabel*                        m_headerLbl;
-    QLabel*                        m_userNameDisplayLbl;
-    QLabel*                        m_permissionLbl;
-    QPushButton*                   m_changeUserBtn;
-
-    QButtonGroup*                  m_dlGrp;
-    QComboBox*                     m_albumsCoB;
-    QPushButton*                   m_newAlbumBtn;
-    QPushButton*                   m_reloadAlbumsBtn;
-
-    QCheckBox*                     m_resizeChB;
-    QSpinBox*                      m_dimensionSpB;
-    QSpinBox*                      m_imageQualitySpB;
-
-    KIPIPlugins::KPProgressWidget* m_progressBar;
+//     KIPIPlugins::KPProgressWidget* m_progressBar;
 
     friend class FbWindow;
 };

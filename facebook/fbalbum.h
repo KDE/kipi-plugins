@@ -27,31 +27,32 @@
 
 #include <QtWidgets/QDialog>
 
-class KLineEdit;
-class KTextEdit;
+//local includes
+
+#include "kpnewalbumdialog.h"
+
 class QComboBox;
+
+using namespace KIPIPlugins;
 
 namespace KIPIFacebookPlugin
 {
 
 class FbAlbum;
 
-class FbNewAlbum : public QDialog
+class FbNewAlbum : public KPNewAlbumDialog
 {
     Q_OBJECT
 
 public:
 
-    FbNewAlbum(QWidget* const parent);
+    FbNewAlbum(QWidget* const parent, const QString& pluginName);
     ~FbNewAlbum();
 
     void getAlbumProperties(FbAlbum& album);
 
 private:
 
-    KLineEdit* m_titleEdt;
-    KLineEdit* m_locEdt;
-    KTextEdit* m_descEdt;
     QComboBox* m_privacyCoB;
 
     friend class FbWindow;

@@ -136,8 +136,12 @@ private:
     QList<QUrl>  m_transferQueue;
 
     FbTalker*    m_talker;
-    FbWidget*    m_widget;
     FbNewAlbum*  m_albumDlg;
+    
+private:
+    
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIFacebookPlugin

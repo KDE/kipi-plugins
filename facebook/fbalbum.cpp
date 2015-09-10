@@ -34,8 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <klineedit.h>
-#include <ktextedit.h>
 
 // local includes
 
@@ -44,28 +42,10 @@
 namespace KIPIFacebookPlugin
 {
 
-FbNewAlbum::FbNewAlbum(QWidget* const parent)
-    : QDialog(parent)
-{
-    QString header(i18n("Facebook New Album"));
-    setWindowTitle(header);
-
-    QDialogButtonBox* buttonBox = new QDialogButtonBox(
-        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
-
-    setModal(false);
-    setMinimumSize(400, 300);
-
-    // ------------------------------------------------------------------------
-    m_titleEdt          = new KLineEdit;
-    m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
-
-    m_locEdt            = new KLineEdit;
-    m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));
-
-    m_descEdt           = new KTextEdit;
-    m_descEdt->setWhatsThis(i18n("Description of the album that will be created (optional)."));
+FbNewAlbum::FbNewAlbum(QWidget* const parent, const QString& pluginName)
+    : KPNewAlbumDialog(parent, pluginName)
+{   
+    hideDateTime();
 
     m_privacyCoB        = new QComboBox;
     m_privacyCoB->setEditable(false);
@@ -81,25 +61,8 @@ FbNewAlbum::FbNewAlbum(QWidget* const parent)
     m_privacyCoB->addItem(QIcon::fromTheme(QStringLiteral("applications-internet")),
                           i18n("Everyone"),                FB_EVERYONE);
     m_privacyCoB->setCurrentIndex(1);
-
-    QWidget* const albumBoxWidget = new QWidget(this);
-    QFormLayout* const albumBoxLayout = new QFormLayout(albumBoxWidget);
-    albumBoxLayout->addRow(i18nc("new facebook album", "Title:"),       m_titleEdt);
-    albumBoxLayout->addRow(i18nc("new facebook album", "Location:"),    m_locEdt);
-    albumBoxLayout->addRow(i18nc("new facebook album", "Description:"), m_descEdt);
-    albumBoxLayout->addRow(i18nc("new facebook album", "Privacy:"),     m_privacyCoB);
-    albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    albumBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    albumBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    albumBoxWidget->setLayout(albumBoxLayout);
-
-    QVBoxLayout* dialogLayout = new QVBoxLayout(this);
-    dialogLayout->addWidget(albumBoxWidget);
-    dialogLayout->addWidget(buttonBox);
-    setLayout(dialogLayout);
-
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &FbNewAlbum::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &FbNewAlbum::reject);
+    
+    addToMainLayout(m_privacyCoB);
 }
 
 FbNewAlbum::~FbNewAlbum()
@@ -108,9 +71,9 @@ FbNewAlbum::~FbNewAlbum()
 
 void FbNewAlbum::getAlbumProperties(FbAlbum& album)
 {
-    album.title       = m_titleEdt->text();
-    album.location    = m_locEdt->text();
-    album.description = m_descEdt->toPlainText();
+    album.title       = getTitleEdit()->text();
+    album.location    = getLocEdit()->text();
+    album.description = getDescEdit()->toPlainText();
     album.privacy     = static_cast<KIPIFacebookPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
 }
 
