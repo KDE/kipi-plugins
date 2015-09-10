@@ -51,17 +51,17 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
     : QObject(),
-      KAboutData(QString("kipiplugins"),  // Name without minus separator for KDE bug report.
+      KAboutData(QStringLiteral("kipiplugins"),  // Name without minus separator for KDE bug report.
                  pluginName.toString(),
-                 kipipluginsVersion().toLatin1(),
+                 kipipluginsVersion(),
                  pluginDescription.toString(),
                  licenseType,
                  copyrightStatement.toString(),
-                 QString(),
-                 QString("http://www.digikam.org"))
+                 QStringLiteral(),
+                 QStringLiteral("http://www.digikam.org"))
 {
     QString directory = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                               "kf5/kipi/pics/kipi-plugins_logo.png");
+                                               QStringLiteral("kf5/kipi/pics/kipi-plugins_logo.png"));
 
     // set the kipiplugins logo inside the about dialog
     setProgramLogo(QImage(directory));
@@ -99,7 +99,7 @@ void KPAboutData::setHelpButton(QPushButton* const help)
     KHelpMenu* const helpMenu = new KHelpMenu(help, *(this), false);
 
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction * const handbook   = new QAction(QIcon::fromTheme("help-contents"), i18n("Handbook"), helpMenu);
+    QAction* const handbook   = new QAction(QIcon::fromTheme(QStringLiteral("help-contents")), i18n("Handbook"), helpMenu);
 
     connect(handbook, &QAction::triggered,
             this, &KPAboutData::slotHelp);
@@ -110,7 +110,7 @@ void KPAboutData::setHelpButton(QPushButton* const help)
 
 void KPAboutData::slotHelp()
 {
-    KHelpClient::invokeHelp(m_handbookEntry, "kipi-plugins");
+    KHelpClient::invokeHelp(m_handbookEntry, QStringLiteral("kipi-plugins"));
 }
 
 }   // namespace KIPIPlugins
