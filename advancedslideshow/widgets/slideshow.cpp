@@ -49,7 +49,6 @@
 // KDE includes
 
 #include <QApplication>
-#include <kglobalsettings.h>
 #include <klocalizedstring.h>
 
 // libkipi includes
