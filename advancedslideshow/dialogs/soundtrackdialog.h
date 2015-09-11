@@ -31,7 +31,7 @@
 // KDE includes
 
 #include <QUrl>
-#include <kdialog.h>
+#include <QtWidgets/QDialog>
 
 // Local includes
 
@@ -46,7 +46,7 @@ class PlaybackWidget;
 
 class SharedContainer;
 
-class SoundtrackPreview : public KDialog
+class SoundtrackPreview : public QDialog
 {
 
 public :

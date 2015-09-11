@@ -148,7 +148,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
     registerEffects();
 
-    if (m_sharedData->effectName == "Random")
+    if (m_sharedData->effectName == QStringLiteral("Random"))
     {
         m_effect = getRandomEffect();
     }
@@ -159,8 +159,8 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
         if (!m_effect)
         {
-            m_effect     = Effects["None"];
-            m_effectName = "None";
+            m_effect     = Effects[QStringLiteral("None")];
+            m_effectName = QStringLiteral("None");
         }
     }
 
@@ -198,39 +198,39 @@ void SlideShow::readSettings()
 
 void SlideShow::registerEffects()
 {
-    Effects.insert( "None", &SlideShow::effectNone );
-    Effects.insert( "Chess Board", &SlideShow::effectChessboard );
-    Effects.insert( "Melt Down", &SlideShow::effectMeltdown );
-    Effects.insert( "Sweep", &SlideShow::effectSweep );
-    Effects.insert( "Mosaic", &SlideShow::effectMosaic );
-    Effects.insert( "Cubism", &SlideShow::effectCubism );
-    Effects.insert( "Growing", &SlideShow::effectGrowing );
-    Effects.insert( "Horizontal Lines", &SlideShow::effectHorizLines );
-    Effects.insert( "Vertical Lines", &SlideShow::effectVertLines );
-    Effects.insert( "Circle Out", &SlideShow::effectCircleOut );
-    Effects.insert( "MultiCircle Out", &SlideShow::effectMultiCircleOut );
-    Effects.insert( "Spiral In", &SlideShow::effectSpiralIn );
-    Effects.insert( "Blobs", &SlideShow::effectBlobs );
+    Effects.insert( QStringLiteral("None"), &SlideShow::effectNone );
+    Effects.insert( QStringLiteral("Chess Board"), &SlideShow::effectChessboard );
+    Effects.insert( QStringLiteral("Melt Down"), &SlideShow::effectMeltdown );
+    Effects.insert( QStringLiteral("Sweep"), &SlideShow::effectSweep );
+    Effects.insert( QStringLiteral("Mosaic"), &SlideShow::effectMosaic );
+    Effects.insert( QStringLiteral("Cubism"), &SlideShow::effectCubism );
+    Effects.insert( QStringLiteral("Growing"), &SlideShow::effectGrowing );
+    Effects.insert( QStringLiteral("Horizontal Lines"), &SlideShow::effectHorizLines );
+    Effects.insert( QStringLiteral("Vertical Lines"), &SlideShow::effectVertLines );
+    Effects.insert( QStringLiteral("Circle Out"), &SlideShow::effectCircleOut );
+    Effects.insert( QStringLiteral("MultiCircle Out"), &SlideShow::effectMultiCircleOut );
+    Effects.insert( QStringLiteral("Spiral In"), &SlideShow::effectSpiralIn );
+    Effects.insert( QStringLiteral("Blobs"), &SlideShow::effectBlobs );
 }
 
 QStringList SlideShow::effectNames()
 {
     QStringList effects;
 
-    effects.append( "None" );
-    effects.append( "Chess Board" );
-    effects.append( "Melt Down" );
-    effects.append( "Sweep" );
-    effects.append( "Mosaic" );
-    effects.append( "Cubism" );
-    effects.append( "Growing" );
-    effects.append( "Horizontal Lines" );
-    effects.append( "Vertical Lines" );
-    effects.append( "Circle Out" );
-    effects.append( "MultiCircle Out" );
-    effects.append( "Spiral In" );
-    effects.append( "Blobs" );
-    effects.append( "Random" );
+    effects.append( QStringLiteral("None") );
+    effects.append( QStringLiteral("Chess Board") );
+    effects.append( QStringLiteral("Melt Down") );
+    effects.append( QStringLiteral("Sweep") );
+    effects.append( QStringLiteral("Mosaic") );
+    effects.append( QStringLiteral("Cubism") );
+    effects.append( QStringLiteral("Growing") );
+    effects.append( QStringLiteral("Horizontal Lines") );
+    effects.append( QStringLiteral("Vertical Lines") );
+    effects.append( QStringLiteral("Circle Out") );
+    effects.append( QStringLiteral("MultiCircle Out") );
+    effects.append( QStringLiteral("Spiral In") );
+    effects.append( QStringLiteral("Blobs") );
+    effects.append( QStringLiteral("Random") );
 
     return effects;
 }
@@ -239,20 +239,20 @@ QMap<QString, QString> SlideShow::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects["None"]             = i18nc("Filter Effect: No effect",        "None" );
-    effects["Chess Board"]      = i18nc("Filter Effect: Chess Board",      "Chess Board" );
-    effects["Melt Down"]        = i18nc("Filter Effect: Melt Down",        "Melt Down" );
-    effects["Sweep"]            = i18nc("Filter Effect: Sweep",            "Sweep" );
-    effects["Mosaic"]           = i18nc("Filter Effect: Mosaic",           "Mosaic" );
-    effects["Cubism"]           = i18nc("Filter Effect: Cubism",           "Cubism" );
-    effects["Growing"]          = i18nc("Filter Effect: Growing",          "Growing" );
-    effects["Horizontal Lines"] = i18nc("Filter Effect: Horizontal Lines", "Horizontal Lines" );
-    effects["Vertical Lines"]   = i18nc("Filter Effect: Vertical Lines",   "Vertical Lines" );
-    effects["Circle Out"]       = i18nc("Filter Effect: Circle Out",       "Circle Out" );
-    effects["MultiCircle Out"]  = i18nc("Filter Effect: Multi-Circle Out", "Multi-Circle Out" );
-    effects["Spiral In"]        = i18nc("Filter Effect: Spiral In",        "Spiral In" );
-    effects["Blobs"]            = i18nc("Filter Effect: Blobs",            "Blobs" );
-    effects["Random"]           = i18nc("Filter Effect: Random effect",    "Random" );
+    effects[QStringLiteral("None")]             = i18nc("Filter Effect: No effect",        "None" );
+    effects[QStringLiteral("Chess Board")]      = i18nc("Filter Effect: Chess Board",      "Chess Board" );
+    effects[QStringLiteral("Melt Down")]        = i18nc("Filter Effect: Melt Down",        "Melt Down" );
+    effects[QStringLiteral("Sweep")]            = i18nc("Filter Effect: Sweep",            "Sweep" );
+    effects[QStringLiteral("Mosaic")]           = i18nc("Filter Effect: Mosaic",           "Mosaic" );
+    effects[QStringLiteral("Cubism")]           = i18nc("Filter Effect: Cubism",           "Cubism" );
+    effects[QStringLiteral("Growing")]          = i18nc("Filter Effect: Growing",          "Growing" );
+    effects[QStringLiteral("Horizontal Lines")] = i18nc("Filter Effect: Horizontal Lines", "Horizontal Lines" );
+    effects[QStringLiteral("Vertical Lines")]   = i18nc("Filter Effect: Vertical Lines",   "Vertical Lines" );
+    effects[QStringLiteral("Circle Out")]       = i18nc("Filter Effect: Circle Out",       "Circle Out" );
+    effects[QStringLiteral("MultiCircle Out")]  = i18nc("Filter Effect: Multi-Circle Out", "Multi-Circle Out" );
+    effects[QStringLiteral("Spiral In")]        = i18nc("Filter Effect: Spiral In",        "Spiral In" );
+    effects[QStringLiteral("Blobs")]            = i18nc("Filter Effect: Blobs",            "Blobs" );
+    effects[QStringLiteral("Random")]           = i18nc("Filter Effect: Random effect",    "Random" );
 
     return effects;
 }
@@ -277,7 +277,7 @@ void SlideShow::slotTimeOut()
             return;
         }
 
-        if ( m_sharedData->effectName  == "Random" )            // Take a random effect.
+        if ( m_sharedData->effectName  == QStringLiteral("Random") )            // Take a random effect.
         {
             m_effect = getRandomEffect();
 
@@ -446,7 +446,7 @@ void SlideShow::printComments()
 
         for (currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; ++currIndex)
         {
-            if (comments[currIndex] == QChar('\n') || comments[currIndex].isSpace())
+            if (comments[currIndex] == QLatin1Char('\n') || comments[currIndex].isSpace())
             {
                 breakLine = true;
             }
@@ -460,10 +460,10 @@ void SlideShow::printComments()
         for (currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
              currIndex < (uint) comments.length() && !breakLine; ++currIndex)
         {
-            breakLine = (comments[currIndex] == QChar('\n')) ? true : false;
+            breakLine = (comments[currIndex] == QLatin1Char('\n')) ? true : false;
 
             if (breakLine)
-                newLine.append(' ');
+                newLine.append(QLatin1Char(' '));
             else
                 newLine.append(comments[currIndex]);
         }
@@ -472,7 +472,7 @@ void SlideShow::printComments()
 
         if (commentsIndex != (uint) comments.length())
         {
-            while (!newLine.endsWith(' '))
+            while (!newLine.endsWith(QLatin1Char(' ')))
             {
                 newLine.truncate(newLine.length() - 1);
                 commentsIndex--;
@@ -516,7 +516,7 @@ void SlideShow::printProgress()
     QPainter p;
     p.begin( &m_currImage );
 
-    QString progress( QString::number( m_fileIndex + 1 ) + '/' + QString::number( m_fileList.count() ) );
+    QString progress( QString::number( m_fileIndex + 1 ) + QLatin1Char('/') + QString::number( m_fileList.count() ) );
 
     int stringLength = p.fontMetrics().width( progress ) * progress.length();
 
@@ -537,7 +537,7 @@ void SlideShow::printProgress()
 SlideShow::EffectMethod SlideShow::getRandomEffect()
 {
     QStringList effs = Effects.keys();
-    effs.removeAt( effs.indexOf( "None" ) );
+    effs.removeAt( effs.indexOf(QStringLiteral("None")));
 
     int count    = effs.count();
     int i        = qrand() % count;

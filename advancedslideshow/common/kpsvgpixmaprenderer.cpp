@@ -32,7 +32,8 @@ KPSvgPixmapRenderer::KPSvgPixmapRenderer(int width, int height, const QString& f
 {
     if (m_filename.isEmpty())
     {
-        m_filename = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kf5/kipi/pics/kipi-icon.svg");
+        m_filename = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                            QStringLiteral("kf5/kipi/pics/kipi-icon.svg"));
     }
 }
 

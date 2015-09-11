@@ -31,11 +31,11 @@
 #include <QPointer>
 #include <QTime>
 #include <QIcon>
+#include <QtWidgets/QFileDialog>
 
 // KDE includes
 
 #include <kfile.h>
-#include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kpagewidget.h>
 
@@ -55,14 +55,20 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 SoundtrackPreview::SoundtrackPreview(QWidget* const parent, QList<QUrl>& urls, SharedContainer* const sharedData)
-    : KDialog(parent)
+    : QDialog(parent)
 {
     setModal(true);
-    setButtons(KDialog::Close);
-    setCaption( i18n("Soundtrack preview") );
+    setWindowTitle(i18n("Soundtrack preview"));
 
     m_playbackWidget = new PlaybackWidget(this, urls, sharedData);
-    setMainWidget(m_playbackWidget);
+
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->addWidget(m_playbackWidget);
+    layout->addWidget(buttonBox);
+    setLayout(layout);
 }
 
 SoundtrackPreview::~SoundtrackPreview()
@@ -91,13 +97,13 @@ SoundtrackDialog::SoundtrackDialog(QWidget* const parent, SharedContainer* const
 
     // --------------------------------------------------------
 
-    m_SoundFilesButtonUp->setIcon(QIcon::fromTheme("arrow-up"));
-    m_SoundFilesButtonDown->setIcon(QIcon::fromTheme("arrow-down"));
-    m_SoundFilesButtonAdd->setIcon(QIcon::fromTheme("list-add"));
-    m_SoundFilesButtonDelete->setIcon(QIcon::fromTheme("list-remove"));
-    m_SoundFilesButtonLoad->setIcon(QIcon::fromTheme("document-open"));
-    m_SoundFilesButtonSave->setIcon(QIcon::fromTheme("document-save"));
-    m_SoundFilesButtonReset->setIcon(QIcon::fromTheme("edit-clear-list"));
+    m_SoundFilesButtonUp->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
+    m_SoundFilesButtonDown->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
+    m_SoundFilesButtonAdd->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
+    m_SoundFilesButtonDelete->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
+    m_SoundFilesButtonLoad->setIcon(QIcon::fromTheme(QStringLiteral("document-open")));
+    m_SoundFilesButtonSave->setIcon(QIcon::fromTheme(QStringLiteral("document-save")));
+    m_SoundFilesButtonReset->setIcon(QIcon::fromTheme(QStringLiteral("edit-clear-list")));
 
     m_SoundFilesButtonUp->setText(QString());
     m_SoundFilesButtonDown->setText(QString());
@@ -192,10 +198,10 @@ void SoundtrackDialog::addItems(const QList<QUrl>& fileList)
     for (QList<QUrl>::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
     {
         QUrl currentFile             = *it;
-        QUrl path                    = QUrl(currentFile.path().section('/', 0, -1));
+        QUrl path                    = QUrl(currentFile.path().section(QLatin1Char('/'), 0, -1));
         m_sharedData->soundtrackPath = path;
         SoundItem* const item        = new SoundItem(m_SoundFilesListBox, path);
-        item->setName(currentFile.path().section('/', -1));
+        item->setName(currentFile.path().section(QLatin1Char('/'), -1));
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
         m_soundItems->insert(path, item);
@@ -282,7 +288,7 @@ void SoundtrackDialog::compareTimes()
     }
     else
     {
-        m_statusBarLabel->setText("");
+        m_statusBarLabel->setText(QStringLiteral(""));
 
         QPalette paletteStatusBar = m_statusBarLabel->palette();
         paletteStatusBar.setColor(QPalette::WindowText, Qt::red);
@@ -332,13 +338,14 @@ void SoundtrackDialog::slotAddDropItems(const QList<QUrl>& filesUrl)
 
 void SoundtrackDialog::slotSoundFilesButtonAdd()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(m_sharedData->soundtrackPath, "", this);
+    QPointer<QFileDialog> dlg = new QFileDialog(
+        this, i18n("Select sound files"), m_sharedData->soundtrackPath.toString());
 
     // Setting available mime-types (filtering out non audio mime-types)
-    dlg->setMimeFilter( Phonon::BackendCapabilities::availableMimeTypes().filter("audio/") );
-    dlg->setOperationMode(KFileDialog::Opening);
-    dlg->setMode( KFile::Files );
-    dlg->setWindowTitle(i18n("Select sound files"));
+    dlg->setMimeTypeFilters(
+        Phonon::BackendCapabilities::availableMimeTypes().filter(QStringLiteral("audio/")));
+    dlg->setAcceptMode(QFileDialog::AcceptOpen);
+    dlg->setFileMode(QFileDialog::ExistingFiles);
     dlg->exec();
 
     QList<QUrl> urls = dlg->selectedUrls();
@@ -441,19 +448,18 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
 
 void SoundtrackDialog::slotSoundFilesButtonLoad()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), this);
-    dlg->setOperationMode(KFileDialog::Opening);
-    dlg->setMode(KFile::File);
-    dlg->setFilter(i18n("*.m3u|Playlist (*.m3u)"));
-    dlg->setWindowTitle(i18n("Load playlist"));
+    QPointer<QFileDialog> dlg = new QFileDialog(this, i18n("Load playlist"),
+                                                QString(), i18n("Playlist (*.m3u)"));
+    dlg->setAcceptMode(QFileDialog::AcceptOpen);
+    dlg->setFileMode(QFileDialog::ExistingFile);
 
-    if (dlg->exec() != KFileDialog::Accepted)
+    if (dlg->exec() != QDialog::Accepted)
     {
         delete dlg;
         return;
     }
 
-    QString  filename = dlg->selectedFile();
+    QString filename = dlg->selectedFiles().isEmpty() ? QString() : dlg->selectedFiles().at(0);
 
     if (!filename.isEmpty())
     {
@@ -469,7 +475,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
                 QString line = in.readLine();
 
                 // we ignore the extended information of the m3u playlist file
-                if (line.startsWith('#') || line.isEmpty())
+                if (line.startsWith(QLatin1Char('#')) || line.isEmpty())
                     continue;
 
                 QUrl fUrl(line);
@@ -497,19 +503,18 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
 
 void SoundtrackDialog::slotSoundFilesButtonSave()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), this);
-    dlg->setOperationMode(KFileDialog::Saving);
-    dlg->setMode(KFile::File);
-    dlg->setFilter(i18n("*.m3u|Playlist (*.m3u)"));
-    dlg->setWindowTitle(i18n("Save playlist"));
+    QPointer<QFileDialog> dlg = new QFileDialog(this, i18n("Save playlist"),
+                                                QString(), i18n("Playlist (*.m3u)"));
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setFileMode(QFileDialog::AnyFile);
 
-    if (dlg->exec() != KFileDialog::Accepted)
+    if (dlg->exec() != QDialog::Accepted)
     {
         delete dlg;
         return;
     }
 
-    QString filename = dlg->selectedFile();
+    QString filename = dlg->selectedFiles().isEmpty() ? QString() : dlg->selectedFiles().at(0);
 
     if (!filename.isEmpty())
     {

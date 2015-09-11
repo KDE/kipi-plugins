@@ -54,17 +54,17 @@ PlaybackWidget::PlaybackWidget(QWidget* const parent, QList<QUrl>& urls, SharedC
     m_canHide     = true;
     m_isZeroTime  = false;
 
-    m_soundLabel->setPixmap(QIcon::fromTheme("speaker").pixmap(64, 64));
+    m_soundLabel->setPixmap(QIcon::fromTheme(QStringLiteral("speaker")).pixmap(64, 64));
 
-    m_prevButton->setText("");
-    m_nextButton->setText("");
-    m_playButton->setText("");
-    m_stopButton->setText("");
+    m_prevButton->setText(QStringLiteral(""));
+    m_nextButton->setText(QStringLiteral(""));
+    m_playButton->setText(QStringLiteral(""));
+    m_stopButton->setText(QStringLiteral(""));
 
-    m_prevButton->setIcon(QIcon::fromTheme("media-skip-backward"));
-    m_nextButton->setIcon(QIcon::fromTheme("media-skip-forward"));
-    m_playButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    m_stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
+    m_prevButton->setIcon(QIcon::fromTheme(QStringLiteral("media-skip-backward")));
+    m_nextButton->setIcon(QIcon::fromTheme(QStringLiteral("media-skip-forward")));
+    m_playButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
+    m_stopButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-stop")));
 
     connect(m_prevButton, SIGNAL(clicked()),
             this, SLOT(slotPrev()));
@@ -148,15 +148,15 @@ void PlaybackWidget::checkSkip()
 
 void PlaybackWidget::setGUIPlay(bool isPlaying)
 {
-    m_playButton->setIcon(QIcon::fromTheme( isPlaying ? "media-playback-start" :
-                                             "media-playback-pause" ));
+    m_playButton->setIcon(QIcon::fromTheme(
+        isPlaying ? QStringLiteral("media-playback-start") : QStringLiteral("media-playback-pause")));
 }
 
 void PlaybackWidget::setZeroTime()
 {
     QTime zeroTime(0, 0, 0);
-    m_elapsedTimeLabel->setText(zeroTime.toString("H:mm:ss"));
-    m_totalTimeLabel->setText(zeroTime.toString("H:mm:ss"));
+    m_elapsedTimeLabel->setText(zeroTime.toString(QStringLiteral("H:mm:ss")));
+    m_totalTimeLabel->setText(zeroTime.toString(QStringLiteral("H:mm:ss")));
     m_isZeroTime = true;
 }
 
@@ -319,10 +319,10 @@ void PlaybackWidget::slotTimeUpdaterTimeout()
         mins           = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
         secs           = (int)((total / (long int)1000) - (long int)(hours * 60 + mins * 60));
         QTime totalTime(hours, mins, secs);
-        m_totalTimeLabel->setText(totalTime.toString("H:mm:ss"));
+        m_totalTimeLabel->setText(totalTime.toString(QStringLiteral("H:mm:ss")));
     }
 
-    m_elapsedTimeLabel->setText(elapsedTime.toString("H:mm:ss"));
+    m_elapsedTimeLabel->setText(elapsedTime.toString(QStringLiteral("H:mm:ss")));
 }
 
 void PlaybackWidget::slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate)

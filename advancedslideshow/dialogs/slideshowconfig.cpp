@@ -34,8 +34,7 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <kiconloader.h>
-#include <kpushbutton.h>
+#include <KConfigGroup>
 
 // Libkipi includes
 
@@ -74,15 +73,15 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     : KPPageDialog(parent),
       d(new Private)
 {
-    setObjectName("Advanced Slideshow Settings");
+    setObjectName(QStringLiteral("Advanced Slideshow Settings"));
     setWindowTitle(i18n("Advanced Slideshow"));
 
-    d->config     = new KConfig("kipirc");
+    d->config     = new KConfig(QStringLiteral("kipirc"));
     d->sharedData = sharedData;
 
     setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Ok | QDialogButtonBox::Apply);
     button(QDialogButtonBox::Apply)->setDefault(true);
-    button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme("system-run"));
+    button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
     button(QDialogButtonBox::Apply)->setText(i18n("Start Slideshow"));
     setFaceType(List);
     setModal(true);
@@ -92,22 +91,22 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
     d->sharedData->page_main = addPage(d->sharedData->mainPage, i18n("Main"));
     d->sharedData->page_main->setHeader(i18n("Main Settings"));
-    d->sharedData->page_main->setIcon(QIcon::fromTheme("view-presentation"));
+    d->sharedData->page_main->setIcon(QIcon::fromTheme(QStringLiteral("view-presentation")));
 
     d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
     d->sharedData->page_caption = addPage(d->sharedData->captionPage, i18nc("captions for the slideshow", "Caption"));
     d->sharedData->page_caption->setHeader(i18nc("captions for the slideshow", "Caption"));
-    d->sharedData->page_caption->setIcon(QIcon::fromTheme("draw-freehand"));
+    d->sharedData->page_caption->setIcon(QIcon::fromTheme(QStringLiteral("draw-freehand")));
 
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
     d->sharedData->page_soundtrack = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
     d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
-    d->sharedData->page_soundtrack->setIcon(QIcon::fromTheme("speaker"));
+    d->sharedData->page_soundtrack->setIcon(QIcon::fromTheme(QStringLiteral("speaker")));
 
     d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
     d->sharedData->page_advanced = addPage(d->sharedData->advancedPage, i18n("Advanced"));
     d->sharedData->page_advanced->setHeader(i18n("Advanced"));
-    d->sharedData->page_advanced->setIcon(QIcon::fromTheme("configure"));
+    d->sharedData->page_advanced->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
 
     // --- About --
 
@@ -120,13 +119,13 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     about->addAuthor(ki18n("Renchi Raju").toString(),
                      ki18n("Developper").toString(),
-                     "renchi dot raju at gmail dot com");
+                     QStringLiteral("renchi dot raju at gmail dot com"));
 
     about->addAuthor(ki18n("Valerio Fuoglio").toString(),
                      ki18n("Developper").toString(),
-                     "valerio dot fuoglio at gmail dot com");
+                     QStringLiteral("valerio dot fuoglio at gmail dot com"));
 
-    about->setHandbookEntry("slideshow");
+    about->setHandbookEntry(QStringLiteral("slideshow"));
     setAboutData(about);
 
     // Slot connections
@@ -199,7 +198,7 @@ void SlideShowConfig::readSettings()
 
     if (d->sharedData->soundtrackRememberPlaylist)
     {
-        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().url().toLocalFile());
+        QString groupName(objectName() + QStringLiteral(" Soundtrack ") + d->sharedData->iface()->currentAlbum().url().toLocalFile());
         KConfigGroup soundGrp = d->config->group(groupName);
 
         // load and check playlist files, if valid, add to tracklist widget
@@ -278,7 +277,7 @@ void SlideShowConfig::saveSettings()
     // of older track entries
     if (d->sharedData->soundtrackRememberPlaylist && d->sharedData->soundtrackPlayListNeedsUpdate)
     {
-        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().url().toLocalFile());
+        QString groupName(objectName() + QStringLiteral(" Soundtrack ") + d->sharedData->iface()->currentAlbum().url().toLocalFile());
         KConfigGroup soundGrp = d->config->group(groupName);
         soundGrp.writeEntry("Tracks", d->sharedData->soundtrackUrls);
     }

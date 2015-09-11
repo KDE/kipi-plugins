@@ -327,7 +327,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
     if (!item || m_ImagesFilesListBox->imageUrls().isEmpty())
     {
-        m_label7->setText("");
+        m_label7->setText(QStringLiteral(""));
         m_previewLabel->setPixmap(m_noPreviewPixmap.getPixmap());
         return;
     }
@@ -470,9 +470,14 @@ void MainDialog::slotPortfolioDurationChanged(int)
 void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
 {
     if (pix.isNull())
-        m_previewLabel->setPixmap(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
+    {
+        m_previewLabel->setPixmap(SmallIcon(QStringLiteral("image-x-generic"),
+                                            ICONSIZE, KIconLoader::DisabledState));
+    }
     else
+    {
         m_previewLabel->setPixmap(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
+    }
 
     disconnect(m_sharedData->iface(), 0,
                this, 0);

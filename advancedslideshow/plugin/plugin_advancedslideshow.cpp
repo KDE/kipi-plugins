@@ -46,12 +46,11 @@ extern "C"
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kgenericfactory.h>
 #include <kactioncollection.h>
-#include <klibloader.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kmessagebox.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 
@@ -116,14 +115,14 @@ void Plugin_AdvancedSlideshow::setupActions()
 
     m_actionSlideShow = new QAction(this);
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
-    m_actionSlideShow->setIcon(QIcon::fromTheme("kipi-slideshow"));
+    m_actionSlideShow->setIcon(QIcon::fromTheme(QStringLiteral("kipi-slideshow")));
     m_actionSlideShow->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
     m_actionSlideShow->setEnabled(false);
 
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("advancedslideshow", m_actionSlideShow);
+    addAction(QStringLiteral("advancedslideshow"), m_actionSlideShow);
 }
 
 void Plugin_AdvancedSlideshow::slotActivate()
@@ -192,11 +191,11 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         return;
     }
 
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("Advanced Slideshow Settings");
     bool opengl      = grp.readEntry("OpenGL",  false);
     bool shuffle     = grp.readEntry("Shuffle", false);
-    bool wantKB      = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
+    bool wantKB      = grp.readEntry("Effect Name (OpenGL)") == QStringLiteral("Ken Burns");
     m_urlList        = m_sharedData->urlList;
 
     if (m_urlList.isEmpty())

@@ -148,7 +148,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
 
     registerEffects();
 
-    if (m_sharedData->effectNameGL == "Random")
+    if (m_sharedData->effectNameGL == QStringLiteral("Random"))
     {
         m_effect = getRandomEffect();
         m_random = true;
@@ -158,7 +158,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
         m_effect = m_effects[m_sharedData->effectNameGL];
 
         if (!m_effect)
-            m_effect = m_effects["None"];
+            m_effect = m_effects[QStringLiteral("None")];
 
         m_random = false;
     }
@@ -354,31 +354,31 @@ void SlideShowGL::wheelEvent(QWheelEvent* e)
 
 void SlideShowGL::registerEffects()
 {
-    m_effects.insert("None",    &SlideShowGL::effectNone);
-    m_effects.insert("Blend",   &SlideShowGL::effectBlend);
-    m_effects.insert("Fade",    &SlideShowGL::effectFade);
-    m_effects.insert("Rotate",  &SlideShowGL::effectRotate);
-    m_effects.insert("Bend",    &SlideShowGL::effectBend);
-    m_effects.insert("In Out",  &SlideShowGL::effectInOut);
-    m_effects.insert("Slide",   &SlideShowGL::effectSlide);
-    m_effects.insert("Flutter", &SlideShowGL::effectFlutter);
-    m_effects.insert("Cube",    &SlideShowGL::effectCube);
+    m_effects.insert(QStringLiteral("None"),    &SlideShowGL::effectNone);
+    m_effects.insert(QStringLiteral("Blend"),   &SlideShowGL::effectBlend);
+    m_effects.insert(QStringLiteral("Fade"),    &SlideShowGL::effectFade);
+    m_effects.insert(QStringLiteral("Rotate"),  &SlideShowGL::effectRotate);
+    m_effects.insert(QStringLiteral("Bend"),    &SlideShowGL::effectBend);
+    m_effects.insert(QStringLiteral("In Out"),  &SlideShowGL::effectInOut);
+    m_effects.insert(QStringLiteral("Slide"),   &SlideShowGL::effectSlide);
+    m_effects.insert(QStringLiteral("Flutter"), &SlideShowGL::effectFlutter);
+    m_effects.insert(QStringLiteral("Cube"),    &SlideShowGL::effectCube);
 }
 
 QStringList SlideShowGL::effectNames()
 {
     QStringList effects;
 
-    effects.append("None");
-    effects.append("Bend");
-    effects.append("Blend");
-    effects.append("Cube");
-    effects.append("Fade");
-    effects.append("Flutter");
-    effects.append("In Out");
-    effects.append("Rotate");
-    effects.append("Slide");
-    effects.append("Random");
+    effects.append(QStringLiteral("None"));
+    effects.append(QStringLiteral("Bend"));
+    effects.append(QStringLiteral("Blend"));
+    effects.append(QStringLiteral("Cube"));
+    effects.append(QStringLiteral("Fade"));
+    effects.append(QStringLiteral("Flutter"));
+    effects.append(QStringLiteral("In Out"));
+    effects.append(QStringLiteral("Rotate"));
+    effects.append(QStringLiteral("Slide"));
+    effects.append(QStringLiteral("Random"));
 
     return effects;
 }
@@ -387,16 +387,16 @@ QMap<QString, QString> SlideShowGL::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects["None"]    = i18nc("Filter Effect: No effect",     "None");
-    effects["Bend"]    = i18nc("Filter Effect: Bend",          "Bend");
-    effects["Blend"]   = i18nc("Filter Effect: Blend",         "Blend");
-    effects["Cube"]    = i18nc("Filter Effect: Cube",          "Cube");
-    effects["Fade"]    = i18nc("Filter Effect: Fade",          "Fade");
-    effects["Flutter"] = i18nc("Filter Effect: Flutter",       "Flutter");
-    effects["In Out"]  = i18nc("Filter Effect: In Out",        "In Out");
-    effects["Rotate"]  = i18nc("Filter Effect: Rotate",        "Rotate");
-    effects["Slide"]   = i18nc("Filter Effect: Slide",         "Slide");
-    effects["Random"]  = i18nc("Filter Effect: Random effect", "Random");
+    effects[QStringLiteral("None")]    = i18nc("Filter Effect: No effect",     "None");
+    effects[QStringLiteral("Bend")]    = i18nc("Filter Effect: Bend",          "Bend");
+    effects[QStringLiteral("Blend")]   = i18nc("Filter Effect: Blend",         "Blend");
+    effects[QStringLiteral("Cube")]    = i18nc("Filter Effect: Cube",          "Cube");
+    effects[QStringLiteral("Fade")]    = i18nc("Filter Effect: Fade",          "Fade");
+    effects[QStringLiteral("Flutter")] = i18nc("Filter Effect: Flutter",       "Flutter");
+    effects[QStringLiteral("In Out")]  = i18nc("Filter Effect: In Out",        "In Out");
+    effects[QStringLiteral("Rotate")]  = i18nc("Filter Effect: Rotate",        "Rotate");
+    effects[QStringLiteral("Slide")]   = i18nc("Filter Effect: Slide",         "Slide");
+    effects[QStringLiteral("Random")]  = i18nc("Filter Effect: Random effect", "Random");
 
     return effects;
 }
@@ -405,7 +405,7 @@ SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 {
     QMap<QString, EffectMethod>  tmpMap(m_effects);
 
-    tmpMap.remove("None");
+    tmpMap.remove(QStringLiteral("None"));
     QStringList t = tmpMap.keys();
     int count     = t.count();
     int i         = (int)((float)(count) * qrand() / (RAND_MAX + 1.0));
@@ -579,7 +579,7 @@ void SlideShowGL::printFilename(QImage& layer)
 
 void SlideShowGL::printProgress(QImage& layer)
 {
-    QString progress(QString::number(m_fileIndex + 1) + '/' + QString::number(m_fileList.count()));
+    QString progress(QString::number(m_fileIndex + 1) + QLatin1Char('/') + QString::number(m_fileList.count()));
 
     QPixmap pix = generateOutlinedTextPixmap(progress);
 
@@ -616,7 +616,7 @@ void SlideShowGL::printComments(QImage& layer)
 
         for (currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; ++currIndex)
         {
-            if (comments[currIndex] == QChar('\n') || comments[currIndex].isSpace())
+            if (comments[currIndex] == QLatin1Char('\n') || comments[currIndex].isSpace())
             {
                 breakLine = true;
             }
@@ -630,10 +630,10 @@ void SlideShowGL::printComments(QImage& layer)
         for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
                 currIndex < (uint) comments.length() && !breakLine; ++currIndex )
         {
-            breakLine = (comments[currIndex] == QChar('\n')) ? true : false;
+            breakLine = (comments[currIndex] == QLatin1Char('\n')) ? true : false;
 
             if (breakLine)
-                newLine.append( ' ' );
+                newLine.append(QLatin1Char(' '));
             else
                 newLine.append( comments[currIndex] );
         }
@@ -642,7 +642,7 @@ void SlideShowGL::printComments(QImage& layer)
 
         if ( commentsIndex != (uint) comments.length() )
         {
-            while ( !newLine.endsWith(' ') )
+            while ( !newLine.endsWith(QLatin1Char(' ')) )
             {
                 newLine.truncate(newLine.length() - 1);
                 commentsIndex--;

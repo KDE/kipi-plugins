@@ -47,7 +47,6 @@
 #include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kglobal.h>
 #include <klocalizedstring.h>
 #include "kipiplugins_debug.h"
 #include <kdeversion.h>
@@ -485,7 +484,7 @@ void SlideShowKB::paintTexture(Image* const img)
 
 void SlideShowKB::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Advanced Slideshow Settings");
 
     m_delay            = group.readEntry("Delay", 8000) / 1000;
@@ -564,7 +563,7 @@ QStringList SlideShowKB::effectNames()
 {
     QStringList effects;
 
-    effects.append("Ken Burns");
+    effects.append(QStringLiteral("Ken Burns"));
     return effects;
 }
 
@@ -572,7 +571,7 @@ QMap<QString, QString> SlideShowKB::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects["Ken Burns"] = i18n("Ken Burns");
+    effects[QStringLiteral("Ken Burns")] = i18n("Ken Burns");
 
     return effects;
 }

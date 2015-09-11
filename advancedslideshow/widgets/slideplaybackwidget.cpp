@@ -49,17 +49,17 @@ SlidePlaybackWidget::SlidePlaybackWidget(QWidget* const parent)
 {
     setupUi(this);
     m_playButton->setCheckable(true);
-    m_slideLabel->setPixmap(QIcon::fromTheme("view-presentation").pixmap(64, 64));
+    m_slideLabel->setPixmap(QIcon::fromTheme(QStringLiteral("view-presentation")).pixmap(64, 64));
 
-    m_prevButton->setText("");
-    m_nextButton->setText("");
-    m_playButton->setText("");
-    m_stopButton->setText("");
+    m_prevButton->setText(QString());
+    m_nextButton->setText(QString());
+    m_playButton->setText(QString());
+    m_stopButton->setText(QString());
 
-    m_prevButton->setIcon(QIcon::fromTheme("media-skip-backward"));
-    m_nextButton->setIcon(QIcon::fromTheme("media-skip-forward"));
-    m_playButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    m_stopButton->setIcon(QIcon::fromTheme("media-playback-stop"));
+    m_prevButton->setIcon(QIcon::fromTheme(QStringLiteral("media-skip-backward")));
+    m_nextButton->setIcon(QIcon::fromTheme(QStringLiteral("media-skip-forward")));
+    m_playButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
+    m_stopButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-stop")));
 
     m_canHide = true;
 
@@ -129,14 +129,14 @@ void SlidePlaybackWidget::slotPlayButtonToggled()
     {
         m_canHide                 = false;
         KIconLoader* const loader = KIconLoader::global();
-        m_playButton->setIcon(loader->loadIcon("media-playback-start", KIconLoader::NoGroup, 22));
+        m_playButton->setIcon(loader->loadIcon(QStringLiteral("media-playback-start"), KIconLoader::NoGroup, 22));
         emit signalPause();
     }
     else
     {
         m_canHide                 = true;
         KIconLoader* const loader = KIconLoader::global();
-        m_playButton->setIcon(loader->loadIcon("media-playback-pause", KIconLoader::NoGroup, 22));
+        m_playButton->setIcon(loader->loadIcon(QStringLiteral("media-playback-pause"), KIconLoader::NoGroup, 22));
         emit signalPlay();
     }
 }
@@ -148,7 +148,7 @@ void SlidePlaybackWidget::slotNexPrevClicked()
         m_playButton->setChecked(true);
         m_canHide                 = false;
         KIconLoader* const loader = KIconLoader::global();
-        m_playButton->setIcon(loader->loadIcon("media-playback-start", KIconLoader::NoGroup, 22));
+        m_playButton->setIcon(loader->loadIcon(QStringLiteral("media-playback-start"), KIconLoader::NoGroup, 22));
         emit signalPause();
     }
 }
