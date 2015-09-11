@@ -77,7 +77,7 @@ public Q_SLOTS:
     void slotAddPhotoSuccess(const QUrl& currentImage, const ImgurSuccess& success);
     void slotAddPhotoError(const QUrl& currentImage, const ImgurError& error);
 //    void slotAuthenticated(bool yes);
-    void slotAuthenticated(bool yes, const QString& message = "");
+    void slotAuthenticated(bool yes, const QString& message = QStringLiteral(""));
 
     void slotStartUpload();
     void slotFinished();

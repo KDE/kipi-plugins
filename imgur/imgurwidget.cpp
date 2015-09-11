@@ -32,7 +32,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 
 // Libkipi includes
 
@@ -86,7 +85,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
 
     d->headerLbl = new QLabel(settingsBox);
     d->headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
-    d->headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
+    d->headerLbl->setText(QStringLiteral("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
     d->headerLbl->setOpenExternalLinks(true);
     d->headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -104,7 +103,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     d->progressBar->setValue(0);
     d->progressBar->setFormat(i18n("%v / %m"));
     d->progressBar->progressScheduled(i18n("Export to Imgur"), true, true);
-    d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    d->progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     // ------------------------------------------------------------------------
 
@@ -118,7 +117,7 @@ ImgurWidget::ImgurWidget(QWidget* const parent)
     //QLabel* userNameLbl             = new QLabel(i18nc("imgur account settings", "Name:"), accountBox);
     //QLabel* userNameDisplayLbl    = new QLabel(d->loggedUser, accountBox);
 
-    d->changeUserBtn = new KPushButton(KGuiItem(i18n("Request authorization"), "system-switch-user",
+    d->changeUserBtn = new KPushButton(KGuiItem(i18n("Request authorization"), QStringLiteral("system-switch-user"),
                                        i18n("Set permissions for the current application to upload images to Imgur.")),
                                        accountBox);
 

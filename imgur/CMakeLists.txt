@@ -26,12 +26,13 @@ endif()
 add_library(kipiplugin_imgur MODULE ${kipiplugin_imgur_PART_SRCS})
 
 target_link_libraries(kipiplugin_imgur
-                      PRIVATE
-                      KF5::Kipi
-                      KF5::KIOCore
-                      KF5::KExiv2
-                      KF5kipiplugins
-                     )
+    PRIVATE
+        KF5kipiplugins
+        KF5::KExiv2
+        KF5::Kipi
+        KF5::KIOCore
+        KF5::WindowSystem
+)
 
 if(QTKOAUTH_FOUND)
     target_link_libraries(kipiplugin_imgur ${QTKOAUTH_LIBRARIES})

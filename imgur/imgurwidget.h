@@ -28,10 +28,6 @@
 #include <QWidget>
 #include <QLabel>
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Local includes
 
 #include "imgurtalker.h"

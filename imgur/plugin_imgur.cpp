@@ -104,12 +104,12 @@ void Plugin_Imgur::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to &Imgur..."));
-    d->actionExport->setIcon(QIcon::fromTheme("kipi-imgur"));
+    d->actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-imgur")));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("imgurexport", d->actionExport);
+    addAction(QStringLiteral("imgurexport"), d->actionExport);
 }
 
 void Plugin_Imgur::slotActivate()

@@ -143,13 +143,13 @@ void ImgurImagesList::slotUploadSuccess(const QUrl& localFile, const ImgurSucces
         {
             if (!success.links.imgur_page.isEmpty())
             {
-                const QString sUrl = success.links.imgur_page.toEncoded();
+                const QString sUrl = QString::fromLatin1(success.links.imgur_page.toEncoded());
                 currItem->setUrl(sUrl);
             }
 
             if (!success.links.delete_page.isEmpty())
             {
-                const QString sDeleteUrl = success.links.delete_page.toEncoded();
+                const QString sDeleteUrl = QString::fromLatin1(success.links.delete_page.toEncoded());
                 currItem->setDeleteUrl(sDeleteUrl);
             }
 

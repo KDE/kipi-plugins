@@ -29,10 +29,8 @@
 // KDE includes
 
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <klocalizedstring.h>
 #include <kconfig.h>
-#include <kdialog.h>
 #include <KWindowConfig>
 
 // Local includes
@@ -79,7 +77,7 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 #endif //OAUTH_ENABLED
 
     setMainWidget(d->widget);
-    setWindowIcon(QIcon::fromTheme("kipi-imgur"));
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-imgur")));
     setWindowTitle(i18n("Export to imgur.com"));
     setModal(false);
 
@@ -99,13 +97,13 @@ ImgurWindow::ImgurWindow(QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Marius Orcsik").toString(),
                      ki18n("Author").toString(),
-                     "marius at habarnam dot ro");
+                     QStringLiteral("marius at habarnam dot ro"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                     "caulier dot gilles at gmail dot com");
+                     QStringLiteral("caulier dot gilles at gmail dot com"));
 
-    about->setHandbookEntry("imgur");
+    about->setHandbookEntry(QStringLiteral("imgur"));
     setAboutData(about);
 
     // ------------------------------------------------------------
@@ -298,19 +296,19 @@ void ImgurWindow::slotBusy(bool val)
 
 void ImgurWindow::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     //KConfigGroup group = config.group(QString("Imgur Settings"));
 
-    KConfigGroup group2 = config.group(QString("Imgur Dialog"));
+    KConfigGroup group2 = config.group("Imgur Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void ImgurWindow::saveSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     //KConfigGroup group = config.group(QString("Imgur Settings"));
 
-    KConfigGroup group2 = config.group(QString("Imgur Dialog"));
+    KConfigGroup group2 = config.group("Imgur Dialog");
     KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }

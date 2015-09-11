@@ -44,15 +44,45 @@ class ImgurConnection
 {
 public:
 
-    static QString APIuploadURL()               {return QString ("https://api.imgur.com/2/upload.json");      }
-    static QString APIdeleteURL()               {return QString ("https://api.imgur.com/2/delete.json");      }
-    static QString OAuthTokenEndPoint()         {return QString ("https://api.imgur.com/oauth/request_token");}
-    static QString OAuthAccessEndPoint()        {return QString ("https://api.imgur.com/oauth/access_token"); }
-    static QString OAuthAuthorizationEndPoint() {return QString ("https://api.imgur.com/oauth/authorize");    }
+    static QString APIuploadURL()
+    {
+        return QStringLiteral("https://api.imgur.com/2/upload.json");
+    }
 
-    static QUrl originalURL(QString imageHash)  { return QUrl ("http://i.imgur.com/" + imageHash + ".jpg"); } // this is wrong
-    static QUrl pageURL(QString imageHash)      { return QUrl ("http://imgur.com/" + imageHash);            }
-    static QUrl deleteURL(QString deleteHash)   { return QUrl ("http://imgur.com/delete/" + deleteHash);    }
+    static QString APIdeleteURL()
+    {
+        return QStringLiteral("https://api.imgur.com/2/delete.json");
+    }
+
+    static QString OAuthTokenEndPoint()
+    {
+        return QStringLiteral("https://api.imgur.com/oauth/request_token");
+    }
+
+    static QString OAuthAccessEndPoint()
+    {
+        return QStringLiteral("https://api.imgur.com/oauth/access_token");
+    }
+
+    static QString OAuthAuthorizationEndPoint()
+    {
+        return QStringLiteral("https://api.imgur.com/oauth/authorize");
+    }
+
+    static QUrl originalURL(QString imageHash)
+    {
+        return QUrl(QStringLiteral("http://i.imgur.com/") + imageHash + QStringLiteral(".jpg"));
+    } // this is wrong
+
+    static QUrl pageURL(QString imageHash)
+    {
+        return QUrl(QStringLiteral("http://imgur.com/") + imageHash);
+    }
+
+    static QUrl deleteURL(QString deleteHash)
+    {
+        return QUrl(QStringLiteral("http://imgur.com/delete/") + deleteHash);
+    }
 };
 
 /*
