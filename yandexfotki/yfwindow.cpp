@@ -63,7 +63,6 @@ extern "C"
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
 
 // LibKDcraw includes
 
@@ -87,6 +86,7 @@ extern "C"
 #include "yfalbumdialog.h"
 #include "logindialog.h"
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 
 using namespace KDcrawIface;
 
@@ -101,11 +101,9 @@ const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     : KPToolDialog(parent)
 {
-    m_import    = import;
+    m_import = import;
 
-    KStandardDirs dir;
-    m_tmpDir    = dir.saveLocation("tmp", "kipiplugin-yandexfotki-" +
-                                   QString::number(getpid()) + '/');
+    m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QStringLiteral("/");
 
     m_mainWidget                  = new QWidget(this);
     QHBoxLayout* const mainLayout = new QHBoxLayout(m_mainWidget);
@@ -140,7 +138,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_loginLabel       = new QLabel(m_accountBox);
     m_changeUserButton = new QPushButton(m_accountBox);
     KGuiItem::assign(m_changeUserButton,
-                     KGuiItem(i18n("Change Account"), "system-switch-user",
+                     KGuiItem(i18n("Change Account"), QStringLiteral("system-switch-user"),
                               i18n("Change Yandex account used to authenticate")));
 
     accountBoxLayout->addWidget(loginDescLabel, 0, 0);
@@ -164,11 +162,11 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     m_newAlbumButton = new QPushButton(m_albumsBox);
     KGuiItem::assign(m_newAlbumButton,
-                     KGuiItem(i18n("New Album"), "list-add",
+                     KGuiItem(i18n("New Album"), QStringLiteral("list-add"),
                               i18n("Create new Yandex.Fotki album")));
     m_reloadAlbumsButton = new QPushButton(m_albumsBox);
     KGuiItem::assign(m_reloadAlbumsButton,
-                     KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
+                     KGuiItem(i18nc("reload albums list", "Reload"), QStringLiteral("view-refresh"),
                               i18n("Reload albums list")));
 
     albumsBoxLayout->addWidget(m_albumsCombo,        0, 0, 1, 5);
@@ -240,9 +238,12 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     QLabel* const accessLabel = new QLabel(i18n("Privacy settings:"), optionsBox);
     m_accessCombo             = new QComboBox(optionsBox);
-    m_accessCombo->addItem(QIcon::fromTheme("folder"), i18n("Public access"),         YandexFotkiPhoto::ACCESS_PUBLIC);
-    m_accessCombo->addItem(QIcon::fromTheme("folder-red"), i18n("Friends access"),    YandexFotkiPhoto::ACCESS_FRIENDS);
-    m_accessCombo->addItem(QIcon::fromTheme("folder-locked"), i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
+    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder")),
+                           i18n("Public access"), YandexFotkiPhoto::ACCESS_PUBLIC);
+    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-red")),
+                           i18n("Friends access"), YandexFotkiPhoto::ACCESS_FRIENDS);
+    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-locked")),
+                           i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
 
     m_hideOriginalCheck = new QCheckBox(i18n("Hide original photo"), optionsBox);
     m_disableCommentsCheck = new QCheckBox(i18n("Disable comments"), optionsBox);
@@ -300,7 +301,7 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(QIcon::fromTheme("yandexfotki"));
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("yandexfotki")));
     setModal(false);
 
     if (!m_import)
@@ -333,9 +334,9 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
 
     about->addAuthor(ki18n( "Roman Tsisyk" ).toString(),
                      ki18n("Author").toString(),
-                     "roman at tsisyk dot com");
+                     QStringLiteral("roman at tsisyk dot com"));
 
-    about->setHandbookEntry("YandexFotki");
+    about->setHandbookEntry(QStringLiteral("YandexFotki"));
     setAboutData(about);
 
     // -- UI slots -----------------------------------------------------------------------
@@ -449,22 +450,23 @@ void YandexFotkiWindow::updateLabels()
         m_albumsCombo->clear();
     }
 
-    m_loginLabel->setText(QString("<b>%1</b>").arg(logintext));
-    m_headerLabel->setText(QString("<b><h2><a href=\"%1\">"
-                                   "<font color=\"#ff000a\">%2</font>"
-                                   "<font color=\"black\">%3</font>"
-                                   "<font color=\"#009d00\">%4</font>"
-                                   "</a></h2></b>")
-                           .arg(urltext)
-                           .arg(i18nc("Yandex.Fotki", "Y"))
-                           .arg(i18nc("Yandex.Fotki", "andex."))
-                           .arg(i18nc("Yandex.Fotki", "Fotki")));
+    m_loginLabel->setText(QStringLiteral("<b>%1</b>").arg(logintext));
+    m_headerLabel->setText(QStringLiteral(
+        "<b><h2><a href=\"%1\">"
+        "<font color=\"#ff000a\">%2</font>"
+        "<font color=\"black\">%3</font>"
+        "<font color=\"#009d00\">%4</font>"
+        "</a></h2></b>")
+        .arg(urltext)
+        .arg(i18nc("Yandex.Fotki", "Y"))
+        .arg(i18nc("Yandex.Fotki", "andex."))
+        .arg(i18nc("Yandex.Fotki", "Fotki")));
 }
 
 void YandexFotkiWindow::readSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup grp = config.group( "YandexFotki Settings");
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup grp = config.group("YandexFotki Settings");
 
     // TODO: use kwallet ??
     m_talker.setLogin(grp.readEntry("login", ""));
@@ -491,7 +493,7 @@ void YandexFotkiWindow::readSettings()
 
 void YandexFotkiWindow::writeSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("YandexFotki Settings");
 
     // TODO: user kwallet ??
@@ -767,7 +769,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
             photo.setLocalUrl(m_tmpDir + QFileInfo(photo.originalUrl())
                               .baseName()
-                              .trimmed() + ".jpg");
+                              .trimmed() + QStringLiteral(".jpg"));
 
             bool prepared = false;
 
@@ -792,8 +794,7 @@ void YandexFotkiWindow::updateNextPhoto()
                     meta.load(photo.originalUrl()))
                 {
                     meta.setImageDimensions(image.size());
-                    meta.setImageProgramId("Kipi-plugins",
-                                                 kipiplugins_version);
+                    meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
                     meta.save(photo.localUrl());
                     prepared = true;
                 }
@@ -972,11 +973,11 @@ void YandexFotkiWindow::slotListAlbumsDone(const QList<YandexFotkiAlbum>& albums
 
         if (album.isProtected())
         {
-            albumIcon = "folder-locked";
+            albumIcon = QStringLiteral("folder-locked");
         }
         else
         {
-            albumIcon = "folder-image";
+            albumIcon = QStringLiteral("folder-image");
         }
 
         m_albumsCombo->addItem(QIcon::fromTheme(albumIcon), album.toString());

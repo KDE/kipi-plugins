@@ -25,9 +25,12 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
+
+// Qt includes
+
+#include <QtWidgets/QDialog>
 
 // Local includes
 
@@ -36,7 +39,7 @@
 namespace KIPIYandexFotkiPlugin
 {
 
-class YandexFotkiAlbumDialog: public KDialog
+class YandexFotkiAlbumDialog: public QDialog
 {
     Q_OBJECT
 
@@ -52,7 +55,7 @@ public:
 
 protected Q_SLOTS:
 
-    void slotButtonClicked(int button);
+    void slotOkClicked();
 
 protected:
 

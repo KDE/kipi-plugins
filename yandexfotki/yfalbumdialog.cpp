@@ -31,11 +31,11 @@
 #include <QApplication>
 #include <QStyle>
 #include <QLineEdit>
+#include <QtWidgets/QPushButton>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
 #include <ktextedit.h>
 #include <kmessagebox.h>
 
@@ -48,17 +48,12 @@ namespace KIPIYandexFotkiPlugin
 {
 
 YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotkiAlbum& album)
-    : KDialog(parent), m_album(album)
+    : QDialog(parent), m_album(album)
 {
     setWindowTitle(i18n("New album"));
-    setButtons(KDialog::Ok | KDialog::Cancel);
-    setDefaultButton(KDialog::Cancel);
+    setMinimumSize(400, 300);
 
-    QWidget* const mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
-    mainWidget->setMinimumSize(400, 300);
-
-    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
+    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), this);
     albumBox->setWhatsThis(i18n("These are basic settings for the new Yandex album."));
 
     m_titleEdit    = new QLineEdit(album.title());
@@ -77,10 +72,19 @@ YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotk
 
     albumBox->setLayout(albumBoxLayout);
 
-    QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
+    // Buttons
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &YandexFotkiAlbumDialog::slotOkClicked);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    // Layout
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(albumBox);
+    mainLayout->addWidget(buttonBox);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainWidget->setLayout(mainLayout);
+    setLayout(mainLayout);
 }
 
 YandexFotkiAlbumDialog::~YandexFotkiAlbumDialog()
@@ -88,31 +92,28 @@ YandexFotkiAlbumDialog::~YandexFotkiAlbumDialog()
     // nothing
 }
 
-void YandexFotkiAlbumDialog::slotButtonClicked(int button)
+void YandexFotkiAlbumDialog::slotOkClicked()
 {
-    if (button == KDialog::Ok)
+    if (m_titleEdit->text().isEmpty())
     {
-        if (m_titleEdit->text().isEmpty())
-        {
-            KMessageBox::error(this, i18n("Title cannot be empty."),
-                               i18n("Error"));
-            return;
-        }
-
-        m_album.setTitle(m_titleEdit->text());
-        m_album.setSummary(m_summaryEdit->toPlainText());
-
-        if (m_passwordEdit->text().isEmpty())
-        {
-            m_album.setPassword(QString()); // force null string
-        }
-        else
-        {
-            m_album.setPassword(m_passwordEdit->text());
-        }
+        KMessageBox::error(this, i18n("Title cannot be empty."),
+                            i18n("Error"));
+        return;
     }
 
-    return KDialog::slotButtonClicked(button);
+    m_album.setTitle(m_titleEdit->text());
+    m_album.setSummary(m_summaryEdit->toPlainText());
+
+    if (m_passwordEdit->text().isEmpty())
+    {
+        m_album.setPassword(QString()); // force null string
+    }
+    else
+    {
+        m_album.setPassword(m_passwordEdit->text());
+    }
+
+    accept();
 }
 
 } // namespace KIPIYandexFotkiPlugin

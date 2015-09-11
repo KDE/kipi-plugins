@@ -18,18 +18,19 @@ set(kipiplugin_yandexfotki_PART_SRCS
     yfalbumdialog.cpp
     yandexrsa.cpp
     yandexauth.cpp
-   )
+)
 
 add_library(kipiplugin_yandexfotki MODULE ${kipiplugin_yandexfotki_PART_SRCS})
 
 target_link_libraries(kipiplugin_yandexfotki
-                      PRIVATE
-                      KF5::KDcraw
-                      KF5::Kipi
-                      KF5::KExiv2
-                      KF5::KIOCore
-                      KF5kipiplugins
-                     )
+    PRIVATE
+        KF5::KDcraw
+        KF5::Kipi
+        KF5::KExiv2
+        KF5::KIOCore
+        KF5::WindowSystem
+        KF5kipiplugins
+)
 
 configure_file(kipiplugin_yandexfotki.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_yandexfotki.desktop)
 

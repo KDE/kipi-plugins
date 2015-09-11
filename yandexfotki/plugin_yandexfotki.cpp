@@ -86,14 +86,14 @@ void Plugin_YandexFotki::setupActions()
     m_actionExport->setText(i18n("Export to &Yandex.Fotki..."));
     // TODO: icon file
     //m_actionExport->setIcon(QIcon::fromTheme("yandexfotki"));
-    m_actionExport->setIcon(QIcon::fromTheme("applications-internet"));
+    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("applications-internet")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction("Yandex.Fotki", m_actionExport);
+    addAction(QStringLiteral("Yandex.Fotki"), m_actionExport);
 }
 
 void Plugin_YandexFotki::slotExport()

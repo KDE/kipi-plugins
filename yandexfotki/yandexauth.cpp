@@ -29,6 +29,7 @@
 // Qt includes
 
 #include <QString>
+#include <QtCore/QByteArray>
 
 /*
 // Qca includes
@@ -72,8 +73,8 @@ QString makeCredentials(const QString& publicKey, const QString& login, const QS
 
     QByteArray ba;
     ba.append(encrypted);
-    return QString(ba.toBase64());
-    
+    return QString::fromAscii(ba.toBase64());
+
 /*    
     QCA::Initializer init;
     QCA::Base64 base64Encoder;

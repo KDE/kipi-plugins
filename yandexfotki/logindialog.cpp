@@ -58,16 +58,17 @@ LoginDialog::LoginDialog(QWidget* const parent, const QString& login, const QStr
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 
     m_headerLabel->setTextFormat(Qt::RichText);
-    m_headerLabel->setText(QString("<b><h2>"
-                                   "<font color=\"#ff000a\">%1</font>%2"
-                                   "<font color=\"#009d00\">%3</font>"
-                                   "</b></h2>")
-                           .arg(i18nc("Yandex.Fotki", "Y"))
-                           .arg(i18nc("Yandex.Fotki", "andex."))
-                           .arg(i18nc("Yandex.Fotki", "Fotki")));
+    m_headerLabel->setText(QStringLiteral(
+        "<b><h2>"
+        "<font color=\"#ff000a\">%1</font>%2"
+        "<font color=\"#009d00\">%3</font>"
+        "</b></h2>")
+        .arg(i18nc("Yandex.Fotki", "Y"))
+        .arg(i18nc("Yandex.Fotki", "andex."))
+        .arg(i18nc("Yandex.Fotki", "Fotki")));
 
     QFrame* const hline = new QFrame(this);
-    hline->setObjectName("hline");
+    hline->setObjectName(QStringLiteral("hline"));
     hline->setFrameShape( QFrame::HLine );
     hline->setFrameShadow( QFrame::Sunken );
     hline->setFrameShape( QFrame::HLine );
@@ -86,7 +87,7 @@ LoginDialog::LoginDialog(QWidget* const parent, const QString& login, const QStr
 
     KUrlLabel* const forgotLabel = new KUrlLabel(this);
     forgotLabel->setText(i18n("Forgot your password?"));
-    forgotLabel->setUrl("http://passport.yandex.ru/passport?mode=restore");
+    forgotLabel->setUrl(QStringLiteral("http://passport.yandex.ru/passport?mode=restore"));
 
     connect(forgotLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
@@ -115,7 +116,7 @@ LoginDialog::LoginDialog(QWidget* const parent, const QString& login, const QStr
     QHBoxLayout* const footerLayout = new QHBoxLayout();
     KUrlLabel *licenseLabel = new KUrlLabel(this);
     licenseLabel->setText(i18n("Yandex User Agreement"));
-    licenseLabel->setUrl("http://fotki.yandex.ru/agreement.xml");
+    licenseLabel->setUrl(QStringLiteral("http://fotki.yandex.ru/agreement.xml"));
 
     connect(licenseLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
@@ -125,7 +126,7 @@ LoginDialog::LoginDialog(QWidget* const parent, const QString& login, const QStr
 
     vbox->setMargin(5);
     vbox->setSpacing(5);
-    vbox->setObjectName("vbox");
+    vbox->setObjectName(QStringLiteral("vbox"));
     vbox->addWidget(m_headerLabel);
     vbox->addWidget(hline);
     vbox->addLayout(centerLayout);
