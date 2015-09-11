@@ -227,6 +227,7 @@ KPSettingsWidget::KPSettingsWidget(QWidget* const parent, KIPI::Interface* const
     d->m_imageQualitySpB->setSingleStep(1);
     d->m_imageQualitySpB->setValue(90);
     d->m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    d->m_imageQualitySpB->setEnabled(false);
 
     QLabel* const imageQualityLbl = new QLabel(i18n("JPEG Quality:"),d->m_optionsBox);
     

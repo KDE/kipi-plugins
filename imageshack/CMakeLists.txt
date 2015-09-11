@@ -9,6 +9,7 @@ subdirs(icons)
 add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_imageshack\")
 
 set(kipiplugin_imageshack_PART_SRCS
+    newalbumdlg.cpp
     imageshack.cpp
     mpform.cpp
     plugin_imageshack.cpp

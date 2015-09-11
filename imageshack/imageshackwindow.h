@@ -52,6 +52,7 @@ namespace KIPIImageshackPlugin
 class Imageshack;
 class ImageshackWidget;
 class ImageshackTalker;
+class NewAlbumDlg;
 
 class ImageshackWindow : public KPToolDialog
 {
@@ -99,18 +100,22 @@ private:
 private Q_SLOTS:
 
     void slotChangeRegistrantionCode();
+    void slotNewAlbumRequest();
 
 private:
 
     bool              m_import;
     unsigned int      m_imagesCount;
     unsigned int      m_imagesTotal;
+    QString           m_newAlbmTitle;
 
     QList<QUrl>        m_transferQueue;
 
     Imageshack*       m_imageshack;
     ImageshackWidget* m_widget;
     ImageshackTalker* m_talker;
+    
+    NewAlbumDlg*      m_albumDlg;
 };
 
 } // namespace KIPIImageshackPlugin

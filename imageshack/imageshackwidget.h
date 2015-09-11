@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+//local includes
+
+#include "kpsettingswidget.h"
+
 class QRadioButton;
 class QSpinBox;
 class QCheckBox;
@@ -42,23 +46,25 @@ namespace KIPIPlugins
     class KPProgressWidget;
 }
 
+using namespace KIPIPlugins;
+
 namespace KIPIImageshackPlugin
 {
 
 class Imageshack;
 
-class ImageshackWidget : public QWidget
+class ImageshackWidget : public KPSettingsWidget
 {
     Q_OBJECT
 
 public:
-    ImageshackWidget(QWidget* const parent, Imageshack* const imageshack);
+    ImageshackWidget(QWidget* const parent, Imageshack* const imageshack, KIPI::Interface* const iface, const QString& pluginName);
     ~ImageshackWidget();
-
+/*
     KIPIPlugins::KPImagesList* imagesList() const;
-    KIPIPlugins::KPProgressWidget* progressBar() const;
+    KIPIPlugins::KPProgressWidget* progressBar() const;*/
 
-    void getGalleriesDone(int errCode);
+//     void getGalleriesDone(int errCode);
 
 Q_SIGNALS:
 
@@ -66,17 +72,16 @@ Q_SIGNALS:
 
 private:
 
-    void updateLabels();
-    void updateResizeOpts();
+    void updateLabels(const QString& name = QString(), const QString& url = QString());
+//     void updateResizeOpts();
 
-    void removeVideosFromList();
+//     void removeVideosFromList();
 
 private Q_SLOTS:
 
-    void slotEnablePredefComboBox(bool checked);
-    void slotEnableCustomSize(bool checked);
+//     void slotEnablePredefComboBox(bool checked);
     void slotGetGalleries(const QStringList& gTexts, const QStringList& gNames);
-    void slotEnableNewGalleryLE(int index);
+//     void slotEnableNewGalleryLE(int index);
     void slotReloadGalleries();
 
 private:

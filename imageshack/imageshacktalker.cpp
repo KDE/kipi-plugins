@@ -347,10 +347,60 @@ QString ImageshackTalker::mimeType(const QString& path)
 
 void ImageshackTalker::uploadItem(QString path, QMap<QString, QString> opts)
 {
-    uploadItemToGallery(path, QStringLiteral(""), opts);
+    
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+
+    emit signalBusy(true);
+    QMap<QString, QString> args;
+    args[QStringLiteral("key")]        = m_appKey;
+    args[QStringLiteral("fileupload")] = QUrl(path).fileName();
+
+    MPForm form;
+
+    for (QMap<QString, QString>::const_iterator it = opts.constBegin();
+         it != opts.constEnd();
+         ++it)
+    {
+        form.addPair(it.key(), it.value());
+    }
+
+    for (QMap<QString, QString>::const_iterator it = args.constBegin();
+         it != args.constEnd();
+         ++it)
+    {
+        form.addPair(it.key(), it.value());
+    }
+
+    if (!form.addFile(QUrl(path).fileName(), path))
+    {
+        emit signalBusy(false);
+        return;
+    }
+
+    form.finish();    
+    
+    QUrl uploadUrl;
+    m_state   = IMGHCK_ADDPHOTO;
+    
+    KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
+    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
+    job->addMetaData(QStringLiteral("content-type"), form.contentType());
+
+    m_job = job;
+
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));    
+    //uploadItemToGallery(path, QStringLiteral(""), opts);
 }
 
-void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*gallery*/, QMap<QString, QString> opts)
+void ImageshackTalker::uploadItemToGallery(QString path, const QString &gallery, QMap<QString, QString> opts)
 {
     if (m_job)
     {
@@ -393,17 +443,17 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &/*galler
     // TODO support for video uploads
     QUrl uploadUrl;
 
-    if (mime.startsWith(QLatin1String("video/")))
-    {
-        uploadUrl = QUrl(m_videoApiUrl);
-        m_state = IMGHCK_ADDVIDEO;
-    }
-    else
-    {
-        // image file
+//     if (mime.startsWith(QLatin1String("video/")))
+//     {
+//         uploadUrl = QUrl(m_videoApiUrl);
+//         m_state = IMGHCK_ADDVIDEO;
+//     }
+//     else
+//     {
+//         // image file
         uploadUrl = QUrl(m_photoApiUrl);
         m_state   = IMGHCK_ADDPHOTO;
-    }
+//     }
 
     KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);

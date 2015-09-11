@@ -69,6 +69,7 @@
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
 #include "kplogindialog.h"
+#include "newalbumdlg.h"
 
 namespace KIPIImageshackPlugin
 {
@@ -77,11 +78,13 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     : KPToolDialog(parent)
 {
     m_imageshack = imghack;
-    m_widget     = new ImageshackWidget(this, imghack);
+    m_widget     = new ImageshackWidget(this, imghack, iface(), QStringLiteral("ImageShack"));
     m_widget->setMinimumSize(700, 500);
     setMainWidget(m_widget);
     setWindowTitle(i18n("Export to Imageshack"));
     setModal(true);
+    
+    m_albumDlg =  new NewAlbumDlg(this, "ImageShack");
 
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotChangeRegistrantionCode()));
@@ -144,6 +147,9 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
 
     connect(this, SIGNAL(cancelClicked()),
             this, SLOT(slotCancelClicked()));
+    
+    connect(m_widget->getNewAlbmBtn(),SIGNAL(clicked()),
+            this,SLOT(slotNewAlbumRequest()));
 
     readSettings();
 
@@ -188,22 +194,22 @@ void ImageshackWindow::readSettings()
         m_widget->m_privateImagesChb->setChecked(true);
     }
 
-    QString resize = group.readEntry("Resize", QString());
-    if (resize == QStringLiteral("No"))
-    {
-        m_widget->m_noResizeRdb->setChecked(true);
-    }
-    else if (resize == QStringLiteral("Template"))
-    {
-        m_widget->m_predefSizeRdb->setChecked(true);
-        m_widget->m_resizeOptsCob->setCurrentIndex(group.readEntry("Template", 0));
-    }
-    else
-    {
-        m_widget->m_customSizeRdb->setChecked(true);
-        m_widget->m_widthSpb->setValue(group.readEntry("Width", 1000));
-        m_widget->m_heightSpb->setValue(group.readEntry("Height", 1000));
-    }
+//     QString resize = group.readEntry("Resize", QString());
+//     if (resize == QStringLiteral("No"))
+//     {
+//         m_widget->m_noResizeRdb->setChecked(true);
+//     }
+//     else if (resize == QStringLiteral("Template"))
+//     {
+//         m_widget->m_predefSizeRdb->setChecked(true);
+//         m_widget->m_resizeOptsCob->setCurrentIndex(group.readEntry("Template", 0));
+//     }
+//     else
+//     {
+//         m_widget->m_customSizeRdb->setChecked(true);
+//         m_widget->m_widthSpb->setValue(group.readEntry("Width", 1000));
+//         m_widget->m_heightSpb->setValue(group.readEntry("Height", 1000));
+//     }
 
     if (group.readEntry("Rembar", false))
     {
@@ -223,21 +229,21 @@ void ImageshackWindow::saveSettings()
 
     group.writeEntry("Private", m_widget->m_privateImagesChb->isChecked());
 
-    if (m_widget->m_noResizeRdb->isChecked())
-    {
-        group.writeEntry("Resize", "No");
-    }
-    else if (m_widget->m_predefSizeRdb->isChecked())
-    {
-        group.writeEntry("Resize", "Template");
-        group.writeEntry("Template", m_widget->m_resizeOptsCob->currentIndex());
-    }
-    else
-    {
-        group.writeEntry("Resize", "Custom");
-        group.writeEntry("Width", m_widget->m_widthSpb->value());
-        group.writeEntry("Height", m_widget->m_heightSpb->value());
-    }
+//     if (m_widget->m_noResizeRdb->isChecked())
+//     {
+//         group.writeEntry("Resize", "No");
+//     }
+//     else if (m_widget->m_predefSizeRdb->isChecked())
+//     {
+//         group.writeEntry("Resize", "Template");
+//         group.writeEntry("Template", m_widget->m_resizeOptsCob->currentIndex());
+//     }
+//     else
+//     {
+//         group.writeEntry("Resize", "Custom");
+//         group.writeEntry("Width", m_widget->m_widthSpb->value());
+//         group.writeEntry("Height", m_widget->m_heightSpb->value());
+//     }
 
     group.writeEntry("Rembar", m_widget->m_remBarChb->isChecked());
 
@@ -364,7 +370,6 @@ void ImageshackWindow::slotGetGalleriesDone(int errCode, const QString &errMsg)
     {
         KMessageBox::error(this, i18n("Failed to get galleries list: %1\n", errMsg));
     }
-    m_widget->getGalleriesDone(errCode);
 }
 
 void ImageshackWindow::uploadNextItem()
@@ -393,18 +398,18 @@ void ImageshackWindow::uploadNextItem()
         opts[QStringLiteral("rembar")] = QStringLiteral("yes");
     }
 
-    if (m_widget->m_predefSizeRdb->isChecked())
-    {
-        opts[QStringLiteral("optimage")] = QStringLiteral("1");
-        opts[QStringLiteral("optsize")] = m_widget->m_resizeOptsCob->itemData(m_widget->m_resizeOptsCob->currentIndex()).toString();
-    }
-    else if (m_widget->m_customSizeRdb->isChecked())
-    {
-        opts[QStringLiteral("optimage")] = QStringLiteral("1");
-        QString dim = QStringLiteral("");
-        dim.append(QStringLiteral("%1x%2").arg(m_widget->m_widthSpb->value()).arg(m_widget->m_heightSpb->value()));
-        opts[QStringLiteral("optsize")] = dim;
-    }
+//     if (m_widget->m_predefSizeRdb->isChecked())
+//     {
+//         opts[QStringLiteral("optimage")] = QStringLiteral("1");
+//         opts[QStringLiteral("optsize")] = m_widget->m_resizeOptsCob->itemData(m_widget->m_resizeOptsCob->currentIndex()).toString();
+//     }
+//     else if (m_widget->m_customSizeRdb->isChecked())
+//     {
+//         opts[QStringLiteral("optimage")] = QStringLiteral("1");
+//         QString dim = QStringLiteral("");
+//         dim.append(QStringLiteral("%1x%2").arg(m_widget->m_widthSpb->value()).arg(m_widget->m_heightSpb->value()));
+//         opts[QStringLiteral("optsize")] = dim;
+//     }
 
     // tags
     if (!m_widget->m_tagsFld->text().isEmpty())
@@ -417,21 +422,37 @@ void ImageshackWindow::uploadNextItem()
 
     opts[QStringLiteral("auth_token")] = m_imageshack->authToken();
 
-    bool uploadToGalleries = m_widget->m_useGalleriesChb->isChecked();
-
-    if (uploadToGalleries)
+//     bool uploadToGalleries = m_widget->m_useGalleriesChb->isChecked();
+// 
+//     if (uploadToGalleries)
+//     {
+//         int gidx = m_widget->m_galleriesCob->currentIndex();
+//         QString gallery;
+//         if (gidx == 0)
+//             gallery = m_newAlbmTitle->text();
+//         else
+//             gallery = m_widget->m_galleriesCob->itemData(gidx).toString();
+//         m_talker->uploadItemToGallery(imgPath, gallery, opts);
+//     }
+//     else
+//     {
+//         m_talker->uploadItem(imgPath, opts);
+//     }
+    
+    int gidx = m_widget->m_galleriesCob->currentIndex();
+    
+    switch(gidx)
     {
-        int gidx = m_widget->m_galleriesCob->currentIndex();
-        QString gallery;
-        if (gidx == 0)
-            gallery = m_widget->m_newGalleryName->text();
-        else
-            gallery = m_widget->m_galleriesCob->itemData(gidx).toString();
-        m_talker->uploadItemToGallery(imgPath, gallery, opts);
-    }
-    else
-    {
-        m_talker->uploadItem(imgPath, opts);
+        case 0:
+            m_talker->uploadItem(imgPath, opts);
+            break;
+        case 1:
+            opts[QStringLiteral("album")] = m_newAlbmTitle;
+            m_talker->uploadItemToGallery(imgPath, m_newAlbmTitle, opts);
+            break;
+        default:
+            opts[QStringLiteral("album")] = m_widget->m_galleriesCob->itemData(gidx).toString();
+            m_talker->uploadItemToGallery(imgPath, m_widget->m_galleriesCob->itemData(gidx).toString(), opts);
     }
 }
 
@@ -465,6 +486,14 @@ void ImageshackWindow::slotGetGalleries()
 {
     m_widget->m_progressBar->setVisible(true);
     m_talker->getGalleries();
+}
+
+void ImageshackWindow::slotNewAlbumRequest()
+{
+    if(m_albumDlg->exec() == QDialog::Accepted)
+    {
+        m_newAlbmTitle = m_albumDlg->getAlbumTitle();
+    }
 }
 
 } // namespace KIPIImageshackPlugin
