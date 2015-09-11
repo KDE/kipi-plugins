@@ -41,17 +41,14 @@
 #include <QCursor>
 #include <QPixmap>
 #include <QMouseEvent>
+#include <QDesktopWidget>
+#include <QApplication>
 
 // KDE includes
 
-#include <QApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <klocalizedstring.h>
-#include "kipiplugins_debug.h"
-#include <kdeversion.h>
-#include <kglobalsettings.h>
-#include <QDesktopWidget>
 
 // Local includes
 
@@ -59,6 +56,7 @@
 #include "imageloadthread.h"
 #include "kbeffect.h"
 #include "playbackwidget.h"
+#include "kipiplugins_debug.h"
 #include "screenproperties.h"
 
 namespace KIPIAdvancedSlideshowPlugin

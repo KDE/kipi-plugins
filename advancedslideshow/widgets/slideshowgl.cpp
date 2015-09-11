@@ -53,13 +53,11 @@
 #include <QApplication>
 #include <kconfiggroup.h>
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
-#include <kdeversion.h>
-#include <kglobalsettings.h>
 #include <klocalizedstring.h>
 
 // local includes
 
+#include "kipiplugins_debug.h"
 #include "commoncontainer.h"
 #include "playbackwidget.h"
 #include "slideplaybackwidget.h"
