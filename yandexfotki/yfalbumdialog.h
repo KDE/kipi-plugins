@@ -35,11 +35,14 @@
 // Local includes
 
 #include "yfalbum.h"
+#include "kpnewalbumdialog.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIYandexFotkiPlugin
 {
 
-class YandexFotkiAlbumDialog: public QDialog
+class YandexFotkiAlbumDialog: public KPNewAlbumDialog
 {
     Q_OBJECT
 
@@ -59,8 +62,6 @@ protected Q_SLOTS:
 
 protected:
 
-    QLineEdit*        m_titleEdit;
-    KTextEdit*        m_summaryEdit;
     QLineEdit*        m_passwordEdit;
 
     YandexFotkiAlbum& m_album;

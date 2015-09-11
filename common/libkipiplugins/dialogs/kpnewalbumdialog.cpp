@@ -214,4 +214,9 @@ void KPNewAlbumDialog::addToMainLayout(QWidget* const widget)
     d->mainLayout->addWidget(d->buttonBox);
 }
 
+QDialogButtonBox* KPNewAlbumDialog::getButtonBox() const
+{
+    return d->buttonBox;
+}
+
 } // namespace KIPIPlugins
