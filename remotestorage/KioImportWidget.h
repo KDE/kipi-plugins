@@ -25,12 +25,9 @@
 
 // Qt includes
 
-#include <QWidget>
+#include <QtCore/QUrl>
+#include <QtWidgets/QWidget>
 
-// KDE includes
-
-#include <kfiledialog.h>
-#include <QUrl>
 
 namespace KIPI
 {

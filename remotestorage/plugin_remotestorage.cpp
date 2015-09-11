@@ -32,11 +32,9 @@
 
 #include <kactioncollection.h>
 #include <kconfig.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <klocalizedstring.h>
-#include <kfiledialog.h>
 #include <kwindowsystem.h>
+#include <KPluginFactory>
 
 // LibKipi includes
 
@@ -94,26 +92,26 @@ void Plugin_RemoteStorage::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to remote storage..."));
-    m_actionExport->setIcon(QIcon::fromTheme("folder-remote"));
+    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("folder-remote")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_K));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateExport()));
 
-    addAction("remotestorageexport", m_actionExport);
+    addAction(QStringLiteral("remotestorageexport"), m_actionExport);
 
     // import
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from remote storage..."));
-    m_actionImport->setIcon(QIcon::fromTheme("folder-remote"));
+    m_actionImport->setIcon(QIcon::fromTheme(QStringLiteral("folder-remote")));
     m_actionImport->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_I));
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));
 
-    addAction("remotestorageimport", m_actionImport, ImportPlugin);
+    addAction(QStringLiteral("remotestorageimport"), m_actionImport, ImportPlugin);
 }
 
 void Plugin_RemoteStorage::slotActivateExport()

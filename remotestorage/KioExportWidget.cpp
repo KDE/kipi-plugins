@@ -32,11 +32,10 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
-#include <kfiledialog.h>
-#include <khbox.h>
 #include <ktoolinvocation.h>
 #include <kcombobox.h>
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -51,7 +50,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
 {
     // setup kio target selection
 
-    KHBox* const hbox   = new KHBox(this);
+    KDcrawIface::RHBox* const hbox = new KDcrawIface::RHBox(this);
     QLabel* const label = new QLabel(hbox);
     m_targetLabel       = new KUrlComboRequester(hbox);
     m_targetDialog      = 0;
@@ -67,8 +66,8 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
                     "This can be any address as used in Dolphin or Konqueror, "
                     "e.g. ftp://my.server.org/sub/folder."));
 
-    m_targetSearchButton = new KPushButton(i18n("Select target location..."), this);
-    m_targetSearchButton->setIcon(QIcon::fromTheme("folder-remote"));
+    m_targetSearchButton = new QPushButton(i18n("Select target location..."), this);
+    m_targetSearchButton->setIcon(QIcon::fromTheme(QStringLiteral("folder-remote")));
 
     // setup image list
     m_imageList = new KPImagesList(this);
@@ -136,15 +135,14 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
 
-    m_targetDialog = new KFileDialog(QUrl(), "*", this);
-    m_targetDialog->setMode(KFile::Directory);
-    m_targetDialog->setWindowTitle(i18n("Select target..."));
-    m_targetDialog->setOperationMode(KFileDialog::Other);
-    m_targetDialog->setUrl(m_targetUrl); // should this check if m_targetUrl is non-null?
+    m_targetDialog = new QFileDialog(this, i18n("Select target..."),
+                                     m_targetUrl.toString(), i18n("All Files (*)"));
+    m_targetDialog->setAcceptMode(QFileDialog::AcceptSave);
+    m_targetDialog->setFileMode(QFileDialog::DirectoryOnly);
 
-    if (m_targetDialog->exec() == KFileDialog::Accepted)
+    if (m_targetDialog->exec() == QDialog::Accepted)
     {
-        m_targetUrl = m_targetDialog->selectedUrl();
+        m_targetUrl = m_targetDialog->selectedUrls().isEmpty() ? QUrl() : m_targetDialog->selectedUrls().at(0);
         updateTargetLabel();
         emit signalTargetUrlChanged(m_targetUrl);
     }
@@ -158,7 +156,7 @@ void KioExportWidget::updateTargetLabel()
              << m_targetUrl.toDisplayString() << ", valid = "
              << m_targetUrl.isValid();
 
-    QString urlString = '<' + i18n("not selected") + '>';
+    QString urlString = i18n("<not selected>");
 
     if (m_targetUrl.isValid())
     {

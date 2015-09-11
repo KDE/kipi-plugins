@@ -19,11 +19,12 @@ set(${PLUGIN_NAME}_PART_SRCS
 add_library(${PLUGIN_NAME} MODULE ${${PLUGIN_NAME}_PART_SRCS})
 
 target_link_libraries(${PLUGIN_NAME}
-                      PRIVATE
-                      KF5::Kipi
-                      KF5::KIOCore
-                      KF5kipiplugins
-                     )
+    PRIVATE
+        KF5kipiplugins
+        KF5::Kipi
+        KF5::KIOCore
+        KF5::WindowSystem
+)
 
 configure_file(${PLUGIN_NAME}.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.desktop)
 

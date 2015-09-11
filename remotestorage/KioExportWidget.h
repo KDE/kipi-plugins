@@ -32,8 +32,6 @@
 
 // KDE includes
 
-#include <kfiledialog.h>
-#include <kpushbutton.h>
 #include <kurlrequester.h>
 
 class QComboBox;
@@ -100,8 +98,8 @@ private:
 private:
 
     KUrlComboRequester* m_targetLabel;
-    KFileDialog*        m_targetDialog;
-    KPushButton*        m_targetSearchButton;
+    QFileDialog*        m_targetDialog;
+    QPushButton*        m_targetSearchButton;
     QUrl                m_targetUrl;
     KPImagesList*       m_imageList;
 };

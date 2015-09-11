@@ -30,12 +30,10 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <khelpmenu.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
 // Libkipi includes
@@ -90,9 +88,9 @@ KioImportWindow::KioImportWindow(QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Johannes Wienke").toString(),
                      ki18n("Developer and maintainer").toString(),
-                     "languitar at semipol dot de");
+                     QStringLiteral("languitar at semipol dot de"));
 
-    about->setHandbookEntry("kioexport");
+    about->setHandbookEntry(QStringLiteral("kioexport"));
     setAboutData(about);
 
     slotSourceAndTargetUpdated();
