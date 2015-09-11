@@ -54,14 +54,15 @@ public:
 
     bool    loggedIn() const;
     void    cancel();
-    void    login(const QString& email = "", const QString& password = "");
+    void    login(const QString& email = QString(),
+                  const QString& password = QString());
     void    logout();
 
-    void    listAlbums(const QString& nickName = "");
+    void    listAlbums(const QString& nickName = QString());
     void    listPhotos(qint64 albumID,
                        const QString& albumKey, 
-                       const QString& albumPassword = "", 
-                       const QString& sitePassword = "");
+                       const QString& albumPassword = QString(),
+                       const QString& sitePassword = QString());
     void    listAlbumTmpl();
     void    listCategories();
     void    listSubCategories(qint64 categoryID);
@@ -77,7 +78,7 @@ Q_SIGNALS:
 
     void signalBusy(bool val);
     void signalLoginProgress(int step, int maxStep = 0, 
-                             const QString& label = "");
+                             const QString& label = QString());
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalGetPhotoDone(int errCode, const QString& errMsg,

@@ -24,9 +24,9 @@
 #ifndef SMUGALBUM_H
 #define SMUGALBUM_H
 
-// KDE includes
+// Qt includes
 
-#include <kdialog.h>
+#include <QtWidgets/QDialog>
 
 class QGroupBox;
 class QRadioButton;
@@ -39,7 +39,7 @@ namespace KIPISmugPlugin
 
 class SmugAlbum;
 
-class SmugNewAlbum : public KDialog
+class SmugNewAlbum : public QDialog
 {
     Q_OBJECT
 

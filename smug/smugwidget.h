@@ -60,8 +60,8 @@ public:
     SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool import);
     ~SmugWidget();
 
-    void updateLabels(const QString& email = "", const QString& name = "", 
-                      const QString& nick = "");
+    void updateLabels(const QString& email = QString(), const QString& name = QString(),
+                      const QString& nick = QString());
 
     bool isAnonymous() const;
     void setAnonymous(bool checked);

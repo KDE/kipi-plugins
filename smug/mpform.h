@@ -44,7 +44,7 @@ public:
     void reset();
 
     bool addPair(const QString& name, const QString& value,
-            const QString& type="text/plain");
+            const QString& type = QStringLiteral("text/plain"));
     bool addFile(const QString& name, const QString& path);
 
     QString    contentType() const;

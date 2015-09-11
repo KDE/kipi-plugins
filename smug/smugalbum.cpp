@@ -32,11 +32,12 @@
 #include <QRadioButton>
 #include <QComboBox>
 #include <QApplication>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QPushButton>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
 #include <klineedit.h>
 #include <ktextedit.h>
 
@@ -48,21 +49,17 @@ namespace KIPISmugPlugin
 {
 
 SmugNewAlbum::SmugNewAlbum(QWidget* parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
     QString header(i18n("SmugMug New Album"));
     setWindowTitle(header);
-    setButtons(Ok|Cancel);
-    setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget* const mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
-    mainWidget->setMinimumSize(400, 400);
+    setMinimumSize(400, 400);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), mainWidget);
+    QGroupBox* const albumBox = new QGroupBox(i18n("Album"), this);
     albumBox->setWhatsThis(
         i18n("These are basic settings for the new SmugMug album."));
 
@@ -102,7 +99,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    m_privBox = new QGroupBox(i18n("Security && Privacy"), mainWidget);
+    m_privBox = new QGroupBox(i18n("Security && Privacy"), this);
     m_privBox->setWhatsThis(
         i18n("These are security and privacy settings for the new SmugMug album."));
 
@@ -135,12 +132,22 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_privBox->setLayout(privBoxLayout);
 
     // ------------------------------------------------------------------------
-    QVBoxLayout* const mainLayout = new QVBoxLayout(mainWidget);
+
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    buttonBox->button(QDialogButtonBox::Cancel)->setDefault(true);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    // ------------------------------------------------------------------------
+
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(m_privBox);
+    mainLayout->addWidget(buttonBox);
     mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     mainLayout->setMargin(0);
-    mainWidget->setLayout(mainLayout);
+    setLayout(mainLayout);
 
     // ------------------------------------------------------------------------
 }

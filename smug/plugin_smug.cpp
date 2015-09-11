@@ -56,6 +56,7 @@ extern "C"
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "smugwindow.h"
 
 namespace KIPISmugPlugin
@@ -103,31 +104,30 @@ void Plugin_Smug::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &SmugMug..."));
-    m_actionExport->setIcon(QIcon::fromTheme("kipi-smugmug"));
+    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-smugmug")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_S));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction("smugexport", m_actionExport);
+    addAction(QStringLiteral("smugexport"), m_actionExport);
 
     m_actionImport = new QAction(this);
     m_actionImport->setText(i18n("Import from &SmugMug..."));
-    m_actionImport->setIcon(QIcon::fromTheme("kipi-smugmug"));
+    m_actionImport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-smugmug")));
     m_actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
     m_actionImport->setEnabled(false);
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotImport()) );
 
-    addAction("smugimport", m_actionImport, ImportPlugin);
+    addAction(QStringLiteral("smugimport"), m_actionImport, ImportPlugin);
 }
 
 void Plugin_Smug::slotExport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-smug-") + QString::number(getpid()) + QString("/"));
+    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QStringLiteral("/");
 
     if (!m_dlgExport)
     {
@@ -147,8 +147,7 @@ void Plugin_Smug::slotExport()
 
 void Plugin_Smug::slotImport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-smug-") + QString::number(getpid()) + QString("/"));
+    QString tmp = makeTemporaryDir("kipi-smug").absolutePath() + QStringLiteral("/");
 
     if (!m_dlgImport)
     {

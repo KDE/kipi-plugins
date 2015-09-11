@@ -43,7 +43,6 @@
 #include <khelpmenu.h>
 #include <klineedit.h>
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <kpassworddialog.h>
 #include <ktoolinvocation.h>
 #include <KWindowConfig>
@@ -86,7 +85,7 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
     m_widget      = new SmugWidget(this, iface(), import);
 
     setMainWidget(m_widget);
-    setWindowIcon(QIcon::fromTheme("kipi-smugmug"));
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-smugmug")));
     setModal(false);
 
     if (import)
@@ -142,9 +141,9 @@ SmugWindow::SmugWindow(const QString& tmpFolder, bool import, QWidget* const /*p
 
     about->addAuthor(ki18n("Luka Renko").toString(),
                      ki18n("Author and maintainer").toString(),
-                     "lure at kubuntu dot org");
+                     QStringLiteral("lure at kubuntu dot org"));
 
-    about->setHandbookEntry("smug");
+    about->setHandbookEntry(QStringLiteral("smug"));
     setAboutData(about);
 
     // ------------------------------------------------------------------------
@@ -301,14 +300,14 @@ void SmugWindow::reactivate()
 void SmugWindow::authenticate(const QString& email, const QString& password)
 {
     setUiInProgressState(true);
-    m_widget->progressBar()->setFormat("");
+    m_widget->progressBar()->setFormat(QString());
 
     m_talker->login(email, password);
 }
 
 void SmugWindow::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp  = config.group("Smug Settings");
     m_anonymousImport = grp.readEntry("AnonymousImport", true);
     m_email           = grp.readEntry("Email");
@@ -346,7 +345,7 @@ void SmugWindow::readSettings()
 
 void SmugWindow::writeSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("Smug Settings");
     grp.writeEntry("AnonymousImport", m_anonymousImport);
     grp.writeEntry("Email",           m_email);
@@ -430,13 +429,13 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     {
         QString albumIcon;
         if (!albumsList.at(i).password.isEmpty())
-            albumIcon = "folder-locked";
+            albumIcon = QStringLiteral("folder-locked");
         else if (albumsList.at(i).isPublic)
-            albumIcon = "folder-image";
+            albumIcon = QStringLiteral("folder-image");
         else
-            albumIcon = "folder";
+            albumIcon = QStringLiteral("folder");
 
-        QString data = QString::fromUtf8("%1:%2").arg(albumsList.at(i).id).arg(albumsList.at(i).key);
+        QString data = QStringLiteral("%1:%2").arg(albumsList.at(i).id).arg(albumsList.at(i).key);
         m_widget->m_albumsCoB->addItem(QIcon::fromTheme(albumIcon), albumsList.at(i).title, data);
 
         if (m_currentAlbumID == albumsList.at(i).id)
@@ -490,11 +489,11 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
     {
         QString albumIcon;
         if (!albumTList.at(i).password.isEmpty())
-            albumIcon = "folder-locked";
+            albumIcon = QStringLiteral("folder-locked");
         else if (albumTList.at(i).isPublic)
-            albumIcon = "folder-image";
+            albumIcon = QStringLiteral("folder-image");
         else
-            albumIcon = "folder";
+            albumIcon = QStringLiteral("folder");
 
         m_albumDlg->m_templateCoB->addItem(QIcon::fromTheme(albumIcon), albumTList.at(i).name, albumTList.at(i).id);
 
@@ -668,12 +667,13 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->progressScheduled(i18n("Smug Import"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(
+            QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
         setUiInProgressState(true);
 
         // list photos of the album, then start download
         QString dataStr = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
-        int colonIdx = dataStr.indexOf(':');
+        int colonIdx = dataStr.indexOf(QLatin1Char(':'));
         qint64 albumID = dataStr.left(colonIdx).toLongLong();
         QString albumKey = dataStr.right(dataStr.length() - colonIdx - 1);
         m_talker->listPhotos(albumID, albumKey,
@@ -690,7 +690,7 @@ void SmugWindow::slotStartTransfer()
 
         QString data = m_widget->m_albumsCoB->itemData(
                                      m_widget->m_albumsCoB->currentIndex()).toString();
-        int colonIdx = data.indexOf(':');
+        int colonIdx = data.indexOf(QLatin1Char(':'));
         m_currentAlbumID = data.left(colonIdx).toLongLong();
         m_currentAlbumKey = data.right(data.length() - colonIdx - 1);
 
@@ -701,7 +701,8 @@ void SmugWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->progressScheduled(i18n("Smug Export"), true, true);
-        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+        m_widget->progressBar()->progressThumbnailChanged(
+            QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
         setUiInProgressState(true);
 
         qCDebug(KIPIPLUGINS_LOG) << "m_currentAlbumID" << m_currentAlbumID;
@@ -727,7 +728,7 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
         return false;
 
     // get temporary file name
-    m_tmpPath  = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
+    m_tmpPath  = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
 
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
@@ -748,7 +749,7 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     if (meta.load(imgPath))
     {
         meta.setImageDimensions(image.size());
-        meta.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
         meta.save(m_tmpPath);
     }
 
@@ -850,7 +851,7 @@ void SmugWindow::downloadNextPhoto()
 void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                                   const QByteArray& photoData)
 {
-    QString imgPath = m_widget->getDestinationPath() + '/'
+    QString imgPath = m_widget->getDestinationPath() + QLatin1Char('/')
                       + QFileInfo(m_transferQueue.first().path()).fileName();
 
     if (errCode == 0)

@@ -31,12 +31,13 @@
 // Qt includes
 
 #include <QFile>
+#include <QtCore/QMimeDatabase>
+#include <QtCore/QMimeType>
 
 // KDE includes
 
 #include <QApplication>
 #include "kipiplugins_debug.h"
-#include <kmimetype.h>
 #include <QUrl>
 #include <krandom.h>
 
@@ -70,7 +71,7 @@ void MPForm::finish()
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
-    QString content_length = QString("%1").arg(value.length());
+    QString content_length = QString::number(value.length());
 
     str += "--";
     str += m_boundary;
@@ -101,8 +102,10 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
 bool MPForm::addFile(const QString& name, const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByUrl(QUrl::fromLocalFile(path));
-    QString mime       = ptr->name();
+    QMimeDatabase db;
+    QMimeType mimeType = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
+    QString mime = mimeType.name();
+
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,
@@ -117,7 +120,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
     QByteArray imageData = imageFile.readAll();
 
     QByteArray str;
-    QString file_size = QString("%1").arg(imageFile.size());
+    QString file_size = QString::number(imageFile.size());
     imageFile.close();
 
     str += "--";
@@ -146,12 +149,12 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
+    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const
 {
-    return m_boundary;
+    return QString::fromLatin1(m_boundary);
 }
 
 QByteArray MPForm::formData() const

@@ -60,7 +60,7 @@ namespace KIPISmugPlugin
 SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool import)
     : QWidget(parent)
 {
-    setObjectName("SmugWidget");
+    setObjectName(QStringLiteral("SmugWidget"));
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
@@ -103,7 +103,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_email             = new QLabel(accountBox);
     m_changeUserBtn     = new QPushButton(accountBox);
     KGuiItem::assign(m_changeUserBtn,
-                     KGuiItem(i18n("Change Account"), "system-switch-user",
+                     KGuiItem(i18n("Change Account"), QStringLiteral("system-switch-user"),
                               i18n("Change SmugMug Account used to authenticate")));
 
     accountBoxLayout->addWidget(m_anonymousRBtn,        0, 0, 1, 2);
@@ -139,11 +139,11 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     m_newAlbumBtn = new QPushButton(accountBox);
     KGuiItem::assign(m_newAlbumBtn,
-                     KGuiItem(i18n("New Album"), "list-add",
+                     KGuiItem(i18n("New Album"), QStringLiteral("list-add"),
                               i18n("Create new SmugMug album")));
     m_reloadAlbumsBtn = new QPushButton(accountBox);
     KGuiItem::assign(m_reloadAlbumsBtn,
-                     KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
+                     KGuiItem(i18nc("reload album list", "Reload"), QStringLiteral("view-refresh"),
                               i18n("Reload album list")));
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
@@ -307,21 +307,23 @@ QString SmugWidget::getDestinationPath() const
 void SmugWidget::setNickName(const QString& nick)
 {
     m_nickNameEdt->setText(nick);
-    m_headerLbl->setText(QString("<b><h2><a href='http://%1.smugmug.com'>"
-                                   "<font color=\"#9ACD32\">SmugMug</font>"
-                                   "</a></h2></b>").arg(nick));
+    m_headerLbl->setText(QStringLiteral(
+        "<b><h2><a href='http://%1.smugmug.com'>"
+        "<font color=\"#9ACD32\">SmugMug</font>"
+        "</a></h2></b>").arg(nick));
 }
 
 void SmugWidget::updateLabels(const QString& email, const QString& name, const QString& nick)
 {
     m_email->setText(email);
-    m_userName->setText(QString("<b>%1</b>").arg(name));
-    QString web("www");
+    m_userName->setText(QStringLiteral("<b>%1</b>").arg(name));
+    QString web(QStringLiteral("www"));
     if (!nick.isEmpty())
         web = nick;
-    m_headerLbl->setText(QString("<b><h2><a href='http://%1.smugmug.com'>"
-                                   "<font color=\"#9ACD32\">SmugMug</font>"
-                                   "</a></h2></b>").arg(web));
+    m_headerLbl->setText(QStringLiteral(
+        "<b><h2><a href='http://%1.smugmug.com'>"
+        "<font color=\"#9ACD32\">SmugMug</font>"
+        "</a></h2></b>").arg(web));
 }
 
 void SmugWidget::slotAnonymousToggled(bool checked)
