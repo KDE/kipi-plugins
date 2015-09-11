@@ -50,8 +50,8 @@ CalSettings::CalSettings(QObject* const parent)
     : QObject(parent)
 {
     params.year = KLocale::global()->calendar()->earliestValidDate().year() + 1;
-    setPaperSize("A4");
-    setResolution("High");
+    setPaperSize(QStringLiteral("A4"));
+    setResolution(QStringLiteral("High"));
     setImagePos(0);
 }
 
@@ -92,13 +92,13 @@ QUrl CalSettings::image(int month) const
 
 void CalSettings::setPaperSize(const QString& paperSize)
 {
-    if (paperSize == "A4")
+    if (paperSize == QStringLiteral("A4"))
     {
         params.paperWidth  = 210;
         params.paperHeight = 297;
         params.pageSize    = QPrinter::A4;
     }
-    else if (paperSize == "US Letter")
+    else if (paperSize == QStringLiteral("US Letter"))
     {
         params.paperWidth  = 216;
         params.paperHeight = 279;
@@ -110,11 +110,11 @@ void CalSettings::setPaperSize(const QString& paperSize)
 
 void CalSettings::setResolution(const QString& resolution)
 {
-    if (resolution == "High")
+    if (resolution == QStringLiteral("High"))
     {
         params.printResolution = QPrinter::HighResolution;
     }
-    else if (resolution == "Low")
+    else if (resolution == QStringLiteral("Low"))
     {
         params.printResolution = QPrinter::ScreenResolution;
     }
@@ -201,7 +201,7 @@ void CalSettings::addSpecial(const QDate& date, const Day& info)
 {
     if (m_special.contains(date))
     {
-        m_special[date].second.append("; ").append(info.second);
+        m_special[date].second.append(QStringLiteral("; ")).append(info.second);
     }
     else
     {
@@ -217,7 +217,7 @@ void CalSettings::loadSpecial(const QUrl& url, const QColor& color)
         return;
     }
 
-    KCalCore::MemoryCalendar::Ptr memCal(new KCalCore::MemoryCalendar("UTC"));
+    KCalCore::MemoryCalendar::Ptr memCal(new KCalCore::MemoryCalendar(QStringLiteral("UTC")));
     KCalCore::FileStorage::Ptr fileStorage(new KCalCore::FileStorage(memCal, url.path(), new KCalCore::ICalFormat));
 
     qCDebug(KIPIPLUGINS_LOG) << "Loading calendar from file " << url.path();

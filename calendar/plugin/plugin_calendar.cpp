@@ -31,8 +31,8 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
 #include <klibloader.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 
@@ -84,13 +84,13 @@ void Plugin_Calendar::setupActions()
 
     m_actionCalendar = new QAction(this);
     m_actionCalendar->setText(i18n("Create Calendar..."));
-    m_actionCalendar->setIcon(QIcon::fromTheme("view-pim-calendar"));
+    m_actionCalendar->setIcon(QIcon::fromTheme(QStringLiteral("view-pim-calendar")));
     m_actionCalendar->setEnabled(false);
 
     connect(m_actionCalendar, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction("calendar", m_actionCalendar);
+    addAction(QStringLiteral("calendar"), m_actionCalendar);
 }
 
 void Plugin_Calendar::slotActivate()

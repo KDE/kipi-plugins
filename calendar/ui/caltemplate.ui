@@ -96,7 +96,7 @@
          </layout>
         </item>
         <item>
-         <widget class="KButtonGroup" name="imagePosButtonGroup">
+         <widget class="QGroupBox" name="imagePosButtonGroup">
           <property name="title">
            <string>Image Position</string>
           </property>
@@ -191,7 +191,7 @@
            </widget>
           </item>
           <item>
-           <widget class="KFontComboBox" name="fontCombo"/>
+           <widget class="QFontComboBox" name="fontCombo"/>
           </item>
          </layout>
         </item>
@@ -249,17 +249,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KButtonGroup</class>
-   <extends>QGroupBox</extends>
-   <header>kbuttongroup.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>KFontComboBox</class>
-   <extends>KComboBox</extends>
-   <header>kfontcombobox.h</header>
-  </customwidget>
   <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>
