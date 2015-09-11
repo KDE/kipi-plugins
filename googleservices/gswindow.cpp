@@ -53,7 +53,6 @@
 // Local includes
 
 #include "kpimageslist.h"
-#include "kprogressdialog.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"

@@ -24,15 +24,18 @@ set(kipiplugin_googleservices_PART_SRCS
 add_library(kipiplugin_googleservices MODULE ${kipiplugin_googleservices_PART_SRCS})
 
 target_link_libraries(kipiplugin_googleservices
-                      PRIVATE
-                      KF5::KDcraw
-                      KF5::Kipi
-                      KF5::KExiv2
-                      KF5::WidgetsAddons
-                      KF5::KIOCore
-                      KF5::Wallet
-                      KF5kipiplugins
-                     )
+    PRIVATE
+        KF5::KDcraw
+        KF5::Kipi
+        KF5::KExiv2
+        KF5::WidgetsAddons
+        KF5::KIOCore
+        KF5::KIOWidgets
+        KF5::IconThemes
+        KF5::WindowSystem
+        KF5::Wallet
+        KF5kipiplugins
+)
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(kipiplugin_googleservices
