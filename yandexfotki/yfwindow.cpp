@@ -84,9 +84,9 @@ extern "C"
 #include "kpimageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
-#include "logindialog.h"
 #include "kipiplugins_debug.h"
 #include "kputil.h"
+#include "kplogindialog.h"
 
 using namespace KDcrawIface;
 
@@ -562,7 +562,7 @@ void YandexFotkiWindow::authenticate(bool forceAuthWindow)
     // update credentials
     if (forceAuthWindow || m_talker.login().isNull() || m_talker.password().isNull())
     {
-        QPointer<LoginDialog> dlg = new LoginDialog(this, m_talker.login(), QString());
+        KPLoginDialog* dlg = new KPLoginDialog(this, QStringLiteral("Yandex.Fotki"), m_talker.login(), QString());
 
         if (dlg->exec() == QDialog::Accepted)
         {

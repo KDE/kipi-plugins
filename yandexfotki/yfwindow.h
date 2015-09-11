@@ -35,7 +35,6 @@
 // Local includes
 
 #include "kptooldialog.h"
-#include "logindialog.h"
 #include "yftalker.h"
 
 class QLabel;

@@ -10,7 +10,6 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_yandexfotki\")
 
 set(kipiplugin_yandexfotki_PART_SRCS
     plugin_yandexfotki.cpp
-    logindialog.cpp
     yfalbum.cpp
     yfphoto.cpp
     yftalker.cpp
