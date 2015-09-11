@@ -52,6 +52,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QMimeType>
+#include <QtCore/QStandardPaths>
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5
@@ -96,11 +97,17 @@ public:
         zoomfactor_keyboard    = 1.05F;
 
         // load cursors for zooming and panning
-        zoomCursor = QCursor(QPixmap(KStandardDirs::locate("data", "kipiplugin_imageviewer/pics/zoom.png")));
-        moveCursor = QCursor(QPixmap(KStandardDirs::locate("data", "kipiplugin_imageviewer/pics/hand.png")));
+        zoomCursor = QCursor(QPixmap(QStandardPaths::locate(
+            QStandardPaths::GenericDataLocation,
+            QStringLiteral("kipiplugin_imageviewer/pics/zoom.png"))));
+        moveCursor = QCursor(QPixmap(QStandardPaths::locate(
+            QStandardPaths::GenericDataLocation,
+            QStringLiteral("kipiplugin_imageviewer/pics/hand.png"))));
 
         // get path of nullImage in case QImage can't load the image
-        nullImage  = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/nullImage.png" );
+        nullImage  = QStandardPaths::locate(
+            QStandardPaths::GenericDataLocation,
+            QStringLiteral("kipiplugin_imageviewer/pics/nullImage.png"));
 
         // while zooming is performed, the image is downsampled to d->zoomsize. This seems to
         // be the optimal way for a PentiumM 1.4G, Nvidia FX5200. For a faster setup, this might
@@ -200,7 +207,7 @@ ViewerWidget::ViewerWidget()
 
         // only add images to d->files
         QString mimeTypeName = QMimeDatabase().mimeTypeForUrl(QUrl::fromLocalFile(s)).name();
-        bool isImage        = mimeTypeName.contains("image", Qt::CaseInsensitive);
+        bool isImage        = mimeTypeName.contains(QStringLiteral("image"), Qt::CaseInsensitive);
 
         if ( isImage )
         {
@@ -871,9 +878,9 @@ OGLstate ViewerWidget::getOGLstate() const
     }
 
     //GL_ARB_texture_rectangle is not supported
-    QString s = QString ( ( char* ) glGetString ( GL_EXTENSIONS ) );
+    QString s = QString::fromLatin1(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
 
-    if ( !s.contains ( "GL_ARB_texture_rectangle",Qt::CaseInsensitive ) )
+    if (!s.contains(QStringLiteral("GL_ARB_texture_rectangle"), Qt::CaseInsensitive))
     {
         return oglNoRectangularTexture;
     }
