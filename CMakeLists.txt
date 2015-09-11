@@ -119,7 +119,7 @@ if(NOT ENABLE_PUREQT5)
 else()
     message(STATUS "Try to compile as pure Qt5")
     add_definitions(-DENABLE_PUREQT5)
-#    add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
+    add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
 endif()
 
 # Dependencies detection required by all plugins
@@ -327,11 +327,14 @@ if(KF5Kipi_FOUND)
         add_subdirectory(timeadjust)
         add_subdirectory(flashexport)
         add_subdirectory(expoblending)
-	#add_subdirectory(metadataedit)
 
-        if(KF5Sane_FOUND)
-            add_subdirectory(acquireimages)
-        endif()
+#       Moved to DK core
+#
+#       add_subdirectory(metadataedit)
+#
+#       if(KF5Sane_FOUND)
+#           add_subdirectory(acquireimages)
+#       endif()
 
         if(BUILD_VIEWERS)
             add_subdirectory(advancedslideshow)
