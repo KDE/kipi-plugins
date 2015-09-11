@@ -194,23 +194,6 @@ void ImageshackWindow::readSettings()
         m_widget->m_privateImagesChb->setChecked(true);
     }
 
-//     QString resize = group.readEntry("Resize", QString());
-//     if (resize == QStringLiteral("No"))
-//     {
-//         m_widget->m_noResizeRdb->setChecked(true);
-//     }
-//     else if (resize == QStringLiteral("Template"))
-//     {
-//         m_widget->m_predefSizeRdb->setChecked(true);
-//         m_widget->m_resizeOptsCob->setCurrentIndex(group.readEntry("Template", 0));
-//     }
-//     else
-//     {
-//         m_widget->m_customSizeRdb->setChecked(true);
-//         m_widget->m_widthSpb->setValue(group.readEntry("Width", 1000));
-//         m_widget->m_heightSpb->setValue(group.readEntry("Height", 1000));
-//     }
-
     if (group.readEntry("Rembar", false))
     {
         m_widget->m_remBarChb->setChecked(true);
@@ -228,22 +211,6 @@ void ImageshackWindow::saveSettings()
     KWindowConfig::saveWindowSize(windowHandle(), group);
 
     group.writeEntry("Private", m_widget->m_privateImagesChb->isChecked());
-
-//     if (m_widget->m_noResizeRdb->isChecked())
-//     {
-//         group.writeEntry("Resize", "No");
-//     }
-//     else if (m_widget->m_predefSizeRdb->isChecked())
-//     {
-//         group.writeEntry("Resize", "Template");
-//         group.writeEntry("Template", m_widget->m_resizeOptsCob->currentIndex());
-//     }
-//     else
-//     {
-//         group.writeEntry("Resize", "Custom");
-//         group.writeEntry("Width", m_widget->m_widthSpb->value());
-//         group.writeEntry("Height", m_widget->m_heightSpb->value());
-//     }
 
     group.writeEntry("Rembar", m_widget->m_remBarChb->isChecked());
 
@@ -398,19 +365,6 @@ void ImageshackWindow::uploadNextItem()
         opts[QStringLiteral("rembar")] = QStringLiteral("yes");
     }
 
-//     if (m_widget->m_predefSizeRdb->isChecked())
-//     {
-//         opts[QStringLiteral("optimage")] = QStringLiteral("1");
-//         opts[QStringLiteral("optsize")] = m_widget->m_resizeOptsCob->itemData(m_widget->m_resizeOptsCob->currentIndex()).toString();
-//     }
-//     else if (m_widget->m_customSizeRdb->isChecked())
-//     {
-//         opts[QStringLiteral("optimage")] = QStringLiteral("1");
-//         QString dim = QStringLiteral("");
-//         dim.append(QStringLiteral("%1x%2").arg(m_widget->m_widthSpb->value()).arg(m_widget->m_heightSpb->value()));
-//         opts[QStringLiteral("optsize")] = dim;
-//     }
-
     // tags
     if (!m_widget->m_tagsFld->text().isEmpty())
     {
@@ -421,23 +375,6 @@ void ImageshackWindow::uploadNextItem()
     }
 
     opts[QStringLiteral("auth_token")] = m_imageshack->authToken();
-
-//     bool uploadToGalleries = m_widget->m_useGalleriesChb->isChecked();
-// 
-//     if (uploadToGalleries)
-//     {
-//         int gidx = m_widget->m_galleriesCob->currentIndex();
-//         QString gallery;
-//         if (gidx == 0)
-//             gallery = m_newAlbmTitle->text();
-//         else
-//             gallery = m_widget->m_galleriesCob->itemData(gidx).toString();
-//         m_talker->uploadItemToGallery(imgPath, gallery, opts);
-//     }
-//     else
-//     {
-//         m_talker->uploadItem(imgPath, opts);
-//     }
     
     int gidx = m_widget->m_galleriesCob->currentIndex();
     

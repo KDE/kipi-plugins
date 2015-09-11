@@ -293,16 +293,6 @@ void ImageshackTalker::parseGetGalleries(const QByteArray &data)
             {
                 QString fmt;
                 fmt          = nameElem.firstChild().toText().data();
-//                 // this is a very ugly hack
-//                 QString name = QStringLiteral("http://img") +
-//                     serverElem.firstChild().toText().data() +
-//                     QStringLiteral(".imageshack.us/gallery_api.php?g=") + fmt;
-//                 gNames << name;
-// 
-//                 if (!titleElem.isNull())
-//                 {
-//                     fmt.append(QStringLiteral(" (") + titleElem.firstChild().toText().data() + QStringLiteral(")"));
-//                 }
                 gNames << nameElem.firstChild().toText().data();
                 gTexts << titleElem.firstChild().toText().data();
             }
@@ -441,39 +431,17 @@ void ImageshackTalker::uploadItemToGallery(QString path, const QString &gallery,
     // Check where to upload
     QString mime = mimeType(path);
 
-    // TODO support for video uploads
     QUrl uploadUrl;
-
-//     if (mime.startsWith(QLatin1String("video/")))
-//     {
-//         uploadUrl = QUrl(m_videoApiUrl);
-//         m_state = IMGHCK_ADDVIDEO;
-//     }
-//     else
-//     {
-//         // image file
-        uploadUrl = QUrl(m_photoApiUrl);
-        m_state   = IMGHCK_ADDPHOTO;
-//     }
+    
+    uploadUrl = QUrl(m_photoApiUrl);
+    m_state   = IMGHCK_ADDPHOTO;
 
     KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
     job->addMetaData(QStringLiteral("content-type"), form.contentType());
 
     m_job = job;
-
-//    if (gallery.isEmpty())
-//    {
-//        m_state = IMGHCK_ADDPHOTO;
-//    }
-//    else
-//    {
-//        qCDebug(KIPIPLUGINS_LOG) << "upload to gallery " << gallery;
-//        m_state = IMGHCK_ADDPHOTOGALLERY;
-//        job->setProperty("k_galleryName", gallery);
-//        m_job->setProperty("k_step", STEP_UPLOADITEM);
-//    }
-    // TODO implement upload to galleries
+    
     m_buffer.resize(0);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
@@ -547,90 +515,6 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
             emit signalBusy(false);
         }        
     }
-    
-    
-//     int errCode    = -1;
-//     QString errMsg = QStringLiteral("");
-//     QDomDocument doc(QStringLiteral("addPhoto"));
-//     if (!doc.setContent(data))
-//         return;
-// 
-//     QDomElement elem = doc.documentElement();
-// 
-//     if (!elem.isNull() && elem.tagName() == QStringLiteral("imginfo"))
-//     {
-//         errCode = 0;
-//     }
-//     else
-//     {
-//         qCDebug(KIPIPLUGINS_LOG) << elem.tagName();
-//         QDomNode node = elem.firstChild();
-//         if (node.nodeName() == QStringLiteral("error")) {
-//             errCode =  parseErrorResponse(elem, errMsg);
-//         }
-//     }
-// 
-//     if (m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO
-//             || (m_state == IMGHCK_ADDPHOTOGALLERY))
-//     {
-//         if(errCode)
-//         {
-//             emit signalBusy(false);
-//             emit signalAddPhotoDone(errCode, errMsg);            
-//         }
-//         else
-//         {
-//             emit signalBusy(false);
-//             emit signalAddPhotoDone(0, QStringLiteral(""));
-//         }
-//     }
-//     else if (m_state == IMGHCK_ADDPHOTOGALLERY)
-//     {
-//         QDomElement chld = elem.firstChildElement(QStringLiteral("files"));
-//         if (chld.isNull())
-//         {
-//             emit signalBusy(false);
-//             emit signalAddPhotoDone(-2, QStringLiteral("Error parsing server response. No information about uploaded item"));
-//         }
-//         else
-//         {
-//             QString server = chld.attribute(QStringLiteral("server"));
-//             QString bucket = chld.attribute(QStringLiteral("bucket"));
-// 
-//             QDomElement image = chld.firstChildElement(QStringLiteral("image"));
-//             if (image.isNull() || server.isEmpty() || bucket.isEmpty() || !image.hasChildNodes())
-//             {
-//                 emit signalBusy(false);
-//                 emit signalAddPhotoDone(-3, QStringLiteral("Error parsing server response. No image, server or bucket returned"));
-//             }
-//             else
-//             {
-//                 QString imgPath = QStringLiteral("img") + server + QStringLiteral("/") + bucket + QStringLiteral("/") + image.firstChild().toText().data();
-// 
-//                 QUrl url(m_job->property("k_galleryName").toString());
-//                 url.addQueryItem(QStringLiteral("action"), QStringLiteral("add"));
-//                 url.addQueryItem(QStringLiteral("image[]"), imgPath);
-//                 url.addQueryItem(QStringLiteral("cookie"), m_imageshack->registrationCode());
-// 
-//                 qCDebug(KIPIPLUGINS_LOG) << url.url();
-// 
-//                 m_job->kill();
-// 
-//                 KIO::Job *job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
-// 
-//                 m_job = job;
-//                 m_job->setProperty("k_step", STEP_ADDITEMTOGALLERY);
-// 
-//                 m_buffer.resize(0);
-// 
-//                 connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-//                         this, SLOT(data(KIO::Job*,QByteArray)));
-// 
-//                 connect(job, SIGNAL(result(KJob*)),
-//                         this, SLOT(slotResult(KJob*)));
-//             }
-//         }
-//     }
 }
 
 void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)

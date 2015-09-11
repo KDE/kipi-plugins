@@ -60,11 +60,6 @@ class ImageshackWidget : public KPSettingsWidget
 public:
     ImageshackWidget(QWidget* const parent, Imageshack* const imageshack, KIPI::Interface* const iface, const QString& pluginName);
     ~ImageshackWidget();
-/*
-    KIPIPlugins::KPImagesList* imagesList() const;
-    KIPIPlugins::KPProgressWidget* progressBar() const;*/
-
-//     void getGalleriesDone(int errCode);
 
 Q_SIGNALS:
 
@@ -73,15 +68,10 @@ Q_SIGNALS:
 private:
 
     void updateLabels(const QString& name = QString(), const QString& url = QString());
-//     void updateResizeOpts();
-
-//     void removeVideosFromList();
 
 private Q_SLOTS:
 
-//     void slotEnablePredefComboBox(bool checked);
     void slotGetGalleries(const QStringList& gTexts, const QStringList& gNames);
-//     void slotEnableNewGalleryLE(int index);
     void slotReloadGalleries();
 
 private:
