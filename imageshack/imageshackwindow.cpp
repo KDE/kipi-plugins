@@ -84,7 +84,7 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
     setWindowTitle(i18n("Export to Imageshack"));
     setModal(true);
     
-    m_albumDlg =  new NewAlbumDlg(this, "ImageShack");
+    m_albumDlg =  new NewAlbumDlg(this, QStringLiteral("ImageShack"));
 
     connect(m_widget->m_chgRegCodeBtn, SIGNAL(clicked(bool)),
             this, SLOT(slotChangeRegistrantionCode()));
