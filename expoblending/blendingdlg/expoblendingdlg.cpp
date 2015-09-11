@@ -57,7 +57,6 @@ extern "C"
 #include <kiconloader.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
 #include <kio/renamedialog.h>
 #include <KWindowConfig>
 
