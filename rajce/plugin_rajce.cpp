@@ -44,9 +44,8 @@ extern "C"
 
 #include <klocalizedstring.h>
 #include <kactioncollection.h>
-#include <kstandarddirs.h>
 #include <kwindowsystem.h>
-#include <kgenericfactory.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 
@@ -55,6 +54,7 @@ extern "C"
 // Local includes
 
 #include "kipiplugins_debug.h"
+#include "kputil.h"
 #include "rajcewindow.h"
 
 namespace KIPIRajcePlugin
@@ -98,20 +98,19 @@ void Plugin_Rajce::setupActions()
 
     m_actionExport = new QAction(this);
     m_actionExport->setText(i18n("Export to &Rajce.net..."));
-    m_actionExport->setIcon(QIcon::fromTheme("kipi-rajce"));
+    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("kipi-rajce")));
     m_actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::Key_J));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction("rajceexport", m_actionExport);
+    addAction(QStringLiteral("rajceexport"), m_actionExport);
 }
 
 void Plugin_Rajce::slotExport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-rajceplugin-" + QString::number(getpid()) + '/');
+    QString tmp = makeTemporaryDir("kipi-rajce").absolutePath() + QStringLiteral("/");
 
     if (!m_dlgExport)
     {

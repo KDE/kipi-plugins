@@ -40,8 +40,8 @@ namespace KIPIRajcePlugin
 {
 
 NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
-    : KPNewAlbumDialog(parent,QString("Rajce.net"))
-{    
+    : KPNewAlbumDialog(parent, QStringLiteral("Rajce.net"))
+{
     getLocEdit()->hide();
     getDateTimeEdit()->hide();
     

@@ -23,11 +23,7 @@
 #ifndef NEWALBUMDIALOG_H
 #define NEWALBUMDIALOG_H
 
-// KDE includes
-
-#include <KDialog>
-
-//local includes
+// Local includes
 
 #include "kpnewalbumdialog.h"
 

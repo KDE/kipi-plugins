@@ -83,7 +83,7 @@ RajceLoginDialog::RajceLoginDialog(QWidget* const parent, const QString& _name, 
 
     vbox->setMargin(5);
     vbox->setSpacing(5);
-    vbox->setObjectName("vbox");
+    vbox->setObjectName(QStringLiteral("vbox"));
     vbox->addLayout(centerLayout);
     vbox->addLayout(btnLayout);
 

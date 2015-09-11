@@ -42,11 +42,10 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
 #include <klineedit.h>
-#include <kpushbutton.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
+#include <KConfigGroup>
 
 // Libkipi includes
 
@@ -65,7 +64,7 @@ namespace KIPIRajcePlugin
 {
 
 RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
-    : KPSettingsWidget(parent, interface, QString("Rajce.net"))
+    : KPSettingsWidget(parent, interface, QStringLiteral("Rajce.net"))
 {
     m_lastLoggedInState           = false;
     m_session                     = new RajceSession(this, tmpFolder);
@@ -122,18 +121,19 @@ void RajceWidget::updateLabels(const QString&, const QString&)
         emit loginStatusChanged(loggedIn);
     }
 
-    QString username = loggedIn ? m_session->state().username() : "";
+    QString username = loggedIn ? m_session->state().username() : QStringLiteral("");
     QString nickname = loggedIn ? m_session->state().nickname() : i18n("Not logged in");
 
-    getUserNameLabel()->setText(QString("<b>%2</b> <small>%1</small>").arg(username, nickname));
+    getUserNameLabel()->setText(QStringLiteral("<b>%2</b> <small>%1</small>").arg(username, nickname));
 
     QString link = loggedIn
-        ? QString("<b><h2><a href='http://" + m_session->state().nickname() + ".rajce.net'>"
+        ? QStringLiteral("<b><h2><a href='http://") + m_session->state().nickname() +
+        QStringLiteral(".rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
         "</a></h2></b>")
-        : "<b><h2><a href='http://www.rajce.net'>"
+        : QStringLiteral("<b><h2><a href='http://www.rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
-        "</a></h2></b>";
+        "</a></h2></b>");
 
     getHeaderLbl()->setText(link);
 
@@ -461,7 +461,7 @@ void RajceWidget::_setEnabled(bool enabled)
 
 void RajceWidget::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("RajceExport Settings");
 
     SessionState state;
@@ -484,7 +484,7 @@ void RajceWidget::readSettings()
 
 void RajceWidget::writeSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp          = config.group("RajceExport Settings");
     const SessionState& state = m_session->state();
 

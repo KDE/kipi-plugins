@@ -40,7 +40,6 @@
 
 // KDE includes
 
-#include <kmimetype.h>
 #include <krandom.h>
 
 // Local includes
@@ -68,9 +67,9 @@ void MPForm::reset()
 void MPForm::finish()
 {
     QString str;
-    str += "--";
-    str += m_boundary;
-    str += "--";
+    str += QStringLiteral("--");
+    str += QString::fromLatin1(m_boundary);
+    str += QStringLiteral("--");
 
     m_buffer.append(str.toUtf8());
 }
@@ -78,7 +77,7 @@ void MPForm::finish()
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
-    QString  content_length = QString("%1").arg(value.length());
+    QString  content_length = QString::number(value.length());
     str += "--";
     str += m_boundary;
     str += "\r\n";
@@ -129,23 +128,23 @@ bool MPForm::addFile(const QString& name,const QString& path)
     QByteArray imageData = imageFile.readAll();
 
     QString str;
-    QString file_size = QString("%1").arg(imageFile.size());
+    QString file_size = QString::number(imageFile.size());
 
-    str += "--";
-    str += m_boundary;
-    str += "\r\n";
-    str += "Content-Disposition: form-data; name=\"";
-    str += name.toAscii();
-    str += "\"; ";
-    str += "filename=\"";
-    str += QFile::encodeName(QUrl(path).fileName());
-    str += "\"\r\n";
-    str += "Content-Length: " ;
-    str +=  file_size.toAscii();
-    str += "\r\n";
-    str += "Content-Type: ";
-    str +=  mime.toAscii();
-    str += "\r\n\r\n";
+    str += QStringLiteral("--");
+    str += QString::fromLatin1(m_boundary);
+    str += QStringLiteral("\r\n");
+    str += QStringLiteral("Content-Disposition: form-data; name=\"");
+    str += name;
+    str += QStringLiteral("\"; ");
+    str += QStringLiteral("filename=\"");
+    str += QUrl(path).fileName();
+    str += QStringLiteral("\"\r\n");
+    str += QStringLiteral("Content-Length: ");
+    str += file_size;
+    str += QStringLiteral("\r\n");
+    str += QStringLiteral("Content-Type: ");
+    str += mime;
+    str += QStringLiteral("\r\n\r\n");
 
     imageFile.close();
     m_buffer.append(str.toUtf8());
@@ -163,12 +162,12 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
+    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const
 {
-    return m_boundary;
+    return QString::fromLatin1(m_boundary);
 }
 
 QByteArray MPForm::formData() const

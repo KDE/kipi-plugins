@@ -31,7 +31,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kpushbutton.h>
 
 // Local includes
 
@@ -48,7 +47,7 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
     m_widget->readSettings();
 
     setMainWidget(m_widget);
-    setWindowIcon(QIcon::fromTheme("kipi-rajce"));
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi-rajce")));
     setModal(false);
 
     setWindowTitle(i18n("Export to Rajce.net"));
@@ -78,9 +77,9 @@ RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt
 
     about->addAuthor(ki18n( "Lukas Krejci" ).toString(),
                      ki18n("Author").toString(),
-                     "metlosh at gmail dot com");
+                     QStringLiteral("metlosh at gmail dot com"));
 
-    about->setHandbookEntry("rajceexport");
+    about->setHandbookEntry(QStringLiteral("rajceexport"));
     setAboutData(about);
 
     startButton()->setEnabled(false);
