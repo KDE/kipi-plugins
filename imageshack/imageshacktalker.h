@@ -54,8 +54,6 @@ public:
     ImageshackTalker(Imageshack* imghack);
     ~ImageshackTalker();
 
-    bool loggedIn();
-
     void authenticate();
     void cancelLogIn();
     void cancel();
@@ -66,7 +64,6 @@ public:
 
 Q_SIGNALS:
 
-    void signalNeedRegistrationCode();
     void signalBusy(bool busy);
     void signalJobInProgress(int step, int maxStep = 0, const QString& label = QString());
     void signalLoginDone(int errCode,  const QString &errMsg);
@@ -79,8 +76,8 @@ private:
 
     enum State
     {
+        IMGHCK_AUTHENTICATING,
         IMGHCK_DONOTHING,
-        IMGHCK_CHECKREGCODE,
         IMGHCK_GETGALLERIES,
         IMGHCK_ADDPHOTO,
         IMGHCK_ADDVIDEO,
@@ -102,10 +99,9 @@ private Q_SLOTS:
 private:
 
     QString getCallString(QMap<QString, QString>& args);
-    void checkRegistrationCode();
-    void parseCheckRegistrationCode(const QByteArray& data);
-    void parseGetGalleries(const QByteArray& data);
     void checkRegistrationCodeDone(int errCode, const QString& errMsg);
+    void parseAccessToken(const QByteArray& data);
+    void parseGetGalleries(const QByteArray& data);
     void authenticationDone(int errCode, const QString& errMsg);
 
     void logOut();

@@ -68,6 +68,7 @@
 #include "kpaboutdata.h"
 #include "kpimageslist.h"
 #include "kpprogresswidget.h"
+#include "kplogindialog.h"
 
 namespace KIPIImageshackPlugin
 {
@@ -116,9 +117,6 @@ ImageshackWindow::ImageshackWindow(QWidget* const parent, Imageshack* const imgh
 
     connect(m_talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
-
-    connect(m_talker, SIGNAL(signalNeedRegistrationCode()),
-            this, SLOT(slotNeedRegistrationCode()));
 
     connect(m_talker, SIGNAL(signalJobInProgress(int,int,QString)),
             this, SLOT(slotJobInProgress(int,int,QString)));
@@ -284,7 +282,6 @@ void ImageshackWindow::slotCancelClicked()
 void ImageshackWindow::slotChangeRegistrantionCode()
 {
     qCDebug(KIPIPLUGINS_LOG) << "Change registration code";
-    m_imageshack->m_registrationCode.clear();
     authenticate();
 }
 
@@ -295,55 +292,15 @@ void ImageshackWindow::authenticate()
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setMaximum(4);
     m_widget->progressBar()->setFormat(i18n("Authenticating..."));
-
-    if (m_imageshack->registrationCode().isEmpty())
+    
+    KIPIPlugins::KPLoginDialog* dlg = new KIPIPlugins::KPLoginDialog(this, QStringLiteral("ImageShack"));
+    
+    if(dlg->exec() == QDialog::Accepted)
     {
-        askRegistrationCode();
+        m_imageshack->setEmail(dlg->login());
+        m_imageshack->setPassword(dlg->password());
+        m_talker->authenticate();
     }
-    m_talker->authenticate();
-}
-
-void ImageshackWindow::askRegistrationCode()
-{
-    QDialog* window = new QDialog(this, 0);
-    window->setModal(true);
-    window->setWindowTitle(i18n("Imageshack authorization"));
-
-    QLineEdit* codeField = new QLineEdit();
-    QPlainTextEdit* infoText = new QPlainTextEdit(
-        i18n( "Please paste the registration code for your ImageShack account"
-              " into the textbox below and press \"OK\"."
-    ));
-    infoText->setReadOnly(true);
-
-    QDialogButtonBox* buttonBox = new QDialogButtonBox(
-        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, window);
-    connect(buttonBox, &QDialogButtonBox::accepted, window, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, window, &QDialog::reject);
-
-    QVBoxLayout* layout = new QVBoxLayout(window);
-    layout->addWidget(infoText);
-    layout->addWidget(codeField);
-    layout->addWidget(buttonBox);
-    window->setLayout(layout);
-
-    if (window->exec() == QDialog::Accepted)
-    {
-        QString code = codeField->text();
-        if (!code.isEmpty())
-        {
-            m_imageshack->setRegistrationCode(code);
-//             m_imageshack->writeSettings();
-            return;
-        }
-    }
-
-    m_talker->cancelLogIn();
-}
-
-void ImageshackWindow::slotNeedRegistrationCode()
-{
-    authenticate();
 }
 
 void ImageshackWindow::slotBusy(bool val)
@@ -458,7 +415,7 @@ void ImageshackWindow::uploadNextItem()
         opts[QStringLiteral("tags")] = tagsList.join(QStringLiteral(","));
     }
 
-    opts[QStringLiteral("cookie")] = m_imageshack->registrationCode();
+    opts[QStringLiteral("auth_token")] = m_imageshack->authToken();
 
     bool uploadToGalleries = m_widget->m_useGalleriesChb->isChecked();
 
@@ -484,6 +441,7 @@ void ImageshackWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
 
     if (!errCode)
     {
+        m_widget->imagesList()->removeItemByUrl(m_transferQueue.first());
         m_transferQueue.pop_front();
         m_imagesCount++;
     }

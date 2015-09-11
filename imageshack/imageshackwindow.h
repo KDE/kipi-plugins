@@ -76,7 +76,6 @@ private Q_SLOTS:
     void slotFinished();
     void slotCancelClicked();
 
-    void slotNeedRegistrationCode();
     void slotJobInProgress(int step, int, const QString& format);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotGetGalleriesDone(int errCode, const QString& errMsg);
@@ -91,7 +90,6 @@ private:
     void readSettings();
     void saveSettings();
 
-    void askRegistrationCode();
     void authenticationDone(int errCode, const QString& errMsg);
 
     void uploadNextItem();

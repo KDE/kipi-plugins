@@ -55,11 +55,6 @@ bool Imageshack::loggedIn() const
     return m_loggedIn;
 }
 
-QString Imageshack::registrationCode() const
-{
-    return m_registrationCode;
-}
-
 QString Imageshack::username() const
 {
     return m_username;
@@ -70,14 +65,19 @@ QString Imageshack::email() const
     return m_email;
 }
 
+QString Imageshack::password() const
+{
+    return m_password;
+}
+
+QString Imageshack::authToken() const
+{
+    return m_authToken;
+}
+
 QString Imageshack::credits() const
 {
     return m_credits;
-}
-
-void Imageshack::setRegistrationCode(const QString& code)
-{
-    m_registrationCode = code;
 }
 
 void Imageshack::setUsername(const QString& username)
@@ -90,10 +90,19 @@ void Imageshack::setEmail(const QString& email)
     m_email = email;
 }
 
+void Imageshack::setAuthToken(const QString& token)
+{
+    m_authToken = token;
+}
+
+void Imageshack::setPassword(const QString& pass)
+{
+    m_password = pass;
+}
+
 void Imageshack::logOut()
 {
     m_loggedIn = false;
-    m_registrationCode.clear();
     m_username.clear();
     m_email.clear();
     m_credits.clear();
@@ -108,16 +117,13 @@ void Imageshack::readSettings()
 
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
-
-    m_registrationCode = group.readEntry("RegistrationCode", QString());
 }
 
 void Imageshack::saveSettings()
 {
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Imageshack Settings");
-
-    group.writeEntry(QStringLiteral("RegistrationCode"), registrationCode());
+    
     config.sync();
 }
 

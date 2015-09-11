@@ -39,14 +39,16 @@ public:
     ~Imageshack();
 
     bool    loggedIn()             const;
-    QString registrationCode()     const;
     QString username()             const;
     QString email()                const;
+    QString password()             const;
     QString credits()              const;
+    QString authToken()            const;
 
-    void setRegistrationCode(const QString& code);
     void setUsername(const QString& username);
     void setEmail(const QString& email);
+    void setPassword(const QString& pass);
+    void setAuthToken(const QString& token);
 
     void readSettings();
 
@@ -60,9 +62,10 @@ private:
 
     bool    m_loggedIn;
 
-    QString m_registrationCode;
+    QString m_authToken;
     QString m_username;
     QString m_email;
+    QString m_password;
     QString m_credits;
 
     friend class ImageshackWindow;

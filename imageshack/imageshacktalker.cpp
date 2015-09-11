@@ -24,6 +24,11 @@
 
 // Qt includes
 
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 #include <QMap>
 #include <QString>
 #include <QDomDocument>
@@ -33,6 +38,7 @@
 #include <QApplication>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QMimeType>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -57,7 +63,7 @@ ImageshackTalker::ImageshackTalker(Imageshack* imghack)
       m_state(IMGHCK_DONOTHING)
 {
     m_userAgent   = QStringLiteral("KIPI-Plugin-Imageshack/%1").arg(kipipluginsVersion());
-    m_photoApiUrl = QUrl(QStringLiteral("http://www.imageshack.us/upload_api.php"));
+    m_photoApiUrl = QUrl(QStringLiteral("https://api.imageshack.com/v2/images"));
     m_videoApiUrl = QUrl(QStringLiteral("http://render.imageshack.us/upload_api.php"));
     m_loginApiUrl = QUrl(QStringLiteral("http://my.imageshack.us/setlogin.php"));
     m_galleryUrl  = QUrl(QStringLiteral("http://www.imageshack.us/gallery_api.php"));
@@ -68,11 +74,6 @@ ImageshackTalker::~ImageshackTalker()
 {
     if (m_job)
         m_job->kill();
-}
-
-bool ImageshackTalker::loggedIn()
-{
-    return !m_imageshack->registrationCode().isEmpty();
 }
 
 void ImageshackTalker::cancel()
@@ -119,10 +120,10 @@ void ImageshackTalker::slotResult(KJob* kjob)
 
     if (job->error())
     {
-        if (m_loginInProgress)
+        if (m_state == IMGHCK_AUTHENTICATING)
         {
             checkRegistrationCodeDone(job->error(), job->errorString());
-            m_loginInProgress = false;
+            emit signalBusy(false);
         }
         else if (m_state == IMGHCK_GETGALLERIES)
         {
@@ -142,9 +143,9 @@ void ImageshackTalker::slotResult(KJob* kjob)
     int step;
     switch (m_state)
     {
-        case IMGHCK_CHECKREGCODE:
+        case IMGHCK_AUTHENTICATING:
             m_job = 0;
-            parseCheckRegistrationCode(m_buffer);
+            parseAccessToken(m_buffer);
             break;
         case IMGHCK_ADDPHOTOGALLERY:
             step = job->property("k_step").toInt();
@@ -169,14 +170,35 @@ void ImageshackTalker::slotResult(KJob* kjob)
 
 
 void ImageshackTalker::authenticate()
-{
-    m_loginInProgress = true;
-
-    if (!m_imageshack->m_registrationCode.isEmpty())
+{   
+    if (m_job)
     {
-        emit signalJobInProgress(1, 4, i18n("Checking the registration code"));
-        checkRegistrationCode();
+        m_job->kill();
+        m_job = 0;
     }
+    
+    emit signalBusy(true);
+    emit signalJobInProgress(1, 4, i18n("Authenticating the user"));
+    
+    QUrl url(QStringLiteral("https://api.imageshack.com/v2/user/login"));
+    QUrlQuery q(url);
+    q.addQueryItem(QStringLiteral("user"), m_imageshack->email());
+    q.addQueryItem(QStringLiteral("password"), m_imageshack->password());
+    url.setQuery(q);
+    
+    KIO::TransferJob* const job = KIO::http_post(url,"",KIO::HideProgressInfo);
+    job->addMetaData(QStringLiteral("content-type"),
+                     QStringLiteral("Content-Type : application/x-www-form-urlencoded"));
+    
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = IMGHCK_AUTHENTICATING;
+    m_job = job;
+    m_buffer.resize(0);    
 }
 
 void ImageshackTalker::getGalleries()
@@ -207,44 +229,43 @@ void ImageshackTalker::getGalleries()
     m_buffer.resize(0);
 }
 
-void ImageshackTalker::checkRegistrationCode()
-{
-    if (m_job)
-    {
-        m_job->kill();
-        m_job = 0;
-    }
-
-    emit signalBusy(true);
-    emit signalJobInProgress(2, 4, i18n("Checking the web server"));
-
-    QString args = QStringLiteral("login=");
-    args.append(m_imageshack->registrationCode());
-    args.append(QStringLiteral("&xml=yes"));
-
-    QByteArray tmp = args.toUtf8();
-    KIO::TransferJob* job = KIO::http_post(QUrl(m_loginApiUrl), tmp, KIO::HideProgressInfo);
-    job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
-    job->addMetaData(QStringLiteral("content-type"),
-                     QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
-
-    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(data(KIO::Job*,QByteArray)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
-    m_state = IMGHCK_CHECKREGCODE;
-    m_job   = job;
-    m_buffer.resize(0);
-
-}
-
 void ImageshackTalker::checkRegistrationCodeDone(int errCode, const QString& errMsg)
 {
     emit signalBusy(false);
     emit signalLoginDone(errCode, errMsg);
     m_loginInProgress = false;
+}
+
+void ImageshackTalker::parseAccessToken(const QByteArray &data)
+{
+    qCDebug(KIPIPLUGINS_LOG) << "Data received is "<< data;  
+    
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+    
+    if(err.error != QJsonParseError::NoError)
+    {
+        emit signalBusy(false);
+        return;
+    }
+    
+    QJsonObject jsonObject = doc.object();
+        
+    if(jsonObject[QStringLiteral("success")].toBool())    
+    {
+        m_imageshack->m_loggedIn = true;
+        QJsonObject obj = jsonObject[QStringLiteral("result")].toObject();
+        m_imageshack->setUsername(obj[QStringLiteral("username")].toString());
+        m_imageshack->setEmail(obj[QStringLiteral("email")].toString());
+        m_imageshack->setAuthToken(obj[QStringLiteral("auth_token")].toString());
+        checkRegistrationCodeDone(0,QStringLiteral(""));
+    }
+    else
+    {
+        m_imageshack->m_loggedIn = false;
+        QJsonObject obj = jsonObject[QStringLiteral("error")].toObject();
+        checkRegistrationCodeDone(obj[QStringLiteral("error_code")].toInt(), obj[QStringLiteral("error_message")].toString());
+    }
 }
 
 void ImageshackTalker::parseGetGalleries(const QByteArray &data)
@@ -291,59 +312,6 @@ void ImageshackTalker::parseGetGalleries(const QByteArray &data)
 
     emit signalUpdateGalleries(gTexts, gNames);
     emit signalGetGalleriesDone(0, i18n("Successfully retrieved galleries"));
-}
-
-void ImageshackTalker::parseCheckRegistrationCode(const QByteArray& data)
-{
-    QXmlStreamReader reader(data);
-    bool foundResponse;
-
-    while (!reader.atEnd())
-    {
-        reader.readNext();
-
-        if (reader.isStartElement())
-        {
-            foundResponse = true;
-            if (reader.name() == QStringLiteral("exists"))
-            {
-                reader.readNext();
-                if (reader.text().toString() == QStringLiteral("yes"))
-                {
-                    m_imageshack->m_loggedIn = true;
-                }
-                else
-                {
-                    m_imageshack->m_loggedIn = false;
-                }
-            }
-            if (reader.name() == QStringLiteral("username"))
-            {
-                reader.readNext();
-                m_imageshack->setUsername(reader.text().toString());
-            }
-            if (reader.name() == QStringLiteral("email"))
-            {
-                reader.readNext();
-                m_imageshack->setEmail(reader.text().toString());
-            }
-        }
-    }
-
-    if (!foundResponse)
-    {
-        emit signalLoginDone(2, i18n("Server does not respond. Please check you internet connection!"));
-        return;
-    }
-
-    if (m_imageshack->loggedIn())
-    {
-        authenticationDone(0, i18n("Registration code successfully verified"));
-    }
-    else
-    {
-        authenticationDone(1, i18n("Registration code not valid!"));
-    }
 }
 
 void ImageshackTalker::authenticationDone(int errCode, const QString& errMsg)
@@ -500,80 +468,118 @@ int ImageshackTalker::parseErrorResponse(QDomElement elem, QString& errMsg)
 
 void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
 {
-    int errCode    = -1;
-    QString errMsg = QStringLiteral("");
-    QDomDocument doc(QStringLiteral("addPhoto"));
-    if (!doc.setContent(data))
-        return;
-
-    QDomElement elem = doc.documentElement();
-
-    if (!elem.isNull() && elem.tagName() == QStringLiteral("imginfo"))
-    {
-        errCode = 0;
-    }
-    else
-    {
-        qCDebug(KIPIPLUGINS_LOG) << elem.tagName();
-        QDomNode node = elem.firstChild();
-        if (node.nodeName() == QStringLiteral("error")) {
-            errCode =  parseErrorResponse(elem, errMsg);
-        }
-    }
-
-    if (m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO
-            || (m_state == IMGHCK_ADDPHOTOGALLERY && errCode))
+    qCDebug(KIPIPLUGINS_LOG) << "ParseUploadPhotoDone data is "<<data;
+    
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+    
+    if(err.error != QJsonParseError::NoError)
     {
         emit signalBusy(false);
-        emit signalAddPhotoDone(errCode, errMsg);
+        return;
     }
-    else if (m_state == IMGHCK_ADDPHOTOGALLERY)
+    
+    QJsonObject jsonObject = doc.object();
+    
+    if(m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO
+            || (m_state == IMGHCK_ADDPHOTOGALLERY))
     {
-        QDomElement chld = elem.firstChildElement(QStringLiteral("files"));
-        if (chld.isNull())
+        if(jsonObject[QStringLiteral("success")].toBool())    
         {
             emit signalBusy(false);
-            emit signalAddPhotoDone(-2, QStringLiteral("Error parsing server response. No information about uploaded item"));
+            emit signalAddPhotoDone(0,QStringLiteral(""));
         }
         else
         {
-            QString server = chld.attribute(QStringLiteral("server"));
-            QString bucket = chld.attribute(QStringLiteral("bucket"));
-
-            QDomElement image = chld.firstChildElement(QStringLiteral("image"));
-            if (image.isNull() || server.isEmpty() || bucket.isEmpty() || !image.hasChildNodes())
-            {
-                emit signalBusy(false);
-                emit signalAddPhotoDone(-3, QStringLiteral("Error parsing server response. No image, server or bucket returned"));
-            }
-            else
-            {
-                QString imgPath = QStringLiteral("img") + server + QStringLiteral("/") + bucket + QStringLiteral("/") + image.firstChild().toText().data();
-
-                QUrl url(m_job->property("k_galleryName").toString());
-                url.addQueryItem(QStringLiteral("action"), QStringLiteral("add"));
-                url.addQueryItem(QStringLiteral("image[]"), imgPath);
-                url.addQueryItem(QStringLiteral("cookie"), m_imageshack->registrationCode());
-
-                qCDebug(KIPIPLUGINS_LOG) << url.url();
-
-                m_job->kill();
-
-                KIO::Job *job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
-
-                m_job = job;
-                m_job->setProperty("k_step", STEP_ADDITEMTOGALLERY);
-
-                m_buffer.resize(0);
-
-                connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
-                        this, SLOT(data(KIO::Job*,QByteArray)));
-
-                connect(job, SIGNAL(result(KJob*)),
-                        this, SLOT(slotResult(KJob*)));
-            }
-        }
+            QJsonObject obj = jsonObject[QStringLiteral("error")].toObject();
+            emit signalAddPhotoDone(obj[QStringLiteral("error_code")].toInt(), obj[QStringLiteral("error_message")].toString());
+            emit signalBusy(false);
+        }        
     }
+    
+    
+//     int errCode    = -1;
+//     QString errMsg = QStringLiteral("");
+//     QDomDocument doc(QStringLiteral("addPhoto"));
+//     if (!doc.setContent(data))
+//         return;
+// 
+//     QDomElement elem = doc.documentElement();
+// 
+//     if (!elem.isNull() && elem.tagName() == QStringLiteral("imginfo"))
+//     {
+//         errCode = 0;
+//     }
+//     else
+//     {
+//         qCDebug(KIPIPLUGINS_LOG) << elem.tagName();
+//         QDomNode node = elem.firstChild();
+//         if (node.nodeName() == QStringLiteral("error")) {
+//             errCode =  parseErrorResponse(elem, errMsg);
+//         }
+//     }
+// 
+//     if (m_state == IMGHCK_ADDPHOTO || m_state == IMGHCK_ADDVIDEO
+//             || (m_state == IMGHCK_ADDPHOTOGALLERY))
+//     {
+//         if(errCode)
+//         {
+//             emit signalBusy(false);
+//             emit signalAddPhotoDone(errCode, errMsg);            
+//         }
+//         else
+//         {
+//             emit signalBusy(false);
+//             emit signalAddPhotoDone(0, QStringLiteral(""));
+//         }
+//     }
+//     else if (m_state == IMGHCK_ADDPHOTOGALLERY)
+//     {
+//         QDomElement chld = elem.firstChildElement(QStringLiteral("files"));
+//         if (chld.isNull())
+//         {
+//             emit signalBusy(false);
+//             emit signalAddPhotoDone(-2, QStringLiteral("Error parsing server response. No information about uploaded item"));
+//         }
+//         else
+//         {
+//             QString server = chld.attribute(QStringLiteral("server"));
+//             QString bucket = chld.attribute(QStringLiteral("bucket"));
+// 
+//             QDomElement image = chld.firstChildElement(QStringLiteral("image"));
+//             if (image.isNull() || server.isEmpty() || bucket.isEmpty() || !image.hasChildNodes())
+//             {
+//                 emit signalBusy(false);
+//                 emit signalAddPhotoDone(-3, QStringLiteral("Error parsing server response. No image, server or bucket returned"));
+//             }
+//             else
+//             {
+//                 QString imgPath = QStringLiteral("img") + server + QStringLiteral("/") + bucket + QStringLiteral("/") + image.firstChild().toText().data();
+// 
+//                 QUrl url(m_job->property("k_galleryName").toString());
+//                 url.addQueryItem(QStringLiteral("action"), QStringLiteral("add"));
+//                 url.addQueryItem(QStringLiteral("image[]"), imgPath);
+//                 url.addQueryItem(QStringLiteral("cookie"), m_imageshack->registrationCode());
+// 
+//                 qCDebug(KIPIPLUGINS_LOG) << url.url();
+// 
+//                 m_job->kill();
+// 
+//                 KIO::Job *job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+// 
+//                 m_job = job;
+//                 m_job->setProperty("k_step", STEP_ADDITEMTOGALLERY);
+// 
+//                 m_buffer.resize(0);
+// 
+//                 connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+//                         this, SLOT(data(KIO::Job*,QByteArray)));
+// 
+//                 connect(job, SIGNAL(result(KJob*)),
+//                         this, SLOT(slotResult(KJob*)));
+//             }
+//         }
+//     }
 }
 
 void ImageshackTalker::parseAddPhotoToGalleryDone(QByteArray data)
