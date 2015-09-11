@@ -441,6 +441,8 @@ void ImageshackWindow::uploadNextItem()
     
     int gidx = m_widget->m_galleriesCob->currentIndex();
     
+    qCDebug(KIPIPLUGINS_LOG) << "Album ID is "<< m_widget->m_galleriesCob->itemData(gidx).toString();
+    
     switch(gidx)
     {
         case 0:

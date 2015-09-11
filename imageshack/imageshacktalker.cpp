@@ -293,17 +293,18 @@ void ImageshackTalker::parseGetGalleries(const QByteArray &data)
             {
                 QString fmt;
                 fmt          = nameElem.firstChild().toText().data();
-                // this is a very ugly hack
-                QString name = QStringLiteral("http://img") +
-                    serverElem.firstChild().toText().data() +
-                    QStringLiteral(".imageshack.us/gallery_api.php?g=") + fmt;
-                gNames << name;
-
-                if (!titleElem.isNull())
-                {
-                    fmt.append(QStringLiteral(" (") + titleElem.firstChild().toText().data() + QStringLiteral(")"));
-                }
-                gTexts << fmt;
+//                 // this is a very ugly hack
+//                 QString name = QStringLiteral("http://img") +
+//                     serverElem.firstChild().toText().data() +
+//                     QStringLiteral(".imageshack.us/gallery_api.php?g=") + fmt;
+//                 gNames << name;
+// 
+//                 if (!titleElem.isNull())
+//                 {
+//                     fmt.append(QStringLiteral(" (") + titleElem.firstChild().toText().data() + QStringLiteral(")"));
+//                 }
+                gNames << nameElem.firstChild().toText().data();
+                gTexts << titleElem.firstChild().toText().data();
             }
         }
     }
@@ -383,7 +384,7 @@ void ImageshackTalker::uploadItem(QString path, QMap<QString, QString> opts)
 
     form.finish();    
     
-    QUrl uploadUrl;
+    QUrl uploadUrl = QUrl(m_photoApiUrl);
     m_state   = IMGHCK_ADDPHOTO;
     
     KIO::Job* const job = KIO::http_post(uploadUrl, form.formData(), KIO::HideProgressInfo);

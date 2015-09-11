@@ -409,7 +409,10 @@ void ImageshackWidget::slotGetGalleries(const QStringList &gTexts, const QString
 
     // TODO check if the lists have the same size
     for (int i = 0; i < gTexts.size(); ++i)
-        m_galleriesCob->addItem(gTexts[i], gNames[i]);
+    {
+        qCDebug(KIPIPLUGINS_LOG) << "gTexts is "<<gTexts[i] << " gNames is "<<gNames[i];
+        m_galleriesCob->addItem(gTexts[i], gNames[i]);        
+    }
 
 //     slotEnableNewGalleryLE(m_galleriesCob->currentIndex());
 }
