@@ -34,16 +34,15 @@
 #include <QMenu>
 #include <QUrl>
 #include <QComboBox>
+#include <QPushButton>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <klineedit.h>
-#include <kpushbutton.h>
 #include <kmessagebox.h>
-#include <KWindowConfig>
-#include <KWidgetsAddons/KGuiItem>
+#include <kwindowconfig.h>
+#include <kguiitem.h>
 
 // MediaWiki includes
 
@@ -108,7 +107,7 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     d->pass      = QString();
 
     setMainWidget(d->widget);
-    setWindowIcon(QIcon::fromTheme("kipi-wikimedia"));
+    setWindowIcon(QIcon::fromTheme(QLatin1String("kipi-wikimedia")));
     setModal(false);
     setWindowTitle(i18n("Export to MediaWiki"));
 
@@ -130,21 +129,21 @@ WMWindow::WMWindow(const QString& tmpFolder, QWidget* const /*parent*/)
 
     about->addAuthor(ki18n("Alexandre Mendes").toString(),
                      ki18n("Author").toString(),
-                     "alex dot mendes1988 at gmail dot com");
+                     QLatin1String("alex dot mendes1988 at gmail dot com"));
 
     about->addAuthor(ki18n("Guillaume Hormiere").toString(),
                      ki18n("Developer").toString(),
-                     "hormiere dot guillaume at gmail dot com");
+                     QLatin1String("hormiere dot guillaume at gmail dot com"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                     "caulier dot gilles at gmail dot com");
+                     QLatin1String("caulier dot gilles at gmail dot com"));
 
     about->addAuthor(ki18n("Peter Potrowl").toString(),
                      ki18n("Developer").toString(),
-                     "peter dot potrowl at gmail dot com");
+                     QLatin1String("peter dot potrowl at gmail dot com"));
 
-    about->setHandbookEntry("wikimedia");
+    about->setHandbookEntry(QLatin1String("wikimedia"));
     setAboutData(about);
 
     connect(startButton(), SIGNAL(clicked()),
@@ -196,23 +195,23 @@ void WMWindow::reactivate()
 
 void WMWindow::readSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("MediaWiki export settings"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("MediaWiki export settings"));
 
     d->widget->readSettings(group);
 
-    KConfigGroup group2 = config.group(QString("MediaWiki export dialog"));
+    KConfigGroup group2 = config.group(QLatin1String("MediaWiki export dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group2);
 }
 
 void WMWindow::saveSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("MediaWiki export settings"));
+    KConfig config(QLatin1String("kipirc"));
+    KConfigGroup group = config.group(QLatin1String("MediaWiki export settings"));
 
     d->widget->saveSettings(group);
 
-    KConfigGroup group2 = config.group(QString("MediaWiki export dialog"));
+    KConfigGroup group2 = config.group(QLatin1String("MediaWiki export dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group2);
     config.sync();
 }
@@ -233,7 +232,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 {
 
     // get temporary file name
-    d->tmpPath = d->tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
+    d->tmpPath = d->tmpDir + QFileInfo(imgPath).baseName().trimmed() + QLatin1String(".jpg");
 
     QImage image;
     // rescale image if requested: metadata is lost
@@ -327,7 +326,7 @@ void WMWindow::slotStartTransfer()
 
     d->widget->progressBar()->show();
     d->widget->progressBar()->progressScheduled(i18n("MediaWiki export"), true, true);
-    d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    d->widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QLatin1String("kipi")).pixmap(22, 22));
     d->uploadJob->begin();
 }
 

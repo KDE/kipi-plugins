@@ -148,12 +148,12 @@ void WikiMediaJob::uploadHandle(KJob* j)
         e1->setFile(file);
         d->currentFile = file->fileName();
         qCDebug(KIPIPLUGINS_LOG) << "Name:" << file->fileName();
-        e1->setFilename(info["title"].replace(" ", "_"));
-        qCDebug(KIPIPLUGINS_LOG) << "Title:" << info["title"];
+        e1->setFilename(info[QLatin1String("title")].replace(QLatin1String(" "), QLatin1String("_")));
+        qCDebug(KIPIPLUGINS_LOG) << "Title:" << info[QLatin1String("title")];
 
-        if(!info["comments"].isEmpty())
+        if (!info[QLatin1String("comments")].isEmpty())
         {
-            e1->setComment(info["comments"]);
+            e1->setComment(info[QLatin1String("comments")]);
         }
         else
         {
@@ -192,66 +192,66 @@ void WikiMediaJob::uploadHandle(KJob* j)
 QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info) const
 {
     QString text = QString::fromUtf8("=={{int:filedesc}}==");
-    text.append("\n{{Information");
-    text.append("\n|Description=").append(info["description"].toUtf8());
-    text.append("\n|Source=");
+    text.append(QLatin1String("\n{{Information"));
+    text.append(QLatin1String("\n|Description=")).append(info[QLatin1String("description")]);
+    text.append(QLatin1String("\n|Source="));
 
-    if(!info["source"].isEmpty())
+    if (!info[QLatin1String("source")].isEmpty())
     {
-        text.append(info["source"].toUtf8());
+        text.append(info[QLatin1String("source")]);
     }
 
-    text.append("\n|Author=");
+    text.append(QLatin1String("\n|Author="));
 
-    if(!info["author"].isEmpty())
+    if (!info[QLatin1String("author")].isEmpty())
     {
-        text.append(info["author"].toUtf8());
+        text.append(info[QLatin1String("author")]);
     }
 
-    text.append("\n|Date=").append(info["date"].toUtf8());
-    text.append("\n|Permission=");
-    text.append("\n|other_versions=");
-    text.append("\n}}\n");
+    text.append(QLatin1String("\n|Date=")).append(info[QLatin1String("date")]);
+    text.append(QLatin1String("\n|Permission="));
+    text.append(QLatin1String("\n|other_versions="));
+    text.append(QLatin1String("\n}}\n"));
 
-    QString latitude  = info["latitude"].toUtf8();
-    QString longitude = info["longitude"].toUtf8();
+    QString latitude  = info[QLatin1String("latitude")];
+    QString longitude = info[QLatin1String("longitude")];
 
-    if(!latitude.isEmpty() && !longitude.isEmpty())
+    if (!latitude.isEmpty() && !longitude.isEmpty())
     {
         qCDebug(KIPIPLUGINS_LOG) << "Latitude:" << latitude << "; longitude:" << longitude;
-        text.append("{{Location|").append(latitude).append("|").append(longitude).append("}}\n");
+        text.append(QLatin1String("{{Location|")).append(latitude).append(QLatin1String("|")).append(longitude).append(QLatin1String("}}\n"));
     }
 
-    if(!info["genText"].isEmpty())
+    if (!info[QLatin1String("genText")].isEmpty())
     {
-        text.append(info["genText"].toUtf8()).append("\n");
+        text.append(info[QLatin1String("genText")]).append(QLatin1String("\n"));
     }
 
-    if(!info["license"].isEmpty())
+    if (!info[QLatin1String("license")].isEmpty())
     {
-        text.append("\n=={{int:license-header}}==\n");
-        text.append(info["license"].toUtf8()).append("\n\n");
+        text.append(QLatin1String("\n=={{int:license-header}}==\n"));
+        text.append(info[QLatin1String("license")]).append(QLatin1String("\n\n"));
     }
 
     QStringList categories;
 
-    if(!info["categories"].isEmpty())
+    if (!info[QLatin1String("categories")].isEmpty())
     {
-        categories = info["categories"].split("\n", QString::SkipEmptyParts);
+        categories = info[QLatin1String("categories")].split(QLatin1String("\n"), QString::SkipEmptyParts);
 
         for(int i = 0; i < categories.size(); i++)
         {
-            text.append("[[Category:").append(categories[i].toUtf8()).append("]]\n");
+            text.append(QLatin1String("[[Category:")).append(categories[i]).append(QLatin1String("]]\n"));
         }
     }
 
-    if(!info["genCategories"].isEmpty())
+    if (!info[QLatin1String("genCategories")].isEmpty())
     {
-        categories = info["genCategories"].split("\n", QString::SkipEmptyParts);
+        categories = info[QLatin1String("genCategories")].split(QLatin1String("\n"), QString::SkipEmptyParts);
 
         for(int i = 0; i < categories.size(); i++)
         {
-            text.append("[[Category:").append(categories[i].toUtf8()).append("]]\n");
+            text.append(QLatin1String("[[Category:")).append(categories[i]).append(QLatin1String("]]\n"));
         }
     }
 

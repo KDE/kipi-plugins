@@ -37,17 +37,17 @@ extern "C"
 
 // Qt includes
 
+#include <QDir>
 #include <QAction>
+#include <QApplication>
 
 // KDE includes
 
-#include <KConfig>
-#include <KApplication>
-#include <KActionCollection>
-#include <KGenericFactory>
-#include <KLibLoader>
-#include <kstandarddirs.h>
+#include <kconfig.h>
+#include <kactioncollection.h>
+#include <kpluginfactory.h>
 #include <kwindowsystem.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 
@@ -114,19 +114,18 @@ void Plugin_WikiMedia::setupActions()
 
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("Export to MediaWiki..."));
-    d->actionExport->setIcon(QIcon::fromTheme("kipi-wikimedia"));
+    d->actionExport->setIcon(QIcon::fromTheme(QLatin1String("kipi-wikimedia")));
     d->actionExport->setEnabled(false);
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()) );
 
-    addAction("wikimediaexport", d->actionExport);
+    addAction(QLatin1String("wikimediaexport"), d->actionExport);
 }
 
 void Plugin_WikiMedia::slotExport()
 {
-    KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-mediawiki-") + QString::number(getpid()) + QString("/"));
+    QString tmp = QDir::tempPath() + QLatin1Char('/') + QLatin1String("kipi-mediawiki") + QString::number(getpid()) + QLatin1String("/");
 
     if (!d->dlgExport)
     {

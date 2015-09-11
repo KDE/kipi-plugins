@@ -30,6 +30,7 @@ target_link_libraries(kipiplugin_wikimedia
                       KF5::KExiv2
                       KF5::KDcraw
                       KF5::KIOCore
+                      KF5::WindowSystem
                      )
 
 configure_file(kipiplugin_wikimedia.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_wikimedia.desktop)
