@@ -35,6 +35,7 @@ set(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kipiplugins_debug.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kptooldialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpnewalbumdialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kplogindialog.cpp
 )
 
 add_library(KF5kipiplugins SHARED ${kipiplugins_LIB_SRCS})
