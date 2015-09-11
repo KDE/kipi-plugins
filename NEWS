@@ -9,8 +9,8 @@ General : FlickrExport plugin renamed as Flickr.
 General : ImageShackExport plugin renamed as ImageShack.
 General : PiwigoExport plugin renamed as Piwigo.
 General : GPSSync plugin renamed as Geolocator.
-Geberal : DNGConverter moved to digiKam core.
-
+General : DNGConverter moved to digiKam core.
+General : AcquireImages moved to digiKam core.
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 
