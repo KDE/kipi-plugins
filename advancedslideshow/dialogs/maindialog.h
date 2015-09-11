@@ -31,7 +31,6 @@
 // KDE includes
 
 #include "kio/previewjob.h"
-#include "kurl.h"
 
 // Local includes
 
