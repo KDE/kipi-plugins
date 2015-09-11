@@ -48,17 +48,21 @@ endforeach()
 add_library(libexpoblending STATIC ${expoblending_common_SRCS})
 
 target_link_libraries(libexpoblending
-                      PRIVATE
-                      KF5::Parts
-                      KF5::Kipi
-                      KF5::KExiv2
-                      KF5::KDcraw
-                      KF5::ConfigCore
-                      KF5kipiplugins
-                      ${KF5KDcraw_LIBRARIES}
-                      ${KF5Kipi_LIBRARIES}
-                      ${KF5KExiv2_LIBRARIES}
-                     )
+    PUBLIC
+        ${KF5KDcraw_LIBRARIES}
+        Qt5::Core
+    PRIVATE
+        KF5kipiplugins
+        ${KF5Kipi_LIBRARIES}
+        ${KF5KExiv2_LIBRARIES}
+        KF5::Parts
+        KF5::Kipi
+        KF5::KExiv2
+        KF5::KDcraw
+        KF5::ConfigCore
+        KF5::IconThemes
+        Qt5::Widgets
+)
 
 # =======================================================
 # ExpoBlending plugin
@@ -67,7 +71,12 @@ set(kipiplugin_expoblending_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_
 
 add_library(kipiplugin_expoblending MODULE ${kipiplugin_expoblending_PART_SRCS})
 
-target_link_libraries(kipiplugin_expoblending libexpoblending)
+target_link_libraries(kipiplugin_expoblending
+    PRIVATE
+        libexpoblending
+        KF5::CoreAddons
+        KF5::XmlGui
+)
 
 configure_file(plugin/kipiplugin_expoblending.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_expoblending.desktop)
 
@@ -85,7 +94,10 @@ ecm_add_app_icon(expoblending_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(expoblending ${expoblending_SRCS})
 
-target_link_libraries(expoblending libexpoblending)
+target_link_libraries(expoblending
+    libexpoblending
+    KF5kipiplugins
+)
 
 install(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS plugin/expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})

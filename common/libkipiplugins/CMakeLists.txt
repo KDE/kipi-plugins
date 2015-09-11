@@ -54,6 +54,7 @@ target_link_libraries(KF5kipiplugins
                       KF5::ConfigCore
                       KF5::KIOFileWidgets
                       KF5::WidgetsAddons
+                      KF5::CoreAddons
 
                       ${KF5Kipi_LIBRARIES}
                       ${KF5KExiv2_LIBRARIES}

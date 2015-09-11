@@ -26,7 +26,7 @@
 
 // Qt includes
 
-#include <QVariant>
+#include <QtCore/QVariant>
 
 // Libkipi includes
 
