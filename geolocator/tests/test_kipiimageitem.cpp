@@ -33,7 +33,6 @@
 // KDE includes
 
 #include <kio/global.h>
-#include <qtest_kde.h>
 
 // local includes
 
@@ -43,8 +42,6 @@
 
 using namespace KIPIPlugins;
 using namespace KIPIGeolocatorPlugin;
-
-QTEST_KDEMAIN_CORE(TestKipiImageItem)
 
 void TestKipiImageItem::initTestCase()
 {
@@ -64,9 +61,9 @@ void TestKipiImageItem::cleanupTestCase()
 QUrl GetTestDataDirectory()
 {
     // any better ideas on how to get the path?
-    const QUrl thisCPPFile(__FILE__);
+    const QUrl thisCPPFile(QStringLiteral(__FILE__));
     QUrl testDataDir = KIO::upUrl(thisCPPFile);
-    testDataDir.setPath(testDataDir.path() + QLatin1Char('/') + QLatin1String("data/"));
+    testDataDir.setPath(testDataDir.path() + QLatin1Char('/') + QStringLiteral("data/"));
     return testDataDir;
 }
 
@@ -132,3 +129,5 @@ void TestKipiImageItem::testBasicLoading()
         QVERIFY(!container.hasFixType());
     }
 }
+
+QTEST_MAIN(TestKipiImageItem)

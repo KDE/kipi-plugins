@@ -28,17 +28,11 @@
 
 #include <QUrl>
 
-// KDE includes
-
-#include <qtest_kde.h>
-
 // local includes
 
 #include "kipiplugins_debug.h"
 #include "simpletreemodel.h"
 #include "../../borrowed/modeltest.h"
-
-QTEST_KDEMAIN_CORE(TestSimpleTreeModel)
 
 /**
  * @brief Dummy test that does nothing
@@ -120,3 +114,5 @@ void TestSimpleTreeModel::testModel1()
 
     new ModelTest(treeModel, this);
 }
+
+QTEST_MAIN(TestSimpleTreeModel)

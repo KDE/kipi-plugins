@@ -32,7 +32,6 @@
 // KDE includes
 
 #include <kio/global.h>
-#include <qtest_kde.h>
 
 // libkgeomap includes
 
@@ -44,17 +43,15 @@
 
 using namespace KIPIGeolocatorPlugin;
 
-QTEST_KDEMAIN_CORE(TestGPXParsing)
-
 /**
  * @brief Return the path of the directory containing the test data
  */
 QUrl GetTestDataDirectory()
 {
     // any better ideas on how to get the path?
-    const QUrl thisCPPFile(__FILE__);
+    const QUrl thisCPPFile(QStringLiteral(__FILE__));
     QUrl testDataDir = KIO::upUrl(thisCPPFile);
-    testDataDir.setPath(testDataDir.path() + QLatin1Char('/') + QLatin1String("data/"));
+    testDataDir.setPath(testDataDir.path() + QLatin1Char('/') + QStringLiteral("data/"));
     return testDataDir;
 }
 
@@ -99,7 +96,7 @@ void TestGPXParsing::testCorrelator1()
     TrackCorrelator::Correlation::List itemsToCorrelate;
     {
         TrackCorrelator::Correlation myItem;
-        myItem.dateTime = KGeoMap::TrackReader::ParseTime("2009-07-26T18:00:00Z");
+        myItem.dateTime = KGeoMap::TrackReader::ParseTime(QStringLiteral("2009-07-26T18:00:00Z"));
         itemsToCorrelate << myItem;
     }
 
@@ -122,7 +119,7 @@ void TestGPXParsing::testCorrelator1()
 
     KIPIGeolocatorPlugin::TrackCorrelator::Correlation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGeolocatorPlugin::TrackCorrelator::Correlation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl("geo:18,7,0"));
+    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl(QStringLiteral("geo:18,7,0")));
     QCOMPARE(myCorrelatedItems.first().nSatellites, 3);
     QCOMPARE(myCorrelatedItems.first().hDop, 2.5);
     QCOMPARE(myCorrelatedItems.first().speed, 3.14);
@@ -162,7 +159,7 @@ void TestGPXParsing::testInterpolation()
     TrackCorrelator::Correlation::List itemsToCorrelate;
     {
         TrackCorrelator::Correlation myItem;
-        myItem.dateTime = KGeoMap::TrackReader::ParseTime("2009-11-29T17:00:30Z");
+        myItem.dateTime = KGeoMap::TrackReader::ParseTime(QStringLiteral("2009-11-29T17:00:30Z"));
         itemsToCorrelate << myItem;
     }
 
@@ -188,7 +185,9 @@ void TestGPXParsing::testInterpolation()
 
     KIPIGeolocatorPlugin::TrackCorrelator::Correlation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGeolocatorPlugin::TrackCorrelator::Correlation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl("geo:17.5,0.5,3"));
+    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl(QStringLiteral("geo:17.5,0.5,3")));
     QCOMPARE(myCorrelatedItems.first().nSatellites, -1);
     QCOMPARE(myCorrelatedItems.first().hDop, -1.0);
 }
+
+QTEST_MAIN(TestGPXParsing)

@@ -78,6 +78,7 @@ target_link_libraries(gpssync_test_kipiimageitem
                       Qt5::Test
                       Qt5::Gui
                       KF5::ItemModels
+                      KF5::GuiAddons
                       KF5::KExiv2
                       KF5::KGeoMap
                       KF5::Kipi

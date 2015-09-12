@@ -32,8 +32,6 @@
 
 // KDE includes
 
-#include <qtest_kde.h>
-#include <kdebug.h>
 #include <QUrl>
 
 // local includes
@@ -42,9 +40,6 @@
 #include "../parseTagString.h"
 
 using namespace KIPIGeolocatorPlugin;
-
-QTEST_KDEMAIN_CORE(TestRGParsing)
-
 
 /**
  * @brief Dummy test that does nothing
@@ -61,12 +56,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("France");
         QString city = QString::fromUtf8("Paris");
 
-        const QString howToFormat = "My Tags/{Country}/{City}";  
+        const QString howToFormat = QStringLiteral("My Tags/{Country}/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;  
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString("My Tags/France/Paris"));
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QStringLiteral("My Tags/France/Paris"));
     }
 
     {
@@ -75,12 +70,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("Germany");
         QString city = QString::fromUtf8("Düsseldorf");
 
-        const QString howToFormat = "My Tags/{Country}/{City}";  
+        const QString howToFormat = QStringLiteral("My Tags/{Country}/{City})");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;  
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
     } 
 
     {
@@ -89,12 +84,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("中国");
         QString city = QString::fromUtf8("北京市");
 
-        const QString howToFormat = "My Tags/{Country}/{City}";  
+        const QString howToFormat = QStringLiteral("My Tags/{Country}/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;  
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/中国/北京市") );
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags/中国/北京市") );
     }
 
     {
@@ -103,12 +98,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("România");
         QString city = QString::fromUtf8("București");
 
-        const QString howToFormat = "My Tags/{Country}/{City}";
+        const QString howToFormat = QStringLiteral("My Tags/{Country}/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/România/București"));
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags/România/București"));
     }
 
     {
@@ -117,12 +112,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("România");
         QString city = QString::fromUtf8("București");
     
-        const QString howToFormat = "My Tags/{City}";
+        const QString howToFormat = QStringLiteral("My Tags/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/București"));
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags/București"));
     }
     
     {
@@ -131,12 +126,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("România");
         QString city = QString::fromUtf8("");
     
-        const QString howToFormat = "My Tags/{Country}/{City}";
+        const QString howToFormat = QStringLiteral("My Tags/{Country}/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/România"));
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags/România"));
     }
 
     {
@@ -145,11 +140,11 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("România");
         QString city = QString::fromUtf8("București");
 
-        const QString howToFormat = "My Tags/{Ctonury}/{City}";
+        const QString howToFormat = QStringLiteral("My Tags/{Ctonury}/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/"));
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags/"));
     }
 
     {
@@ -158,12 +153,12 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("");
         QString city = QString::fromUtf8("");
 
-        const QString howToFormat = "My Tags/{Country}/{City}";
+        const QString howToFormat = QStringLiteral("My Tags/{Country}/{City}");
 
-        info.rgData[QString("country")] = country;
-        info.rgData[QString("city")] = city;
+        info.rgData[QStringLiteral("country")] = country;
+        info.rgData[QStringLiteral("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags"));
+        QCOMPARE( makeTagString(info, howToFormat, QStringLiteral("OSM")).last(), QString::fromUtf8("My Tags"));
     }
 
 
@@ -177,3 +172,5 @@ void TestRGParsing::testVerifyRG()
     // - how do we handle these cases in the UI?
     // * now that we have makeTagString separate, these are handled same in tests and UI
 }
+
+QTEST_MAIN(TestRGParsing)

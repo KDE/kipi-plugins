@@ -28,8 +28,6 @@
 
 // KDE includes
 
-#include <qtest_kde.h>
-#include <kdebug.h>
 #include <QUrl>
 
 // local includes
@@ -37,8 +35,6 @@
 #include "simpletreemodel/simpletreemodel.h"
 #include "../borrowed/modeltest.h"
 #include "../rgtagmodel.h"
-
-QTEST_KDEMAIN_CORE(TestRGTagModel)
 
 /**
  * @brief Dummy test that does nothing
@@ -249,7 +245,7 @@ void TestRGTagModel::testModelSpacerTags()
     // add some items before the tagModel is created:
     SimpleTreeModel::Item* const treeItem1 = treeModel->addItem();
     QPersistentModelIndex treeItem1Index = treeModel->itemToIndex(treeItem1);
-    treeItem1->data = QString("oldChildren");   
+    treeItem1->data = QStringLiteral("oldChildren");
  
     SimpleTreeModel::Item* const treeItem11 = treeModel->addItem(treeItem1);
     QPersistentModelIndex treeItem11Index = treeModel->itemToIndex(treeItem11);
@@ -264,8 +260,8 @@ void TestRGTagModel::testModelSpacerTags()
     qCDebug(KIPIPLUGINS_LOG)<<"Worked before adding spacers";
 
     //insert spacer below ti21
-    tagModel->addSpacerTag(QModelIndex(), "{Country}");
-    tagModel->addNewTag(QModelIndex(), "New Tag");
+    tagModel->addSpacerTag(QModelIndex(), QStringLiteral("{Country}"));
+    tagModel->addNewTag(QModelIndex(), QStringLiteral("New Tag"));
 
     qCDebug(KIPIPLUGINS_LOG)<<"Added the spacers.";
  
@@ -286,3 +282,5 @@ void TestRGTagModel::testModelSpacerTags()
   */
 
 }
+
+QTEST_MAIN(TestRGTagModel)
