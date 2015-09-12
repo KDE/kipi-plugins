@@ -719,10 +719,12 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     {
         path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QStringLiteral("/") + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
 
-        if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        image.save(path, "JPEG", imageQuality);
+        if (rescale)
+        {
+            if(image.width() > maxDim || image.height() > maxDim)
+                image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            image.save(path, "JPEG", imageQuality);
+        }
 
         // Restore all metadata.
 
@@ -747,6 +749,16 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         qCDebug(KIPIPLUGINS_LOG) << "Resizing and saving to temp file: " << path;
     }
 
+    QFileInfo tempFileInfo(path);
+    
+    qCDebug(KIPIPLUGINS_LOG) << "QUrl path is " << QUrl::fromLocalFile(path) << "Image size after resizing (in bytes) is "<< tempFileInfo.size();
+    
+    if(tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
+    {
+        emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file sie."));
+        return false;
+    }
+    
     if (!form.addFile(QStringLiteral("photo"), path))
     {
         return false;

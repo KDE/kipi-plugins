@@ -692,7 +692,7 @@ void FlickrWindow::slotUser1()
         if (lvItem)
         {
             KPImageInfo info(lvItem->url());
-            qCDebug(KIPIPLUGINS_LOG) << "Adding images to the list";
+            qCDebug(KIPIPLUGINS_LOG) << "Adding images"<<lvItem->url()<<" to the list";
             FPhotoInfo temp;
 
             temp.title                 = info.title();
@@ -817,32 +817,23 @@ void FlickrWindow::slotAddPhotoNext()
     
     qCDebug(KIPIPLUGINS_LOG) << "Max allowed file size is : "<<((m_talker->getMaxAllowedFileSize()).toLongLong())<<"File Size is "<<info.size;
     
-    if(info.size > ((m_talker->getMaxAllowedFileSize()).toLongLong()))
-    {
-        slotAddPhotoFailed(QStringLiteral("File Size exceeds maximum allowed file sie."));
-        return;
-    }
-    else
-    {
-        qCDebug(KIPIPLUGINS_LOG) << "File size is within max allowed limit.";
-        bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
+    bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
                                   m_imageQualitySpinBox->value());
 
-        if (!res)
-        {
-            slotAddPhotoFailed(QStringLiteral(""));
-            return;
-        }
+    if (!res)
+    {
+        slotAddPhotoFailed(QStringLiteral(""));
+        return;
+    }
 
-        if (m_widget->progressBar()->isHidden())
-        {
-            setUiInProgressState(true);
-            m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
-            m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
-        }   
+    if (m_widget->progressBar()->isHidden())
+    {
+        setUiInProgressState(true);
+        m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
     }
 }
 
