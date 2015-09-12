@@ -32,6 +32,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QtCore/QCryptographicHash>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -102,19 +103,22 @@ void SmugTalker::login(const QString& email, const QString& password)
     emit signalLoginProgress(1, 4, i18n("Logging in to SmugMug service..."));
 
     QUrl url(m_apiURL);
+    QUrlQuery q;
 
     if (email.isEmpty()) 
     {
-        url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.login.anonymously"));
-        url.addQueryItem(QStringLiteral("APIKey"), m_apiKey);
+        q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.login.anonymously"));
+        q.addQueryItem(QStringLiteral("APIKey"), m_apiKey);
     }
     else
     {
-        url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.login.withPassword"));
-        url.addQueryItem(QStringLiteral("APIKey"), m_apiKey);
-        url.addQueryItem(QStringLiteral("EmailAddress"), email);
-        url.addQueryItem(QStringLiteral("Password"), password);
+        q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.login.withPassword"));
+        q.addQueryItem(QStringLiteral("APIKey"), m_apiKey);
+        q.addQueryItem(QStringLiteral("EmailAddress"), email);
+        q.addQueryItem(QStringLiteral("Password"), password);
     }
+    
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -145,8 +149,10 @@ void SmugTalker::logout()
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.logout"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.logout"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -176,12 +182,16 @@ void SmugTalker::listAlbums(const QString& nickName)
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albums.get"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    url.addQueryItem(QStringLiteral("Heavy"), QStringLiteral("1"));
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albums.get"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QStringLiteral("Heavy"), QStringLiteral("1"));
+    
     if (!nickName.isEmpty())
-        url.addQueryItem(QStringLiteral("NickName"), nickName);
+        q.addQueryItem(QStringLiteral("NickName"), nickName);
 
+    url.setQuery(q);
+    
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
     job->addMetaData(QStringLiteral("content-type"),
@@ -212,17 +222,20 @@ void SmugTalker::listPhotos(const qint64 albumID,
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.images.get"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    url.addQueryItem(QStringLiteral("AlbumID"), QString::number(albumID));
-    url.addQueryItem(QStringLiteral("AlbumKey"), albumKey);
-    url.addQueryItem(QStringLiteral("Heavy"), QStringLiteral("1"));
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.images.get"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QStringLiteral("AlbumID"), QString::number(albumID));
+    q.addQueryItem(QStringLiteral("AlbumKey"), albumKey);
+    q.addQueryItem(QStringLiteral("Heavy"), QStringLiteral("1"));
 
     if (!albumPassword.isEmpty())
-        url.addQueryItem(QStringLiteral("Password"), albumPassword);
+        q.addQueryItem(QStringLiteral("Password"), albumPassword);
 
     if (!sitePassword.isEmpty())
-        url.addQueryItem(QStringLiteral("SitePassword"), sitePassword);
+        q.addQueryItem(QStringLiteral("SitePassword"), sitePassword);
+    
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -251,8 +264,10 @@ void SmugTalker::listAlbumTmpl()
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albumtemplates.get"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albumtemplates.get"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -281,8 +296,10 @@ void SmugTalker::listCategories()
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.categories.get"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.categories.get"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -311,9 +328,11 @@ void SmugTalker::listSubCategories(qint64 categoryID)
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.subcategories.get"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    url.addQueryItem(QStringLiteral("CategoryID"), QString::number(categoryID));
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.subcategories.get"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QStringLiteral("CategoryID"), QString::number(categoryID));
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -342,33 +361,36 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
     emit signalBusy(true);
 
     QUrl url(m_apiURL);
-    url.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albums.create"));
-    url.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
-    url.addQueryItem(QStringLiteral("Title"), album.title);
-    url.addQueryItem(QStringLiteral("CategoryID"), QString::number(album.categoryID));
+    QUrlQuery q;
+    q.addQueryItem(QStringLiteral("method"), QStringLiteral("smugmug.albums.create"));
+    q.addQueryItem(QStringLiteral("SessionID"), m_sessionID);
+    q.addQueryItem(QStringLiteral("Title"), album.title);
+    q.addQueryItem(QStringLiteral("CategoryID"), QString::number(album.categoryID));
 
     if (album.subCategoryID > 0)
-        url.addQueryItem(QStringLiteral("SubCategoryID"), QString::number(album.subCategoryID));
+        q.addQueryItem(QStringLiteral("SubCategoryID"), QString::number(album.subCategoryID));
 
     if (!album.description.isEmpty())
-        url.addQueryItem(QStringLiteral("Description"), album.description);
+        q.addQueryItem(QStringLiteral("Description"), album.description);
 
     if (album.tmplID > 0)
     {
         // template will also define privacy settings
-        url.addQueryItem(QStringLiteral("AlbumTemplateID"), QString::number(album.tmplID));
+        q.addQueryItem(QStringLiteral("AlbumTemplateID"), QString::number(album.tmplID));
     }
     else
     {
         if (!album.password.isEmpty())
-            url.addQueryItem(QStringLiteral("Password"), album.password);
+            q.addQueryItem(QStringLiteral("Password"), album.password);
         if (!album.passwordHint.isEmpty())
-            url.addQueryItem(QStringLiteral("PasswordHint"), album.passwordHint);
+            q.addQueryItem(QStringLiteral("PasswordHint"), album.passwordHint);
         if (album.isPublic)
-            url.addQueryItem(QStringLiteral("Public"), QStringLiteral("1"));
+            q.addQueryItem(QStringLiteral("Public"), QStringLiteral("1"));
         else
-            url.addQueryItem(QStringLiteral("Public"), QStringLiteral("0"));
+            q.addQueryItem(QStringLiteral("Public"), QStringLiteral("0"));
     }
+    
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::Reload, KIO::HideProgressInfo);
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
@@ -415,7 +437,7 @@ bool SmugTalker::addPhoto(const QString& imgPath, qint64 albumID,
     MPForm form;
 
     form.addPair(QStringLiteral("ByteCount"), QString::number(imgSize));
-    form.addPair(QStringLiteral("MD5Sum"), QString::fromAscii(
+    form.addPair(QStringLiteral("MD5Sum"), QString::fromLatin1(
         QCryptographicHash::hash(imgData, QCryptographicHash::Md5).toHex()));
     form.addPair(QStringLiteral("AlbumID"), QString::number(albumID));
     form.addPair(QStringLiteral("AlbumKey"), albumKey);
@@ -461,7 +483,11 @@ void SmugTalker::getPhoto(const QString& imgPath)
     emit signalBusy(true);
 
     KIO::TransferJob* const job = KIO::get(QUrl::fromLocalFile(imgPath), KIO::Reload, KIO::HideProgressInfo);
+    QString customHdr;
+    customHdr += QStringLiteral("X-Smug-SessionID: ") + m_sessionID + QStringLiteral("\r\n");
+    customHdr += QStringLiteral("X-Smug-Version: ") + m_apiVersion + QStringLiteral("\r\n");
     job->addMetaData(QStringLiteral("UserAgent"), m_userAgent);
+    job->addMetaData(QStringLiteral("customHTTPHeader"), customHdr);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
