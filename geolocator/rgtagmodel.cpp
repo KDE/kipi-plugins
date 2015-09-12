@@ -32,7 +32,6 @@
 
 // KDE includes
 
-#include "kdebug.h"
 #include <klocalizedstring.h>
 
 namespace KIPIGeolocatorPlugin

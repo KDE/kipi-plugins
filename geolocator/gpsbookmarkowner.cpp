@@ -34,7 +34,6 @@
 #include <kactioncollection.h>
 #include <kbookmarkmenu.h>
 #include <kbookmarkmanager.h>
-#include <kstandarddirs.h>
 #include <klocalizedstring.h>
 
 // local includes

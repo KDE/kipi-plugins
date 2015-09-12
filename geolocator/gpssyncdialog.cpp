@@ -53,25 +53,22 @@
 #include <QTimer>
 #include <QToolButton>
 #include <QTreeView>
+#include <QMenu>
 #include <QUndoView>
-
-// KDE includes
-
 #include <QAction>
 #include <QApplication>
 #include <QComboBox>
+
+// KDE includes
+
 #include <kconfig.h>
-#include "kipiplugins_debug.h"
-#include <kglobalsettings.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
 #include <ktoolinvocation.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // Libkgeomap includes
 
@@ -92,6 +89,7 @@
 #include "kipiimagelist.h"
 #include "gpsimagelistdragdrophandler.h"
 #include "gpscorrelatorwidget.h"
+#include "kipiplugins_debug.h"
 #include "gpsundocommand.h"
 #include "gpsreversegeocodingwidget.h"
 #include "gpsbookmarkowner.h"
@@ -321,7 +319,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->progressCancelButton = new QPushButton(hboxBottom);
     d->progressCancelButton->setVisible(false);
     d->progressCancelButton->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
-    d->progressCancelButton->setIcon(SmallIcon(QStringLiteral("dialog-cancel")));
+    d->progressCancelButton->setIcon(QIcon::fromTheme(QStringLiteral("dialog-cancel")));
 
     connect(d->progressCancelButton, SIGNAL(clicked()),
             this, SLOT(slotProgressCancelButtonClicked()));
