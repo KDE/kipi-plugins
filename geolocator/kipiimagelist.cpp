@@ -209,7 +209,8 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
     {
         // TODO: paint some default logo
         // TODO: cache this logo
-        itemPixmap = SmallIcon("image-x-generic", d->thumbnailSize, KIconLoader::DisabledState);
+        itemPixmap = SmallIcon(QStringLiteral("image-x-generic"),
+                               d->thumbnailSize, KIconLoader::DisabledState);
     }
 
     const QSize availableSize = option.rect.size();

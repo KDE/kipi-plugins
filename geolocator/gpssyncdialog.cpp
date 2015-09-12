@@ -62,24 +62,15 @@
 #include <QComboBox>
 #include <kconfig.h>
 #include "kipiplugins_debug.h"
-#include <kdialogbuttonbox.h>
-#include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
-#include <knuminput.h>
-#include <kpushbutton.h>
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
-#include <kstandarddirs.h>
-#include <ktabbar.h>
-#include <ktabwidget.h>
 #include <ktoolinvocation.h>
-#include <kundostack.h>
-#include <kvbox.h>
 #include <KWindowConfig>
 
 // Libkgeomap includes
@@ -87,6 +78,8 @@
 #include <KGeoMap/KGeoMap_Widget>
 #include <KGeoMap/ItemMarkerTiler>
 #include <KGeoMap/Tracks>
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -188,7 +181,6 @@ public:
         fileIOCountTotal         = 0;
         fileIOCloseAfterSaving   = false;
         buttonBox                = 0;
-        tabWidget                = 0;
         VSplitter                = 0;
         HSplitter                = 0;
         treeView                 = 0;
@@ -235,14 +227,13 @@ public:
 
     // UI
     QDialogButtonBox*                        buttonBox;
-    KTabWidget*                              tabWidget;
     QSplitter*                               VSplitter;
     QSplitter*                               HSplitter;
     KipiImageList*                           treeView;
     QStackedWidget*                          stackedWidget;
     QTabBar*                                 tabBar;
     int                                      splitterSize;
-    KUndoStack*                              undoStack;
+    QUndoStack*                              undoStack;
     QUndoView*                               undoView;
 
     // UI: progress
@@ -290,7 +281,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     new ModelTest(d->imageModel, this);
 #endif /* GPSSYNC_MODELTEST */
 
-    d->undoStack     = new KUndoStack(this);
+    d->undoStack     = new QUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
     d->stackedWidget = new QStackedWidget();
     d->searchWidget  = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
@@ -305,20 +296,20 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->kgeomapMarkerModel = new ItemMarkerTiler(d->mapModelHelper, this);
 
     d->actionBookmarkVisibility = new QAction(this);
-    d->actionBookmarkVisibility->setIcon(QIcon::fromTheme("user-trash"));
+    d->actionBookmarkVisibility->setIcon(QIcon::fromTheme(QStringLiteral("user-trash")));
     d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
 
     QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     setLayout(mainLayout);
 
-    KHBox* const hboxMain   = new KHBox(this);
+    KDcrawIface::RHBox* const hboxMain = new KDcrawIface::RHBox(this);
     mainLayout->addWidget(hboxMain);
 
     d->HSplitter            = new QSplitter(Qt::Horizontal, hboxMain);
     d->HSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    KHBox* const hboxBottom = new KHBox(this);
+    KDcrawIface::RHBox* const hboxBottom = new KDcrawIface::RHBox(this);
     mainLayout->addWidget(hboxBottom);
 
     d->progressBar          = new KPProgressWidget(hboxBottom);
@@ -330,7 +321,7 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->progressCancelButton = new QPushButton(hboxBottom);
     d->progressCancelButton->setVisible(false);
     d->progressCancelButton->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
-    d->progressCancelButton->setIcon(SmallIcon("dialog-cancel"));
+    d->progressCancelButton->setIcon(SmallIcon(QStringLiteral("dialog-cancel")));
 
     connect(d->progressCancelButton, SIGNAL(clicked()),
             this, SLOT(slotProgressCancelButtonClicked()));
@@ -427,12 +418,12 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
     d->HSplitter->addWidget(d->stackedWidget);
     d->splitterSize        = 0;
 
-    KVBox* const vboxTabBar = new KVBox(hboxMain);
+    KDcrawIface::RVBox* const vboxTabBar = new KDcrawIface::RVBox(hboxMain);
     vboxTabBar->layout()->setSpacing(0);
     vboxTabBar->layout()->setMargin(0);
 
-    d->tabBar = new KTabBar(vboxTabBar);
-    d->tabBar->setShape(KTabBar::RoundedEast);
+    d->tabBar = new QTabBar(vboxTabBar);
+    d->tabBar->setShape(QTabBar::RoundedEast);
 
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
 
@@ -468,21 +459,21 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 
     about->addAuthor(ki18n("Michael G. Hansen").toString(),
                      ki18n("Developer").toString(),
-                           "mike at mghansen dot de");
+                           QStringLiteral("mike at mghansen dot de"));
 
     about->addAuthor(ki18n("Gabriel Voicu").toString(),
                      ki18n("Developer").toString(),
-                           "ping dot gabi at gmail dot com");
+                           QStringLiteral("ping dot gabi at gmail dot com"));
 
     about->addAuthor(ki18n("Gilles Caulier").toString(),
                      ki18n("Developer").toString(),
-                           "caulier dot gilles at gmail dot com");
+                           QStringLiteral("caulier dot gilles at gmail dot com"));
 
     about->addCredit(ki18n("Justus Schwartz").toString(),
                      ki18n("Patch for displaying tracks on the map.").toString(),
-                           "justus at gmx dot li");
+                           QStringLiteral("justus at gmx dot li"));
 
-    about->setHandbookEntry("gpssync");
+    about->setHandbookEntry(QStringLiteral("gpssync"));
     setAboutData(about, help);
 
     // ---------------------------------------------------------------
@@ -679,8 +670,8 @@ void GPSSyncDialog::slotFileMetadataLoaded(int beginIndex, int endIndex)
 
 void GPSSyncDialog::readSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group("GPS Sync 2 Settings");
 
     // --------------------------
 
@@ -724,7 +715,7 @@ void GPSSyncDialog::readSettings()
 
     if (group.hasKey("SplitterState V1"))
     {
-        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState V1"), QByteArray()));
+        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry("SplitterState V1", QByteArray()));
 
         if (!splitterState.isEmpty())
         {
@@ -734,7 +725,7 @@ void GPSSyncDialog::readSettings()
 
     if (group.hasKey("SplitterState H1"))
     {
-        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState H1"), QByteArray()));
+        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry("SplitterState H1", QByteArray()));
 
         if (!splitterState.isEmpty())
         {
@@ -747,7 +738,7 @@ void GPSSyncDialog::readSettings()
     // ----------------------------------
 
     d->mapLayout = MapLayout(group.readEntry("Map Layout", QVariant::fromValue(int(MapLayoutOne))).value<int>());
-    d->setupGlobalObject->writeEntry("Map Layout", QVariant::fromValue(d->mapLayout));
+    d->setupGlobalObject->writeEntry(QStringLiteral("Map Layout"), QVariant::fromValue(d->mapLayout));
     adjustMapLayout(false);
 
     if (d->mapWidget2)
@@ -761,8 +752,8 @@ void GPSSyncDialog::readSettings()
 
 void GPSSyncDialog::saveSettings()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+    KConfig config(QStringLiteral("kipirc"));
+    KConfigGroup group = config.group("GPS Sync 2 Settings");
 
     // --------------------------
 
@@ -795,8 +786,8 @@ void GPSSyncDialog::saveSettings()
     group.writeEntry("Current Tab",               d->tabBar->currentIndex());
     group.writeEntry("Show oldest images first",  d->sortActionOldestFirst->isChecked());
     group.writeEntry("Bookmarks visible",         d->actionBookmarkVisibility->isChecked());
-    group.writeEntry(QString("SplitterState V1"), d->VSplitter->saveState().toBase64());
-    group.writeEntry(QString("SplitterState H1"), d->HSplitter->saveState().toBase64());
+    group.writeEntry("SplitterState V1",          d->VSplitter->saveState().toBase64());
+    group.writeEntry("SplitterState H1",          d->HSplitter->saveState().toBase64());
     group.writeEntry("Splitter H1 CollapsedSize", d->splitterSize);
     group.writeEntry("Map Layout",                QVariant::fromValue(int(d->mapLayout)));
 
@@ -1142,7 +1133,9 @@ void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
             for (int i=0; i<errorList.count(); ++i)
             {
                 // TODO: how to do kurl->qstring?
-                errorStrings << QString("%1: %2").arg(errorList.at(i).first.toLocalFile()).arg(errorList.at(i).second);
+                errorStrings << QStringLiteral("%1: %2")
+                    .arg(errorList.at(i).first.toLocalFile())
+                    .arg(errorList.at(i).second);
             }
 
             KMessageBox::errorList(this, i18n("Failed to save some information:"), errorStrings, i18n("Error"));
@@ -1174,7 +1167,7 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressBar->setValue(0);
     d->progressBar->setVisible(true);
     d->progressBar->progressScheduled(i18n("GPS sync"), true, true);
-    d->progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    d->progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
     d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 
@@ -1216,7 +1209,7 @@ void GPSSyncKGeoMapModelHelper::addUngroupedModelHelper(ModelHelper* const newMo
 
 void GPSSyncDialog::slotConfigureClicked()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     QScopedPointer<Setup> setup(new Setup(this));
 
     setup->exec();
@@ -1224,7 +1217,7 @@ void GPSSyncDialog::slotConfigureClicked()
 
 void GPSSyncDialog::slotSetupChanged()
 {
-    d->mapLayout = d->setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
+    d->mapLayout = d->setupGlobalObject->readEntry(QStringLiteral("Map Layout")).value<MapLayout>();
     adjustMapLayout(true);
 }
 
@@ -1275,8 +1268,8 @@ void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
 
             if (syncSettings)
             {
-                KConfig config("kipirc");
-                KConfigGroup group                = config.group(QString("GPS Sync 2 Settings"));
+                KConfig config(QStringLiteral("kipirc"));
+                KConfigGroup group                = config.group("GPS Sync 2 Settings");
                 const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
                 d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
                 d->mapWidget2->setActive(true);

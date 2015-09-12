@@ -37,21 +37,21 @@
 #include <QMenu>
 #include <QAction>
 #include <QComboBox>
+#include <QtCore/QStandardPaths>
 
 // KDE includes
 
 #include <kconfiggroup.h>
-#include <khbox.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <kvbox.h>
 
 // Libkgeomap includes
 
 #include <KGeoMap/KGeoMap_Widget>
+
+#include <KDCRAW/RWidgetUtils>
 
 // local includes
 
@@ -105,8 +105,8 @@ public:
         actionMoveImagesToThisResult                  = 0;
         actionRemovedSelectedSearchResultsFromList    = 0;
         searchInProgress                              = false;
-        actionToggleAllResultsVisibilityIconUnchecked = QIcon::fromTheme("layer-visible-off");
-        actionToggleAllResultsVisibilityIconChecked   = QIcon::fromTheme("layer-visible-on");
+        actionToggleAllResultsVisibilityIconUnchecked = QIcon::fromTheme(QStringLiteral("layer-visible-off"));
+        actionToggleAllResultsVisibilityIconChecked   = QIcon::fromTheme(QStringLiteral("layer-visible-on"));
     }
 
     // Map
@@ -160,23 +160,23 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->mainVBox = new QVBoxLayout(this);
     setLayout(d->mainVBox);
 
-    KHBox* const topHBox  = new KHBox(this);
+    KDcrawIface::RHBox* const topHBox  = new KDcrawIface::RHBox(this);
     d->mainVBox->addWidget(topHBox);
     d->searchTermLineEdit = new KLineEdit(topHBox);
     d->searchTermLineEdit->setClearButtonShown(true);
     d->searchButton       = new QPushButton(i18nc("Start the search", "Search"), topHBox);
 
-    KHBox* const actionHBox = new KHBox(this);
+    KDcrawIface::RHBox* const actionHBox = new KDcrawIface::RHBox(this);
     d->mainVBox->addWidget(actionHBox);
 
     d->actionClearResultsList = new QAction(this);
-    d->actionClearResultsList->setIcon(SmallIcon("edit-clear-list"));
+    d->actionClearResultsList->setIcon(SmallIcon(QStringLiteral("edit-clear-list")));
     d->actionClearResultsList->setToolTip(i18n("Clear the search results."));
     QToolButton* const tbClearResultsList = new QToolButton(actionHBox);
     tbClearResultsList->setDefaultAction(d->actionClearResultsList);
 
     d->actionKeepOldResults = new QAction(this);
-    d->actionKeepOldResults->setIcon(SmallIcon("flag"));
+    d->actionKeepOldResults->setIcon(SmallIcon(QStringLiteral("flag")));
     d->actionKeepOldResults->setCheckable(true);
     d->actionKeepOldResults->setChecked(false);
     d->actionKeepOldResults->setToolTip(i18n("Keep the results of old searches when doing a new search."));
@@ -191,12 +191,12 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
 
     d->actionCopyCoordinates = new QAction(i18n("Copy coordinates"), this);
-    d->actionCopyCoordinates->setIcon(SmallIcon("edit-copy"));
+    d->actionCopyCoordinates->setIcon(SmallIcon(QStringLiteral("edit-copy")));
 
     d->actionMoveImagesToThisResult = new QAction(i18n("Move selected images to this position"), this);
 
     d->actionRemovedSelectedSearchResultsFromList = new QAction(i18n("Remove from results list"), this);
-    d->actionRemovedSelectedSearchResultsFromList->setIcon(SmallIcon("list-remove"));
+    d->actionRemovedSelectedSearchResultsFromList->setIcon(SmallIcon(QStringLiteral("list-remove")));
 
     d->backendSelectionBox                            = new QComboBox(actionHBox);
     d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));
@@ -315,9 +315,11 @@ public:
 
     Private()
     {
-        markerNormalUrl   = QUrl::fromLocalFile(KStandardDirs::locate("data", "gpssync/searchmarker-normal.png"));
+        markerNormalUrl   = QUrl::fromLocalFile(QStandardPaths::locate(
+            QStandardPaths::GenericDataLocation, QStringLiteral("gpssync/searchmarker-normal.png")));
         markerNormal      = QPixmap(markerNormalUrl.toLocalFile());
-        markerSelectedUrl = QUrl::fromLocalFile(KStandardDirs::locate("data", "gpssync/searchmarker-selected.png"));
+        markerSelectedUrl = QUrl::fromLocalFile(QStandardPaths::locate(
+            QStandardPaths::GenericDataLocation, QStringLiteral("gpssync/searchmarker-selected.png")));
         markerSelected    = QPixmap(markerSelectedUrl.toLocalFile());
         selectionModel    = 0;
     }
@@ -442,7 +444,7 @@ QVariant SearchResultModel::headerData(int section, Qt::Orientation orientation,
         return false;
     }
 
-    return QVariant("Name");
+    return QVariant(QStringLiteral("Name"));
 }
 
 Qt::ItemFlags SearchResultModel::flags(const QModelIndex& index) const

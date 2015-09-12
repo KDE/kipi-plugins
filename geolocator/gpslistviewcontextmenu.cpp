@@ -111,9 +111,9 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList* const imagesList, 
     d->imagesList                   = imagesList;
 
     d->actionCopy                   = new QAction(i18n("Copy coordinates"),                this);
-    d->actionCopy->setIcon(SmallIcon("edit-copy"));
+    d->actionCopy->setIcon(SmallIcon(QStringLiteral("edit-copy")));
     d->actionPaste                  = new QAction(i18n("Paste coordinates"),               this);
-    d->actionPaste->setIcon(SmallIcon("edit-paste"));
+    d->actionPaste->setIcon(SmallIcon(QStringLiteral("edit-paste")));
     d->actionRemoveCoordinates      = new QAction(i18n("Remove coordinates"),              this);
     d->actionRemoveAltitude         = new QAction(i18n("Remove altitude"),                 this);
     d->actionRemoveUncertainty      = new QAction(i18n("Remove uncertainty"),              this);
@@ -221,7 +221,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         {
             QClipboard * const clipboard = QApplication::clipboard();
             const QMimeData * mimedata   = clipboard->mimeData();
-            pasteAvailable               = mimedata->hasFormat("application/gpx+xml") || mimedata->hasText();
+            pasteAvailable               = mimedata->hasFormat(QStringLiteral("application/gpx+xml")) || mimedata->hasText();
         }
 
         d->actionPaste->setEnabled(pasteAvailable);
@@ -317,14 +317,14 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
     GPSDataContainer gpsData;
     bool foundData       = false;
-    if (mimedata->hasFormat("application/gpx+xml"))
+    if (mimedata->hasFormat(QStringLiteral("application/gpx+xml")))
     {
-        const QByteArray data = mimedata->data("application/gpx+xml");
+        const QByteArray data = mimedata->data(QStringLiteral("application/gpx+xml"));
         bool xmlOkay          = true;
         bool foundDoubleData = false;
 
         // code adapted from gpsdataparser.cpp
-        QDomDocument gpxDoc("gpx");
+        QDomDocument gpxDoc(QStringLiteral("gpx"));
 
         if (!gpxDoc.setContent(data))
         {
@@ -335,7 +335,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         {
             const QDomElement gpxDocElem = gpxDoc.documentElement();
 
-            if (gpxDocElem.tagName()!="gpx")
+            if (gpxDocElem.tagName() != QStringLiteral("gpx"))
             {
                 xmlOkay = false;
             }
@@ -351,7 +351,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                         continue;
                     }
 
-                    if (wptElem.tagName() != "wpt")
+                    if (wptElem.tagName() != QStringLiteral("wpt"))
                     {
                         continue;
                     }
@@ -362,8 +362,8 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     bool haveAltitude     = false;
 
                     // Get GPS position. If not available continue to next point.
-                    const QString lat = wptElem.attribute("lat");
-                    const QString lon = wptElem.attribute("lon");
+                    const QString lat = wptElem.attribute(QStringLiteral("lat"));
+                    const QString lon = wptElem.attribute(QStringLiteral("lon"));
 
                     if (lat.isEmpty() || lon.isEmpty())
                     {
@@ -389,7 +389,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                             continue;
                         }
 
-                        if (wptMetaElem.tagName() == QString("ele"))
+                        if (wptMetaElem.tagName() == QStringLiteral("ele"))
                         {
                             // Get GPS point altitude. If not available continue to next point.
                             QString ele = wptMetaElem.text();
@@ -435,7 +435,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         else
         {
             /// @todo this is legacy code from before we used geo-url
-            const QStringList parts = textdata.split(',');
+            const QStringList parts = textdata.split(QLatin1Char(','));
 
             if ((parts.size()==3)||(parts.size()==2))
             {
@@ -684,7 +684,7 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
         return;
     }
 
-    d->altitudeLookup = KGeoMap::LookupFactory::getAltitudeLookup("geonames", this);
+    d->altitudeLookup = KGeoMap::LookupFactory::getAltitudeLookup(QStringLiteral("geonames"), this);
 
     connect(d->altitudeLookup, SIGNAL(signalRequestsReady(QList<int>)),
             this, SLOT(slotAltitudeLookupReady(QList<int>)));
@@ -692,7 +692,7 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
     connect(d->altitudeLookup, SIGNAL(signalDone()),
             this, SLOT(slotAltitudeLookupDone()));
 
-    emit(signalSetUIEnabled(false, this, SLOT(slotAltitudeLookupCancel())));
+    emit(signalSetUIEnabled(false, this, QLatin1String(SLOT(slotAltitudeLookupCancel()))));
     emit(signalProgressSetup(altitudeQueries.count(), i18n("Looking up altitudes")));
 
     d->altitudeUndoCommand    = new GPSUndoCommand();

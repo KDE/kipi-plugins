@@ -57,6 +57,8 @@ target_link_libraries(kipiplugin_geolocator
                       KF5::KExiv2
                       KF5::KGeoMap
                       KF5::ItemModels
+                      KF5::IconThemes
+                      KF5::GuiAddons
                       KF5kipiplugins
                      )
 

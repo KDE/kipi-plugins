@@ -46,14 +46,12 @@
 #include <QComboBox>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kinputdialog.h>
 #include <klocalizedstring.h>
 #include <QMenu>
 #include <kmessagebox.h>
 #include <kseparator.h>
-#include <kstandarddirs.h>
 #include <QUrl>
-#include <kvbox.h>
+#include <QtWidgets/QInputDialog>
 
 // Libkgeomap includes
 
@@ -248,39 +246,39 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
 
     d->actionAddCountry          = new QAction(i18n("Add country tag"), this);
-    d->actionAddCountry->setData("{Country}");
+    d->actionAddCountry->setData(QStringLiteral("{Country}"));
     d->actionAddState            = new QAction(i18n("Add state tag"), this);
-    d->actionAddState->setData("{State}");
+    d->actionAddState->setData(QStringLiteral("{State}"));
     d->actionAddStateDistrict    = new QAction(i18n("Add state district tag"), this);
-    d->actionAddStateDistrict->setData("{State district}");
+    d->actionAddStateDistrict->setData(QStringLiteral("{State district}"));
     d->actionAddCounty           = new QAction(i18n("Add county tag"), this);
-    d->actionAddCounty->setData("{County}");
+    d->actionAddCounty->setData(QStringLiteral("{County}"));
     d->actionAddCity             = new QAction(i18n("Add city tag"), this);
-    d->actionAddCity->setData("{City}");
+    d->actionAddCity->setData(QStringLiteral("{City}"));
     d->actionAddCityDistrict     = new QAction(i18n("Add city district tag"), this);
-    d->actionAddCityDistrict->setData("{City district}");
+    d->actionAddCityDistrict->setData(QStringLiteral("{City district}"));
     d->actionAddSuburb           = new QAction(i18n("Add suburb tag"), this);
-    d->actionAddSuburb->setData("{Suburb}");
+    d->actionAddSuburb->setData(QStringLiteral("{Suburb}"));
     d->actionAddTown             = new QAction(i18n("Add town tag"), this);
-    d->actionAddTown->setData("{Town}");
+    d->actionAddTown->setData(QStringLiteral("{Town}"));
     d->actionAddVillage          = new QAction(i18n("Add village tag"), this);
-    d->actionAddVillage->setData("{Village}");
+    d->actionAddVillage->setData(QStringLiteral("{Village}"));
     d->actionAddHamlet           = new QAction(i18n("Add hamlet tag"), this);
-    d->actionAddHamlet->setData("{Hamlet}");
+    d->actionAddHamlet->setData(QStringLiteral("{Hamlet}"));
     d->actionAddStreet           = new QAction(i18n("Add street"), this);
-    d->actionAddStreet->setData("{Street}");
+    d->actionAddStreet->setData(QStringLiteral("{Street}"));
     d->actionAddHouseNumber      = new QAction(i18n("Add house number tag"), this);
-    d->actionAddHouseNumber->setData("{House number}");
+    d->actionAddHouseNumber->setData(QStringLiteral("{House number}"));
     d->actionAddPlace            = new QAction(i18n("Add place"), this);
-    d->actionAddPlace->setData("{Place}");
+    d->actionAddPlace->setData(QStringLiteral("{Place}"));
     d->actionAddLAU2             = new QAction(i18n("Add Local Administrative Area 2"), this);
-    d->actionAddLAU2->setData("{LAU2}");
+    d->actionAddLAU2->setData(QStringLiteral("{LAU2}"));
     d->actionAddLAU1             = new QAction(i18n("Add Local Administrative Area 1"), this);
-    d->actionAddLAU1->setData("{LAU1}");
+    d->actionAddLAU1->setData(QStringLiteral("{LAU1}"));
     d->actionAddCustomizedSpacer = new QAction(i18n("Add new tag"), this);
     d->actionRemoveTag           = new QAction(i18n("Remove selected tag"), this);
     d->actionRemoveAllSpacers    = new QAction(i18n("Remove all control tags below this tag"), this);
-    d->actionRemoveAllSpacers->setData("Remove all spacers");
+    d->actionRemoveAllSpacers->setData(QStringLiteral("Remove all spacers"));
     d->actionAddAllAddressElementsToTag = new QAction(i18n("Add all address elements"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
@@ -289,50 +287,50 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
     d->languageEdit  = new QComboBox(d->UGridContainer);
 
     /// @todo Is there a ready-made widget for this?
-    d->languageEdit->addItem(i18n("English"),       "en");
-    d->languageEdit->addItem(i18n("Arabic"),        "ar");
-    d->languageEdit->addItem(i18n("Assamese"),      "as");
-    d->languageEdit->addItem(i18n("Byelorussian"),  "be");
-    d->languageEdit->addItem(i18n("Bulgarian"),     "bg");
-    d->languageEdit->addItem(i18n("Bengali"),       "bn");
-    d->languageEdit->addItem(i18n("Chinese"),       "zh");
-    d->languageEdit->addItem(i18n("Czech"),         "cs");
-    d->languageEdit->addItem(i18n("Croatian"),      "hr");
-    d->languageEdit->addItem(i18n("Dutch"),         "nl");
-    d->languageEdit->addItem(i18n("German"),        "de");
-    d->languageEdit->addItem(i18n("Greek"),         "el");
-    d->languageEdit->addItem(i18n("Estonian"),      "et");
-    d->languageEdit->addItem(i18n("Finnish"),       "fi");
-    d->languageEdit->addItem(i18n("French"),        "fr");
-    d->languageEdit->addItem(i18n("Georgian"),      "ka");
-    d->languageEdit->addItem(i18n("Hebrew"),        "iw");
-    d->languageEdit->addItem(i18n("Hindi"),         "hi");
-    d->languageEdit->addItem(i18n("Hungarian"),     "hu");
-    d->languageEdit->addItem(i18n("Indonesian"),    "in");
-    d->languageEdit->addItem(i18n("Icelandic"),     "is");
-    d->languageEdit->addItem(i18n("Italian"),       "it");
-    d->languageEdit->addItem(i18n("Japanese"),      "ja");
-    d->languageEdit->addItem(i18n("Korean"),        "ko");
-    d->languageEdit->addItem(i18n("Lithuanian"),    "lt");
-    d->languageEdit->addItem(i18n("Macedonian"),    "mk");
-    d->languageEdit->addItem(i18n("Mongolian"),     "mn");
-    d->languageEdit->addItem(i18n("Moldavian"),     "mo");
-    d->languageEdit->addItem(i18n("Nepali"),        "ne");
-    d->languageEdit->addItem(i18n("Polish"),        "pl");
-    d->languageEdit->addItem(i18n("Portuguese"),    "pt");
-    d->languageEdit->addItem(i18n("Romanian"),      "ro");
-    d->languageEdit->addItem(i18n("Russian"),       "ru");
-    d->languageEdit->addItem(i18n("Slovak"),        "sk");
-    d->languageEdit->addItem(i18n("Slovenian"),     "sl");
-    d->languageEdit->addItem(i18n("Samoan"),        "sm");
-    d->languageEdit->addItem(i18n("Serbian"),       "sr");
-    d->languageEdit->addItem(i18n("Sudanese"),      "su");
-    d->languageEdit->addItem(i18n("Spanish"),       "es");
-    d->languageEdit->addItem(i18n("Swedish"),       "sv");
-    d->languageEdit->addItem(i18n("Thai"),          "th");
-    d->languageEdit->addItem(i18n("Turkish"),       "tr");
-    d->languageEdit->addItem(i18n("Ukrainian"),     "uk");
-    d->languageEdit->addItem(i18n("Vietnamese"),    "vi");
+    d->languageEdit->addItem(i18n("English"),       QStringLiteral("en"));
+    d->languageEdit->addItem(i18n("Arabic"),        QStringLiteral("ar"));
+    d->languageEdit->addItem(i18n("Assamese"),      QStringLiteral("as"));
+    d->languageEdit->addItem(i18n("Byelorussian"),  QStringLiteral("be"));
+    d->languageEdit->addItem(i18n("Bulgarian"),     QStringLiteral("bg"));
+    d->languageEdit->addItem(i18n("Bengali"),       QStringLiteral("bn"));
+    d->languageEdit->addItem(i18n("Chinese"),       QStringLiteral("zh"));
+    d->languageEdit->addItem(i18n("Czech"),         QStringLiteral("cs"));
+    d->languageEdit->addItem(i18n("Croatian"),      QStringLiteral("hr"));
+    d->languageEdit->addItem(i18n("Dutch"),         QStringLiteral("nl"));
+    d->languageEdit->addItem(i18n("German"),        QStringLiteral("de"));
+    d->languageEdit->addItem(i18n("Greek"),         QStringLiteral("el"));
+    d->languageEdit->addItem(i18n("Estonian"),      QStringLiteral("et"));
+    d->languageEdit->addItem(i18n("Finnish"),       QStringLiteral("fi"));
+    d->languageEdit->addItem(i18n("French"),        QStringLiteral("fr"));
+    d->languageEdit->addItem(i18n("Georgian"),      QStringLiteral("ka"));
+    d->languageEdit->addItem(i18n("Hebrew"),        QStringLiteral("iw"));
+    d->languageEdit->addItem(i18n("Hindi"),         QStringLiteral("hi"));
+    d->languageEdit->addItem(i18n("Hungarian"),     QStringLiteral("hu"));
+    d->languageEdit->addItem(i18n("Indonesian"),    QStringLiteral("in"));
+    d->languageEdit->addItem(i18n("Icelandic"),     QStringLiteral("is"));
+    d->languageEdit->addItem(i18n("Italian"),       QStringLiteral("it"));
+    d->languageEdit->addItem(i18n("Japanese"),      QStringLiteral("ja"));
+    d->languageEdit->addItem(i18n("Korean"),        QStringLiteral("ko"));
+    d->languageEdit->addItem(i18n("Lithuanian"),    QStringLiteral("lt"));
+    d->languageEdit->addItem(i18n("Macedonian"),    QStringLiteral("mk"));
+    d->languageEdit->addItem(i18n("Mongolian"),     QStringLiteral("mn"));
+    d->languageEdit->addItem(i18n("Moldavian"),     QStringLiteral("mo"));
+    d->languageEdit->addItem(i18n("Nepali"),        QStringLiteral("ne"));
+    d->languageEdit->addItem(i18n("Polish"),        QStringLiteral("pl"));
+    d->languageEdit->addItem(i18n("Portuguese"),    QStringLiteral("pt"));
+    d->languageEdit->addItem(i18n("Romanian"),      QStringLiteral("ro"));
+    d->languageEdit->addItem(i18n("Russian"),       QStringLiteral("ru"));
+    d->languageEdit->addItem(i18n("Slovak"),        QStringLiteral("sk"));
+    d->languageEdit->addItem(i18n("Slovenian"),     QStringLiteral("sl"));
+    d->languageEdit->addItem(i18n("Samoan"),        QStringLiteral("sm"));
+    d->languageEdit->addItem(i18n("Serbian"),       QStringLiteral("sr"));
+    d->languageEdit->addItem(i18n("Sudanese"),      QStringLiteral("su"));
+    d->languageEdit->addItem(i18n("Spanish"),       QStringLiteral("es"));
+    d->languageEdit->addItem(i18n("Swedish"),       QStringLiteral("sv"));
+    d->languageEdit->addItem(i18n("Thai"),          QStringLiteral("th"));
+    d->languageEdit->addItem(i18n("Turkish"),       QStringLiteral("tr"));
+    d->languageEdit->addItem(i18n("Ukrainian"),     QStringLiteral("uk"));
+    d->languageEdit->addItem(i18n("Vietnamese"),    QStringLiteral("vi"));
 
     d->serviceLabel    = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new QComboBox(d->UGridContainer);
@@ -523,7 +521,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         d->receivedRGCount  = 0;
         d->requestedRGCount = photoList.count();
 
-        emit(signalSetUIEnabled(false, this, SLOT(slotRGCanceled())));
+        emit(signalSetUIEnabled(false, this, QString::fromUtf8(SLOT(slotRGCanceled()))));
         emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
 
         d->currentBackend->callRGBackend(photoList, wantedLanguage);
@@ -577,17 +575,17 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
         {
             QString addressElementsWantedFormat;
 
-            if (d->currentBackend->backendName() == QString("Geonames"))
+            if (d->currentBackend->backendName() == QStringLiteral("Geonames"))
             {
-                addressElementsWantedFormat.append("/{Country}/{Place}");
+                addressElementsWantedFormat.append(QStringLiteral("/{Country}/{Place}"));
             }
-            else if (d->currentBackend->backendName() == QString("GeonamesUS"))
+            else if (d->currentBackend->backendName() == QStringLiteral("GeonamesUS"))
             {
-                addressElementsWantedFormat.append("/{LAU2}/{LAU1}/{City}");
+                addressElementsWantedFormat.append(QStringLiteral("/{LAU2}/{LAU1}/{City}"));
             }
             else
             {
-                addressElementsWantedFormat.append("/{Country}/{State}/{State district}/{County}/{City}/{City district}/{Suburb}/{Town}/{Village}/{Hamlet}/{Street}/{House number}");
+                addressElementsWantedFormat.append(QStringLiteral("/{Country}/{State}/{State district}/{County}/{City}/{City district}/{Suburb}/{Town}/{Village}/{Hamlet}/{Street}/{House number}"));
             }
 
             QStringList combinedResult = makeTagString(returnedRGList[i], addressElementsWantedFormat, d->currentBackend->backendName());
@@ -599,9 +597,9 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             addressElements.remove(0,1);
             addressElementsWantedFormat.remove(0,1);
 
-            const QStringList listAddressElementsWantedFormat = addressElementsWantedFormat.split('/');
-            const QStringList listAddressElements             = addressElements.split('/');
-            const QStringList listAddressFormat               = addressFormat.split('/');
+            const QStringList listAddressElementsWantedFormat = addressElementsWantedFormat.split(QLatin1Char('/'));
+            const QStringList listAddressElements             = addressElements.split(QLatin1Char('/'));
+            const QStringList listAddressFormat               = addressFormat.split(QLatin1Char('/'));
             QStringList elements, resultedData;
 
             for (int i=0; i<listAddressElementsWantedFormat.count(); ++i)
@@ -679,7 +677,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             d->currentTagTreeIndex        = d->tagTreeView->indexAt(e->pos());
             const Type tagType            = d->tagModel->getTagType(d->currentTagTreeIndex);
 
-            if ( backendName == QString("OSM"))
+            if ( backendName == QStringLiteral("OSM"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag);
                 menu->addSeparator(); 
@@ -696,13 +694,13 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddStreet);
                 menu->addAction(d->actionAddHouseNumber);
             }
-            else if ( backendName == QString("Geonames"))
+            else if ( backendName == QStringLiteral("Geonames"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddPlace);
             }
-            else if ( backendName == QString("GeonamesUS"))
+            else if ( backendName == QStringLiteral("GeonamesUS"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddLAU2);
@@ -746,9 +744,9 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     for (int i=0; i<currentSpacerList.count(); ++i)
     {
         QString spacerName;
-        spacerName.append(QString("Spacerlistname %1").arg(i));
+        spacerName.append(QStringLiteral("Spacerlistname %1").arg(i));
         QString spacerType;
-        spacerType.append(QString("Spacerlisttype %1").arg(i));
+        spacerType.append(QStringLiteral("Spacerlisttype %1").arg(i));
 
         QStringList spacerTagNames;
         QStringList spacerTypes;
@@ -759,15 +757,15 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 
             if (currentSpacerList[i].at(j).tagType == TypeSpacer)
             {
-                spacerTypes.append(QString("Spacer"));
+                spacerTypes.append(QStringLiteral("Spacer"));
             }
             else if (currentSpacerList[i].at(j).tagType == TypeNewChild)
             {
-                spacerTypes.append(QString("NewChild"));
+                spacerTypes.append(QStringLiteral("NewChild"));
             }
             else
             {
-                spacerTypes.append(QString("OldChild"));
+                spacerTypes.append(QStringLiteral("OldChild"));
             }
         }
 
@@ -787,8 +785,8 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
 
     for (int i=0; i<spacerCount; ++i)
     {
-        QStringList spacerTagNames = group->readEntry(QString("Spacerlistname %1").arg(i), QStringList());
-        QStringList spacerTypes    = group->readEntry(QString("Spacerlisttype %1").arg(i), QStringList());
+        QStringList spacerTagNames = group->readEntry(QStringLiteral("Spacerlistname %1").arg(i), QStringList());
+        QStringList spacerTypes    = group->readEntry(QStringLiteral("Spacerlisttype %1").arg(i), QStringList());
         QList<TagData> currentSpacerAddress;
 
         for (int j=0; j<spacerTagNames.count(); ++j)
@@ -797,11 +795,11 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
             currentTagData.tagName = spacerTagNames.at(j);
             QString currentTagType = spacerTypes.at(j);
 
-            if (currentTagType == QString("Spacer"))
+            if (currentTagType == QStringLiteral("Spacer"))
                 currentTagData.tagType = TypeSpacer;
-            else if (currentTagType == QString("NewChild"))
+            else if (currentTagType == QStringLiteral("NewChild"))
                 currentTagData.tagType = TypeNewChild;
-            else if (currentTagType == QString("OldChild"))
+            else if (currentTagType == QStringLiteral("OldChild"))
                 currentTagData.tagType = TypeChild;
 
             currentSpacerAddress.append(currentTagData);
@@ -858,15 +856,11 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
         baseIndex = d->tagSelectionModel->currentIndex();
     }
 
-    bool ok;
-    QString textString;
-
-    textString = KInputDialog::getText(i18n("Add new tag:") /* caption */,
-                                       i18n("Select a name for the new tag:") /* label */,
-                                       QString() /* value */,
-                                       &ok /* ok */,
-                                       this /* parent */
-                                      );
+    bool ok = false;
+    QString textString = QInputDialog::getText(
+        this, i18nc("@title:window", "Add new tag:"),
+        i18n("Select a name for the new tag:"),
+        QLineEdit::Normal, QString(), &ok);
 
     if ( ok && !textString.isEmpty() )
     {
@@ -889,7 +883,7 @@ void GPSReverseGeocodingWidget::slotRemoveTag()
  */
 void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 {
-    QString whatShouldRemove = QString("Spacers");
+    QString whatShouldRemove = QStringLiteral("Spacers");
     QModelIndex baseIndex;
 
     if (!d->currentTagTreeIndex.isValid())
@@ -951,32 +945,32 @@ void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
 
     QStringList spacerList;
 
-    if (d->currentBackend->backendName() == QString("OSM"))
+    if (d->currentBackend->backendName() == QStringLiteral("OSM"))
     {
         /// @todo Why are these wrapped in QString?
-        spacerList.append(QString("{Country}"));
-        spacerList.append(QString("{State}"));
-        spacerList.append(QString("{State district}"));
-        spacerList.append(QString("{County}"));
-        spacerList.append(QString("{City}"));
-        spacerList.append(QString("{City district}"));
-        spacerList.append(QString("{Suburb}"));
-        spacerList.append(QString("{Town}"));
-        spacerList.append(QString("{Village}"));
-        spacerList.append(QString("{Hamlet}"));
-        spacerList.append(QString("{Street}"));
-        spacerList.append(QString("{House number}"));
+        spacerList.append(QStringLiteral("{Country}"));
+        spacerList.append(QStringLiteral("{State}"));
+        spacerList.append(QStringLiteral("{State district}"));
+        spacerList.append(QStringLiteral("{County}"));
+        spacerList.append(QStringLiteral("{City}"));
+        spacerList.append(QStringLiteral("{City district}"));
+        spacerList.append(QStringLiteral("{Suburb}"));
+        spacerList.append(QStringLiteral("{Town}"));
+        spacerList.append(QStringLiteral("{Village}"));
+        spacerList.append(QStringLiteral("{Hamlet}"));
+        spacerList.append(QStringLiteral("{Street}"));
+        spacerList.append(QStringLiteral("{House number}"));
     }
-    else if (d->currentBackend->backendName() == QString("Geonames"))
+    else if (d->currentBackend->backendName() == QStringLiteral("Geonames"))
     {
-        spacerList.append(QString("{Country}"));
-        spacerList.append(QString("{Place}"));
+        spacerList.append(QStringLiteral("{Country}"));
+        spacerList.append(QStringLiteral("{Place}"));
     }
     else
     {
-        spacerList.append(QString("{LAU1}"));
-        spacerList.append(QString("{LAU2}"));
-        spacerList.append(QString("{City}"));
+        spacerList.append(QStringLiteral("{LAU1}"));
+        spacerList.append(QStringLiteral("{LAU2}"));
+        spacerList.append(QStringLiteral("{City}"));
     }
 
     d->tagModel->addAllSpacersToTag(baseIndex, spacerList,0);

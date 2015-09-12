@@ -27,7 +27,7 @@
 // KDE includes
 
 #include <klinkitemselectionmodel.h>
-#include <kpixmapcache.h>
+#include <KImageCache>
 
 // Local includes
 
@@ -51,7 +51,7 @@ public:
     QList<KipiImageItem*>                     items;
     int                                       columnCount;
     QMap<QPair<int, int>, QVariant>           headerData;
-    KPixmapCache*                             pixmapCache;
+    KImageCache*                              pixmapCache;
     KIPI::Interface*                          interface;
     QList<QPair<QPersistentModelIndex, int> > requestedPixmaps;
 };
@@ -59,8 +59,10 @@ public:
 KipiImageModel::KipiImageModel(QObject* const parent)
 : QAbstractItemModel(parent), d(new Private)
 {
-    // TODO: find an appropriate name
-    d->pixmapCache = new KPixmapCache("somename");
+    // TODO: Find an appropriate name (is "digikam-geolocator" OK?)
+    // TODO: Make cache size configurable.
+    d->pixmapCache = new KImageCache(QStringLiteral("digikam-geolocator"), 5 * 1024 * 1024);
+    d->pixmapCache->setPixmapCaching(false);
 }
 
 KipiImageModel::~KipiImageModel()
@@ -245,7 +247,7 @@ QModelIndex KipiImageModel::indexFromUrl(const QUrl& url) const
 
 static QString CacheKeyFromSizeAndUrl(const int size, const QUrl& url)
 {
-    return QString("%1-%3").arg(size).arg(url.url(QUrl::PreferLocalFile));
+    return QStringLiteral("%1-%3").arg(size).arg(url.url(QUrl::PreferLocalFile));
 }
 
 QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size)
@@ -265,7 +267,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
 
     const QString itemKeyString  = CacheKeyFromSizeAndUrl(size, imageItem->url());
     QPixmap thumbnailPixmap;
-    const bool havePixmapInCache = d->pixmapCache->find(itemKeyString, thumbnailPixmap);
+    const bool havePixmapInCache = d->pixmapCache->findPixmap(itemKeyString, &thumbnailPixmap);
 //     qCDebug(KIPIPLUGINS_LOG)<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
 
     if (havePixmapInCache)
@@ -342,7 +344,7 @@ void KipiImageModel::slotThumbnailFromInterface(const QUrl& url, const QPixmap& 
 
                     // save the pixmap:
                     const QString itemKeyString = CacheKeyFromSizeAndUrl(effectiveSize, url);
-                    d->pixmapCache->insert(itemKeyString, pixmap);
+                    d->pixmapCache->insertPixmap(itemKeyString, pixmap);
 
                     emit(signalThumbnailForIndexAvailable(imageIndex, pixmap));
                     return;
@@ -365,7 +367,7 @@ void KipiImageModel::slotThumbnailFromInterface(const QUrl& url, const QPixmap& 
 
             // save the pixmap:
             const QString itemKeyString = CacheKeyFromSizeAndUrl(targetSize, url);
-            d->pixmapCache->insert(itemKeyString, scaledPixmap);
+            d->pixmapCache->insertPixmap(itemKeyString, scaledPixmap);
 
             emit(signalThumbnailForIndexAvailable(imageIndex, scaledPixmap));
         }

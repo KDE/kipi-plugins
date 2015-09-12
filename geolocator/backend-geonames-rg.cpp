@@ -119,13 +119,13 @@ void BackendGeonamesRG::nextPhoto()
     if (d->jobs.isEmpty())
         return;
 
-    QUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
-    jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
-    jobUrl.addQueryItem("lng", d->jobs.first().request.first().coordinates.lonString());
-    jobUrl.addQueryItem("lang", d->jobs.first().language);
+    QUrl jobUrl(QStringLiteral("http://ws.geonames.org/findNearbyPlaceName"));
+    jobUrl.addQueryItem(QStringLiteral("lat"), d->jobs.first().request.first().coordinates.latString());
+    jobUrl.addQueryItem(QStringLiteral("lng"), d->jobs.first().request.first().coordinates.lonString());
+    jobUrl.addQueryItem(QStringLiteral("lang"), d->jobs.first().language);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
-    d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
+    d->jobs.first().kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());
 
     connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(dataIsHere(KIO::Job*,QByteArray)));
@@ -203,11 +203,11 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(const QString& xmlData)
 
         if (!e.isNull())
         {
-            if ((e.tagName().compare(QString("countryName")) == 0) ||
-                (e.tagName().compare(QString("name"))        == 0))
+            if ((e.tagName().compare(QStringLiteral("countryName")) == 0) ||
+                (e.tagName().compare(QStringLiteral("name"))        == 0))
             {
                 mappedData.insert(e.tagName(), e.text());
-                resultString.append(e.tagName() + ':' + e.text() + '\n');
+                resultString.append(e.tagName() + QLatin1Char(':') + e.text() + QLatin1Char('\n'));
             }
         }
 
@@ -230,7 +230,7 @@ QString BackendGeonamesRG::getErrorMessage()
  */
 QString BackendGeonamesRG::backendName()
 {
-    return QString("Geonames");
+    return QStringLiteral("Geonames");
 }
 
 void BackendGeonamesRG::slotResult(KJob* kJob)
@@ -251,7 +251,7 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
         {
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
-            int pos    = dataString.indexOf("<geonames");
+            int pos    = dataString.indexOf(QStringLiteral("<geonames"));
             dataString.remove(0,pos);
             dataString.chop(1);
 

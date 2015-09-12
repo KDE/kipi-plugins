@@ -28,6 +28,7 @@
 
 #include <QBrush>
 #include <QScopedPointer>
+#include <QtCore/QLocale>
 
 // KDE includes
 
@@ -68,7 +69,7 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
             {
                 long num, den;
                 meta->convertToRationalSmallDenominator(value.toDouble(), &num, &den);
-                success = meta->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
+                success = meta->setXmpTagString(xmpTagName, QStringLiteral("%1/%2").arg(num).arg(den));
                 break;
             }
             case QVariant::List:
@@ -82,7 +83,7 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
                 if (list.size() >= 2)
                     den = list[1].toInt();
 
-                success = meta->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
+                success = meta->setXmpTagString(xmpTagName, QStringLiteral("%1/%2").arg(num).arg(den));
                 break;
             }
 
@@ -97,7 +98,7 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
                     break;
                 }
 
-                success = meta->setXmpTagString(xmpTagName, dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")));
+                success = meta->setXmpTagString(xmpTagName, dateTime.toString(QStringLiteral("yyyy:MM:dd hh:mm:ss")));
                 break;
             }
 
@@ -363,7 +364,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
     {
         if (m_dateTime.isValid())
         {
-            return (KLocale::global()->formatDateTime(m_dateTime, KLocale::ShortDate, true));
+            return QLocale().toString(m_dateTime, QLocale::ShortFormat);
         }
 
         return i18n("Not available");
@@ -377,21 +378,21 @@ QVariant KipiImageItem::data(const int column, const int role) const
         if (!m_gpsData.getCoordinates().hasLatitude())
             return QString();
 
-        return KLocale::global()->formatNumber(m_gpsData.getCoordinates().lat(), 7);
+        return QStringLiteral("%1").arg(m_gpsData.getCoordinates().lat(), 7);
     }
     else if ((column==ColumnLongitude)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.getCoordinates().hasLongitude())
             return QString();
 
-        return KLocale::global()->formatNumber(m_gpsData.getCoordinates().lon(), 7);
+        return QStringLiteral("%1").arg(m_gpsData.getCoordinates().lon(), 7);
     }
     else if ((column==ColumnAltitude)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.getCoordinates().hasAltitude())
             return QString();
 
-        return KLocale::global()->formatNumber(m_gpsData.getCoordinates().alt());
+        return QStringLiteral("%1").arg(m_gpsData.getCoordinates().alt(), 7);
     }
     else if (column==ColumnAccuracy)
     {
@@ -437,7 +438,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
         if (!m_gpsData.hasDop())
             return QString();
 
-        return KLocale::global()->formatNumber(m_gpsData.getDop());
+        return QString::number(m_gpsData.getDop());
     }
     else if ((column==ColumnFixType)&&(role==Qt::DisplayRole))
     {
@@ -451,14 +452,14 @@ QVariant KipiImageItem::data(const int column, const int role) const
         if (!m_gpsData.hasNSatellites())
             return QString();
 
-        return KLocale::global()->formatNumber(m_gpsData.getNSatellites(), 0);
+        return QString::number(m_gpsData.getNSatellites());
     }
     else if ((column==ColumnSpeed)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.hasSpeed())
             return QString();
 
-        return KLocale::global()->formatNumber(m_gpsData.getSpeed());
+        return QString::number(m_gpsData.getSpeed());
     }
     else if ((column == ColumnStatus) && (role == Qt::DisplayRole))
     {
@@ -482,14 +483,14 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
                 for (int j = 0; j < m_tagList[i].count(); ++j)
                 {
-                    myTag.append(QString("/") + m_tagList[i].at(j).tagName);
+                    myTag.append(QStringLiteral("/") + m_tagList[i].at(j).tagName);
 
                     if (j == 0)
                         myTag.remove(0,1);
                 }
 
                 if (!myTagsList.isEmpty())
-                    myTagsList.append(", ");
+                    myTagsList.append(QStringLiteral(", "));
 
                 myTagsList.append(myTag);
             }
@@ -743,7 +744,10 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
             // write all other GPS information here too
             if (success && m_gpsData.hasSpeed())
             {
-                success = setExifXmpTagDataVariant(meta.data(), "Exif.GPSInfo.GPSSpeedRef", "Xmp.exif.GPSSpeedRef", QVariant(QString("K")));
+                success = setExifXmpTagDataVariant(meta.data(),
+                                                   "Exif.GPSInfo.GPSSpeedRef",
+                                                   "Xmp.exif.GPSSpeedRef",
+                                                   QVariant(QStringLiteral("K")));
 
                 if (success)
                 {
@@ -812,7 +816,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
                 for (int j=0; j<currentTagList.count(); ++j)
                 {
-                    tag.append(QString("/") + currentTagList[j].tagName);
+                    tag.append(QStringLiteral("/") + currentTagList[j].tagName);
                 }
 
                 tag.remove(0,1);
@@ -900,7 +904,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
                 for (int j=0; j<currentTagPath.count(); ++j)
                 {
-                    singleTagPath.append(QString("%1").arg("/") + currentTagPath[j].tagName);
+                    singleTagPath.append(QStringLiteral("/") + currentTagPath[j].tagName);
 
                     if (j == 0)
                     {

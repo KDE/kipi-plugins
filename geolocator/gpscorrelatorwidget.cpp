@@ -44,23 +44,20 @@
 #include <QComboBox>
 #include <QMenu>
 #include <QStandardPaths>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QSpinBox>
 
 // KDE includes
 
 #include <kio/global.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kfiledialog.h>
-#include <kglobalsettings.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <knuminput.h>
-#include <kpushbutton.h>
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
-#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
 // local includes
@@ -119,14 +116,14 @@ public:
     QComboBox*              timeZoneCB;
     QCheckBox*              offsetEnabled;
     QComboBox*              offsetSign;
-    KIntSpinBox*            offsetMin;
-    KIntSpinBox*            offsetSec;
+    QSpinBox*               offsetMin;
+    QSpinBox*               offsetSec;
 
     QCheckBox*              interpolateBox;
     QCheckBox*              showTracksOnMap;
 
-    KIntSpinBox*            maxGapInput;
-    KIntSpinBox*            maxTimeInput;
+    QSpinBox*               maxGapInput;
+    QSpinBox*               maxTimeInput;
 
     QPushButton*            correlateButton;
 
@@ -179,7 +176,11 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
 
     KSeparator* const line    = new KSeparator(Qt::Horizontal, this);
     QLabel* const maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), this);
-    d->maxGapInput            = new KIntSpinBox(0, 1000000, 1, 30, this);
+
+    d->maxGapInput            = new QSpinBox(this);
+    d->maxGapInput->setRange(0, 1000000);
+    d->maxGapInput->setSingleStep(1);
+    d->maxGapInput->setValue(30);
     d->maxGapInput->setWhatsThis(i18n("Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match will be attempted."));
@@ -204,46 +205,46 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     // See list of time zones over the world :
     // http://en.wikipedia.org/wiki/List_of_time_zones
     // NOTE: Combobox strings are not i18n.
-    d->timeZoneCB->addItem("GMT-12:00");
-    d->timeZoneCB->addItem("GMT-11:00");
-    d->timeZoneCB->addItem("GMT-10:00");
-    d->timeZoneCB->addItem("GMT-09:30");
-    d->timeZoneCB->addItem("GMT-09:00");
-    d->timeZoneCB->addItem("GMT-08:00");
-    d->timeZoneCB->addItem("GMT-07:00");
-    d->timeZoneCB->addItem("GMT-06:00");
-    d->timeZoneCB->addItem("GMT-05:30");
-    d->timeZoneCB->addItem("GMT-05:00");
-    d->timeZoneCB->addItem("GMT-04:30");
-    d->timeZoneCB->addItem("GMT-04:00");
-    d->timeZoneCB->addItem("GMT-03:30");
-    d->timeZoneCB->addItem("GMT-03:00");
-    d->timeZoneCB->addItem("GMT-02:00");
-    d->timeZoneCB->addItem("GMT-01:00");
-    d->timeZoneCB->addItem("GMT+00:00");
-    d->timeZoneCB->addItem("GMT+01:00");
-    d->timeZoneCB->addItem("GMT+02:00");
-    d->timeZoneCB->addItem("GMT+03:00");
-    d->timeZoneCB->addItem("GMT+03:30");
-    d->timeZoneCB->addItem("GMT+04:00");
-    d->timeZoneCB->addItem("GMT+05:00");
-    d->timeZoneCB->addItem("GMT+05:30");    // See bug # 149491
-    d->timeZoneCB->addItem("GMT+05:45");
-    d->timeZoneCB->addItem("GMT+06:00");
-    d->timeZoneCB->addItem("GMT+06:30");
-    d->timeZoneCB->addItem("GMT+07:00");
-    d->timeZoneCB->addItem("GMT+08:00");
-    d->timeZoneCB->addItem("GMT+08:45");
-    d->timeZoneCB->addItem("GMT+09:00");
-    d->timeZoneCB->addItem("GMT+09:30");
-    d->timeZoneCB->addItem("GMT+10:00");
-    d->timeZoneCB->addItem("GMT+10:30");
-    d->timeZoneCB->addItem("GMT+11:00");
-    d->timeZoneCB->addItem("GMT+11:30");
-    d->timeZoneCB->addItem("GMT+12:00");
-    d->timeZoneCB->addItem("GMT+12:45");
-    d->timeZoneCB->addItem("GMT+13:00");
-    d->timeZoneCB->addItem("GMT+14:00");
+    d->timeZoneCB->addItem(QStringLiteral("GMT-12:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-11:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-10:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-09:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-09:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-08:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-07:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-06:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-05:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-05:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-04:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-04:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-03:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-03:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-02:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT-01:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+00:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+01:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+02:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+03:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+03:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+04:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+05:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+05:30"));    // See bug # 149491
+    d->timeZoneCB->addItem(QStringLiteral("GMT+05:45"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+06:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+06:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+07:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+08:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+08:45"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+09:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+09:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+10:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+10:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+11:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+11:30"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+12:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+12:45"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+13:00"));
+    d->timeZoneCB->addItem(QStringLiteral("GMT+14:00"));
     d->timeZoneCB->setWhatsThis(i18n("<p>Sets the time zone the camera was set to "
                     "during photo shooting, so that the time stamps of the images "
                     "can be converted to GMT to match the GPS time reference.</p>"
@@ -261,15 +262,21 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
 
     QWidget* const offsetWidget = new QWidget(this);
     d->offsetSign               = new QComboBox(offsetWidget);
-    d->offsetSign->addItem("+");
-    d->offsetSign->addItem("-");
+    d->offsetSign->addItem(QStringLiteral("+"));
+    d->offsetSign->addItem(QStringLiteral("-"));
     d->offsetSign->setWhatsThis(i18n("Set whether the camera offset "
         "is negative or positive."));
 
-    d->offsetMin = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
+    d->offsetMin = new QSpinBox(offsetWidget);
+    d->offsetMin->setRange(0, 59);
+    d->offsetMin->setSingleStep(1);
+    d->offsetMin->setValue(0);
     d->offsetMin->setWhatsThis(i18n("Minutes to fine tune camera offset."));
 
-    d->offsetSec = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
+    d->offsetSec = new QSpinBox(offsetWidget);
+    d->offsetSec->setRange(0, 59);
+    d->offsetSec->setSingleStep(1);
+    d->offsetSec->setValue(0);
     d->offsetSec->setWhatsThis(i18n("Seconds to fine tune camera offset."));
 
     QGridLayout* const offsetLayout = new QGridLayout(offsetWidget);
@@ -292,7 +299,10 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
             this, SLOT(slotShowTracksStateChanged(int)));
     
     d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), this);
-    d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, this);
+    d->maxTimeInput = new QSpinBox(this);
+    d->maxTimeInput->setRange(0, 240);
+    d->maxTimeInput->setSingleStep(1);
+    d->maxTimeInput->setValue(15);
     d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
@@ -352,9 +362,9 @@ GPSCorrelatorWidget::~GPSCorrelatorWidget()
 
 void GPSCorrelatorWidget::slotLoadTrackFiles()
 {
-    const QList<QUrl> gpxFiles = KFileDialog::getOpenUrls(d->gpxFileOpenLastDirectory,
-                                                        i18n("%1|GPS Exchange Format", QString("*.gpx")), this,
-                                                        i18n("Select GPX File to Load") );
+    const QList<QUrl> gpxFiles = QFileDialog::getOpenFileUrls(
+        this, i18nc("@title:window", "Select GPX File to Load"),
+        d->gpxFileOpenLastDirectory, i18n("GPS Exchange Format (*.gpx)"));
 
     if (gpxFiles.isEmpty())
         return;
@@ -375,7 +385,9 @@ void GPSCorrelatorWidget::slotAllTrackFilesReady()
     for (int i=0; i<loadErrorFiles.count(); ++i)
     {
         const QPair<QUrl, QString> currentError = loadErrorFiles.at(i);
-        const QString fileErrorString = QString("%1: %2").arg(currentError.first.toLocalFile()).arg(currentError.second);
+        const QString fileErrorString = QStringLiteral("%1: %2")
+            .arg(currentError.first.toLocalFile())
+            .arg(currentError.second);
 
         invalidFiles << fileErrorString;
     }
@@ -438,7 +450,7 @@ void GPSCorrelatorWidget::updateUIState()
 void GPSCorrelatorWidget::slotCorrelate()
 {
     // disable the UI of the entire dialog:
-    emit(signalSetUIEnabled(false, this, SLOT(slotCancelCorrelation())));
+    emit(signalSetUIEnabled(false, this, QLatin1String(SLOT(slotCancelCorrelation()))));
 
     // store the options:
     TrackCorrelator::CorrelationOptions options;
@@ -452,7 +464,7 @@ void GPSCorrelatorWidget::slotCorrelate()
         const int mm       = QString(QString(tz[7])+QString(tz[8])).toInt();
         int timeZoneOffset = hh*3600 + mm*60;
 
-        if (tz[3] == QChar('-'))
+        if (tz[3] == QLatin1Char('-'))
         {
             timeZoneOffset = (-1) * timeZoneOffset;
         }
@@ -464,7 +476,7 @@ void GPSCorrelatorWidget::slotCorrelate()
     {
         int userOffset = d->offsetMin->value() * 60 + d->offsetSec->value();
 
-        if (d->offsetSign->currentText() == "-")
+        if (d->offsetSign->currentText() == QStringLiteral("-"))
         {
             userOffset = (-1) * userOffset;
         }

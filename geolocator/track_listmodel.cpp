@@ -131,7 +131,7 @@ QVariant TrackListModel::data(const QModelIndex& index, int role) const
                     return track.url.fileName();
 
                 case ColumnNPoints:
-                    return QString("%1").arg(track.points.count());
+                    return QString::number(track.points.count());
 
                 case ColumnVisible:
                     return QString();

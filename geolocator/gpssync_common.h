@@ -52,7 +52,7 @@ enum MapLayout
 
 inline QString getKipiUserAgentName()
 {
-    return "KIPI-Plugins GPSSync - kde-imaging@kde.org";
+    return QStringLiteral("KIPI-Plugins GPSSync - kde-imaging@kde.org");
 }
 
 inline void CoordinatesToClipboard(const KGeoMap::GeoCoordinates& coordinates, const QUrl& url, const QString& title)

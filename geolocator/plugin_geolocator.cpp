@@ -39,7 +39,7 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kpluginfactory.h>
+#include <KPluginFactory>
 
 // Libkipi includes
 
@@ -99,13 +99,13 @@ void Plugin_Geolocator::setupActions()
 
     m_action_geolocation = new QAction(this);
     m_action_geolocation->setText(i18n("Geo-location"));
-    m_action_geolocation->setIcon(QIcon::fromTheme("applications-internet"));
+    m_action_geolocation->setIcon(QIcon::fromTheme(QStringLiteral("applications-internet")));
     m_action_geolocation->setEnabled(false);
 
     connect(m_action_geolocation, SIGNAL(triggered(bool)),
             this, SLOT(slotGeolocator()));
 
-    addAction("geolocator", m_action_geolocation);
+    addAction(QStringLiteral("geolocator"), m_action_geolocation);
 }
 
 bool Plugin_Geolocator::checkSidecarSettings()

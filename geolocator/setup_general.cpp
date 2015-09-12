@@ -84,7 +84,7 @@ SetupGeneral::~SetupGeneral()
 void SetupGeneral::readSettings()
 {
     SetupGlobalObject* const setupGlobalObject = SetupGlobalObject::instance();
-    const MapLayout targetLayout               = setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
+    const MapLayout targetLayout = setupGlobalObject->readEntry(QStringLiteral("Map Layout")).value<MapLayout>();
 
     for (int i=0; i<d->cbMapLayout->count(); ++i)
     {
@@ -101,7 +101,7 @@ void SetupGeneral::readSettings()
 void SetupGeneral::slotApplySettings()
 {
     SetupGlobalObject* const setupGlobalObject = SetupGlobalObject::instance();
-    setupGlobalObject->writeEntry("Map Layout", d->cbMapLayout->itemData(d->cbMapLayout->currentIndex()));
+    setupGlobalObject->writeEntry(QStringLiteral("Map Layout"), d->cbMapLayout->itemData(d->cbMapLayout->currentIndex()));
 }
 
 } /* namespace KIPIGeolocatorPlugin */

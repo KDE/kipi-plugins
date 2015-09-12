@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <kconfiggroup.h>
-#include <kglobal.h>
 #include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kseparator.h>
@@ -273,15 +272,15 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
     if (gpsData->hasCoordinates())
     {
-        d->leLatitude->setText(KLocale::global()->formatNumber(gpsData->getCoordinates().lat(), 12));
-        d->leLongitude->setText(KLocale::global()->formatNumber(gpsData->getCoordinates().lon(), 12));
+        d->leLatitude->setText(QString::number(gpsData->getCoordinates().lat(), 'f', 12));
+        d->leLongitude->setText(QString::number(gpsData->getCoordinates().lon(), 'f', 12));
 
         const bool haveAltitude = gpsData->hasAltitude();
         d->cbAltitude->setChecked(haveAltitude);
 
         if (haveAltitude)
         {
-            d->leAltitude->setText(KLocale::global()->formatNumber(gpsData->getCoordinates().alt(), 12));
+            d->leAltitude->setText(QString::number(gpsData->getCoordinates().alt(), 'f', 12));
         }
 
         const bool haveSpeed = gpsData->hasSpeed();
@@ -289,7 +288,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         if (haveSpeed)
         {
-            d->leSpeed->setText(KLocale::global()->formatNumber(gpsData->getSpeed(), 12));
+            d->leSpeed->setText(QString::number(gpsData->getSpeed(), 'f', 12));
         }
 
         const bool haveNSatellites = gpsData->hasNSatellites();
@@ -324,7 +323,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
         if (haveDop)
         {
-            d->leDop->setText(KLocale::global()->formatNumber(gpsData->getDop(), 2));
+            d->leDop->setText(QStringLiteral("%1").arg(gpsData->getDop(), 0, 'f', 2));
         }
     }
 
@@ -398,25 +397,25 @@ void GPSImageDetails::slotApply()
 
     if (d->cbCoordinates->isChecked())
     {
-        const qreal lat = KLocale::global()->readNumber(d->leLatitude->text());
-        const qreal lon = KLocale::global()->readNumber(d->leLongitude->text());
+        const double lat = d->leLatitude->text().toDouble();
+        const double lon = d->leLongitude->text().toDouble();
         newData.setCoordinates(KGeoMap::GeoCoordinates(lat, lon));
 
         if (d->cbAltitude->isChecked())
         {
-            const qreal alt = KLocale::global()->readNumber(d->leAltitude->text());
+            const qreal alt = static_cast<qreal>(d->leAltitude->text().toDouble());
             newData.setAltitude(alt);
         }
 
         if (d->cbSpeed->isChecked())
         {
-            const qreal speed = KLocale::global()->readNumber(d->leSpeed->text());
+            const qreal speed = static_cast<qreal>(d->leSpeed->text().toDouble());
             newData.setSpeed(speed);
         }
 
         if (d->cbNSatellites->isChecked())
         {
-            const int nSatellites = KLocale::global()->readNumber(d->leNSatellites->text());
+            const int nSatellites = d->leNSatellites->text().toInt();
             newData.setNSatellites(nSatellites);
         }
 
@@ -428,7 +427,7 @@ void GPSImageDetails::slotApply()
 
         if (d->cbDop->isChecked())
         {
-            const qreal dop = KLocale::global()->readNumber(d->leDop->text());
+            const qreal dop = static_cast<qreal>(d->leDop->text().toDouble());
             newData.setDop(dop);
         }
     }

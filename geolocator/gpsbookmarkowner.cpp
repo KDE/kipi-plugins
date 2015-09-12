@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QStandardItemModel>
+#include <QtCore/QStandardPaths>
 
 // KDE includes
 
@@ -76,9 +77,12 @@ GPSBookmarkOwner::GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget
     d->parent = parent;
 
     // TODO: where do we save the bookmarks? right now, they are kipi-specific
-    const QString bookmarksFileName = KStandardDirs::locateLocal("data", "kipi/geobookmarks.xml");
+    const QString bookmarksFileName =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
+        QLatin1Char('/') + QStringLiteral("kipi/geobookmarks.xml");
     d->actionCollection             = new KActionCollection(this);
-    d->bookmarkManager              = KBookmarkManager::managerForFile(bookmarksFileName, "kipigeobookmarks");
+    d->bookmarkManager              = KBookmarkManager::managerForFile(
+        bookmarksFileName, QStringLiteral("kipigeobookmarks"));
     d->bookmarkManager->setUpdate(true);
     d->bookmarkMenu                 = new QMenu(parent);
     d->bookmarkMenuController       = new KBookmarkMenu(d->bookmarkManager, this, d->bookmarkMenu, d->actionCollection);
@@ -215,13 +219,15 @@ void GPSBookmarkModelHelper::Private::addBookmarkGroupToModel(const KBookmarkGro
     }
 }
 
-GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent)
+GPSBookmarkModelHelper::GPSBookmarkModelHelper(
+    KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent)
     : ModelHelper(parent), d(new Private())
 {
     d->model           = new QStandardItemModel(this);
     d->bookmarkManager = bookmarkManager;
     d->kipiImageModel  = kipiImageModel;
-    d->bookmarkIconUrl = QUrl::fromLocalFile(KStandardDirs::locate("data", "gpssync/bookmarks-marker.png"));
+    d->bookmarkIconUrl = QUrl::fromLocalFile(QStandardPaths::locate(
+        QStandardPaths::GenericDataLocation, QStringLiteral("gpssync/bookmarks-marker.png")));
     d->pixmap          = QPixmap(d->bookmarkIconUrl.toLocalFile());
 
     connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),
