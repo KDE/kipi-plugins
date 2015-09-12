@@ -311,17 +311,8 @@ if(KF5Kipi_FOUND)
         add_subdirectory(printimages)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
-        add_subdirectory(timeadjust)
         add_subdirectory(flashexport)
         add_subdirectory(expoblending)
-
-#       Moved to DK core
-#
-#       add_subdirectory(metadataedit)
-#
-#       if(KF5Sane_FOUND)
-#           add_subdirectory(acquireimages)
-#       endif()
 
         if(BUILD_VIEWERS)
             add_subdirectory(advancedslideshow)
