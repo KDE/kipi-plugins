@@ -37,8 +37,6 @@
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kconfig.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 
