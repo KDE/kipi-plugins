@@ -87,6 +87,7 @@ extern "C"
 #include "kipiplugins_debug.h"
 #include "kputil.h"
 #include "kplogindialog.h"
+#include "yfwidget.h"
 
 using namespace KDcrawIface;
 
@@ -104,224 +105,40 @@ YandexFotkiWindow::YandexFotkiWindow(bool import, QWidget* const parent)
     m_import = import;
 
     m_tmpDir = makeTemporaryDir("kipi-yandexfotki").absolutePath() + QStringLiteral("/");
-
-    m_mainWidget                  = new QWidget(this);
-    QHBoxLayout* const mainLayout = new QHBoxLayout(m_mainWidget);
-
-    m_imgList                     = new KPImagesList(this);
-    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
-    m_imgList->setAllowRAW(true);
-    m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload to your Yandex album."));
-
-    QWidget* const settingsBox           = new QWidget(this);
-    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
-
-    m_headerLabel = new QLabel(settingsBox);
-    m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the "
-                                     "Yandex.Fotki service in a web browser."));
-    m_headerLabel->setOpenExternalLinks(true);
-    m_headerLabel->setFocusPolicy(Qt::NoFocus);
-
-    /*
-     * Account box
-     */
-    m_accountBox = new QGroupBox(i18n("Account"), settingsBox);
-    m_accountBox->setWhatsThis(i18n("This account is used for authentication."));
-
-    QGridLayout* const accountBoxLayout = new QGridLayout(m_accountBox);
-    QLabel* const loginDescLabel        = new QLabel(m_accountBox);
-    loginDescLabel->setText(i18n("Name:"));
-    loginDescLabel->setWhatsThis(i18n("Your Yandex login"));
-
-    m_loginLabel       = new QLabel(m_accountBox);
-    m_changeUserButton = new QPushButton(m_accountBox);
-    KGuiItem::assign(m_changeUserButton,
-                     KGuiItem(i18n("Change Account"), QStringLiteral("system-switch-user"),
-                              i18n("Change Yandex account used to authenticate")));
-
-    accountBoxLayout->addWidget(loginDescLabel, 0, 0);
-    accountBoxLayout->addWidget(m_loginLabel, 0, 1);
-
-    accountBoxLayout->addWidget(m_changeUserButton, 1, 1);
-    accountBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    accountBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
+    
+    m_widget =  new YandexFotkiWidget(this, iface(), QStringLiteral("Yandex.Fotki"));
+    
+    m_loginLabel = m_widget->getUserNameLabel();
+    m_headerLabel = m_widget->getHeaderLbl();
+    m_changeUserButton = m_widget->getChangeUserBtn();
+    m_newAlbumButton = m_widget->getNewAlbmBtn();
+    m_reloadAlbumsButton = m_widget->getReloadBtn();
+    m_albumsCombo = m_widget->getAlbumsCoB();
+    m_resizeCheck = m_widget->getResizeCheckBox();
+    m_dimensionSpin = m_widget->getDimensionSpB();
+    m_imageQualitySpin = m_widget->getImgQualitySpB();
+    m_imgList = m_widget->imagesList();
+    m_progressBar = m_widget->progressBar(); 
+    m_accessCombo = m_widget->m_accessCombo;
+    m_hideOriginalCheck = m_widget->m_hideOriginalCheck;
+    m_disableCommentsCheck = m_widget->m_disableCommentsCheck;
+    m_adultCheck = m_widget->m_adultCheck;
+    m_policyGroup = m_widget->m_policyGroup;  
+    m_albumsBox   = m_widget->getAlbumBox();
+    
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
-
-    // -- Album box --------------------------------------------------------------------------
-
-    m_albumsBox                        = new QGroupBox(i18n("Album"), settingsBox);
-    m_albumsBox->setWhatsThis(i18n("This is the Yandex.Fotki album that will be used for the transfer."));
-    QGridLayout* const albumsBoxLayout = new QGridLayout(m_albumsBox);
-
-    m_albumsCombo        = new QComboBox(m_albumsBox);
-    m_albumsCombo->setEditable(false);
-
-    m_newAlbumButton = new QPushButton(m_albumsBox);
-    KGuiItem::assign(m_newAlbumButton,
-                     KGuiItem(i18n("New Album"), QStringLiteral("list-add"),
-                              i18n("Create new Yandex.Fotki album")));
-    m_reloadAlbumsButton = new QPushButton(m_albumsBox);
-    KGuiItem::assign(m_reloadAlbumsButton,
-                     KGuiItem(i18nc("reload albums list", "Reload"), QStringLiteral("view-refresh"),
-                              i18n("Reload albums list")));
-
-    albumsBoxLayout->addWidget(m_albumsCombo,        0, 0, 1, 5);
-    albumsBoxLayout->addWidget(m_newAlbumButton,     1, 3, 1, 1);
-    albumsBoxLayout->addWidget(m_reloadAlbumsButton, 1, 4, 1, 1);
-
+    
     connect(m_newAlbumButton, SIGNAL(clicked()),
             this, SLOT(slotNewAlbumRequest()) );
 
 
     connect(m_reloadAlbumsButton, SIGNAL(clicked()),
-            this, SLOT(slotReloadAlbumsRequest()) );
-
-    // ------------------------------------------------------------------------
-
-    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(i18n("This is the location where Yandex.Fotki images will be downloaded."));
-    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget                     = iface()->uploadWidget(uploadBox);
-    uploadBoxLayout->addWidget(m_uploadWidget);
-
-    // ------------------------------------------------------------------------
-
-    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
-    optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
-    QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
-
-    m_resizeCheck = new QCheckBox(optionsBox);
-    m_resizeCheck->setText(i18n("Resize photos before uploading"));
-    m_resizeCheck->setChecked(false);
-
-    connect(m_resizeCheck, SIGNAL(clicked()),
-            this, SLOT(slotResizeChecked()));
-
-    m_dimensionSpin            = new QSpinBox(optionsBox);
-    m_dimensionSpin->setMinimum(0);
-    m_dimensionSpin->setMaximum(5000);
-    m_dimensionSpin->setSingleStep(10);
-    m_dimensionSpin->setValue(600);
-    m_dimensionSpin->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_dimensionSpin->setEnabled(false);
-    QLabel* const dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
-
-    m_imageQualitySpin              = new QSpinBox(optionsBox);
-    m_imageQualitySpin->setMinimum(0);
-    m_imageQualitySpin->setMaximum(100);
-    m_imageQualitySpin->setSingleStep(1);
-    m_imageQualitySpin->setValue(85);
-    m_imageQualitySpin->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* const imageQualityLabel = new QLabel(i18n("JPEG quality:"), optionsBox);
-
-    QSpacerItem* const spacer1 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QSpacerItem* const spacer2 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QLabel* const policyLabel  = new QLabel(i18n("Update policy:"), optionsBox);
-
-    QRadioButton* const policyRadio1 = new QRadioButton(i18n("Update metadata"), optionsBox);
-    policyRadio1->setWhatsThis(i18n("Update metadata of remote file and merge remote tags with local"));
-
-/*
-    QRadioButton* policyRadio2 = new QRadioButton(i18n("Update metadata, keep tags"), optionsBox);
-    policyRadio2->setWhatsThis(
-        i18n("Update metadata of remote file but keep remote tags untouched."));
-*/
-
-    QRadioButton* const policyRadio3  = new QRadioButton(i18n("Skip photo"), optionsBox);
-    policyRadio3->setWhatsThis(i18n("Simple skip photo"));
-    QRadioButton* const policyRadio4  = new QRadioButton(i18n("Upload as new"), optionsBox);
-    policyRadio4->setWhatsThis(i18n("Add photo as new"));
-
-    QLabel* const accessLabel = new QLabel(i18n("Privacy settings:"), optionsBox);
-    m_accessCombo             = new QComboBox(optionsBox);
-    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder")),
-                           i18n("Public access"), YandexFotkiPhoto::ACCESS_PUBLIC);
-    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-red")),
-                           i18n("Friends access"), YandexFotkiPhoto::ACCESS_FRIENDS);
-    m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-locked")),
-                           i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
-
-    m_hideOriginalCheck = new QCheckBox(i18n("Hide original photo"), optionsBox);
-    m_disableCommentsCheck = new QCheckBox(i18n("Disable comments"), optionsBox);
-    m_adultCheck = new QCheckBox(i18n("Adult content"), optionsBox);
-
-    m_policyGroup = new QButtonGroup(optionsBox);
-    m_policyGroup->addButton(policyRadio1, POLICY_UPDATE_MERGE);
-//    m_policyGroup->addButton(policyRadio2, POLICY_UPDATE_KEEP);
-    m_policyGroup->addButton(policyRadio3, POLICY_SKIP);
-    m_policyGroup->addButton(policyRadio4, POLICY_ADDNEW);
-
-    optionsBoxLayout->addWidget(m_resizeCheck,          0, 0, 1, 5);
-    optionsBoxLayout->addWidget(imageQualityLabel,      1, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_imageQualitySpin,     1, 2, 1, 1);
-    optionsBoxLayout->addWidget(dimensionLbl,           2, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpin,        2, 2, 1, 1);
-    optionsBoxLayout->addItem(spacer1,                  3, 0, 1, 5);
-
-    optionsBoxLayout->addWidget(accessLabel,            4, 0, 1, 5);
-    optionsBoxLayout->addWidget(m_accessCombo,          5, 1, 1, 4);
-    optionsBoxLayout->addWidget(m_adultCheck,           6, 1, 1, 4);
-    optionsBoxLayout->addWidget(m_hideOriginalCheck,    7, 1, 1, 4);
-    optionsBoxLayout->addWidget(m_disableCommentsCheck, 8, 1, 1, 4);
-    optionsBoxLayout->addItem(spacer2,                  9, 0, 1, 5);
-
-    optionsBoxLayout->addWidget(policyLabel,            10, 0, 1, 5);
-    optionsBoxLayout->addWidget(policyRadio1,           11, 1, 1, 4);
-    //optionsBoxLayout->addWidget(policyRadio2,         12, 1, 1, 4);
-    optionsBoxLayout->addWidget(policyRadio3,           13, 1, 1, 4);
-    optionsBoxLayout->addWidget(policyRadio4,           14, 1, 1, 4);
-
-    optionsBoxLayout->setRowStretch(14, 10);
-
-    optionsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    optionsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    m_progressBar = new QProgressBar(settingsBox);
-    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_progressBar->hide();
-
-    // -- Layouts ---------------------------------------------------------------------
-
-    settingsBoxLayout->addWidget(m_headerLabel);
-    settingsBoxLayout->addWidget(m_accountBox);
-    settingsBoxLayout->addWidget(m_albumsBox);
-    settingsBoxLayout->addWidget(uploadBox);
-    settingsBoxLayout->addWidget(optionsBox);
-    settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    settingsBoxLayout->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    mainLayout->addWidget(m_imgList);
-    mainLayout->addWidget(settingsBox);
-    mainLayout->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    mainLayout->setMargin(0);
-
-    setMainWidget(m_mainWidget);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("yandexfotki")));
-    setModal(false);
-
-    if (!m_import)
-    {
-        setWindowTitle(i18n("Export to Yandex.Fotki Web Service"));
-
-        startButton()->setText(i18n("Start Upload"));
-        startButton()->setToolTip(i18n("Start upload to Yandex.Fotki service"));
-
-        setMinimumSize(700, 520);
-        uploadBox->hide();
-    }
-    else
-    {
-        // TODO: import support
-        m_imgList->hide();
-        m_newAlbumButton->hide();
-        optionsBox->hide();
-    }
-
+            this, SLOT(slotReloadAlbumsRequest()) );    
+    
+    setMainWidget(m_widget);
+    m_widget->setMinimumSize(800, 700);
+    
     KPAboutData* const about = new KPAboutData(ki18n("Yandex.Fotki Plugin"),
                                                0,
                                                KAboutLicense::GPL,
@@ -507,11 +324,6 @@ void YandexFotkiWindow::writeSettings()
     grp.writeEntry("Sync policy", m_policyGroup->checkedId());
 }
 
-QString YandexFotkiWindow::getDestinationPath() const
-{
-    return m_uploadWidget->selectedImageCollection().uploadUrl().toLocalFile();
-}
-
 void YandexFotkiWindow::slotChangeUserClicked()
 {
     // force authenticate window
@@ -539,12 +351,6 @@ void YandexFotkiWindow::slotCancelClicked()
 {
     m_talker.cancel();
     updateControls(true);
-}
-
-void YandexFotkiWindow::slotResizeChecked()
-{
-    m_dimensionSpin->setEnabled(m_resizeCheck->isChecked());
-    m_imageQualitySpin->setEnabled(m_resizeCheck->isChecked());
 }
 
 /*
@@ -639,7 +445,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         i++;
     }
 
-    const UpdatePolicy policy             = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
+    YandexFotkiWidget::UpdatePolicy policy = static_cast<YandexFotkiWidget::UpdatePolicy>(m_policyGroup->checkedId());
     const YandexFotkiPhoto::Access access = static_cast<YandexFotkiPhoto::Access>(
                                             m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
 
@@ -672,7 +478,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
 
         if (oldPhotoId != -1)
         {
-            if (policy == POLICY_SKIP)
+            if (policy == YandexFotkiWidget::UpdatePolicy::POLICY_SKIP)
             {
                 qCDebug(KIPIPLUGINS_LOG) << "SKIP: " << imgPath;
                 continue;
@@ -681,7 +487,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
             // old photo copy
             m_transferQueue.push(photosList[oldPhotoId]);
 
-            if (policy == POLICY_UPDATE_MERGE)
+            if (policy == YandexFotkiWidget::UpdatePolicy::POLICY_UPDATE_MERGE)
             {
                 foreach(const QString& t, m_transferQueue.top().tags)
                 {
@@ -689,7 +495,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
                 }
             }
 
-            if (policy != POLICY_ADDNEW)
+            if (policy != YandexFotkiWidget::UpdatePolicy::POLICY_ADDNEW)
             {
                 updateFile = false;
             }

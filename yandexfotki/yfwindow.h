@@ -61,6 +61,8 @@ using namespace KIPIPlugins;
 
 namespace KIPIYandexFotkiPlugin
 {
+    
+class YandexFotkiWidget;    
 
 class YandexFotkiWindow : public KPToolDialog
 {
@@ -83,7 +85,6 @@ protected Q_SLOTS:
 
     // ui slots
     void slotChangeUserClicked();
-    void slotResizeChecked();
 
     void slotError();
     void slotGetSessionDone();
@@ -120,27 +121,16 @@ protected:
 
 protected:
 
-    enum UpdatePolicy
-    {
-        POLICY_UPDATE_MERGE = 0,
-        POLICY_UPDATE_KEEP, // is not used in GUI
-        POLICY_SKIP,
-        POLICY_ADDNEW
-    };
-
     /*
      * Plugin
      */
 
     bool                     m_import;
 
+    YandexFotkiWidget*       m_widget; 
     /*
      * User interface
      */
-
-    QWidget*                 m_mainWidget;
-    // accounts
-    QGroupBox*               m_accountBox;
     QLabel*                  m_loginLabel;
     QLabel*                  m_headerLabel;
     QPushButton*             m_changeUserButton;

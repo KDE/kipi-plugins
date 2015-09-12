@@ -31,14 +31,12 @@
 
 #include <KIPI/Plugin>
 
-// Local includes
-
-#include "yfwindow.h"
-
 using namespace KIPI;
 
 namespace KIPIYandexFotkiPlugin
 {
+    
+class YandexFotkiWindow;    
 
 class Plugin_YandexFotki : public Plugin
 {
