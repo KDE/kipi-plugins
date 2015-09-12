@@ -50,16 +50,13 @@
 #include <kde_file.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <kdialog.h>
 #include <klineedit.h>
-#include <kmenu.h>
 #include <khelpmenu.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
-#include <kprogressdialog.h>
-#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kio/renamedialog.h>
+#include <KConfigGroup>
 
 // libkvkontakte includes
 
@@ -159,16 +156,16 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
 //     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
+//     settingsBoxLayout->setSpacing(KDialog::spacingHint());
+//     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(m_settingsBox);
-    mainLayout->setSpacing(KDialog::spacingHint());
-    mainLayout->setMargin(0);
+//     mainLayout->setSpacing(KDialog::spacingHint());
+//     mainLayout->setMargin(0);
 
     setMainWidget(m_mainWidget);
-    setWindowIcon(QIcon::fromTheme("kipi"));
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("kipi")));
     setModal(false);
 
     if (!m_import)
@@ -200,7 +197,7 @@ VkontakteWindow::VkontakteWindow(bool import, QWidget* const parent)
                                                      "(c) 2011-2015, Alexander Potashev"));
 
     about->addAuthor(i18n("Alexander Potashev"), i18n("Author"), QStringLiteral("aspotashev@gmail.com"));
-    about->setHandbookEntry("VKontakte");
+    about->setHandbookEntry(QStringLiteral("VKontakte"));
     setAboutData(about);
 
     /*
@@ -287,7 +284,7 @@ void VkontakteWindow::updateBusyStatusReady()
 
 void VkontakteWindow::readSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("VKontakte Settings");
 
     m_appId         = grp.readEntry("VkAppId", "2446321");
@@ -299,7 +296,7 @@ void VkontakteWindow::readSettings()
 
 void VkontakteWindow::writeSettings()
 {
-    KConfig config("kipirc");
+    KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group("VKontakte Settings");
 
     grp.writeEntry("VkAppId", m_appId);
@@ -354,7 +351,7 @@ void VkontakteWindow::authCleared()
 
 void VkontakteWindow::updateHeaderLabel()
 {
-    m_headerLabel->setText(QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
+    m_headerLabel->setText(QStringLiteral("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
                            .arg(m_accountBox->albumsURL()).arg(i18n("VKontakte")));
 }
 
@@ -404,7 +401,7 @@ void VkontakteWindow::slotStartTransfer()
 
     m_progressBar->show();
     m_progressBar->progressScheduled(i18n("Vkontakte Export"), false, true);
-    m_progressBar->progressThumbnailChanged(QIcon::fromTheme("kipi").pixmap(22, 22));
+    m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)

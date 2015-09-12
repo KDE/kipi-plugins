@@ -32,7 +32,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdialog.h>
 #include <kmessagebox.h>
 
 // LibKvkontakte includes
@@ -68,7 +67,7 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent,
     loginDescLabel->setWhatsThis(i18n("Your VKontakte login"));
 
     m_loginLabel       = new QLabel(this);
-    m_changeUserButton = new QPushButton(QIcon::fromTheme("system-switch-user"),
+    m_changeUserButton = new QPushButton(QIcon::fromTheme(QStringLiteral("system-switch-user")),
                                          i18n("Change Account"), this);
     m_changeUserButton->setToolTip(i18n("Change VKontakte account used to authenticate"));
     m_changeUserButton->hide(); // changing account does not work anyway
@@ -76,8 +75,8 @@ AuthInfoWidget::AuthInfoWidget(QWidget* const parent,
     accountBoxLayout->addWidget(loginDescLabel,     0, 0);
     accountBoxLayout->addWidget(m_loginLabel,       0, 1);
     accountBoxLayout->addWidget(m_changeUserButton, 1, 1);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+//     accountBoxLayout->setSpacing(KDialog::spacingHint());
+//     accountBoxLayout->setMargin(KDialog::spacingHint());
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));
@@ -151,7 +150,7 @@ void AuthInfoWidget::updateAuthInfo()
         loginText = i18n("Unauthorized");
     }
 
-    m_loginLabel->setText(QString("<b>%1</b>").arg(loginText));
+    m_loginLabel->setText(QStringLiteral("<b>%1</b>").arg(loginText));
 }
 
 // TODO: share this code with `vkwindow.cpp`
@@ -165,9 +164,9 @@ void AuthInfoWidget::handleVkError(KJob* kjob)
 QString AuthInfoWidget::albumsURL() const
 {
     if (m_vkapi->isAuthenticated() && m_userId != -1)
-        return QString("http://vk.com/albums%1").arg(m_userId);
+        return QStringLiteral("http://vk.com/albums%1").arg(m_userId);
     else
-        return QLatin1String("http://vk.com/");
+        return QStringLiteral("http://vk.com/");
 }
 
 } // namespace KIPIVkontaktePlugin

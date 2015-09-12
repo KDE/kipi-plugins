@@ -64,23 +64,23 @@ AlbumChooserWidget::AlbumChooserWidget(QWidget* const parent,
     m_albumsCombo        = new QComboBox(this);
     m_albumsCombo->setEditable(false);
 
-    m_newAlbumButton     = new QPushButton(QIcon::fromTheme("list-add"),
+    m_newAlbumButton     = new QPushButton(QIcon::fromTheme(QStringLiteral("list-add")),
                                            i18n("New Album"), this);
     m_newAlbumButton->setToolTip(i18n("Create new VKontakte album"));
 
-    m_reloadAlbumsButton = new QPushButton(QIcon::fromTheme("view-refresh"),
+    m_reloadAlbumsButton = new QPushButton(QIcon::fromTheme(QStringLiteral("view-refresh")),
                                            i18nc("reload albums list", "Reload"), this);
     m_reloadAlbumsButton->setToolTip(i18n("Reload albums list"));
 
     m_editAlbumButton    = new QToolButton(this);
     m_editAlbumButton->setToolTip(i18n("Edit selected album"));
     m_editAlbumButton->setEnabled(false);
-    m_editAlbumButton->setIcon(QIcon::fromTheme("document-edit"));
+    m_editAlbumButton->setIcon(QIcon::fromTheme(QStringLiteral("document-edit")));
 
     m_deleteAlbumButton  = new QToolButton(this);
     m_deleteAlbumButton->setToolTip(i18n("Delete selected album"));
     m_deleteAlbumButton->setEnabled(false);
-    m_deleteAlbumButton->setIcon(QIcon::fromTheme("edit-delete"));
+    m_deleteAlbumButton->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
 
     QWidget* const currentAlbumWidget           = new QWidget(this);
     QHBoxLayout* const currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
@@ -293,7 +293,7 @@ void AlbumChooserWidget::slotDeleteAlbumRequest()
         i18nc("@title:window", "Confirm Album Deletion"),
         KStandardGuiItem::del(),
         KStandardGuiItem::cancel(),
-        QString("kipi_vkontakte_delete_album_with_photos")) != KMessageBox::Continue)
+        QStringLiteral("kipi_vkontakte_delete_album_with_photos")) != KMessageBox::Continue)
     {
         return;
     }
@@ -358,7 +358,7 @@ void AlbumChooserWidget::slotAlbumsReloadDone(KJob* kjob)
     m_albums = job->list();
 
     foreach (const Vkontakte::AlbumInfo &album, m_albums)
-        m_albumsCombo->addItem(QIcon::fromTheme("folder-image"), album.title());
+        m_albumsCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-image")), album.title());
 
     if (m_albumToSelect != -1)
     {

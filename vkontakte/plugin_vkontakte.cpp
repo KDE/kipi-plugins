@@ -82,14 +82,14 @@ void Plugin_Vkontakte::setupActions()
     m_actionExport->setText(i18n("Export to &VKontakte..."));
     // TODO: icon file
     //m_actionExport->setIcon(KIcon("vkontakte"));
-    m_actionExport->setIcon(QIcon::fromTheme("preferences-web-browser-shortcuts"));
+    m_actionExport->setIcon(QIcon::fromTheme(QStringLiteral("preferences-web-browser-shortcuts")));
     //m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Y));
     m_actionExport->setEnabled(false);
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotExport()));
 
-    addAction("VKontakte", m_actionExport);
+    addAction(QStringLiteral("VKontakte"), m_actionExport);
 }
 
 void Plugin_Vkontakte::slotExport()
