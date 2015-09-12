@@ -23,26 +23,6 @@
 
 #include "viewerwidget.h"
 
-// Local includes
-
-#include "timer.h"
-#include "texture.h"
-#include "helpdialog.h"
-
-// Libkipi includes
-
-#include <KIPI/ImageCollection>
-#include <KIPI/Interface>
-#include <KIPI/PluginLoader>
-
-// KDE includes
-
-#include "kipiplugins_debug.h"
-#include <kiconloader.h>
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
-
 // Qt includes
 
 #include <QDesktopWidget>
@@ -53,6 +33,23 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QMimeType>
 #include <QtCore/QStandardPaths>
+
+// KDE includes
+
+#include <klocalizedstring.h>
+
+// Libkipi includes
+
+#include <KIPI/ImageCollection>
+#include <KIPI/Interface>
+#include <KIPI/PluginLoader>
+
+// Local includes
+
+#include "timer.h"
+#include "texture.h"
+#include "helpdialog.h"
+#include "kipiplugins_debug.h"
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5
