@@ -27,13 +27,6 @@ target_link_libraries(kipiplugin_sendimages
                       KF5kipiplugins
 )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(kipiplugin_sendimages
-                          PRIVATE
-                          KF5::KDELibs4Support
-    )
-endif()
-
 configure_file(kipiplugin_sendimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_sendimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})

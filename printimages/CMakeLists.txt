@@ -51,13 +51,6 @@ target_link_libraries(kipiplugin_printimages
                       KF5kipiplugins
                      )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(kipiplugin_printimages
-                          PRIVATE
-                          KF5::KDELibs4Support
-    )
-endif()
-
 configure_file(plugin/kipiplugin_printimages.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop)
 
 install(FILES     ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_printimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})

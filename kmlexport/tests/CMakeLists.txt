@@ -13,10 +13,4 @@ target_link_libraries(test_kmlexport_gpxparsing
                       Qt5::Gui
 )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(test_kmlexport_gpxparsing
-                          KF5::KDELibs4Support
-    )
-endif()
-
 add_test(test_kmlexport_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_kmlexport_gpxparsing)

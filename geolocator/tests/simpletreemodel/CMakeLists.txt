@@ -16,10 +16,4 @@ target_link_libraries(gpssync_test_simpletreemodel
                       KF5kipiplugins
                      )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(gpssync_test_simpletreemodel
-                          KF5::KDELibs4Support
-    )
-endif()
-
 add_test(gpssync_test_simpletreemodel ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_simpletreemodel)

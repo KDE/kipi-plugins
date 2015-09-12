@@ -31,13 +31,6 @@ target_link_libraries(kipiplugin_timeadjust
                       KF5kipiplugins
 )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(kipiplugin_timeadjust
-                          PRIVATE
-                          KF5::KDELibs4Support
-    )
-endif()
-
 configure_file(kipiplugin_timeadjust.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_timeadjust.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_timeadjust.desktop DESTINATION ${SERVICES_INSTALL_DIR})

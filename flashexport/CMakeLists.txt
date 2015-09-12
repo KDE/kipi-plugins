@@ -39,13 +39,6 @@ target_link_libraries(kipiplugin_flashexport
                       KF5kipiplugins
 )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(kipiplugin_flashexport
-                          PRIVATE
-                          KF5::KDELibs4Support
-    )
-endif()
-
 configure_file(kipiplugin_flashexport.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_flashexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})

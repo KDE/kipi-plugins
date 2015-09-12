@@ -19,12 +19,6 @@ target_link_libraries(gpssync_test_correlator
                       KF5kipiplugins
                      )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(gpssync_test_correlator
-                          KF5::KDELibs4Support
-    )
-endif()
-
 if(NOT WIN32)
 
     add_executable(gpssync_test_rgparsing
@@ -38,12 +32,6 @@ if(NOT WIN32)
                           KF5::KGeoMap
                           KF5kipiplugins
                          )
-
-    if(NOT ENABLE_PUREQT5)
-        target_link_libraries(gpssync_test_rgparsing
-                              KF5::KDELibs4Support
-        )
-    endif()
 
 endif()
 
@@ -62,12 +50,6 @@ target_link_libraries(gpssync_test_rgtagmodel
                       KF5kipiplugins
                      )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(gpssync_test_rgtagmodel
-                          KF5::KDELibs4Support
-    )
-endif()
-
 add_executable(gpssync_test_kipiimageitem
                test_kipiimageitem.cpp
                ../kipiimageitem.cpp
@@ -84,12 +66,6 @@ target_link_libraries(gpssync_test_kipiimageitem
                       KF5::Kipi
                       KF5kipiplugins
                      )
-
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(gpssync_test_kipiimageitem
-                          KF5::KDELibs4Support
-    )
-endif()
 
 add_test(gpssync_test_correlator       ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_correlator)
 add_test(gpssync_test_gpsrgparsing     ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)

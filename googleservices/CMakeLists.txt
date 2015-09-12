@@ -37,13 +37,6 @@ target_link_libraries(kipiplugin_googleservices
         KF5kipiplugins
 )
 
-if(NOT ENABLE_PUREQT5)
-    target_link_libraries(kipiplugin_googleservices
-                          PRIVATE
-                          KF5::KDELibs4Support
-    )
-endif()
-
 configure_file(kipiplugin_googleservices.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kipiplugin_googleservices.desktop DESTINATION ${SERVICES_INSTALL_DIR})
