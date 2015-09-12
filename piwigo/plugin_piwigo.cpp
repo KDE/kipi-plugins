@@ -35,7 +35,6 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <KPluginFactory>

@@ -38,7 +38,6 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kstandarddirs.h>
 #include <kwindowsystem.h>
 #include <KPluginFactory>
 #include <KLocalizedString>

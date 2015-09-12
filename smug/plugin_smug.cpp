@@ -44,7 +44,6 @@ extern "C"
 
 // KDE includes
 
-#include <kstandarddirs.h>
 #include <KWindowSystem>
 #include <KPluginFactory>
 #include <KLocalizedString>

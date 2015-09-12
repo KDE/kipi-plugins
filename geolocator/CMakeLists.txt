@@ -60,6 +60,12 @@ target_link_libraries(kipiplugin_geolocator
                       KF5kipiplugins
                      )
 
+if(NOT ENABLE_PUREQT5)
+    target_link_libraries(kipiplugin_geolocator
+                          KF5::KDELibs4Support
+    )
+endif()
+
 if(BUILD_TESTING)
     # needed by modeltest
     target_link_libraries(kipiplugin_geolocator

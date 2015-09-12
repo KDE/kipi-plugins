@@ -41,7 +41,7 @@ if(NOT WIN32)
 
     if(NOT ENABLE_PUREQT5)
         target_link_libraries(gpssync_test_rgparsing
-                            KF5::KDELibs4Support
+                              KF5::KDELibs4Support
         )
     endif()
 
@@ -64,7 +64,7 @@ target_link_libraries(gpssync_test_rgtagmodel
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(gpssync_test_rgtagmodel
-                        KF5::KDELibs4Support
+                          KF5::KDELibs4Support
     )
 endif()
 
@@ -86,7 +86,7 @@ target_link_libraries(gpssync_test_kipiimageitem
 
 if(NOT ENABLE_PUREQT5)
     target_link_libraries(gpssync_test_kipiimageitem
-                        KF5::KDELibs4Support
+                          KF5::KDELibs4Support
     )
 endif()
 

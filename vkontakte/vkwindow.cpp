@@ -46,10 +46,7 @@
 
 // KDE includes
 
-#include <kdeversion.h>
-#include <kde_file.h>
 #include <kconfig.h>
-#include <klocale.h>
 #include <klineedit.h>
 #include <khelpmenu.h>
 #include <kmessagebox.h>

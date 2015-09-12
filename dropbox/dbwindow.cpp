@@ -45,7 +45,6 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kconfig.h>
-#include <kdeversion.h>
 #include <kwallet.h>
 #include <ktoolinvocation.h>
 #include <KWindowConfig>

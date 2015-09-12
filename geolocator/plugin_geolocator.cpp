@@ -39,6 +39,7 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 
