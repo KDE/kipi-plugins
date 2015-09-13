@@ -725,7 +725,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     
     if(tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
     {
-        emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file sie."));
+        emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file size."));
         return false;
     }
 
