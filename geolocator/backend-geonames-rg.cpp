@@ -32,15 +32,16 @@
 #include <QMap>
 #include <QPointer>
 #include <QTimer>
+#include <QUrlQuery>
+#include <QUrl>
 
 //KDE includes
 
-#include <QUrl>
-#include "kipiplugins_debug.h"
 #include <kio/job.h>
 
 //local includes
 
+#include "kipiplugins_debug.h"
 #include "gpssync_common.h"
 
 namespace KIPIGeolocatorPlugin
@@ -120,9 +121,18 @@ void BackendGeonamesRG::nextPhoto()
         return;
 
     QUrl jobUrl(QStringLiteral("http://ws.geonames.org/findNearbyPlaceName"));
-    jobUrl.addQueryItem(QStringLiteral("lat"),  d->jobs.first().request.first().coordinates.latString());
-    jobUrl.addQueryItem(QStringLiteral("lng"),  d->jobs.first().request.first().coordinates.lonString());
-    jobUrl.addQueryItem(QStringLiteral("lang"), d->jobs.first().language);
+    
+    QUrlQuery q1(jobUrl);
+    q1.addQueryItem(QStringLiteral("lat"),  d->jobs.first().request.first().coordinates.latString());
+    jobUrl.setQuery(q1);
+
+    QUrlQuery q2(jobUrl);
+    q2.addQueryItem(QStringLiteral("lng"),  d->jobs.first().request.first().coordinates.lonString());
+    jobUrl.setQuery(q2);
+
+    QUrlQuery q3(jobUrl);
+    q3.addQueryItem(QStringLiteral("lang"), d->jobs.first().language);
+    jobUrl.setQuery(q3);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
     d->jobs.first().kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());

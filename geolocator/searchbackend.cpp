@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QDomDocument>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -80,9 +81,15 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
         d->runningBackend = backendName;
 
         QUrl jobUrl(QStringLiteral("http://nominatim.openstreetmap.org/search"));
-        jobUrl.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
-        jobUrl.addQueryItem(QStringLiteral("q"), searchTerm);
+        
+        QUrlQuery q1(jobUrl);
+        q1.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
+        jobUrl.setQuery(q1);
 
+        QUrlQuery q2(jobUrl);
+        q2.addQueryItem(QStringLiteral("q"), searchTerm);
+        jobUrl.setQuery(q2);
+        
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());
 
@@ -102,8 +109,14 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
         // documentation: http://www.geonames.org/export/geonames-search.html
 
         QUrl jobUrl(QStringLiteral("http://ws.geonames.org/search"));
-        jobUrl.addQueryItem(QStringLiteral("type"), QStringLiteral("xml"));
-        jobUrl.addQueryItem(QStringLiteral("q"), searchTerm);
+        
+        QUrlQuery q1(jobUrl);
+        q1.addQueryItem(QStringLiteral("type"), QStringLiteral("xml"));
+        jobUrl.setQuery(q1);
+        
+        QUrlQuery q2(jobUrl);
+        q2.addQueryItem(QStringLiteral("q"), searchTerm);
+        jobUrl.setQuery(q2);
 
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());
@@ -152,6 +165,7 @@ void SearchBackend::slotResult(KJob* kJob)
         for (QDomNode resultNode = docElement.firstChild(); !resultNode.isNull(); resultNode = resultNode.nextSibling())
         {
             QDomElement resultElement = resultNode.toElement();
+
             if (resultElement.isNull())
             {
                 continue;
@@ -168,7 +182,7 @@ void SearchBackend::slotResult(KJob* kJob)
             const QString displayName       = resultElement.attribute(QStringLiteral("display_name"));
             const QString placeId           = resultElement.attribute(QStringLiteral("place_id"));
 
-            if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
+            if (latString.isEmpty() || lonString.isEmpty() || displayName.isEmpty())
             {
                 continue;
             }

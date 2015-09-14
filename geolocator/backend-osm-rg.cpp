@@ -33,14 +33,15 @@
 #include <QPointer>
 #include <QTimer>
 #include <QUrl>
+#include <QUrlQuery>
 
-//KDE includes
+// KDE includes
 
-#include "kipiplugins_debug.h"
+#include <kio/job.h>
 
 //local includes
 
-#include <kio/job.h>
+#include "kipiplugins_debug.h"
 #include "gpssync_common.h"
 
 namespace KIPIGeolocatorPlugin
@@ -118,12 +119,30 @@ void BackendOsmRG::nextPhoto()
         return;
 
     QUrl jobUrl(QStringLiteral("http://nominatim.openstreetmap.org/reverse"));
-    jobUrl.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
-    jobUrl.addQueryItem(QStringLiteral("lat"), d->jobs.first().request.first().coordinates.latString());
-    jobUrl.addQueryItem(QStringLiteral("lon"), d->jobs.first().request.first().coordinates.lonString());
-    jobUrl.addQueryItem(QStringLiteral("zoom"), QStringLiteral("18"));
-    jobUrl.addQueryItem(QStringLiteral("addressdetails"), QStringLiteral("1"));
-    jobUrl.addQueryItem(QStringLiteral("accept-language"), d->jobs.first().language);
+
+    QUrlQuery q1(jobUrl);
+    q1.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
+    jobUrl.setQuery(q1);
+    
+    QUrlQuery q2(jobUrl);
+    q2.addQueryItem(QStringLiteral("lat"), d->jobs.first().request.first().coordinates.latString());
+    jobUrl.setQuery(q2);
+
+    QUrlQuery q3(jobUrl);
+    q3.addQueryItem(QStringLiteral("lon"), d->jobs.first().request.first().coordinates.lonString());
+    jobUrl.setQuery(q3);
+
+    QUrlQuery q4(jobUrl);
+    q4.addQueryItem(QStringLiteral("zoom"), QStringLiteral("18"));
+    jobUrl.setQuery(q4);
+
+    QUrlQuery q5(jobUrl);
+    q5.addQueryItem(QStringLiteral("addressdetails"), QStringLiteral("1"));
+    jobUrl.setQuery(q5);
+    
+    QUrlQuery q6(jobUrl);
+    q6.addQueryItem(QStringLiteral("accept-language"), d->jobs.first().language);
+    jobUrl.setQuery(q6);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
     d->jobs.first().kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());
