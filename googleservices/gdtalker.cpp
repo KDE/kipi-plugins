@@ -46,6 +46,7 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QStandardPaths>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -151,12 +152,12 @@ void GDTalker::createFolder(const QString& title,const QString& id)
     QUrl url(QStringLiteral("https://www.googleapis.com/drive/v2/files"));
     QByteArray data;
     data += "{\"title\":\"";
-    data += title.toAscii();
+    data += title.toLatin1();
     data += "\",\r\n";
     data += "\"parents\":";
     data += "[{";
     data += "\"id\":\"";
-    data += id.toAscii();
+    data += id.toLatin1();
     data += "\"}],\r\n";
     data += "\"mimeType\":";
     data += "\"application/vnd.google-apps.folder\"";
@@ -183,18 +184,19 @@ void GDTalker::createFolder(const QString& title,const QString& id)
 
 bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString& id,bool rescale,int maxDim,int imageQuality)
 {
-    if(m_job)
+    if (m_job)
     {
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(true);
     MPForm_GDrive form;
     form.addPair(QUrl::fromLocalFile(imgPath).fileName(),info.description,imgPath,id);
     QString path = imgPath;
     QImage image;
 
-    if(KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath)))
+    if (KPMetadata::isRawFile(QUrl::fromLocalFile(imgPath)))
     {
         KDcrawIface::KDcraw::loadRawPreview(image,imgPath);
     }
@@ -203,14 +205,14 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
         image.load(imgPath);
     }
 
-    if(image.isNull())
+    if (image.isNull())
     {
         return false;
     }
 
     path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QStringLiteral("/") + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
 
-    if(rescale && (image.width() > maxDim || image.height() > maxDim)){
+    if (rescale && (image.width() > maxDim || image.height() > maxDim)){
         image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
 
@@ -218,14 +220,14 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
 
     KPMetadata meta;
 
-    if(meta.load(imgPath))
+    if (meta.load(imgPath))
     {
         meta.setImageDimensions(image.size());
         meta.setImageProgramId(QStringLiteral("Kipi-plugins"), kipipluginsVersion());
         meta.save(path);
     }
 
-    if(!form.addFile(path))
+    if (!form.addFile(path))
     {
         emit signalBusy(false);
         return false;
