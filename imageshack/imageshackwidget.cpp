@@ -43,7 +43,7 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <KGuiItem>
+#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -105,7 +105,7 @@ ImageshackWidget::~ImageshackWidget()
 {
 }
 
-void ImageshackWidget::updateLabels(const QString& name, const QString& url)
+void ImageshackWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
 {
     if (m_imageshack->loggedIn())
     {
