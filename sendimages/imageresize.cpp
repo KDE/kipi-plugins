@@ -192,7 +192,7 @@ bool Task::imageResize(const EmailSettings& settings, const QUrl& orgUrl,
         }
         else if (emailSettings.format() == QLatin1String("PNG"))
         {
-            QByteArray data((const char*)img.bits(), img.numBytes());
+            QByteArray data((const char*)img.bits(), img.byteCount());
             KPWriteImage wImageIface;
             wImageIface.setImageData(data, img.width(), img.height(), false, true, QByteArray(), meta);
 
