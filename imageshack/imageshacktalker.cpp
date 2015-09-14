@@ -213,10 +213,16 @@ void ImageshackTalker::getGalleries()
     emit signalJobInProgress(3, 4, i18n("Getting galleries from server"));
 
     QUrl gUrl(m_galleryUrl);
-    gUrl.addQueryItem(QStringLiteral("action"), QStringLiteral("gallery_list"));
-    gUrl.addQueryItem(QStringLiteral("user"), m_imageshack->username());
 
-    KIO::TransferJob* job = KIO::get(gUrl, KIO::NoReload, KIO::HideProgressInfo);
+    QUrlQuery q1(gUrl);
+    q1.addQueryItem(QStringLiteral("action"), QStringLiteral("gallery_list"));
+    gUrl.setQuery(q1);
+    
+    QUrlQuery q2(gUrl);
+    q2.addQueryItem(QStringLiteral("user"), m_imageshack->username());
+    gUrl.setQuery(q2);
+
+    KIO::TransferJob* const job = KIO::get(gUrl, KIO::NoReload, KIO::HideProgressInfo);
 
     connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(data(KIO::Job*,QByteArray)));
