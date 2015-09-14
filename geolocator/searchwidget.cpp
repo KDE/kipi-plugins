@@ -37,18 +37,20 @@
 #include <QMenu>
 #include <QAction>
 #include <QComboBox>
-#include <QtCore/QStandardPaths>
+#include <QStandardPaths>
+#include <QLineEdit>
 
 // KDE includes
 
 #include <kconfiggroup.h>
-#include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 
 // Libkgeomap includes
 
 #include <KGeoMap/KGeoMap_Widget>
+
+// Libkdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
 
@@ -63,6 +65,8 @@
 #ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
 #endif /* GPSSYNC_MODELTEST */
+
+using namespace KDcrawIface;
 
 namespace KIPIGeolocatorPlugin
 {
@@ -113,7 +117,7 @@ public:
     GPSBookmarkOwner*        gpsBookmarkOwner;
     KipiImageModel*          kipiImageModel;
     QItemSelectionModel*     kipiImageSelectionModel;
-    KLineEdit*               searchTermLineEdit;
+    QLineEdit*               searchTermLineEdit;
     QPushButton*             searchButton;
 
     // Search: backend
@@ -149,9 +153,11 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->kipiImageSelectionModel = kipiImageSelectionModel;
     d->searchBackend           = new SearchBackend(this);
     d->searchResultsModel      = new SearchResultModel(this);
+
 #ifdef GPSSYNC_MODELTEST
     new ModelTest(d->searchResultsModel, this);
 #endif /* GPSSYNC_MODELTEST */
+
     d->searchResultsSelectionModel = new QItemSelectionModel(d->searchResultsModel);
     d->searchResultsModel->setSelectionModel(d->searchResultsSelectionModel);
     d->searchResultModelHelper     = new SearchResultModelHelper(d->searchResultsModel, d->searchResultsSelectionModel, d->kipiImageModel, this);
@@ -161,8 +167,8 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
 
     KDcrawIface::RHBox* const topHBox  = new KDcrawIface::RHBox(this);
     d->mainVBox->addWidget(topHBox);
-    d->searchTermLineEdit = new KLineEdit(topHBox);
-    d->searchTermLineEdit->setClearButtonShown(true);
+    d->searchTermLineEdit = new QLineEdit(topHBox);
+    d->searchTermLineEdit->setClearButtonEnabled(true);
     d->searchButton       = new QPushButton(i18nc("Start the search", "Search"), topHBox);
 
     KDcrawIface::RHBox* const actionHBox = new KDcrawIface::RHBox(this);

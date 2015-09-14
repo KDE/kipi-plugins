@@ -38,11 +38,11 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QLineEdit>
 
 // KDE includes
 
 #include <kconfiggroup.h>
-#include <klineedit.h>
 #include <klocalizedstring.h>
 
 // Libkdcraw includes
@@ -91,18 +91,18 @@ public:
     KPPreviewManager*            previewManager;
 
     QCheckBox*                   cbCoordinates;
-    KLineEdit*                   leLatitude;
-    KLineEdit*                   leLongitude;
+    QLineEdit*                   leLatitude;
+    QLineEdit*                   leLongitude;
     QCheckBox*                   cbAltitude;
-    KLineEdit*                   leAltitude;
+    QLineEdit*                   leAltitude;
     QCheckBox*                   cbSpeed;
-    KLineEdit*                   leSpeed;
+    QLineEdit*                   leSpeed;
     QCheckBox*                   cbNSatellites;
-    KLineEdit*                   leNSatellites;
+    QLineEdit*                   leNSatellites;
     QCheckBox*                   cbFixType;
     QComboBox*                   comboFixType;
     QCheckBox*                   cbDop;
-    KLineEdit*                   leDop;
+    QLineEdit*                   leDop;
 
     QPushButton*                 pbApply;
 
@@ -130,30 +130,30 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     d->cbCoordinates = new QCheckBox(i18n("Coordinates"), this);
     formLayout->setWidget(formLayout->rowCount(), QFormLayout::LabelRole, d->cbCoordinates);
 
-    d->leLatitude = new KLineEdit(this);
+    d->leLatitude = new QLineEdit(this);
     d->leLatitude->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
-    d->leLatitude->setClearButtonShown(true);
+    d->leLatitude->setClearButtonEnabled(true);
     formLayout->addRow(i18n("Latitude"), d->leLatitude);
-    d->leLongitude = new KLineEdit(this);
+    d->leLongitude = new QLineEdit(this);
     d->leLongitude->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
-    d->leLongitude->setClearButtonShown(true);
+    d->leLongitude->setClearButtonEnabled(true);
     formLayout->addRow(i18n("Longitude"), d->leLongitude);
 
     d->cbAltitude = new QCheckBox(i18n("Altitude"), this);
-    d->leAltitude = new KLineEdit(this);
-    d->leAltitude->setClearButtonShown(true);
+    d->leAltitude = new QLineEdit(this);
+    d->leAltitude->setClearButtonEnabled(true);
     d->leAltitude->setValidator(new QDoubleValidator(this));
     formLayout->addRow(d->cbAltitude, d->leAltitude);
 
     d->cbSpeed = new QCheckBox(i18n("Speed"), this);
-    d->leSpeed = new KLineEdit(this);
-    d->leSpeed->setClearButtonShown(true);
+    d->leSpeed = new QLineEdit(this);
+    d->leSpeed->setClearButtonEnabled(true);
     d->leSpeed->setValidator(new QDoubleValidator(0, HUGE_VAL, 12, this));
     formLayout->addRow(d->cbSpeed, d->leSpeed);
 
     d->cbNSatellites = new QCheckBox(i18n("# satellites"), this);
-    d->leNSatellites = new KLineEdit(this);
-    d->leNSatellites->setClearButtonShown(true);
+    d->leNSatellites = new QLineEdit(this);
+    d->leNSatellites->setClearButtonEnabled(true);
     d->leNSatellites->setValidator(new QIntValidator(0, 2000, this));
     formLayout->addRow(d->cbNSatellites, d->leNSatellites);
 
@@ -164,8 +164,8 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     formLayout->addRow(d->cbFixType, d->comboFixType);
 
     d->cbDop = new QCheckBox(i18n("DOP"), this);
-    d->leDop = new KLineEdit(this);
-    d->leDop->setClearButtonShown(true);
+    d->leDop = new QLineEdit(this);
+    d->leDop->setClearButtonEnabled(true);
     d->leDop->setValidator(new QDoubleValidator(0, HUGE_VAL, 2, this));
     formLayout->addRow(d->cbDop, d->leDop);
 
