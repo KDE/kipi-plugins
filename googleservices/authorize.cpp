@@ -186,13 +186,13 @@ void Authorize::getAccessToken()
     url.setQuery(urlQuery);
     QByteArray postData;
     postData = "code=";
-    postData += m_code.toAscii();
+    postData += m_code.toLatin1();
     postData += "&client_id=";
-    postData += m_client_id.toAscii();
+    postData += m_client_id.toLatin1();
     postData += "&client_secret=";
-    postData += m_client_secret.toAscii();
+    postData += m_client_secret.toLatin1();
     postData += "&redirect_uri=";
-    postData += m_redirect_uri.toAscii();
+    postData += m_redirect_uri.toLatin1();
     postData += "&grant_type=authorization_code";
 
     KIO::TransferJob* const job = KIO::http_post(url,postData,KIO::HideProgressInfo);
@@ -219,11 +219,11 @@ void Authorize::getAccessTokenFromRefreshToken(const QString& msg)
 
     QByteArray postData;
     postData = "&client_id=";
-    postData += m_client_id.toAscii();
+    postData += m_client_id.toLatin1();
     postData += "&client_secret=";
-    postData += m_client_secret.toAscii();
+    postData += m_client_secret.toLatin1();
     postData += "&refresh_token=";
-    postData += msg.toAscii();
+    postData += msg.toLatin1();
     postData += "&grant_type=refresh_token";
 
     KIO::TransferJob* const job = KIO::http_post(url,postData,KIO::HideProgressInfo);

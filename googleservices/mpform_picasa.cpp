@@ -93,20 +93,20 @@ bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QSt
     if (!name.isEmpty())
     {
         str += "Content-Disposition: form-data; name=\"";
-        str += name.toAscii();
+        str += name.toLatin1();
         str += "\"\r\n";
     }
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: "+ QByteArray(contentType.toAscii());
+        str += "Content-Type: "+ QByteArray(contentType.toLatin1());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
     }
 
     str += "Content-Length: " ;
-    str += content_length.toAscii();
+    str += content_length.toLatin1();
     str += "\r\n\r\n";
     str += value.toUtf8();
     str += "\r\n";

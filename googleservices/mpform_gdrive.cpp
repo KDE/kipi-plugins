@@ -49,7 +49,7 @@ namespace KIPIGoogleServicesPlugin
 {
 
 MPForm_GDrive::MPForm_GDrive()
-    : m_boundary(randomString(42+13).toAscii())
+    : m_boundary(randomString(42+13).toLatin1())
 {
     reset();
 }
@@ -88,7 +88,7 @@ void MPForm_GDrive::finish()
     str += QStringLiteral("--");
     str += m_boundary;
     str += QStringLiteral("--");
-    m_buffer.append(str.toAscii());
+    m_buffer.append(str.toLatin1());
     qCDebug(KIPIPLUGINS_LOG) << "finish:" << m_buffer;
 }
 
@@ -152,7 +152,7 @@ bool MPForm_GDrive::addFile(const QString &path)
 
     imageFile.close();
 
-    m_buffer.append(str.toAscii());
+    m_buffer.append(str.toLatin1());
     m_buffer.append(imageData);
     m_buffer.append("\r\n");
 
