@@ -136,16 +136,16 @@ QString FlickrTalker::getApiSig(const QString& secret, const QUrl& url)
     QUrlQuery urlQuery(url.query());
     QList<QPair<QString, QString> > temp_queries = urlQuery.queryItems();
     QMap<QString, QString> queries;
-    
+
     QPair<QString, QString> pair;
 
     foreach(pair,temp_queries)
     {
         queries.insert(pair.first,pair.second);
     }
-    
+
     QString compressed(secret);
-    
+
     // NOTE: iterator QMap iterator will sort alphabetically items based on key values.
     for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
     {
@@ -202,7 +202,7 @@ void FlickrTalker::maxAllowedFileSize()
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
-    
+
     m_state = FE_GETMAXSIZE;
     m_authProgressDlg->setLabelText(i18n("Getting the maximum allowed file size."));
     m_authProgressDlg->setMaximum(4);
@@ -247,6 +247,7 @@ void FlickrTalker::getFrob()
     urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.auth.getFrob"));
     urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
     url.setQuery(urlQuery);
+
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
@@ -299,6 +300,7 @@ void FlickrTalker::checkToken(const QString& token)
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
+
     qCDebug(KIPIPLUGINS_LOG) << "Check token url: " << url;
     QByteArray tmp;
 
@@ -345,22 +347,23 @@ void FlickrTalker::slotAuthenticate()
     urlQuery.addQueryItem(QStringLiteral("frob"), m_frob);
     urlQuery.addQueryItem(QStringLiteral("perms"), QStringLiteral("write"));
     url.setQuery(urlQuery);
+
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
     qCDebug(KIPIPLUGINS_LOG) << "Authenticate url: " << url;
 
     QDesktopServices::openUrl(url);
-    
+
     QMessageBox quest(QMessageBox::Question,
                       i18n("%1 Service Web Authorization", m_serviceName),
                       i18n("Please follow the instructions in the browser window, then "
                            "return to press corresponding button."),
                       QMessageBox::Yes | QMessageBox::No);
-    
+
     (quest.button(QMessageBox::Yes))->setText(i18n("I am authenticated"));
     (quest.button(QMessageBox::No))->setText(i18n("I am not authenticated"));
-    
+
     if (quest.exec() == QMessageBox::Yes)
     {
         getToken();
@@ -432,6 +435,7 @@ void FlickrTalker::listPhotoSets()
         m_job->kill();
         m_job = 0;
     }
+
     qCDebug(KIPIPLUGINS_LOG) << "List photoset invoked";
     QUrl url(m_apiUrl);
     QUrlQuery urlQuery;
@@ -489,6 +493,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
         QStringList str = (*it).split(QLatin1Char('='), QString::SkipEmptyParts);
         urlQuery.addQueryItem(str[0], str[1]);
     }
+
     url.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
@@ -548,6 +553,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     urlQuery.addQueryItem(QStringLiteral("description"), albumDescription);
     urlQuery.addQueryItem(QStringLiteral("primary_photo_id"), primaryPhotoId);
     url.setQuery(urlQuery);
+
     QString md5 = getApiSig(m_secret, url);
     urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
     url.setQuery(urlQuery);
@@ -605,16 +611,12 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
     else
     {
         urlQuery.addQueryItem(QStringLiteral("auth_token"), m_token);
-
         urlQuery.addQueryItem(QStringLiteral("photoset_id"), photoSetId);
-
         urlQuery.addQueryItem(QStringLiteral("api_key"), m_apikey);
-
         urlQuery.addQueryItem(QStringLiteral("method"), QStringLiteral("flickr.photosets.addPhoto"));
-
         urlQuery.addQueryItem(QStringLiteral("photo_id"), photoId);
-        
         url.setQuery(urlQuery);
+
         QString md5 = getApiSig(m_secret, url);
         urlQuery.addQueryItem(QStringLiteral("api_sig"), md5);
         url.setQuery(urlQuery);
@@ -699,7 +701,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         form.addPair(QStringLiteral("description"), info.description, QStringLiteral("text/plain"));
         urlQuery.addQueryItem(QStringLiteral("description"), info.description);
     }
-    
+
     url2.setQuery(urlQuery);
     QString md5 = getApiSig(m_secret, url2);
     form.addPair(QStringLiteral("api_sig"), md5, QStringLiteral("text/plain"));
@@ -723,6 +725,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         {
             if(image.width() > maxDim || image.height() > maxDim)
                 image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
             image.save(path, "JPEG", imageQuality);
         }
 
@@ -750,15 +753,15 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     }
 
     QFileInfo tempFileInfo(path);
-    
+
     qCDebug(KIPIPLUGINS_LOG) << "QUrl path is " << QUrl::fromLocalFile(path) << "Image size after resizing (in bytes) is "<< tempFileInfo.size();
-    
+
     if(tempFileInfo.size() > (getMaxAllowedFileSize().toLongLong()))
     {
-        emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file sie."));
+        emit signalAddPhotoFailed(i18n("File Size exceeds maximum allowed file size."));
         return false;
     }
-    
+
     if (!form.addFile(QStringLiteral("photo"), path))
     {
         return false;
@@ -895,8 +898,8 @@ void FlickrTalker::slotError(const QString& error)
     };
 
     QMessageBox::critical(QApplication::activeWindow(),
-			  i18n("Error"),
-			  i18n("Error Occurred: %1\nCannot proceed any further.", transError));
+                          i18n("Error"),
+                          i18n("Error Occurred: %1\nCannot proceed any further.", transError));
 }
 
 void FlickrTalker::slotResult(KJob* kjob)
@@ -966,7 +969,7 @@ void FlickrTalker::slotResult(KJob* kjob)
         case (FE_CREATEPHOTOSET):
             parseResponseCreatePhotoSet(m_buffer);
             break;
-        
+
         case (FE_GETMAXSIZE):
             parseResponseMaxSize(m_buffer);
             break;
@@ -1015,7 +1018,7 @@ void FlickrTalker::parseResponseMaxSize(const QByteArray& data)
                 details = details.nextSibling();
             }
         }
-        
+
         if (node.isElement() && node.nodeName() == QStringLiteral("err"))
         {
             qCDebug(KIPIPLUGINS_LOG) << "Checking Error in response";
@@ -1160,7 +1163,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
             qCDebug(KIPIPLUGINS_LOG) << "Msg=" << node.toElement().attribute(QStringLiteral("msg"));
 
             int valueOk = QMessageBox::question(QApplication::activeWindow(),
-						i18n("Invalid Token"),
+                                                i18n("Invalid Token"),
                                                 i18n("Your token is invalid. Would you like to "
                                                       "get a new token to proceed?\n"));
 
@@ -1419,7 +1422,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     else
     {
         emit signalListPhotoSetsSucceeded();
-    maxAllowedFileSize();
+        maxAllowedFileSize();
     }
 }
 
@@ -1540,10 +1543,10 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == QStringLiteral("photoid"))
         {
-            e       = node.toElement();                 // try to convert the node to an element.
+            e                = node.toElement();                 // try to convert the node to an element.
             QDomNode details = e.firstChild();
+            success          = true;
             qCDebug(KIPIPLUGINS_LOG) << "Photoid=" << e.text();
-            success = true;
         }
 
         if (node.isElement() && node.nodeName() == QStringLiteral("err"))
