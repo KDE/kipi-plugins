@@ -335,7 +335,7 @@ void PiwigoWindow::connectSignals()
 
 void PiwigoWindow::slotProcessUrl(const QString& url)
 {
-    QDesktopServices::openUrl(url);
+    QDesktopServices::openUrl(QUrl(url));
 }
 
 void PiwigoWindow::readSettings()
