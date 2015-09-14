@@ -130,7 +130,7 @@ void TestRGTagModel::testModel3()
     QCOMPARE(tagModel->columnCount(QModelIndex()), 1);
 
     // now test toSourceIndex:
-    const QModelIndex tagItem1Index = tagModel->index(0, 0);
+    //const QModelIndex tagItem1Index = tagModel->index(0, 0);
 
     // now add a new item to the source model, before the existing item:
     SimpleTreeModel::Item* const treeItem11a = treeModel->addItem(treeItem1, 0);

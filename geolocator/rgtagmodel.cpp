@@ -796,7 +796,7 @@ void RGTagModel::deleteTag(const QModelIndex& currentIndex)
         {
             parentBranch->spacerChildren.append(currentChildBranch->spacerChildren[j]);
             parentBranch->spacerChildren.last()->parent = parentBranch;
-            QModelIndex testIndex                       = createIndex(parentBranch->spacerChildren.count()-1,0, parentBranch->spacerChildren.last());
+            /*QModelIndex testIndex                       = */createIndex(parentBranch->spacerChildren.count()-1,0, parentBranch->spacerChildren.last());
         }
 
         currentChildBranch->spacerChildren.clear();
@@ -838,7 +838,7 @@ void RGTagModel::deleteTag(const QModelIndex& currentIndex)
  */ 
 void RGTagModel::findAndDeleteSpacersOrNewTags( TreeBranch* currentBranch, int currentRow, Type whatShouldRemove)
 {
-    QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
+    /*QModelIndex currentIndex = */createIndex(currentRow, 0, currentBranch);
 
     for (int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
