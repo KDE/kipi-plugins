@@ -7,7 +7,7 @@
  * Description : A KIPI Plugin to export albums to rajce.net
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2013 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2015 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ namespace KIPIRajcePlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).toAscii();
+    m_boundary += KRandom::randomString(42 + 13).toLatin1();
 }
 
 MPForm::~MPForm()
@@ -85,20 +85,20 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     if (!name.isEmpty())
     {
         str += "Content-Disposition: form-data; name=\"";
-        str += name.toAscii();
+        str += name.toLatin1();
         str += "\"\r\n";
     }
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: "+ QByteArray(contentType.toAscii());
+        str += "Content-Type: "+ QByteArray(contentType.toLatin1());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
     }
 
     str += "Content-Length: " ;
-    str += content_length.toAscii();
+    str += content_length.toLatin1();
     str += "\r\n\r\n";
     str += value.toUtf8();
     str += "\r\n";
