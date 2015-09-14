@@ -57,7 +57,8 @@ public:
 };
 
 KipiImageModel::KipiImageModel(QObject* const parent)
-: QAbstractItemModel(parent), d(new Private)
+    : QAbstractItemModel(parent),
+      d(new Private)
 {
     // TODO: Find an appropriate name (is "digikam-geolocator" OK?)
     // TODO: Make cache size configurable.
@@ -381,6 +382,11 @@ void KipiImageModel::setKipiInterface(KIPI::Interface* const interface)
 
     connect(d->interface, SIGNAL(gotThumbnail(QUrl,QPixmap)),
             this, SLOT(slotThumbnailFromInterface(QUrl,QPixmap)));
+}
+
+Qt::DropActions KipiImageModel::supportedDragActions() const
+{
+    return Qt::CopyAction;
 }
 
 // --------------------------------------------------------------------------------------------

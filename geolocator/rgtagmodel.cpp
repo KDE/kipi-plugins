@@ -85,7 +85,8 @@ public:
  * @param parent The parent object
  */  
 RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent)
-    : QAbstractItemModel(parent), d(new Private)
+    : QAbstractItemModel(parent),
+      d(new Private)
 {
     d->tagModel      = externalTagModel;
     d->rootTag       = new TreeBranch();
@@ -714,7 +715,8 @@ void RGTagModel::slotModelAboutToBeReset()
 
 void RGTagModel::slotModelReset()
 {
-    reset();
+    beginResetModel();
+    endResetModel();
 }
 
 void RGTagModel::slotRowsAboutToBeInserted(const QModelIndex& parent, int start, int end )

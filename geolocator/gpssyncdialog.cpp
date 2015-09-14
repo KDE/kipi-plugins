@@ -264,7 +264,9 @@ public:
 };
 
 GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
-    : QDialog(parent), KPDialogBase(this), d(new Private)
+    : QDialog(parent),
+      KPDialogBase(this),
+      d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose, true);
     setWindowTitle(i18n("Geolocation"));
@@ -286,7 +288,6 @@ GPSSyncDialog::GPSSyncDialog(QWidget* const parent)
 
     d->imageModel->setKipiInterface(iface());
     KipiImageItem::setHeaderData(d->imageModel);
-    d->imageModel->setSupportedDragActions(Qt::CopyAction);
     d->mapModelHelper     = new GPSSyncKGeoMapModelHelper(d->imageModel, d->selectionModel, this);
     d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
     d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
