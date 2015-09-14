@@ -30,6 +30,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -334,17 +335,18 @@ void ImgurTalker::imageUpload (const QUrl& filePath)
     MPForm form;
 
     QUrl exportUrl = QUrl(ImgurConnection::APIuploadURL());
-
-    exportUrl.addQueryItem(QStringLiteral("key"), QString::fromUtf8(d->anonymousKey));
-    exportUrl.addQueryItem(QStringLiteral("name"), filePath.fileName());
-
-    // This should be replaced with something the user submits
-    exportUrl.addQueryItem(QStringLiteral("title"), filePath.fileName());
+    QUrlQuery q(exportUrl);
+    q.addQueryItem(QStringLiteral("key"), QString::fromUtf8(d->anonymousKey));
+    q.addQueryItem(QStringLiteral("name"), filePath.fileName());
 
     // This should be replaced with something the user submits
-    //exportUrl.addQueryItem("caption", "");
+    q.addQueryItem(QStringLiteral("title"), filePath.fileName());
 
-    exportUrl.addQueryItem(QStringLiteral("type"), QStringLiteral("file"));
+    // This should be replaced with something the user submits
+    //q.addQueryItem("caption", "");
+
+    q.addQueryItem(QStringLiteral("type"), QStringLiteral("file"));
+    exportUrl.setQuery(q);
 
     form.addFile(QStringLiteral("image"), filePath.path());
     form.finish();

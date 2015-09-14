@@ -51,7 +51,7 @@ namespace KIPIImgurPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).toAscii();
+    m_boundary += KRandom::randomString(42 + 13).toLatin1();
 }
 
 MPForm::~MPForm()
@@ -84,20 +84,20 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     if (!name.isEmpty())
     {
         str += "Content-Disposition: form-data; name=\"";
-        str += name.toAscii();
+        str += name.toLatin1();
         str += "\"\r\n";
     }
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: " + QByteArray(contentType.toAscii());
+        str += "Content-Type: " + QByteArray(contentType.toLatin1());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
     }
 
     str += "Content-Length: ";
-    str += content_length.toAscii();
+    str += content_length.toLatin1();
     str += "\r\n\r\n";
     str += value.toUtf8();
 
@@ -137,16 +137,16 @@ bool MPForm::addFile(const QString& name, const QString& path)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += name.toAscii();
+    str += name.toLatin1();
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(QUrl(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: ";
-    str += file_size.toAscii();
+    str += file_size.toLatin1();
     str += "\r\n";
     str += "Content-Type: ";
-    str +=  mime.toAscii();
+    str +=  mime.toLatin1();
     str += "\r\n\r\n";
 
     m_buffer.append(str);
