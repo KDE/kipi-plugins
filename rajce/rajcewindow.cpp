@@ -40,7 +40,7 @@
 namespace KIPIRajcePlugin
 {
 
-RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/, Qt::WFlags /*flags*/)
+RajceWindow::RajceWindow(const QString& tmpFolder, QWidget* const /*parent*/)
     : KPToolDialog(0)
 {
     m_widget = new RajceWidget(iface(), tmpFolder, this);

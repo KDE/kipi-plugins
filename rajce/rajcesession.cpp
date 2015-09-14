@@ -328,7 +328,7 @@ QString RajceCommand::additionalXml() const
 
 QByteArray RajceCommand::encode() const
 {
-    QByteArray ret = QStringLiteral("data=").toAscii();
+    QByteArray ret = QStringLiteral("data=").toLatin1();
     ret.append(QUrl::toPercentEncoding(getXml()));
 
     return ret;
@@ -376,7 +376,7 @@ LoginCommand::LoginCommand(const QString& username, const QString& password)
     : RajceCommand(QStringLiteral("login"), Login)
 {
     parameters()[QStringLiteral("login")]    = username;
-    parameters()[QStringLiteral("password")] = QString::fromAscii(
+    parameters()[QStringLiteral("password")] = QString::fromLatin1(
         QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Md5).toHex());
 }
 
