@@ -67,7 +67,7 @@ public:
      */
     virtual ~KioImportWindow();
 
-private slots:
+private Q_SLOTS:
 
     /**
      * Starts importing the selected images.
