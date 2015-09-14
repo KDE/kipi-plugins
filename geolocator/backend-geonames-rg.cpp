@@ -122,17 +122,11 @@ void BackendGeonamesRG::nextPhoto()
 
     QUrl jobUrl(QStringLiteral("http://ws.geonames.org/findNearbyPlaceName"));
     
-    QUrlQuery q1(jobUrl);
-    q1.addQueryItem(QStringLiteral("lat"),  d->jobs.first().request.first().coordinates.latString());
-    jobUrl.setQuery(q1);
-
-    QUrlQuery q2(jobUrl);
-    q2.addQueryItem(QStringLiteral("lng"),  d->jobs.first().request.first().coordinates.lonString());
-    jobUrl.setQuery(q2);
-
-    QUrlQuery q3(jobUrl);
-    q3.addQueryItem(QStringLiteral("lang"), d->jobs.first().language);
-    jobUrl.setQuery(q3);
+    QUrlQuery q(jobUrl);
+    q.addQueryItem(QStringLiteral("lat"),  d->jobs.first().request.first().coordinates.latString());
+    q.addQueryItem(QStringLiteral("lng"),  d->jobs.first().request.first().coordinates.lonString());
+    q.addQueryItem(QStringLiteral("lang"), d->jobs.first().language);
+    jobUrl.setQuery(q);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
     d->jobs.first().kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());

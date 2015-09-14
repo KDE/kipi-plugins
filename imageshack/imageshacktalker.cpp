@@ -214,13 +214,10 @@ void ImageshackTalker::getGalleries()
 
     QUrl gUrl(m_galleryUrl);
 
-    QUrlQuery q1(gUrl);
-    q1.addQueryItem(QStringLiteral("action"), QStringLiteral("gallery_list"));
-    gUrl.setQuery(q1);
-    
-    QUrlQuery q2(gUrl);
-    q2.addQueryItem(QStringLiteral("user"), m_imageshack->username());
-    gUrl.setQuery(q2);
+    QUrlQuery q(gUrl);
+    q.addQueryItem(QStringLiteral("action"), QStringLiteral("gallery_list"));
+    q.addQueryItem(QStringLiteral("user"), m_imageshack->username());
+    gUrl.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(gUrl, KIO::NoReload, KIO::HideProgressInfo);
 

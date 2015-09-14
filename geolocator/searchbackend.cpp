@@ -82,13 +82,10 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
 
         QUrl jobUrl(QStringLiteral("http://nominatim.openstreetmap.org/search"));
         
-        QUrlQuery q1(jobUrl);
-        q1.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
-        jobUrl.setQuery(q1);
-
-        QUrlQuery q2(jobUrl);
-        q2.addQueryItem(QStringLiteral("q"), searchTerm);
-        jobUrl.setQuery(q2);
+        QUrlQuery q(jobUrl);
+        q.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
+        q.addQueryItem(QStringLiteral("q"), searchTerm);
+        jobUrl.setQuery(q);
         
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());
@@ -110,13 +107,10 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
 
         QUrl jobUrl(QStringLiteral("http://ws.geonames.org/search"));
         
-        QUrlQuery q1(jobUrl);
-        q1.addQueryItem(QStringLiteral("type"), QStringLiteral("xml"));
-        jobUrl.setQuery(q1);
-        
-        QUrlQuery q2(jobUrl);
-        q2.addQueryItem(QStringLiteral("q"), searchTerm);
-        jobUrl.setQuery(q2);
+        QUrlQuery q(jobUrl);
+        q.addQueryItem(QStringLiteral("type"), QStringLiteral("xml"));
+        q.addQueryItem(QStringLiteral("q"), searchTerm);
+        jobUrl.setQuery(q);
 
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());

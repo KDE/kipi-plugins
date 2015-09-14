@@ -143,16 +143,15 @@ void PicasawebTalker::listPhotos(const QString& albumId,
 
     QUrl url(QStringLiteral("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
 
-    QUrlQuery q1(url);
-    q1.addQueryItem(QStringLiteral("thumbsize"), QStringLiteral("200"));
-    url.setQuery(q1);
+    QUrlQuery q(url);
+    q.addQueryItem(QStringLiteral("thumbsize"), QStringLiteral("200"));
 
     if (!imgmax.isNull())
     {
-        QUrlQuery q2(url);
-        q2.addQueryItem(QStringLiteral("imgmax"), imgmax);
-        url.setQuery(q2);
+        q.addQueryItem(QStringLiteral("imgmax"), imgmax);
     }
+
+    url.setQuery(q);
 
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());

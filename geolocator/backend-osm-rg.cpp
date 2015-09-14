@@ -120,35 +120,21 @@ void BackendOsmRG::nextPhoto()
 
     QUrl jobUrl(QStringLiteral("http://nominatim.openstreetmap.org/reverse"));
 
-    QUrlQuery q1(jobUrl);
-    q1.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
-    jobUrl.setQuery(q1);
-    
-    QUrlQuery q2(jobUrl);
-    q2.addQueryItem(QStringLiteral("lat"), d->jobs.first().request.first().coordinates.latString());
-    jobUrl.setQuery(q2);
-
-    QUrlQuery q3(jobUrl);
-    q3.addQueryItem(QStringLiteral("lon"), d->jobs.first().request.first().coordinates.lonString());
-    jobUrl.setQuery(q3);
-
-    QUrlQuery q4(jobUrl);
-    q4.addQueryItem(QStringLiteral("zoom"), QStringLiteral("18"));
-    jobUrl.setQuery(q4);
-
-    QUrlQuery q5(jobUrl);
-    q5.addQueryItem(QStringLiteral("addressdetails"), QStringLiteral("1"));
-    jobUrl.setQuery(q5);
-    
-    QUrlQuery q6(jobUrl);
-    q6.addQueryItem(QStringLiteral("accept-language"), d->jobs.first().language);
-    jobUrl.setQuery(q6);
+    QUrlQuery q(jobUrl);
+    q.addQueryItem(QStringLiteral("format"), QStringLiteral("xml"));
+    q.addQueryItem(QStringLiteral("lat"), d->jobs.first().request.first().coordinates.latString());
+    q.addQueryItem(QStringLiteral("lon"), d->jobs.first().request.first().coordinates.lonString());
+    q.addQueryItem(QStringLiteral("zoom"), QStringLiteral("18"));
+    q.addQueryItem(QStringLiteral("addressdetails"), QStringLiteral("1"));
+    q.addQueryItem(QStringLiteral("accept-language"), d->jobs.first().language);
+    jobUrl.setQuery(q);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
     d->jobs.first().kioJob->addMetaData(QStringLiteral("User-Agent"), getKipiUserAgentName());
 
     connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*,QByteArray)), 
             this, SLOT(dataIsHere(KIO::Job*,QByteArray)));
+
     connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));    
 }
