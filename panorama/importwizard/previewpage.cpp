@@ -308,7 +308,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     qCWarning(KIPIPLUGINS_LOG) << "Preview compilation failed: " << ad.message;
-                    QString errorString(xi18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>", Qt::escape(ad.message).replace(QLatin1String("\n"), QLatin1String("</p><p>"))));
+                    QString errorString(xi18n("<qt><h2><b>Error</b></h2><p><message>%1</message></p></qt>",
+                                              ad.message.toHtmlEscaped().replace(QLatin1String("\n"),
+                                                                                 QLatin1String("</p><p>"))));
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
 
@@ -407,7 +409,8 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     d->stitchingBusy = false;
-                    d->postProcessing->addedAction(xi18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>", Qt::escape(ad.message)), ErrorMessage);
+                    d->postProcessing->addedAction(xi18nc("Error message for panorama compilation", "Panorama compilation: <message>%1</message>",
+                                                          ad.message.toHtmlEscaped()), ErrorMessage);
                     qCWarning(KIPIPLUGINS_LOG) << "Enblend call failed";
                     emit signalStitchingFinished(false);
                     break;
