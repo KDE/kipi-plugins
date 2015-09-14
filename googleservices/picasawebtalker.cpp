@@ -50,6 +50,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QMessageBox>
+#include <QUrlQuery>
 
 // KDE includes
 
@@ -139,11 +140,19 @@ void PicasawebTalker::listPhotos(const QString& albumId,
         m_job->kill();
         m_job = 0;
     }
+
     QUrl url(QStringLiteral("https://picasaweb.google.com/data/feed/api/user/default/albumid/") + albumId);
-    url.addQueryItem(QStringLiteral("thumbsize"), QStringLiteral("200"));
+
+    QUrlQuery q1(url);
+    q1.addQueryItem(QStringLiteral("thumbsize"), QStringLiteral("200"));
+    url.setQuery(q1);
 
     if (!imgmax.isNull())
-        url.addQueryItem(QStringLiteral("imgmax"), imgmax);
+    {
+        QUrlQuery q2(url);
+        q2.addQueryItem(QStringLiteral("imgmax"), imgmax);
+        url.setQuery(q2);
+    }
 
     KIO::TransferJob* const job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     KIO::JobUiDelegate* const job_ui = static_cast<KIO::JobUiDelegate*>(job->ui());
