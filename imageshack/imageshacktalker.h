@@ -51,7 +51,7 @@ class ImageshackTalker : public QObject
 
 public:
 
-    ImageshackTalker(Imageshack* imghack);
+    ImageshackTalker(Imageshack* const imghack);
     ~ImageshackTalker();
 
     void authenticate();
@@ -59,8 +59,8 @@ public:
     void cancel();
     void getGalleries();
 
-    void uploadItem(QString path, QMap<QString, QString> opts);
-    void uploadItemToGallery(QString path, const QString& gallery, QMap<QString, QString> opts);
+    void uploadItem(const QString& path, const QMap<QString, QString>& opts);
+    void uploadItemToGallery(const QString& path, const QString& gallery, const QMap<QString, QString>& opts);
 
 Q_SIGNALS:
 

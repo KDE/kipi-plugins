@@ -56,7 +56,7 @@
 namespace KIPIImageshackPlugin
 {
 
-ImageshackTalker::ImageshackTalker(Imageshack* imghack)
+ImageshackTalker::ImageshackTalker(Imageshack* const imghack)
     : m_imageshack(imghack),
       m_loginInProgress(false),
       m_job(0),
@@ -339,7 +339,7 @@ QString ImageshackTalker::mimeType(const QString& path)
     return ptr.name();
 }
 
-void ImageshackTalker::uploadItem(QString path, QMap<QString, QString> opts)
+void ImageshackTalker::uploadItem(const QString& path, const QMap<QString, QString>& opts)
 {
     
     if (m_job)
@@ -394,7 +394,7 @@ void ImageshackTalker::uploadItem(QString path, QMap<QString, QString> opts)
     //uploadItemToGallery(path, QStringLiteral(""), opts);
 }
 
-void ImageshackTalker::uploadItemToGallery(QString path, const QString &gallery, QMap<QString, QString> opts)
+void ImageshackTalker::uploadItemToGallery(const QString& path, const QString& /*gallery*/, const QMap<QString, QString>& opts)
 {
     if (m_job)
     {
