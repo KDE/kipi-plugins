@@ -174,7 +174,7 @@ EnfuseStackList::EnfuseStackList(QWidget* const parent)
     setColumnCount(3);
     setHeaderHidden(false);
     setDragEnabled(false);
-    header()->setResizeMode(QHeaderView::Stretch);
+    header()->setSectionResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
     labels.append( i18nc("@title:column Saving checkbox", "Include during Saving") );

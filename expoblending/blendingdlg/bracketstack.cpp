@@ -133,7 +133,7 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
     setColumnCount(3);
     setHeaderHidden(false);
     setDragEnabled(false);
-    header()->setResizeMode(QHeaderView::Stretch);
+    header()->setSectionResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
     labels.append( i18nc("@title:column Processing checkbox", "Include for Enfuse") );
