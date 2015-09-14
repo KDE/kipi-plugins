@@ -74,7 +74,7 @@ MonthWidget::MonthWidget(Interface* const interface, QWidget* const parent, int 
     setFixedSize(QSize(74, 94));
     month_     = month;
     imagePath_ = QUrl();
-    setThumb(QPixmap(SmallIcon(QStringLiteral("image-x-generic"),
+    setThumb(QPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic"),
                                KIconLoader::SizeMedium,
                                KIconLoader::DisabledState)));
 
@@ -208,7 +208,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
     {
         imagePath_ = QUrl();
         CalSettings::instance()->setImage(month_, imagePath_);
-        setThumb(QPixmap(SmallIcon(QStringLiteral("image-x-generic"),
+        setThumb(QPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic"),
                                    KIconLoader::SizeMedium,
                                    KIconLoader::DisabledState)));
     }

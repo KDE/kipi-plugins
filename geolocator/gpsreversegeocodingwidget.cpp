@@ -39,19 +39,28 @@
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QMenu>
+#include <QUrl>
+#include <QInputDialog>
+#include <QAction>
+#include <QComboBox>
 
 // KDE includes
 
-#include <QAction>
-#include <QComboBox>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <kmessagebox.h>
-#include <kseparator.h>
-#include <QUrl>
-#include <QtWidgets/QInputDialog>
+
+// Libkipi includes
+
+#include <KIPI/Interface>
+#include <KIPI/ImageCollection>
+#include <libkipi_version.h>
+
+// Libkdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 // Libkgeomap includes
 
@@ -70,13 +79,11 @@
 #include "rgtagmodel.h"
 #include "tests/simpletreemodel/simpletreemodel.h"
 
-#include <KIPI/Interface>
-#include <KIPI/ImageCollection>
-#include <libkipi_version.h>
-
 #ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
 #endif /* GPSSYNC_MODELTEST */
+
+using namespace KDcrawIface;
 
 namespace KIPIGeolocatorPlugin
 {
@@ -166,7 +173,7 @@ public:
     QWidget*             LGridContainer;
     QLabel*              serviceLabel;
     QLabel*              languageLabel;
-    KSeparator*          separator;
+    RLineWidget*          separator;
 
     QAbstractItemModel*  externTagModel;
     RGTagModel*          tagModel;
@@ -349,7 +356,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const inte
 
     d->UGridContainer->setLayout(gridLayout);
 
-    d->separator         = new KSeparator(Qt::Horizontal, this);
+    d->separator         = new RLineWidget(Qt::Horizontal, this);
     vBoxLayout->addWidget(d->separator);
 
     d->buttonHideOptions = new QPushButton(i18n("Less options"), this);

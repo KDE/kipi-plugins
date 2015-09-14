@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <kconfiggroup.h>
-#include <kiconloader.h>
 #include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
@@ -170,13 +169,13 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->mainVBox->addWidget(actionHBox);
 
     d->actionClearResultsList = new QAction(this);
-    d->actionClearResultsList->setIcon(SmallIcon(QStringLiteral("edit-clear-list")));
+    d->actionClearResultsList->setIcon(QIcon::fromTheme(QStringLiteral("edit-clear-list")));
     d->actionClearResultsList->setToolTip(i18n("Clear the search results."));
     QToolButton* const tbClearResultsList = new QToolButton(actionHBox);
     tbClearResultsList->setDefaultAction(d->actionClearResultsList);
 
     d->actionKeepOldResults = new QAction(this);
-    d->actionKeepOldResults->setIcon(SmallIcon(QStringLiteral("flag")));
+    d->actionKeepOldResults->setIcon(QIcon::fromTheme(QStringLiteral("flag")));
     d->actionKeepOldResults->setCheckable(true);
     d->actionKeepOldResults->setChecked(false);
     d->actionKeepOldResults->setToolTip(i18n("Keep the results of old searches when doing a new search."));
@@ -191,12 +190,12 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
 
     d->actionCopyCoordinates = new QAction(i18n("Copy coordinates"), this);
-    d->actionCopyCoordinates->setIcon(SmallIcon(QStringLiteral("edit-copy")));
+    d->actionCopyCoordinates->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
 
     d->actionMoveImagesToThisResult = new QAction(i18n("Move selected images to this position"), this);
 
     d->actionRemovedSelectedSearchResultsFromList = new QAction(i18n("Remove from results list"), this);
-    d->actionRemovedSelectedSearchResultsFromList->setIcon(SmallIcon(QStringLiteral("list-remove")));
+    d->actionRemovedSelectedSearchResultsFromList->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
 
     d->backendSelectionBox                            = new QComboBox(actionHBox);
     d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));

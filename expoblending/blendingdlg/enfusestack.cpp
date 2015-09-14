@@ -51,7 +51,8 @@ struct EnfuseStackItem::EnfuseStackItemPriv
 {
     EnfuseStackItemPriv()
         : asValidThumb(false)
-    {}
+    {
+    }
 
     bool           asValidThumb;
     QPixmap        thumb;

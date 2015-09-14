@@ -201,8 +201,8 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18nc("@title:group", "Enfuse Settings"), QStringLiteral("expoblending"), true);
     d->settingsExpander->addItem(dummySaveWidget,      i18nc("@title:group", "Save Settings"),   QStringLiteral("savesettings"), true);
-    d->settingsExpander->setItemIcon(0, SmallIcon(QStringLiteral("kipi-expoblending")));
-    d->settingsExpander->setItemIcon(1, SmallIcon(QStringLiteral("document-save")));
+    d->settingsExpander->setItemIcon(0, QIcon::fromTheme(QStringLiteral("kipi-expoblending")));
+    d->settingsExpander->setItemIcon(1, QIcon::fromTheme(QStringLiteral("document-save")));
     d->settingsExpander->addStretch();
 
     d->enfuseStack                  = new EnfuseStackList(rightColumn->viewport());

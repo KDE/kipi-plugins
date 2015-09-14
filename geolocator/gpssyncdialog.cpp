@@ -65,7 +65,6 @@
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kseparator.h>
 #include <ksqueezedtextlabel.h>
 #include <ktoolinvocation.h>
 #include <kwindowconfig.h>
@@ -75,6 +74,8 @@
 #include <KGeoMap/KGeoMap_Widget>
 #include <KGeoMap/ItemMarkerTiler>
 #include <KGeoMap/Tracks>
+
+// Libkdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
 
@@ -102,6 +103,8 @@
 #ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
 #endif /* GPSSYNC_MODELTEST */
+
+using namespace KDcrawIface;
 
 namespace KIPIGeolocatorPlugin
 {

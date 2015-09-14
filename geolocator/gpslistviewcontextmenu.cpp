@@ -39,7 +39,6 @@
 
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <kiconloader.h>
 
 // libkgeomap includes
 
@@ -106,14 +105,15 @@ public:
 };
 
 GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList* const imagesList, GPSBookmarkOwner* const bookmarkOwner)
-    : QObject(imagesList), d(new Private)
+    : QObject(imagesList),
+      d(new Private)
 {
     d->imagesList                   = imagesList;
 
     d->actionCopy                   = new QAction(i18n("Copy coordinates"),                this);
-    d->actionCopy->setIcon(SmallIcon(QStringLiteral("edit-copy")));
+    d->actionCopy->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
     d->actionPaste                  = new QAction(i18n("Paste coordinates"),               this);
-    d->actionPaste->setIcon(SmallIcon(QStringLiteral("edit-paste")));
+    d->actionPaste->setIcon(QIcon::fromTheme(QStringLiteral("edit-paste")));
     d->actionRemoveCoordinates      = new QAction(i18n("Remove coordinates"),              this);
     d->actionRemoveAltitude         = new QAction(i18n("Remove altitude"),                 this);
     d->actionRemoveUncertainty      = new QAction(i18n("Remove uncertainty"),              this);
