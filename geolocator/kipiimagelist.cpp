@@ -88,11 +88,12 @@ public:
 };
 
 KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const parent)
-    : QTreeView(parent), d(new Private())
+    : QTreeView(parent),
+      d(new Private())
 {
     d->interface = interface;
 
-    header()->setMovable(true);
+    header()->setSectionsMovable(true);
     setUniformRowHeights(true);
     setRootIsDecorated(false);
     setAlternatingRowColors(true);

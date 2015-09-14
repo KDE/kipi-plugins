@@ -120,8 +120,8 @@ void BackendGeonamesRG::nextPhoto()
         return;
 
     QUrl jobUrl(QStringLiteral("http://ws.geonames.org/findNearbyPlaceName"));
-    jobUrl.addQueryItem(QStringLiteral("lat"), d->jobs.first().request.first().coordinates.latString());
-    jobUrl.addQueryItem(QStringLiteral("lng"), d->jobs.first().request.first().coordinates.lonString());
+    jobUrl.addQueryItem(QStringLiteral("lat"),  d->jobs.first().request.first().coordinates.latString());
+    jobUrl.addQueryItem(QStringLiteral("lng"),  d->jobs.first().request.first().coordinates.lonString());
     jobUrl.addQueryItem(QStringLiteral("lang"), d->jobs.first().language);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
