@@ -44,12 +44,18 @@ namespace KIPIPanoramaPlugin
 
 PreProcessTask::PreProcessTask(const QString& workDirPath, int id, ItemPreprocessedUrls& targetUrls,
                                const QUrl& sourceUrl, const RawDecodingSettings& rawSettings)
-    : Task(PREPROCESS_INPUT, workDirPath), id(id),
-      fileUrl(sourceUrl), preProcessedUrl(targetUrls), settings(rawSettings)
-{}
+    : Task(PREPROCESS_INPUT,
+      workDirPath),
+      id(id),
+      fileUrl(sourceUrl),
+      preProcessedUrl(targetUrls),
+      settings(rawSettings)
+{
+}
 
 PreProcessTask::~PreProcessTask()
-{}
+{
+}
 
 void PreProcessTask::requestAbort()
 {
@@ -168,7 +174,7 @@ bool PreProcessTask::convertRaw()
 
         for (it = m.begin(); it != m.end(); ++it)
         {
-            metaIn.removeExifTag(it.key().toAscii().data(), false);
+            metaIn.removeExifTag(it.key().toLatin1().constData(), false);
         }
 
         metaOut.setData(metaIn.data());
