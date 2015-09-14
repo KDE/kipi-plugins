@@ -26,7 +26,7 @@
 
 #include "backend-osm-rg.h"
 
-//Qt includes
+// Qt includes
 
 #include <QDomDocument>
 #include <QMap>
@@ -39,7 +39,7 @@
 
 #include <kio/job.h>
 
-//local includes
+// Local includes
 
 #include "kipiplugins_debug.h"
 #include "gpssync_common.h"

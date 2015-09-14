@@ -25,12 +25,9 @@
 #ifndef GPSIMAGEDETAILS_H
 #define GPSIMAGEDETAILS_H
 
-// KDE includes
-
-#include <QUrl>
-
 // Qt includes
 
+#include <QUrl>
 #include <QModelIndex>
 #include <QWidget>
 

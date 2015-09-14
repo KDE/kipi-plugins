@@ -26,7 +26,7 @@
 
 #include "backend-geonames-rg.h"
 
-//Qt includes
+// Qt includes
 
 #include <QDomDocument>
 #include <QMap>
@@ -35,11 +35,11 @@
 #include <QUrlQuery>
 #include <QUrl>
 
-//KDE includes
+// KDE includes
 
 #include <kio/job.h>
 
-//local includes
+// Local includes
 
 #include "kipiplugins_debug.h"
 #include "gpssync_common.h"

@@ -30,11 +30,7 @@
 #include <QPersistentModelIndex>
 #include <QVariant>
 #include <QDateTime>
-
-// KDE includes
-
 #include <QUrl>
-#include "kipiplugins_debug.h"
 
 // Libkipi includes
 
@@ -44,8 +40,9 @@
 
 #include <KGeoMap/KGeoMap_Primitives>
 
-// local includes
+// Local includes
 
+#include "kipiplugins_debug.h"
 #include "gpsdatacontainer.h"
 #include "kpmetadata.h"
 

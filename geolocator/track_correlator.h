@@ -27,7 +27,7 @@
 #ifndef TRACK_CORRELATOR_H
 #define TRACK_CORRELATOR_H
 
-// libkgeomap includes
+// Libkgeomap includes
 
 #include <KGeoMap/Tracks>
 

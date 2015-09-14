@@ -26,7 +26,7 @@
 
 #include "track_correlator_thread.h"
 
-// local includes
+// Local includes
 
 #include "kipiplugins_debug.h"
 #include "track_correlator.h"

@@ -28,7 +28,7 @@
 
 #include <klocalizedstring.h>
 
-// libkgeomap includes
+// Libkgeomap includes
 
 #include <KGeoMap/Tracks>
 
@@ -50,11 +50,10 @@ namespace KIPIGeolocatorPlugin
 
 enum TrackColumns
 {
-    ColumnVisible = 0,
-    ColumnNPoints = 1,
+    ColumnVisible  = 0,
+    ColumnNPoints  = 1,
     ColumnFilename = 2,
-
-    ColumnCount = 3
+    ColumnCount    = 3
 };
 
 class TrackListModel::Private
@@ -69,8 +68,8 @@ public:
 };
 
 TrackListModel::TrackListModel(KGeoMap::TrackManager* const trackManager, QObject* const parent)
-  : QAbstractItemModel(parent),
-    d(new Private())
+    : QAbstractItemModel(parent),
+      d(new Private())
 {
     d->trackManager = trackManager;
 

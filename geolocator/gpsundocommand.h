@@ -29,7 +29,7 @@
 
 #include <QUndoCommand>
 
-// local includes
+// Local includes
 
 #include "kipiimageitem.h"
 

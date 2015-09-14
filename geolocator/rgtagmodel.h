@@ -32,7 +32,7 @@
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-// local includes
+// Local includes
 
 #include "kipiimageitem.h"
 

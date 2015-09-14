@@ -114,7 +114,8 @@ public:
 };
 
 GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel)
-    : QWidget(parent), d(new Private())
+    : QWidget(parent),
+      d(new Private())
 {
     d->imageModel = imageModel;
 

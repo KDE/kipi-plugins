@@ -31,9 +31,6 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QString>
-
-// KDE includes
-
 #include <QUrl>
 
 // Libkgeomap includes

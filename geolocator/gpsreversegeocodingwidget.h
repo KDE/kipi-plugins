@@ -27,23 +27,20 @@
 #ifndef REVERSEGEOCODING_H
 #define REVERSEGEOCODING_H
 
-//KDE includes
+// Qt includes
 
 #include <QUrl>
-
-//Qt includes
-
 #include <QWidget>
 
 // Libkgeomap includes
 
 #include <KGeoMap/KGeoMap_Primitives>
 
-// libkipi includes
+// Libkipi includes
 
 #include <KIPI/Interface>
 
-// local includes
+// Local includes
 
 #include "kipiimageitem.h"
 

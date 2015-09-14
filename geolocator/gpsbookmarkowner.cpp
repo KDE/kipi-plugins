@@ -27,7 +27,7 @@
 // Qt includes
 
 #include <QStandardItemModel>
-#include <QtCore/QStandardPaths>
+#include <QStandardPaths>
 
 // KDE includes
 

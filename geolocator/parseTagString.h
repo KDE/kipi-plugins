@@ -27,12 +27,9 @@
 #ifndef PARSETAGSTRING_H
 #define PARSETAGSTRING_H
 
-// KDE includes
-
-#include "kipiplugins_debug.h"
-
 // local includes
 
+#include "kipiplugins_debug.h"
 #include "backend-rg.h"
 
 namespace KIPIGeolocatorPlugin

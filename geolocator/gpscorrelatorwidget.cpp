@@ -55,7 +55,6 @@
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <ksqueezedtextlabel.h>
 #include <ktoolinvocation.h>
 
 // Libkdcraw includes
@@ -148,10 +147,10 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     : QWidget(parent),
       d(new Private())
 {
-    d->imageModel = imageModel;
-    d->trackManager = trackManager;
+    d->imageModel      = imageModel;
+    d->trackManager    = trackManager;
     d->trackCorrelator = new TrackCorrelator(d->trackManager, this);
-    d->trackListModel = new TrackListModel(d->trackManager, this);
+    d->trackListModel  = new TrackListModel(d->trackManager, this);
 
     connect(d->trackManager, SIGNAL(signalAllTrackFilesReady()),
             this, SLOT(slotAllTrackFilesReady()));

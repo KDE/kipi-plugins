@@ -31,7 +31,7 @@
 
 #include <QThread>
 
-// local includes
+// Local includes
 
 #include "track_correlator.h"
 

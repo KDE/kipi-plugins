@@ -27,17 +27,14 @@
 #ifndef BACKEND_GEONAMES_RG_H
 #define BACKEND_GEONAMES_RG_H
 
-//kde includes
+// Qt includes
 
 #include <QUrl>
-
-//Qt includes
-
 #include <QList>
 #include <QMap>
 #include <QString>
 
-//local includes
+// Local includes
 
 #include "backend-rg.h"
 

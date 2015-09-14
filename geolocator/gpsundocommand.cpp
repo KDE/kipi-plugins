@@ -24,10 +24,9 @@
 
 #include "gpsundocommand.h"
 
-// local includes:
+// Local includes
 
 #include "kipiimagemodel.h"
-
 
 namespace KIPIGeolocatorPlugin
 {

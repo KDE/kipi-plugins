@@ -32,11 +32,11 @@
 #include <QPixmap>
 #include <QSortFilterProxyModel>
 
-// libKIPI includes
+// Libkipi includes
 
 #include <KIPI/Interface>
 
-// local includes
+// Local includes
 
 #include "kipiimageitem.h"
 

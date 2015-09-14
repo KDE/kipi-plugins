@@ -146,7 +146,8 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
                            KipiImageModel* const kipiImageModel,
                            QItemSelectionModel* const kipiImageSelectionModel,
                            QWidget* const parent)
-    : QWidget(parent), d(new Private())
+    : QWidget(parent),
+      d(new Private())
 {
     d->gpsBookmarkOwner        = gpsBookmarkOwner;
     d->kipiImageModel          = kipiImageModel;

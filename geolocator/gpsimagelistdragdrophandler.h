@@ -29,7 +29,7 @@
 
 #include <QTreeView>
 
-// local includes
+// Local includes
 
 #include "mapdragdrophandler.h"
 #include "kipiimagelist.h"

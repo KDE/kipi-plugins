@@ -30,11 +30,11 @@
 #include <QItemDelegate>
 #include <QTreeView>
 
-// libKIPI includes
+// Libkipi includes
 
 #include <KIPI/Interface>
 
-// local includes
+// Local includes
 
 #include "kipiimagemodel.h"
 

@@ -28,16 +28,13 @@
 #ifndef BACKEND_OSM_RG_H
 #define BACKEND_OSM_RG_H
 
-//kde includes
+// Qt includes
 
 #include <QUrl>
-
-//Qt includes
-
 #include <QList>
 #include <QMap>
 
-//local includes
+// Local includes
 
 #include "backend-rg.h"
 

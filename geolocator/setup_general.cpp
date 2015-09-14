@@ -29,10 +29,10 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QComboBox>
 
 // KDE includes
 
-#include <QComboBox>
 #include <klocalizedstring.h>
 
 // local includes

@@ -27,12 +27,9 @@
 #ifndef GPSCORRELATORWIDGET_H
 #define GPSCORRELATORWIDGET_H
 
-// KDE includes
-
-#include <QUrl>
-
 // Qt includes
 
+#include <QUrl>
 #include <QWidget>
 
 // local includes

@@ -33,7 +33,7 @@
 
 #include <KGeoMap/KGeoMap_Primitives>
 
-// local includes
+// Local includes
 
 #include "gpsreversegeocodingwidget.h"
 

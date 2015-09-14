@@ -27,7 +27,7 @@
 // KDE includes
 
 #include <klinkitemselectionmodel.h>
-#include <KImageCache>
+#include <kimagecache.h>
 
 // Local includes
 

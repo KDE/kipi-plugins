@@ -28,11 +28,11 @@
 
 // KDE includes
 
-#include "kipiplugins_debug.h"
 #include <klocalizedstring.h>
 
 // local includes
 
+#include "kipiplugins_debug.h"
 #include "track_correlator_thread.h"
 
 namespace KIPIGeolocatorPlugin

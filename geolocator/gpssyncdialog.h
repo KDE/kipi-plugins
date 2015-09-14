@@ -36,9 +36,6 @@
 #include <QModelIndex>
 #include <QWidget>
 #include <QDialog>
-
-// KDE includes
-
 #include <QUrl>
 
 // Libkgeomap includes
