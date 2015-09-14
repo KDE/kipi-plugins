@@ -44,7 +44,7 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kio/renamedialog.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // LibKIPI includes
 
@@ -653,6 +653,8 @@ void GSWindow::slotStartTransfer()
                 return;                
             }   
             break;
+        case PluginName::PicasaImport :
+            break;
     }
     
     switch (name)
@@ -679,6 +681,7 @@ void GSWindow::slotStartTransfer()
                 }
             }
             break;
+
         default :
             if(!(m_picsasa_talker->authenticated()))
             {
@@ -748,7 +751,7 @@ void GSWindow::uploadNextPhoto()
 {
     qCDebug(KIPIPLUGINS_LOG) << "in upload nextphoto " << m_transferQueue.count();
 
-    if(m_transferQueue.isEmpty())
+    if (m_transferQueue.isEmpty())
     {
         //m_widget->progressBar()->hide();
         m_widget->progressBar()->progressCompleted();
@@ -764,27 +767,30 @@ void GSWindow::uploadNextPhoto()
     switch (name)
     {
         case PluginName::GDrive :
-        res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                 m_widget->getResizeCheckBox()->isChecked(),
-                                 m_widget->getDimensionSpB()->value(),
-                                 m_widget->getImgQualitySpB()->value());
-        break;
-        
-        case PluginName::PicasaExport :
-        bool bCancel = false;
-        bool bAdd    = true;
-
-        if (!info.id.isEmpty() && !info.editUrl.isEmpty())
         {
-            switch(m_renamingOpt)
+            res = m_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
+                                    m_widget->getResizeCheckBox()->isChecked(),
+                                    m_widget->getDimensionSpB()->value(),
+                                    m_widget->getImgQualitySpB()->value());
+            break;
+        }
+
+        case PluginName::PicasaExport :
+        {    
+            bool bCancel = false;
+            bool bAdd    = true;
+
+            if (!info.id.isEmpty() && !info.editUrl.isEmpty())
             {
-                case PWR_ADD_ALL:
-                    bAdd = true;
-                    break;
-                case PWR_REPLACE_ALL:
-                    bAdd = false;
-                    break;
-                default:
+                switch(m_renamingOpt)
+                {
+                    case PWR_ADD_ALL:
+                        bAdd = true;
+                        break;
+                    case PWR_REPLACE_ALL:
+                        bAdd = false;
+                        break;
+                    default:
                     {
                         ReplaceDialog dlg(this, QStringLiteral(""), iface(), pathComments.first, info.thumbURL);
                         dlg.exec();
@@ -808,95 +814,99 @@ void GSWindow::uploadNextPhoto()
                                 bCancel = true;
                                 break;
                         }
+
+                        break;
                     }
-                    break;
+                }
             }
-        }
-        
-        //adjust tags according to radio button clicked
-        switch (m_widget->m_tagsBGrp->checkedId())
-        {
-            case PwTagLeaf:
+            
+            //adjust tags according to radio button clicked
+            switch (m_widget->m_tagsBGrp->checkedId())
             {
-                QStringList newTags;
-                QStringList::const_iterator itT;
-
-                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                case PwTagLeaf:
                 {
-                    QString strTmp = *itT;
-                    int idx        = strTmp.lastIndexOf(QStringLiteral("/"));
+                    QStringList newTags;
+                    QStringList::const_iterator itT;
 
-                    if (idx > 0)
+                    for (itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
                     {
-                        strTmp.remove(0, idx + 1);
+                        QString strTmp = *itT;
+                        int idx        = strTmp.lastIndexOf(QStringLiteral("/"));
+
+                        if (idx > 0)
+                        {
+                            strTmp.remove(0, idx + 1);
+                        }
+
+                        newTags.append(strTmp);
                     }
 
-                    newTags.append(strTmp);
+                    info.tags = newTags;
+                    break;
                 }
 
-                info.tags = newTags;
-                break;
-            }
-
-            case PwTagSplit:
-            {
-                QSet<QString> newTagsSet;
-                QStringList::const_iterator itT;
-
-                for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
+                case PwTagSplit:
                 {
-                    QStringList strListTmp = itT->split(QLatin1Char('/'));
-                    QStringList::const_iterator itT2;
+                    QSet<QString> newTagsSet;
+                    QStringList::const_iterator itT;
 
-                    for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
+                    for (itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
                     {
-                        if (!newTagsSet.contains(*itT2))
+                        QStringList strListTmp = itT->split(QLatin1Char('/'));
+                        QStringList::const_iterator itT2;
+
+                        for (itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
                         {
-                            newTagsSet.insert(*itT2);
+                            if (!newTagsSet.contains(*itT2))
+                            {
+                                newTagsSet.insert(*itT2);
+                            }
                         }
                     }
+
+                    info.tags.clear();
+                    QSet<QString>::const_iterator itT3;
+
+                    for (itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
+                    {
+                        info.tags.append(*itT3);
+                    }
+
+                    break;
                 }
 
-                info.tags.clear();
-                QSet<QString>::const_iterator itT3;
-
-                for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
-                {
-                    info.tags.append(*itT3);
-                }
-
-                break;
+                case PwTagCombined:
+                default:
+                    break;
             }
-
-            case PwTagCombined:
-            default:
-                break;
-        }
-        
-        if (bCancel)
-        {
-            slotTransferCancel();
-            res = true;
-        }
-        else
-        {
-            if(bAdd)
+            
+            if (bCancel)
             {
-                res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
-                                                 m_widget->getResizeCheckBox()->isChecked(),
-                                                 m_widget->getDimensionSpB()->value(),
-                                                 m_widget->getImgQualitySpB()->value());     
+                slotTransferCancel();
+                res = true;
             }
             else
             {
-                res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info,
+                if (bAdd)
+                {
+                    res = m_picsasa_talker->addPhoto(pathComments.first.toLocalFile(),info,m_currentAlbumId,
                                                     m_widget->getResizeCheckBox()->isChecked(),
                                                     m_widget->getDimensionSpB()->value(),
-                                                    m_widget->getImgQualitySpB()->value());
+                                                    m_widget->getImgQualitySpB()->value());     
+                }
+                else
+                {
+                    res = m_picsasa_talker->updatePhoto(pathComments.first.toLocalFile(), info,
+                                                        m_widget->getResizeCheckBox()->isChecked(),
+                                                        m_widget->getDimensionSpB()->value(),
+                                                        m_widget->getImgQualitySpB()->value());
+                }
             }
+            break;
         }
-        break;
 
+        case PluginName::PicasaImport :
+            break;
     }
     
     if (!res)
