@@ -68,7 +68,7 @@ public:
     ImgurWindow* winExport;
 };
 
-Plugin_Imgur::Plugin_Imgur(QObject* const parent, const QVariantList& args)
+Plugin_Imgur::Plugin_Imgur(QObject* const parent, const QVariantList& /*args*/)
     : Plugin(parent, "Imgur"),
       d(new Private)
 {
