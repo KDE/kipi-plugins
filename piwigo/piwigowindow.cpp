@@ -44,6 +44,7 @@
 #include <QApplication>
 #include <QIcon>
 #include <QMenu>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -51,9 +52,8 @@
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <krun.h>
-#include <ktoolinvocation.h>
 #include <kurllabel.h>
-#include <KConfigGroup>
+#include <kconfiggroup.h>
 
 // Libkipi includes
 
@@ -335,7 +335,7 @@ void PiwigoWindow::connectSignals()
 
 void PiwigoWindow::slotProcessUrl(const QString& url)
 {
-    KToolInvocation::self()->invokeBrowser(url);
+    QDesktopServices::openUrl((url);
 }
 
 void PiwigoWindow::readSettings()
