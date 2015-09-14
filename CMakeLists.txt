@@ -110,8 +110,6 @@ find_package(KF5 REQUIRED COMPONENTS
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)
-
 # Dependencies detection required by all plugins
 
 DETECT_LIBKIPI(${KIPI_MIN_VERSION})
