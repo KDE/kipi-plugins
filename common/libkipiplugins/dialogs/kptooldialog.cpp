@@ -33,7 +33,6 @@
 
 // KDE includes
 
-#include <khelpmenu.h>
 #include <klocalizedstring.h>
 #include <kguiitem.h>
 

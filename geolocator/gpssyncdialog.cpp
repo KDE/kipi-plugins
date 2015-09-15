@@ -62,7 +62,6 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <khelpmenu.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kwindowconfig.h>

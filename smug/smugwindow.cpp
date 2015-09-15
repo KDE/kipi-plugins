@@ -40,7 +40,6 @@
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <khelpmenu.h>
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>

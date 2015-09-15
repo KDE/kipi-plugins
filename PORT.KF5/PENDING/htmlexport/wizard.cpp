@@ -28,36 +28,33 @@
 
 #include <QCheckBox>
 #include <QLabel>
+#include <QMenu>
+#include <QApplication>
+#include <QComboBox>
 
 // KDE includes
 
-#include <QApplication>
-#include <QComboBox>
 #include <kconfigdialogmanager.h>
-#include "kipiplugins_debug.h"
-#include <kdialog.h>
 #include <klistwidget.h>
 #include <klocalizedstring.h>
-#include <QMenu>
 #include <ktextbrowser.h>
 #include <kurlrequester.h>
-#include <ktoolinvocation.h>
-#include <kpushbutton.h>
-#include <khelpmenu.h>
 
 // KIPI includes
 
-#include <imagecollectionselector.h>
+#include <KIPI/ImageCollectionSelector>
 #include <KIPI/Interface>
 
 // Local includes
 
+#include "kipiplugins_debug.h"
 #include "abstractthemeparameter.h"
 #include "galleryinfo.h"
 #include "invisiblebuttongroup.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "theme.h"
+
 #include "ui_imagesettingspage.h"
 #include "ui_outputpage.h"
 #include "ui_themepage.h"

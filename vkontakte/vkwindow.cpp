@@ -48,7 +48,6 @@
 
 #include <kconfig.h>
 #include <klineedit.h>
-#include <khelpmenu.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kio/renamedialog.h>

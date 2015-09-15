@@ -30,7 +30,6 @@
 
 // KDE includes
 
-#include <khelpmenu.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
