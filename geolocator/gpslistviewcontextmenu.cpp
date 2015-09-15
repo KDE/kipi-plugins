@@ -34,11 +34,11 @@
 #include <QPointer>
 #include <QAction>
 #include <QMenu>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // libkgeomap includes
 
@@ -417,7 +417,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
         if (foundDoubleData)
         {
-            KMessageBox::sorry(d->imagesList, i18n("Found more than one point on the clipboard - can only assign one point at a time."), i18n("GPS Sync"));
+            QMessageBox::information(d->imagesList, i18n("GPS Sync"), i18n("Found more than one point on the clipboard - can only assign one point at a time."));
         }
     }
 
@@ -475,7 +475,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
     if (!foundData)
     {
-        KMessageBox::sorry(d->imagesList, i18n("Could not find any coordinates on the clipboard."), i18n("GPS Sync"));
+        QMessageBox::information(d->imagesList, i18n("GPS Sync"), i18n("Could not find any coordinates on the clipboard."));
         return;
     }
 
@@ -745,7 +745,7 @@ void GPSListViewContextMenu::slotAltitudeLookupDone()
     if (requestStatus==KGeoMap::LookupAltitude::StatusError)
     {
         const QString errorMessage = i18n("Altitude lookup failed:\n%1", d->altitudeLookup->errorMessage());
-        KMessageBox::sorry(d->imagesList, errorMessage, i18n("GPS Sync"));
+        QMessageBox::information(d->imagesList, i18n("GPS Sync"),errorMessage);
     }
 
     if (d->altitudeReceivedCount>0)
