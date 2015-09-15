@@ -44,6 +44,8 @@
 #include <QInputDialog>
 #include <QAction>
 #include <QComboBox>
+#include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -209,7 +211,8 @@ public:
  * @param parent The parent object
  */
 GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* const interface, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent)
-    : QWidget(parent), d(new Private())
+    : QWidget(parent),
+      d(new Private())
 {
 
     d->imageModel     = imageModel;
@@ -565,7 +568,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     if (!errorString.isEmpty())
     {
         /// @todo This collides with the message box displayed if the user aborts the RG process
-        KMessageBox::error(this, errorString);
+        QMessageBox::critical(this, qApp->applicationName(), errorString);
 
         d->receivedRGCount+=returnedRGList.count();
         emit(signalSetUIEnabled(true));
