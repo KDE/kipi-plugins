@@ -39,12 +39,12 @@
 #include <QComboBox>
 #include <QStandardPaths>
 #include <QLineEdit>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kconfiggroup.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // Libkgeomap includes
 
@@ -281,7 +281,7 @@ void SearchWidget::slotSearchCompleted()
 
     if (!errorString.isEmpty())
     {
-        KMessageBox::error(this, i18n("Your search failed:\n%1", errorString), i18n("Search failed"));
+        QMessageBox::critical(this, i18n("Search failed"), i18n("Your search failed:\n%1", errorString));
         slotUpdateActionAvailability();
         return;
     }
