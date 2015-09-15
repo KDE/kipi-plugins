@@ -44,17 +44,16 @@
 #include <QComboBox>
 #include <QMenu>
 #include <QStandardPaths>
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QSpinBox>
+#include <QFileDialog>
+#include <QSpinBox>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kio/global.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <khelpmenu.h>
-#include <klocalizedstring.h>
 #include <kmessagebox.h>
+#include <kconfiggroup.h>
+#include <klocalizedstring.h>
 
 // Libkdcraw includes
 
@@ -584,22 +583,20 @@ void GPSCorrelatorWidget::slotAllItemsCorrelated()
 {
     if (d->correlationCorrelatedCount==0)
     {
-        KMessageBox::sorry(this,
-                           i18n("Could not correlate any image - please make sure the timezone and gap settings are correct."),
-                           i18n("Correlation failed"));
+        QMessageBox::warning(this, i18n("Correlation failed"),
+                             i18n("Could not correlate any image - please make sure the timezone and gap settings are correct."));
     }
     else if (d->correlationCorrelatedCount==d->correlationTotalCount)
     {
-        KMessageBox::information(this,
-                                 i18n("All images have been correlated. You can now check their position on the map."),
-                                 i18n("Correlation succeeded"));
+        QMessageBox::information(this, i18n("Correlation succeeded"),
+                                 i18n("All images have been correlated. You can now check their position on the map."));
     }
     else
     {
         // note: no need for i18np here, because the case of correlationTotalCount==1 is covered in the other two cases.
-        KMessageBox::sorry(this,
-                           i18n("%1 out of %2 images have been correlated. Please check the timezone and gap settings if you think that more images should have been correlated.", d->correlationCorrelatedCount, d->correlationTotalCount),
-                           i18n("Correlation finished"));
+        QMessageBox::warning(this, i18n("Correlation finished"),
+                           i18n("%1 out of %2 images have been correlated. Please check the timezone and gap settings if you think that more images should have been correlated.",
+                                d->correlationCorrelatedCount, d->correlationTotalCount));
     }
 
     if (d->correlationCorrelatedCount==0)
@@ -620,16 +617,16 @@ void GPSCorrelatorWidget::slotAllItemsCorrelated()
 
 void GPSCorrelatorWidget::saveSettingsToGroup(KConfigGroup* const group)
 {
-    group->writeEntry("Max Gap Time", d->maxGapInput->value() );
-    group->writeEntry("Time Zone Mode", d->timeZoneGroup->checkedId() );
-    group->writeEntry("Time Zone", d->timeZoneCB->currentIndex() );
-    group->writeEntry("Interpolate", d->interpolateBox->isChecked() );
-    group->writeEntry("ShowTracksOnMap", d->showTracksOnMap->isChecked() );
-    group->writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
-    group->writeEntry("Offset Enabled", d->offsetEnabled->isChecked());
-    group->writeEntry("Offset Sign", d->offsetSign->currentIndex());
-    group->writeEntry("Offset Min", d->offsetMin->value());
-    group->writeEntry("Offset Sec", d->offsetSec->value());
+    group->writeEntry("Max Gap Time",                 d->maxGapInput->value());
+    group->writeEntry("Time Zone Mode",               d->timeZoneGroup->checkedId());
+    group->writeEntry("Time Zone",                    d->timeZoneCB->currentIndex());
+    group->writeEntry("Interpolate",                  d->interpolateBox->isChecked());
+    group->writeEntry("ShowTracksOnMap",              d->showTracksOnMap->isChecked());
+    group->writeEntry("Max Inter Dist Time",          d->maxTimeInput->value());
+    group->writeEntry("Offset Enabled",               d->offsetEnabled->isChecked());
+    group->writeEntry("Offset Sign",                  d->offsetSign->currentIndex());
+    group->writeEntry("Offset Min",                   d->offsetMin->value());
+    group->writeEntry("Offset Sec",                   d->offsetSec->value());
     group->writeEntry("GPX File Open Last Directory", d->gpxFileOpenLastDirectory.toLocalFile());
 }
 
@@ -674,8 +671,8 @@ QList<KGeoMap::GeoCoordinates::List> GPSCorrelatorWidget::getTrackCoordinates() 
     for (int i=0; i<d->trackManager->trackCount(); ++i)
     {
         const KGeoMap::TrackManager::Track& gpxData = d->trackManager->getTrack(i);
-
         KGeoMap::GeoCoordinates::List track;
+
         for (int coordIdx = 0; coordIdx < gpxData.points.count(); ++coordIdx)
         {
             KGeoMap::TrackManager::TrackPoint const& point = gpxData.points.at(coordIdx);
