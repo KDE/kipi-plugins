@@ -51,9 +51,8 @@
 #include <khelpmenu.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
-#include <ktoolinvocation.h>
 #include <kio/renamedialog.h>
-#include <KConfigGroup>
+#include <kconfiggroup.h>
 
 // libkvkontakte includes
 
@@ -63,7 +62,7 @@
 // LibKIPI includes
 
 #include <KIPI/Interface>
-#include <uploadwidget.h>
+#include <KIPI/UploadWidget>
 #include <KIPI/ImageCollection>
 
 // Local includes

@@ -44,8 +44,7 @@
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
-#include <ktoolinvocation.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // LibKDcraw includes
 

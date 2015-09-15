@@ -32,8 +32,9 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ktoolinvocation.h>
 #include <kcombobox.h>
+
+// Libkdcraw includes
 
 #include <KDCRAW/RWidgetUtils>
 

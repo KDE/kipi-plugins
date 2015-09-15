@@ -40,8 +40,8 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ktoolinvocation.h>
 #include <kmessagebox.h>
+#include <ktoolinvocation.h>
 
 // Libkipi includes
 

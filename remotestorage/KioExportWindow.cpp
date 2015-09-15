@@ -37,7 +37,6 @@
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 #include <KWindowConfig>
 
 // Local includes

@@ -35,7 +35,6 @@
 
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
-#include <ktoolinvocation.h>
 #include <kguiitem.h>
 
 // Libkipi includes

@@ -46,7 +46,6 @@
 #include <krun.h>
 #include <kconfig.h>
 #include <kwallet.h>
-#include <ktoolinvocation.h>
 #include <KWindowConfig>
 
 // Libkipi includes
