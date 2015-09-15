@@ -65,7 +65,6 @@
 #include <khelpmenu.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 #include <kwindowconfig.h>
 
 // Libkgeomap includes
