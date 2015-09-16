@@ -44,7 +44,7 @@ class KConfigGroup;
 
 namespace KGeoMap
 {
-    class KGeoMapWidget;
+    class MapWidget;
 }
 
 namespace KIPIGeolocatorPlugin
@@ -146,7 +146,7 @@ public:
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(const KConfigGroup* const group);
 
-    void setPrimaryMapWidget(KGeoMap::KGeoMapWidget* const mapWidget);
+    void setPrimaryMapWidget(KGeoMap::MapWidget* const mapWidget);
 
 private Q_SLOTS:
 

@@ -119,9 +119,4 @@ private:
 
 } /* KIPIGeolocatorPlugin */
 
-// TODO: ugly way to prevent double declaration of the metatype
-#ifndef KGEOMAP_PRIMITIVES_H
-Q_DECLARE_METATYPE(QPersistentModelIndex);
-#endif /* KGEOMAP_PRIMITIVES_H */
-
 #endif /* KIPIIMAGEMODEL_H */

@@ -35,7 +35,7 @@
 
 // libkgeomap includes
 
-#include <KGeoMap/Track_Reader>
+#include <KGeoMap/TrackReader>
 
 // local includes
 

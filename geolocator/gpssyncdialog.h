@@ -40,7 +40,7 @@
 
 // Libkgeomap includes
 
-#include <KGeoMap/KGeoMap_Primitives>
+#include <KGeoMap/Types>
 #include <KGeoMap/ModelHelper>
 #include <KGeoMap/Tracks>
 
@@ -54,7 +54,7 @@
 
 namespace KGeoMap
 {
-    class KGeoMapWidget;
+    class MapWidget;
 }
 
 using namespace KIPI;
@@ -127,7 +127,7 @@ private:
     void readSettings();
     void saveSettings();
     void saveChanges(const bool closeAfterwards);
-    KGeoMapWidget* makeMapWidget(QWidget** const pvbox);
+    MapWidget* makeMapWidget(QWidget** const pvbox);
     void adjustMapLayout(const bool syncSettings);
 
 private Q_SLOTS:

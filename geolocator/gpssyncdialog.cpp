@@ -68,7 +68,7 @@
 
 // Libkgeomap includes
 
-#include <KGeoMap/KGeoMap_Widget>
+#include <KGeoMap/MapWidget>
 #include <KGeoMap/ItemMarkerTiler>
 #include <KGeoMap/Tracks>
 
@@ -249,8 +249,8 @@ public:
     // map: UI
     MapLayout                                mapLayout;
     QSplitter*                               mapSplitter;
-    KGeoMapWidget*                           mapWidget;
-    KGeoMapWidget*                           mapWidget2;
+    MapWidget*                               mapWidget;
+    MapWidget*                               mapWidget2;
 
     // map: helpers
     MapDragDropHandler*                      mapDragDropHandler;
@@ -1220,11 +1220,11 @@ void GPSSyncDialog::slotSetupChanged()
     adjustMapLayout(true);
 }
 
-KGeoMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
+MapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
 {
     QWidget* const dummyWidget     = new QWidget(this);
     QVBoxLayout* const vbox        = new QVBoxLayout(dummyWidget);
-    KGeoMapWidget* const mapWidget = new KGeoMapWidget(dummyWidget);
+    MapWidget* const mapWidget = new MapWidget(dummyWidget);
     mapWidget->setAvailableMouseModes(MouseModePan|MouseModeZoomIntoGroup|MouseModeSelectThumbnail);
     mapWidget->setVisibleMouseModes(MouseModePan|MouseModeZoomIntoGroup|MouseModeSelectThumbnail);
     mapWidget->setMouseMode(MouseModeSelectThumbnail);

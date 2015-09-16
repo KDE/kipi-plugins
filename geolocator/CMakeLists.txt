@@ -51,6 +51,7 @@ endif()
 add_library(kipiplugin_geolocator MODULE ${kipiplugin_geolocator_PART_SRCS})
 
 target_link_libraries(kipiplugin_geolocator
+                      KF5kipiplugins
                       KF5::Parts
                       KF5::KHtml
                       KF5::Kipi
@@ -59,7 +60,7 @@ target_link_libraries(kipiplugin_geolocator
                       KF5::ItemModels
                       KF5::IconThemes
                       KF5::GuiAddons
-                      KF5kipiplugins
+                      Qt5::Concurrent
                      )
 
 if(BUILD_TESTING)

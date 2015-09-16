@@ -48,7 +48,7 @@
 
 // Libkgeomap includes
 
-#include <KGeoMap/KGeoMap_Widget>
+#include <KGeoMap/MapWidget>
 
 // Libkdcraw includes
 
@@ -113,7 +113,7 @@ public:
     }
 
     // Map
-    KGeoMap::KGeoMapWidget*  mapWidget;
+    KGeoMap::MapWidget*      mapWidget;
     GPSBookmarkOwner*        gpsBookmarkOwner;
     KipiImageModel*          kipiImageModel;
     QItemSelectionModel*     kipiImageSelectionModel;
@@ -826,7 +826,7 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
     emit(signalUndoCommand(undoCommand));
 }
 
-void SearchWidget::setPrimaryMapWidget(KGeoMap::KGeoMapWidget* const mapWidget)
+void SearchWidget::setPrimaryMapWidget(KGeoMap::MapWidget* const mapWidget)
 {
     d->mapWidget = mapWidget;
 }

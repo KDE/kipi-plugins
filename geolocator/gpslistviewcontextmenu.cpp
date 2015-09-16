@@ -42,7 +42,7 @@
 
 // libkgeomap includes
 
-#include <KGeoMap/Lookup_Factory>
+#include <KGeoMap/LookupFactory>
 
 // Libkipi includes
 

@@ -66,7 +66,7 @@
 
 // Libkgeomap includes
 
-#include <KGeoMap/KGeoMap_Primitives>
+#include <KGeoMap/Types>
 
 // local includes
 
