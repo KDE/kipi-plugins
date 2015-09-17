@@ -50,7 +50,6 @@ set(REQUIRED_QT_VERSION "5.2.0")
 set(KIPI_MIN_VERSION    "5.0.0")
 set(KEXIV2_MIN_VERSION  "5.0.0")
 set(KDCRAW_MIN_VERSION  "5.0.0")
-set(KGEOMAP_MIN_VERSION "5.0.0")
 cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 ############## ECM setup ######################
@@ -124,7 +123,6 @@ if(KF5Kipi_FOUND)
 
     # -- Optional dependencies detection required by some plugins -------------------------------------
 
-    DETECT_LIBKGEOMAP(5.0.0)                                                   # For Geolocator.
     DETECT_LIBMEDIAWIKI(5.0.0)                                                 # For Mediawiki.
     DETECT_LIBKVKONTAKTE(4.70.0)                                               # For VKontakte.
     find_package(OpenGL)                                                       # For AdvancedSlideshow and ImageViewer.
@@ -165,7 +163,6 @@ if(KF5Kipi_FOUND)
 
     # Optional shared libraries results.
 
-    PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap"     "https://projects.kde.org/projects/extragear/libs/libkgeomap"     "(version >= ${KGEOMAP_MIN_VERSION})" "Kipi-plugins will be compiled without libkgeomap support."     KF5KGeoMap_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki"   "https://projects.kde.org/projects/extragear/libs/libmediawiki"   "(version >= 5.0.0)"                  "Kipi-plugins will be compiled without libmediawiki support."   KF5MediaWiki_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte"  "https://projects.kde.org/projects/extragear/libs/libkvkontakte"  "(version >= 4.70.0)"                 "Kipi-plugins will be compiled without libkvkontakte support."  KF5Vkontakte_FOUND)
     PRINT_OPTIONAL_LIBRARY_STATUS("libkcalcore"    "https://projects.kde.org/projects/kde/pim/kcalcore"              "(version >= 4.81.0)"                 "Kipi-plugins will be compiled without libkcalcore support."    KF5CalendarCore_FOUND)
@@ -216,7 +213,6 @@ if(KF5Kipi_FOUND)
 
     PRINT_COMPONENT_COMPILE_STATUS("ImageViewer"        BUILD_VIEWERS)
     PRINT_COMPONENT_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
-    PRINT_COMPONENT_COMPILE_STATUS("Geolocator"         KF5KGeoMap_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("VKontakte"          KF5Vkontakte_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("Mediawiki"          KF5MediaWiki_FOUND)
     PRINT_COMPONENT_COMPILE_STATUS("AdvancedSlideshow"  BUILD_VIEWERS)
@@ -315,10 +311,6 @@ if(KF5Kipi_FOUND)
         if(BUILD_VIEWERS)
             add_subdirectory(advancedslideshow)
             add_subdirectory(imageviewer)
-        endif()
-
-        if(KF5KGeoMap_FOUND)
-            add_subdirectory(geolocator)
         endif()
 
         if(FLEX_FOUND AND BISON_FOUND)
