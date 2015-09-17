@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <klineedit.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
 #include <KConfigGroup>

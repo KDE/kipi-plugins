@@ -52,7 +52,6 @@ extern "C"
 
 // KDE includes
 
-#include <klineedit.h>
 #include <KConfig>
 #include <kiconloader.h>
 #include <KLocalizedString>

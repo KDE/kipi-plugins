@@ -40,7 +40,6 @@
 
 // KDE includes
 
-#include <klineedit.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <krun.h>
