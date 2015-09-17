@@ -56,7 +56,7 @@ struct LastPage::Private
     Private()
         : title(0),
           saveSettingsGroupBox(0),
-          fileTemplateKLineEdit(0),
+          fileTemplateQLineEdit(0),
           savePtoCheckBox(0),
           warningLabel(0),
           errorLabel(0),
@@ -67,7 +67,7 @@ struct LastPage::Private
     QLabel*    title;
 
     QGroupBox* saveSettingsGroupBox;
-    QLineEdit* fileTemplateKLineEdit;
+    QLineEdit* fileTemplateQLineEdit;
     QCheckBox* savePtoCheckBox;
     QLabel*    warningLabel;
     QLabel*    errorLabel;
@@ -100,14 +100,14 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
     QLabel *fileTemplateLabel = new QLabel(i18nc("@label:textbox", "File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
 
-    d->fileTemplateKLineEdit  = new QLineEdit(QStringLiteral("panorama"), d->saveSettingsGroupBox);
-    d->fileTemplateKLineEdit->setToolTip(i18nc("@info:tooltip", "Name of the panorama file (without its extension)."));
-    d->fileTemplateKLineEdit->setWhatsThis(i18nc("@info:whatsthis", "<b>File name template</b>: Set here the base name of the files that "
+    d->fileTemplateQLineEdit  = new QLineEdit(QStringLiteral("panorama"), d->saveSettingsGroupBox);
+    d->fileTemplateQLineEdit->setToolTip(i18nc("@info:tooltip", "Name of the panorama file (without its extension)."));
+    d->fileTemplateQLineEdit->setWhatsThis(i18nc("@info:whatsthis", "<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
                                                 "you chose a JPEG output, then your panorama will be saved with the "
                                                 "name <i>panorama.jpg</i>. If you choose to save also the project file, "
                                                 "it will have the name <i>panorama.pto</i>."));
-    formatVBox->addWidget(d->fileTemplateKLineEdit);
+    formatVBox->addWidget(d->fileTemplateQLineEdit);
 
     d->savePtoCheckBox        = new QCheckBox(i18nc("@option:check", "Save project file"), d->saveSettingsGroupBox);
     d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
@@ -136,7 +136,7 @@ LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
     QPixmap leftPix(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kipiplugin_panorama/pics/assistant-hugin.png")));
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->fileTemplateKLineEdit, SIGNAL(textChanged(QString)),
+    connect(d->fileTemplateQLineEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotTemplateChanged(QString)));
 
     connect(d->savePtoCheckBox, SIGNAL(stateChanged(int)),
@@ -160,9 +160,9 @@ void LastPage::resetTitle()
     QString file = QStringLiteral("%1-%2")
         .arg(first.left(first.lastIndexOf(QChar::fromLatin1('.'))))
         .arg(last.left(last.lastIndexOf(QChar::fromLatin1('.'))));
-    d->fileTemplateKLineEdit->setText(file);
+    d->fileTemplateQLineEdit->setText(file);
 
-    slotTemplateChanged(d->fileTemplateKLineEdit->text());
+    slotTemplateChanged(d->fileTemplateQLineEdit->text());
     checkFiles();
 }
 
@@ -172,7 +172,7 @@ void LastPage::copyFiles()
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     QUrl panoUrl = d->mngr->preProcessedMap().begin().key().adjusted(QUrl::RemoveFilename);
-    panoUrl.setPath(panoUrl.path() + panoFileName(d->fileTemplateKLineEdit->text()));
+    panoUrl.setPath(panoUrl.path() + panoFileName(d->fileTemplateQLineEdit->text()));
     d->mngr->thread()->copyFiles(d->mngr->panoPtoUrl(),
                                  d->mngr->panoUrl(),
                                  panoUrl,
@@ -268,12 +268,13 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
 void LastPage::checkFiles()
 {
     QString dir = d->mngr->preProcessedMap().begin().key().toString(QUrl::RemoveFilename);
-    QUrl panoUrl(dir + panoFileName(d->fileTemplateKLineEdit->text()));
-    QUrl ptoUrl(dir + d->fileTemplateKLineEdit->text() + QStringLiteral(".pto"));
+    QUrl panoUrl(dir + panoFileName(d->fileTemplateQLineEdit->text()));
+    QUrl ptoUrl(dir + d->fileTemplateQLineEdit->text() + QStringLiteral(".pto"));
     QFile panoFile(panoUrl.toString(QUrl::PreferLocalFile));
     QFile ptoFile(ptoUrl.toString(QUrl::PreferLocalFile));
 
     bool rawsOk = true;
+
     if (d->savePtoCheckBox->isChecked())
     {
         for (auto& input : d->mngr->preProcessedMap().keys())
@@ -307,7 +308,6 @@ void LastPage::checkFiles()
         emit signalIsValid(true);
         d->warningLabel->hide();
     }
-
 }
 
 }   // namespace KIPIPanoramaPlugin

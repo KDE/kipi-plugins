@@ -29,9 +29,6 @@
 
 class QCheckBox;
 
-class KLineEdit;
-class KTextEdit;
-
 using namespace KIPIPlugins;
 
 namespace KIPIRajcePlugin

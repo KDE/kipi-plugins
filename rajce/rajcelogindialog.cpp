@@ -30,10 +30,10 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPushButton>
+#include <QLineEdit>
 
 // KDE includes
 
-#include <klineedit.h>
 #include <klocalizedstring.h>
 
 // Local includes
@@ -50,9 +50,9 @@ RajceLoginDialog::RajceLoginDialog(QWidget* const parent, const QString& _name, 
 
     QVBoxLayout* const vbox          = new QVBoxLayout(this);
     QGridLayout* const centerLayout  = new QGridLayout();
-    m_nameEdit                       = new KLineEdit(this);
-    m_passwdEdit                     = new KLineEdit(this);
-    m_passwdEdit->setEchoMode(KLineEdit::Password);
+    m_nameEdit                       = new QLineEdit(this);
+    m_passwdEdit                     = new QLineEdit(this);
+    m_passwdEdit->setEchoMode(QLineEdit::Password);
 
     QLabel* const nameLabel = new QLabel(this);
     nameLabel->setText(i18n( "Login:" ));

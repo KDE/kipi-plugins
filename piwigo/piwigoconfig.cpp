@@ -62,14 +62,14 @@ PiwigoEdit::PiwigoEdit(QWidget* const pParent, Piwigo* const pPiwigo, const QStr
     QGridLayout* const centerLayout = new QGridLayout();
     page->setMinimumSize(500, 128);
 
-    mpUrlEdit = new KLineEdit(this);
+    mpUrlEdit = new QLineEdit(this);
     centerLayout->addWidget(mpUrlEdit, 1, 1);
 
-    mpUsernameEdit = new KLineEdit(this);
+    mpUsernameEdit = new QLineEdit(this);
     centerLayout->addWidget(mpUsernameEdit, 2, 1);
 
-    mpPasswordEdit = new KLineEdit(this);
-    mpPasswordEdit->setEchoMode(KLineEdit::Password);
+    mpPasswordEdit = new QLineEdit(this);
+    mpPasswordEdit->setEchoMode(QLineEdit::Password);
     centerLayout->addWidget(mpPasswordEdit, 3, 1);
 
     QLabel* const urlLabel = new QLabel(this);

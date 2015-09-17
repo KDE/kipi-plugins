@@ -33,14 +33,13 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <klineedit.h>
-#include <ktextedit.h>
 
 namespace KIPIRajcePlugin
 {
 
 NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
-    : KPNewAlbumDialog(parent, QStringLiteral("Rajce.net"))
+    : KPNewAlbumDialog(parent,
+      QStringLiteral("Rajce.net"))
 {
     getLocEdit()->hide();
     getDateTimeEdit()->hide();
@@ -48,12 +47,12 @@ NewAlbumDialog::NewAlbumDialog(QWidget* const parent)
     QGroupBox* const privBox = new QGroupBox(i18n("Visiblity"), getMainWidget());
     privBox->setWhatsThis(i18n("Set the visiblity of the album"));   
     
-    QLabel* const lbl     = new QLabel(i18n("Public"), privBox);
+    QLabel* const lbl   = new QLabel(i18n("Public"), privBox);
     
     m_albumVisible = new QCheckBox;
     m_albumVisible->setChecked(true);
     
-    QGridLayout* layout = new QGridLayout(privBox);
+    QGridLayout* const layout = new QGridLayout(privBox);
     
     layout->addWidget(lbl,             0, 0, 1, 1);
     layout->addWidget(m_albumVisible,  0, 1, 1, 1);

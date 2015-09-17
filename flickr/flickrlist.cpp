@@ -444,7 +444,7 @@ FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
                    FlickrList::TAGS),
                i18n("Add extra tags per image or use Upload Options tab to "
                     "add tags for all images"));
-    //m_tagLineEdit = new KLineEdit(view);
+    //m_tagLineEdit = new QLineEdit(view);
     //m_tagLineEdit->setToolTip(i18n("Enter extra tags, separated by commas."));
     //view->setItemWidget(this, static_cast<KPImagesListView::ColumnType>(
     //                    FlickrList::TAGS), m_tagLineEdit);

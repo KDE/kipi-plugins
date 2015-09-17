@@ -31,10 +31,7 @@
 
 #include <QString>
 #include <QtWidgets/QDialog>
-
-// KDE includes
-
-#include <klineedit.h>
+#include <QLineEdit>
 
 namespace KIPIPiwigoExportPlugin
 {
@@ -56,9 +53,9 @@ private Q_SLOTS:
 
 private:
 
-    KLineEdit* mpUrlEdit;
-    KLineEdit* mpUsernameEdit;
-    KLineEdit* mpPasswordEdit;
+    QLineEdit* mpUrlEdit;
+    QLineEdit* mpUsernameEdit;
+    QLineEdit* mpPasswordEdit;
 
     Piwigo*    mpPiwigo;
 };

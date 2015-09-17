@@ -27,7 +27,7 @@
 
 #include <QDialog>
 
-class KLineEdit;
+class QLineEdit;
 
 namespace KIPIRajcePlugin
 {
@@ -39,7 +39,7 @@ class RajceLoginDialog : public QDialog
 public:
 
     explicit RajceLoginDialog(QWidget* const parent, const QString& _name=QString(),
-                     const QString& _passwd=QString());
+                              const QString& _passwd=QString());
     ~RajceLoginDialog();
 
     QString password() const;
@@ -50,8 +50,8 @@ public:
 
 private:
 
-    KLineEdit* m_nameEdit;
-    KLineEdit* m_passwdEdit;
+    QLineEdit* m_nameEdit;
+    QLineEdit* m_passwdEdit;
 };
 
 } // namespace KIPIRajcePlugin
