@@ -23,14 +23,10 @@
 #ifndef YF_ALBUMDIALOG_H
 #define YF_ALBUMDIALOG_H
 
-// KDE includes
-
-#include <klineedit.h>
-#include <ktextedit.h>
-
 // Qt includes
 
 #include <QtWidgets/QDialog>
+#include <QLineEdit>
 
 // Local includes
 

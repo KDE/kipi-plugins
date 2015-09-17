@@ -33,8 +33,8 @@
 #include <libkvkontakte/albuminfo.h>
 
 class QComboBox;
-class KTextEdit;
-class KLineEdit;
+class QTextEdit;
+class QLineEdit;
 
 namespace KIPIVkontaktePlugin
 {
@@ -53,6 +53,8 @@ public:
         int commentPrivacy;
     };
 
+public:
+
     /**
      * @brief Album creation dialog
      *
@@ -66,7 +68,7 @@ public:
      * @param parent Parent widget
      * @param album Initial album properties
      */
-    VkontakteAlbumDialog(QWidget* const parent, const AlbumInfo &album);
+    VkontakteAlbumDialog(QWidget* const parent, const AlbumInfo& album);
 
     ~VkontakteAlbumDialog();
 
@@ -80,12 +82,14 @@ private:
 
     void initDialog(bool editing);
 
-    KLineEdit*              m_titleEdit;
-    KTextEdit*              m_summaryEdit;
-    QComboBox*              m_albumPrivacyCombo;
-    QComboBox*              m_commentsPrivacyCombo;
+private:
 
-    AlbumInfo               m_album;
+    QLineEdit* m_titleEdit;
+    QTextEdit* m_summaryEdit;
+    QComboBox* m_albumPrivacyCombo;
+    QComboBox* m_commentsPrivacyCombo;
+
+    AlbumInfo  m_album;
 };
 
 } // namespace KIPIVkontaktePlugin

@@ -31,8 +31,8 @@
 class QGroupBox;
 class QRadioButton;
 class QComboBox;
-class KLineEdit;
-class KTextEdit;
+class QLineEdit;
+class QTextEdit;
 
 namespace KIPISmugPlugin
 {
@@ -45,22 +45,22 @@ class SmugNewAlbum : public QDialog
 
 public:
 
-    SmugNewAlbum(QWidget* parent);
+    SmugNewAlbum(QWidget* const parent);
     ~SmugNewAlbum();
 
     void getAlbumProperties(SmugAlbum& album);
 
 private:
 
-    KLineEdit*    m_titleEdt;
-    KTextEdit*    m_descEdt;
+    QLineEdit*    m_titleEdt;
+    QTextEdit*    m_descEdt;
     QComboBox*    m_categCoB;
     QComboBox*    m_subCategCoB;
     QComboBox*    m_templateCoB;
 
     QGroupBox*    m_privBox;
-    KLineEdit*    m_passwdEdt;
-    KLineEdit*    m_hintEdt;
+    QLineEdit*    m_passwdEdt;
+    QLineEdit*    m_hintEdt;
     QRadioButton* m_publicRBtn;
     QRadioButton* m_unlistedRBtn;
 

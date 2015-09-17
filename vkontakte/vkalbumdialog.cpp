@@ -33,13 +33,14 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QComboBox>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QMessageBox>
+#include <QDialogButtonBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <klineedit.h>
-#include <ktextedit.h>
-#include <kmessagebox.h>
 
 // libvkontakte includes
 
@@ -49,14 +50,16 @@ namespace KIPIVkontaktePlugin
 {
 
 VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent)
-    : QDialog(parent), m_album()
+    : QDialog(parent),
+      m_album()
 {
     initDialog(false);
 }
 
 VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget* const parent,
-                                           const VkontakteAlbumDialog::AlbumInfo &album)
-    : QDialog(parent), m_album(album)
+                                           const VkontakteAlbumDialog::AlbumInfo& album)
+    : QDialog(parent),
+      m_album(album)
 {
     initDialog(true);
 }
@@ -72,27 +75,29 @@ void VkontakteAlbumDialog::initDialog(bool editing)
                            : i18nc("@title:window", "New album"));
     setMinimumSize(400, 300);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* const mainLayout = new QVBoxLayout(this);
     setLayout(mainLayout);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(
-        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    QDialogButtonBox* const buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 
-    QPushButton* okButton = buttonBox->button(QDialogButtonBox::Ok);
+    QPushButton* const okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
 
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &VkontakteAlbumDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &VkontakteAlbumDialog::reject);
+    connect(buttonBox, &QDialogButtonBox::accepted,
+            this, &VkontakteAlbumDialog::accept);
+
+    connect(buttonBox, &QDialogButtonBox::rejected,
+            this, &VkontakteAlbumDialog::reject);
 
 
     QGroupBox* const albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), this);
     albumBox->setWhatsThis(i18n("These are basic settings for the new VKontakte album."));
 
-    m_titleEdit = new KLineEdit(m_album.title);
+    m_titleEdit = new QLineEdit(m_album.title);
     m_titleEdit->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
-    m_summaryEdit = new KTextEdit(m_album.description);
+    m_summaryEdit = new QTextEdit(m_album.description);
     m_summaryEdit->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
 
@@ -141,8 +146,7 @@ void VkontakteAlbumDialog::accept()
 {
     if (m_titleEdit->text().isEmpty())
     {
-        KMessageBox::error(this, i18n("Title cannot be empty."),
-                            i18n("Error"));
+        QMessageBox::critical(this, i18n("Error"), i18n("Title cannot be empty."));
         return;
     }
 

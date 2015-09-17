@@ -33,12 +33,11 @@
 #include <QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QDebug>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ktextedit.h>
-#include <kmessagebox.h>
 
 // Local includes
 
@@ -49,7 +48,8 @@ namespace KIPIYandexFotkiPlugin
 {
 
 YandexFotkiAlbumDialog::YandexFotkiAlbumDialog(QWidget* const parent, YandexFotkiAlbum& album)
-    : KPNewAlbumDialog(parent, QStringLiteral("Yandex.Fotki")), m_album(album)
+    : KPNewAlbumDialog(parent, QStringLiteral("Yandex.Fotki")),
+      m_album(album)
 {
     hideLocation();
     hideDateTime();
@@ -77,8 +77,7 @@ void YandexFotkiAlbumDialog::slotOkClicked()
 {
     if (getTitleEdit()->text().isEmpty())
     {
-        KMessageBox::error(this, i18n("Title cannot be empty."),
-                            i18n("Error"));
+        QMessageBox::critical(this, i18n("Error"), i18n("Title cannot be empty."));
         return;
     }
 
