@@ -30,6 +30,7 @@
 // Local includes
 
 #include "kpsettingswidget.h"
+#include "gsitem.h"
 
 class QLabel;
 class QSpinBox;
@@ -43,6 +44,8 @@ namespace KIPI
     class Interface;
     class UploadWidget;
 }
+
+enum class PluginName;
 
 using namespace KIPIPlugins;
 
@@ -62,18 +65,14 @@ class GoogleServicesWidget : public KPSettingsWidget
 
 public:
 
-    GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName, const QString& serviceName);
+    GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const PluginName& pluginName, const QString& serviceName);
     ~GoogleServicesWidget();
 
     virtual void updateLabels(const QString& name = QString(), const QString& url = QString());
 
 private:
   
-    bool                           m_picasaExport;
-    bool                           m_picasaImport;
-    bool                           m_gdrive;
-    
-    QString                        m_serviceName;
+    PluginName                     m_pluginName;
     QButtonGroup*                  m_tagsBGrp;
 
     friend class GSWindow;

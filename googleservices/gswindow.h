@@ -37,6 +37,7 @@
 // Local includes
 
 #include "kptooldialog.h"
+#include "gsitem.h"
 
 class QCloseEvent;
 
@@ -63,13 +64,6 @@ class GSPhoto;
 class GSFolder;
 class NewAlbumDlg;
 class PicasawebTalker;
-
-enum PluginName
-{
-    GDrive = 1,
-    PicasaExport,
-    PicasaImport
-};    
 
 class GSWindow : public KPToolDialog
 {

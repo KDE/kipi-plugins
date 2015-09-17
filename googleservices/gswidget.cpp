@@ -44,27 +44,16 @@
 namespace KIPIGoogleServicesPlugin
 {
 
-GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName, const QString& serviceName):KPSettingsWidget(parent,iface,pluginName)
+GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interface* const iface, const PluginName& pluginName, const QString& serviceName):KPSettingsWidget(parent,iface,serviceName)
 {
-    m_serviceName = serviceName;
-
-    m_gdrive = false;
-    m_picasaExport = false;
-    m_picasaImport = false;
-    
-    if(QString::compare(m_serviceName, QStringLiteral("googledriveexport"), Qt::CaseInsensitive) == 0)
-        m_gdrive = true;
-    else if(QString::compare(m_serviceName, QStringLiteral("picasawebexport"), Qt::CaseInsensitive) == 0)
-        m_picasaExport = true;
-    else
-        m_picasaImport = true;
+    m_pluginName = pluginName;
     
     QGroupBox* m_LeafBox = new QGroupBox(QStringLiteral(""), getSettingsBox());
     QGridLayout* leafLayout = new QGridLayout(m_LeafBox);
     
     m_tagsBGrp = new QButtonGroup(m_LeafBox);
     
-    if(m_picasaExport)
+    if(m_pluginName == PluginName::PicasaExport)
     {
         QSpacerItem* const spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         QLabel* const tagsLbl     = new QLabel(i18n("Tag path behavior :"), m_LeafBox);
@@ -89,17 +78,17 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
         addWidgetToSettingsBox(m_LeafBox);
     }
 
-    if (m_picasaImport)
+    switch(m_pluginName)
     {
-        imagesList()->hide();
-        getNewAlbmBtn()->hide();
-        getOptionsBox()->hide();
+        case PluginName::PicasaImport :
+            imagesList()->hide();
+            getNewAlbmBtn()->hide();
+            getOptionsBox()->hide();            
+            break;
+        default :
+            getUploadBox()->hide();
+            getSizeBox()->hide();    
     }
-    else
-    {
-        getUploadBox()->hide();
-        getSizeBox()->hide();
-    }    
 }
 
 GoogleServicesWidget::~GoogleServicesWidget()
@@ -108,23 +97,23 @@ GoogleServicesWidget::~GoogleServicesWidget()
 
 void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
 {
-
-    if(m_gdrive)
+    switch(m_pluginName)
     {
-        QString web(QStringLiteral("http://www.drive.google.com"));
-        getHeaderLbl()->setText(QStringLiteral(
-            "<b><h2><a href='%1'>"
-            "<font color=\"#9ACD32\">Google Drive</font>"
-            "</a></h2></b>").arg(web));
+        case PluginName::GDrive :
+        {
+            QString web(QStringLiteral("http://www.drive.google.com"));
+            getHeaderLbl()->setText(QStringLiteral(
+                "<b><h2><a href='%1'>"
+                "<font color=\"#9ACD32\">Google Drive</font>"
+                "</a></h2></b>").arg(web));
+            break;
+        }
+        default :
+            getHeaderLbl()->setText(QStringLiteral(
+                "<b><h2><a href='http://picasaweb.google.com/%1'>"
+                "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
+                "</a></h2></b>").arg(url)); 
     }
-    else
-    {
-        getHeaderLbl()->setText(QStringLiteral(
-            "<b><h2><a href='http://picasaweb.google.com/%1'>"
-            "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
-            "</a></h2></b>").arg(url));
-    }
-
 
     if (name.isEmpty())
     {

@@ -94,7 +94,7 @@ GSWindow::GSWindow(const QString& tmpFolder,QWidget* const /*parent*/, const QSt
     m_imagesTotal = 0;
     m_renamingOpt = 0;
 
-    m_widget = new GoogleServicesWidget(this, iface(), m_pluginName, m_serviceName);
+    m_widget = new GoogleServicesWidget(this, iface(), name, m_pluginName);
     
     setMainWidget(m_widget);
     setModal(false);  
@@ -619,6 +619,7 @@ void GSWindow::picasaTransferHandler()
 
             m_picsasa_talker->listPhotos(m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
                                          m_widget->getDimensionCoB()->itemData(m_widget->getDimensionCoB()->currentIndex()).toString());
+            break;
             
         default :
             // list photos of the album, then start upload with add/update items
@@ -720,6 +721,7 @@ void GSWindow::slotStartTransfer()
         {
             case PluginName::GDrive :
                 temp.title      = info.title();
+                break;
             default :
                 temp.title      = info.name();
         }
