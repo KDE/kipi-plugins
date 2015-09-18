@@ -305,8 +305,11 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, GSPhoto& info, const QS
     path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
     int imgQualityToApply = 100;
 
-    if(rescale && (image.width() > maxDim || image.height() > maxDim)){
-        image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    if(rescale)
+    {
+        if(image.width() > maxDim || image.height() > maxDim)
+            image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        
         imgQualityToApply = imageQuality;
     }
 
@@ -432,12 +435,18 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, GSPhoto& info/*, con
     }
     
     path = QDir::tempPath() + QLatin1Char('/') + QFileInfo(photoPath).baseName().trimmed() + QStringLiteral(".jpg");
+    
+    int imgQualityToApply = 100;
 
-    if(rescale && (image.width() > maxDim || image.height() > maxDim)){
-        image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    if(rescale)
+    {
+        if(image.width() > maxDim || image.height() > maxDim)
+            image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        
+        imgQualityToApply = imageQuality;
     }
 
-    image.save(path,"JPEG",imageQuality);
+    image.save(path,"JPEG",imgQualityToApply);
 
     KIPIPlugins::KPMetadata meta;
 

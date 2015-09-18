@@ -214,8 +214,11 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     
     int imgQualityToApply = 100;
 
-    if (rescale && (image.width() > maxDim || image.height() > maxDim)){
-        image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    if (rescale)
+    {
+        if(image.width() > maxDim || image.height() > maxDim)
+            image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        
         imgQualityToApply = imageQuality;
     }
 
