@@ -612,22 +612,25 @@ void GSWindow::picasaTransferHandler()
     
     switch (name)
     {
-        case PluginName::PicasaImport :
-            // list photos of the album, then start download
-            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-                    this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
+    case PluginName::PicasaImport:
+        // list photos of the album, then start download
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<GSPhoto>)));
 
-            m_picsasa_talker->listPhotos(m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
-                                         m_widget->getDimensionCoB()->itemData(m_widget->getDimensionCoB()->currentIndex()).toString());
-            break;
-            
-        default :
-            // list photos of the album, then start upload with add/update items
-            connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
-                    this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
+        m_picsasa_talker->listPhotos(
+            m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString(),
+            m_widget->getDimensionCoB()->itemData(m_widget->getDimensionCoB()->currentIndex()).toString());
+        break;
 
-            m_picsasa_talker->listPhotos(m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString());            
-    } 
+    default:
+        // list photos of the album, then start upload with add/update items
+        connect(m_picsasa_talker, SIGNAL(signalListPhotosDone(int,QString,QList<GSPhoto>)),
+                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<GSPhoto>)));
+
+        m_picsasa_talker->listPhotos(
+            m_widget->getAlbumsCoB()->itemData(m_widget->getAlbumsCoB()->currentIndex()).toString());
+        break;
+    }
 }
 
 void GSWindow::slotTextBoxEmpty()
