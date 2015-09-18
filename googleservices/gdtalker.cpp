@@ -211,12 +211,15 @@ bool GDTalker::addPhoto(const QString& imgPath,const GSPhoto& info,const QString
     }
 
     path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QStringLiteral("/") + QFileInfo(imgPath).baseName().trimmed() + QStringLiteral(".jpg");
+    
+    int imgQualityToApply = 100;
 
     if (rescale && (image.width() > maxDim || image.height() > maxDim)){
         image = image.scaled(maxDim,maxDim,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+        imgQualityToApply = imageQuality;
     }
 
-    image.save(path,"JPEG",imageQuality);
+    image.save(path,"JPEG",imgQualityToApply);
 
     KPMetadata meta;
 
