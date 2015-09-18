@@ -333,11 +333,7 @@ void FbTalker::doOAuth()
 
                     if( m_sessionExpires != 0 )
                     {
-#if QT_VERSION >= 0x40700
                         m_sessionExpires += QDateTime::currentMSecsSinceEpoch() / 1000;
-#else
-                        m_sessionExpires += QDateTime::currentDateTime().toTime_t();
-#endif
                     }
                 }
                 else if( ! keyvalue[0].compare( QStringLiteral("error_reason") ) )
@@ -717,11 +713,7 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
         m_sessionExpires    = jsonObject[QStringLiteral("expires")].toInt();
         if( m_sessionExpires != 0 )
         {
-#if QT_VERSION >= 0x40700
             m_sessionExpires += QDateTime::currentMSecsSinceEpoch() / 1000;
-#else
-            m_sessionExpires += QDateTime::currentDateTime().toTime_t();
-#endif
         }
 
         if( m_accessToken.isEmpty() )
