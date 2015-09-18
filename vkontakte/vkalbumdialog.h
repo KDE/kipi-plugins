@@ -28,10 +28,6 @@
 
 #include <QtWidgets/QDialog>
 
-// libkvkontakte includes
-
-#include <libkvkontakte/albuminfo.h>
-
 class QComboBox;
 class QTextEdit;
 class QLineEdit;

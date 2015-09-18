@@ -29,10 +29,6 @@
 #ifndef VKWINDOW_H
 #define VKWINDOW_H
 
-// libkvkontakte includes
-
-#include <libkvkontakte/albuminfo.h>
-
 // Local includes
 
 #include "kptooldialog.h"

@@ -30,7 +30,7 @@
 
 // LibKvkontakte includes
 
-#include <libkvkontakte/albuminfo.h>
+#include <Vkontakte/albuminfo.h>
 
 // Local includes
 

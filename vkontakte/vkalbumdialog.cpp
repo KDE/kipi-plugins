@@ -44,7 +44,7 @@
 
 // libvkontakte includes
 
-#include <libkvkontakte/albuminfo.h>
+#include <Vkontakte/albuminfo.h>
 
 namespace KIPIVkontaktePlugin
 {

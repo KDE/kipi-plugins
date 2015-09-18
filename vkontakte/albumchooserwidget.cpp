@@ -38,11 +38,11 @@
 
 // LibKvkontakte includes
 
-#include <libkvkontakte/albumlistjob.h>
-#include <libkvkontakte/createalbumjob.h>
-#include <libkvkontakte/editalbumjob.h>
-#include <libkvkontakte/deletealbumjob.h>
-#include <libkvkontakte/vkapi.h>
+#include <Vkontakte/albumlistjob.h>
+#include <Vkontakte/createalbumjob.h>
+#include <Vkontakte/editalbumjob.h>
+#include <Vkontakte/deletealbumjob.h>
+#include <Vkontakte/vkapi.h>
 
 // Local includes
 
