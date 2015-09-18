@@ -724,6 +724,7 @@ void GSWindow::slotStartTransfer()
                 break;
             default :
                 temp.title      = info.name();
+                break;
         }
         
         temp.description    = info.description().section(QStringLiteral("\n"), 0, 0);
