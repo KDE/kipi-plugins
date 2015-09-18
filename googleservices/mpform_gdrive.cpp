@@ -84,11 +84,11 @@ void MPForm_GDrive::reset()
 void MPForm_GDrive::finish()
 {
     qCDebug(KIPIPLUGINS_LOG) << "in finish";
-    QString str;
-    str += QStringLiteral("--");
+    QByteArray str;
+    str += "--";
     str += m_boundary;
-    str += QStringLiteral("--");
-    m_buffer.append(str.toLatin1());
+    str += "--";
+    m_buffer.append(str);
     qCDebug(KIPIPLUGINS_LOG) << "finish:" << m_buffer;
 }
 
@@ -117,7 +117,7 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
     // Append to the multipart
     QByteArray str;
     str += "--";
-    str += m_boundary.latin1();
+    str += m_boundary;
     str += "\r\n";
     str += "Content-Type:application/json; charset=UTF-8\r\n\r\n";
     str += json;
@@ -127,18 +127,18 @@ void MPForm_GDrive::addPair(const QString& name, const QString& description, con
 
 bool MPForm_GDrive::addFile(const QString &path)
 {
-    QString str;
+    QByteArray str;
     qCDebug(KIPIPLUGINS_LOG) << "in addfile" << path;
 
     QMimeDatabase db;
     QMimeType ptr = db.mimeTypeForUrl(QUrl::fromLocalFile(path));
     QString mime = ptr.name();
-    str += QStringLiteral("--");
+    str += "--";
     str += m_boundary;
-    str += QStringLiteral("\r\n");
-    str += QStringLiteral("Content-Type: ");
-    str += mime;
-    str += QStringLiteral("\r\n\r\n");
+    str += "\r\n";
+    str += "Content-Type: ";
+    str += mime.toLatin1();
+    str += "\r\n\r\n";
 
     QFile imageFile(path);
 
@@ -152,7 +152,7 @@ bool MPForm_GDrive::addFile(const QString &path)
 
     imageFile.close();
 
-    m_buffer.append(str.toLatin1());
+    m_buffer.append(str);
     m_buffer.append(imageData);
     m_buffer.append("\r\n");
 
@@ -166,12 +166,12 @@ QByteArray MPForm_GDrive::formData() const
 
 QString MPForm_GDrive::boundary() const
 {
-    return m_boundary;
+    return QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_GDrive::contentType() const
 {
-    return QStringLiteral("Content-Type: multipart/related;boundary=") + m_boundary;
+    return QStringLiteral("Content-Type: multipart/related;boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_GDrive::getFileSize() const

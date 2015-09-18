@@ -74,12 +74,12 @@ void MPForm_Picasa::reset()
 
 void MPForm_Picasa::finish()
 {
-    QString str;
-    str += QStringLiteral("--");
+    QByteArray str;
+    str += "--";
     str += m_boundary;
-    str += QStringLiteral("--");
+    str += "--";
 
-    m_buffer.append(str.toUtf8());
+    m_buffer.append(str);
 }
 
 bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QString& contentType)
@@ -87,7 +87,7 @@ bool MPForm_Picasa::addPair(const QString& name, const QString& value, const QSt
     QByteArray str;
     QString content_length = QString::number(value.length());
     str += "--";
-    str += QString(m_boundary).toUtf8();
+    str += m_boundary;
     str += "\r\n";
 
     if (!name.isEmpty())
@@ -135,25 +135,25 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
 
     QByteArray imageData = imageFile.readAll();
 
-    QString str;
-    str += QStringLiteral("--");
+    QByteArray str;
+    str += "--";
     str += m_boundary;
-    str += QStringLiteral("\r\n");
-    str += QStringLiteral("Content-Disposition: form-data; name=\"");
-    str += name;
-    str += QStringLiteral("\"; ");
-    str += QStringLiteral("filename=\"");
-    str += QUrl::fromLocalFile(path).fileName();
-    str += QStringLiteral("\"\r\n");
-    str += QStringLiteral("Content-Length: ");
-    str += QString::number(imageFile.size());
-    str += QStringLiteral("\r\n");
-    str += QStringLiteral("Content-Type: ");
-    str += mime;
-    str += QStringLiteral("\r\n\r\n");
+    str += "\r\n";
+    str += "Content-Disposition: form-data; name=\"";
+    str += name.toLatin1();
+    str += "\"; ";
+    str += "filename=\"";
+    str += QUrl::fromLocalFile(path).fileName().toLatin1();
+    str += "\"\r\n";
+    str += "Content-Length: ";
+    str += QString::number(imageFile.size()).toLatin1();
+    str += "\r\n";
+    str += "Content-Type: ";
+    str += mime.toLatin1();
+    str += "\r\n\r\n";
 
     imageFile.close();
-    m_buffer.append(str.toUtf8());
+    m_buffer.append(str);
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);
@@ -166,12 +166,12 @@ bool MPForm_Picasa::addFile(const QString& name,const QString& path)
 
 QString MPForm_Picasa::contentType() const
 {
-    return QStringLiteral("Content-Type: multipart/related; boundary=") + m_boundary;
+    return QStringLiteral("Content-Type: multipart/related; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm_Picasa::boundary() const
 {
-    return m_boundary;
+    return QString::fromLatin1(m_boundary);
 }
 
 QByteArray MPForm_Picasa::formData() const

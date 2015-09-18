@@ -54,7 +54,7 @@ public:
 private:
 
     QByteArray  m_buffer;
-    QLatin1String m_boundary;
+    QByteArray m_boundary;
 };
 
 } // namespace KIPIGoogleServicesPlugin
