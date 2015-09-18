@@ -764,7 +764,7 @@ void GSWindow::uploadNextPhoto()
     Pair pathComments = m_transferQueue.first();
     GSPhoto info      = pathComments.second;
     m_widget->imagesList()->processing(pathComments.first);
-    bool res;
+    bool res = true;
     
     switch (name)
     {
