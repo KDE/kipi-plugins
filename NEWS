@@ -10,4 +10,4 @@ BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 001 ==> 306442 - digiKam 2.8 crash when opening geolocation plugin.
 002 ==> 352596 - Unable to upload large image to flickr even though I'm resizing it.
 003 ==> 352621 - Export to facebook crashes.
-004 ==> 
+004 ==> 352862 - photos are compressed when exported to picasa.
