@@ -152,7 +152,7 @@ protected:
     QButtonGroup*            m_policyGroup;
 
     KPImagesList*            m_imgList;
-    UploadWidget*            m_uploadWidget;
+//     UploadWidget*            m_uploadWidget;
 
     QProgressBar*            m_progressBar;
 
