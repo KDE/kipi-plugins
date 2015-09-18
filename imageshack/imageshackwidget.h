@@ -82,30 +82,30 @@ private:
 
     QLabel*                        m_headerLbl;
     QLabel*                        m_accountNameLbl;
-    QLabel*                        m_accountEmailLbl;
+//     QLabel*                        m_accountEmailLbl;
 
     QLineEdit*                     m_tagsFld;
-    QLineEdit*                     m_newGalleryName;
+//     QLineEdit*                     m_newGalleryName;
 
-    QRadioButton*                  m_noResizeRdb;
-    QRadioButton*                  m_predefSizeRdb;
-    QRadioButton*                  m_customSizeRdb;
+//     QRadioButton*                  m_noResizeRdb;
+//     QRadioButton*                  m_predefSizeRdb;
+//     QRadioButton*                  m_customSizeRdb;
 
     QCheckBox*                     m_privateImagesChb;
     QCheckBox*                     m_remBarChb;
-    QCheckBox*                     m_useGalleriesChb;
+//     QCheckBox*                     m_useGalleriesChb;
 
     QPushButton*                   m_chgRegCodeBtn;
     QPushButton*                   m_reloadGalleriesBtn;
 
-    QComboBox*                     m_resizeOptsCob;
+//     QComboBox*                     m_resizeOptsCob;
     QComboBox*                     m_galleriesCob;
 
-    QSpinBox*                      m_widthSpb;
-    QSpinBox*                      m_heightSpb;
+//     QSpinBox*                      m_widthSpb;
+//     QSpinBox*                      m_heightSpb;
 
-    QGroupBox*                     m_galleriesBox;
-    QWidget*                       m_galleriesWidget;
+//     QGroupBox*                     m_galleriesBox;
+//     QWidget*                       m_galleriesWidget;
 
     KIPIPlugins::KPProgressWidget* m_progressBar;
 
