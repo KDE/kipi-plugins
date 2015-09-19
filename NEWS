@@ -12,6 +12,7 @@ General : GPSSync plugin renamed as Geolocator.
 General : DNGConverter moved to digiKam core.
 General : AcquireImages moved to digiKam core.
 General : MetadataEdit moved to digiKam core.
+General : Geolocator moved to digiKam core.
 
 BUGFIXES FROM KDE BUGZILLA (http://bugs.kde.org):
 

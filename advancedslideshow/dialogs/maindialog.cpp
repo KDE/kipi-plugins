@@ -42,7 +42,6 @@
 
 // KDE includes
 
-#include <kiconloader.h>
 #include <kmessagebox.h>
 
 // Libkipi includes

@@ -52,12 +52,11 @@ extern "C"
 
 // KDE includes
 
-#include <KConfig>
-#include <kiconloader.h>
-#include <KLocalizedString>
+#include <kconfig.h>
+#include <klocalizedstring.h>
 #include <kmessagebox.h>
 #include <kio/renamedialog.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // Libkipi includes
 

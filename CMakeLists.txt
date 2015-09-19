@@ -101,9 +101,7 @@ find_package(KF5 REQUIRED COMPONENTS
              WindowSystem
              Parts
              Wallet
-             KHtml
              Config
-             ItemModels
              ThreadWeaver
              I18n
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
@@ -297,26 +295,11 @@ if(KF5Kipi_FOUND)
         endif()
 
         add_subdirectory(common)
-
-        if (BUILD_TESTING)
-            add_subdirectory(tests)
-        endif()
-
         add_subdirectory(printimages)
         add_subdirectory(kmlexport)
         add_subdirectory(sendimages)
         add_subdirectory(flashexport)
         add_subdirectory(expoblending)
-
-        if(BUILD_VIEWERS)
-            add_subdirectory(advancedslideshow)
-            add_subdirectory(imageviewer)
-        endif()
-
-        if(FLEX_FOUND AND BISON_FOUND)
-            add_subdirectory(panorama)
-        endif()
-
         add_subdirectory(flickr)
         add_subdirectory(smug)
         add_subdirectory(imageshack)
@@ -329,8 +312,17 @@ if(KF5Kipi_FOUND)
         add_subdirectory(imgur)
         add_subdirectory(facebook)
 
-        if(KF5Vkontakte_FOUND)
-            add_subdirectory(vkontakte)
+        if (BUILD_TESTING)
+            add_subdirectory(tests)
+        endif()
+
+        if(BUILD_VIEWERS)
+            add_subdirectory(advancedslideshow)
+            add_subdirectory(imageviewer)
+        endif()
+
+        if(FLEX_FOUND AND BISON_FOUND)
+            add_subdirectory(panorama)
         endif()
 
         if(KF5MediaWiki_FOUND)
@@ -339,6 +331,10 @@ if(KF5Kipi_FOUND)
 
         if(KF5CalendarCore_FOUND)
             add_subdirectory(calendar)
+        endif()
+
+        if(KF5Vkontakte_FOUND)
+            add_subdirectory(vkontakte)
         endif()
 
 # Plugins in pending state
