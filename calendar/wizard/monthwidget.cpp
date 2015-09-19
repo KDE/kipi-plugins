@@ -41,7 +41,6 @@
 
 #include <kcalendarsystem.h>
 #include <kglobal.h>
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -74,9 +73,7 @@ MonthWidget::MonthWidget(Interface* const interface, QWidget* const parent, int 
     setFixedSize(QSize(74, 94));
     month_     = month;
     imagePath_ = QUrl();
-    setThumb(QPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic"),
-                               KIconLoader::SizeMedium,
-                               KIconLoader::DisabledState)));
+    setThumb(QPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(32, QIcon::Disabled)));
 
     connect(interface_, SIGNAL(gotThumbnail(QUrl,QPixmap)),
             this, SLOT(gotThumbnail(QUrl,QPixmap)));
@@ -208,9 +205,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
     {
         imagePath_ = QUrl();
         CalSettings::instance()->setImage(month_, imagePath_);
-        setThumb(QPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic"),
-                                   KIconLoader::SizeMedium,
-                                   KIconLoader::DisabledState)));
+        setThumb(QPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(32, QIcon::Disabled)));
     }
 }
 
