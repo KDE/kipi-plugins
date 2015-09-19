@@ -35,13 +35,14 @@
 #include <QMenu>
 #include <QComboBox>
 #include <QPushButton>
+#include <QMessageBox>
+#include <QApplication>
 
 // KDE includes
 
+#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <klineedit.h>
-#include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kwindowconfig.h>
 
@@ -408,7 +409,7 @@ void SmugWindow::slotLoginDone(int errCode, const QString &errMsg)
     }
     else
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
     }
 }
 
@@ -417,7 +418,7 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -446,7 +447,7 @@ void SmugWindow::slotListPhotosDone(int errCode, const QString &errMsg,
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -479,13 +480,14 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
 
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
         return;
     }
 
     for (int i = 0; i < albumTList.size(); ++i)
     {
         QString albumIcon;
+
         if (!albumTList.at(i).password.isEmpty())
             albumIcon = QStringLiteral("folder-locked");
         else if (albumTList.at(i).isPublic)
@@ -510,7 +512,7 @@ void SmugWindow::slotListCategoriesDone(int errCode, const QString& errMsg,
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -521,8 +523,9 @@ void SmugWindow::slotListCategoriesDone(int errCode, const QString& errMsg,
         m_albumDlg->m_categCoB->addItem(
             categoriesList.at(i).name,
             categoriesList.at(i).id);
-       if (m_currentCategoryID == categoriesList.at(i).id)
-           m_albumDlg->m_categCoB->setCurrentIndex(i);
+        
+        if (m_currentCategoryID == categoriesList.at(i).id)
+            m_albumDlg->m_categCoB->setCurrentIndex(i);
     }
 
     m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
@@ -539,7 +542,7 @@ void SmugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg,
 
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -906,7 +909,7 @@ void SmugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        QMessageBox::critical(QApplication::activeWindow(), i18n("Error"), i18n("SmugMug Call Failed: %1\n", errMsg));
         return;
     }
 

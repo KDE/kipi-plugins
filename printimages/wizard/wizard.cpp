@@ -2201,7 +2201,7 @@ void Wizard::saveSettings(const QString& pageName)
         if (d->m_photoPage->m_printer_choice->currentText() == i18n("Print to JPG"))
         {
             // output path
-            QString outputPath = d->m_cropPage->m_fileName->originalText();
+            QString outputPath = d->m_cropPage->m_fileName->text();
             group.writePathEntry(QLatin1String("OutputPath"), outputPath);
         }
     }
@@ -2545,7 +2545,7 @@ void Wizard::accept()
     {
         // now output the items
         //TODO manage URL
-        QString path = d->m_cropPage->m_fileName->originalText();
+        QString path = d->m_cropPage->m_fileName->text();
 
         if (path.isEmpty())
         {

@@ -43,11 +43,11 @@
 #include <QVBoxLayout>
 #include <QToolButton>
 #include <QPushButton>
+#include <QLineEdit>
 
 // KDE includes
 
 #include <kconfig.h>
-#include <klineedit.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kio/renamedialog.h>

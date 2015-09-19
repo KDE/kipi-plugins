@@ -159,7 +159,7 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="KLineEdit" name="m_fileName"/>
+      <widget class="QLineEdit" name="m_fileName"/>
      </item>
      <item>
       <widget class="QPushButton" name="BtnSaveAs">
@@ -176,16 +176,6 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-   </customwidget>
-   <customwidget>
-   <class>QPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
   <customwidget>
    <class>KIPIPrintImagesPlugin::CropFrame</class>
    <extends>QWidget</extends>

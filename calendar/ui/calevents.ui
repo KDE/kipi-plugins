@@ -135,10 +135,6 @@ This is fully optional. All the events from this calendar will be printed in gre
    <header>kurlrequester.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local" >klineedit.h</include>
-  <include location="local" >klineedit.h</include>
- </includes>
  <resources/>
  <connections/>
  <slots>
