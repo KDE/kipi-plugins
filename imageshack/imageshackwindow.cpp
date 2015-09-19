@@ -42,6 +42,7 @@
 #include <QIcon>
 #include <QMenu>
 #include <QComboBox>
+#include <QMessageBox>
 #include <QTimer>
 
 // KDE includes
@@ -52,8 +53,8 @@
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kurllabel.h>
-#include <KWindowConfig>
-#include <KGuiItem>
+#include <kwindowconfig.h>
+#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -321,7 +322,7 @@ void ImageshackWindow::slotLoginDone(int errCode, const QString& errMsg)
     }
     else
     {
-        KMessageBox::error(this, i18n("Login failed: %1\n", errMsg));
+        QMessageBox::critical(this, QString(), i18n("Login failed: %1\n", errMsg));
         startButton()->setEnabled(false);
         m_widget->m_progressBar->setVisible(false);
         slotBusy(false);
@@ -335,7 +336,7 @@ void ImageshackWindow::slotGetGalleriesDone(int errCode, const QString &errMsg)
 
     if (errCode)
     {
-        KMessageBox::error(this, i18n("Failed to get galleries list: %1\n", errMsg));
+        QMessageBox::critical(this, QString(), i18n("Failed to get galleries list: %1\n", errMsg));
     }
 }
 
