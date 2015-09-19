@@ -25,13 +25,14 @@
 // Qt includes
 
 #include <QCloseEvent>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 #include <kconfig.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // Local includes
 
@@ -243,7 +244,7 @@ void ImgurWindow::slotAddPhotoError(const QUrl& /*currentImage*/, const ImgurErr
     }
     else
     {
-        KMessageBox::sorry(this,i18n("Failed to upload photo to Imgur: %1\n", error.message));
+        QMessageBox::information(this, QString(), i18n("Failed to upload photo to Imgur: %1\n", error.message));
     }
 
     return;
