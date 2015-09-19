@@ -36,8 +36,8 @@
 
 // LibKvkontakte includes
 
-#include <Vkontakte/userinfojob.h>
-#include <Vkontakte/vkapi.h>
+#include <Vkontakte/UserInfoJob>
+#include <Vkontakte/VkApi>
 
 // TODO: share this code with `vkwindow.cpp`
 #define SLOT_JOB_DONE_INIT(JobClass) \
