@@ -49,6 +49,7 @@ extern "C"
 #include <QScrollArea>
 #include <QApplication>
 #include <QMenu>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -485,7 +486,7 @@ void ExpoBlendingDlg::saveItem(const QUrl& temp, const EnfuseSettings& settings)
     {
         if (QFile::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
         {
-            KMessageBox::error(this, i18n("Failed to save image to %1.", newUrl.toLocalFile()));
+            QMessageBox::critical(this, QString(), i18n("Failed to save image to %1.", newUrl.toLocalFile()));
             d->enfuseStack->setOnItem(settings.previewUrl, false);
             d->enfuseStack->processedItem(settings.previewUrl, false);
             return;

@@ -42,6 +42,7 @@ extern "C"
 #include <QAction>
 #include <QDir>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -145,8 +146,7 @@ void Plugin_PrintImages::slotPrintImagesActivate()
 
     if ( fileList.isEmpty() )
     {
-        KMessageBox::sorry ( QApplication::activeWindow(), i18n ( "Please select one or more photos to print." ),
-                            i18n ( "Print images" ) );
+        QMessageBox::information(QApplication::activeWindow(), i18n("Print Images"), i18n("Please select one or more photos to print."));
         return;
     }
 
@@ -166,8 +166,7 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
 
     if (fileList.isEmpty())
     {
-        KMessageBox::sorry(QApplication::activeWindow(), i18n("Please select one or more photos to print."),
-                           i18n("Print assistant"));
+        QMessageBox::information(QApplication::activeWindow(), i18n("Print Assistant"), i18n("Please select one or more photos to print."));
         return;
     }
 

@@ -38,11 +38,11 @@ extern "C"
 
 #include <QDir>
 #include <QProcess>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 namespace KIPIPrintImagesPlugin
 {
@@ -69,9 +69,9 @@ bool checkTempPath(QWidget* const parent, const QString& tempPath)
     {
         if (!tempDir.mkdir(tempDir.path()))
         {
-            KMessageBox::sorry(parent,
-                              i18n("Unable to create a temporary folder. "
-                                   "Please make sure you have proper permissions to this folder and try again."));
+            QMessageBox::information(parent, QString(),
+                                     i18n("Unable to create a temporary folder. "
+                                          "Please make sure you have proper permissions to this folder and try again."));
             return false;
         }
     }

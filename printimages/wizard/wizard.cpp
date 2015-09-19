@@ -47,6 +47,7 @@
 #include <QMenu>
 #include <QIcon>
 #include <QLocale>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -2391,7 +2392,7 @@ QStringList Wizard::printPhotosToFile(const QList<TPhoto*>& photos, const QStrin
 
             if (!pixmap.save(filename,0,100))
             {
-                KMessageBox::sorry(this, i18n("Could not save file, please check your output entry."));
+                QMessageBox::information(this, QString(), i18n("Could not save file, please check your output entry."));
                 break;
             }
         }
@@ -2415,7 +2416,7 @@ void Wizard::removeGimpFiles()
         {
             if (QFile::remove(*it) == false)
             {
-                KMessageBox::sorry(this, i18n("Could not remove the GIMP's temporary files."));
+                QMessageBox::information(this, QString(), i18n("Could not remove the GIMP's temporary files."));
                 break;
             }
         }
@@ -2535,9 +2536,8 @@ void Wizard::accept()
 
         if (!launchExternalApp(prog, args))
         {
-            KMessageBox::sorry(this,
-                               i18n("There was an error launching the GIMP. Please make sure it is properly installed."),
-                               i18n("KIPI"));
+            QMessageBox::information(this, QString(), 
+                                     i18n("There was an error launching the GIMP. Please make sure it is properly installed."));
             return;
         }
     }
@@ -2549,8 +2549,7 @@ void Wizard::accept()
 
         if (path.isEmpty())
         {
-            KMessageBox::sorry(this,
-                               i18n("Empty output path."));
+            QMessageBox::information(this, QString(), i18n("Empty output path."));
             return;
         }
         
