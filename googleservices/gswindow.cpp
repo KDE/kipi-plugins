@@ -316,6 +316,7 @@ void GSWindow::readSettings()
             break;
         default :
             grp = config.group("PicasawebExport Settings");
+            break;
     }
 
     m_currentAlbumId = grp.readEntry("Current Album",QString());
@@ -370,6 +371,7 @@ void GSWindow::writeSettings()
             break;
         default :
             grp = config.group("PicasawebExport Settings");
+            break;
     }
     
     grp.writeEntry("refresh_token",refresh_token);
@@ -585,7 +587,8 @@ void GSWindow::slotListAlbumsDone(int code,const QString& errMsg ,const QList <G
                     m_widget->getAlbumsCoB()->setCurrentIndex(i);
             
                 buttonStateChange(true);  
-            }         
+            }
+            break;
     }
 
 }
@@ -1203,6 +1206,7 @@ void GSWindow::slotNewAlbumRequest()
                 m_picasa_albumdlg->getAlbumProperties(newFolder);
                 m_picsasa_talker->createAlbum(newFolder);
             }
+            break;
     }
 }
 

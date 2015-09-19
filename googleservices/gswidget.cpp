@@ -87,7 +87,8 @@ GoogleServicesWidget::GoogleServicesWidget(QWidget* const parent, KIPI::Interfac
             break;
         default :
             getUploadBox()->hide();
-            getSizeBox()->hide();    
+            getSizeBox()->hide();  
+            break;
     }
 }
 
@@ -112,7 +113,8 @@ void GoogleServicesWidget::updateLabels(const QString& name, const QString& url)
             getHeaderLbl()->setText(QStringLiteral(
                 "<b><h2><a href='http://picasaweb.google.com/%1'>"
                 "<font color=\"#9ACD32\">Google Photos/PicasaWeb</font>"
-                "</a></h2></b>").arg(url)); 
+                "</a></h2></b>").arg(url));
+            break;
     }
 
     if (name.isEmpty())
