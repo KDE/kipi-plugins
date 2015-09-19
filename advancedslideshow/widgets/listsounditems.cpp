@@ -35,11 +35,11 @@
 #include <QBrush>
 #include <QMimeData>
 #include <QUrl>
+#include <QMessageBox>
+#include <QApplication>
 
 // KDE includes
 
-#include <kiconloader.h>
-#include <kmessagebox.h>
 #include <klocalizedstring.h>
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -49,8 +49,7 @@ SoundItem::SoundItem(QListWidget* const parent, const QUrl& url)
     : QListWidgetItem(parent)
 {
     m_url = url;
-    setIcon(SmallIcon(QStringLiteral("audio-x-generic"),
-                      KIconLoader::SizeLarge, KIconLoader::DisabledState));
+    setIcon(QIcon::fromTheme(QStringLiteral("audio-x-generic")).pixmap(48, QIcon::Disabled));
 
     m_totalTime   = QTime(0, 0, 0);
     m_mediaObject = new Phonon::MediaObject();
@@ -93,11 +92,15 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
 {
     if ( newstate == Phonon::ErrorState )
     {
-        KMessageBox::detailedError( (QWidget*)(this),
-                                    i18n("%1 is damaged and may not be playable.", m_url.fileName()),
-                                    m_mediaObject->errorString(),
-                                    i18n("Phonon error")
-                                  );
+        QMessageBox msgBox(QApplication::activeWindow());
+        msgBox.setWindowTitle(i18n("Phonon error"));
+        msgBox.setText(i18n("%1 is damaged and may not be playable.", m_url.fileName()));
+        msgBox.setDetailedText(m_mediaObject->errorString());
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
+
         m_artist = m_url.fileName();
         m_title  = i18n("This file is damaged and may not be playable.");
         setText(i18nc("artist - title", "%1 - %2", artist(), title()));

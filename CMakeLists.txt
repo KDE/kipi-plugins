@@ -103,6 +103,7 @@ find_package(KF5 REQUIRED COMPONENTS
              Wallet
              Config
              ThreadWeaver
+             KHtml
              I18n
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )

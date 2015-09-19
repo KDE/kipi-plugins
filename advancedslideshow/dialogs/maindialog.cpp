@@ -39,10 +39,7 @@
 #include <QSvgRenderer>
 #include <QUrl>
 #include <QIcon>
-
-// KDE includes
-
-#include <kmessagebox.h>
+#include <QMessageBox>
 
 // Libkipi includes
 
@@ -66,8 +63,8 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
-    : QWidget(parent)
-    , m_noPreviewPixmap(ICONSIZE, ICONSIZE)
+    : QWidget(parent),
+      m_noPreviewPixmap(ICONSIZE, ICONSIZE)
 {
     setupUi(this);
 
@@ -77,7 +74,7 @@ MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
     // --------------------------------------------------------
 
     QVBoxLayout* listBoxContainerLayout = new QVBoxLayout;
-    m_ImagesFilesListBox                = new KPImagesList(m_ImagesFilesListBoxContainer, KIconLoader::SizeMedium);
+    m_ImagesFilesListBox                = new KPImagesList(m_ImagesFilesListBoxContainer, 32);
     m_ImagesFilesListBox->listView()->header()->hide();
 
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
@@ -311,7 +308,7 @@ bool MainDialog::updateUrlList()
 
         if (!QFile::exists(url))
         {
-            KMessageBox::error(this, i18n("Cannot access file %1. Please check the path is correct.", url));
+            QMessageBox::critical(this, i18n("Error"), i18n("Cannot access file %1. Please check the path is correct.", url));
             return false;
         }
 
@@ -470,8 +467,7 @@ void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
 {
     if (pix.isNull())
     {
-        m_previewLabel->setPixmap(SmallIcon(QStringLiteral("image-x-generic"),
-                                            ICONSIZE, KIconLoader::DisabledState));
+        m_previewLabel->setPixmap(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(ICONSIZE, QIcon::Disabled));
     }
     else
     {
