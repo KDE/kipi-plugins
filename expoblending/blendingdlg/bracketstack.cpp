@@ -28,11 +28,11 @@
 
 #include <QHeaderView>
 #include <QPainter>
+#include <QIcon>
 
 // KDE includes
 
-#include <KLocalizedString>
-#include <kiconloader.h>
+#include <klocalizedstring.h>
 #include <kio/previewjob.h>
 #include <kfileitem.h>
 
@@ -54,7 +54,7 @@ BracketStackItem::BracketStackItem(QTreeWidget* const parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
-    setThumbnail(SmallIcon(QStringLiteral("image-x-generic"), treeWidget()->iconSize().width(), KIconLoader::DisabledState));
+    setThumbnail(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(treeWidget()->iconSize().width(), QIcon::Disabled));
 }
 
 BracketStackItem::~BracketStackItem()
@@ -107,20 +107,21 @@ bool BracketStackItem::operator< (const QTreeWidgetItem& other) const
 
 // -------------------------------------------------------------------------
 
-struct BracketStackList::BracketStackListPriv
+struct BracketStackList::Private
 {
-    BracketStackListPriv()
+    Private()
         : iface(0),
           loadRawThumb(0)
-    {}
+    {
+    }
 
     Interface*        iface;
     KPRawThumbThread* loadRawThumb;
 };
 
-BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
+BracketStackList::BracketStackList(Interface* const iface, QWidget* const parent)
     : QTreeWidget(parent),
-      d(new BracketStackListPriv)
+      d(new Private)
 {
     d->iface = iface;
 
@@ -163,11 +164,12 @@ BracketStackList::~BracketStackList()
 QList<QUrl> BracketStackList::urls()
 {
     QList<QUrl> list;
-
     QTreeWidgetItemIterator it(this);
+
     while (*it)
     {
-        BracketStackItem* item = dynamic_cast<BracketStackItem*>(*it);
+        BracketStackItem* const item = dynamic_cast<BracketStackItem*>(*it);
+
         if (item && item->isOn())
             list.append(item->url());
 
@@ -180,15 +182,18 @@ QList<QUrl> BracketStackList::urls()
 BracketStackItem* BracketStackList::findItem(const QUrl& url)
 {
     QTreeWidgetItemIterator it(this);
+
     while (*it)
     {
-        BracketStackItem* lvItem = dynamic_cast<BracketStackItem*>(*it);
+        BracketStackItem* const lvItem = dynamic_cast<BracketStackItem*>(*it);
+
         if (lvItem && lvItem->url() == url)
         {
             return lvItem;
         }
         ++it;
     }
+
     return 0;
 }
 
@@ -207,9 +212,10 @@ void BracketStackList::addItems(const QList<QUrl>& list)
         bool found = false;
 
         QTreeWidgetItemIterator iter(this);
+
         while (*iter)
         {
-            BracketStackItem* item = dynamic_cast<BracketStackItem*>(*iter);
+            BracketStackItem* const item = dynamic_cast<BracketStackItem*>(*iter);
 
             if (item->url() == imageUrl)
             {
@@ -221,7 +227,7 @@ void BracketStackList::addItems(const QList<QUrl>& list)
 
         if (!found)
         {
-            BracketStackItem* item = new BracketStackItem(this);
+            BracketStackItem* const item = new BracketStackItem(this);
             item->setUrl(imageUrl);
             item->setOn(true);
             urls.append(imageUrl);
@@ -235,6 +241,7 @@ void BracketStackList::addItems(const QList<QUrl>& list)
     else
     {
         KFileItemList items;
+
         for (const QUrl& url: urls)
         {
             if (url.isValid())
@@ -242,7 +249,8 @@ void BracketStackList::addItems(const QList<QUrl>& list)
                 items.append(KFileItem(url));
             }
         }
-        KIO::PreviewJob* job = KIO::filePreview(items, iconSize());
+
+        KIO::PreviewJob* const job = KIO::filePreview(items, iconSize());
 
         connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
                 this, SLOT(slotKDEPreview(KFileItem, QPixmap)));
@@ -276,18 +284,21 @@ void BracketStackList::slotRawThumb(const QUrl& url, const QImage& img)
 void BracketStackList::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
     QTreeWidgetItemIterator it(this);
+
     while (*it)
     {
-        BracketStackItem* item = static_cast<BracketStackItem*>(*it);
+        BracketStackItem* const item = static_cast<BracketStackItem*>(*it);
+
         if (item->url() == url)
         {
             if (pix.isNull())
-                item->setThumbnail(SmallIcon(QStringLiteral("image-x-generic"), iconSize().width(), KIconLoader::DisabledState));
+                item->setThumbnail(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(iconSize().width(), QIcon::Disabled));
             else
                 item->setThumbnail(pix.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio));
 
             return;
         }
+
         ++it;
     }
 }

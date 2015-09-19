@@ -44,7 +44,6 @@ using namespace KIPI;
 namespace KIPIExpoBlendingPlugin
 {
 
-
 class BracketStackItem : public QTreeWidgetItem
 {
 
@@ -79,7 +78,7 @@ class BracketStackList : public QTreeWidget
 
 public:
 
-    BracketStackList(Interface* iface, QWidget* parent);
+    BracketStackList(Interface* const iface, QWidget* const parent);
     virtual ~BracketStackList();
 
     void addItems(const QList<QUrl>& list);
@@ -100,8 +99,8 @@ private Q_SLOTS:
 
 private:
 
-    class BracketStackListPriv;
-    BracketStackListPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIExpoBlendingPlugin
