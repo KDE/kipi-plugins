@@ -53,7 +53,6 @@
 
 #include <kconfiggroup.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // Libkipi includes
 

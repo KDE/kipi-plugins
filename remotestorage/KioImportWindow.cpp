@@ -27,12 +27,12 @@
 
 #include <QAction>
 #include <QMenu>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // Libkipi includes
 
@@ -136,11 +136,10 @@ void KioImportWindow::slotCopyingFinished(KJob* job)
 
     if (!m_importWidget->imagesList()->imageUrls().empty())
     {
-        KMessageBox::sorry(this, i18n(
-                           "Some of the images have not been transferred "
-                           "and are still in the list. "
-                           "You can retry to import these images now."), i18n(
-                           "Import not completed"));
+        QMessageBox::information(this,  i18n("Import not completed"),
+                                 i18n("Some of the images have not been transferred "
+                                            "and are still in the list. "
+                                            "You can retry to import these images now."));
     }
 }
 

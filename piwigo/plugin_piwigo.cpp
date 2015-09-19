@@ -36,9 +36,8 @@
 
 #include <kactioncollection.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
-#include <KPluginFactory>
-#include <KConfig>
+#include <kpluginfactory.h>
+#include <kconfig.h>
 
 // Libkipi includes
 

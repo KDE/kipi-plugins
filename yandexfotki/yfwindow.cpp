@@ -57,6 +57,7 @@ extern "C"
 #include <QMenu>
 #include <QComboBox>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -635,7 +636,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
     updateControls(true);
 
-    KMessageBox::information(this, i18n("Images has been uploaded"));
+    QMessageBox::information(this, QString(), i18n("Images has been uploaded"));
     return;
 }
 
@@ -665,7 +666,7 @@ void YandexFotkiWindow::slotStartTransfer()
 
     if (m_albumsCombo->currentIndex() == -1 || m_albumsCombo->count() == 0)
     {
-        KMessageBox::information(this, i18n("Please select album first"));
+        QMessageBox::information(this, QString(), i18n("Please select album first"));
         return;
     }
 
@@ -687,17 +688,17 @@ void YandexFotkiWindow::slotError()
     switch (m_talker.state())
     {
         case YandexFotkiTalker::STATE_GETSESSION_ERROR:
-            KMessageBox::error(this, i18n("Session error"));
+            QMessageBox::critical(this, QString(), i18n("Session error"));
             break;
         case YandexFotkiTalker::STATE_GETTOKEN_ERROR:
-            KMessageBox::error(this, i18n("Token error"));
+            QMessageBox::critical(this, QString(), i18n("Token error"));
             break;
         case YandexFotkiTalker::STATE_INVALID_CREDENTIALS:
-            KMessageBox::error(this, i18n("Invalid credentials"));
+            QMessageBox::critical(this, QString(), i18n("Invalid credentials"));
 //            authenticate(true);
             break;
         case YandexFotkiTalker::STATE_GETSERVICE_ERROR:
-            KMessageBox::error(this, i18n("Cannot get service document"));
+            QMessageBox::critical(this, QString(), i18n("Cannot get service document"));
             break;
 /*
         case YandexFotkiTalker::STATE_CHECKTOKEN_INVALID:
@@ -710,13 +711,13 @@ void YandexFotkiWindow::slotError()
 */
         case YandexFotkiTalker::STATE_LISTALBUMS_ERROR:
             m_albumsCombo->clear();
-            KMessageBox::error(this, i18n("Cannot list albums"));
+            QMessageBox::critical(this, QString(), i18n("Cannot list albums"));
             break;
         case YandexFotkiTalker::STATE_LISTPHOTOS_ERROR:
-            KMessageBox::error(this, i18n("Cannot list photos"));
+            QMessageBox::critical(this, QString(), i18n("Cannot list photos"));
             break;
         case YandexFotkiTalker::STATE_UPDATEALBUM_ERROR:
-            KMessageBox::error(this, i18n("Cannot update album info"));
+            QMessageBox::critical(this, QString(), i18n("Cannot update album info"));
             break;
         case YandexFotkiTalker::STATE_UPDATEPHOTO_FILE_ERROR:
         case YandexFotkiTalker::STATE_UPDATEPHOTO_INFO_ERROR:
@@ -743,7 +744,7 @@ void YandexFotkiWindow::slotError()
             break;
         default:
             qCDebug(KIPIPLUGINS_LOG) << "Unhandled error" << m_talker.state();
-            KMessageBox::error(this, i18n("Unknown error"));
+            QMessageBox::critical(this, QString(), i18n("Unknown error"));
     }
 
     // cancel current operation

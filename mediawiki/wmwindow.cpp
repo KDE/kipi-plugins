@@ -35,12 +35,12 @@
 #include <QUrl>
 #include <QComboBox>
 #include <QPushButton>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kwindowconfig.h>
 #include <kguiitem.h>
 
@@ -361,7 +361,7 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
         d->pass.clear();
         d->uploadJob = 0;
         //TODO Message d'erreur de login
-        KMessageBox::error(this, i18n("Login error\nPlease check your credentials and try again."));
+        QMessageBox::critical(this, i18n("Login Error"), i18n("Please check your credentials and try again."));
     }
     else
     {
@@ -382,7 +382,7 @@ void WMWindow::slotEndUpload()
     disconnect(d->uploadJob, SIGNAL(endUpload()),
                this, SLOT(slotEndUpload()));
 
-    KMessageBox::information(this, i18n("Upload finished with no errors."));
+    QMessageBox::information(this, QString(), i18n("Upload finished with no errors."));
     d->widget->progressBar()->hide();
     d->widget->progressBar()->progressCompleted();
 }
@@ -393,7 +393,7 @@ bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
     {
         QKeyEvent* const c = dynamic_cast<QKeyEvent *>(event);
 
-        if(c && c->key() == Qt::Key_Return)
+        if (c && c->key() == Qt::Key_Return)
         {
             event->ignore();
             qCDebug(KIPIPLUGINS_LOG) << "Key event pass";

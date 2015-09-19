@@ -31,12 +31,12 @@
 #include <QPointer>
 #include <QTime>
 #include <QIcon>
-#include <QtWidgets/QFileDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kfile.h>
-#include <kmessagebox.h>
 #include <kpagewidget.h>
 
 // Phonon includes
@@ -397,7 +397,7 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
 
     if  (Cpt > 1)
     {
-        KMessageBox::error(this, i18n("You can only move image files up one at a time."));
+        QMessageBox::critical(this, QString(), i18n("You can only move image files up one at a time."));
         return;
     }
 
@@ -429,7 +429,7 @@ void SoundtrackDialog::slotSoundFilesButtonDown()
 
     if (Cpt > 1)
     {
-        KMessageBox::error(this, i18n("You can only move files down one at a time."));
+        QMessageBox::critical(this, QString(), i18n("You can only move files down one at a time."));
         return;
     }
 
@@ -561,7 +561,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
 
         if (!QFile::exists(path))
         {
-            KMessageBox::error(this, i18n("Cannot access file %1. Please check the path is correct.", path));
+            QMessageBox::critical(this, QString(), i18n("Cannot access file %1. Please check the path is correct.", path));
             return;
         }
 
@@ -570,7 +570,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
 
     if ( urlList.isEmpty() )
     {
-        KMessageBox::error(this, i18n("Cannot create a preview of an empty file list."));
+        QMessageBox::critical(this, QString(), i18n("Cannot create a preview of an empty file list."));
         return;
     }
 

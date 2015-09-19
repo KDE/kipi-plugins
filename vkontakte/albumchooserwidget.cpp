@@ -29,12 +29,13 @@
 #include <QtWidgets/QPushButton>
 #include <QToolButton>
 #include <QtWidgets/QComboBox>
+#include <QMessageBox>
 
 // KDE Frameworks includes
 
 #include <klocalizedstring.h>
 #include <kguiitem.h>
-#include <KMessageBox>
+#include <kmessagebox.h>
 
 // LibKvkontakte includes
 
@@ -387,10 +388,9 @@ void AlbumChooserWidget::updateBusyStatus(bool busy)
 // TODO: share this code with `vkwindow.cpp`
 void AlbumChooserWidget::handleVkError(KJob* kjob)
 {
-    KMessageBox::error(
-        this,
-        kjob == 0 ? i18n("Internal error: Null pointer to KJob instance.") : kjob->errorText(),
-        i18nc("@title:window", "Request to VKontakte failed"));
+    QMessageBox::critical(this,
+                          i18nc("@title:window", "Request to VKontakte failed"),
+                          kjob == 0 ? i18n("Internal error: Null pointer to KJob instance.") : kjob->errorText());
 }
 
 } // namespace KIPIVkontaktePlugin

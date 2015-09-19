@@ -23,23 +23,26 @@
 
 #include "plugin_viewer.h"
 
-// Local includes
-#include "viewerwidget.h"
+// Qt includes
+
+#include <QUrl>
+#include <QAction>
+#include <QMessageBox>
+
+// KDE includes
+
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
 #include <KIPI/ImageCollection>
+
+// Local includes
+
+#include "viewerwidget.h"
 #include "kipiplugins_debug.h"
-
-// KDE includes
-#include <KPluginFactory>
-#include <KMessageBox>
-#include <KLocalizedString>
-
-// Qt includes
-#include <QUrl>
-#include <QAction>
 
 namespace KIPIViewerPlugin
 {
@@ -57,7 +60,7 @@ public:
     }
 
     ViewerWidget* widget;
-    QAction *      actionViewer;
+    QAction*      actionViewer;
 };
 
 Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
@@ -123,13 +126,13 @@ void Plugin_viewer::slotActivate()
         case oglNoRectangularTexture:
             qCCritical(KIPIPLUGINS_LOG) << "GL_ARB_texture_rectangle not supported";
             delete d->widget;
-            KMessageBox::error(0, i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
+            QMessageBox::critical(0, i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case oglNoContext:
             qCCritical(KIPIPLUGINS_LOG) << "no OpenGL context found";
             delete d->widget;
-            KMessageBox::error(0, i18n("OpenGL error"), i18n("No OpenGL context found"));
+            QMessageBox::critical(0, i18n("OpenGL error"), i18n("No OpenGL context found"));
             break;
     }
 }

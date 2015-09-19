@@ -27,12 +27,12 @@
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
-#include <QtWidgets/QPushButton>
+#include <QPushButton>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // LibKvkontakte includes
 
@@ -156,7 +156,7 @@ void AuthInfoWidget::updateAuthInfo()
 // TODO: share this code with `vkwindow.cpp`
 void AuthInfoWidget::handleVkError(KJob* kjob)
 {
-    KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
+    QMessageBox::critical(this, i18nc("@title:window", "Request to VKontakte failed"), kjob->errorText());
 }
 
 //---------------------------------------------------------------------------

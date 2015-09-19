@@ -42,6 +42,7 @@ extern "C"
 #include <QStringList>
 #include <QAction>
 #include <QApplication>
+#include <QMessageBox>
 
 // KDE includes
 
@@ -49,8 +50,7 @@ extern "C"
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kmessagebox.h>
-#include <KPluginFactory>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 
@@ -200,7 +200,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     if (m_urlList.isEmpty())
     {
-        KMessageBox::sorry(QApplication::activeWindow(), i18n("There are no images to show."));
+        QMessageBox::information(QApplication::activeWindow(), QString(), i18n("There are no images to show."));
         return;
     }
 
@@ -258,7 +258,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     {
         if (!QGLFormat::hasOpenGL())
         {
-            KMessageBox::error(QApplication::activeWindow(),
+            QMessageBox::critical(QApplication::activeWindow(), QString(), 
                                i18n("OpenGL support is not available on your system."));
         }
         else

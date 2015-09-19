@@ -29,14 +29,14 @@
 #include <QCloseEvent>
 #include <QUrl>
 #include <QMenu>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <kio/copyjob.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // Local includes
 
@@ -195,11 +195,10 @@ void KioExportWindow::slotCopyingFinished(KJob *job)
 
     if (!m_exportWidget->imagesList()->imageUrls().empty())
     {
-        KMessageBox::sorry(this, i18n(
-                           "Some of the images have not been transferred "
-                           "and are still in the list. "
-                           "You can retry to export these images now."), i18n(
-                           "Upload not completed"));
+        QMessageBox::information(this, i18n("Upload not completed"),
+                                 i18n("Some of the images have not been transferred "
+                                      "and are still in the list. "
+                                      "You can retry to export these images now."));
     }
 }
 
