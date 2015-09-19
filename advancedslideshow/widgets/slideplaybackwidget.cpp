@@ -35,7 +35,6 @@
 
 // KDE includes
 
-#include <kiconloader.h>
 #include <klocalizedstring.h>
 
 // Local includes
@@ -127,16 +126,14 @@ void SlidePlaybackWidget::slotPlayButtonToggled()
 {
     if (m_playButton->isChecked())
     {
-        m_canHide                 = false;
-        KIconLoader* const loader = KIconLoader::global();
-        m_playButton->setIcon(loader->loadIcon(QStringLiteral("media-playback-start"), KIconLoader::NoGroup, 22));
+        m_canHide = false;
+        m_playButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")).pixmap(22));
         emit signalPause();
     }
     else
     {
-        m_canHide                 = true;
-        KIconLoader* const loader = KIconLoader::global();
-        m_playButton->setIcon(loader->loadIcon(QStringLiteral("media-playback-pause"), KIconLoader::NoGroup, 22));
+        m_canHide = true;
+        m_playButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-pause")).pixmap(22));
         emit signalPlay();
     }
 }
@@ -146,9 +143,8 @@ void SlidePlaybackWidget::slotNexPrevClicked()
     if (!m_playButton->isChecked())
     {
         m_playButton->setChecked(true);
-        m_canHide                 = false;
-        KIconLoader* const loader = KIconLoader::global();
-        m_playButton->setIcon(loader->loadIcon(QStringLiteral("media-playback-start"), KIconLoader::NoGroup, 22));
+        m_canHide = false;
+        m_playButton->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")).pixmap(22));
         emit signalPause();
     }
 }
