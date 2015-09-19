@@ -72,7 +72,7 @@ void MPForm::finish()
 {
     QByteArray str;
     str += "--";
-    str += m_boundary.latin1();
+    str += m_boundary;
     str += "--";
     m_buffer.append(str);
 }
@@ -83,7 +83,7 @@ void MPForm::addPair(const QString& name, const QString& value)
     QString content_length = QString::number(value.length());
 
     str += "--";
-    str += m_boundary.latin1();
+    str += m_boundary;
     str += "\r\n";
 
     if (!name.isEmpty()) 
@@ -120,7 +120,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
     QByteArray str;
     str += "--";
-    str += m_boundary.latin1();
+    str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; filename=\"";
     str += QFile::encodeName(name);
@@ -141,12 +141,12 @@ bool MPForm::addFile(const QString& name, const QString& path)
 
 QString MPForm::contentType() const
 {
-    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + m_boundary;
+    return QStringLiteral("Content-Type: multipart/form-data; boundary=") + QString::fromLatin1(m_boundary);
 }
 
 QString MPForm::boundary() const
 {
-    return m_boundary;
+    return QString::fromLatin1(m_boundary);
 }
 
 QByteArray MPForm::formData() const
