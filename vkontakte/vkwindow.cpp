@@ -44,11 +44,11 @@
 #include <QToolButton>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kconfig.h>
-#include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kio/renamedialog.h>
 #include <kconfiggroup.h>
@@ -354,7 +354,7 @@ void VkontakteWindow::updateHeaderLabel()
 
 void VkontakteWindow::handleVkError(KJob* kjob)
 {
-    KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
+    QMessageBox::critical(this, i18nc("@title:window", "Request to VKontakte failed"), kjob->errorText());
 }
 
 //---------------------------------------------------------------------------
@@ -365,7 +365,7 @@ void VkontakteWindow::slotStartTransfer()
     if (!m_albumsBox->getCurrentAlbumId(aid))
     {
         // TODO: offer the user to create an album if there are no albums yet
-        KMessageBox::information(this, i18n("Please select album first."));
+        QMessageBox::information(this, QString(), i18n("Please select album first."));
         return;
     }
 
