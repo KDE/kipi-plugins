@@ -33,11 +33,12 @@
 #include <QTimer>
 #include <QMenu>
 #include <QAction>
+#include <QIcon>
 
 // KDE includes
 
-#include <KLocalizedString>
 #include <kiconloader.h>
+#include <klocalizedstring.h>
 #include <kpixmapsequence.h>
 
 // Libkipi includes
@@ -47,9 +48,9 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-struct EnfuseStackItem::EnfuseStackItemPriv
+struct EnfuseStackItem::Private
 {
-    EnfuseStackItemPriv()
+    Private()
         : asValidThumb(false)
     {
     }
@@ -61,11 +62,11 @@ struct EnfuseStackItem::EnfuseStackItemPriv
 
 EnfuseStackItem::EnfuseStackItem(QTreeWidget* const parent)
     : QTreeWidgetItem(parent),
-      d(new EnfuseStackItemPriv)
+      d(new Private)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
-    setThumbnail(SmallIcon(QStringLiteral("image-x-generic"), treeWidget()->iconSize().width(), KIconLoader::DisabledState));
+    setThumbnail(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(treeWidget()->iconSize().width(), QIcon::Disabled));
     d->asValidThumb = false;
 }
 
@@ -139,15 +140,16 @@ void EnfuseStackItem::setOn(bool b)
 
 // -------------------------------------------------------------------------
 
-struct EnfuseStackList::EnfuseStackListPriv
+struct EnfuseStackList::Private
 {
-    EnfuseStackListPriv()
+    Private()
         : outputFormat(KPSaveSettingsWidget::OUTPUT_PNG),
           progressCount(0),
           progressTimer(0),
           progressPix(KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium)),
           processItem(0)
-    {}
+    {
+    }
 
     KPSaveSettingsWidget::OutputFormat  outputFormat;
 
@@ -161,7 +163,7 @@ struct EnfuseStackList::EnfuseStackListPriv
 
 EnfuseStackList::EnfuseStackList(QWidget* const parent)
     : QTreeWidget(parent),
-      d(new EnfuseStackListPriv)
+      d(new Private)
 {
     d->progressTimer = new QTimer(this);
 
@@ -202,17 +204,18 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
 {
     QMenu popmenu(this);
 
-    EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
+    EnfuseStackItem* const item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
+
     if (item)
     {
-        QAction * rmItem = new QAction(QIcon::fromTheme(QStringLiteral("dialog-close")), i18nc("@item:inmenu", "Remove item"), this);
+        QAction* const rmItem = new QAction(QIcon::fromTheme(QStringLiteral("dialog-close")), i18nc("@item:inmenu", "Remove item"), this);
         connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
-    QAction * rmAll = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete-shred")), i18nc("@item:inmenu", "Clear all"), this);
+    QAction* const rmAll = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete-shred")), i18nc("@item:inmenu", "Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 
@@ -229,11 +232,11 @@ void EnfuseStackList::slotRemoveItem()
 QList<EnfuseSettings> EnfuseStackList::settingsList()
 {
     QList<EnfuseSettings> list;
-
     QTreeWidgetItemIterator it(this);
+
     while (*it)
     {
-        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        EnfuseStackItem* const item = dynamic_cast<EnfuseStackItem*>(*it);
         if (item && item->isOn())
             list.append(item->enfuseSettings());
 
@@ -250,11 +253,13 @@ void EnfuseStackList::clearSelected()
 
     while (*it)
     {
-        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        EnfuseStackItem* const item = dynamic_cast<EnfuseStackItem*>(*it);
+
         if (item && item->isOn())
         {
             list.append(item);
         }
+
         ++it;
     }
 
@@ -264,7 +269,8 @@ void EnfuseStackList::clearSelected()
 
 void EnfuseStackList::setOnItem(const QUrl& url, bool on)
 {
-    EnfuseStackItem* item = findItemByUrl(url);
+    EnfuseStackItem* const item = findItemByUrl(url);
+
     if (item)
         item->setOn(on);
 }
@@ -287,7 +293,7 @@ void EnfuseStackList::addItem(const QUrl& url, const EnfuseSettings& settings)
         QString ext               = KPSaveSettingsWidget::extensionForFormat(enfusePrms.outputFormat);
         enfusePrms.previewUrl     = url;
 
-        EnfuseStackItem* item = new EnfuseStackItem(this);
+        EnfuseStackItem* const item = new EnfuseStackItem(this);
         item->setEnfuseSettings(enfusePrms);
         item->setOn(true);
         setCurrentItem(item);
@@ -301,14 +307,16 @@ void EnfuseStackList::setThumbnail(const QUrl& url, const QImage& img)
 {
     if (img.isNull()) return;
 
-    EnfuseStackItem* item = findItemByUrl(url);
+    EnfuseStackItem* const item = findItemByUrl(url);
+
     if (item && (!item->asValidThumb()))
         item->setThumbnail(QPixmap::fromImage(img.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio)));
 }
 
 void EnfuseStackList::slotItemClicked(QTreeWidgetItem* item)
 {
-    EnfuseStackItem* eItem = dynamic_cast<EnfuseStackItem*>(item);
+    EnfuseStackItem* const eItem = dynamic_cast<EnfuseStackItem*>(item);
+
     if (eItem)
         emit signalItemClicked(eItem->url());
 }
@@ -317,6 +325,7 @@ void EnfuseStackList::slotProgressTimerDone()
 {
     d->processItem->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
     d->progressCount++;
+
     if (d->progressCount == 8)
         d->progressCount = 0;
 
@@ -326,14 +335,17 @@ void EnfuseStackList::slotProgressTimerDone()
 EnfuseStackItem* EnfuseStackList::findItemByUrl(const QUrl& url)
 {
     QTreeWidgetItemIterator it(this);
+
     while (*it)
     {
-        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        EnfuseStackItem* const item = dynamic_cast<EnfuseStackItem*>(*it);
+
         if (item && (item->url() == url))
             return item;
 
         ++it;
     }
+
     return 0;
 }
 

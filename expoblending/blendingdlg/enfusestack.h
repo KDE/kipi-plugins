@@ -73,8 +73,8 @@ public:
 
 private:
 
-    class EnfuseStackItemPriv;
-    EnfuseStackItemPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 // ---------------------------------------------------------------------
@@ -117,8 +117,8 @@ private Q_SLOTS:
 
 private:
 
-    class EnfuseStackListPriv;
-    EnfuseStackListPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPIExpoBlendingPlugin

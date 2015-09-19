@@ -39,8 +39,8 @@
 
 // KDE includes
 
-#include <KConfig>
-#include <KLocalizedString>
+#include <kconfig.h>
+#include <klocalizedstring.h>
 #include <kiconloader.h>
 #include <kpixmapsequence.h>
 
