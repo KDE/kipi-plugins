@@ -32,13 +32,14 @@
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QSpinBox>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kmessagebox.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
 
 // LibKDcraw includes
 
@@ -370,7 +371,7 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
     }
     else
     {
-        KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
+        QMessageBox::critical(this, QString(), i18n("Facebook Call Failed: %1\n", errMsg));
     }
 }
 
@@ -388,7 +389,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
 
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
+        QMessageBox::critical(this, QString(), i18n("Facebook Call Failed: %1\n", errMsg));
         return;
     }
 
@@ -701,7 +702,7 @@ void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const QSt
 {
     if (errCode != 0)
     {
-        KMessageBox::error(this, i18n("Facebook Call Failed: %1", errMsg));
+        QMessageBox::critical(this, QString(), i18n("Facebook Call Failed: %1", errMsg));
         return;
     }
 
