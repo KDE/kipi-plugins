@@ -45,7 +45,8 @@
 #include <QIcon>
 #include <QMenu>
 #include <QDesktopServices>
-
+#include <QMessageBox>
+                      
 // KDE includes
 
 #include <kconfig.h>
@@ -430,7 +431,7 @@ void PiwigoWindow::slotProgressInfo(const QString& msg)
 void PiwigoWindow::slotError(const QString& msg)
 {
     d->progressDlg->hide();
-    KMessageBox::error(this, msg);
+    QMessageBox::critical(this, QString(), msg);
 }
 
 void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
@@ -529,7 +530,7 @@ void PiwigoWindow::slotAddPhoto()
 
     if ( urls.isEmpty())
     {
-        KMessageBox::error(this, i18n("Nothing to upload - please select photos to upload."));
+        QMessageBox::critical(this, QString(), i18n("Nothing to upload - please select photos to upload."));
         return;
     }
 
