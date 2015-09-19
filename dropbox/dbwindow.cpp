@@ -278,9 +278,10 @@ void DBWindow::slotBusy(bool val)
 
 void DBWindow::slotTextBoxEmpty()
 {
-    KMessageBox::error(this, i18n("The textbox is empty, please enter the code from the browser in the textbox. "
-                                  "To complete the authentication click \"Change Account\", "
-                                  "or \"Start Upload\" to authenticate again."));
+    QMessageBox::critical(this, QString(), 
+                          i18n("The textbox is empty, please enter the code from the browser in the textbox. "
+                               "To complete the authentication click \"Change Account\", "
+                               "or \"Start Upload\" to authenticate again."));
 
 }
 
@@ -437,14 +438,12 @@ void DBWindow::slotAccessTokenObtained(const QString& msg1,const QString& msg2,c
 
 void DBWindow::slotListAlbumsFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("Dropbox call failed:\n%1", msg));
-    return;
+    QMessageBox::critical(this, QString(), i18n("Dropbox call failed:\n%1", msg));
 }
 
 void DBWindow::slotCreateFolderFailed(const QString& msg)
 {
-    KMessageBox::error(this, i18n("Dropbox call failed:\n%1", msg));
-    //return;
+    QMessageBox::critical(this, QString(), i18n("Dropbox call failed:\n%1", msg));
 }
 
 void DBWindow::slotCreateFolderSucceeded()
