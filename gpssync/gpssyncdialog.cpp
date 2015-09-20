@@ -957,6 +957,7 @@ bool GPSSyncKGeoMapModelHelper::itemCoordinates(const QModelIndex& index, GeoCoo
 
 GPSSyncKGeoMapModelHelper::~GPSSyncKGeoMapModelHelper()
 {
+    delete d;
 }
 
 QPixmap GPSSyncKGeoMapModelHelper::pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size)
