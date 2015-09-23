@@ -53,6 +53,7 @@ Comment[el]=Εργαλείο ακολουθιακής επεξεργασίας �
 Comment[en_GB]=A tool to batch process images
 Comment[es]=Una herramienta para procesar imágenes por lotes
 Comment[fi]=Kuvien käsittely eräajossa
+Comment[fr]=Outil pour le traitement d'images par lot
 Comment[gl]=Unha ferramenta para procesar imaxes por lotes.
 Comment[is]=Verkfæri til að meðhöndla margar myndir í einu
 Comment[it]=Uno strumento per elaborare automaticamente le immagini

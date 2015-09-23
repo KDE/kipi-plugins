@@ -39,6 +39,7 @@ Comment[de]=Ein Werkzeug, um Fotolayouts zu erstellen
 Comment[el]=Εργαλείο δημιουργίας διατάξεων φωτογραφιών
 Comment[en_GB]=A tool to make photo layouts
 Comment[es]=Una herramienta para hacer distribuciones de fotografías
+Comment[fr]=Un outil pour créer des dispositions de photos
 Comment[gl]=Unha ferramenta para crear disposicións de fotos.
 Comment[is]=Verkfæri til að setja upp myndir
 Comment[it]=Uno strumento impaginare le foto
