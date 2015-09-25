@@ -105,6 +105,7 @@ find_package(KF5 REQUIRED COMPONENTS
              ThreadWeaver
              KHtml
              I18n
+             Archive
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 
