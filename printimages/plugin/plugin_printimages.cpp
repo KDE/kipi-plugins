@@ -47,7 +47,6 @@ extern "C"
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>
 

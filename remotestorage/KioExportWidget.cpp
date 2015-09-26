@@ -56,7 +56,7 @@ KioExportWidget::KioExportWidget(QWidget* const parent)
     m_targetLabel       = new KUrlComboRequester(hbox);
     m_targetDialog      = 0;
 
-    if(m_targetLabel->button())
+    if (m_targetLabel->button())
         m_targetLabel->button()->hide();
 
     m_targetLabel->comboBox()->setEditable(true);

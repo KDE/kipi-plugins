@@ -36,9 +36,9 @@
 
 // KDE includes
 
+#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kwindowconfig.h>
 
 // LibKDcraw includes
@@ -73,12 +73,12 @@ public:
 
     Private(QWidget* const widget, KIPI::Interface* const iface)
     {
-        m_widget  = new FbWidget(widget, iface, QStringLiteral("Facebook"));
-        m_imgList = m_widget->imagesList();
-        m_progressBar = m_widget->progressBar();
-        m_changeUserBtn = m_widget->getChangeUserBtn();
-        m_albumsCoB     = m_widget->getAlbumsCoB();
-        m_newAlbumBtn   = m_widget->getNewAlbmBtn();
+        m_widget          = new FbWidget(widget, iface, QStringLiteral("Facebook"));
+        m_imgList         = m_widget->imagesList();
+        m_progressBar     = m_widget->progressBar();
+        m_changeUserBtn   = m_widget->getChangeUserBtn();
+        m_albumsCoB       = m_widget->getAlbumsCoB();
+        m_newAlbumBtn     = m_widget->getNewAlbmBtn();
         m_reloadAlbumsBtn = m_widget->getReloadBtn();
         m_resizeChB       = m_widget->getResizeCheckBox();
         m_dimensionSpB    = m_widget->getDimensionSpB();
@@ -334,7 +334,7 @@ void FbWindow::authenticate()
 
 void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
 {
-    KIPIPlugins::KPProgressWidget* progressBar = d->m_progressBar;
+    KIPIPlugins::KPProgressWidget* const progressBar = d->m_progressBar;
 
     if (!label.isEmpty())
     {

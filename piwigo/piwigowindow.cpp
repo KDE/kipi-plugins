@@ -49,9 +49,9 @@
                       
 // KDE includes
 
+#include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <krun.h>
 #include <kurllabel.h>
 #include <kconfiggroup.h>
@@ -116,7 +116,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     parent->setMainWidget(widget);
     parent->setModal(false);
 
-    QHBoxLayout* hlay = new QHBoxLayout(widget);
+    QHBoxLayout* const hlay = new QHBoxLayout(widget);
 
     // ---------------------------------------------------------------------------
 
@@ -147,19 +147,19 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     QGroupBox* const optionsBox = new QGroupBox(i18n("Options"));
     QVBoxLayout* const vlay2    = new QVBoxLayout();
 
-    resizeCheckBox        = new QCheckBox(optionsBox);
+    resizeCheckBox           = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
-    QGridLayout* const glay     = new QGridLayout;
-    QLabel* const widthLabel    = new QLabel(i18n("Maximum width:"));
+    QGridLayout* const glay  = new QGridLayout;
+    QLabel* const widthLabel = new QLabel(i18n("Maximum width:"));
 
-    widthSpinBox          = new QSpinBox;
+    widthSpinBox   = new QSpinBox;
     widthSpinBox->setRange(1,8000);
     widthSpinBox->setValue(1600);
 
     QLabel* const heightLabel   = new QLabel(i18n("Maximum height:"));
 
-    heightSpinBox         = new QSpinBox;
+    heightSpinBox  = new QSpinBox;
     heightSpinBox->setRange(1,8000);
     heightSpinBox->setValue(1600);
 
@@ -176,11 +176,11 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    glay->addWidget(widthLabel, 0, 0);
-    glay->addWidget(widthSpinBox, 0, 1);
-    glay->addWidget(heightLabel, 1, 0);
-    glay->addWidget(heightSpinBox, 1, 1);
-    glay->addWidget(qualityLabel, 2, 0);
+    glay->addWidget(widthLabel,     0, 0);
+    glay->addWidget(widthSpinBox,   0, 1);
+    glay->addWidget(heightLabel,    1, 0);
+    glay->addWidget(heightSpinBox,  1, 1);
+    glay->addWidget(qualityLabel,   2, 0);
     glay->addWidget(qualitySpinBox, 2, 1);
 
     // ---------------------------------------------------------------------------

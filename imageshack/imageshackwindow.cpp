@@ -47,10 +47,10 @@
 
 // KDE includes
 
+#include <kmessagebox.h>
 #include <kaboutdata.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <krun.h>
 #include <kurllabel.h>
 #include <kwindowconfig.h>
@@ -212,9 +212,7 @@ void ImageshackWindow::saveSettings()
     KWindowConfig::saveWindowSize(windowHandle(), group);
 
     group.writeEntry("Private", m_widget->m_privateImagesChb->isChecked());
-
     group.writeEntry("Rembar", m_widget->m_remBarChb->isChecked());
-
     group.sync();
 }
 
@@ -238,8 +236,7 @@ void ImageshackWindow::slotStartTransfer()
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setVisible(true);
     m_widget->m_progressBar->progressScheduled(i18n("Image Shack Export"), false, true);
-    m_widget->m_progressBar->progressThumbnailChanged(
-        QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
+    m_widget->m_progressBar->progressThumbnailChanged(QIcon::fromTheme(QStringLiteral("kipi")).pixmap(22, 22));
 
     uploadNextItem();
 }
@@ -267,9 +264,9 @@ void ImageshackWindow::authenticate()
     m_widget->m_progressBar->setMaximum(4);
     m_widget->progressBar()->setFormat(i18n("Authenticating..."));
     
-    KIPIPlugins::KPLoginDialog* dlg = new KIPIPlugins::KPLoginDialog(this, QStringLiteral("ImageShack"));
+    KIPIPlugins::KPLoginDialog* const dlg = new KIPIPlugins::KPLoginDialog(this, QStringLiteral("ImageShack"));
     
-    if(dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         m_imageshack->setEmail(dlg->login());
         m_imageshack->setPassword(dlg->password());
@@ -430,7 +427,7 @@ void ImageshackWindow::slotGetGalleries()
 
 void ImageshackWindow::slotNewAlbumRequest()
 {
-    if(m_albumDlg->exec() == QDialog::Accepted)
+    if (m_albumDlg->exec() == QDialog::Accepted)
     {
         m_newAlbmTitle = m_albumDlg->getAlbumTitle();
     }

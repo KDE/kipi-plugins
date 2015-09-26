@@ -44,7 +44,7 @@
 #include <klocalizedstring.h>
 #include <kconfig.h>
 #include <kcolorscheme.h>
-#include <KConfigGroup>
+#include <kconfiggroup.h>
 
 // Libkipi includes
 
@@ -105,9 +105,6 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
 
     connect(m_albumsCoB, SIGNAL(currentIndexChanged(QString)),
             this, SLOT(selectedAlbumChanged(QString)));
-
-    // ------------------------------------------------------------------------
-    
 }
 
 void RajceWidget::updateLabels(const QString&, const QString&)

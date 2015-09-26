@@ -41,11 +41,11 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <krun.h>
 #include <kconfig.h>
 #include <kwallet.h>
-#include <KWindowConfig>
+#include <kwindowconfig.h>
+#include <kmessagebox.h>
 
 // Libkipi includes
 

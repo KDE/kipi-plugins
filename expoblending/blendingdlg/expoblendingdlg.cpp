@@ -53,9 +53,9 @@ extern "C"
 
 // KDE includes
 
+#include <kstandardguiitem.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
 #include <kio/renamedialog.h>
 #include <kwindowconfig.h>
 
@@ -145,7 +145,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
                               i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings.")));
     addButton(d->previewButton, QDialogButtonBox::ActionRole);
 
-    QPushButton* defaultButton = new QPushButton(this);
+    QPushButton* const defaultButton = new QPushButton(this);
     KGuiItem::assign(defaultButton, KStandardGuiItem::defaults());
     addButton(defaultButton, QDialogButtonBox::ResetRole);
 
@@ -154,8 +154,8 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     // ---------------------------------------------------------------
 
-    QWidget* page                   = new QWidget(this);
-    QGridLayout* grid               = new QGridLayout(page);
+    QWidget* const page             = new QWidget(this);
+    QGridLayout* const grid         = new QGridLayout(page);
     setMainWidget(page);
 
     d->previewWidget                = new KPPreviewManager(page);
@@ -163,7 +163,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     // ---------------------------------------------------------------
 
-    QScrollArea* rightColumn        = new QScrollArea(page);
+    QScrollArea* const rightColumn  = new QScrollArea(page);
     rightColumn->setWidgetResizable(true);
     QVBoxLayout* const panel        = new QVBoxLayout();
 
@@ -177,7 +177,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     d->enfuseSettingsBox            = new EnfuseSettingsWidget(d->settingsExpander);
 
-    QWidget* dummySaveWidget        = new QWidget(d->settingsExpander);
+    QWidget* const dummySaveWidget  = new QWidget(d->settingsExpander);
     QVBoxLayout* const saveVBox     = new QVBoxLayout();
 
     d->saveSettingsBox              = new KPSaveSettingsWidget(dummySaveWidget);
@@ -185,7 +185,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
 
     QHBoxLayout* const hbox         = new QHBoxLayout();
 
-    QLabel* customLabel             = new QLabel(dummySaveWidget);
+    QLabel* const customLabel       = new QLabel(dummySaveWidget);
     customLabel->setText(i18nc("@label:textbox", "File Name Template: "));
     hbox->addWidget(customLabel);
 
@@ -204,7 +204,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     d->settingsExpander->setItemIcon(1, QIcon::fromTheme(QStringLiteral("document-save")));
     d->settingsExpander->addStretch();
 
-    d->enfuseStack                  = new EnfuseStackList(rightColumn->viewport());
+    d->enfuseStack = new EnfuseStackList(rightColumn->viewport());
     panel->addWidget(d->enfuseStack, 1);
 
     rightColumn->setLayout(panel);
@@ -316,6 +316,7 @@ void ExpoBlendingDlg::slotAddItems(const QList<QUrl>& urls)
     if (!urls.empty())
     {
         d->mngr->thread()->identifyFiles(urls);
+
         if (!d->mngr->thread()->isRunning())
             d->mngr->thread()->start();
     }
@@ -324,13 +325,15 @@ void ExpoBlendingDlg::slotAddItems(const QList<QUrl>& urls)
 void ExpoBlendingDlg::slotLoadProcessed(const QUrl& url)
 {
     d->mngr->thread()->loadProcessed(url);
+
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
 
 void ExpoBlendingDlg::setIdentity(const QUrl& url, const QString& identity)
 {
-    BracketStackItem* item = d->bracketStack->findItem(url);
+    BracketStackItem* const item = d->bracketStack->findItem(url);
+
     if (item)
         item->setExposure(identity);
 }
@@ -400,7 +403,9 @@ void ExpoBlendingDlg::saveSettings()
 void ExpoBlendingDlg::slotPreview()
 {
     QList<QUrl> selectedUrl = d->bracketStack->urls();
-    if (selectedUrl.isEmpty()) return;
+
+    if (selectedUrl.isEmpty())
+        return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
     QList<QUrl> preprocessedList;
@@ -422,7 +427,9 @@ void ExpoBlendingDlg::slotPreview()
 void ExpoBlendingDlg::slotProcess()
 {
     QList<EnfuseSettings> list = d->enfuseStack->settingsList();
-    if (list.isEmpty()) return;
+
+    if (list.isEmpty())
+        return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
     QList<QUrl> preprocessedList;
@@ -438,6 +445,7 @@ void ExpoBlendingDlg::slotProcess()
         }
 
         d->mngr->thread()->enfuseFinal(preprocessedList, d->mngr->itemsList()[0], settings, d->mngr->enfuseBinary().path());
+
         if (!d->mngr->thread()->isRunning())
             d->mngr->thread()->start();
     }

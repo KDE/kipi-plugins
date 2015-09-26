@@ -35,7 +35,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QUrl>
-#include <QtCore/QString>
+#include <QString>
 
 // KDE includes
 
