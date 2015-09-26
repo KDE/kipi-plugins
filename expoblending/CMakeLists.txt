@@ -60,7 +60,6 @@ target_link_libraries(libexpoblending
         KF5::KExiv2
         KF5::KDcraw
         KF5::ConfigCore
-        KF5::IconThemes
         Qt5::Widgets
 )
 

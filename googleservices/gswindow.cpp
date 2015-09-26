@@ -42,7 +42,7 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kconfig.h>
+#include <ksharedconfig.h>
 #include <kio/renamedialog.h>
 #include <kwindowconfig.h>
 

@@ -53,7 +53,6 @@ target_link_libraries(kipiplugin_advancedslideshow
                       PRIVATE
                       KF5::Parts
                       KF5::WidgetsAddons
-                      KF5::IconThemes
 
                       Qt5::OpenGL
                       Qt5::Svg

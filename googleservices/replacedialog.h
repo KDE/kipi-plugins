@@ -23,13 +23,18 @@
 #ifndef REPLACEDIALOG_H
 #define REPLACEDIALOG_H
 
+// Qt includes
+
 #include <QDialog>
 #include <QString>
 #include <QUrl>
 
+// KDE includes
+
 #include <kio/global.h>
-#include <kio/pixmaploader.h>
 #include <kio/job.h>
+
+// Libkipi includes
 
 #include <KIPI/Interface>
 

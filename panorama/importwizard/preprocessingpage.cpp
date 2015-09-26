@@ -42,14 +42,16 @@
 
 // KDE includes
 
-#include <KConfig>
-#include <KLocalizedString>
-#include <kiconloader.h>
-#include <kpixmapsequence.h>
+#include <kconfig.h>
+#include <klocalizedstring.h>
 
 // LibKIPI includes
 
 #include <KIPI/Interface>
+
+// LibKDcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -75,41 +77,41 @@ struct PreProcessingPage::PreProcessingPagePriv
           title(0),
           celesteCheckBox(0),
           detailsBtn(0),
+          progressPix(KDcrawIface::WorkingPixmap()),
           mngr(0)
     {
-        progressPix = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
     }
 
-    int             progressCount;
-    QLabel*         progressLabel;
-    QTimer*         progressTimer;
-    QMutex          progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
-    bool            canceled;
+    int                        progressCount;
+    QLabel*                    progressLabel;
+    QTimer*                    progressTimer;
+    QMutex                     progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool                       canceled;
 
-    int             nbFilesProcessed;
-    QMutex          nbFilesProcessed_mutex;
+    int                        nbFilesProcessed;
+    QMutex                     nbFilesProcessed_mutex;
 
-    QLabel*         title;
+    QLabel*                    title;
 
-    QCheckBox*      celesteCheckBox;
+    QCheckBox*                 celesteCheckBox;
 
-    QString         output;
+    QString                    output;
 
-    QPushButton*    detailsBtn;
+    QPushButton*               detailsBtn;
 
-    KPixmapSequence progressPix;
+    KDcrawIface::WorkingPixmap progressPix;
 
-    Manager*        mngr;
+    Manager*                   mngr;
 };
 
 PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Pre-Processing Images</b>")),
       d(new PreProcessingPagePriv)
 {
-    d->mngr             = mngr;
-    d->progressTimer    = new QTimer(this);
+    d->mngr                 = mngr;
+    d->progressTimer        = new QTimer(this);
     QVBoxLayout* const vbox = new QVBoxLayout();
-    d->title            = new QLabel(this);
+    d->title                = new QLabel(this);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
     vbox->addWidget(d->title);
@@ -126,12 +128,11 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
                                            "is useful to prevent moving clouds from altering the control points matching "
                                            "process."));
     vbox->addWidget(d->celesteCheckBox);
-
     vbox->addStretch(2);
 
     QHBoxLayout* const hbox = new QHBoxLayout();
 
-    d->detailsBtn    = new QPushButton(this);
+    d->detailsBtn           = new QPushButton(this);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     hbox->addWidget(d->detailsBtn);
@@ -139,7 +140,6 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     hbox->addStretch(10);
 
     vbox->addLayout(hbox);
-
     vbox->addStretch(2);
 
     d->progressLabel = new QLabel(this);
@@ -189,7 +189,7 @@ void PreProcessingPage::process()
     connect(d->mngr->thread(), SIGNAL(jobCollectionFinished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-//     d->nbFilesProcessed = 0;
+//  d->nbFilesProcessed = 0;
 
     d->mngr->resetBasePto();
     d->mngr->resetCpFindPto();
@@ -200,7 +200,7 @@ void PreProcessingPage::process()
                                        d->mngr->cpFindPtoUrl(),
                                        d->mngr->cpCleanPtoUrl(),
                                        d->celesteCheckBox->isChecked(),
-//                                        d->mngr->hdr(),
+//                                     d->mngr->hdr(),
                                        d->mngr->format(),
                                        d->mngr->gPano(),
                                        d->mngr->rawDecodingSettings(),
@@ -221,6 +221,7 @@ bool PreProcessingPage::cancel()
     d->mngr->thread()->cancel();
 
     QMutexLocker lock(&d->progressMutex);
+
     if (d->progressTimer->isActive())
     {
         d->progressTimer->stop();
@@ -228,6 +229,7 @@ bool PreProcessingPage::cancel()
         resetTitle();
         return false;
     }
+
     return true;
 }
 
@@ -240,9 +242,7 @@ void PreProcessingPage::resetPage()
 void PreProcessingPage::slotProgressTimerDone()
 {
     d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
-
     d->progressCount = (d->progressCount + 1) % d->progressPix.frameCount();
-
     d->progressTimer->start(300);
 }
 
@@ -270,6 +270,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 return;
             }
+
             switch (ad.action)
             {
                 case PREPROCESS_INPUT:
@@ -359,6 +360,7 @@ void PreProcessingPage::resetTitle()
                            QDir::toNativeSeparators(d->mngr->cpFindBinary().path()),
                            d->mngr->cpFindBinary().url().url(),
                            d->mngr->cpFindBinary().projectName()));
+
     d->detailsBtn->hide();
     d->celesteCheckBox->show();
 }

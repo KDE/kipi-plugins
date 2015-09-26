@@ -107,7 +107,6 @@ find_package(KF5 REQUIRED COMPONENTS
              I18n
              Archive
              KIO
-             IconThemes
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 

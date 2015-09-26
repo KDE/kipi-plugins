@@ -64,8 +64,8 @@ private:
 
 private:
 
-    struct OptimizePagePriv;
-    OptimizePagePriv* const d;
+    struct Private;
+    Private* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin

@@ -37,13 +37,15 @@
 
 // KDE includes
 
-#include <kiconloader.h>
 #include <klocalizedstring.h>
-#include <kpixmapsequence.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
+
+// LibKDcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -146,19 +148,19 @@ struct EnfuseStackList::Private
         : outputFormat(KPSaveSettingsWidget::OUTPUT_PNG),
           progressCount(0),
           progressTimer(0),
-          progressPix(KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium)),
+          progressPix(KDcrawIface::WorkingPixmap()),
           processItem(0)
     {
     }
 
-    KPSaveSettingsWidget::OutputFormat  outputFormat;
+    KPSaveSettingsWidget::OutputFormat outputFormat;
 
-    QString                             templateFileName;
+    QString                            templateFileName;
 
-    int                                 progressCount;
-    QTimer*                             progressTimer;
-    KPixmapSequence                     progressPix;
-    EnfuseStackItem*                    processItem;
+    int                                progressCount;
+    QTimer*                            progressTimer;
+    KDcrawIface::WorkingPixmap         progressPix;
+    EnfuseStackItem*                   processItem;
 };
 
 EnfuseStackList::EnfuseStackList(QWidget* const parent)
@@ -263,7 +265,7 @@ void EnfuseStackList::clearSelected()
         ++it;
     }
 
-    foreach(QTreeWidgetItem* item, list)
+    foreach(QTreeWidgetItem* const item, list)
         delete item;
 }
 
@@ -277,7 +279,7 @@ void EnfuseStackList::setOnItem(const QUrl& url, bool on)
 
 void EnfuseStackList::removeItem(const QUrl& url)
 {
-    EnfuseStackItem* item = findItemByUrl(url);
+    EnfuseStackItem* const item = findItemByUrl(url);
     delete item;
 }
 
@@ -352,6 +354,7 @@ EnfuseStackItem* EnfuseStackList::findItemByUrl(const QUrl& url)
 void EnfuseStackList::processingItem(const QUrl& url, bool run)
 {
     d->processItem = findItemByUrl(url);
+
     if (d->processItem)
     {
         if (run)
@@ -370,9 +373,10 @@ void EnfuseStackList::processingItem(const QUrl& url, bool run)
 
 void EnfuseStackList::processedItem(const QUrl& url, bool success)
 {
-    EnfuseStackItem* item = findItemByUrl(url);
+    EnfuseStackItem* const item = findItemByUrl(url);
+
     if (item)
-        item->setProcessedIcon(SmallIcon(success ? QStringLiteral("dialog-ok") : QStringLiteral("dialog-cancel")));
+        item->setProcessedIcon(QIcon::fromTheme(success ? QStringLiteral("dialog-ok") : QStringLiteral("dialog-cancel")));
 }
 
 void EnfuseStackList::setTemplateFileName(KPSaveSettingsWidget::OutputFormat frm, const QString& string)
@@ -382,9 +386,11 @@ void EnfuseStackList::setTemplateFileName(KPSaveSettingsWidget::OutputFormat frm
     int count           = 0;
 
     QTreeWidgetItemIterator it(this);
+
     while (*it)
     {
-        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        EnfuseStackItem* const item = dynamic_cast<EnfuseStackItem*>(*it);
+
         if (item)
         {
             QString temp;
@@ -394,6 +400,7 @@ void EnfuseStackList::setTemplateFileName(KPSaveSettingsWidget::OutputFormat frm
             settings.targetFileName = d->templateFileName + temp.sprintf("-%02i", count+1).append(ext);
             item->setEnfuseSettings(settings);
         }
+
         ++it;
         count++;
     }

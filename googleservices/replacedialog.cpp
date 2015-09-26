@@ -24,8 +24,8 @@
 
 // Qt includes
 
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLayout>
+#include <QLabel>
+#include <QLayout>
 #include <QPainter>
 #include <QTimer>
 #include <QPushButton>
@@ -35,6 +35,7 @@
 
 #include <klocalizedstring.h>
 #include <ksqueezedtextlabel.h>
+#include <kio/pixmaploader.h>
 
 // Libkdcraw includes
 
@@ -80,8 +81,9 @@ public:
 };
 
 ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
-                                               Interface* const _iface, const QUrl& _src, const QUrl& _dest)
-                      : QDialog(parent), d(new Private)
+                             Interface* const _iface, const QUrl& _src, const QUrl& _dest)
+    : QDialog(parent),
+      d(new Private)
 {
     setObjectName(QStringLiteral("ReplaceDialog"));
 
@@ -91,7 +93,7 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
 
     setWindowTitle(_caption);
     
-    QDialogButtonBox* const buttonBox   = new QDialogButtonBox();
+    QDialogButtonBox* const buttonBox = new QDialogButtonBox();
     
     buttonBox->addButton(QDialogButtonBox::Cancel);
     connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),

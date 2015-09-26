@@ -80,11 +80,7 @@ target_link_libraries(libpanorama
                       KF5::ConfigCore
                       KF5::ThreadWeaver
                       KF5::I18n
-                      KF5::IconThemes
                       KF5kipiplugins
-                      ${KF5KDcraw_LIBRARIES}
-                      ${KF5Kipi_LIBRARIES}
-                      ${KF5KExiv2_LIBRARIES}
                      )
 
 # =======================================================

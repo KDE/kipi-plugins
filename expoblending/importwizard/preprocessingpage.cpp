@@ -37,14 +37,16 @@
 
 // KDE includes
 
-#include <KLocalizedString>
-#include <KConfig>
-#include <kiconloader.h>
-#include <kpixmapsequence.h>
+#include <klocalizedstring.h>
+#include <kconfig.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
+
+// LibKDcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -66,7 +68,7 @@ public:
 
     Private()
     {
-        progressPix   = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
+        progressPix   = KDcrawIface::WorkingPixmap();
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0,
@@ -76,49 +78,45 @@ public:
         detailsBtn    = 0;
     }
 
-    int             progressCount;
-    QLabel*         progressLabel;
-    QTimer*         progressTimer;
+    int                        progressCount;
+    QLabel*                    progressLabel;
+    QTimer*                    progressTimer;
 
-    QLabel*         title;
+    QLabel*                    title;
 
-    QCheckBox*      alignCheckBox;
+    QCheckBox*                 alignCheckBox;
 
-    QString         output;
+    QString                    output;
 
-    QPushButton*    detailsBtn;
+    QPushButton*               detailsBtn;
 
-    KPixmapSequence progressPix;
+    KDcrawIface::WorkingPixmap progressPix;
 
-    Manager*        mngr;
+    Manager*                   mngr;
 };
 
 PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Pre-Processing Bracketed Images</b>")),
       d(new Private)
 {
-    d->mngr           = mngr;
-
-    d->progressTimer  = new QTimer(this);
-
+    d->mngr                 = mngr;
+    d->progressTimer        = new QTimer(this);
     QVBoxLayout* const vbox = new QVBoxLayout(this);
-
-    d->title          = new QLabel(this);
+    d->title                = new QLabel(this);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
     vbox->addWidget(d->title);
 
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("ExpoBlending Settings");
-    d->alignCheckBox  = new QCheckBox(i18nc("@option:check", "Align bracketed images"), this);
+    d->alignCheckBox   = new QCheckBox(i18nc("@option:check", "Align bracketed images"), this);
     d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
     vbox->addWidget(d->alignCheckBox);
 
     vbox->addStretch(2);
 
     QHBoxLayout* const hbox = new QHBoxLayout();
-
-    d->detailsBtn     = new QPushButton(this);
+    d->detailsBtn           = new QPushButton(this);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     hbox->addWidget(d->detailsBtn);
@@ -127,12 +125,11 @@ PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* cons
     vbox->addLayout(hbox);
     vbox->addStretch(2);
 
-    d->progressLabel       = new QLabel(this);
+    d->progressLabel = new QLabel(this);
     d->progressLabel->setAlignment(Qt::AlignCenter);
+
     vbox->addWidget(d->progressLabel);
-
     vbox->addStretch(10);
-
     vbox->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vbox->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 

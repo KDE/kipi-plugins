@@ -41,8 +41,10 @@
 
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <kiconloader.h>
-#include <kpixmapsequence.h>
+
+// LibKDcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -57,50 +59,50 @@
 namespace KIPIPanoramaPlugin
 {
 
-struct OptimizePage::OptimizePagePriv
+struct OptimizePage::Private
 {
-    OptimizePagePriv()
+    Private()
         : progressCount(0),
           progressLabel(0),
           progressTimer(0),
           canceled(false),
           title(0),
-//           preprocessResults(0),
+//        preprocessResults(0),
           horizonCheckbox(0),
-//           projectionAndSizeCheckbox(0),
+//        projectionAndSizeCheckbox(0),
           detailsBtn(0),
+          progressPix(KDcrawIface::WorkingPixmap()),
           mngr(0)
     {
-        progressPix = KPixmapSequence(QStringLiteral("process-working"), KIconLoader::SizeSmallMedium);
     }
 
-    int             progressCount;
-    QLabel*         progressLabel;
-    QTimer*         progressTimer;
-    QMutex          progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
-    bool            canceled;
+    int                        progressCount;
+    QLabel*                    progressLabel;
+    QTimer*                    progressTimer;
+    QMutex                     progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool                       canceled;
 
-    QLabel*         title;
-//     QLabel*         preprocessResults;
+    QLabel*                    title;
+//  QLabel*                    preprocessResults;
 
-    QCheckBox*      horizonCheckbox;
-//     QCheckBox*      projectionAndSizeCheckboxs;
+    QCheckBox*                 horizonCheckbox;
+//  QCheckBox*                 projectionAndSizeCheckboxs;
 
-    QString         output;
+    QString                    output;
 
-    QPushButton*    detailsBtn;
+    QPushButton*               detailsBtn;
 
-    KPixmapSequence progressPix;
+    KDcrawIface::WorkingPixmap progressPix;
 
-    Manager*        mngr;
+    Manager*                   mngr;
 };
 
 OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18nc("@title:window", "<b>Optimization</b>")),
-      d(new OptimizePagePriv)
+      d(new Private)
 {
     d->mngr                         = mngr;
-    QVBoxLayout* const vbox = new QVBoxLayout();
+    QVBoxLayout* const vbox         = new QVBoxLayout();
     d->progressTimer                = new QTimer(this);
     d->title                        = new QLabel(this);
     d->title->setOpenExternalLinks(true);
@@ -116,7 +118,9 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     d->horizonCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
                                            "the detected horizon is an horizontal line in the final panorama"));
     vbox->addWidget(d->horizonCheckbox);
-    /*if (!d->mngr->gPano())
+    
+/*
+    if (!d->mngr->gPano())
     {
         d->projectionAndSizeCheckbox = new QCheckBox(i18nc("@option:check", "Automatic projection and output aspect"), this);
         d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
@@ -136,16 +140,18 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
         d->projectionAndSizeCheckbox->setWhatsThis(i18nc("@info:whatsthis", "<b>Automatic output aspect</b>: Automatically adapt the area "
                                                          "rendered of the panorama to get every photos into the panorama."));
     }
-    vbox->addWidget(d->projectionAndSizeCheckbox);*/
 
-//     d->preprocessResults            = new QLabel(this);
-//     vbox->addWidget(d->preprocessResults);
+    vbox->addWidget(d->projectionAndSizeCheckbox);
+*/
+
+//  d->preprocessResults            = new QLabel(this);
+//  vbox->addWidget(d->preprocessResults);
 
     vbox->addStretch(2);
 
     QHBoxLayout* const hbox = new QHBoxLayout();
 
-    d->detailsBtn                   = new QPushButton(this);
+    d->detailsBtn           = new QPushButton(this);
     d->detailsBtn->setText(i18nc("@action:button", "Details..."));
     d->detailsBtn->hide();
     hbox->addWidget(d->detailsBtn);
@@ -153,10 +159,9 @@ OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
     hbox->addStretch(10);
 
     vbox->addLayout(hbox);
-
     vbox->addStretch(2);
 
-    d->progressLabel                = new QLabel(this);
+    d->progressLabel        = new QLabel(this);
     d->progressLabel->setAlignment(Qt::AlignCenter);
     vbox->addWidget(d->progressLabel);
 
@@ -181,7 +186,7 @@ OptimizePage::~OptimizePage()
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup group = config.group("Panorama Settings");
     group.writeEntry("Horizon", d->horizonCheckbox->isChecked());
-//     group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
+//  group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
     config.sync();
 
     delete d;
@@ -196,7 +201,7 @@ void OptimizePage::process()
                            "<p>This can take a while...</p>"
                            "</qt>"));
     d->horizonCheckbox->hide();
-//     d->projectionAndSizeCheckbox->hide();
+//  d->projectionAndSizeCheckbox->hide();
     d->progressTimer->start(300);
 
     connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
@@ -225,6 +230,7 @@ bool OptimizePage::cancel()
     d->mngr->thread()->cancel();
 
     QMutexLocker lock(&d->progressMutex);
+
     if (d->progressTimer->isActive())
     {
         d->progressTimer->stop();
@@ -285,7 +291,7 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                             "</qt>"));
                         d->progressTimer->stop();
                         d->horizonCheckbox->hide();
-//                         d->projectionAndSizeCheckbox->hide();
+//                      d->projectionAndSizeCheckbox->hide();
                         d->detailsBtn->show();
                         d->progressLabel->clear();
                         d->output = ad.message;
@@ -354,11 +360,12 @@ void OptimizePage::resetTitle()
                            QDir::toNativeSeparators(d->mngr->autoOptimiserBinary().path()),
                            d->mngr->autoOptimiserBinary().url().url(),
                            d->mngr->autoOptimiserBinary().projectName()));
-//     QPair<double, int> result = d->mngr->cpFindUrlData().standardDeviation();
-//     d->preprocessResults->setText(i18n("Alignment error: %1px", result.first / ((double) result.second)));
+
+//  QPair<double, int> result = d->mngr->cpFindUrlData().standardDeviation();
+//  d->preprocessResults->setText(i18n("Alignment error: %1px", result.first / ((double) result.second)));
     d->detailsBtn->hide();
     d->horizonCheckbox->show();
-//     d->projectionAndSizeCheckbox->show();
+//  d->projectionAndSizeCheckbox->show();
 }
 
 }   // namespace KIPIPanoramaPlugin
