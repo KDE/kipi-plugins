@@ -67,11 +67,6 @@ SharedContainer::SharedContainer()
     kbDisableFadeInOut            = false;
     kbDisableCrossFade            = false;
     cacheSize                     = 0;
-
-    page_main                     = 0;
-    page_caption                  = 0;
-    page_soundtrack               = 0;
-    page_advanced                 = 0;
 }
 
 SharedContainer::~SharedContainer()

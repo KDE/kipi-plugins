@@ -75,11 +75,6 @@ public:
     SoundtrackDialog*    soundtrackPage;
     AdvancedDialog*      advancedPage;
 
-    KPageWidgetItem*     page_main;
-    KPageWidgetItem*     page_caption;
-    KPageWidgetItem*     page_soundtrack;
-    KPageWidgetItem*     page_advanced;
-
     // Config file data
 
     // --> Main page

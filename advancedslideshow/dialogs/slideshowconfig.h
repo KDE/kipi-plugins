@@ -36,7 +36,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class SharedContainer;
 
-class SlideShowConfig : public KPPageDialog
+class SlideShowConfig : public KPToolDialog
 {
     Q_OBJECT
 

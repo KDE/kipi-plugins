@@ -50,6 +50,7 @@
 #include "kipiplugins_debug.h"
 #include "commoncontainer.h"
 #include "advanceddialog.h"
+#include "captiondialog.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
@@ -384,7 +385,7 @@ void MainDialog::slotEffectChanged()
     m_printProgressCheckBox->setEnabled(!isKB);
     m_printCommentsCheckBox->setEnabled(!isKB);
     m_openGlFullScale->setEnabled(!isKB && m_openglCheckBox->isChecked());
-    m_sharedData->page_caption->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
+    m_sharedData->captionPage->setEnabled((!isKB) && m_printCommentsCheckBox->isChecked());
 }
 
 void MainDialog::slotDelayChanged( int delay )
@@ -481,7 +482,7 @@ void MainDialog::slotThumbnail(const QUrl& /*url*/, const QPixmap& pix)
 void MainDialog::slotPrintCommentsToggled()
 {
     m_sharedData->printFileComments =  m_printCommentsCheckBox->isChecked();
-    m_sharedData->page_caption->setEnabled(m_printCommentsCheckBox->isChecked());
+    m_sharedData->captionPage->setEnabled(m_printCommentsCheckBox->isChecked());
 }
 
 void MainDialog::slotImageListChanged()

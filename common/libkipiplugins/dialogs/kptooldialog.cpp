@@ -275,17 +275,4 @@ KPWizardDialog::~KPWizardDialog()
 {
 }
 
-// -----------------------------------------------------------------------------------
-
-KPPageDialog::KPPageDialog(QWidget* const parent)
-    : KPageDialog(parent),
-      KPDialogBase(this)
-{
-    setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Ok);
-}
-
-KPPageDialog::~KPPageDialog()
-{
-}
-
 } // namespace KIPIPlugins

@@ -30,6 +30,7 @@
 #include <QFont>
 #include <QIcon>
 #include <QMenu>
+#include <QTabWidget>
 
 // KDE includes
 
@@ -61,16 +62,18 @@ public:
 
     Private()
     {
+        tab        = 0;
         sharedData = 0;
         config     = 0;
     }
 
+    QTabWidget*      tab;
     SharedContainer* sharedData;
     KConfig*         config;
 };
 
 SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const sharedData)
-    : KPPageDialog(parent),
+    : KPToolDialog(parent),
       d(new Private)
 {
     setObjectName(QStringLiteral("Advanced Slideshow Settings"));
@@ -79,34 +82,36 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
     d->config     = new KConfig(QStringLiteral("kipirc"));
     d->sharedData = sharedData;
 
-    setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Ok | QDialogButtonBox::Apply);
-    button(QDialogButtonBox::Apply)->setDefault(true);
-    button(QDialogButtonBox::Apply)->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
-    button(QDialogButtonBox::Apply)->setText(i18n("Start Slideshow"));
-    setFaceType(List);
+    startButton()->setDefault(true);
+    startButton()->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
+    startButton()->setText(i18n("Start Slideshow"));
     setModal(true);
 
     // --- Pages settings ---
 
+    d->tab = new QTabWidget(this);
+    
     d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
-    d->sharedData->page_main = addPage(d->sharedData->mainPage, i18n("Main"));
-    d->sharedData->page_main->setHeader(i18n("Main Settings"));
-    d->sharedData->page_main->setIcon(QIcon::fromTheme(QStringLiteral("view-presentation")));
+    d->tab->addTab(d->sharedData->mainPage,
+                   QIcon::fromTheme(QStringLiteral("view-presentation")),
+                   i18n("Main Settings"));
 
     d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
-    d->sharedData->page_caption = addPage(d->sharedData->captionPage, i18nc("captions for the slideshow", "Caption"));
-    d->sharedData->page_caption->setHeader(i18nc("captions for the slideshow", "Caption"));
-    d->sharedData->page_caption->setIcon(QIcon::fromTheme(QStringLiteral("draw-freehand")));
+    d->tab->addTab(d->sharedData->captionPage,
+                   QIcon::fromTheme(QStringLiteral("draw-freehand")),
+                   i18nc("captions for the slideshow", "Caption"));
 
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
-    d->sharedData->page_soundtrack = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
-    d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
-    d->sharedData->page_soundtrack->setIcon(QIcon::fromTheme(QStringLiteral("speaker")));
+    d->tab->addTab(d->sharedData->soundtrackPage,
+                   QIcon::fromTheme(QStringLiteral("speaker")),
+                   i18n("Soundtrack"));
 
     d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
-    d->sharedData->page_advanced = addPage(d->sharedData->advancedPage, i18n("Advanced"));
-    d->sharedData->page_advanced->setHeader(i18n("Advanced"));
-    d->sharedData->page_advanced->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
+    d->tab->addTab(d->sharedData->advancedPage,
+                   QIcon::fromTheme(QStringLiteral("configure")),
+                   i18n("Advanced"));
+
+    setMainWidget(d->tab);
 
     // --- About --
 
@@ -130,7 +135,7 @@ SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const s
 
     // Slot connections
 
-    connect(buttonBox()->button(QDialogButtonBox::Apply), &QPushButton::clicked,
+    connect(startButton(), &QPushButton::clicked,
             this, &SlideShowConfig::slotStartClicked);
 
     readSettings();

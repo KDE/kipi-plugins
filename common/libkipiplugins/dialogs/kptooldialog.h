@@ -25,7 +25,6 @@
 
 // KDE includes
 
-#include <kpagedialog.h>
 #include <kassistantdialog.h>
 
 // Local includes
@@ -116,16 +115,6 @@ public:
 
     KPWizardDialog(QWidget* const parent=0);
     virtual ~KPWizardDialog();
-};
-
-// -----------------------------------------------------------------------------------
-
-class KIPIPLUGINS_EXPORT KPPageDialog : public KPageDialog, public KPDialogBase
-{
-public:
-
-    KPPageDialog(QWidget* const parent=0);
-    virtual ~KPPageDialog();
 };
 
 } // namespace KIPIPlugins
