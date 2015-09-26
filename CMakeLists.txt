@@ -106,6 +106,7 @@ find_package(KF5 REQUIRED COMPONENTS
              KHtml
              I18n
              Archive
+             KIOCore
              OPTIONAL_COMPONENTS CalendarCore # for Calendar
 )
 
