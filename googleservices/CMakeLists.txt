@@ -33,6 +33,7 @@ target_link_libraries(kipiplugin_googleservices
         KF5::KIOWidgets
         KF5::WindowSystem
         KF5::Wallet
+        KF5::IconThemes
         KF5kipiplugins
 )
 
