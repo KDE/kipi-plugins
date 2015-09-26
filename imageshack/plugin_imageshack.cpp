@@ -32,8 +32,7 @@
 
 #include <kactioncollection.h>
 #include <klocalizedstring.h>
-#include <kxmlguiclient.h>
-#include <KPluginFactory>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 
