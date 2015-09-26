@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <ksqueezedtextlabel.h>
 #include <kio/pixmaploader.h>
 
 // Libkdcraw includes
@@ -142,7 +141,8 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
 
     QString sentence1 = i18n("A linked item already exists.");
 
-    QLabel* lb1 = new KSqueezedTextLabel(sentence1, this);
+    KDcrawIface::RAdjustableLabel* const lb1 = new KDcrawIface::RAdjustableLabel(this);
+    lb1->setAdjustedText(sentence1);
     lb1->setAlignment(Qt::AlignHCenter);
     gridLayout->addWidget(lb1, 0, 0, 1, 3);
 
@@ -157,13 +157,15 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     d->lbSrc->setAlignment(Qt::AlignCenter);
     gridLayout->addWidget(d->lbSrc, 1, 2, 1, 1);
 
-    lb1 = new KSqueezedTextLabel(i18n("Destination"), this);
-    lb1->setAlignment(Qt::AlignHCenter);
-    gridLayout->addWidget(lb1, 2, 0, 1, 1);
+    KDcrawIface::RAdjustableLabel* const lb2 = new KDcrawIface::RAdjustableLabel(this);
+    lb2->setAdjustedText(i18n("Destination"));
+    lb2->setAlignment(Qt::AlignHCenter);
+    gridLayout->addWidget(lb2, 2, 0, 1, 1);
 
-    lb1 = new KSqueezedTextLabel(i18n("Source"), this);
-    lb1->setAlignment(Qt::AlignHCenter);
-    gridLayout->addWidget(lb1, 2, 2, 1, 1);
+    KDcrawIface::RAdjustableLabel* const lb3 = new KDcrawIface::RAdjustableLabel(this);
+    lb3->setAdjustedText(i18n("Source"));
+    lb3->setAlignment(Qt::AlignHCenter);
+    gridLayout->addWidget(lb3, 2, 2, 1, 1);
 
     QHBoxLayout* const layout2 = new QHBoxLayout();
     pLayout->addLayout(layout2);
@@ -175,7 +177,6 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     pLayout->addLayout(layout);
 
     layout->addStretch(1);
-
     layout->addWidget(buttonBox);
 
     d->progressTimer = new QTimer(this);
@@ -200,6 +201,7 @@ ReplaceDialog::ReplaceDialog(QWidget* const parent, const QString& _caption,
     if (d->dest.isValid())
     {
         KIO::TransferJob* const job = KIO::get(d->dest, KIO::NoReload, KIO::HideProgressInfo);
+
         job->addMetaData(QStringLiteral("content-type"),
                          QStringLiteral("Content-Type: application/x-www-form-urlencoded"));
 
