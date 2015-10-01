@@ -36,7 +36,6 @@
 #include <klocalizedstring.h>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>
-#include <kpluginloader.h>
 #include <kwindowsystem.h>
 
 // Libkipi includes

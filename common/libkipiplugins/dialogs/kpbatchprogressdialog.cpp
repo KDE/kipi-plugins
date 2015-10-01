@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kguiitem.h>
 #include <kstandardguiitem.h>
 
 // Local includes

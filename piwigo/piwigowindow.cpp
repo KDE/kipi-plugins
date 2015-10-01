@@ -44,7 +44,6 @@
 #include <QApplication>
 #include <QIcon>
 #include <QMenu>
-#include <QDesktopServices>
 #include <QMessageBox>
                       
 // KDE includes
@@ -52,14 +51,16 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <krun.h>
-#include <kurllabel.h>
 #include <kconfiggroup.h>
 
 // Libkipi includes
 
 #include <KIPI/Interface>
 #include <KIPI/ImageCollection>
+
+// Libkdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -71,6 +72,8 @@
 #include "kpimagedialog.h"
 #include "kpaboutdata.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIPiwigoExportPlugin
 {
 
@@ -80,28 +83,26 @@ public:
 
     Private(PiwigoWindow* const parent);
 
-    QWidget*               widget;
+    QWidget*                       widget;
 
-    QTreeWidget*           albumView;
+    QTreeWidget*                   albumView;
 
-    QPushButton*           confButton;
+    QPushButton*                   confButton;
 
-    QCheckBox*             resizeCheckBox;
-    QSpinBox*              widthSpinBox;
-    QSpinBox*              heightSpinBox;
-    QSpinBox*              qualitySpinBox;
+    QCheckBox*                     resizeCheckBox;
+    QSpinBox*                      widthSpinBox;
+    QSpinBox*                      heightSpinBox;
+    QSpinBox*                      qualitySpinBox;
 
-    QHash<QString, GAlbum> albumDict;
+    QHash<QString, GAlbum>         albumDict;
 
-    KUrlLabel*             logo;
+    PiwigoTalker*                  talker;
+    Piwigo*                        pPiwigo;
 
-    PiwigoTalker*          talker;
-    Piwigo*                pPiwigo;
-
-    QProgressDialog*       progressDlg;
-    unsigned int           uploadCount;
-    unsigned int           uploadTotal;
-    QStringList*           pUploadList;
+    QProgressDialog*               progressDlg;
+    unsigned int                   uploadCount;
+    unsigned int                   uploadTotal;
+    QStringList*                   pUploadList;
 };
 
 PiwigoWindow::Private::Private(PiwigoWindow* const parent)
@@ -120,13 +121,12 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    logo = new KUrlLabel;
-    logo->setText(QString());
-    logo->setUrl(QStringLiteral("http://piwigo.org"));
-    logo->setPixmap(QPixmap(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                   QStringLiteral("kipiplugin_piwigo/pics/piwigo_logo.png"))));
+    RActiveLabel* const logo = new RActiveLabel(QUrl(QLatin1String("http://piwigo.org")),
+                                                QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                                       QLatin1String("kipiplugin_piwigo/pics/piwigo_logo.png")));
+    logo->setToolTip(i18n("Visit Piwigo website"));
     logo->setAlignment(Qt::AlignLeft);
-
+    
     // ---------------------------------------------------------------------------
 
     albumView = new QTreeWidget;
@@ -306,9 +306,6 @@ void PiwigoWindow::connectSignals()
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotEnableSpinBox(int)));
 
-    connect(d->logo, SIGNAL(leftClickedUrl(QString)),
-            this, SLOT(slotProcessUrl(QString)));
-
     connect(d->progressDlg, SIGNAL(canceled()),
             this, SLOT(slotAddPhotoCancel()));
 
@@ -332,11 +329,6 @@ void PiwigoWindow::connectSignals()
 
     connect(d->talker, SIGNAL(signalAddPhotoFailed(QString)),
             this, SLOT(slotAddPhotoFailed(QString)));
-}
-
-void PiwigoWindow::slotProcessUrl(const QString& url)
-{
-    QDesktopServices::openUrl(QUrl(url));
 }
 
 void PiwigoWindow::readSettings()

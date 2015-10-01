@@ -41,7 +41,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <krun.h>
 #include <kconfig.h>
 #include <kwallet.h>
 #include <kwindowconfig.h>
