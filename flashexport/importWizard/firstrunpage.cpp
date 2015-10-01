@@ -64,7 +64,7 @@ public:
 
     QUrl           url;
 
-    KUrlRequester* urlRequester;
+    RFileSelector* urlRequester;
 };
 
 // link this page to SimpleViewer to gain access to settings container.
@@ -88,7 +88,6 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
 
     QLabel* const link = new QLabel(vbox);
     link->setAlignment(Qt::AlignRight);
-    link->setToolTip(i18nc("@info:tooltip", "Visit LibRaw project website"));
     link->setOpenExternalLinks(true);
     link->setTextFormat(Qt::RichText);
     link->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
@@ -99,10 +98,13 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
     QLabel* const info3   = new QLabel(vbox);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
-    d->urlRequester = new KUrlRequester(vbox);
-
-    connect(d->urlRequester, SIGNAL(urlSelected(QUrl)),
-            this, SLOT(slotUrlSelected(QUrl)));
+    d->urlRequester = new RFileSelector(vbox);
+    d->urlRequester->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+    d->urlRequester->fileDialog()->setWindowTitle(i18n("Select downloaded archive"));
+    d->urlRequester->fileDialog()->setFileMode(QFileDialog::ExistingFile);
+    
+    connect(d->urlRequester, SIGNAL(signalPathSelected()),
+            this, SLOT(slotUrlSelected()));
 
     setPageWidget(vbox);
     setLeftBottomPix(QIcon::fromTheme(QStringLiteral("kipi-flash")).pixmap(128));
@@ -113,9 +115,9 @@ FirstRunPage::~FirstRunPage()
     delete d;
 }
 
-void FirstRunPage::slotUrlSelected(const QUrl& url)
+void FirstRunPage::slotPathSelected()
 {
-    d->url = url;
+    d->url = QUrl::fromLocalFile(d->urlRequester->lineEdit()->text());
     emit signalUrlObtained();
 }
 

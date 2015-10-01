@@ -37,7 +37,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kurlrequester.h>
 
 // Libkdcraw includes
 
@@ -83,7 +82,7 @@ public:
     RIntNumInput*  imagesExportSize;
     RIntNumInput*  maxImageDimension;
 
-    KUrlRequester* exportUrl;
+    RFileSelector* exportUrl;
 };
 
 GeneralPage::GeneralPage (KAssistantDialog* dlg)
@@ -105,10 +104,11 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
-    QVBoxLayout* vlay2 = new QVBoxLayout(box2);
-    d->exportUrl       = new KUrlRequester(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer")), this);
-    d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
+    QGroupBox* const box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
+    QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
+    d->exportUrl             = new RFileSelector(this);
+    d->exportUrl->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer"));
+    d->exportUrl->fileDialog()->setFileMode(QFileDialog::Directory);
 
     vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
@@ -212,7 +212,7 @@ GeneralPage::~GeneralPage()
 void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const settings)
 {
     d->title->setText(settings->title);
-    d->exportUrl->setUrl(settings->exportUrl);
+    d->exportUrl->lineEdit()->setText(settings->exportUrl.toLocalFile());
     d->resizeExportImages->setChecked(settings->resizeExportImages);
     d->imagesExportSize->setValue(settings->imagesExportSize);
     d->maxImageDimension->setValue(settings->maxImageDimension);
@@ -226,7 +226,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const setting
 void GeneralPage::settings(SimpleViewerSettingsContainer* const settings)
 {
     settings->title                = d->title->text();
-    settings->exportUrl            = d->exportUrl->url();
+    settings->exportUrl            = QUrl::fromLocalFile(d->exportUrl->lineEdit()->text());
     settings->resizeExportImages   = d->resizeExportImages->isChecked();
     settings->imagesExportSize     = d->imagesExportSize->value();
     settings->maxImageDimension    = d->maxImageDimension->value();
