@@ -36,13 +36,11 @@
 #include <QIcon>
 #include <QUrl>
 
-// KDE includes
-
-#include <kfileitem.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"
+
+class KFileItem;
 
 namespace KIPI
 {
@@ -255,7 +253,7 @@ public:
 
     void                updateThumbnail(const QUrl& url);
 
-    virtual QList<QUrl>  imageUrls(bool onlyUnprocessed = false) const;
+    virtual QList<QUrl> imageUrls(bool onlyUnprocessed = false) const;
     virtual void        removeItemByUrl(const QUrl& url);
     QUrl                getCurrentUrl() const;
 

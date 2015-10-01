@@ -22,7 +22,7 @@
 
 #include "kputil.h"
 
-// ANSI C includes
+// C ANSI includes
 
 extern "C"
 {
@@ -35,7 +35,7 @@ namespace KIPIPlugins
 QDir makeTemporaryDir(const char* prefix)
 {
     QString subDir = QStringLiteral("%1-%2").arg(QString::fromUtf8(prefix)).arg(getpid());
-    QString path = QDir(QDir::tempPath()).filePath(subDir);
+    QString path   = QDir(QDir::tempPath()).filePath(subDir);
 
     QDir().mkpath(path);
 

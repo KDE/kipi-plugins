@@ -82,7 +82,8 @@ public:
 };
 
 KPPreviewManager::KPPreviewManager(QWidget* const parent)
-    : QStackedWidget(parent), d(new Private)
+    : QStackedWidget(parent),
+      d(new Private)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(QSize(400, 300));
@@ -92,14 +93,14 @@ KPPreviewManager::KPPreviewManager(QWidget* const parent)
     QVBoxLayout* const vboxLay = new QVBoxLayout(vbox);
     vbox->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
     vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
-    QLabel* const space1   = new QLabel(vbox);
-    d->progressLabel       = new QLabel(vbox);
+    QLabel* const space1       = new QLabel(vbox);
+    d->progressLabel           = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    QLabel* const space2   = new QLabel(vbox);
-    d->thumbLabel          = new QLabel(vbox);
+    QLabel* const space2       = new QLabel(vbox);
+    d->thumbLabel              = new QLabel(vbox);
     d->thumbLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    QLabel* const space3   = new QLabel(vbox);
-    d->textLabel           = new QLabel(vbox);
+    QLabel* const space3       = new QLabel(vbox);
+    d->textLabel               = new QLabel(vbox);
     d->textLabel->setScaledContents(true);
     d->textLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
@@ -171,6 +172,7 @@ void KPPreviewManager::setImage(const QImage& img, bool fit)
     }
 
     setCurrentIndex(PreviewMode);
+
     if (fit)
     {
         d->preview->slotZoom2Fit();
@@ -188,10 +190,12 @@ bool KPPreviewManager::load(const QUrl& file, bool fit)
     }
 
     setCurrentIndex(PreviewMode);
+
     if (fit)
     {
         d->preview->slotZoom2Fit();
     }
+
     return true;
 }
 
@@ -216,12 +220,12 @@ void KPPreviewManager::setSelectionAreaPossible(bool b)
     d->preview->enableSelectionArea(b);
 }
 
-QRectF KPPreviewManager::getSelectionArea()
+QRectF KPPreviewManager::getSelectionArea() const
 {
     return d->preview->getSelectionArea();
 }
 
-void KPPreviewManager::setSelectionArea(QRectF rectangle)
+void KPPreviewManager::setSelectionArea(const QRectF& rectangle)
 {
     d->preview->setSelectionArea(rectangle);
 }

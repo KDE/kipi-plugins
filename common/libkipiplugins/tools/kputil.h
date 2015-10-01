@@ -23,10 +23,14 @@
 #ifndef KPUTIL_H
 #define KPUTIL_H
 
-#include "kipiplugins_export.h"
+// Qt includes
 
 #include <QtCore/QString>
 #include <QtCore/QDir>
+
+// Local includes
+
+#include "kipiplugins_export.h"
 
 namespace KIPIPlugins
 {

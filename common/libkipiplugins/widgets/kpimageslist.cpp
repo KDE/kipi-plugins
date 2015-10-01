@@ -52,7 +52,7 @@
 
 #include <klocalizedstring.h>
 #include <kio/previewjob.h>
-#include <kpixmapsequence.h>
+#include <kfileitem.h>
 
 // Libkipi includes
 
@@ -91,7 +91,7 @@ public:
         hasThumb = false;
     }
 
-    bool              hasThumb;
+    bool              hasThumb;       // True if thumbnails is a real photo thumbs
 
     int               rating;         // Image Rating from Kipi host.
     QString           comments;       // Image comments from Kipi host.
@@ -106,14 +106,16 @@ KPImagesListViewItem::KPImagesListViewItem(KPImagesListView* const view, const Q
     : QTreeWidgetItem(view),
       d(new Private)
 {
-    qCDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << url
-                             << " for list view " << view;
-    d->view      = view;
-    int iconSize = d->view->iconSize().width();
-    setThumb(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(iconSize, iconSize, QIcon::Disabled));
     setUrl(url);
     setRating(-1);
     setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+    
+    d->view      = view;
+    int iconSize = d->view->iconSize().width();
+    setThumb(QIcon::fromTheme(QStringLiteral("image-x-generic")).pixmap(iconSize, iconSize, QIcon::Disabled), false);
+    
+    qCDebug(KIPIPLUGINS_LOG) << "Creating new ImageListViewItem with url " << d->url
+                             << " for list view " << d->view;
 }
 
 KPImagesListViewItem::~KPImagesListViewItem()
@@ -486,24 +488,23 @@ public:
 
     Private()
     {
-        listView              = 0;
-        iface                 = 0;
-        addButton             = 0;
-        removeButton          = 0;
-        moveUpButton          = 0;
-        moveDownButton        = 0;
-        clearButton           = 0;
-        loadButton            = 0;
-        saveButton            = 0;
-        iconSize              = DEFAULTSIZE;
-        allowRAW              = true;
-        controlButtonsEnabled = true;
-        allowDuplicate        = false;
-        progressCount         = 0;
-        progressTimer         = 0;
-        loadRawThumb          = 0;
-        progressPix           = KDcrawIface::WorkingPixmap();
-
+        listView               = 0;
+        iface                  = 0;
+        addButton              = 0;
+        removeButton           = 0;
+        moveUpButton           = 0;
+        moveDownButton         = 0;
+        clearButton            = 0;
+        loadButton             = 0;
+        saveButton             = 0;
+        iconSize               = DEFAULTSIZE;
+        allowRAW               = true;
+        controlButtonsEnabled  = true;
+        allowDuplicate         = false;
+        progressCount          = 0;
+        progressTimer          = 0;
+        loadRawThumb           = 0;
+        progressPix            = KDcrawIface::WorkingPixmap();
         PluginLoader* const pl = PluginLoader::instance();
 
         if (pl)
@@ -512,27 +513,27 @@ public:
         }
     }
 
-    bool                           allowRAW;
-    bool                           allowDuplicate;
-    bool                           controlButtonsEnabled;
-    int                            iconSize;
+    bool                       allowRAW;
+    bool                       allowDuplicate;
+    bool                       controlButtonsEnabled;
+    int                        iconSize;
 
-    CtrlButton*                    addButton;
-    CtrlButton*                    removeButton;
-    CtrlButton*                    moveUpButton;
-    CtrlButton*                    moveDownButton;
-    CtrlButton*                    clearButton;
-    CtrlButton*                    loadButton;
-    CtrlButton*                    saveButton;
+    CtrlButton*                addButton;
+    CtrlButton*                removeButton;
+    CtrlButton*                moveUpButton;
+    CtrlButton*                moveDownButton;
+    CtrlButton*                clearButton;
+    CtrlButton*                loadButton;
+    CtrlButton*                saveButton;
 
-    QList<QUrl>                    processItems;
-    KDcrawIface::WorkingPixmap     progressPix;
-    int                            progressCount;
-    QTimer*                        progressTimer;
+    QList<QUrl>                processItems;
+    KDcrawIface::WorkingPixmap progressPix;
+    int                        progressCount;
+    QTimer*                    progressTimer;
 
-    KPImagesListView*              listView;
-    Interface*                     iface;
-    KPRawThumbThread*              loadRawThumb;
+    KPImagesListView*          listView;
+    Interface*                 iface;
+    KPRawThumbThread*          loadRawThumb;
 };
 
 KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
@@ -571,13 +572,14 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
 
     // --------------------------------------------------------
 
-    setControlButtons(Add | Remove | MoveUp | MoveDown | Clear | Save | Load ); // add all buttons       (default)
-    setControlButtonsPlacement(ControlButtonsRight);             // buttons on the right  (default)
-    enableDragAndDrop(true);                                     // enable drag and drop  (default)
+    setControlButtons(Add | Remove | MoveUp | MoveDown | Clear | Save | Load ); // add all buttons      (default)
+    setControlButtonsPlacement(ControlButtonsRight);                            // buttons on the right (default)
+    enableDragAndDrop(true);                                                    // enable drag and drop (default)
 
     // --------------------------------------------------------
 
-    connect(d->listView, &KPImagesListView::signalAddedDropedItems, this, &KPImagesList::slotAddImages);
+    connect(d->listView, &KPImagesListView::signalAddedDropedItems,
+            this, &KPImagesList::slotAddImages);
 
     if (d->iface)
     {
@@ -599,9 +601,11 @@ KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
     // queue this connection because itemSelectionChanged is emitted
     // while items are deleted, and accessing selectedItems at that
     // time causes a crash ...
-    connect(d->listView, &KPImagesListView::itemSelectionChanged, this, &KPImagesList::slotImageListChanged, Qt::QueuedConnection);
+    connect(d->listView, &KPImagesListView::itemSelectionChanged,
+            this, &KPImagesList::slotImageListChanged, Qt::QueuedConnection);
 
-    connect(this, &KPImagesList::signalImageListChanged, this, &KPImagesList::slotImageListChanged);
+    connect(this, &KPImagesList::signalImageListChanged,
+            this, &KPImagesList::slotImageListChanged);
 
     // --------------------------------------------------------
 
@@ -771,7 +775,7 @@ void KPImagesList::loadImagesFromCurrentSelection()
 {
     bool selection = checkSelection();
 
-    if(selection == true)
+    if (selection == true)
     {
         if (!d->iface)
         {
@@ -816,7 +820,7 @@ bool KPImagesList::checkSelection()
     ImageCollection images = d->iface->currentSelection();
     bool check_empty       = images.images().empty();
 
-    if(check_empty == true)
+    if (check_empty == true)
     {
         return false;
     }
@@ -1032,7 +1036,7 @@ void KPImagesList::slotLoadItems()
             // unmanaged start element (it should be plugins one)
             emit signalXMLCustomElements(xmlReader);
         }
-        else if(xmlReader.isEndElement() && xmlReader.name() == QStringLiteral("Images"))
+        else if (xmlReader.isEndElement() && xmlReader.name() == QStringLiteral("Images"))
         {
             // if EndElement is Images return
             return;
@@ -1059,7 +1063,7 @@ void KPImagesList::slotSaveItems()
 
     QFile file(saveLevelsFile.path() /*.prettyUrl().toAscii()*/);
     file.open(QIODevice::WriteOnly);
-//     file.open(stdout, QIODevice::WriteOnly);
+//  file.open(stdout, QIODevice::WriteOnly);
 
     QXmlStreamWriter xmlWriter;
     xmlWriter.setDevice(&file);
@@ -1162,6 +1166,7 @@ void KPImagesList::slotProgressTimerDone()
         foreach(const QUrl& url, d->processItems)
         {
             KPImagesListViewItem* const item = listView()->findItem(url);
+
             if (item)
                 item->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
         }
@@ -1197,11 +1202,12 @@ void KPImagesList::processed(const QUrl& url, bool success)
     if (item)
     {
         d->processItems.removeAll(url);
-        item->setProcessedIcon(QIcon::fromTheme(
-            success ? QStringLiteral("dialog-ok") : QStringLiteral("dialog-cancel")).pixmap(16, 16));
-        item->setState(success ? KPImagesListViewItem::Success : KPImagesListViewItem::Failed);
+        item->setProcessedIcon(QIcon::fromTheme(success ? QStringLiteral("dialog-ok")
+                                                        : QStringLiteral("dialog-cancel")).pixmap(16, 16));
+        item->setState(success ? KPImagesListViewItem::Success
+                               : KPImagesListViewItem::Failed);
 
-        if(d->processItems.isEmpty())
+        if (d->processItems.isEmpty())
             d->progressTimer->stop();
     }
 }
@@ -1308,6 +1314,8 @@ void KPImagesList::slotRawThumb(const QUrl& url, const QImage& img)
 
 void KPImagesList::slotThumbnail(const QUrl& url, const QPixmap& pix)
 {
+qDebug() << " :: " << url;
+
     QTreeWidgetItemIterator it(d->listView);
 
     while (*it)

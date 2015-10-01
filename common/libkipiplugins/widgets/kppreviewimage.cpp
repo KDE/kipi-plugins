@@ -87,15 +87,15 @@ struct KPSelectionItem::Private
 };
 
 KPSelectionItem::KPSelectionItem(const QRectF& rect)
-    : QGraphicsItem(), d(new Private)
+    : QGraphicsItem(),
+      d(new Private)
 {
-    d->invZoom   = 1;
-    d->selMargin = selMargin;
+    d->invZoom     = 1;
+    d->selMargin   = selMargin;
     d->showAnchors = true;
-
-    d->hasMaxX = false;
-    d->hasMaxY = false;
-    d->hasMax  = false;
+    d->hasMaxX     = false;
+    d->hasMaxY     = false;
+    d->hasMax      = false;
     setRect(rect);
 
     // FIXME We should probably use some standard KDE color here and not hard code it
@@ -167,6 +167,7 @@ KPSelectionItem::Intersects KPSelectionItem::intersects(QPointF& point)
     {
         if (point.y() < (d->rect.top()    + d->selMargin))
             return TopLeft;
+
         if (point.y() > (d->rect.bottom() - d->selMargin))
             return BottomLeft;
 
@@ -177,6 +178,7 @@ KPSelectionItem::Intersects KPSelectionItem::intersects(QPointF& point)
     {
         if (point.y() < (d->rect.top()    + d->selMargin))
             return TopRight;
+
         if (point.y() > (d->rect.bottom() - d->selMargin))
             return BottomRight;
 
@@ -572,14 +574,15 @@ void KPPreviewImage::enableSelectionArea(bool b)
     d->enableSelection = b;
 }
 
-QRectF KPPreviewImage::getSelectionArea()
+QRectF KPPreviewImage::getSelectionArea() const
 {
     return d->selection->rect();
 }
 
-void KPPreviewImage::setSelectionArea(QRectF rectangle)
+void KPPreviewImage::setSelectionArea(const QRectF& rectangle)
 {
     d->selection->setRect(rectangle);
+
     if (!d->selection->isVisible())
         d->selection->setVisible(true);
 }
@@ -857,6 +860,7 @@ void KPPreviewImage::mouseReleaseEvent(QMouseEvent* e)
 
     d->mouseDragAction = Private::NONE;
     updateHighlight();
+
     QGraphicsView::mouseReleaseEvent(e);
 }
 
@@ -911,6 +915,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                         setCursor(Qt::SizeFDiagCursor);
                         rect.setRight(rect.left());
                     }
+
                     if (scenePoint.y() < rect.bottom())
                     {
                         rect.setTop(scenePoint.y());
@@ -927,6 +932,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                             d->mouseZone = KPSelectionItem::BottomLeft;
                             setCursor(Qt::SizeBDiagCursor);
                         }
+
                         rect.setTop(rect.bottom());
                     }
                     break;
@@ -954,6 +960,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                         setCursor(Qt::SizeBDiagCursor);
                         rect.setRight(rect.left());
                     }
+
                     if (scenePoint.y() > rect.top())
                     {
                         rect.setBottom(scenePoint.y());
@@ -970,6 +977,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                             d->mouseZone = KPSelectionItem::TopLeft;
                             setCursor(Qt::SizeFDiagCursor);
                         }
+
                         rect.setBottom(rect.top());
                     }
                     break;
@@ -997,6 +1005,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                         setCursor(Qt::SizeFDiagCursor);
                         rect.setLeft(rect.right());
                     }
+
                     if (scenePoint.y() > rect.top())
                     {
                         rect.setBottom(scenePoint.y());
@@ -1013,6 +1022,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                             d->mouseZone = KPSelectionItem::TopRight;
                             setCursor(Qt::SizeBDiagCursor);
                         }
+
                         rect.setBottom(rect.top());
                     }
                     break;
@@ -1040,6 +1050,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                         setCursor(Qt::SizeBDiagCursor);
                         rect.setLeft(rect.right());
                     }
+
                     if (scenePoint.y() < rect.bottom())
                     {
                         rect.setTop(scenePoint.y());
@@ -1056,6 +1067,7 @@ void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
                             d->mouseZone = KPSelectionItem::BottomRight;
                             setCursor(Qt::SizeFDiagCursor);
                         }
+
                         rect.setTop(rect.bottom());
                     }
                     break;
