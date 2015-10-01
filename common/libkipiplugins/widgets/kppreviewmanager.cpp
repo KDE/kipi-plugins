@@ -40,7 +40,10 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kpixmapsequence.h>
+
+// Libkdcraw includes
+
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -55,7 +58,7 @@ public:
 
     Private()
     {
-        progressPix   = KPixmapSequence(QStringLiteral("process-working"), 22);
+        progressPix   = KDcrawIface::WorkingPixmap();
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0;
@@ -66,19 +69,19 @@ public:
         button        = 0;
     }
 
-    bool            busy;
+    bool                       busy;
 
-    QLabel*         textLabel;
-    QLabel*         thumbLabel;
+    QLabel*                    textLabel;
+    QLabel*                    thumbLabel;
 
-    QPushButton*    button;
+    QPushButton*               button;
 
-    int             progressCount;
-    KPixmapSequence progressPix;
-    QTimer*         progressTimer;
-    QLabel*         progressLabel;
+    int                        progressCount;
+    KDcrawIface::WorkingPixmap progressPix;
+    QTimer*                    progressTimer;
+    QLabel*                    progressLabel;
 
-    KPPreviewImage* preview;
+    KPPreviewImage*            preview;
 };
 
 KPPreviewManager::KPPreviewManager(QWidget* const parent)
