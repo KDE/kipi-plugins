@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kurlrequester.h>
 
 // Libkipi includes
 
