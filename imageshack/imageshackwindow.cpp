@@ -48,7 +48,6 @@
 // KDE includes
 
 #include <kmessagebox.h>
-#include <kaboutdata.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <krun.h>

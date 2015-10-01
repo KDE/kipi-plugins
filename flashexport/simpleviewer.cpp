@@ -39,7 +39,6 @@
 
 // KDE includes
 
-#include <kaboutdata.h>
 #include <kio/copyjob.h>
 #include <kio/job.h>
 #include <kjobwidgets.h>
@@ -63,9 +62,7 @@ namespace KIPIFlashExportPlugin
 
 static QDir makeWritableDir(const QString& subpath)
 {
-    QString path = QDir(QStandardPaths::writableLocation(
-        QStandardPaths::GenericDataLocation)).filePath(subpath);
-
+    QString path = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath(subpath);
     QDir().mkpath(path);
 
     return QDir(path);
@@ -119,17 +116,12 @@ public:
 };
 
 SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
-    : QObject(parent), d(new Private)
+    : QObject(parent),
+      d(new Private)
 {
     d->interface = interface;
-    d->hostName  = QApplication::applicationName();
-    d->hostUrl   = KAboutData::applicationData().homepage();
-
-    if (d->hostUrl.isEmpty())
-    {
-        d->hostName = QStringLiteral("Kipi");
-        d->hostUrl  = QStringLiteral("http://www.digikam.org");
-    }
+    d->hostName = QStringLiteral("Kipi-plugins");
+    d->hostUrl  = QStringLiteral("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
 }
 
 SimpleViewer::~SimpleViewer()
@@ -189,7 +181,7 @@ void SimpleViewer::initProgressWdg() const
 
 void SimpleViewer::startExport()
 {
-    if(d->canceled)
+    if (d->canceled)
         return;
 
      qCDebug(KIPIPLUGINS_LOG) << "SimpleViewer started...";
@@ -199,7 +191,7 @@ void SimpleViewer::startExport()
     d->action          = 0;
     d->progressWdg->reset();
 
-    if(d->settings->imgGetOption == 0)
+    if (d->settings->imgGetOption == 0)
     {
         for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
@@ -228,45 +220,45 @@ void SimpleViewer::slotCancel()
 
 void SimpleViewer::slotProcess()
 {
-    if(d->canceled)
+    if (d->canceled)
         return;
 
-    if(!d->canceled && !createExportDirectories())
+    if (!d->canceled && !createExportDirectories())
     {
             d->progressWdg->addedAction(i18n("Failed to create export directories"),
                                        ErrorMessage);
         return;
     }
 
-    if(!d->canceled && !exportImages())
+    if (!d->canceled && !exportImages())
     {
         d->progressWdg->addedAction(i18n("Failed to export the images"),
                                    ErrorMessage);
         return;
     }
 
-    if(!d->canceled && !createIndex())
+    if (!d->canceled && !createIndex())
     {
         d->progressWdg->addedAction(i18n("Failed to create index.html"),
                                    ErrorMessage);
         return;
     }
 
-    if(!d->canceled && !copySimpleViewer())
+    if (!d->canceled && !copySimpleViewer())
     {
         d->progressWdg->addedAction(i18n("Failed to copy SimpleViewer files"),
                                    ErrorMessage);
         return;
     }
 
-    if(!d->canceled && !upload())
+    if (!d->canceled && !upload())
     {
         d->progressWdg->addedAction(i18n("Failed to upload the gallery"),
                                    ErrorMessage);
         return;
     }
 
-    if(d->canceled)
+    if (d->canceled)
     {
 
         int ret = QMessageBox::warning(QApplication::activeWindow(),
@@ -274,7 +266,7 @@ void SimpleViewer::slotProcess()
                                        i18n("Do you want to delete files in %1 that have already been created?",
                                             d->settings->exportUrl.path()),
                                        QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
-        if(ret == QMessageBox::Yes)
+        if (ret == QMessageBox::Yes)
         {
             auto deleteJob = KIO::file_delete(d->settings->exportUrl);
             KJobWidgets::setWindow(deleteJob, QApplication::activeWindow());
@@ -282,13 +274,13 @@ void SimpleViewer::slotProcess()
         }
     }
 
-    if(!d->canceled)
+    if (!d->canceled)
     {
         d->progressWdg->addedAction(i18nc("Flash export has finished", "Finished..."),
                                     SuccessMessage);
         emit signalProcessingDone();
 
-        if(d->settings->openInKonqueror)
+        if (d->settings->openInKonqueror)
             QDesktopServices::openUrl(d->settings->exportUrl);
     }
 }
@@ -314,7 +306,7 @@ bool SimpleViewer::createExportDirectories() const
         return false;
     }
 
-    if(d->settings->plugType == 0)
+    if (d->settings->plugType == 0)
     {
 
         QUrl thumbsDir = QUrl(d->tempDir->path());
@@ -339,7 +331,7 @@ bool SimpleViewer::createExportDirectories() const
     auto mkdirJob3 = KIO::mkdir(imagesDir);
     KJobWidgets::setWindow(mkdirJob3, QApplication::activeWindow());
 
-    if(!mkdirJob3->exec())
+    if (!mkdirJob3->exec())
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
                                     ErrorMessage);
@@ -376,7 +368,7 @@ bool SimpleViewer::cmpUrl(const QUrl& url1, const QUrl& url2)
 
 bool SimpleViewer::exportImages()
 {
-    if(d->canceled)
+    if (d->canceled)
         return false;
 
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
@@ -480,7 +472,7 @@ bool SimpleViewer::exportImages()
         default:
             break;
     }
-    if(d->settings->imgGetOption ==0)
+    if (d->settings->imgGetOption ==0)
     {
         for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
@@ -532,7 +524,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         QFileInfo fi(url.path());
 
         //video can't be exported, need to add for all video files
-        if(fi.suffix().toUpper() == QStringLiteral("MOV"))
+        if (fi.suffix().toUpper() == QStringLiteral("MOV"))
             continue;
 
         d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), StartingMessage);
@@ -543,18 +535,18 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         else
             image.load(url.path());
 
-        if(image.isNull())
+        if (image.isNull())
         {
             d->progressWdg->addedAction(i18n("Could not open image '%1'", url.fileName()),
                                         WarningMessage);
             continue;
         }
 
-        if(d->settings->plugType == 0)
+        if (d->settings->plugType == 0)
         {
             // Thumbnails are generated only for simpleviewer plugin
 
-            if(!createThumbnail(image, thumbnail))
+            if (!createThumbnail(image, thumbnail))
             {
                 d->progressWdg->addedAction(i18n("Could not create thumbnail from '%1'", url.fileName()),
                                         WarningMessage);
@@ -562,7 +554,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
             }
         }
 
-        if(resizeImages && !resizeImage(image, maxSize, image))
+        if (resizeImages && !resizeImage(image, maxSize, image))
         {
             d->progressWdg->addedAction(i18n("Could not resize image '%1'", url.fileName()),
                                         WarningMessage);
@@ -573,7 +565,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         bool rotated = false;
         newName = QStringLiteral("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QStringLiteral("jpg"));
 
-        if(d->settings->plugType == 0)
+        if (d->settings->plugType == 0)
         {
             QUrl thumbnailPath(thumbsDir);
             thumbnailPath.setPath(thumbnailPath.path() + newName);
@@ -604,7 +596,7 @@ void SimpleViewer::processQUrlList(QList<QUrl>& images, QDomDocument& xmlDoc,
         d->width  = image.width();
         d->height = image.height();
 
-        if(d->settings->plugType!=2)
+        if (d->settings->plugType!=2)
             cfgAddImage(xmlDoc, galleryElem, url, newName);
         else
             cfgAddImage(xmlDoc, photosElem, url, newName);
@@ -620,9 +612,9 @@ bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail) const
 
     int maxSize = 0;
 
-    if(w > d->maxThumbSize || h > d->maxThumbSize)
+    if (w > d->maxThumbSize || h > d->maxThumbSize)
     {
-        if(w > h)
+        if (w > h)
         {
             maxSize = (int)(double)(w * d->maxThumbSize) / h;
         }
@@ -642,9 +634,9 @@ bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resized
     int w = image.width();
     int h = image.height();
 
-    if(w > maxSize || h > maxSize)
+    if (w > maxSize || h > maxSize)
     {
-        if(w > h)
+        if (w > h)
         {
             h = (int)(double)(h * maxSize) / w;
             h = (h == 0) ? 1 : h;
@@ -656,6 +648,7 @@ bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resized
             w = (w == 0) ? 1 : w;
             h = maxSize;
         }
+
         resizedImage = image.scaled(w, h, Qt::KeepAspectRatio,
                                           Qt::SmoothTransformation);
     }
@@ -666,7 +659,7 @@ bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resized
 void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
                                const QUrl& url, const QString& newName) const
 {
-    if(d->canceled)
+    if (d->canceled)
         return;
 
     QString comment;
@@ -674,7 +667,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
     KPImageInfo info(url);
 
-    if(d->settings->showComments)
+    if (d->settings->showComments)
     {
         comment = info.description();
     }
@@ -682,10 +675,11 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     {
         comment.clear();
     }
-    if(d->settings->showKeywords)
+    if (d->settings->showKeywords)
     {
         QStringList tagList = info.keywords();
-        if(!tagList.join(QStringLiteral(" ")).isEmpty())
+
+        if (!tagList.join(QStringLiteral(" ")).isEmpty())
             keywords = QStringLiteral("\nTags: ") + tagList.join(QStringLiteral(", "));
     }
     else
@@ -788,7 +782,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
 bool SimpleViewer::createIndex() const
 {
-    if(d->canceled)
+    if (d->canceled)
         return false;
 
     d->progressWdg->addedAction(i18n("Creating index.html..."), StartingMessage);
@@ -799,7 +793,7 @@ bool SimpleViewer::createIndex() const
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                                QStringLiteral("kipiplugin_flashexport/index.template"));
-            if(indexTemplateName.isEmpty())
+            if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
                 qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
@@ -830,7 +824,7 @@ bool SimpleViewer::createIndex() const
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                                QStringLiteral("kipiplugin_flashexport/index2.template"));
-            if(indexTemplateName.isEmpty())
+            if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
                 qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
@@ -861,7 +855,7 @@ bool SimpleViewer::createIndex() const
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                                QStringLiteral("kipiplugin_flashexport/index3.template"));
-            if(indexTemplateName.isEmpty())
+            if (indexTemplateName.isEmpty())
             {
             //TODO: errormsg
                 qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
@@ -917,7 +911,7 @@ bool SimpleViewer::createIndex() const
         {
             QString indexTemplateName = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                                QStringLiteral("kipiplugin_flashexport/index4.template"));
-            if(indexTemplateName.isEmpty())
+            if (indexTemplateName.isEmpty())
             {
                 //TODO: errormsg
                 qCDebug(KIPIPLUGINS_LOG) << "No indexTemplateName" ;
@@ -954,7 +948,7 @@ bool SimpleViewer::createIndex() const
 
 bool SimpleViewer::copySimpleViewer() const
 {
-    if(d->canceled)
+    if (d->canceled)
         return false;
 
     d->progressWdg->addedAction(i18n("Copying flash files..."), StartingMessage);
@@ -982,7 +976,7 @@ bool SimpleViewer::copySimpleViewer() const
 
 bool SimpleViewer::upload() const
 {
-    if(d->canceled)
+    if (d->canceled)
         return false;
 
     d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
@@ -991,7 +985,7 @@ bool SimpleViewer::upload() const
     KJobWidgets::setWindow(dircopyJob, 0);
     dircopyJob->exec();
 
-    if(!dircopyJob->exec())
+    if (!dircopyJob->exec())
         return false;
 
     d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);
@@ -1003,7 +997,7 @@ bool SimpleViewer::unzip(const QString& url) const
 {
     KZip zip(url);
 
-    if(!openArchive(zip))
+    if (!openArchive(zip))
     {
         return false;
     }
@@ -1013,7 +1007,7 @@ bool SimpleViewer::unzip(const QString& url) const
 
 bool SimpleViewer::openArchive(KZip& zip) const
 {
-    if(!zip.open(QIODevice::ReadOnly))
+    if (!zip.open(QIODevice::ReadOnly))
     {
         qCDebug(KIPIPLUGINS_LOG) << "Open archive failed\n";
         return false;
@@ -1025,7 +1019,7 @@ bool SimpleViewer::extractArchive(KZip& zip) const
 {
     // read root directory content
     QStringList names = zip.directory()->entries();
-    if(names.count() != 1)
+    if (names.count() != 1)
     {
         qCDebug(KIPIPLUGINS_LOG) << "Wrong SimpleViewer Version or corrupted archive" ;
         qCDebug(KIPIPLUGINS_LOG) << "Content of the archive root folder" << names ;
@@ -1033,21 +1027,22 @@ bool SimpleViewer::extractArchive(KZip& zip) const
     }
 
     // open root directory
-    const KArchiveEntry* root = zip.directory()->entry(names[0]);
-    if(!root || !root->isDirectory())
+    const KArchiveEntry* const root = zip.directory()->entry(names[0]);
+    if (!root || !root->isDirectory())
     {
         qCDebug(KIPIPLUGINS_LOG) << "could not open " << names[0] << " of zipname" ;
         return false;
     }
 
-    const KArchiveDirectory* dir = dynamic_cast<const KArchiveDirectory*>(root);
+    const KArchiveDirectory* const dir = dynamic_cast<const KArchiveDirectory*>(root);
 
     // extract the needed files from SimpleViewer archive
     for(QStringList::ConstIterator it = d->simpleViewerFiles.constBegin();
         it != d->simpleViewerFiles.constEnd(); ++it )
     {
-        const KArchiveEntry* entry = dir->entry(*it);
-        if(!extractFile(entry))
+        const KArchiveEntry* const entry = dir->entry(*it);
+
+        if (!extractFile(entry))
         {
             //TODO error msg
             qCDebug(KIPIPLUGINS_LOG) << "could not open " << *it << " of zipname" ;
@@ -1060,18 +1055,19 @@ bool SimpleViewer::extractArchive(KZip& zip) const
 
 bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 {
-    if( !entry || !entry->isFile() )
+    if ( !entry || !entry->isFile() )
         return false;
 
-    const KArchiveFile* entryFile = dynamic_cast<const KArchiveFile*>(entry);
+    const KArchiveFile* const entryFile = dynamic_cast<const KArchiveFile*>(entry);
 
-    if(entryFile == NULL)
+    if (entryFile == NULL)
         return false;
 
     QByteArray array              = entryFile->data();
 
     QFile file( d->dataLocal + entry->name() );
-    if(file.open( QIODevice::WriteOnly ))
+
+    if (file.open( QIODevice::WriteOnly ))
     {
         int ret = file.write(array);
         file.close();

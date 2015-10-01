@@ -29,7 +29,6 @@
 
 // KDE includes
 
-#include <kfile.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes

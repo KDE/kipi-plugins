@@ -29,11 +29,6 @@
 #include <QFont>
 #include <QUrl>
 
-// KDE includes
-
-#include <kpagedialog.h>
-#include <kpagewidgetmodel.h>
-
 // Phonon includes
 
 #include <phonon/volumeslider.h>

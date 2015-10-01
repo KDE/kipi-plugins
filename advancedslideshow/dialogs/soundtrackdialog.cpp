@@ -33,11 +33,7 @@
 #include <QIcon>
 #include <QFileDialog>
 #include <QMessageBox>
-
-// KDE includes
-
-#include <kfile.h>
-#include <kpagewidget.h>
+#include <QDialogButtonBox>
 
 // Phonon includes
 
@@ -60,12 +56,13 @@ SoundtrackPreview::SoundtrackPreview(QWidget* const parent, QList<QUrl>& urls, S
     setModal(true);
     setWindowTitle(i18n("Soundtrack preview"));
 
-    m_playbackWidget = new PlaybackWidget(this, urls, sharedData);
+    m_playbackWidget                  = new PlaybackWidget(this, urls, sharedData);
+    QDialogButtonBox* const buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
 
-    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(buttonBox, &QDialogButtonBox::rejected,
+            this, &QDialog::reject);
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout* const layout = new QVBoxLayout(this);
     layout->addWidget(m_playbackWidget);
     layout->addWidget(buttonBox);
     setLayout(layout);
@@ -257,7 +254,7 @@ void SoundtrackDialog::updateTracksNumber()
 void SoundtrackDialog::updateFileList()
 {
     QList<QUrl> files = m_SoundFilesListBox->fileUrls();
-    m_urlList        = files;
+    m_urlList         = files;
 
     m_SoundFilesButtonUp->setEnabled(!files.isEmpty());
     m_SoundFilesButtonDown->setEnabled(!files.isEmpty());
@@ -319,7 +316,7 @@ void SoundtrackDialog::slotAddNewTime(const QUrl& url, const QTime& trackTime)
 
 void SoundtrackDialog::slotSoundFilesSelected( int row )
 {
-    QListWidgetItem* item = m_SoundFilesListBox->item(row);
+    QListWidgetItem* const item = m_SoundFilesListBox->item(row);
 
     if ( !item || m_SoundFilesListBox->count() == 0 )
     {
@@ -338,12 +335,12 @@ void SoundtrackDialog::slotAddDropItems(const QList<QUrl>& filesUrl)
 
 void SoundtrackDialog::slotSoundFilesButtonAdd()
 {
-    QPointer<QFileDialog> dlg = new QFileDialog(
-        this, i18n("Select sound files"), m_sharedData->soundtrackPath.toString());
+    QPointer<QFileDialog> dlg = new QFileDialog(this,
+                                                i18n("Select sound files"),
+                                                m_sharedData->soundtrackPath.toString());
 
     // Setting available mime-types (filtering out non audio mime-types)
-    dlg->setMimeTypeFilters(
-        Phonon::BackendCapabilities::availableMimeTypes().filter(QStringLiteral("audio/")));
+    dlg->setMimeTypeFilters(Phonon::BackendCapabilities::availableMimeTypes().filter(QStringLiteral("audio/")));
     dlg->setAcceptMode(QFileDialog::AcceptOpen);
     dlg->setFileMode(QFileDialog::ExistingFiles);
     dlg->exec();
@@ -366,7 +363,7 @@ void SoundtrackDialog::slotSoundFilesButtonDelete()
     if( Index < 0 )
        return;
 
-    SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
+    SoundItem* const pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
     m_urlList.removeAll(pitem->url());
     m_soundItems->remove(pitem->url());
     m_timeMutex->lock();
@@ -392,10 +389,10 @@ void SoundtrackDialog::slotSoundFilesButtonUp()
             ++Cpt;
     }
 
-    if  (Cpt == 0)
+    if (Cpt == 0)
         return;
 
-    if  (Cpt > 1)
+    if (Cpt > 1)
     {
         QMessageBox::critical(this, QString(), i18n("You can only move image files up one at a time."));
         return;

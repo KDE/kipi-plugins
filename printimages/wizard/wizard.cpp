@@ -52,7 +52,6 @@
 // KDE includes
 
 #include <kconfigdialogmanager.h>
-#include <kfile.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
