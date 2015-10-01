@@ -40,9 +40,8 @@
 
 // KDE includes
 
-#include <KConfig>
-#include <KWindowConfig>
-#include <KGuiItem>
+#include <kconfig.h>
+#include <kwindowconfig.h>
 
 // LibKIPI includes
 
@@ -88,6 +87,7 @@ FlickrWindow::FlickrWindow(const QString& tmpFolder, QWidget* const /*parent*/, 
 
     KConfig config(QStringLiteral("kipirc"));
     KConfigGroup grp = config.group(QStringLiteral("%1Export Settings").arg(m_serviceName));
+
     if(grp.exists())
     {
         qCDebug(KIPIPLUGINS_LOG) << QStringLiteral("%1Export Settings").arg(m_serviceName) << " exists, deleting it";

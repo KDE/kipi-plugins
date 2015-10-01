@@ -40,8 +40,7 @@
 
 // KDE includes
 
-#include <KLocalizedString>
-#include <KGuiItem>
+#include <klocalizedstring.h>
 
 //local includes
 
@@ -54,14 +53,14 @@ namespace KIPIYandexFotkiPlugin
 YandexFotkiWidget::YandexFotkiWidget(QWidget* const parent, KIPI::Interface* const iface, const QString& pluginName)
     : KPSettingsWidget(parent, iface, pluginName)
 {
-    QGroupBox* const optionsBox = getOptionsBox();
+    QGroupBox* const optionsBox         = getOptionsBox();
     QGridLayout* const optionsBoxLayout = getOptionsBoxLayout();
     
     QSpacerItem* const spacer1 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* const spacer2 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QLabel* const policyLabel  = new QLabel(i18n("Update policy:"), optionsBox);
 
-    QRadioButton* const policyRadio1 = new QRadioButton(i18n("Update metadata"), optionsBox);
+    QRadioButton* const policyRadio1  = new QRadioButton(i18n("Update metadata"), optionsBox);
     policyRadio1->setWhatsThis(i18n("Update metadata of remote file and merge remote tags with local"));
 
     QRadioButton* const policyRadio3  = new QRadioButton(i18n("Skip photo"), optionsBox);
@@ -78,11 +77,11 @@ YandexFotkiWidget::YandexFotkiWidget(QWidget* const parent, KIPI::Interface* con
     m_accessCombo->addItem(QIcon::fromTheme(QStringLiteral("folder-locked")),
                            i18n("Private access"), YandexFotkiPhoto::ACCESS_PRIVATE);
 
-    m_hideOriginalCheck = new QCheckBox(i18n("Hide original photo"), optionsBox);
+    m_hideOriginalCheck    = new QCheckBox(i18n("Hide original photo"), optionsBox);
     m_disableCommentsCheck = new QCheckBox(i18n("Disable comments"), optionsBox);
-    m_adultCheck = new QCheckBox(i18n("Adult content"), optionsBox);
+    m_adultCheck           = new QCheckBox(i18n("Adult content"), optionsBox);
 
-    m_policyGroup = new QButtonGroup(optionsBox);
+    m_policyGroup          = new QButtonGroup(optionsBox);
     m_policyGroup->addButton(policyRadio1, POLICY_UPDATE_MERGE);
     m_policyGroup->addButton(policyRadio3, POLICY_SKIP);
     m_policyGroup->addButton(policyRadio4, POLICY_ADDNEW);
@@ -110,7 +109,6 @@ YandexFotkiWidget::~YandexFotkiWidget()
 
 void YandexFotkiWidget::updateLabels(const QString& /*name*/, const QString& /*url*/)
 {
-    
 }
 
 } // namespace KIPIYandexFotkiPlugin

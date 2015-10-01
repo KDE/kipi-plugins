@@ -50,10 +50,7 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
-#include <krun.h>
-#include <kurllabel.h>
 #include <kwindowconfig.h>
-#include <kguiitem.h>
 
 // Libkipi includes
 

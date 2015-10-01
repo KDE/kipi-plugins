@@ -43,7 +43,6 @@
 #include <kio/job.h>
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
-#include <kstandardguiitem.h>
 
 // Libkdcraw includes
 
@@ -120,8 +119,8 @@ SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
       d(new Private)
 {
     d->interface = interface;
-    d->hostName = QStringLiteral("Kipi-plugins");
-    d->hostUrl  = QStringLiteral("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
+    d->hostName  = QStringLiteral("Kipi-plugins");
+    d->hostUrl   = QStringLiteral("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
 }
 
 SimpleViewer::~SimpleViewer()

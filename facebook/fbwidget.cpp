@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <KGuiItem>
 
 // Libkipi includes
 
@@ -61,6 +60,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, const QS
 {
     getUploadBox()->hide();
     getSizeBox()->hide();
+
     connect(getReloadBtn(), SIGNAL(clicked()),
             this, SLOT(slotReloadAlbumsRequest()));
 }

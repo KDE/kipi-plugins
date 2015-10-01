@@ -26,15 +26,14 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QtWidgets/QPushButton>
+#include <QPushButton>
 #include <QToolButton>
-#include <QtWidgets/QComboBox>
+#include <QComboBox>
 #include <QMessageBox>
 
-// KDE Frameworks includes
+// KDE includes
 
 #include <klocalizedstring.h>
-#include <kguiitem.h>
 #include <kmessagebox.h>
 
 // LibKvkontakte includes
@@ -156,7 +155,7 @@ bool AlbumChooserWidget::getCurrentAlbumId(int &out)
     if (index >= 0)
     {
         Vkontakte::AlbumInfo album = m_albums.at(index);
-        out = album.aid();
+        out                        = album.aid();
 
         return true;
     }
@@ -236,6 +235,7 @@ void AlbumChooserWidget::slotEditAlbumRequest()
 {
     VkontakteAlbumDialog::AlbumInfo album;
     int aid = 0;
+
     if (!getCurrentAlbumInfo(album) || !getCurrentAlbumId(aid))
     {
         return;
@@ -283,6 +283,7 @@ void AlbumChooserWidget::slotDeleteAlbumRequest()
 {
     VkontakteAlbumDialog::AlbumInfo album;
     int aid = 0;
+
     if (!getCurrentAlbumInfo(album) || !getCurrentAlbumId(aid))
     {
         return;
@@ -329,6 +330,7 @@ void AlbumChooserWidget::slotReloadAlbumsRequest()
     updateBusyStatus(true);
 
     int aid = 0;
+
     if (getCurrentAlbumId(aid))
     {
         m_albumToSelect = aid;

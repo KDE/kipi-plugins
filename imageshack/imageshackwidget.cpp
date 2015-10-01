@@ -37,13 +37,12 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QPushButton>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -65,10 +64,10 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
       m_imageshack(imageshack)
 {
     
-    m_imgList = imagesList();
-    m_headerLbl = getHeaderLbl();
-    m_accountNameLbl = getUserNameLabel();
-    m_chgRegCodeBtn = getChangeUserBtn();
+    m_imgList            = imagesList();
+    m_headerLbl          = getHeaderLbl();
+    m_accountNameLbl     = getUserNameLabel();
+    m_chgRegCodeBtn      = getChangeUserBtn();
     m_reloadGalleriesBtn = getReloadBtn();
     m_galleriesCob       = getAlbumsCoB();
     m_progressBar        = progressBar();
@@ -76,8 +75,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     connect(m_reloadGalleriesBtn, SIGNAL(clicked()),
             this, SLOT(slotReloadGalleries()));    
     
-    QGroupBox* tagsBox = new QGroupBox(QStringLiteral(""), getSettingsBox());
-    QGridLayout* tagsLayout = new QGridLayout(tagsBox);
+    QGroupBox* const tagsBox      = new QGroupBox(QStringLiteral(""), getSettingsBox());
+    QGridLayout* const tagsLayout = new QGridLayout(tagsBox);
     
     m_privateImagesChb = new QCheckBox(tagsBox);
     m_privateImagesChb->setText(i18n("Make private"));
@@ -90,8 +89,8 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     m_remBarChb->setChecked(false);
     
     tagsLayout->addWidget(m_privateImagesChb, 0, 0);
-    tagsLayout->addWidget(tagsLbl           , 1, 0);
-    tagsLayout->addWidget(m_tagsFld         , 1, 1);
+    tagsLayout->addWidget(tagsLbl,            1, 0);
+    tagsLayout->addWidget(m_tagsFld,          1, 1);
     
     addWidgetToSettingsBox(tagsBox);
     

@@ -40,8 +40,8 @@
 
 // KDE includes
 
-#include <KLocalizedString>
-#include <KGuiItem>
+#include <klocalizedstring.h>
+#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -62,7 +62,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 {
     setObjectName(QStringLiteral("SmugWidget"));
 
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
+    QHBoxLayout* const mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
 
@@ -73,8 +73,8 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_imgList->listView()->setWhatsThis(
         i18n("This is the list of images to upload to your SmugMug account."));
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget* const settingsBox           = new QWidget(this);
+    QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(
@@ -84,10 +84,10 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
+    QGroupBox* const accountBox         = new QGroupBox(i18n("Account"), settingsBox);
     accountBox->setWhatsThis(
         i18n("This is the SmugMug account that will be used to authenticate."));
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
+    QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
     m_anonymousRBtn     = new QRadioButton(i18nc("smug account login", "Anonymous"), accountBox);
     m_anonymousRBtn->setWhatsThis(
@@ -118,9 +118,9 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
+    QGroupBox* const albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
     albumsBox->setWhatsThis(i18n("This is the SmugMug album that will be used for transfer."));
-    QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
+    QGridLayout* const albumsBoxLayout = new QGridLayout(albumsBox);
 
     m_albumsCoB         = new QComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
@@ -158,30 +158,30 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* const uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where SmugMug images will be downloaded."));
-    QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget               = iface->uploadWidget(uploadBox);
+    QVBoxLayout* const uploadBoxLayout = new QVBoxLayout(uploadBox);
+    m_uploadWidget                     = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox* const optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    QGridLayout* const optionsBoxLayout = new QGridLayout(optionsBox);
 
-    m_resizeChB                   = new QCheckBox(optionsBox);
+    m_resizeChB                         = new QCheckBox(optionsBox);
     m_resizeChB->setText(i18n("Resize photos before uploading"));
     m_resizeChB->setChecked(false);
 
-    m_dimensionSpB  = new QSpinBox(optionsBox);
+    m_dimensionSpB = new QSpinBox(optionsBox);
     m_dimensionSpB->setMinimum(0);
     m_dimensionSpB->setMaximum(5000);
     m_dimensionSpB->setSingleStep(10);
     m_dimensionSpB->setValue(600);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
-    QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    QLabel* const dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
     m_imageQualitySpB = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
@@ -189,7 +189,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_imageQualitySpB->setSingleStep(1);
     m_imageQualitySpB->setValue(85);
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
+    QLabel* const imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     optionsBoxLayout->addWidget(m_resizeChB,        0, 0, 1, 5);
     optionsBoxLayout->addWidget(imageQualityLbl,    1, 1, 1, 1);
@@ -318,8 +318,10 @@ void SmugWidget::updateLabels(const QString& email, const QString& name, const Q
     m_email->setText(email);
     m_userName->setText(QStringLiteral("<b>%1</b>").arg(name));
     QString web(QStringLiteral("www"));
+
     if (!nick.isEmpty())
         web = nick;
+
     m_headerLbl->setText(QStringLiteral(
         "<b><h2><a href='http://%1.smugmug.com'>"
         "<font color=\"#9ACD32\">SmugMug</font>"

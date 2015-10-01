@@ -101,7 +101,8 @@ struct ExpoBlendingDlg::ExpoBlendingDlgPriv
           mngr(0),
           firstImageDisplayed(false),
           previewButton(0)
-    {}
+    {
+    }
 
     QString               inputFileName;
     QString               output;

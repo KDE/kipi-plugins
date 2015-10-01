@@ -42,7 +42,6 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
-#include <kguiitem.h>
 
 // MediaWiki includes
 
@@ -236,6 +235,7 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 
     QImage image;
     // rescale image if requested: metadata is lost
+
     if (d->widget->resize())
     {
         image.load(imgPath);
@@ -299,14 +299,14 @@ bool WMWindow::prepareImageForUpload(const QString& imgPath)
 void WMWindow::slotStartTransfer()
 {
     saveSettings();
-    QList<QUrl> urls = d->widget->imagesList()->imageUrls(false);
+    QList<QUrl> urls                                    = d->widget->imagesList()->imageUrls(false);
     QMap <QString, QMap <QString, QString> > imagesDesc = d->widget->allImagesDesc();
 
     for (int i = 0; i < urls.size(); ++i)
     {
         QString url;
 
-        if(d->widget->resize() || d->widget->removeMeta() || d->widget->removeGeo())
+        if (d->widget->resize() || d->widget->removeMeta() || d->widget->removeGeo())
         {
             prepareImageForUpload(urls.at(i).path());
             imagesDesc.insert(d->tmpPath, imagesDesc.take(urls.at(i).path()));
@@ -355,12 +355,11 @@ int WMWindow::slotLoginHandle(KJob* loginJob)
 {
     qCDebug(KIPIPLUGINS_LOG) << loginJob->error() << loginJob->errorString() << loginJob->errorText();
 
-    if(loginJob->error())
+    if (loginJob->error())
     {
         d->login.clear();
         d->pass.clear();
         d->uploadJob = 0;
-        //TODO Message d'erreur de login
         QMessageBox::critical(this, i18n("Login Error"), i18n("Please check your credentials and try again."));
     }
     else
@@ -389,7 +388,7 @@ void WMWindow::slotEndUpload()
 
 bool WMWindow::eventFilter(QObject* /*obj*/, QEvent* event)
 {
-    if(event->type() == QEvent::KeyRelease)
+    if (event->type() == QEvent::KeyRelease)
     {
         QKeyEvent* const c = dynamic_cast<QKeyEvent *>(event);
 
