@@ -32,7 +32,7 @@
 
 #include <kactioncollection.h>
 #include <klibloader.h>
-#include <KPluginFactory>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 

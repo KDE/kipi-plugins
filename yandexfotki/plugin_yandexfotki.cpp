@@ -29,9 +29,9 @@
 
 // KDE includes
 
-#include <KLocalizedString>
-#include <KPluginFactory>
-#include <KWindowSystem>
+#include <klocalizedstring.h>
+#include <kpluginfactory.h>
+#include <kwindowsystem.h>
 
 // Libkipi includes
 

@@ -46,8 +46,8 @@ extern "C"
 #include <kconfig.h>
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
-#include <KPluginFactory>
-#include <KLocalizedString>
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

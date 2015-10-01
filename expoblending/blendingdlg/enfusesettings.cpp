@@ -30,14 +30,13 @@
 #include <QLabel>
 #include <QStyle>
 #include <QApplication>
-
 #include <QDoubleSpinBox>
 
 // KDE includes
 
-#include <KLocalizedString>
-#include <KConfig>
-#include <KConfigGroup>
+#include <klocalizedstring.h>
+#include <kconfig.h>
+#include <kconfiggroup.h>
 
 // Libkdcraw includes
 

@@ -34,8 +34,6 @@
 
 #include <kurlrequester.h>
 
-class QComboBox;
-
 namespace KIPIPlugins
 {
     class KPImagesList;

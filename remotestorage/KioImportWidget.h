@@ -25,9 +25,8 @@
 
 // Qt includes
 
-#include <QtCore/QUrl>
-#include <QtWidgets/QWidget>
-
+#include <QUrl>
+#include <QWidget>
 
 namespace KIPI
 {

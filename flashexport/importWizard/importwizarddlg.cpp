@@ -35,8 +35,8 @@
 #include <klocalizedstring.h>
 #include <kjobwidgets.h>
 #include <kconfig.h>
-#include <KIO/Job>
-#include <KConfigGroup>
+#include <kio/job.h>
+#include <kconfiggroup.h>
 
 // Libkipi includes
 

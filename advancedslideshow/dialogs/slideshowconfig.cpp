@@ -35,7 +35,7 @@
 // KDE includes
 
 #include <kconfig.h>
-#include <KConfigGroup>
+#include <kconfiggroup.h>
 
 // Libkipi includes
 

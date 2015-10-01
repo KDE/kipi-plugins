@@ -33,14 +33,14 @@
 
 #include <QApplication>
 #include <QAction>
-#include <QtCore/QDir>
+#include <QDir>
 
 // KDE includes
 
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
-#include <KPluginFactory>
-#include <KLocalizedString>
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

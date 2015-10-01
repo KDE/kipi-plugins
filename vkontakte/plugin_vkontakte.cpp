@@ -6,8 +6,8 @@
  * Date        : 2010-11-15
  * Description : a kipi plugin to export images to VKontakte.ru web service
  *
- * Copyright (C) 2010 by Roman Tsisyk <roman at tsisyk dot com>
- * Copyright (C) 2011, 2015  Alexander Potashev <aspotashev@gmail.com>
+ * Copyright (C) 2010       by Roman Tsisyk <roman at tsisyk dot com>
+ * Copyright (C) 2011, 2015 by Alexander Potashev <aspotashev@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,13 +25,13 @@
 
 // Qt includes
 
-#include <QtWidgets/QApplication>
+#include <QApplication>
 
 // KDE includes
 
-#include <KPluginFactory>
-#include <KLocalizedString>
-#include <KWindowSystem>
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
+#include <kwindowsystem.h>
 
 // Local includes
 

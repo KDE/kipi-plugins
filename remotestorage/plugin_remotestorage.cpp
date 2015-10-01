@@ -34,7 +34,7 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowsystem.h>
-#include <KPluginFactory>
+#include <kpluginfactory.h>
 
 // LibKipi includes
 

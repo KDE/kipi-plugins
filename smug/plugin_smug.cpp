@@ -44,9 +44,9 @@ extern "C"
 
 // KDE includes
 
-#include <KWindowSystem>
-#include <KPluginFactory>
-#include <KLocalizedString>
+#include <kwindowsystem.h>
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

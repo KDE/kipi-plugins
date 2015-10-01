@@ -32,9 +32,9 @@
 
 // KDE includes
 
-#include <KConfig>
-#include <KPluginFactory>
-#include <KLocalizedString>
+#include <kconfig.h>
+#include <kpluginfactory.h>
+#include <klocalizedstring.h>
 
 // Libkipi includes
 

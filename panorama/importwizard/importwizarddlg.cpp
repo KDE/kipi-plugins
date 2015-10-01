@@ -31,11 +31,11 @@
 
 // KDE includes
 
-#include <KConfig>
-#include <KLocalizedString>
-#include <KWindowConfig>
+#include <kconfig.h>
+#include <klocalizedstring.h>
+#include <kwindowconfig.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include <KIPI/Interface>
 

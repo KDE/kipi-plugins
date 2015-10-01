@@ -32,7 +32,7 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <KPluginFactory>
+#include <kpluginfactory.h>
 
 // Libkipi includes
 

@@ -24,10 +24,12 @@
 #ifndef KIOIMPORTWINDOW_H
 #define KIOIMPORTWINDOW_H
 
+// Qt includes
+
+#include <QUrl>
+
 // KDE includes
 
-#include <kjob.h>
-#include <QUrl>
 #include <kio/job.h>
 
 // Local includes
