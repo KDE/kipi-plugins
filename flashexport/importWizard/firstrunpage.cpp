@@ -38,7 +38,7 @@
 
 // Libkipi includes
 
-#include <imagecollectionselector.h>
+#include <KIPI/ImageCollectionSelector>
 
 // Libkdcraw includes
 

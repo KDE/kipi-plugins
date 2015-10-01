@@ -43,11 +43,11 @@
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kwindowconfig.h>
-#include <kurlrequester.h>
 
 // Libkdcraw includes
 
 #include <KDCRAW/RNumInput>
+#include <KDCRAW/RWidgetUtils>
 
 // Local includes
 
@@ -61,10 +61,12 @@ namespace KIPIKMLExportPlugin
  * @brief Constructs a KIPIKMLExport::KmlWindow which is a child of @parent.
  */
 KmlWindow::KmlWindow(QWidget* const parent,
-                     bool hostFeatureImagesHasComments, bool hostFeatureImagesHasTime,
-                     const QString& hostAlbumName, const KIPI::ImageCollection& hostSelection)
-    : KPToolDialog(parent)
-    , m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
+                     bool hostFeatureImagesHasComments,
+                     bool hostFeatureImagesHasTime,
+                     const QString& hostAlbumName,
+                     const KIPI::ImageCollection& hostSelection)
+    : KPToolDialog(parent),
+      m_kmlExport(hostFeatureImagesHasComments, hostFeatureImagesHasTime, hostAlbumName, hostSelection)
 {
     setWindowTitle(i18n("KML Export"));
     setModal(true);
@@ -117,12 +119,11 @@ KmlWindow::KmlWindow(QWidget* const parent,
 
     destinationDirectoryLabel_ = new QLabel(i18n("Destination Directory:"), TargetPreferenceGroupBox);
 
-    // DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
-    DestinationDirectory_= new KUrlRequester(TargetPreferenceGroupBox);
-    DestinationDirectory_->setWindowTitle(i18n("Select a directory in which to save the kml file and pictures"));
-    DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
-
-    DestinationUrlLabel_ = new QLabel(i18n("Destination URL:"), TargetPreferenceGroupBox);
+    DestinationDirectory_= new RFileSelector(TargetPreferenceGroupBox);
+    DestinationDirectory_->fileDialog()->setFileMode(QFileDialog::Directory);
+    DestinationDirectory_->fileDialog()->setWindowTitle(i18n("Select a directory in which to save the kml file and pictures"));
+    
+    DestinationUrlLabel_ = new QLabel(i18n("Destination Path:"), TargetPreferenceGroupBox);
     DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
     FileNameLabel_       = new QLabel(i18n( "Filename:" ), TargetPreferenceGroupBox);
     FileName_            = new QLineEdit(TargetPreferenceGroupBox);
@@ -171,9 +172,10 @@ KmlWindow::KmlWindow(QWidget* const parent,
     // file selector
     GPXFileLabel_ = new QLabel(i18n("GPX file:"), GPXTracksGroupBox);
 
-    GPXFileUrlRequester_ = new KUrlRequester( GPXTracksGroupBox);
-    GPXFileUrlRequester_->setFilter(i18n("%1|GPS Exchange Format", QLatin1String("*.gpx")));
-    GPXFileUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
+    GPXFileUrlRequester_ = new RFileSelector( GPXTracksGroupBox);
+    GPXFileUrlRequester_->fileDialog()->setNameFilter(i18n("%1|GPS Exchange Format", QLatin1String("*.gpx")));
+    GPXFileUrlRequester_->fileDialog()->setWindowTitle(i18n("Select GPX File to Load"));
+    GPXFileUrlRequester_->fileDialog()->setFileMode(QFileDialog::ExistingFile);
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
     timeZoneCB     = new QComboBox(GPXTracksGroupBox );
@@ -338,7 +340,7 @@ void KmlWindow::slotKMLGenerate()
 
     saveSettings();
 
-    if(!m_kmlExport.getConfig())
+    if (!m_kmlExport.getConfig())
         return;
 
     m_kmlExport.generate();
@@ -426,7 +428,7 @@ void KmlWindow::readSettings()
     size                = group.readEntry(QLatin1String("size"), 320);
     // UrlDestDir have to have the trailing /
     baseDestDir	        = group.readEntry(QLatin1String("baseDestDir"), QString::fromUtf8("/tmp/"));
-    UrlDestDir	        = group.readEntry(QLatin1String("UrlDestDir"), QString::fromUtf8("http://www.example.com/"));
+    UrlDestDir	        = group.readEntry(QLatin1String("UrlDestDir"),  QString::fromUtf8("http://www.example.com/"));
     KMLFileName         = group.readEntry(QLatin1String("KMLFileName"), QString::fromUtf8("kmldocument"));
     AltitudeMode        = group.readEntry(QLatin1String("Altitude Mode"), 0);
 
@@ -450,7 +452,7 @@ void KmlWindow::readSettings()
     ImageSizeInput_->setValue(size);
 
     AltitudeCB_->setCurrentIndex(AltitudeMode);
-    DestinationDirectory_->setUrl(QUrl::fromLocalFile(baseDestDir));
+    DestinationDirectory_->lineEdit()->setText(baseDestDir);
     DestinationUrl_->setText(UrlDestDir);
     FileName_->setText(KMLFileName);
 
@@ -472,7 +474,7 @@ void KmlWindow::saveSettings()
     group.writeEntry(QLatin1String("iconSize"),           IconSizeInput_->value());
     group.writeEntry(QLatin1String("size"),               ImageSizeInput_->value());
 
-    QString destination = DestinationDirectory_->url().path();
+    QString destination = DestinationDirectory_->lineEdit()->text();
 
     if (!destination.endsWith(QLatin1Char('/')))
     {
@@ -491,7 +493,7 @@ void KmlWindow::saveSettings()
     group.writeEntry(QLatin1String("KMLFileName"),       FileName_->text());
     group.writeEntry(QLatin1String("Altitude Mode"),     AltitudeCB_->currentIndex() );
     group.writeEntry(QLatin1String("UseGPXTracks"),      GPXTracksCheckBox_->isChecked());
-    group.writeEntry(QLatin1String("GPXFile"),           GPXFileUrlRequester_->text());
+    group.writeEntry(QLatin1String("GPXFile"),           GPXFileUrlRequester_->lineEdit()->text());
     group.writeEntry(QLatin1String("Time Zone"),         timeZoneCB->currentIndex() );
     group.writeEntry(QLatin1String("Line Width"),        GPXLineWidthInput_->value());
     group.writeEntry(QLatin1String("Track Color"),       GPXTrackColor_->color().name ());

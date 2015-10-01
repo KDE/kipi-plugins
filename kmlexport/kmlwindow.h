@@ -45,11 +45,11 @@ class QComboBox;
 class QCloseEvent;
 
 class KColorButton;
-class KUrlRequester;
 
 namespace KDcrawIface
 {
 class RIntNumInput;
+class RFileSelector;
 }
 
 using namespace KDcrawIface;
@@ -102,8 +102,8 @@ public:
 
     KColorButton*  GPXTrackColor_;
 
-    KUrlRequester* DestinationDirectory_;
-    KUrlRequester* GPXFileUrlRequester_;
+    RFileSelector* DestinationDirectory_;
+    RFileSelector* GPXFileUrlRequester_;
 
     RIntNumInput*  ImageSizeInput_;
     RIntNumInput*  IconSizeInput_;
@@ -138,7 +138,7 @@ protected:
     QGridLayout* TargetPreferenceGroupBoxLayout;
     QGridLayout* buttonGroupTargetTypeLayout;
 
-    KmlExport m_kmlExport;
+    KmlExport    m_kmlExport;
 };
 
 } // KIPIKMLExportPlugin
