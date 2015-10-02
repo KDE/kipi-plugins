@@ -11,8 +11,6 @@ add_definitions(-DTRANSLATION_DOMAIN=\"kipiplugin_mediawiki\")
 
 include_directories(${LIBMEDIAWIKI_INCLUDES})
 
-ki18n_wrap_ui(ui_src wmwindow.ui)
-
 set(kipiplugin_wikimedia_PART_SRCS
     plugin_wikimedia.cpp
     wmwidget.cpp
