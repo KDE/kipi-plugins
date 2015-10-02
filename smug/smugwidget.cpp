@@ -41,7 +41,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -70,41 +69,37 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload to your SmugMug account."));
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your SmugMug account."));
 
     QWidget* const settingsBox           = new QWidget(this);
     QVBoxLayout* const settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(
-        i18n("This is a clickable link to open the SmugMug home page in a web browser."));
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the SmugMug home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* const accountBox         = new QGroupBox(i18n("Account"), settingsBox);
-    accountBox->setWhatsThis(
-        i18n("This is the SmugMug account that will be used to authenticate."));
+    accountBox->setWhatsThis(i18n("This is the SmugMug account that will be used to authenticate."));
     QGridLayout* const accountBoxLayout = new QGridLayout(accountBox);
 
     m_anonymousRBtn     = new QRadioButton(i18nc("smug account login", "Anonymous"), accountBox);
-    m_anonymousRBtn->setWhatsThis(
-        i18n("Login as anonymous to SmugMug web service."));
+    m_anonymousRBtn->setWhatsThis(i18n("Login as anonymous to SmugMug web service."));
 
     m_accountRBtn       = new QRadioButton(i18n("SmugMug Account"), accountBox);
-    m_accountRBtn->setWhatsThis(
-        i18n("Login to SmugMug web service using email and password."));
+    m_accountRBtn->setWhatsThis(i18n("Login to SmugMug web service using email and password."));
 
     m_userNameLbl       = new QLabel(i18nc("smug account settings", "Name:"), accountBox);
     m_userName          = new QLabel(accountBox);
     m_emailLbl          = new QLabel(i18nc("smug account settings", "Email:"), accountBox);
     m_email             = new QLabel(accountBox);
     m_changeUserBtn     = new QPushButton(accountBox);
-    KGuiItem::assign(m_changeUserBtn,
-                     KGuiItem(i18n("Change Account"), QStringLiteral("system-switch-user"),
-                              i18n("Change SmugMug Account used to authenticate")));
+    
+    m_changeUserBtn->setText(i18n("Change Account"));
+    m_changeUserBtn->setIcon(QIcon::fromTheme(QStringLiteral("system-switch-user")));
+    m_changeUserBtn->setToolTip(i18n("Change SmugMug Account used to authenticate"));
 
     accountBoxLayout->addWidget(m_anonymousRBtn,        0, 0, 1, 2);
     accountBoxLayout->addWidget(m_accountRBtn,          1, 0, 1, 2);
@@ -126,25 +121,23 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
     m_albumsCoB->setEditable(false);
     m_nickNameLbl       = new QLabel(i18n("Nickname:"), albumsBox);
     m_nickNameEdt       = new QLineEdit(albumsBox);
-    m_nickNameEdt->setWhatsThis(
-        i18n("Nickname of SmugMug user to list albums."));
+    m_nickNameEdt->setWhatsThis(i18n("Nickname of SmugMug user to list albums."));
     m_sitePasswordLbl   = new QLabel(i18n("Site Password:"), albumsBox);
     m_sitePasswordEdt   = new QLineEdit(albumsBox);
-    m_sitePasswordEdt->setWhatsThis(
-        i18n("Site-wide password for specified SmugMug nick/user."));
+    m_sitePasswordEdt->setWhatsThis(i18n("Site-wide password for specified SmugMug nick/user."));
     m_albumPasswordLbl  = new QLabel(i18n("Album Password:"), albumsBox);
     m_albumPasswordEdt  = new QLineEdit(albumsBox);
-    m_albumPasswordEdt->setWhatsThis(
-        i18n("Password for SmugMug album."));
+    m_albumPasswordEdt->setWhatsThis(i18n("Password for SmugMug album."));
 
     m_newAlbumBtn = new QPushButton(accountBox);
-    KGuiItem::assign(m_newAlbumBtn,
-                     KGuiItem(i18n("New Album"), QStringLiteral("list-add"),
-                              i18n("Create new SmugMug album")));
+    m_newAlbumBtn->setText(i18n("New Album"));
+    m_newAlbumBtn->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
+    m_newAlbumBtn->setToolTip(i18n("Create new SmugMug album"));
+    
     m_reloadAlbumsBtn = new QPushButton(accountBox);
-    KGuiItem::assign(m_reloadAlbumsBtn,
-                     KGuiItem(i18nc("reload album list", "Reload"), QStringLiteral("view-refresh"),
-                              i18n("Reload album list")));
+    m_reloadAlbumsBtn->setText(i18nc("reload album list", "Reload"));
+    m_reloadAlbumsBtn->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
+    m_reloadAlbumsBtn->setToolTip(i18n("Reload album list"));
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_nickNameLbl,       1, 0, 1, 1);
@@ -233,7 +226,7 @@ SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool
             this, SLOT(slotResizeChecked()));
 
     connect(m_anonymousRBtn, SIGNAL(toggled(bool)),
-            this, SLOT(slotAnonymousToggled(bool)) );
+            this, SLOT(slotAnonymousToggled(bool)));
 
     // ------------------------------------------------------------------------
 
@@ -307,10 +300,9 @@ QString SmugWidget::getDestinationPath() const
 void SmugWidget::setNickName(const QString& nick)
 {
     m_nickNameEdt->setText(nick);
-    m_headerLbl->setText(QStringLiteral(
-        "<b><h2><a href='http://%1.smugmug.com'>"
-        "<font color=\"#9ACD32\">SmugMug</font>"
-        "</a></h2></b>").arg(nick));
+    m_headerLbl->setText(QStringLiteral("<b><h2><a href='http://%1.smugmug.com'>"
+                                        "<font color=\"#9ACD32\">SmugMug</font>"
+                                        "</a></h2></b>").arg(nick));
 }
 
 void SmugWidget::updateLabels(const QString& email, const QString& name, const QString& nick)
@@ -322,10 +314,9 @@ void SmugWidget::updateLabels(const QString& email, const QString& name, const Q
     if (!nick.isEmpty())
         web = nick;
 
-    m_headerLbl->setText(QStringLiteral(
-        "<b><h2><a href='http://%1.smugmug.com'>"
-        "<font color=\"#9ACD32\">SmugMug</font>"
-        "</a></h2></b>").arg(web));
+    m_headerLbl->setText(QStringLiteral("<b><h2><a href='http://%1.smugmug.com'>"
+                                        "<font color=\"#9ACD32\">SmugMug</font>"
+                                        "</a></h2></b>").arg(web));
 }
 
 void SmugWidget::slotAnonymousToggled(bool checked)
