@@ -146,6 +146,10 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     addButton(d->previewButton, QDialogButtonBox::ActionRole);
 
     QPushButton* const defaultButton = new QPushButton(this);
+    defaultButton->setText(i18nc("@action:button", "&Default"));
+    defaultButton->setIcon(QIcon::fromTheme(QStringLiteral("document-revert")));
+    defaultButton->setToolTip(i18nc("@info:tooltip", "Revert current settings to default values."));
+
     KGuiItem::assign(defaultButton, KStandardGuiItem::defaults());
     addButton(defaultButton, QDialogButtonBox::ResetRole);
 
