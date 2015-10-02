@@ -53,7 +53,6 @@ extern "C"
 
 // KDE includes
 
-#include <kstandardguiitem.h>
 #include <kconfig.h>
 #include <klocalizedstring.h>
 #include <kio/renamedialog.h>
@@ -136,14 +135,14 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     setModal(false);
     setWindowTitle(i18n("Exposure Blending"));
 
-    KGuiItem::assign(startButton(),
-                     KGuiItem(i18nc("@action:button", "&Save"), QStringLiteral("document-save"),
-                              i18nc("@info:tooltip", "Process and save selected items.")));
+    startButton()->setText(i18nc("@action:button", "&Save"));
+    startButton()->setIcon(QIcon::fromTheme(QStringLiteral("document-save")));
+    startButton()->setToolTip(i18nc("@info:tooltip", "Process and save selected items."));
 
     d->previewButton = new QPushButton(this);
-    KGuiItem::assign(d->previewButton,
-                     KGuiItem(i18nc("@action:button", "&Preview"), QStringLiteral("system-run"),
-                              i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings.")));
+    d->previewButton->setText(i18nc("@action:button", "&Preview"));
+    d->previewButton->setIcon(QIcon::fromTheme(QStringLiteral("system-run")));
+    d->previewButton->setToolTip(i18nc("@info:tooltip", "Process a preview of bracketed images stack with current settings."));
     addButton(d->previewButton, QDialogButtonBox::ActionRole);
 
     QPushButton* const defaultButton = new QPushButton(this);
