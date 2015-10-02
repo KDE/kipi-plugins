@@ -41,7 +41,6 @@
 #include <kcalendarsystem.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
-#include <kdeprintdialog.h>
 
 // Libkipi includes
 
@@ -239,7 +238,9 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
         // PageSize
         printer_->setPageSize(params.pageSize);
-        QPrintDialog* const printDialog = KdePrint::createPrintDialog(printer_, this);
+        
+        QPrintDialog* const printDialog = new QPrintDialog(printer_, this);
+        printDialog->setWindowTitle(i18n("Print Calendar"));
 
         if (printDialog->exec() == QDialog::Accepted)
         {
@@ -252,7 +253,6 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         }
 
         delete printDialog;
-
     }
 }
 
