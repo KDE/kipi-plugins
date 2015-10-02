@@ -678,11 +678,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KColorButton</class>
-   <extends>QPushButton</extends>
-   <header>kcolorbutton.h</header>
-  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>ListPhotoSizes</tabstop>

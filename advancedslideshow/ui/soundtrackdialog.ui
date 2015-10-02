@@ -435,11 +435,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KSeparator</class>
-   <extends>QFrame</extends>
-   <header>kseparator.h</header>
-  </customwidget>
-  <customwidget>
    <class>KIPIAdvancedSlideshowPlugin::ListSoundItems</class>
    <extends>QListWidget</extends>
    <header>listsounditems.h</header>

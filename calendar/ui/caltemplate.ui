@@ -250,11 +250,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
-  <customwidget>
    <class>KIPICalendarPlugin::CalWidget</class>
    <extends>QWidget</extends>
    <header>calwidget.h</header>
