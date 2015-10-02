@@ -120,8 +120,8 @@ KmlWindow::KmlWindow(QWidget* const parent,
     destinationDirectoryLabel_ = new QLabel(i18n("Destination Directory:"), TargetPreferenceGroupBox);
 
     DestinationDirectory_= new RFileSelector(TargetPreferenceGroupBox);
-    DestinationDirectory_->fileDialog()->setFileMode(QFileDialog::Directory);
-    DestinationDirectory_->fileDialog()->setWindowTitle(i18n("Select a directory in which to save the kml file and pictures"));
+    DestinationDirectory_->setFileDlgMode(QFileDialog::Directory);
+    DestinationDirectory_->setFileDlgTitle(i18n("Select a directory in which to save the kml file and pictures"));
     
     DestinationUrlLabel_ = new QLabel(i18n("Destination Path:"), TargetPreferenceGroupBox);
     DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
@@ -173,9 +173,9 @@ KmlWindow::KmlWindow(QWidget* const parent,
     GPXFileLabel_ = new QLabel(i18n("GPX file:"), GPXTracksGroupBox);
 
     GPXFileUrlRequester_ = new RFileSelector( GPXTracksGroupBox);
-    GPXFileUrlRequester_->fileDialog()->setNameFilter(i18n("%1|GPS Exchange Format", QLatin1String("*.gpx")));
-    GPXFileUrlRequester_->fileDialog()->setWindowTitle(i18n("Select GPX File to Load"));
-    GPXFileUrlRequester_->fileDialog()->setFileMode(QFileDialog::ExistingFile);
+    GPXFileUrlRequester_->setFileDlgFilter(i18n("%1|GPS Exchange Format", QLatin1String("*.gpx")));
+    GPXFileUrlRequester_->setFileDlgTitle(i18n("Select GPX File to Load"));
+    GPXFileUrlRequester_->setFileDlgMode(QFileDialog::ExistingFile);
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
     timeZoneCB     = new QComboBox(GPXTracksGroupBox );

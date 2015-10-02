@@ -108,7 +108,7 @@ GeneralPage::GeneralPage (KAssistantDialog* dlg)
     QVBoxLayout* const vlay2 = new QVBoxLayout(box2);
     d->exportUrl             = new RFileSelector(this);
     d->exportUrl->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + QLatin1String("/simpleviewer"));
-    d->exportUrl->fileDialog()->setFileMode(QFileDialog::Directory);
+    d->exportUrl->setFileDlgMode(QFileDialog::Directory);
 
     vlay2->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
     vlay2->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));

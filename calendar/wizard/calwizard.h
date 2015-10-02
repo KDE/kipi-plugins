@@ -48,14 +48,8 @@ namespace KIPI
     class Interface;
 }
 
-namespace KDcrawIface
-{
-    class RFileSelector;
-}
-
 using namespace KIPI;
 using namespace KIPIPlugins;
-using namespace KDcrawIface;
 
 namespace KIPICalendarPlugin
 {
@@ -101,9 +95,6 @@ private:
     QPrinter*        printer_;
 
     CalPrinter*      printThread_;
-    
-    RFileSelector*   ohUrlRequester;
-    RFileSelector*   fhUrlRequester;
 
     QMap<int, QUrl>  months_;
 };

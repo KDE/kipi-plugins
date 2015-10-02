@@ -46,10 +46,6 @@
 
 #include <KIPI/Interface>
 
-// Libkdcraw includes
-
-#include <KDCRAW/RWidgetUtils>
-
 // Local includes
 
 #include "calprinter.h"
@@ -95,15 +91,13 @@ CalWizard::CalWizard(QWidget* const parent)
     
     // ---------------------------------------------------------------
 
-    ohUrlRequester = new RFileSelector(calEventsUI.ohUrlWidget);
-    ohUrlRequester->fileDialog()->setNameFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
-    ohUrlRequester->fileDialog()->setWindowTitle(i18n("Select Calendar Data File"));
-    ohUrlRequester->fileDialog()->setFileMode(QFileDialog::ExistingFile);
+    calEventsUI.ohUrlRequester->setFileDlgFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
+    calEventsUI.ohUrlRequester->setFileDlgTitle(i18n("Select Calendar Data File"));
+    calEventsUI.ohUrlRequester->setFileDlgMode(QFileDialog::ExistingFile);
 
-    fhUrlRequester = new RFileSelector(calEventsUI.ohUrlWidget);
-    fhUrlRequester->fileDialog()->setNameFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
-    fhUrlRequester->fileDialog()->setWindowTitle(i18n("Select Calendar Data File"));
-    fhUrlRequester->fileDialog()->setFileMode(QFileDialog::ExistingFile);
+    calEventsUI.fhUrlRequester->setFileDlgFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
+    calEventsUI.fhUrlRequester->setFileDlgTitle(i18n("Select Calendar Data File"));
+    calEventsUI.fhUrlRequester->setFileDlgMode(QFileDialog::ExistingFile);
 
     // ---------------------------------------------------------------
 
@@ -278,8 +272,8 @@ void CalWizard::print()
     }
 
     cSettings_->clearSpecial();
-    cSettings_->loadSpecial(QUrl::fromLocalFile(ohUrlRequester->lineEdit()->text()), Qt::red);
-    cSettings_->loadSpecial(QUrl::fromLocalFile(fhUrlRequester->lineEdit()->text()), Qt::darkGreen);
+    cSettings_->loadSpecial(QUrl::fromLocalFile(calEventsUI.ohUrlRequester->lineEdit()->text()), Qt::red);
+    cSettings_->loadSpecial(QUrl::fromLocalFile(calEventsUI.fhUrlRequester->lineEdit()->text()), Qt::darkGreen);
 
     printThread_ = new CalPrinter(printer_, months_, iface(), this);
 

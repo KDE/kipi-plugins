@@ -69,8 +69,8 @@ private Q_SLOTS:
     /**
      * Starts the installation of SimpleViewer
      */
-    void slotPathSelected();
-
+    void slotUrlSelected(const QUrl& url);
+    
 private:
 
     class Private;

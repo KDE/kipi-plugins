@@ -99,10 +99,10 @@ FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
 
     d->urlRequester = new RFileSelector(vbox);
     d->urlRequester->lineEdit()->setText(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-    d->urlRequester->fileDialog()->setWindowTitle(i18n("Select downloaded archive"));
-    d->urlRequester->fileDialog()->setFileMode(QFileDialog::ExistingFile);
+    d->urlRequester->setFileDlgTitle(i18n("Select downloaded archive"));
+    d->urlRequester->setFileDlgMode(QFileDialog::ExistingFile);
     
-    connect(d->urlRequester, SIGNAL(signalPathSelected()),
+    connect(d->urlRequester, SIGNAL(signalUrlSelected(QUrl)),
             this, SLOT(slotUrlSelected()));
 
     setPageWidget(vbox);
@@ -114,9 +114,9 @@ FirstRunPage::~FirstRunPage()
     delete d;
 }
 
-void FirstRunPage::slotPathSelected()
+void FirstRunPage::slotUrlSelected(const QUrl& url)
 {
-    d->url = QUrl::fromLocalFile(d->urlRequester->lineEdit()->text());
+    d->url = url;
     emit signalUrlObtained();
 }
 
