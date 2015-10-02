@@ -25,12 +25,15 @@
 
 #include "caltemplate.h"
 
+// Qt includes
+
+#include <QButtonGroup>
+
 // KDE includes
 
 #include <kcalendarsystem.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
-#include <kstandarddirs.h>
 
 // Libkipi includes
 
@@ -114,6 +117,12 @@ CalTemplate::CalTemplate(KIPI::Interface* const interface, QWidget* const parent
 
     m_ui.yearSpin->setRange(cal->year(cal->earliestValidDate()) + 1, cal->year(cal->latestValidDate()) - 1);
     m_ui.yearSpin->setValue(currentYear);
+    
+    QButtonGroup* const btnGrp = new QButtonGroup(m_ui.imagePosButtonGroup);
+    btnGrp->addButton(m_ui.topRadio,   CalParams::Top);
+    btnGrp->addButton(m_ui.leftRadio,  CalParams::Left);
+    btnGrp->addButton(m_ui.rightRadio, CalParams::Right);
+    btnGrp->setExclusive(true);
 
     connect(m_ui.paperSizeCombo, SIGNAL(currentIndexChanged(QString)),
             settings, SLOT(setPaperSize(QString)));
@@ -121,7 +130,7 @@ CalTemplate::CalTemplate(KIPI::Interface* const interface, QWidget* const parent
     connect(m_ui.resolutionCombo, SIGNAL(currentIndexChanged(QString)),
             settings, SLOT(setResolution(QString)));
 
-    connect(m_ui.imagePosButtonGroup, SIGNAL(changed(int)),
+    connect(btnGrp, SIGNAL(buttonClicked(int)),
             settings, SLOT(setImagePos(int)));
 
     connect(m_ui.drawLinesCheckBox, SIGNAL(toggled(bool)),
