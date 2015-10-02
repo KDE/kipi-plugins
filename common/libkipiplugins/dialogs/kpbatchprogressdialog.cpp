@@ -40,7 +40,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kstandardguiitem.h>
 
 // Local includes
 
@@ -267,7 +266,8 @@ KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
 
 void KPBatchProgressDialog::setButtonClose()
 {
-    KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Cancel), KStandardGuiItem::close());
+    d->buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon::fromTheme(QStringLiteral("dialog-close")));
+    d->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18n("Close"));
 
     // Clicking "Close" now does two things:
     //  1. Emits signal cancelClicked(),
