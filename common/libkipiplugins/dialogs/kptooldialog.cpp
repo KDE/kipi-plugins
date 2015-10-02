@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kguiitem.h>
 
 // Libkipi includes
 
@@ -217,16 +216,16 @@ void KPToolDialog::setRejectButtonMode(QDialogButtonBox::StandardButton button)
 {
     if (button == QDialogButtonBox::Close)
     {
-        KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Close),
-                         KGuiItem(i18n("Close"), QStringLiteral("dialog-close"),
-                                  i18n("Close window")));
+        d->buttonBox->button(QDialogButtonBox::Close)->setText(i18n("Close"));
+        d->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon::fromTheme(QStringLiteral("dialog-close")));
+        d->buttonBox->button(QDialogButtonBox::Close)->setToolTip(i18n("Close window"));
         d->propagateReject = true;
     }
     else if (button == QDialogButtonBox::Cancel)
     {
-        KGuiItem::assign(d->buttonBox->button(QDialogButtonBox::Close),
-                         KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel"),
-                                  i18n("Cancel current operation")));
+        d->buttonBox->button(QDialogButtonBox::Close)->setText(i18n("Cancel"));
+        d->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon::fromTheme(QStringLiteral("dialog-cancel")));
+        d->buttonBox->button(QDialogButtonBox::Close)->setToolTip(i18n("Cancel current operation"));
         d->propagateReject = false;
     }
     else
