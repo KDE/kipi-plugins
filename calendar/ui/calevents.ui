@@ -27,11 +27,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KUrlRequester" name="ohUrlRequester" >
-     <property name="filter" >
-      <string>*.ics</string>
-     </property>
-    </widget>
+    <widget class="KDcrawIface::RFileSelector" name="ohUrlRequester"/>
    </item>
    <item>
     <widget class="QLabel" name="ohExplainLabel" >
@@ -83,11 +79,7 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <widget class="KUrlRequester" name="fhUrlRequester" >
-     <property name="filter" >
-      <string>*.ics</string>
-     </property>
-    </widget>
+    <widget class="KDcrawIface::RFileSelector" name="fhUrlRequester"/>       
    </item>
    <item>
     <widget class="QLabel" name="fhExplainLabel" >
@@ -130,9 +122,9 @@ This is fully optional. All the events from this calendar will be printed in gre
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
+   <class>KDcrawIface::RFileSelector</class>
    <extends>QFrame</extends>
-   <header>kurlrequester.h</header>
+   <header>KDCRAW/RWidgetUtils</header>
   </customwidget>
  </customwidgets>
  <resources/>

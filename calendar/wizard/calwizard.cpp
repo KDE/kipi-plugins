@@ -11,7 +11,7 @@
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  * Copyright (C) 2011      by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
- * Copyright (C) 2012-2013 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,14 +34,14 @@
 #include <QPrinter>
 #include <QStringList>
 #include <QMenu>
+#include <QPushButton>
 
 // KDE includes
 
 #include <kcalendarsystem.h>
-#include <kdebug.h>
-#include <kdeprintdialog.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
+#include <kdeprintdialog.h>
 
 // Libkipi includes
 
@@ -89,6 +89,16 @@ CalWizard::CalWizard(QWidget* const parent)
     wFinish_     = new QWidget(this);
     calProgressUI.setupUi(wFinish_);
     wFinishPage_ = addPage(wFinish_, i18n("Printing"));
+    
+    // ---------------------------------------------------------------
+
+    calEventsUI.ohUrlRequester->fileDialog()->setNameFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
+    calEventsUI.ohUrlRequester->fileDialog()->setWindowTitle(i18n("Select Calendar Data File"));
+    calEventsUI.ohUrlRequester->fileDialog()->setFileMode(QFileDialog::ExistingFile);
+
+    calEventsUI.fhUrlRequester->fileDialog()->setNameFilter(i18n("%1|Calendar Data File", QLatin1String("*.ics")));
+    calEventsUI.fhUrlRequester->fileDialog()->setWindowTitle(i18n("Select Calendar Data File"));
+    calEventsUI.fhUrlRequester->fileDialog()->setFileMode(QFileDialog::ExistingFile);
 
     // ---------------------------------------------------------------
 
@@ -229,7 +239,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
         // PageSize
         printer_->setPageSize(params.pageSize);
-        QPrintDialog* printDialog = KdePrint::createPrintDialog(printer_, this);
+        QPrintDialog* const printDialog = KdePrint::createPrintDialog(printer_, this);
 
         if (printDialog->exec() == QDialog::Accepted)
         {
@@ -262,8 +272,8 @@ void CalWizard::print()
     }
 
     cSettings_->clearSpecial();
-    cSettings_->loadSpecial(calEventsUI.ohUrlRequester->url(), Qt::red);
-    cSettings_->loadSpecial(calEventsUI.fhUrlRequester->url(), Qt::darkGreen);
+    cSettings_->loadSpecial(QUrl::fromLocalFile(calEventsUI.ohUrlRequester->lineEdit()->text()), Qt::red);
+    cSettings_->loadSpecial(QUrl::fromLocalFile(calEventsUI.fhUrlRequester->lineEdit()->text()), Qt::darkGreen);
 
     printThread_ = new CalPrinter(printer_, months_, iface(), this);
 
