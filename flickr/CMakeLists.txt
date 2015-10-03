@@ -32,7 +32,6 @@ target_link_libraries(kipiplugin_flickr
                       KF5::KDcraw
                       KF5::KIOCore
                       KF5::Wallet
-                      KF5::KHtml
                       KF5::WindowSystem
                      )
 

@@ -103,7 +103,6 @@ find_package(KF5 REQUIRED COMPONENTS
              Wallet
              Config
              ThreadWeaver
-             KHtml
              I18n
              Archive
              KIO
