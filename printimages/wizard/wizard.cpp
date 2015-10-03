@@ -224,7 +224,7 @@ Wizard::Wizard(QWidget* const parent)
     connect(d->m_photoPage->m_font_size , SIGNAL(valueChanged(int)),
             this, SLOT(infopage_updateCaptions()));
 
-    connect(d->m_photoPage->m_font_color , SIGNAL(changed(QColor)),
+    connect(d->m_photoPage->m_font_color , SIGNAL(signalColorSelected(QColor)),
             this, SLOT(infopage_updateCaptions()));
 
     connect(d->m_photoPage->m_setDefault , SIGNAL(clicked()),
