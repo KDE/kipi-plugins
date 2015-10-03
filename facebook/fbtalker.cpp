@@ -52,7 +52,6 @@
 
 // KDE includes
 
-//#include <kcodecs.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
